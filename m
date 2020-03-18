@@ -1,91 +1,74 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
- by mx.groups.io with SMTP id smtpd.web12.571.1584563926016253411
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mx.groups.io with SMTP id smtpd.web10.999.1584565156714744215
  for <tools@linux.kernel.org>;
- Wed, 18 Mar 2020 13:38:46 -0700
+ Wed, 18 Mar 2020 13:59:16 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=J4wytQFR;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.128.49, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-wm1-f49.google.com with SMTP id m3so4981977wmi.0
-        for <tools@linux.kernel.org>; Wed, 18 Mar 2020 13:38:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rbkcDeuRYEz8U9RFI3PHaxXdU2zqmaFcpZmPrcTlocM=;
-        b=J4wytQFRyzZ6bcjj05WUvOaLWeEu0V3YQHKbeKmSDFN3wp9q4RzO9ir7Ijk7Gly7S5
-         ykQCXMCQBf8Du6JzpB8M/SEHGhf0fyMRb+CjSvYHCJt0lEILrHJGFJ/pD/LsJzEcZGdU
-         +Mzpaenvivfq3i2pkLdGIVp/o6p5I8YtiKxOg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rbkcDeuRYEz8U9RFI3PHaxXdU2zqmaFcpZmPrcTlocM=;
-        b=YWbjNvULK1Qz3O/05uu/YT6tzfdj4K4p9drOKubYy/ntXANx50AELkFJgVEtFa7hqM
-         12RT8qVwGMsVjvf3RylOgMlsQxBccjVST/u9UhRfqw8UbXFOah8mrrBcm/Oe5oAi6Ok/
-         4Ir02suKJDJRGxzJcOjHPUjrfG/h+rSFMH7TRfHT7h7o4HI+uROg9bcJOH1BcoKAVPYO
-         ITKj6zucZ2XSr+pGLgZh7jy0VgokxMaKzNbo8khoFuoTtb+RrBLnyOnBj/lEegioav24
-         izcszCN61s3m9y76f3UtviXcW2Em13b3uG2t4UnzgDMTL8pNW0qOEqA76pAdHwvD7ROp
-         ITfw==
-X-Gm-Message-State: ANhLgQ3JfRdpom7MuvNbCB3rc3kVIXzqSYP6eMrf2pUaSOU6f0nxUBGw
-	gXZYgAYx9AAVujYWFE2zOv2N1Q==
-X-Google-Smtp-Source: ADFU+vu1EKkGaspzzHK/8twy0env83Q2CVLgjHWjQza2CuyBYy8YrUlBzLsKaQetSXCSeNWiOeyYUw==
-X-Received: by 2002:a1c:7d88:: with SMTP id y130mr7391767wmc.5.1584563924540;
-        Wed, 18 Mar 2020 13:38:44 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local (139.ip-51-83-76.eu. [51.83.76.139])
-        by smtp.gmail.com with ESMTPSA id k84sm5484451wmk.2.2020.03.18.13.38.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 13:38:43 -0700 (PDT)
-Date: Wed, 18 Mar 2020 16:38:38 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
+ dkim=missing; spf=pass (domain: arm.com, ip: 217.140.110.172, mailfrom: mark.brown@arm.com)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6514D1FB;
+	Wed, 18 Mar 2020 13:59:16 -0700 (PDT)
+Received: from localhost (unknown [10.37.6.21])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DDEC03F67D;
+	Wed, 18 Mar 2020 13:59:15 -0700 (PDT)
+Date: Wed, 18 Mar 2020 20:59:14 +0000
+From: "Mark Brown" <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org
 Subject: Re: b4 not finding patches
-Message-ID: <20200318203838.jb2q4g4sxstob75e@chatter.i7.local>
+Message-ID: <20200318205914.GG4553@sirena.org.uk>
 References: <20200318202335.GF4553@sirena.org.uk>
+ <20200318203838.jb2q4g4sxstob75e@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <20200318202335.GF4553@sirena.org.uk>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20200318203838.jb2q4g4sxstob75e@chatter.i7.local>
+X-Cookie: Oh no, not again.
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 5
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5L6AZ1aJH5mDrqCQ"
 Content-Disposition: inline
 
-On Wed, Mar 18, 2020 at 08:23:35PM +0000, Mark Brown wrote:
-> When I run
-> 
->    b4 am -t 87y2s0olg6.wl-kuninori.morimoto.gx@renesas.com
-> 
-> it says:
-> 
-> | Grabbing thread from lore.kernel.org
-> | Analyzing 13 messages in the thread
-> | Found new series v1
-> | Will use the latest revision: v3
-> | You can pick other revisions using the -vN flag
-> | ---
-> | Writing ./v3_20200316_kuninori_morimoto_gx_renesas_com.mbx
-> |   ERROR: missing [1/6]!
-> |   ERROR: missing [2/6]!
-> |   ERROR: missing [3/6]!
-> |   ERROR: missing [4/6]!
-> |   ERROR: missing [5/6]!
-> |   ERROR: missing [6/6]!
-> | ---
-> | Total patches: 0
-> | ---
-> 
-> even though lore appears to have the full thread:
-> 
->    https://lore.kernel.org/alsa-devel/87wo7kolfa.wl-kuninori.morimoto.gx@renesas.com/
+--5L6AZ1aJH5mDrqCQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This is because the cover letter is the only bit where we see "v3":
+On Wed, Mar 18, 2020 at 04:38:38PM -0400, Konstantin Ryabitsev wrote:
+> On Wed, Mar 18, 2020 at 08:23:35PM +0000, Mark Brown wrote:
 
-> [PATCH v3 0/6]
+> >    https://lore.kernel.org/alsa-devel/87wo7kolfa.wl-kuninori.morimoto.g=
+x@renesas.com/
 
-all other messages have
+> This is because the cover letter is the only bit where we see "v3":
 
-> [PATCH N/6]
+> > [PATCH v3 0/6]
 
-I'm not sure if there is a reliably clean way of handling this 
-situation, but I'll think about it. For this particular case, you can 
-just pass -v1 to "b4 am" to grab the actual patches.
+> all other messages have
 
--K
+> > [PATCH N/6]
+
+> I'm not sure if there is a reliably clean way of handling this=20
+> situation, but I'll think about it. For this particular case, you can=20
+> just pass -v1 to "b4 am" to grab the actual patches.
+
+=2E..but not the tags added to the cover letter which is the main reason
+I'm doing this :/ .  I do see the issue given people sending new
+serieses in reply to existing ones though.  Perhaps some heuristic about
+lack of ambiguity (eg, if we're looking for six patches and find exactly
+six patches)?
+
+--5L6AZ1aJH5mDrqCQ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5yi6EACgkQJNaLcl1U
+h9C+yQf/VWX18XG8P9BIv8hqGEp4JSvgJeFLHY+a+AMuZzaarbMv+VX9pJBRD/Ir
+1jocnuQd7/VPL0+DuUhtNxUKNxkY2wHxRPETe41GYASezpY6aFI+NxyfUrIrZF4n
++LVze7Fp5pNexe+U7wvAY67aOPmbF4Cfg+nLPcFKfm0g40erBcE3k8DOf9Chv6rM
+Y0LZJ6Q4IZP1XQF9MW1Nry6yKWXtzPN2Gz7l4zsMa7LLjjGzeQlaEe/hSHHNCDmG
+Gl+tZcObaMs4zTqSj6HaJo/slQO1c78mNKI1GbU+Gk4X3nP8l2kcLIpXjRkkQ8cV
+wnMOJsS55zhekD6zivme9ThbpEUbhw==
+=tj0U
+-----END PGP SIGNATURE-----
+
+--5L6AZ1aJH5mDrqCQ--
