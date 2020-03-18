@@ -1,84 +1,76 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
- by mx.groups.io with SMTP id smtpd.web11.424.1584554107027680900
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mx.groups.io with SMTP id smtpd.web11.238.1584563017766153746
  for <tools@linux.kernel.org>;
- Wed, 18 Mar 2020 10:55:07 -0700
+ Wed, 18 Mar 2020 13:23:38 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=ZxKOKsfV;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.128.48, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-wm1-f48.google.com with SMTP id z13so4504911wml.0
-        for <tools@linux.kernel.org>; Wed, 18 Mar 2020 10:55:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=d2KRV37Togh05O3mD6meFBkFtyTmW4us4rQFP9sQ2JM=;
-        b=ZxKOKsfVkTgB2lKYAo+0LP/GZqtmpoApG+I7XiuMhcAoFivJwgbCPSr2Kyy9KDQkUJ
-         ZiASI1vI5dQSOgJDsWBR+KEOr+CN3muo4IBCDl3dhLtg97wJa1vZ7Wiivi+qyZkzzCnP
-         c/KHNMHB92lWJUHwqqxcEzrhi+BhIZULhad1Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=d2KRV37Togh05O3mD6meFBkFtyTmW4us4rQFP9sQ2JM=;
-        b=iZVazh4a/7CGo+TcdqvJw2WGtHP8qD3mLzCXBQHmOURtWqrehyQbdtyCWmRfAMU233
-         ub38isCrRT/TgbvT6YnnOxeyN44eL+Or5W/QyNPGxVncqAozA11F35qVZ01wQIWFxXCZ
-         hIacQs26UxL1UlMxOi/wdJay4xXzujimf0s6XsaZPwFxFZ8pqRtIIAcVkM2Mf4IZ+FtU
-         U5kvgd1KGeX6sdEk9Ga6GwLK5V4CcBuLZkhM+FoQWI2C3QHg9Ni8BmyIRRhGY0xcCNAL
-         bGnxzi1ukk2/grWwkjY8rWIrwa34cGx2eA6NRVYIojw3XzU6uRyJjSLji4GoVqwlV3B5
-         2+nw==
-X-Gm-Message-State: ANhLgQ0rd7X4sDatc6UF9jJF1/IKOr4MjnHA2FTC/V4G0CAZhLayUw41
-	jxNF71X/6vQHVnaa4htr07e3ErarfxJCNA==
-X-Google-Smtp-Source: ADFU+vvDeCd7rnSjtcUAXL/t19BYYc/r89WoJIhL3tRndzg/ModQRbEp3p9fWmYfOYrXuii+ZZBTow==
-X-Received: by 2002:a1c:7214:: with SMTP id n20mr6209734wmc.24.1584554102720;
-        Wed, 18 Mar 2020 10:55:02 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local (chomsky.torservers.net. [77.247.181.162])
-        by smtp.gmail.com with ESMTPSA id v2sm10876497wrt.58.2020.03.18.10.55.00
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 10:55:01 -0700 (PDT)
-Date: Wed, 18 Mar 2020 13:54:58 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org
-Subject: b4 v0.3.3 available
-Message-ID: <20200318175458.cknmmoy64u5jesi3@chatter.i7.local>
+ dkim=missing; spf=pass (domain: arm.com, ip: 217.140.110.172, mailfrom: mark.brown@arm.com)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 59F871FB;
+	Wed, 18 Mar 2020 13:23:37 -0700 (PDT)
+Received: from localhost (unknown [10.37.6.21])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D19323F67D;
+	Wed, 18 Mar 2020 13:23:36 -0700 (PDT)
+Date: Wed, 18 Mar 2020 20:23:35 +0000
+From: "Mark Brown" <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Subject: b4 not finding patches
+Message-ID: <20200318202335.GF4553@sirena.org.uk>
 MIME-Version: 1.0
-X-Groupsio-MsgNum: 2
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="vbdzwtqnquu6klh4"
+X-Cookie: Oh no, not again.
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 3
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5CUMAwwhRxlRszMD"
 Content-Disposition: inline
 
---vbdzwtqnquu6klh4
-Content-Type: text/plain; charset=utf-8
+--5CUMAwwhRxlRszMD
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello:
+When I run
 
-Version 0.3.3 adds a few minor features to patch attestation:
+   b4 am -t 87y2s0olg6.wl-kuninori.morimoto.gx@renesas.com
 
-- if attestation is available but does not succeed, we try to indicate=20
-  which part of the patch is failing (commit metadata, commit message,=20
-  or patch content)
-- we now reject attestations that were created 30 days or more before=20
-  the date of the patch (configurable via 'attestation-staleness-days'=20
-  parameter)
-- when querying the signatures archive, use the URL that doesn't result=20
-  in an unnecessary 301 redirect
+it says:
 
-You can upgrade using 'pip install --upgrade b4'.
+| Grabbing thread from lore.kernel.org
+| Analyzing 13 messages in the thread
+| Found new series v1
+| Will use the latest revision: v3
+| You can pick other revisions using the -vN flag
+| ---
+| Writing ./v3_20200316_kuninori_morimoto_gx_renesas_com.mbx
+|   ERROR: missing [1/6]!
+|   ERROR: missing [2/6]!
+|   ERROR: missing [3/6]!
+|   ERROR: missing [4/6]!
+|   ERROR: missing [5/6]!
+|   ERROR: missing [6/6]!
+| ---
+| Total patches: 0
+| ---
 
-Regards,
--K
+even though lore appears to have the full thread:
 
---vbdzwtqnquu6klh4
+   https://lore.kernel.org/alsa-devel/87wo7kolfa.wl-kuninori.morimoto.gx@renesas.com/
+
+Thanks,
+Mark
+
+--5CUMAwwhRxlRszMD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCXnJgcAAKCRC2xBzjVmSZ
-bAUoAQDk3oRRic513J99UhtYRay1v9rpsYKwcfZKPz2+Mi1PFwEArSfEh+rEtDmV
-o6wcb28YgBjllS9to34eSYKDAaLeiQI=
-=AUQ6
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5yg0YACgkQJNaLcl1U
+h9ArYAf9FdFHWlBhRqUGgm2mdAP0UGhIE2CCroJobouJHkH8yxYxmhLXk6q9pBM+
+9FR3VvdVf7pMOXV3BTsMbbmavzAQGWas/bmuHtDM8yYH9zgYbq5AyyRqtQNjjlze
+/MBq/GEUxGbBUTwjFDlzQCY7TzK3Iawu8pjkznYugPTWPAtvn7AOjgUPTWv69aAs
+ZX6PsxW0WSdWftR9S96XUtXV9/PRtEDN+Sh69D/dzuayLDqoelEG+JFNbwbjSC+Q
+iMcU+B7ZKbFciSHNkwop37sUUb/uHtkQd7CojO72Vdz2ftjPipsbL3zLaxc3nqOg
+oc6wCcdUfH01TtScKKK2CfySw+FTUg==
+=FkHH
 -----END PGP SIGNATURE-----
 
---vbdzwtqnquu6klh4--
+--5CUMAwwhRxlRszMD--
