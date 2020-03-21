@@ -1,48 +1,62 @@
-Received: from sipsolutions.net (sipsolutions.net [144.76.43.62])
- by mx.groups.io with SMTP id smtpd.web12.12393.1584741832944530972
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+ by mx.groups.io with SMTP id smtpd.web10.380.1584752072874701342
  for <tools@linux.kernel.org>;
- Fri, 20 Mar 2020 15:03:53 -0700
+ Fri, 20 Mar 2020 17:54:32 -0700
 Authentication-Results: mx.groups.io;
- dkim=missing; spf=none, err=permanent DNS error (domain: sipsolutions.net, ip: 144.76.43.62, mailfrom: johannes@sipsolutions.net)
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	(envelope-from <johannes@sipsolutions.net>)
-	id 1jFPk6-00C0u6-H3; Fri, 20 Mar 2020 23:03:50 +0100
-Message-ID: <40b68e30fa106d65d0e8451d057ec338a3e002ab.camel@sipsolutions.net>
-Subject: Re: [kernel.org users] B4 and gmail integration features
-From: "Johannes Berg" <johannes@sipsolutions.net>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=WIGrpe+O;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.214.180, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-pl1-f180.google.com with SMTP id f16so3224877plj.4
+        for <tools@linux.kernel.org>; Fri, 20 Mar 2020 17:54:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yhIRv5qV4DeALbwqzdU4XzpaCfBJ6paJJcVznhZ8kPE=;
+        b=WIGrpe+Oud40TRf2j+RIRWa0sJwOL+wqiFTqtN8aoxC9DqKXWZgnFpcAj+4qOcfzIP
+         ucRfXgjA6tXF4m3yR2R5dhikFWkSG3IQb140S6J5xK2hqz/gVwwsEKQgMrrhg+kxCD9m
+         yR2Uu1FaZ1gW3KWPBbFVCwSIfZ8PCg+mYZ+qE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yhIRv5qV4DeALbwqzdU4XzpaCfBJ6paJJcVznhZ8kPE=;
+        b=B43NZ0kaBynuc7LlwhE58aVV9YWiT4VAXUOs6csNarxi1aQLLp4ltJkbLcAmWNDwWD
+         z3c8a6w/gOo4Y12vD7tmUu7BXD/fkxBpRErpYzNHiPo6DYicl7SZhl6EXVVmVZkEjYdd
+         NJKR/mva2Cixt/MRV7gVDpe4QdUpFylRMySrEqnfs1NMNE0PmSVB3uufY0dtd/TOCmJ6
+         yxF1UJV9EXhNepqdDrqPs68IDNkj9ChzLvYWWHpIMLfQZKI66vmWrPo9HTMd6FjqxW5G
+         ITQFdIJvptobAn1dY3SbyxgTxYXNkMA5AkCe2UPLmlJJ9u/mMUXJcw5jmXphWWTwVy87
+         5VQQ==
+X-Gm-Message-State: ANhLgQ3Kh7gSLk9lbNyqFzPhZd8y0Z0t8XvCoh2wxwlDETP7T8wlWZS/
+	EEX8oWAO0+mvrAFFz4XD2lRHGg==
+X-Google-Smtp-Source: ADFU+vvDA21FBPV7OEhnu9uQGfkpGZUBwuQG0WdEcGopS4xjQLrd3AUPEQNdDyn5NxR1cqXxPOTVrg==
+X-Received: by 2002:a17:90a:71c5:: with SMTP id m5mr469107pjs.193.1584752072194;
+        Fri, 20 Mar 2020 17:54:32 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([23.129.64.188])
+        by smtp.gmail.com with ESMTPSA id k2sm6101593pgj.16.2020.03.20.17.54.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Mar 2020 17:54:31 -0700 (PDT)
+Date: Fri, 20 Mar 2020 20:54:19 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: "Luck, Tony" <tony.luck@intel.com>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
-Date: Fri, 20 Mar 2020 23:03:49 +0100
-In-Reply-To: <20200320220138.axvbfnlmzaajvkwh@chatter.i7.local> (sfid-20200320_230146_618107_4EAB0D91)
-References: <20200320214532.wvmym643l3dw24qh@chatter.i7.local>
-	 <516a16778778f90f7d2f7d5a7ef392118fc90f28.camel@sipsolutions.net>
-	 <20200320220138.axvbfnlmzaajvkwh@chatter.i7.local>
-	 (sfid-20200320_230146_618107_4EAB0D91)
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+Subject: Re: Another glitch in "b4"
+Message-ID: <20200321005419.nk2g2hkzli4d32dc@chatter.i7.local>
+References: <20200321001533.GA6137@agluck-desk2.amr.corp.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20200321001533.GA6137@agluck-desk2.amr.corp.intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On Fri, 2020-03-20 at 18:01 -0400, Konstantin Ryabitsev wrote:
-> On Fri, Mar 20, 2020 at 10:49:13PM +0100, Johannes Berg wrote:
-> > On Fri, 2020-03-20 at 17:45 -0400, Konstantin Ryabitsev wrote:
-> > > 3. Optionally, also send a "thanks, applied" templated reply after you 
-> > >    do "b4 am"
-> > 
-> > I've always thought that somehow this ought to be delayed somehow, since
-> > I may apply a patch just to look at it, or to run tests, etc. and then
-> > really only make up my mind when I push it out ...
-> 
-> How about we just "remember to thank" and have a separate command "b4 
-> thank" which will interactively verify patch/series before actually 
-> sending out the "thanks, applied"?
+On Fri, Mar 20, 2020 at 05:15:33PM -0700, Luck, Tony wrote:
+> $ b4 am 20200320131345.635023594@linutronix.de
+> Looking up https://lore.kernel.org/r/20200320131345.635023594@linutronix.de
 
-I think that'd be useful, at least as an option.
+This one is already fixed in the master. You can grab the repo directly 
+from https://git.kernel.org/pub/scm/utils/b4/b4.git and set your alias 
+to the "b4.sh" wrapper in there. That should let you run it directly 
+from the checkout.
 
-Even better if you could run a script there to thank, so that could e.g.
-also close patchwork patches at that stage? Once we get patchwork with
-msgids :)
+I plan to push 0.3.4 into pip tomorrow.
 
-johannes
-
+-K
