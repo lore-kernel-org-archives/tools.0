@@ -1,62 +1,61 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
- by mx.groups.io with SMTP id smtpd.web10.380.1584752072874701342
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ by mx.groups.io with SMTP id smtpd.web12.14822.1584749735083431891
  for <tools@linux.kernel.org>;
- Fri, 20 Mar 2020 17:54:32 -0700
+ Fri, 20 Mar 2020 17:15:35 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=WIGrpe+O;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.214.180, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-pl1-f180.google.com with SMTP id f16so3224877plj.4
-        for <tools@linux.kernel.org>; Fri, 20 Mar 2020 17:54:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=yhIRv5qV4DeALbwqzdU4XzpaCfBJ6paJJcVznhZ8kPE=;
-        b=WIGrpe+Oud40TRf2j+RIRWa0sJwOL+wqiFTqtN8aoxC9DqKXWZgnFpcAj+4qOcfzIP
-         ucRfXgjA6tXF4m3yR2R5dhikFWkSG3IQb140S6J5xK2hqz/gVwwsEKQgMrrhg+kxCD9m
-         yR2Uu1FaZ1gW3KWPBbFVCwSIfZ8PCg+mYZ+qE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yhIRv5qV4DeALbwqzdU4XzpaCfBJ6paJJcVznhZ8kPE=;
-        b=B43NZ0kaBynuc7LlwhE58aVV9YWiT4VAXUOs6csNarxi1aQLLp4ltJkbLcAmWNDwWD
-         z3c8a6w/gOo4Y12vD7tmUu7BXD/fkxBpRErpYzNHiPo6DYicl7SZhl6EXVVmVZkEjYdd
-         NJKR/mva2Cixt/MRV7gVDpe4QdUpFylRMySrEqnfs1NMNE0PmSVB3uufY0dtd/TOCmJ6
-         yxF1UJV9EXhNepqdDrqPs68IDNkj9ChzLvYWWHpIMLfQZKI66vmWrPo9HTMd6FjqxW5G
-         ITQFdIJvptobAn1dY3SbyxgTxYXNkMA5AkCe2UPLmlJJ9u/mMUXJcw5jmXphWWTwVy87
-         5VQQ==
-X-Gm-Message-State: ANhLgQ3Kh7gSLk9lbNyqFzPhZd8y0Z0t8XvCoh2wxwlDETP7T8wlWZS/
-	EEX8oWAO0+mvrAFFz4XD2lRHGg==
-X-Google-Smtp-Source: ADFU+vvDA21FBPV7OEhnu9uQGfkpGZUBwuQG0WdEcGopS4xjQLrd3AUPEQNdDyn5NxR1cqXxPOTVrg==
-X-Received: by 2002:a17:90a:71c5:: with SMTP id m5mr469107pjs.193.1584752072194;
-        Fri, 20 Mar 2020 17:54:32 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([23.129.64.188])
-        by smtp.gmail.com with ESMTPSA id k2sm6101593pgj.16.2020.03.20.17.54.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Mar 2020 17:54:31 -0700 (PDT)
-Date: Fri, 20 Mar 2020 20:54:19 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: "Luck, Tony" <tony.luck@intel.com>
+ dkim=missing; spf=pass (domain: intel.com, ip: 192.55.52.93, mailfrom: tony.luck@intel.com)
+IronPort-SDR: cjVL3elB73fu8egA+XmkOl4G2w6J9yv62hEE9mZkdeLBmOgjtR81Z5v+jk5xwce8GrCGFSubI0
+ uR5SFlmOGKqw==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2020 17:15:34 -0700
+IronPort-SDR: ELSmYUT3xdckBcVV3cNqE0mLBpI0SXxu33svYOsJCfrdkX+gvFoEsTecjC12g4tltg1INz5wbd
+ ZIocIEh16bsA==
+X-IronPort-AV: E=Sophos;i="5.72,286,1580803200"; 
+   d="scan'208";a="237371329"
+Received: from agluck-desk2.sc.intel.com (HELO agluck-desk2.amr.corp.intel.com) ([10.3.52.68])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2020 17:15:34 -0700
+Date: Fri, 20 Mar 2020 17:15:33 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: Another glitch in "b4"
-Message-ID: <20200321005419.nk2g2hkzli4d32dc@chatter.i7.local>
-References: <20200321001533.GA6137@agluck-desk2.amr.corp.intel.com>
+Subject: Another glitch in "b4"
+Message-ID: <20200321001533.GA6137@agluck-desk2.amr.corp.intel.com>
 MIME-Version: 1.0
-In-Reply-To: <20200321001533.GA6137@agluck-desk2.amr.corp.intel.com>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Fri, Mar 20, 2020 at 05:15:33PM -0700, Luck, Tony wrote:
-> $ b4 am 20200320131345.635023594@linutronix.de
-> Looking up https://lore.kernel.org/r/20200320131345.635023594@linutronix.de
-
-This one is already fixed in the master. You can grab the repo directly 
-from https://git.kernel.org/pub/scm/utils/b4/b4.git and set your alias 
-to the "b4.sh" wrapper in there. That should let you run it directly 
-from the checkout.
-
-I plan to push 0.3.4 into pip tomorrow.
-
--K
+$ b4 am 20200320131345.635023594@linutronix.de
+Looking up https://lore.kernel.org/r/20200320131345.635023594@linutronix.de
+Grabbing thread from lore.kernel.org
+Analyzing 39 messages in the thread
+---
+Writing ./20200320_tglx_linutronix_de.mbx
+  [patch 01/22] x86/devicetable: Move x86 specific macro out of generic code
+  [patch 02/22] x86/cpu: Add conistent CPU match macros
+  [patch 03/22] x86/cpu/bugs: Convert to new matching macros
+  [patch 04/22] x86/perf/events: Convert to new CPU match macros
+  [patch 05/22] x86/kvm: Convert to new CPU match macros
+Traceback (most recent call last):
+  File "/home/agluck/.local/bin/b4", line 10, in <module>
+    sys.exit(cmd())
+  File "/home/agluck/.local/lib/python3.7/site-packages/b4/command.py", line 132, in cmd
+    cmdargs.func(cmdargs)
+  File "/home/agluck/.local/lib/python3.7/site-packages/b4/command.py", line 38, in cmd_am
+    b4.mbox.main(cmdargs)
+  File "/home/agluck/.local/lib/python3.7/site-packages/b4/mbox.py", line 391, in main
+    mbox_to_am(threadmbox, config, cmdargs)
+  File "/home/agluck/.local/lib/python3.7/site-packages/b4/mbox.py", line 136, in mbox_to_am
+    linkmask=config['linkmask'])
+  File "/home/agluck/.local/lib/python3.7/site-packages/b4/__init__.py", line 381, in save_am_mbox
+    attdoc = lmsg.get_attestation(lore_lookup=lore_lookup, exact_from_match=exact_from_match)
+  File "/home/agluck/.local/lib/python3.7/site-packages/b4/__init__.py", line 808, in get_attestation
+    self._load_attestation(lore_lookup=lore_lookup)
+  File "/home/agluck/.local/lib/python3.7/site-packages/b4/__init__.py", line 803, in _load_attestation
+    self.load_hashes()
+  File "/home/agluck/.local/lib/python3.7/site-packages/b4/__init__.py", line 726, in load_hashes
+    p = LoreMessage.get_patch_hash(patch)
+  File "/home/agluck/.local/lib/python3.7/site-packages/b4/__init__.py", line 688, in get_patch_hash
+    if line[0] != '-':
+IndexError: string index out of range
