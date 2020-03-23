@@ -1,73 +1,64 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mx.groups.io with SMTP id smtpd.web10.51810.1584968098779788015
+Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [66.63.167.143])
+ by mx.groups.io with SMTP id smtpd.web10.54400.1584974864315272608
  for <tools@linux.kernel.org>;
- Mon, 23 Mar 2020 05:54:58 -0700
+ Mon, 23 Mar 2020 07:47:44 -0700
 Authentication-Results: mx.groups.io;
- dkim=missing; spf=pass (domain: arm.com, ip: 217.140.110.172, mailfrom: mark.brown@arm.com)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7F4AF1FB;
-	Mon, 23 Mar 2020 05:54:58 -0700 (PDT)
-Received: from localhost (unknown [10.37.6.21])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 038EC3F52E;
-	Mon, 23 Mar 2020 05:54:57 -0700 (PDT)
-Date: Mon, 23 Mar 2020 12:54:56 +0000
-From: "Mark Brown" <broonie@kernel.org>
+ dkim=pass header.i=@hansenpartnership.com header.s=20151216 header.b=B11de3mj;
+ spf=pass (domain: hansenpartnership.com, ip: 66.63.167.143, mailfrom: james.bottomley@hansenpartnership.com)
+Received: from localhost (localhost [127.0.0.1])
+	by bedivere.hansenpartnership.com (Postfix) with ESMTP id 755E68EE15F;
+	Mon, 23 Mar 2020 07:47:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=hansenpartnership.com;
+	s=20151216; t=1584974863;
+	bh=dkkZatVO9N5ti3I+KsXBspvaIlQJ25oQwnpXc6NLNbc=;
+	h=Subject:From:To:Cc:Date:From;
+	b=B11de3mjW6+l9uMD9nGkxo3UQZHkjyYQr4qjbMmfKrzWGzQNXkrr3L86gkniAa9cF
+	 L5mgeyyolNphF+bGdx9JHzC7QRO6CqUnnESfvEulM2dqdRlEgWtPnQmja5qQXDLh0v
+	 sEgc0hqI12jLKgIxliclsNjZFlu8M0t5yw/NFiAM=
+Received: from bedivere.hansenpartnership.com ([127.0.0.1])
+	by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1q_u28jWqIty; Mon, 23 Mar 2020 07:47:42 -0700 (PDT)
+Received: from [153.66.254.194] (unknown [50.35.76.230])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id 7DDAE8EE0FC;
+	Mon, 23 Mar 2020 07:47:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=hansenpartnership.com;
+	s=20151216; t=1584974861;
+	bh=dkkZatVO9N5ti3I+KsXBspvaIlQJ25oQwnpXc6NLNbc=;
+	h=Subject:From:To:Cc:Date:From;
+	b=LC4rTwucglWHmDf9BmJ8HCTxz7mk1Gs4YnsbXH62zgx4H/etqez8EkHpJk6PrbRZr
+	 i7Bbbeu0ZnLgguEq3Gh0WpTwy6CPZMW8ISlXuWOCELnclUjMqNMaAbxxbQZolxQxgA
+	 mfjK7CI5XwhRYO8sBMl3M2crR5MVX+hk697AbGDg=
+Message-ID: <1584974859.3780.10.camel@HansenPartnership.com>
+Subject: Pip dependency problem with b4
+From: "James Bottomley" <James.Bottomley@HansenPartnership.com>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: b4 message ID shortening
-Message-ID: <20200323125456.GC4948@sirena.org.uk>
-MIME-Version: 1.0
-X-Cookie: Stay on the trail.
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 21
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oTHb8nViIGeoXxdp"
-Content-Disposition: inline
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Date: Mon, 23 Mar 2020 07:47:39 -0700
+X-Mailer: Evolution 3.26.6 
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
---oTHb8nViIGeoXxdp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This is on a vanilla ubuntu 19.10 system with a fresh install.  After
+doing
 
-When generating filenames to save messages b4 am looks like it truncates
-the message ID to generate the default filename (or possibly uses a
-portion of the date now I think about it, I didn't read the code).  For
-example
+apt-get install python-pip
+pip-install b4
 
-   https://lore.kernel.org/r/20200320232515.GA24800@embeddedor.com
+I get this
 
-results in a mailbox
+jejb@amdmilan1:~/git/linux-build$ b4 --help
+Traceback (most recent call last):
+  File "/home/jejb/.local/bin/b4", line 6, in <module>
+    from b4.command import cmd
+  File "/home/jejb/.local/lib/python2.7/site-packages/b4/__init__.py",
+line 11, in <module>
+    import email.policy
+ImportError: No module named policy
 
-   20200320_gustavo_embeddedor_com.mbx
+Which looks like a missing dependency pip should have installed.
 
-which is all well and good except if you also try to save:
+James
 
-   https://lore.kernel.org/r/20200320232556.GA24989@embeddedor.com
-
-it generates the same filename and silently overwrites the first
-mailbox.  Using b4 mbox avoids this as it generates files using the full
-message ID such as
-
-   20200320232515.GA24800@embeddedor.com.t.mbx-thread
-
-which avoids collisions.
-
-FWIW my workflow is currently to save a bunch of mailboxes into a
-directory then throw them at a script to do some testing & apply them if
-that works.
-
---oTHb8nViIGeoXxdp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl54sZ8ACgkQJNaLcl1U
-h9DIrwf+JHWswBN3+yS/iLzJ4kT8WxF3hncB+bg/R4MsoKrgyR94nPp+Zh1+QfWC
-exBNUQT7doZREPnfEyyEihN8696RvZJkYy3F5Ngt6tNgFkbmiGtyXu60nYN/UwkF
-xfuf0VEzaUTuECukRTBBbNHO5vURUhfEq7F2K66AWz1cu8NE4sieBi6cnlvTARHa
-H/INpcWHIPGTlS5OWp/cxAvsJZPTVypZ8o6qEiyvLvqA+730XnUTIelJMQWCbTgI
-vbVn5Lw+Rn59UmBbMF1dkMFzeGDjbeojV4QFQIAGHDXgOJq2hIjhxRhBaQ+IQFe7
-5A+ea4vwMwia8vb7O6EQvvh9ImHz/w==
-=9K0m
------END PGP SIGNATURE-----
-
---oTHb8nViIGeoXxdp--
