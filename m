@@ -1,93 +1,96 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
- by mx.groups.io with SMTP id smtpd.web12.57189.1584981546020829704
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mx.groups.io with SMTP id smtpd.web11.58000.1584983115045470111
  for <tools@linux.kernel.org>;
- Mon, 23 Mar 2020 09:39:06 -0700
+ Mon, 23 Mar 2020 10:05:15 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=YhIMFG9s;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.128.52, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-wm1-f52.google.com with SMTP id m3so233429wmi.0
-        for <tools@linux.kernel.org>; Mon, 23 Mar 2020 09:39:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lbJeHUpq9TeORCsLFnNieieVv77Uliwl3cFA03DCeJc=;
-        b=YhIMFG9stQ+oY5tuP5GC9LImYuuOYmI5z6wL5ttNerr8cdQd8z5AZP3EgZrt1k2nTs
-         rTPyR+Mm2+jC2XkTJORbKP4sdNxq55LrM3raVj9p5BMjyjHgF74ImNus7MBU2hA8+E35
-         W7enFUfq5Rt1dyOFLgAA1Xw67Y8lbkLyd8d0Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lbJeHUpq9TeORCsLFnNieieVv77Uliwl3cFA03DCeJc=;
-        b=lkOniLIWLw4I5gsabM62gj5RMt7tjHKISSAStQBwqADc35H+lH4+F0FHCSah6DiIhC
-         gu4QFsDDb3Fx6L/TV7L/bj9nN7TY+0OHxDemrZC782R4n5WL2XV4yCLjhrW+Agc1pziy
-         tq6wCRruhJAuJoKQ5zZRLtj3SrxQVpoGHdGmaBP2vCm9EO7ajWgXKLwS12tsCT6w8g6O
-         OAk/Cg/ZR4L3yFc0KGz70i6lERHF0VAqVhFr5by98q6nP3UmKf5BDgrg3a5poxhzvqcy
-         G3qcwfzIy/ke7I2LQkemrGOXtoRJLGktBTu5QgXqA2Aqgij8JqrmpX4JeXBliVWAOJSr
-         T4bw==
-X-Gm-Message-State: ANhLgQ0wxo7YgXA7s90tq56JavllYq209SzokpoDL0g0/l6G2IkQM/I7
-	jyBz3iCJQ3t/7wVVHKRAKKNg9Q==
-X-Google-Smtp-Source: ADFU+vtuJEKqutW97ad1ouo/QbWBiaYQ72AuP6hdAsNglQJPCYhoszxWcs7+itdAVXM0sfCyXqh2NQ==
-X-Received: by 2002:a1c:5443:: with SMTP id p3mr81699wmi.149.1584981544535;
-        Mon, 23 Mar 2020 09:39:04 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local (tor-exit-1.zbau.f3netze.de. [185.220.100.252])
-        by smtp.gmail.com with ESMTPSA id c7sm25141269wro.75.2020.03.23.09.39.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2020 09:39:03 -0700 (PDT)
-Date: Mon, 23 Mar 2020 12:38:59 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
+ dkim=missing; spf=pass (domain: arm.com, ip: 217.140.110.172, mailfrom: mark.brown@arm.com)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8DE87FEC;
+	Mon, 23 Mar 2020 10:05:14 -0700 (PDT)
+Received: from localhost (unknown [10.37.6.21])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 12A103F7C3;
+	Mon, 23 Mar 2020 10:05:13 -0700 (PDT)
+Date: Mon, 23 Mar 2020 17:05:12 +0000
+From: "Mark Brown" <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org
 Subject: Re: b4 message ID shortening
-Message-ID: <20200323163859.xyntfstr5o2uv55q@chatter.i7.local>
+Message-ID: <20200323170512.GF4948@sirena.org.uk>
 References: <20200323125456.GC4948@sirena.org.uk>
+ <20200323163859.xyntfstr5o2uv55q@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <20200323125456.GC4948@sirena.org.uk>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20200323163859.xyntfstr5o2uv55q@chatter.i7.local>
+X-Cookie: Stay on the trail.
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 30
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="aZoGpuMECXJckB41"
 Content-Disposition: inline
 
-On Mon, Mar 23, 2020 at 12:54:56PM +0000, Mark Brown wrote:
-> When generating filenames to save messages b4 am looks like it truncates
-> the message ID to generate the default filename (or possibly uses a
-> portion of the date now I think about it, I didn't read the code).  For
-> example
-> 
->    https://lore.kernel.org/r/20200320232515.GA24800@embeddedor.com
-> 
-> results in a mailbox
-> 
->    20200320_gustavo_embeddedor_com.mbx
-> 
-> which is all well and good except if you also try to save:
-> 
->    https://lore.kernel.org/r/20200320232556.GA24989@embeddedor.com
+--aZoGpuMECXJckB41
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It doesn't really shorten it as much as it tries to create a descriptive 
-enough "slug" that is supposed to help you identify the content by just 
-looking at your dir listing.  How about we throw in the patch/cover 
-title, e.g, for that particular case the slugs would be:
+On Mon, Mar 23, 2020 at 12:38:59PM -0400, Konstantin Ryabitsev wrote:
 
-20200320_gustavo_spi_spi_s3c24xx_replace_zero_length_array_with_flexible_array_member.mbx
+> It doesn't really shorten it as much as it tries to create a descriptive=
+=20
+> enough "slug" that is supposed to help you identify the content by just=
+=20
+> looking at your dir listing.  How about we throw in the patch/cover=20
+> title, e.g, for that particular case the slugs would be:
 
-and
+> 20200320_gustavo_spi_spi_s3c24xx_replace_zero_length_array_with_flexible_=
+array_member.mbx
 
-20200320_gustavo_spi_spi_fsl_lpspi_replace_zero_length_array_with_flexible_array_member.mbx
+> and
 
-This used to be the scheme in early revisions, except filenames ended up 
-being freakishly long. An option is to truncate them if they go over a 
-certain length.
+> 20200320_gustavo_spi_spi_fsl_lpspi_replace_zero_length_array_with_flexibl=
+e_array_member.mbx
 
-> it generates the same filename and silently overwrites the first
-> mailbox. 
+> This used to be the scheme in early revisions, except filenames ended up=
+=20
+> being freakishly long. An option is to truncate them if they go over a=20
+> certain length.
 
-I can do the -1.mbx, -2.mbx, etc when we find existing files, but I'm 
-worried this will be annoying for people who are rerunning the same 
-series for the purposes of adding other flags. On the other hand that 
-would be safer.
+That looks good for my usage, long filenames aren't a concern for me but
+I can see some people might not like them (perhaps a configurable
+length, or perhaps that's overthinking it?).
 
-If we have more disambiguated .mbx names, would you still prefer not to 
-overwrite existing .mbx files?
+> > it generates the same filename and silently overwrites the first
+> > mailbox.=20
 
--K
+> I can do the -1.mbx, -2.mbx, etc when we find existing files, but I'm=20
+> worried this will be annoying for people who are rerunning the same=20
+> series for the purposes of adding other flags. On the other hand that=20
+> would be safer.
+
+Yes, and indeed I do use the overwriting behaviour myself if for example
+new tags come in before I actually process the mailboxes.
+
+> If we have more disambiguated .mbx names, would you still prefer not to=
+=20
+> overwrite existing .mbx files?
+
+I think it's the silent bit as much as the overwriting bit that caught
+me out - I didn't notice that it had overwritten the existing mailbox,
+if it had said something about replacing an existing mailbox I'd
+hopefully have seen that.
+
+--aZoGpuMECXJckB41
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl547EcACgkQJNaLcl1U
+h9DKuQf/UgCD49PyPWCrzWCszevD8jGjfFwyuB8SeZKP9VKQXNSKQS8APqVwAGdZ
+R+QdqobX+OTOqwV0Emr5F61F/ADpk0UahPCStdmLj7TrEerNCRCR3t6UY+Ibeu7f
+gOPP0ayVl8x4QFmc+82Vw6fc7ikIZ/j0kwwB+DqNc4uszXY3omnmOYFgLHQ/eS1a
+mzWby1tAdTB2AKCozZEoF8bOJfjhPGFc3xCBSYGahbhuKpdBR+11znuznevKJe/x
+QWyuzGPusf4J+wOzR8bRAzxcp07TNu6eDG0Bli8NJWBUUEc3drrXjcCtkGY5ZrqT
+bc93MEKPMVt1MsqxgZQVAGK/H/zfjw==
+=lIgQ
+-----END PGP SIGNATURE-----
+
+--aZoGpuMECXJckB41--
