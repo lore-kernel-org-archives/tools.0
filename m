@@ -1,57 +1,54 @@
-Received: from laurent.telenet-ops.be (laurent.telenet-ops.be [195.130.137.89])
- by mx.groups.io with SMTP id smtpd.web12.2102.1585040464535878760
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+ by mx.groups.io with SMTP id smtpd.web12.7619.1585060740749688172
  for <tools@linux.kernel.org>;
- Tue, 24 Mar 2020 02:01:05 -0700
+ Tue, 24 Mar 2020 07:39:01 -0700
 Authentication-Results: mx.groups.io;
- dkim=missing; spf=none, err=SPF record not found (domain: linux-m68k.org, ip: 195.130.137.89, mailfrom: geert@linux-m68k.org)
-Received: from ramsan ([84.195.182.253])
-	by laurent.telenet-ops.be with bizsmtp
-	id J9122200L5USYZQ01912y5; Tue, 24 Mar 2020 10:01:02 +0100
-Received: from rox.of.borg ([192.168.97.57])
-	by ramsan with esmtp (Exim 4.90_1)
-	(envelope-from <geert@linux-m68k.org>)
-	id 1jGfQk-0008Jc-6w; Tue, 24 Mar 2020 10:01:02 +0100
-Received: from geert by rox.of.borg with local (Exim 4.90_1)
-	(envelope-from <geert@linux-m68k.org>)
-	id 1jGfQk-0006cj-5I; Tue, 24 Mar 2020 10:01:02 +0100
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org,
-	Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: [PATCH] Fix invocation of b4.sh through a symlink
-Date: Tue, 24 Mar 2020 10:00:57 +0100
-Message-Id: <20200324090057.25409-1-geert@linux-m68k.org>
-X-Mailer: git-send-email 2.17.1
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=KPeSc0AL;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.128.46, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-wm1-f46.google.com with SMTP id a9so3738505wmj.4
+        for <tools@linux.kernel.org>; Tue, 24 Mar 2020 07:39:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=P6VC8VUwqMfTcLOTDDu7coaZIeHVGtzAj9w8WUzTN90=;
+        b=KPeSc0AL7rnpQP1pk+h/IOb/+d64xthvybI2HDdIPUCWpkHpJBKy/xEAjwyj14Fm0y
+         5MDPzKHBIvFhHEUpHWHfF5i8sQuGHu8gDjbia3IQtAhkpiWsXT75WjxkwLdTr9ftmvSE
+         3WbW5PSbMkPuUrxmqmREeaQcflPPqnLvu9YIA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=P6VC8VUwqMfTcLOTDDu7coaZIeHVGtzAj9w8WUzTN90=;
+        b=ie2auAoggAbCKXm93JjFRUKpJRYgMsoU/aQPIOvvtG5i3DZ0zDp5Wm+RGS06rNF4JQ
+         IojRzLzWj5XCw/IKPra/It2H4gG2YsHg7RBaX74lgd9gGvnEY2fIdPtUabF8qTSNRZmv
+         Iyu/9PkEiMHBGK19h9cWl9r6O2W4thRRuRTU0FH4GrOFsU8Mt6VLsjYAjJYyO4vU3Zyf
+         4EV5aJ5gDWf5iHZBfWWySIueEQg4yAqI/YxxMdov8m7auE2DrWtAGI00LA423qLWLaES
+         mt0eJzuJAWzb8kCgefqWB474CHupKUZYzQTRcLMgbolv1nFoeQrS+QQcEpZWyQo0ymbj
+         8CFw==
+X-Gm-Message-State: ANhLgQ35FLeHHiMZMZweV5CVH7LnoOX21DsA2UH3bIJXo11wDYMYZyVx
+	UEoCQEDsoZOKWcoSIaQW3a8RzH4tX9E3gTc4
+X-Google-Smtp-Source: ADFU+vtjkC5VugEqc14ryVjgIvBVQBKseVbTHPQ7gxGUfVykbey6487vdpb34ph+z0F9Y1q5nnHHYw==
+X-Received: by 2002:a05:600c:230e:: with SMTP id 14mr3619611wmo.138.1585060739102;
+        Tue, 24 Mar 2020 07:38:59 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([51.158.111.157])
+        by smtp.gmail.com with ESMTPSA id q3sm18260191wru.87.2020.03.24.07.38.57
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Mar 2020 07:38:58 -0700 (PDT)
+Date: Tue, 24 Mar 2020 10:38:55 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: tools@linux.kernel.org
+Subject: stable-0.3.y branch created
+Message-ID: <20200324143855.njudzgvb2niehpue@chatter.i7.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-If b4 in your $PATH is a symlink pointing to b4.sh, $SCRIPT_TOP points
-to the directory containing the symlink, and b4/command.py cannot be
-found.
+Hi, all:
 
-Fix this by following any symlinks, if present.
+If you're using b4 from a checkout, you may want to switch to the 
+stable-0.3.y branch, as master may get a bit buggy as I work on 
+gmail/localmail integration.
 
-After this it works for being invoked through either an alias, symlink,
-or plain path.
-
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
----
-Stack Overflow tells me "readlink -f" is not supported on OS X and some
-BSDs. Do we care?
----
- b4.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/b4.sh b/b4.sh
-index cafeee186115832d..e5459192d978e41b 100755
---- a/b4.sh
-+++ b/b4.sh
-@@ -3,6 +3,6 @@
- # Run b4 from a git checkout.
- #
- 
--SCRIPT_TOP="${SCRIPT_TOP:-$(cd "${BASH_SOURCE%/*}" && pwd)}"
-+SCRIPT_TOP="${SCRIPT_TOP:-$(dirname $(readlink -f $0))}"
- 
- exec env PYTHONPATH="${SCRIPT_TOP}" python3 "${SCRIPT_TOP}/b4/command.py" "${@}"
--- 
-2.17.1
-
+-K
