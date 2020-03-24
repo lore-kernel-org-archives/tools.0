@@ -1,74 +1,117 @@
-Received: from mail-oi1-f194.google.com (mail-oi1-f194.google.com [209.85.167.194])
- by mx.groups.io with SMTP id smtpd.web10.8611.1585062778821721918
+Received: from mail-qt1-f193.google.com (mail-qt1-f193.google.com [209.85.160.193])
+ by mx.groups.io with SMTP id smtpd.web12.2473.1585088588115537275
  for <tools@linux.kernel.org>;
- Tue, 24 Mar 2020 08:12:58 -0700
+ Tue, 24 Mar 2020 15:23:08 -0700
 Authentication-Results: mx.groups.io;
- dkim=missing; spf=pass (domain: gmail.com, ip: 209.85.167.194, mailfrom: geert.uytterhoeven@gmail.com)
-Received: by mail-oi1-f194.google.com with SMTP id y71so18742065oia.7
-        for <tools@linux.kernel.org>; Tue, 24 Mar 2020 08:12:58 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=UgwnZfR9;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.160.193, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qt1-f193.google.com with SMTP id t17so417436qtn.12
+        for <tools@linux.kernel.org>; Tue, 24 Mar 2020 15:23:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=aRx/DRPQ/2V5bp6B2MM8QGGCTc/6qoHjPZzYq13UEiU=;
+        b=UgwnZfR9aHYNNr5ZO1yco1dxCyveQqf5eKpREDLOk8NtEuEuh7wkNQ22DsZlOzCaOl
+         hZGangMdYqnrFSzcyVYRfnsuaPXhCf2+yv3xC6TFHi/MIPsvsG7F8WiK6S2VEgkdInEz
+         P/zoh+3gpz3R4e7s2AuYrrC4C9f7yKpcJjgek=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fiRPAJzSd5hCqByh2yPYY50ymTN6XCkOOd/uUe4ie3Q=;
-        b=QeMrxAfF/iUcLnzRxxposaqfiPfcmkNt9/UN709au5hgPtn7FQXDCsTpuOrN0bPI4Y
-         d0L9zMMV0t8dv8Mx6WRlGOeywLJWc2QYZeeSSkfP6pfMb1e2cEideAwb0mMbYaajivgL
-         93j0ezF7BopiyHXDM2FnUAWeoWMDqvJ6PX4TF8Etl3hrGrxsvqsMD7ljTIa9ZPOskwd/
-         Zb882RvizKPBWVlNMITBUm2KFiPrV9BHJ/orIxutcMgkrX/UC5eRSBLidJa/aUiwsfnv
-         Li1S99+mRIVK60eTV8Ys1bwbcZLdXYTB/OfekMkhSCDTjW11uMw+oelqHKMLxuuHIMtr
-         6szQ==
-X-Gm-Message-State: ANhLgQ1F24N7uNi8eV/hAbCbJMAH4l6Bh7MVWsXWf7phZBaxgBIfBNep
-	WT34mv7Kngo2YXP2ks/EJWPK5Z7MH3k51oWWIXQ=
-X-Google-Smtp-Source: ADFU+vuqyeFN0bXYQ+BB7w9BF6rOpmCE4Jcp114gSav/rngB1132aOaK+d26OHtJIPwZbq1kbwuPo2Jyk0yUojmN/KI=
-X-Received: by 2002:aca:ad93:: with SMTP id w141mr3878052oie.54.1585062778152;
- Tue, 24 Mar 2020 08:12:58 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=aRx/DRPQ/2V5bp6B2MM8QGGCTc/6qoHjPZzYq13UEiU=;
+        b=pQU4tksVwuj27PkCC3YlLxDXDrJNe1kGR5yX5YPhEOtLBwWaNuLu0eZK6MNtQn+XJy
+         A0w+HfCP1gknwaRaj/Y9ok7297HxTYnWx3q3cpvVjAEcUnZChzQXSIpRL+dYncrVlcmN
+         WFenMIh/LU7/KJydHh0ahnrqPjgmXe+u7BsQtJQX7rHFP66SxrrCSLKl75wiUdoyU4DY
+         RTN2T9ACutT+vlgy78EjBpQZiec8RBw/aOjwNRTnZyH4yDkftM8Vx+KailzNEX98dfJr
+         ZEWWw2GFFDfEiZiqVCa6/PdhtcY4bECStIp/V5+VoKUggDs7Ui2NBgCujc763LFoWrb9
+         CQUQ==
+X-Gm-Message-State: ANhLgQ1Pr8CJUr15BhasA6xR3GvfC0gIIb+Tsnl2jW/NTern3cRz7X/T
+	gu5ljF6v2CXAgtekTJfwv9KI/A==
+X-Google-Smtp-Source: ADFU+vtCsdowAAt+vf/8bIBFM2IefsTfkq14pJaXuvEEEFC0NSJa7Mke80o3eh3ma+14/A2CHfLF9A==
+X-Received: by 2002:ac8:683:: with SMTP id f3mr107180qth.356.1585088587241;
+        Tue, 24 Mar 2020 15:23:07 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local (politkovskaja.torservers.net. [77.247.181.165])
+        by smtp.gmail.com with ESMTPSA id 82sm14481573qkd.62.2020.03.24.15.23.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Mar 2020 15:23:06 -0700 (PDT)
+Date: Tue, 24 Mar 2020 18:23:00 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: [kernel.org users] get-lore-mbox missing Reviewed-by
+Message-ID: <20200324222300.gbhlst7u5xbbkti4@chatter.i7.local>
+References: <20200310120627.GA4106@sirena.org.uk>
+ <20200310123644.a7r6cyaru57niio5@chatter.i7.local>
+ <20200310124358.GD4106@sirena.org.uk>
+ <20200310130949.inshbk4w5ngai2br@chatter.i7.local>
+ <20200310131305.GC11767@piout.net>
+ <20200310132451.GG4106@sirena.org.uk>
 MIME-Version: 1.0
-References: <20200324090057.25409-1-geert@linux-m68k.org> <20200324143336.rqwxnp3dutchlqah@chatter.i7.local>
-In-Reply-To: <20200324143336.rqwxnp3dutchlqah@chatter.i7.local>
-From: "Geert Uytterhoeven" <geert.uytterhoeven@gmail.com>
-Date: Tue, 24 Mar 2020 16:12:46 +0100
-Message-ID: <CAMuHMdVx6k6RBzUDekQ_N9L+=aoPHsyg28kFj+hM3GkG2UCuiQ@mail.gmail.com>
-Subject: Re: [PATCH] Fix invocation of b4.sh through a symlink
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200310132451.GG4106@sirena.org.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Hi Konstantin,
+On Tue, Mar 10, 2020 at 01:24:51PM +0000, Mark Brown wrote:
+> > Maybe you could issue a warning or so when the SoB is not strictly
+> > matching the From to make it obvious it has to be reviewed.
+> 
+> That's a good idea.
 
-On Tue, Mar 24, 2020 at 3:33 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
-> On Tue, Mar 24, 2020 at 10:00:57AM +0100, Geert Uytterhoeven wrote:
-> > If b4 in your $PATH is a symlink pointing to b4.sh, $SCRIPT_TOP points
-> > to the directory containing the symlink, and b4/command.py cannot be
-> > found.
-> >
-> > Fix this by following any symlinks, if present.
-> >
-> > After this it works for being invoked through either an alias, symlink,
-> > or plain path.
-> >
-> > Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-> > ---
-> > Stack Overflow tells me "readlink -f" is not supported on OS X and some
-> > BSDs. Do we care?
->
-> I used a similar patch that Greg sent because it used "realpath"
-> instead. It doesn't exist at all on OSX/BSDs, but if they are doing any
-> kernel development at all, they probably know how to install coreutils.
-> I think that's an easier requirement than setting up a GNU-compatible
-> version of readlink.
+This kept happening, so I implemented the feature as suggested. If we 
+come across a mismatch, we now warn about it:
 
-Greg's version works fine for me, too.
+------
+$ b4 am 1527061353-16902-4-git-send-email-hl@rock-chips.com
+Analyzing 9 messages in the thread
+---
+Writing ./v7_20180523_hl_drm_rockchip_add_transfer_function_for_cdn_dp.mbx
+  [PATCH v7 1/5] drm/rockchip: add transfer function for cdn-dp
+  [PATCH v7 2/5] Documentation: dt-bindings: phy: add phy_config for Rockchip USB Type-C PHY
+  [PATCH v7 3/5] soc: rockchip: split rockchip_typec_phy struct to separate header
+  [PATCH v7 4/5] phy: rockchip-typec: support variable phy config value
+  [PATCH v7 5/5] drm/rockchip: support dp training outside dp firmware
+---
+Total patches: 5
+---
+NOTE: some trailers ignored due to from/email mismatches:
+    ! Trailer: Enric Balletbo i Serra <enric.balletbo@collabora.com>
+         From: Enric Balletbo Serra <eballetbo@gmail.com>
+NOTE: Rerun with -S to apply them anyway
+---
+ Link: https://lore.kernel.org/r/1527061353-16902-1-git-send-email-hl@rock-chips.com
+ Base: not found, sorry
+       git checkout -b v7_20180523_hl_rock_chips_com master
+       git am ./v7_20180523_hl_drm_rockchip_add_transfer_function_for_cdn_dp.mbx
+------
 
-Note that both readlink and realpath are part of coreutils ;-)
+Rerunning with -S applies them:
 
-Gr{oetje,eeting}s,
+------
+$ b4 am 1527061353-16902-4-git-send-email-hl@rock-chips.com -S
+Analyzing 9 messages in the thread
+---
+Writing ./v7_20180523_hl_drm_rockchip_add_transfer_function_for_cdn_dp.mbx
+  [PATCH v7 1/5] drm/rockchip: add transfer function for cdn-dp
+  [PATCH v7 2/5] Documentation: dt-bindings: phy: add phy_config for Rockchip USB Type-C PHY
+  [PATCH v7 3/5] soc: rockchip: split rockchip_typec_phy struct to separate header
+    + Reviewed-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
+  [PATCH v7 4/5] phy: rockchip-typec: support variable phy config value
+    + Tested-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
+  [PATCH v7 5/5] drm/rockchip: support dp training outside dp firmware
+    + Tested-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
+---
+Total patches: 5
+---
+ Link: https://lore.kernel.org/r/1527061353-16902-1-git-send-email-hl@rock-chips.com
+ Base: not found, sorry
+       git checkout -b v7_20180523_hl_rock_chips_com master
+       git am ./v7_20180523_hl_drm_rockchip_add_transfer_function_for_cdn_dp.mbx
+------
 
-                        Geert
+This feature is in both the latest master and in stable-0.3.y.
+Please try it out.
 
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+-K
