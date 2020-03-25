@@ -1,117 +1,112 @@
-Received: from mail-qt1-f193.google.com (mail-qt1-f193.google.com [209.85.160.193])
- by mx.groups.io with SMTP id smtpd.web12.2473.1585088588115537275
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by mx.groups.io with SMTP id smtpd.web11.3891.1585102284673665018
  for <tools@linux.kernel.org>;
- Tue, 24 Mar 2020 15:23:08 -0700
+ Tue, 24 Mar 2020 19:11:25 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=UgwnZfR9;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.160.193, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qt1-f193.google.com with SMTP id t17so417436qtn.12
-        for <tools@linux.kernel.org>; Tue, 24 Mar 2020 15:23:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=aRx/DRPQ/2V5bp6B2MM8QGGCTc/6qoHjPZzYq13UEiU=;
-        b=UgwnZfR9aHYNNr5ZO1yco1dxCyveQqf5eKpREDLOk8NtEuEuh7wkNQ22DsZlOzCaOl
-         hZGangMdYqnrFSzcyVYRfnsuaPXhCf2+yv3xC6TFHi/MIPsvsG7F8WiK6S2VEgkdInEz
-         P/zoh+3gpz3R4e7s2AuYrrC4C9f7yKpcJjgek=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aRx/DRPQ/2V5bp6B2MM8QGGCTc/6qoHjPZzYq13UEiU=;
-        b=pQU4tksVwuj27PkCC3YlLxDXDrJNe1kGR5yX5YPhEOtLBwWaNuLu0eZK6MNtQn+XJy
-         A0w+HfCP1gknwaRaj/Y9ok7297HxTYnWx3q3cpvVjAEcUnZChzQXSIpRL+dYncrVlcmN
-         WFenMIh/LU7/KJydHh0ahnrqPjgmXe+u7BsQtJQX7rHFP66SxrrCSLKl75wiUdoyU4DY
-         RTN2T9ACutT+vlgy78EjBpQZiec8RBw/aOjwNRTnZyH4yDkftM8Vx+KailzNEX98dfJr
-         ZEWWw2GFFDfEiZiqVCa6/PdhtcY4bECStIp/V5+VoKUggDs7Ui2NBgCujc763LFoWrb9
-         CQUQ==
-X-Gm-Message-State: ANhLgQ1Pr8CJUr15BhasA6xR3GvfC0gIIb+Tsnl2jW/NTern3cRz7X/T
-	gu5ljF6v2CXAgtekTJfwv9KI/A==
-X-Google-Smtp-Source: ADFU+vtCsdowAAt+vf/8bIBFM2IefsTfkq14pJaXuvEEEFC0NSJa7Mke80o3eh3ma+14/A2CHfLF9A==
-X-Received: by 2002:ac8:683:: with SMTP id f3mr107180qth.356.1585088587241;
-        Tue, 24 Mar 2020 15:23:07 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local (politkovskaja.torservers.net. [77.247.181.165])
-        by smtp.gmail.com with ESMTPSA id 82sm14481573qkd.62.2020.03.24.15.23.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2020 15:23:06 -0700 (PDT)
-Date: Tue, 24 Mar 2020 18:23:00 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: [kernel.org users] get-lore-mbox missing Reviewed-by
-Message-ID: <20200324222300.gbhlst7u5xbbkti4@chatter.i7.local>
-References: <20200310120627.GA4106@sirena.org.uk>
- <20200310123644.a7r6cyaru57niio5@chatter.i7.local>
- <20200310124358.GD4106@sirena.org.uk>
- <20200310130949.inshbk4w5ngai2br@chatter.i7.local>
- <20200310131305.GC11767@piout.net>
- <20200310132451.GG4106@sirena.org.uk>
+ dkim=pass header.i=@zx2c4.com header.s=mail header.b=P9Yi12bI;
+ spf=pass (domain: zx2c4.com, ip: 192.95.5.64, mailfrom: jason@zx2c4.com)
+Received: 
+	by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3770cc02;
+	Wed, 25 Mar 2020 02:04:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:references:in-reply-to:from:date:message-id:subject:to:cc
+	:content-type; s=mail; bh=y3h+rAxZzoZ3BUzUqy+Br94n9O0=; b=P9Yi12
+	bI9agKYu3RlTEw/fdJ80PC1DBzjbPpNyfqW/1W3afK6a6F0sb2kDjyZ1vpWTADK+
+	pANdK8AOR4fFJGCfPW9gAeoY7rcTU5VUqZjgE2YVFsgr0sFBetvpBZZR7t4uzTkR
+	HU9wnN0xYaEFSGWZhIMkCmqkGHhF0+f7MjXwkV7tUQXd0Fq22fAR6vsl30I6TU8m
+	BM39SdUjM0QxZc8HcmnnySo5WY40YwbxuHwdnuzYUkqBsO++oueuhOXwtk/DD2Ib
+	wq+TLLr+j7vp5J3zdlOlrYiDwVFV/umChu3/XFaigQx1jVLAoagx8BNq/uS52Bwv
+	QVC0v6iAOjund69A==
+Received: 
+	by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 11b31fea (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
+	Wed, 25 Mar 2020 02:04:10 +0000 (UTC)
+Received: by mail-il1-f176.google.com with SMTP id p13so487744ilp.3;
+        Tue, 24 Mar 2020 19:11:22 -0700 (PDT)
+X-Gm-Message-State: ANhLgQ3owMueMbpXYaNhG4cIwY2brUBB1mAI4iBbhgiDTGMEcTvszxFo
+	2GDZSqbvKTfARqceW8c8R9HuDdXP3HXfVXTiT4w=
+X-Google-Smtp-Source: ADFU+vs/fcWobuVHF/18P1bIWTW/caOmUz0DNGznaZ9xTt47oJuTnYKaSkBHuiq9VhExkHmGxvGTw4YK6HqxfJnSZ30=
+X-Received: by 2002:a92:cc8c:: with SMTP id x12mr1417204ilo.224.1585102281588;
+ Tue, 24 Mar 2020 19:11:21 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200310132451.GG4106@sirena.org.uk>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local>
+In-Reply-To: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 24 Mar 2020 20:11:10 -0600
+X-Gmail-Original-Message-ID: <CAHmME9os=HxxxqWHp9nM6ggDdkqwpa6gOpTTAG68gamR3NtWaA@mail.gmail.com>
+Message-ID: <CAHmME9os=HxxxqWHp9nM6ggDdkqwpa6gOpTTAG68gamR3NtWaA@mail.gmail.com>
+Subject: Re: [kernel.org users] b4 v0.3.4 released
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, users@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Mar 10, 2020 at 01:24:51PM +0000, Mark Brown wrote:
-> > Maybe you could issue a warning or so when the SoB is not strictly
-> > matching the From to make it obvious it has to be reviewed.
-> 
-> That's a good idea.
+Hi Konstantin,
 
-This kept happening, so I implemented the feature as suggested. If we 
-come across a mismatch, we now warn about it:
+Still not a fan at all of the attestation stuff, but the lore
+integration is a great convenience. Thanks for this great tool. I've
+packaged it up for Gentoo:
 
-------
-$ b4 am 1527061353-16902-4-git-send-email-hl@rock-chips.com
-Analyzing 9 messages in the thread
----
-Writing ./v7_20180523_hl_drm_rockchip_add_transfer_function_for_cdn_dp.mbx
-  [PATCH v7 1/5] drm/rockchip: add transfer function for cdn-dp
-  [PATCH v7 2/5] Documentation: dt-bindings: phy: add phy_config for Rockchip USB Type-C PHY
-  [PATCH v7 3/5] soc: rockchip: split rockchip_typec_phy struct to separate header
-  [PATCH v7 4/5] phy: rockchip-typec: support variable phy config value
-  [PATCH v7 5/5] drm/rockchip: support dp training outside dp firmware
----
-Total patches: 5
----
-NOTE: some trailers ignored due to from/email mismatches:
-    ! Trailer: Enric Balletbo i Serra <enric.balletbo@collabora.com>
-         From: Enric Balletbo Serra <eballetbo@gmail.com>
-NOTE: Rerun with -S to apply them anyway
----
- Link: https://lore.kernel.org/r/1527061353-16902-1-git-send-email-hl@rock-chips.com
- Base: not found, sorry
-       git checkout -b v7_20180523_hl_rock_chips_com master
-       git am ./v7_20180523_hl_drm_rockchip_add_transfer_function_for_cdn_dp.mbx
-------
+https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=8374a4402f40ad1ff3613e281db5bb897708fcea
 
-Rerunning with -S applies them:
+Users can now run:
 
-------
-$ b4 am 1527061353-16902-4-git-send-email-hl@rock-chips.com -S
-Analyzing 9 messages in the thread
----
-Writing ./v7_20180523_hl_drm_rockchip_add_transfer_function_for_cdn_dp.mbx
-  [PATCH v7 1/5] drm/rockchip: add transfer function for cdn-dp
-  [PATCH v7 2/5] Documentation: dt-bindings: phy: add phy_config for Rockchip USB Type-C PHY
-  [PATCH v7 3/5] soc: rockchip: split rockchip_typec_phy struct to separate header
-    + Reviewed-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
-  [PATCH v7 4/5] phy: rockchip-typec: support variable phy config value
-    + Tested-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
-  [PATCH v7 5/5] drm/rockchip: support dp training outside dp firmware
-    + Tested-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
----
-Total patches: 5
----
- Link: https://lore.kernel.org/r/1527061353-16902-1-git-send-email-hl@rock-chips.com
- Base: not found, sorry
-       git checkout -b v7_20180523_hl_rock_chips_com master
-       git am ./v7_20180523_hl_drm_rockchip_add_transfer_function_for_cdn_dp.mbx
-------
+`$ emerge b4`
 
-This feature is in both the latest master and in stable-0.3.y.
-Please try it out.
+Please let me know if any of the metadata I've used in that commit is
+off. As well, at the bottom of this email is a listing of all the
+files this winds up installing, in case you spot something as being
+wrong.
 
--K
+Will you continue to send release announcements here, or should I set
+up a notifier through other means?
+
+I'm curious to learn: where did this name "b4" come from? Is it like
+the millennial meme phrase "inb4" being a deconstruction of "inbox"
+for a postmodern command line work of art?
+
+Regards,
+Jason
+
+----8<--------------------------
+
+zx2c4@thinkpad ~ $ equery f b4
+* Searching for b4 ...
+* Contents of net-mail/b4-0.3.4:
+/usr
+/usr/bin
+/usr/bin/b4 -> ../lib/python-exec/python-exec2
+/usr/lib
+/usr/lib/python-exec
+/usr/lib/python-exec/python3.6
+/usr/lib/python-exec/python3.6/b4
+/usr/lib64
+/usr/lib64/python3.6
+/usr/lib64/python3.6/site-packages
+/usr/lib64/python3.6/site-packages/b4
+/usr/lib64/python3.6/site-packages/b4-0.3.4-py3.6.egg-info
+/usr/lib64/python3.6/site-packages/b4-0.3.4-py3.6.egg-info/PKG-INFO
+/usr/lib64/python3.6/site-packages/b4-0.3.4-py3.6.egg-info/SOURCES.txt
+/usr/lib64/python3.6/site-packages/b4-0.3.4-py3.6.egg-info/dependency_links.txt
+/usr/lib64/python3.6/site-packages/b4-0.3.4-py3.6.egg-info/entry_points.txt
+/usr/lib64/python3.6/site-packages/b4-0.3.4-py3.6.egg-info/requires.txt
+/usr/lib64/python3.6/site-packages/b4-0.3.4-py3.6.egg-info/top_level.txt
+/usr/lib64/python3.6/site-packages/b4/__init__.py
+/usr/lib64/python3.6/site-packages/b4/__pycache__
+/usr/lib64/python3.6/site-packages/b4/__pycache__/__init__.cpython-36.opt-1.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/__init__.cpython-36.opt-2.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/__init__.cpython-36.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/attest.cpython-36.opt-1.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/attest.cpython-36.opt-2.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/attest.cpython-36.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/command.cpython-36.opt-1.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/command.cpython-36.opt-2.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/command.cpython-36.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/mbox.cpython-36.opt-1.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/mbox.cpython-36.opt-2.pyc
+/usr/lib64/python3.6/site-packages/b4/__pycache__/mbox.cpython-36.pyc
+/usr/lib64/python3.6/site-packages/b4/attest.py
+/usr/lib64/python3.6/site-packages/b4/command.py
+/usr/lib64/python3.6/site-packages/b4/mbox.py
+/usr/share
+/usr/share/doc
+/usr/share/doc/b4-0.3.4
+/usr/share/doc/b4-0.3.4/README.rst.bz2
