@@ -1,90 +1,140 @@
-Received: from mail-lf1-f68.google.com (mail-lf1-f68.google.com [209.85.167.68])
- by mx.groups.io with SMTP id smtpd.web11.41523.1585240351787712748
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by mx.groups.io with SMTP id smtpd.web11.5240.1585253919966590101
  for <tools@linux.kernel.org>;
- Thu, 26 Mar 2020 09:32:32 -0700
+ Thu, 26 Mar 2020 13:18:40 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=KduL0LTi;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.167.68, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-lf1-f68.google.com with SMTP id j11so5401902lfg.4
-        for <tools@linux.kernel.org>; Thu, 26 Mar 2020 09:32:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7s8+jAY6lFGRthBwAkibbinvk7rFbgPA4uiRAnwbScA=;
-        b=KduL0LTiSpWkHcbNVKT1ncEmVbDutq6UggG2m3FiGSJL5ufxt4XEFSPmOW3Zg5hM1s
-         z0Xkjda8KVEjyfA+WNP5Ms9ngqLeaiSGaOJA3AuHArAHMX3+ncQlPr2CCHaaqJAHAogv
-         vJyXk6acryv5Gi+o+0mWzcCRcGIGJKyMLrlnI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7s8+jAY6lFGRthBwAkibbinvk7rFbgPA4uiRAnwbScA=;
-        b=L4E6Z9hSInA6X+nGEZi+jeDF72bNC/rSr0EIxJbJhbdVm12PvyQSS0xl5eaUv3Q6T5
-         /GCrB/z46OtHayB+KGPT1w3xLltOl2t/N2+CjL7foqOfIe7I9PC69MQXnRTIoau5Ixn3
-         nvNFAqGVXqjvamPF4R8wtwid5Fx97iXZIwQqJ0WpnTFySKc5dlWXsq0E2aNMq8BUaQfJ
-         TlxwzRARK4AAbIvUOLrKNLK+fqE9FO2resuk0mSIHYH52gxVjwMC+73T6tuO+2MkdlMz
-         gmLOrELHAqKhY90rToun4feD+PV7PBa3pxupd00fMHmyyJQa9VVkYgVwDSWr7XaKk7ap
-         GoFA==
-X-Gm-Message-State: ANhLgQ30TJCMViyI5QXnP0VAu7E06zDXTGBwprr8dyDFkTu47tBEuQTl
-	r8i/2m+bs8fNbNT/BsAmqp90xA==
-X-Google-Smtp-Source: ADFU+vsy/y9bJxPlip0jToNGT9IrOFtLZPzWI1JARr0qAMKo4GeE8vzLkHpBs7Jbk3qqN+iv9/vWMA==
-X-Received: by 2002:a05:6512:552:: with SMTP id h18mr6333500lfl.48.1585240349676;
-        Thu, 26 Mar 2020 09:32:29 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local (tor-exit3-readme.dfri.se. [171.25.193.235])
-        by smtp.gmail.com with ESMTPSA id r141sm1838613lff.58.2020.03.26.09.32.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2020 09:32:28 -0700 (PDT)
-Date: Thu, 26 Mar 2020 12:32:25 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Rob Herring <robh@kernel.org>, users@linux.kernel.org
-Cc: tools@linux.kernel.org
-Subject: Re: [kernel.org users] b4 v0.3.4 released
-Message-ID: <20200326163225.qkitq6dkmqj2fw5l@chatter.i7.local>
+ dkim=pass header.i=@zx2c4.com header.s=mail header.b=Jvwj/Xlt;
+ spf=pass (domain: zx2c4.com, ip: 192.95.5.64, mailfrom: jason@zx2c4.com)
+Received: 
+	by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8524332;
+	Thu, 26 Mar 2020 20:11:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:references:in-reply-to:from:date:message-id:subject:to:cc
+	:content-type; s=mail; bh=xHgsXscwBr8HjT2Cg79d6qgFcfE=; b=Jvwj/X
+	ltK9HyC/+2p4UpbE68+ISXhuxWpLP50wMVXYEmnW5hXhd61s+CchWWEBw14vKS6X
+	i1XUK+hu+FXzZvXNXUZHqS2LdyScH9XgejrjFXFAPzPPeWi2zLYdP2tjDrmnPt9H
+	HdYvvo49OXw1hG4RP234MH3sQ1ZihQUdWe/W3PZOY7WwccH9wgGvLrMj8VwlrbqR
+	q9srCECvSq9AN3vdYx8QC4RijEQ50kFDMhWFRe5OzRSSJ0jT/Q6IKPj+v1BinNLT
+	p3iB0D2XXexKeOc9OswIYtuJieA/S5CtAv15k7OZBqk9d4/AIeAVn/5p73QCLdnJ
+	UX8zwAREDy/ezroA==
+Received: 
+	by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6b4b2af8 (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
+	Thu, 26 Mar 2020 20:11:13 +0000 (UTC)
+Received: by mail-io1-f52.google.com with SMTP id y24so7483788ioa.8;
+        Thu, 26 Mar 2020 13:18:38 -0700 (PDT)
+X-Gm-Message-State: ANhLgQ3jUQLN2KoqBv3fsij25Rwe8Xq8lHxow4WHmwUMQlqcyHvbLfrs
+	SgZHmt9nmo89sErYxxs24Ll2/YXONsQ/2dgjod8=
+X-Google-Smtp-Source: ADFU+vs7m/QYcdvtXDIWcS/JOwooXJqJPhS+KeA/d3NhUzbl2aJyQMof+0Xs01tiF6pUq8GCP9CPcDbwNlJ9VSgXnZY=
+X-Received: by 2002:a5e:df4b:: with SMTP id g11mr9423692ioq.29.1585253917948;
+ Thu, 26 Mar 2020 13:18:37 -0700 (PDT)
+MIME-Version: 1.0
 References: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local>
  <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
  <CAL_JsqKBskO3oyEP0g9nTyWL4V614w21Hwigs5YpFpgLnUVktg@mail.gmail.com>
- <15FFE6D3B979AF4C.32445@linux.kernel.org>
-MIME-Version: 1.0
-In-Reply-To: <15FFE6D3B979AF4C.32445@linux.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ <15FFE6D3B979AF4C.32445@linux.kernel.org> <20200326163225.qkitq6dkmqj2fw5l@chatter.i7.local>
+In-Reply-To: <20200326163225.qkitq6dkmqj2fw5l@chatter.i7.local>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 26 Mar 2020 14:18:26 -0600
+X-Gmail-Original-Message-ID: <CAHmME9oP4epS5UvrrnvLDcSEZAHXgrrGHkbZ7ddryKO56KFosg@mail.gmail.com>
+Message-ID: <CAHmME9oP4epS5UvrrnvLDcSEZAHXgrrGHkbZ7ddryKO56KFosg@mail.gmail.com>
+Subject: Re: [kernel.org users] b4 v0.3.4 released
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Rob Herring <robh@kernel.org>, users@linux.kernel.org, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Mar 26, 2020 at 12:16:22PM -0400, Konstantin Ryabitsev via Linux.Kernel.Org wrote:
-> > > I'm seeing corruption of the subject on patches[1] with a comma in 
-> > > the
-> > > subject (and I'd guess only ones longer than 70 something chars). It's
-> > > fine on lore web interface, but it gets wrapped in the downloaded
-> > > mbox. A log is attached. When it gets applied, a space is inserted
-> > > after the comma:
-> > >
-> > > dt-bindings: iio/accel: Drop duplicate adi, adxl345/6 from trivial-devices.yaml
-> > 
-> > Nevermind. It's not b4, but the dri-devel list that is corrupting the subject.
-> > 
-> > https://lore.kernel.org/dri-devel/20200325220542.19189-2-robh@kernel.org/
-> > https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-robh@kernel.org/
-> 
-> I think it's actually Python's fault. I'm trying to isolate the 
-> operation that causes it. It makes sense that dri-devel also exhibits 
-> it, because it's a mailman-managed list.
+Looks like the auto project detection has issues:
 
-No, your initial assessment is correct -- this is done by the dri-devel 
-list. I was confused by the caching layer that needs to be fixed to make 
-sure that we can grab the same thread from multiple projects (I'll fix 
-it today).
+zx2c4@thinkpad ~/Projects/linux $ b4 am -c
+20200326080104.27286-16-masahiroy@kernel.org
+Looking up https://lore.kernel.org/r/20200326080104.27286-16-masahiroy@kernel.org
+Grabbing thread from lore.kernel.org
+Reduced thread to strict matches only (12->11)
+Checking for newer revisions on https://lore.kernel.org/linux-crypto/
+Analyzing 11 messages in the thread
+---
+Writing ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.mbx
+ ERROR: missing [1/16]!
+ ERROR: missing [2/16]!
+ ERROR: missing [3/16]!
+ ERROR: missing [4/16]!
+ ERROR: missing [5/16]!
+ [PATCH v2 06/16] x86: remove always-defined CONFIG_AS_SSSE3
+ [PATCH v2 07/16] x86: remove always-defined CONFIG_AS_AVX
+ ERROR: missing [8/16]!
+ ERROR: missing [9/16]!
+ ERROR: missing [10/16]!
+ ERROR: missing [11/16]!
+ [PATCH v2 12/16] crypto: x86 - rework configuration based on Kconfig
+ ERROR: missing [13/16]!
+ ERROR: missing [14/16]!
+ [PATCH v2 15/16] x86: update AS_* macros to binutils >=2.23,
+supporting ADX and AVX2
+ [PATCH v2 16/16] crypto: x86 - clean up poly1305-x86_64-cryptogams.S
+by 'make clean'
+---
+Total patches: 5
+---
+NOTE: Some trailers were sent to the cover letter:
+     Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
+     Acked-by: Ingo Molnar <mingo@kernel.org>
+NOTE: Rerun with -t to apply them to all patches
+---
+WARNING: Thread incomplete!
+Cover: ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.cover
+Link: https://lore.kernel.org/r/20200326080104.27286-1-masahiroy@kernel.org
+Base: not found, sorry
+      git checkout -b v2_20200326_masahiroy_kernel_org master
+      git am ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.mbx
+zx2c4@thinkpad ~/Projects/linux $ b4 am -p linux-kernel -c
+20200326080104.27286-16-masahiroy@kernel.org
+Looking up https://lore.kernel.org/r/20200326080104.27286-16-masahiroy@kernel.org
+Grabbing thread from lore.kernel.org
+Server returned an error: 404
+zx2c4@thinkpad ~/Projects/linux $ b4 am -p lkml -c
+20200326080104.27286-16-masahiroy@kernel.org
+Looking up https://lore.kernel.org/r/20200326080104.27286-16-masahiroy@kernel.org
+Grabbing thread from lore.kernel.org
+Checking for newer revisions on https://lore.kernel.org/lkml/
+Analyzing 27 messages in the thread
+---
+Writing ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.mbx
+ [PATCH v2 01/16] lib/raid6/test: fix build on distros whose /bin/sh is not bash
+ [PATCH v2 02/16] x86: remove unneeded defined(__ASSEMBLY__) check
+from asm/dwarf2.h
+ [PATCH v2 03/16] x86: remove always-defined CONFIG_AS_CFI
+ [PATCH v2 04/16] x86: remove unneeded (CONFIG_AS_)CFI_SIGNAL_FRAME
+ [PATCH v2 05/16] x86: remove always-defined CONFIG_AS_CFI_SECTIONS
+ [PATCH v2 06/16] x86: remove always-defined CONFIG_AS_SSSE3
+ [PATCH v2 07/16] x86: remove always-defined CONFIG_AS_AVX
+ [PATCH v2 08/16] x86: replace arch macros from compiler with CONFIG_X86_{32,64}
+ [PATCH v2 09/16] drm/i915: remove always-defined CONFIG_AS_MOVNTDQA
+ [PATCH v2 10/16] x86: probe assembler capabilities via kconfig
+instead of makefile
+   + Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+ [PATCH v2 11/16] x86: add comments about the binutils version to
+support code in as-instr
+   + Acked-by: Nick Desaulniers <ndesaulniers@google.com>
+ [PATCH v2 12/16] crypto: x86 - rework configuration based on Kconfig
+ [PATCH v2 13/16] crypto: curve25519 - do not pollute dispatcher based
+on assembler
+ [PATCH v2 14/16] Documentation/changes: Raise minimum supported
+binutils version to 2.23
+ [PATCH v2 15/16] x86: update AS_* macros to binutils >=2.23,
+supporting ADX and AVX2
+ [PATCH v2 16/16] crypto: x86 - clean up poly1305-x86_64-cryptogams.S
+by 'make clean'
+---
+Total patches: 16
+---
+NOTE: Some trailers were sent to the cover letter:
+     Acked-by: Ingo Molnar <mingo@kernel.org>
+     Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
+NOTE: Rerun with -t to apply them to all patches
+---
+Cover: ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.cover
+Link: https://lore.kernel.org/r/20200326080104.27286-1-masahiroy@kernel.org
+Base: not found, sorry
+      git checkout -b v2_20200326_masahiroy_kernel_org master
+      git am ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.mbx
 
-$ b4 am https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-robh@kernel.org -C
-...
-  [PATCH 1/4] dt-bindings: iio/accel: Drop duplicate adi,adxl345/6 from trivial-devices.yaml
-...
-
-vs.
-
-$ b4 am https://lore.kernel.org/dri-devel/20200325220542.19189-2-robh@kernel.org -C
-...
-  [PATCH 1/4] dt-bindings: iio/accel: Drop duplicate adi, adxl345/6 from trivial-devices.yaml
-...
-
--K
+(Also: lore still calls linux-kernel "lkml" which is a bit confusing.)
