@@ -1,212 +1,86 @@
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web10.40611.1585238659597102411
+ by mx.groups.io with SMTP id smtpd.web10.40833.1585239117633928384
  for <tools@linux.kernel.org>;
- Thu, 26 Mar 2020 09:04:19 -0700
+ Thu, 26 Mar 2020 09:11:57 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=Yr/kJAcu;
+ dkim=pass header.i=@kernel.org header.s=default header.b=X1FyEAKF;
  spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: robh@kernel.org)
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id EC3CE20737;
-	Thu, 26 Mar 2020 16:04:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPSA id 049FD2076A;
+	Thu, 26 Mar 2020 16:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1585238659;
-	bh=p11CDO2uCTUhxtzoFhqQv4yZ3VI1hA+skzlqHGeioPo=;
+	s=default; t=1585239117;
+	bh=PuipyVBUvFH8x06tWWvMAUWokNY5rZy4C78YolcwGSc=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=Yr/kJAcu57SsXlKh2gVd09zNbRLOfq0fe+5LRc9aSn8BW+Bvh15wPY1c95VxpcehF
-	 2XcMINb4OSwOIVWvNO9w05gSq4Glj8YOAFp7KiHFOUYEZzAm39U6Ic66DL7Pv0S0yV
-	 vPyNdMpYqsmHTm15sGFxikm6eca8USs0usiG/LHA=
-Received: by mail-qt1-f178.google.com with SMTP id x16so5734380qts.11;
-        Thu, 26 Mar 2020 09:04:18 -0700 (PDT)
-X-Gm-Message-State: ANhLgQ0tODNmVkMmmtoqFdw/jVrjiPTjRUHl8Aoq2H/spRg1cu+hHKxv
-	OdKACBXSgN/qJuKW5AvL8IduKO76f2cQwHipJg==
-X-Google-Smtp-Source: ADFU+vv/Rj805caE1WkYutNwuPGWFX6jXdOiQocwgxdfnNuhul8J8jkfxpxZ4DjkzqaWsalqkqxruwj/KMWeyXWDOL4=
-X-Received: by 2002:ac8:59:: with SMTP id i25mr8996535qtg.110.1585238657689;
- Thu, 26 Mar 2020 09:04:17 -0700 (PDT)
+	b=X1FyEAKFWElPZJN+gNxcny0hHFezrX8oUoglHFAQJJNKFdDPCAKr2725rmyM/h5ko
+	 hrX/oltks1Pn9C18fVNE7cvdXnStKCwkf97PxItbDbaN/gIc/fAxmR6afafHciYUKg
+	 Xh0lyIfn0vQWMTtEAK42vRSaZMGt8QRLtZx3pePY=
+Received: by mail-qk1-f178.google.com with SMTP id v7so7201704qkc.0;
+        Thu, 26 Mar 2020 09:11:56 -0700 (PDT)
+X-Gm-Message-State: ANhLgQ2Qrk3omGzaks637NiLXMjrXRYlXOBb3j4uIBSSB79FsCIB+kdO
+	AsLnZ/s+iTf7yfp1xMaTrQ2OR0DNKzDFPjUCkQ==
+X-Google-Smtp-Source: ADFU+vtB5/icQNaK6t3r+EBgBojrpIVdki44p9rr6W4oqdXn1T587YUeeHgbs0vjxHVWRIik9VFLEzrQrO4VXgfFoLc=
+X-Received: by 2002:a37:4a85:: with SMTP id x127mr8995604qka.152.1585239116127;
+ Thu, 26 Mar 2020 09:11:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local>
-In-Reply-To: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local>
+References: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local> <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
+In-Reply-To: <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
 From: "Rob Herring" <robh@kernel.org>
-Date: Thu, 26 Mar 2020 10:04:05 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
-Message-ID: <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
+Date: Thu, 26 Mar 2020 10:11:44 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKBskO3oyEP0g9nTyWL4V614w21Hwigs5YpFpgLnUVktg@mail.gmail.com>
+Message-ID: <CAL_JsqKBskO3oyEP0g9nTyWL4V614w21Hwigs5YpFpgLnUVktg@mail.gmail.com>
 Subject: Re: [kernel.org users] b4 v0.3.4 released
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org, users@linux.kernel.org
-X-Groupsio-MsgNum: 45
-Content-Type: multipart/mixed; boundary="000000000000152de305a1c42338"
-
---000000000000152de305a1c42338
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Mar 23, 2020 at 4:20 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
+On Thu, Mar 26, 2020 at 10:04 AM Rob Herring <robh@kernel.org> wrote:
 >
-> Hello:
+> On Mon, Mar 23, 2020 at 4:20 PM Konstantin Ryabitsev
+> <konstantin@linuxfoundation.org> wrote:
+> >
+> > Hello:
+> >
+> > I pushed v0.3.4 to pypi, so if you're using it from there, you can run
+> > "pip install --user --upgrade b4" to grab the latest version.
+> >
+> > Notable changes compared to 0.3.3:
+> >
+> > - deals properly with series versions that are only mentioned in the
+> >   cover letter
+> > - adds a b4.sh wrapper that lets you run b4 without needing to install
+> >   with pip
+> > - fixes a couple of backtraces due to bugs with patch attestation
+> > - adds a caching layer to avoid hitting lore.kernel.org on repeating
+> >   runs (e.g. when rerunning with -t, -s, -l, and similar)
+> > - properly refuses to install on python version < 3.5
+> > - uses more descriptive filenames for "b4 am" mboxes
 >
-> I pushed v0.3.4 to pypi, so if you're using it from there, you can run
-> "pip install --user --upgrade b4" to grab the latest version.
+> I'm seeing corruption of the subject on patches[1] with a comma in the
+> subject (and I'd guess only ones longer than 70 something chars). It's
+> fine on lore web interface, but it gets wrapped in the downloaded
+> mbox. A log is attached. When it gets applied, a space is inserted
+> after the comma:
 >
-> Notable changes compared to 0.3.3:
->
-> - deals properly with series versions that are only mentioned in the
->   cover letter
-> - adds a b4.sh wrapper that lets you run b4 without needing to install
->   with pip
-> - fixes a couple of backtraces due to bugs with patch attestation
-> - adds a caching layer to avoid hitting lore.kernel.org on repeating
->   runs (e.g. when rerunning with -t, -s, -l, and similar)
-> - properly refuses to install on python version < 3.5
-> - uses more descriptive filenames for "b4 am" mboxes
+> dt-bindings: iio/accel: Drop duplicate adi, adxl345/6 from trivial-devices.yaml
 
-I'm seeing corruption of the subject on patches[1] with a comma in the
-subject (and I'd guess only ones longer than 70 something chars). It's
-fine on lore web interface, but it gets wrapped in the downloaded
-mbox. A log is attached. When it gets applied, a space is inserted
-after the comma:
+Nevermind. It's not b4, but the dri-devel list that is corrupting the subject.
 
-dt-bindings: iio/accel: Drop duplicate adi, adxl345/6 from trivial-devices.yaml
-
-Interestingly, DT patchwork suffers from the same issue.
-
-Also, I got tripped up with missing acks again because dri-devel got
-picked and it moderates non-subscribers. A way to set the default
-project would be nice. Perhaps rather than a single default, making it
-a list of lists to try. Or trying lkml first might work better if
-we're just guessing.
+https://lore.kernel.org/dri-devel/20200325220542.19189-2-robh@kernel.org/
+https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-robh@kernel.org/
 
 Rob
 
-[1] https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-robh@kernel.org/
-
---000000000000152de305a1c42338
-Content-Type: application/octet-stream; name=log
-Content-Disposition: attachment; filename=log
-Content-Transfer-Encoding: base64
-Content-ID: <f_k88xiuxn0>
-X-Attachment-Id: f_k88xiuxn0
-
-UnVubmluZyBnaXQgLS1uby1wYWdlciBjb25maWcgLXogLS1nZXQtcmVnZXhwIGI0XC4uKgpSdW5u
-aW5nIGdpdCAtLW5vLXBhZ2VyIGNvbmZpZyAteiAtLWdldC1yZWdleHAgZ2V0LWxvcmUtbWJveFwu
-LioKUnVubmluZyBnaXQgLS1uby1wYWdlciBjb25maWcgLXogLS1nZXQtcmVnZXhwIGdwZ1wuLioK
-TG9va2luZyB1cCBodHRwczovL2xvcmUua2VybmVsLm9yZy9yLzIwMjAwMzI1MjIwNTQyLjE5MTg5
-LTItcm9iaEBrZXJuZWwub3JnCkdyYWJiaW5nIHRocmVhZCBmcm9tIGxvcmUua2VybmVsLm9yZwpT
-YXZpbmcgLi8yMDIwMDMyNTIyMDU0Mi4xOTE4OS0yLXJvYmhAa2VybmVsLm9yZy50Lm1ieC1sb29z
-ZQpLZXB0IGluIHRocmVhZDogMjAyMDAzMjUyMjA1NDIuMTkxODktMi1yb2JoQGtlcm5lbC5vcmcK
-S2VwdCBpbiB0aHJlYWQ6IDIwMjAwMzI1MjIwNTQyLjE5MTg5LTQtcm9iaEBrZXJuZWwub3JnCktl
-cHQgaW4gdGhyZWFkOiAyMDIwMDMyNTIyMDU0Mi4xOTE4OS01LXJvYmhAa2VybmVsLm9yZwpLZXB0
-IGluIHRocmVhZDogMjAyMDAzMjUyMjA3NDkuR0YxMjE2OUBzaXJlbmEub3JnLnVrCktlcHQgaW4g
-dGhyZWFkOiAyMDIwMDMyNTIzMzQwOS5HQjE2NzY3QG9uc3RhdGlvbi5vcmcKS2VwdCBpbiB0aHJl
-YWQ6IDg4ZGViOGJiLTcxOGMtZjhjZS04ODVlLWRiYzEyMjIwMWYxNkBiYXlsaWJyZS5jb20KS2Vw
-dCBpbiB0aHJlYWQ6IGU2MGRmNTc1LWM3MGQtYTE5NC02YzU0LTMyYjVhZTY5YTA0MUBiYXlsaWJy
-ZS5jb20KS2VwdCBpbiB0aHJlYWQ6IENBK00za3M3WTlZRVVQX3BjX0h5ZmZqNUVhTEZHRUE1Xzkx
-dkgwUWNQVUNia3d6NFZZd0BtYWlsLmdtYWlsLmNvbQpLZXB0IGluIHRocmVhZDogMjAyMDAzMjUy
-MjA1NDIuMTkxODktMS1yb2JoQGtlcm5lbC5vcmcKS2VwdCBpbiB0aHJlYWQ6IDIwMjAwMzI1MjIw
-NTQyLjE5MTg5LTMtcm9iaEBrZXJuZWwub3JnCkFuYWx5emluZyAxMCBtZXNzYWdlcyBpbiB0aGUg
-dGhyZWFkCkxvb2tpbmcgYXQ6IFtQQVRDSCAxLzRdIGR0LWJpbmRpbmdzOiBpaW8vYWNjZWw6IERy
-b3AgZHVwbGljYXRlIGFkaSwgYWR4bDM0NS82IGZyb20gdHJpdmlhbC1kZXZpY2VzLnlhbWwKICBh
-ZGRpbmcgYXMgcGF0Y2gKTG9va2luZyBhdDogW1BBVENIIDMvNF0gZHQtYmluZGluZ3M6IENsZWFu
-LXVwIHNjaGVtYSBlcnJvcnMgZHVlIHRvIG1pc3NpbmcgJ2FkZHRpb25hbFByb3BlcnRpZXM6IGZh
-bHNlJwogIGFkZGluZyBhcyBwYXRjaApMb29raW5nIGF0OiBbUEFUQ0ggNC80XSBkdC1iaW5kaW5n
-czogQWRkIG1pc3NpbmcgJ2FkZGl0aW9uYWxQcm9wZXJ0aWVzOiBmYWxzZScKICBhZGRpbmcgYXMg
-cGF0Y2gKICB0cmFpbGVyIGV4YWN0IGVtYWlsIG1hdGNoCkxvb2tpbmcgYXQ6IFJlOiBbUEFUQ0gg
-NC80XSBkdC1iaW5kaW5nczogQWRkIG1pc3NpbmcgJ2FkZGl0aW9uYWxQcm9wZXJ0aWVzOiBmYWxz
-ZScKICBhZGRpbmcgdG8gZm9sbG93dXBzCiAgdHJhaWxlciBleGFjdCBlbWFpbCBtYXRjaApMb29r
-aW5nIGF0OiBSZTogW1BBVENIIDIvNF0gZHQtYmluZGluZ3M6IHNyYW06IHFjb206IENsZWFuLXVw
-ICdyYW5nZXMnIGFuZCBjaGlsZCBub2RlIG5hbWVzCiAgYWRkaW5nIHRvIGZvbGxvd3VwcwogIHRy
-YWlsZXIgZXhhY3QgZW1haWwgbWF0Y2gKTG9va2luZyBhdDogUmU6IFtQQVRDSCA0LzRdIGR0LWJp
-bmRpbmdzOiBBZGQgbWlzc2luZyAnYWRkaXRpb25hbFByb3BlcnRpZXM6IGZhbHNlJwogIGFkZGlu
-ZyB0byBmb2xsb3d1cHMKICB0cmFpbGVyIGV4YWN0IGVtYWlsIG1hdGNoCkxvb2tpbmcgYXQ6IFJl
-OiBbUEFUQ0ggMy80XSBkdC1iaW5kaW5nczogQ2xlYW4tdXAgc2NoZW1hIGVycm9ycyBkdWUgdG8g
-bWlzc2luZyAnYWRkdGlvbmFsUHJvcGVydGllczogZmFsc2UnCiAgYWRkaW5nIHRvIGZvbGxvd3Vw
-cwpMb29raW5nIGF0OiBSZTogW1BBVENIIDQvNF0gZHQtYmluZGluZ3M6IEFkZCBtaXNzaW5nICdh
-ZGRpdGlvbmFsUHJvcGVydGllczogZmFsc2UnCiAgYWRkaW5nIHRvIGZvbGxvd3VwcwpMb29raW5n
-IGF0OiBbUEFUQ0ggMC80XSBkdC1iaW5kaW5nczogYWRkaXRpb25hbFByb3BlcnRpZXMgY2xlYW4t
-dXAKICBhZGRpbmcgYXMgdjEgY292ZXIgbGV0dGVyCkxvb2tpbmcgYXQ6IFtQQVRDSCAyLzRdIGR0
-LWJpbmRpbmdzOiBzcmFtOiBxY29tOiBDbGVhbi11cCAncmFuZ2VzJyBhbmQgY2hpbGQgbm9kZSBu
-YW1lcwogIGFkZGluZyBhcyBwYXRjaApBbmFseXppbmcgZm9sbG93LXVwOiBSZTogW1BBVENIIDQv
-NF0gZHQtYmluZGluZ3M6IEFkZCBtaXNzaW5nICdhZGRpdGlvbmFsUHJvcGVydGllczogZmFsc2Un
-IChicm9vbmllQGtlcm5lbC5vcmcpCiBQYXJlbnQ6IFtQQVRDSCA0LzRdIGR0LWJpbmRpbmdzOiBB
-ZGQgbWlzc2luZyAnYWRkaXRpb25hbFByb3BlcnRpZXM6IGZhbHNlJwogVHJhaWxlcnM6CiAgQWNr
-ZWQtYnk6IE1hcmsgQnJvd24gPGJyb29uaWVAa2VybmVsLm9yZz4KQW5hbHl6aW5nIGZvbGxvdy11
-cDogUmU6IFtQQVRDSCAyLzRdIGR0LWJpbmRpbmdzOiBzcmFtOiBxY29tOiBDbGVhbi11cCAncmFu
-Z2VzJyBhbmQgY2hpbGQgbm9kZSBuYW1lcyAobWFzbmV5YkBvbnN0YXRpb24ub3JnKQogUGFyZW50
-OiBbUEFUQ0ggMi80XSBkdC1iaW5kaW5nczogc3JhbTogcWNvbTogQ2xlYW4tdXAgJ3Jhbmdlcycg
-YW5kIGNoaWxkIG5vZGUgbmFtZXMKIFRyYWlsZXJzOgogIFJldmlld2VkLWJ5OiBCcmlhbiBNYXNu
-ZXkgPG1hc25leWJAb25zdGF0aW9uLm9yZz4KQW5hbHl6aW5nIGZvbGxvdy11cDogUmU6IFtQQVRD
-SCA0LzRdIGR0LWJpbmRpbmdzOiBBZGQgbWlzc2luZyAnYWRkaXRpb25hbFByb3BlcnRpZXM6IGZh
-bHNlJyAobmFybXN0cm9uZ0BiYXlsaWJyZS5jb20pCiBQYXJlbnQ6IFtQQVRDSCA0LzRdIGR0LWJp
-bmRpbmdzOiBBZGQgbWlzc2luZyAnYWRkaXRpb25hbFByb3BlcnRpZXM6IGZhbHNlJwogVHJhaWxl
-cnM6CiAgUmV2aWV3ZWQtYnk6IE5laWwgQXJtc3Ryb25nIDxuYXJtc3Ryb25nQGJheWxpYnJlLmNv
-bT4KQW5hbHl6aW5nIGZvbGxvdy11cDogUmU6IFtQQVRDSCAzLzRdIGR0LWJpbmRpbmdzOiBDbGVh
-bi11cCBzY2hlbWEgZXJyb3JzIGR1ZSB0byBtaXNzaW5nICdhZGR0aW9uYWxQcm9wZXJ0aWVzOiBm
-YWxzZScgKG5hcm1zdHJvbmdAYmF5bGlicmUuY29tKQogUGFyZW50OiBbUEFUQ0ggMy80XSBkdC1i
-aW5kaW5nczogQ2xlYW4tdXAgc2NoZW1hIGVycm9ycyBkdWUgdG8gbWlzc2luZyAnYWRkdGlvbmFs
-UHJvcGVydGllczogZmFsc2UnCiBUcmFpbGVyczoKICBSZXZpZXdlZC1ieTogTmVpbCBBcm1zdHJv
-bmcgPG5hcm1zdHJvbmdAYmF5bGlicmUuY29tPgpBbmFseXppbmcgZm9sbG93LXVwOiBSZTogW1BB
-VENIIDQvNF0gZHQtYmluZGluZ3M6IEFkZCBtaXNzaW5nICdhZGRpdGlvbmFsUHJvcGVydGllczog
-ZmFsc2UnIChiZW5qYW1pbi5nYWlnbmFyZEBsaW5hcm8ub3JnKQogIG5vIHRyYWlsZXJzIGZvdW5k
-LCBza2lwcGluZwotLS0KV3JpdGluZyAuLzIwMjAwMzI1X3JvYmhfZHRfYmluZGluZ3NfYWRkaXRp
-b25hbHByb3BlcnRpZXNfY2xlYW5fdXAubWJ4ClJ1bm5pbmcgZ2l0IC0tbm8tcGFnZXIgY29uZmln
-IC16IC0tZ2V0LXJlZ2V4cCB1c2VyXC4uKgpSdW5uaW5nIGdpdCAtLW5vLXBhZ2VyIG1haWxpbmZv
-IC0tZW5jb2Rpbmc9VVRGLTggL3RtcC90bXA2MW44NWM1bCAvdG1wL3RtcDRwaHBoaDBfClF1ZXJ5
-IFVSTDogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvc2lnbmF0dXJlcy8/cT0zMmE2MWIzNi0wYTk4
-MDg3Ni00NjAyZjkyOCZ4PUEmbz0tMQogIFtQQVRDSCAxLzRdIGR0LWJpbmRpbmdzOiBpaW8vYWNj
-ZWw6IERyb3AgZHVwbGljYXRlIGFkaSwgYWR4bDM0NS82IGZyb20gdHJpdmlhbC1kZXZpY2VzLnlh
-bWwKICAgIC4gU2lnbmVkLW9mZi1ieTogUm9iIEhlcnJpbmcgPHJvYmhAa2VybmVsLm9yZz4KICAg
-IC4gQ2M6IFBldGVyIE1lZXJ3YWxkLVN0YWRsZXIgPHBtZWVyd0BwbWVlcncubmV0PgogICAgLiBD
-YzogTGFycy1QZXRlciBDbGF1c2VuIDxsYXJzQG1ldGFmb28uZGU+CiAgICAuIENjOiBsaW51eC1p
-aW9Admdlci5rZXJuZWwub3JnCiAgICAuIENjOiBNaWNoYWVsIEhlbm5lcmljaCA8bWljaGFlbC5o
-ZW5uZXJpY2hAYW5hbG9nLmNvbT4KICAgIC4gQ2M6IEhhcnRtdXQgS25hYWNrIDxrbmFhY2suaEBn
-bXguZGU+CiAgICAuIENjOiBKb25hdGhhbiBDYW1lcm9uIDxqaWMyM0BrZXJuZWwub3JnPgpSdW5u
-aW5nIGdpdCAtLW5vLXBhZ2VyIG1haWxpbmZvIC0tZW5jb2Rpbmc9VVRGLTggL3RtcC90bXB5bXlj
-eTd0ZiAvdG1wL3RtcHBfbXV1ajh4CiAgW1BBVENIIDIvNF0gZHQtYmluZGluZ3M6IHNyYW06IHFj
-b206IENsZWFuLXVwICdyYW5nZXMnIGFuZCBjaGlsZCBub2RlIG5hbWVzCiAgICAuIEZpeGVzOiA5
-NTdmZDY5ZDM5NmIgKCJkdC1iaW5kaW5nczogc29jOiBxY29tOiBhZGQgT24gQ2hpcCBNRU1vcnkg
-KE9DTUVNKSBiaW5kaW5ncyIpCiAgICAuIFNpZ25lZC1vZmYtYnk6IFJvYiBIZXJyaW5nIDxyb2Jo
-QGtlcm5lbC5vcmc+CiAgICArIFJldmlld2VkLWJ5OiBCcmlhbiBNYXNuZXkgPG1hc25leWJAb25z
-dGF0aW9uLm9yZz4KICAgIC4gQ2M6IGxpbnV4LWFybS1tc21Admdlci5rZXJuZWwub3JnCiAgICAu
-IENjOiBCam9ybiBBbmRlcnNzb24gPGJqb3JuLmFuZGVyc3NvbkBsaW5hcm8ub3JnPgogICAgLiBD
-YzogQnJpYW4gTWFzbmV5IDxtYXNuZXliQG9uc3RhdGlvbi5vcmc+ClJ1bm5pbmcgZ2l0IC0tbm8t
-cGFnZXIgbWFpbGluZm8gLS1lbmNvZGluZz1VVEYtOCAvdG1wL3RtcHRneDIyazBfIC90bXAvdG1w
-OWxpaHNnZ3IKICBbUEFUQ0ggMy80XSBkdC1iaW5kaW5nczogQ2xlYW4tdXAgc2NoZW1hIGVycm9y
-cyBkdWUgdG8gbWlzc2luZyAnYWRkdGlvbmFsUHJvcGVydGllczogZmFsc2UnCiAgICAuIFNpZ25l
-ZC1vZmYtYnk6IFJvYiBIZXJyaW5nIDxyb2JoQGtlcm5lbC5vcmc+CiAgICArIFJldmlld2VkLWJ5
-OiBOZWlsIEFybXN0cm9uZyA8bmFybXN0cm9uZ0BiYXlsaWJyZS5jb20+CiAgICAuIENjOiBMaW51
-cyBXYWxsZWlqIDxsaW51cy53YWxsZWlqQGxpbmFyby5vcmc+CiAgICAuIENjOiBLZXZpbiBIaWxt
-YW4gPGtoaWxtYW5AYmF5bGlicmUuY29tPgogICAgLiBDYzogTGVlIEpvbmVzIDxsZWUuam9uZXNA
-bGluYXJvLm9yZz4KICAgIC4gQ2M6IGRyaS1kZXZlbEBsaXN0cy5mcmVlZGVza3RvcC5vcmcKICAg
-IC4gQ2M6IFRob21hcyBHbGVpeG5lciA8dGdseEBsaW51dHJvbml4LmRlPgogICAgLiBDYzogQmFy
-dG9zeiBHb2xhc3pld3NraSA8YmdvbGFzemV3c2tpQGJheWxpYnJlLmNvbT4KICAgIC4gQ2M6IERh
-bmllbCBMZXpjYW5vIDxkYW5pZWwubGV6Y2Fub0BsaW5hcm8ub3JnPgogICAgLiBDYzogbGludXgt
-YXJtLWtlcm5lbEBsaXN0cy5pbmZyYWRlYWQub3JnCiAgICAuIENjOiBMYXJzLVBldGVyIENsYXVz
-ZW4gPGxhcnNAbWV0YWZvby5kZT4KICAgIC4gQ2M6IE1hdXJvIENhcnZhbGhvIENoZWhhYiA8bWNo
-ZWhhYkBrZXJuZWwub3JnPgogICAgLiBDYzogSGFydG11dCBLbmFhY2sgPGtuYWFjay5oQGdteC5k
-ZT4KICAgIC4gQ2M6IFpoYW5nIFJ1aSA8cnVpLnpoYW5nQGludGVsLmNvbT4KICAgIC4gQ2M6IG5l
-dGRldkB2Z2VyLmtlcm5lbC5vcmcKICAgIC4gQ2M6IFBldGVyIE1lZXJ3YWxkLVN0YWRsZXIgPHBt
-ZWVyd0BwbWVlcncubmV0PgogICAgLiBDYzogTWFyayBCcm93biA8YnJvb25pZUBrZXJuZWwub3Jn
-PgogICAgLiBDYzogbGludXgtYW1sb2dpY0BsaXN0cy5pbmZyYWRlYWQub3JnCiAgICAuIENjOiBN
-YXNhaGlybyBZYW1hZGEgPHlhbWFkYS5tYXNhaGlyb0Bzb2Npb25leHQuY29tPgogICAgLiBDYzog
-bGludXgtY2xrQHZnZXIua2VybmVsLm9yZwogICAgLiBDYzogbGludXgtaWlvQHZnZXIua2VybmVs
-Lm9yZwogICAgLiBDYzogSm9uYXRoYW4gQ2FtZXJvbiA8amljMjNAa2VybmVsLm9yZz4KICAgIC4g
-Q2M6IFN0ZXBoZW4gQm95ZCA8c2JveWRAa2VybmVsLm9yZz4KICAgIC4gQ2M6IExpYW0gR2lyZHdv
-b2QgPGxnaXJkd29vZEBnbWFpbC5jb20+CiAgICAuIENjOiBsaW51eC1ncGlvQHZnZXIua2VybmVs
-Lm9yZwogICAgLiBDYzogbGludXgtbWVkaWFAdmdlci5rZXJuZWwub3JnCiAgICAuIENjOiAiRGF2
-aWQgUy4gTWlsbGVyIiA8ZGF2ZW1AZGF2ZW1sb2Z0Lm5ldD4KICAgIC4gQ2M6IEd1aWxsYXVtZSBM
-YSBSb3F1ZSA8Z2xhcm9xdWVAYmF5bGlicmUuY29tPgogICAgLiBDYzogTmVpbCBBcm1zdHJvbmcg
-PG5hcm1zdHJvbmdAYmF5bGlicmUuY29tPgogICAgLiBDYzogbGludXgtcG1Admdlci5rZXJuZWwu
-b3JnClJ1bm5pbmcgZ2l0IC0tbm8tcGFnZXIgbWFpbGluZm8gLS1lbmNvZGluZz1VVEYtOCAvdG1w
-L3RtcHdwcDRfeGJ4IC90bXAvdG1waXptM2ZodnQKICBbUEFUQ0ggNC80XSBkdC1iaW5kaW5nczog
-QWRkIG1pc3NpbmcgJ2FkZGl0aW9uYWxQcm9wZXJ0aWVzOiBmYWxzZScKICAgIC4gU2lnbmVkLW9m
-Zi1ieTogUm9iIEhlcnJpbmcgPHJvYmhAa2VybmVsLm9yZz4KICAgICsgUmV2aWV3ZWQtYnk6IE5l
-aWwgQXJtc3Ryb25nIDxuYXJtc3Ryb25nQGJheWxpYnJlLmNvbT4KICAgICsgQWNrZWQtYnk6IE1h
-cmsgQnJvd24gPGJyb29uaWVAa2VybmVsLm9yZz4KLS0tClRvdGFsIHBhdGNoZXM6IDQKLS0tCkNv
-dmVyOiAuLzIwMjAwMzI1X3JvYmhfZHRfYmluZGluZ3NfYWRkaXRpb25hbHByb3BlcnRpZXNfY2xl
-YW5fdXAuY292ZXIKIExpbms6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3IvMjAyMDAzMjUyMjA1
-NDIuMTkxODktMS1yb2JoQGtlcm5lbC5vcmcKIEJhc2U6IG5vdCBmb3VuZCwgc29ycnkKICAgICAg
-IGdpdCBjaGVja291dCAtYiAyMDIwMDMyNV9yb2JoX2tlcm5lbF9vcmcgbWFzdGVyCiAgICAgICBn
-aXQgYW0gLi8yMDIwMDMyNV9yb2JoX2R0X2JpbmRpbmdzX2FkZGl0aW9uYWxwcm9wZXJ0aWVzX2Ns
-ZWFuX3VwLm1ieAo=
-
---000000000000152de305a1c42338--
+> Interestingly, DT patchwork suffers from the same issue.
+>
+> Also, I got tripped up with missing acks again because dri-devel got
+> picked and it moderates non-subscribers. A way to set the default
+> project would be nice. Perhaps rather than a single default, making it
+> a list of lists to try. Or trying lkml first might work better if
+> we're just guessing.
+>
+> Rob
+>
+> [1] https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-robh@kernel.org/
