@@ -1,85 +1,90 @@
-Received: from mail-oi1-f193.google.com (mail-oi1-f193.google.com [209.85.167.193])
- by mx.groups.io with SMTP id smtpd.web11.41506.1585240319325431724
+Received: from mail-lf1-f68.google.com (mail-lf1-f68.google.com [209.85.167.68])
+ by mx.groups.io with SMTP id smtpd.web11.41523.1585240351787712748
  for <tools@linux.kernel.org>;
- Thu, 26 Mar 2020 09:31:59 -0700
+ Thu, 26 Mar 2020 09:32:32 -0700
 Authentication-Results: mx.groups.io;
- dkim=missing; spf=pass (domain: gmail.com, ip: 209.85.167.193, mailfrom: geert.uytterhoeven@gmail.com)
-Received: by mail-oi1-f193.google.com with SMTP id m14so6066461oic.0;
-        Thu, 26 Mar 2020 09:31:59 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=KduL0LTi;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.167.68, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-lf1-f68.google.com with SMTP id j11so5401902lfg.4
+        for <tools@linux.kernel.org>; Thu, 26 Mar 2020 09:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7s8+jAY6lFGRthBwAkibbinvk7rFbgPA4uiRAnwbScA=;
+        b=KduL0LTiSpWkHcbNVKT1ncEmVbDutq6UggG2m3FiGSJL5ufxt4XEFSPmOW3Zg5hM1s
+         z0Xkjda8KVEjyfA+WNP5Ms9ngqLeaiSGaOJA3AuHArAHMX3+ncQlPr2CCHaaqJAHAogv
+         vJyXk6acryv5Gi+o+0mWzcCRcGIGJKyMLrlnI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2hKST+mDEtgCTbga/xgAqkeoB9ofywV6N1I9lEb5yFw=;
-        b=Es60JPMSrmvDmFFOuUEc/5k0Yx+wogajLJaXhs2eYyUFZCt5jIP/imOT4BJWf3unK/
-         FHH319M/cLsjFNx6sfm1ntljaTH9LnavZAMehzVYpi0lTt02mMrE5bY7Q6fZwgBxmeeA
-         MLHskkX0YNZPwTncknVS0xhnWXe8J9/MyyaY8bq5SES2Fzvf8yNi3E3Sd06mAF+f2okM
-         8ykf0J6qmtATLhziaEEouk/Gyeq2qUWw9+pEVESX0Y14ZlWhHzYMN141y86kjl+0o7/y
-         XtI0/mfo/YJiHzrQPl9GBYk6TWpmjHJLBySCYoqZWC5slH0F9Pk+cj1oGYMg7qaXKw5/
-         67XQ==
-X-Gm-Message-State: ANhLgQ0m+n0040NPpeCoYfQ1QZYl4BtAh1xBUnDCt1CsPYpdPABaGGdT
-	0uVsHS4C7oq7y4IkhJqZ54ycQW0zJAf3LfCSW48=
-X-Google-Smtp-Source: ADFU+vsx/tmT1GbZOIvcfNgz9nRE16r6DAf2+jkoyc3okifqyEh2rUpUclPjS6vN+cO+30jLlZAkvucTUdGuG0ETzgs=
-X-Received: by 2002:aca:ad93:: with SMTP id w141mr731069oie.54.1585240317680;
- Thu, 26 Mar 2020 09:31:57 -0700 (PDT)
-MIME-Version: 1.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7s8+jAY6lFGRthBwAkibbinvk7rFbgPA4uiRAnwbScA=;
+        b=L4E6Z9hSInA6X+nGEZi+jeDF72bNC/rSr0EIxJbJhbdVm12PvyQSS0xl5eaUv3Q6T5
+         /GCrB/z46OtHayB+KGPT1w3xLltOl2t/N2+CjL7foqOfIe7I9PC69MQXnRTIoau5Ixn3
+         nvNFAqGVXqjvamPF4R8wtwid5Fx97iXZIwQqJ0WpnTFySKc5dlWXsq0E2aNMq8BUaQfJ
+         TlxwzRARK4AAbIvUOLrKNLK+fqE9FO2resuk0mSIHYH52gxVjwMC+73T6tuO+2MkdlMz
+         gmLOrELHAqKhY90rToun4feD+PV7PBa3pxupd00fMHmyyJQa9VVkYgVwDSWr7XaKk7ap
+         GoFA==
+X-Gm-Message-State: ANhLgQ30TJCMViyI5QXnP0VAu7E06zDXTGBwprr8dyDFkTu47tBEuQTl
+	r8i/2m+bs8fNbNT/BsAmqp90xA==
+X-Google-Smtp-Source: ADFU+vsy/y9bJxPlip0jToNGT9IrOFtLZPzWI1JARr0qAMKo4GeE8vzLkHpBs7Jbk3qqN+iv9/vWMA==
+X-Received: by 2002:a05:6512:552:: with SMTP id h18mr6333500lfl.48.1585240349676;
+        Thu, 26 Mar 2020 09:32:29 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local (tor-exit3-readme.dfri.se. [171.25.193.235])
+        by smtp.gmail.com with ESMTPSA id r141sm1838613lff.58.2020.03.26.09.32.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Mar 2020 09:32:28 -0700 (PDT)
+Date: Thu, 26 Mar 2020 12:32:25 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Rob Herring <robh@kernel.org>, users@linux.kernel.org
+Cc: tools@linux.kernel.org
+Subject: Re: [kernel.org users] b4 v0.3.4 released
+Message-ID: <20200326163225.qkitq6dkmqj2fw5l@chatter.i7.local>
 References: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local>
  <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
  <CAL_JsqKBskO3oyEP0g9nTyWL4V614w21Hwigs5YpFpgLnUVktg@mail.gmail.com>
- <20200326161622.pzma44m6vte2qi33@chatter.i7.local> <1585240058.3610.19.camel@HansenPartnership.com>
-In-Reply-To: <1585240058.3610.19.camel@HansenPartnership.com>
-From: "Geert Uytterhoeven" <geert.uytterhoeven@gmail.com>
-Date: Thu, 26 Mar 2020 17:31:46 +0100
-Message-ID: <CAMuHMdUbk75UVQ8+SH_ejP5e5TsKgG20Fksrg3SBF0915WMaiQ@mail.gmail.com>
-Subject: Re: [kernel.org users] b4 v0.3.4 released
-To: James Bottomley <James.Bottomley@hansenpartnership.com>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, Rob Herring <robh@kernel.org>, 
-	tools@linux.kernel.org, "users@linux.kernel.org" <users@linux.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+ <15FFE6D3B979AF4C.32445@linux.kernel.org>
+MIME-Version: 1.0
+In-Reply-To: <15FFE6D3B979AF4C.32445@linux.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On Thu, Mar 26, 2020 at 5:27 PM James Bottomley
-<James.Bottomley@hansenpartnership.com> wrote:
-> On Thu, 2020-03-26 at 12:16 -0400, Konstantin Ryabitsev wrote:
-> > On Thu, Mar 26, 2020 at 10:11:44AM -0600, Rob Herring wrote:
-> > > > I'm seeing corruption of the subject on patches[1] with a comma
-> > > > in the subject (and I'd guess only ones longer than 70 something
-> > > > chars). It's fine on lore web interface, but it gets wrapped in
-> > > > the downloaded mbox. A log is attached. When it gets applied, a
-> > > > space is inserted after the comma:
-> > > >
-> > > > dt-bindings: iio/accel: Drop duplicate adi, adxl345/6 from
-> > > > trivial-devices.yaml
+On Thu, Mar 26, 2020 at 12:16:22PM -0400, Konstantin Ryabitsev via Linux.Kernel.Org wrote:
+> > > I'm seeing corruption of the subject on patches[1] with a comma in 
+> > > the
+> > > subject (and I'd guess only ones longer than 70 something chars). It's
+> > > fine on lore web interface, but it gets wrapped in the downloaded
+> > > mbox. A log is attached. When it gets applied, a space is inserted
+> > > after the comma:
 > > >
-> > > Nevermind. It's not b4, but the dri-devel list that is corrupting
-> > > the subject.
-> > >
-> > > https://lore.kernel.org/dri-devel/20200325220542.19189-2-robh@kerne
-> > > l.org/
-> > > https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-rob
-> > > h@kernel.org/
-> >
-> > I think it's actually Python's fault. I'm trying to isolate the
-> > operation that causes it. It makes sense that dri-devel also
-> > exhibits it, because it's a mailman-managed list.
->
-> It smells like a mishandling of RFC2822 header folding rules.
->
-> https://tools.ietf.org/html/rfc2822#section-2.2.3
->
-> Lots of email tools get this wrong as well, so they add an extra space
-> where the subject header got split by the wrapping because they expect
-> the header to split at a space and the space to be eaten by the split,
-> but that's not what the rules say.
+> > > dt-bindings: iio/accel: Drop duplicate adi, adxl345/6 from trivial-devices.yaml
+> > 
+> > Nevermind. It's not b4, but the dri-devel list that is corrupting the subject.
+> > 
+> > https://lore.kernel.org/dri-devel/20200325220542.19189-2-robh@kernel.org/
+> > https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-robh@kernel.org/
+> 
+> I think it's actually Python's fault. I'm trying to isolate the 
+> operation that causes it. It makes sense that dri-devel also exhibits 
+> it, because it's a mailman-managed list.
 
-Even formail -c gets it wrong, so my scripts have to postprocess the result.
+No, your initial assessment is correct -- this is done by the dri-devel 
+list. I was confused by the caching layer that needs to be fixed to make 
+sure that we can grab the same thread from multiple projects (I'll fix 
+it today).
 
-Gr{oetje,eeting}s,
+$ b4 am https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-robh@kernel.org -C
+...
+  [PATCH 1/4] dt-bindings: iio/accel: Drop duplicate adi,adxl345/6 from trivial-devices.yaml
+...
 
-                        Geert
+vs.
 
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+$ b4 am https://lore.kernel.org/dri-devel/20200325220542.19189-2-robh@kernel.org -C
+...
+  [PATCH 1/4] dt-bindings: iio/accel: Drop duplicate adi, adxl345/6 from trivial-devices.yaml
+...
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+-K
