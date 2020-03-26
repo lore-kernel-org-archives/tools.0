@@ -1,86 +1,72 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web10.40833.1585239117633928384
+Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
+ by mx.groups.io with SMTP id smtpd.web10.40970.1585239390426481263
  for <tools@linux.kernel.org>;
- Thu, 26 Mar 2020 09:11:57 -0700
+ Thu, 26 Mar 2020 09:16:30 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=X1FyEAKF;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: robh@kernel.org)
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 049FD2076A;
-	Thu, 26 Mar 2020 16:11:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1585239117;
-	bh=PuipyVBUvFH8x06tWWvMAUWokNY5rZy4C78YolcwGSc=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=X1FyEAKFWElPZJN+gNxcny0hHFezrX8oUoglHFAQJJNKFdDPCAKr2725rmyM/h5ko
-	 hrX/oltks1Pn9C18fVNE7cvdXnStKCwkf97PxItbDbaN/gIc/fAxmR6afafHciYUKg
-	 Xh0lyIfn0vQWMTtEAK42vRSaZMGt8QRLtZx3pePY=
-Received: by mail-qk1-f178.google.com with SMTP id v7so7201704qkc.0;
-        Thu, 26 Mar 2020 09:11:56 -0700 (PDT)
-X-Gm-Message-State: ANhLgQ2Qrk3omGzaks637NiLXMjrXRYlXOBb3j4uIBSSB79FsCIB+kdO
-	AsLnZ/s+iTf7yfp1xMaTrQ2OR0DNKzDFPjUCkQ==
-X-Google-Smtp-Source: ADFU+vtB5/icQNaK6t3r+EBgBojrpIVdki44p9rr6W4oqdXn1T587YUeeHgbs0vjxHVWRIik9VFLEzrQrO4VXgfFoLc=
-X-Received: by 2002:a37:4a85:: with SMTP id x127mr8995604qka.152.1585239116127;
- Thu, 26 Mar 2020 09:11:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local> <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
-In-Reply-To: <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
-From: "Rob Herring" <robh@kernel.org>
-Date: Thu, 26 Mar 2020 10:11:44 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKBskO3oyEP0g9nTyWL4V614w21Hwigs5YpFpgLnUVktg@mail.gmail.com>
-Message-ID: <CAL_JsqKBskO3oyEP0g9nTyWL4V614w21Hwigs5YpFpgLnUVktg@mail.gmail.com>
-Subject: Re: [kernel.org users] b4 v0.3.4 released
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=YDgiiTE4;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.221.68, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-wr1-f68.google.com with SMTP id h9so8504394wrc.8
+        for <tools@linux.kernel.org>; Thu, 26 Mar 2020 09:16:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=3o9whE1SE4KsfSMjrMRpMi84bMWwayc9npdAD1cUmkM=;
+        b=YDgiiTE44PyyIQXa9Q83tzZ+bXMR6g4QSazcvhV29JlNtu2kd+OBRMtFJCgnImaNSu
+         enVlgqGiLpycxeI8QVUDQmUHrenMp5zX4MSyHEKfQO2NeuPALrwFJrLp7DLGFMaQZraD
+         LowbbziNQ66YIFSC0QlbRr8oLMis9xfm35MRk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=3o9whE1SE4KsfSMjrMRpMi84bMWwayc9npdAD1cUmkM=;
+        b=nRUL21p6s44I1LMQG30+tYNbrt8E4nPcUZDT/xoLX5kZ6hFLXeN5y2kd3Z5+hhLZjM
+         BNaC8r7ykr1Kpz8QkInGY+Nn6w4VEkYrvWNBljbb24ryDFQJAY/SlubGaI9KTl4m/GFW
+         l28o6zzrv0pRbRRcqxQzVvbVD8bJ/U0eGGbUTqyI7bQRRVsnDUR+erNZPaOiO9zrG+q3
+         OGuIzP01QLV3UBJ4O1SXiPQroDUuyfE7rnZAGCA6cC8d0iM6LwzTEQuD70y7wDkXGYAw
+         qHapwgQT15rWD0L0mQLeoCC5IZn3v1qUc3KgFGGGdpaSZwUBAbHExqvvuAxmXFwgBStt
+         CHpg==
+X-Gm-Message-State: ANhLgQ1K5F8gPnWVnYaJNocvzPFOonMxeMzTC/wxf4xt3NAmeUqZ/Dhz
+	rup95mGR7+T89wIvNlaw8XZNlg==
+X-Google-Smtp-Source: ADFU+vsPHsjz080mtUf2jD0IoM0+FryXsGmr/ioWtHnYOWOgkaxWjfKyaTrfjoCylP0qkzKvvRxnyw==
+X-Received: by 2002:a5d:5230:: with SMTP id i16mr10009358wra.15.1585239388911;
+        Thu, 26 Mar 2020 09:16:28 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local (134.ip-51-79-53.net. [51.79.53.134])
+        by smtp.gmail.com with ESMTPSA id s2sm4077028wru.68.2020.03.26.09.16.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Mar 2020 09:16:27 -0700 (PDT)
+Date: Thu, 26 Mar 2020 12:16:22 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Rob Herring <robh@kernel.org>
 Cc: tools@linux.kernel.org, users@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [kernel.org users] b4 v0.3.4 released
+Message-ID: <20200326161622.pzma44m6vte2qi33@chatter.i7.local>
+References: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local>
+ <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
+ <CAL_JsqKBskO3oyEP0g9nTyWL4V614w21Hwigs5YpFpgLnUVktg@mail.gmail.com>
+MIME-Version: 1.0
+In-Reply-To: <CAL_JsqKBskO3oyEP0g9nTyWL4V614w21Hwigs5YpFpgLnUVktg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On Thu, Mar 26, 2020 at 10:04 AM Rob Herring <robh@kernel.org> wrote:
->
-> On Mon, Mar 23, 2020 at 4:20 PM Konstantin Ryabitsev
-> <konstantin@linuxfoundation.org> wrote:
+On Thu, Mar 26, 2020 at 10:11:44AM -0600, Rob Herring wrote:
+> > I'm seeing corruption of the subject on patches[1] with a comma in 
+> > the
+> > subject (and I'd guess only ones longer than 70 something chars). It's
+> > fine on lore web interface, but it gets wrapped in the downloaded
+> > mbox. A log is attached. When it gets applied, a space is inserted
+> > after the comma:
 > >
-> > Hello:
-> >
-> > I pushed v0.3.4 to pypi, so if you're using it from there, you can run
-> > "pip install --user --upgrade b4" to grab the latest version.
-> >
-> > Notable changes compared to 0.3.3:
-> >
-> > - deals properly with series versions that are only mentioned in the
-> >   cover letter
-> > - adds a b4.sh wrapper that lets you run b4 without needing to install
-> >   with pip
-> > - fixes a couple of backtraces due to bugs with patch attestation
-> > - adds a caching layer to avoid hitting lore.kernel.org on repeating
-> >   runs (e.g. when rerunning with -t, -s, -l, and similar)
-> > - properly refuses to install on python version < 3.5
-> > - uses more descriptive filenames for "b4 am" mboxes
->
-> I'm seeing corruption of the subject on patches[1] with a comma in the
-> subject (and I'd guess only ones longer than 70 something chars). It's
-> fine on lore web interface, but it gets wrapped in the downloaded
-> mbox. A log is attached. When it gets applied, a space is inserted
-> after the comma:
->
-> dt-bindings: iio/accel: Drop duplicate adi, adxl345/6 from trivial-devices.yaml
+> > dt-bindings: iio/accel: Drop duplicate adi, adxl345/6 from trivial-devices.yaml
+> 
+> Nevermind. It's not b4, but the dri-devel list that is corrupting the subject.
+> 
+> https://lore.kernel.org/dri-devel/20200325220542.19189-2-robh@kernel.org/
+> https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-robh@kernel.org/
 
-Nevermind. It's not b4, but the dri-devel list that is corrupting the subject.
+I think it's actually Python's fault. I'm trying to isolate the 
+operation that causes it. It makes sense that dri-devel also exhibits 
+it, because it's a mailman-managed list.
 
-https://lore.kernel.org/dri-devel/20200325220542.19189-2-robh@kernel.org/
-https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-robh@kernel.org/
-
-Rob
-
-> Interestingly, DT patchwork suffers from the same issue.
->
-> Also, I got tripped up with missing acks again because dri-devel got
-> picked and it moderates non-subscribers. A way to set the default
-> project would be nice. Perhaps rather than a single default, making it
-> a list of lists to try. Or trying lkml first might work better if
-> we're just guessing.
->
-> Rob
->
-> [1] https://lore.kernel.org/linux-devicetree/20200325220542.19189-2-robh@kernel.org/
+-K
