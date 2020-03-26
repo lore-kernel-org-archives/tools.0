@@ -1,140 +1,103 @@
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by mx.groups.io with SMTP id smtpd.web11.5240.1585253919966590101
+Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
+ by mx.groups.io with SMTP id smtpd.web11.155.1585261172938374101
  for <tools@linux.kernel.org>;
- Thu, 26 Mar 2020 13:18:40 -0700
+ Thu, 26 Mar 2020 15:19:33 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@zx2c4.com header.s=mail header.b=Jvwj/Xlt;
- spf=pass (domain: zx2c4.com, ip: 192.95.5.64, mailfrom: jason@zx2c4.com)
-Received: 
-	by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8524332;
-	Thu, 26 Mar 2020 20:11:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
-	:references:in-reply-to:from:date:message-id:subject:to:cc
-	:content-type; s=mail; bh=xHgsXscwBr8HjT2Cg79d6qgFcfE=; b=Jvwj/X
-	ltK9HyC/+2p4UpbE68+ISXhuxWpLP50wMVXYEmnW5hXhd61s+CchWWEBw14vKS6X
-	i1XUK+hu+FXzZvXNXUZHqS2LdyScH9XgejrjFXFAPzPPeWi2zLYdP2tjDrmnPt9H
-	HdYvvo49OXw1hG4RP234MH3sQ1ZihQUdWe/W3PZOY7WwccH9wgGvLrMj8VwlrbqR
-	q9srCECvSq9AN3vdYx8QC4RijEQ50kFDMhWFRe5OzRSSJ0jT/Q6IKPj+v1BinNLT
-	p3iB0D2XXexKeOc9OswIYtuJieA/S5CtAv15k7OZBqk9d4/AIeAVn/5p73QCLdnJ
-	UX8zwAREDy/ezroA==
-Received: 
-	by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6b4b2af8 (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
-	Thu, 26 Mar 2020 20:11:13 +0000 (UTC)
-Received: by mail-io1-f52.google.com with SMTP id y24so7483788ioa.8;
-        Thu, 26 Mar 2020 13:18:38 -0700 (PDT)
-X-Gm-Message-State: ANhLgQ3jUQLN2KoqBv3fsij25Rwe8Xq8lHxow4WHmwUMQlqcyHvbLfrs
-	SgZHmt9nmo89sErYxxs24Ll2/YXONsQ/2dgjod8=
-X-Google-Smtp-Source: ADFU+vs7m/QYcdvtXDIWcS/JOwooXJqJPhS+KeA/d3NhUzbl2aJyQMof+0Xs01tiF6pUq8GCP9CPcDbwNlJ9VSgXnZY=
-X-Received: by 2002:a5e:df4b:: with SMTP id g11mr9423692ioq.29.1585253917948;
- Thu, 26 Mar 2020 13:18:37 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=gfftMwuk;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.128.68, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-wm1-f68.google.com with SMTP id a81so9893708wmf.5
+        for <tools@linux.kernel.org>; Thu, 26 Mar 2020 15:19:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=bKV5LDmPRS4jCXALae7L8UjOBzxhLxI3M/HhJoxenkU=;
+        b=gfftMwukkP1p69pYJmqp+SeL5KfsN6ECXvmNu64QYctG5rUDGTARifD/uSwgrhRFVx
+         /7uYgZEaqruko+UWfIYl1tla2Z4/G0U24hbjflJOMD54y8q9aVvh9JYWYl498NGLW8EL
+         q1gzQK25sWMzg4RFNTLRBtEzeORFZuxv33/Ys=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=bKV5LDmPRS4jCXALae7L8UjOBzxhLxI3M/HhJoxenkU=;
+        b=oK2WJjFEqaYIF6dfOfu105c6znr2LlFIVR+nqsobn78NWjiJONmJ8U6PCd/TWa8rTm
+         QmG73Sj4lfBqHVXHMRFc6Z15ksH3WUH9KGwYO/fF7RydvUH3kYKEpl4vVcXhgyeHDdj7
+         odn2fJiGfe+hfrscngYWcd4+DsxBE3GHOQTAEWD2HtMO/rMD6Cjob/Y4bo5/Maa6CAR1
+         AqAoa3bg32TEnUkee56uC2H/67L10unZNKvaqUf5NNAwqSUHOEpOsSnfBkMFxkRDJXDI
+         vEyAXzYeU1H6zLXfX7UDj/v95m1HQM4pQhzsAcpb25TfIUtX6axCusKa+gx2KJ0EboN2
+         P+hg==
+X-Gm-Message-State: ANhLgQ17AXy820EsLCO3ezY4iRvtaSzEhoFfxc1N4+7+vis9ru7WCP+V
+	OiNzRnUlFvd2GIcKhbKk5oEpWw==
+X-Google-Smtp-Source: ADFU+vs0ZTFNVQn8TeODmd6VYNdaCXMk6Xr8jAymOEixIFatYc5PsyJuoLABnZc0TKiFcRzyN/Fcqg==
+X-Received: by 2002:a5d:53ce:: with SMTP id a14mr612511wrw.129.1585261171034;
+        Thu, 26 Mar 2020 15:19:31 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local (174.ip-51-79-86.net. [51.79.86.174])
+        by smtp.gmail.com with ESMTPSA id h18sm5102003wmm.34.2020.03.26.15.19.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Mar 2020 15:19:30 -0700 (PDT)
+Date: Thu, 26 Mar 2020 18:19:26 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: users@linux.kernel.org, tools@linux.kernel.org
+Subject: b4 can now explode a pull request into an mbox file with patches
+Message-ID: <20200326221926.jfsbtvnb7bfjahov@chatter.i7.local>
 MIME-Version: 1.0
-References: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local>
- <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
- <CAL_JsqKBskO3oyEP0g9nTyWL4V614w21Hwigs5YpFpgLnUVktg@mail.gmail.com>
- <15FFE6D3B979AF4C.32445@linux.kernel.org> <20200326163225.qkitq6dkmqj2fw5l@chatter.i7.local>
-In-Reply-To: <20200326163225.qkitq6dkmqj2fw5l@chatter.i7.local>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 26 Mar 2020 14:18:26 -0600
-X-Gmail-Original-Message-ID: <CAHmME9oP4epS5UvrrnvLDcSEZAHXgrrGHkbZ7ddryKO56KFosg@mail.gmail.com>
-Message-ID: <CAHmME9oP4epS5UvrrnvLDcSEZAHXgrrGHkbZ7ddryKO56KFosg@mail.gmail.com>
-Subject: Re: [kernel.org users] b4 v0.3.4 released
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Rob Herring <robh@kernel.org>, users@linux.kernel.org, tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Looks like the auto project detection has issues:
+Hi, all:
 
-zx2c4@thinkpad ~/Projects/linux $ b4 am -c
-20200326080104.27286-16-masahiroy@kernel.org
-Looking up https://lore.kernel.org/r/20200326080104.27286-16-masahiroy@kernel.org
-Grabbing thread from lore.kernel.org
-Reduced thread to strict matches only (12->11)
-Checking for newer revisions on https://lore.kernel.org/linux-crypto/
-Analyzing 11 messages in the thread
----
-Writing ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.mbx
- ERROR: missing [1/16]!
- ERROR: missing [2/16]!
- ERROR: missing [3/16]!
- ERROR: missing [4/16]!
- ERROR: missing [5/16]!
- [PATCH v2 06/16] x86: remove always-defined CONFIG_AS_SSSE3
- [PATCH v2 07/16] x86: remove always-defined CONFIG_AS_AVX
- ERROR: missing [8/16]!
- ERROR: missing [9/16]!
- ERROR: missing [10/16]!
- ERROR: missing [11/16]!
- [PATCH v2 12/16] crypto: x86 - rework configuration based on Kconfig
- ERROR: missing [13/16]!
- ERROR: missing [14/16]!
- [PATCH v2 15/16] x86: update AS_* macros to binutils >=2.23,
-supporting ADX and AVX2
- [PATCH v2 16/16] crypto: x86 - clean up poly1305-x86_64-cryptogams.S
-by 'make clean'
----
-Total patches: 5
----
-NOTE: Some trailers were sent to the cover letter:
-     Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
-     Acked-by: Ingo Molnar <mingo@kernel.org>
-NOTE: Rerun with -t to apply them to all patches
----
-WARNING: Thread incomplete!
-Cover: ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.cover
-Link: https://lore.kernel.org/r/20200326080104.27286-1-masahiroy@kernel.org
-Base: not found, sorry
-      git checkout -b v2_20200326_masahiroy_kernel_org master
-      git am ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.mbx
-zx2c4@thinkpad ~/Projects/linux $ b4 am -p linux-kernel -c
-20200326080104.27286-16-masahiroy@kernel.org
-Looking up https://lore.kernel.org/r/20200326080104.27286-16-masahiroy@kernel.org
-Grabbing thread from lore.kernel.org
-Server returned an error: 404
-zx2c4@thinkpad ~/Projects/linux $ b4 am -p lkml -c
-20200326080104.27286-16-masahiroy@kernel.org
-Looking up https://lore.kernel.org/r/20200326080104.27286-16-masahiroy@kernel.org
-Grabbing thread from lore.kernel.org
-Checking for newer revisions on https://lore.kernel.org/lkml/
-Analyzing 27 messages in the thread
----
-Writing ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.mbx
- [PATCH v2 01/16] lib/raid6/test: fix build on distros whose /bin/sh is not bash
- [PATCH v2 02/16] x86: remove unneeded defined(__ASSEMBLY__) check
-from asm/dwarf2.h
- [PATCH v2 03/16] x86: remove always-defined CONFIG_AS_CFI
- [PATCH v2 04/16] x86: remove unneeded (CONFIG_AS_)CFI_SIGNAL_FRAME
- [PATCH v2 05/16] x86: remove always-defined CONFIG_AS_CFI_SECTIONS
- [PATCH v2 06/16] x86: remove always-defined CONFIG_AS_SSSE3
- [PATCH v2 07/16] x86: remove always-defined CONFIG_AS_AVX
- [PATCH v2 08/16] x86: replace arch macros from compiler with CONFIG_X86_{32,64}
- [PATCH v2 09/16] drm/i915: remove always-defined CONFIG_AS_MOVNTDQA
- [PATCH v2 10/16] x86: probe assembler capabilities via kconfig
-instead of makefile
-   + Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
- [PATCH v2 11/16] x86: add comments about the binutils version to
-support code in as-instr
-   + Acked-by: Nick Desaulniers <ndesaulniers@google.com>
- [PATCH v2 12/16] crypto: x86 - rework configuration based on Kconfig
- [PATCH v2 13/16] crypto: curve25519 - do not pollute dispatcher based
-on assembler
- [PATCH v2 14/16] Documentation/changes: Raise minimum supported
-binutils version to 2.23
- [PATCH v2 15/16] x86: update AS_* macros to binutils >=2.23,
-supporting ADX and AVX2
- [PATCH v2 16/16] crypto: x86 - clean up poly1305-x86_64-cryptogams.S
-by 'make clean'
----
-Total patches: 16
----
-NOTE: Some trailers were sent to the cover letter:
-     Acked-by: Ingo Molnar <mingo@kernel.org>
-     Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
-NOTE: Rerun with -t to apply them to all patches
----
-Cover: ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.cover
-Link: https://lore.kernel.org/r/20200326080104.27286-1-masahiroy@kernel.org
-Base: not found, sorry
-      git checkout -b v2_20200326_masahiroy_kernel_org master
-      git am ./v2_20200326_masahiroy_x86_crypto_remove_always_defined_config_as__and_cosolidate_kconfig_makefiles.mbx
+While working on "pull-request exploder" stuff for achiving on 
+lore.kernel.org, I realized that this may be a useful set of features 
+for developers as well, as I imagine you sometimes want to comment on 
+something in a pull request and end up having to go hunting for the 
+proper commit, from/to/cc, etc information.
 
-(Also: lore still calls linux-kernel "lkml" which is a bit confusing.)
+So, the master branch of b4 just landed initial "b4 pr" implementation, 
+which will let you do "b4 pr --explode <msgid>" to get an mbox file
+with that pull request converted into a patch series with various 
+headers set so it's convenient to fire off "mutt -f" and reply to the 
+exact bits that you want and send it to the proper places.
+
+In more details:
+
+b4 pr <msgid>
+
+  - downloads that message
+  - parses the pull request
+  - checks that the remote tip is where the message says it should be
+  - makes sure the base-commit is present in the tree
+  - makes sure the tip commit isn't already in one of the branches
+  - checks if FETCH_HEAD already is at that commit
+  - if all looks good, performs a git fetch
+  - (optionally, can then do a checkout into a branch for you)
+
+b4 pr --check <msgid>
+
+  Runs all of the checks above, but doesn't perform the actual fetch.
+  Useful if you don't remember if you've already processed a pull
+  request or not.
+
+b4 pr --explode <msgid>
+
+  Runs basic sanity checks and then:
+
+  - performs a git fetch
+  - runs a "git format-patch" for base-commit..FETCH_HEAD
+  - adds the same to/from/cc headers as in the pull request
+  - properly threads each patch below the pull request
+  - saves that into a <msgid>.mbox file
+
+I mostly imagine that it's the --explode functionality that you'd be 
+interested in, but since that required writing most of the other 
+pull-request handling functionality, there's basic handling for that as 
+well.
+
+Please let me know if that is useful.
+
+You can grab the master here:
+https://git.kernel.org/pub/scm/utils/b4/b4.git
+
+Using the "b4.sh" wrapper in should let you run it straight from the 
+checkout.
+
+-K
