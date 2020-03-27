@@ -1,82 +1,73 @@
-Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
- by mx.groups.io with SMTP id smtpd.web11.18825.1585332936568434899
+Received: from userp2120.oracle.com (userp2120.oracle.com [156.151.31.85])
+ by mx.groups.io with SMTP id smtpd.web10.22620.1585342260899683033
  for <tools@linux.kernel.org>;
- Fri, 27 Mar 2020 11:15:36 -0700
+ Fri, 27 Mar 2020 13:51:01 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=bvKTakg7;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.221.67, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-wr1-f67.google.com with SMTP id u10so12551357wro.7
-        for <tools@linux.kernel.org>; Fri, 27 Mar 2020 11:15:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CIOtaG55QL1nRZrxr33sKWcJ6BTtQLQEhs2XR67Lytw=;
-        b=bvKTakg7j6LYXyfBIX3NCELvCHnL1Ec2/lJaeL/Pp2mBq3p+lIcU5LzKJd1HCPzQrr
-         EvP+JkQuy1Xsp64QjppMuEOy3U65tiR2l/4GdFtaDcGpT1mM+IJmOrSqYC5BXtpzUa6j
-         R5ukB7G8mfD/oTgsYUgndVyeelxdFyGmcf0fY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CIOtaG55QL1nRZrxr33sKWcJ6BTtQLQEhs2XR67Lytw=;
-        b=o40nsc2TpLVJw0GXg9ra2hPILKHP3GpuxJoxlug7izbCPjWwbTQ2cGYc6OA7AzDyGE
-         JqJpFN1TWxDgUzM2nEyeaK1R1v1RXK//bFUScLhuezXnqhudxVZ4dFX7c7m4NUugmHp+
-         PT2QgMwVrYtzEPQNxBJeDE3OYH+yp5tkng9ONzf6+kbUFpPyET7oeA55KolylhSTiDcL
-         yNVxtbII2L+HHm6KhOS7X3tRRHIIgapxRms6dUkDlyD1xvvwUUye3E/0uxsx7rkCcm9X
-         Dja4WVl1V6+WksAKHUn2y9TZwDLXZm1FdcrNcj6sXY+ehuYnPN+LPn5tvMq6udSfnfrq
-         K4eQ==
-X-Gm-Message-State: ANhLgQ39Q1cesMIE0Oc2ZizfD2hsMGH/+kAMxLrGtGt22sl4O67MdefA
-	4oOSpl8wYu/E93OZ7VoQ6A3Amw==
-X-Google-Smtp-Source: ADFU+vuso+c/J9aPQG9VMTwfLMLWSyjMTwV22d0mWg76NVneEMCPZzzDKSPC3l+pEmBw0NQD9FVJfA==
-X-Received: by 2002:adf:aac5:: with SMTP id i5mr609089wrc.285.1585332934971;
-        Fri, 27 Mar 2020 11:15:34 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local (tor-exit-13.zbau.f3netze.de. [185.220.100.240])
-        by smtp.gmail.com with ESMTPSA id m11sm9222620wmf.9.2020.03.27.11.15.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2020 11:15:33 -0700 (PDT)
-Date: Fri, 27 Mar 2020 14:15:26 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Rob Herring <robh@kernel.org>, users@linux.kernel.org,
-	tools@linux.kernel.org
-Subject: Re: [kernel.org users] b4 v0.3.4 released
-Message-ID: <20200327181526.e46zqg4bne2rplbm@chatter.i7.local>
-References: <20200323222041.uzfcexg2wy74jqdd@chatter.i7.local>
- <CAL_JsqLJkDx3HQEN-0ih0Jp4i2h7xKYrsfqAiYcW_hV-9GtLKA@mail.gmail.com>
- <CAL_JsqKBskO3oyEP0g9nTyWL4V614w21Hwigs5YpFpgLnUVktg@mail.gmail.com>
- <15FFE6D3B979AF4C.32445@linux.kernel.org>
- <20200326163225.qkitq6dkmqj2fw5l@chatter.i7.local>
- <CAHmME9oP4epS5UvrrnvLDcSEZAHXgrrGHkbZ7ddryKO56KFosg@mail.gmail.com>
+ dkim=pass header.i=@oracle.com header.s=corp-2020-01-29 header.b=izyapuT7;
+ spf=pass (domain: oracle.com, ip: 156.151.31.85, mailfrom: martin.petersen@oracle.com)
+Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
+	by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 02RKma05002937;
+	Fri, 27 Mar 2020 20:51:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : references : date : in-reply-to : message-id : mime-version :
+ content-type; s=corp-2020-01-29;
+ bh=bjI2Rz6erVn5Rt53V0FZIBTTm5llWkPs7FA6k2zgxO8=;
+ b=izyapuT7wvEMv3zDGhrgCbXDhY+tQYSxoxYI4BXSONIMbTyjbVJRpwmOEmskddZ9kQX1
+ M+MBQXYgW75KBhha9/GpiiN7o5n+MIhar2Nk+wOCeA2AA2MwzinRwyfomS1G2X6fbhqf
+ drHW7UHrvbYocFzdW3+orTIrwNt6FMQ8CSxijlWbUKoocyXouKCaKNnirVanHm4y0MeQ
+ +yw8fIS5jIs4GAiJIlEmMkDk1XycIJ3vIotPmszSLhoAbot0ZWiuqaQ0Bx70EqufiScc
+ FGbmBgL2JBg55/bRreIEYVUglu9RpDM7BEg2ofojJRl3yueYFNXWk1q6Z2Iae6sXXZ8U Ww== 
+Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
+	by userp2120.oracle.com with ESMTP id 3019veccfd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 27 Mar 2020 20:51:00 +0000
+Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
+	by userp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 02RKnuVL094986;
+	Fri, 27 Mar 2020 20:50:59 GMT
+Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
+	by userp3020.oracle.com with ESMTP id 3003gpngfd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 27 Mar 2020 20:50:59 +0000
+Received: from abhmp0012.oracle.com (abhmp0012.oracle.com [141.146.116.18])
+	by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 02RKovF7019529;
+	Fri, 27 Mar 2020 20:50:58 GMT
+Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
+	by default (Oracle Beehive Gateway v4.0)
+	with ESMTP ; Fri, 27 Mar 2020 13:50:57 -0700
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, "Martin K. Petersen" <martin.petersen@oracle.com>,
+        users@linux.kernel.org
+Subject: Re: [tools] [kernel.org users] b4 version 0.3.5 released
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+References: <20200327164537.wxfcj5f7xtwp574o@chatter.i7.local>
+	<yq1a741bt2b.fsf@oracle.com> <16003A554CE54555.17905@linux.kernel.org>
+	<20200327180414.bggwsgfa2k3yqmz4@chatter.i7.local>
+Date: Fri, 27 Mar 2020 16:50:55 -0400
+In-Reply-To: <20200327180414.bggwsgfa2k3yqmz4@chatter.i7.local> (Konstantin
+	Ryabitsev's message of "Fri, 27 Mar 2020 14:04:14 -0400")
+Message-ID: <yq1mu81a5e8.fsf@oracle.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9oP4epS5UvrrnvLDcSEZAHXgrrGHkbZ7ddryKO56KFosg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9573 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 mlxlogscore=907 bulkscore=0
+ phishscore=0 adultscore=0 spamscore=0 malwarescore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2003270171
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9573 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 impostorscore=0 phishscore=0
+ clxscore=1015 adultscore=0 spamscore=0 malwarescore=0 mlxlogscore=983
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2003270171
+Content-Type: text/plain
 
-On Thu, Mar 26, 2020 at 02:18:26PM -0600, Jason A. Donenfeld wrote:
-> Looks like the auto project detection has issues:
 
-It's not really auto-project detection. We use public-inbox itself to 
-look for "any list where this message-id shows up". Currently, it does 
-no thread completion matching and there is no way to set preference. I 
-hope that we'll be able to implement these features in the future.
+Konstantin,
 
-For now, I plan to use the following approach:
+> The latest commit (in master and stable-0.3.y) should fix this.
 
-- when a thread is incomplete, look at other mailing lists where it was 
-  sent (in to: and cc:)
-- grab https://lore.kernel.org/lists.txt
-- try to see if we have archives for any of those other lists
-- try to backfill missing messages from other lists
+No gremlins to be found. Thanks much!
 
-This is not great, but it should hopefully help with this problem until 
-public-inbox gains ability to return a thread collected from multiple 
-lists (it should be able to do that once cross-list search becomes 
-available).
-
-> (Also: lore still calls linux-kernel "lkml" which is a bit confusing.)
-
-I know, and I'll have some mechanism in place so both work soon.
-
--K
+-- 
+Martin K. Petersen	Oracle Linux Engineering
