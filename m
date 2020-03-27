@@ -1,94 +1,60 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
- by mx.groups.io with SMTP id smtpd.web12.16491.1585327546306703913
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+ by mx.groups.io with SMTP id smtpd.web10.16764.1585328048847163155
  for <tools@linux.kernel.org>;
- Fri, 27 Mar 2020 09:45:46 -0700
+ Fri, 27 Mar 2020 09:54:09 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=Y+fcPNns;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.221.51, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-wr1-f51.google.com with SMTP id a25so12248097wrd.0
-        for <tools@linux.kernel.org>; Fri, 27 Mar 2020 09:45:46 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=f/AXvW39;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.221.46, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-wr1-f46.google.com with SMTP id h15so12209681wrx.9
+        for <tools@linux.kernel.org>; Fri, 27 Mar 2020 09:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=DxhSBXDjoeDwg0yEIy/WezOVMR13s68wO9jmgQ5JaNM=;
-        b=Y+fcPNnsQnkm/czGzA6E9p3iZsvfrs3ogpxPGZyIeULFITAxP6xNaY4/yYmSadMDXz
-         ZEhMiA7Z/GG5YBmp6IzRtyOMFQ6ky6uS/YpjagDEHb2x3ulGxGhu04K7pRMCdNnRvToH
-         HrGe+uzW/FntNUdyK7NYxN+o313W+6MpeR2ec=
+        bh=lykxb/y5JUcais2KuC81BvtYcZUdpauMYFNfkua+/CU=;
+        b=f/AXvW39cVqO5zmK10a9zbItzTr26pfGPNWCg1lH5jgD9PEIl+ML/+Bkr9Ab/rwYkj
+         mvpqZVKRXffwbLvnFhZShlhAPNFgwr0byYTWusw+jOkHy0QGSCh5UvY3gUA/6o1vYrfi
+         2cYByL9OHNouJtUhGWFn4CLISnI/ytA0VjdQw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:mime-version
          :content-disposition;
-        bh=DxhSBXDjoeDwg0yEIy/WezOVMR13s68wO9jmgQ5JaNM=;
-        b=AGRNu/ZXHVOPAz4hjel4lArr5aOVTiSF4ZxtoMB3psNAl0Vjt8e7Y9zN2pyA1gBW4y
-         Yy6GAoQrIU49Q6ihclpakOyACDgwS/rfczCC9iWBJIYZoNaV2TKlw/SLAfy+p4oOJs6c
-         9zixT/2F8HX2kaPHPxS8JvVsl09q8o1yIPv6xsBb7M2c4crR85IpldJ2eGfixPJ1/UEK
-         mVSK0lWMejLzsrCc/ZomrnLSnVk0T0KSsodGAW0R/8sDyqEZcv86LRFHEOfIdCLIki8W
-         lzf67nSA83OfV5HjWADvZVIq3cMZksyhTzYm8+7A9K/bxrwb6SRN/wvuGOtxBWx2BDLl
-         N7LQ==
-X-Gm-Message-State: ANhLgQ3EgbY/zif7THlJOpi0dEOZPHorQK7O9UoVrEy8EGpK9PCMI/I4
-	esaLrsoQhErrM4YpNCMx6jJIFZWrDlDSNg==
-X-Google-Smtp-Source: ADFU+vu+F5DTd0glCt8oJqyIUh0t9MZGo1nXj+LjpX7gmoI2mWxJtvBPDcV5xy9t5aFNgq0KLbYx1Q==
-X-Received: by 2002:adf:f6c8:: with SMTP id y8mr276295wrp.403.1585327543266;
-        Fri, 27 Mar 2020 09:45:43 -0700 (PDT)
+        bh=lykxb/y5JUcais2KuC81BvtYcZUdpauMYFNfkua+/CU=;
+        b=QedMjnvJhZ/DYnSYW6zrCr/8YOVLZNg98qAh+BhIMbyfl3Q0bYBSGfmOuDN+Ko7qVX
+         6jTTvenPuYw3mc1aO7NbkxOXE2KXxSYRhAv36975Bvw8HyoEKztJGYSbpcua/jiRvkyc
+         IhecEL6wRha4O4TGJimEsmxNBI20QvKH2Qeoc7Bm3wTjdd4opbWrBAbcSmQQgKqMJC4r
+         MaUuuRwi7y5x+zeqlK/j/UNXUHe/sWJuyatLmwUtBeWK9MpZgbEYw1sn2xfSXFCQ1h2d
+         SCpwBsAh1egCW8CNUVsNNTPE6rNv8qFuweh3o1syCVfUuk+xBlwpOzOZOhi3y4tKNaNm
+         lpIA==
+X-Gm-Message-State: ANhLgQ0DNccmdknN8Ce10LAkd0aJaP5/plnLIo99FrWhNxU+3Umijp4Z
+	vVaKqIwakb6fVqn5kIJJqMU2iHQbQuKBiA==
+X-Google-Smtp-Source: ADFU+vtckDHWMQz/pDXzoLmNbYAVA9ZLipHbtK3JOwbDAdUmtLEEASykjTQ6JybQ2SSMH7uLgnXfZQ==
+X-Received: by 2002:adf:dc4f:: with SMTP id m15mr336714wrj.219.1585328047253;
+        Fri, 27 Mar 2020 09:54:07 -0700 (PDT)
 Return-Path: <konstantin@linuxfoundation.org>
 Received: from chatter.i7.local ([185.220.101.146])
-        by smtp.gmail.com with ESMTPSA id r3sm9000467wrm.35.2020.03.27.09.45.40
+        by smtp.gmail.com with ESMTPSA id p21sm9270840wma.0.2020.03.27.09.54.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2020 09:45:42 -0700 (PDT)
-Date: Fri, 27 Mar 2020 12:45:37 -0400
+        Fri, 27 Mar 2020 09:54:06 -0700 (PDT)
+Date: Fri, 27 Mar 2020 12:54:02 -0400
 From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, users@linux.kernel.org
-Subject: b4 version 0.3.5 released
-Message-ID: <20200327164537.wxfcj5f7xtwp574o@chatter.i7.local>
+To: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Gmail message ID finder Chrome extension
+Message-ID: <20200327165402.slc5l46hc7hlo2l5@chatter.i7.local>
 MIME-Version: 1.0
-X-Groupsio-MsgNum: 58
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="3jbyuvwozxppd5sb"
-Content-Disposition: inline
-
---3jbyuvwozxppd5sb
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello:
+If you're a Chrome and Gmail user, you can try the following extension 
+to easily get the message-id of an email without having to "show 
+original" and hunting for the right header:
 
-Version 0.3.5 is a minor point release in the stable-0.3.y branch. =20
-Notable changes compared to v0.3.4:
+https://chrome.google.com/webstore/detail/gmail-message-id-finder/comcoiiifldaaejpbgbincdkoohihbae
 
-- Tweak b4.sh wrapper so it can also be symlinked
-- Strip leading id: and rfc822msgid: bits from the message-id
-- Warn when we are ignoring trailers due to From mismatch and allow to=20
-  force their application using the -S,--sloppy-trailers flag
-- Ignore messages without plaintext content instead of crashing
-- Disambiguate cached messages when running with --useproject
-- Minor bugfixes
+The message-id will be copied to the clipboard with the "rfc822msgid:" 
+lead, but current versions of b4 will handle that properly.
 
-Thanks to the following people for their help:
-- Greg Kroah-Hartman
-- Jason Donenfeld
-- Rob Herring
-- Geert Uytterhoeven
-
-To upgrade with pip:
-
-pip install --user --upgrade b4
-
-You can also run from the stable-0.3.y branch directly from checkout if=20
-you use the b4.sh wrapper.
+I haven't been able to find something similar for Firefox, but perhaps 
+this is easy to do with a greasemonkey/tampermonkey extension.
 
 Best regards,
-Konstantin
-
---3jbyuvwozxppd5sb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCXn4trwAKCRC2xBzjVmSZ
-bGQ6AQDWhrU/e35ysX6zU1Q6Y/xbvf2J//8MF8HpwlKh76HqfgD+NmjVWL7VWmxP
-wvj9Qwh1jG0luVEa/k7yaTCyVSfe+wE=
-=Aj0U
------END PGP SIGNATURE-----
-
---3jbyuvwozxppd5sb--
+-K
