@@ -1,89 +1,94 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
- by mx.groups.io with SMTP id smtpd.web11.10982.1585314881254472103
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+ by mx.groups.io with SMTP id smtpd.web12.16491.1585327546306703913
  for <tools@linux.kernel.org>;
- Fri, 27 Mar 2020 06:14:41 -0700
+ Fri, 27 Mar 2020 09:45:46 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@ziepe.ca header.s=google header.b=nXcZyMIZ;
- spf=pass (domain: ziepe.ca, ip: 209.85.219.42, mailfrom: jgg@ziepe.ca)
-Received: by mail-qv1-f42.google.com with SMTP id bp12so786643qvb.7
-        for <tools@linux.kernel.org>; Fri, 27 Mar 2020 06:14:41 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=Y+fcPNns;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.221.51, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-wr1-f51.google.com with SMTP id a25so12248097wrd.0
+        for <tools@linux.kernel.org>; Fri, 27 Mar 2020 09:45:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=tkhbRxDM4csH2u8b4WMj1F0hyQCa4JvwRhFmnAyayG8=;
-        b=nXcZyMIZoZOIi+Cmz4lI5eWE5bBAlFwk42/uyG6zlYqIeewIHSVSO8w+rlIvCUlEFf
-         pDUTd3kwf2Rxer/7BcNEqrkQlhx6LaqxQimbAqR2FCC5U62WZN5FSr//uyy8ifpjyFVQ
-         ZjT9FZtz0eOFIfKExYGvDUEtn8CToLwF2zKXSSGEHB+LYf5mGy0jyJ8odAWmEUucDx6D
-         kOkhVXrO2xy3NPpHh2h6HqjI4q5vmaN1ZoG0//LZLepOKBQk+Rd0xrPf5EuXBPNEwTAF
-         y6Sskp7IpAaS7GNxka6/XkoH+x08J1yn0FZMybYk0ylqGI0o3mO94x4FuXq+NAHOSWVT
-         L66Q==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=DxhSBXDjoeDwg0yEIy/WezOVMR13s68wO9jmgQ5JaNM=;
+        b=Y+fcPNnsQnkm/czGzA6E9p3iZsvfrs3ogpxPGZyIeULFITAxP6xNaY4/yYmSadMDXz
+         ZEhMiA7Z/GG5YBmp6IzRtyOMFQ6ky6uS/YpjagDEHb2x3ulGxGhu04K7pRMCdNnRvToH
+         HrGe+uzW/FntNUdyK7NYxN+o313W+6MpeR2ec=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tkhbRxDM4csH2u8b4WMj1F0hyQCa4JvwRhFmnAyayG8=;
-        b=qNEzYxRPjRfQbBoPM9Qm2CfpX1n+vl7hPHlCBdo1XuYouSzaESthl09lhMzRylpBKT
-         m7G+Y6klba1GyArvR9qhMLswq7yYDxlJARwbVSQ9ATqTG4Lep22qTmYTB0GX6wt2cX3L
-         d/BhVQ2wU2cbm9ZoHWK1b5JprkcypSWGnwFA/US8DqsDuY3D6GwrDb3GwwLPodHCE1A5
-         NTSzf9hG3RyVy+aNZHiZWOpmoqdB1XJc/yVzYELuChyHf8s8I2ourwtz8RKRLFpGShpo
-         x5xD74kgOt8I3oGdJJQF7QXIy6Q4U0crGmADLdwj18pEVfLkR+b3Pnmhch91jm3b1htH
-         g1gg==
-X-Gm-Message-State: ANhLgQ05q6dDo8WJCNNdGT9V2JAV10ZSJzgMN19QhrL6cYkwRmozeUam
-	IAvSCzLT7n6n5ORI5zIjbYhjqw==
-X-Google-Smtp-Source: ADFU+vtj/ff9Bo7gt80WxVXIELf6iGDhTwrmfPmesT6lEGZNwwG70OxjTpOHadLYJTmf+YpgXft+Cw==
-X-Received: by 2002:a0c:9b95:: with SMTP id o21mr13656109qve.175.1585314880308;
-        Fri, 27 Mar 2020 06:14:40 -0700 (PDT)
-Return-Path: <jgg@ziepe.ca>
-Received: from ziepe.ca (hlfxns017vw-142-68-57-212.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.57.212])
-        by smtp.gmail.com with ESMTPSA id y127sm3704078qkb.76.2020.03.27.06.14.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Mar 2020 06:14:39 -0700 (PDT)
-Received: from jgg by mlx.ziepe.ca with local (Exim 4.90_1)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1jHooo-0008K4-O7; Fri, 27 Mar 2020 10:14:38 -0300
-Date: Fri, 27 Mar 2020 10:14:38 -0300
-From: "Jason Gunthorpe" <jgg@ziepe.ca>
-To: Ludovic.Desroches@microchip.com
-Cc: konstantin@linuxfoundation.org, users@linux.kernel.org,
-	tools@linux.kernel.org
-Subject: Re: [kernel.org users] B4 and gmail integration features
-Message-ID: <20200327131438.GU20941@ziepe.ca>
-References: <20200320214532.wvmym643l3dw24qh@chatter.i7.local>
- <20200323121620.GX20941@ziepe.ca>
- <9d4c04a2-be5c-2fad-2513-dc2bcc052f3d@microchip.com>
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=DxhSBXDjoeDwg0yEIy/WezOVMR13s68wO9jmgQ5JaNM=;
+        b=AGRNu/ZXHVOPAz4hjel4lArr5aOVTiSF4ZxtoMB3psNAl0Vjt8e7Y9zN2pyA1gBW4y
+         Yy6GAoQrIU49Q6ihclpakOyACDgwS/rfczCC9iWBJIYZoNaV2TKlw/SLAfy+p4oOJs6c
+         9zixT/2F8HX2kaPHPxS8JvVsl09q8o1yIPv6xsBb7M2c4crR85IpldJ2eGfixPJ1/UEK
+         mVSK0lWMejLzsrCc/ZomrnLSnVk0T0KSsodGAW0R/8sDyqEZcv86LRFHEOfIdCLIki8W
+         lzf67nSA83OfV5HjWADvZVIq3cMZksyhTzYm8+7A9K/bxrwb6SRN/wvuGOtxBWx2BDLl
+         N7LQ==
+X-Gm-Message-State: ANhLgQ3EgbY/zif7THlJOpi0dEOZPHorQK7O9UoVrEy8EGpK9PCMI/I4
+	esaLrsoQhErrM4YpNCMx6jJIFZWrDlDSNg==
+X-Google-Smtp-Source: ADFU+vu+F5DTd0glCt8oJqyIUh0t9MZGo1nXj+LjpX7gmoI2mWxJtvBPDcV5xy9t5aFNgq0KLbYx1Q==
+X-Received: by 2002:adf:f6c8:: with SMTP id y8mr276295wrp.403.1585327543266;
+        Fri, 27 Mar 2020 09:45:43 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([185.220.101.146])
+        by smtp.gmail.com with ESMTPSA id r3sm9000467wrm.35.2020.03.27.09.45.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Mar 2020 09:45:42 -0700 (PDT)
+Date: Fri, 27 Mar 2020 12:45:37 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: tools@linux.kernel.org, users@linux.kernel.org
+Subject: b4 version 0.3.5 released
+Message-ID: <20200327164537.wxfcj5f7xtwp574o@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <9d4c04a2-be5c-2fad-2513-dc2bcc052f3d@microchip.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Content-Type: text/plain; charset=us-ascii
+X-Groupsio-MsgNum: 58
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="3jbyuvwozxppd5sb"
 Content-Disposition: inline
 
-On Fri, Mar 27, 2020 at 12:53:57PM +0000, Ludovic.Desroches@microchip.com wrote:
-> On 3/23/2020 1:16 PM, Jason Gunthorpe wrote:
-> > On Fri, Mar 20, 2020 at 05:45:32PM -0400, Konstantin Ryabitsev wrote:
-> >> Hi, all:
-> >>
-> >> For my next B4 trick, I plan to add some basic gmail integration --
-> >> since I know many of you do use gmail.
-> > 
-> > FWIW, I've done some work on this here to avoid the 'OAUTH Apocalypse'
-> > that is coming. You may find the oauth code helpful:
-> > 
-> > https://github.com/jgunthorpe/cloud_mdir_sync
-> 
-> Thanks a lot for this tool. We have an Exchange server with IMAP support 
-> disabled recently. It has broken my mail workflow.
+--3jbyuvwozxppd5sb
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, we are looking to a similar future.
+Hello:
 
-I hope in a month or so I can show how to make IMAP work again with an
-OAUTH helper, but this tool turned out well and is nicer than mutt's
-built in IMAP or mbsync..
+Version 0.3.5 is a minor point release in the stable-0.3.y branch. =20
+Notable changes compared to v0.3.4:
 
-> I didn't play much yet with your tool but first tests are encouraging to 
-> be able to use notmuch and mutt again.
+- Tweak b4.sh wrapper so it can also be symlinked
+- Strip leading id: and rfc822msgid: bits from the message-id
+- Warn when we are ignoring trailers due to From mismatch and allow to=20
+  force their application using the -S,--sloppy-trailers flag
+- Ignore messages without plaintext content instead of crashing
+- Disambiguate cached messages when running with --useproject
+- Minor bugfixes
 
-Consider it 'beta' at the momement, would be interested in feedback
+Thanks to the following people for their help:
+- Greg Kroah-Hartman
+- Jason Donenfeld
+- Rob Herring
+- Geert Uytterhoeven
 
-Regards,
-Jason
+To upgrade with pip:
+
+pip install --user --upgrade b4
+
+You can also run from the stable-0.3.y branch directly from checkout if=20
+you use the b4.sh wrapper.
+
+Best regards,
+Konstantin
+
+--3jbyuvwozxppd5sb
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCXn4trwAKCRC2xBzjVmSZ
+bGQ6AQDWhrU/e35ysX6zU1Q6Y/xbvf2J//8MF8HpwlKh76HqfgD+NmjVWL7VWmxP
+wvj9Qwh1jG0luVEa/k7yaTCyVSfe+wE=
+=Aj0U
+-----END PGP SIGNATURE-----
+
+--3jbyuvwozxppd5sb--
