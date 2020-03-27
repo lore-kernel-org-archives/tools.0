@@ -1,60 +1,99 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
- by mx.groups.io with SMTP id smtpd.web10.16764.1585328048847163155
+Received: from aserp2120.oracle.com (aserp2120.oracle.com [141.146.126.78])
+ by mx.groups.io with SMTP id smtpd.web12.17838.1585330466011881707
  for <tools@linux.kernel.org>;
- Fri, 27 Mar 2020 09:54:09 -0700
+ Fri, 27 Mar 2020 10:34:26 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=f/AXvW39;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.221.46, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-wr1-f46.google.com with SMTP id h15so12209681wrx.9
-        for <tools@linux.kernel.org>; Fri, 27 Mar 2020 09:54:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=lykxb/y5JUcais2KuC81BvtYcZUdpauMYFNfkua+/CU=;
-        b=f/AXvW39cVqO5zmK10a9zbItzTr26pfGPNWCg1lH5jgD9PEIl+ML/+Bkr9Ab/rwYkj
-         mvpqZVKRXffwbLvnFhZShlhAPNFgwr0byYTWusw+jOkHy0QGSCh5UvY3gUA/6o1vYrfi
-         2cYByL9OHNouJtUhGWFn4CLISnI/ytA0VjdQw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=lykxb/y5JUcais2KuC81BvtYcZUdpauMYFNfkua+/CU=;
-        b=QedMjnvJhZ/DYnSYW6zrCr/8YOVLZNg98qAh+BhIMbyfl3Q0bYBSGfmOuDN+Ko7qVX
-         6jTTvenPuYw3mc1aO7NbkxOXE2KXxSYRhAv36975Bvw8HyoEKztJGYSbpcua/jiRvkyc
-         IhecEL6wRha4O4TGJimEsmxNBI20QvKH2Qeoc7Bm3wTjdd4opbWrBAbcSmQQgKqMJC4r
-         MaUuuRwi7y5x+zeqlK/j/UNXUHe/sWJuyatLmwUtBeWK9MpZgbEYw1sn2xfSXFCQ1h2d
-         SCpwBsAh1egCW8CNUVsNNTPE6rNv8qFuweh3o1syCVfUuk+xBlwpOzOZOhi3y4tKNaNm
-         lpIA==
-X-Gm-Message-State: ANhLgQ0DNccmdknN8Ce10LAkd0aJaP5/plnLIo99FrWhNxU+3Umijp4Z
-	vVaKqIwakb6fVqn5kIJJqMU2iHQbQuKBiA==
-X-Google-Smtp-Source: ADFU+vtckDHWMQz/pDXzoLmNbYAVA9ZLipHbtK3JOwbDAdUmtLEEASykjTQ6JybQ2SSMH7uLgnXfZQ==
-X-Received: by 2002:adf:dc4f:: with SMTP id m15mr336714wrj.219.1585328047253;
-        Fri, 27 Mar 2020 09:54:07 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([185.220.101.146])
-        by smtp.gmail.com with ESMTPSA id p21sm9270840wma.0.2020.03.27.09.54.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2020 09:54:06 -0700 (PDT)
-Date: Fri, 27 Mar 2020 12:54:02 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Gmail message ID finder Chrome extension
-Message-ID: <20200327165402.slc5l46hc7hlo2l5@chatter.i7.local>
+ dkim=pass header.i=@oracle.com header.s=corp-2020-01-29 header.b=Q/AqAdim;
+ spf=pass (domain: oracle.com, ip: 141.146.126.78, mailfrom: martin.petersen@oracle.com)
+Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
+	by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 02RHNN1c054683;
+	Fri, 27 Mar 2020 17:34:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : references : date : in-reply-to : message-id : mime-version :
+ content-type; s=corp-2020-01-29;
+ bh=WtGn0W6GbRfLR7Ip6FaG10A7YDxRpegxwRBa+jm5PUM=;
+ b=Q/AqAdim9LamdLgJxAoENHqwQN0WKWxMpR8NzKtA10/2Z0kDe73G2mrdzMJgNJMj1oij
+ OUQXlWB4sF4ZmQEZ5qzQcp/vh4tczEBNkAioPhh974R7uDBTrcjs1DlaN7PTqmOKpuT2
+ aKMBAXqLCC7ITaQRno9JRz5SBIkEmAMc59jpL4Tbw+naUT38k4+7+58rG2q/b5C7sRTh
+ y1W/CqFlCPr2vje8OwiZdVxHXwwvEddB9xBUbkNGlE/QhguKmLQCy0pOKP3DSZIdE9O0
+ t7SYuNv6fFSbMLG11hF0Ld8bMZi9XoQjbG+/Mzj63sDdv/vgkT4Y/TBhjV4hSiRcd8NK 7A== 
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
+	by aserp2120.oracle.com with ESMTP id 301m49gnay-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 27 Mar 2020 17:34:24 +0000
+Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
+	by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 02RHN3II075239;
+	Fri, 27 Mar 2020 17:34:24 GMT
+Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
+	by aserp3020.oracle.com with ESMTP id 30073h9j5n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 27 Mar 2020 17:34:24 +0000
+Received: from abhmp0016.oracle.com (abhmp0016.oracle.com [141.146.116.22])
+	by aserv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 02RHYNx1008717;
+	Fri, 27 Mar 2020 17:34:23 GMT
+Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
+	by default (Oracle Beehive Gateway v4.0)
+	with ESMTP ; Fri, 27 Mar 2020 10:34:23 -0700
+To: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, users@linux.kernel.org
+Subject: Re: [kernel.org users] b4 version 0.3.5 released
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+References: <20200327164537.wxfcj5f7xtwp574o@chatter.i7.local>
+Date: Fri, 27 Mar 2020 13:34:20 -0400
+In-Reply-To: <20200327164537.wxfcj5f7xtwp574o@chatter.i7.local> (Konstantin
+	Ryabitsev's message of "Fri, 27 Mar 2020 12:45:37 -0400")
+Message-ID: <yq1a741bt2b.fsf@oracle.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9573 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 adultscore=0
+ suspectscore=0 mlxscore=0 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2003270148
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9573 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 clxscore=1011 bulkscore=0
+ impostorscore=0 suspectscore=0 spamscore=0 adultscore=0 phishscore=0
+ malwarescore=0 mlxlogscore=999 lowpriorityscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2003270148
+Content-Type: text/plain
 
-If you're a Chrome and Gmail user, you can try the following extension 
-to easily get the message-id of an email without having to "show 
-original" and hunting for the right header:
 
-https://chrome.google.com/webstore/detail/gmail-message-id-finder/comcoiiifldaaejpbgbincdkoohihbae
+Hi Konstantin!
 
-The message-id will be copied to the clipboard with the "rfc822msgid:" 
-lead, but current versions of b4 will handle that properly.
+> Version 0.3.5 is a minor point release in the stable-0.3.y branch.  
 
-I haven't been able to find something similar for Firefox, but perhaps 
-this is easy to do with a greasemonkey/tampermonkey extension.
+I started noticing this a few commits back. Sometimes my SoB is being
+added before the patch author's. The interesting thing is that it is
+non-deterministic. I.e. if I run exactly the same b4 command several
+times in a row, sometimes the ordering is correct, sometimes it's
+reversed.
 
-Best regards,
--K
+While repeating this in one terminal:
+
+$ b4 am -s 20200327141954.955-1-ddiss@suse.de
+
+I run this in another:
+
+$ tail -F v3_20200327_ddiss_scsi_target_xcopy_performance.mbx | grep Signed-off
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+[...]
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[...]
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+[...]
+
+I think I'm cursed!
+
+-- 
+Martin K. Petersen	Oracle Linux Engineering
