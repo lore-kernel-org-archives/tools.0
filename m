@@ -1,73 +1,46 @@
-Received: from userp2120.oracle.com (userp2120.oracle.com [156.151.31.85])
- by mx.groups.io with SMTP id smtpd.web10.22620.1585342260899683033
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by mx.groups.io with SMTP id smtpd.web11.3547.1585361280363000925
  for <tools@linux.kernel.org>;
- Fri, 27 Mar 2020 13:51:01 -0700
+ Fri, 27 Mar 2020 19:08:01 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@oracle.com header.s=corp-2020-01-29 header.b=izyapuT7;
- spf=pass (domain: oracle.com, ip: 156.151.31.85, mailfrom: martin.petersen@oracle.com)
-Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
-	by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 02RKma05002937;
-	Fri, 27 Mar 2020 20:51:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : references : date : in-reply-to : message-id : mime-version :
- content-type; s=corp-2020-01-29;
- bh=bjI2Rz6erVn5Rt53V0FZIBTTm5llWkPs7FA6k2zgxO8=;
- b=izyapuT7wvEMv3zDGhrgCbXDhY+tQYSxoxYI4BXSONIMbTyjbVJRpwmOEmskddZ9kQX1
- M+MBQXYgW75KBhha9/GpiiN7o5n+MIhar2Nk+wOCeA2AA2MwzinRwyfomS1G2X6fbhqf
- drHW7UHrvbYocFzdW3+orTIrwNt6FMQ8CSxijlWbUKoocyXouKCaKNnirVanHm4y0MeQ
- +yw8fIS5jIs4GAiJIlEmMkDk1XycIJ3vIotPmszSLhoAbot0ZWiuqaQ0Bx70EqufiScc
- FGbmBgL2JBg55/bRreIEYVUglu9RpDM7BEg2ofojJRl3yueYFNXWk1q6Z2Iae6sXXZ8U Ww== 
-Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
-	by userp2120.oracle.com with ESMTP id 3019veccfd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 27 Mar 2020 20:51:00 +0000
-Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
-	by userp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 02RKnuVL094986;
-	Fri, 27 Mar 2020 20:50:59 GMT
-Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
-	by userp3020.oracle.com with ESMTP id 3003gpngfd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 27 Mar 2020 20:50:59 +0000
-Received: from abhmp0012.oracle.com (abhmp0012.oracle.com [141.146.116.18])
-	by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 02RKovF7019529;
-	Fri, 27 Mar 2020 20:50:58 GMT
-Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
-	by default (Oracle Beehive Gateway v4.0)
-	with ESMTP ; Fri, 27 Mar 2020 13:50:57 -0700
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, "Martin K. Petersen" <martin.petersen@oracle.com>,
-        users@linux.kernel.org
-Subject: Re: [tools] [kernel.org users] b4 version 0.3.5 released
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
-References: <20200327164537.wxfcj5f7xtwp574o@chatter.i7.local>
-	<yq1a741bt2b.fsf@oracle.com> <16003A554CE54555.17905@linux.kernel.org>
-	<20200327180414.bggwsgfa2k3yqmz4@chatter.i7.local>
-Date: Fri, 27 Mar 2020 16:50:55 -0400
-In-Reply-To: <20200327180414.bggwsgfa2k3yqmz4@chatter.i7.local> (Konstantin
-	Ryabitsev's message of "Fri, 27 Mar 2020 14:04:14 -0400")
-Message-ID: <yq1mu81a5e8.fsf@oracle.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
+ dkim=pass header.i=@zx2c4.com header.s=mail header.b=IhY0NoAs;
+ spf=pass (domain: zx2c4.com, ip: 192.95.5.64, mailfrom: jason@zx2c4.com)
+Received: 
+	by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c793861;
+	Sat, 28 Mar 2020 02:00:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:references:in-reply-to:from:date:message-id:subject:to:cc
+	:content-type; s=mail; bh=aabBhYMb4oUSLytX+9y35yAwtVY=; b=IhY0No
+	AsSQdbVTZ5lgb6d2la21CA1WHSYo9QVvwBeNrijbcu0lxRilIPMPowDSghWHUaju
+	uGDy/5VX1Hlt4kg1ayaJf7OKqgo99J2nWBMN9BKXDKCMmbrjLsG3HgZbCfBKst3a
+	HtvUNAHRQuUmDAP5BXgYWbZokP0GButrlr1zH4NhS9XDWqP8p+sqGHvC3+AYA20C
+	MTvecnCiOKCR2cda1LH8XCjK9KV54RVkQYRp3cAGO4EedzkfUazaxweHUns6Oo/Q
+	zsO1+qrgoiu5l/KbBUyo83i1n+98co9ITYZZ0wl5aCLa3pnsoDAql4SWjc1DgRde
+	0j9ewyYm/HfCcHsg==
+Received: 
+	by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d51b16d4 (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
+	Sat, 28 Mar 2020 02:00:23 +0000 (UTC)
+Received: by mail-io1-f51.google.com with SMTP id y24so11857786ioa.8;
+        Fri, 27 Mar 2020 19:07:58 -0700 (PDT)
+X-Gm-Message-State: ANhLgQ1HowqqACjk6L5rqe+oIv12Hd9/yVT2NFV1YrdvpiXdnj0rDDcY
+	QUG43PD+mivglKxcdkb7mXmLOhjMoIM4MA2cq2s=
+X-Google-Smtp-Source: ADFU+vtMmt0Dz3d1AOMMZQjOeih3P1kJYIaEc9L+fv8xlEngDiRdz6uwurC+YNnRzKUjuzk25Ud7V4lktURXkzo22iI=
+X-Received: by 2002:a5d:954c:: with SMTP id a12mr1429925ios.25.1585361277470;
+ Fri, 27 Mar 2020 19:07:57 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9573 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 mlxlogscore=907 bulkscore=0
- phishscore=0 adultscore=0 spamscore=0 malwarescore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2003270171
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9573 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 impostorscore=0 phishscore=0
- clxscore=1015 adultscore=0 spamscore=0 malwarescore=0 mlxlogscore=983
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2003270171
-Content-Type: text/plain
+References: <20200327165402.slc5l46hc7hlo2l5@chatter.i7.local>
+In-Reply-To: <20200327165402.slc5l46hc7hlo2l5@chatter.i7.local>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 27 Mar 2020 20:07:46 -0600
+X-Gmail-Original-Message-ID: <CAHmME9oPWZFggrmDyOeu26HJZE16kmaHZ3HXUCTm1Yy0cLGrgQ@mail.gmail.com>
+Message-ID: <CAHmME9oPWZFggrmDyOeu26HJZE16kmaHZ3HXUCTm1Yy0cLGrgQ@mail.gmail.com>
+Subject: Re: [kernel.org users] Gmail message ID finder Chrome extension
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-
-Konstantin,
-
-> The latest commit (in master and stable-0.3.y) should fix this.
-
-No gremlins to be found. Thanks much!
-
--- 
-Martin K. Petersen	Oracle Linux Engineering
+Note that this extension has access to your gmail.com content, and can
+also be remotely updated by its original author. I'm not sure I'd be
+too happy about having this rando developer being the weakest link in
+security posture. However, you can download that and install it
+locally, or make it into a bookmarklet or greasemonkey script.
