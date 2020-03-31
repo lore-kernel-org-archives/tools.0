@@ -1,84 +1,116 @@
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
- by mx.groups.io with SMTP id smtpd.web11.1237.1585620380424716778
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+ by mx.groups.io with SMTP id smtpd.web12.4658.1585641847024017705
  for <tools@linux.kernel.org>;
- Mon, 30 Mar 2020 19:06:20 -0700
+ Tue, 31 Mar 2020 01:04:07 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=ZLnNwXZW;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.128.67, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-wm1-f67.google.com with SMTP id c81so824059wmd.4
-        for <tools@linux.kernel.org>; Mon, 30 Mar 2020 19:06:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=rFSd6AmePtaAqjx2BjOga9toOx0sOuRisdKABByKTJE=;
-        b=ZLnNwXZW2581XOZMz5Kpfg31YLqxr3lc4tXEFV9z71DKz5rWqsScS4WQ2YmuorqSVn
-         mU4qq6nTvV2whip8bt89bfZhl04HWvynve9UJb0qubn5gaT+Cz5m3gwCSJgNMKmj5aRG
-         s66S9wIdBKj+W+ocGNYp7YZUTb+Sw85fw/hLw=
+ dkim=missing; spf=pass (domain: gmail.com, ip: 209.85.167.180, mailfrom: geert.uytterhoeven@gmail.com)
+Received: by mail-oi1-f180.google.com with SMTP id u20so13424811oic.4;
+        Tue, 31 Mar 2020 01:04:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=rFSd6AmePtaAqjx2BjOga9toOx0sOuRisdKABByKTJE=;
-        b=m4B1g5XCLEs7zHVxlVImdM+VMTFG9MW8twKGYOX2tqwpTyiDtWItsaGvB6deE2EhBb
-         2h2yM/GczScJ8VMTWKdf1eaDlU/MCgeH5evBAAwZN09NzMhJ52f2b0PHBEZ/YN1ObTsY
-         vME0OzpKny+0QJAUCLksKOwZNwJr8PCV/lviBvzsjw+KQU6+zwnG/dwoXJU21x9RjoNz
-         pg3emQJQmp29BwRHYWl73J+JMFAPrx3w5jyx8swobpPNWr8bowFY6SvJwTT+dWSvqeGK
-         PkuYVHC5jrV5sdC3vF1jFivD0QiknKXKUQnS9fIRaDFiwhyE8y9H0spCjVxmoeeDwUIk
-         W6YA==
-X-Gm-Message-State: ANhLgQ14EFTd9hw7xmF7VrIQLgXLG/2DqQJKtr9ig/KsWxylgZ547YVU
-	sdA9njRqSrPqFJgfhhd2KRcs7LepynzzJw==
-X-Google-Smtp-Source: ADFU+vuk/XyUwpL8s6XxdE21Wv85XmohHwSsGH7HcjbWMT26I34jjccxn6DUTouLHZoIbSbG59ReqQ==
-X-Received: by 2002:a1c:8193:: with SMTP id c141mr932721wmd.14.1585620378478;
-        Mon, 30 Mar 2020 19:06:18 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local (slc-exit.privateinternetaccess.com. [173.244.209.5])
-        by smtp.gmail.com with ESMTPSA id o14sm1772981wmh.22.2020.03.30.19.06.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2020 19:06:17 -0700 (PDT)
-Date: Mon, 30 Mar 2020 22:06:12 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org
-Cc: users@linux.kernel.org
-Subject: Re: [tools] [kernel.org users] b4 can now explode a pull request into an mbox file with patches
-Message-ID: <20200331020612.ngzwzaalvwt2cyre@chatter.i7.local>
-References: <20200326221926.jfsbtvnb7bfjahov@chatter.i7.local>
- <20200327114824.GB1738094@kroah.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ij7B1PITUJsaml0zcNHpqJ4VdmP42bRtun7YY/QlJBc=;
+        b=Swt2IZrsNSa0uDin+ySEQwh/jnuoHPNVIcZND6BsuW0dRdjjd4FC0+sT6RzwFi7Tur
+         /hIJPVMsaaGUR8bPnxp6ZwmmYYpeL1iqxRA12b1jJWcfxOOq/lfb2J/n1SyenmLtfy5w
+         L05rY7MSC7vSk8HAD/jCR5R04oIL/MBD54GtdiIzc0rviQAaKAPn8+F+BVNeQStlFWhX
+         cyUpYlZUjyBjt3vaJTyJ6IakSKj509mCVcRqbareVsOgAu8+Xmh/xTn4Nzh773BKOpAw
+         1oaKW8brhlpwm2v2qVKxblc0BWks3FX8iNHEg1bOSoUkae6YoPYAcxnnjGSi3cKEWpm+
+         3SvA==
+X-Gm-Message-State: ANhLgQ2U0fzFjhxyyJQOMmFpnLNGrZ34yHNPKK1ba2/c0vPu9LG7IANq
+	355mXNn5xZa9bUG/oUi22hZdCVXGz0bg8q/1OQg=
+X-Google-Smtp-Source: ADFU+vv3UHt1XcqDVcdq87c/UA+Wmnlt2KpYBOTigPQSMYnWspW6j2xrcZgQsieABZnjmiSnGuHd+XRcmUm1mJjflHI=
+X-Received: by 2002:aca:ad93:: with SMTP id w141mr1311054oie.54.1585641846260;
+ Tue, 31 Mar 2020 01:04:06 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200327114824.GB1738094@kroah.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+References: <20200327165402.slc5l46hc7hlo2l5@chatter.i7.local>
+ <CACRpkdZRXh8gKEyeF-uwnP+GuBWxj_QGHeEL=dDOSMoKx6G=1w@mail.gmail.com> <20200329171313.s5qe5ofvmh3uoy7z@chatter.i7.local>
+In-Reply-To: <20200329171313.s5qe5ofvmh3uoy7z@chatter.i7.local>
+From: "Geert Uytterhoeven" <geert.uytterhoeven@gmail.com>
+Date: Tue, 31 Mar 2020 10:03:55 +0200
+Message-ID: <CAMuHMdUpbQydt09SJKPeTr3SL6NM+huyVAZbMBu8qrNmtPUZ=w@mail.gmail.com>
+Subject: Re: [kernel.org users] Gmail message ID finder Chrome extension
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>, 
+	"users@linux.kernel.org" <users@linux.kernel.org>, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Mar 27, 2020 at 12:48:24PM +0100, Greg KH wrote:
-> > I mostly imagine that it's the --explode functionality that you'd be 
-> > interested in, but since that required writing most of the other 
-> > pull-request handling functionality, there's basic handling for that 
-> > as well.
-> > 
-> > Please let me know if that is useful.
-> 
-> Both sound really useful, thanks!
-> 
-> Now to just wait for someone to send me a pull request so I can try it
-> out, I just had caught up on all of them last night :)
+Hi Konstantin, Linus,
 
-The latest 0.4.0-dev master branch will also verify the signature at the 
-tip of FETCH_HEAD once it is fetched, so once the merge window closes 
-and you start processing pull requests again, you may find this useful.
+On Sun, Mar 29, 2020 at 7:13 PM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+> On Sun, Mar 29, 2020 at 04:54:33PM +0200, Linus Walleij wrote:
+> > > If you're a Chrome and Gmail user, you can try the following
+> > > extension
+> > > to easily get the message-id of an email without having to "show
+> > > original" and hunting for the right header:
+> > >
+> > > https://chrome.google.com/webstore/detail/gmail-message-id-finder/comcoiiifldaaejpbgbincdkoohihbae
+> > >
+> > > The message-id will be copied to the clipboard with the "rfc822msgid:"
+> > > lead, but current versions of b4 will handle that properly.
+> >
+> > Actually, but I don't know if I'm unique in this, for my workflow
+> > I'd ideally take that thing a step longer so that the drop down menu
+> > simply had "apply patch" meaning it gets the message ID,
+> > calls on b4 to get the message, and applies it to a certain branch
+> > in a certain local git tree with --signoff.
+>
+> The way I envision this could work is if we define workflows based on
+> labels. E.g.:
+>
+> 1. You label a message with "Accepted"
+> 2. You run "b4 gmail apply Accepted" (or an agent process runs that)
+> 3. We then try to:
+>    - retrieve patch series using lore and your inbox as sources
+>    - make an am-ready mbox
+>    - apply to a branch provided in a mapping config
+>      "e.g. Accepted->refs/heads/pending"
+> 4. If "git am" fails on a series, we label the thread as
+>    "Review-Required" and move to the next one
+> 5. If it succeeds, we add the label "Applied"
 
-E.g.:
+And remove the "Accepted" label?
+Else, as labels applies to conversations, if someone replies with a
+full patch, it will be applied next time you run your script.
 
-$ b4 pr -b pstore-v5.7 202003292120.2BDCB41@keescook
-Looking up https://lore.kernel.org/r/202003292120.2BDCB41@keescook
-Grabbing thread from lore.kernel.org
-Looking at: [GIT PULL] pstore updates for v5.7-rc1
-  Fetching https://git.kernel.org/pub/scm/linux/kernel/git/kees/linux.git tags/pstore-v5.7-rc1
-  ---
-  [✓] Attestation-by: Kees Cook <keescook@chromium.org> (pgp: 8972F4DFDC6DC026)
----
-Fetched into branch pstore-v5.7
+> You still have to do your own merging, though. :)
+>
+> > I anyway use gmail's web UI to read all mail and keep track
+> > of what's processed and not by whether is is read or unread in
+> > gmail.
+> >
+> > Are these extensions to say Chrome hard to write? I think
+> > if I wrote an extension like that it could save me hours of work
+> > time, but maybe I'm the only one. I tried to find the source code
+> > for the above extension but no such luck.
+>
+> I wouldn't use a chrome extension for this, but it's fairly
+> straightforward to accomplish this with a gmail API. There are a few
+> annoying things about Gmail that make it not super great for the purpose
+> of working with patch threads. Specifically, Gmail ignores In-Reply-To
+> if subjects don't match, so while the API provides a "retrieve a thread"
+> call, we can't use it to get a properly threaded patch series the same
+> way we can from lore.kernel.org, because Gmail refuses to consider them
+> all part of the same thread.
+>
+> The best we can do is do a search for "from:same sender AND
+> date:same-ish date AND subject-contains:PATCH", and then go through what
+> we got back to reconstitute the patch series.
 
-Best,
--K
+Alternatively, select "Download message" in the drop-down menu (repeat
+if needed), and run a script on your download directory.
+As the downloaded messages contain Message-IDs, they can be fed to
+the b4 machinery for further processing of tags and series, augmented
+by data from lore.
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
