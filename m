@@ -1,62 +1,115 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
- by mx.groups.io with SMTP id smtpd.web12.381.1587140929057140335
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web12.661.1587141582527811354
  for <tools@linux.kernel.org>;
- Fri, 17 Apr 2020 09:28:49 -0700
+ Fri, 17 Apr 2020 09:39:42 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=Z7VK79q1;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.175, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f175.google.com with SMTP id c63so3045026qke.2
-        for <tools@linux.kernel.org>; Fri, 17 Apr 2020 09:28:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=N1lKxuSaU089CF9ZzUQwFT7oyICxvO6B1n2T8cS3V9w=;
-        b=Z7VK79q1gT5smV0vLBV6Ra9tpsZCn1lWuIh7PmdIRi0myr9tEhFpBuAOKExBRw6Kfd
-         G0YQqOQSnLvYlry7GkTxuhOKsZUaPbq1WjwRQz8dprqNgJweP03VIbnSyP37IMFDJWXJ
-         yyOdvJcPqAkEY4MUqNQ7lXh7zdt9QbsoWJWgg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=N1lKxuSaU089CF9ZzUQwFT7oyICxvO6B1n2T8cS3V9w=;
-        b=bRM8t1tDVuWBluO6Pg8YkmrTyYDCgC9gPlAWPiImc6veqh22Q8Z0dfB/AdTr59QBdD
-         891p9w2cYOInlq1/3XYDzJ9rF17HwclQ/q3XPcyHtWLMwn4bGPYzYc7aULflCQtIKFdx
-         asKb+X2O7hkUW5hJajS0mB5Hco3gtzjc4/+E2j6q+3a/SeglfSsYT7Wk57eEADBTDbma
-         FfO0/15ITdHHGXHb3p0NYr3zpazBd11bnDzKWpPqC1BsBiCR6wwFMMLXiulxZELsllBq
-         pLzRmM8dzOIaAVEDbARfjiNIvqDNH2/yANFuWtruEcZSp/xLHtt0MsDNIqgf9usAUTAz
-         SwIA==
-X-Gm-Message-State: AGi0PuaGsJRO+hEYMGMxRUU0oVDln+v6Kj/JWLcX3xhhbngFYStiH6FH
-	9krqQ5PDjaRaccgAavnXNWcFPuqRkTI=
-X-Google-Smtp-Source: APiQypKo/tIcGuA5roS4I8hVcc2hj2VizRCmDghr+T4Nvkn9dAWlTd3OzO0LHdtCYZZnwnfLOO9GYQ==
-X-Received: by 2002:a05:620a:22b1:: with SMTP id p17mr4107486qkh.249.1587140927798;
-        Fri, 17 Apr 2020 09:28:47 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id d23sm14037575qkj.26.2020.04.17.09.28.47
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2020 09:28:47 -0700 (PDT)
-Date: Fri, 17 Apr 2020 12:28:45 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org
-Subject: RFC: "b4 ack" to quick-reply with trailers
-Message-ID: <20200417162845.uolobnt75ei6svtd@chatter.i7.local>
+ dkim=pass header.i=@kernel.org header.s=default header.b=pkQfCbXq;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id 5E30822209;
+	Fri, 17 Apr 2020 16:39:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1587141581;
+	bh=/SzRZI3Mi+WkTjBgb7SvMRHzleWlcZ7IIIT6N+Mazn8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pkQfCbXqaHm2QAvRHiJXAV+j0kKPrpTj1Ifg5weLQgZqKqz/OgF8yKomcq2rSlumO
+	 8FWQK3qeck8g/tpDUAvP6Cga2l2+PD54G/xE4Nr4bwPg1MleZNhOBF9hpy6jHZVHl7
+	 Wx/RIvYqDs/vsgkUPjn2P7wjTgbZvOlCJ0u7zf5Q=
+Date: Fri, 17 Apr 2020 17:39:39 +0100
+From: "Mark Brown" <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 ty feature requests
+Message-ID: <20200417163939.GH5315@sirena.org.uk>
+References: <20200417154430.GG5315@sirena.org.uk>
+ <20200417161424.y6nlcm6pbavikwch@chatter.i7.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20200417161424.y6nlcm6pbavikwch@chatter.i7.local>
+X-Cookie: MOUNT TAPE U1439 ON B3, NO RING
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 89
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="SUk9VBj82R8Xhb8H"
 Content-Disposition: inline
 
-I wanted to get your opinion on the usefulness of this workflow, aimed 
-at reviewers.
+--SUk9VBj82R8Xhb8H
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-1. Reviewer does "b4 am <msgid>"
-2. Reviewer performs the review as usual
-3. Reviewer does "b4 ack that.mbox"
-4. B4 sends "Acked-by: Name <email>" as a reply to the cover letter
+On Fri, Apr 17, 2020 at 12:14:24PM -0400, Konstantin Ryabitsev wrote:
+> On Fri, Apr 17, 2020 at 04:44:30PM +0100, Mark Brown wrote:
 
-Acked-by would be the default, but can be set via -t "Reviewed-by", etc.
+> > One thing that would be nice would be mechanism to supply some
+> > additional values to be filled in the templates - I want to be able to
+> > tell people what tree and branch I applied things to.  A command line
+> > option to set the templates might also work but would be clunkier for
+> > me.
 
-This functionality would be easy to add, but I'm not sure if most people 
-would just do this from their mail client and never bother using b4 for 
-this.
+> Branch would be easy, e.g.:
 
--K
+> ---
+> Applied to ${branch}, thanks!
+> ---
+
+> I'm not sure how to convey the tree information. Would it be a sane=20
+> approach to try to use current dirname as default, overridable via a=20
+> b4.thanks-tree-name value? E.g.:
+
+> ---
+> Applied to ${treename} ${branch} branch, thanks!
+> ---
+
+That wouldn't work well for me since I have a single repo with multiple
+remotes - I'm invoking b4 as:
+
+	b4 ty -b remote/branch -a
+
+so I'd need to switch out the config file to update the variable for the
+tree name and the branch name would I think come out wrong.  People
+probably would mostly understand the short names I use for my remotes so
+it wouldn't be the end of the world to just say ${branch} and have it
+show up as remote/branch but I know inexperienced contributors sometimes
+find figuring out exactly which tree you mean a bit confusing so the URL
+is useful for them.
+
+In that particular usage b4 could parse out the fact that it's a remote
+based on asking git-remote if the thing before the first / is a remote
+and use the info from that to rewrite such that the branch gets expanded
+into a GIT URL plus branch but that may be a bit too much DWIM.  You'd
+get something like
+
+	b4 ty -b asoc/for-5.8 -a
+
+with a template of
+
+	Applied to ${branch}
+
+generating
+
+	Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.g=
+it for-5.8
+
+TBH I'd personally be happy just specifying variables I name on the
+command line (the actual b4 invocation is scripted for me) and that's
+what I'd been imagining, although something more fancy would be very
+nice.
+
+--SUk9VBj82R8Xhb8H
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6Z28oACgkQJNaLcl1U
+h9C/bwf+P2Bdw0BDDJAyo1tZ8v+Z2BTYfybd57AiSSKjvKkEseJlTnBo/3inCYfV
+Z/k4Ml+2WoWo0sgwzsmjjYDUfqWozctRx3uPjohVlCktMjUu6hhWDKb4/6ThUJcP
+1ubb7FkNHMPs7wUSG/vmMmKj7dO9ru7hxRYVa54yjJrfuv7Jaltd0WXItHvKZEFv
+PfJm4Ys0I0Qal/tjCvIfaws7AWDVz1pJP9jhOuf6xSrtsMDk00Qshk5XguuEqqOK
+0oSaIudL4ZM/fSiKfoQTp1DmEhjaVRPFLJ/3EAJKyxEQybsv1lR5GT6XbGHZIVWx
+aUR4xtnCEzdqd1joCe15P4nU+iWAJg==
+=q/Cc
+-----END PGP SIGNATURE-----
+
+--SUk9VBj82R8Xhb8H--
