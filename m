@@ -1,82 +1,75 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web11.1413.1587143347663120728
+Received: from mail-qt1-f195.google.com (mail-qt1-f195.google.com [209.85.160.195])
+ by mx.groups.io with SMTP id smtpd.web10.2167.1587150415679206096
  for <tools@linux.kernel.org>;
- Fri, 17 Apr 2020 10:09:07 -0700
+ Fri, 17 Apr 2020 12:06:55 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=RzmvbhIa;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id C87992220A;
-	Fri, 17 Apr 2020 17:09:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1587143347;
-	bh=07ZZe0g6Y0zj+2u6XTKcSFXIdD79yTHCfHIVHvM09No=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RzmvbhIaj2Znv/T165CL9t+98jlotMKpwrX+tRLUO4idhKRuPw3hqPxM1GT5XZg00
-	 yOdNRvuw6BTf/cDdrhpLRQz7NA1uKXYs5GvEXegBQhDCZitjXw1y8Gu+7nzS4Yf4Os
-	 9uSW0JsfRjHiSLc0GKibQaQzep5D7wZMzCH9BqEc=
-Date: Fri, 17 Apr 2020 18:09:04 +0100
-From: "Mark Brown" <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=YAkPRwZi;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.160.195, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qt1-f195.google.com with SMTP id b10so2877918qtt.9
+        for <tools@linux.kernel.org>; Fri, 17 Apr 2020 12:06:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Q5mkKVZoldpRd4KFy5TfpzbXb6mTvCySFVF5O7fwybA=;
+        b=YAkPRwZisKqLFctOgRbsam44sxjEoj5tdpuJFFsW1od3WIG0SZG1uQEN4TRvjTd/kA
+         QW+eDJnAnEXL9GTq3EuyrtAShyI3RBLq/XsEuouURAjvGlZBVvVYMOqFjCqHGWdJ8wtd
+         +VwmGw1KS8uypi2HU9bdRnoPT+YcseAuc+Rm8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Q5mkKVZoldpRd4KFy5TfpzbXb6mTvCySFVF5O7fwybA=;
+        b=Al+iS2iFEjF92trOwoTINYWzQYDqYdgPMmVGz6LMgQHBr8t7ysBkTT0PVStXc5MOob
+         NbgCQr9ypXxqCxRNzh/bFCldo2N/CyR5kCFZAvOYlE40t7+8giRUNy55kVkNG+KO7sz4
+         ro3o5j85FO9t8HbOwXzM4Kh03ea6qsbdNAXG1YiCxp8z6DLbjfrqplui1EQLiEENSW48
+         8/LxUe5Ae7A+C6IkPPvh6rZmFaJwUzKcKkg0VlgMYt72liufNsn4uyGjqCSuKCz/mjqI
+         C1GB3hLnn8He7uS7MuBtY4Lp44/teJYm3H0uobc57pSg2nIC5yVDmUiLNtpHpUrNMvJ3
+         ZGtQ==
+X-Gm-Message-State: AGi0PuadVgkxlEcLBdlkuF9QjVWNqGHaky0uDrO1F+hhgFDzY904lbx8
+	Bz4xw4YsQgmGVnJShFfMZBuRnA==
+X-Google-Smtp-Source: APiQypLdqEeaj4vAfK1klmOst8ZdBfkVDKqXXGARkBrBov26tP991Vi0QWfRwQpMRt6y9xADgm6qBA==
+X-Received: by 2002:ac8:342d:: with SMTP id u42mr4505029qtb.255.1587150414683;
+        Fri, 17 Apr 2020 12:06:54 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id e9sm17389263qtq.82.2020.04.17.12.06.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Apr 2020 12:06:53 -0700 (PDT)
+Date: Fri, 17 Apr 2020 15:06:52 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: tools@linux.kernel.org
 Subject: Re: b4 ty feature requests
-Message-ID: <20200417170904.GI5315@sirena.org.uk>
+Message-ID: <20200417190652.yur6z53naj7dlqwr@chatter.i7.local>
 References: <20200417154430.GG5315@sirena.org.uk>
  <20200417161424.y6nlcm6pbavikwch@chatter.i7.local>
  <20200417163939.GH5315@sirena.org.uk>
  <20200417165537.4xgdj537vw26fai6@chatter.i7.local>
+ <20200417170904.GI5315@sirena.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <20200417165537.4xgdj537vw26fai6@chatter.i7.local>
-X-Cookie: MOUNT TAPE U1439 ON B3, NO RING
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 91
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9s922KAXlWjPfK/Q"
+In-Reply-To: <20200417170904.GI5315@sirena.org.uk>
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
---9s922KAXlWjPfK/Q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, Apr 17, 2020 at 06:09:04PM +0100, Mark Brown wrote:
+> > [remote "foo"]
+> >   url = git@gitolite.kernel.org:pub/scm/linux/kernel/git/foo/linux
+> >   fetch = +refs/heads/*:refs/remotes/foo/*
+> >   b4-treename = "foo/linux.git"
+> >   b4-commit-url-mask = "https://git.kernel.org/foo/c/%.8s"
+> 
+> > Would that work?
+> 
+> I think so, yes - the treename could even default to either url or the
+> remote name so a lot of the time it'd not even need to be set.
+> 
+> One thing to watch out for is that you can name branches foo/bar without
+> them being remotes so just because there's a / that doesn't mean the
+> branch is a remote branch.
 
-On Fri, Apr 17, 2020 at 12:55:37PM -0400, Konstantin Ryabitsev wrote:
+I committed a change that should do the above (with proper precautions).  
+Please try it out (see .example files for ${branch} and ${treename} 
+usage examples).
 
-> Ah, excellent data point. How about we approach it from a slightly=20
-> different angle. We already allow setting a per-repo=20
-> "thanks-commit-url-mask", but how about also a way to record that in the=
-=20
-> remote section of .git/config, e.g.:
-
-> [remote "foo"]
->   url =3D git@gitolite.kernel.org:pub/scm/linux/kernel/git/foo/linux
->   fetch =3D +refs/heads/*:refs/remotes/foo/*
->   b4-treename =3D "foo/linux.git"
->   b4-commit-url-mask =3D "https://git.kernel.org/foo/c/%.8s"
-
-> Would that work?
-
-I think so, yes - the treename could even default to either url or the
-remote name so a lot of the time it'd not even need to be set.
-
-One thing to watch out for is that you can name branches foo/bar without
-them being remotes so just because there's a / that doesn't mean the
-branch is a remote branch.
-
---9s922KAXlWjPfK/Q
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6Z4q8ACgkQJNaLcl1U
-h9DAGQf/W0PX+QG0GU5abrEl9Ku91Kgaf6RmIgnF4FzxL/HQ4lRmAOa/42cfKjOr
-RS/j0t+AKiPcpsqdBnsXOmb/ETdLOxCHovADBuZtKy2QUqgkvBecceWKhybgvk3J
-Rgiwe7UMC8HFEmD0Bn4P/0rijgTA51v4Oyh5wfUnDUGUrFqlVyT6CbKtbigMJBvI
-KyyGYbJ/ArnmgHrxPJqYp+ebWF8F8XZVjF63WlECvkV9v+Q0zymN4jNVy20vA3WE
-iBApT2bSG7Xi/xAKARyhbLBfjvBrZuWuGRFHnBmbgHnw8QRTK/rmcJz3kVUHY4/P
-92pblw1NSL7KHekWl0L7e1Gzz3irEw==
-=ZmH0
------END PGP SIGNATURE-----
-
---9s922KAXlWjPfK/Q--
+-K
