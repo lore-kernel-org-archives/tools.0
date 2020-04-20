@@ -1,71 +1,75 @@
-Received: from mail-ot1-f67.google.com (mail-ot1-f67.google.com [209.85.210.67])
- by mx.groups.io with SMTP id smtpd.web12.2478.1587391335901969428
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web12.4733.1587397572663478379
  for <tools@linux.kernel.org>;
- Mon, 20 Apr 2020 07:02:16 -0700
+ Mon, 20 Apr 2020 08:46:12 -0700
 Authentication-Results: mx.groups.io;
- dkim=missing; spf=pass (domain: gmail.com, ip: 209.85.210.67, mailfrom: geert.uytterhoeven@gmail.com)
-Received: by mail-ot1-f67.google.com with SMTP id z25so4683576otq.13;
-        Mon, 20 Apr 2020 07:02:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=KGRiDRv/bjtcHXkiyGc0ZkdHAxLqjixw48TGDaOxfFE=;
-        b=Cm6p58bIV928OjhZESrhwqyJr4AogQ/2Mbclhg7NFAqMgZLk+exvVDe5MIiPW7rfEt
-         b1+NGcZWnKPUMnBs8OAiVArhuFHrgNXccSAEnsAem7qZHRjNF7hVHjPTvt4i5xnN93dA
-         /V7wfiTeIY9OnvlSOo7aS6GHu4IGqfN6IgaAz/brIN/EYM5uNR0/sx+9LLwhkF/isdX/
-         jrdrT4JrxcMv9U0NuNtBi0O7TPVwe2eAF9dTMjXPtxfbrC4P0a8m0+IeuOb+ao3ohVmo
-         HeJAbGdYrO0G0vHdxLeojOUt2nnEFmLj0cTs+DKKhriZV/5Pcrs6YMqxvR/sqNyyUrTH
-         ZfRQ==
-X-Gm-Message-State: AGi0PuY6JYVpzRtkHWjHHCbPDH+H+4nAQ1RkEqsr+BLmPiQKC+McTxpy
-	QJdp1MQOnE8pI2V/Dk0zmm/mfq9YYCmFj+CoOJg=
-X-Google-Smtp-Source: APiQypL0uKiGUMuaff2M6cTd/DYHIVubBS0bKAukcxWuwRrCLx5wBtgSQyy2VgKJaX6Ct5wmIeubjI3hTUF/I4syHVc=
-X-Received: by 2002:a05:6830:3104:: with SMTP id b4mr6050991ots.250.1587391335147;
- Mon, 20 Apr 2020 07:02:15 -0700 (PDT)
-MIME-Version: 1.0
-From: "Geert Uytterhoeven" <geert.uytterhoeven@gmail.com>
-Date: Mon, 20 Apr 2020 16:02:04 +0200
-Message-ID: <CAMuHMdUEy-95tQExorPvTUjXzcOfJkp4BFtRYN10koDPmwMoZw@mail.gmail.com>
-Subject: b4 am doesn't see patch 2/2
+ dkim=pass header.i=@kernel.org header.s=default header.b=blatgfdr;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id 7A8382078E;
+	Mon, 20 Apr 2020 15:46:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1587397572;
+	bh=oXUnQjRXv4uh4KhrXH8wKK86aONhsgbCoWHB4gCDciI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=blatgfdr8fZ7TZHr4OCvO4YdfucQ8aTawdApa5nE8RthAS8p3gO5D1CvvJmhMBQ8p
+	 ZxXPMLd9Rwyp9R90MIcTjWB0w/aB6YFP5LwmBz3onIe6HkXWBFf0SRERz7DRrkNtaL
+	 IDETOR09hgvYyDDKtmC3Lzw1y/SnZdqHpMK93niw=
+Date: Mon, 20 Apr 2020 16:46:09 +0100
+From: "Mark Brown" <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, "users@linux.kernel.org" <users@linux.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc: tools@linux.kernel.org
+Subject: Re: b4 ty feature requests
+Message-ID: <20200420154609.GF10045@sirena.org.uk>
+References: <20200417154430.GG5315@sirena.org.uk>
+ <20200417161424.y6nlcm6pbavikwch@chatter.i7.local>
+ <20200417163939.GH5315@sirena.org.uk>
+ <20200417165537.4xgdj537vw26fai6@chatter.i7.local>
+ <20200417170904.GI5315@sirena.org.uk>
+ <20200417190652.yur6z53naj7dlqwr@chatter.i7.local>
+MIME-Version: 1.0
+In-Reply-To: <20200417190652.yur6z53naj7dlqwr@chatter.i7.local>
+X-Cookie: Hope is a waking dream.
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 94
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="dWYAkE0V1FpFQHQ3"
+Content-Disposition: inline
 
-Hi Konstantin,
+--dWYAkE0V1FpFQHQ3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-While
+On Fri, Apr 17, 2020 at 03:06:52PM -0400, Konstantin Ryabitsev wrote:
+> On Fri, Apr 17, 2020 at 06:09:04PM +0100, Mark Brown wrote:
 
-     b4 mbox 20200420123844.3998746-2-arnd@arndb.de
+> > One thing to watch out for is that you can name branches foo/bar without
+> > them being remotes so just because there's a / that doesn't mean the
+> > branch is a remote branch.
 
-fetches all files, "b4 am" only sees the first patch:
+> I committed a change that should do the above (with proper precautions). =
+=20
+> Please try it out (see .example files for ${branch} and ${treename}=20
+> usage examples).
 
-    $ b4 am 20200420123844.3998746-2-arnd@arndb.de
-    Analyzing 2 messages in the thread
-    ---
-    Thread incomplete, attempting to backfill
-    ---
-    Writing ./20200420_arnd_sh_remove_sh5_support.mbx
-      [PATCH 1/2] sh: remove sh5 support
-      ERROR: missing [2/2]!
-    ---
-    Total patches: 1
-    ---
-    WARNING: Thread incomplete!
-     Link: https://lore.kernel.org/r/20200420123844.3998746-1-arnd@arndb.de
-     Base: not found, sorry
-           git checkout -b 20200420_arnd_arndb_de master
-           git am ./20200420_arnd_sh_remove_sh5_support.mbx
+This all seems to be working great, thanks!
 
-It doesn't matter whether I pass the Message-Id of the first or second patch.
+--dWYAkE0V1FpFQHQ3
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks!
+-----BEGIN PGP SIGNATURE-----
 
-Gr{oetje,eeting}s,
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6dw8AACgkQJNaLcl1U
+h9B+bAf+MBIsHMIPq93CwPZ7aQDnozuvS8Y7Hfu8jfb5sgdKfZ0tpFM2r6V9eado
+WXWjB9Z0QvmVC3jjoBf0P9l8zsQUcm+JfcR8V7kz/+/hNo9l2Qnwa4u8ykdJFz0X
+IBIuGXZFO4jdwVrnZN7HP11kRGf6Er8FETyZzblRqTP62g88Lh/eX9d81sZyHA72
+TxKw+bNVg+WvurAYrbs4f347686QTtZAFXf6EjhlkVqCFpe2cZFvXpU47mZcjn/o
+ReYIvkez9WIbf686xb+WwOHAeqV/sZD3SpbdiiGjhy+h7+Ek4D/h0O3WE0fFPMDJ
+x/1RamSaAcAKKSOBs0tVE+cX4YwcjQ==
+=VAaR
+-----END PGP SIGNATURE-----
 
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+--dWYAkE0V1FpFQHQ3--
