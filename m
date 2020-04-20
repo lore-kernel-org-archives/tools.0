@@ -1,75 +1,71 @@
-Received: from mail-qt1-f195.google.com (mail-qt1-f195.google.com [209.85.160.195])
- by mx.groups.io with SMTP id smtpd.web10.2167.1587150415679206096
+Received: from mail-ot1-f67.google.com (mail-ot1-f67.google.com [209.85.210.67])
+ by mx.groups.io with SMTP id smtpd.web12.2478.1587391335901969428
  for <tools@linux.kernel.org>;
- Fri, 17 Apr 2020 12:06:55 -0700
+ Mon, 20 Apr 2020 07:02:16 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=YAkPRwZi;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.160.195, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qt1-f195.google.com with SMTP id b10so2877918qtt.9
-        for <tools@linux.kernel.org>; Fri, 17 Apr 2020 12:06:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Q5mkKVZoldpRd4KFy5TfpzbXb6mTvCySFVF5O7fwybA=;
-        b=YAkPRwZisKqLFctOgRbsam44sxjEoj5tdpuJFFsW1od3WIG0SZG1uQEN4TRvjTd/kA
-         QW+eDJnAnEXL9GTq3EuyrtAShyI3RBLq/XsEuouURAjvGlZBVvVYMOqFjCqHGWdJ8wtd
-         +VwmGw1KS8uypi2HU9bdRnoPT+YcseAuc+Rm8=
+ dkim=missing; spf=pass (domain: gmail.com, ip: 209.85.210.67, mailfrom: geert.uytterhoeven@gmail.com)
+Received: by mail-ot1-f67.google.com with SMTP id z25so4683576otq.13;
+        Mon, 20 Apr 2020 07:02:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Q5mkKVZoldpRd4KFy5TfpzbXb6mTvCySFVF5O7fwybA=;
-        b=Al+iS2iFEjF92trOwoTINYWzQYDqYdgPMmVGz6LMgQHBr8t7ysBkTT0PVStXc5MOob
-         NbgCQr9ypXxqCxRNzh/bFCldo2N/CyR5kCFZAvOYlE40t7+8giRUNy55kVkNG+KO7sz4
-         ro3o5j85FO9t8HbOwXzM4Kh03ea6qsbdNAXG1YiCxp8z6DLbjfrqplui1EQLiEENSW48
-         8/LxUe5Ae7A+C6IkPPvh6rZmFaJwUzKcKkg0VlgMYt72liufNsn4uyGjqCSuKCz/mjqI
-         C1GB3hLnn8He7uS7MuBtY4Lp44/teJYm3H0uobc57pSg2nIC5yVDmUiLNtpHpUrNMvJ3
-         ZGtQ==
-X-Gm-Message-State: AGi0PuadVgkxlEcLBdlkuF9QjVWNqGHaky0uDrO1F+hhgFDzY904lbx8
-	Bz4xw4YsQgmGVnJShFfMZBuRnA==
-X-Google-Smtp-Source: APiQypLdqEeaj4vAfK1klmOst8ZdBfkVDKqXXGARkBrBov26tP991Vi0QWfRwQpMRt6y9xADgm6qBA==
-X-Received: by 2002:ac8:342d:: with SMTP id u42mr4505029qtb.255.1587150414683;
-        Fri, 17 Apr 2020 12:06:54 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id e9sm17389263qtq.82.2020.04.17.12.06.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2020 12:06:53 -0700 (PDT)
-Date: Fri, 17 Apr 2020 15:06:52 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: b4 ty feature requests
-Message-ID: <20200417190652.yur6z53naj7dlqwr@chatter.i7.local>
-References: <20200417154430.GG5315@sirena.org.uk>
- <20200417161424.y6nlcm6pbavikwch@chatter.i7.local>
- <20200417163939.GH5315@sirena.org.uk>
- <20200417165537.4xgdj537vw26fai6@chatter.i7.local>
- <20200417170904.GI5315@sirena.org.uk>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=KGRiDRv/bjtcHXkiyGc0ZkdHAxLqjixw48TGDaOxfFE=;
+        b=Cm6p58bIV928OjhZESrhwqyJr4AogQ/2Mbclhg7NFAqMgZLk+exvVDe5MIiPW7rfEt
+         b1+NGcZWnKPUMnBs8OAiVArhuFHrgNXccSAEnsAem7qZHRjNF7hVHjPTvt4i5xnN93dA
+         /V7wfiTeIY9OnvlSOo7aS6GHu4IGqfN6IgaAz/brIN/EYM5uNR0/sx+9LLwhkF/isdX/
+         jrdrT4JrxcMv9U0NuNtBi0O7TPVwe2eAF9dTMjXPtxfbrC4P0a8m0+IeuOb+ao3ohVmo
+         HeJAbGdYrO0G0vHdxLeojOUt2nnEFmLj0cTs+DKKhriZV/5Pcrs6YMqxvR/sqNyyUrTH
+         ZfRQ==
+X-Gm-Message-State: AGi0PuY6JYVpzRtkHWjHHCbPDH+H+4nAQ1RkEqsr+BLmPiQKC+McTxpy
+	QJdp1MQOnE8pI2V/Dk0zmm/mfq9YYCmFj+CoOJg=
+X-Google-Smtp-Source: APiQypL0uKiGUMuaff2M6cTd/DYHIVubBS0bKAukcxWuwRrCLx5wBtgSQyy2VgKJaX6Ct5wmIeubjI3hTUF/I4syHVc=
+X-Received: by 2002:a05:6830:3104:: with SMTP id b4mr6050991ots.250.1587391335147;
+ Mon, 20 Apr 2020 07:02:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200417170904.GI5315@sirena.org.uk>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+From: "Geert Uytterhoeven" <geert.uytterhoeven@gmail.com>
+Date: Mon, 20 Apr 2020 16:02:04 +0200
+Message-ID: <CAMuHMdUEy-95tQExorPvTUjXzcOfJkp4BFtRYN10koDPmwMoZw@mail.gmail.com>
+Subject: b4 am doesn't see patch 2/2
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, "users@linux.kernel.org" <users@linux.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Apr 17, 2020 at 06:09:04PM +0100, Mark Brown wrote:
-> > [remote "foo"]
-> >   url = git@gitolite.kernel.org:pub/scm/linux/kernel/git/foo/linux
-> >   fetch = +refs/heads/*:refs/remotes/foo/*
-> >   b4-treename = "foo/linux.git"
-> >   b4-commit-url-mask = "https://git.kernel.org/foo/c/%.8s"
-> 
-> > Would that work?
-> 
-> I think so, yes - the treename could even default to either url or the
-> remote name so a lot of the time it'd not even need to be set.
-> 
-> One thing to watch out for is that you can name branches foo/bar without
-> them being remotes so just because there's a / that doesn't mean the
-> branch is a remote branch.
+Hi Konstantin,
 
-I committed a change that should do the above (with proper precautions).  
-Please try it out (see .example files for ${branch} and ${treename} 
-usage examples).
+While
 
--K
+     b4 mbox 20200420123844.3998746-2-arnd@arndb.de
+
+fetches all files, "b4 am" only sees the first patch:
+
+    $ b4 am 20200420123844.3998746-2-arnd@arndb.de
+    Analyzing 2 messages in the thread
+    ---
+    Thread incomplete, attempting to backfill
+    ---
+    Writing ./20200420_arnd_sh_remove_sh5_support.mbx
+      [PATCH 1/2] sh: remove sh5 support
+      ERROR: missing [2/2]!
+    ---
+    Total patches: 1
+    ---
+    WARNING: Thread incomplete!
+     Link: https://lore.kernel.org/r/20200420123844.3998746-1-arnd@arndb.de
+     Base: not found, sorry
+           git checkout -b 20200420_arnd_arndb_de master
+           git am ./20200420_arnd_sh_remove_sh5_support.mbx
+
+It doesn't matter whether I pass the Message-Id of the first or second patch.
+
+Thanks!
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
