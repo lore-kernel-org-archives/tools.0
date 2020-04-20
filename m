@@ -1,88 +1,72 @@
-Received: from mail-lj1-f195.google.com (mail-lj1-f195.google.com [209.85.208.195])
- by mx.groups.io with SMTP id smtpd.web11.6502.1587401723875958073
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+ by mx.groups.io with SMTP id smtpd.web10.6611.1587402232047967281
  for <tools@linux.kernel.org>;
- Mon, 20 Apr 2020 09:55:24 -0700
+ Mon, 20 Apr 2020 10:03:52 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=aQnd8B5c;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.208.195, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-lj1-f195.google.com with SMTP id e25so10803707ljg.5
-        for <tools@linux.kernel.org>; Mon, 20 Apr 2020 09:55:23 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=I/X6Ls8T;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.167.53, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-lf1-f53.google.com with SMTP id 198so8610572lfo.7
+        for <tools@linux.kernel.org>; Mon, 20 Apr 2020 10:03:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=vE9JgoHouSRJfwcXvPMYd3ku3AN2dTHJ/Nsmfd9cup8=;
-        b=aQnd8B5cJ232ikzcpiJDKOj5TiHVBNNsarQkrT+iPDTSOTUqGCH+4/sD216zLWYCPg
-         Dd0Eg6cucGnZ2xNTq1o+yJV7jbIU9QQJlML90LPsp25sM9bar8Xi3AzP+rq3nNO6swRU
-         ayq/mgT/z7t+aCJHm31doJ76xSe1QhACHW0X4=
+        bh=7ErKAl7JQymBpe6Jo10hpq6nwronUF+lAxc+gDnAAIA=;
+        b=I/X6Ls8T+hUDTOLVGFh7H3/6bEhBixNlc12jJRsPDqmcxi1+50WWzdBWYEnGdN1UfH
+         iv2PQTG5tHT9B2aqquy2pkcFwxLNhlkSsFYqTysZTAjxM9cEp74891oJBwqHqPY1l2Dt
+         fumBydo4UbM8tZpv9n15hQ2m+CQ6SdZqnNGbk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=vE9JgoHouSRJfwcXvPMYd3ku3AN2dTHJ/Nsmfd9cup8=;
-        b=b2JL/4KSxf3ZW3QodIBG0DCjbUYdg/Qb/GnB1PAl5z9NCXFjRn1vIEfo/MGDrA2WP3
-         8oPkxVLGGvs5zmUP+UxXCGmKEGBIq3x5U1JmZjPaB3A9lC2jA3GJyw8THq+k5+Udu6HO
-         EK6DvX4JuvVWXac4NgUuvS3QfdoeBJb6CQuzxJYRl2llvY5qWVq1MwK8Abaubmg8WcPc
-         XGpmApopyEmkvc91vmCc9BV8CcJIRUlxclYR3msabyOIegyzb0ljy3N/T94pmtlkG7gQ
-         eZXO3SJ93t6BtGPKedHCefFeCDxL5TgAA6snfpNMtZtils3vfp1aO13XnGkFg2BeYHOE
-         Gsqw==
-X-Gm-Message-State: AGi0PuZxPqEsHPYTHdS5d13EeTMMnCi2Gfs7A1j/XGJv1pbZCFxrcEOe
-	8ECDa96pNMI6n4ca4yE4JrhiiQ==
-X-Google-Smtp-Source: APiQypKVKW2htRtz+P7fzuIjZ0sG681asoj0EEcQkvrjXO1A3ZDl6MZEHgepwdjVeKQ9aLqch2ZXaw==
-X-Received: by 2002:a05:651c:515:: with SMTP id o21mr10980701ljp.91.1587401721976;
-        Mon, 20 Apr 2020 09:55:21 -0700 (PDT)
+        bh=7ErKAl7JQymBpe6Jo10hpq6nwronUF+lAxc+gDnAAIA=;
+        b=D0sij6BvNFUArDgksFD/ruwrKnFIXFzmY/GtxuvXeph5u4FS0F73kRZnsaxIEosB1D
+         yoqwRkq9PVap75ZabNOZnpIyyH+P5xYzjl+VEOvt/cJnEOblZtCdGc2vBALrg8sKufqz
+         rxXc1FrIDZ3VvwB6o3mNSoAoNgQuhyp0JajwDafQUVZ/KAz+2kcmN3PhHyVJ6ZXJb1M2
+         PWkFPm5cKWA2Fi71kZw8dySQtTJp0OhdtG6z7rmRCExzh+oNyUmroYSaVW9f8tzOVnUF
+         FfjnuyPsqdZlg8HD5sycim38ue7pTrTkgds4/OrLHMuMzRylVGUGN07aPeWB612S1Tpr
+         33iA==
+X-Gm-Message-State: AGi0PuYVlS42mwKwUQvGliEl3xv7nQt55v0IpIh6eNcAptVR8P2N0WWv
+	w/fbxuElyFsmVupIhp/bTVqUrQ==
+X-Google-Smtp-Source: APiQypJMibkQOMi0I7HiZmRCvDtz7/PWTshkaaPuH80YYnjho54lnlLtj9blW3wOmbUmyxNoN7J4hw==
+X-Received: by 2002:a19:e041:: with SMTP id g1mr10963826lfj.70.1587402230177;
+        Mon, 20 Apr 2020 10:03:50 -0700 (PDT)
 Return-Path: <konstantin@linuxfoundation.org>
 Received: from chatter.i7.local (tor-exit1-readme.dfri.se. [171.25.193.77])
-        by smtp.gmail.com with ESMTPSA id 6sm18195ljq.36.2020.04.20.09.55.19
+        by smtp.gmail.com with ESMTPSA id q6sm21963ljg.67.2020.04.20.10.03.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2020 09:55:20 -0700 (PDT)
-Date: Mon, 20 Apr 2020 12:55:17 -0400
+        Mon, 20 Apr 2020 10:03:49 -0700 (PDT)
+Date: Mon, 20 Apr 2020 13:03:46 -0400
 From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: tools@linux.kernel.org,
-	"users@linux.kernel.org" <users@linux.kernel.org>
-Subject: Re: b4 am doesn't see patch 2/2
-Message-ID: <20200420165517.7dcqowrrapdc7qad@chatter.i7.local>
-References: <CAMuHMdUEy-95tQExorPvTUjXzcOfJkp4BFtRYN10koDPmwMoZw@mail.gmail.com>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 ty feature requests
+Message-ID: <20200420170346.skra7tq3v4ecs7jm@chatter.i7.local>
+References: <20200417154430.GG5315@sirena.org.uk>
+ <20200417161424.y6nlcm6pbavikwch@chatter.i7.local>
+ <20200417163939.GH5315@sirena.org.uk>
+ <20200417165537.4xgdj537vw26fai6@chatter.i7.local>
+ <20200417170904.GI5315@sirena.org.uk>
+ <20200417190652.yur6z53naj7dlqwr@chatter.i7.local>
+ <20200420154609.GF10045@sirena.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <CAMuHMdUEy-95tQExorPvTUjXzcOfJkp4BFtRYN10koDPmwMoZw@mail.gmail.com>
+In-Reply-To: <20200420154609.GF10045@sirena.org.uk>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
-On Mon, Apr 20, 2020 at 04:02:04PM +0200, Geert Uytterhoeven wrote:
-> Hi Konstantin,
+On Mon, Apr 20, 2020 at 04:46:09PM +0100, Mark Brown wrote:
+> > > One thing to watch out for is that you can name branches foo/bar 
+> > > without
+> > > them being remotes so just because there's a / that doesn't mean the
+> > > branch is a remote branch.
 > 
-> While
+> > I committed a change that should do the above (with proper precautions).  
+> > Please try it out (see .example files for ${branch} and ${treename} 
+> > usage examples).
 > 
->      b4 mbox 20200420123844.3998746-2-arnd@arndb.de
-> 
-> fetches all files, "b4 am" only sees the first patch:
-> 
->     $ b4 am 20200420123844.3998746-2-arnd@arndb.de
->     Analyzing 2 messages in the thread
->     ---
->     Thread incomplete, attempting to backfill
->     ---
->     Writing ./20200420_arnd_sh_remove_sh5_support.mbx
->       [PATCH 1/2] sh: remove sh5 support
->       ERROR: missing [2/2]!
->     ---
->     Total patches: 1
->     ---
->     WARNING: Thread incomplete!
->      Link: https://lore.kernel.org/r/20200420123844.3998746-1-arnd@arndb.de
->      Base: not found, sorry
->            git checkout -b 20200420_arnd_arndb_de master
->            git am ./20200420_arnd_sh_remove_sh5_support.mbx
-> 
-> It doesn't matter whether I pass the Message-Id of the first or second 
-> patch.
+> This all seems to be working great, thanks!
 
-Ah, good one. That patch has nothing but file deletes, so in the absence 
-of @@ @@ lines, we didn't recognize it as a patch.
+Good to hear. I'll probably release 0.4.0 with this set of features some 
+time mid-week.
 
-Both master and stable-0.3.y have a fix for this now, and I will release 
-0.3.8 in the near future.
-
-Thanks,
 -K
