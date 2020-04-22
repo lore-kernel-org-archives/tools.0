@@ -1,72 +1,76 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
- by mx.groups.io with SMTP id smtpd.web10.6611.1587402232047967281
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web10.2430.1587564400249476017
  for <tools@linux.kernel.org>;
- Mon, 20 Apr 2020 10:03:52 -0700
+ Wed, 22 Apr 2020 07:06:40 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=I/X6Ls8T;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.167.53, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-lf1-f53.google.com with SMTP id 198so8610572lfo.7
-        for <tools@linux.kernel.org>; Mon, 20 Apr 2020 10:03:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7ErKAl7JQymBpe6Jo10hpq6nwronUF+lAxc+gDnAAIA=;
-        b=I/X6Ls8T+hUDTOLVGFh7H3/6bEhBixNlc12jJRsPDqmcxi1+50WWzdBWYEnGdN1UfH
-         iv2PQTG5tHT9B2aqquy2pkcFwxLNhlkSsFYqTysZTAjxM9cEp74891oJBwqHqPY1l2Dt
-         fumBydo4UbM8tZpv9n15hQ2m+CQ6SdZqnNGbk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7ErKAl7JQymBpe6Jo10hpq6nwronUF+lAxc+gDnAAIA=;
-        b=D0sij6BvNFUArDgksFD/ruwrKnFIXFzmY/GtxuvXeph5u4FS0F73kRZnsaxIEosB1D
-         yoqwRkq9PVap75ZabNOZnpIyyH+P5xYzjl+VEOvt/cJnEOblZtCdGc2vBALrg8sKufqz
-         rxXc1FrIDZ3VvwB6o3mNSoAoNgQuhyp0JajwDafQUVZ/KAz+2kcmN3PhHyVJ6ZXJb1M2
-         PWkFPm5cKWA2Fi71kZw8dySQtTJp0OhdtG6z7rmRCExzh+oNyUmroYSaVW9f8tzOVnUF
-         FfjnuyPsqdZlg8HD5sycim38ue7pTrTkgds4/OrLHMuMzRylVGUGN07aPeWB612S1Tpr
-         33iA==
-X-Gm-Message-State: AGi0PuYVlS42mwKwUQvGliEl3xv7nQt55v0IpIh6eNcAptVR8P2N0WWv
-	w/fbxuElyFsmVupIhp/bTVqUrQ==
-X-Google-Smtp-Source: APiQypJMibkQOMi0I7HiZmRCvDtz7/PWTshkaaPuH80YYnjho54lnlLtj9blW3wOmbUmyxNoN7J4hw==
-X-Received: by 2002:a19:e041:: with SMTP id g1mr10963826lfj.70.1587402230177;
-        Mon, 20 Apr 2020 10:03:50 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local (tor-exit1-readme.dfri.se. [171.25.193.77])
-        by smtp.gmail.com with ESMTPSA id q6sm21963ljg.67.2020.04.20.10.03.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2020 10:03:49 -0700 (PDT)
-Date: Mon, 20 Apr 2020 13:03:46 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
+ dkim=pass header.i=@kernel.org header.s=default header.b=YygDO85l;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id 310DA20787;
+	Wed, 22 Apr 2020 14:06:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1587564399;
+	bh=tjkkWkisoP1MrwzjaIMHCGbVsEAM4KlNWehtbhaNwA8=;
+	h=Date:From:To:Cc:Subject:From;
+	b=YygDO85lWokoq2ywK/wFnZP+LA4cf/LC3rV7SrCgGKaV/NY/off8RZPNYUeZqzTc4
+	 dvvxs7fDjbbgZk+0/yRSCQzLMrnIdnGl8U4SGXEy9YU9hnQKcnoxRL1VH+/Isd7ntt
+	 pAainBNTDpKJM54kQWUxQGeZuOF8od1NqxijrdsI=
+Date: Wed, 22 Apr 2020 15:06:37 +0100
+From: "Mark Brown" <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org
-Subject: Re: b4 ty feature requests
-Message-ID: <20200420170346.skra7tq3v4ecs7jm@chatter.i7.local>
-References: <20200417154430.GG5315@sirena.org.uk>
- <20200417161424.y6nlcm6pbavikwch@chatter.i7.local>
- <20200417163939.GH5315@sirena.org.uk>
- <20200417165537.4xgdj537vw26fai6@chatter.i7.local>
- <20200417170904.GI5315@sirena.org.uk>
- <20200417190652.yur6z53naj7dlqwr@chatter.i7.local>
- <20200420154609.GF10045@sirena.org.uk>
+Subject: b4 ty doesn't respect -b for prs
+Message-ID: <20200422140637.GI4898@sirena.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <20200420154609.GF10045@sirena.org.uk>
-Content-Type: text/plain; charset=utf-8
+X-Cookie: A stitch in time saves nine.
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 97
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="uJWb33pM2TcUAXIl"
 Content-Disposition: inline
 
-On Mon, Apr 20, 2020 at 04:46:09PM +0100, Mark Brown wrote:
-> > > One thing to watch out for is that you can name branches foo/bar 
-> > > without
-> > > them being remotes so just because there's a / that doesn't mean the
-> > > branch is a remote branch.
-> 
-> > I committed a change that should do the above (with proper precautions).  
-> > Please try it out (see .example files for ${branch} and ${treename} 
-> > usage examples).
-> 
-> This all seems to be working great, thanks!
+--uJWb33pM2TcUAXIl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Good to hear. I'll probably release 0.4.0 with this set of features some 
-time mid-week.
+Hi Konstantin,
 
--K
+When I run b4 ty to generate thank-you letters for a pull specifying -b
+the program doesn't find the merge commit:
+
+  $ b4 ty -b asoc-5.7 -s 2
+  Generating 1 thank-you letters
+  Could not get merge commit id for [GIT PULL] ASoC: tegra: Fixes for v5.7-rc3
+  Was it actually merged?
+
+however if I change to the branch it does:
+
+  $ git checkout asoc-5.7
+  Switched to branch 'asoc-5.7'
+  $ b4 ty -b asoc-5.7 -s 2
+  Generating 1 thank-you letters
+  Writing: ./thierry_reding_gmail_com_git_pull_asoc_tegra_fixes_for_v5_7_rc3.thanks
+
+(asoc-5.7 is for-5.7 in my sound tree, the merge commit is now published.)
+
+Thanks,
+Mark
+
+--uJWb33pM2TcUAXIl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6gT2wACgkQJNaLcl1U
+h9DZFgf/UfpKR+bI/rHo5kvksKCqiz+XzuBcYOlK+Ao5Ug4cY8OfT4LzIxh6NXCs
+1JUCMvWBVlEF3N78Z93Nq6qxXpcIoGcMDPZt6mnqZ6UQSVh70gAPI+ZHGqK6TWko
+c18uoztdMPiT1CE0zSQCTV8Vbfnc19HLPTcGw58W2crmg88ipzJbrI7KjJl5CI3z
+H4TlSH43fzxFelegH756NJRGwBqtNIUSqX63M8jrRKtnhW7vu85qWsGqqRnT2hLO
+LUt2NqotU/O7QA1DlB7TjkKo8OIN9ym4QVP7y0Y82olXa15wvpLDCIdmU4i7zJam
+YM1S0kzz+MGvsY3ZtsNJ/UqoaJSlww==
+=K8zM
+-----END PGP SIGNATURE-----
+
+--uJWb33pM2TcUAXIl--
