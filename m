@@ -1,81 +1,70 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web11.3502.1587637056226657656
+Received: from mail-qk1-f193.google.com (mail-qk1-f193.google.com [209.85.222.193])
+ by mx.groups.io with SMTP id smtpd.web11.401.1587654466557442374
  for <tools@linux.kernel.org>;
- Thu, 23 Apr 2020 03:17:36 -0700
+ Thu, 23 Apr 2020 08:07:46 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=WYSP8pum;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 2D6DC20704;
-	Thu, 23 Apr 2020 10:17:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1587637055;
-	bh=jye/9OIjCvArxpD1rau1AOOo2suBsCYl62i9AcPyBUE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WYSP8pumFiy0XXoqNKKaEK2sPvLN/Aepnk7rzrxXFe50cUSwheN82cIKaytvSRaBi
-	 L6uMRezMEkNLfk0aZXgFh48B8TwQ3k03RMnvpXiWTkFpjqvk1QTBckq5rsiNDFuZbW
-	 yvRBr+jmnVgZPk1DGM+awqFvzAh09cJZeyQoIaYs=
-Date: Thu, 23 Apr 2020 11:17:33 +0100
-From: "Mark Brown" <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=E9u6o2aw;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.193, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f193.google.com with SMTP id n143so6694066qkn.8
+        for <tools@linux.kernel.org>; Thu, 23 Apr 2020 08:07:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HhIXk32ury5RPPlfymEZncr2YCO+AriXGQ4q2f3aapw=;
+        b=E9u6o2awVb2nitNB8jZF2TD3T9mTx1oqK4u+MByycwh55Sh6N9hRAj/GLEu7f3sPpy
+         cL17FQQFg2cQA6noVz0wYsUdC+9yWOAdMr6drTTC/WzQN1UWcx9Q8KtMpr68uRQ5WCrp
+         7OfJE6MXvp5BLaY0huyk/mVinuwKkjDaFXafc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HhIXk32ury5RPPlfymEZncr2YCO+AriXGQ4q2f3aapw=;
+        b=jk08NrMA1tNoUgWcdHvfx2nIF4H6rpAPrJgsvnYIaGSjHKfXrq13zI+6ALvIqhEu+g
+         tjIuuDKLSceI1lrQcGVli5OebhNQKuvBZCysp7a5AUN/Y/qpFF5gr3I3uNyiEsa2nFh4
+         MTPwr6h6CQ8OXbcLkSEWe8FOQn418KiLkwoDt+9SMq5OwFyvklNEB+woon3QkxlMnBlf
+         Dm57bS2cbt1CAF7VJ/qsRDDnEleBUtBuYG+uKIRW1GA7S+JwhzXPNj7WLZoUMuqJMzFL
+         BBzKpZQerb6An7IswjLnboismXMAmc5ZYGPfuhJENTGYt0t0BfHMpsrmeGuWZqTkgi99
+         cwPw==
+X-Gm-Message-State: AGi0PuZzYcmSotj4PAemG7xZmN7MhgNLFLBDb2ezaY7LQVNtZRQOu15O
+	9VLMtYDKd9qjWht/VkUdEGyegg==
+X-Google-Smtp-Source: APiQypJH2wh3mqADlBVS34GJDNwazMEzA1G/hlLlcOyZoShXOhj9OnmWGb1qELuiKJlPZGRWd4QC9w==
+X-Received: by 2002:a37:cc1:: with SMTP id 184mr4136221qkm.490.1587654465599;
+        Thu, 23 Apr 2020 08:07:45 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id v37sm1908945qtc.7.2020.04.23.08.07.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Apr 2020 08:07:44 -0700 (PDT)
+Date: Thu, 23 Apr 2020 11:07:43 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: tools@linux.kernel.org
 Subject: Re: b4 ty doesn't respect -b for prs
-Message-ID: <20200423101733.GA4808@sirena.org.uk>
+Message-ID: <20200423150743.xtjmpgukvidqcghw@chatter.i7.local>
 References: <20200422140637.GI4898@sirena.org.uk>
  <20200422224345.jx7f6w7h4aisae6v@chatter.i7.local>
+ <20200423101733.GA4808@sirena.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <20200422224345.jx7f6w7h4aisae6v@chatter.i7.local>
-X-Cookie: This unit... must... survive.
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 99
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TB36FDmn/VVEgNH/"
+In-Reply-To: <20200423101733.GA4808@sirena.org.uk>
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
---TB36FDmn/VVEgNH/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Apr 23, 2020 at 11:17:33AM +0100, Mark Brown wrote:
+> > > (asoc-5.7 is for-5.7 in my sound tree, the merge commit is now 
+> > > published.)
+> 
+> > I see that your message says "undefined" here:
+> > https://lore.kernel.org/alsa-devel/158756395814.23495.171205742201395813.b4-ty@kernel.org/
+> 
+> > I'll see if I can find something nicer for it to say instead.
+> 
+> I'm not sure there's something fundamentally better - it's basically
+> "local tree" and not all of my local branches are tagged as tracking
+> branches in git.  Should've proofread properly before I sent it out.
 
-On Wed, Apr 22, 2020 at 06:43:45PM -0400, Konstantin Ryabitsev wrote:
-> On Wed, Apr 22, 2020 at 03:06:37PM +0100, Mark Brown wrote:
+Well, even if it says "local tree" as the fallback default for 
+${treename}, that will be more informative than "undefined". That's what 
+I'll probably set it to.
 
-> >   Generating 1 thank-you letters
-> >   Writing: ./thierry_reding_gmail_com_git_pull_asoc_tegra_fixes_for_v5_=
-7_rc3.thanks
-
-> Good find -- there is a fix for this in master.
-
-Thanks.
-
-> > (asoc-5.7 is for-5.7 in my sound tree, the merge commit is now=20
-> > published.)
-
-> I see that your message says "undefined" here:
-> https://lore.kernel.org/alsa-devel/158756395814.23495.171205742201395813.=
-b4-ty@kernel.org/
-
-> I'll see if I can find something nicer for it to say instead.
-
-I'm not sure there's something fundamentally better - it's basically
-"local tree" and not all of my local branches are tagged as tracking
-branches in git.  Should've proofread properly before I sent it out.
-
---TB36FDmn/VVEgNH/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6hazkACgkQJNaLcl1U
-h9Cgagf/X3q2ZXORp7vJ3dRPoK0ZIldyf17w3RHX8581HlNm3MDDxzbgKJ+tDSfH
-udziL5oo/Oe12aRPu3uV3e5uAIiAxtvbKABcD1VjG8kQEKAbkl4Fd/ijzkZnLiik
-p1c/J6GAry77tFUZRCHQnBa1MjeFrCrSVp8w4sAR4KzWfAoB8ExGP2KiwAjRS/bA
-+IejOSAH7ivsumNqGhxuPAJKA4a9f56O9OcX6E79g5/PKK2yxFa3BB4CO4V522sC
-o3sbtR9mct4YJQ82t5DclH0132r0USboK8mJ3ou22PnlbnvfaQpyg0MqanxWtLuL
-QhW9mFjw3+4yUrbs9VL23P/hsVVBEw==
-=g8aK
------END PGP SIGNATURE-----
-
---TB36FDmn/VVEgNH/--
+-K
