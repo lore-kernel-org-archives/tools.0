@@ -1,90 +1,99 @@
-Received: from userp2130.oracle.com (userp2130.oracle.com [156.151.31.86])
- by mx.groups.io with SMTP id smtpd.web10.2708.1587771347870553116
+Received: from mail-qk1-f195.google.com (mail-qk1-f195.google.com [209.85.222.195])
+ by mx.groups.io with SMTP id smtpd.web11.1512.1588012855014634525
  for <tools@linux.kernel.org>;
- Fri, 24 Apr 2020 16:35:48 -0700
+ Mon, 27 Apr 2020 11:40:55 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@oracle.com header.s=corp-2020-01-29 header.b=VHr0VISq;
- spf=pass (domain: oracle.com, ip: 156.151.31.86, mailfrom: martin.petersen@oracle.com)
-Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
-	by userp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03ONX0ot124276;
-	Fri, 24 Apr 2020 23:35:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : references : date : in-reply-to : message-id : mime-version :
- content-type; s=corp-2020-01-29;
- bh=GGz1IknI23wpLcO7rTVH2Kq3xdCMP5nN2uNt9pTMv6I=;
- b=VHr0VISqgK3GAzyaK2zz5GlkhlGYlGkpRFXCooQ+hk/PcirxaH2DTsPQ9jAfp/XChw7N
- mGXWJ0ToCfIjWuz2uJ6t0rClCavQtIGGIUrUb37mnJcE0h0hovclrgqp0iZeoEbb1SRa
- AfjIb+LkxGB93ZK/N82FUii6L2/ciPsO/Q5/wK1DGIlt3dEaShzFVCXa74KYUAHjEAWF
- pa4D98nOFHaSc9meWAHkDEsQHorJqSvzySszoX9tRa+Euv6vBLZtf1BVpOcD1ctHOoIj
- 3TdiDpZsiv0PiMzGmdYce4JtqXrv7UYlM6gzAe4TTGfDRCfJEU+u1W2Pme2TYSXjOCAq +w== 
-Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
-	by userp2130.oracle.com with ESMTP id 30ketdpvxv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 24 Apr 2020 23:35:46 +0000
-Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
-	by userp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03ONVef3017869;
-	Fri, 24 Apr 2020 23:35:45 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-	by userp3020.oracle.com with ESMTP id 30k7qy6f7e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 24 Apr 2020 23:35:45 +0000
-Received: from abhmp0007.oracle.com (abhmp0007.oracle.com [141.146.116.13])
-	by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 03ONZiGh008972;
-	Fri, 24 Apr 2020 23:35:45 GMT
-Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
-	by default (Oracle Beehive Gateway v4.0)
-	with ESMTP ; Fri, 24 Apr 2020 16:35:44 -0700
-To: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=IAhV8OeK;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.195, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f195.google.com with SMTP id g74so19061652qke.13
+        for <tools@linux.kernel.org>; Mon, 27 Apr 2020 11:40:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=abRiCYmPLXfPi/zHp/OuaDGWJ2XgAAnxfJZZPg34zx0=;
+        b=IAhV8OeKSHwCV/RBnJBit1ajTVQaYUBVlvYDuRioaOIM6eq5H9eoV4/Jnk1dmzs4HM
+         Ukun/YB7+cF03/H+hTGobh+BILnz7bshLSY77Zq2aVvvrTmOXt95iZx2Y46Nj2q1j/F3
+         +vuE2/VhGT21AALGdDh2/vARV+ZDFM/6U2P00=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=abRiCYmPLXfPi/zHp/OuaDGWJ2XgAAnxfJZZPg34zx0=;
+        b=KiGHeLJ+HrCLF7lvQD/eaX324LvbfHdeIvoq0+XAOW4y4QelvNwugTNWg++C5pd2al
+         V14Y0zQDa6u22QSHb+5Zh8dYrvwsR3iYAIMb7hatI8Jv3QekK7KSIIxusZgtZPinYrJy
+         42E205KoxdiIgzZq+OkZLLD2mSmFsfz0dDlDX68/tFyskYMhMxjAmGLYe4B5VW9eknJP
+         mXiOjiVhm/eHTlV1HWs8y5D63Xc7Upr1dalmoqqksVWILjkj39I7/ltsBhIXY1IncKIV
+         4hhL8rwejLwwEVr39rNKFhMTKSsChOO7l5j7sRN6HTkVX6Eu2/srF+ROoTPLjjbd02dT
+         F4bA==
+X-Gm-Message-State: AGi0Pua/i5EYVtM2c2KSe+SkJJwKtadN0Wqggpc+Cdi4jglHFsAQaEua
+	kKuBDZQPODszStYzOAratoMnxA==
+X-Google-Smtp-Source: APiQypK3K9ojiyfiHT1tAQeaLlCCkiuYWBE45pASdipzLfkHVsDjCPlwaVuzD+DRHmt3s7fGJU/ZTA==
+X-Received: by 2002:ae9:d847:: with SMTP id u68mr23101774qkf.322.1588012853864;
+        Mon, 27 Apr 2020 11:40:53 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id w27sm11671842qtc.18.2020.04.27.11.40.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Apr 2020 11:40:53 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Mon, 27 Apr 2020 14:40:51 -0400
+Date: Mon, 27 Apr 2020 14:40:51 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: "Martin K. Petersen" <martin.petersen@oracle.com>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: [tools] b4 v0.4.0 available with new features
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
+Message-ID: <20200427184051.ol7znhab6khqvjas@chatter.i7.local>
 References: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local>
-Date: Fri, 24 Apr 2020 19:35:41 -0400
-In-Reply-To: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local> (Konstantin
-	Ryabitsev's message of "Fri, 24 Apr 2020 13:04:42 -0400")
-Message-ID: <yq1lfmkbgoi.fsf@oracle.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
+ <yq1lfmkbgoi.fsf@oracle.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9601 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 spamscore=0 mlxlogscore=999
- adultscore=0 suspectscore=0 bulkscore=0 phishscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004240178
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9601 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 lowpriorityscore=0 spamscore=0
- impostorscore=0 bulkscore=0 mlxlogscore=999 phishscore=0 mlxscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004240178
-Content-Type: text/plain
+In-Reply-To: <yq1lfmkbgoi.fsf@oracle.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
+On Fri, Apr 24, 2020 at 07:35:41PM -0400, Martin K. Petersen wrote:
+> 
+> Hi Konstantin!
+> 
+> > ## b4 ty
+> >
+> > Allows you to automate a lot of "thanks, applied" and "thanks, merged"
+> > feedback for series and pull requests that were fetched with "b4 am"
+> > and "b4 pr".
+> 
+> I just merged a bunch of one-liners and the "thank you" quote ends up
+> being:
+> 
+>     > Fix the following coccicheck warning:
+>     > 
+>     > drivers/scsi/foo/bar/baz.c
+>     > 
+>     > Link: https://lore.kernel.org/r/...
+>     > Reported-by: ...
+>     > Reviewed-by: ...
+>     > Signed-off-by: ...
+>     > Signed-off-by: ...
+> 
+> It would be nice if the quoting function could ignore the trailers
+> portion of the mail and not just stuff below "---".
 
-Hi Konstantin!
+Yep, good point. The latest master and stable-0.4.y should do a better 
+job at making these quotes. Tested on:
 
-> ## b4 ty
->
-> Allows you to automate a lot of "thanks, applied" and "thanks, merged"
-> feedback for series and pull requests that were fetched with "b4 am"
-> and "b4 pr".
+https://lore.kernel.org/kernel-hardening/20200229231120.1147527-1-nivedita@alum.mit.edu/
 
-I just merged a bunch of one-liners and the "thank you" quote ends up
-being:
+The reply generated was:
 
-    > Fix the following coccicheck warning:
-    > 
-    > drivers/scsi/foo/bar/baz.c
-    > 
-    > Link: https://lore.kernel.org/r/...
-    > Reported-by: ...
-    > Reviewed-by: ...
-    > Signed-off-by: ...
-    > Signed-off-by: ...
+-----
+On Sat, 29 Feb 2020 18:11:20 -0500, Arvind Sankar wrote:
+> This currently leaks kernel physical addresses into userspace.
 
-It would be nice if the quoting function could ignore the trailers
-portion of the mail and not just stuff below "---".
+Applied to mricon/linux.git master, thanks!
+...
 
-Thanks!
+-----
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+(Note: The reply quote is generated during the "b4 am" run, so the 
+changes will only be seen on newly fetched patches/series.)
+
+Best,
+-K
