@@ -1,98 +1,97 @@
-Received: from userp2130.oracle.com (userp2130.oracle.com [156.151.31.86])
- by mx.groups.io with SMTP id smtpd.web10.144.1588039933165317606
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+ by mx.groups.io with SMTP id smtpd.web11.1939.1588087028152675121
  for <tools@linux.kernel.org>;
- Mon, 27 Apr 2020 19:12:13 -0700
+ Tue, 28 Apr 2020 08:17:08 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@oracle.com header.s=corp-2020-01-29 header.b=cZNWtS/l;
- spf=pass (domain: oracle.com, ip: 156.151.31.86, mailfrom: martin.petersen@oracle.com)
-Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
-	by userp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03S29Fs0186278;
-	Tue, 28 Apr 2020 02:12:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : references : date : in-reply-to : message-id : mime-version :
- content-type; s=corp-2020-01-29;
- bh=LczZ0W/ZUSvNYHyPt0hkk1Ea5VqdXu/0eA+6/qGRfMo=;
- b=cZNWtS/luyOLAGOA1b7kbvcFExOAMXKSKqTWneIR4wluE6DQiF5on55OWR3X8QzLbMVY
- e9JzzW2TlWMC8HJJEK5kSXFst/NvUJLgD+g1C3Uh24rW03BjorOBJXWjS9gDj6kbv7Db
- XBYNV9aInluSL0mMe+thvIr8iWepzFe0/FoEDh+jvtZGClJtIOgQQaHXtwn9vVpzJPOv
- /7xP4r3inVTfwAbnjH853wlZTkGRagghFhCqkHwjWkk9hsLDJhfo1Wp/aF0C8hnMgQSP
- AXCIDvjFAbTb1ATKlMpeXDeErTES8hgt+A/Zx+tWFiyydnEnz0bUys9jBd4XUO7hkRa5 Jg== 
-Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
-	by userp2130.oracle.com with ESMTP id 30p01nkj8x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 28 Apr 2020 02:12:12 +0000
-Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
-	by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03S289aM047659;
-	Tue, 28 Apr 2020 02:12:11 GMT
-Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-	by aserp3030.oracle.com with ESMTP id 30mxrrg8tb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 28 Apr 2020 02:12:11 +0000
-Received: from abhmp0019.oracle.com (abhmp0019.oracle.com [141.146.116.25])
-	by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 03S2CAJu016784;
-	Tue, 28 Apr 2020 02:12:10 GMT
-Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
-	by default (Oracle Beehive Gateway v4.0)
-	with ESMTP ; Mon, 27 Apr 2020 19:12:09 -0700
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>, users@linux.kernel.org,
-        tools@linux.kernel.org
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=SUSBWEyj;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.219.52, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qv1-f52.google.com with SMTP id v18so10528222qvx.9
+        for <tools@linux.kernel.org>; Tue, 28 Apr 2020 08:17:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LAEOdBx3KbeVwTbaeCdn3c4TPpuQcpHkmbjN4Ws5Z5Q=;
+        b=SUSBWEyjIRWBQzs/3Y6zu8fccNs4S7pj59UM4CewByIAM3+j2T2gw08fCVd3otflgo
+         aR6t8BtbaHF41DA8ZmIPXctQnWUwgJ7R6/xd7CV2WHadrAbQitRlgU+Bm2w4/cAytCcD
+         OOUJvUgSGYCuD+kEDqXJEVjUWhdIsKkjp6mok=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LAEOdBx3KbeVwTbaeCdn3c4TPpuQcpHkmbjN4Ws5Z5Q=;
+        b=kKc5w9H+2HuBjuYtBrM+OQsg3cJpCtCYdyNOIVj8HW8F5xUM1riP1tK+c4V47Gyxsq
+         KA7A9qQYuMgIJdrlZr8o5cL2H9FsDfupCsF40KN5N4UcyceC2shC7ZE4It1K6s18NId6
+         df+v4D3FPIl2///wJt65kpn4Dx3si5SlcR1log23X1rmicUGfLGeo0FQKHKYa3O/VMdQ
+         1d59tUQfj42fUdRcJteaGAjhh/LRGbLeh2O7z4D9LkiPyw4/h8FfvQddnIVga6v/ISLs
+         MC2FoWyDgQP1wTazGCbqSHALuRaeeBg74i8Jl3zGgY1m1nz8t3PZaD938XSx+wYf5QZ8
+         1zNA==
+X-Gm-Message-State: AGi0PuY9/4oJ5+Cw+mDJxAEvRn2QzLcFIt9D9W0MRwW0lmtjftYINgJs
+	1ccQzgHI4eSd/EJyQiDdVbgq8RRoQvY=
+X-Google-Smtp-Source: APiQypLknppKI9Bz6S5/pLoK5LeV2q21DZjp5GiWUi14zna0elHpPEZ3tExgo9DzNK1FSsS8TI88qg==
+X-Received: by 2002:a0c:90e7:: with SMTP id p94mr12900500qvp.219.1588087026889;
+        Tue, 28 Apr 2020 08:17:06 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id z26sm13822135qkg.39.2020.04.28.08.16.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Apr 2020 08:17:03 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Tue, 28 Apr 2020 11:16:56 -0400
+Date: Tue, 28 Apr 2020 11:16:56 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: tools@linux.kernel.org
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>,
+	users@linux.kernel.org
 Subject: Re: [tools] b4 v0.4.0 available with new features
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
+Message-ID: <20200428151656.5qz5yiclxmffcnga@chatter.i7.local>
 References: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local>
-	<yq1lfmkbgoi.fsf@oracle.com>
-	<20200427184051.ol7znhab6khqvjas@chatter.i7.local>
-Date: Mon, 27 Apr 2020 22:12:07 -0400
-In-Reply-To: <20200427184051.ol7znhab6khqvjas@chatter.i7.local> (Konstantin
-	Ryabitsev's message of "Mon, 27 Apr 2020 14:40:51 -0400")
-Message-ID: <yq11ro89x54.fsf@oracle.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
+ <yq1lfmkbgoi.fsf@oracle.com>
+ <20200427184051.ol7znhab6khqvjas@chatter.i7.local>
+ <yq11ro89x54.fsf@oracle.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9604 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 phishscore=0 suspectscore=0
- mlxlogscore=999 malwarescore=0 bulkscore=0 spamscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004280015
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9604 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 spamscore=0 clxscore=1015
- phishscore=0 mlxlogscore=999 adultscore=0 priorityscore=1501 mlxscore=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004280015
-Content-Type: text/plain
+In-Reply-To: <yq11ro89x54.fsf@oracle.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
+On Mon, Apr 27, 2020 at 10:12:07PM -0400, Martin K. Petersen wrote:
+> Second issue:
+> 
+> I have had a few cases today where my merge edits meant that b4 ty
+> couldn't match the original patch-id up with a commit in my tree.
+> 
+> I can see the patches in question with b4 ty --list but b4 ty -s N
+> fails because no match can be found. It would be nice to have a way to
+> specify a commit hash and have b4 still write a .thanks file even when
+> the patch-id matching fails. Something like:
+> 
+> $ b4 ty -s 10 -c <SHA>
+> 
+> would produce the thank you note with <SHA> as the ${summary} commit
+> link.
+> 
+> It would also be great for the matching to be more forgiving (capturing
+> per-patch message-id and matching with Link: tag, for instance). But I
+> still think I might end up in situations where I would like to be able
+> to force a thank you note given a ty id number and a commit hash.
 
-Konstantin,
+Interesting -- did you modify the subjects of those commits as well?  
+We're already falling back to matching by subject when we can't find 
+exact patch-id matches.
 
-> Yep, good point. The latest master and stable-0.4.y should do a better
-> job at making these quotes. Tested on:
+How about we create a .thanks file even if no match is found (when used 
+with -s, not --auto), except the summary will omit the commit-id 
+information. You can then add that information manually or just send 
+without it. After all, if you know for sure that you've applied that 
+patch, then we shouldn't be stopping you from notifying the submitter 
+about it.
 
-Works great, thank you!
+So:
 
-Second issue:
+b4 ty -s 1,2,3
 
-I have had a few cases today where my merge edits meant that b4 ty
-couldn't match the original patch-id up with a commit in my tree.
+will always generate a .thanks file for those series, and will omit 
+comit-id information when not found.
 
-I can see the patches in question with b4 ty --list but b4 ty -s N
-fails because no match can be found. It would be nice to have a way to
-specify a commit hash and have b4 still write a .thanks file even when
-the patch-id matching fails. Something like:
+Does that sound okay?
 
-$ b4 ty -s 10 -c <SHA>
-
-would produce the thank you note with <SHA> as the ${summary} commit
-link.
-
-It would also be great for the matching to be more forgiving (capturing
-per-patch message-id and matching with Link: tag, for instance). But I
-still think I might end up in situations where I would like to be able
-to force a thank you note given a ty id number and a commit hash.
-
-Just an idea...
-
-Thanks!
-
--- 
-Martin K. Petersen	Oracle Linux Engineering
+-K
