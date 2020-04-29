@@ -1,69 +1,100 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
- by mx.groups.io with SMTP id smtpd.web12.57.1588164564791767087
+Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [66.63.167.143])
+ by mx.groups.io with SMTP id smtpd.web12.2820.1588172435605782472
  for <tools@linux.kernel.org>;
- Wed, 29 Apr 2020 05:49:25 -0700
+ Wed, 29 Apr 2020 08:00:35 -0700
 Authentication-Results: mx.groups.io;
- dkim=missing; spf=none, err=permanent DNS error (domain: ucw.cz, ip: 46.255.230.98, mailfrom: pavel@ucw.cz)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id AD3CF1C0208; Wed, 29 Apr 2020 14:49:04 +0200 (CEST)
-Date: Wed, 29 Apr 2020 14:49:04 +0200
-From: "Pavel Machek" <pavel@ucw.cz>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
+ dkim=pass header.i=@hansenpartnership.com header.s=20151216 header.b=kWtrJFHy;
+ spf=pass (domain: hansenpartnership.com, ip: 66.63.167.143, mailfrom: james.bottomley@hansenpartnership.com)
+Received: from localhost (localhost [127.0.0.1])
+	by bedivere.hansenpartnership.com (Postfix) with ESMTP id A26438EE105;
+	Wed, 29 Apr 2020 08:00:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=hansenpartnership.com;
+	s=20151216; t=1588172434;
+	bh=4X/fovNTIkZYfa1rTpoEIAuid1I7h496GoDUgNKq9cE=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=kWtrJFHygKRYMsRrc/fg0qjjlIlx8hpTnt2yP6e2YbdOHfEpNbdbXCdmww0T/fyvU
+	 NMjdS8UQ8oA96+ngShvtuxw29bm8pAFZFofngCIAQXm11beDZJuZvoauSsVTn6CerC
+	 9MH4Z39ecjyUtR5twcMFeHauomxfi0cz3Oi8NsM0=
+Received: from bedivere.hansenpartnership.com ([127.0.0.1])
+	by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id WIunDACS1gf8; Wed, 29 Apr 2020 08:00:34 -0700 (PDT)
+Received: from [153.66.254.194] (unknown [50.35.76.230])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id B39AB8EE0C9;
+	Wed, 29 Apr 2020 08:00:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=hansenpartnership.com;
+	s=20151216; t=1588172434;
+	bh=4X/fovNTIkZYfa1rTpoEIAuid1I7h496GoDUgNKq9cE=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=kWtrJFHygKRYMsRrc/fg0qjjlIlx8hpTnt2yP6e2YbdOHfEpNbdbXCdmww0T/fyvU
+	 NMjdS8UQ8oA96+ngShvtuxw29bm8pAFZFofngCIAQXm11beDZJuZvoauSsVTn6CerC
+	 9MH4Z39ecjyUtR5twcMFeHauomxfi0cz3Oi8NsM0=
+Message-ID: <1588172426.11333.10.camel@HansenPartnership.com>
 Subject: Re: [kernel.org users] What is a useful way to show changes between series?
-Message-ID: <20200429124904.GA3098@duo.ucw.cz>
+From: "James Bottomley" <James.Bottomley@HansenPartnership.com>
+To: Mark Brown <broonie@kernel.org>, Konstantin Ryabitsev
+	 <konstantin@linuxfoundation.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>, users@linux.kernel.org, 
+	tools@linux.kernel.org
+Date: Wed, 29 Apr 2020 08:00:26 -0700
+In-Reply-To: <20200429101309.GE4201@sirena.org.uk>
 References: <20200428192938.aue3v6kxsm47day5@chatter.i7.local>
-MIME-Version: 1.0
-In-Reply-To: <20200428192938.aue3v6kxsm47day5@chatter.i7.local>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 117
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="FL5UXtIhxfXey3p5"
-Content-Disposition: inline
+	 <20200428193550.GX26002@ziepe.ca>
+	 <20200428194419.i2gamyjgbilp2x73@chatter.i7.local>
+	 <20200429101309.GE4201@sirena.org.uk>
+X-Mailer: Evolution 3.26.6 
+Mime-Version: 1.0
+X-Groupsio-MsgNum: 118
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-xEuS5xtNPoEhNxI4jaKo"
 
---FL5UXtIhxfXey3p5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--=-xEuS5xtNPoEhNxI4jaKo
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue 2020-04-28 15:29:38, Konstantin Ryabitsev wrote:
-> Hi, all:
+On Wed, 2020-04-29 at 11:13 +0100, Mark Brown wrote:
+> On Tue, Apr 28, 2020 at 03:44:19PM -0400, Konstantin Ryabitsev wrote:
 >=20
-> What would be a useful way to quickly do a "show me what changed"=20
-> between two versions of the same patch series? Especially considering=20
-> that:
+> > Right, but that only works from a tree, correct? Unfortunately,
+> > very few people are providing base-commit information still, so I'm
+> > not sure how=20
 >=20
-> - there may be a different number of patches in the series
-> - new revisions will likely be based on newer trees
-> - subjects/commit messages/trailers may be vastly different between two=
-=20
->   series, even if the code is very similar (e.g. someone broke down a=20
->   single large commit into several smaller ones or vice-versa)
->=20
-> In my mind, the best way to approach this would be:
->=20
-> 1. Create a single unified diff file from all patches in each series=20
->    (using combinediff)
-> 2. Remove all context, leaving only -/+ lines (using interdiff -U0)
-> 3. Remove all line numbers from @@ @@ hunks (replacing them with 0)
-> 4. Add commit information on top of the diff
+> It would be helpful if git could be configured to do this by default
+> in format-patch rather than requiring it to be done manually on the
+> command line separately to specifying the set of patches to format.
 
-You know about interdiff utility, do you?
+It might also end up causing a lot of confusion:  remember, a lot of
+people use a quilt like workflow for their patches ... I know I do
+because when I've got several patch series to upport, having a single
+branch with all of them is much easier to work with than multiple
+branches and a combination.  Even in the simplest cases where I'm
+working on the current tree and have only a single series, I often have
+a bugfix for some current issue as the base patch so I can boot my
+series easily.  In either case forcing the cover letter to show my base
+patch would give you useless information because it wouldn't be in any
+tree you have.
 
+I really think a base commit is sometimes useful but definitely not
+essential information.  Quilt is the poster child for tools that don't
+use a base commit.  I like to think that base commit based tools like
+git perform better under conflict merges, but I have to confess given
+some of the merge messes I've seen, there's no substantive difference
+between what git does and what quilt spits into .rej files.
 
---=20
-(english) http://www.livejournal.com/~pavelmachek
-(cesky, pictures) http://atrey.karlin.mff.cuni.cz/~pavel/picture/horses/blo=
-g.html
+James
 
---FL5UXtIhxfXey3p5
+--=-xEuS5xtNPoEhNxI4jaKo
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCXql3wAAKCRAw5/Bqldv6
-8qGDAJ9pzrrtjbThLhr6FLGaTEWPqa0R4gCfRrTtYGKUNHiozzuW+TGDL/wN3GI=
-=a9a0
+iHUEABMIAB0WIQTnYEDbdso9F2cI+arnQslM7pishQUCXqmWigAKCRDnQslM7pis
+hQxEAQD41fECkNJ6jhZmmP+KyBbd1+ORXq9JBDwdH7LWwHXmawD+P2/joY6Jfi9X
+Fyc1RcWFpMflvfdvPgxs0uDANdqBeTc=
+=ZinY
 -----END PGP SIGNATURE-----
 
---FL5UXtIhxfXey3p5--
+--=-xEuS5xtNPoEhNxI4jaKo--
