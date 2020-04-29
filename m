@@ -1,85 +1,98 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web12.4068.1588175492139825839
+Received: from mail-qv1-f68.google.com (mail-qv1-f68.google.com [209.85.219.68])
+ by mx.groups.io with SMTP id smtpd.web12.5396.1588178471270134585
  for <tools@linux.kernel.org>;
- Wed, 29 Apr 2020 08:51:32 -0700
+ Wed, 29 Apr 2020 09:41:11 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=X4JT/9zG;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 05EE420B80;
-	Wed, 29 Apr 2020 15:51:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1588175491;
-	bh=k8xHM8l5nAStAbbMZdN27Tt6GXD2u6PmFaO3YuiDtqs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=X4JT/9zG0LGcOVzSWTx+NKj8R8hU1R5oDeqAJpJ0JM4xcZp48ZH8BWcCvRJiNlRIE
-	 ioNlMe93mKTdaGtx9EskyPChLEEo8b8btMunGbDoB55A028w9256C4IK6Ibuv065dv
-	 0JQCvNbZ9fvIkF+fkLVtr85K1WHRszEeK+7Rxazc=
-Date: Wed, 29 Apr 2020 16:51:28 +0100
-From: "Mark Brown" <broonie@kernel.org>
-To: James Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>, users@linux.kernel.org,
-	tools@linux.kernel.org
-Subject: Re: [kernel.org users] What is a useful way to show changes between series?
-Message-ID: <20200429155128.GN4201@sirena.org.uk>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=H9KccLTh;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.219.68, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qv1-f68.google.com with SMTP id v10so1474068qvr.2
+        for <tools@linux.kernel.org>; Wed, 29 Apr 2020 09:41:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=d+fKOyXCvtLbrBegmHPHbf+WvZSVeauJoHPx6kFB390=;
+        b=H9KccLThZ0JUe5DnDepaRBX9/IMM3Tgo40qMw7bFPVbrocAzNjde6rEjlxYL2jckzf
+         Q8mciTWHU/xnPp221vNPzxyam5U122ta7qs+C4yERFBX2VyfnEQaqe7dzVthd6FcVk35
+         9/2NROrb4JBF9XQMqjp2w+NQGhMpZE6E+lHRw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=d+fKOyXCvtLbrBegmHPHbf+WvZSVeauJoHPx6kFB390=;
+        b=bDE2Me/tvZ+HKT0dGorcOlbZtG6wGwio9T2obcq2vu7rfB/qzkbWU5kfm/HsgGRwo6
+         Px8XJUntL4MjTE6i9cdCFI4grFUOAnyj0kbh+g5e+Bt7toQy+vMAV7Rd4O6ZVTlgcPm4
+         wkNGkBf/4MaIn4iTmYMStfMZjm2E5z8sAheU+JEUi66lea6Txeb1rXSmwVaMOp05GCh7
+         dPVnaZIBcMQwapJ5RnXsg5ZEtVuFI1eXRBCszB1AWik5ma0wc1zuS/RzHpEwsmptlxUh
+         WcWYzFDt4HzeSw5nHthl/NWLE4n5BkNPtQgoo9dBvXMlh+3lDudj9yb8Jn+qDY7K7WaV
+         TCng==
+X-Gm-Message-State: AGi0PuZ4bc3dO+Kl8JSsHW3SNNzDj+RKkU9/Jle260ujHHTa4/yZOzBF
+	L0TL39/WERb84mF7aRKIBEKBrQ==
+X-Google-Smtp-Source: APiQypKe+oRiWGvmbmCd77qbmisNWo+aah1J9uG48zWaT0NGUYja95M31xqhCy1P16f5l9WujBjiow==
+X-Received: by 2002:a0c:e992:: with SMTP id z18mr34975997qvn.25.1588178469441;
+        Wed, 29 Apr 2020 09:41:09 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id e186sm16577440qkb.40.2020.04.29.09.41.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Apr 2020 09:41:08 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Wed, 29 Apr 2020 12:41:07 -0400
+Date: Wed, 29 Apr 2020 12:41:07 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: tools@linux.kernel.org
+Subject: Re: [tools] jg expand-am (Was: What is a useful way to show changes between series?)
+Message-ID: <20200429164107.lc4sezzibjocwxgo@chatter.i7.local>
 References: <20200428192938.aue3v6kxsm47day5@chatter.i7.local>
  <20200428193550.GX26002@ziepe.ca>
  <20200428194419.i2gamyjgbilp2x73@chatter.i7.local>
- <20200429101309.GE4201@sirena.org.uk>
- <1588172426.11333.10.camel@HansenPartnership.com>
- <20200429151938.GM4201@sirena.org.uk>
- <1588175070.11333.35.camel@HansenPartnership.com>
+ <20200428195555.GY26002@ziepe.ca>
 MIME-Version: 1.0
-In-Reply-To: <1588175070.11333.35.camel@HansenPartnership.com>
-X-Cookie: I know how to do SPECIAL EFFECTS!!
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 121
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="b/Q3JWIUAuLE0ZFy"
+In-Reply-To: <20200428195555.GY26002@ziepe.ca>
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
---b/Q3JWIUAuLE0ZFy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Tue, Apr 28, 2020 at 04:55:55PM -0300, Jason Gunthorpe wrote:
+> > Right, but that only works from a tree, correct? Unfortunately, very 
+> > few people are providing base-commit information still, so I'm not 
+> > sure how reliably we could generate a range-diff between series if 
+> > we don't know where in the tree they belong, which is why I was 
+> > looking at easy ways of accomplishing something like this before 
+> > touching git at all.
+> 
+> In this case the absolute tree isn't important, if you have the blobs
+> referenced in the diffs you can build commits from a dummy base and
+> run git-range-diff over that.
+> 
+> Alternatively you could try to duplicate the visualization it uses
+> without git commits?
+> 
+> Actually, come to think of it, I wrote some part of this once to solve
+> some other problem, look here:
+> 
+> https://github.com/jgunthorpe/Kernel-Maintainer-Tools/blob/master/gj_tools/cmd_expand_am.py
 
-On Wed, Apr 29, 2020 at 08:44:30AM -0700, James Bottomley wrote:
-> On Wed, 2020-04-29 at 16:19 +0100, Mark Brown wrote:
+(Dropping users from this follow-up)
 
-> > I did say "default" rather than "force" - it's a lot easier if you
-> > have a workflow where it might be useful if you can just turn it on
+I'm trying to wrap my head around what `jg expand-am` does, and I need a 
+bit of your help to figure out what happens after it completes. So, when 
+you expand-am, you:
 
-> I think we need to be careful here.  Today if you specify a base
-> everyone assumes it should exist and they know something is seriously
-> wrong if it doesn't (0day will complain, for instance).  If you force
-> everyone to specify a base, then suddenly you lose the information that
-> they really meant it and you have no idea if a bogus base is an
-> indicator of problems with the series.  Forcing a default base would
-> make the base commit useless as an indicator of correctness since now
-> you have to process bogus bases as well.
+- grab a list of files and their index info
+- create a temporary detached-head worktree without any files in it
+- populate it with the exact files as in the patch, using the index info 
+  to grab the blobs at the exact state they were when the patches were 
+  created
+- git am the patch/series
+- display the tip commit of the "git am" operation
+- destroy the temporary worktree
 
-> Of course, this is simply an argument for still having the option, just
-> not making it default, so if you know what you're doing and don't use a
-> quilt like workflow, you turn it on.
+So, you now have these commits as loose objects in the original tree.
+What happens next in your workflow? How do these objects help you during 
+the actual "git am"?
 
-This is why I suggested adding the ability to configure git to do this
-by default rather than suggesting just doing this by default.
+(My git experience is pretty much entirely branch/merge based, so I'm in 
+the dark about a lot of this -- thanks for helping me understand your 
+perspective.)
 
---b/Q3JWIUAuLE0ZFy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6pooAACgkQJNaLcl1U
-h9BG2Qf8CjgI8NSvn0bTIt1DE0cC7q0QGl5FrcaiUswv/8OwNdqxD+gaXk5c8e5+
-/fEvHY/rfrR5e4du7jmtkHujAdrAv6UkiFzDMD82UZPlL7bsuJanNGj6ATi1i9wi
-Nj493nVBJTMortod21WId8gTP/FooxnPmMiUEiefTBn+DBpvlMjNDIIIaOdCenMO
-CKQLudmkAGpfn9wkGCgC4FZ2zn1HfhkgNPJjOwzmDHp7XPol4BLZd4Stqq1WGej7
-oPxtyQzKYlIQ5kaxvN/UOQLyN5BbXAaDD4pqLBRKxOSCSYeSXHPPtxGnf5oJfXQc
-Kif0IJzAoomAkhVFtHv6N3WKDniz+A==
-=MqeU
------END PGP SIGNATURE-----
-
---b/Q3JWIUAuLE0ZFy--
+-K
