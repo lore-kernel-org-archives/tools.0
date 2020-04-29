@@ -1,98 +1,85 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
- by mx.groups.io with SMTP id smtpd.web12.1733.1588183103455636199
+Received: from mail-qv1-f67.google.com (mail-qv1-f67.google.com [209.85.219.67])
+ by mx.groups.io with SMTP id smtpd.web11.1791.1588183126607850143
  for <tools@linux.kernel.org>;
- Wed, 29 Apr 2020 10:58:23 -0700
+ Wed, 29 Apr 2020 10:58:46 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=NpJv0sk+;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.169, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f169.google.com with SMTP id h124so2909495qke.11
-        for <tools@linux.kernel.org>; Wed, 29 Apr 2020 10:58:23 -0700 (PDT)
+ dkim=pass header.i=@ziepe.ca header.s=google header.b=G8oQAXFS;
+ spf=pass (domain: ziepe.ca, ip: 209.85.219.67, mailfrom: jgg@ziepe.ca)
+Received: by mail-qv1-f67.google.com with SMTP id v18so1599693qvx.9
+        for <tools@linux.kernel.org>; Wed, 29 Apr 2020 10:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
+        d=ziepe.ca; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=pK5lWQJ0xyJ2RZGdtZeJYukQcdFEs7lbi9+WC6Dw1dQ=;
-        b=NpJv0sk+rZroCbDSCmtqSLkL6lQMFiQT8zh9vcZGNXcb7Fh/48JeciokLjiMqtkYDF
-         hP4qNIBlNJ8Px0JXlVl/VIHjcGaryyjb/qGek4wGFM5jd5/e8qaGyTHLAGI9DXQ7afxT
-         rnHyibU1OPToj8qD5RU/bpDqfubxQXOHP+mBI=
+         :content-disposition:in-reply-to:user-agent;
+        bh=G/m4Q0B1xafjEMvuieOOgxTl8Dt2HkuorOozvLEIm8g=;
+        b=G8oQAXFS3EWAcn8WtlYw9r2R8SQjOLKlhvGn74hcgQlbOs+riAWq8S8DcZy0IT9yCL
+         /4qg7tyyQEkxwRpMNUghmS+VhOwGFaMbMzGt3LlW8xqtWSuILTJ5jyOULKoiJeRG8kFK
+         cUkBOgclJ2fftJ1TeqGiT8w6QT/p/RyhYd91AJerkAr4O8HRsSRLeqMwmjt4uEuJV4LM
+         m2R46kPX+qMz09Ixgnwx+vCZ18vsNyeYieAXkP5UTHV7x1QlQkewttU6ARaCU8hRMZYb
+         0h63qONdo9XoAIVzHnu8H+MqEg2bGmeAkgWUkR8ZgjctEL0FA00hhXgAPnIkHncfkCab
+         7QKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pK5lWQJ0xyJ2RZGdtZeJYukQcdFEs7lbi9+WC6Dw1dQ=;
-        b=hHnJEDpV9nVs7s8xxHfDM4KYzni93zQnA/rPVND04LiJR9Uoa0oI3kuWi9pIk+Ykuu
-         AAIl6Qp9cCU43XCESRXIv9P2OjKU73wuIUpbVoj8nAr9Ik0O0COm/lYnToyNWSfjhr9U
-         zC71spwRc2V1zclGOgMGg17kzt3SwiCOkQG5pMd27RPcptJpkek7RjVXAh7xT3pW6xoG
-         vlatRothjGmPEU+k/UGo+l/HHS5+OHhWEhz5tqCqyaS5g5QF4VpQG/JIuvu24zIM02Ze
-         +HlDQ20GBXk9FPbCcLWfPtbIzF6yquyZ/PGwInb293uDbevdyUR7B7HcN79usbMB7QVY
-         Yxjw==
-X-Gm-Message-State: AGi0PuYWJ1BE8ekeUufGXi5oeq+YhfSSjbUG91iUoKdqgh6svK7WUCsx
-	2MrTrWgHiVarKbQ/InIObk/+bw==
-X-Google-Smtp-Source: APiQypILAG+vS0AHorLjs0652XvYlAz3sBZFncABtJ++JToGDWDl/u0lVq50nXhCG6aNeI++8Mragw==
-X-Received: by 2002:a05:620a:22ab:: with SMTP id p11mr35463059qkh.373.1588183102501;
-        Wed, 29 Apr 2020 10:58:22 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id o201sm16444821qke.31.2020.04.29.10.58.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 10:58:21 -0700 (PDT)
-Received: by i7.mricon.com (sSMTP sendmail emulation); Wed, 29 Apr 2020 13:58:20 -0400
-Date: Wed, 29 Apr 2020 13:58:20 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: tools@linux.kernel.org
-Subject: Re: [tools] jg expand-am (Was: What is a useful way to show changes between series?)
-Message-ID: <20200429175820.bydzqgxmbc5k65qt@chatter.i7.local>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=G/m4Q0B1xafjEMvuieOOgxTl8Dt2HkuorOozvLEIm8g=;
+        b=ankmFsjv0UKEhPIDIwEQf/buRH8YCi+WvwTWbMa3+IN9Nidtp87id9pw8WZ1IQ320Y
+         HBy3rPlrTOTA0vshPL6g8uf+tcXG0sZW6tmfch75UnbiU8W6GTl/+RR2fe88ooo129O6
+         PQ048rFD7fY4QBt5FDsC7KHEtM48NEeFHf43UPhsZbrpIGyEdl1bgiOfCX6vKAdbj3q6
+         CPWwl5N4jp1HMj0/94E5184nEVxCLeGxiek61K0Kie0hfKBw1OzmaSKIjLa+BCeBOgOV
+         eRwVnIWlEKVoWBuyYJ+cc4/FKXTyyLv5jvnqc7t2bYaEmjuH6H3RWlP3gjy80Q1clvSF
+         71ZQ==
+X-Gm-Message-State: AGi0PuY4K5fTvJntJG6difW6HEDYNIGPaNNcEz8kpcli5m+cIKb2psCS
+	Kr1paPQS7V42GfVkmnk+zfArPw==
+X-Google-Smtp-Source: APiQypLxaa9caUpwLIMfQ13iDkdGbcD03/c5A4+Xl4K9kOdNG9KRej+6Nrb4a9sTQAeCJ5ovzEk1gQ==
+X-Received: by 2002:ad4:45ac:: with SMTP id y12mr33863969qvu.227.1588183125610;
+        Wed, 29 Apr 2020 10:58:45 -0700 (PDT)
+Return-Path: <jgg@ziepe.ca>
+Received: from ziepe.ca (hlfxns017vw-142-68-57-212.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.57.212])
+        by smtp.gmail.com with ESMTPSA id t7sm8185569qtr.93.2020.04.29.10.58.45
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Apr 2020 10:58:45 -0700 (PDT)
+Received: from jgg by mlx.ziepe.ca with local (Exim 4.90_1)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1jTqyq-00017u-O8; Wed, 29 Apr 2020 14:58:44 -0300
+Date: Wed, 29 Apr 2020 14:58:44 -0300
+From: "Jason Gunthorpe" <jgg@ziepe.ca>
+To: Mark Brown <broonie@kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: [kernel.org users] What is a useful way to show changes between series?
+Message-ID: <20200429175844.GH26002@ziepe.ca>
 References: <20200428192938.aue3v6kxsm47day5@chatter.i7.local>
  <20200428193550.GX26002@ziepe.ca>
  <20200428194419.i2gamyjgbilp2x73@chatter.i7.local>
- <20200428195555.GY26002@ziepe.ca>
- <20200429164107.lc4sezzibjocwxgo@chatter.i7.local>
- <20200429171540.GD26002@ziepe.ca>
+ <20200429101309.GE4201@sirena.org.uk>
+ <CAPc5daUXCRv5CN9cVdGTgAWinTEFB0RnMF27MA5D4dOMiCCk1A@mail.gmail.com>
+ <20200429175049.GP4201@sirena.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <20200429171540.GD26002@ziepe.ca>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20200429175049.GP4201@sirena.org.uk>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Wed, Apr 29, 2020 at 02:15:40PM -0300, Jason Gunthorpe wrote:
-> The commits are not the goal. The purpose is to populate the object
-> store with evey file blob mentioned in every diff header:
+On Wed, Apr 29, 2020 at 06:50:49PM +0100, Mark Brown wrote:
+> On Wed, Apr 29, 2020 at 10:42:01AM -0700, Junio C Hamano wrote:
 > 
-> index a1f053cd30b990..49775cda83dc18 100644
+> > Are we talking about format.useAutoBase or something more elaborate?
 > 
-> ie the goal is to create blob 49775cda83dc18
-> 
-> This effects 'git am -3'. If it has the source blob then it does
-> standard 3 way git merge - otherwise it tries less hard and drops .rej
-> files.
-> 
-> The problem comes when a series of patches change the same file
-> multiple times. The file might go through blobs A->B->C->D over 4
-> patches.
-> 
-> I probably have the starting blob A, however, my top of tree has that
-> file as W. So my git am will produce blobs W->X->Y->Z
-> 
-> The key thing is that when am applies A->B on top of W it gets W->X. 
-> am never creates B.
-> 
-> Thus when am goes to do B->C it can't find B, and now it can't do 3
-> way. If there are conflicts you get .rej files.
+> Ah, indeed I think that is exactly what I'm looking for!  Sadly it is
+> not documented in the git format-patch man page so I hadn't seen it,
 
-Ah, this is a pretty neat hack. It would be fairly easy for b4 to do the 
-same thing if we're running "b4 am" inside a git tree -- I'll see if I 
-can add that in as an optional "b4 am -3" flag.
+So if we use this, should we set the --base to be a linux-next tag?
 
-Getting back to the original topic, I now better understand what you're 
-suggesting. We perform the exact same operation on two different series 
-(v1, v2) and then perform:
+Is that reliable enough?
 
-git range-diff <dummy-base-v1>..<dummy-tip-v1> <dummy-base-v2>..<dummy-tip-v2>
+Can't relly use Linus's tree, and if people randomly choose their
+upstream's then it defeats the whole point :(
 
-Assuming we were able to find all the blobs, this should effectively 
-allow us to range-diff across arbitrary patchsets without knowing the 
-base-commit. Neat.
+> even the base auto option is a bit buried.
 
-Thanks for suggesting that -- I'll see if I can work that into b4.
+Agree, that seems to be missed from the synopsis and option
+description sections :)
 
--K
+Jason
