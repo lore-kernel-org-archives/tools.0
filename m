@@ -1,49 +1,55 @@
-Received: from mail-qk1-f193.google.com (mail-qk1-f193.google.com [209.85.222.193])
- by mx.groups.io with SMTP id smtpd.web11.2400.1588184688144199821
+Received: from mail-qk1-f196.google.com (mail-qk1-f196.google.com [209.85.222.196])
+ by mx.groups.io with SMTP id smtpd.web10.306.1588187563361064463
  for <tools@linux.kernel.org>;
- Wed, 29 Apr 2020 11:24:48 -0700
+ Wed, 29 Apr 2020 12:12:43 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=CAwnrpeH;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.193, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f193.google.com with SMTP id b188so3021715qkd.9
-        for <tools@linux.kernel.org>; Wed, 29 Apr 2020 11:24:48 -0700 (PDT)
+ dkim=pass header.i=@ziepe.ca header.s=google header.b=mZEhK5yN;
+ spf=pass (domain: ziepe.ca, ip: 209.85.222.196, mailfrom: jgg@ziepe.ca)
+Received: by mail-qk1-f196.google.com with SMTP id k81so503402qke.5
+        for <tools@linux.kernel.org>; Wed, 29 Apr 2020 12:12:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
+        d=ziepe.ca; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=AmqIGhWR1y3o+5lld+GkdDu7tcBAXsTy/b1dEpRX8bo=;
-        b=CAwnrpeHZZZy12fKNgjBIBSm8NDOUYEfTvMwCG+Abj+fYwxcCn+LPHg3IuCgN2qsKu
-         adhSkpTBB00gwgAFtaU9nA6Ft1QCqL9FX2/voo/CtnRPaZAzLX3KPDOuyixNkqv2PlPv
-         oeq3uOBIIgCBZjQZOAVtMZMM/cj6igkOAFHRQ=
+         :content-disposition:in-reply-to:user-agent;
+        bh=JXYJ2TEs/v0D9T2mbDryFNRks2yVXZfWDsMTd2jLIFI=;
+        b=mZEhK5yNVD0wVYC177HZxx3GvQgLf9zREWZ3/Ds5RJtPjOAEtBHiMHkNGGrIefITpu
+         /b6FoOVu1TESz2u/P6j77M8v0kLTCUphSm3iXCetH9SH7QKT2rIcWS29Nfi6ylczN5Lk
+         Wlsop6W1d++2fYeTu4goViViAfJMjBXuNO0qCN+YTg81Dsj4jHavC8Sn/yFpgUTESfxP
+         F4VZad496GclpvyoE+SrUf7QygsEL2Z+w/yAKMI2P7h8zqKAQDyOW5jYTh2LjQTXp3Zl
+         2rW5XNYP0JNNU2YXUKQP4vB2rF1PK5tUJtxoL1Aa+EqXWBgoephmA+VvlP+YWJWjK85x
+         HKQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=AmqIGhWR1y3o+5lld+GkdDu7tcBAXsTy/b1dEpRX8bo=;
-        b=m9yArX/tQuIGBZYuEE9Kyzm79LfszUDV5XlyO0FTtoTYlHJihc/IyGQGd/C2ih7WOD
-         AatAP84tkAJHN6vFaE3jXGDZWgkbiq6UWXcxcUZmVWvZ8FRmY/AvMSLZA+FVSVaKB9/v
-         cQFuLqw14g04f00g2PewReGxOW4hjoRuq8TuZkEw8O28obWvOm0LKFy63SOuvLEnR2jJ
-         pcoADbiXytR5QnNt9WpKOjZhuPzmCwT6LiNzEvpaKUI2L2JchLibcUFL9hiLEesZXWQc
-         dV3D6XpmNmYsNIgCiTr2roS+ToPcj4V+8xjDZRfJBEiF2zAlE/LBOc5D7FjDgA5NX92v
-         rpdA==
-X-Gm-Message-State: AGi0Pub46HxuaT8GJLGmVm+pOeHM/z8Zga7nJzA70jAotdhG3HXEakwn
-	Prl515u6r33NQhfq20oYAoKHLQ==
-X-Google-Smtp-Source: APiQypICFH8NE8GiR7zEw7DR5aInaapsWITkSt4LkvjNS37aZFkZ1LHoursNedzvWFgVzikH+YLKaw==
-X-Received: by 2002:a37:a517:: with SMTP id o23mr33729141qke.134.1588184687280;
-        Wed, 29 Apr 2020 11:24:47 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id s28sm7007763qks.49.2020.04.29.11.24.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 11:24:46 -0700 (PDT)
-Received: by i7.mricon.com (sSMTP sendmail emulation); Wed, 29 Apr 2020 14:24:44 -0400
-Date: Wed, 29 Apr 2020 14:24:44 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Mark Brown <broonie@kernel.org>, Junio C Hamano <gitster@pobox.com>,
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JXYJ2TEs/v0D9T2mbDryFNRks2yVXZfWDsMTd2jLIFI=;
+        b=PoGRjepiOG8f3se/4TjtLr/HV3N3bPpjzQZNV+lozN9GbpZKDrIkRmtDrB6QRoBvF0
+         8ShVKm5IZN+cwz7VySXn9qmFxcZUskP4x7R3Q4yDiOJOnvoFYOOe5Zt04ymcN7prFoS9
+         gIhVnl7zQQHoBE7RI3NP7+/unpPFd8sGfJckyWU2vvRZ/GshKQjrh2ovjDOOHq/QkeNk
+         cLf11a9Kqo70N/uEUZQLueegEO5y4suFTut1ITbmmkVABJhRW0+vtUnbg+vcGhxOJ3ry
+         DnC9JI7/gVaFh0gAG0kShJbOq9UQIANyTlvFSm3a3YSOSMxVxKYaA1u1YLb4m/GeTcN3
+         nUMA==
+X-Gm-Message-State: AGi0PuZrRrgMZDnSTJS8yH3RlSi9rt9PZOGBiWzC+OwCGrN93bczxQIN
+	eTJJv7pEijXvIXbbbYuSNcCyTA==
+X-Google-Smtp-Source: APiQypJNKPd779tHNfsbsJep4EzVo5ycud592eT39uX6jGkRWnIoNDP/34MBYCMH6sFQh3pR+WW9PQ==
+X-Received: by 2002:a37:9e4a:: with SMTP id h71mr34144029qke.341.1588187562514;
+        Wed, 29 Apr 2020 12:12:42 -0700 (PDT)
+Return-Path: <jgg@ziepe.ca>
+Received: from ziepe.ca (hlfxns017vw-142-68-57-212.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.57.212])
+        by smtp.gmail.com with ESMTPSA id x55sm120120qtk.3.2020.04.29.12.12.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Apr 2020 12:12:41 -0700 (PDT)
+Received: from jgg by mlx.ziepe.ca with local (Exim 4.90_1)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1jTs8P-0002Cf-6W; Wed, 29 Apr 2020 16:12:41 -0300
+Date: Wed, 29 Apr 2020 16:12:41 -0300
+From: "Jason Gunthorpe" <jgg@ziepe.ca>
+To: Mark Brown <broonie@kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
 	users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: [kernel.org users] What is a useful way to show changes between series?
-Message-ID: <20200429182444.ma62hhym3ndxpgol@chatter.i7.local>
+Message-ID: <20200429191241.GJ26002@ziepe.ca>
 References: <20200428192938.aue3v6kxsm47day5@chatter.i7.local>
  <20200428193550.GX26002@ziepe.ca>
  <20200428194419.i2gamyjgbilp2x73@chatter.i7.local>
@@ -51,34 +57,41 @@ References: <20200428192938.aue3v6kxsm47day5@chatter.i7.local>
  <CAPc5daUXCRv5CN9cVdGTgAWinTEFB0RnMF27MA5D4dOMiCCk1A@mail.gmail.com>
  <20200429175049.GP4201@sirena.org.uk>
  <20200429175844.GH26002@ziepe.ca>
+ <20200429180941.GQ4201@sirena.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <20200429175844.GH26002@ziepe.ca>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20200429180941.GQ4201@sirena.org.uk>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Wed, Apr 29, 2020 at 02:58:44PM -0300, Jason Gunthorpe wrote:
-> > Ah, indeed I think that is exactly what I'm looking for!  Sadly it 
-> > is
-> > not documented in the git format-patch man page so I hadn't seen it,
+On Wed, Apr 29, 2020 at 07:09:41PM +0100, Mark Brown wrote:
+> On Wed, Apr 29, 2020 at 02:58:44PM -0300, Jason Gunthorpe wrote:
+> > On Wed, Apr 29, 2020 at 06:50:49PM +0100, Mark Brown wrote:
+> > > On Wed, Apr 29, 2020 at 10:42:01AM -0700, Junio C Hamano wrote:
 > 
-> So if we use this, should we set the --base to be a linux-next tag?
+> > > Ah, indeed I think that is exactly what I'm looking for!  Sadly it is
+> > > not documented in the git format-patch man page so I hadn't seen it,
 > 
-> Is that reliable enough?
+> > So if we use this, should we set the --base to be a linux-next tag?
 > 
-> Can't relly use Linus's tree, and if people randomly choose their
-> upstream's then it defeats the whole point :(
+> > Is that reliable enough?
+> 
+> > Can't relly use Linus's tree, and if people randomly choose their
+> > upstream's then it defeats the whole point :(
+> 
+> Personally I'd just not bother specifying a base if it's -next or
+> there's platform enablement stuff in there - I do send a bunch of stuff
+> that's based off directly off a rc or something in a maintainer's tree
+> so for me it's quite useful.
 
-One option I can think of is for git.kernel.org to provide a lookup API 
-that would consume the commit-id and spit out the tree and branch where 
-this object exists, working down the list of preferred trees:
+I mean, if I use --base to be linux-next then git format-patch will
+find some common near commit that is easy for tooling to access.
 
-1. torvalds/linux.git
-2. next/linux-next.git
-3. stable/linux.git
-4. everyone else on kernel.org
-5. select remote trees that we can start mirroring
+eg if my series has netdev as my base then --base=linux-next will pull
+out the latest netdev tree (I assume it usese git merge-base
+internally?). Same for basically all the subsystem trees in the
+kernel..
 
-This should help make this information a lot more useful for automation, 
-I expect.
+I'm not suggesting to send patches against linux-next
 
--K
+Jason
