@@ -1,97 +1,71 @@
-Received: from mail-qk1-f196.google.com (mail-qk1-f196.google.com [209.85.222.196])
- by mx.groups.io with SMTP id smtpd.web10.306.1588187563361064463
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+ by mx.groups.io with SMTP id smtpd.web11.1053.1588189666697213616
  for <tools@linux.kernel.org>;
- Wed, 29 Apr 2020 12:12:43 -0700
+ Wed, 29 Apr 2020 12:47:46 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@ziepe.ca header.s=google header.b=mZEhK5yN;
- spf=pass (domain: ziepe.ca, ip: 209.85.222.196, mailfrom: jgg@ziepe.ca)
-Received: by mail-qk1-f196.google.com with SMTP id k81so503402qke.5
-        for <tools@linux.kernel.org>; Wed, 29 Apr 2020 12:12:43 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=Q1e6QGCp;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.174, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f174.google.com with SMTP id s63so3343460qke.4
+        for <tools@linux.kernel.org>; Wed, 29 Apr 2020 12:47:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JXYJ2TEs/v0D9T2mbDryFNRks2yVXZfWDsMTd2jLIFI=;
-        b=mZEhK5yNVD0wVYC177HZxx3GvQgLf9zREWZ3/Ds5RJtPjOAEtBHiMHkNGGrIefITpu
-         /b6FoOVu1TESz2u/P6j77M8v0kLTCUphSm3iXCetH9SH7QKT2rIcWS29Nfi6ylczN5Lk
-         Wlsop6W1d++2fYeTu4goViViAfJMjBXuNO0qCN+YTg81Dsj4jHavC8Sn/yFpgUTESfxP
-         F4VZad496GclpvyoE+SrUf7QygsEL2Z+w/yAKMI2P7h8zqKAQDyOW5jYTh2LjQTXp3Zl
-         2rW5XNYP0JNNU2YXUKQP4vB2rF1PK5tUJtxoL1Aa+EqXWBgoephmA+VvlP+YWJWjK85x
-         HKQA==
+        d=linuxfoundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CuRBGksnI+O6JVgH/MBwvJ0p19qogYEI+NCdWt4ElZQ=;
+        b=Q1e6QGCpXJVverOIz/kCtBqM2YI3qvlq703calL5el9Pvo3UXfTjkKFErAFj02900F
+         OR1CXGNm5qYW6+40QnvoVSq0APsLvm/86oy09fQXpmNx11GdzeHSGqY/qQxxrrDKL4lK
+         6TCAD1bL9vUYt1sMJ0FYdU0ULNYae+Hg+bVDU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JXYJ2TEs/v0D9T2mbDryFNRks2yVXZfWDsMTd2jLIFI=;
-        b=PoGRjepiOG8f3se/4TjtLr/HV3N3bPpjzQZNV+lozN9GbpZKDrIkRmtDrB6QRoBvF0
-         8ShVKm5IZN+cwz7VySXn9qmFxcZUskP4x7R3Q4yDiOJOnvoFYOOe5Zt04ymcN7prFoS9
-         gIhVnl7zQQHoBE7RI3NP7+/unpPFd8sGfJckyWU2vvRZ/GshKQjrh2ovjDOOHq/QkeNk
-         cLf11a9Kqo70N/uEUZQLueegEO5y4suFTut1ITbmmkVABJhRW0+vtUnbg+vcGhxOJ3ry
-         DnC9JI7/gVaFh0gAG0kShJbOq9UQIANyTlvFSm3a3YSOSMxVxKYaA1u1YLb4m/GeTcN3
-         nUMA==
-X-Gm-Message-State: AGi0PuZrRrgMZDnSTJS8yH3RlSi9rt9PZOGBiWzC+OwCGrN93bczxQIN
-	eTJJv7pEijXvIXbbbYuSNcCyTA==
-X-Google-Smtp-Source: APiQypJNKPd779tHNfsbsJep4EzVo5ycud592eT39uX6jGkRWnIoNDP/34MBYCMH6sFQh3pR+WW9PQ==
-X-Received: by 2002:a37:9e4a:: with SMTP id h71mr34144029qke.341.1588187562514;
-        Wed, 29 Apr 2020 12:12:42 -0700 (PDT)
-Return-Path: <jgg@ziepe.ca>
-Received: from ziepe.ca (hlfxns017vw-142-68-57-212.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.57.212])
-        by smtp.gmail.com with ESMTPSA id x55sm120120qtk.3.2020.04.29.12.12.41
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Apr 2020 12:12:41 -0700 (PDT)
-Received: from jgg by mlx.ziepe.ca with local (Exim 4.90_1)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1jTs8P-0002Cf-6W; Wed, 29 Apr 2020 16:12:41 -0300
-Date: Wed, 29 Apr 2020 16:12:41 -0300
-From: "Jason Gunthorpe" <jgg@ziepe.ca>
-To: Mark Brown <broonie@kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: [kernel.org users] What is a useful way to show changes between series?
-Message-ID: <20200429191241.GJ26002@ziepe.ca>
-References: <20200428192938.aue3v6kxsm47day5@chatter.i7.local>
- <20200428193550.GX26002@ziepe.ca>
- <20200428194419.i2gamyjgbilp2x73@chatter.i7.local>
- <20200429101309.GE4201@sirena.org.uk>
- <CAPc5daUXCRv5CN9cVdGTgAWinTEFB0RnMF27MA5D4dOMiCCk1A@mail.gmail.com>
- <20200429175049.GP4201@sirena.org.uk>
- <20200429175844.GH26002@ziepe.ca>
- <20200429180941.GQ4201@sirena.org.uk>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CuRBGksnI+O6JVgH/MBwvJ0p19qogYEI+NCdWt4ElZQ=;
+        b=UCvz1fFb3r601WiOFix/+wEul4EgfY5Lw+nHwvz6S8BGxseIbH2y6Udc2KxPw6/P7+
+         419lxj+NiMw8d4ND9gbXFG3+YeS7dCfiQWEUwlpFWnyYAtzreyWWpWVUpPK75PmiOMn8
+         hVb3Wx5+a3hsbd4Zsbru/XwsKiTL2HawXZN+GVp3WexZhqlafsI8wADoAZUQSIF9ULl8
+         /75iCpmUmYgev8M2FFAAwUJAERQX0wiMliagQ4Zs3ElkrRmqSUiZ2JIxMGgeXC2FkGVD
+         6x2ELQytsYsDbI+8sqwn6Jm3tpvX3W9/n2uDMsbEudCwZ3GlQB894oKIVRLWMuXjx+tr
+         VgaQ==
+X-Gm-Message-State: AGi0PubfFzfQe6sHfHWBrlTYpUZPIh2uxGNRMo5i6L9XBQ89QyfvYF2U
+	d38wtCB6YVqST0hSlGQIYR9IbR3Aa5G1CWLH85FU+/+r
+X-Google-Smtp-Source: APiQypJne8Hb3fcP9rt/GQSey5VKDifgne4wqFFHs3wCJ9bY23y/fWs3WIoTgXjqobLlAYt6oB+zckCXsWsNVpow2P0=
+X-Received: by 2002:a37:9d3:: with SMTP id 202mr40343qkj.401.1588189664119;
+ Wed, 29 Apr 2020 12:47:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200429180941.GQ4201@sirena.org.uk>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20200428192938.aue3v6kxsm47day5@chatter.i7.local> <87sggnexjq.fsf@mpe.ellerman.id.au>
+In-Reply-To: <87sggnexjq.fsf@mpe.ellerman.id.au>
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+Date: Wed, 29 Apr 2020 15:47:32 -0400
+Message-ID: <CAMwyc-RaUhw9q9baKKPMLWSWsnQ+e1=+u2yC1Fi2KCGqfTgCtg@mail.gmail.com>
+Subject: Re: [tools] [kernel.org users] What is a useful way to show changes between series?
+To: tools@linux.kernel.org
+Cc: users@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Apr 29, 2020 at 07:09:41PM +0100, Mark Brown wrote:
-> On Wed, Apr 29, 2020 at 02:58:44PM -0300, Jason Gunthorpe wrote:
-> > On Wed, Apr 29, 2020 at 06:50:49PM +0100, Mark Brown wrote:
-> > > On Wed, Apr 29, 2020 at 10:42:01AM -0700, Junio C Hamano wrote:
-> 
-> > > Ah, indeed I think that is exactly what I'm looking for!  Sadly it is
-> > > not documented in the git format-patch man page so I hadn't seen it,
-> 
-> > So if we use this, should we set the --base to be a linux-next tag?
-> 
-> > Is that reliable enough?
-> 
-> > Can't relly use Linus's tree, and if people randomly choose their
-> > upstream's then it defeats the whole point :(
-> 
-> Personally I'd just not bother specifying a base if it's -next or
-> there's platform enablement stuff in there - I do send a bunch of stuff
-> that's based off directly off a rc or something in a maintainer's tree
-> so for me it's quite useful.
+On Wed, 29 Apr 2020 at 00:16, Michael Ellerman <mpe@ellerman.id.au> wrote:
+> There will be cases where the diff of the whole series is going to be
+> too big and/or busy. So having a way to drill down would be awesome.
+>
+> The easiest to implement would be limiting it to a single file, which
+> would be useful in some cases.
 
-I mean, if I use --base to be linux-next then git format-patch will
-find some common near commit that is easy for tooling to access.
+With Jason's help, I think I have a good idea how we can do this. It's
+not infallible, but it moves most of the logic to git-range-diff,
+which is how I prefer it anyway. I'll try to figure out how to limit
+this to a subpath and if I can do it without it potentially causing
+more confusion, then I'll try to implement it.
 
-eg if my series has netdev as my base then --base=linux-next will pull
-out the latest netdev tree (I assume it usese git merge-base
-internally?). Same for basically all the subsystem trees in the
-kernel..
+> Harder to implement but possibly more useful would be showing the diff
+> between the two series up to some point, so eg. show me the changes
+> between the series but only patches 1-5.
 
-I'm not suggesting to send patches against linux-next
+Well, the upside of using git-range-diff for the actual comparison is
+that it makes it very easy to locate the commits that you're
+interested in.
 
-Jason
+Let me try to put together something that folks can try out and then
+we can work iteratively from there.
+
+Thanks for everyone's input.
+
+-K
