@@ -1,88 +1,82 @@
-Received: from mail-qt1-f195.google.com (mail-qt1-f195.google.com [209.85.160.195])
- by mx.groups.io with SMTP id smtpd.web11.1864.1588183293131383284
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web10.1998.1588183784786689928
  for <tools@linux.kernel.org>;
- Wed, 29 Apr 2020 11:01:33 -0700
+ Wed, 29 Apr 2020 11:09:45 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@ziepe.ca header.s=google header.b=Z7sVYtnr;
- spf=pass (domain: ziepe.ca, ip: 209.85.160.195, mailfrom: jgg@ziepe.ca)
-Received: by mail-qt1-f195.google.com with SMTP id o10so2655908qtr.6
-        for <tools@linux.kernel.org>; Wed, 29 Apr 2020 11:01:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=QZqcxvoBXVk9CbbJA2BXfIMHICoHBZhlogfZTw71f3I=;
-        b=Z7sVYtnrW6W311mpkXQurFKtA3xRnHym9wTmQb7AmZWPwJL50zrl+COZuSIVVnBlEw
-         uU0IkxGQNjqEsNm9eztrKQHMH/b7FoznBaL5ohDjG7s2UH19IK4ySCzL8CVutIg3nPJY
-         vYCe9b7lNdRPZ9KY+JOlWUlqbzTlBCyb4UxQso++uMkSs7faPLvhbY0+yGKfIhIBlHRE
-         21EFrz/bP0WIlWvjPZKvUDyoCEYptgxwX8v/aBKFynxFkr7exQgd7HG6DXng6Lmo5rnq
-         Vq76BTJ1AMIYIXjuYaI5jo/6+i3wY8E9lK+6RXSIMFQozGWGEJrv4gc5VrD6qkUadXuu
-         fjtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QZqcxvoBXVk9CbbJA2BXfIMHICoHBZhlogfZTw71f3I=;
-        b=C2cGH8lI886LKr4TVaAQTguKJt4FW8XFB7JP/PgxXIeI7qdJf9rJM+ILBhMkoCfleN
-         8uJt0dghXQWw5+lN67BReizjhR/qp4D7w3tLEdpG+OPj2jX+lI5JLMEZ50F+x0wNim/C
-         VQa8HQybAhw/RvDBgy7R4J+VHYakZGyv/QjaxkKPxwZtC6IZF/fK0cQvWAZ2M6Ihh2+A
-         jNJm5yMPhHE57q8VWKFFtE8Bmpmeq7dqssAjFJWxkdaeuLI5qXHZW6JQVHjYpe0GcvlK
-         oFX4lPV59ZcmVuuiPWXmF7KPoexEQlQqCxh4LYTAyD2o8NM6Ui93vwu4lOnMB7R6bn8s
-         2hEg==
-X-Gm-Message-State: AGi0PubLfQuH14VQdSLjSzgD0wQlpNYLKNUAmlicYxUtHBxTIUctcZ7l
-	Z6GreptjY1hn/+8bNsR9vDpxlzqy3kc5VQ==
-X-Google-Smtp-Source: APiQypJZKnJpWM7e6q5QG3HhIkRtNR1Uouen00L6CXQdadTOQYkZWsRCLgLUL0md+LlysgJINHAw7Q==
-X-Received: by 2002:ac8:4cd1:: with SMTP id l17mr35407811qtv.20.1588183291630;
-        Wed, 29 Apr 2020 11:01:31 -0700 (PDT)
-Return-Path: <jgg@ziepe.ca>
-Received: from ziepe.ca (hlfxns017vw-142-68-57-212.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.57.212])
-        by smtp.gmail.com with ESMTPSA id c6sm15929484qka.58.2020.04.29.11.01.31
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Apr 2020 11:01:31 -0700 (PDT)
-Received: from jgg by mlx.ziepe.ca with local (Exim 4.90_1)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1jTr1W-00019h-MY; Wed, 29 Apr 2020 15:01:30 -0300
-Date: Wed, 29 Apr 2020 15:01:30 -0300
-From: "Jason Gunthorpe" <jgg@ziepe.ca>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: Re: [tools] jg expand-am (Was: What is a useful way to show changes between series?)
-Message-ID: <20200429180130.GI26002@ziepe.ca>
+ dkim=pass header.i=@kernel.org header.s=default header.b=HT6aQxPp;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id E59682064C;
+	Wed, 29 Apr 2020 18:09:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1588183784;
+	bh=AYAiCgwC640AgZh2nCo4sBpK5RblXzGegQEmhHHJglo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HT6aQxPpp09cIyi8d6KrTs/sPoySnCi2OX8zYiUVybGUQ+EqbuYXwOeA/gKGfFPCC
+	 iAtq/2p59wVsmchy+7f4ZogJGmqiwf+/7U+gDuHiUNO45fUvTq2Ewr9bj3qbzilQR9
+	 g13t04TaS3ycwGPz0IxqzptSD+VwugzluZjGS7RE=
+Date: Wed, 29 Apr 2020 19:09:41 +0100
+From: "Mark Brown" <broonie@kernel.org>
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: [kernel.org users] What is a useful way to show changes between series?
+Message-ID: <20200429180941.GQ4201@sirena.org.uk>
 References: <20200428192938.aue3v6kxsm47day5@chatter.i7.local>
  <20200428193550.GX26002@ziepe.ca>
  <20200428194419.i2gamyjgbilp2x73@chatter.i7.local>
- <20200428195555.GY26002@ziepe.ca>
- <20200429164107.lc4sezzibjocwxgo@chatter.i7.local>
- <20200429171540.GD26002@ziepe.ca>
- <20200429175820.bydzqgxmbc5k65qt@chatter.i7.local>
+ <20200429101309.GE4201@sirena.org.uk>
+ <CAPc5daUXCRv5CN9cVdGTgAWinTEFB0RnMF27MA5D4dOMiCCk1A@mail.gmail.com>
+ <20200429175049.GP4201@sirena.org.uk>
+ <20200429175844.GH26002@ziepe.ca>
 MIME-Version: 1.0
-In-Reply-To: <20200429175820.bydzqgxmbc5k65qt@chatter.i7.local>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20200429175844.GH26002@ziepe.ca>
+X-Cookie: I know how to do SPECIAL EFFECTS!!
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 129
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="cnBsrynPgIOyCJkL"
+Content-Disposition: inline
+
+--cnBsrynPgIOyCJkL
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Wed, Apr 29, 2020 at 01:58:20PM -0400, Konstantin Ryabitsev wrote:
+On Wed, Apr 29, 2020 at 02:58:44PM -0300, Jason Gunthorpe wrote:
+> On Wed, Apr 29, 2020 at 06:50:49PM +0100, Mark Brown wrote:
+> > On Wed, Apr 29, 2020 at 10:42:01AM -0700, Junio C Hamano wrote:
 
-> Ah, this is a pretty neat hack. It would be fairly easy for b4 to do the 
-> same thing if we're running "b4 am" inside a git tree -- I'll see if I 
-> can add that in as an optional "b4 am -3" flag.
+> > Ah, indeed I think that is exactly what I'm looking for!  Sadly it is
+> > not documented in the git format-patch man page so I hadn't seen it,
 
-IMHO it should be part of git am, a --rebuild-blobs flag or
-something. git am -3 doesn't really work as intended without this..
- 
-> Getting back to the original topic, I now better understand what you're 
-> suggesting. We perform the exact same operation on two different series 
-> (v1, v2) and then perform:
-> 
-> git range-diff <dummy-base-v1>..<dummy-tip-v1> <dummy-base-v2>..<dummy-tip-v2>
-> 
-> Assuming we were able to find all the blobs, this should effectively 
-> allow us to range-diff across arbitrary patchsets without knowing the 
-> base-commit. Neat.
+> So if we use this, should we set the --base to be a linux-next tag?
 
-Yep
+> Is that reliable enough?
 
-For the purpose of range diff the files outside the series can be
-ignored.
+> Can't relly use Linus's tree, and if people randomly choose their
+> upstream's then it defeats the whole point :(
 
-Jason
+Personally I'd just not bother specifying a base if it's -next or
+there's platform enablement stuff in there - I do send a bunch of stuff
+that's based off directly off a rc or something in a maintainer's tree
+so for me it's quite useful.
+
+--cnBsrynPgIOyCJkL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6pwuUACgkQJNaLcl1U
+h9AUywf9Gp/PqKDRHrmDKDfWm0IU+Fm4F3h6PGTTHIO/7vMF+LZXVWMFEvAwDVpM
+18HtQtIoiYI+kdy1SX3zWfyrSkYdtvScgRkyomxc2Bxw0NuYLWL/TawL+MNIcVYa
+ihxdNqaEtsTJu/Ef6TGuCv0DBH3IiVRFpNu4MCfkHKXHSdkLlvbNI3F/oRxmSHw9
+sM2hLOptmAT/8w6YS1VTK4sAJ7vTn8PG1N+1CYg2gkTz5SXg16i7aLqhJzII4zVR
+ztHTstvRZcSZSxnSyDi7YcRbD/bZJ/Qd11VYNKp5dQdJrlSpYXIoFtCj8gjhWgNh
+aVlNS5SCfhniHpOkIls+62vGZzw9Gw==
+=J0mj
+-----END PGP SIGNATURE-----
+
+--cnBsrynPgIOyCJkL--
