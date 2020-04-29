@@ -1,97 +1,105 @@
-Received: from userp2130.oracle.com (userp2130.oracle.com [156.151.31.86])
- by mx.groups.io with SMTP id smtpd.web12.212.1588130865972524037
+Received: from ozlabs.org (ozlabs.org [203.11.71.1])
+ by mx.groups.io with SMTP id smtpd.web12.674.1588133791617600309
  for <tools@linux.kernel.org>;
- Tue, 28 Apr 2020 20:27:46 -0700
+ Tue, 28 Apr 2020 21:16:32 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@oracle.com header.s=corp-2020-01-29 header.b=DydPO7Pc;
- spf=pass (domain: oracle.com, ip: 156.151.31.86, mailfrom: martin.petersen@oracle.com)
-Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
-	by userp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03T3HO8e015201;
-	Wed, 29 Apr 2020 03:27:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : references : date : in-reply-to : message-id : mime-version :
- content-type; s=corp-2020-01-29;
- bh=17hddnKjN9MrzO9CKdj9xsPP4rMrTvaamfWLO73zKYQ=;
- b=DydPO7Pcibky6QzXieq9koW2MjM0o5PRF+PyOEnYU3tfNZY9ZWfa/7sWDMF5lO1t2D99
- dtXN8QRb0+c8HY8WZasu5Z2/qmK9epv2wQh0nBM2hMNpvWqWTW7PWp29d5zXltJcjidW
- 6edliex7bXpYE80X7yIBfDejJB08wU3xhHMvPtjFLEGxBEsyAxgOzkvooziBabw499xD
- zLrXT1zO1caEa6VMXr9ROQeUMJUmMHqOaT1RD2KMoAq5h8uhAoTZAipP1/Dl3CHK0uDg
- lG1J3VQuClkyfhYVqc2CR46rjPMBLkoCeGEKWFFHkX5SiNQZnInCYpN7MeyrBeQWJU9b 3g== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-	by userp2130.oracle.com with ESMTP id 30p01nswmn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 29 Apr 2020 03:27:45 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-	by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03T3D18T148020;
-	Wed, 29 Apr 2020 03:25:44 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-	by aserp3020.oracle.com with ESMTP id 30my0fb6sy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 29 Apr 2020 03:25:44 +0000
-Received: from abhmp0004.oracle.com (abhmp0004.oracle.com [141.146.116.10])
-	by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 03T3PgGb021311;
-	Wed, 29 Apr 2020 03:25:42 GMT
-Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
-	by default (Oracle Beehive Gateway v4.0)
-	with ESMTP ; Tue, 28 Apr 2020 20:25:42 -0700
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, "Martin K. Petersen" <martin.petersen@oracle.com>,
-        users@linux.kernel.org
-Subject: Re: [tools] b4 v0.4.0 available with new features
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
-References: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local>
-	<yq1lfmkbgoi.fsf@oracle.com>
-	<20200427184051.ol7znhab6khqvjas@chatter.i7.local>
-	<yq11ro89x54.fsf@oracle.com>
-	<20200428151656.5qz5yiclxmffcnga@chatter.i7.local>
-Date: Tue, 28 Apr 2020 23:25:40 -0400
-In-Reply-To: <20200428151656.5qz5yiclxmffcnga@chatter.i7.local> (Konstantin
-	Ryabitsev's message of "Tue, 28 Apr 2020 11:16:56 -0400")
-Message-ID: <yq1ees77z2j.fsf@oracle.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
+ dkim=fail reason="no key for verify" header.i=@ellerman.id.au header.s=201909 header.b=jK57+ill;
+ spf=pass (domain: ellerman.id.au, ip: 203.11.71.1, mailfrom: mpe@ellerman.id.au)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 49BlZM2cPqz9sSb;
+	Wed, 29 Apr 2020 14:16:27 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ellerman.id.au;
+	s=201909; t=1588133788;
+	bh=oRVqCykfZ/grjqDlcnelgLQ2qglIqPc9kjOL3Ro/4AM=;
+	h=From:To:Subject:In-Reply-To:References:Date:From;
+	b=jK57+illF5SMR44DWZWzs94CNlmL5sgcbuRovZvRStOVcjUtTR/UpZCVwjnYI8bCU
+	 78fcnkmq64qxmOkDlwF0G8WpFc9kbJ8KqqZYaZ/Q8MrJBk7J8HJHVJ95TZvMOjYibL
+	 B1Q4Ai6M0ld2NztrpP1Kq0p3KZxomY8E7CmxB9XOx0rxEz6/0x4/9eP3f6aV34MQnF
+	 qcZEIQk8YddDctRYof8ktuTnc1g2LWWZ7nGMJu7ozZ42EdFj8SmNoQ9Q3PJ8L03FrB
+	 SOAWCVdkfegadiZLVNhPAC77wt9KfTN5gYWCUUE8k9kj2aaN0rYQrnKNnaQGZHjGVo
+	 qzWoNFxO2i5bw==
+From: mpe@ellerman.id.au
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: [kernel.org users] What is a useful way to show changes between series?
+In-Reply-To: <20200428192938.aue3v6kxsm47day5@chatter.i7.local>
+References: <20200428192938.aue3v6kxsm47day5@chatter.i7.local>
+Date: Wed, 29 Apr 2020 14:16:41 +1000
+Message-ID: <87sggnexjq.fsf@mpe.ellerman.id.au>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9605 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 spamscore=0
- suspectscore=0 adultscore=0 mlxlogscore=999 bulkscore=0 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004290023
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9605 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 spamscore=0 clxscore=1015
- phishscore=0 mlxlogscore=999 adultscore=0 priorityscore=1501 mlxscore=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004290023
 Content-Type: text/plain
 
-
-Konstantin,
-
-> Interesting -- did you modify the subjects of those commits as well?  
-> We're already falling back to matching by subject when we can't find 
-> exact patch-id matches.
-
-I had a couple of cases where I didn't and still got failures. I tried
-tweaking the b4 files in .local to match the updated subject to see if I
-could convince it to proceed that way but no such luck.
-
-In any case: I do modify subject and commit descriptions for a
-substantial amount of the patches I apply. Lots of typos, missing scsi:
-tag, wrong driver tag, excessively long lines, etc. I have a hook script
-that does a bunch of sanity checking on each patch and won't let me
-apply until all issues are addressed.
-
-> b4 ty -s 1,2,3
+"Konstantin Ryabitsev" <konstantin@linuxfoundation.org> writes:
+> Hi, all:
 >
-> will always generate a .thanks file for those series, and will omit 
-> comit-id information when not found.
+> What would be a useful way to quickly do a "show me what changed" 
+> between two versions of the same patch series? Especially considering 
+> that:
 >
-> Does that sound okay?
+> - there may be a different number of patches in the series
+> - new revisions will likely be based on newer trees
+> - subjects/commit messages/trailers may be vastly different between two 
+>   series, even if the code is very similar (e.g. someone broke down a 
+>   single large commit into several smaller ones or vice-versa)
+>
+> In my mind, the best way to approach this would be:
+>
+> 1. Create a single unified diff file from all patches in each series 
+>    (using combinediff)
+> 2. Remove all context, leaving only -/+ lines (using interdiff -U0)
+> 3. Remove all line numbers from @@ @@ hunks (replacing them with 0)
+> 4. Add commit information on top of the diff
+>
+> In the end, we get two summary documents that can be compared using 
+> regular diffing tools like vimdiff/meld/etc and actually show a fairly 
+> succinct "how are these two series different" view.
+>
+> The goal is not to replace code review, obviously, but to give a way for 
+> a maintainer to do a quick sanity-check of a series they've reviewed 
+> before.
+>
+> I ran this scenario on a random patch series that I found 
+> (https://lore.kernel.org/lkml/b2b9cb06-b0eb-3e94-b83a-e58467069ae2@gmail.com/) 
+> and attached are two summary files:
+>
+>  - phy_v2.summary
+>  - phy_v3.summary
+>
+> Here's how diffing them looks in vimdiff and meld:
+>
+>  - https://mricon.com/misc/phy-summary-vimdiff-fs8.png
+>  - https://mricon.com/misc/phy-summary-meld-fs8.png
+>
+> So, questions for you are:
+>
+> 1. Is this is a useful way to present an "at-a-glance" view?
 
-Sure. If you could still emit the %{summary} boilerplate with XXXXXXXX
-as commit hash so it's easy to update afterwards, that would be great.
+Yes, I think in a lot of cases it would be.
 
-Thanks!
+It's fairly common I think for a series to not change a lot in later
+versions. So eg. the series might be 10 patches with 1000 lines changed
+total but a new revision might only change 10 lines. For cases like that
+this would be very useful compared to trawling through 10 patches
+individually.
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+And even for a larger delta between the series I think this will often
+work quite well, as long as there isn't too much code movement.
+
+Where this will fall down is a series that is undergoing large sweeping
+changes, but that case is just plain hard to visualise well.
+
+> 2. If yes, how would you change it to be more useful?
+
+There will be cases where the diff of the whole series is going to be
+too big and/or busy. So having a way to drill down would be awesome.
+
+The easiest to implement would be limiting it to a single file, which
+would be useful in some cases.
+
+Harder to implement but possibly more useful would be showing the diff
+between the two series up to some point, so eg. show me the changes
+between the series but only patches 1-5.
+
+cheers
