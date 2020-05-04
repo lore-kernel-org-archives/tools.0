@@ -1,97 +1,100 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web11.4054.1588851781096719244
+Received: from mail-qk1-f195.google.com (mail-qk1-f195.google.com [209.85.222.195])
+ by mx.groups.io with SMTP id smtpd.web12.18379.1588633643086629285
  for <tools@linux.kernel.org>;
- Thu, 07 May 2020 04:43:01 -0700
+ Mon, 04 May 2020 16:07:23 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=UWRKV+47;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: will@kernel.org)
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 18294208CA;
-	Thu,  7 May 2020 11:42:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1588851780;
-	bh=EIy1zuMG0mme4R2X5hCNZa6m+zt4LzD/ls/+Fg6KHNM=;
-	h=Date:From:To:Cc:Subject:From;
-	b=UWRKV+47+L9IcuRClRnL1Mb2DAXYDWVhBJ4Bu1QLYACflpjvlZhQ55NjFC/ZhZx0y
-	 na9VY4QC37a8tjFebjmrJC/tRaQMP8NICni+NL2+0+3JGf7eh+xx4KJYXaytoYde4i
-	 75OP3PHm9yIWTWJLfiuURhSJ1S1Ykr8XQMydlIYM=
-Date: Thu, 7 May 2020 12:42:56 +0100
-From: "Will Deacon" <will@kernel.org>
-To: konstantin@linuxfoundation.org
-Cc: tools@linux.kernel.org
-Subject: b4 ty not picking up per-remote git config properties
-Message-ID: <20200507114255.GB29541@willie-the-truck>
+ dkim=pass header.i=@ziepe.ca header.s=google header.b=VKcxjVRT;
+ spf=pass (domain: ziepe.ca, ip: 209.85.222.195, mailfrom: jgg@ziepe.ca)
+Received: by mail-qk1-f195.google.com with SMTP id g185so502666qke.7
+        for <tools@linux.kernel.org>; Mon, 04 May 2020 16:07:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ziepe.ca; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=twMrNUGiAK1itPOsIzKZrg9KDGcSPaq21a5LnXEUPeI=;
+        b=VKcxjVRT5/m4uCWi39LXizvpBJwwdDU14A3JxMymlJmex0ZDNjupM+UDvR3ET6zVNn
+         Kk/0a6r1amtY6lGqLd/j6+l3+9qxUgMdoec/ieuSIrgeeSGVjv4J7l4Hg9XLv3mpuVwS
+         kcth7g7FvIJfxsRwBPwFgSY0bSWqAbo3QpD1tYjHxwJXVXoz+Os6CsRiuZnZfwFnlUb4
+         w4Hrm0CWrVK/u4hBtwF5EloY4Och5YnR3lIf0dlhpzwFIwTXXSSB8JKpFX+Rvjj9O/KE
+         721AXfgsmRoXvzjLY8SzpPUYkjgl51rxkL56nDNVW953ZpDGdrsn570HafCzLanKwpMV
+         d+BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=twMrNUGiAK1itPOsIzKZrg9KDGcSPaq21a5LnXEUPeI=;
+        b=XaDJq/HOv0Nc33l33MtybstaGZi9NTRMNMDqWgJZUOwAR0xusVevrOOQSG0vAjDOAz
+         mwkcz7qs+QDz2pqopROw0P51FjEoXHhy3plG9jeGhUFpZCV4cbrtsN/n62pG4BfbOnF/
+         RCAtwJQnpe5UK1SzwgbsJW2djtaCV98I5OyrStCySgcgOSt2Ehms/nzNwCJYSvDpS5p3
+         YEuIS0Vy6DKPxgDJbjmumQ/7diLXoQA57kFLUIFPjmJnM/GZafVYqddLRGFTbTFEU+E+
+         ts11IndVSu0TQL6FOjuoCVeWbGpwR0mnqd5qSh6U1rupONuFk/4eu08XmAL6/uHbqhDn
+         GSHA==
+X-Gm-Message-State: AGi0PuYjus0ICb4M8Z9YbaTNNOOY6OUNQ/LOi0Y07eDXZLy3eJzLbcja
+	Hul4NAhZNM596iqKpkp6Uf+m9Q==
+X-Google-Smtp-Source: APiQypJo7YMfa8FIx7FsWSaIAzpTXrzDtW9kzF4XOi0NP1YD7KP1gTHGV/FGmoq4hEHcVDO7ntz/Mg==
+X-Received: by 2002:a05:620a:12dc:: with SMTP id e28mr829657qkl.38.1588633642239;
+        Mon, 04 May 2020 16:07:22 -0700 (PDT)
+Return-Path: <jgg@ziepe.ca>
+Received: from ziepe.ca (hlfxns017vw-142-68-57-212.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.57.212])
+        by smtp.gmail.com with ESMTPSA id a194sm410765qkb.21.2020.05.04.16.07.21
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 04 May 2020 16:07:21 -0700 (PDT)
+Received: from jgg by mlx.ziepe.ca with local (Exim 4.90_1)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1jVkBF-0005B9-5o; Mon, 04 May 2020 20:07:21 -0300
+Date: Mon, 4 May 2020 20:07:21 -0300
+From: "Jason Gunthorpe" <jgg@ziepe.ca>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Rob Herring <robh@kernel.org>, users@linux.kernel.org,
+	tools@linux.kernel.org
+Subject: Re: [kernel.org users] b4 v0.4.0 available with new features
+Message-ID: <20200504230721.GC26002@ziepe.ca>
+References: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local>
+ <CAL_JsqJ+0Py_XtTojshKPV+o8Y1-Z=pGYJFODDTRVuroLpsJCw@mail.gmail.com>
+ <20200504171758.GY26002@ziepe.ca>
+ <20200504200915.6yb6mo2rdcn6xjqg@chatter.i7.local>
 MIME-Version: 1.0
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200504200915.6yb6mo2rdcn6xjqg@chatter.i7.local>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-Hi Konstantin,
+On Mon, May 04, 2020 at 04:09:15PM -0400, Konstantin Ryabitsev wrote:
+> On Mon, May 04, 2020 at 02:17:58PM -0300, Jason Gunthorpe wrote:
+> > > I worry that automatically fixing it silently will create yet 
+> > > another
+> > > case of tribal knowledge of maintainer practices/requirements for
+> > > submitters. Maintainer A using b4 doesn't care if tags are added, but
+> > > Maintainer B does care and gets grumpy. We need the tooling to promote
+> > > that submitters should add these tags as that is what works in either
+> > > case. It would be useful if b4 provided just the check as a separate
+> > > command/option for integrating into maintainers tools or maybe
+> > > submitter tools like checkpatch.pl.
+> > 
+> > It would be helpful if b4 had a submitter focused command that would
+> > sync the tags from the mailing list with the current series in git (or
+> > whatever)
+> 
+> Something like "auto-amend committed series with any newer
+> trailers"?
 
-I've been having trouble persuading 'b4 ty' to honour the 'b4-treename'
-and 'b4-commit-url-mask' properties if they are specified on a per-remote
-basis. This seems to be because get_branch_info() has expectations about
-branch naming to which I'm probably not adhering.
+Yes.
 
-In my specific case, I have a branch called 'for-joerg/arm-smmu/updates'
-which has a remote called 'wd-korg', so my .git/config contains:
+> the net result Maintainers are subtle and quick to anger, so 
+> I'm not sure I'm confident enough with my git skills to start rewriting 
+> history. :)
 
-[remote "wd-korg"]
-	...
-	b4-treename = will
-	b4-commit-url-mask = https://git.kernel.org/will/c/%.12s
+Ah! I have something for this:
 
-[branch "for-joerg/arm-smmu/updates"]
-	remote = wd-korg
-	merge = refs/heads/for-joerg/arm-smmu/updates
+https://github.com/jgunthorpe/Kernel-Maintainer-Tools/blob/master/gj_tools/cmd_gerrit.py#L98
 
-but 'b4 ty' always takes the properties from my top-level .gitconfig.
+It directly rewrites history, specifically the commit message ..
 
-I've hacked ty.py as below to get things working but, believe it or not,
-this is the first time I've written any python so I suspect it's all a
-load of rubbish.
+> I think providing a Link: tag is sufficient in this case anyway. Even if 
+> some trailers were sent to the list after a series was committed, the 
+> record of that trailer still exists, just external to the git repo.
 
-Will
+Many maintainers will be unhappy if someone submits v2 of a series and
+does not carry forwards the tags from v1.
 
---->8
-
-diff --git a/b4/ty.py b/b4/ty.py
-index 33baddbeaaa8..04ef63899563 100644
---- a/b4/ty.py
-+++ b/b4/ty.py
-@@ -560,29 +560,14 @@ def get_branch_info(gitdir, branch):
- 
-     BRANCH_INFO = dict()
- 
--    if branch.find('/') < 0:
--        # Not a remote branch
--        return BRANCH_INFO
--
--    # Get a list of all remotes
--    gitargs = ['remote', 'show']
--    lines = b4.git_get_command_lines(gitdir, gitargs)
--    if not len(lines):
--        # No remotes? Hmm...
--        return BRANCH_INFO
--
--    remote = None
--    for entry in lines:
--        if branch.find('%s/' % entry) == 0:
--            remote = entry
--            break
--
--    if remote is None:
-+    remotecfg = b4.get_config_from_git('branch\\.' + branch + '\\.remote')
-+    if remotecfg is None or 'remote' not in remotecfg:
-         # Not found any matching remotes
-         return BRANCH_INFO
- 
-+    remote = remotecfg['remote']
-     BRANCH_INFO['remote'] = remote
--    BRANCH_INFO['branch'] = branch.replace('%s/' % remote, '')
-+    BRANCH_INFO['branch'] = branch
- 
-     # Grab template overrides
-     remotecfg = b4.get_config_from_git('remote\\.%s\\..*' % remote)
+Jason
