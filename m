@@ -1,82 +1,56 @@
-Received: from mail-qv1-f66.google.com (mail-qv1-f66.google.com [209.85.219.66])
- by mx.groups.io with SMTP id smtpd.web11.10962.1588612680071608654
+Received: from mail-qk1-f193.google.com (mail-qk1-f193.google.com [209.85.222.193])
+ by mx.groups.io with SMTP id smtpd.web12.14715.1588622605279786041
  for <tools@linux.kernel.org>;
- Mon, 04 May 2020 10:18:00 -0700
+ Mon, 04 May 2020 13:03:25 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@ziepe.ca header.s=google header.b=QXSy8GrC;
- spf=pass (domain: ziepe.ca, ip: 209.85.219.66, mailfrom: jgg@ziepe.ca)
-Received: by mail-qv1-f66.google.com with SMTP id t7so25615qvz.6
-        for <tools@linux.kernel.org>; Mon, 04 May 2020 10:17:59 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=IyYa5hGZ;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.193, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f193.google.com with SMTP id t3so18757qkg.1
+        for <tools@linux.kernel.org>; Mon, 04 May 2020 13:03:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
+        d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Z3Al6cdQMqbw5Kv3FCDdGYkcNJyTbROTwctdThp2V8M=;
-        b=QXSy8GrCDHJEmZUh878I/0ZVh7jbiRLSVXhSkaQm2PXTaeO/r2Wr8EG9vLOAQxj4ok
-         A7j9S/7V3kek4VYkrzU7zFSElcqpt+/K2+wSbOkhReLbgdegj7s3XeJGr1XV38jiH8N3
-         KQhYhLbREU30KTTdIrUXf8tAyMWrEfsOhTLCZf5mDcfSzzUUpUP51wDAAUuKsD4aHU3x
-         p3Kmbq7TBHbwP082/sYp7JAr0lOrKAvwQk9S2nQvqMCOjwOP4pC5hac2V5jYbBedziA2
-         Nou2RncZ3PEpj14sTZBXhZWqm8121QU6eMTaby10nhrcaoZzA2+QGsIx8SuXwnQGMJDR
-         heUg==
+         :content-disposition:in-reply-to;
+        bh=tF5vdkQdQghPvOtDTSgp5jdFH4gePCxmgC5JA4ls4n4=;
+        b=IyYa5hGZpqF6lAQFOhCL/jN84/XzJEwZrDwtnCUz8+1pI7dnGuSrKFWmZt1qI2DvoN
+         Egt8muUqXvTgqTnYhUgHorCMoh7K0jqMyVtXPQ6oxve9gV7g3OPZ2DDrbeziqCbjZNXz
+         mMhDLR3hS5qMySNmyp8M5v03U7bHO+yI8idMw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Z3Al6cdQMqbw5Kv3FCDdGYkcNJyTbROTwctdThp2V8M=;
-        b=POfbSQVN8JSUhnHlVRYJpxL/VzP45r7Mtnsu5JXHwjFG6DGrARGDk8doqL56KruLG5
-         UnBFDJRBfxpP8qkqB4B7LY16d/U0a8SiqKqMafloegh+f31ldPb+lUJXbYn95zIYGr5+
-         uJdmCDjRpzsnoyA2O0bUYj7cW1Nc91L36DoX9meOcvoeyoMBE0a0ESUxA/i1wnvGwecd
-         Y/HLOhNNMiV9WkyPq+jdIuAJ4i4GqcdV/Itvz9vmXLWQZpuKQ4NDuVPAJnL0jKXdf7eR
-         x2CJy2r6Tx9vWFEln+pMVmWXRwiRJ9zD1HFs8e0YG8/8JYl1C/wtc/GGNm+mjiJ6nXb3
-         Jxmg==
-X-Gm-Message-State: AGi0Publ8BGWDh5Z18JW8r7ZSxwnbXbwKoAvo4yguKQIGwdi2v64bL3R
-	OMcvttbF0Y3bpQB2uUb8rI70wA==
-X-Google-Smtp-Source: APiQypKDd1U93HkgxajIEA76FKChhCeHeM/IxkhoC5UkOgAH+iC7T9Uai6wKOQP4o49u+Aso1d1FiQ==
-X-Received: by 2002:a05:6214:ab2:: with SMTP id ew18mr99106qvb.159.1588612679220;
-        Mon, 04 May 2020 10:17:59 -0700 (PDT)
-Return-Path: <jgg@ziepe.ca>
-Received: from ziepe.ca (hlfxns017vw-142-68-57-212.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.57.212])
-        by smtp.gmail.com with ESMTPSA id t6sm10422728qkf.27.2020.05.04.10.17.58
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 May 2020 10:17:58 -0700 (PDT)
-Received: from jgg by mlx.ziepe.ca with local (Exim 4.90_1)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1jVej8-0002re-5D; Mon, 04 May 2020 14:17:58 -0300
-Date: Mon, 4 May 2020 14:17:58 -0300
-From: "Jason Gunthorpe" <jgg@ziepe.ca>
+         :mime-version:content-disposition:in-reply-to;
+        bh=tF5vdkQdQghPvOtDTSgp5jdFH4gePCxmgC5JA4ls4n4=;
+        b=eCck3mnhrmjCw6hZaAWoMD084aRVPMPXBC3VMI1EfIL428MgN464550FJPnzQjcyC0
+         NsLqOk8kEys5Qs2hac39B2UR5f8CQpBsOe/SOPwGmZcLvr+MMyjlQ1yB/AycBATFxC6Z
+         t7r0tje14FgrJhb/c0A7V0JiUNW3QqHWXL9orU/Wq+5wMSmqDNbCHgNIYWuSpnNUonXz
+         asaWIXMfITysWJKz8PoVjMJBfm9NjFUaeheKKR4i3ma+DNjBPm+bd3XEqX4OpdhEAYWU
+         BgDWS1g/evpAnnD6q9OaYuocIjagAbRNYx87+qQ68QCgThaT5VHJeymqMGg5zF3yiZR5
+         Z8sQ==
+X-Gm-Message-State: AGi0PuYLYb/pAlFhGDZqlEZ7FBdxz4z0vV8mn8Y3VDHE+G6srqZonYhm
+	607grTbrOvIoLUmBUZDJH7AONA==
+X-Google-Smtp-Source: APiQypKHfyTE76j009lcpnRcOQ2xrk6fCJcmproZj7VT5A6yVUYxl+ZC6vO9CbOmt9sY08JvmDYrTA==
+X-Received: by 2002:a05:620a:2143:: with SMTP id m3mr57412qkm.140.1588622604303;
+        Mon, 04 May 2020 13:03:24 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id s14sm12198175qts.70.2020.05.04.13.03.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 May 2020 13:03:23 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Mon, 04 May 2020 16:03:21 -0400
+Date: Mon, 4 May 2020 16:03:21 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
 To: Rob Herring <robh@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@linux.kernel.org, tools@linux.kernel.org
+Cc: users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: [kernel.org users] b4 v0.4.0 available with new features
-Message-ID: <20200504171758.GY26002@ziepe.ca>
+Message-ID: <20200504200321.lk72ymlmluu2tsgt@chatter.i7.local>
 References: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local>
  <CAL_JsqJ+0Py_XtTojshKPV+o8Y1-Z=pGYJFODDTRVuroLpsJCw@mail.gmail.com>
 MIME-Version: 1.0
 In-Reply-To: <CAL_JsqJ+0Py_XtTojshKPV+o8Y1-Z=pGYJFODDTRVuroLpsJCw@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
 On Mon, May 04, 2020 at 12:09:49PM -0500, Rob Herring wrote:
-> On Fri, Apr 24, 2020 at 12:04 PM Konstantin Ryabitsev
-> <konstantin@linuxfoundation.org> wrote:
-> >
-> > Hi, all:
-> >
-> > I am happy to release b4 version 0.4.0 that contains a set of
-> > improvements and new features. To upgrade from pypi, run:
-> 
-> Thanks Konstantin! A couple of requests below.
-> 
-> > pip install --upgrade --user b4
-> >
-> > Or you can clone the repository directly:
-> > git clone https://git.kernel.org/pub/scm/utils/b4/b4.git -b stable-0.4.y b4
-> >
-> > You can run ./b4.sh from the repository or set an alias/symlink to that
-> > wrapper.
-> >
-> > # Improvements
 > >
 > > - When a series is missing patches, b4 is now able to backfill them from
 > >   other mailing lists tracked on lore.kernel.org. This feature will be
@@ -90,7 +64,20 @@ On Mon, May 04, 2020 at 12:09:49PM -0500, Rob Herring wrote:
 > 
 > This is pretty common actually. At least common enough that I do a
 > check for this and have a semi-automated reply for it.
-> 
+
+All three things have to be exactly the same:
+
+- subject
+- commit message
+- patch contents (to the last bit)
+
+The series must also be within the same thread, so if v2 is posted as a 
+separate thread to v1, then this won't trigger.
+
+I ran quite a few tests on series being posted to LKML, and there was 
+maybe one instance where the trailer to a single patch ended up carried 
+over between revisions.
+
 > I worry that automatically fixing it silently will create yet another
 > case of tribal knowledge of maintainer practices/requirements for
 > submitters. Maintainer A using b4 doesn't care if tags are added, but
@@ -100,8 +87,50 @@ On Mon, May 04, 2020 at 12:09:49PM -0500, Rob Herring wrote:
 > command/option for integrating into maintainers tools or maybe
 > submitter tools like checkpatch.pl.
 
-It would be helpful if b4 had a submitter focused command that would
-sync the tags from the mailing list with the current series in git (or
-whatever)
+I see it as a case of "what you get is what was meant" -- if someone 
+sends a trailer to a specific patch, and that patch didn't change at all 
+between revisions, then we can safely assume that the author's trailer 
+can be carried over to the new series revision. In your example, 
+"Maintainer B" shouldn't get grumpy, because they should be doing the 
+exact same thing anyway -- the reviewer has already sent their feedback 
+about that patch, so it's the maintainer's duty to carry it over across 
+revisions. In fact, many submitters already include previously received 
+trailers with the new series revision, so I would argue that b4 isn't 
+doing anything the maintainer wouldn't be doing in the first place.
 
-Jason
+> More generally, as I've started to integrate b4 into my workflow,
+> there's a couple of useful pieces of functionality already in b4, but
+> not exposed directly on their own. It would be nice to have both
+> porcelain and low-level commands.
+> 
+> It would help for scripting if 'mbox' stdout was just the mbox file
+> name similar to git-format-patch output and send the rest to stderr.
+> While I have message-id and can construct the mbox name, there can be
+> some transformation on it.
+> 
+> It would help if the old versions of a series could optionally be
+> included in the mbox output.
+> 
+> Can the lore search code in get_newest_series be exposed as a command
+> taking a search string and outputting an mbox? Essentially, what the
+> lore web interface does with a search box and 'mbox.gz' button (I
+> tried and gave up doing that with curl).
+
+A lot of search stuff is currently very kludgy in b4 (e.g. we're abusing 
+RSS search feeds for it). The situation will be very much improved once 
+some of the necessary changes are implemented on the public-inbox side 
+of things:
+
+- unified search across all mailing lists
+- ability to reconstitute a thread from multiple lists/sources
+- proper query and subscription API
+
+Looks like these features will be landing in public-inbox some time in 
+the near future and that would vastly expand what we can do with 
+search-based queries. I'd rather wait for that to happen instead of 
+creating more kludgy RSS abuse.
+
+I'll see what I can do about making b4 more pipe-friendly for some 
+operations.
+
+-K
