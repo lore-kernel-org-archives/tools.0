@@ -1,77 +1,97 @@
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web12.2361.1588793008505540969
+ by mx.groups.io with SMTP id smtpd.web11.4054.1588851781096719244
  for <tools@linux.kernel.org>;
- Wed, 06 May 2020 12:23:28 -0700
+ Thu, 07 May 2020 04:43:01 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=Cyc8pVmB;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: robh@kernel.org)
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ dkim=pass header.i=@kernel.org header.s=default header.b=UWRKV+47;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: will@kernel.org)
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id E6AB62075A;
-	Wed,  6 May 2020 19:23:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPSA id 18294208CA;
+	Thu,  7 May 2020 11:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1588793008;
-	bh=jV3vbR/ogQh1R3KNfcssTJ+KzsAfLm3+3mEg7e7mcGU=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=Cyc8pVmB7tHueVrw7bUJblUk6CCKzIBD6K34X2qXwZ+LuBJJts1nb4+VY070utfkG
-	 qTFAPX/N3pE64r97cIdkkFJ1lZhHWLe3OJhiN9lL2BdZzacJsmYB2z0LFzelPCq7UF
-	 5h2lwFcPTQ9iVxJTuVCbykwoaU6MsBXLbl5MsSBQ=
-Received: by mail-ot1-f42.google.com with SMTP id m13so2334192otf.6;
-        Wed, 06 May 2020 12:23:27 -0700 (PDT)
-X-Gm-Message-State: AGi0PuYu0mPjuzhhY9PwNv6RZDlsQ/BHZRZVdnjsfGJ6vi2abwRhc3Or
-	kGtkU7TNYUOKq4EtkLhsY3xUsmqYu2mrfaqbzg==
-X-Google-Smtp-Source: APiQypJcm2hHmvpBQQ5SjzHORnfwVu8W3yKVji+5ttA3M1yr6o+ydtxqs/eLDJavGNKKi0UswOspBarXQCTdmJfN01A=
-X-Received: by 2002:a05:6830:4d6:: with SMTP id s22mr7552618otd.129.1588793007227;
- Wed, 06 May 2020 12:23:27 -0700 (PDT)
+	s=default; t=1588851780;
+	bh=EIy1zuMG0mme4R2X5hCNZa6m+zt4LzD/ls/+Fg6KHNM=;
+	h=Date:From:To:Cc:Subject:From;
+	b=UWRKV+47+L9IcuRClRnL1Mb2DAXYDWVhBJ4Bu1QLYACflpjvlZhQ55NjFC/ZhZx0y
+	 na9VY4QC37a8tjFebjmrJC/tRaQMP8NICni+NL2+0+3JGf7eh+xx4KJYXaytoYde4i
+	 75OP3PHm9yIWTWJLfiuURhSJ1S1Ykr8XQMydlIYM=
+Date: Thu, 7 May 2020 12:42:56 +0100
+From: "Will Deacon" <will@kernel.org>
+To: konstantin@linuxfoundation.org
+Cc: tools@linux.kernel.org
+Subject: b4 ty not picking up per-remote git config properties
+Message-ID: <20200507114255.GB29541@willie-the-truck>
 MIME-Version: 1.0
-References: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local>
-In-Reply-To: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local>
-From: "Rob Herring" <robh@kernel.org>
-Date: Wed, 6 May 2020 14:23:16 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqK+FyXZZ3uAcAsVFLYoxjzj_fpMLF=DFe3M2Byi9Fd6Xw@mail.gmail.com>
-Message-ID: <CAL_JsqK+FyXZZ3uAcAsVFLYoxjzj_fpMLF=DFe3M2Byi9Fd6Xw@mail.gmail.com>
-Subject: Re: [kernel.org users] b4 v0.4.0 available with new features
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Fri, Apr 24, 2020 at 12:04 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> Hi, all:
->
-> I am happy to release b4 version 0.4.0 that contains a set of
-> improvements and new features. To upgrade from pypi, run:
->
-> pip install --upgrade --user b4
->
-> Or you can clone the repository directly:
-> git clone https://git.kernel.org/pub/scm/utils/b4/b4.git -b stable-0.4.y b4
->
-> You can run ./b4.sh from the repository or set an alias/symlink to that
-> wrapper.
->
-> # Improvements
->
-> - When a series is missing patches, b4 is now able to backfill them from
->   other mailing lists tracked on lore.kernel.org. This feature will be
->   improved when public-inbox is able to collect a thread from across all
->   sources.
-> - If both patch and metadata are identical between rerolls (v1 -> v2),
->   b4 will automatically carry over trailers from v1 to v2. This is handy
->   if there is an sob on [PATCH v2 7/15] from a maintainer that is
->   missing from an identical [PATCH v3 7/15]. In my observation, this
->   happens very rarely, though.
-> - Many bugfixes that were also backported into stable-0.3.y.
+Hi Konstantin,
 
-I found a minor issue on patches with no 'To' header. They end up with this:
+I've been having trouble persuading 'b4 ty' to honour the 'b4-treename'
+and 'b4-commit-url-mask' properties if they are specified on a per-remote
+basis. This seems to be because get_branch_info() has expectations about
+branch naming to which I'm probably not adhering.
 
-To: unlisted-recipients: no To-header on input <;
+In my specific case, I have a branch called 'for-joerg/arm-smmu/updates'
+which has a remote called 'wd-korg', so my .git/config contains:
 
-However, that appears to be a public-inbox problem as it's on there
-too. Here's an example[1].
+[remote "wd-korg"]
+	...
+	b4-treename = will
+	b4-commit-url-mask = https://git.kernel.org/will/c/%.12s
 
-Rob
+[branch "for-joerg/arm-smmu/updates"]
+	remote = wd-korg
+	merge = refs/heads/for-joerg/arm-smmu/updates
 
-[1] https://lore.kernel.org/linux-devicetree/20200506010809.6348-2-i.mikhaylov@yadro.com/
+but 'b4 ty' always takes the properties from my top-level .gitconfig.
+
+I've hacked ty.py as below to get things working but, believe it or not,
+this is the first time I've written any python so I suspect it's all a
+load of rubbish.
+
+Will
+
+--->8
+
+diff --git a/b4/ty.py b/b4/ty.py
+index 33baddbeaaa8..04ef63899563 100644
+--- a/b4/ty.py
++++ b/b4/ty.py
+@@ -560,29 +560,14 @@ def get_branch_info(gitdir, branch):
+ 
+     BRANCH_INFO = dict()
+ 
+-    if branch.find('/') < 0:
+-        # Not a remote branch
+-        return BRANCH_INFO
+-
+-    # Get a list of all remotes
+-    gitargs = ['remote', 'show']
+-    lines = b4.git_get_command_lines(gitdir, gitargs)
+-    if not len(lines):
+-        # No remotes? Hmm...
+-        return BRANCH_INFO
+-
+-    remote = None
+-    for entry in lines:
+-        if branch.find('%s/' % entry) == 0:
+-            remote = entry
+-            break
+-
+-    if remote is None:
++    remotecfg = b4.get_config_from_git('branch\\.' + branch + '\\.remote')
++    if remotecfg is None or 'remote' not in remotecfg:
+         # Not found any matching remotes
+         return BRANCH_INFO
+ 
++    remote = remotecfg['remote']
+     BRANCH_INFO['remote'] = remote
+-    BRANCH_INFO['branch'] = branch.replace('%s/' % remote, '')
++    BRANCH_INFO['branch'] = branch
+ 
+     # Grab template overrides
+     remotecfg = b4.get_config_from_git('remote\\.%s\\..*' % remote)
