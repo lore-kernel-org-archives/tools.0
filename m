@@ -1,83 +1,70 @@
-Received: from mail-qv1-f68.google.com (mail-qv1-f68.google.com [209.85.219.68])
- by mx.groups.io with SMTP id smtpd.web10.421.1588873074073539414
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+ by mx.groups.io with SMTP id smtpd.web11.3354.1588882804954116893
  for <tools@linux.kernel.org>;
- Thu, 07 May 2020 10:37:54 -0700
+ Thu, 07 May 2020 13:20:05 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=UK318oet;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.219.68, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qv1-f68.google.com with SMTP id t8so3081142qvw.5
-        for <tools@linux.kernel.org>; Thu, 07 May 2020 10:37:53 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=aV3Bj0Q5;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.219.46, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qv1-f46.google.com with SMTP id c4so3347459qvi.6
+        for <tools@linux.kernel.org>; Thu, 07 May 2020 13:20:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=H2qbC+XAFVE8wdw7JUQEcduz3gA+j8Q3cs1oggMtAco=;
-        b=UK318oetvF5j+nJAOxqUMtVmFYrNqjKx1Wf61+/RDhoMBnWVWN2FRyFTd6iDTKhCst
-         QTyXY0gPPZnoGbtU+IrKgza44yNYlhRrkUQSpJ+84N+xaftniGjuS1D1u0QopLOVSBbK
-         XgMyL0BvSuhpZchpkvNufGp+Ayrna0wLt58mc=
+        bh=SAOyAfzQPzgvBuSOa2DpOpnIFUEEXsxTH4sKFWAF/F4=;
+        b=aV3Bj0Q5F3mJyp0aEg1wlJtdY1aTf2eSINmu7DcjJj4/+rMjNR/Dh9oqYR+Ct6/7Dh
+         ljLomTGyge0JWuUGRmN+vH8EWvQeKX0FzKTPIbYGq+f2gQSFjWgYhN/VMzDHIoexebLY
+         DYVg/cmk/lEEunPzU8J2KoOzS+GsumOrlDDLY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=H2qbC+XAFVE8wdw7JUQEcduz3gA+j8Q3cs1oggMtAco=;
-        b=DV5G1j6LB+4q2fWttAQlpMhoPPNezc4UhjuoVV7sw+nk52CGonocEVZ/7CjhFQgs2+
-         cNuBx51E3RscICIJV4oHhIh/NZjrDRiwkCmjyeGng/pkI9FVQxpxmfqeww40dYjFaGAN
-         hdXWURkZN8tNpWM18xp5KVoHkGloZWpcz/oiltSR/Uv00pHsgqpwaQukRAjsb7br7npA
-         A5VAwkDqK9WcIf9r/bwkRQAhSsb6oQQqBhmIcwEjne84tJKtizjG6DZ8zKtAhycmWGZz
-         rGETlyZwEA4lqysqwGcbND7NCzWByPYQ6H3pHDyIDN81tmNhUqEhYXhCX+2QekYSn6aT
-         JjSw==
-X-Gm-Message-State: AGi0PubL4eknt+vxN8ieGn8sgPYYCLMc+qUcUsqCdNDxvuJ2cg/hoYCP
-	M0iRtY+hWKqsFkMZQL2fTNLffA==
-X-Google-Smtp-Source: APiQypIsuGTCSsAMtVl6TbfmBAZnhEEU2MT3Vc91gPSbWVHTrGIlLdeOu+e/8BM0uJineU73ZRxTew==
-X-Received: by 2002:a05:6214:150f:: with SMTP id e15mr14100870qvy.18.1588873073122;
-        Thu, 07 May 2020 10:37:53 -0700 (PDT)
+        bh=SAOyAfzQPzgvBuSOa2DpOpnIFUEEXsxTH4sKFWAF/F4=;
+        b=NzBNLpOJb6CKaiek0pYZqbGXmGpyqCIXO+uox3/tfecQPPsWWRNRrhPnCTAOd6ZkQ4
+         5zFI3JdD8LKYoM68bdxGElcIx0/OIZ4cs2cPmZiid/iO9aLb99VxJ3Qj7EODJ82o+ulE
+         igeOFXQ8gjgW0/SFyaQtQJuwzJ63qFZ+Dsbd+UXxWOvKixJonghshhtc3izvH9p+OBtQ
+         nGEfZrNFhfbaIv8KPSafsa0TyvRcv0MFEj/DaI/olE+ET56mW/yWBN0kTfxmKRKdkM1R
+         ApnK70G4o8Q6ytoUM1i1+LsWO4PWaf4VHP8jhfIxNO9H4aQO3EwDIEvrdwctjNHGLY/i
+         l2Zw==
+X-Gm-Message-State: AGi0PubXggVhW4V9G8qSFAKNxkt0InB9ltCnXaRUe0gDOTVBpAqoCFzq
+	znELK4ohCfm0aB0ZVKj62cwj3Q==
+X-Google-Smtp-Source: APiQypJ7kCWQHTG8SPxHfeZXGInAW+Of/pjVNsuGUI2rI3lAasRMDqz7j+TFtTG11fe4x9cw77YyPg==
+X-Received: by 2002:a0c:f883:: with SMTP id u3mr15831596qvn.86.1588882804047;
+        Thu, 07 May 2020 13:20:04 -0700 (PDT)
 Return-Path: <konstantin@linuxfoundation.org>
 Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id v2sm4882761qth.66.2020.05.07.10.37.51
+        by smtp.gmail.com with ESMTPSA id k58sm5375892qtf.40.2020.05.07.13.20.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 10:37:52 -0700 (PDT)
-Received: by i7.mricon.com (sSMTP sendmail emulation); Thu, 07 May 2020 13:37:50 -0400
-Date: Thu, 7 May 2020 13:37:50 -0400
+        Thu, 07 May 2020 13:20:03 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Thu, 07 May 2020 16:20:01 -0400
+Date: Thu, 7 May 2020 16:20:01 -0400
 From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Will Deacon <will@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: b4 ty not picking up per-remote git config properties
-Message-ID: <20200507173750.jvd6kvatmon36pa2@chatter.i7.local>
-References: <20200507114255.GB29541@willie-the-truck>
+To: Rob Herring <robh@kernel.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: [kernel.org users] b4 v0.4.0 available with new features
+Message-ID: <20200507202001.3sststasmemmgr5z@chatter.i7.local>
+References: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local>
+ <CAL_JsqK+FyXZZ3uAcAsVFLYoxjzj_fpMLF=DFe3M2Byi9Fd6Xw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200507114255.GB29541@willie-the-truck>
+In-Reply-To: <CAL_JsqK+FyXZZ3uAcAsVFLYoxjzj_fpMLF=DFe3M2Byi9Fd6Xw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
-On Thu, May 07, 2020 at 12:42:56PM +0100, Will Deacon wrote:
-> Hi Konstantin,
+On Wed, May 06, 2020 at 02:23:16PM -0500, Rob Herring wrote:
+> I found a minor issue on patches with no 'To' header. They end up with 
+> this:
 > 
-> I've been having trouble persuading 'b4 ty' to honour the 'b4-treename'
-> and 'b4-commit-url-mask' properties if they are specified on a per-remote
-> basis. This seems to be because get_branch_info() has expectations about
-> branch naming to which I'm probably not adhering.
+> To: unlisted-recipients: no To-header on input <;
 > 
-> In my specific case, I have a branch called 'for-joerg/arm-smmu/updates'
-> which has a remote called 'wd-korg', so my .git/config contains:
-> 
-> [remote "wd-korg"]
-> 	...
-> 	b4-treename = will
-> 	b4-commit-url-mask = https://git.kernel.org/will/c/%.12s
-> 
-> [branch "for-joerg/arm-smmu/updates"]
-> 	remote = wd-korg
-> 	merge = refs/heads/for-joerg/arm-smmu/updates
-> 
-> but 'b4 ty' always takes the properties from my top-level .gitconfig.
-> 
-> I've hacked ty.py as below to get things working but, believe it or not,
-> this is the first time I've written any python so I suspect it's all a
-> load of rubbish.
+> However, that appears to be a public-inbox problem as it's on there
+> too. Here's an example[1].
 
-It's not, I used it largely without changes. The latest master and 
-stable-0.4.y should be a lot less naive about local and remote branch 
-names.
+Interesting. I'm not seeing any strange output from that series. "b4 am" 
+and "b4 ty" seem to be generating proper things.
 
-Best,
+Can you try with the latest master/stable-0.4.y and show me the place 
+where this is still showing up? When I do it, the .mbx file is just 
+missing the "To:" header entirely.
+
+Regards,
 -K
