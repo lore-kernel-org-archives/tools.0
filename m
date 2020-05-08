@@ -1,70 +1,81 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
- by mx.groups.io with SMTP id smtpd.web11.3354.1588882804954116893
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+ by mx.groups.io with SMTP id smtpd.web12.2025.1588965572813842210
  for <tools@linux.kernel.org>;
- Thu, 07 May 2020 13:20:05 -0700
+ Fri, 08 May 2020 12:19:33 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=aV3Bj0Q5;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.219.46, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qv1-f46.google.com with SMTP id c4so3347459qvi.6
-        for <tools@linux.kernel.org>; Thu, 07 May 2020 13:20:04 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=I1T61cGx;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.172, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f172.google.com with SMTP id f83so2812425qke.13
+        for <tools@linux.kernel.org>; Fri, 08 May 2020 12:19:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=SAOyAfzQPzgvBuSOa2DpOpnIFUEEXsxTH4sKFWAF/F4=;
-        b=aV3Bj0Q5F3mJyp0aEg1wlJtdY1aTf2eSINmu7DcjJj4/+rMjNR/Dh9oqYR+Ct6/7Dh
-         ljLomTGyge0JWuUGRmN+vH8EWvQeKX0FzKTPIbYGq+f2gQSFjWgYhN/VMzDHIoexebLY
-         DYVg/cmk/lEEunPzU8J2KoOzS+GsumOrlDDLY=
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding;
+        bh=j2KR9A6mnYrp9zkUhg+6qAtT23yvMtiWIT0DpdxTYio=;
+        b=I1T61cGxbq2lG2R4GWApXQ6J6T/lNp5Mx8qg87tAYhOeEvjyGfTU4zknnIHtFRfY49
+         F30YrWqCZ4KRrKURoyTNm5yC08o4AqmyJBgACdy2gqub7f2BmWQGsJjxSdpYcVEkmXXn
+         0YYc0EH/fIuaR/LY86/eIXEOozAJuzdwkxvsU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=SAOyAfzQPzgvBuSOa2DpOpnIFUEEXsxTH4sKFWAF/F4=;
-        b=NzBNLpOJb6CKaiek0pYZqbGXmGpyqCIXO+uox3/tfecQPPsWWRNRrhPnCTAOd6ZkQ4
-         5zFI3JdD8LKYoM68bdxGElcIx0/OIZ4cs2cPmZiid/iO9aLb99VxJ3Qj7EODJ82o+ulE
-         igeOFXQ8gjgW0/SFyaQtQJuwzJ63qFZ+Dsbd+UXxWOvKixJonghshhtc3izvH9p+OBtQ
-         nGEfZrNFhfbaIv8KPSafsa0TyvRcv0MFEj/DaI/olE+ET56mW/yWBN0kTfxmKRKdkM1R
-         ApnK70G4o8Q6ytoUM1i1+LsWO4PWaf4VHP8jhfIxNO9H4aQO3EwDIEvrdwctjNHGLY/i
-         l2Zw==
-X-Gm-Message-State: AGi0PubXggVhW4V9G8qSFAKNxkt0InB9ltCnXaRUe0gDOTVBpAqoCFzq
-	znELK4ohCfm0aB0ZVKj62cwj3Q==
-X-Google-Smtp-Source: APiQypJ7kCWQHTG8SPxHfeZXGInAW+Of/pjVNsuGUI2rI3lAasRMDqz7j+TFtTG11fe4x9cw77YyPg==
-X-Received: by 2002:a0c:f883:: with SMTP id u3mr15831596qvn.86.1588882804047;
-        Thu, 07 May 2020 13:20:04 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding;
+        bh=j2KR9A6mnYrp9zkUhg+6qAtT23yvMtiWIT0DpdxTYio=;
+        b=WPae/wJj7Cb41co3VnkwvC3CdaDiGBb41bomM16bcbvVkwb5KMZ53WfD8gPvL/+hTe
+         HBKh315yD2sXeTg1hXvm68JmdorTIqlGd4q6bdpzXmm6mno4Kup2uJcWBUUGQ1RjlWL3
+         4B8jxvFj1f+VDhL4g3mmApWUHQHkv/2yuUFfdP57zs98FUSziBi00J+HC3hs0O8Q0gUk
+         zX44Y5a/8Pz2OtvHOs2owMS/neQXh1Wg1FQAyjlb7cEXFhqtLf/4/C2hwqcLI6Eah/kt
+         rlSUXzNLpA61nKtgWpeuiCDhgD2dRI8eGsMmniLlEEmFZqnKS1/vgHGYpRZ98BCbdfAS
+         og9g==
+X-Gm-Message-State: AGi0PuZ39Kh1xR7dzBuMjznoP+e/lyBbtSC+cc1VvaJsvERJVY04/qfE
+	s+A5/ewMqQua7pbSJhzWZdO3CBDjd8U=
+X-Google-Smtp-Source: APiQypKhf/1VYDK+jsR3YJNcWDrW34M4YSi9EIlUee+CrYtAeFZEYuWer0mTljZxJDCdjA5IQDQfqg==
+X-Received: by 2002:a37:91c6:: with SMTP id t189mr4458012qkd.280.1588965571590;
+        Fri, 08 May 2020 12:19:31 -0700 (PDT)
 Return-Path: <konstantin@linuxfoundation.org>
 Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id k58sm5375892qtf.40.2020.05.07.13.20.02
+        by smtp.gmail.com with ESMTPSA id l9sm2127825qth.60.2020.05.08.12.19.29
+        for <tools@linux.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 13:20:03 -0700 (PDT)
-Received: by i7.mricon.com (sSMTP sendmail emulation); Thu, 07 May 2020 16:20:01 -0400
-Date: Thu, 7 May 2020 16:20:01 -0400
+        Fri, 08 May 2020 12:19:31 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Fri, 08 May 2020 15:19:29 -0400
+Date: Fri, 8 May 2020 15:19:29 -0400
 From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Rob Herring <robh@kernel.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: [kernel.org users] b4 v0.4.0 available with new features
-Message-ID: <20200507202001.3sststasmemmgr5z@chatter.i7.local>
-References: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local>
- <CAL_JsqK+FyXZZ3uAcAsVFLYoxjzj_fpMLF=DFe3M2Byi9Fd6Xw@mail.gmail.com>
+To: tools@linux.kernel.org
+Subject: b4 0.4.1 available with bugfixes and minor improvements
+Message-ID: <20200508191929.5l2jzw42fjz47jb4@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <CAL_JsqK+FyXZZ3uAcAsVFLYoxjzj_fpMLF=DFe3M2Byi9Fd6Xw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 06, 2020 at 02:23:16PM -0500, Rob Herring wrote:
-> I found a minor issue on patches with no 'To' header. They end up with 
-> this:
-> 
-> To: unlisted-recipients: no To-header on input <;
-> 
-> However, that appears to be a public-inbox problem as it's on there
-> too. Here's an example[1].
+Hi, all:
 
-Interesting. I'm not seeing any strange output from that series. "b4 am" 
-and "b4 ty" seem to be generating proper things.
+B4 version 0.4.1 is now available on pypi.
 
-Can you try with the latest master/stable-0.4.y and show me the place 
-where this is still showing up? When I do it, the .mbx file is just 
-missing the "To:" header entirely.
+- ty: does a better job of preparing canned replies to short patches
+- ty: is less naive about mapping local to remote branches when using them in
+  templates
+- ty: uses Link: and Message-Id trailers when auto-locating applied
+  patches
+- ty: switches -s and -d to use frienlier ranges;
+  before: "-s 1 2 3 5 7 8 9", after: "-s 1-3,5,7-9"
+- am: can now use the -P,--cherry-pick flag to select a subset of
+  patches from a larger series
 
-Regards,
+You can upgrade to the latest version from pypi using:
+
+pip install --user --upgrade b4
+
+Or you can use it straight from git, as before.
+
+Special thanks in this release go to:
+
+- Will Deacon
+- Jason Gunthorpe
+- Martin K. Petersen
+- Lorenzo Pieralisi
+- Heiko Stübner
+
+Thanks!
+
 -K
