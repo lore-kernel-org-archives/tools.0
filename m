@@ -1,69 +1,93 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web10.1621.1589218087102717686
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+ by mx.groups.io with SMTP id smtpd.web12.1006.1589221590933864603
  for <tools@linux.kernel.org>;
- Mon, 11 May 2020 10:28:07 -0700
+ Mon, 11 May 2020 11:26:31 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=bMlS6mXg;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 93409206D7;
-	Mon, 11 May 2020 17:28:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1589218086;
-	bh=MrV9otoJTuUDA58SQ7JaQArPTHyETzRu/reOQspOzBg=;
-	h=Date:From:To:Cc:Subject:From;
-	b=bMlS6mXg4X14FHDYdDVsTtTMTdLA2nggutuJ/oIf54aqb1eo1q42zHRvRhdx2szTo
-	 9jq7k+QSJpwtu2rpTgEzfC+Yy857UQsffN/6/0u1gWCPTXuwWSao927x90qgGevO/3
-	 ttsiNqie7aw+0CFg4ZJTUsD+5S/dVbmjNbc6KbQ8=
-Date: Mon, 11 May 2020 18:28:03 +0100
-From: "Mark Brown" <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=cf3XFL4F;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.219.52, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qv1-f52.google.com with SMTP id z5so3118177qvw.4
+        for <tools@linux.kernel.org>; Mon, 11 May 2020 11:26:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=kUcW/qqcbdlg5TNTcV51OQbYIYNyl9lQNZCgXsAwavw=;
+        b=cf3XFL4Fvwq73UxXiSMfZsJa1ioPDoAcM33xbuF+yZ4DEwW1SqfoMrhhTVixSfQCoO
+         /Z56lNDDrYpWueMq+bSUxHpwk6rzOfUZ7Zy63fIcFcx8p13e+e43h/EnOGiC76+Sz+m7
+         n+n/KcYNbhhqc4WCnCF8MyO3rDaxMTbkDp9PU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=kUcW/qqcbdlg5TNTcV51OQbYIYNyl9lQNZCgXsAwavw=;
+        b=mTfHrdqXbu1KC4qeqZPKuJjuP72Zw5m7Zf8esvHhA/hWeKFgTvmcmpFsqmvFSI4dK7
+         RZpeBA+nBcMD/+KchLvrA3N6hYl0cGbV14HjVbphtU8T9wHNs4FNGZqzkKymmxJ98BxH
+         o7rBFBfAQOKamc6dgfq2u4rbeIg2++m4iDTUCUCrCh5bdCb12N2UszIoA1BwBWlHL4Wf
+         ubBUnyKZfq1Csp9qL+GYLkpbORNTk39AWhriYmKSvcfLy5uK5zANczN8502n0GEX8/OJ
+         BzmBcN+PDHXDA+3qmH3vthPrBvBgcuUh9DF9KVh7TOJZhjsfYf6dbmqcZhP+tMwj3oLx
+         qXkw==
+X-Gm-Message-State: AGi0PuYGru/2g7e+BfukX7MVZU3tevt/n5LOeRsmLtIa3X5DOB1UzYTE
+	r2h/RXy6jsnlaoqBpR9OZ4ey5Q==
+X-Google-Smtp-Source: APiQypJfx89YVROzYbeds37f4juLb2URjePLG8CWqMvcAvu7G8eMrgyKnOrFOkoY6t9cj2UxQUn+SA==
+X-Received: by 2002:ad4:4b6b:: with SMTP id m11mr16668286qvx.130.1589221590029;
+        Mon, 11 May 2020 11:26:30 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id 124sm8900548qkl.76.2020.05.11.11.26.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 May 2020 11:26:29 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Mon, 11 May 2020 14:26:27 -0400
+Date: Mon, 11 May 2020 14:26:27 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: tools@linux.kernel.org
-Subject: b4 ty issues with no patches matching
-Message-ID: <20200511172803.GI8216@sirena.org.uk>
+Subject: Re: b4 ty issues with no patches matching
+Message-ID: <20200511182627.477l2gclz5dhagvc@chatter.i7.local>
+References: <20200511172803.GI8216@sirena.org.uk>
 MIME-Version: 1.0
-X-Cookie: TANSTAAFL
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 148
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="h3LYUU6HlUDSAOzy"
+In-Reply-To: <20200511172803.GI8216@sirena.org.uk>
+X-Groupsio-MsgNum: 149
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="pktwkir4gsph7u7l"
 Content-Disposition: inline
 
---h3LYUU6HlUDSAOzy
-Content-Type: text/plain; charset=us-ascii
+--pktwkir4gsph7u7l
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi Konstantin,
+On Mon, May 11, 2020 at 06:28:03PM +0100, Mark Brown wrote:
+> Since a recent update when using b4 ty -a to thank for everything that's
+> applied in a given branch it started generating thanks mails for patches
+> that aren't in the branch at all:
+>=20
+> |  WARNING: None of the patches matched for: [PATCH v1] ASoC: rsnd: add i=
+nterrupt support for SSI BUSIF buffer
+> |           Please review the resulting message
+> |  Writing: /tmp/tmp.f58uBPLZuA/giraffesnn123_gmail_com_patch_v1_asoc_rsn=
+d_add_interrupt_support_for_ssi_busif_buffer.thanks
+>=20
+> which then causes further problems as b4 expires the patches from its
+> database.
 
-Since a recent update when using b4 ty -a to thank for everything that's
-applied in a given branch it started generating thanks mails for patches
-that aren't in the branch at all:
+You're right -- when I relaxed the rules to allow forcefully sending=20
+series selected with -s, the auto-thankanator logic broke.
 
-|  WARNING: None of the patches matched for: [PATCH v1] ASoC: rsnd: add interrupt support for SSI BUSIF buffer
-|           Please review the resulting message
-|  Writing: /tmp/tmp.f58uBPLZuA/giraffesnn123_gmail_com_patch_v1_asoc_rsnd_add_interrupt_support_for_ssi_busif_buffer.thanks
+The latest master/stable-0.4.y fixes this.
 
-which then causes further problems as b4 expires the patches from its
-database.
+Sorry about that.
 
-Thanks,
-Mark
+-K
 
---h3LYUU6HlUDSAOzy
+--pktwkir4gsph7u7l
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl65iyIACgkQJNaLcl1U
-h9CJJggAhCgekciNCIg/EBK3d4NdgN6ZOqzc1zxq17JMIp9dZ63ezi2QUwl7lh5J
-Zx0Zvvj0taNb6hJF8Px4nqsFMgPcnadDBECvl9lsztq2mX6IhmC5sNIKstLlsPM6
-d/oJUN5IHRxRLpEarRaQDpYwx4HTyNebF+raHogNCvtNc2ccia3Q0VKAqBvrfYM8
-8KYSpVrKa1fcrqKX2wi6/IibhRPXMSurp2nmwnoVjKCYVzeSKu1TjfSmPRCdeXKh
-dUmNCCX6xKVRC6fRe9++jl8owE2TDwkxncAbI+046xh5Mt9HA98mEvkuD52GqOCz
-EZlbsUK9R61fZ7oqNeW4IOePpNnsEw==
-=ATNB
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCXrmY0QAKCRC2xBzjVmSZ
+bGgpAQCaqb/QgUgxc1NNJyExTDYypmQkPifidIBAOlUw1uu/1AD+MWmRpQXRPIvV
+1mAxd+Hal+FCfxmBbLlFHuWrizG6nQ4=
+=aNdt
 -----END PGP SIGNATURE-----
 
---h3LYUU6HlUDSAOzy--
+--pktwkir4gsph7u7l--
