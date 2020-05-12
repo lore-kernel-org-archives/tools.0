@@ -1,60 +1,57 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
- by mx.groups.io with SMTP id smtpd.web11.6263.1589291978001526752
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web11.2004.1589310472171578311
  for <tools@linux.kernel.org>;
- Tue, 12 May 2020 06:59:38 -0700
+ Tue, 12 May 2020 12:07:52 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=SdQJLYlQ;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.169, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f169.google.com with SMTP id y22so978776qki.3
-        for <tools@linux.kernel.org>; Tue, 12 May 2020 06:59:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=PXz/RhXd53hObtV/6jE/cbRWIIF5dkn8pi6S27o2a4w=;
-        b=SdQJLYlQrhhJ876W/djZFJOE89Q+5/w6xb3TJDcKFNwM1FgJBn+ngP1J24iPU4qpeE
-         lQLPojmrk+l/BSYKKfW9sb7xqUdXNLz8SgkwHnFXnf1jF8etTIQwqjLj//ZzvUmFv9To
-         MvKRkXDY0GCrbdezXSTtdPSGR4aXwBrq/zSpg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=PXz/RhXd53hObtV/6jE/cbRWIIF5dkn8pi6S27o2a4w=;
-        b=C/HnQ5kBfh8R1iyZqDWIJaDbjNLGGXMQc/7gBSUOA5gNbPV1GKPr/IfRr0xrkiMdwl
-         J2D5Ek9NDqMmzUnNLMDxHE8okc578b1YBlJ5gTCuDeKj9G1Msqsg9nFPFwHOd4UqsPZf
-         BmH69TJEBvIdxAv04nhy5FtNs+Vgpw58xwg1UqdZhHmEiqR7exO0G/qEzPpxLVdKdmda
-         M5UhwQ4YtUXOeexksLfyHbhtxRaX7pnA8e3g1an0G93p3FVVuyPLCDM3DK0IMNh4dw4x
-         k4fN0wmrL0W8csverBR/FADgnwsZUaSSl7jLxnMRW9SKL/GJvDplf5mQvmpUe4iUm4RA
-         E3dA==
-X-Gm-Message-State: AGi0PuZU2dyhyrxOIwT6H9gfZxuoezw9lbcralgsRDQk+UTnMgFbd5lA
-	JiVkq5chHecYtgMHpND+V58RANxoxpA=
-X-Google-Smtp-Source: APiQypJ0s06B46f4lAAgk/WArBc7yXFAWUBqnbFU8Rw5rCt3yrrJiIKi6/MxhoOB2Qs+g5ZP6ZGwGw==
-X-Received: by 2002:ae9:e713:: with SMTP id m19mr21006730qka.39.1589291976822;
-        Tue, 12 May 2020 06:59:36 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id t21sm4780057qtb.0.2020.05.12.06.59.34
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 06:59:35 -0700 (PDT)
-Received: by i7.mricon.com (sSMTP sendmail emulation); Tue, 12 May 2020 09:59:33 -0400
-Date: Tue, 12 May 2020 09:59:33 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org
-Subject: b4 0.4.2 bugfix release out
-Message-ID: <20200512135933.t5yhgwt4xfiblx2j@chatter.i7.local>
+ dkim=pass header.i=@kernel.org header.s=default header.b=O5+/RvQA;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: robh@kernel.org)
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id 930AA206A5;
+	Tue, 12 May 2020 19:07:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1589310471;
+	bh=IyF4wilAL9ywX8M+HZ1DjEfK50DTmlOkEoPNrzyBl2E=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=O5+/RvQA4gjLt4vj/hiZcwWOSNWxmIcV1vZlw2KYPZ8zVPzY2UJF13LoBKnV4ldcU
+	 ohOh3FyWkpG8NwWDFh+aKoDaO9O9zx5qejWDK3YwfR6CIpVPZ13OoK3iGP93hPGY/U
+	 SIdMX673CNScDr7hPXUK/hz9xSEYhXvO8plET+/k=
+Received: by mail-oi1-f179.google.com with SMTP id v128so2387573oia.7;
+        Tue, 12 May 2020 12:07:51 -0700 (PDT)
+X-Gm-Message-State: AGi0PuakyUHj+CR77x2SSH7jlEuXNbB298bNIxNA5gWoVlQvwYJ2ImDu
+	q1ySODR0zPPWA45xCZ2KzP7xDvWOMNALjf4IXQ==
+X-Google-Smtp-Source: APiQypKkeR69xgAt4qOkbkBuL0X19PnfAj8KUmdY3rOyj+BfwiUK4yDUq73N+tXbXCLV0b8o6KeGcWVObJ2lIWrBwGs=
+X-Received: by 2002:aca:1904:: with SMTP id l4mr24999916oii.106.1589310470873;
+ Tue, 12 May 2020 12:07:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20200424170442.ad3b3j5f5vkbcmvb@chatter.i7.local>
+ <CAL_JsqK+FyXZZ3uAcAsVFLYoxjzj_fpMLF=DFe3M2Byi9Fd6Xw@mail.gmail.com> <20200507202001.3sststasmemmgr5z@chatter.i7.local>
+In-Reply-To: <20200507202001.3sststasmemmgr5z@chatter.i7.local>
+From: "Rob Herring" <robh@kernel.org>
+Date: Tue, 12 May 2020 14:07:39 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLoekwTz3QWOCS+iY8ALvc9nhmNjjV+12A=_+gHmdbn0Q@mail.gmail.com>
+Message-ID: <CAL_JsqLoekwTz3QWOCS+iY8ALvc9nhmNjjV+12A=_+gHmdbn0Q@mail.gmail.com>
+Subject: Re: [kernel.org users] b4 v0.4.0 available with new features
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hello:
+On Thu, May 7, 2020 at 3:20 PM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Wed, May 06, 2020 at 02:23:16PM -0500, Rob Herring wrote:
+> > I found a minor issue on patches with no 'To' header. They end up with
+> > this:
+> >
+> > To: unlisted-recipients: no To-header on input <;
+> >
+> > However, that appears to be a public-inbox problem as it's on there
+> > too. Here's an example[1].
+>
+> Interesting. I'm not seeing any strange output from that series. "b4 am"
+> and "b4 ty" seem to be generating proper things.
 
-I released b4 v0.4.2 that fixes some things with "b4 ty" workflow that 
-got broken in v0.4.1:
+Yes, 'b4 am' is correct, but 'b4 mbox' is not. That's with 0.4.2.
 
-- fix auto-thankanator logic that started matching everything
-- properly process branches for remote without a [branch] entry
-
-You can update using "pip install --user --upgrade b4".
-
-Best regards,
--K
+Rob
