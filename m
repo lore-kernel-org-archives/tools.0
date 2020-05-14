@@ -1,92 +1,126 @@
 Received: from ozlabs.org (ozlabs.org [203.11.71.1])
- by mx.groups.io with SMTP id smtpd.web12.6166.1589428011906140908
+ by mx.groups.io with SMTP id smtpd.web10.7042.1589434413227623760
  for <tools@linux.kernel.org>;
- Wed, 13 May 2020 20:46:53 -0700
+ Wed, 13 May 2020 22:33:34 -0700
 Authentication-Results: mx.groups.io;
- dkim=fail reason="body hash did not verify" header.i=@ellerman.id.au header.s=201909 header.b=oMTsAu+S;
+ dkim=fail reason="body hash did not verify" header.i=@ellerman.id.au header.s=201909 header.b=dxeGglFU;
  spf=pass (domain: ozlabs.org, ip: 203.11.71.1, mailfrom: michael@ozlabs.org)
 Received: by ozlabs.org (Postfix, from userid 1034)
-	id 49MyCC6yhhz9sSr; Thu, 14 May 2020 13:46:47 +1000 (AEST)
+	id 49N0ZK2wMHz9sSd; Thu, 14 May 2020 15:33:29 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ellerman.id.au;
-	s=201909; t=1589428007;
-	bh=clcpraDrGFC0YV1X/U9iq4xdhx+9H4Xd7bSqXZ4R8+M=;
+	s=201909; t=1589434409;
+	bh=EioDRGEcsE4RddKuTWWG8En/APiS9Ajh/RAqAU7sIt4=;
 	h=From:To:Subject:Date:From;
-	b=oMTsAu+SbEArRUUaS6VcLrgIl3uhZ84G9JRWMP3qRuXLLsHY4WRxKP/KJbTrErWBe
-	 yjql5Lzv7Msv7qmRT/8gbPR0WhS/Twv+9YX0AmzhjfZJcuSbDbb4XGQ4iro1A6q2zi
-	 1yZOHmwFyxXfU9WQnPhk3cqSrYu4nf0WiWOsQuqR//lYg4t5d+w/Q83e9Epw4CoXgI
-	 MiTR4133f/63mtx/7o/eG2NAYX5xbgu86rCIkM3tFOU5SJcyaGIhAtrstCecD+Iau4
-	 S+2xll7vL2NNjBeX2a6/hNOspcBoEIRKxlO+BP6F1JKK2bHrFJmxO14Dlg62G/25st
-	 4eGO8DJPLGvAA==
+	b=dxeGglFUm2wj2VZKvJXmFZO1efU8MIPigRpFLEy0G4Fr0JV2yiiTG1Qe7cCHpeRSD
+	 zMYu9HY8qBAzp0xBT+6tcWB+5VGl48gewpUKfdmeMJAF8vN2/2dMe9Y839pCsOoYsr
+	 ofSsYFRF/MEo7MDSjllYV6E9mjWu9qkKWGFqjav5Lo6A9L7BZgdbbdyQOP/jph1e5z
+	 VRGB3GPUEkCVp80ottSPhu5mmrhq0VV5W+FXkbjqD1DKiZbwH8IQBcSmxmlgfcedID
+	 V8LPGjYOxISnJzRHtb1ZlqFE/RFOL81QSH4p0XEPMt31RrjTQ7weXNOsNFTrp2fs6o
+	 le/gqmUSwSohQ==
 From: "Michael Ellerman" <mpe@ellerman.id.au>
 To: tools@linux.kernel.org
-Subject: [PATCH] Allow a custom name/from when sending thanks
-Date: Thu, 14 May 2020 13:46:40 +1000
-Message-Id: <20200514034640.3666399-1-mpe@ellerman.id.au>
+Subject: [RFC PATCH] Add --dry-run (-n) option to b4 ty
+Date: Thu, 14 May 2020 15:30:58 +1000
+Message-Id: <20200514053058.3676830-1-mpe@ellerman.id.au>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 
-Add config options "thanks-from-name" and "thanks-from-email" that
-allow setting a custom name and/or from address when sending thanks.
+Currently `b4 ty -a` generates the thanks messages and also archives
+the metadata for the associated commits (by renaming them to x.sent).
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+This means you can't run `b4 ty -a` just to see what it will do.
+
+Although `b4 ty -l` exists, that only shows which series b4 knows
+about, it doesn't show which commits b4 is able to match and generate
+thanks for.
+
+So add a --dry-run (-n) option that does everything except archive the
+metadata, which allows a user to see what `b4 ty -a` can match and the
+thanks that are generated without committing to sending.
 ---
- b4/ty.py     | 11 ++++++++---
- man/b4.5.rst |  4 ++++
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ b4/command.py |  2 ++
+ b4/ty.py      | 15 +++++++++------
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
+
+This is RFC because I'm not sure if the plan is to eventually have b4 act=
+ually
+invoke git send email (optionally), etc, and if so how this would interac=
+t with
+that.
+
+Another option would be to have `-a` behave like a dry run unless `-s` is=
+ also
+specified, but that would be a backward incompatible UI change.
+
+cheers
+
+diff --git a/b4/command.py b/b4/command.py
+index 6d516a3..1e120bf 100644
+--- a/b4/command.py
++++ b/b4/command.py
+@@ -160,6 +160,8 @@ logger =3D b4.logger
+                        help=3D'The branch to check against, instead of c=
+urrent')
+     sp_ty.add_argument('--since', default=3D'1.week',
+                        help=3D'The --since option to use when auto-match=
+ing patches (default=3D1.week)')
++    sp_ty.add_argument('-n', '--dry-run', action=3D'store_true', dest=3D=
+'dry_run', default=3DFalse,
++                       help=3D"Dry run, don't actually send or update b4=
+ state.")
+     sp_ty.set_defaults(func=3Dcmd_ty)
+=20
+     cmdargs =3D parser.parse_args()
 diff --git a/b4/ty.py b/b4/ty.py
-index 4271986..44f4451 100644
+index 44f4451..9c9c35e 100644
 --- a/b4/ty.py
 +++ b/b4/ty.py
-@@ -396,13 +396,18 @@ BRANCH_INFO =3D None
-         os.mkdir(outdir)
+@@ -381,11 +381,11 @@ BRANCH_INFO =3D None
+         sys.exit(0)
 =20
-     usercfg =3D b4.get_user_config()
-+    config =3D b4.get_main_config()
-+    user_name =3D config.get('thanks-from-name', usercfg['name'])
-+    user_email =3D config.get('thanks-from-email', usercfg['email'])
+     logger.info('---')
+-    send_messages(applied, cmdargs.gitdir, cmdargs.outdir, wantbranch, s=
+ince=3Dcmdargs.since)
++    send_messages(applied, cmdargs.gitdir, cmdargs.outdir, wantbranch, c=
+mdargs.dry_run, since=3Dcmdargs.since)
+     sys.exit(0)
+=20
+=20
+-def send_messages(listing, gitdir, outdir, branch, since=3D'1.week'):
++def send_messages(listing, gitdir, outdir, branch, dry_run, since=3D'1.w=
+eek'):
+     # Not really sending, but writing them out to be sent on your own
+     # We'll probably gain ability to send these once the feature is
+     # more mature and we're less likely to mess things up
+@@ -434,9 +434,12 @@ BRANCH_INFO =3D None
+         bout =3D msg.as_string(policy=3Db4.emlpolicy)
+         with open(outfile, 'wb') as fh:
+             fh.write(bout.encode('utf-8'))
+-        logger.debug('Cleaning up: %s', jsondata['trackfile'])
+-        fullpath =3D os.path.join(datadir, jsondata['trackfile'])
+-        os.rename(fullpath, '%s.sent' % fullpath)
 +
-     # Do we have a .signature file?
-     sigfile =3D os.path.join(str(Path.home()), '.signature')
-     if os.path.exists(sigfile):
-         with open(sigfile, 'r', encoding=3D'utf-8') as fh:
-             signature =3D fh.read()
-     else:
--        signature =3D '%s <%s>' % (usercfg['name'], usercfg['email'])
-+        signature =3D '%s <%s>' % (user_name, user_email)
++        if not dry_run:
++            logger.debug('Cleaning up: %s', jsondata['trackfile'])
++            fullpath =3D os.path.join(datadir, jsondata['trackfile'])
++            os.rename(fullpath, '%s.sent' % fullpath)
 +
+     logger.info('---')
+     if not outgoing:
+         logger.info('No thanks necessary.')
+@@ -505,7 +508,7 @@ BRANCH_INFO =3D None
+         sys.exit(0)
 =20
-     outgoing =3D 0
-     for jsondata in listing:
-@@ -410,8 +415,8 @@ BRANCH_INFO =3D None
-         slug_subj =3D re.sub(r'\W', '_', jsondata['subject'])
-         slug =3D '%s_%s' % (slug_from.lower(), slug_subj.lower())
-         slug =3D re.sub(r'_+', '_', slug)
--        jsondata['myname'] =3D usercfg['name']
--        jsondata['myemail'] =3D usercfg['email']
-+        jsondata['myname'] =3D user_name
-+        jsondata['myemail'] =3D user_email
-         jsondata['signature'] =3D signature
-         if 'pr_commit_id' in jsondata:
-             # This is a pull request
-diff --git a/man/b4.5.rst b/man/b4.5.rst
-index b44dc96..d1972b9 100644
---- a/man/b4.5.rst
-+++ b/man/b4.5.rst
-@@ -236,6 +236,10 @@ either the toplevel $HOME/.gitconfig file, or in a p=
-er-repository
-       thanks-pr-template =3D None
-       # See thanks-am-template.example. If not set, a default template w=
-ill be used.
-       thanks-am-template =3D None
-+      # An optional custom from name for sending thanks
-+      # thanks-from-name =3D Project Foo Thanks Bot
-+      # An optional custom from email for sending thanks
-+      # thanks-from-email =3D thanks-bot@foo.org
+     wantbranch =3D get_wanted_branch(cmdargs)
+-    send_messages(listing, cmdargs.gitdir, cmdargs.outdir, wantbranch, c=
+mdargs.since)
++    send_messages(listing, cmdargs.gitdir, cmdargs.outdir, wantbranch, c=
+mdargs.dry_run, cmdargs.since)
+     sys.exit(0)
 =20
 =20
- SUPPORT
 --=20
 2.25.1
 
