@@ -1,68 +1,93 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web12.19667.1589566761900813020
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+ by mx.groups.io with SMTP id smtpd.web12.19934.1589567487449725821
  for <tools@linux.kernel.org>;
- Fri, 15 May 2020 11:19:21 -0700
+ Fri, 15 May 2020 11:31:27 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=heLv1PcC;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id C926B206D8;
-	Fri, 15 May 2020 18:19:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1589566761;
-	bh=zqq9Led4nyUcCg3mmUyW+RoNc1TUEubr4eyKPM8AxlQ=;
-	h=Date:From:To:Cc:Subject:From;
-	b=heLv1PcCb/bKwYygWKSLTktg7H538GHaYvIOaVHD/XW0FOocvc21tNj98xm9Xbuqq
-	 mInyKqJIAw3wPbYcdnI6uWgOKaMwtef0I2Zy33c4/iy6FdIuHY4k2+XXtA0uduog10
-	 rDWddSiuBW9MaXIUVaDdxOySsF46im+B1Gc/yIZA=
-Date: Fri, 15 May 2020 19:19:18 +0100
-From: "Mark Brown" <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=Er6yqNqg;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.160.170, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qt1-f170.google.com with SMTP id t25so2826448qtc.0
+        for <tools@linux.kernel.org>; Fri, 15 May 2020 11:31:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nQIigbyhw6nHV6Z5rh8ZOrey3uHWWUaH8AoaorpWUkU=;
+        b=Er6yqNqgNrDToei27xQ90xLgEQtSS5AHGy2TIo2/MXyVVR1+3ooQOcqWBp1Dmea+Xs
+         mVkUOwL+iU4aH/fwe5nem9/qHi5EoKQMf5AAQiZrp40rdgudZKYlaV8IgbMHZeMqHfFu
+         O79osbW0SYnKLca/AVQzPz3cFEUZqUq6JZLn0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nQIigbyhw6nHV6Z5rh8ZOrey3uHWWUaH8AoaorpWUkU=;
+        b=sAbigMUYi8pRqdFzH1MeHcoUw6HoOQr4IPdhT0sj4LT1qJih51A2Ko4+N/XSSv5ASZ
+         s9f3JqOTiz8XTAyYl4OTnP9oIeOHDetqNeOzh+rA3LJfDrWxgv/VK/YArNxTIKtGUCID
+         xSVmIe6SpNeccjlwXHM07ny2+++syt/xxRA3udP/k3nJwJU/IFIK3XT62w5cEGgzjBgD
+         AUedxlLnYxZfjFaoXbIpnDEXLDNLo7as38WNk49kw0OdgJuNEPVTyv857kOxCsN4DxqF
+         2hqiubnHdr7wo+wgEnh5qZcleFB1c6y69OTior37mC1ePPuvd+et/nBoh5vSpfWYwWc2
+         76Fg==
+X-Gm-Message-State: AOAM531V3teYQM4BVLtzIrBwBmoeUy7at+03aLhHNjo/QaaiAibRh9Vu
+	p9hFFbDvaJAz4yuEL68XQHZ+xw==
+X-Google-Smtp-Source: ABdhPJxzk/R21J+lMP0363j5f1uw+LGV2ALnvb+WH/w0BZ7XoXAslYibjPjTQpLRq13pHVFcO0Ek3w==
+X-Received: by 2002:ac8:7249:: with SMTP id l9mr5055973qtp.224.1589567486512;
+        Fri, 15 May 2020 11:31:26 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id g5sm2101982qkl.114.2020.05.15.11.31.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 May 2020 11:31:25 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Fri, 15 May 2020 14:31:23 -0400
+Date: Fri, 15 May 2020 14:31:23 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: tools@linux.kernel.org
-Subject: b4 ty not remembering fetched patches
-Message-ID: <20200515181918.GO5066@sirena.org.uk>
+Subject: Re: b4 ty issues matching remote branches
+Message-ID: <20200515183123.ya7z53275szbn5xz@chatter.i7.local>
+References: <20200515180542.GM5066@sirena.org.uk>
 MIME-Version: 1.0
-X-Cookie: Avoid contact with eyes.
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 160
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KM+e2hnYAO+MCJ5e"
+In-Reply-To: <20200515180542.GM5066@sirena.org.uk>
+X-Groupsio-MsgNum: 161
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="hwfyrvjlobougpyk"
 Content-Disposition: inline
 
---KM+e2hnYAO+MCJ5e
-Content-Type: text/plain; charset=us-ascii
+--hwfyrvjlobougpyk
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Konstantin,
+On Fri, May 15, 2020 at 07:05:42PM +0100, Mark Brown wrote:
+> Hi Konstantin,
+>=20
+> Having updated to the latest master a command like
+>=20
+> 	b4 ty -b remote/foo -a
+>=20
+> has started to report errors like
+>=20
+> 	Requested branch asoc/for-5.7 not found in git branch --list --all
+>=20
+> This is true since "git branch --list --all" lists remotes as
+> remotes/name/branch while most git commands accept name/branch (and git
+> branch -r lists them as such).  For some reason tweaking to add a
+> remotes/ on the front doesn't seem to work either, even though grepping
+> the output appears to confirm that the branch is there under that=20
+> name.
 
-When I run=20
+I think I was trying too hard. I've committed a small fix to current=20
+master -- that should relax our sanity-checking logic.
 
-	b4 am -t 20200515104758.6934-1-Sergey.Semin@baikalelectronics.ru
+-K
 
-a mailbox is generated (incomplete due to issues with vger spam
-filtering) but the fetched patches are not recorded in the b4 ty
-database (as showing by b4 ty -l).  This happens even if only patches
-that are present on the list are requested on the command line.
-
-Thanks,
-Mark
-
---KM+e2hnYAO+MCJ5e
+--hwfyrvjlobougpyk
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6+3SUACgkQJNaLcl1U
-h9BTRAf+MUJawbp9JrDIu6emdPcd9a3N3gRImU1DQMD6/rWA2cUA3qsfsPTuPw1R
-4wkgGBAEXovdWfpeQLPHQ9WOH+w2Df1zMtcpbD3pbKp1/Ssua1g2C3fpR35Tg/+q
-OtevaC8Clx5yScm3oc/MPM+mvimnUa9zA83H7DjhBx310PanRhhl/CBIkVDVDKjl
-qkIqjLyd7CmLgFmDMPkwlge1jnSEfIosz4AWPaHtQvSvvCAQF66rjZzVHkDj6Q/y
-wFmt3zcEa3KaJNkS0qQNk1FPOldDtE7z8XCwmg2AbkMMFivh60lLXZf+4oY0SkN3
-TvUc1JWnPxhjXDtJedvbjpQHDVQXyA==
-=4fPi
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCXr7f+QAKCRC2xBzjVmSZ
+bKvKAP9LfbCbzXQ/NX+XtgRaC14qkGS8DY2I+8oSFwuZiailoAEApCjpp8ABxOt+
+m/cyrsPkQ3EBOS+EogISFZZnMH0ytwg=
+=BImH
 -----END PGP SIGNATURE-----
 
---KM+e2hnYAO+MCJ5e--
+--hwfyrvjlobougpyk--
