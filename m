@@ -1,81 +1,64 @@
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web11.21172.1589570798095506830
+ by mx.groups.io with SMTP id smtpd.web10.21206.1589570911115629938
  for <tools@linux.kernel.org>;
- Fri, 15 May 2020 12:26:38 -0700
+ Fri, 15 May 2020 12:28:31 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=iUCYz2o3;
+ dkim=pass header.i=@kernel.org header.s=default header.b=zHO/6ClQ;
  spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
 Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 055DC2070A;
-	Fri, 15 May 2020 19:26:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPSA id 44A352070A;
+	Fri, 15 May 2020 19:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1589570797;
-	bh=KSHbDf3esJu9fEco+YMpwc/Ok1DwEnF5kvY6EudpcXg=;
+	s=default; t=1589570910;
+	bh=KEQf9G6bDuBszYfXYHhHFAAj0vSGhbIp4Vod1gbVsS4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iUCYz2o3OSMbH9MrQEh8AmNfqYy9aC5ZgJNU0dypfjmdBIOlP2GEPo88ce0pRuDuF
-	 bSITwrqQODw7WmA6dhmDFiCemfqcFo66yHFBgLVZmbK5W49DOpMAqJ6i8cUb+9VfZa
-	 YFZZjgHbzIRFAMA9DL2tTTrTB7y98pITwf4vWqvs=
-Date: Fri, 15 May 2020 20:26:34 +0100
+	b=zHO/6ClQondL3q+lcXTcSCFVOkP9hug8XaObSmFshKsRyfztABo5hNKbrKgK6Bo9/
+	 3SWSGTB1ieSFhMClCpcqsf1tn+kWc1eTzUkhjhkN0AZpJ2njnhctXtrI9BvabZ2/70
+	 Vc96EPm/roXsI8EhDQp+7DKA4mk6HHVPdJa5hHBg=
+Date: Fri, 15 May 2020 20:28:28 +0100
 From: "Mark Brown" <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org
-Subject: Re: b4 ty not remembering fetched patches
-Message-ID: <20200515192634.GR5066@sirena.org.uk>
-References: <20200515181918.GO5066@sirena.org.uk>
- <20200515183602.ivwwyxafxojmc7mp@chatter.i7.local>
+Subject: Re: b4 ty issues matching remote branches
+Message-ID: <20200515192828.GS5066@sirena.org.uk>
+References: <20200515180542.GM5066@sirena.org.uk>
+ <20200515183123.ya7z53275szbn5xz@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <20200515183602.ivwwyxafxojmc7mp@chatter.i7.local>
+In-Reply-To: <20200515183123.ya7z53275szbn5xz@chatter.i7.local>
 X-Cookie: Avoid contact with eyes.
 User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 163
+X-Groupsio-MsgNum: 164
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CPn8Wy5ME997YUMW"
+	protocol="application/pgp-signature"; boundary="qjXtncIm5b3tWrFJ"
 Content-Disposition: inline
 
---CPn8Wy5ME997YUMW
+--qjXtncIm5b3tWrFJ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 15, 2020 at 02:36:02PM -0400, Konstantin Ryabitsev wrote:
-> On Fri, May 15, 2020 at 07:19:18PM +0100, Mark Brown wrote:
+On Fri, May 15, 2020 at 02:31:23PM -0400, Konstantin Ryabitsev wrote:
 
-> > a mailbox is generated (incomplete due to issues with vger spam
-> > filtering) but the fetched patches are not recorded in the b4 ty
-> > database (as showing by b4 ty -l).  This happens even if only patches
-> > that are present on the list are requested on the command line.
+> I think I was trying too hard. I've committed a small fix to current=20
+> master -- that should relax our sanity-checking logic.
 
-> Right, this was intentional due to trying to be over-cautious. If we=20
-> don't have the complete thread, then we probably shouldn't be tracking=20
-> if this incomplete thread was applied or not -- at least that was my=20
-> thinking. What is your thoughts on that?
+That works, thanks!
 
-I think that's a sensible decision and wasn't particularly surprised by
-that bit of it.  In fact what might be handy would be an option to not
-output the partial mailbox if we can't find some of the patches - that'd
-help spot problems early on in the process.
-
-> Of course, if we're specifically selecting a subset of that thread, we=20
-> shouldn't be applying that logic. I'll see if I can add that caveat in.
-
-Right, I'd have expected it to only apply to whatever was explicitly
-asked for.
-
---CPn8Wy5ME997YUMW
+--qjXtncIm5b3tWrFJ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6+7OoACgkQJNaLcl1U
-h9CV7Qf8CQxLsD//WEBFlq2DODssRUKGAdFGO/EqG2/6EoRa/ytP8GmLRc8lV3cT
-Hx6hSDngf/Tl1OUsYgR0oretHtp7DapDUk5preZjGbW3sCDHds4Ewdr2BuD5fvnM
-ff01J2bJGMItXNUDgSY10SkuGFoNA7WzNoXGRFIAe7buwRlmZzIA+n20HF4NoSON
-MBm2LR1vUoW+qYiYo5mAw8ePJlZEuZox6K1mHlLEzg0W2pJhJ/ziIpCyqH3Sa500
-uzy4kzaGB6iFbj0kKpgrUx6mwMTGx0mFrozgdOB8wQgFHYx5AfqU5I3a+bEI4EBI
-yLM/pfCS3pd1sj0Nd5wqAhR8IkytQg==
-=3iSf
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6+7VsACgkQJNaLcl1U
+h9D2GQf+J4XBmvN54P8wfyrtkCnycz0flEYbZBHnHZO/tFyu8XIL7IqvdFenvLZW
+K8Dl50TShe5G2wKCxqIsQRC+mVNPJT+EmXOCBXj0DOhDBiAH1OHPeFC6wPkBlVZS
+WrEgeflP2KYO7bLIjTlZCoGX1vZINrd7Hbgv8Jgx8kaEgNovAzHo3R7VuA+3OuBj
+e4ZeHL4I4qM27S2XVjzY6N9pSQSEd4QgB94Yz2NCnmDmXz7EWDwCIFoISZ5AACEn
+2V4AcQ+RfJpK+O6AaIr5guPDUnbiKOp33PdJmqomBJXiOhxX1IreHrpVTQuMcg/t
+N4jn147BvtXBxAW07r7Jigp6DQjclQ==
+=7086
 -----END PGP SIGNATURE-----
 
---CPn8Wy5ME997YUMW--
+--qjXtncIm5b3tWrFJ--
