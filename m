@@ -1,17 +1,16 @@
 Received: from mx2.suse.de (mx2.suse.de [195.135.220.15])
- by mx.groups.io with SMTP id smtpd.web11.48929.1590493610080665470
+ by mx.groups.io with SMTP id smtpd.web11.48812.1590493108970654917
  for <tools@linux.kernel.org>;
- Tue, 26 May 2020 04:46:50 -0700
+ Tue, 26 May 2020 04:38:29 -0700
 Authentication-Results: mx.groups.io;
  dkim=missing; spf=pass (domain: suse.cz, ip: 195.135.220.15, mailfrom: jslaby@suse.cz)
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.220.254])
-	by mx2.suse.de (Postfix) with ESMTP id 08554AF5D
-	for <tools@linux.kernel.org>; Tue, 26 May 2020 11:46:50 +0000 (UTC)
-Subject: Re: b4 fails to build w/ py 3.6.5
-From: Jiri Slaby <jslaby@suse.cz>
+	by mx2.suse.de (Postfix) with ESMTP id C8042AFFC
+	for <tools@linux.kernel.org>; Tue, 26 May 2020 11:38:28 +0000 (UTC)
 To: tools@linux.kernel.org
-References: <cf0d3873-535b-97e5-f183-8d1abe17610c@suse.cz>
+From: Jiri Slaby <jslaby@suse.cz>
+Subject: b4 fails to build w/ py 3.6.5
 Autocrypt: addr=jslaby@suse.cz; prefer-encrypt=mutual; keydata=
  mQINBE6S54YBEACzzjLwDUbU5elY4GTg/NdotjA0jyyJtYI86wdKraekbNE0bC4zV+ryvH4j
  rrcDwGs6tFVrAHvdHeIdI07s1iIx5R/ndcHwt4fvI8CL5PzPmn5J+h0WERR5rFprRh6axhOk
@@ -54,90 +53,38 @@ Autocrypt: addr=jslaby@suse.cz; prefer-encrypt=mutual; keydata=
  9HKkJqkN9xYEYaxtfl5pelF8idoxMZpTvCZY7jhnl2IemZCBMs6s338wS12Qro5WEAxV6cjD
  VSdmcD5l9plhKGLmgVNCTe8DPv81oDn9s0cIRLg9wNnDtj8aIiH8lBHwfUkpn32iv0uMV6Ae
  sLxhDWfOR4N+wu1gzXWgLel4drkCJcuYK5IL1qaZDcuGR8RPo3jbFO7Y
-Message-ID: <2e815dd0-c745-f254-5b00-e69a36cd2d00@suse.cz>
-Date: Tue, 26 May 2020 13:46:46 +0200
+Message-ID: <cf0d3873-535b-97e5-f183-8d1abe17610c@suse.cz>
+Date: Tue, 26 May 2020 13:38:25 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <cf0d3873-535b-97e5-f183-8d1abe17610c@suse.cz>
-X-Groupsio-MsgNum: 167
-Content-Type: multipart/mixed;
- boundary="------------DCA288C2731A04B862AA5DD7"
-Content-Language: en-US
-
---------------DCA288C2731A04B862AA5DD7
 Content-Type: text/plain; charset=iso-8859-2
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 
-On 26. 05. 20, 13:38, Jiri Slaby wrote:
-> Hi,
-> 
-> while b4 builds fine with python 3.8.3, python 3.6.5 (SLE15-SP2) fails
-> to build it:
->> [    3s] + /usr/bin/python3 setup.py build '--executable=/usr/bin/python3 -s'
->> [    3s] Traceback (most recent call last):
->> [    3s]   File "setup.py", line 28, in <module>
->> [    3s]     version=find_version('b4/__init__.py'),
->> [    3s]   File "setup.py", line 18, in find_version
->> [    3s]     version_file = read(source)
->> [    3s]   File "setup.py", line 14, in read
->> [    3s]     return open(os.path.join(os.path.dirname(__file__), fname)).read()
->> [    3s]   File "/usr/lib64/python3.6/encodings/ascii.py", line 26, in decode
->> [    3s]     return codecs.ascii_decode(input, self.errors)[0]
->> [    3s] UnicodeDecodeError: 'ascii' codec can't decode byte 0xe2 in position 915: ordinal not in range(128)
->> [    3s] error: Bad exit status from /var/tmp/rpm-tmp.nPNYVp (%build)
-> 
-> It is the tick in PASS_FANCY on line 41 in b4/__init__.py.
-> 
-> I have zero python-fu, but I believe it's because 3.6 tries to load the
-> file using ascii, while 3.8 defaults to utf-8...
+Hi,
 
-The attached patch fixes it. But as I wrote, I have no idea whether it
-is correct at all.
+while b4 builds fine with python 3.8.3, python 3.6.5 (SLE15-SP2) fails
+to build it:
+> [    3s] + /usr/bin/python3 setup.py build '--executable=/usr/bin/python3 -s'
+> [    3s] Traceback (most recent call last):
+> [    3s]   File "setup.py", line 28, in <module>
+> [    3s]     version=find_version('b4/__init__.py'),
+> [    3s]   File "setup.py", line 18, in find_version
+> [    3s]     version_file = read(source)
+> [    3s]   File "setup.py", line 14, in read
+> [    3s]     return open(os.path.join(os.path.dirname(__file__), fname)).read()
+> [    3s]   File "/usr/lib64/python3.6/encodings/ascii.py", line 26, in decode
+> [    3s]     return codecs.ascii_decode(input, self.errors)[0]
+> [    3s] UnicodeDecodeError: 'ascii' codec can't decode byte 0xe2 in position 915: ordinal not in range(128)
+> [    3s] error: Bad exit status from /var/tmp/rpm-tmp.nPNYVp (%build)
+
+It is the tick in PASS_FANCY on line 41 in b4/__init__.py.
+
+I have zero python-fu, but I believe it's because 3.6 tries to load the
+file using ascii, while 3.8 defaults to utf-8...
 
 thanks,
 -- 
 js
 suse labs
-
---------------DCA288C2731A04B862AA5DD7
-Content-Type: text/x-patch; charset=UTF-8;
- name="0001-fix-unicode.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="0001-fix-unicode.patch"
-
-From 345a58f37d51b302937a14f623076c5dd13dcc32 Mon Sep 17 00:00:00 2001
-From: Jiri Slaby <jslaby@suse.cz>
-Date: Tue, 26 May 2020 13:40:37 +0200
-Subject: [PATCH] fix unicode
-
----
- setup.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/setup.py b/setup.py
-index ed24367c6c56..c73c9f4b2b0b 100644
---- a/setup.py
-+++ b/setup.py
-@@ -1,5 +1,6 @@
- #!/usr/bin/env python3
- 
-+import io
- import os
- import re
- from setuptools import setup
-@@ -11,7 +12,7 @@ from setuptools import setup
- 
- 
- def read(fname):
--    return open(os.path.join(os.path.dirname(__file__), fname)).read()
-+    return io.open(os.path.join(os.path.dirname(__file__), fname), "r", encoding="utf-8").read()
- 
- 
- def find_version(source):
--- 
-2.26.2
-
-
---------------DCA288C2731A04B862AA5DD7--
