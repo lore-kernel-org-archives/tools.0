@@ -1,122 +1,143 @@
-Received: from mail-qk1-f196.google.com (mail-qk1-f196.google.com [209.85.222.196])
- by mx.groups.io with SMTP id smtpd.web11.38917.1590438825595201019
+Received: from mx2.suse.de (mx2.suse.de [195.135.220.15])
+ by mx.groups.io with SMTP id smtpd.web11.48929.1590493610080665470
  for <tools@linux.kernel.org>;
- Mon, 25 May 2020 13:33:45 -0700
+ Tue, 26 May 2020 04:46:50 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=DHXKHl+A;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.196, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f196.google.com with SMTP id b6so18474090qkh.11
-        for <tools@linux.kernel.org>; Mon, 25 May 2020 13:33:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=hd5l9tmE6sZVVbGW6+TPHUAjf8m6l3UIcXEsGqc+T2s=;
-        b=DHXKHl+AIhtAKWtIWDAcuBd9YI1dTyLMHo81ORQ7R33qnRYso6W7zwg07asix3Dlkh
-         CltixsaBetmt17OuUGwGhRxetxfwtilimSs1erwUxfRKSz5iTKvULjuWVdsaRm3JecC3
-         GNwMqHtmoAqSqaL9AtE1eaIPHcHLFNux2Andc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=hd5l9tmE6sZVVbGW6+TPHUAjf8m6l3UIcXEsGqc+T2s=;
-        b=n/n7IWWWz7oHoKkNt6SBrAszy2iL8oeifqY6FG9+Bw6cQDmg1LJ3vV4inNG82Uvgcl
-         xvUbX2xe3rpTGx4yQVTKkAwhNK3ZUK796+u/bj5ZykiEtrbFv31D3WtD3Isnlzzq9lMo
-         Ed4baoRI31LbcmuqGFgge/4mR6kg53u4MnDE9nbKApGHptVBCbj7pFOp9yeiBk3dZA4v
-         ESJrvPkx3hg7Tk2QJxj2rXKKGoiSh0s2CrmEEr3AE9CHPHyjFjSgnUVZ3sgMWT6MMfqe
-         qQsFko0EdVreZx7IloNqeVHhssT/Jqehq5qcjZx5rJvmQZq/RuR8EABUu3ldiCQ+aO0K
-         Er7g==
-X-Gm-Message-State: AOAM533+Na75DfOX0+GADb3/iVlzNxsBc2PxFqEuUz2dgzK0ryELnrLP
-	e7VpNxBrXJE9RRXL4sRm7MrQkzEt7JQ=
-X-Google-Smtp-Source: ABdhPJywrZ15KJYdCZXjMfKYFrV0vkunt8yo8voeEekdzYqvmljBLavNA0ftVlD1fx0fqA15P/+LEQ==
-X-Received: by 2002:a37:cca:: with SMTP id 193mr21815022qkm.208.1590438824583;
-        Mon, 25 May 2020 13:33:44 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id h3sm14286835qkl.28.2020.05.25.13.33.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 May 2020 13:33:43 -0700 (PDT)
-Received: by i7.mricon.com (sSMTP sendmail emulation); Mon, 25 May 2020 16:33:41 -0400
-Date: Mon, 25 May 2020 16:33:41 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: users@linux.kernel.org, tools@linux.kernel.org
-Subject: b4 version 0.5.0 is available
-Message-ID: <20200525203341.z4dollmzbo7exnhc@chatter.i7.local>
+ dkim=missing; spf=pass (domain: suse.cz, ip: 195.135.220.15, mailfrom: jslaby@suse.cz)
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+	by mx2.suse.de (Postfix) with ESMTP id 08554AF5D
+	for <tools@linux.kernel.org>; Tue, 26 May 2020 11:46:50 +0000 (UTC)
+Subject: Re: b4 fails to build w/ py 3.6.5
+From: Jiri Slaby <jslaby@suse.cz>
+To: tools@linux.kernel.org
+References: <cf0d3873-535b-97e5-f183-8d1abe17610c@suse.cz>
+Autocrypt: addr=jslaby@suse.cz; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <2e815dd0-c745-f254-5b00-e69a36cd2d00@suse.cz>
+Date: Tue, 26 May 2020 13:46:46 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-X-Groupsio-MsgNum: 166
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="lmnw23fyyl2ic5p2"
-Content-Disposition: inline
+In-Reply-To: <cf0d3873-535b-97e5-f183-8d1abe17610c@suse.cz>
+X-Groupsio-MsgNum: 167
+Content-Type: multipart/mixed;
+ boundary="------------DCA288C2731A04B862AA5DD7"
+Content-Language: en-US
 
---lmnw23fyyl2ic5p2
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--------------DCA288C2731A04B862AA5DD7
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: 7bit
 
-Hello:
+On 26. 05. 20, 13:38, Jiri Slaby wrote:
+> Hi,
+> 
+> while b4 builds fine with python 3.8.3, python 3.6.5 (SLE15-SP2) fails
+> to build it:
+>> [    3s] + /usr/bin/python3 setup.py build '--executable=/usr/bin/python3 -s'
+>> [    3s] Traceback (most recent call last):
+>> [    3s]   File "setup.py", line 28, in <module>
+>> [    3s]     version=find_version('b4/__init__.py'),
+>> [    3s]   File "setup.py", line 18, in find_version
+>> [    3s]     version_file = read(source)
+>> [    3s]   File "setup.py", line 14, in read
+>> [    3s]     return open(os.path.join(os.path.dirname(__file__), fname)).read()
+>> [    3s]   File "/usr/lib64/python3.6/encodings/ascii.py", line 26, in decode
+>> [    3s]     return codecs.ascii_decode(input, self.errors)[0]
+>> [    3s] UnicodeDecodeError: 'ascii' codec can't decode byte 0xe2 in position 915: ordinal not in range(128)
+>> [    3s] error: Bad exit status from /var/tmp/rpm-tmp.nPNYVp (%build)
+> 
+> It is the tick in PASS_FANCY on line 41 in b4/__init__.py.
+> 
+> I have zero python-fu, but I believe it's because 3.6 tries to load the
+> file using ascii, while 3.8 defaults to utf-8...
 
-I am pleased to release b4 v0.5.0 with the following new features:
+The attached patch fixes it. But as I wrote, I have no idea whether it
+is correct at all.
 
-b4 diff:
+thanks,
+-- 
+js
+suse labs
 
-  allows to display range-diffs between patch/series revisions.  It=20
-  accomplishes this by creating two "fake" detached ranges consisting=20
-  solely of the files in the patches and then running a "git range-diff"=20
-  between those ranges. In order to work, the following conditions must=20
-  all be met:
+--------------DCA288C2731A04B862AA5DD7
+Content-Type: text/x-patch; charset=UTF-8;
+ name="0001-fix-unicode.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="0001-fix-unicode.patch"
 
-  1. patches must contain "index" blob information
-  2. we must be able to find all of those blobs in the repo
+From 345a58f37d51b302937a14f623076c5dd13dcc32 Mon Sep 17 00:00:00 2001
+From: Jiri Slaby <jslaby@suse.cz>
+Date: Tue, 26 May 2020 13:40:37 +0200
+Subject: [PATCH] fix unicode
 
-  Behind the scenes, b4 will create a temporary worktree containing just=20
-  the files mentioned in the patch and run "git am" to create the commit=20
-  range. After deleting the worktree, this range will continue to exist=20
-  in the repo as loose objects (until gc cleans them up), allowing to=20
-  run git range-diff across both patch series.
+---
+ setup.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-  In my experience, this works about 60% of the time, but I expect this=20
-  percentage will be higher for you, since you are more likely to have=20
-  the needed blobs in your repo due to using the same tree as the=20
-  submitter.
+diff --git a/setup.py b/setup.py
+index ed24367c6c56..c73c9f4b2b0b 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1,5 +1,6 @@
+ #!/usr/bin/env python3
+ 
++import io
+ import os
+ import re
+ from setuptools import setup
+@@ -11,7 +12,7 @@ from setuptools import setup
+ 
+ 
+ def read(fname):
+-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
++    return io.open(os.path.join(os.path.dirname(__file__), fname), "r", encoding="utf-8").read()
+ 
+ 
+ def find_version(source):
+-- 
+2.26.2
 
-  Here's a small demo: https://asciinema.org/a/333888
 
-b4 am enhancements:
-
-When we find blob information in the series, we will check if they match=20
-the current tree. If they do, we will display an "applies clean to=20
-current tree" message. You can additionally try the following flags:
-
-  -g,--guess-base: will look at the last few tags to check if the=20
-  patch/series applies cleanly to any of them. I'm not sure how useful=20
-  this feature is, but it was an easy thing to implement.
-  -3,--prep-3way: if you know you have to do a 3-way merge, this will=20
-  prepare the tree for you by making sure all files exist at indexes=20
-  specified in the patches. Same caveats apply as for "b4 diff".
-
-The "b4 diff" and "b4 am -3" functionality borrows heavily from Jason=20
-Gunthorpe's gj_tools [1], for which I am very thankful.
-
-You can upgrade to the latest version by running:
-
-pip install --user --upgrade b4
-
-Please send any inevitable bug reports and feature change suggestions to=20
-tools@linux.kernel.org.
-
-Best regards,
--K
-
-=2E. [1]: https://github.com/jgunthorpe/Kernel-Maintainer-Tools
-
---lmnw23fyyl2ic5p2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCXswrowAKCRC2xBzjVmSZ
-bOc0AQDK98KlPInqm50TZwZ73KmsP4Mkg51mTNAG475i5oqKxwEAwcoN/6kdc4QK
-8zgNBUEIdybQ0w2sfaUmQvYxdZztZAs=
-=CpPr
------END PGP SIGNATURE-----
-
---lmnw23fyyl2ic5p2--
+--------------DCA288C2731A04B862AA5DD7--
