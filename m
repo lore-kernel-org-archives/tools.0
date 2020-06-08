@@ -1,63 +1,75 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
- by mx.groups.io with SMTP id smtpd.web11.34287.1591633856719693944
+Received: from mail-lj1-f194.google.com (mail-lj1-f194.google.com [209.85.208.194])
+ by mx.groups.io with SMTP id smtpd.web12.133.1591635600353295616
  for <tools@linux.kernel.org>;
- Mon, 08 Jun 2020 09:30:56 -0700
+ Mon, 08 Jun 2020 10:00:00 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=XgNw9DTD;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.160.170, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qt1-f170.google.com with SMTP id j32so15126588qte.10
-        for <tools@linux.kernel.org>; Mon, 08 Jun 2020 09:30:56 -0700 (PDT)
+ dkim=pass header.i=@linux-foundation.org header.s=google header.b=O56NBndU;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.208.194, mailfrom: torvalds@linuxfoundation.org)
+Received: by mail-lj1-f194.google.com with SMTP id z9so21386840ljh.13
+        for <tools@linux.kernel.org>; Mon, 08 Jun 2020 10:00:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZW8TyYoDzEEmyOwXGwzn5XUKJgitATYMjJUlSbjilFc=;
-        b=XgNw9DTDBeg513YhgwJMNYSIOivVeuzCgCngsXNq4IpAnM+WTZWCT+wBrNN9Du8Zbt
-         Pc3zg+l22N5/Z2sM4UF9lwWDyBs7IS9PEuKsopBHVsiVcTxwl4SVR90hWEfbEmRL7F5C
-         iSJPLtGjvqJgOprOe/xtCIU9g/U/mGRB6EiU0=
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=btJ96Xi6/EHUzg/tjEigVFmKz4P73zfE4pL0hzt7rVs=;
+        b=O56NBndUdsznORYa7pNssTEmV/hYGTwUMamvBHoXlrtvkEvVxrbq8Jiqqh6BR77ISE
+         acShgn/qHEwGhAk8XMp6Zqu14uZAa1/L2F6P//1yY5PauBEOC6TupLGI8e5YcdRaDLrw
+         /ufyO3bDR0SNHdMEcfJYXJuJyY4fmHpUKbBIU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZW8TyYoDzEEmyOwXGwzn5XUKJgitATYMjJUlSbjilFc=;
-        b=N6OZJRuDcSXC9zbOwWQDaToueZ6ajBJqwPuvNJaqgJjAaq+k3wkXDPFh+yj8H4Nx3a
-         1DIOU+KwfgWR3RsPflXoveQRETynQciJtPKu0gukDKyWdSbM2F0XKd54Uq03A9Bz8A08
-         g1rZrNNOCbQXYG5vkRskCR47YjBChw1skbCdYJRu8be8mH+HkOVIOchlJGEcwU2qpifL
-         a7ErU5uOFu/dvrEy+WfDi82XVJ5jZBoWc3s3ftm/714rV27vEVsPO5ypfbkdEpx/guOY
-         sCp1SY61Lt5t2HPcSPSuqscuxVeTytdA4miS1SfvDF6WNXrB2KbHDiBBttmWufQEA6Wf
-         P/gA==
-X-Gm-Message-State: AOAM533hKMmDbAynYZfVGMVaCGnGPHYUdx0e4WCFY+utpJ4kEAYRdICM
-	6eKLv7uttDu66IG7s0vHrhLPJQ==
-X-Google-Smtp-Source: ABdhPJxR13U5QX8HFeXO+u1vxF1pQFjJCw/WeZQYsdWzSbHjjvLzjWdzC0fqvKsxX2rxwJvq8DdRyA==
-X-Received: by 2002:ac8:4d0f:: with SMTP id w15mr24956114qtv.120.1591633855683;
-        Mon, 08 Jun 2020 09:30:55 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id v14sm8505904qtj.31.2020.06.08.09.30.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2020 09:30:55 -0700 (PDT)
-Received: by i7.mricon.com (sSMTP sendmail emulation); Mon, 08 Jun 2020 12:30:53 -0400
-Date: Mon, 8 Jun 2020 12:30:53 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Tags placed incorrectly in malformed messages
-Message-ID: <20200608163053.ut4aqjhtoc3mszhb@chatter.i7.local>
-References: <20200608114630.GE4593@sirena.org.uk>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=btJ96Xi6/EHUzg/tjEigVFmKz4P73zfE4pL0hzt7rVs=;
+        b=F1tnU417joPcI/8cTfg651LZISTJGMhLbRFCgcGrZiYF+gXBxW3MqAhoF5J8kZdeSx
+         ATD4N5hsqZ/OFy52K5HLrSarjSdByTozJPqRldpNk0G+Y73asEfrmy6yEVK2bvlt6PpS
+         6tcxv0SZosHD7WT0UNWp6Kr2lfmdQv8wDHvMJfvQCZpADLo7ZgXe1nxQCugk/fYL2Eg/
+         yVWQDkkZE9BNhxX29l3Vg1HIU4ajaMn11XP025BlU/cYPchnxLHdT/FO6Xu69zfvMCNY
+         /Mt6hCetkUss3I60+WiRw5AdFFtmWAT1qgv3hP74rYoHmi1Bv39cDhuN60hKuG0txJv9
+         m+lQ==
+X-Gm-Message-State: AOAM533oVNG0E0M3PLes2QWaQbaxblnNZLhFxFzFQH6qrsHkh4XyG+Ft
+	hOwl4r3HfS863oiDlVEkIgXZ+UgAIVk=
+X-Google-Smtp-Source: ABdhPJyu3u5vViphKWZWtTGTsEjnOT+1147BmGdz4LM9fChahNaxQHMmbLPkX1E4UBa63UlnU6HW4A==
+X-Received: by 2002:a2e:9d99:: with SMTP id c25mr11388142ljj.404.1591635597946;
+        Mon, 08 Jun 2020 09:59:57 -0700 (PDT)
+Return-Path: <torvalds@linuxfoundation.org>
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com. [209.85.167.49])
+        by smtp.gmail.com with ESMTPSA id 2sm3808855lji.100.2020.06.08.09.59.56
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jun 2020 09:59:56 -0700 (PDT)
+Received: by mail-lf1-f49.google.com with SMTP id u16so10674291lfl.8
+        for <tools@linux.kernel.org>; Mon, 08 Jun 2020 09:59:56 -0700 (PDT)
+X-Received: by 2002:a19:6a0e:: with SMTP id u14mr12851003lfu.192.1591635595985;
+ Mon, 08 Jun 2020 09:59:55 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200608114630.GE4593@sirena.org.uk>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20200525203341.z4dollmzbo7exnhc@chatter.i7.local>
+In-Reply-To: <20200525203341.z4dollmzbo7exnhc@chatter.i7.local>
+From: "Linus Torvalds" <torvalds@linuxfoundation.org>
+Date: Mon, 8 Jun 2020 09:59:40 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wipQzNyLxEh2mr2=Y9brLx_y0G0aKrVcjG2Ad3ba+_41Q@mail.gmail.com>
+Message-ID: <CAHk-=wipQzNyLxEh2mr2=Y9brLx_y0G0aKrVcjG2Ad3ba+_41Q@mail.gmail.com>
+Subject: Re: [kernel.org users] b4 version 0.5.0 is available
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Jun 08, 2020 at 12:46:30PM +0100, Mark Brown wrote:
-> When fetching the message 20200606153103.GA17905@amd b4 picks up the
-> fact that there's a Reviewed-by but places it at the end of the message
-> after the body of the patch.  This seems to be triggered by the fact
-> that the patch submission is not in a standard format, lacking the ---
-> separator after the commit log.
+Hmm.
 
-Thanks for the report. I committed a fix into master and stable-0.5.y 
-that deals with this case.
+This fails with the most recent patch-bomb from Andrew when I randomly
+picked the email (just because it was most recent in my mailbox
+because of a reply, not because of arrival), and I don't see why.
 
-Best,
--K
+Doing
+
+    b4 am 20200608044014.1sydER6sj%akpm@linux-foundation.org
+
+gets me 51 out of 54 patches, and no cover letter. Strange.
+
+But when I do the same on the _first_ message ID in the series:
+
+    b4 am 20200608044004.04xI8ALrc%akpm@linux-foundation.org
+
+it gets the whole series. It again doesn't find the base commit, but
+it's a lot better.
+
+                    Linus
