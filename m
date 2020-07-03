@@ -1,178 +1,69 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
- by mx.groups.io with SMTP id smtpd.web10.13096.1593571133253853472
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web10.5288.1593802360296406229
  for <tools@linux.kernel.org>;
- Tue, 30 Jun 2020 19:38:53 -0700
+ Fri, 03 Jul 2020 11:52:40 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@gmail.com header.s=20161025 header.b=VT/cKCtm;
- spf=pass (domain: gmail.com, ip: 209.85.215.177, mailfrom: unixbhaskar@gmail.com)
-Received: by mail-pg1-f177.google.com with SMTP id j19so4066604pgm.11
-        for <tools@linux.kernel.org>; Tue, 30 Jun 2020 19:38:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Y9fYsaC8nuczOOQ7Ydz+Y0R0cxMVO5hYZXrEtCc50yY=;
-        b=VT/cKCtmHuwUf/xC0MNi4Ce2hoUDgeVRbpLCX7K8r4OX0JyqG/tsOGty7/KnEGNfo4
-         e5RUNoFY35x6wthOoKQfWMaokeatGbLdVQmlsQdEsdtgBlw+smbIHvFkzhfWwKFd/k0K
-         6uxGMuFQoYqUKsV9zlbC8RHaLabU7XE04eUkIq6F4MalmgbsS+8IhddQYP3xCEHLBnvC
-         c7fwu77g8UTbzV1TtNGs0XrVLUCDsMefNnufEL/znbWj8XIgnsXVqQJnrIJmn39wOn1r
-         iMEMLobFjvDFy6f0GL/3Qt9MI+chuDSWeUMGJIWJ/Zvy9Onwg8Qh6iSpyn4H3v3MuoEy
-         chKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Y9fYsaC8nuczOOQ7Ydz+Y0R0cxMVO5hYZXrEtCc50yY=;
-        b=XttFoyC7QPLhx10ratnT2uazNTwCNXS8X4DZ2K0qM/dZtdt7DtH4CSyLPZRcXWdJMA
-         NVZ4rHAxxgaqeZxV3dlWyTjyRTLgR/HvsX8tR7PDbLRDUJc+JfN/KzRWPOFeUo0Iz946
-         6sQbHweaWuFF6KZd+22Vja9kGFzVsADOUVLVpCEASASTTrfsJuIYH7yyajl/GYlmy9OK
-         jLElJ3oYPIIyyQWWRhIiPar2165C/xzDeslabUX5yyIBVJcAjgVwfoC8SMxo5nmsk1cc
-         VCUnCl3XM2WWG5axCiwVrowgdnsA+a16UN2QOpDead9ZZusIDiEm364stje1gzeJgUcF
-         y9Mg==
-X-Gm-Message-State: AOAM532VzTasS1rkWvxUfDv6sp8+WKbzGxQ95IiUTqw4QlZUtkmxHUVf
-	ge2RkJTMl9Kdw5cFO+Dx1Zg=
-X-Google-Smtp-Source: ABdhPJxBZVJ4AYFNk4hLhN6w3gdMRrIU96vqpH/exDzJMQE32m+I5+oCiLn0be2C9lvqn0MhshQRoA==
-X-Received: by 2002:a63:8ec2:: with SMTP id k185mr17112023pge.331.1593571132789;
-        Tue, 30 Jun 2020 19:38:52 -0700 (PDT)
-Return-Path: <unixbhaskar@gmail.com>
-Received: from Gentoo ([185.156.175.88])
-        by smtp.gmail.com with ESMTPSA id v28sm3911863pgc.44.2020.06.30.19.38.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2020 19:38:51 -0700 (PDT)
-Date: Wed, 1 Jul 2020 08:08:33 +0530
-From: Bhaskar Chowdhury <unixbhaskar@gmail.com>
+ dkim=pass header.i=@kernel.org header.s=default header.b=UETidArw;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id 4926F2073E;
+	Fri,  3 Jul 2020 18:52:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1593802359;
+	bh=h/CDUnbnbR77vxjsBbJJMxCQtRgE+dP5G2u1sNW8re4=;
+	h=Date:From:To:Cc:Subject:From;
+	b=UETidArwObSnTrzX1NZlhLGYoeEMUWjlq+l9ap3rVLUgwYPavVy5tlEJXCmAS0uWb
+	 IuQijf2+9lD8j/a2XZU8KlCFO0dBmIfNrZpzlImq22AiE78WejU2azPgG7UMkh47km
+	 XP95J5Jc40tAzbsAbxp+gWjH+tidGhgrFXMzC1vY=
+Date: Fri, 3 Jul 2020 19:52:37 +0100
+From: "Mark Brown" <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org
-Subject: Re: b4 trouble!
-Message-ID: <20200701023833.GB11489@Gentoo>
-References: <20200701022934.GA11489@Gentoo>
+Subject: b4 picking the wrong message
+Message-ID: <20200703185237.GA996@sirena.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <20200701022934.GA11489@Gentoo>
-X-Groupsio-MsgNum: 179
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="0eh6TmSyL6TZE2Uz"
+X-Cookie: Does not include installation.
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 180
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0OAP2g/MAC+5xKAE"
 Content-Disposition: inline
 
---0eh6TmSyL6TZE2Uz
-Content-Type: text/plain; charset=utf-8; format=flowed
+--0OAP2g/MAC+5xKAE
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On 07:59 Wed 01 Jul 2020, Bhaskar Chowdhury wrote:
-Never mind ...got it ...
+Hi Konstantin,
 
-08:04 $ sudo !!
-sudo eselect python set 3
-Password:
-=E2=9C=94 ~/git-linux/b4 [master|=E2=9C=94]
-08:05 $ eselect python list
-Available Python interpreters, in order of preference:
-   [1]   python3.7
-   [2]   python3.6 (uninstalled)
-   [3]   python3.8 (fallback)
-   [4]   python2.7 (fallback)
-=E2=9C=94 ~/git-linux/b4 [master|=E2=9C=94]
-08:05 $ ./b4.sh
-usage: b4 [-h] [--version] [-d] [-q]
-{mbox,am,attest,attverify,pr,ty,diff} ...
+When I ask b4 am to fetch either of these message IDs:
 
-A tool to work with public-inbox patches
+   20200626164623.87894-1-sebastian.reichel@collabora.com
+   DB6PR1001MB10965E5BDA9B3EF570B607A4806A0@DB6PR1001MB1096.EURPRD10.PROD.OUTLOOK.COM
 
-positional arguments:
-   {mbox,am,attest,attverify,pr,ty,diff}
-                         sub-command help
-     mbox                Download a thread as an mbox file
-     am                  Create an mbox file that is ready to git-am
-     attest              Submit cryptographic attestation for patches
-     attverify           Verify cryptographic attestation of patches in
-an mbox
-     pr                  Fetch a pull request found in a message ID
-     ty                  Generate thanks email when something gets
-                         merged/applied
-     diff                Show a range-diff to previous series revision
+both of which are for v4 of a single patch that was previously part of a
+series b4 fetches v3 of that series rather than the v4 I thought I was
+asking for. I see that the patch (the first message ID) was sent in
+reply to discussion of v3 of the series which is probably confusing
+things, there's also the use of PATCHv4 rather than PATCH v4.
 
-optional arguments:
-   -h, --help            show this help message and exit
-   --version             show program's version number and exit
-   -d, --debug           Add more debugging info to the output (default:
-False)
-   -q, --quiet           Output critical information only (default:
-False)
+Thanks,
+Mark
 
-
->Kai,
->
->The story goes like this :
->
->Once cloned the git repo and as suggested in README in the cloned repo
->,I made an alias in .bashrc like this :
->
->alias b4=3D"The path to the b4.sh"
->
->source .bashrc=20
->
->
->But...I got this ...I tried this from within the dir and outside of it..
->
->=E2=9C=94 ~/git-linux/b4 [master|=E2=9C=94]
->07:53 $ b4
->Traceback (most recent call last):
->   File "/home/bhaskar/git-linux/b4/b4/command.py", line 10, in <module>
->     import b4
->   File "/home/bhaskar/git-linux/b4/b4/__init__.py", line 15, in <module>
->     import requests
->ModuleNotFoundError: No module named 'requests'
->=E2=9C=98-1 ~/git-linux/b4 [master|=E2=9C=94]
->07:53 $ cd ~
->bhaskar@Gentoo_07:53:29_Wed Jul 01:~> b4
->Traceback (most recent call last):
->   File "/home/bhaskar/git-linux/b4/b4/command.py", line 10, in <module>
->     import b4
->   File "/home/bhaskar/git-linux/b4/b4/__init__.py", line 15, in <module>
->     import requests
->ModuleNotFoundError: No module named 'requests'
->
->
->Is this a expected behavior of it??? I know what it is missing, but the
->point is ,why the end user have to take care of this??=20
->
->OR, this is tool made for certain people and those people know what
->exactly do with this kind of return???
->
->I am lost ...and can we make some sanity check to before running . Will
->that be costly enough or bring more maintenance headache. I am not sure,
->because I lack knowledge ,probably.
->
->Kindly , shed some light.
->
->Thanks,
->Bhaskar
-
->-----BEGIN PGP SIGNATURE-----
->
->iQEzBAABCAAdFiEEnwF+nWawchZUPOuwsjqdtxFLKRUFAl779QsACgkQsjqdtxFL
->KRVU8Af+LmwX9EkEOMCY9vN55nU0Dgrzja11luTVNbAc1WvxNsbuc0xhOaC0rNdw
->AKv2W0T99iupiE7J6HJqH6dRlDqvSBwcpgqjRn3+l1x8nV+gXZOpkX8D5BTKRF38
->LVp8Vf+TPYGP/l5QzEajR205VQdoswFS42cT3UamPjm/Fg4a1iMdTm1OfP29PwQx
->PSfFRzH6ZCeZsZl/Yz8EKHW4DzrZiELWchCwOluBrMLJUyNEN8hu3zNkWbMgm6aV
->FQJ/OwrvlSIdQHgHri5KkvO3Bv+siY0FgKhsCmQIcxDONIL+MgHHc8w0vSBf4jzQ
->69wyz/IjeJmz2Anm8sVCcyjUpY2r2g=3D=3D
->=3Dfs7w
->-----END PGP SIGNATURE-----
-
---0eh6TmSyL6TZE2Uz
+--0OAP2g/MAC+5xKAE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCAAdFiEEnwF+nWawchZUPOuwsjqdtxFLKRUFAl779yYACgkQsjqdtxFL
-KRXxnwf/SIXHQ2tKPB8WzuEHUUqB+hHrbYZ/CkTYdO8QYqOyGH/6cK6kKlBqtn+O
-PXH2tdsOkNGVKMP+V3Dq7nWW3ZBX9qAHl13d5F7Gal3J/DQH3zZfV6VRO6rDBAob
-HTLgKhHa0tr2GAj5yu6JxOpqYnCfzphS9Ts44pmKNZqiKg1wob12pzNlbNp9t1ic
-apmslC28gjRZLEez4wBXLaEjQ9EVaOShCuhTFnR9R0/W9RSwsefHs4m+FgIcqVxt
-+ObzvvXgtJGW8PEKZG045G+rpiyausYNF/za9gLEFPBQsleVVCLXmFA/dZv830Xf
-C/aeH57gGW6Q9RPgBWqb2SkxED4tMA==
-=nmk7
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7/fnQACgkQJNaLcl1U
+h9AEDwf/TSIWsNgadeg6zIO5igVG1vq1lqt4k4MENqVf56FefLPhtSKrbTQMS3ap
+ZcSE0PRAQ3JjwSFfBfCC2mnxoeCvzNKYm/c8YOhb4extiX5vStvRYUVkd4+XdXOB
+byrm33Ost9yeknkOFVirxV8LuBoQTOhttT2ApQVTL+nfZKNArHXgfPWsDRTv/v7G
+BfqHz/C/894iXmBdjxE2b6RFQ435qNwZsqkUu4wTjMGoVPqVbzhsKbt8Ni7kxDN7
+FEMQGuVJdC5HAqCe1aLN+DBxBQRVDuiHKtcLEwauUTbeHBilEQUn89/a4Ax22PV/
+DVfBSO07pkWBbDpz6Ls+kaUYJ0vHNQ==
+=zLse
 -----END PGP SIGNATURE-----
 
---0eh6TmSyL6TZE2Uz--
+--0OAP2g/MAC+5xKAE--
