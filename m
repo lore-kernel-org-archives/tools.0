@@ -1,84 +1,64 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
- by mx.groups.io with SMTP id smtpd.web10.20235.1594139525125024212
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+ by mx.groups.io with SMTP id smtpd.web10.22824.1595734878187930902
  for <tools@linux.kernel.org>;
- Tue, 07 Jul 2020 09:32:05 -0700
+ Sat, 25 Jul 2020 20:41:18 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=Da83kAh9;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.160.179, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qt1-f179.google.com with SMTP id k18so1888289qtm.10
-        for <tools@linux.kernel.org>; Tue, 07 Jul 2020 09:32:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VBHIGdxx0NgqtmKoRU0ScGV4MQl/ShX00G4GMvAAqVk=;
-        b=Da83kAh9R7savvvGG5s4ctpVdGCoJGKoQBK75FBPHgkYO0H20djm5jVi2Jz7fQDgRC
-         QzJaMpwBaVZf1uQuuuBhsGzKFaNStnbEfjbUsSlyZUyx4i9fG5Y7nAieew0TMDZJQiA6
-         n4DhcwgIj1MXhCJTiSIOVSaKHPVahDfJBy330=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VBHIGdxx0NgqtmKoRU0ScGV4MQl/ShX00G4GMvAAqVk=;
-        b=NoyFjjXEF9wJggRW+9NbimCMEjBN7uGEv8YJlpVJXF2ALYPp7G/Q4PnA4bsi1YPFZF
-         9di+832u9agAKd7P1OWBdk9gLQHskCdCEKpO03dpniOzmYOZN459dtfQeseN62HLCIFb
-         0xrI/Bhw9SqCfYt++eGwyEZlkbVU+bM7FEgy+ek5VwqCCZm+7oPnfgFp7jdG7spKECyQ
-         fuFps4DKm1+8Udmk5lhrS6zsuKPheub3/Ll5uFPPI/uhr93ETrTOrv7sxMQMdzZEAdG+
-         4R/UGpxURxawhHaqk9CHZZlgS0ClUf950tNG8Laj1sQqsutDHwxPAyRWn5Yysg/uf2d1
-         tJ2g==
-X-Gm-Message-State: AOAM530lxZA0XWIyAJB5UT6edf86+sOdQyBQJ1hOf4TcA217xTHWieXy
-	iTaAGpu0n29QPydafPAt+2+MCXX2wpQ=
-X-Google-Smtp-Source: ABdhPJwDWxvL5r2GKDcLQL2FHGYZcPDwE5uCjDbsY/KLepi/HdCLKrgzmw6iiCQfSpHw6kYZHlSwwA==
-X-Received: by 2002:ac8:5385:: with SMTP id x5mr57892241qtp.230.1594139523958;
-        Tue, 07 Jul 2020 09:32:03 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([87.101.92.156])
-        by smtp.gmail.com with ESMTPSA id t36sm27955033qtj.58.2020.07.07.09.32.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 09:32:03 -0700 (PDT)
-Date: Tue, 7 Jul 2020 12:32:01 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+ dkim=fail reason="body hash did not verify" header.i=@kyleam.com header.s=mesmtp header.b=xZknDtHy;
+ spf=pass (domain: kyleam.com, ip: 64.147.108.71, mailfrom: kyle@kyleam.com)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0AE386AB05;
+	Sat, 25 Jul 2020 23:41:17 -0400 (EDT)
+	(envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-transfer-encoding;
+	 s=sasl; bh=Gth3fM/z5pptH9FGdYPHkmVdj8E=; b=UV5NK7hi6s7aCOvRyWcB
+	rskBRnGi27Lx7VxDC4B6SWIcpk7tCWWV2cAx1dh2sAT0sxGtp+Zkp7HmCe9KqXVl
+	fGM7wYRxITL+aFiuCoHoV+OrsEHNBo7Nfi9dQMybm03HbZegxZcq5tP3iieyDE2C
+	YQRkCfxKGF6C4/ojf/BHQRE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id F2C6D6AB04;
+	Sat, 25 Jul 2020 23:41:16 -0400 (EDT)
+	(envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:subject:date:message-id:mime-version:content-transfer-encoding;
+ s=mesmtp; bh=T6zV6AF25d5Sjy8Bn6hyf5J42WArG81+pdhz4i7eMSo=;
+ b=xZknDtHyDRUpXy4BTnxfGpfMY74qzvZ6B56RsfBIve58pslwtyJrfmBHmG02MZg0Cv4MV6WBXW+djQDmlkmP6PJ/LqnVDT+uFeQuQKc91NKjub1fpC10YyxV6J7FEhWdJNEIphkhc38qcUdO6ZbBRP2y5YAUWkZMvxGd4e76AVc=
+Received: from localhost (unknown [45.33.91.115])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DF7C6AB02;
+	Sat, 25 Jul 2020 23:41:16 -0400 (EDT)
+	(envelope-from kyle@kyleam.com)
+From: kyle@kyleam.com
 To: tools@linux.kernel.org
-Cc: Christian Brauner <christian.brauner@ubuntu.com>
-Subject: Re: [tools] Failure to grab a thread with b4
-Message-ID: <20200707163201.fxkpq2raanvdt7bj@chatter.i7.local>
-References: <20200703114559.05a0777d@oasis.local.home>
- <20200703165011.GF4781@hirez.programming.kicks-ass.net>
- <F9EA6942-7CF5-4D7D-A978-521FA0C8AA03@fb.com>
- <CAHk-=wjyyZxDUr8c_V+Pa9NEM4jvJa0Joy32ss7-Kb0W=rZyjA@mail.gmail.com>
- <CAMwyc-RVsOwbO93WLKB++KAwF5WasfiPkqSjkn3oPNZUMnWOcA@mail.gmail.com>
- <20200704204849.q7lfqbahtdxway44@wittgenstein>
- <20200704205140.3sztf4avevm635rt@wittgenstein>
- <20200706192733.zxulcyyzugugooze@chatter.i7.local>
- <20200707081724.rde6zb2iu43n3k52@wittgenstein>
- <161F83DE1134F205.6803@linux.kernel.org>
+Subject: [PATCH b4 0/2] Two fixes for LoreMessage.get_body_parts()
+Date: Sat, 25 Jul 2020 23:41:13 -0400
+Message-Id: <20200726034115.21567-1-kyle@kyleam.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-In-Reply-To: <161F83DE1134F205.6803@linux.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+X-Pobox-Relay-ID: 
+ DC23AB52-CEF1-11EA-AD88-2F5D23BA3BAF-24757444!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 07, 2020 at 12:02:59PM -0400, Konstantin Ryabitsev via linux.kernel.org wrote:
-> > Traceback (most recent call last):
-> >   File "/home/brauner/.local/bin//b4", line 8, in <module>
-> >     sys.exit(cmd())
-> >   File "/home/brauner/.local/lib/python3.8/site-packages/b4/command.py", line 222, in cmd
-> >     cmdargs.func(cmdargs)
-> >   File "/home/brauner/.local/lib/python3.8/site-packages/b4/command.py", line 40, in cmd_am
-> >     b4.mbox.main(cmdargs)
-> >   File "/home/brauner/.local/lib/python3.8/site-packages/b4/mbox.py", line 494, in main
-> >     mbox_to_am(threadmbox, cmdargs)
-> >   File "/home/brauner/.local/lib/python3.8/site-packages/b4/mbox.py", line 110, in mbox_to_am
-> >     am_mbx = lser.save_am_mbox(mbx, noaddtrailers=cmdargs.noaddtrailers,
-> >   File "/home/brauner/.local/lib/python3.8/site-packages/b4/__init__.py", line 532, in save_am_mbox
-> >     failed.remove('commit metadata')
-> > ValueError: list.remove(x): x not in list
-> 
-> I can't reproduce this one. Can you give me all command-line switches 
-> you're using with "b4 am"?
+After using 'b4 am' to grab a series from public-inbox meta [0], I
+noticed that many of the commit message bodies were missing.  It turns
+out that this happens when a message body consists of only a single,
+non-trailer paragraph.
 
-I managed to recreate it based on the output you were seeing -- the 
-latest 0.5.y should have the fix. I'll plan to release 0.5.2 by the end 
-of the week.
+The second patch fixes this.  The first patch addresses another issue
+I spotted when debugging the dropped commit messages.
 
-Thanks,
--K
+[0]: https://public-inbox.org/meta/20200724055606.27332-1-e@yhbt.net
+
+
+  [1/2] Fix basement detection for empty commit message bodies
+  [2/2] Fix handling of single-paragraph commit message bodies
+
+ b4/__init__.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+
+base-commit: 2737ccdd3dbf58e330ace3ec658511bfbd715059
+--=20
+2.27.0
+
