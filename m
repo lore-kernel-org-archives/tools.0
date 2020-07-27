@@ -1,72 +1,63 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
- by mx.groups.io with SMTP id smtpd.web12.23052.1595734880630797906
+Received: from mail-qv1-f68.google.com (mail-qv1-f68.google.com [209.85.219.68])
+ by mx.groups.io with SMTP id smtpd.web11.56284.1595858921446836924
  for <tools@linux.kernel.org>;
- Sat, 25 Jul 2020 20:41:20 -0700
+ Mon, 27 Jul 2020 07:08:41 -0700
 Authentication-Results: mx.groups.io;
- dkim=fail reason="body hash did not verify" header.i=@kyleam.com header.s=mesmtp header.b=aZ9AQi0s;
- spf=pass (domain: kyleam.com, ip: 64.147.108.70, mailfrom: kyle@kyleam.com)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 89D4F7F0E7;
-	Sat, 25 Jul 2020 23:41:19 -0400 (EDT)
-	(envelope-from kyle@kyleam.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=RYwbhf5ivG48u4xesYEVtS9nd
-	MQ=; b=USGCKbAK9HuvFfthJfoqoRleYhCaIfi+Qz8f0Dxieybg9LOyFEwxRAK03
-	jRfiWhNeAOPLwFL/r9+4YvCyS8BWEOceKoVXJA1JUhwziLV/rk3h16Wwd4rux+M5
-	o8q3vHDkNiavj9NbLJ3AO1a0HPv1RF9wNuef0LJMdHCjkVao+c=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 813E07F0E6;
-	Sat, 25 Jul 2020 23:41:19 -0400 (EDT)
-	(envelope-from kyle@kyleam.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
- h=from:to:subject:date:message-id:in-reply-to:references:mime-version:content-transfer-encoding; s=mesmtp; bh=U6yKKD1/9T78qHaSy6/Kd+mWk1g2oWcRD0jOPNSQMKk=; b=aZ9AQi0sJ4FXOmcMbA1tyTeaEpQ3MPHKsPQ3xGjuyW4qHx/ofjr3rj7vLtPq/ZNoP/ZyTW1GNUj5ted/G3WeRJFNQ9quyhvCZIfdg7DuYaW/XphkFiMiZRq3kVbcMGslcUhwXxlC9EU0VErPWGVYyprPo2ZoS/EpC0BjqqnDYXE=
-Received: from localhost (unknown [45.33.91.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AD21D7F0E5;
-	Sat, 25 Jul 2020 23:41:18 -0400 (EDT)
-	(envelope-from kyle@kyleam.com)
-From: "Kyle Meyer" <kyle@kyleam.com>
-To: tools@linux.kernel.org
-Subject: [PATCH b4 2/2] Fix handling of single-paragraph commit message bodies
-Date: Sat, 25 Jul 2020 23:41:15 -0400
-Message-Id: <20200726034115.21567-3-kyle@kyleam.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200726034115.21567-1-kyle@kyleam.com>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=afOGkURh;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.219.68, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qv1-f68.google.com with SMTP id j10so809429qvo.13
+        for <tools@linux.kernel.org>; Mon, 27 Jul 2020 07:08:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SM543hcxzFezPB2cPg8s4yMlJCWubVnzAxA04LBkm8A=;
+        b=afOGkURhz2Ny4cDl8fFifL8UkwRltULtwn32ldi8jbwnZJ4XMmM3CDry2eCE+52qHQ
+         e74XiJzLma8Xndw/Sx5q4X73Ikz330k1p8iof9wtOsoi7F2Jc7gIpdJap/TIfjLFDDey
+         min3asE73W9lz+BW5myukioIF7uK7LMwYNuMI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SM543hcxzFezPB2cPg8s4yMlJCWubVnzAxA04LBkm8A=;
+        b=KzRGDmwgmWULoEGG3uq23iHxnzG9pjIwGEwgbNA1rhrctzDSrs1Cegkxj5l3U4qU1U
+         qeOQIp2fjcYgX6AoCLYni+BiW5I/6Xkc+6VccQgh6CwUokr53u1HJ33DfKo90s2QQ4Qn
+         Ym8/duq+Si9S0/Qu4ciPUUps6ykybiL4Te2k48y0q/QXdSDvwyqnB3muqm1NPUHhO9z4
+         Yg8HCGeOyhWBFWx+DzqD3i/h0KSyUntVDbqZ/IMRJTzVczhBtM7Rqy7GUlGPXHd1cpg1
+         JQpz9FmVCtYGXQbhBU62yJxikusF7yGKLlL/AKtQXat/3Yi+LiNZF4NgFdZcCAYM7ek4
+         Fs3A==
+X-Gm-Message-State: AOAM5307lMjATq0wywrExgrabPpTnR24Kch1174Jr4aYXvcmHvl2Y0m5
+	oJuwZxGT7EAEK0V8dx7gqYR/0SznpZUeTg==
+X-Google-Smtp-Source: ABdhPJy9HkxtO2kAUGfSO0r7Rq3n1oA1LAB3dqsAyFGRfi87KOER+RF1hox348OAO5rybeiTvidv0w==
+X-Received: by 2002:a05:6214:2d2:: with SMTP id g18mr22209475qvu.215.1595858920029;
+        Mon, 27 Jul 2020 07:08:40 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([87.101.92.156])
+        by smtp.gmail.com with ESMTPSA id r18sm14048229qtf.62.2020.07.27.07.08.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jul 2020 07:08:39 -0700 (PDT)
+Date: Mon, 27 Jul 2020 10:08:37 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: tools@linux.kernel.org, kyle@kyleam.com
+Subject: Re: [tools] [PATCH b4 0/2] Two fixes for LoreMessage.get_body_parts()
+Message-ID: <20200727140837.j235wtekraafvbuq@chatter.i7.local>
 References: <20200726034115.21567-1-kyle@kyleam.com>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 
- DD86F206-CEF1-11EA-858F-01D9BED8090B-24757444!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200726034115.21567-1-kyle@kyleam.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-The get_body_parts() method added in ba6c790 (Parse body parts into
-usual chunks, 2020-04-27) strips lines that look like trailers from
-the last paragraph, storing the other lines to add back to the
-message.  However, if the commit message has only a single paragraph,
-get_body_parts() returns early, unconditionally returning an empty
-string for the message even if non-trailer lines were encountered.
+On Sat, Jul 25, 2020 at 11:41:13PM -0400, Kyle Meyer wrote:
+> After using 'b4 am' to grab a series from public-inbox meta [0], I
+> noticed that many of the commit message bodies were missing.  It turns
+> out that this happens when a message body consists of only a single,
+> non-trailer paragraph.
+> 
+> The second patch fixes this.  The first patch addresses another issue
+> I spotted when debugging the dropped commit messages.
 
-Return the collected non-trailer lines, if any, as the message.
+Thanks, applied both to  master and stable-0.5.y. I guess I'm so used to 
+trailers that I haven't considered cases where there are commits without 
+them. :)
 
-Signed-off-by: Kyle Meyer <kyle@kyleam.com>
----
- b4/__init__.py | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/b4/__init__.py b/b4/__init__.py
-index 7e3134f..b7b33f4 100644
---- a/b4/__init__.py
-+++ b/b4/__init__.py
-@@ -1241,6 +1241,8 @@ def get_body_parts(body):
-             if githeaders =3D=3D trailers:
-                 # This is a message that consists of just trailers?
-                 githeaders =3D list()
-+            if nlines:
-+                message =3D '\n'.join(nlines)
-             return githeaders, message, trailers, basement, signature
-=20
-         # Add all parts between first and last to mparts
---=20
-2.27.0
-
+-K
