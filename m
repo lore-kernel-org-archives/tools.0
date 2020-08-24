@@ -1,92 +1,96 @@
-Received: from mail-qk1-f193.google.com (mail-qk1-f193.google.com [209.85.222.193])
- by mx.groups.io with SMTP id smtpd.web11.70377.1597769205465802260
+Received: from mail-qv1-f65.google.com (mail-qv1-f65.google.com [209.85.219.65])
+ by mx.groups.io with SMTP id smtpd.web12.197403.1598283804470565688
  for <tools@linux.kernel.org>;
- Tue, 18 Aug 2020 09:46:45 -0700
+ Mon, 24 Aug 2020 08:43:24 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@toxicpanda-com.20150623.gappssmtp.com header.s=20150623 header.b=Io5QTXCD;
- spf=none, err=permanent DNS error (domain: toxicpanda.com, ip: 209.85.222.193, mailfrom: josef@toxicpanda.com)
-Received: by mail-qk1-f193.google.com with SMTP id i20so4641469qkk.8
-        for <tools@linux.kernel.org>; Tue, 18 Aug 2020 09:46:45 -0700 (PDT)
+ dkim=pass header.i=@toxicpanda-com.20150623.gappssmtp.com header.s=20150623 header.b=TD9Vu5dY;
+ spf=none, err=permanent DNS error (domain: toxicpanda.com, ip: 209.85.219.65, mailfrom: josef@toxicpanda.com)
+Received: by mail-qv1-f65.google.com with SMTP id v1so3920033qvn.3
+        for <tools@linux.kernel.org>; Mon, 24 Aug 2020 08:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=toxicpanda-com.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=KeZ3wejlVj94+XmNfztclRP8VIjndEDQtkIfdxsREAY=;
-        b=Io5QTXCDw7m6At4XHusj8iw4pR9UpTHUgKx6ce6VCZzKdVEybrdZaw9jtL0cDpx6SJ
-         7BueFlVWjqAQez2c6ynPA8RrWduYlPiYEmory7PI3CGAO+K6KeOe8el7Tt80SdK893+Q
-         r4jkx5cJd5CEvAjoWfCyUe8VtbehlIbxpzszNRuj4gqvZzkISc5NTPuIjCruw4WeBxAr
-         b1EuMXBpIA2Pn6yEMV1T6RvKvk5E7dUHHcEMMPJzmh+N41S8vFv9lbNz7nYvtRAo2QQh
-         vjxMlkm7/9jPMnv8RLnTiuGYFSJWgGjUGENgOme1miv7cS1fy6TlMwb+/PW114jb6PA+
-         oVqg==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GiA0mxFfobqJjKEKH3kFtIei7JAN3nlucEt3EpKFLqs=;
+        b=TD9Vu5dYrDA+tT25TM+ckrmwhsbgKUyKEBloCKJ0QhHyvweJRVDxuhttLC/PnL8Vxa
+         9t3mEBIyt1unEIiXANHxO8FZgN/tIlTak2LizdR/jDrEBI12AvZ0qetp2Z8vP75kOVjY
+         zINGm/GI3trb1RgebplRmU0yGV43l896goRhA6PWUek9G9dXR1oX9l/R5dbg437bCG0x
+         ekjUvYWzP//JVOiO0So0lEq42PFtqLJ2GtER5az/4GHPT/bqh2VhXRXmFPWhagfvTrM7
+         kcW5TPjJkMx4vsNMthysLEFslA1DFOMvdft8t320MNqI3PrgFXKZ5FU21o1EFfgJYanD
+         snEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=KeZ3wejlVj94+XmNfztclRP8VIjndEDQtkIfdxsREAY=;
-        b=dZaz1tj8VCjlWMF32ygYx/vMOG7BxbK90gyRL9NFWasFxuUl7QeLjVtjscvoaNPAla
-         /4lSGlAOK3KJjDCiDnWPO2hylHZ+R49rZa0IL9B6D+I0wFtba9iGfrW4Z/nOK71oREp4
-         Ue4fCvAWEwapdUEeEnbgffHb6xVVR7eVlpiAcaNnkR16lJMR6t1ZoH0sykIv7eBjwkVU
-         4+vIXCwECN9JYbkYOtCvyx8rjBIRaefRPQiraZXHbMnmilhUGPwY4hH7ql2i1MiJILT9
-         kK0JAnL8mmN6iShWsB1EiRI9I9JBMp0vZ6jxntbzv8UWVVUeDda2rIntyKNmUP6q/Ose
-         pCGw==
-X-Gm-Message-State: AOAM532+7A37vzuMG9SksXrwltrHKPPmjE1+Kfj5Ydk5yRps7387x7Uv
-	4bfTA7dISVB0smpsx+zESR0Q5k2e2w3xy54a
-X-Google-Smtp-Source: ABdhPJzaQmfiLztQY9OuoqcsSOsCt/7UPewzT3gWLCdHsghOxdbg/rYhif5/NT991FGnCWgqwfh1GQ==
-X-Received: by 2002:a05:620a:1645:: with SMTP id c5mr17852331qko.309.1597769204224;
-        Tue, 18 Aug 2020 09:46:44 -0700 (PDT)
+        bh=GiA0mxFfobqJjKEKH3kFtIei7JAN3nlucEt3EpKFLqs=;
+        b=jNHhKcnw7AQ9t5LwuFKPc5KUxQRzQPrCHsqsfaD6ZO9JlsACLDupWIUXm6Hm3M/x4/
+         NKdi2OLXns1nY/j6+g+C4gDa5ryvhPjNKOW6yWK62wzJybeHhurxaKjplAueuipeRSE+
+         UhghMEUiitxz7N6bdZEdTpCGBb57KuelkGM/dauPXLt2mukwOJaH4MSnaoez2LweE/nC
+         crbYCACD0ilp83aZtJhCy/T9x2ek+ZpPmyF3FOpKtA0gbYOisOsM5eiI4LR23sZgjLAV
+         qKz/1HiMtcZo19Ookq/qFy9liQgv8ts0lrS8mn1Jm3VsDm+wCwYP193Lr4VjrYgIyPqS
+         5/dg==
+X-Gm-Message-State: AOAM5328zWTIkW2m1Wq6WH61itHa1EUA2EhrdoVahgUkqrHgNH/NBx/9
+	IIH/CzfQ9lMI3Hlpb7hBmkVrIqm/HOhur6LR
+X-Google-Smtp-Source: ABdhPJwQE3djMkDAJX7aB/pILCMRPZT09xdiKvV42Z4IjMqzAxDgI34lmoGaJ6dA41zO1vaBDxxvDg==
+X-Received: by 2002:ad4:42cc:: with SMTP id f12mr5506865qvr.89.1598283803304;
+        Mon, 24 Aug 2020 08:43:23 -0700 (PDT)
 Return-Path: <josef@toxicpanda.com>
-Received: from ?IPv6:2620:10d:c0a8:11d9::1055? ([2620:10d:c091:480::1:7359])
-        by smtp.gmail.com with ESMTPSA id n4sm23297482qtr.73.2020.08.18.09.46.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Aug 2020 09:46:43 -0700 (PDT)
-Subject: Re: [tools] Problem with b4 with v2's in the thread
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- tools@linux.kernel.org
-References: <72f0dace-2283-b905-5ef3-ad623f34e79b@toxicpanda.com>
- <20200818151601.ewj4spibjbwz7l55@chatter.i7.local>
+Received: from localhost (cpe-174-109-172-136.nc.res.rr.com. [174.109.172.136])
+        by smtp.gmail.com with ESMTPSA id h20sm9762403qkk.79.2020.08.24.08.43.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Aug 2020 08:43:22 -0700 (PDT)
 From: Josef Bacik <josef@toxicpanda.com>
-Message-ID: <2ef682ac-85e6-a4d0-d709-3ea2b398ca16@toxicpanda.com>
-Date: Tue, 18 Aug 2020 12:46:42 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.11.0
+To: tools@linux.kernel.org,
+	kernel-team@fb.com
+Subject: [PATCH] b4: add an --apply option for b4 am
+Date: Mon, 24 Aug 2020 11:43:21 -0400
+Message-Id: <73e01862e01dc42fe853365e4babe1f9d8c2e839.1598283790.git.josef@toxicpanda.com>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-In-Reply-To: <20200818151601.ewj4spibjbwz7l55@chatter.i7.local>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 8/18/20 11:16 AM, Konstantin Ryabitsev wrote:
-> On Tue, Aug 18, 2020 at 11:01:23AM -0400, Josef Bacik wrote:
->> Hello,
->>
->> I have a thread here
->>
->> https://lore.kernel.org/linux-btrfs/941273be-4250-3406-79e4-60ef762c5506@suse.com/T/#m64fdf99cfbdb8914a7f665a1d241f6643a8be389
->>
->> That doesn't work right with b4 am, it's only pulling down
->>
->> [PATCH v2] btrfs: Switch seed device to list api
->>
->> Which is just v2 of the 5th patch in the series.  There's actually 2 v2's in
->> this list to address the kbuild fixes, but it doesn't even pick up both
->> v2's, just the last one.  I realize this is a weird case, but thought I'd
->> report it anyway.  Thanks,
-> 
-> Right, this is not really a case we can reasonably handle without making
-> too many assumptions (that could be erroneous). A similar case was
-> discussed on the users list a while back and the consensus was that, to
-> make maintainers' lives easier, the entire series needs to be rerolled
-> and resubmitted, instead of individual patches in the thread.
-> 
-> So, I suggest you respond to Nikolay with "looks good, but please reroll
-> the whole series."
-> 
-> The alternative is that you can download the entire thread using "b4
-> mbox" and manually edit subjects to make the proper v2 series that b4 is
-> able to process.
-> 
+I'm infinitely lazy and would rather not have to copy and paste the git
+am command to run.  This patch adds a --apply/-a option to git am so
+it'll go ahead and run git am so I can get to the work of reviewing a
+patch series.
 
-That's fair, thanks!
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+---
+ b4/command.py | 2 ++
+ b4/mbox.py    | 7 ++++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-Josef
+diff --git a/b4/command.py b/b4/command.py
+index ffa58ef..c584fb0 100644
+--- a/b4/command.py
++++ b/b4/command.py
+@@ -113,6 +113,8 @@ def cmd():
+                             '(tries to ensure that all index blobs exist by making a fake commit range)')
+     sp_am.add_argument('--no-cover', dest='nocover', action='store_true', default=False,
+                        help='Do not save the cover letter (on by default when using -o -)')
++    sp_am.add_argument('-a', '--apply', dest='apply', action='store_true', default=False,
++                       help='Run git am on the resulting am file')
+     sp_am.set_defaults(func=cmd_am)
+ 
+     # b4 attest
+diff --git a/b4/mbox.py b/b4/mbox.py
+index fb82389..0fd4795 100644
+--- a/b4/mbox.py
++++ b/b4/mbox.py
+@@ -239,7 +239,12 @@ def mbox_to_am(mboxfile, cmdargs):
+         os.unlink(am_filename)
+ 
+     thanks_record_am(lser, cherrypick=cherrypick)
+-
++    if cmdargs.apply:
++        ecode, out = b4.git_run_command(None, ['am', am_filename])
++        if ecode > 0:
++            logger.critical("Error: couldn't apply patch cleanly")
++        else:
++            logger.critical("Applied patchfile cleanly")
+ 
+ def thanks_record_am(lser, cherrypick=None):
+     if not lser.complete:
+-- 
+2.24.1
+
