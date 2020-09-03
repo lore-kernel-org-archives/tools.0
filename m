@@ -1,63 +1,100 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web10.7574.1599053710505612000
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+ by mx.groups.io with SMTP id smtpd.web11.16742.1599147158552923120
  for <tools@linux.kernel.org>;
- Wed, 02 Sep 2020 06:35:10 -0700
+ Thu, 03 Sep 2020 08:32:38 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=jxIVLpnP;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: krzk@kernel.org)
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 83FB920709
-	for <tools@linux.kernel.org>; Wed,  2 Sep 2020 13:35:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1599053709;
-	bh=wPcrw2IEh0ZQ4QO6wuQO9b7Vwal20+MnQp+AdPgCnWw=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=jxIVLpnPLoGzf9vdXzSKk1NPDGm+sICahq0ch7HCNcHG4h2BlOUtzeSeL3tufeUoO
-	 yhgXIhiK7S7fEmW62xaMUtCKFD3Ip4cXncheQHkEpVSShIburEkFpIMeNHoetMTY/X
-	 F3ED5BpiTeV1D3z8TM6OSg6utysyt2kQPER593OI=
-Received: by mail-ed1-f52.google.com with SMTP id n22so4941354edt.4
-        for <tools@linux.kernel.org>; Wed, 02 Sep 2020 06:35:09 -0700 (PDT)
-X-Gm-Message-State: AOAM531qkai/wX1HN7XW6sMg8MCF2z4gRLw9kxIyHNgl6XdZPGz24ndq
-	YALx5CMVS5bIVQQq783KxUJjetW6VipUfGJxCCs=
-X-Google-Smtp-Source: ABdhPJyDtemCak/goFqWaiSoJ8JuDdhsPBB2OCUM3rVJKxXM/keldn61ExpJqtH/UTETMUe/juQuU5+T6vsT//0br1w=
-X-Received: by 2002:a05:6402:1a48:: with SMTP id bf8mr94271edb.298.1599053708176;
- Wed, 02 Sep 2020 06:35:08 -0700 (PDT)
+ dkim=pass header.i=@toxicpanda-com.20150623.gappssmtp.com header.s=20150623 header.b=KdpicxVA;
+ spf=none, err=permanent DNS error (domain: toxicpanda.com, ip: 209.85.222.182, mailfrom: josef@toxicpanda.com)
+Received: by mail-qk1-f182.google.com with SMTP id q5so1206645qkc.2
+        for <tools@linux.kernel.org>; Thu, 03 Sep 2020 08:32:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=toxicpanda-com.20150623.gappssmtp.com; s=20150623;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=nio1Z0dUk20rT3Hty53fOp/oCOnwb1HRr6KAqf3TxNY=;
+        b=KdpicxVA8uKQNsORvHZHCS0MwUa3+G/T6NIDsDztH5WgMZTlfPe5hc96oUln6+3iW9
+         4BZ1GedFdtDym9Yi9htGr9k4IJOqCL2FQlhqWvKigR5oXr+ka/iS6ulJ5OoprzbghFjW
+         5kbvi/QzXmPAaaCJT2qdSHa+k2gulumsGYFCmj3y3oYKsd62Zz1TVzOSolL9Bj7ovfCf
+         TmpC1cHggprSXBV3IqYqJwQV8lLE6DMfaz8JzcLZ6vUOBreFFNyw/eW8r7GYcgmXyAHn
+         0vLKsGEcfkEb3jZ05nw/D9SZK5gS8zLCzmAHtUFieWcER4HQxoUDtMxYGuSp6ifzA7Sj
+         ovCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=nio1Z0dUk20rT3Hty53fOp/oCOnwb1HRr6KAqf3TxNY=;
+        b=OCUjbb31o17H2bT3VEYFis6tr4D0P5zPsjgm3/k56tkZCI6wOqVgBgMvC1FzYaAQpg
+         JWXI8a+XofGHD5E79a2kmd2Fds4XfB1wHR5wNAmBifpVBqfZ2hcT2Bge/A/zD8Z2eAb1
+         T5Z7xnuzaxtlcQcO6xv0OyO3EGtOSM7UHZRPGo67OjHp+ec69ncsBoerNEEvPmue1QhM
+         1eEyYNXjVr/0c20xdbE/VtGj2n4WxiE9XNi97f/18d2DbNd5PAs8iWKq8Xnnatxfavz0
+         jrESzOjs3jE6cnDJZ4W2Cy/7tqQAciDUHK+cODn683c8sUoZw0cd1grGDaoSs5fzJ52U
+         JIEw==
+X-Gm-Message-State: AOAM532eMeB/NuEczTpMOk62mMqbrJozTk4F44uYY+c0zG1Rl8G8CsC0
+	wmqYUefbB4GGVWm15hn2pCgGH1KbS+1fpeIT
+X-Google-Smtp-Source: ABdhPJzlgHkwlejsr1avAj9/gFAQG+K6NCZPLG7Xhn5MzUw3nk3kIMxtTc3hc2ajt0ZwWSLszmRQ7g==
+X-Received: by 2002:a37:9986:: with SMTP id b128mr3705650qke.290.1599147155896;
+        Thu, 03 Sep 2020 08:32:35 -0700 (PDT)
+Return-Path: <josef@toxicpanda.com>
+Received: from [192.168.1.45] (cpe-174-109-172-136.nc.res.rr.com. [174.109.172.136])
+        by smtp.gmail.com with ESMTPSA id b9sm2239517qtt.39.2020.09.03.08.32.34
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Sep 2020 08:32:35 -0700 (PDT)
+To: tools@linux.kernel.org
+From: Josef Bacik <josef@toxicpanda.com>
+Subject: [bug] b4 not working with a patch valid patch series
+Message-ID: <19d6330d-b1c4-96d3-f081-7cbe1ac07e2e@toxicpanda.com>
+Date: Thu, 3 Sep 2020 11:32:34 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <20200902085531.GA13726@pi3> <87mu28b92n.fsf@kyleam.com>
-In-Reply-To: <87mu28b92n.fsf@kyleam.com>
-From: "Krzysztof Kozlowski" <krzk@kernel.org>
-Date: Wed, 2 Sep 2020 15:34:56 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPdDX42BCQ367ZB9RwkhGNvR7YhRCwJjW-ne0=1ZUzC=Mg@mail.gmail.com>
-Message-ID: <CAJKOXPdDX42BCQ367ZB9RwkhGNvR7YhRCwJjW-ne0=1ZUzC=Mg@mail.gmail.com>
-Subject: Re: [tools] b4-am SyntaxError on Python 3.5
-To: Kyle Meyer <kyle@kyleam.com>
-Cc: mricon@kernel.org, tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-On Wed, 2 Sep 2020 at 15:33, Kyle Meyer <kyle@kyleam.com> wrote:
->
-> Krzysztof Kozlowski writes:
->
-> > Hi,
-> >
-> > I tried now b4 v0.5.2 on my Ubuntu 16.04 with Python 3.5 and:
-> >
-> >   $ b4
-> >   Traceback (most recent call last):
-> >     File "/home/krzk/.local/bin/b4", line 7, in <module>
-> >       from b4.command import cmd
-> >     File "/home/krzk/.local/lib/python3.5/site-packages/b4/__init__.py", line 625
-> >       ecode, out = git_run_command(gitdir, ['show', f'{when}:{fn}'])
-> >                                                                  ^
-> >   SyntaxError: invalid syntax
-> >
-> > Is Python v3.5 not supported by b4?
->
-> setup.py specifies that Python 3.6 or above is required.
+Hello,
 
-Somehow I missed this information. Thanks for the explanation.
+b4 from pip and b4 from git do not seem to be handling this patch series properly
 
-Best Regards,
-Krzysztof
+cover.1599091832.git.anand.jain@oracle.com
+
+I'm getting
+
+root@localhost ~/btrfs-next# ~/b4/b4.sh am 
+cover.1599091832.git.anand.jain@oracle.com
+Looking up https://lore.kernel.org/r/cover.1599091832.git.anand.jain%40oracle.com
+Grabbing thread from lore.kernel.org/linux-btrfs
+Analyzing 30 messages in the thread
+---
+Thread incomplete, attempting to backfill
+Will use the latest revision: v3
+You can pick other revisions using the -vN flag
+---
+Writing 
+./v3_20200903_anand_jain_btrfs_seed_fix_null_ptr_use_only_main_device_list_mutex_and_cleanups.mbx
+   [PATCH v3 1/15] btrfs: add btrfs_sysfs_add_device helper
+   ERROR: missing [2/15]!
+   ERROR: missing [3/15]!
+   ERROR: missing [4/15]!
+   ERROR: missing [5/15]!
+   ERROR: missing [6/15]!
+   ERROR: missing [7/15]!
+   ERROR: missing [8/15]!
+   ERROR: missing [9/15]!
+   ERROR: missing [10/15]!
+   ERROR: missing [11/15]!
+   ERROR: missing [12/15]!
+   ERROR: missing [13/15]!
+   ERROR: missing [14/15]!
+   ERROR: missing [15/15]!
+---
+Total patches: 1
+
+but looking at the headers for the thread they're all set right, and 
+lore.kernel.org shows them in the thread properly
+
+https://lore.kernel.org/linux-btrfs/cover.1599091832.git.anand.jain@oracle.com/
+
+Not sure what's going wrong.  Thanks,
+
+Josef
