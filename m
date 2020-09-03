@@ -1,100 +1,71 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
- by mx.groups.io with SMTP id smtpd.web11.16742.1599147158552923120
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+ by mx.groups.io with SMTP id smtpd.web11.16844.1599147434057927148
  for <tools@linux.kernel.org>;
- Thu, 03 Sep 2020 08:32:38 -0700
+ Thu, 03 Sep 2020 08:37:14 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@toxicpanda-com.20150623.gappssmtp.com header.s=20150623 header.b=KdpicxVA;
- spf=none, err=permanent DNS error (domain: toxicpanda.com, ip: 209.85.222.182, mailfrom: josef@toxicpanda.com)
-Received: by mail-qk1-f182.google.com with SMTP id q5so1206645qkc.2
-        for <tools@linux.kernel.org>; Thu, 03 Sep 2020 08:32:38 -0700 (PDT)
+ dkim=pass header.i=@toxicpanda-com.20150623.gappssmtp.com header.s=20150623 header.b=oblW+qri;
+ spf=none, err=permanent DNS error (domain: toxicpanda.com, ip: 209.85.160.176, mailfrom: josef@toxicpanda.com)
+Received: by mail-qt1-f176.google.com with SMTP id 60so2205704qtc.9
+        for <tools@linux.kernel.org>; Thu, 03 Sep 2020 08:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=toxicpanda-com.20150623.gappssmtp.com; s=20150623;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=nio1Z0dUk20rT3Hty53fOp/oCOnwb1HRr6KAqf3TxNY=;
-        b=KdpicxVA8uKQNsORvHZHCS0MwUa3+G/T6NIDsDztH5WgMZTlfPe5hc96oUln6+3iW9
-         4BZ1GedFdtDym9Yi9htGr9k4IJOqCL2FQlhqWvKigR5oXr+ka/iS6ulJ5OoprzbghFjW
-         5kbvi/QzXmPAaaCJT2qdSHa+k2gulumsGYFCmj3y3oYKsd62Zz1TVzOSolL9Bj7ovfCf
-         TmpC1cHggprSXBV3IqYqJwQV8lLE6DMfaz8JzcLZ6vUOBreFFNyw/eW8r7GYcgmXyAHn
-         0vLKsGEcfkEb3jZ05nw/D9SZK5gS8zLCzmAHtUFieWcER4HQxoUDtMxYGuSp6ifzA7Sj
-         ovCA==
+        h=subject:from:to:references:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=MKkQ5Ui4genQzFf4l9JKaXbCQOLbgcAU2pxFJC1ElAs=;
+        b=oblW+qriAYUMYo+BwZRKUXiPDiFG+q80J3+FxOFD+zLJ5hXqpzi0CqE9JYJAiReqQz
+         wv+Ha4UaqYRswGLSj/WwqIDmw8dek2ZkMjp7hFIGhEsmZpgr7qMz1MZUC+wikpAvrzGr
+         HsCk3RzuQho/vvemfF5nCtdxnmufI6WhwdTIolmyjq513z6LxnjOovE0IRHABghdT0JQ
+         Loe6hU8ZFqXbxNNhuErAJt1MaY20GcYzWUeLyWAg1CxXiZVuvVeupFytgne6bPy6n0YE
+         yfSAcPC87T34o/BEwZQvD73V7cbFnagO7j8Riehk/2mRvWXtitJDuPV7cqVeasuLprqQ
+         7aZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=nio1Z0dUk20rT3Hty53fOp/oCOnwb1HRr6KAqf3TxNY=;
-        b=OCUjbb31o17H2bT3VEYFis6tr4D0P5zPsjgm3/k56tkZCI6wOqVgBgMvC1FzYaAQpg
-         JWXI8a+XofGHD5E79a2kmd2Fds4XfB1wHR5wNAmBifpVBqfZ2hcT2Bge/A/zD8Z2eAb1
-         T5Z7xnuzaxtlcQcO6xv0OyO3EGtOSM7UHZRPGo67OjHp+ec69ncsBoerNEEvPmue1QhM
-         1eEyYNXjVr/0c20xdbE/VtGj2n4WxiE9XNi97f/18d2DbNd5PAs8iWKq8Xnnatxfavz0
-         jrESzOjs3jE6cnDJZ4W2Cy/7tqQAciDUHK+cODn683c8sUoZw0cd1grGDaoSs5fzJ52U
-         JIEw==
-X-Gm-Message-State: AOAM532eMeB/NuEczTpMOk62mMqbrJozTk4F44uYY+c0zG1Rl8G8CsC0
-	wmqYUefbB4GGVWm15hn2pCgGH1KbS+1fpeIT
-X-Google-Smtp-Source: ABdhPJzlgHkwlejsr1avAj9/gFAQG+K6NCZPLG7Xhn5MzUw3nk3kIMxtTc3hc2ajt0ZwWSLszmRQ7g==
-X-Received: by 2002:a37:9986:: with SMTP id b128mr3705650qke.290.1599147155896;
-        Thu, 03 Sep 2020 08:32:35 -0700 (PDT)
+        h=x-gm-message-state:subject:from:to:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=MKkQ5Ui4genQzFf4l9JKaXbCQOLbgcAU2pxFJC1ElAs=;
+        b=eL5UTWnVt4Fp6AvoA6dfLyUp6CuMZ0RvbZ19vH+yg00v1oQq23D0w2iFzcDB5knYJz
+         caC7PvxzS6qHfXPCLhrV7RHFSfjEZB/ZZPjIWFmuBao2HYA4BBfFn2qkk0XEeOHrnn0S
+         NvNLnqzpUGba+zkwHdXPAygYTDy1oswZ4JmOQa/O96Z2yVEjoEnp+luLHIyLH2Q7AOQ/
+         N0eKJEGA7DQXwqHpIogtDc3BWpe3YR7lDPAVtf0onOEfAD2Ym0jPKGeVLuL957aZHUdn
+         bUPxDDsdADLU+81XoEeD4mt298zRSooG9CH1bQRtVc0F+f1/2WKMkOAyC1rWE0x62TOC
+         z0kg==
+X-Gm-Message-State: AOAM532POQBM+um63rVv1zQJiAgGNZhnLhmdAqw1UXgEaxXa8en9RneH
+	Bf7U6yw1RtyNV0ZZJa5at+t0xUzUZgXu81/N
+X-Google-Smtp-Source: ABdhPJyE0qVD9M8ef2FN3rpJMy4++FWKtaCkN4bntfuub+q/ku+IkWJKqd8y0XJ3oSZVnIO7Z3fFHg==
+X-Received: by 2002:aed:2356:: with SMTP id i22mr3922367qtc.92.1599147432918;
+        Thu, 03 Sep 2020 08:37:12 -0700 (PDT)
 Return-Path: <josef@toxicpanda.com>
 Received: from [192.168.1.45] (cpe-174-109-172-136.nc.res.rr.com. [174.109.172.136])
-        by smtp.gmail.com with ESMTPSA id b9sm2239517qtt.39.2020.09.03.08.32.34
+        by smtp.gmail.com with ESMTPSA id r42sm2327080qtk.29.2020.09.03.08.37.11
         for <tools@linux.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Sep 2020 08:32:35 -0700 (PDT)
-To: tools@linux.kernel.org
+        Thu, 03 Sep 2020 08:37:12 -0700 (PDT)
+Subject: Re: [bug] b4 not working with a patch valid patch series
 From: Josef Bacik <josef@toxicpanda.com>
-Subject: [bug] b4 not working with a patch valid patch series
-Message-ID: <19d6330d-b1c4-96d3-f081-7cbe1ac07e2e@toxicpanda.com>
-Date: Thu, 3 Sep 2020 11:32:34 -0400
+To: tools@linux.kernel.org
+References: <19d6330d-b1c4-96d3-f081-7cbe1ac07e2e@toxicpanda.com>
+Message-ID: <a6996501-8570-fe7d-d25d-7e894cc8b5d8@toxicpanda.com>
+Date: Thu, 3 Sep 2020 11:37:11 -0400
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
  Gecko/20100101 Thunderbird/68.12.0
 MIME-Version: 1.0
+In-Reply-To: <19d6330d-b1c4-96d3-f081-7cbe1ac07e2e@toxicpanda.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 
-Hello,
+On 9/3/20 11:32 AM, Josef Bacik wrote:
+> Hello,
+> 
+> b4 from pip and b4 from git do not seem to be handling this patch series properly
+> 
+> cover.1599091832.git.anand.jain@oracle.com
+> 
+> I'm getting
+> 
 
-b4 from pip and b4 from git do not seem to be handling this patch series properly
-
-cover.1599091832.git.anand.jain@oracle.com
-
-I'm getting
-
-root@localhost ~/btrfs-next# ~/b4/b4.sh am 
-cover.1599091832.git.anand.jain@oracle.com
-Looking up https://lore.kernel.org/r/cover.1599091832.git.anand.jain%40oracle.com
-Grabbing thread from lore.kernel.org/linux-btrfs
-Analyzing 30 messages in the thread
----
-Thread incomplete, attempting to backfill
-Will use the latest revision: v3
-You can pick other revisions using the -vN flag
----
-Writing 
-./v3_20200903_anand_jain_btrfs_seed_fix_null_ptr_use_only_main_device_list_mutex_and_cleanups.mbx
-   [PATCH v3 1/15] btrfs: add btrfs_sysfs_add_device helper
-   ERROR: missing [2/15]!
-   ERROR: missing [3/15]!
-   ERROR: missing [4/15]!
-   ERROR: missing [5/15]!
-   ERROR: missing [6/15]!
-   ERROR: missing [7/15]!
-   ERROR: missing [8/15]!
-   ERROR: missing [9/15]!
-   ERROR: missing [10/15]!
-   ERROR: missing [11/15]!
-   ERROR: missing [12/15]!
-   ERROR: missing [13/15]!
-   ERROR: missing [14/15]!
-   ERROR: missing [15/15]!
----
-Total patches: 1
-
-but looking at the headers for the thread they're all set right, and 
-lore.kernel.org shows them in the thread properly
-
-https://lore.kernel.org/linux-btrfs/cover.1599091832.git.anand.jain@oracle.com/
-
-Not sure what's going wrong.  Thanks,
+Bah nevermind, got bitten by that stupid single [v3] reply to the series.  -v2 
+works fine, ignore me.  Thanks,
 
 Josef
