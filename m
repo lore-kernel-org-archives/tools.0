@@ -1,71 +1,83 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
- by mx.groups.io with SMTP id smtpd.web11.16844.1599147434057927148
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+ by mx.groups.io with SMTP id smtpd.web12.26756.1599587927471935075
  for <tools@linux.kernel.org>;
- Thu, 03 Sep 2020 08:37:14 -0700
+ Tue, 08 Sep 2020 10:58:47 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@toxicpanda-com.20150623.gappssmtp.com header.s=20150623 header.b=oblW+qri;
- spf=none, err=permanent DNS error (domain: toxicpanda.com, ip: 209.85.160.176, mailfrom: josef@toxicpanda.com)
-Received: by mail-qt1-f176.google.com with SMTP id 60so2205704qtc.9
-        for <tools@linux.kernel.org>; Thu, 03 Sep 2020 08:37:13 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=A+etMf/d;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.160.170, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qt1-f170.google.com with SMTP id n18so12663587qtw.0
+        for <tools@linux.kernel.org>; Tue, 08 Sep 2020 10:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=toxicpanda-com.20150623.gappssmtp.com; s=20150623;
-        h=subject:from:to:references:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=MKkQ5Ui4genQzFf4l9JKaXbCQOLbgcAU2pxFJC1ElAs=;
-        b=oblW+qriAYUMYo+BwZRKUXiPDiFG+q80J3+FxOFD+zLJ5hXqpzi0CqE9JYJAiReqQz
-         wv+Ha4UaqYRswGLSj/WwqIDmw8dek2ZkMjp7hFIGhEsmZpgr7qMz1MZUC+wikpAvrzGr
-         HsCk3RzuQho/vvemfF5nCtdxnmufI6WhwdTIolmyjq513z6LxnjOovE0IRHABghdT0JQ
-         Loe6hU8ZFqXbxNNhuErAJt1MaY20GcYzWUeLyWAg1CxXiZVuvVeupFytgne6bPy6n0YE
-         yfSAcPC87T34o/BEwZQvD73V7cbFnagO7j8Riehk/2mRvWXtitJDuPV7cqVeasuLprqQ
-         7aZw==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=8CKLP9By34cLUVDG2opElLNEIVZQFVgzT9co9VdQdcc=;
+        b=A+etMf/dFxpWpowoflcjvCVhYbtHYmoC09sGlj/ejEkLYYTDRYNnMD6waj42+TTe1h
+         sL3kcIlwO8ye0Gw9/kqS19LGHGt3f23cnzZUS5zimLztMgMRVOomsgNODgDTIjIRsrJM
+         R/uVBESKbkDe0aOh0zmCMAspMdwJgrt+51ARE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=MKkQ5Ui4genQzFf4l9JKaXbCQOLbgcAU2pxFJC1ElAs=;
-        b=eL5UTWnVt4Fp6AvoA6dfLyUp6CuMZ0RvbZ19vH+yg00v1oQq23D0w2iFzcDB5knYJz
-         caC7PvxzS6qHfXPCLhrV7RHFSfjEZB/ZZPjIWFmuBao2HYA4BBfFn2qkk0XEeOHrnn0S
-         NvNLnqzpUGba+zkwHdXPAygYTDy1oswZ4JmOQa/O96Z2yVEjoEnp+luLHIyLH2Q7AOQ/
-         N0eKJEGA7DQXwqHpIogtDc3BWpe3YR7lDPAVtf0onOEfAD2Ym0jPKGeVLuL957aZHUdn
-         bUPxDDsdADLU+81XoEeD4mt298zRSooG9CH1bQRtVc0F+f1/2WKMkOAyC1rWE0x62TOC
-         z0kg==
-X-Gm-Message-State: AOAM532POQBM+um63rVv1zQJiAgGNZhnLhmdAqw1UXgEaxXa8en9RneH
-	Bf7U6yw1RtyNV0ZZJa5at+t0xUzUZgXu81/N
-X-Google-Smtp-Source: ABdhPJyE0qVD9M8ef2FN3rpJMy4++FWKtaCkN4bntfuub+q/ku+IkWJKqd8y0XJ3oSZVnIO7Z3fFHg==
-X-Received: by 2002:aed:2356:: with SMTP id i22mr3922367qtc.92.1599147432918;
-        Thu, 03 Sep 2020 08:37:12 -0700 (PDT)
-Return-Path: <josef@toxicpanda.com>
-Received: from [192.168.1.45] (cpe-174-109-172-136.nc.res.rr.com. [174.109.172.136])
-        by smtp.gmail.com with ESMTPSA id r42sm2327080qtk.29.2020.09.03.08.37.11
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Sep 2020 08:37:12 -0700 (PDT)
-Subject: Re: [bug] b4 not working with a patch valid patch series
-From: Josef Bacik <josef@toxicpanda.com>
-To: tools@linux.kernel.org
-References: <19d6330d-b1c4-96d3-f081-7cbe1ac07e2e@toxicpanda.com>
-Message-ID: <a6996501-8570-fe7d-d25d-7e894cc8b5d8@toxicpanda.com>
-Date: Thu, 3 Sep 2020 11:37:11 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.12.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=8CKLP9By34cLUVDG2opElLNEIVZQFVgzT9co9VdQdcc=;
+        b=iyE6ywfiyeuRZk/4CqohXQAjvgO7NIfgPZeCdDLnogI+Ilsnmt6vl4K8bMSfJRaumS
+         GX2TLqqfEyzmBSikcOJkI0p/+tjLNu0Gui2mX0rJVlTsWKX4WXVzVVAl6aM2NvlOj87P
+         T5v62gq3wv8uIXfpN3k5V8BPjt1ewlHDB7+AbHVUs0E0NUoTRu/wNdVwBRV1JMBKaKFt
+         xOhEGv2CFbt9QwDp4AHS/Uzdsv0aZ8xwrIxEdt/BtenfVWsZulZARrgZwMjbqQhGjoxJ
+         Oc01XK6P7kcqn2f1Lbe80fovPOSosaqAz35BzkUtU/pape3iCseYZM4Ac7+wwLLd82Mf
+         T1oQ==
+X-Gm-Message-State: AOAM530IggEsCKnSVNMMJZBArs6n+jEgT7lR9OZ610Yh3JiBPpJrcTOk
+	gZlfZRXFgW2gbZfOFfXXvojUyw==
+X-Google-Smtp-Source: ABdhPJyIqUw4h7iaQAPg9/9g+IRoPCu2mnfVD6MIT712He9lnTxy9SiSN5tXkZsixlCe2TKWiIFN7A==
+X-Received: by 2002:ac8:1b92:: with SMTP id z18mr1218218qtj.265.1599587926489;
+        Tue, 08 Sep 2020 10:58:46 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id z2sm9166081qkg.40.2020.09.08.10.58.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2020 10:58:45 -0700 (PDT)
+Date: Tue, 8 Sep 2020 13:58:43 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: narmstrong@baylibre.com
+Cc: tools@linux.kernel.org
+Subject: Trying to figure out why your attestation is failing
+Message-ID: <20200908175843.6urcfbntaa324ncz@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <19d6330d-b1c4-96d3-f081-7cbe1ac07e2e@toxicpanda.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On 9/3/20 11:32 AM, Josef Bacik wrote:
-> Hello,
-> 
-> b4 from pip and b4 from git do not seem to be handling this patch series properly
-> 
-> cover.1599091832.git.anand.jain@oracle.com
-> 
-> I'm getting
-> 
+Neil:
 
-Bah nevermind, got bitten by that stupid single [v3] reply to the series.  -v2 
-works fine, ignore me.  Thanks,
+I am keeping an eye on attestation emails sent to the signatures list 
+(https://lore.kernel.org/signatures/) and I noticed that b4 isn't 
+properly finding your attestation data. I poked at this series:
 
-Josef
+- thread: https://lore.kernel.org/linux-amlogic/20200907081825.1654-1-narmstrong@baylibre.com
+- attestation: https://lore.kernel.org/signatures/159946699508.19944.11132773619713429568@kernel.org
+
+When we generate attestation hashes from the patches you submitted, we 
+get a different value for the "i" hash:
+
+$ git mailinfo m p < 0001-dt-bindings-display-amlogic-meson-vpu-add-bindings-f.patch | egrep '^(Author|Email|Subject)' | sha256sum
+7158b7d79fbd5342923a63ea14701fa75061a856f6eb30c9dfe83672894113ba -
+
+Apparently, when you run it on your system during attestation generation 
+step, you get a different hash for i:
+
+3753d76c-4b385c46-aa69b83c:
+  i: 3753d76ca01efcc78b682dc0f9feb582d67a1e9a6a89b0519cdf54a36eee5e0b
+  m: 4b385c46651635915366eba13de55a445ae3d41afd2d0e5da8bad270a08c0e70
+  p: aa69b83c2b5d484b33deec0c59135fdfe7290b658f29527590261abab8a4ac51
+
+This is why when we're trying to find your attestation document, we are 
+not finding it:
+
+  Cache says looking up 7158b7d7-4b385c46-aa69b83c = 404
+
+I am curious why this happens -- either the patches generated on your 
+system have different Author/Email/Subject values until git-send-email actually
+runs, or git mailinfo output has changed between revisions. I would like to
+understand this better so we can properly address it, if you're willing to lend
+a hand.
+
+Best,
+Konstantin
