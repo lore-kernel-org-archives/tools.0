@@ -1,72 +1,173 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
- by mx.groups.io with SMTP id smtpd.web12.22380.1600619482023518855
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+ by mx.groups.io with SMTP id smtpd.web11.46621.1600708017952669958
  for <tools@linux.kernel.org>;
- Sun, 20 Sep 2020 09:31:22 -0700
+ Mon, 21 Sep 2020 10:06:58 -0700
 Authentication-Results: mx.groups.io;
- dkim=missing; spf=pass (domain: gmail.com, ip: 209.85.208.49, mailfrom: k.kozlowski.k@gmail.com)
-Received: by mail-ed1-f49.google.com with SMTP id j2so10538653eds.9
-        for <tools@linux.kernel.org>; Sun, 20 Sep 2020 09:31:21 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=StnFiTy0;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.169, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f169.google.com with SMTP id 16so15919378qkf.4
+        for <tools@linux.kernel.org>; Mon, 21 Sep 2020 10:06:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:mime-version
+         :content-disposition;
+        bh=mQheBbl/Envxc4mlK6rqmLVa1VigNOe54/9h0gT4kcY=;
+        b=StnFiTy0RCRivBJcaZa7KEdIF9in6BDgFzoYNi07XP6YRcUL19NTgUITB1TBEhFcXg
+         Ru2yVf2z+6Hsi7Ut5BQ1fCOO7RyqK1HWq8axp4UBlPnql+rIpSrYGXwBuHXOD9tMIoK7
+         VcgWCCG/9UYSWUfsNzFhBmhXBC23FEIh7/1uE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=dLzvav/PkQBFPDVbvcG3buMTK1lURYqeMR3pQ7H0lDg=;
-        b=ajIjTFuLEizqrbYOFFTu6+hXix4+hdEx1VLZcOn5aAHWXRl0VqbIZENbT2bC6nXYNq
-         O1N4zZhCVuYL3J5A1Sj6AmVMKJHAxlczRw4OfdGF4/rNd69q7e2TttENzNP/76fgSCPO
-         AuPv6PmmAgg4xim5OLzH0YbBDXIjNsbAqiBRMNcdDlJqQNs5FUFy2zKzEoVwuabUvQVb
-         ENOOJ0xNttLSdobX4banXB29DlfBak3pyAK16aMuReOAMNqw5A4+fjmr+sn6RvUn1c+T
-         TabmdN8Iu6nlZKGGnXSgglSoYr38cDxFjtQfL6vbpXdpciMnm2wb4EVWi0vvwTccdcdo
-         nu+g==
-X-Gm-Message-State: AOAM532IsDaNTxqk6rCIHUrh95TDQDyR9iG6SkFTt34G8YDD4Dft91Lb
-	pfZUa/P0tR+F5gD8Dhypl2+KnHzpbF4=
-X-Google-Smtp-Source: ABdhPJwCTKJSYmKt70PlCYJ0nnXE4lId2MyWRNwQIM4W7UB9GmxzBs8v/d6gi2Dhd7lQd3qdeCqZpg==
-X-Received: by 2002:aa7:c504:: with SMTP id o4mr49773526edq.82.1600619479626;
-        Sun, 20 Sep 2020 09:31:19 -0700 (PDT)
-Return-Path: <k.kozlowski.k@gmail.com>
-Received: from kozik-lap ([194.230.155.191])
-        by smtp.googlemail.com with ESMTPSA id cf7sm6792587edb.78.2020.09.20.09.31.18
-        for <tools@linux.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 20 Sep 2020 09:31:18 -0700 (PDT)
-Date: Sun, 20 Sep 2020 18:31:17 +0200
-From: "Krzysztof Kozlowski" <krzk@kernel.org>
-To: tools@linux.kernel.org
-Subject: b4 diff -m: max() arg is an empty sequence
-Message-ID: <20200920163117.GA15084@kozik-lap>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:mime-version:content-disposition;
+        bh=mQheBbl/Envxc4mlK6rqmLVa1VigNOe54/9h0gT4kcY=;
+        b=DZDv/C+USP2P9+1BHDL2yip6BdhXml/dE1KEPkJBg2dg3dh0Wi5CCvyszslCpLKB73
+         eLTJs+6EcNMS8V/Gb1ttZo1oDNTR76hmMi2l27mA79eRBYk4iDBG32WEVUmuprgKqxML
+         LepYJc59ywfFLee2bWaWl1seyUaWhBxqAYdGFrvI2+xDG/B0hcJ4yoJKi1QEDzRrVoon
+         q9JLydE1RpiIkHHZ4cUDoHEAV+8I7YgHNvHa8qqrLePa4txdqYLXPOp/zf5cF8xYJ53I
+         v3fQhsSUShC9rJmfizU4o42Aoys+igP+W3TQxmxsFvAhx0Q5mOj1GXMOJDl/rSBzsNyl
+         vspg==
+X-Gm-Message-State: AOAM533un8EuBMbX6NZWe7W+9ZJ0FNwD4TBKvvOvLpedWr/EU4x1/Asa
+	9jBv+SNmjtFWEZLw8C/AM565cw==
+X-Google-Smtp-Source: ABdhPJwNBPjWlIPRT4omUFip35s62/Vn8gKXKMZB15novcCArBYZg64QSG2WYnrz5Ih7raqifK2AxA==
+X-Received: by 2002:a37:a84a:: with SMTP id r71mr663302qke.481.1600708014069;
+        Mon, 21 Sep 2020 10:06:54 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id u18sm10671259qtk.61.2020.09.21.10.06.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Sep 2020 10:06:53 -0700 (PDT)
+Date: Mon, 21 Sep 2020 13:06:51 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: git@vger.kernel.org
+Cc: tools@linux.kernel.org
+Subject: grokmirror-2.0 is available
+Message-ID: <20200921170651.aszbydzvnj7l4y2w@chatter.i7.local>
+Mail-Followup-To: git@vger.kernel.org, tools@linux.kernel.org
 MIME-Version: 1.0
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Content-Type: text/plain; charset=utf-8
+X-Groupsio-MsgNum: 207
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="x4ff6avmflavdcyx"
 Content-Disposition: inline
 
-Hi,
+--x4ff6avmflavdcyx
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-$ b4 mbox '1600234622-8815-2-git-send-email-yilun.xu@intel.com'
-$ b4 mbox '1599553645-26928-1-git-send-email-yilun.xu@intel.com'
+Hello:
 
-(the second mbox is actually a cover letter as b4 could not download the
-actual patch directly via its Message-Id)
+I am pleased to announce version 2.0 of kernel.org's git mirroring=20
+software, grokmirror. This is a major rewrite that intentionally breaks=20
+the upgrade path from grokmirror-1.x due to significant backend changes=20
+requiring replica administrator's thoughtful consideration -- please see=20
+the UPGRADING.rst document provided with this release.
 
-$ b4 diff -m 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx 1600234622-8815-2-git-send-email-yilun.xu@intel.com.mbx
+## New in grokmirror-2.0
 
-Loading 8 messages from 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx
-Traceback (most recent call last):
-  File "/home/kozik/.local/bin/b4", line 11, in <module>
-    sys.exit(cmd())
-  File "/home/kozik/.local/lib/python3.6/site-packages/b4/command.py", line 222, in cmd
-    cmdargs.func(cmdargs)
-  File "/home/kozik/.local/lib/python3.6/site-packages/b4/command.py", line 65, in cmd_diff
-    b4.diff.main(cmdargs)
-  File "/home/kozik/.local/lib/python3.6/site-packages/b4/diff.py", line 115, in main
-    lser, user = diff_mboxes(cmdargs)
-  File "/home/kozik/.local/lib/python3.6/site-packages/b4/diff.py", line 108, in diff_mboxes
-    chunks.append(lmbx.series[max(lmbx.series.keys())])
-ValueError: max() arg is an empty sequence
+- Drop support for python < 3.6
+- Introduce "object storage" repositories that benefit from git-pack
+  delta islands and improve overall disk storage footprint (results will=20
+  directly depend on the number of forks).
+- Drop dependency on GitPython: use git calls directly for all operations
+- Remove progress bars to slim down dependencies (drops enlighten)
+- Make grok-pull operate in daemon mode (with -o) (see contrib for
+  systemd unit files). This is more efficient than the cron mode when
+  run very frequently.
+- Provide a socket listener for pubsub push updates (see contrib for
+  Google pubsubv1.py).
+- Merge fsck.conf and repos.conf into a single config file. This
+  requires creating a new configuration file after the upgrade. See
+  UPGRADING.rst for details.
+- Record and propagate HEAD position using the manifest file.
+- Add grok-bundle command to create clone.bundle files for CDN-offloaded
+  cloning (mostly used by Android's repo command).
+- Add SELinux policy for EL7 (see contrib).
 
+## Object Storage Repositories
 
-Ubuntu 18.04.5
-Python 3.6.9
-b4 0.5.2
+Grokmirror 2.0 introduces the concept of "object storage repositories", whi=
+ch
+aims to optimize how repository forks are stored on disk and served to the
+cloning clients.
+
+When grok-fsck runs, it will automatically recognize related repositories by
+analyzing their root commits. If it finds two or more related repositories,=
+ it
+will set up a unified "object storage" repo and fetch all refs from each
+related repository into it.
+
+For example, you can have two forks of linux.git:
+  torvalds/linux.git:
+    refs/heads/master
+    refs/tags/v5.0-rc3
+    ...
+
+and its fork:
+
+  maintainer/linux.git:
+    refs/heads/master
+    refs/heads/devbranch
+    refs/tags/v5.0-rc3
+    ...
+
+Grok-fsck will set up an object storage repository and fetch all refs from =
+both
+repositories:
+
+  objstore/[random-guid-name].git
+     refs/virtual/[sha1-of-torvalds/linux.git:12]/heads/master
+     refs/virtual/[sha1-of-torvalds/linux.git:12]/tags/v5.0-rc3
+     ...
+     refs/virtual/[sha1-of-maintainer/linux.git:12]/heads/master
+     refs/virtual/[sha1-of-maintainer/linux.git:12]/heads/devbranch
+     refs/virtual/[sha1-of-maintainer/linux.git:12]/tags/v5.0-rc3
+     ...
+
+Then both torvalds/linux.git and maintainer/linux.git with be configured to=
+ use
+objstore/[random-guid-name].git via objects/info/alternates and repacked to
+just contain metadata and no objects.
+
+The alternates repository will be repacked with "delta islands" enabled,
+which should help optimize clone operations for each "sibling"
+repository.
+
+Please see the example grokmirror.conf for more details about configuring
+objstore repositories.
+
+## Space savings using object storage repositories
+
+Any disk space savings will depend on how many repositories are forks of=20
+each other. For git.kernel.org, which already aggressively used=20
+alternates for all linux.git forks, we saw reduction from 60GB to 20GB=20
+for the entirety of git.kernel.org content. On some of the=20
+codeaurora.org systems, especially those containing a lot of pre-release=20
+forks of entire AOSP repo collections, we saw space usage go from 3TB to=20
+under 1TB.
+
+## Stability
+
+This release has proven pretty stable and has been operating on=20
+git.kernel.org and a subset of codeaurora.org systems for over the past=20
+month. However, since the trickiest part is initial repository=20
+conversion towards the use of object storage repos, we urge proceeding=20
+with caution. Please study the UPGRADING.rst document before making any=20
+changes to your infrastructure.
+
+With all support questions, please email tools@linux.kernel.org.
 
 Best regards,
-Krzysztof
+Konstantin
 
+--x4ff6avmflavdcyx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCX2jdnwAKCRC2xBzjVmSZ
+bGF9AP0TDwe9jUmlWZGW9LEjHjSXXKnOAVB4C+0UupoTD0/4/AEAxXW2pfirzX84
+vW6hMB+fhIDuHdqL8mEGfCLvWatSdwA=
+=Ieyd
+-----END PGP SIGNATURE-----
+
+--x4ff6avmflavdcyx--
