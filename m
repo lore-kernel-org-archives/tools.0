@@ -1,74 +1,80 @@
-Received: from rere.qmqm.pl (rere.qmqm.pl [91.227.64.183])
- by mx.groups.io with SMTP id smtpd.web11.1117.1601577672523386817
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+ by mx.groups.io with SMTP id smtpd.web12.2154.1601580364284846686
  for <tools@linux.kernel.org>;
- Thu, 01 Oct 2020 11:41:13 -0700
+ Thu, 01 Oct 2020 12:26:04 -0700
 Authentication-Results: mx.groups.io;
- dkim=fail, err=mail: missing word in phrase: charset not supported: "iso-8859-2";
- spf=pass (domain: rere.qmqm.pl, ip: 91.227.64.183, mailfrom: mirq-linux@rere.qmqm.pl)
-Received: from remote.user (localhost [127.0.0.1])
-	by rere.qmqm.pl (Postfix) with ESMTPSA id 4C2MQZ6F6bz5q;
-	Thu,  1 Oct 2020 20:41:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rere.qmqm.pl; s=1;
-	t=1601577670; bh=qUQN7NjUMHOLg4S9FqIvmQQw48RVnvLBJ2qqxNt6WtY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=h+UllmQb2zPj5KBwqxU6RzaAwIT7Hz+Ew7soy30s/GIkAGGxF1r2+BaMC4NkWv9ou
-	 QMh7vEKW6s5dOHaXKWVbD25JXyc6lDmJqKlYVBla4iNWoNZ65mwOydvngx2+FA9eL9
-	 7X5ofmOWsBFF5c9s9O3+jUKHeyj9Enc1PYHILOwTAqa0eYcTQUtFue1xOt6OBDQ+RH
-	 bLek7AXTEt76b86xT6RqCemD0ChU+hf9HM7G7WYkXussJcuVAi2bDyY5/sYJtV5LcI
-	 189RQErQ34XOG+aw1mMHNGsUvpFH8nP/a0+ybqCRLQgsPDpvFXfnyEmN9kq0dWI21z
-	 J+PE+XABME2qA==
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.102.4 at mail
-Date: Thu, 1 Oct 2020 20:41:09 +0200
-From: =?iso-8859-2?Q?Micha=B3_Miros=B3aw?= <mirq-linux@rere.qmqm.pl>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=VlxQPrgC;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.174, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f174.google.com with SMTP id o5so6806211qke.12
+        for <tools@linux.kernel.org>; Thu, 01 Oct 2020 12:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=2FX0I/WWSZ9ahVmjcW+ivx6kpd8nzkEMkSy9HLUr9sE=;
+        b=VlxQPrgCRCPFj5KfAhtlbxGkXhnJkaiTCyEC9Dn4NSGVZuF62cjLGbBd49hUwXfLfU
+         7YbYhuEMn8RR1wN71QNy6MKkKS2hQwrWMFjM7LLnZ0gAHAIa4WW9YHssebFtwaUorlMl
+         Mm1LJdR+ssdABxiIk5Afr5U/VUxE7M8KQVZhU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=2FX0I/WWSZ9ahVmjcW+ivx6kpd8nzkEMkSy9HLUr9sE=;
+        b=Z+qsv2pjclLSjR+A7Mtpr7UlAb1rGOAvGsmbmL4ezCQGMRICVobToKaD9NPu3y6bRt
+         70FWrWHN0jfhbOL+XqQ3IqHVgLp8AX52qngXvzfxBuxDQCM9znCjAz+OvKj6Eyq698vM
+         hYu8TR/FoJYgguRwWS/uJ+3ooLzA2rAfXB9/mwWibc50KXjw7MAWRb8NZ9bZ/E3bAXU6
+         MDR4uWcU070aNfIC2p9/mq92nedyOqZ1mctYlImwPhYxqUUgfOeumvN5ajUXtDTpM1qY
+         L4vc+px3POVT6BYEU7wVsAyqQPJouJnDU6WSo2KNk0iXtwV0C3kyafOzvjt9+3H15XPg
+         WMWQ==
+X-Gm-Message-State: AOAM531y3uoksVknqh/SuqO+X36ZlXeIm3go5f8NZRfzoSq4T/lF1EN+
+	O/iz27tymHF1AWrc+6GP1VTFJg==
+X-Google-Smtp-Source: ABdhPJydQbPl+j4SWn8Cxfwlww71zJdMdIdt/uQlhkiLJwMYUprSSB1fFnvjR6KpycylDvsggdTpqQ==
+X-Received: by 2002:a37:b8c2:: with SMTP id i185mr8930203qkf.87.1601580363334;
+        Thu, 01 Oct 2020 12:26:03 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id l12sm7191730qkg.54.2020.10.01.12.26.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Oct 2020 12:26:02 -0700 (PDT)
+Date: Thu, 1 Oct 2020 15:26:00 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: =?utf-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>
 Cc: tools@linux.kernel.org
 Subject: Re: b4: UTF-8 in replies
-Message-ID: <20201001184109.GB23339@qmqm.qmqm.pl>
+Message-ID: <20201001192600.fo2rivqc4nklw4oj@chatter.i7.local>
 References: <20201001171405.GA17873@qmqm.qmqm.pl>
  <20201001180541.poupp36rtajzkihs@chatter.i7.local>
  <20201001183647.GA23339@qmqm.qmqm.pl>
+ <20201001184109.GB23339@qmqm.qmqm.pl>
 MIME-Version: 1.0
-In-Reply-To: <20201001183647.GA23339@qmqm.qmqm.pl>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Content-Type: text/plain; charset=iso-8859-2
+In-Reply-To: <20201001184109.GB23339@qmqm.qmqm.pl>
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Oct 01, 2020 at 08:36:47PM +0200, Micha=B3 Miros=B3aw wrote:
-> On Thu, Oct 01, 2020 at 02:05:41PM -0400, Konstantin Ryabitsev wrote:
-> > On Thu, Oct 01, 2020 at 07:14:05PM +0200, Micha=B3 Miros=B3aw wrote:
-> > > I'm writing to you because I can't find a bug tracker for b4 script=
-.
-> >=20
-> > There isn't one. Just email tools@linux.kernel.org (cc'd).
-> >=20
-> > > The bug is that when generating the reply, script doesn't include M=
-IME
-> > > headers but is using UTF-8 in the body (eg. when replying to an aut=
-hor
-> > > with non-US name, like me).
-> >=20
-> > Hm... is that causing you any problems? We make sure to set=20
-> > "Content-Transfer-Encoding: 8bit" in the headers, so unless you're us=
-ing=20
-> > some extremely old SMTP software, UTF-8 in the body or headers should=
-n't=20
-> > matter.
->=20
-> At least K9 Mail on Android requires MIME headers to properly decode it=
-.
-> The additional headers are actually required by RFC 5322 to include
-> 8-bit data in the message.
->=20
-> I guess the fix would be to just include Content-Type (and others) with
-> charset=3D"utf8".
-
-According to RFC2045 those should be enough:
-
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3Dutf-8
 Content-Transfer-Encoding: 8bit
 
-Best Regards,
-Micha=B3=A0Miros=B3aw
+On Thu, Oct 01, 2020 at 08:41:09PM +0200, Michał Mirosław wrote:
+> > At least K9 Mail on Android requires MIME headers to properly decode 
+> > it.
+> > The additional headers are actually required by RFC 5322 to include
+> > 8-bit data in the message.
+> > 
+> > I guess the fix would be to just include Content-Type (and others) with
+> > charset="utf8".
+> 
+> According to RFC2045 those should be enough:
+> 
+> MIME-Version: 1.0
+> Content-Type: text/plain; charset=utf-8
+> Content-Transfer-Encoding: 8bit
+
+Hrmph, apparently my assumption on what headers will be generated by 
+policy=8bit was pretty wrong. I pushed a commit to master and 
+stable-0.5.y that should properly set the charset and generate the 
+necessary headers.
+
+I intend to cut 0.6.0 tomorrow that will incorporate this fix, among 
+several others.
+
+Thanks!
+-K
