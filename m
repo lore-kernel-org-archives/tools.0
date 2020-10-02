@@ -1,61 +1,94 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
- by mx.groups.io with SMTP id smtpd.web10.14077.1601644435764981790
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web12.5498.1601673051572243734
  for <tools@linux.kernel.org>;
- Fri, 02 Oct 2020 06:13:56 -0700
+ Fri, 02 Oct 2020 14:10:51 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=DbUKc00L;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.172, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f172.google.com with SMTP id q5so1236315qkc.2
-        for <tools@linux.kernel.org>; Fri, 02 Oct 2020 06:13:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=luj9eIT8LQ0qwhcr05g83sFr1lZFzPrhY3QCoHmpsDM=;
-        b=DbUKc00LHJj6v+TzjTd6jg9C1tC9HCtVIHPzMN5XSHh5DUINRnUnoNua7fyKAsFV5l
-         MI1iTczutuhiu3lHFliEdWAshklfTF4rXVT/h0CITq0eCyc71RY15Gx5xGHy5gQA4kyv
-         udeDAvQjhJerARJUBeFExyaEp0xgQg+IRtx1E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=luj9eIT8LQ0qwhcr05g83sFr1lZFzPrhY3QCoHmpsDM=;
-        b=Ig1rhpJXJkO6Hh08f94XgEVVuN6eeFEphIMzi5fzjJ75bGXBJEHYchlWku4bXgbD7H
-         m7/unEJlpEyDtZkygbPid7kviU+7v+ZRIEMHTfXdlgDQ8QHfb/1mouR3UgddpWnpvxLs
-         Lw7UKElmq+htDvq9lS09iU2bh4WiY0Rkx69hFyKbUrDRthuMmWC25HloPwRc38m4l43r
-         NHO50jHoIvbX07xlR6w53wDhNXFa06CCumfC2wWglRE2DDizK0Zm/+IuWz37tGLHM9cs
-         7ZfKgzz2enRrmMIM7JcTccfTh4blM9oxyWuWLF8GfkA0/vbA8MiiUyGuN/TPcj9EM7xV
-         FP9g==
-X-Gm-Message-State: AOAM532UiwIzabzWcjYzi9I3LR8gAycFTSGBZCMJ5+OCVq6Vvs3sxd+r
-	pFpqfC/DQCfrw8Lv4U5Q8C05yg==
-X-Google-Smtp-Source: ABdhPJzzwn6CmkKmEZLJHWf4aJzOIDE+ndodHXfe16P1qPTa1uBKeE/M970Z2T5+mPOgyUkSClGlpA==
-X-Received: by 2002:a05:620a:13a5:: with SMTP id m5mr2078312qki.280.1601644434705;
-        Fri, 02 Oct 2020 06:13:54 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id b199sm993235qkg.116.2020.10.02.06.13.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2020 06:13:53 -0700 (PDT)
-Date: Fri, 2 Oct 2020 09:13:51 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4: 'NoneType' object has no attribute 'msgid'
-Message-ID: <20201002131351.yq55y53ztsdlfkua@chatter.i7.local>
-References: <20200820154740.GA5195@kozik-lap>
+ dkim=pass header.i=@kernel.org header.s=default header.b=d3QWqhTa;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id 543F9206DB;
+	Fri,  2 Oct 2020 21:10:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1601673050;
+	bh=Wd752/P/ncRTJezDUzxybcUJ5/z03Fdb+XFyK3rNTKY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=d3QWqhTanAq3YMD2DMbZGkpzQNDbENvcp0PtEYs3S0leVgqBCbq77vzQVvVykSRIJ
+	 exGNeRkPYg67scUQzFXh3aikOEH4RxxhnwZEH/JEHunagT9ZRdDhUkTtGdYiw1J87i
+	 cmmvGZwob0Z6brej6i9M6ErzClyiC4V0CSW2jlhM=
+Date: Fri, 2 Oct 2020 22:09:50 +0100
+From: "Mark Brown" <broonie@kernel.org>
+To: tools@linux.kernel.org, konstantin@linuxfoundation.org
+Cc: =?utf-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>
+Subject: Re: [tools] b4: UTF-8 in replies
+Message-ID: <20201002210950.GH5527@sirena.org.uk>
+References: <20201001171405.GA17873@qmqm.qmqm.pl>
+ <20201001180541.poupp36rtajzkihs@chatter.i7.local>
+ <20201001183647.GA23339@qmqm.qmqm.pl>
+ <20201001184109.GB23339@qmqm.qmqm.pl>
+ <20201001192600.fo2rivqc4nklw4oj@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <20200820154740.GA5195@kozik-lap>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20201001192600.fo2rivqc4nklw4oj@chatter.i7.local>
+X-Cookie: Words must be weighed, not counted.
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 217
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="AzNpbZlgThVzWita"
 Content-Disposition: inline
 
-On Thu, Aug 20, 2020 at 05:47:40PM +0200, Krzysztof Kozlowski wrote:
-> Hi,
-> 
-> I hit Python exception (AttributeError: 'NoneType' object has no
-> attribute 'msgid'):
+--AzNpbZlgThVzWita
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks, master/stable-0.5.y now properly handles cherrypicking from 
-incomplete series.
+On Thu, Oct 01, 2020 at 03:26:00PM -0400, Konstantin Ryabitsev wrote:
 
-Best regards,
--K
+> Hrmph, apparently my assumption on what headers will be generated by=20
+> policy=3D8bit was pretty wrong. I pushed a commit to master and=20
+> stable-0.5.y that should properly set the charset and generate the=20
+> necessary headers.
+
+This fix seems to have caused some issues for me - using msmtp with
+kernel.org on 1594818110-786-1-git-send-email-brent.lu@intel.com I'm
+getting headers with:
+
+To: alsa-devel@alsa-project.org, Brent Lu <brent.lu@intel.com>
+Cc: =3D?utf-8?q?linux-kernel=3D40vger=3D2Ekernel=3D2Eorg=3D2C_Kai_Vehmanen_=
+=3D3Ckai=3D2Eve?=3D
+ =3D?utf-8?q?hmanen=3D40linux=3D2Eintel=3D2Ecom=3D3E=3D2C_Pierre-Louis_Boss=
+art_=3D3Cpierre?=3D
+ =3D?utf-8?q?-louis=3D2Ebossart=3D40linux=3D2Eintel=3D2Ecom=3D3E=3D2C_Takas=
+hi_Iwai_=3D3Ctiwa?=3D
+ =3D?utf-8?q?i=3D40suse=3D2Ecom=3D3E=3D2C_Guennadi_Liakhovetski_=3D3Cguenna=
+di=3D2Eliakhove?=3D
+ =3D?utf-8?q?tski=3D40linux=3D2Eintel=3D2Ecom=3D3E=3D2C_Liam_Girdwood_=3D3C=
+lgirdwood=3D40gma?=3D
+ =3D?utf-8?q?il=3D2Ecom=3D3E=3D2C_Amadeusz_S=3DC5=3D82awi=3DC5=3D84ski_=3D3=
+Camadeuszx=3D2Eslawin?=3D
+ =3D?utf-8?q?ski=3D40linux=3D2Eintel=3D2Ecom=3D3E?=3D
+
+(in message ID 160167211500.21762.13369928255363041989.b4-ty@kernel.org
+which I'll manage to send) which /usr/sbin/sendmail -t from both msmtp
+and exim has a lot of trouble parsing and since b4 has generated the
+thanks I now can't ask the database (though I don't immediately see a
+way to extract it anyway).  I think we need a sidecar file with the
+unencoded e-mail addresses in it?
+ask b4 what addresses are buried in there even if=20
+
+--AzNpbZlgThVzWita
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl93lx0ACgkQJNaLcl1U
+h9BWWwf8D6y8EDib0jNCjnazAJ2XCrWiXkPWf6UOO2LsbFcFTV/K4oR15yF/Sb7V
+L5SQYy+deLsrSDclXFKVLLwiLQAIPXmaXJlns2tuAZp1r10u2YJWXrG5qurcCSUH
+PJrWMF+/itNna7c6bla51Y4J3aonE8Vldg1+blk8rTnKqKie5Pvc3I7g0Xs3/nbh
+iPAo0UPVCG/3FZ2UjhhZbU9RdrYhrJaWv0bGd7j0tlsvQNj7uxbCXPhbH0Otg0Wk
+gCRhE9bEUOzPGPeJZmJTfDP4fGuJvmkuMoJoH0fBjjptBZS9/izXY6tiz+FF+i+Y
++tRE+J9QNT3OdqRlDdlFMnVY2uQU/w==
+=6tkM
+-----END PGP SIGNATURE-----
+
+--AzNpbZlgThVzWita--
