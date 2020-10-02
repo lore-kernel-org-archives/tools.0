@@ -1,82 +1,61 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
- by mx.groups.io with SMTP id smtpd.web12.11240.1601642113609490093
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+ by mx.groups.io with SMTP id smtpd.web10.14077.1601644435764981790
  for <tools@linux.kernel.org>;
- Fri, 02 Oct 2020 05:35:13 -0700
+ Fri, 02 Oct 2020 06:13:56 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=chmAU2Oh;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.160.182, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qt1-f182.google.com with SMTP id m23so1014455qtq.4
-        for <tools@linux.kernel.org>; Fri, 02 Oct 2020 05:35:13 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=DbUKc00L;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.172, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f172.google.com with SMTP id q5so1236315qkc.2
+        for <tools@linux.kernel.org>; Fri, 02 Oct 2020 06:13:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=9puPbp+de6HHTIleNpLOhgTKN8Awmu5KUNAateM0eq4=;
-        b=chmAU2Ohj88Qa2SDWhYBf3/4USIsGZATM8ZbgE81QvdwlK42OD+SoRu280uAf+sUeg
-         gqXN609KTdu76COfdwUjZhoQzr1av59NToHOY/HRXMBLK+Qrkpk3mNPaosbz2AhKAt9f
-         T4BsMKFtIzkzJs0QFAMQ1ZQp4ZWN/vELA+mMQ=
+        bh=luj9eIT8LQ0qwhcr05g83sFr1lZFzPrhY3QCoHmpsDM=;
+        b=DbUKc00LHJj6v+TzjTd6jg9C1tC9HCtVIHPzMN5XSHh5DUINRnUnoNua7fyKAsFV5l
+         MI1iTczutuhiu3lHFliEdWAshklfTF4rXVT/h0CITq0eCyc71RY15Gx5xGHy5gQA4kyv
+         udeDAvQjhJerARJUBeFExyaEp0xgQg+IRtx1E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=9puPbp+de6HHTIleNpLOhgTKN8Awmu5KUNAateM0eq4=;
-        b=cqgXZ3H3Z+XmVWg/m5rDgVAx95Iktt+fF6My7WX8FTWrXC+PcKi8EP4HTY/yb3+FhC
-         x8uy6sPs5peDaM4uhJ4TXDVXUfWipHTMDexqPqrLOWLuKktzsZYxoYuLnsYFPBHmQTov
-         5BsscjRcxfK3DMhTHlNQn5jkOB+hl9FuV9pI7be7OGc6GZd3W8ZeJrO2BBcMOmDd59GO
-         f/Y1DUIafb1yG10x4nL8uBg8iktrwXkBfJf6F+B/PDZ7PyqLWjmCApBI/EIwBPX0jHmP
-         fg5EhrenBDZQ33hUp+w1/BkU5ua+D/zQZiZnyEJcjHXI0F8TxwWGA/4T1gWmxrGdsjS8
-         5WUQ==
-X-Gm-Message-State: AOAM530e+iPHIjyprb0+6YqE8VMAgCoiTu6irQGzwmrzQNhg+qadl16p
-	dmX5ojcqAw6IzvjOo/o7S9GioGQ1ObDj4fat
-X-Google-Smtp-Source: ABdhPJxSjFQMvP4B6h+ibCiXHDu2eUuzqOTt9AsomdlVruQSWMYlSD7M2J5H+x1cbhXiKpua1dwi3g==
-X-Received: by 2002:ac8:7281:: with SMTP id v1mr1946745qto.229.1601642112488;
-        Fri, 02 Oct 2020 05:35:12 -0700 (PDT)
+        bh=luj9eIT8LQ0qwhcr05g83sFr1lZFzPrhY3QCoHmpsDM=;
+        b=Ig1rhpJXJkO6Hh08f94XgEVVuN6eeFEphIMzi5fzjJ75bGXBJEHYchlWku4bXgbD7H
+         m7/unEJlpEyDtZkygbPid7kviU+7v+ZRIEMHTfXdlgDQ8QHfb/1mouR3UgddpWnpvxLs
+         Lw7UKElmq+htDvq9lS09iU2bh4WiY0Rkx69hFyKbUrDRthuMmWC25HloPwRc38m4l43r
+         NHO50jHoIvbX07xlR6w53wDhNXFa06CCumfC2wWglRE2DDizK0Zm/+IuWz37tGLHM9cs
+         7ZfKgzz2enRrmMIM7JcTccfTh4blM9oxyWuWLF8GfkA0/vbA8MiiUyGuN/TPcj9EM7xV
+         FP9g==
+X-Gm-Message-State: AOAM532UiwIzabzWcjYzi9I3LR8gAycFTSGBZCMJ5+OCVq6Vvs3sxd+r
+	pFpqfC/DQCfrw8Lv4U5Q8C05yg==
+X-Google-Smtp-Source: ABdhPJzzwn6CmkKmEZLJHWf4aJzOIDE+ndodHXfe16P1qPTa1uBKeE/M970Z2T5+mPOgyUkSClGlpA==
+X-Received: by 2002:a05:620a:13a5:: with SMTP id m5mr2078312qki.280.1601644434705;
+        Fri, 02 Oct 2020 06:13:54 -0700 (PDT)
 Return-Path: <konstantin@linuxfoundation.org>
 Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id l21sm931708qkl.128.2020.10.02.05.35.11
+        by smtp.gmail.com with ESMTPSA id b199sm993235qkg.116.2020.10.02.06.13.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2020 05:35:11 -0700 (PDT)
-Date: Fri, 2 Oct 2020 08:35:09 -0400
+        Fri, 02 Oct 2020 06:13:53 -0700 (PDT)
+Date: Fri, 2 Oct 2020 09:13:51 -0400
 From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, krzk@kernel.org
-Subject: Re: [tools] b4 diff -m: max() arg is an empty sequence
-Message-ID: <20201002123509.pcbxthxlhaonm2ie@chatter.i7.local>
-References: <20200920163117.GA15084@kozik-lap>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: b4: 'NoneType' object has no attribute 'msgid'
+Message-ID: <20201002131351.yq55y53ztsdlfkua@chatter.i7.local>
+References: <20200820154740.GA5195@kozik-lap>
 MIME-Version: 1.0
-In-Reply-To: <20200920163117.GA15084@kozik-lap>
+In-Reply-To: <20200820154740.GA5195@kozik-lap>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
-On Sun, Sep 20, 2020 at 06:31:17PM +0200, Krzysztof Kozlowski wrote:
+On Thu, Aug 20, 2020 at 05:47:40PM +0200, Krzysztof Kozlowski wrote:
 > Hi,
 > 
-> $ b4 mbox '1600234622-8815-2-git-send-email-yilun.xu@intel.com'
-> $ b4 mbox '1599553645-26928-1-git-send-email-yilun.xu@intel.com'
-> 
-> (the second mbox is actually a cover letter as b4 could not download the
-> actual patch directly via its Message-Id)
-> 
-> $ b4 diff -m 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx 1600234622-8815-2-git-send-email-yilun.xu@intel.com.mbx
-> 
-> Loading 8 messages from 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx
-> Traceback (most recent call last):
->   File "/home/kozik/.local/bin/b4", line 11, in <module>
->     sys.exit(cmd())
->   File "/home/kozik/.local/lib/python3.6/site-packages/b4/command.py", line 222, in cmd
->     cmdargs.func(cmdargs)
->   File "/home/kozik/.local/lib/python3.6/site-packages/b4/command.py", line 65, in cmd_diff
->     b4.diff.main(cmdargs)
->   File "/home/kozik/.local/lib/python3.6/site-packages/b4/diff.py", line 115, in main
->     lser, user = diff_mboxes(cmdargs)
->   File "/home/kozik/.local/lib/python3.6/site-packages/b4/diff.py", line 108, in diff_mboxes
->     chunks.append(lmbx.series[max(lmbx.series.keys())])
-> ValueError: max() arg is an empty sequence
+> I hit Python exception (AttributeError: 'NoneType' object has no
+> attribute 'msgid'):
 
-Thanks, this crasher is now fixed in master and stable-0.5.y:
+Thanks, master/stable-0.5.y now properly handles cherrypicking from 
+incomplete series.
 
-$ b4 diff -m 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx 1600234622-8815-2-git-send-email-yilun.xu@intel.com.mbx
-Loading 8 messages from 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx
-No valid patches found in 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx
-
-
+Best regards,
 -K
