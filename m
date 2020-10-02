@@ -1,80 +1,61 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
- by mx.groups.io with SMTP id smtpd.web12.2154.1601580364284846686
+Received: from mail-qv1-f65.google.com (mail-qv1-f65.google.com [209.85.219.65])
+ by mx.groups.io with SMTP id smtpd.web10.13096.1601641440334982069
  for <tools@linux.kernel.org>;
- Thu, 01 Oct 2020 12:26:04 -0700
+ Fri, 02 Oct 2020 05:24:00 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=VlxQPrgC;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.174, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f174.google.com with SMTP id o5so6806211qke.12
-        for <tools@linux.kernel.org>; Thu, 01 Oct 2020 12:26:04 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=VLITYOBA;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.219.65, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qv1-f65.google.com with SMTP id h1so628162qvo.9
+        for <tools@linux.kernel.org>; Fri, 02 Oct 2020 05:24:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=2FX0I/WWSZ9ahVmjcW+ivx6kpd8nzkEMkSy9HLUr9sE=;
-        b=VlxQPrgCRCPFj5KfAhtlbxGkXhnJkaiTCyEC9Dn4NSGVZuF62cjLGbBd49hUwXfLfU
-         7YbYhuEMn8RR1wN71QNy6MKkKS2hQwrWMFjM7LLnZ0gAHAIa4WW9YHssebFtwaUorlMl
-         Mm1LJdR+ssdABxiIk5Afr5U/VUxE7M8KQVZhU=
+         :content-disposition:in-reply-to;
+        bh=g4n1dQJZyl4qp4zjOwJk8tY/250TnQsb2r5QbJt3KoM=;
+        b=VLITYOBAZH1U/zNlzkm5VAEaosdCtgmOayGKkPbI88APFVGq9Ucr8OYGKC5x14IbST
+         9PeRFHfmLyPcSzdYEPiuI7JVCV81z8WyNXmqvRf9oVly9rtazw+kABfXuC3Veqx9By9j
+         LCDN/XUu6o6CNMv5LugI9yb7fHBJNmeKtUUsY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=2FX0I/WWSZ9ahVmjcW+ivx6kpd8nzkEMkSy9HLUr9sE=;
-        b=Z+qsv2pjclLSjR+A7Mtpr7UlAb1rGOAvGsmbmL4ezCQGMRICVobToKaD9NPu3y6bRt
-         70FWrWHN0jfhbOL+XqQ3IqHVgLp8AX52qngXvzfxBuxDQCM9znCjAz+OvKj6Eyq698vM
-         hYu8TR/FoJYgguRwWS/uJ+3ooLzA2rAfXB9/mwWibc50KXjw7MAWRb8NZ9bZ/E3bAXU6
-         MDR4uWcU070aNfIC2p9/mq92nedyOqZ1mctYlImwPhYxqUUgfOeumvN5ajUXtDTpM1qY
-         L4vc+px3POVT6BYEU7wVsAyqQPJouJnDU6WSo2KNk0iXtwV0C3kyafOzvjt9+3H15XPg
-         WMWQ==
-X-Gm-Message-State: AOAM531y3uoksVknqh/SuqO+X36ZlXeIm3go5f8NZRfzoSq4T/lF1EN+
-	O/iz27tymHF1AWrc+6GP1VTFJg==
-X-Google-Smtp-Source: ABdhPJydQbPl+j4SWn8Cxfwlww71zJdMdIdt/uQlhkiLJwMYUprSSB1fFnvjR6KpycylDvsggdTpqQ==
-X-Received: by 2002:a37:b8c2:: with SMTP id i185mr8930203qkf.87.1601580363334;
-        Thu, 01 Oct 2020 12:26:03 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to;
+        bh=g4n1dQJZyl4qp4zjOwJk8tY/250TnQsb2r5QbJt3KoM=;
+        b=kI9xVJjwedA/DrHA0EES9mJgyqc3xTZMWX2GjZq/aAo7rpdtqlIUoMVKOOZA8f45yV
+         hgEaSnf8s+pJjCBux3tfiWmU2RQJYeneWkBYTCaXusgVfEVa7pt2mYSaRwkl68ko3sCD
+         Ln7kZIjCTI8b+2OuGM+/sakUsjEdgPAcBFQ2PDoUG/IF7b4IOPjfguGoRpuTA7sM1lFE
+         lAGaC9Z7xEiAo5hD4Ix/T3IRMwxb0oQI26cvjqkl4Et2svwSoeNj6I24It7nHpvzPloo
+         mA/etsc6uOxRfO41KdSpgAri22aOWGy2HkAgi6flW43dEfTqBbiVMt/0J1IqgPHmSMTn
+         sX+g==
+X-Gm-Message-State: AOAM533d2cstdYq8MbAEBHN1y+//wJbWP+Qg8y0kIP6RYBAnag5gYELX
+	xm+EiLprlvze2TJcp6tehvaJ+Q==
+X-Google-Smtp-Source: ABdhPJw/Lew1N0hp/55i88/vAVoiqdFK14nFIMgyUs9C0geP9KypWUgb6LMnFzMhrMOsgzNK1bLjiQ==
+X-Received: by 2002:a0c:d443:: with SMTP id r3mr1913776qvh.17.1601641439336;
+        Fri, 02 Oct 2020 05:23:59 -0700 (PDT)
 Return-Path: <konstantin@linuxfoundation.org>
 Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id l12sm7191730qkg.54.2020.10.01.12.26.02
+        by smtp.gmail.com with ESMTPSA id o13sm903050qtq.41.2020.10.02.05.23.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Oct 2020 12:26:02 -0700 (PDT)
-Date: Thu, 1 Oct 2020 15:26:00 -0400
+        Fri, 02 Oct 2020 05:23:58 -0700 (PDT)
+Date: Fri, 2 Oct 2020 08:23:56 -0400
 From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: =?utf-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>
-Cc: tools@linux.kernel.org
-Subject: Re: b4: UTF-8 in replies
-Message-ID: <20201001192600.fo2rivqc4nklw4oj@chatter.i7.local>
-References: <20201001171405.GA17873@qmqm.qmqm.pl>
- <20201001180541.poupp36rtajzkihs@chatter.i7.local>
- <20201001183647.GA23339@qmqm.qmqm.pl>
- <20201001184109.GB23339@qmqm.qmqm.pl>
+To: Rob Herring <robherring2@gmail.com>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: b4: traceback on stdout mbox output
+Message-ID: <20201002122356.oygd22atfswhxgid@chatter.i7.local>
+References: <CAL_JsqJhxJKbaeUjH7MVhuhuU1o9xm-eE2+sYr-4yit1btG+SQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20201001184109.GB23339@qmqm.qmqm.pl>
+In-Reply-To: <CAL_JsqJhxJKbaeUjH7MVhuhuU1o9xm-eE2+sYr-4yit1btG+SQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 01, 2020 at 08:41:09PM +0200, Michał Mirosław wrote:
-> > At least K9 Mail on Android requires MIME headers to properly decode 
-> > it.
-> > The additional headers are actually required by RFC 5322 to include
-> > 8-bit data in the message.
-> > 
-> > I guess the fix would be to just include Content-Type (and others) with
-> > charset="utf8".
+On Wed, Sep 23, 2020 at 05:07:08PM -0600, Rob Herring wrote:
+> Hi Konstantin,
 > 
-> According to RFC2045 those should be enough:
-> 
-> MIME-Version: 1.0
-> Content-Type: text/plain; charset=utf-8
-> Content-Transfer-Encoding: 8bit
+> I'm getting a traceback on a particular thread when I output to
+> stdout. File output is fine.
 
-Hrmph, apparently my assumption on what headers will be generated by 
-policy=8bit was pretty wrong. I pushed a commit to master and 
-stable-0.5.y that should properly set the charset and generate the 
-necessary headers.
+Indeed, we were needlessly trying to output unicode. It's fixed in the 
+latest master and stable-0.5.y where we dump bytes instead.
 
-I intend to cut 0.6.0 tomorrow that will incorporate this fix, among 
-several others.
-
-Thanks!
+Thanks,
 -K
