@@ -1,61 +1,82 @@
-Received: from mail-qv1-f65.google.com (mail-qv1-f65.google.com [209.85.219.65])
- by mx.groups.io with SMTP id smtpd.web10.13096.1601641440334982069
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+ by mx.groups.io with SMTP id smtpd.web12.11240.1601642113609490093
  for <tools@linux.kernel.org>;
- Fri, 02 Oct 2020 05:24:00 -0700
+ Fri, 02 Oct 2020 05:35:13 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=VLITYOBA;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.219.65, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qv1-f65.google.com with SMTP id h1so628162qvo.9
-        for <tools@linux.kernel.org>; Fri, 02 Oct 2020 05:24:00 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=chmAU2Oh;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.160.182, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qt1-f182.google.com with SMTP id m23so1014455qtq.4
+        for <tools@linux.kernel.org>; Fri, 02 Oct 2020 05:35:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
+        h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=g4n1dQJZyl4qp4zjOwJk8tY/250TnQsb2r5QbJt3KoM=;
-        b=VLITYOBAZH1U/zNlzkm5VAEaosdCtgmOayGKkPbI88APFVGq9Ucr8OYGKC5x14IbST
-         9PeRFHfmLyPcSzdYEPiuI7JVCV81z8WyNXmqvRf9oVly9rtazw+kABfXuC3Veqx9By9j
-         LCDN/XUu6o6CNMv5LugI9yb7fHBJNmeKtUUsY=
+        bh=9puPbp+de6HHTIleNpLOhgTKN8Awmu5KUNAateM0eq4=;
+        b=chmAU2Ohj88Qa2SDWhYBf3/4USIsGZATM8ZbgE81QvdwlK42OD+SoRu280uAf+sUeg
+         gqXN609KTdu76COfdwUjZhoQzr1av59NToHOY/HRXMBLK+Qrkpk3mNPaosbz2AhKAt9f
+         T4BsMKFtIzkzJs0QFAMQ1ZQp4ZWN/vELA+mMQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+        h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=g4n1dQJZyl4qp4zjOwJk8tY/250TnQsb2r5QbJt3KoM=;
-        b=kI9xVJjwedA/DrHA0EES9mJgyqc3xTZMWX2GjZq/aAo7rpdtqlIUoMVKOOZA8f45yV
-         hgEaSnf8s+pJjCBux3tfiWmU2RQJYeneWkBYTCaXusgVfEVa7pt2mYSaRwkl68ko3sCD
-         Ln7kZIjCTI8b+2OuGM+/sakUsjEdgPAcBFQ2PDoUG/IF7b4IOPjfguGoRpuTA7sM1lFE
-         lAGaC9Z7xEiAo5hD4Ix/T3IRMwxb0oQI26cvjqkl4Et2svwSoeNj6I24It7nHpvzPloo
-         mA/etsc6uOxRfO41KdSpgAri22aOWGy2HkAgi6flW43dEfTqBbiVMt/0J1IqgPHmSMTn
-         sX+g==
-X-Gm-Message-State: AOAM533d2cstdYq8MbAEBHN1y+//wJbWP+Qg8y0kIP6RYBAnag5gYELX
-	xm+EiLprlvze2TJcp6tehvaJ+Q==
-X-Google-Smtp-Source: ABdhPJw/Lew1N0hp/55i88/vAVoiqdFK14nFIMgyUs9C0geP9KypWUgb6LMnFzMhrMOsgzNK1bLjiQ==
-X-Received: by 2002:a0c:d443:: with SMTP id r3mr1913776qvh.17.1601641439336;
-        Fri, 02 Oct 2020 05:23:59 -0700 (PDT)
+        bh=9puPbp+de6HHTIleNpLOhgTKN8Awmu5KUNAateM0eq4=;
+        b=cqgXZ3H3Z+XmVWg/m5rDgVAx95Iktt+fF6My7WX8FTWrXC+PcKi8EP4HTY/yb3+FhC
+         x8uy6sPs5peDaM4uhJ4TXDVXUfWipHTMDexqPqrLOWLuKktzsZYxoYuLnsYFPBHmQTov
+         5BsscjRcxfK3DMhTHlNQn5jkOB+hl9FuV9pI7be7OGc6GZd3W8ZeJrO2BBcMOmDd59GO
+         f/Y1DUIafb1yG10x4nL8uBg8iktrwXkBfJf6F+B/PDZ7PyqLWjmCApBI/EIwBPX0jHmP
+         fg5EhrenBDZQ33hUp+w1/BkU5ua+D/zQZiZnyEJcjHXI0F8TxwWGA/4T1gWmxrGdsjS8
+         5WUQ==
+X-Gm-Message-State: AOAM530e+iPHIjyprb0+6YqE8VMAgCoiTu6irQGzwmrzQNhg+qadl16p
+	dmX5ojcqAw6IzvjOo/o7S9GioGQ1ObDj4fat
+X-Google-Smtp-Source: ABdhPJxSjFQMvP4B6h+ibCiXHDu2eUuzqOTt9AsomdlVruQSWMYlSD7M2J5H+x1cbhXiKpua1dwi3g==
+X-Received: by 2002:ac8:7281:: with SMTP id v1mr1946745qto.229.1601642112488;
+        Fri, 02 Oct 2020 05:35:12 -0700 (PDT)
 Return-Path: <konstantin@linuxfoundation.org>
 Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id o13sm903050qtq.41.2020.10.02.05.23.58
+        by smtp.gmail.com with ESMTPSA id l21sm931708qkl.128.2020.10.02.05.35.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2020 05:23:58 -0700 (PDT)
-Date: Fri, 2 Oct 2020 08:23:56 -0400
+        Fri, 02 Oct 2020 05:35:11 -0700 (PDT)
+Date: Fri, 2 Oct 2020 08:35:09 -0400
 From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Rob Herring <robherring2@gmail.com>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4: traceback on stdout mbox output
-Message-ID: <20201002122356.oygd22atfswhxgid@chatter.i7.local>
-References: <CAL_JsqJhxJKbaeUjH7MVhuhuU1o9xm-eE2+sYr-4yit1btG+SQ@mail.gmail.com>
+To: tools@linux.kernel.org, krzk@kernel.org
+Subject: Re: [tools] b4 diff -m: max() arg is an empty sequence
+Message-ID: <20201002123509.pcbxthxlhaonm2ie@chatter.i7.local>
+References: <20200920163117.GA15084@kozik-lap>
 MIME-Version: 1.0
-In-Reply-To: <CAL_JsqJhxJKbaeUjH7MVhuhuU1o9xm-eE2+sYr-4yit1btG+SQ@mail.gmail.com>
+In-Reply-To: <20200920163117.GA15084@kozik-lap>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
-On Wed, Sep 23, 2020 at 05:07:08PM -0600, Rob Herring wrote:
-> Hi Konstantin,
+On Sun, Sep 20, 2020 at 06:31:17PM +0200, Krzysztof Kozlowski wrote:
+> Hi,
 > 
-> I'm getting a traceback on a particular thread when I output to
-> stdout. File output is fine.
+> $ b4 mbox '1600234622-8815-2-git-send-email-yilun.xu@intel.com'
+> $ b4 mbox '1599553645-26928-1-git-send-email-yilun.xu@intel.com'
+> 
+> (the second mbox is actually a cover letter as b4 could not download the
+> actual patch directly via its Message-Id)
+> 
+> $ b4 diff -m 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx 1600234622-8815-2-git-send-email-yilun.xu@intel.com.mbx
+> 
+> Loading 8 messages from 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx
+> Traceback (most recent call last):
+>   File "/home/kozik/.local/bin/b4", line 11, in <module>
+>     sys.exit(cmd())
+>   File "/home/kozik/.local/lib/python3.6/site-packages/b4/command.py", line 222, in cmd
+>     cmdargs.func(cmdargs)
+>   File "/home/kozik/.local/lib/python3.6/site-packages/b4/command.py", line 65, in cmd_diff
+>     b4.diff.main(cmdargs)
+>   File "/home/kozik/.local/lib/python3.6/site-packages/b4/diff.py", line 115, in main
+>     lser, user = diff_mboxes(cmdargs)
+>   File "/home/kozik/.local/lib/python3.6/site-packages/b4/diff.py", line 108, in diff_mboxes
+>     chunks.append(lmbx.series[max(lmbx.series.keys())])
+> ValueError: max() arg is an empty sequence
 
-Indeed, we were needlessly trying to output unicode. It's fixed in the 
-latest master and stable-0.5.y where we dump bytes instead.
+Thanks, this crasher is now fixed in master and stable-0.5.y:
 
-Thanks,
+$ b4 diff -m 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx 1600234622-8815-2-git-send-email-yilun.xu@intel.com.mbx
+Loading 8 messages from 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx
+No valid patches found in 1599553645-26928-1-git-send-email-yilun.xu@intel.com.mbx
+
+
 -K
