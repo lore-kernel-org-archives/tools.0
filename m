@@ -1,117 +1,92 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web11.316.1601916790583413005
+Received: from smtprelay.hostedemail.com (smtprelay.hostedemail.com [216.40.44.215])
+ by mx.groups.io with SMTP id smtpd.web10.2220.1601753776097385612
  for <tools@linux.kernel.org>;
- Mon, 05 Oct 2020 09:53:10 -0700
+ Sat, 03 Oct 2020 12:36:16 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=gBC/IzIe;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 7BDA1207BC;
-	Mon,  5 Oct 2020 16:53:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1601916790;
-	bh=p/E99tTjql4QstxaT4SSl5drfyNj4h+kQn/1L+FU6Hg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gBC/IzIeywxmI9gsb/JTsx+zOOUJIooFw3wfYC06TBiHzICVtnlgNaAv/yO1EfA51
-	 zVseZLj5T0M70hmLa6qq17YAe111X+Q9rT1NlLPW8KVTi2SkXaQsGts5rIE+F43U3z
-	 nybuOkwnpLc2tf4yEu29xxvUOBIsDUDyDKfTSVTQ=
-Date: Mon, 5 Oct 2020 17:52:06 +0100
-From: "Mark Brown" <broonie@kernel.org>
-To: Joe Perches <joe@perches.com>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	Julia Lawall <julia.lawall@inria.fr>, tools@linux.kernel.org,
-	linux-iio@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-	linux-crypto@vger.kernel.org,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Jerome Brunet <jbrunet@baylibre.com>, linux-acpi@vger.kernel.org,
-	David Lechner <david@lechnology.com>,
-	Valdis =?utf-8?Q?Kl=C4=93tnieks?= <valdis.kletnieks@vt.edu>,
-	kernel-janitors@vger.kernel.org, drbd-dev@lists.linbit.com,
-	openipmi-developer@lists.sourceforge.net,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	linux-ide@vger.kernel.org, linux-amlogic@lists.infradead.org,
-	linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Thomas Gleixner <tglx@linutronix.de>,
-	linux-wireless@vger.kernel.org,
-	Neil Armstrong <narmstrong@baylibre.com>
+ dkim=missing; spf=none, err=permanent DNS error (domain: perches.com, ip: 216.40.44.215, mailfrom: joe@perches.com)
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+	by smtprelay04.hostedemail.com (Postfix) with ESMTP id DC1A2180A7FF0;
+	Sat,  3 Oct 2020 19:36:14 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:960:973:982:988:989:1260:1277:1311:1313:1314:1345:1359:1431:1437:1515:1516:1518:1534:1541:1593:1594:1711:1730:1747:1777:1792:2110:2393:2553:2559:2562:2691:2828:3138:3139:3140:3141:3142:3353:3622:3865:3866:3867:3868:3870:3871:3874:4321:5007:6248:6742:6743:7903:7974:10004:10400:10848:11232:11658:11914:12297:12740:12760:12895:13069:13311:13357:13439:14659:14721:14777:21080:21325:21433:21627:30054:30090:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
+X-HE-Tag: ship26_570a7fe271af
+X-Filterd-Recvd-Size: 3575
+Received: from XPS-9350.home (unknown [47.151.133.149])
+	(Authenticated sender: joe@perches.com)
+	by omf13.hostedemail.com (Postfix) with ESMTPA;
+	Sat,  3 Oct 2020 19:36:11 +0000 (UTC)
+Message-ID: <306974234222092651f7497504f8c03e1304926b.camel@perches.com>
 Subject: Re: [PATCH 00/18] use semicolons rather than commas to separate statements
-Message-ID: <20201005165206.GA2440@sirena.org.uk>
-References: <160132172369.55460.9237357219623604216.b4-ty@kernel.org>
- <b1174f9be2ce65f6b5ebefcba0b48e792926abbc.camel@perches.com>
- <20200929113745.GB4799@sirena.org.uk>
- <db26d49401dc0bd6b9013a603a155f9827f404a4.camel@perches.com>
- <20201001110150.GA6715@sirena.org.uk>
- <f44d19ad596f261c0287c9ab18c45161003efb43.camel@perches.com>
- <20201003191501.o56tqq63d2buq5ox@chatter.i7.local>
- <alpine.DEB.2.22.394.2010032118420.2741@hadrien>
- <20201003193137.z2bpwzlz5a66kkex@chatter.i7.local>
- <9ab43333596f08abbbbbf1fa8cdf1ded4b65af2a.camel@perches.com>
+From: Joe Perches <joe@perches.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Mark Brown <broonie@kernel.org>, tools@linux.kernel.org, 
+ linux-iio@vger.kernel.org, Julia Lawall <Julia.Lawall@inria.fr>, 
+ linux-stm32@st-md-mailman.stormreply.com, linux-crypto@vger.kernel.org, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, linux-block@vger.kernel.org,
+ linux-kernel@vger.kernel.org,  Jerome Brunet <jbrunet@baylibre.com>,
+ linux-acpi@vger.kernel.org, David Lechner <david@lechnology.com>,  Valdis
+ =?UTF-8?Q?Kl=C4=93tnieks?= <valdis.kletnieks@vt.edu>,
+ kernel-janitors@vger.kernel.org,  drbd-dev@lists.linbit.com,
+ openipmi-developer@lists.sourceforge.net, Martin Blumenstingl
+ <martin.blumenstingl@googlemail.com>, linux-ide@vger.kernel.org, 
+ linux-amlogic@lists.infradead.org, linux-clk@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, Thomas Gleixner <tglx@linutronix.de>,
+  linux-wireless@vger.kernel.org, Neil Armstrong <narmstrong@baylibre.com>
+Date: Sat, 03 Oct 2020 12:36:10 -0700
+In-Reply-To: <c7fd58ebd81f8731fc03434b2bdd8aa4bf99335a.camel@perches.com>
+References: <1601233948-11629-1-git-send-email-Julia.Lawall@inria.fr>
+	 <160132172369.55460.9237357219623604216.b4-ty@kernel.org>
+	 <b1174f9be2ce65f6b5ebefcba0b48e792926abbc.camel@perches.com>
+	 <20200929113745.GB4799@sirena.org.uk>
+	 <db26d49401dc0bd6b9013a603a155f9827f404a4.camel@perches.com>
+	 <20201001110150.GA6715@sirena.org.uk>
+	 <f44d19ad596f261c0287c9ab18c45161003efb43.camel@perches.com>
+	 <20201003191501.o56tqq63d2buq5ox@chatter.i7.local>
+	 <c7fd58ebd81f8731fc03434b2bdd8aa4bf99335a.camel@perches.com>
+User-Agent: Evolution 3.36.4-0ubuntu1 
 MIME-Version: 1.0
-In-Reply-To: <9ab43333596f08abbbbbf1fa8cdf1ded4b65af2a.camel@perches.com>
-X-Cookie: God is real, unless declared integer.
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 228
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
-Content-Disposition: inline
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
 
---sdtB3X0nJg68CQEu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sat, 2020-10-03 at 12:27 -0700, Joe Perches wrote:
+> On Sat, 2020-10-03 at 15:15 -0400, Konstantin Ryabitsev wrote:
+> > On Sat, Oct 03, 2020 at 11:40:48AM -0700, Joe Perches wrote:
+> > > (Adding tools and Konstantin Ryabitsev)
+> > > 
+> > > There seems to be some mismatch between b4's use of the
+> > > cover letter to a patch series and what maintainers that
+> > > apply a subset of the patches in the patch series.
+> > > 
+> > > The merge description shows the entire patch series as
+> > > applied, but the actual merge is only a subset of the
+> > > series.
+> > > 
+> > > Can this be improved in b4?
+> > 
+> > So, the following logic should be applied:
+> > 
+> > - if the entire series was applied, reply to 0/n
+> > - if a subset only is applied, reply to each n/n of the patch that was 
+> >   cherry-picked out of the series
+> > 
+> > Is that an accurate summary?
+> 
+> Exactly so, thanks.
 
-On Sat, Oct 03, 2020 at 12:43:13PM -0700, Joe Perches wrote:
-> On Sat, 2020-10-03 at 15:31 -0400, Konstantin Ryabitsev wrote:
+And there's no need to commit the [0/n] cover letter as a
+part of the merge unless the entire series was committed.
 
-> > I'm worried that this can get unwieldy for series of 50 patches where 4=
-9=20
-> > got applied. Would the following be better:
+Or perhaps trim the cover letter to exclude the files
+modified by the patch series and show only the actual files
+committed.
 
-=2E..
+And I believe b4 inserts this line ahead of the 0/n series
+cover letter description for the merge:
 
-> > A subset of these patches was applied to
-> >=20
-> >   https://...
-> >=20
-> > Thanks!
-> >=20
-> > [5/18] regmap: debugfs:
-> >        commit:
+    Merge series "<series>" from <author>:
 
-It's definitely an improvement but TBH I'm not sure how much it's going
-to help those struggling to parse the current messages.
+Perhaps that like could be "partial merge of" when a partial
+merge occurs or left as is if the entire series is applied.
 
-> > I think this is a better solution than potentially flooding everyone=20
-> > with 49 emails.
+cheers, Joe
 
-I would tend to prefer cutting down on mail volume but I don't think
-there's any way to keep everyone happy with this stuff.
-
-> I think it would be better to reply individually as
-> the likelihood that the maintainer skips just a few
-> patches of a large series is relatively low.
-
-It's not at all unusual for driver updates to both add new DT bindings
-(either for entirely new drivers or new properties/compatibles for
-existing drivers) and also have DTS file updates using those bindings,
-these go via separate trees.
-
---sdtB3X0nJg68CQEu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl97TzUACgkQJNaLcl1U
-h9DI9Qf/dhOghwYGEqexRQ644ACI4w9j7rH7Z4qsTYl+rdj06q5wrcOFnyypjB/j
-N/Qx3llsTbG0UagMLyGeuFi5bzhxALnrvmrbv8cBPI0/3jS2D7u22cD5m6toS+Tp
-f08tgo7VkjfkB3QCZn9A7XGAPq3bEvoaCvFalxqGt0FPUw5kVGrboVa1dgJCzRL/
-CtWXDQfG9vy5ZVs0cY+s+O9yvAbrZJyMPaKkeoa7dwnqzOQz1Ga4ADtUZsUWyieK
-wuCO/HNGdf77CmSbOuG6BMrWi5SGoEtRmVO+w5NmYO1yOfnooSih3uWDR4H01xVg
-3zFgbOHRZMIwAEzTfTqRA4vzPMXRQQ==
-=wwYC
------END PGP SIGNATURE-----
-
---sdtB3X0nJg68CQEu--
