@@ -1,66 +1,150 @@
-Received: from mail2-relais-roc.national.inria.fr (mail2-relais-roc.national.inria.fr [192.134.164.83])
- by mx.groups.io with SMTP id smtpd.web10.1866.1601752734394458663
+Received: from mail-qt1-f194.google.com (mail-qt1-f194.google.com [209.85.160.194])
+ by mx.groups.io with SMTP id smtpd.web11.2110.1601753503397183525
  for <tools@linux.kernel.org>;
- Sat, 03 Oct 2020 12:18:55 -0700
+ Sat, 03 Oct 2020 12:31:43 -0700
 Authentication-Results: mx.groups.io;
- dkim=missing; spf=pass (domain: inria.fr, ip: 192.134.164.83, mailfrom: julia.lawall@inria.fr)
-X-IronPort-AV: E=Sophos;i="5.77,332,1596492000"; 
-   d="scan'208";a="470811687"
-Received: from abo-173-121-68.mrs.modulonet.fr (HELO hadrien) ([85.68.121.173])
-  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 03 Oct 2020 21:18:51 +0200
-Date: Sat, 3 Oct 2020 21:18:51 +0200 (CEST)
-From: Julia Lawall <julia.lawall@inria.fr>
-X-X-Sender: jll@hadrien
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-cc: Joe Perches <joe@perches.com>, Mark Brown <broonie@kernel.org>, 
-    tools@linux.kernel.org, linux-iio@vger.kernel.org, 
-    Julia Lawall <Julia.Lawall@inria.fr>, 
-    linux-stm32@st-md-mailman.stormreply.com, linux-crypto@vger.kernel.org, 
-    "Rafael J. Wysocki" <rafael@kernel.org>, linux-block@vger.kernel.org, 
-    linux-kernel@vger.kernel.org, Jerome Brunet <jbrunet@baylibre.com>, 
-    linux-acpi@vger.kernel.org, David Lechner <david@lechnology.com>, 
-    =?UTF-8?Q?Valdis_Kl=C4=93tnieks?= <valdis.kletnieks@vt.edu>, 
-    kernel-janitors@vger.kernel.org, drbd-dev@lists.linbit.com, 
-    openipmi-developer@lists.sourceforge.net, 
-    Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-    linux-ide@vger.kernel.org, linux-amlogic@lists.infradead.org, 
-    linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-    Thomas Gleixner <tglx@linutronix.de>, linux-wireless@vger.kernel.org, 
-    Neil Armstrong <narmstrong@baylibre.com>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=TRIuiKup;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.160.194, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qt1-f194.google.com with SMTP id q26so617603qtb.5
+        for <tools@linux.kernel.org>; Sat, 03 Oct 2020 12:31:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CWQLnefJnV9lai9ha07+j4R+wHuwUmFBxVnJsYEYjsI=;
+        b=TRIuiKupRuCU5VUlLtlKbsBlNQbnfv9jVMRmvy5WrUMTyv5g7SdRa3REDAkElPyBzv
+         WSOws0iapEwPs/zPE6it9FcrVqCtAnsz/UakcRiEJxUOMFcBe7pAZ20U41kh3yUYUB6u
+         lAK2edDDWs/OyXo320TXSOEjMz+2dy680rqXQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=CWQLnefJnV9lai9ha07+j4R+wHuwUmFBxVnJsYEYjsI=;
+        b=rIHh+64I+ra2dS0Vk/xfu9xXNG4SKVHe1m62OvvcKO+GhfMJ3593Xy12I9Jbl6j6aJ
+         4ge5qYwC2V2daHF4NO3rwQuryhr8WHsogvfoptvhOqEwC6KqPeRAGkF6RRmsGVdexjEW
+         FHYQXIC/a6037YaZKLepfXZx6pFTHj7Eh3CRHD/heyMgBaMufrmitfA58lZJ13IqQEko
+         2AOSaQ2aPSOcH+Db2nSzLs3UwhCd7hsaAHIa1wTa9y4Z0nJtJyAaOUUrkhiKc6WWeIju
+         +lDlpRB3WxhcxlHw491Ujs3bT7Tr+336xx5+OqRqccIA5B3d0dfZV0pR/8mx82HKJUO9
+         L3IA==
+X-Gm-Message-State: AOAM530vu7XwUYC/cISdtAL8dBL6cL8AT6pwBmV+ziCMDJFzm+w2Rsd0
+	7BRZe1QxXb97TL+j3dAo57Gy5w==
+X-Google-Smtp-Source: ABdhPJyXj0to29E/962sKEc6U/odEp+QvXfYgP1BYnP1Sa/tA6o1DsKTTnJkOmEDBav7C7kIlGgFyQ==
+X-Received: by 2002:ac8:4548:: with SMTP id z8mr7894174qtn.291.1601753502454;
+        Sat, 03 Oct 2020 12:31:42 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id a66sm3745298qkc.52.2020.10.03.12.31.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Oct 2020 12:31:41 -0700 (PDT)
+Date: Sat, 3 Oct 2020 15:31:37 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Julia Lawall <julia.lawall@inria.fr>
+Cc: Joe Perches <joe@perches.com>, Mark Brown <broonie@kernel.org>,
+	tools@linux.kernel.org, linux-iio@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-crypto@vger.kernel.org,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Jerome Brunet <jbrunet@baylibre.com>, linux-acpi@vger.kernel.org,
+	David Lechner <david@lechnology.com>,
+	Valdis =?utf-8?Q?Kl=C4=93tnieks?= <valdis.kletnieks@vt.edu>,
+	kernel-janitors@vger.kernel.org, drbd-dev@lists.linbit.com,
+	openipmi-developer@lists.sourceforge.net,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	linux-ide@vger.kernel.org, linux-amlogic@lists.infradead.org,
+	linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Thomas Gleixner <tglx@linutronix.de>,
+	linux-wireless@vger.kernel.org,
+	Neil Armstrong <narmstrong@baylibre.com>
 Subject: Re: [PATCH 00/18] use semicolons rather than commas to separate statements
-In-Reply-To: <20201003191501.o56tqq63d2buq5ox@chatter.i7.local>
-Message-ID: <alpine.DEB.2.22.394.2010032118420.2741@hadrien>
-References: <1601233948-11629-1-git-send-email-Julia.Lawall@inria.fr> <160132172369.55460.9237357219623604216.b4-ty@kernel.org> <b1174f9be2ce65f6b5ebefcba0b48e792926abbc.camel@perches.com> <20200929113745.GB4799@sirena.org.uk>
- <db26d49401dc0bd6b9013a603a155f9827f404a4.camel@perches.com> <20201001110150.GA6715@sirena.org.uk> <f44d19ad596f261c0287c9ab18c45161003efb43.camel@perches.com> <20201003191501.o56tqq63d2buq5ox@chatter.i7.local>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+Message-ID: <20201003193137.z2bpwzlz5a66kkex@chatter.i7.local>
+Mail-Followup-To: Julia Lawall <julia.lawall@inria.fr>,
+	Joe Perches <joe@perches.com>, Mark Brown <broonie@kernel.org>,
+	tools@linux.kernel.org, linux-iio@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-crypto@vger.kernel.org,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Jerome Brunet <jbrunet@baylibre.com>, linux-acpi@vger.kernel.org,
+	David Lechner <david@lechnology.com>,
+	Valdis =?utf-8?Q?Kl=C4=93tnieks?= <valdis.kletnieks@vt.edu>,
+	kernel-janitors@vger.kernel.org, drbd-dev@lists.linbit.com,
+	openipmi-developer@lists.sourceforge.net,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	linux-ide@vger.kernel.org, linux-amlogic@lists.infradead.org,
+	linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Thomas Gleixner <tglx@linutronix.de>,
+	linux-wireless@vger.kernel.org,
+	Neil Armstrong <narmstrong@baylibre.com>
+References: <1601233948-11629-1-git-send-email-Julia.Lawall@inria.fr>
+ <160132172369.55460.9237357219623604216.b4-ty@kernel.org>
+ <b1174f9be2ce65f6b5ebefcba0b48e792926abbc.camel@perches.com>
+ <20200929113745.GB4799@sirena.org.uk>
+ <db26d49401dc0bd6b9013a603a155f9827f404a4.camel@perches.com>
+ <20201001110150.GA6715@sirena.org.uk>
+ <f44d19ad596f261c0287c9ab18c45161003efb43.camel@perches.com>
+ <20201003191501.o56tqq63d2buq5ox@chatter.i7.local>
+ <alpine.DEB.2.22.394.2010032118420.2741@hadrien>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <alpine.DEB.2.22.394.2010032118420.2741@hadrien>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-
-
-On Sat, 3 Oct 2020, Konstantin Ryabitsev wrote:
-
-> On Sat, Oct 03, 2020 at 11:40:48AM -0700, Joe Perches wrote:
-> > (Adding tools and Konstantin Ryabitsev)
+On Sat, Oct 03, 2020 at 09:18:51PM +0200, Julia Lawall wrote:
+> > > There seems to be some mismatch between b4's use of the
+> > > cover letter to a patch series and what maintainers that
+> > > apply a subset of the patches in the patch series.
+> > >
+> > > The merge description shows the entire patch series as
+> > > applied, but the actual merge is only a subset of the
+> > > series.
+> > >
+> > > Can this be improved in b4?
 > >
-> > There seems to be some mismatch between b4's use of the
-> > cover letter to a patch series and what maintainers that
-> > apply a subset of the patches in the patch series.
+> > So, the following logic should be applied:
 > >
-> > The merge description shows the entire patch series as
-> > applied, but the actual merge is only a subset of the
-> > series.
+> > - if the entire series was applied, reply to 0/n
+> > - if a subset only is applied, reply to each n/n of the patch that was
+> >   cherry-picked out of the series
 > >
-> > Can this be improved in b4?
->
-> So, the following logic should be applied:
->
-> - if the entire series was applied, reply to 0/n
-> - if a subset only is applied, reply to each n/n of the patch that was
->   cherry-picked out of the series
->
-> Is that an accurate summary?
+> > Is that an accurate summary?
+> 
+> That sounds good.
 
-That sounds good.
+I'm worried that this can get unwieldy for series of 50 patches where 49 
+got applied. Would the following be better:
 
-julia
+-----
+From: ...
+To: ...
+Subject: Re: [PATCH 00/18] use semicolons...
+
+On Sun...
+> These patches...
+>
+> [...]
+
+A subset of these patches was applied to
+
+  https://...
+
+Thanks!
+
+[5/18] regmap: debugfs:
+       commit:
+
+(etc)
+-----
+
+In other words, we:
+
+- specifically say that it's a subset
+- instead of just enumerating the number of patches that were applied, 
+  as is currently the case ([1/1]) we list the exact numbers out of the 
+  posted series (e.g. [5/18])
+
+I think this is a better solution than potentially flooding everyone 
+with 49 emails.
+
+-K
