@@ -1,66 +1,75 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
- by mx.groups.io with SMTP id smtpd.web11.1784.1601687836073505708
+Received: from rere.qmqm.pl (rere.qmqm.pl [91.227.64.183])
+ by mx.groups.io with SMTP id smtpd.web11.4173.1601720034071766658
  for <tools@linux.kernel.org>;
- Fri, 02 Oct 2020 18:17:16 -0700
+ Sat, 03 Oct 2020 03:13:55 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=ZXky4eKh;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.182, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f182.google.com with SMTP id d20so4976709qka.5
-        for <tools@linux.kernel.org>; Fri, 02 Oct 2020 18:17:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=yC8RXR1pakcQkcba/S5lUmXPrKt/J2Cck2xOCAzZTuw=;
-        b=ZXky4eKh5aJoC9sssgZ0UVXsNRQImT8k69eFj8Qz6R6YgJ0kwu17FGnuCy0d1w7BuF
-         cxLIi2XWNxYZPhIiNMuxXdB+fstNt//e7dG2cPXMJZVnb2pSlfVZGwSkCjVK2ROY03Jc
-         OCGwVHZGhnXlunZNg6kMRnecWpeCTPaljr1sA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yC8RXR1pakcQkcba/S5lUmXPrKt/J2Cck2xOCAzZTuw=;
-        b=i8Rxlk1JuCzypW0KTCKLixs6c1gX3X06dYU0FaBwixMr+uHSwlsprNavIjELPLwLjL
-         iiHz2iYwfy+f0WA9ASE5RX+WkaYfyzL7Vdby78Xux9LVWY9mfC1UJwicLqK8DBIfYS0s
-         jDB5PeBHlJ+BDd7FxaZ9IIlU0w4oG78oSolupmWYe8W9E6dAAo9pqv7WbvmTmDMyaIpK
-         Y62Nwad/kZYFc2Nlwr4WrqJuT3Y1/ldlJDg7ViaPusJb/aoli3cMjmbYP+9/Kwja4VE8
-         w7/fLURqN/v1EskRSP1QtlN+StVaNidti+GGaxFShLcRgD6//Rvt56jcpmbLAMfHBC8D
-         RMqg==
-X-Gm-Message-State: AOAM533S6UF+Y3GP034DAGV3nnA/qrvM0KdGqaclIjmC+T/Vau/773qY
-	kWe+WRQEoACeRmJueRWP+AcXEA==
-X-Google-Smtp-Source: ABdhPJylQAorFSwePCDdEq88ktGFIKReg5P+07wTqItE9XzTIHf2FTLeML4FEfwWg82jM7GlGn5h4A==
-X-Received: by 2002:a05:620a:45:: with SMTP id t5mr4854677qkt.41.1601687835154;
-        Fri, 02 Oct 2020 18:17:15 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id 15sm2334491qka.96.2020.10.02.18.17.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2020 18:17:14 -0700 (PDT)
-Date: Fri, 2 Oct 2020 21:17:12 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+ dkim=fail, err=mail: missing word in phrase: charset not supported: "iso-8859-2";
+ spf=pass (domain: rere.qmqm.pl, ip: 91.227.64.183, mailfrom: mirq-linux@rere.qmqm.pl)
+Received: from remote.user (localhost [127.0.0.1])
+	by rere.qmqm.pl (Postfix) with ESMTPSA id 4C3N4F1hjCz6D;
+	Sat,  3 Oct 2020 12:13:49 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rere.qmqm.pl; s=1;
+	t=1601720029; bh=Bcl6CDdiLnCjsgy4zKg1LatQA3/anNgtTSAUnjuPOlQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pbfOn+Qe37/tF5B3FhH7QkelC5gPrrGS8b7hi5LgCdkg8zct3FuA2rnpKpidTFsXP
+	 kO3o9ncDzf4O7qjNBREG/pTsTtuHXVDpq1WHXyPoL9rlurH2i02Sqb/AWr/QPzNGoo
+	 jAWUQVOLSKP/Tq7sTeNSht7R0Z6HQp3+wuR4HZWuB54OqgavcUCoeNo/ap6RMkSUmi
+	 C/phSTKQmi1EVusaVWHUv1aL1j/qVn+L4sWkOh25lDuxdF60/iToyGCoA0jiEPbt1m
+	 XOFPZ9JrIT2/QKnYRYnJZ870Hg/We6leVrE+X01JLvVFtMkaXuFuvCqUQDJBMBLWY5
+	 kxrcWkUbTxFFQ==
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.102.4 at mail
+Date: Sat, 3 Oct 2020 12:13:45 +0200
+From: =?iso-8859-2?Q?Micha=B3_Miros=B3aw?= <mirq-linux@rere.qmqm.pl>
 To: Mark Brown <broonie@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Exception from b4 ty
-Message-ID: <20201003011712.vwigxq5pqp4d3gid@chatter.i7.local>
-References: <20201002211248.GI5527@sirena.org.uk>
+Cc: tools@linux.kernel.org, konstantin@linuxfoundation.org
+Subject: Re: [tools] b4: UTF-8 in replies
+Message-ID: <20201003101345.GA4163@qmqm.qmqm.pl>
+References: <20201001171405.GA17873@qmqm.qmqm.pl>
+ <20201001180541.poupp36rtajzkihs@chatter.i7.local>
+ <20201001183647.GA23339@qmqm.qmqm.pl>
+ <20201001184109.GB23339@qmqm.qmqm.pl>
+ <20201001192600.fo2rivqc4nklw4oj@chatter.i7.local>
+ <20201002210950.GH5527@sirena.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <20201002211248.GI5527@sirena.org.uk>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20201002210950.GH5527@sirena.org.uk>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=iso-8859-2
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 02, 2020 at 10:12:48PM +0100, Mark Brown wrote:
-> Hi,
-> 
-> Attempting to generate thanks with b4 ty -a using current git master I
-> get a traceback:
-> 
+On Fri, Oct 02, 2020 at 10:09:50PM +0100, Mark Brown wrote:
+> On Thu, Oct 01, 2020 at 03:26:00PM -0400, Konstantin Ryabitsev wrote:
+>=20
+> > Hrmph, apparently my assumption on what headers will be generated by=20
+> > policy=3D8bit was pretty wrong. I pushed a commit to master and=20
+> > stable-0.5.y that should properly set the charset and generate the=20
+> > necessary headers.
+>=20
+> This fix seems to have caused some issues for me - using msmtp with
+> kernel.org on 1594818110-786-1-git-send-email-brent.lu@intel.com I'm
+> getting headers with:
+>=20
+> To: alsa-devel@alsa-project.org, Brent Lu <brent.lu@intel.com>
+> Cc: =3D?utf-8?q?linux-kernel=3D40vger=3D2Ekernel=3D2Eorg=3D2C_Kai_Vehma=
+nen_=3D3Ckai=3D2Eve?=3D
+>  =3D?utf-8?q?hmanen=3D40linux=3D2Eintel=3D2Ecom=3D3E=3D2C_Pierre-Louis_=
+Bossart_=3D3Cpierre?=3D
+>  =3D?utf-8?q?-louis=3D2Ebossart=3D40linux=3D2Eintel=3D2Ecom=3D3E=3D2C_T=
+akashi_Iwai_=3D3Ctiwa?=3D
+>  =3D?utf-8?q?i=3D40suse=3D2Ecom=3D3E=3D2C_Guennadi_Liakhovetski_=3D3Cgu=
+ennadi=3D2Eliakhove?=3D
+>  =3D?utf-8?q?tski=3D40linux=3D2Eintel=3D2Ecom=3D3E=3D2C_Liam_Girdwood_=3D=
+3Clgirdwood=3D40gma?=3D
+>  =3D?utf-8?q?il=3D2Ecom=3D3E=3D2C_Amadeusz_S=3DC5=3D82awi=3DC5=3D84ski_=
+=3D3Camadeuszx=3D2Eslawin?=3D
+>  =3D?utf-8?q?ski=3D40linux=3D2Eintel=3D2Ecom=3D3E?=3D
 
-This is due to the earlier fix to set proper charsets. I need to 
-remember not to rely on Python's as_bytes() mechanism -- we get much 
-better control when we do as_string() and then do the encoding on our 
-own.
+RFC 2047 section 6.2. suggests that this encoding is invalid, because it
+encodes structural characters (commas in this case) -- the MTA/MUA
+might treat the whole 'Cc:' as one entry. Also, section 5 point 3 of the
+RFC forbids encoding the addr-spec part (mail address if I understand
+correctly).
 
-The latest master/stable-0.5.y has the fix for this, I hope -- plus for 
-the horrible header encoding.
-
--K
+Best Regards,
+Micha=B3 Miros=B3aw
