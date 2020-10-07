@@ -1,118 +1,73 @@
-Received: from mail-pj1-f65.google.com (mail-pj1-f65.google.com [209.85.216.65])
- by mx.groups.io with SMTP id smtpd.web10.105.1602092853905757339
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+ by mx.groups.io with SMTP id smtpd.web12.2290.1602107671349763380
  for <tools@linux.kernel.org>;
- Wed, 07 Oct 2020 10:47:34 -0700
+ Wed, 07 Oct 2020 14:54:31 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@baylibre-com.20150623.gappssmtp.com header.s=20150623 header.b=TazgW8ih;
- spf=pass (domain: baylibre.com, ip: 209.85.216.65, mailfrom: khilman@baylibre.com)
-Received: by mail-pj1-f65.google.com with SMTP id az3so1394808pjb.4
-        for <tools@linux.kernel.org>; Wed, 07 Oct 2020 10:47:33 -0700 (PDT)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=M2hFtFuB;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.177, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f177.google.com with SMTP id d20so4802679qka.5
+        for <tools@linux.kernel.org>; Wed, 07 Oct 2020 14:54:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=chCoNNmSo+QONRqS+gEVDd7+wVsSWfG5MNs+Oil3Gqs=;
-        b=TazgW8ihj2xaOJUHoMvavvoPKoARZvfSxhWD5TxYs1s1uXsxsF/SlqK5s2+C9h47oX
-         LA9QHypqjC93cSfAfMlfI2PBvJL8AmnuCWTiQYN1E7rckSFhYxe51aktWUUN81Vqfn4W
-         uCqfa8jr4CZaMSsUsWf/bW1wet0flBTX+S8irZaOpmSdXFuMmccWfD1iIGZNFk+7ZPgS
-         0rS8TMV9qe2eF7cPocVFWGkJMYstRJfJwA++rbR8IaSr+OI0F8bFF+YH3VkiJ/QmmPre
-         h+XLsMDFiUux7OiPT2cIRoy8U4vgnH/gwSilGYxntNI3mD25ml1MlEwWUeWyFRg2pv1E
-         X+Tw==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=HcAmbAC7Zz1e3UOZYBkEiB9ftM6s58UFlLGXXPtG5gI=;
+        b=M2hFtFuBoOBCqd3tWe/0DKAB2jNFQBSfM2cwnfdd+qQDkJLRf5kj6hpJzC6i6WUvVd
+         qXuLOvHYKvYWrer/NqmvOhIkSiYv272cfJnbTzbQWi9lNf+k5cwuR+727Iel8SOpF6jC
+         OHUIy9OrRHQWm/LubyY+jOvmrivW/gkEAKIkM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=chCoNNmSo+QONRqS+gEVDd7+wVsSWfG5MNs+Oil3Gqs=;
-        b=bSfPyB4+XIsIx41oRVsUH0Ybsz/VWCQsGK5b3OstzbFZfkNg/wjz+p+oca4cQ7vYpT
-         kDqEPZF0Q9oSpq1ZFJO1xXaW3sGwuoeoNBbLiWBTJd3LJ33jVyfmT3RaY/pG7mzSpM1N
-         F1me51L9CBcMANupY67Qi6gddDM6qsBXGrt3f4TtKLlK+J+qHgSlwWrHnb+A6c3g2GcJ
-         W+JhA3gTVGnwpAL3HGAby/VsECsV+nnmH6FyKebl+9m+xwCcLgGYr07MeHLO2ADYFnmi
-         cuf1d+bhBLLUOvXGhZfUSQMYBklvQIVM+Px/9SV1cFfmkjHNOYUByZX+Sppir/htrvWy
-         qirQ==
-X-Gm-Message-State: AOAM53308O9t20T5NDdgY0BgH+fZuCmOLwI6oHppRXLPDyBu/E/1BVjA
-	mExTtjQJ0WBNoFgmjAQFZsuadg==
-X-Google-Smtp-Source: ABdhPJxvTtiEByPOF9N5x7yaqdxL/8OLdb4C8MaBMouRmNJ/dTBQoLBIG8HoibZdaO1xgfajEC5Cow==
-X-Received: by 2002:a17:90a:8585:: with SMTP id m5mr3791359pjn.69.1602092853250;
-        Wed, 07 Oct 2020 10:47:33 -0700 (PDT)
-Return-Path: <khilman@baylibre.com>
-Received: from localhost (c-71-197-186-152.hsd1.wa.comcast.net. [71.197.186.152])
-        by smtp.gmail.com with ESMTPSA id x7sm4129301pgl.77.2020.10.07.10.47.32
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=HcAmbAC7Zz1e3UOZYBkEiB9ftM6s58UFlLGXXPtG5gI=;
+        b=YQavYX+4zaTk+K9WWOypFmMUH2V6QQHgyDZeUtefWAxa0jPPFvuWOYWSuk4o1fxAqV
+         At+ZsfTvlD9fbZ22X0w4E3Co88HQVxP6LaIS+86xnKYfoUetUyvVmPiQoQ7QHy2Y4q2G
+         2deOZT2xhlmCms3CqvQyJ6cfWT3KFPCHYGJGku5IC6oqKIkvvEBJunVCgkJ8poJ9qi0s
+         GwJhb0D+ccVT6Zvj9VMCYocVvPGiNNpbpFTfMSX5Rg790223ZXREB1IJ8h9Z2qzqthCd
+         EyQn5ReixK7FPg9KTROxhcgsNdTay5+WjBVr9W99RjV5XYzRFEIFZ5rsGrghQ+wgja6+
+         DUPw==
+X-Gm-Message-State: AOAM532nvFaBLwJnrrCvc3LnlUFOZUNm8LwHssaDIDP+j/o/kTU1ds+z
+	Yc481R021ofPEp+20GrUF5/V1DmR98cH9btk
+X-Google-Smtp-Source: ABdhPJxQMhcdkrfggfIKU5xKKU++tZ1jr8TqjgbSva6U2t9JXAZwokq8KgQYG4uM1bdsrDTS2u+EEA==
+X-Received: by 2002:a37:58c3:: with SMTP id m186mr3259623qkb.25.1602107670391;
+        Wed, 07 Oct 2020 14:54:30 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id v16sm2373257qkg.37.2020.10.07.14.54.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Oct 2020 10:47:32 -0700 (PDT)
-From: "Kevin Hilman" <khilman@baylibre.com>
-To: automated-testing@lists.yoctoproject.org, kernelci@groups.io, 
+        Wed, 07 Oct 2020 14:54:29 -0700 (PDT)
+Date: Wed, 7 Oct 2020 17:54:28 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: users@linux.kernel.org
 Cc: tools@linux.kernel.org
-Subject: RFC: dashboards, visualization and analytics for test results
-Date: Wed, 07 Oct 2020 10:47:32 -0700
-Message-ID: <7hk0w2c4i3.fsf@baylibre.com>
+Subject: subscribing to lore using grokmirror + procmail
+Message-ID: <20201007215428.g45vafyjigj5k2d2@chatter.i7.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Hello folks interested in kernel testing/automation,
+Hi, all:
 
-The KernelCI project is starting to look at what's next for dashboards,
-visualization and analytics for the various Linux focused testing
-projects.
+I needed a way to pipe lore.kernel.org lists straight into 
+patchwork.kernel.org, so we don't have to subscribe patchwork separately 
+for each list. Then I realized that it's generally useful as a way to 
+deliver straight from public-inbox archives into local inboxes -- 
+similar to how l2md does it, plus with some additional perks:
 
-At Linux Plumbers, we launched some discussions[1] around common ways to
-collect test results, logs and metadata into a public, shared dataset,
-and we've already started collecting data from several different
-sources.
+- we use manifest.js.gz provided by public-inbox to quickly see which 
+  lists have updates, so we only update those repositories that actually 
+  have new content
+- we automatically recognize when remote epochs roll over
+- if configured with `shallow=yes`, we can automatically re-shallow
+  local git copies after each successful delivery, so they don't take up
+  any space
 
-So the next question is... how do we best use all of this data?
+Since it delivers via procmail, you can use in-depth filtering or just 
+dump it into your ~/Mail/. You can also pair it with mbsync to have 
+things uploaded straight to your imap mailbox.
 
-We're beginning to brainstorm how to visualize, analyze and learn from
-this data in useful ways.
+If you're interested, you can read the details here:
+https://people.kernel.org/monsieuricon/subscribing-to-lore-lists-with-grokmirror
 
-To that end, we're starting to collect a set of user stories to help us
-brainstorm a new design for web based dashboard and analytics, and we'd
-like to hear from you.
+Caution: pi-piper is brand new and probably has bugs.
 
-Below is the start of a list of user stories[2], but we want to grow
-this list with your ideas, so please share them on this thread.=20
-
-We're also very interested in talking with any big data people and data
-scientists who might be willing to look at this growing set of data and
-help us better plan for the future full of lots of test data.
-
-We appreciate your ideas and feedback,
-
-Kevin (on behalf of the KernelCI team)
-
-
-[1] c.f. Unifying Test Reporting with KernelCI from the testing/fuzzing
-    micro-conference:
-    https://linuxplumbersconf.org/event/7/sessions/80/#20200826
-
-
-
-[2] Example user stories
-
-A kernel developer has sent a patch which caused a regression
-   - Find the details, how to reproduce, check when it=E2=80=99s fixed
-
-A maintainer is getting a branch ready for the next merge window
-  - Compare results against mainline, ensure all tests were run correctly
-
-An OEM or SoC vendor needs to upgrade their kernel or move to upstream
-  - See all results for a particular platform on various stable releases
-
-Regular visitors who want to know how the kernel is doing
-  - Highlight new regressions, show trends for pass/fail and performance
-  - Does kernel X work on my hardware?=20
-
-Distro vendor wants to know
-  - Is the latest kernel stable enough for my distro?
-  - Why does this test fail on my distro kernel but not stable kernel?
-
-Stable kernel maintainer wants to know
-  - Is this kernel stable enough to release?
-
-Kernel / subsystem maintainer wants to know
-  - Is my code/subsystem being tested?  How much coverage?
-  - Is the kernel size growing?  Why?  Which subsystems
-  - Is boot time / test execution time increasing/decreasing?  What are the=
- historical trends?
-
-
+-K
