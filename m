@@ -1,73 +1,88 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
- by mx.groups.io with SMTP id smtpd.web10.12317.1603111409048654902
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+ by mx.groups.io with SMTP id smtpd.web11.13094.1603113390821650625
  for <tools@linux.kernel.org>;
- Mon, 19 Oct 2020 05:43:29 -0700
+ Mon, 19 Oct 2020 06:16:31 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=TmsX4IzC;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.174, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f174.google.com with SMTP id i22so7630948qkn.9
-        for <tools@linux.kernel.org>; Mon, 19 Oct 2020 05:43:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oV6k73QfGzyyghI/N95BGloOwADHoC4Kx//k8zAhofY=;
-        b=TmsX4IzCMnr+cSTLE8HIpDrkkudngRqW182958sZiHbnRTqpTI0JaZN58wk3yU0A2/
-         vxieBChc4QccxuVdTHcLkSQSIJ70E19ZHVURgJHKwx1FRT1Ca/umFoXezbuTl5rLloez
-         nrQcXqyptZQilSudwJ/WqZ8S04bPvuuaADeGw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oV6k73QfGzyyghI/N95BGloOwADHoC4Kx//k8zAhofY=;
-        b=GgMdy9ruCuhFiLbQcYBpl6CAQYyRspyuJ33wh0pHyQWZiebQFqE7CDHY1sTl5dOcvA
-         cBanCGnsxyyQafP3D4E1do5FeVrVVH+/ZCfMDucCDnooTdWe3xtCgah86FlS59dCWETB
-         dGRAnkNWOroLD/xAP+0I18c6HKH7q9V/HchDYT4DdvzdNtuZ8j4c42DfsUtU01BAek9g
-         UsDT23fxPbB0NwgvDJAtNcUiSA+AQad4THjFSxxM9W07Ie4Jno/2z+MsS1qoOggikJwz
-         wgSTjre/OrcDUa0Fvitmy61NpRIqKeaTCKQsDuZSb+40IduGajoxViSpY6W56BYSGNqd
-         iTwA==
-X-Gm-Message-State: AOAM530YTMegq9AZhMYPw2Ig1cku8woB7HyA1Zy6a1L/0SvU00NYyNhy
-	z712TJvsL8AaplA+yWYffK2Icw==
-X-Google-Smtp-Source: ABdhPJxe8M3RNPEsDm7Sln13ZANiYbUC+XVZiQModpm99+fCRxAWI7WUfWakT5jaYp3QrvT6AC3XhQ==
-X-Received: by 2002:ae9:ee15:: with SMTP id i21mr14908078qkg.76.1603111407940;
-        Mon, 19 Oct 2020 05:43:27 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id v65sm4177428qkb.88.2020.10.19.05.43.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2020 05:43:27 -0700 (PDT)
-Date: Mon, 19 Oct 2020 08:43:25 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Greg Kroah-Hartman <greg@kroah.com>
+ dkim=pass header.i=@kroah.com header.s=fm2 header.b=wr6k9WZ5;
+ spf=pass (domain: kroah.com, ip: 66.111.4.29, mailfrom: greg@kroah.com)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 1C9F25C0139;
+	Mon, 19 Oct 2020 09:16:30 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Mon, 19 Oct 2020 09:16:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm2; bh=3t+ZaRrRQfD8Fkbx+w1qSJWSsTO
+	iUZa9RvEZKb6WktM=; b=wr6k9WZ5zd3eMlsa+bWwNo1Fh2BFapk8O9u/u9zSYv9
+	vVCQq7Prq9eLjHCYAwvS6e9BNfeyKuvZKR+a9iYRcXY2uC40MpAG6P7KC34e5AzB
+	0WhwIiahxaPkHRvAADjTPRReoXTV9CQAjezubScJnLLU6U0yJ60mFYtmxn+HqnYG
+	TtgSZ+9FjhmPCNjv1kc3gTW7s0WI2fR/PVNbALevLIvpzxg7F0TEJi2rjmnwtm9j
+	qiZQUDAw4mC2eM+kBuhjPiBkevG4xZCEdzivNmN+RZU6hdwtlBI1qNZEZTMLbFlm
+	h6Ie8DQtQJmXALYwpVHFmEh6N2jA67hg11jIWQoA4bQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=3t+ZaR
+	rRQfD8Fkbx+w1qSJWSsTOiUZa9RvEZKb6WktM=; b=NuHP85uuxe+Y5zsKxPOKk7
+	L9kQY3M5icfe8fVJ/yuL9LK+SjaFBydqjZjO8Thqk1vUNVE/Qp9+JPMUsF9VoO7G
+	3wHI7k3sBJbr9t3+rbHyGKaT7XpFf455s1QYnbtss09PXEgn1xVRuA27W1hiwa+1
+	miz0UilmtIJrMs3TsIjC+ocf6NnsRwLaZmMke+uGsRxk0jmx63TSpOa9AQ0r504f
+	dVDnb9svwkb5YAs6rvFLYRI2LUPfS5eLe8vlAfYIxAt48kNHZF+rj9MqhL5GROwz
+	qZZ5/Gzw2tPKeBvo6Opru0w8dg8L7bat2Y1Z8tReZl7ms2C6/7h+8u61VPm8pLXQ
+	==
+X-ME-Sender: <xms:rZGNXyOutUZ1IFPOn7l6gR1RxR0RqDqHktXZU5kc3H1gZAV-OtavYg>
+    <xme:rZGNXw-zCIBlPDqv--wC-CAGac-JtrH90W0SWKJS9c4gY9NvSZRRr4Gtu1pqz7W7l
+    uNjDQd0kKG6lw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrjedugdeigecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepifhrvghgucfm
+    rhhorghhqdfjrghrthhmrghnuceoghhrvghgsehkrhhorghhrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeefueevkedtuddtudeiudekueeftdejkeehhfeiveehhfeludffheffhfev
+    hfdthfenucfkphepkeefrdekiedrjeegrdeigeenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:rZGNX5QPyF-Ja5f5NJXCY0Pc8uGuMyAg3KBdnc3DXdTxzRLx1EPMwg>
+    <xmx:rZGNXysGgX95nmMGQwG_8Pi490lP632xWnxSIQU6n3Xuf9VUZAktIg>
+    <xmx:rZGNX6cGYmsrvy5umTBrrfJZzh8z9tANP1WSRfA3OnD_oXafoiyGuw>
+    <xmx:rpGNX7qhsiXAtnEmrEG-a11k_cWearGeUNHoHN3mgsjv6fV_qW-XFA>
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 2DC593064682;
+	Mon, 19 Oct 2020 09:16:29 -0400 (EDT)
+Date: Mon, 19 Oct 2020 15:17:15 +0200
+From: "Greg KH" <greg@kroah.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: users@linux.kernel.org, tools@linux.kernel.org,
 	Johan Hovold <johan@kernel.org>, Sasha Levin <sashal@kernel.org>
 Subject: Re: b4 seems to be dropping "cc: stable" on patches.
-Message-ID: <20201019124325.r5kx3yq3kqounke5@chatter.i7.local>
+Message-ID: <20201019131715.GA3255086@kroah.com>
 References: <20201019072006.GB3219053@kroah.com>
+ <20201019124325.r5kx3yq3kqounke5@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <20201019072006.GB3219053@kroah.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20201019124325.r5kx3yq3kqounke5@chatter.i7.local>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Mon, Oct 19, 2020 at 09:20:06AM +0200, Greg Kroah-Hartman wrote:
-> Hi Konstantin,
+On Mon, Oct 19, 2020 at 08:43:25AM -0400, Konstantin Ryabitsev wrote:
+> On Mon, Oct 19, 2020 at 09:20:06AM +0200, Greg Kroah-Hartman wrote:
+> > Hi Konstantin,
+> > 
+> > It looks like 'b4' is dropping the cc: stable lines of patches.
 > 
-> It looks like 'b4' is dropping the cc: stable lines of patches.
+> Correct, sorry about that -- I was trying to tighten trailer recognition 
+> to avoid hitting some of the false-positives I've seen and apparently 
+> this affected Cc: and Link: trailers. :(
+> 
+> This is currently fixed.
+> 
+> > I can reproduce this on the current b4 git tree, at commit c0910ee77a2a
+> > ("Fix header encoding introduced by earlier fix") as of this moment.
+> 
+> This is one of the dangers of the devel branch, unfortunately -- 
+> sometimes it ends up with half-baked code.
 
-Correct, sorry about that -- I was trying to tighten trailer recognition 
-to avoid hitting some of the false-positives I've seen and apparently 
-this affected Cc: and Link: trailers. :(
+Hey, someone has to test the stuff, might as well be people who rely on
+it :)
 
-This is currently fixed.
+Thanks for fixing this so quickly, much appreciated.
 
-> I can reproduce this on the current b4 git tree, at commit c0910ee77a2a
-> ("Fix header encoding introduced by earlier fix") as of this moment.
-
-This is one of the dangers of the devel branch, unfortunately -- 
-sometimes it ends up with half-baked code. I do need to finally put a 
-solid test matrix in place, which is the target for 0.7.0 -- currently 
-I'm just continuously running on lkml to find crashers, but it's not a 
-good enough solution for finding formatting errors. So, the hope is that 
-we'll learn to avoid regressions like this one in the near future.
-
--K
+greg k-h
