@@ -1,88 +1,86 @@
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
- by mx.groups.io with SMTP id smtpd.web11.13094.1603113390821650625
+Received: from mail-qt1-f196.google.com (mail-qt1-f196.google.com [209.85.160.196])
+ by mx.groups.io with SMTP id smtpd.web09.2993.1603741782669927334
  for <tools@linux.kernel.org>;
- Mon, 19 Oct 2020 06:16:31 -0700
+ Mon, 26 Oct 2020 12:49:42 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kroah.com header.s=fm2 header.b=wr6k9WZ5;
- spf=pass (domain: kroah.com, ip: 66.111.4.29, mailfrom: greg@kroah.com)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 1C9F25C0139;
-	Mon, 19 Oct 2020 09:16:30 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 19 Oct 2020 09:16:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=fm2; bh=3t+ZaRrRQfD8Fkbx+w1qSJWSsTO
-	iUZa9RvEZKb6WktM=; b=wr6k9WZ5zd3eMlsa+bWwNo1Fh2BFapk8O9u/u9zSYv9
-	vVCQq7Prq9eLjHCYAwvS6e9BNfeyKuvZKR+a9iYRcXY2uC40MpAG6P7KC34e5AzB
-	0WhwIiahxaPkHRvAADjTPRReoXTV9CQAjezubScJnLLU6U0yJ60mFYtmxn+HqnYG
-	TtgSZ+9FjhmPCNjv1kc3gTW7s0WI2fR/PVNbALevLIvpzxg7F0TEJi2rjmnwtm9j
-	qiZQUDAw4mC2eM+kBuhjPiBkevG4xZCEdzivNmN+RZU6hdwtlBI1qNZEZTMLbFlm
-	h6Ie8DQtQJmXALYwpVHFmEh6N2jA67hg11jIWQoA4bQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=3t+ZaR
-	rRQfD8Fkbx+w1qSJWSsTOiUZa9RvEZKb6WktM=; b=NuHP85uuxe+Y5zsKxPOKk7
-	L9kQY3M5icfe8fVJ/yuL9LK+SjaFBydqjZjO8Thqk1vUNVE/Qp9+JPMUsF9VoO7G
-	3wHI7k3sBJbr9t3+rbHyGKaT7XpFf455s1QYnbtss09PXEgn1xVRuA27W1hiwa+1
-	miz0UilmtIJrMs3TsIjC+ocf6NnsRwLaZmMke+uGsRxk0jmx63TSpOa9AQ0r504f
-	dVDnb9svwkb5YAs6rvFLYRI2LUPfS5eLe8vlAfYIxAt48kNHZF+rj9MqhL5GROwz
-	qZZ5/Gzw2tPKeBvo6Opru0w8dg8L7bat2Y1Z8tReZl7ms2C6/7h+8u61VPm8pLXQ
-	==
-X-ME-Sender: <xms:rZGNXyOutUZ1IFPOn7l6gR1RxR0RqDqHktXZU5kc3H1gZAV-OtavYg>
-    <xme:rZGNXw-zCIBlPDqv--wC-CAGac-JtrH90W0SWKJS9c4gY9NvSZRRr4Gtu1pqz7W7l
-    uNjDQd0kKG6lw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrjedugdeigecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepifhrvghgucfm
-    rhhorghhqdfjrghrthhmrghnuceoghhrvghgsehkrhhorghhrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeefueevkedtuddtudeiudekueeftdejkeehhfeiveehhfeludffheffhfev
-    hfdthfenucfkphepkeefrdekiedrjeegrdeigeenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:rZGNX5QPyF-Ja5f5NJXCY0Pc8uGuMyAg3KBdnc3DXdTxzRLx1EPMwg>
-    <xmx:rZGNXysGgX95nmMGQwG_8Pi490lP632xWnxSIQU6n3Xuf9VUZAktIg>
-    <xmx:rZGNX6cGYmsrvy5umTBrrfJZzh8z9tANP1WSRfA3OnD_oXafoiyGuw>
-    <xmx:rpGNX7qhsiXAtnEmrEG-a11k_cWearGeUNHoHN3mgsjv6fV_qW-XFA>
-Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 2DC593064682;
-	Mon, 19 Oct 2020 09:16:29 -0400 (EDT)
-Date: Mon, 19 Oct 2020 15:17:15 +0200
-From: "Greg KH" <greg@kroah.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org,
-	Johan Hovold <johan@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: b4 seems to be dropping "cc: stable" on patches.
-Message-ID: <20201019131715.GA3255086@kroah.com>
-References: <20201019072006.GB3219053@kroah.com>
- <20201019124325.r5kx3yq3kqounke5@chatter.i7.local>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=a4/fy0Tg;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.160.196, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qt1-f196.google.com with SMTP id q26so7655947qtb.5
+        for <tools@linux.kernel.org>; Mon, 26 Oct 2020 12:49:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=qZtPTMd38C8KR7F950x8mbRI7jKweNJv65a9ASI/adI=;
+        b=a4/fy0TgruP2yLzrWeQRB57mwbK/407D8wJaxc8jFh7uDK8yueCstwRU7UOWa5TcS+
+         6cINwLbx83Y8Go2xId/4qfT6jfTMTngj0kpjy4gu0Dr5UZaAj4L9BOKkSQ1O+uH+UtUP
+         IcSy8ml8ACOmKPdequpY3TuP03DzQJTl2lS8c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qZtPTMd38C8KR7F950x8mbRI7jKweNJv65a9ASI/adI=;
+        b=AYx9hJOwXtmkiuet/pN31v+15U6qG4S8LMqJESF4XeaejfgrnHCWi+iMkTfvNUj9N1
+         tbmbSY4UqAqCeWfr5ySJhRlkUR19UrBl0ic4iIVXFNijXdaHeMhYVFVkqhzYgBm+ZPJo
+         1iCq5JTUj6QQ7pmCnZp3dfGz2eJzaHmd4jRPfPJwKgqAcAY5V4Gbbhd1ZZlp0wP5+fX6
+         9nsX5hqEtNzrDWWbOuS6YrhlYs9dsCYg4w05j65XqGzVGxNlUg7IpmhPvd4EuVUWD5PI
+         /Kaj4TVxbqwgq+XYeYpoDwp7hei9E4DxjApTwBWxG30xzLN12PL4ca/vlUw9fM5b1EUK
+         PPLA==
+X-Gm-Message-State: AOAM531bZaB9yRYbm06gtFa5WoL1YX0jlfKiBVsYwIAB45yw4wZkFGy6
+	3NjsSccOaSmfQXrBK8ioYcNZrg==
+X-Google-Smtp-Source: ABdhPJzYiwQQCcjkXbhoM9K033zl7MYgw1sdJa3umN0TuVZDt0C0yVai3afaGAHFEVfnQM8QWoiAOQ==
+X-Received: by 2002:ac8:5a82:: with SMTP id c2mr19620886qtc.378.1603741781412;
+        Mon, 26 Oct 2020 12:49:41 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id n2sm7362161qtr.6.2020.10.26.12.49.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2020 12:49:40 -0700 (PDT)
+Date: Mon, 26 Oct 2020 15:49:39 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Arnaldo Carvalho de Melo <acme@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: [BUG] b4: AttributeError: 'LoreAttestation' object has no attribute 'attid'
+Message-ID: <20201026194939.r7dsx43zhd5xjebj@chatter.i7.local>
+References: <20201026175618.GB2449445@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20201019124325.r5kx3yq3kqounke5@chatter.i7.local>
-Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <20201026175618.GB2449445@kernel.org>
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
-On Mon, Oct 19, 2020 at 08:43:25AM -0400, Konstantin Ryabitsev wrote:
-> On Mon, Oct 19, 2020 at 09:20:06AM +0200, Greg Kroah-Hartman wrote:
-> > Hi Konstantin,
-> > 
-> > It looks like 'b4' is dropping the cc: stable lines of patches.
+On Mon, Oct 26, 2020 at 02:56:18PM -0300, Arnaldo Carvalho de Melo wrote:
 > 
-> Correct, sorry about that -- I was trying to tighten trailer recognition 
-> to avoid hitting some of the false-positives I've seen and apparently 
-> this affected Cc: and Link: trailers. :(
-> 
-> This is currently fixed.
-> 
-> > I can reproduce this on the current b4 git tree, at commit c0910ee77a2a
-> > ("Fix header encoding introduced by earlier fix") as of this moment.
-> 
-> This is one of the dangers of the devel branch, unfortunately -- 
-> sometimes it ends up with half-baked code.
+> [acme@five perf]$ b4 am -tcsl 20201024025918.453431-1-namhyung@kernel.org
+> Looking up https://lore.kernel.org/r/20201024025918.453431-1-namhyung%40kernel.org
 
-Hey, someone has to test the stuff, might as well be people who rely on
-it :)
+Note -- that thread is kinda broken because there is a [PATCH 1/2] with 
+no [PATCH 2/2], and we don't count [PATCH v2 2/2], as it's a different 
+series.
 
-Thanks for fixing this so quickly, much appreciated.
+> Grabbing thread from lore.kernel.org/lkml
+> Checking for newer revisions on https://lore.kernel.org/lkml/
+> Analyzing 8 messages in the thread
+> ---
+> Thread incomplete, attempting to backfill
+> Traceback (most recent call last):
+>   File "/home/acme/git/b4/b4/command.py", line 238, in <module>
+>     cmd()
+>   File "/home/acme/git/b4/b4/command.py", line 221, in cmd
+>     cmdargs.func(cmdargs)
+>   File "/home/acme/git/b4/b4/command.py", line 40, in cmd_am
+>     b4.mbox.main(cmdargs)
+>   File "/home/acme/git/b4/b4/mbox.py", line 509, in main
+>     mbox_to_am(threadmbox, cmdargs)
+>   File "/home/acme/git/b4/b4/mbox.py", line 49, in mbox_to_am
+>     lser = lmbx.get_series(revision=wantver, sloppytrailers=cmdargs.sloppytrailers)
+>   File "/home/acme/git/b4/b4/__init__.py", line 307, in get_series
+>     attid = pmsg.attestation.attid
+> AttributeError: 'LoreAttestation' object has no attribute 'attid'
 
-greg k-h
+There is a fix for this in the current master, though new attestation 
+code is a bit mid-flight and may cause occasional further problems until 
+I complete it.
+
+Thanks for the report!
+
+-K
