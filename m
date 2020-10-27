@@ -1,86 +1,91 @@
-Received: from mail-qt1-f196.google.com (mail-qt1-f196.google.com [209.85.160.196])
- by mx.groups.io with SMTP id smtpd.web09.2993.1603741782669927334
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+ by mx.groups.io with SMTP id smtpd.web08.12890.1603801342010310497
  for <tools@linux.kernel.org>;
- Mon, 26 Oct 2020 12:49:42 -0700
+ Tue, 27 Oct 2020 05:22:22 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=a4/fy0Tg;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.160.196, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qt1-f196.google.com with SMTP id q26so7655947qtb.5
-        for <tools@linux.kernel.org>; Mon, 26 Oct 2020 12:49:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qZtPTMd38C8KR7F950x8mbRI7jKweNJv65a9ASI/adI=;
-        b=a4/fy0TgruP2yLzrWeQRB57mwbK/407D8wJaxc8jFh7uDK8yueCstwRU7UOWa5TcS+
-         6cINwLbx83Y8Go2xId/4qfT6jfTMTngj0kpjy4gu0Dr5UZaAj4L9BOKkSQ1O+uH+UtUP
-         IcSy8ml8ACOmKPdequpY3TuP03DzQJTl2lS8c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qZtPTMd38C8KR7F950x8mbRI7jKweNJv65a9ASI/adI=;
-        b=AYx9hJOwXtmkiuet/pN31v+15U6qG4S8LMqJESF4XeaejfgrnHCWi+iMkTfvNUj9N1
-         tbmbSY4UqAqCeWfr5ySJhRlkUR19UrBl0ic4iIVXFNijXdaHeMhYVFVkqhzYgBm+ZPJo
-         1iCq5JTUj6QQ7pmCnZp3dfGz2eJzaHmd4jRPfPJwKgqAcAY5V4Gbbhd1ZZlp0wP5+fX6
-         9nsX5hqEtNzrDWWbOuS6YrhlYs9dsCYg4w05j65XqGzVGxNlUg7IpmhPvd4EuVUWD5PI
-         /Kaj4TVxbqwgq+XYeYpoDwp7hei9E4DxjApTwBWxG30xzLN12PL4ca/vlUw9fM5b1EUK
-         PPLA==
-X-Gm-Message-State: AOAM531bZaB9yRYbm06gtFa5WoL1YX0jlfKiBVsYwIAB45yw4wZkFGy6
-	3NjsSccOaSmfQXrBK8ioYcNZrg==
-X-Google-Smtp-Source: ABdhPJzYiwQQCcjkXbhoM9K033zl7MYgw1sdJa3umN0TuVZDt0C0yVai3afaGAHFEVfnQM8QWoiAOQ==
-X-Received: by 2002:ac8:5a82:: with SMTP id c2mr19620886qtc.378.1603741781412;
-        Mon, 26 Oct 2020 12:49:41 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id n2sm7362161qtr.6.2020.10.26.12.49.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 12:49:40 -0700 (PDT)
-Date: Mon, 26 Oct 2020 15:49:39 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: [BUG] b4: AttributeError: 'LoreAttestation' object has no attribute 'attid'
-Message-ID: <20201026194939.r7dsx43zhd5xjebj@chatter.i7.local>
-References: <20201026175618.GB2449445@kernel.org>
+ dkim=pass header.i=@kroah.com header.s=fm2 header.b=jX2pPTsv;
+ spf=pass (domain: kroah.com, ip: 64.147.123.24, mailfrom: greg@kroah.com)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.west.internal (Postfix) with ESMTP id 28A6BE91;
+	Tue, 27 Oct 2020 08:22:21 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Tue, 27 Oct 2020 08:22:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:cc:subject:message-id:mime-version:content-type; s=
+	fm2; bh=eM/BbTwLj7SPLXhO35eogzx2+7jF9nVBIFqXXT0/Z90=; b=jX2pPTsv
+	sh1rICHppVNL7ka6PeGd89VTabvJJEy3l85vwflUjh8bpnXPCfO9MFJaT7Vd6iLW
+	EndsyetpOu8Y4tdfjQ860GVsl+nDcpOXOgyCt9RDGU64PvURRSZgrn0hDpTI2fOl
+	31Nr/A8N4OVBeuSixt847T631zaNnv1jdi4OTWdudR49Sbg66qM9EdQdr8KVUXfM
+	zf2+n2fEnyqne0uzx0djBFsbMnjpAW7riPAP2PmO5T1MzHxhjz4v5rI7z3iONo2E
+	VxmeqW9t3dYmck8uuOiSkiWAb5M23rWMRdc7gpv1eAOUZO1gyEXoQg8jqIa2TDlj
+	Ha9GJakOKDyl0g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:message-id
+	:mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; bh=eM/BbTwLj7SPLXhO35eogzx2+7jF9
+	nVBIFqXXT0/Z90=; b=AfcNRj4IWav1g3p0m3bP/2ohFCqSTkkmC9vq4fhG0kopm
+	uJHKMn81i108bNk5vtOH3ajxYyTj30tByyLSt50rj7/sSWUr4bK7TOsrAeVQBhwK
+	8RFzEa/FAvbaDpfok3lytUxebIh4As9ohT8ltFF2ooDxjLBaMXIz11Ywyiv8G5ZD
+	igJSSr809oCJ3or+/ZJjE/0ZOAM1ASeRCln/2RQQyddk4LBt8Te+V97BpaPsjxJ6
+	e1IrfcDGuwlZqn9RJJRoIx/AcaNc7qFG8QNjCXHEyFJJVcrYf/rLp7a6ly8rjyg0
+	8pijDPVatt9Lpfk3P2TWpH77r+BqXp9Ln4Mh4qqRg==
+X-ME-Sender: <xms:_BCYX8e2Pyw0XWHMb1CA5sYJ0REaRD5UgvjuZI_A6HeC_FNqSJdmsw>
+    <xme:_BCYX-O4wW7cKJRKHCv3Cbkv95zYeK8WP57M1A-OPUa7BlxR5aT1RaAV1vM_9ID97
+    04PL4jg3-npfQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrkeelgdeflecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkgggtugesthdtredttddtvdenucfhrhhomhepifhrvghgucfmrhho
+    rghhqdfjrghrthhmrghnuceoghhrvghgsehkrhhorghhrdgtohhmqeenucggtffrrghtth
+    gvrhhnpedvledthfehhffhffejudejieeuleeigfeihfduudeivedtteeuudetffevkeef
+    hfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecukfhppeekfedrkeeirdejgedrie
+    egnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhr
+    vghgsehkrhhorghhrdgtohhm
+X-ME-Proxy: <xmx:_BCYX9gCPHcbzQNh6d9XpyauuGbWJLkaYtxjHU1VA8LcyvUCifkHMQ>
+    <xmx:_BCYXx-yHuN_tUz-6TljPfepefdGdvOGbet_Gphtc4EnXXZkxvlPqQ>
+    <xmx:_BCYX4t18ZrrBkLj9hUAP_tSien0DVWl9kTUsSEhS_UGgYV9nU3hcw>
+    <xmx:_BCYX-2iBV4wW0_Hb-Oib82b6mFWK4HiaZAmb4A9lND9HvFwGkLDPA>
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 255163064684;
+	Tue, 27 Oct 2020 08:22:20 -0400 (EDT)
+Date: Tue, 27 Oct 2020 13:23:15 +0100
+From: "Greg KH" <greg@kroah.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: b4 crash on staging driver patchset
+Message-ID: <20201027122315.GA669512@kroah.com>
 MIME-Version: 1.0
-In-Reply-To: <20201026175618.GB2449445@kernel.org>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Mon, Oct 26, 2020 at 02:56:18PM -0300, Arnaldo Carvalho de Melo wrote:
-> 
-> [acme@five perf]$ b4 am -tcsl 20201024025918.453431-1-namhyung@kernel.org
-> Looking up https://lore.kernel.org/r/20201024025918.453431-1-namhyung%40kernel.org
+Hi Konstantin,
 
-Note -- that thread is kinda broken because there is a [PATCH 1/2] with 
-no [PATCH 2/2], and we don't count [PATCH v2 2/2], as it's a different 
-series.
+On the latest tip of the 'b4' tree, I get the following crash with this
+patch series:
 
-> Grabbing thread from lore.kernel.org/lkml
-> Checking for newer revisions on https://lore.kernel.org/lkml/
-> Analyzing 8 messages in the thread
-> ---
-> Thread incomplete, attempting to backfill
-> Traceback (most recent call last):
->   File "/home/acme/git/b4/b4/command.py", line 238, in <module>
->     cmd()
->   File "/home/acme/git/b4/b4/command.py", line 221, in cmd
->     cmdargs.func(cmdargs)
->   File "/home/acme/git/b4/b4/command.py", line 40, in cmd_am
->     b4.mbox.main(cmdargs)
->   File "/home/acme/git/b4/b4/mbox.py", line 509, in main
->     mbox_to_am(threadmbox, cmdargs)
->   File "/home/acme/git/b4/b4/mbox.py", line 49, in mbox_to_am
->     lser = lmbx.get_series(revision=wantver, sloppytrailers=cmdargs.sloppytrailers)
->   File "/home/acme/git/b4/b4/__init__.py", line 307, in get_series
->     attid = pmsg.attestation.attid
-> AttributeError: 'LoreAttestation' object has no attribute 'attid'
+$ b4 am -t https://lore.kernel.org/r/20201019160604.1609180-1-Jerome.Pouiller@silabs.com
+Looking up https://lore.kernel.org/r/20201019160604.1609180-1-Jerome.Pouiller%40silabs.com
+Grabbing thread from lore.kernel.org/driverdev-devel
+Analyzing 3 messages in the thread
+---
+Writing ./20201019_jerome_pouiller_staging_wfx_fix_use_of_uninitialized_pointer.mbx
+Traceback (most recent call last):
+  File "/mnt/fast_disk/linux/tools/b4/b4/command.py", line 238, in <module>
+    cmd()
+  File "/mnt/fast_disk/linux/tools/b4/b4/command.py", line 221, in cmd
+    cmdargs.func(cmdargs)
+  File "/mnt/fast_disk/linux/tools/b4/b4/command.py", line 40, in cmd_am
+    b4.mbox.main(cmdargs)
+  File "/mnt/fast_disk/linux/tools/b4/b4/mbox.py", line 509, in main
+    mbox_to_am(threadmbox, cmdargs)
+  File "/mnt/fast_disk/linux/tools/b4/b4/mbox.py", line 114, in mbox_to_am
+    am_mbx = lser.save_am_mbox(mbx, noaddtrailers=cmdargs.noaddtrailers,
+  File "/mnt/fast_disk/linux/tools/b4/b4/__init__.py", line 522, in save_am_mbox
+    latt.validate(lmsg.msg)
+AttributeError: 'NoneType' object has no attribute 'validate'
 
-There is a fix for this in the current master, though new attestation 
-code is a bit mid-flight and may cause occasional further problems until 
-I complete it.
+Any hints?
 
-Thanks for the report!
+thanks,
 
--K
+greg k-h
