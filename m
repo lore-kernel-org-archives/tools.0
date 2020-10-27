@@ -1,70 +1,72 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
- by mx.groups.io with SMTP id smtpd.web09.18074.1604081134190507818
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
+ by mx.groups.io with SMTP id smtpd.web11.985.1603821669789623866
  for <tools@linux.kernel.org>;
- Fri, 30 Oct 2020 11:05:34 -0700
+ Tue, 27 Oct 2020 11:01:10 -0700
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=S+gIOAw5;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.172, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f172.google.com with SMTP id a65so3434053qkg.13
-        for <tools@linux.kernel.org>; Fri, 30 Oct 2020 11:05:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=epl8PEZEqpkBQhIZQn/oOIl51Lnf2IyBc9q+zi7R34w=;
-        b=S+gIOAw5/kYpAL8OXArnJQkv3Am9lSLNWUlbfE0E6W8CJ9SoJ4TokS3SP7HbheDNIr
-         P8+5Uk1aYImUBoc39eopuWCZlq/qBEip4MQxHPQOf1yN08q4Nnc3TtYZPSXePBObzObF
-         bme01bO1RsGIaB3RE+B5Y8Pyt3EOrXFexOrLo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=epl8PEZEqpkBQhIZQn/oOIl51Lnf2IyBc9q+zi7R34w=;
-        b=Ohsjy2AT6SqZsbdu0Mxapa7Nj3cFAlYObd7g2vsM+JDBf3ZMff4c0v/Ci5DGGrSvlO
-         6ziu1eFRakPA35CIFnFrjomEWwTzR+mBm8Erh5sxoa9O0cMmfuuhqY6GRMU/prIrUoGO
-         V67nzUBa7pwHPZIzc4Si+xISqGju4CMTTtIYSbhU5Yv5JlS3G9MxEBhjCsbINBjJcS5Y
-         jg8ou6kMPK7+QwuddPwUiPveJUAKOy7JGma0qHjKvcDe5EFfF0eXKFqTe2ZkQL0ljK2b
-         BhGBATTngEWL9YXquJs0zvjXSTXRqx6NEIYL3zUX1SQcMQeyWykNNhCvTGwPG/6bAjPO
-         rXqw==
-X-Gm-Message-State: AOAM5334tMvXBoRV9PIb1uuBdR5zoMLdbMtVUl/FT0QzD4pENctHc3Ye
-	5jGIe/g4Y0GW1VgbQzQZMuTxXg==
-X-Google-Smtp-Source: ABdhPJxwHe63MHOlmIhGs08o1eaO7dp13ieUv5roNuMA9hC04ggSHOWJcuQGgV+IXo1CWMh2yJ97kg==
-X-Received: by 2002:a37:5906:: with SMTP id n6mr3451209qkb.254.1604081133261;
-        Fri, 30 Oct 2020 11:05:33 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id 8sm1215420qkk.90.2020.10.30.11.05.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2020 11:05:32 -0700 (PDT)
-Date: Fri, 30 Oct 2020 14:05:30 -0400
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Alexandre Belloni <alexandre.belloni@bootlin.com>
+ dkim=missing; spf=pass (domain: bootlin.com, ip: 217.70.183.197, mailfrom: alexandre.belloni@bootlin.com)
+X-Originating-IP: 90.65.88.165
+Received: from localhost (lfbn-lyo-1-1908-165.w90-65.abo.wanadoo.fr [90.65.88.165])
+	(Authenticated sender: alexandre.belloni@bootlin.com)
+	by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id 86A6F1C000E;
+	Tue, 27 Oct 2020 18:01:06 +0000 (UTC)
+Date: Tue, 27 Oct 2020 19:01:06 +0100
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4 ty : wrong patch number when cherrypicking
-Message-ID: <20201030180530.fpkcjxfjeih24cmu@chatter.i7.local>
-References: <20201030173744.GA995986@piout.net>
+Subject: Re: b4 not fetching proper patch
+Message-ID: <20201027180106.GE12276@piout.net>
+References: <20201027173116.GA158870@piout.net>
+ <20201027174527.6mt2gcsfxc2q4u5m@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <20201030173744.GA995986@piout.net>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20201027174527.6mt2gcsfxc2q4u5m@chatter.i7.local>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Fri, Oct 30, 2020 at 06:37:44PM +0100, Alexandre Belloni wrote:
-> I cherrypicked patch 4 and 5 of
-> https://lore.kernel.org/linux-amlogic/20201005203451.9985-1-post@lespocky.de/
-> using:
+On 27/10/2020 13:45:27-0400, Konstantin Ryabitsev wrote:
+> On Tue, Oct 27, 2020 at 06:31:16PM +0100, Alexandre Belloni wrote:
+> > Hello,
+> > 
+> > I'm not sure this is worth fixing but I though I would report it anyway:
+> > 
+> > I want to apply just this patch:
+> > https://lore.kernel.org/linux-rtc/20200924105256.18162-2-u.kleine-koenig@pengutronix.de/
+> > 
+> > However b4 am -p linux-rtc -c -t -s -l -P _ -o - 20200924105256.18162-2-u.kleine-koenig@pengutronix.de
+> > ends up with:
+> > 
+> > Grabbing thread from lore.kernel.org/linux-rtc
+> > Checking for newer revisions on https://lore.kernel.org/linux-rtc/
+> > Analyzing 20 messages in the thread
+> > Will use the latest revision: v2
+> > You can pick other revisions using the -vN flag
+> > ---
+> > Specified msgid is not present in the series, cannot cherry-pick
+> > 
+> > The issue here is that this series has been sent as a reply to another
+> > series labeled v2 that it supersedes and b4 insists in using this v2.
 > 
-> b4 am -p linux-arm-kernel -c -t -s -l -P 4-5 -o - 20201005203451.9985-5-post@lespocky.de
+> Oooh, gosh, yeah:
 > 
-> After applying to my tree, b4 ty generated the message I sent (without
-> checking, my bad):
+> -> [PATCH v2 N/3]
+>  \-> [PATCH N/2]
+>   \-> [PATCH v2 N/2]
 > 
-> https://lore.kernel.org/linux-amlogic/160391135997.385141.5554228268638639718.b4-ty@bootlin.com/
 > 
-> Where it had 1/2 and 2/2 instead of 04/12 and 05/12.
+> I'm sorry, it's one of those times when it's never going to be clear 
+> what's been intended. :)
 > 
-> Is this too awful to fix? :)
+> That said, it's a legitimate bug -- if the msgid we're cherry-picking is 
+> not in the latest series revision, we should automatically select the 
+> revision containing the requested msgid. You can still get the patch you 
+> need in this particular case if you pass -v1 to the command you used, 
+> but it should work without forcing the -v1.
+> 
 
-It shouldn't be -- I have a similar request in the following thread:
-https://lore.kernel.org/r/20201003193137.z2bpwzlz5a66kkex@chatter.i7.local
+Yeah, that is what I did. I then applied with git am as usual. The last
+issue was that b4 ty didn't seem to track that patch, I'm not sure this
+is related though.
 
--K
+-- 
+Alexandre Belloni, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
