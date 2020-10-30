@@ -1,45 +1,72 @@
-Received: from relay12.mail.gandi.net (relay12.mail.gandi.net [217.70.178.232])
- by mx.groups.io with SMTP id smtpd.web12.454.1603819879933363062
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web12.11830.1604055119471344407
  for <tools@linux.kernel.org>;
- Tue, 27 Oct 2020 10:31:20 -0700
+ Fri, 30 Oct 2020 03:51:59 -0700
 Authentication-Results: mx.groups.io;
- dkim=missing; spf=pass (domain: bootlin.com, ip: 217.70.178.232, mailfrom: alexandre.belloni@bootlin.com)
-Received: from localhost (lfbn-lyo-1-1908-165.w90-65.abo.wanadoo.fr [90.65.88.165])
-	(Authenticated sender: alexandre.belloni@bootlin.com)
-	by relay12.mail.gandi.net (Postfix) with ESMTPSA id DAA3920000A;
-	Tue, 27 Oct 2020 17:31:16 +0000 (UTC)
-Date: Tue, 27 Oct 2020 18:31:16 +0100
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: b4 not fetching proper patch
-Message-ID: <20201027173116.GA158870@piout.net>
+ dkim=fail reason="body hash did not verify" header.i=@kernel.org header.s=default header.b=vUZlDrV5;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: maz@kernel.org)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id 8701E20728;
+	Fri, 30 Oct 2020 10:51:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1604055118;
+	bh=8Y3zeZl/rnRB/8LTSA0IGeEoiVENzt9soWpS/wvWpvU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=vUZlDrV54Zcy2lA5LF37PZb7eRVNyOKLOlvY8KquDhYRnBzRY2AYLfJ67R/M09/ph
+	 i+DMnK7Ro5RaimHWHr70VCsyDJJjX3+7u/t+g4Uycq9vqG51PIEPYj1a82/Rbn6EoM
+	 ir9hG1uYA9LnCuKaA/A3T02+V689eMHZM/PQBdqE=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78] helo=hot-poop.lan)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94)
+	(envelope-from <maz@kernel.org>)
+	id 1kYS0i-005ihZ-E5; Fri, 30 Oct 2020 10:51:56 +0000
+From: "Marc Zyngier" <maz@kernel.org>
+To: tools@linux.kernel.org
+Cc: users@linux.kernel.org,
+	konstantin@linuxfoundation.org
+Subject: [b4][PATCH] Fix handling of series with the [PATCHvX] defect
+Date: Fri, 30 Oct 2020 10:51:53 +0000
+Message-Id: <20201030105153.3015432-1-maz@kernel.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: tools@linux.kernel.org, users@linux.kernel.org, konstantin@linuxfoundation.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+b4 tries to handle subject lines such as "[PATCHvX]" by replacing
+the subject line in situ, but seems to do a rather bad job of it,
+resulting in only the first patch of the series being picked up.
+Fetching <20201026134931.28246-1-mark.rutland@arm.com> does exhibit
+the problem.
 
-I'm not sure this is worth fixing but I though I would report it anyway:
+Fixing the re.sub() expression allows normal funtionalities to be
+restored, and the above series to be fetched.
 
-I want to apply just this patch:
-https://lore.kernel.org/linux-rtc/20200924105256.18162-2-u.kleine-koenig@pengutronix.de/
-
-However b4 am -p linux-rtc -c -t -s -l -P _ -o - 20200924105256.18162-2-u.kleine-koenig@pengutronix.de
-ends up with:
-
-Grabbing thread from lore.kernel.org/linux-rtc
-Checking for newer revisions on https://lore.kernel.org/linux-rtc/
-Analyzing 20 messages in the thread
-Will use the latest revision: v2
-You can pick other revisions using the -vN flag
+Fixes: 6bf644f14b3f ("Deal with [PATCHvX] subject")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
-Specified msgid is not present in the series, cannot cherry-pick
+ b4/__init__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The issue here is that this series has been sent as a reply to another
-series labeled v2 that it supersedes and b4 insists in using this v2.
+diff --git a/b4/__init__.py b/b4/__init__.py
+index a1479aa..c6d43b2 100644
+--- a/b4/__init__.py
++++ b/b4/__init__.py
+@@ -1389,7 +1389,7 @@ class LoreSubject:
+             subject =3D re.sub(r'^\w+:\s*\[', '[', subject)
+=20
+         # Fix [PATCHv3] to be properly [PATCH v3]
+-        subject =3D re.sub(r'^\[\s*(patch)(v\d+).*', '[$1 $2$3', subject=
+, flags=3Dre.I)
++        subject =3D re.sub(r'^\[\s*(patch)(v\d+)(.*)', '[\\1 \\2\\3', su=
+bject, flags=3Dre.I)
+=20
+         # Find all [foo] in the title
+         while subject.find('[') =3D=3D 0:
+--=20
+2.28.0
 
--- 
-Alexandre Belloni, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
