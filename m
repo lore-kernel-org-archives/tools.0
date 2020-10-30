@@ -1,72 +1,70 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web12.11830.1604055119471344407
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+ by mx.groups.io with SMTP id smtpd.web09.18074.1604081134190507818
  for <tools@linux.kernel.org>;
- Fri, 30 Oct 2020 03:51:59 -0700
+ Fri, 30 Oct 2020 11:05:34 -0700
 Authentication-Results: mx.groups.io;
- dkim=fail reason="body hash did not verify" header.i=@kernel.org header.s=default header.b=vUZlDrV5;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: maz@kernel.org)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 8701E20728;
-	Fri, 30 Oct 2020 10:51:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1604055118;
-	bh=8Y3zeZl/rnRB/8LTSA0IGeEoiVENzt9soWpS/wvWpvU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=vUZlDrV54Zcy2lA5LF37PZb7eRVNyOKLOlvY8KquDhYRnBzRY2AYLfJ67R/M09/ph
-	 i+DMnK7Ro5RaimHWHr70VCsyDJJjX3+7u/t+g4Uycq9vqG51PIEPYj1a82/Rbn6EoM
-	 ir9hG1uYA9LnCuKaA/A3T02+V689eMHZM/PQBdqE=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78] helo=hot-poop.lan)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94)
-	(envelope-from <maz@kernel.org>)
-	id 1kYS0i-005ihZ-E5; Fri, 30 Oct 2020 10:51:56 +0000
-From: "Marc Zyngier" <maz@kernel.org>
-To: tools@linux.kernel.org
-Cc: users@linux.kernel.org,
-	konstantin@linuxfoundation.org
-Subject: [b4][PATCH] Fix handling of series with the [PATCHvX] defect
-Date: Fri, 30 Oct 2020 10:51:53 +0000
-Message-Id: <20201030105153.3015432-1-maz@kernel.org>
-X-Mailer: git-send-email 2.28.0
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=S+gIOAw5;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.172, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f172.google.com with SMTP id a65so3434053qkg.13
+        for <tools@linux.kernel.org>; Fri, 30 Oct 2020 11:05:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=epl8PEZEqpkBQhIZQn/oOIl51Lnf2IyBc9q+zi7R34w=;
+        b=S+gIOAw5/kYpAL8OXArnJQkv3Am9lSLNWUlbfE0E6W8CJ9SoJ4TokS3SP7HbheDNIr
+         P8+5Uk1aYImUBoc39eopuWCZlq/qBEip4MQxHPQOf1yN08q4Nnc3TtYZPSXePBObzObF
+         bme01bO1RsGIaB3RE+B5Y8Pyt3EOrXFexOrLo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=epl8PEZEqpkBQhIZQn/oOIl51Lnf2IyBc9q+zi7R34w=;
+        b=Ohsjy2AT6SqZsbdu0Mxapa7Nj3cFAlYObd7g2vsM+JDBf3ZMff4c0v/Ci5DGGrSvlO
+         6ziu1eFRakPA35CIFnFrjomEWwTzR+mBm8Erh5sxoa9O0cMmfuuhqY6GRMU/prIrUoGO
+         V67nzUBa7pwHPZIzc4Si+xISqGju4CMTTtIYSbhU5Yv5JlS3G9MxEBhjCsbINBjJcS5Y
+         jg8ou6kMPK7+QwuddPwUiPveJUAKOy7JGma0qHjKvcDe5EFfF0eXKFqTe2ZkQL0ljK2b
+         BhGBATTngEWL9YXquJs0zvjXSTXRqx6NEIYL3zUX1SQcMQeyWykNNhCvTGwPG/6bAjPO
+         rXqw==
+X-Gm-Message-State: AOAM5334tMvXBoRV9PIb1uuBdR5zoMLdbMtVUl/FT0QzD4pENctHc3Ye
+	5jGIe/g4Y0GW1VgbQzQZMuTxXg==
+X-Google-Smtp-Source: ABdhPJxwHe63MHOlmIhGs08o1eaO7dp13ieUv5roNuMA9hC04ggSHOWJcuQGgV+IXo1CWMh2yJ97kg==
+X-Received: by 2002:a37:5906:: with SMTP id n6mr3451209qkb.254.1604081133261;
+        Fri, 30 Oct 2020 11:05:33 -0700 (PDT)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id 8sm1215420qkk.90.2020.10.30.11.05.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Oct 2020 11:05:32 -0700 (PDT)
+Date: Fri, 30 Oct 2020 14:05:30 -0400
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: b4 ty : wrong patch number when cherrypicking
+Message-ID: <20201030180530.fpkcjxfjeih24cmu@chatter.i7.local>
+References: <20201030173744.GA995986@piout.net>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: tools@linux.kernel.org, users@linux.kernel.org, konstantin@linuxfoundation.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20201030173744.GA995986@piout.net>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-b4 tries to handle subject lines such as "[PATCHvX]" by replacing
-the subject line in situ, but seems to do a rather bad job of it,
-resulting in only the first patch of the series being picked up.
-Fetching <20201026134931.28246-1-mark.rutland@arm.com> does exhibit
-the problem.
+On Fri, Oct 30, 2020 at 06:37:44PM +0100, Alexandre Belloni wrote:
+> I cherrypicked patch 4 and 5 of
+> https://lore.kernel.org/linux-amlogic/20201005203451.9985-1-post@lespocky.de/
+> using:
+> 
+> b4 am -p linux-arm-kernel -c -t -s -l -P 4-5 -o - 20201005203451.9985-5-post@lespocky.de
+> 
+> After applying to my tree, b4 ty generated the message I sent (without
+> checking, my bad):
+> 
+> https://lore.kernel.org/linux-amlogic/160391135997.385141.5554228268638639718.b4-ty@bootlin.com/
+> 
+> Where it had 1/2 and 2/2 instead of 04/12 and 05/12.
+> 
+> Is this too awful to fix? :)
 
-Fixing the re.sub() expression allows normal funtionalities to be
-restored, and the above series to be fetched.
+It shouldn't be -- I have a similar request in the following thread:
+https://lore.kernel.org/r/20201003193137.z2bpwzlz5a66kkex@chatter.i7.local
 
-Fixes: 6bf644f14b3f ("Deal with [PATCHvX] subject")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- b4/__init__.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/b4/__init__.py b/b4/__init__.py
-index a1479aa..c6d43b2 100644
---- a/b4/__init__.py
-+++ b/b4/__init__.py
-@@ -1389,7 +1389,7 @@ class LoreSubject:
-             subject =3D re.sub(r'^\w+:\s*\[', '[', subject)
-=20
-         # Fix [PATCHv3] to be properly [PATCH v3]
--        subject =3D re.sub(r'^\[\s*(patch)(v\d+).*', '[$1 $2$3', subject=
-, flags=3Dre.I)
-+        subject =3D re.sub(r'^\[\s*(patch)(v\d+)(.*)', '[\\1 \\2\\3', su=
-bject, flags=3Dre.I)
-=20
-         # Find all [foo] in the title
-         while subject.find('[') =3D=3D 0:
---=20
-2.28.0
-
+-K
