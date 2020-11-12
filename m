@@ -1,64 +1,86 @@
-Received: from mail-qv1-f66.google.com (mail-qv1-f66.google.com [209.85.219.66])
- by mx.groups.io with SMTP id smtpd.web12.5153.1604442659970887589
+Received: from mail-qt1-f196.google.com (mail-qt1-f196.google.com [209.85.160.196])
+ by mx.groups.io with SMTP id smtpd.web10.5763.1605194497627348300
  for <tools@linux.kernel.org>;
- Tue, 03 Nov 2020 14:31:00 -0800
+ Thu, 12 Nov 2020 07:21:37 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=hRotF+F3;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.219.66, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qv1-f66.google.com with SMTP id 63so8803235qva.7
-        for <tools@linux.kernel.org>; Tue, 03 Nov 2020 14:30:59 -0800 (PST)
+ dkim=pass header.i=@gmail.com header.s=20161025 header.b=KdsPtfZE;
+ spf=pass (domain: gmail.com, ip: 209.85.160.196, mailfrom: levraiphilippeblain@gmail.com)
+Received: by mail-qt1-f196.google.com with SMTP id 7so4211105qtp.1
+        for <tools@linux.kernel.org>; Thu, 12 Nov 2020 07:21:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rOJIIh0++SLxvRYyEtHIWZSRFNMd6d1jwdvks4R9S6A=;
-        b=hRotF+F3k6BNCTgCbGpfUVYLf7S/RCYfb/jVCJnLGVmgR8iQsM9Q59FusBvqP1scaU
-         t9TEh+eY7XjRMMIy65e3FdM10k3gJdFRRWsr2dDEzxbf0AFgNTf/j9dG+Iq87vUdXAzX
-         U7JbR8Wq2SQWxnI6SMeRpz6n9EqdYo/T3sWbI=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eD7xgNUHt5OsiJoGSxIyMxy+61z9V8aiw8a8J4oCd6U=;
+        b=KdsPtfZEcbmQ6/Pl2w/2j2iBgC2wn7RLIKb6PLxiRvMi9FEk2K2LOyqrft/n6k+h11
+         3dwn/2YEKL3jgmDgaWjjO7oPUD2moyD2h8KE6dhpoPJzwDEhr1tfnrtXm7pQRusrM5AK
+         KlMAyt1BkI7/5zXUsDwVu7l7LG9+MVSx2cmNMiTqy7tXFZ5maTxry9thsMUG/iB63S3Y
+         ifr311rPK6n9PtZc4LKITU7KwGYYvZx171XG6+c5mlABAFzUeswbKiZ03tEF+2/Tkey0
+         TYVHEjUwOKUCpODLMry2+5NQrZuVPoHEw3tLDF2dEDZ8BMI1urxM/jqJByLdeTUlp03n
+         qzlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rOJIIh0++SLxvRYyEtHIWZSRFNMd6d1jwdvks4R9S6A=;
-        b=f8H370yu04LgZx9ngpBkOhWn7innaoF23AVIogXZx+mZ5CZ4A9f2vxZEAqzt/pnkpF
-         iFHYaEX5SeVEZDkbcYsusKZrYHquswsfzGiTrlXEBM8WeYaUM5e/Wa2Sh7mgGH4M9h6s
-         uk0CYHyST38MdJ4Xr8rmWNd3xXxQCmbHI94WJiExZ1Fk9fdnyhbVYI7hxF2f7ThB0B9S
-         x5wPEHA0YXb3tmzyy6BMaGZWknrBKl8LDjRr0pQEoSe19uvqFDs9wgcU8aIgM3l8xN28
-         VPeQYfPl5S115TunjeJiIku5fcuZSQ2lx1H4XYEe2IqKcn2nghcoq5zXJTXQcSX5n1Ry
-         O4AQ==
-X-Gm-Message-State: AOAM5307HEGZSjkCLIwQyJxmtw9XzoujUim2QG8T6RSSLHIdHAZkI12E
-	swkWOBtYQWlGd5dn50z4vFJFVg==
-X-Google-Smtp-Source: ABdhPJy43/hERqajLIgpBf0XpK7NWYXOvGkQM2IjHss4jnXyk3YrmLvUjFMoh9mnG67HQgodj+S+fQ==
-X-Received: by 2002:ad4:54e9:: with SMTP id k9mr28887721qvx.60.1604442659034;
-        Tue, 03 Nov 2020 14:30:59 -0800 (PST)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id b196sm162141qkg.124.2020.11.03.14.30.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2020 14:30:58 -0800 (PST)
-Date: Tue, 3 Nov 2020 17:30:56 -0500
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Marc Zyngier <maz@kernel.org>
-Cc: tools@linux.kernel.org, users@linux.kernel.org
-Subject: Re: [b4][PATCH] Fix handling of series with the [PATCHvX] defect
-Message-ID: <20201103223056.3y4v4n4pkm4gr7xu@chatter.i7.local>
-References: <20201030105153.3015432-1-maz@kernel.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eD7xgNUHt5OsiJoGSxIyMxy+61z9V8aiw8a8J4oCd6U=;
+        b=A4U0ke6xPLvqffdw2zCmI7AOSCHvxWCxrnQoYscYvCVdrO2dC9IeS3xRHOxr/igggF
+         AZb/fD4atBL7QGO6EcVtetaeN7ufo3dD9enpOzxk80exKx5khfoS4GPvpbzOpVJiznhC
+         UgH/tRnstg9u67zFImBn4DUQtZpf5x0U5gs49Y6a3jR0PHTXArmwsgo9d07GMlzQejjZ
+         5va3prNPVfMNaUh5ci2RIbNauts/0wmKdteRUmigiAY/WdU/6sUT7sVWLVfNXpQ6evkL
+         6eoz8suftG7lpjysgw+HBLfniQx0K6u2VIZAGR1rINiT7vsgAeG3kO5qKMhB0fP87VFm
+         RMBQ==
+X-Gm-Message-State: AOAM533p9Ja1ISofzhqwajUv4bSsXq14f42BjAER8gMXAnEBN+o9cUzK
+	vKmWa7vShNXqAOdLWHp42lQ1K/h96CSZZw==
+X-Google-Smtp-Source: ABdhPJzfuWvNfkxtlQSESOOY39ZFASEuZBB6odQNg4TKzKkUfqzB14owOJyHcqcx5dYwZKuo7aiDdQ==
+X-Received: by 2002:ac8:58c8:: with SMTP id u8mr20499737qta.25.1605194496520;
+        Thu, 12 Nov 2020 07:21:36 -0800 (PST)
+Return-Path: <levraiphilippeblain@gmail.com>
+Received: from localhost.localdomain ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id k70sm5230351qke.46.2020.11.12.07.21.35
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 12 Nov 2020 07:21:35 -0800 (PST)
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+To: tools@linux.kernel.org
+Cc: konstantin@linuxfoundation.org
+Subject: [PATCH b4 0/4] Add the man page to the pip package
+Date: Thu, 12 Nov 2020 10:21:30 -0500
+Message-Id: <20201112152134.96498-1-levraiphilippeblain@gmail.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-In-Reply-To: <20201030105153.3015432-1-maz@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 30, 2020 at 10:51:53AM +0000, Marc Zyngier wrote:
-> b4 tries to handle subject lines such as "[PATCHvX]" by replacing
-> the subject line in situ, but seems to do a rather bad job of it,
-> resulting in only the first patch of the series being picked up.
-> Fetching <20201026134931.28246-1-mark.rutland@arm.com> does exhibit
-> the problem.
-> 
-> Fixing the re.sub() expression allows normal funtionalities to be
-> restored, and the above series to be fetched.
+Hi ! I'm a Git contributor and just discovered b4 yesterday.
+I'm already convinced it will be a great addition to my workflow.
 
-Thanks, I have no idea how that bad regex made it in. Applied both to 
-master and stable-0.5.y.
+I noticed that the man page is not installed when you 'pip install' the
+package, so patch 4/4 in this here series takes care of that.
 
--K
+The other 3 patches are project-level goodies that I thought were good
+additions. Feel free to drop them if you don't think so.
+
+Cheers!
+
+Philippe.
+
+P.S. a quick search on https://lore.kernel.org/git/ reveals you did not
+formally announce neither b4 nor its predecessor get-lore-mbox there. I think
+it could be helpful for some Git folks too :)
+
+Philippe Blain (4):
+  Add '.venv' to .gitignore
+  Link to the README from PyPI
+  Add pointers to https://linux.kernel.org/g/tools
+  Distribute the manpage with the pip package
+
+ .gitignore   | 1 +
+ README.rst   | 3 ++-
+ man/b4.5     | 3 ++-
+ man/b4.5.rst | 3 ++-
+ setup.py     | 6 +++++-
+ 5 files changed, 12 insertions(+), 4 deletions(-)
+
+
+base-commit: f33033c03cf96ed769289ebf6d3c26b0cf540683
+-- 
+2.27.0
+
