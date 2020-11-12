@@ -1,86 +1,79 @@
-Received: from mail-qt1-f196.google.com (mail-qt1-f196.google.com [209.85.160.196])
- by mx.groups.io with SMTP id smtpd.web10.5763.1605194497627348300
+Received: from mail-qk1-f196.google.com (mail-qk1-f196.google.com [209.85.222.196])
+ by mx.groups.io with SMTP id smtpd.web09.5698.1605194498881459839
  for <tools@linux.kernel.org>;
- Thu, 12 Nov 2020 07:21:37 -0800
+ Thu, 12 Nov 2020 07:21:39 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@gmail.com header.s=20161025 header.b=KdsPtfZE;
- spf=pass (domain: gmail.com, ip: 209.85.160.196, mailfrom: levraiphilippeblain@gmail.com)
-Received: by mail-qt1-f196.google.com with SMTP id 7so4211105qtp.1
-        for <tools@linux.kernel.org>; Thu, 12 Nov 2020 07:21:37 -0800 (PST)
+ dkim=pass header.i=@gmail.com header.s=20161025 header.b=HqAUdEHz;
+ spf=pass (domain: gmail.com, ip: 209.85.222.196, mailfrom: levraiphilippeblain@gmail.com)
+Received: by mail-qk1-f196.google.com with SMTP id 11so5548231qkd.5
+        for <tools@linux.kernel.org>; Thu, 12 Nov 2020 07:21:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=eD7xgNUHt5OsiJoGSxIyMxy+61z9V8aiw8a8J4oCd6U=;
-        b=KdsPtfZEcbmQ6/Pl2w/2j2iBgC2wn7RLIKb6PLxiRvMi9FEk2K2LOyqrft/n6k+h11
-         3dwn/2YEKL3jgmDgaWjjO7oPUD2moyD2h8KE6dhpoPJzwDEhr1tfnrtXm7pQRusrM5AK
-         KlMAyt1BkI7/5zXUsDwVu7l7LG9+MVSx2cmNMiTqy7tXFZ5maTxry9thsMUG/iB63S3Y
-         ifr311rPK6n9PtZc4LKITU7KwGYYvZx171XG6+c5mlABAFzUeswbKiZ03tEF+2/Tkey0
-         TYVHEjUwOKUCpODLMry2+5NQrZuVPoHEw3tLDF2dEDZ8BMI1urxM/jqJByLdeTUlp03n
-         qzlw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Gd3wzvlqpqSv6opFviL5pQxJHXyEC7zvRshpIvLFiUk=;
+        b=HqAUdEHzBl/781w50SJMxz1DOuFE3k36JFjeuVh/wvAI78+4HTM4y9AiO33d//FAtQ
+         UarmcBFrdSXasilVE5FIhpm/FwBFA3GkFKs0FDEdzyMFBds87R7ORadmi/QahzPMeqgF
+         KM/kuwcH0WSGlC0/9NjAktkjIW1+kr6gPAChrAYddKh6UhRkxoxcDxQo30xE1m/3ULy0
+         1DIwpsK3l+kWc+KbDkPwO2A1JKxeKFASsitZ665lidQjEHVX2HrbVN/3MO4ImyP7ZEM2
+         lHM2WWTNkGNwb54wt27KlH3Yz7Z3s0krpun1O1epKtxXobRYIV4O2ZHA2SejeJmSz74G
+         G1qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=eD7xgNUHt5OsiJoGSxIyMxy+61z9V8aiw8a8J4oCd6U=;
-        b=A4U0ke6xPLvqffdw2zCmI7AOSCHvxWCxrnQoYscYvCVdrO2dC9IeS3xRHOxr/igggF
-         AZb/fD4atBL7QGO6EcVtetaeN7ufo3dD9enpOzxk80exKx5khfoS4GPvpbzOpVJiznhC
-         UgH/tRnstg9u67zFImBn4DUQtZpf5x0U5gs49Y6a3jR0PHTXArmwsgo9d07GMlzQejjZ
-         5va3prNPVfMNaUh5ci2RIbNauts/0wmKdteRUmigiAY/WdU/6sUT7sVWLVfNXpQ6evkL
-         6eoz8suftG7lpjysgw+HBLfniQx0K6u2VIZAGR1rINiT7vsgAeG3kO5qKMhB0fP87VFm
-         RMBQ==
-X-Gm-Message-State: AOAM533p9Ja1ISofzhqwajUv4bSsXq14f42BjAER8gMXAnEBN+o9cUzK
-	vKmWa7vShNXqAOdLWHp42lQ1K/h96CSZZw==
-X-Google-Smtp-Source: ABdhPJzfuWvNfkxtlQSESOOY39ZFASEuZBB6odQNg4TKzKkUfqzB14owOJyHcqcx5dYwZKuo7aiDdQ==
-X-Received: by 2002:ac8:58c8:: with SMTP id u8mr20499737qta.25.1605194496520;
-        Thu, 12 Nov 2020 07:21:36 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Gd3wzvlqpqSv6opFviL5pQxJHXyEC7zvRshpIvLFiUk=;
+        b=iZFxJ74ADcjJdy2Nmo/JuHONFXtG5f1lHIuPoPZwaW5vBmrEpVt8HYcnj/1xaBav62
+         fXLsDR+3K8XjlRo1hmRhyPelWvlX+KM6exCsAoUiowMmzE1N+2jHBFNzFvUletT+LpTi
+         P+hhdmv8ZMxvtCWwhEfAVjIKocol4r2tNpF/v/11eZGStURS3DPfGx9pmSrKuHt8GP9z
+         IUI5CWiMMN/a6LNKpwpzc5UKngDpJTtGSjbosghAfPLn5jKeKpCoEUKMtd2fHO9bOeBO
+         unRp3kAucpUc+RfLegZxqTtbdh22Gsm8I/1JjWeXzvB7TYJRaMi3ZhFB7P/Ila/8qhoi
+         Stgw==
+X-Gm-Message-State: AOAM5330Xf7agy9/DxWrRTvlipxhv7xIe63Wx7OMjkSMmJ+IgUH1kVbE
+	T7dQGMa2m/+Iadgr/VZFjOeYDaf3LLv6XQ==
+X-Google-Smtp-Source: ABdhPJzjab2keySiwAg/3eRBky81uE3mBPFFZ/YHEwzGMqzUhfMKIXfVPspG7XUV+4DmGpT0cG33HA==
+X-Received: by 2002:ae9:ea18:: with SMTP id f24mr213564qkg.135.1605194497796;
+        Thu, 12 Nov 2020 07:21:37 -0800 (PST)
 Return-Path: <levraiphilippeblain@gmail.com>
 Received: from localhost.localdomain ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id k70sm5230351qke.46.2020.11.12.07.21.35
+        by smtp.gmail.com with ESMTPSA id k70sm5230351qke.46.2020.11.12.07.21.36
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 12 Nov 2020 07:21:35 -0800 (PST)
+        Thu, 12 Nov 2020 07:21:37 -0800 (PST)
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 To: tools@linux.kernel.org
 Cc: konstantin@linuxfoundation.org
-Subject: [PATCH b4 0/4] Add the man page to the pip package
-Date: Thu, 12 Nov 2020 10:21:30 -0500
-Message-Id: <20201112152134.96498-1-levraiphilippeblain@gmail.com>
+Subject: [PATCH b4 1/4] Add '.venv' to .gitignore
+Date: Thu, 12 Nov 2020 10:21:31 -0500
+Message-Id: <20201112152134.96498-2-levraiphilippeblain@gmail.com>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20201112152134.96498-1-levraiphilippeblain@gmail.com>
+References: <20201112152134.96498-1-levraiphilippeblain@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi ! I'm a Git contributor and just discovered b4 yesterday.
-I'm already convinced it will be a great addition to my workflow.
+When using the built-in Python3 module 'venv' to create a virtual
+environment, it is common to name the folder containing the virtual
+environment '.venv' [1].
 
-I noticed that the man page is not installed when you 'pip install' the
-package, so patch 4/4 in this here series takes care of that.
+To help developers wishing to use a virtual environment to develop the
+project, add '.venv' to the .gitignore file.
 
-The other 3 patches are project-level goodies that I thought were good
-additions. Feel free to drop them if you don't think so.
+[1] https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments
 
-Cheers!
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ .gitignore | 1 +
+ 1 file changed, 1 insertion(+)
 
-Philippe.
-
-P.S. a quick search on https://lore.kernel.org/git/ reveals you did not
-formally announce neither b4 nor its predecessor get-lore-mbox there. I think
-it could be helpful for some Git folks too :)
-
-Philippe Blain (4):
-  Add '.venv' to .gitignore
-  Link to the README from PyPI
-  Add pointers to https://linux.kernel.org/g/tools
-  Distribute the manpage with the pip package
-
- .gitignore   | 1 +
- README.rst   | 3 ++-
- man/b4.5     | 3 ++-
- man/b4.5.rst | 3 ++-
- setup.py     | 6 +++++-
- 5 files changed, 12 insertions(+), 4 deletions(-)
-
-
-base-commit: f33033c03cf96ed769289ebf6d3c26b0cf540683
+diff --git a/.gitignore b/.gitignore
+index 5d6f10a..e0d7c2e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -13,3 +13,4 @@ __pycache__
+ *.patch
+ *.mbx
+ *.cover
++.venv
 -- 
 2.27.0
 
