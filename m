@@ -1,112 +1,85 @@
-Received: from mail-qv1-f68.google.com (mail-qv1-f68.google.com [209.85.219.68])
- by mx.groups.io with SMTP id smtpd.web08.5761.1605194502334985188
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web11.7001.1605615308620825131
  for <tools@linux.kernel.org>;
- Thu, 12 Nov 2020 07:21:42 -0800
+ Tue, 17 Nov 2020 04:15:08 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@gmail.com header.s=20161025 header.b=W1XiHWLu;
- spf=pass (domain: gmail.com, ip: 209.85.219.68, mailfrom: levraiphilippeblain@gmail.com)
-Received: by mail-qv1-f68.google.com with SMTP id z17so2883003qvy.11
-        for <tools@linux.kernel.org>; Thu, 12 Nov 2020 07:21:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rLoRbw6eDiHMW2W9toZMvy9lX+uinXK6pCIIL/2CVjg=;
-        b=W1XiHWLuxKozUET0ygEJaDOYlG9WF0cyeEib+9/8Zxn+1Kj3gnuIQuHclS/ccCfbzm
-         cJZ8F9n0XbvwnbUBja7icLNPy9g7zq/2tLrUATygvVH7keXXYUtr8goLzvFfr2Be1bC8
-         B8IOc7t4gbJPxoigx5qNYlKSp6E371fSGfE5/24Xw/A/g6nF2CS1o7qia7EAbuy/uSx6
-         HZ9hiSdzQgMJooJnrl6tWjusEIPms3yiocy785NlNyTlIzo5lbcy9ZODrAdN2NOkZteS
-         cI1qJyyWhANsTUkX2M7rPlEjSRqmzl6h/mcopC5+0TLUkvi5p0NQEL5Rtq4nwjFP08t7
-         Pm3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rLoRbw6eDiHMW2W9toZMvy9lX+uinXK6pCIIL/2CVjg=;
-        b=jhLu55EZI96yqrcIP44AgVKAN0Uy9YmTRWzgF7yv6lAnYw8SAjfQdEGqshLBIvN1kV
-         1oLUifbZYvUe9cKGPclJwuyiHM7fJ6I/z0S7cnFxPntg8u/1mnQs0y2AuA2RtO8nOonq
-         +NC00PtgUx81lWulIh4ZEm95vEyHBub40QOTZHnPdZGB7/DNQJt3ZPwij6a0MSeq4Ldc
-         lvH+Gbrgncnto1TrQVNvcoNeUYs2ztS19YQSt9thi+F3s2eocrgziJreHDze+pXcRIKE
-         fgokD+wfei3jc5+bh/2ViFvy9lqT3Ey/6mziZ+gGei9/PjvMkbIyVP0M/QleMOzFCccZ
-         wBVg==
-X-Gm-Message-State: AOAM530Pvbdlslk3B7blCgNaUYczFK29FtUTcH/T7UHW5QL7J8LfHSpx
-	oFOhyeA4gPP6HHcGp6+LIiJo4zoTQLZIIA==
-X-Google-Smtp-Source: ABdhPJzhjPVTenu0otSSRcY0Xah3oolSWHT229Je7J0Olik60oKXoTMIfE9BJbPxo9IWPf60kqJA6w==
-X-Received: by 2002:a0c:b98f:: with SMTP id v15mr31200579qvf.51.1605194501115;
-        Thu, 12 Nov 2020 07:21:41 -0800 (PST)
-Return-Path: <levraiphilippeblain@gmail.com>
-Received: from localhost.localdomain ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id k70sm5230351qke.46.2020.11.12.07.21.40
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 12 Nov 2020 07:21:40 -0800 (PST)
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-To: tools@linux.kernel.org
-Cc: konstantin@linuxfoundation.org
-Subject: [PATCH b4 4/4] Distribute the manpage with the pip package
-Date: Thu, 12 Nov 2020 10:21:34 -0500
-Message-Id: <20201112152134.96498-5-levraiphilippeblain@gmail.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20201112152134.96498-1-levraiphilippeblain@gmail.com>
-References: <20201112152134.96498-1-levraiphilippeblain@gmail.com>
+ dkim=pass header.i=@kernel.org header.s=default header.b=S4CJzjcV;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id 3282E2223C;
+	Tue, 17 Nov 2020 12:15:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1605615307;
+	bh=lx3ZeR35Pur78GrskKtRdpKI5TNWKudMuHQxo5UV6nk=;
+	h=Date:From:To:Subject:From;
+	b=S4CJzjcVTMCGlmIt6zUawaEqDpHLPGjZfOovNujfqxN713qmeFMFotcNUqJ3vKX8R
+	 uFFxxpojVgF6fzFt7TxeSMhhlpNniTQ8oX5sCNBQuzvTvvCfKxO+mSnmzvBWZJ/TgN
+	 gqrRaOovTVNRT73ScmqK31kw3dmcWvrvKoNEJzts=
+Date: Tue, 17 Nov 2020 12:14:47 +0000
+From: "Mark Brown" <broonie@kernel.org>
+To: tools@linux.kernel.org, konstantin@linuxfoundation.org
+Subject: Exception with b4 am -3
+Message-ID: <20201117121447.GA5142@sirena.org.uk>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Cookie: Pause for storage relocation.
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 253
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6c2NcOVqGQ03X4Wi"
+Content-Disposition: inline
 
-The 'data_files' option to setuptools.setup can be used to install
-additional files "outside" of the package [1].
+--6c2NcOVqGQ03X4Wi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Use it so that the manpage is installed with the package.
+When running
 
-Install the manpage to '$PREFIX/share/man/man5', mimicking what the
-Filesystem Hiararchy Standard mandates for the '/usr/local/' prefix [2].
+   b4 am -t -g -3 20201116040721.8001-1-rdunlap@infradead.org
 
-Prefer '$PREFIX/share/man/man5' to '$PREFIX/man/man5' since the later is
-deprecated [3].
+I get:
 
-[1] https://docs.python.org/3/distutils/setupscript.html#installing-additional-files
-[2] https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch04s11.html#idm236091648080
-[3] https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch04s11.html#ftn.idm236091648080
-
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+Looking up https://lore.kernel.org/r/20201116040721.8001-1-rdunlap%40infradead.org
+Grabbing thread from lore.kernel.org/linux-spi
+Analyzing 2 messages in the thread
 ---
+Writing /home/broonie/queue/spi/next/20201115_rdunlap_spi_dw_fix_build_error_by_selecting_multiplexer.mbx
+  [PATCH] spi: dw: fix build error by selecting MULTIPLEXER
+    + Acked-by: Serge Semin <fancer.lancer@gmail.com>
+---
+Total patches: 1
+Preparing fake-am for v1: spi: dw: fix build error by selecting MULTIPLEXER
+Traceback (most recent call last):
+  File "/home/broonie/git/b4/b4/command.py", line 238, in <module>
+    cmd()
+  File "/home/broonie/git/b4/b4/command.py", line 221, in cmd
+    cmdargs.func(cmdargs)
+  File "/home/broonie/git/b4/b4/command.py", line 40, in cmd_am
+    b4.mbox.main(cmdargs)
+  File "/home/broonie/git/b4/b4/mbox.py", line 511, in main
+    mbox_to_am(threadmbox, cmdargs)
+  File "/home/broonie/git/b4/b4/mbox.py", line 155, in mbox_to_am
+    rstart, rend = lser.make_fake_am_range(gitdir=None)
+  File "/home/broonie/git/b4/b4/__init__.py", line 681, in make_fake_am_range
+    if not len(lmsg.blob_indexes):
+TypeError: object of type 'NoneType' has no len()
 
-Notes:
-    A small note: by installing the man page to '$PREFIX/share/man', we are
-    unfortunately trusting every other package installed in '$PREFIX' to follow
-    the same convention.
-    
-    The reason is that when invoking `man <cmd>`, man(1) looks for the <cmd> man
-    page by searching for man directories "near" the directory where <cmd> is found
-    in 'PATH'. This search is limited to a single "nearby" directory and at least
-    for some versions of man on some Linux distributions [1], '$PREFIX/man' is
-    preferred to '$PREFIX/share/man'.
-    
-    So if manpages exist in both locations, man will only look in '$PREFIX/man' and
-    our manpage won't be found. The behavior of man(1) on macOS is the opposite;
-    the search prefers '$PREFIX/share/man' to '$PREFIX/man' [2].
-    
-    We could install the man page at both locations, but then we are wasting disk
-    space (does it matter?). We can't easily use a symlink from one location to the
-    other one, because this is not well supported by pip/setuptools [3].
-    
-    [1] https://github.com/conda-forge/git-feedstock/pull/65#discussion_r322762265
-    [2] https://github.com/conda-forge/git-feedstock/issues/66#issuecomment-539095424
-    [3] https://github.com/pypa/pip/issues/5856
+Omitting the -3 causes things to run successfully.
 
- setup.py | 1 +
- 1 file changed, 1 insertion(+)
+--6c2NcOVqGQ03X4Wi
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/setup.py b/setup.py
-index 65ede59..867b5cf 100644
---- a/setup.py
-+++ b/setup.py
-@@ -38,6 +38,7 @@ setup(
-     license='GPLv2+',
-     long_description=read('man/b4.5.rst'),
-     long_description_content_type='text/x-rst',
-+    data_files = [('share/man/man5', ['man/b4.5'])],
-     keywords=['git', 'lore.kernel.org', 'patches'],
-     install_requires=[
-         'requests'
--- 
-2.27.0
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl+zvrYACgkQJNaLcl1U
+h9ALmQf/ZvnDgPgLPL38o4fAvI2cdw2Hnz1DXaBLgg6L8lgZPSt55A3pHjy12kJL
+WcmHHmn2PkzgRWdbsj5pSW9bVG8lkow+jR0OzH9tb1MX0m0Zb3nl7gOfu/4kmBnX
+pf7ABubdkvz2kfF3XYOiyJAMmYpC6ezg8L8J/iDLMXX2zQfS4wF3qcJT0fIcUDH8
+sgfkljIa+PUrOvnU9NdInI+ULobGqYh/DugqQEZIYEyJKg9ZmfraObv3cI1XOtqG
+U0Sod6dvlCFG3aKcWAKEcPqJ2s2xNbsEF0tR3gKT1LMmQjkIqsHi0b+xoxqn1JvW
+pcGbF3g+DL7wzOttyFJ11nfZosXF6Q==
+=murC
+-----END PGP SIGNATURE-----
+
+--6c2NcOVqGQ03X4Wi--
