@@ -1,70 +1,74 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web10.39217.1606155229346167468
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+ by mx.groups.io with SMTP id smtpd.web12.39512.1606155470320248327
  for <tools@linux.kernel.org>;
- Mon, 23 Nov 2020 10:13:49 -0800
+ Mon, 23 Nov 2020 10:17:50 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=qgWSCOyZ;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Received: from localhost (cpc102334-sgyl38-2-0-cust884.18-2.cable.virginm.net [92.233.91.117])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 51E0F204FD;
-	Mon, 23 Nov 2020 18:13:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1606155228;
-	bh=IptAOXSpj1OvffiC5dgT5you5kx6ZP1wG1tvQ6wa+xw=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=qgWSCOyZD1xMH3C7fZb1xuSNfoq/rGpXV5ijXFRzV3IDaRwDUXTGT8nHfBXo/8Tib
-	 c49QT3Qqbx7tnIirswGMsPxfrKk9gXIMXWFecI58mMussGKkgfiFXnNQt7kHDqwrSb
-	 ijrPab5m24huT7jSFxM7V/J4jsn3zwzlqO+RZ/Ao=
-Date: Mon, 23 Nov 2020 18:13:24 +0000
-From: "Mark Brown" <broonie@kernel.org>
-To: tools@linux.kernel.org, konstantin@linuxfoundation.org
-Subject: Re: [tools] Exception with b4 am
-Message-ID: <20201123181324.GO6322@sirena.org.uk>
-References: <20201123124139.GB6322@sirena.org.uk>
- <20201123144920.qijmi23rxdibswtb@chatter.i7.local>
- <20201123165052.GH6322@sirena.org.uk>
- <20201123180101.wdlniyuswy75b4fe@chatter.i7.local>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=dy07/J+l;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.172, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f172.google.com with SMTP id l2so17925567qkf.0
+        for <tools@linux.kernel.org>; Mon, 23 Nov 2020 10:17:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=C3T/rNtlgTvKOwRgFI89LCpNfy+YtPzQnxlmuxetWoU=;
+        b=dy07/J+lTkr53WnzMd156o3alpk8iY26xzxSv5C49b9q5wiQrbp1g+x0bc03oEGO5u
+         t1Xc/DYaV7iZmE+iUUF/Czp1S1NYiZ+E6oxP7wWqUqzTS4DeElDo4S3/8HBsRoxG+ZlI
+         TWD+MwDGC7EVWVVw7c1tx0hrKA9SeDEcX5CFI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=C3T/rNtlgTvKOwRgFI89LCpNfy+YtPzQnxlmuxetWoU=;
+        b=c3GfHmALuulhc5fBzAYPBSJy4BJlVa4mxzrphO6WuNB4HjNldTxdAzs4Qc7PDQk5rP
+         hCVEyhncJl8uDcJYybq2UNkyWNBvoH9/BSAPoJO5y3RFu69qTx8E/XOqIbqsn531S1c2
+         RSaPK6zR49xDMtVE78u8K8kp3OtQ6YTNgkVBDAzi86ckgSImQhB7uGGlRBtk775B9KN2
+         Nyvz1uBheSVTTy9XEGkAXtFL5GgtDNFPsxUwZDtFa06tYzUHqRVhV8wk6dSeSz52zi7J
+         lmRZq8nticZ40K/L5+VzbVPoE+4+0RNNNu6anPZvgHFYyHBteH0Hy5nJr40Rsj79i9Uz
+         8hrw==
+X-Gm-Message-State: AOAM531i3rFLi3RnVo5L/mdr5j+9xd1vT2e/woRxMed3U+6pqnZXa2Am
+	y1N2JEWuotVDVSXANolWtw3Hxg==
+X-Google-Smtp-Source: ABdhPJywQVKPDAll1G2pdoSDRf0OywYHy56AQ0rMu0Ho6s9BaEMlL/vJvdBtXN56LMH+4ISk/O9rsA==
+X-Received: by 2002:ae9:dd44:: with SMTP id r65mr766213qkf.482.1606155468852;
+        Mon, 23 Nov 2020 10:17:48 -0800 (PST)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id k15sm9901341qke.75.2020.11.23.10.17.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Nov 2020 10:17:48 -0800 (PST)
+Date: Mon, 23 Nov 2020 13:17:46 -0500
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: James Bottomley <James.Bottomley@hansenpartnership.com>,
+	users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: [kernel.org users] b4: DKIM verification available
+Message-ID: <20201123181746.fu32rqyw3bpohciz@chatter.i7.local>
+References: <20201120221530.mfwn72nr6lqr2qqs@chatter.i7.local>
+ <20201123154841.GU244516@ziepe.ca>
+ <1dccb9ac431b854ba4f7a72f6e7b90baecdacbe1.camel@HansenPartnership.com>
+ <20201123164220.GW244516@ziepe.ca>
 MIME-Version: 1.0
-In-Reply-To: <20201123180101.wdlniyuswy75b4fe@chatter.i7.local>
-X-Cookie: Dry clean only.
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 263
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6zipuvUKAEymKn2g"
+In-Reply-To: <20201123164220.GW244516@ziepe.ca>
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
---6zipuvUKAEymKn2g
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Nov 23, 2020 at 12:42:20PM -0400, Jason Gunthorpe wrote:
+> Konstantin: This seems like a few bad behaviors here.. Shouldn't the
+> first one report the DKIM failure??
 
-On Mon, Nov 23, 2020 at 01:01:01PM -0500, Konstantin Ryabitsev wrote:
-> On Mon, Nov 23, 2020 at 04:50:52PM +0000, Mark Brown wrote:
+Yeah, but I try not to put in features that everyone would immediately 
+turn off due to high false-positive rates. :) We treat a successful DKIM 
+verification as a nice surprise and quietly move on otherwise.
 
-> > That fixes the immediate issue but there's more issues with old Python
-> > stuff:
+> It also feels like b4 should try other list archives if the DKIM is
+> bad. eg inspect the to/cc headers and pick a vger list if available.
 
-> Thanks for testing it out again. I believe I have a better fix in place=
-=20
-> now, if you're willing to try it out one more time.
+There is a better solution that should become available in the future 
+releases of public-inbox:
 
-That seems to work, thanks!
+- it'll allow us to combine threads from multiple lists
+- when multiple sources match, we'll be able to assign a "weighting" 
+  metric that should let us pick vger lists over mailman lists when the 
+  same message exists on both
 
---6zipuvUKAEymKn2g
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl+7+8MACgkQJNaLcl1U
-h9CMUAf9Gfu02e45HkxER58FgRmDnPzCUDNoAvwuDXJMTtxJ3YMD7EsTW5BgxB7v
-f7N/HkaytFpZMjIzUOZvErqaBQ5v04cwlDPwLG4/60IuqlQVPoqOHg8dqHeg7qUU
-63tOTCM0vEJLdWor61z6lo/eH5dbiB6pMRBSRuxCNVQwljil+NvQjrPZJx2MF0tU
-+mFTSkQ8GPDSMQHXygNyTojuIXk3Tj115QfiPEzbLD3zH5yYXzidv2iZbgpO2ZUA
-GZDs9s/9nIhyLhcK6Ikx5XQ8wutjvMIQLKDARL3eATP97IckenIMn5KOQOHARmdd
-qOtMWRrRVH0cTsZaOtpAIM1y5mQGGg==
-=xq0e
------END PGP SIGNATURE-----
-
---6zipuvUKAEymKn2g--
+-K
