@@ -1,70 +1,74 @@
-Received: from mail-qk1-f195.google.com (mail-qk1-f195.google.com [209.85.222.195])
- by mx.groups.io with SMTP id smtpd.web09.42359.1606165126779999323
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+ by mx.groups.io with SMTP id smtpd.web08.52547.1606228676810124847
  for <tools@linux.kernel.org>;
- Mon, 23 Nov 2020 12:58:46 -0800
+ Tue, 24 Nov 2020 06:37:57 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=bg1Dko0v;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.195, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f195.google.com with SMTP id h11so6825595qkl.4
-        for <tools@linux.kernel.org>; Mon, 23 Nov 2020 12:58:46 -0800 (PST)
+ dkim=pass header.i=@gmail.com header.s=20161025 header.b=nGet+wWn;
+ spf=pass (domain: gmail.com, ip: 209.85.219.51, mailfrom: levraiphilippeblain@gmail.com)
+Received: by mail-qv1-f51.google.com with SMTP id x13so10664681qvk.8
+        for <tools@linux.kernel.org>; Tue, 24 Nov 2020 06:37:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=sRLt6srt1yo2dAOx4xp85n+KL7HUl8Iv3Z47l3umiMY=;
-        b=bg1Dko0v8TbK8TnD6/C5czFTqK4EVtJTVThSMvOYNoKteytInGzhJfjGpbbkoaBzQW
-         ut1in6rEaoY2E+NlRAu5H0aoReXDtosvj/qhxWIHVuS93+fb0tcpOOlLzFrSVXItIfAd
-         bfDjnERrTJzfhf4YhL+4FW2ktO71cNFkVTrbk=
+        d=gmail.com; s=20161025;
+        h=from:subject:to:cc:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=i7BPlTZ2GGSN7dh9Ro6J/nEuaAojIUZNPt+PWbMdLeA=;
+        b=nGet+wWnYmb0DPvvzdUp9KAeKo7WqFlR2XgonVG0PR8f+WZF9bPR8xxxZwJV3OiuzX
+         VJo37fM6CH2xXSYrXpiHOe2YOUOSJni5Sjh9pEDtPg7ShVfFOi9fKMyc7cWFysa9h7yc
+         zO4buHmcR4RzuAfS8HgyXAmD/incPV+cBBodsKDMfBcN4ETCS9xk0uDm6/Zku3q9O+9Q
+         9MD9hQznpXHXsD/cj73g4YdKs8rJBowiNl6WJFpD76sxuRUauPXfWksg/IItIV+ry79G
+         p5ZbmFeA/xI2ljeRB6wmmlvmcuvFViOe4ZwZ8AdXDTFpj9Lz1+Wxo+gNed3Eh/Kxwdqr
+         XtIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=sRLt6srt1yo2dAOx4xp85n+KL7HUl8Iv3Z47l3umiMY=;
-        b=bFqhQdkZ+drnq1ZGm4zBuSZVzh5lgA3e4Gi4e49klFqaRomeAbGPpVyfmgkhpEg04e
-         IbnYSs3k7ysvMxq1H/N0gRfBMUZ5u/w/oVQz82LrH86QJ674hL9lub6qYmk5+d8emEW8
-         /kUuv0Gq5UtcgBoCPcgSZmbftD3mx5Ge+ILVW+srkRew1VG7fmyIURC9gYBIKiPvgAXg
-         V61X4xtqHlioY27lzU4XBdhvBY8R60EoWyyjqF7nkMk+a+vNhTiTdllWDof9FVuDNdY7
-         mx+E6ZUsoFDdiLWPc5osZr/oeD89c0e08T/0oxbbSJpDJnn80N2SxtojbssJSnfjnX29
-         vq9g==
-X-Gm-Message-State: AOAM531r/FfWpHQnGYKm045itnKzaRkPxGbIN9jYr/McvAO5eS5yS2KM
-	bp2/z469JoKvZFdlLgTQR7s7Iy3LPfRl0upZ
-X-Google-Smtp-Source: ABdhPJxpHucm7d0m/nDOsx9oQDYoroPgZyDhBccZ2uX2qOeRkkqNFRPo+rXNb0Ag1KCvZnkktU7mYg==
-X-Received: by 2002:ae9:ef86:: with SMTP id d128mr1423892qkg.123.1606165125390;
-        Mon, 23 Nov 2020 12:58:45 -0800 (PST)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id n9sm5664788qti.75.2020.11.23.12.58.44
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 12:58:44 -0800 (PST)
-Date: Mon, 23 Nov 2020 15:58:42 -0500
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+        h=x-gm-message-state:from:subject:to:cc:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=i7BPlTZ2GGSN7dh9Ro6J/nEuaAojIUZNPt+PWbMdLeA=;
+        b=AARithdZHDPl3zM2xnNEGGTQp/dI2dQnzHDJ5KpB/EaGK4UZvxhY2Hm7uibGNGJCPw
+         E7g/SKDkVui8CUt7DIvUpz3QRskgy+FKFd0G0hJB+PFhjZVWOEvQX4lWJ94QG+tXaCm6
+         7sWxBR7iIdsXhUw3dMN/wYurC1uEaWojPSEN+MkMQpziG9T8VnYMh1QDASvjdId1Z7qX
+         IVrp8RG6a8mBC5+djCJ/sRawXV1nERTuSTQ2BQYwTrCw0iWj/G1nGT+yGpKJDmE2ptYy
+         ypKWBZJmGUK02Wtfd38uslvXrJrknfgH2bUQIfdrXeCAA2N1ETZIDeMBCSphYcRP+lFF
+         zUIA==
+X-Gm-Message-State: AOAM531D7dSRea12E5doOR++SzrVjwMLC7mUBnHqYyfmwh+8/P4FA1Le
+	Dd5tvz37SRSfN99lCJB+vRI=
+X-Google-Smtp-Source: ABdhPJymmVcnvP0R3ob3MdsLLEbQGUDM3W7DB0Z2ovvzjBthlZhdt0hDpDG482VOlfMbQLgGrIUrDw==
+X-Received: by 2002:a0c:9e20:: with SMTP id p32mr4925585qve.44.1606228676029;
+        Tue, 24 Nov 2020 06:37:56 -0800 (PST)
+Return-Path: <levraiphilippeblain@gmail.com>
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id j13sm14440991qtc.81.2020.11.24.06.37.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Nov 2020 06:37:55 -0800 (PST)
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: [BUG] b4 can't grap thread with already-percent-encoded slash
 To: tools@linux.kernel.org
-Subject: in-header PGP patch attestation in latest master
-Message-ID: <20201123205842.owomj4qojgjmtjzr@chatter.i7.local>
+Cc: mricon@kernel.org
+Message-ID: <2ce40a78-4291-c01c-f468-8b7f3be2f379@gmail.com>
+Date: Tue, 24 Nov 2020 09:37:54 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-Hi, all:
+Hello,
 
-The latest master implements in-header PGP attestation, following my 
-ongoing work on that subject. I am now convinced that my initial 
-attestation implementation via detached "certification documents" is not 
-sufficiently fault-tolerant due to requiring access to lore.kernel.org 
-for verification, so I'm moving on to in-header attestation in hopes to 
-come up with a better scheme that doesn't require any central 
-infrastructure pieces for verification purposes.
+I tried to use b4 to import this thread:
+https://lore.kernel.org/git/X7y+cZ3MPqqmGXx%2F@coredump.intra.peff.net/T/#t
 
-You can read more about my proposal here:
-https://git.kernel.org/pub/scm/linux/kernel/git/mricon/patch-attestation-poc.git/tree/README.rst
+using that exact URL:
 
-The latest b4 implements the PGP attestation mode both for generating 
-and attesting patch signatures. If you would like to trial it out, the 
-easiest way to enable it is via git's sendemail-validation hook and is 
-described in the README:
+b4 mbox -o- https://lore.kernel.org/git/X7y+cZ3MPqqmGXx%2F@coredump.intra.peff.net/T/#t
 
-https://git.kernel.org/pub/scm/utils/b4/b4.git/tree/README.rst#n33
+It does not work - I get a 404. I think it's partly 
+due to the already-percent-encoded slash (just before the @).
+I tried a few things, like manually changing the '%2F' to '/', 
+removing the '/T/#t' suffix, adding '-p git' to disambiguate,
+but to no avail. I always get either a 404 or 
+"That message-id is not known."
 
-Please let me know if it's working for you or not.
+Cheers,
 
--K
+Philippe.
+
