@@ -1,92 +1,81 @@
-Received: from mail-qk1-f195.google.com (mail-qk1-f195.google.com [209.85.222.195])
- by mx.groups.io with SMTP id smtpd.web10.52696.1606229385406000949
+Received: from mail-qv1-f65.google.com (mail-qv1-f65.google.com [209.85.219.65])
+ by mx.groups.io with SMTP id smtpd.web11.53330.1606229750346595611
  for <tools@linux.kernel.org>;
- Tue, 24 Nov 2020 06:49:45 -0800
+ Tue, 24 Nov 2020 06:55:50 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@gmail.com header.s=20161025 header.b=qy+EGNOd;
- spf=pass (domain: gmail.com, ip: 209.85.222.195, mailfrom: levraiphilippeblain@gmail.com)
-Received: by mail-qk1-f195.google.com with SMTP id q22so20614652qkq.6
-        for <tools@linux.kernel.org>; Tue, 24 Nov 2020 06:49:45 -0800 (PST)
+ dkim=pass header.i=@gmail.com header.s=20161025 header.b=qlsqo2Nr;
+ spf=pass (domain: gmail.com, ip: 209.85.219.65, mailfrom: levraiphilippeblain@gmail.com)
+Received: by mail-qv1-f65.google.com with SMTP id k3so3861562qvz.4
+        for <tools@linux.kernel.org>; Tue, 24 Nov 2020 06:55:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=47lftltXR4j2SPa7sZ3evEMWWzVmCGPcS3QIZa0yzYE=;
-        b=qy+EGNOdGdSYEFvbwvWdsxXWIqnZBFy2w3Ftle2dg5IUxoJNRfVBRncm+MjqlbRF0g
-         1rzxAA4Rr2IJyisvvb3Ob9cqZ7tZjO8Jat4aXZH5qKymfLwlHGsFyBEwOobmz0Z34Yx7
-         MUF50MTOlVNFd9VePrn2xhRRZKe8g3mFLX8as6v1HOPrdnYsopoG5MHr6cY9UaUncB28
-         IWfgih9HEot5YMQwQZT+QzOSq6I/37Vtrtm4Ma8RRHpUVfdLCWwPl7+mdDbAxdUWhGv2
-         NlPCecBzxz7mZ6Lm+xWMOYhyu8y93BvFUuSa117zRNs82hv0syxkuin14KYUWNcrPyXW
-         6Qbw==
+        bh=jYIEvuxsGXq+LfAT6jXS87ymhqHQlxes8eogt+o9ozM=;
+        b=qlsqo2NrLYBGsQ78faS+yOCWrLr+QJ6Mp4KKig/yXQLzdoqp5mw5nZZmew4nZoaSn3
+         U2sha0bjIYfCehHbWzXx6cFxGEBD2T408bZ0HLohVi6EMLV4edtZAm7JnWlD22KZ3Yy7
+         NBlaGGb4WejapbYPpVT3FTDc0C72bW+2XGjYJU/MKMN2jZbHw3pQeRMUfkeeSTqIIrOU
+         wbsaefr0IxewZ54hv+DYk/RjHyyhbMCw9oniFPAiEOml+SqSBKtHPczF5dT7anv4DrKL
+         1ISdS/uyLbVXBi5AI91o/au8Gr9nlQbk45UJ3i/5sa7rDYuyMXfKY5FKlUV7Ffpqjvfs
+         z2iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=47lftltXR4j2SPa7sZ3evEMWWzVmCGPcS3QIZa0yzYE=;
-        b=Ykegu6AqgkkrHRA+cPE1IZt5gEmLWxlq7lBjxiOPi976ItFXCga0Dt1CUUbzuhO4XV
-         Qpt1zT33GIjiRzNr1bK9xrT9JoYCZLfbpShLhuh/SpKUtUb1aKI0TR00JDTHPWJz7md2
-         ousG5mtM1wVt6xaZVIEER6FmPMVuuojkv8LPPNqvSTg9eeVc7f71ddiCCNyedQgUNrdN
-         Ltb0DYUfJlHcrqEEHCTk30bTnHRL2ojQEJvdzTLHZuVYZI6GHl4Qnjie6FNTKMws8/lp
-         C87+Zmc0Ab7LPIC6jMBBd87LiMm9LxD7iBBDquv3wuiRWd+tA4zhqJBWXQpj2TBey3h6
-         wc3w==
-X-Gm-Message-State: AOAM533jkDeIVBZheUDt8o5bO35zVzPsmRvGnnL5M/pctDUWE+X0tsD6
-	hbzOoBRxCejC+mqU13jj2oAyAmUVCwdVuw==
-X-Google-Smtp-Source: ABdhPJxb8TSVacm4cOKJK3TSl8f/F85ys0VNySiu0HQkuPWYBXGZunF04vhNiWi0u989yYd2VYjC8A==
-X-Received: by 2002:a05:620a:10a3:: with SMTP id h3mr4867045qkk.459.1606229383985;
-        Tue, 24 Nov 2020 06:49:43 -0800 (PST)
+        bh=jYIEvuxsGXq+LfAT6jXS87ymhqHQlxes8eogt+o9ozM=;
+        b=XenKOkNRNcjQxuhfBqO3ez/vJg7yHPJb4s5SWcHHvnRpDMinTjJcWUYs1ncm1iCm/2
+         vG6PXL0awIJAq7lSvwXeL7MG595qu1+gVzLj8mN2nvL7GGpeLZnm9Ec40adKUjGepmxy
+         85ICQ95I1yX13ACr32UFfoL8sLh7lzPZRXA/f8nqDPBNqr4zPm78AxXO8A+8ci5Ywv7A
+         9fTNurzR8WGKEYs3Xqkeciy8CzftfxJRDSO/cXO3gwwl3DTRR0Dd8rif7Hx5HsaQtfOk
+         VyE7SFsYjNDgZFNeK1k1Mlwh3MmEcXp788l4mPG69zWXykxtIKP6YCk1572VQNUu5j8F
+         gabg==
+X-Gm-Message-State: AOAM531EVdh6C2AU7ja/XWAKkYQwWUiZmu+QeTqzj/IELQGnwKU8FZ3n
+	OsF04DHDDQwjwDPNBpHAjiy/7/b80TrYsA==
+X-Google-Smtp-Source: ABdhPJzGV428NXowHlpOovQOm25FWuKGlqB2jClL8dtlRWOje2a72VJJi/SeYu5Rta8cka4Wpv1KkA==
+X-Received: by 2002:ad4:4908:: with SMTP id bh8mr5195414qvb.58.1606229749229;
+        Tue, 24 Nov 2020 06:55:49 -0800 (PST)
 Return-Path: <levraiphilippeblain@gmail.com>
 Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id h65sm12618345qkd.95.2020.11.24.06.49.42
+        by smtp.gmail.com with ESMTPSA id v9sm13073655qkv.34.2020.11.24.06.55.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Nov 2020 06:49:42 -0800 (PST)
+        Tue, 24 Nov 2020 06:55:48 -0800 (PST)
 Subject: Re: [BUG] b4 can't grap thread with already-percent-encoded slash
 To: Konstantin Ryabitsev <mricon@kernel.org>
 Cc: tools@linux.kernel.org
 References: <2ce40a78-4291-c01c-f468-8b7f3be2f379@gmail.com>
  <20201124144542.arws25irjgylbrqa@chatter.i7.local>
+ <8a1500fe-7c1a-2904-7723-8e638f524c03@gmail.com>
+ <20201124145232.2mnfvyqy5cdb7ds7@chatter.i7.local>
 From: Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <8a1500fe-7c1a-2904-7723-8e638f524c03@gmail.com>
-Date: Tue, 24 Nov 2020 09:49:41 -0500
+Message-ID: <2dc4badd-6f08-d83b-f57d-48c1286748d0@gmail.com>
+Date: Tue, 24 Nov 2020 09:55:47 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <20201124144542.arws25irjgylbrqa@chatter.i7.local>
+In-Reply-To: <20201124145232.2mnfvyqy5cdb7ds7@chatter.i7.local>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 
-Hi Konstantin,
 
-On 20-11-24 09 h 45, Konstantin Ryabitsev wrote:
-> On Tue, Nov 24, 2020 at 09:37:54AM -0500, Philippe Blain wrote:
->> Hello,
+
+On 20-11-24 09 h 52, Konstantin Ryabitsev wrote:
+> On Tue, Nov 24, 2020 at 09:49:41AM -0500, Philippe Blain wrote:
+>>> Yes, I kept meaning to fix that -- thanks for the reminder. The 
+>>> latest master/stable-0.5.y have a fix for that.
 >>
->> I tried to use b4 to import this thread:
->> https://lore.kernel.org/git/X7y+cZ3MPqqmGXx%2F@coredump.intra.peff.net/T/#t
+>> Not sure if you mean that it should be fixed in master... I installed b4 using
 >>
->> using that exact URL:
+>> pip3 install --user --upgrade git+https://git.kernel.org/pub/scm/utils/b4/b4.git#egg=b4
 >>
->> b4 mbox -o- https://lore.kernel.org/git/X7y+cZ3MPqqmGXx%2F@coredump.intra.peff.net/T/#t
->>
->> It does not work - I get a 404. I think it's partly 
->> due to the already-percent-encoded slash (just before the @).
->> I tried a few things, like manually changing the '%2F' to '/', 
->> removing the '/T/#t' suffix, adding '-p git' to disambiguate,
->> but to no avail. I always get either a 404 or "That message-id is not 
->> known."
+>> so I'm at version 0.6.0-dev. Is it supposed to work ?
 > 
-> Yes, I kept meaning to fix that -- thanks for the reminder. The latest 
-> master/stable-0.5.y have a fix for that.
+> No, I *just* fixed it, so you'll need the latest master.
 
-Not sure if you mean that it should be fixed in master... I installed b4 using
+Ha! wow I'm impressed by your responsiveness then :P 
+Indeed it works - I jus re-ran my pip command above to upgrade.
 
-pip3 install --user --upgrade git+https://git.kernel.org/pub/scm/utils/b4/b4.git#egg=b4
-
-so I'm at version 0.6.0-dev. Is it supposed to 
-work ?
-
-Thanks for the quick answer,
+Thanks a lot!
 
 Philippe.
-
