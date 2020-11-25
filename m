@@ -1,102 +1,105 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
- by mx.groups.io with SMTP id smtpd.web11.4424.1606256879465668552
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+ by mx.groups.io with SMTP id smtpd.web09.3435.1606342526262808371
  for <tools@linux.kernel.org>;
- Tue, 24 Nov 2020 14:27:59 -0800
+ Wed, 25 Nov 2020 14:15:26 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=bnndSS6i;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.160.174, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qt1-f174.google.com with SMTP id f15so250738qto.13
-        for <tools@linux.kernel.org>; Tue, 24 Nov 2020 14:27:59 -0800 (PST)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=bLGUF6JN;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.173, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f173.google.com with SMTP id h20so6280700qkk.4
+        for <tools@linux.kernel.org>; Wed, 25 Nov 2020 14:15:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Ir9nGrpzcQ/wR5QykhOmn7CA5TlQ2duhJ8PhMyzV5ho=;
-        b=bnndSS6iVVOMzEnQl3TUILToJmpGhuLijPio6v6jX6jA8CktvUNQrjIt0zYx/9RPs4
-         bAkrGph1S9hVPgr47ypv901zJAh9j3CkdSBXnkDTR/7H4UbI2QbHJ/YZOVRCfQ7DHWKl
-         y+Z2dmOpdvPBTXb88/M6rfcWDghIl/4e1+u0I=
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=RKjvJHgw1zUhIickXTJtncW4mvbweSxk5yGqVhxvxPI=;
+        b=bLGUF6JN+ZcKFSN3nE96Y8mgMMHUyk60KzOiaRQBjK4jPLZc595ZcIKcExx9nKipeo
+         4Jp8T0Xsi40sLCxULgGH2CCJowhAJ5o7sy1kdVDsrF1trQJdnOjAdAvC94a4UeAO1+RR
+         /SvmGplAkiKLh9rBTOGQJ50M49FikIPojETJc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Ir9nGrpzcQ/wR5QykhOmn7CA5TlQ2duhJ8PhMyzV5ho=;
-        b=G2UNESqJcZiX4XMxbuy6c/1Uhl2g1gI/ZBu2HYWT+Zs98jBHCleR8FBTgZdNIvoahS
-         lrrlQEXir+lrPX+R0oZumTbcFo/q7rCQE89aZ7QmlDqbxg7bY+I1/v+H/CyEy9EP5rsx
-         w/WlDSdCrQs864iJ3n7fHHtSrK/wW4eDptQE3qIa/vSeYrbfF0ByJlEHcdPUiMzEhRu+
-         r8KbYTo5O/pVXGGmY7lFOVp13LnIJ+U/odQiYBtGCKnyzgeidkLMNJpB5Zxtv+WREqsD
-         yzpeL42tVYrRhT7+fss4+e9lIghMnqbaoNXDrOZJxP2p14Ck6T0q10aYenUiIDwnJ+4w
-         5plA==
-X-Gm-Message-State: AOAM533J1yQL0t55KOhOCxr6SqkwMlDQIClDyCQSXnSaATFKe/1v40Yq
-	3Vocdkh/nUTAmbkbD3Qy5dcLQw==
-X-Google-Smtp-Source: ABdhPJy+2lvqF0j7XoPlyrPoZfph2Ui7V2uiryASk3x9ZiiE3nOuAozptbv5oateFqXBRvjG2HSX7g==
-X-Received: by 2002:ac8:43cd:: with SMTP id w13mr281225qtn.391.1606256878511;
-        Tue, 24 Nov 2020 14:27:58 -0800 (PST)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=RKjvJHgw1zUhIickXTJtncW4mvbweSxk5yGqVhxvxPI=;
+        b=QHqXjhtlOxGIvaBdCVQv2jTGAShM07ZVDlA3sJS0KLPLWzspgcBhYAnET1+E5XxsYK
+         zbOTyrqaMHllqJg+1gyzM+3Emn4+wbGof0UjXkbHz+uklcaddxjAigJ2x9D7u67+ryJs
+         M+jzt3ezFz1OIGrwY4EkYJP+aR3dG2wjsCcaU76BTAIBqfSF/t3OX2Lnaax1ko2q0dk6
+         94Tw2wV8UAqMt/6Ij9fxNGXM1f78JvlHsu9FZdNb2YhkATPnOnpYebBpP2yyCS0RJ6mB
+         6JYKMV6MYqozTohzVbbmVgX6hBfApisHIXDlOWt1AuO6FIZYe/JUwDx851C+VZepD02b
+         aPHQ==
+X-Gm-Message-State: AOAM533r2BoR7nH3FPjJZJDbDadFP/lilWeYL4ZP6zNAN+l10V2ItJE6
+	HtRIN2fW187Js64mLYuj7Ti/CSH9i+ymTEmW
+X-Google-Smtp-Source: ABdhPJyv6h21aj2o/zXgdJu0e6XY/sKme/Dq9LCHB8MygNSM4rmr4xYv3x3MI0KeGSdBj95KWZi6dQ==
+X-Received: by 2002:a37:4903:: with SMTP id w3mr270245qka.340.1606342525083;
+        Wed, 25 Nov 2020 14:15:25 -0800 (PST)
 Return-Path: <konstantin@linuxfoundation.org>
 Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id x19sm446707qtr.65.2020.11.24.14.27.57
+        by smtp.gmail.com with ESMTPSA id q32sm774022qtb.71.2020.11.25.14.15.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 14:27:58 -0800 (PST)
-Date: Tue, 24 Nov 2020 17:27:56 -0500
+        Wed, 25 Nov 2020 14:15:24 -0800 (PST)
+Date: Wed, 25 Nov 2020 17:15:22 -0500
 From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: b4 Cc: lines
-Message-ID: <20201124222756.osrv7ixjer6n3f3f@chatter.i7.local>
-References: <20201014164747.GM3100363@kernel.org>
+To: tools@linux.kernel.org, users@linux.kernel.org
+Subject: [b4] version 0.5.3 is available
+Message-ID: <20201125221522.jk4kdfyfur6zblvp@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <20201014164747.GM3100363@kernel.org>
+X-Groupsio-MsgNum: 275
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="5w2ezuixvwt4f57w"
+Content-Disposition: inline
+
+--5w2ezuixvwt4f57w
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 14, 2020 at 01:47:47PM -0300, Arnaldo Carvalho de Melo wrote:
-> 	First of all, thanks a lot for b4, I'm now using it regularly,
-> great tool!
-> 
-> 	My previous workflow involved a 'am' script that I would have to
-> use patch by patch, would go on it and collect Cc: lines, not just the
-> ones in the patch itself, but the ones in the e-mail containing it, as I
-> wanted to record that that group of people was actually made aware of
-> that change.
-> 
-> 	Would it be possible to have something like a --cc to have that?
+Hi, all:
 
-I added this feature to the latest master, but I'm not 100% sure if it's 
-doing the right/useful thing. If we only look for Cc: addresses, then 
-more often than not we just find mailing lists there:
+I've released b4 version 0.5.3, which offers a handful of bugfixes and=20
+small enhancements in the stable-0.5.y branch. This is expected to be=20
+the last release in the 0.5.x series.
 
-----
-$ b4 am -o/tmp 20201124143848.874894-1-antonio.borneo@st.com --cc-trailers
-Looking up https://lore.kernel.org/r/20201124143848.874894-1-antonio.borneo%40st.com
-Grabbing thread from lore.kernel.org/lkml
-Analyzing 12 messages in the thread
-Will use the latest revision: v2
-You can pick other revisions using the -vN flag
----
-Writing /tmp/v2_20201124_antonio_borneo_net_phy_realtek_read_actual_speed_on_rtl8211f_to_detect_downshift.mbx
-  ✓ [PATCH v2] net: phy: realtek: read actual speed on rtl8211f to detect downshift
-    + Cc: linuxarm@huawei.com
-    + Cc: Salil Mehta <salil.mehta@huawei.com>
-    + Cc: linux-stm32@st-md-mailman.stormreply.com
-    + Cc: linux-kernel@vger.kernel.org
-  ---
-  ✓ Attestation-by: DKIM/st.com (From: antonio.borneo@st.com)
----
-Total patches: 1
----
- Link: https://lore.kernel.org/r/20201124215932.885306-1-antonio.borneo@st.com
- Base: 9bd2702d292cb7b565b09e949d30288ab7a26d51
-       git checkout -b v2_20201124_antonio_borneo_st_com 9bd2702d292cb7b565b09e949d30288ab7a26d51
-       git am /tmp/v2_20201124_antonio_borneo_net_phy_realtek_read_actual_speed_on_rtl8211f_to_detect_downshift.mbx
-----
+Notable changes:
 
-Is it better to look both in To: and Cc:, or did you specifically intend 
-to have just the Cc: header copied into the commit?
+- properly grab cover letters that don't have a diffstat
+- require that trailers are at least 2 chars long
+- improve "b4 ty" on cherry-picked series
+- fix some crashers
 
-I'm also a bit worried that on some patches the Cc trailer list ends up 
-fairly huge. Is that expected and okay?
+If you installed using pip, you should be able to upgrade using the=20
+following command:
+
+  pip install --upgrade --user b4
+
+Full shortlog is below.
+
+Konstantin Ryabitsev (13):
+      Cover letters may not have a diffstat
+      Require that a trailer is at least 2 chars long
+      Set charset in order to generate MIME headers
+      Use bytes when dumping to stdout
+      Don't crash when no valid patches are found
+      Fix some cherry-picking corner cases
+      Fix header encoding introduced by earlier fix
+      Fix crasher when attempting a 3-way prep
+      Unquote msgid if we're getting a full https URL
+      Improve ty with cherrypicked subsets
+      Fix crash on incomplete series thanks tracking
+      Fix thanks-tracking of partial series
+      Increment version to 0.5.3 in prep for release
+
+Marc Zyngier (1):
+      Fix handling of series with the [PATCHvX] defect
 
 -K
 
+--5w2ezuixvwt4f57w
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCX77XegAKCRC2xBzjVmSZ
+bDf7AQCND88SJ/WM07rdpAdGE6b8qe9WcdvOX629VlRyEGhI1AD9HvPMzvhUz/aK
+L1eUsrYpJRhVxtEZwmIE50hJHTiNswU=
+=pXyi
+-----END PGP SIGNATURE-----
+
+--5w2ezuixvwt4f57w--
