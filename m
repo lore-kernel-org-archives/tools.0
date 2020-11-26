@@ -1,105 +1,58 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
- by mx.groups.io with SMTP id smtpd.web09.3435.1606342526262808371
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+ by mx.groups.io with SMTP id smtpd.web10.3076.1606384717752291023
  for <tools@linux.kernel.org>;
- Wed, 25 Nov 2020 14:15:26 -0800
+ Thu, 26 Nov 2020 01:58:38 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=bLGUF6JN;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.173, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f173.google.com with SMTP id h20so6280700qkk.4
-        for <tools@linux.kernel.org>; Wed, 25 Nov 2020 14:15:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=RKjvJHgw1zUhIickXTJtncW4mvbweSxk5yGqVhxvxPI=;
-        b=bLGUF6JN+ZcKFSN3nE96Y8mgMMHUyk60KzOiaRQBjK4jPLZc595ZcIKcExx9nKipeo
-         4Jp8T0Xsi40sLCxULgGH2CCJowhAJ5o7sy1kdVDsrF1trQJdnOjAdAvC94a4UeAO1+RR
-         /SvmGplAkiKLh9rBTOGQJ50M49FikIPojETJc=
+ dkim=missing; spf=pass (domain: gmail.com, ip: 209.85.208.44, mailfrom: jirislaby@gmail.com)
+Received: by mail-ed1-f44.google.com with SMTP id v22so1602523edt.9;
+        Thu, 26 Nov 2020 01:58:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=RKjvJHgw1zUhIickXTJtncW4mvbweSxk5yGqVhxvxPI=;
-        b=QHqXjhtlOxGIvaBdCVQv2jTGAShM07ZVDlA3sJS0KLPLWzspgcBhYAnET1+E5XxsYK
-         zbOTyrqaMHllqJg+1gyzM+3Emn4+wbGof0UjXkbHz+uklcaddxjAigJ2x9D7u67+ryJs
-         M+jzt3ezFz1OIGrwY4EkYJP+aR3dG2wjsCcaU76BTAIBqfSF/t3OX2Lnaax1ko2q0dk6
-         94Tw2wV8UAqMt/6Ij9fxNGXM1f78JvlHsu9FZdNb2YhkATPnOnpYebBpP2yyCS0RJ6mB
-         6JYKMV6MYqozTohzVbbmVgX6hBfApisHIXDlOWt1AuO6FIZYe/JUwDx851C+VZepD02b
-         aPHQ==
-X-Gm-Message-State: AOAM533r2BoR7nH3FPjJZJDbDadFP/lilWeYL4ZP6zNAN+l10V2ItJE6
-	HtRIN2fW187Js64mLYuj7Ti/CSH9i+ymTEmW
-X-Google-Smtp-Source: ABdhPJyv6h21aj2o/zXgdJu0e6XY/sKme/Dq9LCHB8MygNSM4rmr4xYv3x3MI0KeGSdBj95KWZi6dQ==
-X-Received: by 2002:a37:4903:: with SMTP id w3mr270245qka.340.1606342525083;
-        Wed, 25 Nov 2020 14:15:25 -0800 (PST)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id q32sm774022qtb.71.2020.11.25.14.15.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2020 14:15:24 -0800 (PST)
-Date: Wed, 25 Nov 2020 17:15:22 -0500
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, users@linux.kernel.org
-Subject: [b4] version 0.5.3 is available
-Message-ID: <20201125221522.jk4kdfyfur6zblvp@chatter.i7.local>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=RN8VWreTaaRT4hOUa/h24d0awQi7xcY1SY0nyc0xQIU=;
+        b=BQSkHQCjECAc9HCAYMyw5pAQS8dHurOuS7EkHZHd3rmiYpLluZevLsY8zHJNg1d2Mr
+         DTNP4fXVog4ZIWH/8R5ADsW84+uEuWNEo/4yS6GiRzIntBAfK291XzFbMf+Xx6cBoz+3
+         5mmO+cyA5a2+1m0nReNZvIZsjXNmDvUPQbhLdiDWZGl7r0PMzhG8MqSklHubpkgzP2uW
+         qLdmfwmB+p9KtJvnHSsahjt5bFX4oh/OKIY9zuqYJeM5aGTlCPhu5fheSnGH/+Q1qxEE
+         jsEIAyTHNHtA5JMKfsrxodwdbG/lDKYS59FF9EQWzCdf/Vs1kc+jTBgxh4VvZ33Eldw7
+         MKHA==
+X-Gm-Message-State: AOAM530g2/LXkAM6pvZYweu3pujmUg+nSG/LjzVHLTDwnRKX7rMLhgKx
+	PPJBf38E0VmxOjWkNWBjKcw2/IKi644=
+X-Google-Smtp-Source: ABdhPJzgaJ6wAEFdJ4PI+OZda/agKt1rHw7QD5w1bFWiM4DWNE0FVf47jW0130seE9J/1PsSuMXCTw==
+X-Received: by 2002:a05:6402:1844:: with SMTP id v4mr1687215edy.346.1606384716063;
+        Thu, 26 Nov 2020 01:58:36 -0800 (PST)
+Return-Path: <jirislaby@gmail.com>
+Received: from ?IPv6:2a0b:e7c0:0:107::49? ([2a0b:e7c0:0:107::49])
+        by smtp.gmail.com with ESMTPSA id d23sm2850039edp.36.2020.11.26.01.58.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Nov 2020 01:58:34 -0800 (PST)
+Subject: Re: [kernel.org users] [b4] version 0.5.3 is available
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+ tools@linux.kernel.org, users@linux.kernel.org
+References: <20201125221522.jk4kdfyfur6zblvp@chatter.i7.local>
+From: "Jiri Slaby" <jirislaby@kernel.org>
+Message-ID: <98da4f38-84e4-558b-ab57-a4a15a0f8687@kernel.org>
+Date: Thu, 26 Nov 2020 10:58:33 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-X-Groupsio-MsgNum: 275
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="5w2ezuixvwt4f57w"
-Content-Disposition: inline
+In-Reply-To: <20201125221522.jk4kdfyfur6zblvp@chatter.i7.local>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
---5w2ezuixvwt4f57w
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 25. 11. 20, 23:15, Konstantin Ryabitsev wrote:
+> Hi, all:
+> 
+> I've released b4 version 0.5.3, which offers a handful of bugfixes and
+> small enhancements in the stable-0.5.y branch. This is expected to be
+> the last release in the 0.5.x series.
 
-Hi, all:
+Hi, did you forget to push the branch? The tag, I can see. It's one 
+commit on the top of stable-0.5.y.
 
-I've released b4 version 0.5.3, which offers a handful of bugfixes and=20
-small enhancements in the stable-0.5.y branch. This is expected to be=20
-the last release in the 0.5.x series.
-
-Notable changes:
-
-- properly grab cover letters that don't have a diffstat
-- require that trailers are at least 2 chars long
-- improve "b4 ty" on cherry-picked series
-- fix some crashers
-
-If you installed using pip, you should be able to upgrade using the=20
-following command:
-
-  pip install --upgrade --user b4
-
-Full shortlog is below.
-
-Konstantin Ryabitsev (13):
-      Cover letters may not have a diffstat
-      Require that a trailer is at least 2 chars long
-      Set charset in order to generate MIME headers
-      Use bytes when dumping to stdout
-      Don't crash when no valid patches are found
-      Fix some cherry-picking corner cases
-      Fix header encoding introduced by earlier fix
-      Fix crasher when attempting a 3-way prep
-      Unquote msgid if we're getting a full https URL
-      Improve ty with cherrypicked subsets
-      Fix crash on incomplete series thanks tracking
-      Fix thanks-tracking of partial series
-      Increment version to 0.5.3 in prep for release
-
-Marc Zyngier (1):
-      Fix handling of series with the [PATCHvX] defect
-
--K
-
---5w2ezuixvwt4f57w
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCX77XegAKCRC2xBzjVmSZ
-bDf7AQCND88SJ/WM07rdpAdGE6b8qe9WcdvOX629VlRyEGhI1AD9HvPMzvhUz/aK
-L1eUsrYpJRhVxtEZwmIE50hJHTiNswU=
-=pXyi
------END PGP SIGNATURE-----
-
---5w2ezuixvwt4f57w--
+thanks,
+-- 
+js
