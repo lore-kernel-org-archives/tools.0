@@ -1,112 +1,63 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web11.4115.1606392860037713140
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+ by mx.groups.io with SMTP id smtpd.web08.5122.1606399010930366765
  for <tools@linux.kernel.org>;
- Thu, 26 Nov 2020 04:14:20 -0800
+ Thu, 26 Nov 2020 05:56:51 -0800
 Authentication-Results: mx.groups.io;
- dkim=fail reason="body hash did not verify" header.i=@kernel.org header.s=default header.b=EkOvUVHH;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: acme@kernel.org)
-Received: from quaco.ghostprotocols.net (unknown [179.97.37.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 1525C2087C;
-	Thu, 26 Nov 2020 12:14:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1606392859;
-	bh=hv6se9OB23Q3gVwZDtOcCgbYvYe4y6IazWKWZI4dg1E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EkOvUVHHw3ek5ir66QTOi8yZqPSbxXq9EhD6uZ5DDs4OZBStROflVUh6QP2GHPQNx
-	 Le/F5d5r0v0Aolejg2S5qJ01VfdssC4vEG6Oqu/0cBy64DXSINXZAgEN27blPm1TFH
-	 JMT0e0lao//e2luzeoL5GEs6SX8FlVtzeD1B2Prw=
-Received: by quaco.ghostprotocols.net (Postfix, from userid 1000)
-	id EBE6C40E29; Thu, 26 Nov 2020 09:14:16 -0300 (-03)
-Date: Thu, 26 Nov 2020 09:14:16 -0300
-From: acme@kernel.org
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: Re: b4 Cc: lines
-Message-ID: <20201126121416.GC53384@kernel.org>
-References: <20201014164747.GM3100363@kernel.org>
- <20201124222756.osrv7ixjer6n3f3f@chatter.i7.local>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=SX6Xsgs5;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.160.174, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qt1-f174.google.com with SMTP id p12so1135108qtp.7
+        for <tools@linux.kernel.org>; Thu, 26 Nov 2020 05:56:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=eV7tkKkeal1hE3L6zhF6OxxhUhg0oTrwGAsztuG8gmg=;
+        b=SX6Xsgs5Sm9XCS9T7UIDawKixUFOgF94UF9XS6MG6DcyEqoZuud0Sk5Ks22tt5ekTJ
+         95z6PWwap34U+eBjx4wQu9ausL7u6ipreo87TGfJt7LeY96xBMBlR83XHF+Epp+Jg+tJ
+         imbIX5YTPh81EEUkU3MXAn9lKLTE5xkwxTlXI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=eV7tkKkeal1hE3L6zhF6OxxhUhg0oTrwGAsztuG8gmg=;
+        b=LyJzxukbA8oRc53SVWMNyhqRipwx0SFPLDq1UtoY324Kyinh91UFi9BXJSPAgEEyTd
+         qH5C8i8qKimyv8m3By3kw+YTdk5xPd5DfyLbQ/WwYR7HN1w3mX5NiwGBXO3LBi/EQNBI
+         7osTVAkvWLdoIyZjDi5wleryybsai3NIsgj59Pkw+WmdpSl5c7lo7y8xY3Ag6uhjK+HW
+         XKwTCBdRkCQO+hOVXnw74bTGJCExCMQU7mMNVBSawkHWkcvDrhXF5pvldv2FJoRSH5o8
+         wZt36vzQAEaAjTNkpsIMVHmdDmSQ9XGQFOY6or+aiiIa9LUm/+3j7Db+3lfSq2XWuJ/V
+         WsYg==
+X-Gm-Message-State: AOAM532J2TduIRoGNBduxQksfRCiM5XvJQ9q6Fu++an7/9haKLHDiFJU
+	FwVdCEUD/8QvtLfhuZNMrCS6PA==
+X-Google-Smtp-Source: ABdhPJwa/S531SxLg26kUVxkfEp/Qv0LBXvvmMPaN8FJfNdyFYcpExLsuS+HHBLui2OJ8LAowSPtRA==
+X-Received: by 2002:ac8:5c13:: with SMTP id i19mr3272349qti.250.1606399009981;
+        Thu, 26 Nov 2020 05:56:49 -0800 (PST)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id d9sm2519775qtr.68.2020.11.26.05.56.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Nov 2020 05:56:49 -0800 (PST)
+Date: Thu, 26 Nov 2020 08:56:47 -0500
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Jiri Slaby <jirislaby@kernel.org>
+Cc: tools@linux.kernel.org, users@linux.kernel.org
+Subject: Re: [kernel.org users] [b4] version 0.5.3 is available
+Message-ID: <20201126135647.2wfxvk7yu7r2ley2@chatter.i7.local>
+References: <20201125221522.jk4kdfyfur6zblvp@chatter.i7.local>
+ <98da4f38-84e4-558b-ab57-a4a15a0f8687@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20201124222756.osrv7ixjer6n3f3f@chatter.i7.local>
-X-Url: http://acmel.wordpress.com
+In-Reply-To: <98da4f38-84e4-558b-ab57-a4a15a0f8687@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Em Tue, Nov 24, 2020 at 05:27:56PM -0500, Konstantin Ryabitsev escreveu:
-> On Wed, Oct 14, 2020 at 01:47:47PM -0300, Arnaldo Carvalho de Melo wrot=
-e:
-> > 	First of all, thanks a lot for b4, I'm now using it regularly,
-> > great tool!
+On Thu, Nov 26, 2020 at 10:58:33AM +0100, Jiri Slaby wrote:
+> > I've released b4 version 0.5.3, which offers a handful of bugfixes 
+> > and
+> > small enhancements in the stable-0.5.y branch. This is expected to be
+> > the last release in the 0.5.x series.
+> 
+> Hi, did you forget to push the branch? The tag, I can see. It's one commit
+> on the top of stable-0.5.y.
 
-> > 	My previous workflow involved a 'am' script that I would have to
-> > use patch by patch, would go on it and collect Cc: lines, not just th=
-e
-> > ones in the patch itself, but the ones in the e-mail containing it, a=
-s I
-> > wanted to record that that group of people was actually made aware of
-> > that change.
+Yes indeed, sorry about that.
 
-> > 	Would it be possible to have something like a --cc to have that?
->=20
-> I added this feature to the latest master, but I'm not 100% sure if it'=
-s=20
-> doing the right/useful thing. If we only look for Cc: addresses, then=20
-> more often than not we just find mailing lists there:
-
-I'm using b4 and going thru all the patches, to read them one last time
-and do whatever adjustments to the cset logs, so I'll see how this goes
-with --cc.
-
-Thanks for adding this feature!
-
-- Arnaldo
-=20
-> ----
-> $ b4 am -o/tmp 20201124143848.874894-1-antonio.borneo@st.com --cc-trail=
-ers
-> Looking up https://lore.kernel.org/r/20201124143848.874894-1-antonio.bo=
-rneo%40st.com
-> Grabbing thread from lore.kernel.org/lkml
-> Analyzing 12 messages in the thread
-> Will use the latest revision: v2
-> You can pick other revisions using the -vN flag
-> ---
-> Writing /tmp/v2_20201124_antonio_borneo_net_phy_realtek_read_actual_spe=
-ed_on_rtl8211f_to_detect_downshift.mbx
->   =E2=9C=93 [PATCH v2] net: phy: realtek: read actual speed on rtl8211f=
- to detect downshift
->     + Cc: linuxarm@huawei.com
->     + Cc: Salil Mehta <salil.mehta@huawei.com>
->     + Cc: linux-stm32@st-md-mailman.stormreply.com
->     + Cc: linux-kernel@vger.kernel.org
->   ---
->   =E2=9C=93 Attestation-by: DKIM/st.com (From: antonio.borneo@st.com)
-> ---
-> Total patches: 1
-> ---
->  Link: https://lore.kernel.org/r/20201124215932.885306-1-antonio.borneo=
-@st.com
->  Base: 9bd2702d292cb7b565b09e949d30288ab7a26d51
->        git checkout -b v2_20201124_antonio_borneo_st_com 9bd2702d292cb7=
-b565b09e949d30288ab7a26d51
->        git am /tmp/v2_20201124_antonio_borneo_net_phy_realtek_read_actu=
-al_speed_on_rtl8211f_to_detect_downshift.mbx
-> ----
->=20
-> Is it better to look both in To: and Cc:, or did you specifically inten=
-d=20
-> to have just the Cc: header copied into the commit?
->=20
-> I'm also a bit worried that on some patches the Cc trailer list ends up=
-=20
-> fairly huge. Is that expected and okay?
->=20
-> -K
->=20
->=20
-
---=20
-
-- Arnaldo
+-K
