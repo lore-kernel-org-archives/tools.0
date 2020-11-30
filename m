@@ -1,56 +1,46 @@
-Received: from out1.migadu.com (out1.migadu.com [91.121.223.63])
- by mx.groups.io with SMTP id smtpd.web12.29761.1606545746983888447
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web08.1569.1606776670603142933
  for <tools@linux.kernel.org>;
- Fri, 27 Nov 2020 22:42:28 -0800
+ Mon, 30 Nov 2020 14:51:10 -0800
 Authentication-Results: mx.groups.io;
- dkim=fail reason="body hash did not verify" header.i=@kyleam.com header.s=key1 header.b=LXY4Snvc;
- spf=pass (domain: kyleam.com, ip: 91.121.223.63, mailfrom: kyle@kyleam.com)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kyleam.com; s=key1;
-	t=1606545780;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=ozhoLfdyBwJ770tpUbc8bvsPfV+xIW/MOefzKCZPs+4=;
-	b=LXY4SnvcelHCeKpxm5cb9ErYF8Zu2HKshkPwGdb5vRYcyIlaMpOon8r2LVIpEiPRM/wmwB
-	XSFgW+PfgadG+1bmj2/syx/O9iHMiuHr/mBDQWuEBOMDI+lBuIqx2sKfUOkC976/umFkVa
-	6LltdCAw61GPoOaQiityXnlds/LnVlvdxfT7xhap8GdTkzLbLUyjI0nZSWIsZJwetopqRZ
-	3LaHM08/KYpNZws0IhyurSuF3Stk5dCm62Wb2wuWKoX3UUFgQ39Ssf7G+c9NsvgPhvAsV2
-	F5Ff5Xl8ohOgPassc61yGg3IYxB71fy43pIpqC+xECp3yxEoKhWGoHkk8vjdsQ==
-From: "Kyle Meyer" <kyle@kyleam.com>
-To: tools@linux.kernel.org
-Subject: [PATCH b4] man: Drop apostrophe from midmask value
-Date: Sat, 28 Nov 2020 01:42:06 -0500
-Message-Id: <20201128064206.4373-1-kyle@kyleam.com>
+ dkim=fail reason="body hash did not verify" header.i=@linuxfoundation.org header.s=korg header.b=ZxsRbOCp;
+ spf=pass (domain: linuxfoundation.org, ip: 198.145.29.99, mailfrom: konstantin@linuxfoundation.org)
+Received: from localhost.localdomain (unknown [89.36.78.230])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id 437A120725;
+	Mon, 30 Nov 2020 22:51:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1606776669;
+	bh=JBGvlgLK6hnHWRjYUysz15zSelj3HxSQrhFEIwj9CSo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ZxsRbOCpWDqxOp8J7S3wH7nZd0T3E2peoXRzQJ63dwOZ4bEF3w2dLmsin1pfajZrv
+	 1KVQWWePcvK/c2rY8loTJpKBdoxA0TW1ll6Yumwbo0X1Y0Rx9lsnMAsW3t2HMGhnZB
+	 p/LWmmNluX5gfRNnB/AfrKyepG9TonIGRMQKJdOs=
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Kyle Meyer <kyle@kyleam.com>,
+	tools@linux.kernel.org
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Subject: Re: [PATCH b4] man: Drop apostrophe from midmask value
+Date: Mon, 30 Nov 2020 17:50:50 -0500
+Message-Id: <160677649486.1027712.12685174241776267428.b4-ty@linuxfoundation.org>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20201128064206.4373-1-kyle@kyleam.com>
+References: <20201128064206.4373-1-kyle@kyleam.com>
 MIME-Version: 1.0
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: kyle@kyleam.com
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-55913ca (man: Drop the apostrophe from the linkmask configuration,
-2020-06-25) removed a spurious apostrophe in the linkmask value.  Do
-the same for the midmask value.
+On Sat, 28 Nov 2020 01:42:06 -0500, Kyle Meyer wrote:
+> 55913ca (man: Drop the apostrophe from the linkmask configuration,
+> 2020-06-25) removed a spurious apostrophe in the linkmask value.  Do
+> the same for the midmask value.
 
-Signed-off-by: Kyle Meyer <kyle@kyleam.com>
----
- man/b4.5.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Applied, thanks!
 
-diff --git a/man/b4.5.rst b/man/b4.5.rst
-index d1aa251..e21ed71 100644
---- a/man/b4.5.rst
-+++ b/man/b4.5.rst
-@@ -214,7 +214,7 @@ Default configuration, with explanations::
-=20
-    [b4]
-       # Where to look up threads by message id
--      midmask =3D https://lore.kernel.org/r/%s'
-+      midmask =3D https://lore.kernel.org/r/%s
-       #
-       # When recording Link: trailers, use this mask
-       linkmask =3D https://lore.kernel.org/r/%s
+[1/1] man: Drop apostrophe from midmask value
+      commit: 97ed3503d7493cd3f9a9bfaa7adf5db885f94e63
 
-base-commit: cd94518f3eda9ec69727d9627dbd4196de826034
+Best regards,
 --=20
-2.29.2
-
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
