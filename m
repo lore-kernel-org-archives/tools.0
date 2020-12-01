@@ -1,81 +1,87 @@
-Received: from userp2130.oracle.com (userp2130.oracle.com [156.151.31.86])
- by mx.groups.io with SMTP id smtpd.web10.11260.1606834361877237326
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+ by mx.groups.io with SMTP id smtpd.web11.11659.1606836242085114530
  for <tools@linux.kernel.org>;
- Tue, 01 Dec 2020 06:52:42 -0800
+ Tue, 01 Dec 2020 07:24:02 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@oracle.com header.s=corp-2020-01-29 header.b=YZEGwBku;
- spf=pass (domain: oracle.com, ip: 156.151.31.86, mailfrom: martin.petersen@oracle.com)
-Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
-	by userp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0B1EnMDw126253;
-	Tue, 1 Dec 2020 14:52:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : message-id : references : date : in-reply-to : mime-version :
- content-type; s=corp-2020-01-29;
- bh=H5GMKgdoc7SyJ9pe+EZjbuRHxsyOBAPHSVxIT52GY7Y=;
- b=YZEGwBkuOuVMePPm1AE4eHL7Ym6sDONBbtnxzx/JXCa8b2jZ31z45qsbJlieRhC6rQ+F
- w9vPnxPR/sol3meeuT/u5rubAouyPgQosPUykM3UB0Uq7phzGsm0gsKaPTXitfa8yY+v
- 0zOBb0/GyV9ph87Eec1LbkMzBMZB/7KKBfe56dULi0SsbFsqdVeRlT/oAQgGU6amMpkv
- ++7J18prY5qSrhcHLpbS9+jygzo1/3m9IULdTU4oWx/gVpdEH5YBq5Ii96XoNAzZUXyY
- VVbmnAAElvRF0qLB0k5hgNf7gjn/CHg0b0oNu1vjFn1EYud8xITCjeKuh9Ft8VvJR2tC 2Q== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-	by userp2130.oracle.com with ESMTP id 353dyqjx3u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Tue, 01 Dec 2020 14:52:39 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-	by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0B1Eo6Gm164043;
-	Tue, 1 Dec 2020 14:52:38 GMT
-Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-	by aserp3020.oracle.com with ESMTP id 3540ey2dtn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 01 Dec 2020 14:52:38 +0000
-Received: from abhmp0019.oracle.com (abhmp0019.oracle.com [141.146.116.25])
-	by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 0B1EqaWv006962;
-	Tue, 1 Dec 2020 14:52:36 GMT
-Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
-	by default (Oracle Beehive Gateway v4.0)
-	with ESMTP ; Tue, 01 Dec 2020 06:52:36 -0800
-To: "Mark Brown" <broonie@kernel.org>
-Cc: tools@linux.kernel.org, konstantin@linuxfoundation.org
-Subject: Re: [tools] b4 ty thanking for everything
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
-Message-ID: <yq1zh2xfuxa.fsf@ca-mkp.ca.oracle.com>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=XEmtxQbh;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.219.43, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qv1-f43.google.com with SMTP id cv2so964700qvb.9
+        for <tools@linux.kernel.org>; Tue, 01 Dec 2020 07:24:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KWpTSR8w07WD+l4nBLmqoKc8cHdPHSOpiSPtz94kT6Q=;
+        b=XEmtxQbho3kvxpoizUPrlwP62RZ7Lj3W36Ygau6YHyVzQyrxg7+Dza2A0xprjOBvQP
+         PDpAmhIcrEPYNkq4zZmW+approgN/U6Cq+X7klhDKcBTBgB7zFn8TyMuepkY0Cf2RFkV
+         aqh4Yq0avi+JZTepApJVB7jJNxTB2POgGAF04=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KWpTSR8w07WD+l4nBLmqoKc8cHdPHSOpiSPtz94kT6Q=;
+        b=fbic5erVlDgZszxjb2+LulQX3qcIOCxOpGeWuO+uGH5oyqVMZ91IZ9bt9vJ2oJFNwI
+         cgB7zlpHCk3DCx1Zj46XiK2Hs2QDoxDTciYhafb5uoGjKzD80t/wf6DU+QBfMWNac3pu
+         eUKHKRSEx3jvBfiCO3pDodoxuf0iefAakusU0a49Tv8I94onrD2vn2n9KdSRmOBLYoFR
+         FVWfmKHHaRBll6EsFcZfhg2d3KK7mPYHO38UKXaTHUPtJWAb9rj9KILqecMv64/pN06Y
+         yK0UjWG41ld0SPstbN/tRhWWUYiV6FwxjgZChXTJ3hIYX+JP1xIYM4SxMrhakCGRD0qZ
+         2zfw==
+X-Gm-Message-State: AOAM5310zUUl91Gre4UG3HdYgv7/7UwBFoP9gq8twNygNID5lnMffKaS
+	7aa+Dvlsr0LbRrPtAM3cCyiLyQ==
+X-Google-Smtp-Source: ABdhPJwjXUFscVRTxvvBPvYRzVMeXis8JhMG91x63XOpqhOBqWEZy0+ob6yzLp+oBmQiDmGOSuVbpw==
+X-Received: by 2002:ad4:476b:: with SMTP id d11mr3434943qvx.57.1606836241028;
+        Tue, 01 Dec 2020 07:24:01 -0800 (PST)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id o4sm2292140qta.26.2020.12.01.07.23.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Dec 2020 07:23:59 -0800 (PST)
+Date: Tue, 1 Dec 2020 10:23:57 -0500
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 ty thanking for everything
+Message-ID: <20201201152357.kjzkqnhocidrmrv5@chatter.i7.local>
 References: <20201201144101.GF5239@sirena.org.uk>
-Date: Tue, 01 Dec 2020 09:52:34 -0500
-In-Reply-To: <20201201144101.GF5239@sirena.org.uk> (Mark Brown's message of
-	"Tue, 1 Dec 2020 14:41:01 +0000")
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9821 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 malwarescore=0 phishscore=0
- suspectscore=1 bulkscore=0 spamscore=0 adultscore=0 mlxlogscore=940
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2012010095
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9821 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 bulkscore=0
- clxscore=1011 mlxscore=0 spamscore=0 priorityscore=1501 mlxlogscore=954
- suspectscore=1 lowpriorityscore=0 phishscore=0 adultscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2012010095
-Content-Type: text/plain
+In-Reply-To: <20201201144101.GF5239@sirena.org.uk>
+X-Groupsio-MsgNum: 284
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ycyisc7kz3hcxghw"
+Content-Disposition: inline
 
+--ycyisc7kz3hcxghw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Mark,
-
+On Tue, Dec 01, 2020 at 02:41:01PM +0000, Mark Brown wrote:
+> Hi,
+>=20
 > When I run
->
+>=20
 > 	b4 ty -o /some/dir -b remote/branch -a
->
+>=20
 > as of a git update from master earlier today (I'm at 45c63bd0fd80 "Fix
 > headers generated by "b4 ty") b4 generates thanks for every patch in its
 > database regardless of if it finds any commits for that series in the
 > specified branch which isn't ideal, especially if one has been applying
 > things to multiple branches.
 
-I tripped over that as well and was just about to post.
+Dang, this means 0.5.3 is probably broken the same way. Let me find the=20
+culprit. :/
 
-Thankfully manually renaming the affected files in ~/.local/b4/shared
-worked. I had a lot of stuff queued for 5.11 that became collateral
-damage when trying to send out thanks for a couple of 5.10 fixes.
+-K
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+--ycyisc7kz3hcxghw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCX8ZgDQAKCRC2xBzjVmSZ
+bHyhAP9Ad4IoUNLkbDUXjqa+elS+pX17nNYPtnyVAlTg/j7MegD9FNUTSymSxdH4
+ycTVTCnWJqkCnDQS56YnBw5dYVpxowo=
+=hNwT
+-----END PGP SIGNATURE-----
+
+--ycyisc7kz3hcxghw--
