@@ -1,87 +1,91 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
- by mx.groups.io with SMTP id smtpd.web11.11659.1606836242085114530
+Received: from mail-qk1-f194.google.com (mail-qk1-f194.google.com [209.85.222.194])
+ by mx.groups.io with SMTP id smtpd.web09.11946.1606837438836962868
  for <tools@linux.kernel.org>;
- Tue, 01 Dec 2020 07:24:02 -0800
+ Tue, 01 Dec 2020 07:43:59 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=XEmtxQbh;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.219.43, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qv1-f43.google.com with SMTP id cv2so964700qvb.9
-        for <tools@linux.kernel.org>; Tue, 01 Dec 2020 07:24:01 -0800 (PST)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=T+1H5Bso;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.194, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f194.google.com with SMTP id y18so1633506qki.11
+        for <tools@linux.kernel.org>; Tue, 01 Dec 2020 07:43:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=KWpTSR8w07WD+l4nBLmqoKc8cHdPHSOpiSPtz94kT6Q=;
-        b=XEmtxQbho3kvxpoizUPrlwP62RZ7Lj3W36Ygau6YHyVzQyrxg7+Dza2A0xprjOBvQP
-         PDpAmhIcrEPYNkq4zZmW+approgN/U6Cq+X7klhDKcBTBgB7zFn8TyMuepkY0Cf2RFkV
-         aqh4Yq0avi+JZTepApJVB7jJNxTB2POgGAF04=
+        bh=Ch3V0Lv7nkzKqMXfvpdLcJfSAv2OOsxMT150+L4kuh4=;
+        b=T+1H5BsoOifHwLsbyOkFeIjP7OvSUbw96+enaJmDdA1/DzkpArZbFBV2mjmHzhEV6L
+         88WxA26BQHYPMTpXDk7G8ned/VOutqW8gZ1bw6wGvoaRhUBdrOrzDnjuOcOI/EKeQv5u
+         5WqhY5cfDaCiPvqQgN3Es4tpXlaffyS9/xnyg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=KWpTSR8w07WD+l4nBLmqoKc8cHdPHSOpiSPtz94kT6Q=;
-        b=fbic5erVlDgZszxjb2+LulQX3qcIOCxOpGeWuO+uGH5oyqVMZ91IZ9bt9vJ2oJFNwI
-         cgB7zlpHCk3DCx1Zj46XiK2Hs2QDoxDTciYhafb5uoGjKzD80t/wf6DU+QBfMWNac3pu
-         eUKHKRSEx3jvBfiCO3pDodoxuf0iefAakusU0a49Tv8I94onrD2vn2n9KdSRmOBLYoFR
-         FVWfmKHHaRBll6EsFcZfhg2d3KK7mPYHO38UKXaTHUPtJWAb9rj9KILqecMv64/pN06Y
-         yK0UjWG41ld0SPstbN/tRhWWUYiV6FwxjgZChXTJ3hIYX+JP1xIYM4SxMrhakCGRD0qZ
-         2zfw==
-X-Gm-Message-State: AOAM5310zUUl91Gre4UG3HdYgv7/7UwBFoP9gq8twNygNID5lnMffKaS
-	7aa+Dvlsr0LbRrPtAM3cCyiLyQ==
-X-Google-Smtp-Source: ABdhPJwjXUFscVRTxvvBPvYRzVMeXis8JhMG91x63XOpqhOBqWEZy0+ob6yzLp+oBmQiDmGOSuVbpw==
-X-Received: by 2002:ad4:476b:: with SMTP id d11mr3434943qvx.57.1606836241028;
-        Tue, 01 Dec 2020 07:24:01 -0800 (PST)
+        bh=Ch3V0Lv7nkzKqMXfvpdLcJfSAv2OOsxMT150+L4kuh4=;
+        b=bdG5soHEeVMOjV66mR2ybKQmPmFx5cW5iuyajMQTzDPrmpsC0hxXolFj52wUQ6oV8K
+         ZgnXMCKNonSWtn/6L7CzF7VQcrD7BJiLZWsTBbAj7ZQ3c0QWoqJeRsGWrBan2FkU0ovJ
+         4abD7rIuwh3HLRGWRMY/B0pkMcq5JlLsUUrM/u5b4IyuPD7gAjm6fPwXerRXct3EElOG
+         GU127PGeRFkHHv4YL5R3CWz0HmYiuSJSmPdF4vPMPJxYczlfdkOHXy02e3ry6N96v1Jh
+         NROp/L7vFQKokvPe11fvXMznFGeSZWdQ1Tl7j2My+UbqW8jqgR+87w6g5fjZOyAEz1rN
+         HCCA==
+X-Gm-Message-State: AOAM533f4L7CD+kFOdDpMJllz/sbMw2s8vlk9xifqFyr6Sel89Hrpzhf
+	wNoWRq2tcjUZTDHkAybDgBH8hKkW0nWrJdOw
+X-Google-Smtp-Source: ABdhPJyFzZxYKG0OB1DxZ1GisnEow7lBLAFLUCqqZJHKvV9mQjPC0vltbV2PxJ/1TTrt5DJzLn9QPg==
+X-Received: by 2002:a37:a010:: with SMTP id j16mr3506699qke.347.1606837437626;
+        Tue, 01 Dec 2020 07:43:57 -0800 (PST)
 Return-Path: <konstantin@linuxfoundation.org>
 Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id o4sm2292140qta.26.2020.12.01.07.23.59
+        by smtp.gmail.com with ESMTPSA id h67sm1390571qkd.107.2020.12.01.07.43.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Dec 2020 07:23:59 -0800 (PST)
-Date: Tue, 1 Dec 2020 10:23:57 -0500
+        Tue, 01 Dec 2020 07:43:56 -0800 (PST)
+Date: Tue, 1 Dec 2020 10:43:54 -0500
 From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: b4 ty thanking for everything
-Message-ID: <20201201152357.kjzkqnhocidrmrv5@chatter.i7.local>
+To: tools@linux.kernel.org
+Cc: Mark Brown <broonie@kernel.org>
+Subject: Re: [tools] b4 ty thanking for everything
+Message-ID: <20201201154354.fw32bk44e6myyi3y@chatter.i7.local>
 References: <20201201144101.GF5239@sirena.org.uk>
+ <164CA10C94033C15.5074@linux.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20201201144101.GF5239@sirena.org.uk>
-X-Groupsio-MsgNum: 284
+In-Reply-To: <164CA10C94033C15.5074@linux.kernel.org>
+X-Groupsio-MsgNum: 285
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ycyisc7kz3hcxghw"
+	protocol="application/pgp-signature"; boundary="ai3mlsvf6abphsz2"
 Content-Disposition: inline
 
---ycyisc7kz3hcxghw
+--ai3mlsvf6abphsz2
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Dec 01, 2020 at 02:41:01PM +0000, Mark Brown wrote:
-> Hi,
+On Tue, Dec 01, 2020 at 10:23:57AM -0500, Konstantin Ryabitsev via linux.ke=
+rnel.org wrote:
+> > as of a git update from master earlier today (I'm at 45c63bd0fd80=20
+> > "Fix
+> > headers generated by "b4 ty") b4 generates thanks for every patch in its
+> > database regardless of if it finds any commits for that series in the
+> > specified branch which isn't ideal, especially if one has been applying
+> > things to multiple branches.
 >=20
-> When I run
->=20
-> 	b4 ty -o /some/dir -b remote/branch -a
->=20
-> as of a git update from master earlier today (I'm at 45c63bd0fd80 "Fix
-> headers generated by "b4 ty") b4 generates thanks for every patch in its
-> database regardless of if it finds any commits for that series in the
-> specified branch which isn't ideal, especially if one has been applying
-> things to multiple branches.
+> Dang, this means 0.5.3 is probably broken the same way. Let me find=20
+> the culprit. :/
 
-Dang, this means 0.5.3 is probably broken the same way. Let me find the=20
-culprit. :/
+Okay, this should be fixed both in master and stable-0.5.y. You can=20
+restore the damage by looking in your .local/share/b4, finding the .sent=20
+files that you know were wrongfully triggered, and renaming them back=20
+into .am.
+
+Sorry about that.
 
 -K
 
---ycyisc7kz3hcxghw
+--ai3mlsvf6abphsz2
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCX8ZgDQAKCRC2xBzjVmSZ
-bHyhAP9Ad4IoUNLkbDUXjqa+elS+pX17nNYPtnyVAlTg/j7MegD9FNUTSymSxdH4
-ycTVTCnWJqkCnDQS56YnBw5dYVpxowo=
-=hNwT
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCX8ZkugAKCRC2xBzjVmSZ
+bCW4AP4rXKsa7uIN2E4AThJe4mRVGfpJo4KPy4OS155gXsUyFgD+I5ArK0FpaOUz
+IBJgwsMK9fmkvx2H96rEaYq/kpgL8QE=
+=MuVo
 -----END PGP SIGNATURE-----
 
---ycyisc7kz3hcxghw--
+--ai3mlsvf6abphsz2--
