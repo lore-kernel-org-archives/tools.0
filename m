@@ -1,67 +1,81 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web09.10904.1606833691562572473
+Received: from userp2130.oracle.com (userp2130.oracle.com [156.151.31.86])
+ by mx.groups.io with SMTP id smtpd.web10.11260.1606834361877237326
  for <tools@linux.kernel.org>;
- Tue, 01 Dec 2020 06:41:36 -0800
+ Tue, 01 Dec 2020 06:52:42 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=r93TN/ar;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Received: from localhost (cpc102334-sgyl38-2-0-cust884.18-2.cable.virginm.net [92.233.91.117])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPSA id 45B0620758;
-	Tue,  1 Dec 2020 14:41:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1606833690;
-	bh=VEkAi+8udzBkFjtpTcbDRzzMvkDSYyKYyFeEqyrgF0k=;
-	h=Date:From:To:Subject:From;
-	b=r93TN/are7AyMPhlyEQwJ861LyT+gKoClKUKKve3nBqQC7EX5Uow7Eane9S79CQSt
-	 iVL+2yMWtqM8HhpXAG20xDd33QYKR28t942fNH6+7xCQnU6RLJUWnUoxZlUZonCUWa
-	 A9rCcC4bNSoKCGAhVEhI8tcHIoBKQ55hitjdX214=
-Date: Tue, 1 Dec 2020 14:41:01 +0000
-From: "Mark Brown" <broonie@kernel.org>
-To: tools@linux.kernel.org, konstantin@linuxfoundation.org
-Subject: b4 ty thanking for everything
-Message-ID: <20201201144101.GF5239@sirena.org.uk>
+ dkim=pass header.i=@oracle.com header.s=corp-2020-01-29 header.b=YZEGwBku;
+ spf=pass (domain: oracle.com, ip: 156.151.31.86, mailfrom: martin.petersen@oracle.com)
+Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
+	by userp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0B1EnMDw126253;
+	Tue, 1 Dec 2020 14:52:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : message-id : references : date : in-reply-to : mime-version :
+ content-type; s=corp-2020-01-29;
+ bh=H5GMKgdoc7SyJ9pe+EZjbuRHxsyOBAPHSVxIT52GY7Y=;
+ b=YZEGwBkuOuVMePPm1AE4eHL7Ym6sDONBbtnxzx/JXCa8b2jZ31z45qsbJlieRhC6rQ+F
+ w9vPnxPR/sol3meeuT/u5rubAouyPgQosPUykM3UB0Uq7phzGsm0gsKaPTXitfa8yY+v
+ 0zOBb0/GyV9ph87Eec1LbkMzBMZB/7KKBfe56dULi0SsbFsqdVeRlT/oAQgGU6amMpkv
+ ++7J18prY5qSrhcHLpbS9+jygzo1/3m9IULdTU4oWx/gVpdEH5YBq5Ii96XoNAzZUXyY
+ VVbmnAAElvRF0qLB0k5hgNf7gjn/CHg0b0oNu1vjFn1EYud8xITCjeKuh9Ft8VvJR2tC 2Q== 
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
+	by userp2130.oracle.com with ESMTP id 353dyqjx3u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Tue, 01 Dec 2020 14:52:39 +0000
+Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
+	by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0B1Eo6Gm164043;
+	Tue, 1 Dec 2020 14:52:38 GMT
+Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
+	by aserp3020.oracle.com with ESMTP id 3540ey2dtn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 01 Dec 2020 14:52:38 +0000
+Received: from abhmp0019.oracle.com (abhmp0019.oracle.com [141.146.116.25])
+	by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 0B1EqaWv006962;
+	Tue, 1 Dec 2020 14:52:36 GMT
+Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
+	by default (Oracle Beehive Gateway v4.0)
+	with ESMTP ; Tue, 01 Dec 2020 06:52:36 -0800
+To: "Mark Brown" <broonie@kernel.org>
+Cc: tools@linux.kernel.org, konstantin@linuxfoundation.org
+Subject: Re: [tools] b4 ty thanking for everything
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+Message-ID: <yq1zh2xfuxa.fsf@ca-mkp.ca.oracle.com>
+References: <20201201144101.GF5239@sirena.org.uk>
+Date: Tue, 01 Dec 2020 09:52:34 -0500
+In-Reply-To: <20201201144101.GF5239@sirena.org.uk> (Mark Brown's message of
+	"Tue, 1 Dec 2020 14:41:01 +0000")
 MIME-Version: 1.0
-X-Cookie: Who was that masked man?
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 282
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ExXT7PjY8AI4Hyfa"
-Content-Disposition: inline
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9821 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 malwarescore=0 phishscore=0
+ suspectscore=1 bulkscore=0 spamscore=0 adultscore=0 mlxlogscore=940
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2012010095
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9821 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 bulkscore=0
+ clxscore=1011 mlxscore=0 spamscore=0 priorityscore=1501 mlxlogscore=954
+ suspectscore=1 lowpriorityscore=0 phishscore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2012010095
+Content-Type: text/plain
 
---ExXT7PjY8AI4Hyfa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-Hi,
+Mark,
 
-When I run
+> When I run
+>
+> 	b4 ty -o /some/dir -b remote/branch -a
+>
+> as of a git update from master earlier today (I'm at 45c63bd0fd80 "Fix
+> headers generated by "b4 ty") b4 generates thanks for every patch in its
+> database regardless of if it finds any commits for that series in the
+> specified branch which isn't ideal, especially if one has been applying
+> things to multiple branches.
 
-	b4 ty -o /some/dir -b remote/branch -a
+I tripped over that as well and was just about to post.
 
-as of a git update from master earlier today (I'm at 45c63bd0fd80 "Fix
-headers generated by "b4 ty") b4 generates thanks for every patch in its
-database regardless of if it finds any commits for that series in the
-specified branch which isn't ideal, especially if one has been applying
-things to multiple branches.
+Thankfully manually renaming the affected files in ~/.local/b4/shared
+worked. I had a lot of stuff queued for 5.11 that became collateral
+damage when trying to send out thanks for a couple of 5.10 fixes.
 
-Thanks,
-Mark
-
---ExXT7PjY8AI4Hyfa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/GVf0ACgkQJNaLcl1U
-h9DkUwf/WMyuFjZwyz4+0yaYtJ05flHmrltul5vkiIxGgsChzMNj7J9F7O4SyWON
-F4s+1s1Lc0J1T2pD9Br/J4xb8J9KMDVtRhHSBLWdvjCRAkCqLf50WIRH2Ag2Wvgr
-NbX5+ZU3O8sdNigBzWvdN1ygNuL+OIE+iIGTsLgTDsNJx3ZGQtApH6oEMumZ9Bou
-271wfJZ2STDHfNJ3f+2VFbZQ2on6P/BcdP90h90q7O0BClCcFoLuKLy2QlXVMHuX
-hc5bTthaXFH4MkYtn6RDkAmRhdzKk6ncMruS1VgszvhHf2/N7p8MLXH9+vfQJbsb
-ZZ2y2jxlLZNS0AaZCricRN5ecDngtw==
-=PAbx
------END PGP SIGNATURE-----
-
---ExXT7PjY8AI4Hyfa--
+-- 
+Martin K. Petersen	Oracle Linux Engineering
