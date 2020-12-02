@@ -1,79 +1,63 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
- by mx.groups.io with SMTP id smtpd.web12.12739.1606840190233688748
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web12.8218.1606928771501950683
  for <tools@linux.kernel.org>;
- Tue, 01 Dec 2020 08:29:50 -0800
+ Wed, 02 Dec 2020 09:06:11 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=Ribyj7oC;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.160.173, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qt1-f173.google.com with SMTP id f15so1515209qto.13
-        for <tools@linux.kernel.org>; Tue, 01 Dec 2020 08:29:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=MlSSY/13iTjXZC7S032wlYpLTTH10jrxLIxWQkOAUFs=;
-        b=Ribyj7oC3Qe9fqbpKKMktUDRdk0azcwWQdYsi2m3988L6MG4nOYsm+lkwonjS0hVwK
-         7SxlUTs6fu6mnOetx3NXIl8yqhCr7KiohDJ5HfVIg/iMiOchNCNZwbSNSm54z8w4DmpL
-         AmjNa8Eq3/7KZfunJfmMmr+C+oNZz6PDbM8/U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=MlSSY/13iTjXZC7S032wlYpLTTH10jrxLIxWQkOAUFs=;
-        b=jTf1zDh8/rhICJGqFfU2AnOPbMqH1zKuGq2YvMXJc8QrIZKnH/OrkdXFjejzlXsyl4
-         p/WRBzg/SR6h320lICEw4O2sVP+tcgFtzBUwtyRc3hd4S9FKFivV2Bz99/fmOaKbx3LM
-         pjwg3da7PrE5Et36Kua/y6Z50rp1JmOZzT+cU/wPG4HqH7ka+OmcLko5h5eZNa9/3UEm
-         lOZdRkEqu16gfNI7/keGJ2M3vzrVSMZDii2Av44t20jYnskGZEIC686CCSyMYjmwK/cc
-         1SkUnnzZMIHX/8LIO8ULvK5bjUodNajvogiBFB6zIdmm8P5A14aGRGNR7yodyXAIhYEQ
-         SllA==
-X-Gm-Message-State: AOAM532T/A9cVcNJwNKfvMFAyFQUKyiEqjHWo/EriONmlqw0hfJ9uMJw
-	K7Joxw0/zjMYCuUG9OlNhoHyAtmw8IQsreyL
-X-Google-Smtp-Source: ABdhPJwGhfN82YbmjTBtPBGGb+jISwQgSkw9MdZ7LdCS4PbuN5mfn6w/1bNIWT3If2xHVOcqltshlw==
-X-Received: by 2002:ac8:7a70:: with SMTP id w16mr3687165qtt.61.1606840188992;
-        Tue, 01 Dec 2020 08:29:48 -0800 (PST)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id e4sm64068qtc.54.2020.12.01.08.29.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Dec 2020 08:29:48 -0800 (PST)
-Date: Tue, 1 Dec 2020 11:29:46 -0500
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, users@linux.kernel.org
-Subject: [b4] version 0.5.4 released (hotfix)
-Message-ID: <20201201162946.44atowzr44m2yhky@chatter.i7.local>
+ dkim=pass header.i=@kernel.org header.s=default header.b=OPp4KgRk;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
+Date: Wed, 2 Dec 2020 17:05:38 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1606928770;
+	bh=q77vGK110Ed7w0jVKwoZW7ryBrxoFp4kpGb5pelynNU=;
+	h=From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OPp4KgRkMRHqh8kSZp9qyzZhjmbTSGr3dHjrZiuWYo59uEVJcbhNPTi66QNfswWKp
+	 oukU8O7VAdq+kTtMf2Gp8x+lIZRG5cI0hkU92jyrETYHW31cFLckYuo+FZwVTVJvNA
+	 ZvDToY2eRN3mMWwf/5P1W6R1Wz0fSK4WM5b1/bSk=
+From: "Mark Brown" <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Subject: Re: [tools] b4 ty thanking for everything
+Message-ID: <20201202170538.GJ5560@sirena.org.uk>
+References: <20201201144101.GF5239@sirena.org.uk>
+ <164CA10C94033C15.5074@linux.kernel.org>
+ <20201201154354.fw32bk44e6myyi3y@chatter.i7.local>
 MIME-Version: 1.0
-X-Groupsio-MsgNum: 286
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="j6e4sq4umdfq5hln"
+In-Reply-To: <20201201154354.fw32bk44e6myyi3y@chatter.i7.local>
+X-Cookie: Sauron is alive in Argentina!
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Groupsio-MsgNum: 287
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ofZMSlrAVk9bLeVm"
 Content-Disposition: inline
 
---j6e4sq4umdfq5hln
-Content-Type: text/plain; charset=utf-8
+--ofZMSlrAVk9bLeVm
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi, all:
+On Tue, Dec 01, 2020 at 10:43:54AM -0500, Konstantin Ryabitsev wrote:
 
-There was a nasty bug in 0.5.3 that caused "b4 ty" to wrongly match=20
-every tracked series, so if you're using that functionality of b4 and=20
-you're on version 0.5.3, you should upgrade to 0.5.4.
+> Okay, this should be fixed both in master and stable-0.5.y. You can=20
+> restore the damage by looking in your .local/share/b4, finding the .sent=
+=20
+> files that you know were wrongfully triggered, and renaming them back=20
+> into .am.
 
-  pip install --upgrade --user b4
+This seems to have fixed things, thanks!
 
-If you are on version 0.5.2, you should be unaffected.
-
-Thanks to Mark Brown and Martin K. Petersen for the report.
-
--K
-
---j6e4sq4umdfq5hln
+--ofZMSlrAVk9bLeVm
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCX8ZvegAKCRC2xBzjVmSZ
-bCErAQC/rup8xqHl/0TiQKIV4zN3/UQpJPml1IDj+VwES1oJIQEAsJ7vGwTFUTeD
-PNLxi9kj6ietVPfTbqao58CvYP2lUAc=
-=XLaw
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/HyWIACgkQJNaLcl1U
+h9CsGAf/TBv1As/B2Ah4zMDcnxwR8weMP9J8BQj6bGzRxBgn4yieTXrSex5MYejC
+ehuqVTt+5eJtSUlCYNvzwXJjPhevJMC4U9PItr3qfYXQzvyrlm0WPClDV8i2A7uF
+IIbPzzFwg7wIT+KAfpbcSCkBNwZ9Dkv+7BR3pIntcibAxiriUdC0HFmZ0P4S3NCd
+Mr+P70Tb4CRs1opAGYaKxjra0RyhWyxgpXKkWbuA3yDxlrz5WItJeoBr10AzEay9
+nVdktWxkCMQqU8RlqTgmhIvQlhMGj8OCt1NKZtZcMdt70tSvHaIbU/w7mTpY1FUx
+rhA+LxSifhAGB6UAeGpqp/WOscsjmA==
+=tsRY
 -----END PGP SIGNATURE-----
 
---j6e4sq4umdfq5hln--
+--ofZMSlrAVk9bLeVm--
