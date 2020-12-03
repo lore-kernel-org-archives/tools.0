@@ -1,63 +1,72 @@
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web12.8218.1606928771501950683
+ by mx.groups.io with SMTP id smtpd.web09.11243.1607007827888063841
  for <tools@linux.kernel.org>;
- Wed, 02 Dec 2020 09:06:11 -0800
+ Thu, 03 Dec 2020 07:03:48 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=default header.b=OPp4KgRk;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Date: Wed, 2 Dec 2020 17:05:38 +0000
+ dkim=pass header.i=@kernel.org header.s=k20201202 header.b=skpYztB6;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: robh@kernel.org)
+X-Gm-Message-State: AOAM532PeWh0dduvYi/ed34nvQ6c1BqBv3U1pGgRz43wE5s2Qe/mTsjX
+	/ZBzbPO1rHw1/7yMoCrGK0Sv8BL5BGYmsu6cvA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1606928770;
-	bh=q77vGK110Ed7w0jVKwoZW7ryBrxoFp4kpGb5pelynNU=;
-	h=From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OPp4KgRkMRHqh8kSZp9qyzZhjmbTSGr3dHjrZiuWYo59uEVJcbhNPTi66QNfswWKp
-	 oukU8O7VAdq+kTtMf2Gp8x+lIZRG5cI0hkU92jyrETYHW31cFLckYuo+FZwVTVJvNA
-	 ZvDToY2eRN3mMWwf/5P1W6R1Wz0fSK4WM5b1/bSk=
-From: "Mark Brown" <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: Re: [tools] b4 ty thanking for everything
-Message-ID: <20201202170538.GJ5560@sirena.org.uk>
-References: <20201201144101.GF5239@sirena.org.uk>
- <164CA10C94033C15.5074@linux.kernel.org>
- <20201201154354.fw32bk44e6myyi3y@chatter.i7.local>
+	s=k20201202; t=1607007827;
+	bh=OLobY8kinVEsZTJo7ZJzz7tUhQb6bw+BMZG5wqPn1YE=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=skpYztB6cD1rpOWUjxHkqGkM+BQGuhgK5dBKpjt95LHzIRpwAy0Tmhapt9+aMWY1i
+	 zpSKdkOmgqEPTVJIU17ZWGoZ7M/QiGkgzqyu00WYouUgSSbm6mxllYbQlCviZgSqJL
+	 IRM+539tKWQa2bAuLF3UXuNvcKrRcXPZb+9qNmd8OxZzlBE+vqqcexfyLcaJUsjNaC
+	 gKbHxqm7u7FXJxgcq6n1jhHiFKLKPFMNg6HR8Jag9bYv+w9x9Wb5xrI9BbzAenMWTP
+	 hF3p2ZZVjyqXrqg/drTAfrdzYUrsbS6E23GmJXzMKyKcjQu0Bk/FSh8VL3YMkqdiqa
+	 totBQ0qcnAcDQ==
+X-Google-Smtp-Source: ABdhPJwoxTir4fcMz1gX+Nc1US9ZkV/YGq47b8lf5JnxAq7HhWbeJpEypjFUuyuzEfqQ5nje5Zcr/eS46vwnXEzKU7g=
+X-Received: by 2002:a17:906:6713:: with SMTP id a19mr2986640ejp.468.1607007825151;
+ Thu, 03 Dec 2020 07:03:45 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20201201154354.fw32bk44e6myyi3y@chatter.i7.local>
-X-Cookie: Sauron is alive in Argentina!
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 287
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ofZMSlrAVk9bLeVm"
-Content-Disposition: inline
+References: <20201030173744.GA995986@piout.net> <1642D74B05A23708.27950@linux.kernel.org>
+ <20201124182241.sojck3t76qjm5a2s@chatter.i7.local>
+In-Reply-To: <20201124182241.sojck3t76qjm5a2s@chatter.i7.local>
+From: "Rob Herring" <robh@kernel.org>
+Date: Thu, 3 Dec 2020 08:03:33 -0700
+X-Gmail-Original-Message-ID: <CAL_JsqJ8s6ry-nkSujEO1Pvxre=rW4p72U-_aadkQ-2Zc93sWA@mail.gmail.com>
+Message-ID: <CAL_JsqJ8s6ry-nkSujEO1Pvxre=rW4p72U-_aadkQ-2Zc93sWA@mail.gmail.com>
+Subject: Re: [kernel.org users] [tools] b4 ty : wrong patch number when cherrypicking
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	users@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
---ofZMSlrAVk9bLeVm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, Nov 24, 2020 at 11:23 AM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Fri, Oct 30, 2020 at 02:05:30PM -0400, Konstantin Ryabitsev via linux.kernel.org wrote:
+> > On Fri, Oct 30, 2020 at 06:37:44PM +0100, Alexandre Belloni wrote:
+> > > I cherrypicked patch 4 and 5 of
+> > > https://lore.kernel.org/linux-amlogic/20201005203451.9985-1-post@lespocky.de/
+> > > using:
+> > >
+> > > b4 am -p linux-arm-kernel -c -t -s -l -P 4-5 -o - 20201005203451.9985-5-post@lespocky.de
+> > >
+> > > After applying to my tree, b4 ty generated the message I sent (without
+> > > checking, my bad):
+> > >
+> > > https://lore.kernel.org/linux-amlogic/160391135997.385141.5554228268638639718.b4-ty@bootlin.com/
+> > >
+> > > Where it had 1/2 and 2/2 instead of 04/12 and 05/12.
+> > >
+> > > Is this too awful to fix? :)
+> >
+> > It shouldn't be -- I have a similar request in the following thread:
+> > https://lore.kernel.org/r/20201003193137.z2bpwzlz5a66kkex@chatter.i7.local
+>
+> There is a fix in the latest master that more properly handles these
+> situations:
+>
+> - we record actual patch prefixes when we start tracking a series, so
+>   when we send a thank you report, the actual counters will be shown
+> - when we send a reply for a subset of the series, we will now insert a
+>   "(subset)" into the subject to more clearly indicate to the submitter
+>   that the series only got applied partially
 
-On Tue, Dec 01, 2020 at 10:43:54AM -0500, Konstantin Ryabitsev wrote:
+Could we not modify subjects as that breaks gmail 'threading'. Yes,
+gmail is broken, but there's more than a few users...
 
-> Okay, this should be fixed both in master and stable-0.5.y. You can=20
-> restore the damage by looking in your .local/share/b4, finding the .sent=
-=20
-> files that you know were wrongfully triggered, and renaming them back=20
-> into .am.
-
-This seems to have fixed things, thanks!
-
---ofZMSlrAVk9bLeVm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/HyWIACgkQJNaLcl1U
-h9CsGAf/TBv1As/B2Ah4zMDcnxwR8weMP9J8BQj6bGzRxBgn4yieTXrSex5MYejC
-ehuqVTt+5eJtSUlCYNvzwXJjPhevJMC4U9PItr3qfYXQzvyrlm0WPClDV8i2A7uF
-IIbPzzFwg7wIT+KAfpbcSCkBNwZ9Dkv+7BR3pIntcibAxiriUdC0HFmZ0P4S3NCd
-Mr+P70Tb4CRs1opAGYaKxjra0RyhWyxgpXKkWbuA3yDxlrz5WItJeoBr10AzEay9
-nVdktWxkCMQqU8RlqTgmhIvQlhMGj8OCt1NKZtZcMdt70tSvHaIbU/w7mTpY1FUx
-rhA+LxSifhAGB6UAeGpqp/WOscsjmA==
-=tsRY
------END PGP SIGNATURE-----
-
---ofZMSlrAVk9bLeVm--
+Rob
