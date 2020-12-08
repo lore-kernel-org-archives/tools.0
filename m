@@ -1,77 +1,75 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
- by mx.groups.io with SMTP id smtpd.web08.8936.1607436547899634082
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mx.groups.io with SMTP id smtpd.web09.12611.1607449608039756405
  for <tools@linux.kernel.org>;
- Tue, 08 Dec 2020 06:09:08 -0800
+ Tue, 08 Dec 2020 09:46:48 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=ab4fXPtI;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.173, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f173.google.com with SMTP id 1so16027395qka.0
-        for <tools@linux.kernel.org>; Tue, 08 Dec 2020 06:09:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fO1rfroL1Rk2s6iYsSBvrYTF+Ii/S7pGbnZOgIw8E4A=;
-        b=ab4fXPtI93nuXCjpWz3Pi537ZfmqhGSMYZxQZalZBRWPiXvoVLc5N1RjEC7UZBIkhk
-         429JWVzzjAaTc+X3O+VPrMOtYz9UO1DcncuS0NmPY+k4nb+v3zPdRjYg2NL4PPHcCdzl
-         JuXNzOriPI3LvbMPkAEMetGeYsNiP63inNZmw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fO1rfroL1Rk2s6iYsSBvrYTF+Ii/S7pGbnZOgIw8E4A=;
-        b=OVUvF//8OOwuJiYa75Yfl9DxwwDVIXbRkHuGuVvLw76I6PjDvZjSvkDpUZFJL1M8MM
-         sMUTJtxwWw+oShm/uh7kYJ6UA0+yyiWuVdAzyCRJg7nXjGQalcmFrOYlF0w9l6J1cMA2
-         u4W68r4QNXM7wsgdqQMHtGPdc9x+1Wy3LCwCs7ZCw+UtnVXcn3KsV3qv2LATVBHhOmEZ
-         gQAQsn57zFbAWjFLyfTODv3IV5N4byqRZbKnAzkmUOqJWDiGR8BpKsPCYChnl6g/TjrD
-         X1CPdQ0k3d4WVAWnYXLxRpUdUMfxM4wzEp6ffYaaEFHBkMK65ACJiSPR0isLK1z4gvuS
-         bOuA==
-X-Gm-Message-State: AOAM532k+8UvWYVFywlCb5IK+yUEaniHAs3QB8WqPo3cOIFcICoV+PGz
-	Saku1ofLEC785wRT8Amn1sbprA==
-X-Google-Smtp-Source: ABdhPJxYUYTZ7LJVSh9akJtCHjwQ0y/IEEfqUW5XWM2QXAlJJ0z5V00TELywa2pigzFH0ltg2RkHTA==
-X-Received: by 2002:ae9:ef12:: with SMTP id d18mr31043315qkg.473.1607436547026;
-        Tue, 08 Dec 2020 06:09:07 -0800 (PST)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id q32sm9879181qtc.65.2020.12.08.06.09.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 06:09:06 -0800 (PST)
-Date: Tue, 8 Dec 2020 09:09:04 -0500
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, tools@linux.kernel.org,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	users@linux.kernel.org
-Subject: Re: [kernel.org users] [tools] b4 ty : wrong patch number when cherrypicking
-Message-ID: <20201208140904.rnw3hrwwze26kv5e@chatter.i7.local>
-References: <20201030173744.GA995986@piout.net>
- <1642D74B05A23708.27950@linux.kernel.org>
- <20201124182241.sojck3t76qjm5a2s@chatter.i7.local>
- <CAL_JsqJ8s6ry-nkSujEO1Pvxre=rW4p72U-_aadkQ-2Zc93sWA@mail.gmail.com>
- <20201208135926.fax4p7zqxpqgq3wo@chatter.i7.local>
- <20201208140348.GE6686@sirena.org.uk>
+ dkim=pass header.i=@kernel.org header.s=k20201202 header.b=qSutCwnw;
+ spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: robh@kernel.org)
+X-Gm-Message-State: AOAM530KnUzVlVagOff/Xa6BZ5tji565lE1A51826z9MbYiOPuAAw+fu
+	dc/SpErNhbPyU0xD9YQ13iuwnFhUNQ2TGnF02w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1607449607;
+	bh=d7LYYsN6///ks70tTG54i3ftd1ZZWIacCIN5ZeQRReo=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=qSutCwnwF5xywPjtvTK1rkb/+FoCvwxn5rWI0NpkLIKqDyU655siI5bFYOebjTuAr
+	 FNuqFAktFljHlVWSvZl2kUp2Zz6wJH0BzkD9eaHYsRQxYhzvprLP35wpUmei0Q9/Mi
+	 tQUmzNk1h8RazVAVbbQoTVYAZg2qN80c0ZH6i7lXpSInyng/58mTDorQQyhLqm10zl
+	 y09aIlX/EJqUVRfQt6zKTa69gfiK60JZaou/w52hQSnZMhY5I6DzJ4rFCzqMkP1acA
+	 jVb6StIcZJ0cwKJUw1/1D68SGoxEWHdnjKvlt78feIsANbm2GSkHCx3H2i55W3m35E
+	 Mhfk+QyzkuxIg==
+X-Google-Smtp-Source: ABdhPJyVPHTsnXiJxt+XxTooYJQ4yJgM1uOrNlRAfhS1nzFhLJ2qxPmf1Ce7U8fChpyZBpdIz4+KsexSFIK3C/isk7g=
+X-Received: by 2002:a17:906:1197:: with SMTP id n23mr12108012eja.359.1607449605832;
+ Tue, 08 Dec 2020 09:46:45 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20201208140348.GE6686@sirena.org.uk>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20201030173744.GA995986@piout.net> <1642D74B05A23708.27950@linux.kernel.org>
+ <20201124182241.sojck3t76qjm5a2s@chatter.i7.local> <CAL_JsqJ8s6ry-nkSujEO1Pvxre=rW4p72U-_aadkQ-2Zc93sWA@mail.gmail.com>
+ <20201208135926.fax4p7zqxpqgq3wo@chatter.i7.local>
+In-Reply-To: <20201208135926.fax4p7zqxpqgq3wo@chatter.i7.local>
+From: "Rob Herring" <robh@kernel.org>
+Date: Tue, 8 Dec 2020 11:46:34 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJMaA4X77PwvF3uHMZVMf8uvxEa5Dg_or_RaT9hbD92JA@mail.gmail.com>
+Message-ID: <CAL_JsqJMaA4X77PwvF3uHMZVMf8uvxEa5Dg_or_RaT9hbD92JA@mail.gmail.com>
+Subject: Re: [kernel.org users] [tools] b4 ty : wrong patch number when cherrypicking
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	users@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Dec 08, 2020 at 02:03:48PM +0000, Mark Brown wrote:
-> > Well, the goal is to make it extremely obvious for the submitter 
-> > that only a subset of their patch series got applied -- so I would 
-> > argue that
-> > Gmail thread-breaking only helps here.
-> 
-> > Overall, this would be an very rare situation, so I doubt anyone would 
-> > care enough to get annoyed.
-> 
-> This is actually a pretty common situation - the two most frequent
-> situations are people doing cleanup work who decide to thread a bunch of
-> patches to different subsystems with no interdependencies together and
-> people adding new drivers that cross multiple subsystems (eg, a driver
-> plus DTS updates adding it to some platform or a MFD with several
-> subfunctions).
+On Tue, Dec 8, 2020 at 7:59 AM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Thu, Dec 03, 2020 at 08:03:33AM -0700, Rob Herring wrote:
+> > > > It shouldn't be -- I have a similar request in the following
+> > > > thread:
+> > > > https://lore.kernel.org/r/20201003193137.z2bpwzlz5a66kkex@chatter.i7.local
+> > >
+> > > There is a fix in the latest master that more properly handles these
+> > > situations:
+> > >
+> > > - we record actual patch prefixes when we start tracking a series, so
+> > >   when we send a thank you report, the actual counters will be shown
+> > > - when we send a reply for a subset of the series, we will now insert a
+> > >   "(subset)" into the subject to more clearly indicate to the submitter
+> > >   that the series only got applied partially
+> >
+> > Could we not modify subjects as that breaks gmail 'threading'. Yes,
+> > gmail is broken, but there's more than a few users...
+>
+> Well, the goal is to make it extremely obvious for the submitter that
+> only a subset of their patch series got applied -- so I would argue that
+> Gmail thread-breaking only helps here.
 
-Okay, good to know. I'm still sticking with "(subset)" in the subject, 
-as this hopefully avoids more problems than it causes.
+If you manually label things in gmail (or just look at 'Sent'),
+replies don't get the label (and in turn aren't in the corresponding
+IMAP folder). But they will still show up the gmail thread unless the
+subject is changed. So the reply could just be missed completely
+rather than be unclear to people that don't read the body.
 
--K
+> Overall, this would be an very rare situation, so I doubt anyone would
+> care enough to get annoyed.
+
+I'm annoyed, hence why I raised it. But if no one else cares, then
+fine. I'm using mutt now in most situations I care about. I was more
+concerned with less active submitters only using gmail.
+
+Rob
