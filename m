@@ -1,58 +1,62 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
- by mx.groups.io with SMTP id smtpd.web12.3512.1607501637421054662
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ by mx.groups.io with SMTP id smtpd.web12.4544.1607509380535510145
  for <tools@linux.kernel.org>;
- Wed, 09 Dec 2020 00:13:57 -0800
+ Wed, 09 Dec 2020 02:23:00 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linaro.org header.s=google header.b=NVlId9U9;
- spf=pass (domain: linaro.org, ip: 209.85.208.170, mailfrom: linus.walleij@linaro.org)
-Received: by mail-lj1-f170.google.com with SMTP id y22so1188870ljn.9
-        for <tools@linux.kernel.org>; Wed, 09 Dec 2020 00:13:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=hrPMmtdsYPgl0/AMzRsJX5PdixQuqf++bvrOEWdP8bc=;
-        b=NVlId9U9gB6lLxySd63F7adRidBv7nn/cUqclHvn4VQMW8ev9s4uj1bKbysWCIUJdb
-         6J/dIlprBYabzkGC/ev+JdYpWCqz8qmm2mhkqoLUPDIoLJhKGsSGQwPE4UkGC10Kgrpp
-         t329AdBREXMPUiitromdFw7qLIf74pz6bPqXdRUAEi9mMt/jQ1FKBo3gCKtbP+NitNON
-         L4d1EQ+UVxPRE7vIOtwzD9FgtM5iWmtMQ9vIMnovYc4TvIchQyuHBDJjqppcR/5xzoBX
-         JyJleNGxWED5rIXDEoAeTz7nosIMr5U80L2l1RNfXrLVIhRjE9ueBSEB7YFxz2Wf7Rex
-         yQVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=hrPMmtdsYPgl0/AMzRsJX5PdixQuqf++bvrOEWdP8bc=;
-        b=L2jUaNXzpzeccJumkyDRa3GnE4g1jfZ0Zsft+yRGT9qfp8bj68nanQsrkVeMO2kHwb
-         UXRCOIsXOmjfRjXqhPd2CXTTiZBPbYJziaww5E5ZELEE1hsuk9bPLp3cHYU+FLiyFzYV
-         ZfIAxjEoG394oeD+9YkRtnY6Wvxbk+C0MyNv/vE4ZVKY8YJlZHTGlBPiMD+HRW/WsBFJ
-         rR51n398tuxw/yLDEPz8+fsvAosyioD4gK8/jtc4BYhe8QDxkAdHAntY8H7dK9kXcEqu
-         7m5ZFENWeCUYLW46EA/FJbjgYLzl8LEgfn10u+k49Xye/TGEG6UbUdJp92xy/I9KXx7E
-         znrQ==
-X-Gm-Message-State: AOAM533TqIXWOzuDdZ1S4TldbB/QGwcRi2lJCpqCyJtfVk7pp0LV9Dqa
-	2MRYY3E+/YwTj9SzEs8EuoGaRKSnJlAA6ZXeW3RTTQ==
-X-Google-Smtp-Source: ABdhPJwT5TZy//BFh0/NaZBd6D7fEXS+pigoGp8Gp8D0obRd3b1Mb6SFFUKLxa5OdsEzOyCQZ00Ax7CBi+u9X6DN+pU=
-X-Received: by 2002:a2e:85d1:: with SMTP id h17mr614092ljj.438.1607501635244;
- Wed, 09 Dec 2020 00:13:55 -0800 (PST)
+ dkim=missing; spf=none, err=permanent DNS error (domain: linux.intel.com, ip: 134.134.136.31, mailfrom: andriy.shevchenko@linux.intel.com)
+IronPort-SDR: 5d2QfodBVbru29PclPl3/5BtyE1v2jmSj76J+j0zK0edouxWX0fsVnK9ntohbf9zwVpTzn7UJX
+ scMhUbU2x1LA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9829"; a="235652100"
+X-IronPort-AV: E=Sophos;i="5.78,405,1599548400"; 
+   d="scan'208";a="235652100"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2020 02:22:59 -0800
+IronPort-SDR: Fb8LGhbkRu31jNARVrLmn/DgOHIVLY3EZGOMKDt+uiCMK0JFjhZLQ3KWJB867FpFynNCgwu7v+
+ ScyPd8hB058A==
+X-IronPort-AV: E=Sophos;i="5.78,405,1599548400"; 
+   d="scan'208";a="407998857"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2020 02:22:58 -0800
+Received: from andy by smile with local (Exim 4.94)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1kmwdc-00D4id-FJ; Wed, 09 Dec 2020 12:24:00 +0200
+Date: Wed, 9 Dec 2020 12:24:00 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	tools@linux.kernel.org
+Subject: Re: b4 strips BiugLink
+Message-ID: <20201209102400.GP4077@smile.fi.intel.com>
+References: <CACRpkdZrth39GdKc0OFF9cDNHq2hBOXq1f-uU=TOOT8GaogoMQ@mail.gmail.com>
 MIME-Version: 1.0
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 9 Dec 2020 09:13:44 +0100
-Message-ID: <CACRpkdZrth39GdKc0OFF9cDNHq2hBOXq1f-uU=TOOT8GaogoMQ@mail.gmail.com>
-Subject: b4 strips BiugLink
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CACRpkdZrth39GdKc0OFF9cDNHq2hBOXq1f-uU=TOOT8GaogoMQ@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hi Konstantin,
+On Wed, Dec 09, 2020 at 09:13:44AM +0100, Linus Walleij wrote:
+> Hi Konstantin,
+> 
+> I ran into this situation with b4, when trying to apply this patch:
+> https://lore.kernel.org/linux-gpio/CACRpkdY6gEi6pzuuFCdO_Lj1r23=HKCWF+N+QR-E7kWS8bBkjg@mail.gmail.com/T/#m4ed4e0b58f70c69a0105c73ae8ea7ce8a6f5e61d
+> 
+> The "BugLink" tag gets stripped.
+> 
+> Is this on purpose, like b4 strips all unknown tags?
+> 
+> It seems BugLink is important to Intel so we better allow it
+> in that case.
 
-I ran into this situation with b4, when trying to apply this patch:
-https://lore.kernel.org/linux-gpio/CACRpkdY6gEi6pzuuFCdO_Lj1r23=HKCWF+N+QR-E7kWS8bBkjg@mail.gmail.com/T/#m4ed4e0b58f70c69a0105c73ae8ea7ce8a6f5e61d
+FYI:
 
-The "BugLink" tag gets stripped.
+% git log --oneline --grep BugLink v5.10-rc7 | wc -l
+772
 
-Is this on purpose, like b4 strips all unknown tags?
+% git log --oneline --grep Buglink v5.10-rc7 | wc -l
+29
 
-It seems BugLink is important to Intel so we better allow it
-in that case.
+-- 
+With Best Regards,
+Andy Shevchenko
 
-Thanks!
-Linus Walleij
+
