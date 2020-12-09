@@ -1,61 +1,58 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
- by mx.groups.io with SMTP id smtpd.web09.7462.1607524853108769726
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ by mx.groups.io with SMTP id smtpd.web09.9839.1607532775715433969
  for <tools@linux.kernel.org>;
- Wed, 09 Dec 2020 06:40:53 -0800
+ Wed, 09 Dec 2020 08:52:55 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linaro.org header.s=google header.b=Qmv9ynH+;
- spf=pass (domain: linaro.org, ip: 209.85.208.172, mailfrom: linus.walleij@linaro.org)
-Received: by mail-lj1-f172.google.com with SMTP id b10so300621ljp.6
-        for <tools@linux.kernel.org>; Wed, 09 Dec 2020 06:40:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RN5r8JOjhYT1YawXNnCRhhPy2qwNP9cpoWSEYnI8WfI=;
-        b=Qmv9ynH+r5X0n1TneFNRSVcQRThzQHN4DCNHvo1Sh6aI6pCqPG3OTNKKwtF3q+DDvt
-         N7Yo8A0GuyJfWl3nrt2adcp6F6pZ1T6K5JDuNJ3DCXHqKaybDlWao0OlAFbOZac4Gpnw
-         FYZKS4gxU2GU438aJPDYTZkt0yfNzkTVXrGji24Zc/jAnGW0HbYgeMO9l7XIBZfwhNu9
-         H471ySk6YgVfdK1cgvOOXHSN/NpoQqr32kICV9WWuqNcSpl4ytBbidBuzgu7hDnynbQD
-         SEpxxMMeV7kCfGwmTRNuisatTaj6aIAhbBVSoHrihCUCfPYX6KiVmI88leBEG1iv2G4e
-         Wemw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RN5r8JOjhYT1YawXNnCRhhPy2qwNP9cpoWSEYnI8WfI=;
-        b=BI2J3hyrzXsR7CPfpcwBiz9STQZbZ1AAY1o5SRrJIuRu+cdXQXUrt3mEdIHXffiPQS
-         q6wYLxpl5lAMNmC8CfoNJd5aT2qoUMHgK/3S6jHgDsfujM4h5u8zm62KXaX4+cVT7CrL
-         WeZ+tVztz6mmhH2QGdPC+4v7yClM8Mdl+Yo/ujU5yyKIOQ/sQnPcP6x+R+Y0JN2j44zU
-         1Xd8vbtj48qS9qXE/6L75s3OrG25lZe9NL8NxFD2Q+wu5nK3eMhWNd7lSDIox3/NfH+6
-         xJuZLxY69W2fKHtLsvLMPioNt8tFQDbf0+1bXCP7rzehrvBRCRFZoYFeyZxcxJy5mGHv
-         GE7g==
-X-Gm-Message-State: AOAM532G7DEHDc0DSguh3NqgRV8wPsbgHhPVxZQn8Uv9sjAz3gK/pP+g
-	hwojoCC7r+aAME+oaIxgLMxF8j5TvmSDoUJKbuFVFw==
-X-Google-Smtp-Source: ABdhPJyalxfIJyqlvH7Ieh98zW5w8Eaasdex2itKVUxm+bNx+KzNifVuEbvYoKirL8xQx1AL73Z7ey4hlVurgLTnl3s=
-X-Received: by 2002:a2e:910f:: with SMTP id m15mr1154795ljg.467.1607524851211;
- Wed, 09 Dec 2020 06:40:51 -0800 (PST)
-MIME-Version: 1.0
+ dkim=missing; spf=none, err=permanent DNS error (domain: linux.intel.com, ip: 134.134.136.65, mailfrom: andriy.shevchenko@linux.intel.com)
+IronPort-SDR: CcBNdnTmDYdn8Ikq7D7gIw4GA7WdQIt4tumtGkzyKTf35UI5NlPqJ0uGpmGiH1hz+yD5KZEBqa
+ /H+pLfNKbARQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9829"; a="174226540"
+X-IronPort-AV: E=Sophos;i="5.78,405,1599548400"; 
+   d="scan'208";a="174226540"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2020 08:52:55 -0800
+IronPort-SDR: PCk7wBKLP6ZV+hijQXAbxmdD2HRoNo8IXyTPbIcx+vgSzna0r6BmU1pR499p3TZAZgUvjtBZeF
+ E1ZVtfHVJwbg==
+X-IronPort-AV: E=Sophos;i="5.78,405,1599548400"; 
+   d="scan'208";a="408127015"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2020 08:52:54 -0800
+Received: from andy by smile with local (Exim 4.94)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1kn2iy-00DBD3-6K; Wed, 09 Dec 2020 18:53:56 +0200
+Date: Wed, 9 Dec 2020 18:53:56 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	tools@linux.kernel.org
+Subject: Re: b4 strips BiugLink
+Message-ID: <20201209165356.GT4077@smile.fi.intel.com>
 References: <CACRpkdZrth39GdKc0OFF9cDNHq2hBOXq1f-uU=TOOT8GaogoMQ@mail.gmail.com>
  <20201209131924.bai7b4tj2wb7sbon@chatter.i7.local>
-In-Reply-To: <20201209131924.bai7b4tj2wb7sbon@chatter.i7.local>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 9 Dec 2020 15:40:40 +0100
-Message-ID: <CACRpkdYA9T9msayNQrd5X+oXnr5_MtGQTEmUkpsAF+LALEdt8w@mail.gmail.com>
-Subject: Re: b4 strips BiugLink
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+ <CACRpkdYA9T9msayNQrd5X+oXnr5_MtGQTEmUkpsAF+LALEdt8w@mail.gmail.com>
+MIME-Version: 1.0
+In-Reply-To: <CACRpkdYA9T9msayNQrd5X+oXnr5_MtGQTEmUkpsAF+LALEdt8w@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Wed, Dec 9, 2020 at 2:19 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
+On Wed, Dec 09, 2020 at 03:40:40PM +0100, Linus Walleij wrote:
+> On Wed, Dec 9, 2020 at 2:19 PM Konstantin Ryabitsev
+> <konstantin@linuxfoundation.org> wrote:
+> 
+> > Okay, there is a fix in master and stable-0.6.y that adds BugLink to the
+> > list.
+> 
+> Wow that's quick!
+> 
+> Thanks a lot Konstantin!
 
-> Okay, there is a fix in master and stable-0.6.y that adds BugLink to the
-> list.
+Thanks!
 
-Wow that's quick!
+Btw, can b4 print a warning if it cuts an (unknown) tag?
 
-Thanks a lot Konstantin!
+-- 
+With Best Regards,
+Andy Shevchenko
 
-Yours,
-Linus Walleij
+
