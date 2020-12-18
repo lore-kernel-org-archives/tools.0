@@ -1,94 +1,77 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
- by mx.groups.io with SMTP id smtpd.web12.628.1608330704402025158
+Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [96.44.175.130])
+ by mx.groups.io with SMTP id smtpd.web09.785.1608331127790703176
  for <tools@linux.kernel.org>;
- Fri, 18 Dec 2020 14:31:44 -0800
+ Fri, 18 Dec 2020 14:38:47 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=eZ9R6w2P;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.169, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f169.google.com with SMTP id z11so3633812qkj.7
-        for <tools@linux.kernel.org>; Fri, 18 Dec 2020 14:31:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=VESVamw+p2hoXlfzinH50OLGzvuOF4H4VzvsleFJy2A=;
-        b=eZ9R6w2PmXxIvvesokif4TeO2YTrCVDKEErtBYfZz8E/muaNkb+L58AnLvdiWApN3i
-         B5DUlo87EVwedk6Y5uV2VV7wdwy4K6KAqkdN12tbFNyAabiN0Ulc7iaD9z7QQWhcysVt
-         X905nJwX72q6VuWykHWVMg6irEpoCwWwmeGVo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=VESVamw+p2hoXlfzinH50OLGzvuOF4H4VzvsleFJy2A=;
-        b=j8ZyDmKelE3PKzmIB66NZ3853+0VpKp6j7wacVDDdzEdsWlybuKsD+x0z86yVaHlcY
-         8l4TfEinNgXZQqQ/S4YOku3cjHj06m+pBeXntI+mKeS5HHWcxeE14y9RBxr3Umj+qZXB
-         qDYd85PS1OZXuDGWwirWEPEFaMExBbY30f+2yu/xv4wXnzWFmnri89s7wI+FNtkVLGZ/
-         Nesy7nWidoZZDCuAwDEpupmxWEQX5psyA0BoqJ03tgcHC8hMNIm41RJzkjDDCOVm7mN4
-         T9UvZ1n5KOoRtV8fhGrEGlxqElZXVrPow+BNuseFHWSas1Xz1352GCKpBKhdkJduRYLx
-         P2IA==
-X-Gm-Message-State: AOAM533crxpHGztG02/W+ZaYV1s4DMBL5xAr7xia3S3IL+5HhnnxaCEM
-	RSpcMv2ne9yEOt4XAqqrswOFCvM9RafY7smH
-X-Google-Smtp-Source: ABdhPJyxM8fmQ3sB1vENYztjt57oalq4xUieZsPQ1blSU8LVOfYNAYNGa0UtnCf5PCQKJPbvNQ0BCA==
-X-Received: by 2002:a05:620a:1101:: with SMTP id o1mr7207299qkk.489.1608330703480;
-        Fri, 18 Dec 2020 14:31:43 -0800 (PST)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id b14sm5866361qtx.36.2020.12.18.14.31.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Dec 2020 14:31:42 -0800 (PST)
-Date: Fri, 18 Dec 2020 17:31:41 -0500
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: users@linux.kernel.org, tools@linux.kernel.org
-Subject: [b4] b4-0.6.2 is available
-Message-ID: <20201218223141.6g6rlqno4oekkegs@chatter.i7.local>
+ dkim=fail reason="body hash did not verify" header.i=@hansenpartnership.com header.s=20151216 header.b=RYu6lkOF;
+ spf=pass (domain: hansenpartnership.com, ip: 96.44.175.130, mailfrom: james.bottomley@hansenpartnership.com)
+Received: from localhost (localhost [127.0.0.1])
+	by bedivere.hansenpartnership.com (Postfix) with ESMTP id 05A6C12809D0;
+	Fri, 18 Dec 2020 14:38:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+	d=hansenpartnership.com; s=20151216; t=1608331127;
+	bh=otg86WNakOoWzIcmKgFGmMqJyHcGDlCL0B+OY8Huolg=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
+	b=RYu6lkOFBSnuqhGl43Dbtw5oR+yFUsJjLoBHTRAnxEaqSwf5aTrU7x2VR5DIH/QNU
+	 /HiqcAwAo/0uJlqLvsUcubbEJ1lpS7lXP/Gmkb0zj4/W0uUUSjJrNFRK3ry99+PM5T
+	 izKaPCNd8BjuIg4HCbxtOmW7JtxSJvFOlb6rahNQ=
+Received: from bedivere.hansenpartnership.com ([127.0.0.1])
+	by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id OIuffPTE22Nu; Fri, 18 Dec 2020 14:38:46 -0800 (PST)
+Received: from jarvis.int.hansenpartnership.com (unknown [IPv6:2601:600:8280:66d1::c447])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id 51EC012809CF;
+	Fri, 18 Dec 2020 14:38:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+	d=hansenpartnership.com; s=20151216; t=1608331126;
+	bh=otg86WNakOoWzIcmKgFGmMqJyHcGDlCL0B+OY8Huolg=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
+	b=g2ecJ0YBU++OwMDBGUkT/2/fNqlkpu0MCWLEyrIXjCigHVRqnzEhH/NYnE5ysxTFt
+	 gK0T21qnjt+VL6yw0ZU2B60rly3HDjlilba6STm9Wg6kT+gF+3CZnyATiNBup8whGH
+	 q2k7qLpjcuOVIlkX7ppabHjmuvjrqrOrZomyrRMM=
+Message-ID: <bdffc35910338117c6ed66f6dfac2dc13d6ed03a.camel@HansenPartnership.com>
+Subject: Re: [kernel.org users] b4: encouraging using the cover letter in merge commits?
+From: "James Bottomley" <James.Bottomley@HansenPartnership.com>
+To: toke@toke.dk, Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org, Jens Axboe
+ <axboe@kernel.dk>,  Arnaldo Carvalho de Melo <acme@kernel.org>
+Date: Fri, 18 Dec 2020 14:38:45 -0800
+In-Reply-To: <877dpeol5w.fsf@toke.dk>
+References: <877dpeol5w.fsf@toke.dk>
+User-Agent: Evolution 3.34.4 
 MIME-Version: 1.0
-X-Groupsio-MsgNum: 303
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="wz6vgybtl2uumw3k"
-Content-Disposition: inline
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
---wz6vgybtl2uumw3k
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+On Fri, 2020-12-18 at 22:32 +0100, Toke H=C3=B8iland-J=C3=B8rgensen via
+linux.kernel.org wrote:
+> Hi Konstantin
+>=20
+> Jens, Arnaldo and I just had a twitter conversation[0] about cover
+> letters and merge commits. Do you think it would be possible to
+> support the 'include the cover letter text in the merge commit
+> message' work flow in b4, maybe even encourage it?
+>=20
+> I notice b4 will already save the cover letter along with the patch
+> mbox file, but maybe it would be possible to automate the workflow
+> some more? A 'b4 merge' command that wraps 'git merge' and pre-
+> populates the commit message with the text from the cover letter? Or
+> some other trick?
 
-Hello:
+I think it's important to ask before we do this: why is the cover
+letter relevant to a merge but not to a linear patch application (which
+is what a lot of maintainers use b4 for)?  I think the answer is that
+it's relevant to linear patches as well, which is why we use the Link
+tag, but in that case shouldn't we be using the Link tag for merge
+commits also?
 
-B4 version 0.6.2 is available, which contains minor bugfixes.
-Everyone must upgrade. ;)
+We did toy with the idea of using empty commits for cover letters a
+while ago but they got dropped because of the problems they cause (and
+the fact that they get lost on a rebase), so it could be the answer to
+why merge but not linear is because we have a vehicle for the former
+but not the latter, but we should think about it first.
 
-If you installed using pip:
-	pip install --user --upgrade b4
+James
 
-If you're running from git checkout, you may want to switch to the
-stable-0.6.y branch, as there are some potential breakage incoming into
-master.
 
-Shortlog below:
-
-Konstantin Ryabitsev (6):
-      Create stable-0.6.y and increment version
-      Add BugLink to non-person trailers
-      Only check allow-list of trailers in follow-ups
-      DKIM: remove extra public-inbox headers
-      Convert mboxrd to mboxo
-      Prepare 0.6.2 release
-
-Special thanks for bug reports from the following people (who both happen to
-be named Linus):
-
-- Linus Walleij <linus.walleij@linaro.org>
-- Linus Torvalds <torvalds@linux-foundation.org>
-
--K
-
---wz6vgybtl2uumw3k
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCX90tzQAKCRC2xBzjVmSZ
-bFFHAP0U3vbRjSfEwyWP2yo/yID1ferelW2+eq21lgdOU9rjEQD+OnN+RYOWVOmS
-/M2OK+V4pZpSSOd32Cf/6ZgvbNahYQU=
-=MOKB
------END PGP SIGNATURE-----
-
---wz6vgybtl2uumw3k--
