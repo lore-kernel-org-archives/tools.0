@@ -1,77 +1,63 @@
-Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [96.44.175.130])
- by mx.groups.io with SMTP id smtpd.web09.13347.1608403768876972128
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+ by mx.groups.io with SMTP id smtpd.web10.13480.1608404238044350529
  for <tools@linux.kernel.org>;
- Sat, 19 Dec 2020 10:49:29 -0800
+ Sat, 19 Dec 2020 10:57:18 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@hansenpartnership.com header.s=20151216 header.b=nqdszNov;
- spf=pass (domain: hansenpartnership.com, ip: 96.44.175.130, mailfrom: james.bottomley@hansenpartnership.com)
-Received: from localhost (localhost [127.0.0.1])
-	by bedivere.hansenpartnership.com (Postfix) with ESMTP id 652B1128031D;
-	Sat, 19 Dec 2020 10:49:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1608403768;
-	bh=fXYyrGOHdwT+PZx7PKZf1U55XRoG/ZMZ1zvWPR9xAfU=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=nqdszNovACcNriZJoqkX4nH3ekkYd8AIJiIKK7VHuDJVw4mgfBigfCPsHDejMwRBX
-	 olvVYUW8mvTlJwpEPbWb7wFyq3b2skBA8FAVH/9/IMPHhYqzxOO9szNSu9oyzZ9knT
-	 718LVTCrSMuzqqOmS79DUK8y7bautLjaM7PBm8Jc=
-Received: from bedivere.hansenpartnership.com ([127.0.0.1])
-	by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JU27yuRQvFPL; Sat, 19 Dec 2020 10:49:28 -0800 (PST)
-Received: from jarvis.int.hansenpartnership.com (c-73-35-198-56.hsd1.wa.comcast.net [73.35.198.56])
+ dkim=fail reason="body hash did not verify" header.i=@lwn.net header.s=20201203 header.b=NXULm4fd;
+ spf=pass (domain: lwn.net, ip: 45.79.88.28, mailfrom: corbet@lwn.net)
+Received: from lwn.net (localhost [127.0.0.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id DED9412802DD;
-	Sat, 19 Dec 2020 10:49:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1608403768;
-	bh=fXYyrGOHdwT+PZx7PKZf1U55XRoG/ZMZ1zvWPR9xAfU=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=nqdszNovACcNriZJoqkX4nH3ekkYd8AIJiIKK7VHuDJVw4mgfBigfCPsHDejMwRBX
-	 olvVYUW8mvTlJwpEPbWb7wFyq3b2skBA8FAVH/9/IMPHhYqzxOO9szNSu9oyzZ9knT
-	 718LVTCrSMuzqqOmS79DUK8y7bautLjaM7PBm8Jc=
-Message-ID: <b6094139488f2b725eb6ef632afa04f349980949.camel@HansenPartnership.com>
-Subject: Re: [kernel.org users] b4: encouraging using the cover letter in merge commits?
-From: "James Bottomley" <James.Bottomley@HansenPartnership.com>
-To: Jonathan Corbet <corbet@lwn.net>
-Cc: toke@toke.dk, Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+	by ms.lwn.net (Postfix) with ESMTPSA id 3F93B99C;
+	Sat, 19 Dec 2020 18:57:17 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 3F93B99C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1608404237; bh=MnaCDoqqNpaa7BEQqS7zPhRKCwKEMtPowd2Tcp8IOSY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=NXULm4fdToIzubAAxbL8hW9YBqkNaChPHVC6MIfM8pdYwDOEsQcslzrigDMFRkCHi
+	 UOMkxnwv9Czuy6yf/2W3FktPOC2QoJRFy67/fXepPk85ThXm8RpXm4mQzImc2HoYrT
+	 rwAWJdRfm3jetd4TzaP/di/8nd7ViOs2etn0k/e9YyTAk4XQIBx8baczq66HxtvQ6i
+	 vvsj9jx7sIvUlm8+bi+12cUJBYkSvjFLrTEY7NdMIa8EWU2PiYxKukpjBIYzo2VOqZ
+	 QysCgRHQpsE5u2TdDW7rAfFIzTNvD+XOD0JJPtHkvV8TLjqnl/BVrqUBeP4seeS+wA
+	 djG/jaNdGKFXQ==
+Date: Sat, 19 Dec 2020 11:57:16 -0700
+From: "Jonathan Corbet" <corbet@lwn.net>
+To: "James Bottomley" <James.Bottomley@HansenPartnership.com>
+Cc: toke@toke.dk, Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
  users@linux.kernel.org, tools@linux.kernel.org, Jens Axboe
- <axboe@kernel.dk>,  Arnaldo Carvalho de Melo <acme@kernel.org>
-Date: Sat, 19 Dec 2020 10:49:21 -0800
-In-Reply-To: <20201219114529.42058976@lwn.net>
+ <axboe@kernel.dk>, Arnaldo Carvalho de Melo <acme@kernel.org>
+Subject: Re: [kernel.org users] b4: encouraging using the cover letter in merge commits?
+Message-ID: <20201219115716.416fa2df@lwn.net>
+In-Reply-To: <b6094139488f2b725eb6ef632afa04f349980949.camel@HansenPartnership.com>
 References: <877dpeol5w.fsf@toke.dk>
-	 <bdffc35910338117c6ed66f6dfac2dc13d6ed03a.camel@HansenPartnership.com>
-	 <87y2hum0t0.fsf@toke.dk>
-	 <fc05bad0b5517500e62b271b8896f142060b235e.camel@HansenPartnership.com>
-	 <20201219114529.42058976@lwn.net>
-User-Agent: Evolution 3.34.4 
+	<bdffc35910338117c6ed66f6dfac2dc13d6ed03a.camel@HansenPartnership.com>
+	<87y2hum0t0.fsf@toke.dk>
+	<fc05bad0b5517500e62b271b8896f142060b235e.camel@HansenPartnership.com>
+	<20201219114529.42058976@lwn.net>
+	<b6094139488f2b725eb6ef632afa04f349980949.camel@HansenPartnership.com>
+Organization: LWN.net
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 2020-12-19 at 11:45 -0700, Jonathan Corbet wrote:
-> On Sat, 19 Dec 2020 09:03:36 -0800
-> "James Bottomley" <James.Bottomley@HansenPartnership.com> wrote:
-> 
-> > I've got to say that creating a spurious merge for the cover letter
-> > looks even more tortuous than creating an empty commit.  What
-> > advantages does this have over the existing link tag practice which
-> > is the one that we now use instead of the empty commit?
-> 
-> I do that too when I have a significant series with information in
-> the cover that seems like it should be preserved; it's easy enough to
-> do.  like the merge commit because it clearly ties the cover letter
-> with the series of patches it describes; an empty commit or link tag
-> wouldn't do that.
+On Sat, 19 Dec 2020 10:49:21 -0800
+"James Bottomley" <James.Bottomley@HansenPartnership.com> wrote:
 
-I'm not that keen on justifying a discarded idea.  The empty commit was
-an original idea for preserving the cover letter which got discarded,
-actually way before the link tag.  It wouldn't preserve series
-information.
+> However, the link tag does preserve the cover letter and all the series
+> information, why do you think it doesn't?
 
-However, the link tag does preserve the cover letter and all the series
-information, why do you think it doesn't?
+The information is essentially there, though one step further removed fro=
+m
+the repository.  But it documents the series as posted, not as applied;
+one expects the two to be the same most of the time, but that's not alway=
+s
+the case.
 
-James
+We're getting into minor details, though.  If The Community were to decid=
+e
+somehow that link tags are The Preferred Way, I would not kick and scream
+too hard before going along with it.  Unless I were in one of my screamin=
+g
+moods at the time, of course.
 
-
+jon
