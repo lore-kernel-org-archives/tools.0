@@ -1,79 +1,83 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
- by mx.groups.io with SMTP id smtpd.web10.32663.1608510106396644377
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+ by mx.groups.io with SMTP id smtpd.web10.2721.1608570230880542200
  for <tools@linux.kernel.org>;
- Sun, 20 Dec 2020 16:21:46 -0800
+ Mon, 21 Dec 2020 09:03:51 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@gmail.com header.s=20161025 header.b=d9jya2vz;
- spf=pass (domain: gmail.com, ip: 209.85.160.176, mailfrom: levraiphilippeblain@gmail.com)
-Received: by mail-qt1-f176.google.com with SMTP id a6so5599691qtw.6
-        for <tools@linux.kernel.org>; Sun, 20 Dec 2020 16:21:46 -0800 (PST)
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=SbTdq0bY;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.172, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f172.google.com with SMTP id c7so9396133qke.1
+        for <tools@linux.kernel.org>; Mon, 21 Dec 2020 09:03:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:cc:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=mOPmBStUfS5HlY98FoJBPH0eSVeh3w+2bYl1wJuTW2E=;
-        b=d9jya2vzTN4vMgN6HNecwOxw1aI22wad4M1A8qhp4ZXDnQtxwpeffE1YI7WaynjUxr
-         L387UEDpjzFK1Xyotq1YBX5k7YT0P0vZxfGgRkdtqTI6Z81luJ2ILJKwMxim0aREZ0bv
-         HHqsU46rkoOD4Ixzidp8X0o6GMD/Uyy3qTpV+iVKfeLNMlOaz4gT5H7nSeyWfyH7SLkF
-         kgwsgJcjcBdfVqwMqnkUK2/k8VbYFRbBx29yQvE+zWs38S65zjdek/FzZWPxzdmWNvxV
-         JwBmltdm9wje5Wgdxm0daIm1FOsjPI9FA7QJb/bofQZKWeW5TbxKMfgw2cT9ySVp7IHZ
-         SfsA==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=qxngqXPi/66QMWoTkB/BTfpOjxtZAZSzyriYHJpeCx8=;
+        b=SbTdq0bYp/OdTGDP7csAKFLiGS/1bNV3/puzzNX5JUe0dZ+Q6cQeBWLmJNllg85MD7
+         iCK8e6CUpqvPJOcl5+TKHnyBQCjysoY+Pp3VaWOmGYNIHrcIQ92B1PoIo80yAg8GMWM/
+         S/QzTElijWSp5Ym9y7jxcjNUGG3ojLof9F3vA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:cc:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=mOPmBStUfS5HlY98FoJBPH0eSVeh3w+2bYl1wJuTW2E=;
-        b=bxtUXtr5nL4mZ8Qjw7v4v2/2sElRwQxjEArIEZ0oIaO8pdVL8x9hkkGBnReiGagQwe
-         aw/ghxcn30SMAN8WZUoOHZzvxeovTPm5zLRKsan1hnMBolOKbhBqL/Gp+tP6fcGwjpyZ
-         DR3s8k+6iAZ2/S06aQJKjKtTr/6qfMbZS0PF0fP+ZIlkSIARqPbxoJCh2snHvEUZ8sTy
-         /qCisab70e8Ey0cRGAlI6RiaSzgkPLJ4nUxXagBY1l+AQwCysaKMB7Vd8wjHaOiGodq3
-         LGcI0nvnkeJ+lsuwhHl7JipSA/BmQVr+doO+T6wpS7EjO0bGzgnVYYv7okv/7IChoGCy
-         J4vQ==
-X-Gm-Message-State: AOAM532Db1uGHC3mD/aSiXE/jWzVwH5xf0jpDU6jCAfJJ64ys++uIwmM
-	mfbgl6KeJolG/E45vF/NUcg=
-X-Google-Smtp-Source: ABdhPJxzFoeq/fHKJmWxwbwKkRpKxiYUsIc+irOnBkb1XikeL6CEvRbbm5u8KidxHkIMkvlAgbk4lQ==
-X-Received: by 2002:ac8:6659:: with SMTP id j25mr14540958qtp.322.1608510105618;
-        Sun, 20 Dec 2020 16:21:45 -0800 (PST)
-Return-Path: <levraiphilippeblain@gmail.com>
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id u20sm9870552qtb.9.2020.12.20.16.21.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Dec 2020 16:21:44 -0800 (PST)
-To: tools@linux.kernel.org
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Cc: konstantin@linuxfoundation.org
-Subject: [b4] make 'b4 mbox' reorder headers so piping to 'git imap-send' works
-Message-ID: <7e6329fa-e5fa-c5af-002d-a8fbb60e0724@gmail.com>
-Date: Sun, 20 Dec 2020 19:21:43 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.5.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qxngqXPi/66QMWoTkB/BTfpOjxtZAZSzyriYHJpeCx8=;
+        b=p+qu7QqDh3xXTwCpOYr1qr244t6aAtYivnmV+4o0m70YKwWfq1yAg8Ac+ODxJdxbpZ
+         DeOoOc1zCtxWr+sz9RKiNbqCtkJ1NOgPFIrvzyDP2OyhDOcDrr/go1Z9SrPqWkaZZB5N
+         7y9CpFOsYZxIZUJO961QWFiCblu+0wmZfSostfdIo82e504TaaowMulp85aztCnMXlv+
+         QphqvWM/P1pJGPSvMGXJ9VnM6mJ8mKV5dKZ+3zNfnE/kob3FU8eUd1XBtTlXJdqeSrSY
+         CKt6IRTz+3OyHfAfV5CpmLiHFzwSynLNGQHqKTnCrWTDHghwwPisL5XMl/zlUwxl22aq
+         hkqA==
+X-Gm-Message-State: AOAM5321rPEhZ8H+W+OF92liEw+cKp3ygzzdpNz5oujMqoQxCJJN3QLn
+	ZTZgM8ndly0qN5ox2Itw1t36nQ==
+X-Google-Smtp-Source: ABdhPJw+sz9jEhEjLww1Mfdlhqx5s6Y70EcT3uc3mFITHZnXYMhfR9FIeR1Xe4mMz1Ll2I+QzsK9ug==
+X-Received: by 2002:a37:71c7:: with SMTP id m190mr18191576qkc.95.1608570229928;
+        Mon, 21 Dec 2020 09:03:49 -0800 (PST)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id c2sm11598644qke.109.2020.12.21.09.03.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Dec 2020 09:03:49 -0800 (PST)
+Date: Mon, 21 Dec 2020 12:03:47 -0500
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Philippe Blain <levraiphilippeblain@gmail.com>
+Cc: tools@linux.kernel.org
+Subject: Re: [b4] make 'b4 mbox' reorder headers so piping to 'git imap-send' works
+Message-ID: <20201221170347.agxrsnalgvinjisj@chatter.i7.local>
+References: <7e6329fa-e5fa-c5af-002d-a8fbb60e0724@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <7e6329fa-e5fa-c5af-002d-a8fbb60e0724@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Hi,
+On Sun, Dec 20, 2020 at 07:21:43PM -0500, Philippe Blain wrote:
+> Hi,
+> 
+> I'm using 'b4 mbox -o- <url> | git imap-send' to quickly import
+> threads to my email account when I see an interesting thread that
+> I'd like to reply to (I contribute to Git but I'm not subscribed to the
+> Git mailing list).
+> 
+> This only works if the emails in the threads have the 'From', 'Date'
+> and 'Subject' headers in exactly that order, because that order is
+> hard-coded in 'git imap-send' [1]. I wrote a small script [2] that
+> just reads the headers and reorders them accordingly but I'd like to
+> just use 'b4 mbox' instead as it has more features. However I discovered
+> that such reordering is not done by b4. For example, this fails as 'git imap-send'
+> reports 'nothing to send':
+> 
+> b4 mbox -o- https://lore.kernel.org/git/op.0vvmwohypvqxoc@damia/T/#u | git imap-send
+> 
+> It would be nice if b4 would take care of the reordering.
 
-I'm using 'b4 mbox -o- <url> | git imap-send' to quickly import
-threads to my email account when I see an interesting thread that
-I'd like to reply to (I contribute to Git but I'm not subscribed to the
-Git mailing list).
+I'm not sure that's a great solution, as you may be hitting other weird
+corner-cases with git-imap-send. I suggest using isync/mbsync for this
+purpose. I just added a tweak to b4 mbox that will recognize when -o receives
+a maildir, in which case instead of saving an .mbox file, it will add messages
+to the maildir instead, e.g.:
 
-This only works if the emails in the threads have the 'From', 'Date'
-and 'Subject' headers in exactly that order, because that order is
-hard-coded in 'git imap-send' [1]. I wrote a small script [2] that
-just reads the headers and reorders them accordingly but I'd like to
-just use 'b4 mbox' instead as it has more features. However I discovered
-that such reordering is not done by b4. For example, this fails as 'git imap-send'
-reports 'nothing to send':
+  b4 mbox -o ~/Mail [msgid]
 
-b4 mbox -o- https://lore.kernel.org/git/op.0vvmwohypvqxoc@damia/T/#u | git imap-send
+This will add all messages from the retrieved thread to the mail spool in
+~/Mail (assuming it has the expected {new,cur,tmp} subdirs).
 
-It would be nice if b4 would take care of the reordering.
-
-Cheers,
-
-Philippe.
-
-[1] https://git-scm.com/docs/git-imap-send#_description
-[2] https://gist.github.com/phil-blain/d350e91959efa6e7afce60e74bf7e4a8
+Regards,
+-K
