@@ -1,76 +1,74 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web08.3197.1608572115464841142
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+ by mx.groups.io with SMTP id smtpd.web08.538.1608577410589093941
  for <tools@linux.kernel.org>;
- Mon, 21 Dec 2020 09:35:15 -0800
+ Mon, 21 Dec 2020 11:03:30 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=k20201202 header.b=oScbMfAt;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Date: Mon, 21 Dec 2020 17:34:59 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1608572114;
-	bh=VN/rKdCemvePVe91r+JcTwN/0XQnUWvRYb08qYnpxH0=;
-	h=From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oScbMfAty1TgsriKFaQe4cz8dmfOdCRFdhPD2elPKYbaTvacoY1kbjZXfpoNeMTNk
-	 CTX5KazHlj5JmQoQtbewfNtZtISDnSsQ7UspTaafYgZal1IZPfalogUJultKZ0udv7
-	 rHheF0wvmDrBvKhAQnd6l7EYC/8d3jLzTmg17agcUGx+94pPPCFkTdxlDaSpOsCz1j
-	 KcQdPxvo/C1ViFJBERKdbK2RxRnIFk3AKTPO0G1HhngRlvjTuMGGTkz5it5MnQXoA4
-	 fICTVE2MSJugWi4jt6V0iiqWF7ptegQkgF64jsyWpXpYbAwNJEY1de7R/dwqEOQ7z+
-	 JtSkc3n3tVBDQ==
-From: "Mark Brown" <broonie@kernel.org>
-To: tools@linux.kernel.org, James.Bottomley@HansenPartnership.com
-Cc: toke@toke.dk, Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@linux.kernel.org, Jens Axboe <axboe@kernel.dk>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>
-Subject: Re: [tools] [kernel.org users] b4: encouraging using the cover letter in merge commits?
-Message-ID: <20201221173459.GB4521@sirena.org.uk>
-References: <877dpeol5w.fsf@toke.dk>
- <bdffc35910338117c6ed66f6dfac2dc13d6ed03a.camel@HansenPartnership.com>
- <87y2hum0t0.fsf@toke.dk>
- <fc05bad0b5517500e62b271b8896f142060b235e.camel@HansenPartnership.com>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=VRDim/GW;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.170, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f170.google.com with SMTP id d14so9710003qkc.13
+        for <tools@linux.kernel.org>; Mon, 21 Dec 2020 11:03:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=gj3paraXZcBvz6s+X6UOZvufHPxWbQS9RwF7R6dHqJs=;
+        b=VRDim/GWuIN0ygAsKhdT30QcX+NmzEYMqOiz3GZJPBp57hqkJ18uQFTNpsVYHr8HhP
+         zEnx2T87h30m8T4iSDSjasvK/C1H+H1Obttt2mzdubhJDS+bhgJlJM6Gb4CLSW0dVVtw
+         5lwshX7m88e7N2wvhE9ZsW/aVRwMAtqlviBLc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=gj3paraXZcBvz6s+X6UOZvufHPxWbQS9RwF7R6dHqJs=;
+        b=tsrgwE/5KSuU/FirLraPWDratqSzhJdTIdlj/Yi59qWzZ3gHLHL4co2qGAcy4pcPwg
+         r8JEH0ER7Zv7KHIC123FvMHUvZ/2tGkbwIMTQJto5QyTZhEsqueRo0w84xo18usWcEel
+         0ULuLDs71LX5aY5F3d8IMxBaPBn7mNKUkSUkuCl0q59GiLTZWaeAVTUKqza5brIauJuA
+         hmTvGy83xHIfuHC0+uass7ZQi8sxMX7T0LRx2si4Lm7ZKvmKIJ5kM4U9kuCGprKSUP0y
+         tGbXfzJIdTpbbA82i2T6/xQkN7MzpLHrYoimiwFa/G+tO9vr0sZKlZO4nQkjNupSaVg5
+         5SWA==
+X-Gm-Message-State: AOAM531rKtzMyxi5cEW1gG8Uue676Hw3n6DV+gMeN3uvrDiJwALn4eMH
+	tUmQ9xxrRyRBxhs+AhyELwsqXhc/wumuPKof
+X-Google-Smtp-Source: ABdhPJxlWRaBd4y11qUm7+iKs5C11p1PV9x/nk7cM1QpZe6XyC4pA6R+4sUm+1+7kapsit/rQZQAxQ==
+X-Received: by 2002:a37:a158:: with SMTP id k85mr18376310qke.432.1608577409409;
+        Mon, 21 Dec 2020 11:03:29 -0800 (PST)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id q3sm11594488qkb.73.2020.12.21.11.03.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Dec 2020 11:03:28 -0800 (PST)
+Date: Mon, 21 Dec 2020 14:03:26 -0500
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: tools@linux.kernel.org
+Cc: Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [tools] [b4] make 'b4 mbox' reorder headers so piping to 'git imap-send' works
+Message-ID: <20201221190326.vdqjsqqdrq3atboc@chatter.i7.local>
+References: <7e6329fa-e5fa-c5af-002d-a8fbb60e0724@gmail.com>
+ <1652CA1A4BC02C6D.17984@linux.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <fc05bad0b5517500e62b271b8896f142060b235e.camel@HansenPartnership.com>
-X-Cookie: Remember: use logout to logout.
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 322
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CUfgB8w4ZwR/yMy5"
+In-Reply-To: <1652CA1A4BC02C6D.17984@linux.kernel.org>
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
---CUfgB8w4ZwR/yMy5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Mon, Dec 21, 2020 at 12:03:47PM -0500, Konstantin Ryabitsev via linux.kernel.org wrote:
+>   b4 mbox -o ~/Mail [msgid]
+> 
+> This will add all messages from the retrieved thread to the mail spool in
+> ~/Mail (assuming it has the expected {new,cur,tmp} subdirs).
 
-On Sat, Dec 19, 2020 at 09:03:36AM -0800, James Bottomley wrote:
+I just added a -f|--filter-dupes flag to "b4 mbox" that will check the
+existing maildir for existing duplicates before adding messages from the
+retrieved thread. This allows neat things like retrieving the rest of the
+thread directly from mutt. If you add the following to .muttrc:
 
-> I've got to say that creating a spurious merge for the cover letter
-> looks even more tortuous than creating an empty commit.  What
-> advantages does this have over the existing link tag practice which is
-> the one that we now use instead of the empty commit?
+macro index 4 "<pipe-message>~/bin/b4.sh mbox -f -o ~/Mail<return>"
 
-My scripting will apply serieses as branches and then record the cover
-letter in the merge, I don't do this so much for recording the cover as
-for the benefit of my testing - I tend to queue up things to apply and
-then later have automation run through and check things before actually
-merging them (anything without a cover latter gets dropped into a single
-series together).  Each series gets branched off separately and then
-gets merged into the branch once I'm happy with the testing.  By
-splitting things out like this I'm helping ensure that if a patch has
-problems it only causes issues on the individual series and there's less
-stuff to to pick through and redo in case of problems.
+(obviously, use something other than ~/Mail if it's not where your maildir is)
 
---CUfgB8w4ZwR/yMy5
-Content-Type: application/pgp-signature; name="signature.asc"
+This lets you hit "4" in the index view to retrieve the rest of the thread for
+the message that is currently selected (or tagged). Handy for when you're cc'd
+in the middle of a discussion and want to grab everything else for context.
 
------BEGIN PGP SIGNATURE-----
+NOTE: -f requires iterating through the entire maildir to collect existing
+msgids, so it's not recommended for huge maildirs.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/g3MIACgkQJNaLcl1U
-h9BdHwf/Ra+5kLodPxHMIpnI3zVzcoWgk5T5S2VsmChfQY3xhBNpuKCipcvi29hN
-QR1DxTYefgopwrgfRAv5m7TGnpsyeTwXFY6R17wdDTqR+ILpE+X9VDVrwU6Oqjvm
-74nqOccZVXxEFhmdKkO4qUKmif4WhG3ek2tgXd8WTo81ryGVccykNjA1My+uS+dE
-b/aYVNsNMJKoDucNyBvF6ji44BgLxIZVbIquqS4xD9EMKiwYDBrS3hbJ/yYgnaSC
-en1Erfy2aMsN9gsnGZaQh5pDrjPvbqxsqFDsKPMyInZBLc6y1ZIUQUMu4kOEKDtc
-NRN8zATnl8flHOuxTPZ5WCV6fC2lIg==
-=affy
------END PGP SIGNATURE-----
-
---CUfgB8w4ZwR/yMy5--
+-K
