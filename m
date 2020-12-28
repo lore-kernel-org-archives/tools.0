@@ -1,84 +1,108 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mx.groups.io with SMTP id smtpd.web09.47506.1609172049018276982
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+ by mx.groups.io with SMTP id smtpd.web08.47937.1609174590854247707
  for <tools@linux.kernel.org>;
- Mon, 28 Dec 2020 08:14:09 -0800
+ Mon, 28 Dec 2020 08:56:31 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@kernel.org header.s=k20201202 header.b=b+qZAE8p;
- spf=pass (domain: kernel.org, ip: 198.145.29.99, mailfrom: broonie@kernel.org)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id F089D207FB;
-	Mon, 28 Dec 2020 16:14:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1609172048;
-	bh=13U9t+oidKoAiI3+DrGbOk8mnjV2FdPdzzlNlQl+PI4=;
-	h=Date:From:To:Subject:From;
-	b=b+qZAE8pRIEYE2jEOUZxoyTND0T++1F23QptuM1zrHzlBLVuFDDe39tmvbLrFV0ct
-	 kzIngntgxFyEVABSy/0zrIYvuT7WhFPO5r5j5tpa0Z3y7nI/XqFDMGxIxwD5Q/3srC
-	 U3hkVy5AD7N2LGnotkEKGtzSlav/Sta23lAJm7eDakhfAe9giZUu7ubVGS1fleSUGw
-	 tp+FY+mhs8Ah9EYW0jONq8nuYcczKB0Fm3yV4fVJJymCLHuwOPCsqrX7PQDPun+8Q+
-	 63GNW/pF0WSEFI0fwYoAnHMOCG39Fpj0cZFHbo3ri/pr+os3ZVA1GZduFQE+3l3unF
-	 EDXijvp7YbmPQ==
-Date: Mon, 28 Dec 2020 16:13:47 +0000
-From: "Mark Brown" <broonie@kernel.org>
-To: tools@linux.kernel.org, konstantin@linuxfoundation.org
-Subject: b4 ty unicode crash
-Message-ID: <20201228161347.GD5352@sirena.org.uk>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=awqIw82k;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.171, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f171.google.com with SMTP id v126so9247368qkd.11
+        for <tools@linux.kernel.org>; Mon, 28 Dec 2020 08:56:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=rRzBiPgthYSe1tacTaG/g8oYAHC86+TxOA+UrfOOpXI=;
+        b=awqIw82k7eVIv1or8xMVRkCtnPpk8xdITIaKaaV4ZsGb9lkJh0ZzJV0kxmFx5oNn46
+         NEEXQda5ZOkIvrEv7SztbL+Tf3v+bb6kkI70YURkY5JBt542abViAbLPsrkNThtrEatf
+         MwUyWJA3j896x+h4MlUC+HyMeYOgUMUwskE3A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=rRzBiPgthYSe1tacTaG/g8oYAHC86+TxOA+UrfOOpXI=;
+        b=Okh/pxc/LL1uzpfGwBr2/RQM97M6B31O+rlqOW4uBhLEAiDQnukbRGaNWVT3dY++4t
+         dy4TqLROyZSMUcnIExtu8eabHux3rXpe81gBky0EldPmg/4vt7UTyDbrXCXW/sGKZHhW
+         jPSrQ88rb1P6Z5pym+pURxAXXoKhitEDPctysEwkOWNV1YYBP4ZJg5EkVZtOroh3AnlW
+         UlWGzSUqIrU5j1jzsz4L5QheImY7MLl0QeYo5Khheq57ITzrYcxhbJjEI4gtCjxSjExC
+         1aS268oFpVXr7Oej0zFSFJ7xniOSfw4o2dUvb0yBblK/xdQNkzDagR7+O9H7JzBlGtrj
+         AWZA==
+X-Gm-Message-State: AOAM531zbwaO40fk6wockjfxctr1pWLRO8Qyd6BwG0UEV4Gfp8lYBaiE
+	JSzRd2dS4KXJgvvBDSzbayoWQQ==
+X-Google-Smtp-Source: ABdhPJz/AQi3Zad4xlh3GFptcivljBqkIdKx6ZNIHIbsxlft1ALPhjAkqimNsk65M7igBWh3QNE2Vw==
+X-Received: by 2002:a05:620a:11ad:: with SMTP id c13mr44304472qkk.134.1609174589962;
+        Mon, 28 Dec 2020 08:56:29 -0800 (PST)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id d140sm24219029qkc.111.2020.12.28.08.56.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Dec 2020 08:56:29 -0800 (PST)
+Date: Mon, 28 Dec 2020 11:56:27 -0500
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 ty unicode crash
+Message-ID: <20201228165627.7r2zd2gzvo4kuhsg@chatter.i7.local>
+References: <20201228161347.GD5352@sirena.org.uk>
 MIME-Version: 1.0
-X-Cookie: To see you is to sympathize.
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Groupsio-MsgNum: 331
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OaZoDhBhXzo6bW1J"
+In-Reply-To: <20201228161347.GD5352@sirena.org.uk>
+X-Groupsio-MsgNum: 332
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="sfakyrzlbgvdkimh"
 Content-Disposition: inline
 
---OaZoDhBhXzo6bW1J
-Content-Type: text/plain; charset=us-ascii
+--sfakyrzlbgvdkimh
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Mon, Dec 28, 2020 at 04:13:47PM +0000, Mark Brown wrote:
+> Hi,
+>=20
+> When I run b4 ty and it finds what looks like:
+>=20
+>    https://lore.kernel.org/r/ec66399502514edbb1de3cf9bff08b1d@realtek.com
+>=20
+> I get a traceback:
 
-When I run b4 ty and it finds what looks like:
+Urgh, this uncovered a bug in Python:
 
-   https://lore.kernel.org/r/ec66399502514edbb1de3cf9bff08b1d@realtek.com
+In [5]: from email import utils
 
-I get a traceback:
+In [6]: utils.getaddresses(['foo <foo@bar.com>'])
+Out[6]: [('foo', 'foo@bar.com')]
 
-Generating 4 thank-you letters
-Traceback (most recent call last):
-  File "/home/broonie/git/b4/b4/command.py", line 236, in <module>
-    cmd()
-  File "/home/broonie/git/b4/b4/command.py", line 219, in cmd
-    cmdargs.func(cmdargs)
-  File "/home/broonie/git/b4/b4/command.py", line 61, in cmd_ty
-    b4.ty.main(cmdargs)
-  File "/home/broonie/git/b4/b4/ty.py", line 638, in main
-    auto_thankanator(cmdargs)
-  File "/home/broonie/git/b4/b4/ty.py", line 392, in auto_thankanator
-    send_messages(applied, cmdargs.gitdir, cmdargs.outdir, wantbranch, since=cmdargs.since)
-  File "/home/broonie/git/b4/b4/ty.py", line 429, in send_messages
-    msg = generate_am_thanks(gitdir, jsondata, branch, since)
-  File "/home/broonie/git/b4/b4/ty.py", line 351, in generate_am_thanks
-    msg = make_reply(thanks_template, jsondata)
-  File "/home/broonie/git/b4/b4/ty.py", line 96, in make_reply
-    msg['Cc'] = b4.format_addrs(allcc)
-  File "/home/broonie/git/b4/b4/__init__.py", line 2382, in format_addrs
-    addrs.add(email.utils.formataddr((LoreMessage.clean_header(pair[0]), LoreMessage.clean_header(pair[1]))))
-  File "/usr/lib/python3.7/email/utils.py", line 91, in formataddr
-    address.encode('ascii')
-UnicodeEncodeError: 'ascii' codec can't encode characters in position 22-24: ordinal not in range(128)
+In [7]: utils.getaddresses(['Shuming [=E8=8C=83=E6=9B=B8=E9=8A=98] <shuming=
+f@realtek.com>'])
+Out[7]:
+[('', 'Shuming'),
+ ('', ''),
+ ('', '=E8=8C=83=E6=9B=B8=E9=8A=98'),
+ ('', ''),
+ ('', 'shumingf@realtek.com')]
 
---OaZoDhBhXzo6bW1J
+It crashes when it tries to treat "=E8=8C=83=E6=9B=B8=E9=8A=98" as an email=
+ address.
+
+>   File "/usr/lib/python3.7/email/utils.py", line 91, in formataddr
+>     address.encode('ascii')
+> UnicodeEncodeError: 'ascii' codec can't encode characters in position 22-=
+24: ordinal not in range(128)
+
+I'm not sure how to tackle this yet, but I'll try to figure it out.
+
+Thanks for the report.
+
+-K
+
+--sfakyrzlbgvdkimh
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/qBDoACgkQJNaLcl1U
-h9DvzAf+JlIQkw/Sy75v5uWsFCkJ2Ygwc+N3oaaPUzY/EUWXbioa+heN6hQ3gsSW
-piEGvA5xiWiFZCaopL3oC9z7ZYriXng0h1nK9oReBJ0oXGZ/5tME8vF0oHPdW4GF
-Ia87OkKjMUuweJhhJEZ4QdtyiC4rLJLgQLR8WTVj1qdGjaxqLiohlHokfc6sHk4i
-AnxHPAF4TW8/ROoERvZo4mQM3s7nzXiAi8g5Sl3cKMXj4i6cwHLENrzzkHjNq3fa
-XZsFdrPb+lwhj8AQqq9+2dhWvy3dLf7WYDuDwV1OJJ/i0YTdRm9OAfSkQe80ws9i
-4cTu2ZnJzio7vePw184O8NMBCdR1xA==
-=wCl/
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCX+oOOwAKCRC2xBzjVmSZ
+bDbVAP9gAbvNO4Wx3Az3knwKZOP0bXBGP7SCaNoAiPZls74BKgD/Skpr5r8D8gyw
+zDB2PHEhIzBvufygUO0NTTAJKrm5twU=
+=M1nz
 -----END PGP SIGNATURE-----
 
---OaZoDhBhXzo6bW1J--
+--sfakyrzlbgvdkimh--
