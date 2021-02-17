@@ -1,98 +1,93 @@
-Received: from out0.migadu.com (out0.migadu.com [94.23.1.103])
- by mx.groups.io with SMTP id smtpd.web08.31120.1612757258063458323
+Received: from mail.archlinux.org (mail.archlinux.org [95.216.189.61])
+ by mx.groups.io with SMTP id smtpd.web08.7590.1613569418012269186
  for <tools@linux.kernel.org>;
- Sun, 07 Feb 2021 20:07:38 -0800
+ Wed, 17 Feb 2021 05:43:39 -0800
 Authentication-Results: mx.groups.io;
- dkim=fail reason="body hash did not verify" header.i=@kyleam.com header.s=key1 header.b=Xz40t+Ya;
- spf=pass (domain: kyleam.com, ip: 94.23.1.103, mailfrom: kyle@kyleam.com)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kyleam.com; s=key1;
-	t=1612757254;
+ dkim=pass header.i=@archlinux.org header.s=dkim-rsa header.b=OKeIJ8Ku;
+ spf=pass (domain: archlinux.org, ip: 95.216.189.61, mailfrom: foxboron@archlinux.org)
+Date: Wed, 17 Feb 2021 14:43:33 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+	s=dkim-rsa; t=1613569414;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=QmBt92YO9gJOg8rF/gVr6F+BOT8zL9IyDGQAubQEZcM=;
-	b=Xz40t+YajGED53Ecf4p29gXsty6xmV4AKIs/Xn4EzKa36CX1kaGPy+qdRTjNog0ykIV0l4
-	mc3zSSmOhqttNtiUwUGtTlNWS52KfAQfYlcg3s5L62nQNIyEHQFyeA0R3rIv8k/qNvsXTH
-	6zWeB+cYeHLWJx4/EtaHKUtle2BUPpn/ZqG5X5WrXG8FQ9Iet6IrmKrDIYNbk3ZDyGdJwp
-	608JefzLhZyqP0pliz5BQnBUnyBKKMK6aXNY3eJAI/33qGgPHJbIDLSLx4ne3BZIePfnhm
-	afg/2iq8qQLiQ8ca7Vve4B8CYMOrFVXh8c3FUI0Zl/Z+wGoqN7UP/R6CaQFZZg==
-From: "Kyle Meyer" <kyle@kyleam.com>
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=CAOBnEevYqj24zIIlBcnK9QK9SeSyjTJB0elJtdjSwA=;
+	b=OKeIJ8Ku8YXwDAesr19G1cYGV1vp2enNsBUQJgrCflF37+MIdm72oAWUgxwOSZY4nuMYUY
+	FMWvI9mDJKyDN64Xbok3OzK3Ssd6lzQURRTNJyWuzux7FrTh0LcCkDKUcO25JUchxM3mKo
+	W7I3dIxLvuCyyAYCFbA1kw9QqT5lWspdHu8e/vM2AcAVhD1FUSWuYV/gSdTiKuUjC8NT90
+	39vi2CAY6kx4OCKvUkRxAXMzEWeQHcUaM1zx0eHrmHBNuqRQ6+rsUNq/grhSlL34LYSElq
+	Rn7F9ki/ldWm2V/7EleyLji4n92Gwst08NWR0oycpMMORRCtwYALIktgB8aMpJoX1lpm6Q
+	xFt2FBe57MqU1QEe8Od/rGZ3nm8XwQNtbzDgdU9E/dcNmdFxQzsG6Y9MVyiGxjrvD2/3qX
+	IpxrU1PqVmTq1YpKGkWfhv7nRP5OLb/9cBK1s2HQ0wT6SH7qWnmRksU1UZXOp91nUSetcH
+	YQxJ1u57qd873qW1wqcOZJJBncGMZtBMdpN4Engl4qHeH1gQS5Q5qMyQG2iAoF3yn1FMmO
+	MaG/30wes9pGxxU2V+f0SJUmrW8HZO0zT9fV+b1Jb+LswVQ1vVb8+iQgOPPV36n2NafOuV
+	S5uVFtjvTT83ZGo3UkrLKz16grUC6hVOUg8nqFa/HPQEB8PhW6N2E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+	s=dkim-ed25519; t=1613569414;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=CAOBnEevYqj24zIIlBcnK9QK9SeSyjTJB0elJtdjSwA=;
+	b=y1OnaW1SpSEcMDg0IsjMI8Q3NNb0F6c0V9eJYmbAGnmI9mWRT+n94Q/78JIHZ8lg8eL0V9
+	eFluoo17BO3VVKAA==
+From: foxboron@archlinux.org
 To: tools@linux.kernel.org
-Subject: [PATCH b4] Delay dns.resolver.get_default_resolver call
-Date: Sun,  7 Feb 2021 23:07:22 -0500
-Message-Id: <20210208040722.31203-1-kyle@kyleam.com>
+Subject: [b4] Sign gzipped tarball instead of .tar
+Message-ID: <20210217134333.vqhg6xoz2bhmzpks@anathema>
 MIME-Version: 1.0
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: kyle@kyleam.com
+Authentication-Results: mail.archlinux.org;
+	auth=pass smtp.auth=foxboron smtp.mailfrom=foxboron@archlinux.org
+X-Groupsio-MsgNum: 341
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tactgjklyomw66my"
+Content-Disposition: inline
+
+--tactgjklyomw66my
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When b4.attestation-policy is 'off', calling `b4 am` with
---use-local-mbox is conceptually an offline operation, but it still
-requires being online because get_default_resolver() is called at the
-top-level of b4/__init__.py.
+Yo!
 
-Support offline operation by delaying the call to
-get_default_resolver() until it's needed.  Note that
-get_default_resolver() already caches the result, so there's no need
-for b4 to store the result as a global variable on its end.
+Currently packaging up b4 for Arch Linux and encountered a slight issue wit=
+h the
+release tarballs for the project.
 
-Signed-off-by: Kyle Meyer <kyle@kyleam.com>
----
- b4/__init__.py | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+The siganture says it needs to be compared against the tarball of the proje=
+ct,
+however the kernel.org and googlesource.com only allows one to download the
+gzipped tarball. To recreat the release artifact one would need to clone and
+create the archive to have anything to compare against.
 
-diff --git a/b4/__init__.py b/b4/__init__.py
-index 17fae0e..49304fd 100644
---- a/b4/__init__.py
-+++ b/b4/__init__.py
-@@ -33,10 +33,8 @@
-     import dkim
-=20
-     can_dkim_verify =3D True
--    _resolver =3D dns.resolver.get_default_resolver()
- except ModuleNotFoundError:
-     can_dkim_verify =3D False
--    _resolver =3D None
-=20
- __VERSION__ =3D '0.6.3-dev'
-=20
-@@ -1703,7 +1701,8 @@ def __init__(self, msg):
-             ddata =3D get_parts_from_header(dks)
-             self.attestor =3D LoreAttestorDKIM(ddata['d'])
-             # Do we have a resolve method?
--            if _resolver and hasattr(_resolver, 'resolve'):
-+            resolver =3D get_resolver()
-+            if resolver and hasattr(resolver, 'resolve'):
-                 res =3D dkim.verify(self.msg.as_bytes(), dnsfunc=3Ddkim_=
-get_txt)
-             else:
-                 res =3D dkim.verify(self.msg.as_bytes())
-@@ -2448,13 +2447,19 @@ def validate_gpg_signature(output, trustmodel):
-     return good, valid, trusted, attestor, sigdate, errors
-=20
-=20
-+def get_resolver():
-+    if can_dkim_verify:
-+        return dns.resolver.get_default_resolver()
-+
-+
- def dkim_get_txt(name: bytes, timeout: int =3D 5):
-     global _DKIM_DNS_CACHE
-     if name not in _DKIM_DNS_CACHE:
-         lookup =3D name.decode()
-         logger.debug('DNS-lookup: %s', lookup)
-+        resolver =3D get_resolver()
-         try:
--            a =3D _resolver.resolve(lookup, dns.rdatatype.TXT, raise_on_=
-no_answer=3DFalse, lifetime=3Dtimeout, search=3DTrue)
-+            a =3D resolver.resolve(lookup, dns.rdatatype.TXT, raise_on_n=
-o_answer=3DFalse, lifetime=3Dtimeout, search=3DTrue)
-             for r in a.response.answer:
-                 if r.rdtype =3D=3D dns.rdatatype.TXT:
-                     for item in r.items:
+This doesn't work that well since we preferably include the sources
+declaratively and not work out a tarball from the source checkout during
+packaging. This also has the effect of most distros packaging the release
+straight from pypi or from git with no release authentication.
 
-base-commit: f93bbd3e50b1fb4507aa537f4004da545af9d890
+Could the gzipped release tarballs be signed instead? Another alternative w=
+ould
+be to sign the release tags of b4.
+
 --=20
-2.30.0
+Morten Linderud
+PGP: 9C02FF419FECBE16
 
+--tactgjklyomw66my
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEktnGzemaICTWkKdu50JoO6CMsv8FAmAtHYUACgkQ50JoO6CM
+sv/spw/+NGezzKAL1Q4E+MKo3Lv8jCLwPi4pUajdBSkBDxKg5/oZUVIPKYFEtRSP
+2aYJo/F1UNrWGg5IvO9Pp4CVETY9DpthTX58l3BVK81M06Q3pvFKse+y5/pecTKw
+5BkJ8ymnZgA/HT9BLh6sicVt3BXAa3UFcF0Scc6J3W8HVvASgFZPE9lC1QQvYOB7
+4omuhFYO1/0XkpqOwI0Nv/9WDRWydEMW4dxs9FScHeOqRUqxIP8MZJF4eqyG5w0s
+lYEHNvaMoXU0vxpmRm8RAzm6BJCpfFeEnCeZOefKiEPz/KFmVHP98JgE8m3khE9V
+9MZHMtxVDF1GxepwWo0TCxeHACopdp3vqPOZ5r9VpYhzoS2NA0AFx+wQdHz+P6HS
+x1ywRQtO5JfJIs3HsOCJLrfRwTwILgP9sb5115uHe2d3FPaJ2gzSLKY9KD7BnkEQ
+/BJimg/8NtBifjGFvjJVshdzAhxI3yFzEdEfzfAbYiprIlDBpNcUxRaEew+olyoP
+SoEdTHFSIhE7VUrRVc9uXSXLNgS76N3z0n0/sXoi7e6SovPFAFwmyFIF5Q1YPyq9
+lbG9/MKEMwARqoj0XawECyMmjP/WzRKUcfae7VyXlF5I9Vn+iLIG66tK9+QQ0/04
+2kpGBiJNeHmT4hEwpVu6orNjISNdmp/GGXpQwZd+Pp6laVHDsNM=
+=97RM
+-----END PGP SIGNATURE-----
+
+--tactgjklyomw66my--
