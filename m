@@ -1,129 +1,68 @@
-Received: from mail.archlinux.org (mail.archlinux.org [95.216.189.61])
- by mx.groups.io with SMTP id smtpd.web08.8611.1613573987154784497
+Received: from out1.migadu.com (out1.migadu.com [91.121.223.63])
+ by mx.groups.io with SMTP id smtpd.web08.4930.1614313582967948306
  for <tools@linux.kernel.org>;
- Wed, 17 Feb 2021 06:59:48 -0800
+ Thu, 25 Feb 2021 20:26:23 -0800
 Authentication-Results: mx.groups.io;
- dkim=pass header.i=@archlinux.org header.s=dkim-rsa header.b=Hhy94N43;
- spf=pass (domain: archlinux.org, ip: 95.216.189.61, mailfrom: foxboron@archlinux.org)
-Date: Wed, 17 Feb 2021 15:59:43 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
-	s=dkim-rsa; t=1613573985;
+ dkim=fail reason="body hash did not verify" header.i=@kyleam.com header.s=key1 header.b=MwOsnQB3;
+ spf=pass (domain: kyleam.com, ip: 91.121.223.63, mailfrom: kyle@kyleam.com)
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kyleam.com; s=key1;
+	t=1614313570;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Mep3rD0SLMHwSopu/Cy21EPxfqky10jl+viotas0NRc=;
-	b=Hhy94N43ulQV7Tqb+Qhsgs7DB9+85HHUiGOqNT10PIF4fkwzi5OMqf+M0SoQgOqC/MlW3a
-	90B/+ivk4xu8Y6Nl5j1yw4lFejyG31wSFU++bwndStttaM1hlbJ/GhhEIvEAi/cWY8f1Ro
-	lxYiFYmUyY29Nh+Gg51Jj70Sx1KZqqxtB70r4qgfFZjG3tFUpZ+Vh0qbh6B6s0Dm9r4BTo
-	PlPXJYtR7l8djdrGVpjg02Wkh3NrmUqfiYOxLerg82gdIoDZkIrJnPJDfLxekqi28NPYhq
-	elBhfqOF7L3izv+kf1LqDH7M62dCXfX6AsPU81n6CGYwg24z8DxNxA4+KON5+bsmlxtbtH
-	zb+lxdCidkpiAAfTD/lbQ2vUUXhiN+yv/NaX9hk9xEgffCKmBRFlGhIawykJvqeDU79I1J
-	ExTtTEtdCJymeRqa+sJsrIinEd1sDaux+hgX3g8QhJOEvGsLytXfEvJUlfiktT5OCDsy6t
-	ExycmjqR7u+nfEA3A8SlCotJCmIwV8HGm6N8esahvXNdPIm8VSguAb3epj3oDRT+fi9qae
-	dw5S0kTjrhM8wh8FkQQTrTeU2F2oWv93tHzWGTCIzXJZSF0rcmi80c+7Klpx7srb0m94V/
-	7mKeCPwa27+2t4BEC95hBJj9z42UzVZyTWNRiYFyaZjwXBpQpof7U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
-	s=dkim-ed25519; t=1613573985;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Mep3rD0SLMHwSopu/Cy21EPxfqky10jl+viotas0NRc=;
-	b=rp/OnYW8U+OnIZqKgXVgtzGRZS2JIqBk3Jhd+3y4cINfMPNBwzKHvaA3QH0cYt+6T4iFX4
-	T9N53xIt0TlI6+CA==
-From: "Morten Linderud" <foxboron@archlinux.org>
-To: tools@linux.kernel.org, konstantin@linuxfoundation.org
-Subject: Re: [tools] [b4] Sign gzipped tarball instead of .tar
-Message-ID: <20210217145943.vrdm2gfb2h7yvlqt@anathema>
-References: <20210217134333.vqhg6xoz2bhmzpks@anathema>
- <20210217140814.yoifhqws2mdth5ec@chatter.i7.local>
+	 to:to:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=PKI8wkEVs+a5S6/CWOUcEFc27p2Dk1y16GPldbwoj10=;
+	b=MwOsnQB3ADAabPXBaPBCfoaC9DDC51PwlNMpuh7dLWLas+AhbHnbS9hWidi4K8ar5DMEgv
+	Q99GfH2Mf11nnxa/urTZQ0c1TsUVL2f+1ffdHJX8rOOBntCpJeK6xpvnb0rfeEMWM+UKwt
+	m4u2Uu43rcT5i+IYggOGP32FLEPTT1m9WwC/JfEk2KAf6Ej7+tFtE1OKUVvvj8S11URSRl
+	j6T1CyyEIvK3aEWQohvXq/010E/wSbjZ1qaA21nrqOO6unGEoKLmBYXduyooWWNh3vxaEo
+	9VnYUHle0H1O8i37RqvBoZvexafsUo75hE5oefl80H6yjqNb80ut8maYuVDiBA==
+From: "Kyle Meyer" <kyle@kyleam.com>
+To: tools@linux.kernel.org
+Subject: [PATCH b4] Loosen compatible release identifiers for install_requires
+Date: Thu, 25 Feb 2021 23:25:57 -0500
+Message-Id: <20210226042557.19210-1-kyle@kyleam.com>
 MIME-Version: 1.0
-In-Reply-To: <20210217140814.yoifhqws2mdth5ec@chatter.i7.local>
-Authentication-Results: mail.archlinux.org;
-	auth=pass smtp.auth=foxboron smtp.mailfrom=foxboron@archlinux.org
-X-Groupsio-MsgNum: 343
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3zo7tumkcwibav7f"
-Content-Disposition: inline
-
---3zo7tumkcwibav7f
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: kyle@kyleam.com
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 17, 2021 at 09:08:14AM -0500, Konstantin Ryabitsev wrote:
-> On Wed, Feb 17, 2021 at 02:43:33PM +0100, Morten Linderud wrote:
-> > Yo!
-> >=20
-> > Currently packaging up b4 for Arch Linux and encountered a slight issue=
- with the
-> > release tarballs for the project.
-> >=20
-> > The siganture says it needs to be compared against the tarball of the p=
-roject,
-> > however the kernel.org and googlesource.com only allows one to download=
- the
-> > gzipped tarball. To recreat the release artifact one would need to clon=
-e and
-> > create the archive to have anything to compare against.
->=20
-> Or run:
-> xz -cd b4-0.6.2.tar.xz | gpg2 --verify b4-0.6.2.tar.sign -
->=20
-> You can get .xz archives here:
-> https://www.kernel.org/pub/software/devel/b4/
->=20
-> > This doesn't work that well since we preferably include the sources
-> > declaratively and not work out a tarball from the source checkout during
-> > packaging. This also has the effect of most distros packaging the relea=
-se
-> > straight from pypi or from git with no release authentication.
-> >=20
-> > Could the gzipped release tarballs be signed instead? Another alternati=
-ve would
-> > be to sign the release tags of b4.
->=20
-> FYI, all software released on kernel.org provides a signature against the
-> uncompressed .tar archive. This is done to allow providing a single signa=
-ture
-> file for multiple compressed versions (.gz, .xz) and allow for recompress=
-ing
-> things in the future with better algorithms or higher compression ratios.
+The install_requires entries use a compatible release operator.  As an
+example, "requests~=3D2.24.0" maps to a requirement of ">=3D 2.24.0 and =3D=
+=3D
+2.24.*".  With the current version of requests (2.25.1), this leads to
+a ContextualVersionConflict failure at runtime.
 
-Ah well, I did a mistake! It turns out this is handled by pacman implicitly=
-=2E I
-didn't need to do anything and the issue is because I messed up the downloa=
-ded
-files :) I had no clue this was even a thing.
+Allowing only Z to tick in version X.Y.Z seems unnecessarily strict
+unless there are known problems with a particular release, and it
+makes it more difficult for distributions to package b4.  Drop the
+trailing digit from all of the version identifiers, allowing both Y
+and Z to increase.
 
-I also found a bug as it doesn't handle zstd archives :)
+Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+---
+ setup.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-> Regards,
-> -K
+diff --git a/setup.py b/setup.py
+index 358e6a7..a21ec76 100644
+--- a/setup.py
++++ b/setup.py
+@@ -41,9 +41,9 @@ def find_version(source):
+     data_files =3D [('share/man/man5', ['man/b4.5'])],
+     keywords=3D['git', 'lore.kernel.org', 'patches'],
+     install_requires=3D[
+-        'requests~=3D2.24.0',
+-        'dkimpy~=3D1.0.5',
+-        'dnspython~=3D2.0.0',
++        'requests~=3D2.24',
++        'dkimpy~=3D1.0',
++        'dnspython~=3D2.0',
+     ],
+     python_requires=3D'>=3D3.6',
+     entry_points=3D{
 
-Thanks for the fast reply and apologizes for the noise!
-
+base-commit: f93bbd3e50b1fb4507aa537f4004da545af9d890
 --=20
-Morten Linderud
-PGP: 9C02FF419FECBE16
+2.30.1
 
---3zo7tumkcwibav7f
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEktnGzemaICTWkKdu50JoO6CMsv8FAmAtL18ACgkQ50JoO6CM
-sv9Sqw/+LmD1ItzKe98QO79TiZelS6VeA9uqPPJTarDezM7VQQaoDEVkJrjA3tHF
-Lov1PRf3aFWrruEHHYZRA5EyHC8e/tQN446wM2nZhIz4lC4kXbF6kO3Q5ra05pZV
-i1gm5FG7saJGKVD+smq11fLlPti0y2H8OJHBK9+IMURILA+FR/CQzEFiuUxKyADi
-fEk/IxTbvtJESMgy9RDgVNYEsPeDdKz28Cp59hNMhuTieXnIeSH1Mbab/q48tOQ8
-HJ95OYnKA8f2llrR3K7Ub/QOmQKAN/y+rie/qh0RnfXHczuzaClzJvnpyPZtvccV
-yApAju0ergu1bqRLRa518V2NpU9YJaqzuUWKQ4W9cRwcHm+oEKM6M6cBpMR87W0+
-ygq0rklxvrjeh6fJpCbche7FlswTJaBxLsZvEtw5ZmaqRO6Hk3I58ibCHcpbwubs
-npbNmozfLeOB7uP3fyAqVcnx7DMPLjwCoqqcLvXFIjEkigdoDVI5UJPcUdJkwRhK
-dWmgGXkM+qeKVqDicsvOG1bm1gj5rDig8YLsMET1ikJ/HbUrhWoAtX8LrJkL2Zbk
-uIGcVvPe/wIoihU8NJGL9/q6vAfvUvmSji5ilQb3rfBUW+hkfvZ2m08UOe9D8s+8
-Ul+4WHu5EiturEJ18vfOKzKxe+bon546pcgqsVGSu11xDa2gw4Q=
-=noVU
------END PGP SIGNATURE-----
-
---3zo7tumkcwibav7f--
