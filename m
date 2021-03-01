@@ -1,68 +1,68 @@
-Received: from out1.migadu.com (out1.migadu.com [91.121.223.63])
- by mx.groups.io with SMTP id smtpd.web08.4930.1614313582967948306
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+ by mx.groups.io with SMTP id smtpd.web09.2854.1614627917690786233
  for <tools@linux.kernel.org>;
- Thu, 25 Feb 2021 20:26:23 -0800
+ Mon, 01 Mar 2021 11:45:17 -0800
 Authentication-Results: mx.groups.io;
- dkim=fail reason="body hash did not verify" header.i=@kyleam.com header.s=key1 header.b=MwOsnQB3;
- spf=pass (domain: kyleam.com, ip: 91.121.223.63, mailfrom: kyle@kyleam.com)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kyleam.com; s=key1;
-	t=1614313570;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=PKI8wkEVs+a5S6/CWOUcEFc27p2Dk1y16GPldbwoj10=;
-	b=MwOsnQB3ADAabPXBaPBCfoaC9DDC51PwlNMpuh7dLWLas+AhbHnbS9hWidi4K8ar5DMEgv
-	Q99GfH2Mf11nnxa/urTZQ0c1TsUVL2f+1ffdHJX8rOOBntCpJeK6xpvnb0rfeEMWM+UKwt
-	m4u2Uu43rcT5i+IYggOGP32FLEPTT1m9WwC/JfEk2KAf6Ej7+tFtE1OKUVvvj8S11URSRl
-	j6T1CyyEIvK3aEWQohvXq/010E/wSbjZ1qaA21nrqOO6unGEoKLmBYXduyooWWNh3vxaEo
-	9VnYUHle0H1O8i37RqvBoZvexafsUo75hE5oefl80H6yjqNb80ut8maYuVDiBA==
-From: "Kyle Meyer" <kyle@kyleam.com>
-To: tools@linux.kernel.org
-Subject: [PATCH b4] Loosen compatible release identifiers for install_requires
-Date: Thu, 25 Feb 2021 23:25:57 -0500
-Message-Id: <20210226042557.19210-1-kyle@kyleam.com>
+ dkim=pass header.i=@linuxfoundation.org header.s=google header.b=cImXu8gz;
+ spf=pass (domain: linuxfoundation.org, ip: 209.85.222.171, mailfrom: konstantin@linuxfoundation.org)
+Received: by mail-qk1-f171.google.com with SMTP id b130so6208819qkc.10
+        for <tools@linux.kernel.org>; Mon, 01 Mar 2021 11:45:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7FTvHuXtgZn6JvORTC1Hp1g+gmipxS7ew8owUr7M4L4=;
+        b=cImXu8gz4cpEb0UuGRjtWCcE1UL8vR+bWy+uTnd2t84H0Ew1cUMMVzaGP5dqajw166
+         TOQtwy49uTLfpCrrylHD5RTJ3zYsklO8oFZh6OwHaG50yBeIMXY9VhWNxJCY4PVP3GUl
+         TtGHmZhnNXtX0cu1JlvP0t1Uq9CDiD3UVNLys=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7FTvHuXtgZn6JvORTC1Hp1g+gmipxS7ew8owUr7M4L4=;
+        b=r4feVuw0ey/+D16xrE2oPGK9dsObNuA6EsfpOFMEgKr5ZbFjN5LQNmoUxW1vYQz80J
+         m6sZw8RnnD7wcL7I9nzRaCkmfohcIeQSvasjpDB9v9p2PMHkGmQ38IYDz5HwPaOr8JTD
+         oDoU9wfpZ8M+hmsdZrn6FTYlXpHIWYfKc+zEmtovVbzSf9EWYQqyAheHR9abG7aiTs9e
+         V/lL8GZsyrMwI9bH0VM1apzO1WJFhsJbgZL9cAmuclNPyVvJb8UVbL1Wbo2jZcQuEoS/
+         SsEvYnZQcZ9ukUndY3KvQS9YJK+gR5w43iNRN3vtMl7DqFdQBxvPKw8BqjFPSVdQ5Euy
+         FIPA==
+X-Gm-Message-State: AOAM532+AeAzHzwoTPYD5B8ShN5j/Y15fcxxoUoD9QSuo0VUpV3ewgPO
+	f4Q9+KCOoMHRJC6Tqshq2xsUQw==
+X-Google-Smtp-Source: ABdhPJwK9pGwUNSyblpN11fCMmChBedFCLyLRKp8dAI28XOyD+SPuwG9MxJbu2gmbcmj2fRlzRit+Q==
+X-Received: by 2002:ae9:edc1:: with SMTP id c184mr14607422qkg.453.1614627916650;
+        Mon, 01 Mar 2021 11:45:16 -0800 (PST)
+Return-Path: <konstantin@linuxfoundation.org>
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id f27sm7217015qkh.118.2021.03.01.11.45.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Mar 2021 11:45:15 -0800 (PST)
+Date: Mon, 1 Mar 2021 14:45:13 -0500
+From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+To: Kyle Meyer <kyle@kyleam.com>, tools@linux.kernel.org
+Subject: Re: [PATCH b4] Loosen compatible release identifiers for install_requires
+Message-ID: <161462765924.1338541.17855550955663212424.b4-ty@linuxfoundation.org>
+References: <20210226042557.19210-1-kyle@kyleam.com>
 MIME-Version: 1.0
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: kyle@kyleam.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210226042557.19210-1-kyle@kyleam.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-The install_requires entries use a compatible release operator.  As an
-example, "requests~=3D2.24.0" maps to a requirement of ">=3D 2.24.0 and =3D=
-=3D
-2.24.*".  With the current version of requests (2.25.1), this leads to
-a ContextualVersionConflict failure at runtime.
+On Thu, 25 Feb 2021 23:25:57 -0500, Kyle Meyer wrote:
+> The install_requires entries use a compatible release operator.  As an
+> example, "requests~=2.24.0" maps to a requirement of ">= 2.24.0 and ==
+> 2.24.*".  With the current version of requests (2.25.1), this leads to
+> a ContextualVersionConflict failure at runtime.
+> 
+> Allowing only Z to tick in version X.Y.Z seems unnecessarily strict
+> unless there are known problems with a particular release, and it
+> makes it more difficult for distributions to package b4.  Drop the
+> trailing digit from all of the version identifiers, allowing both Y
+> and Z to increase.
 
-Allowing only Z to tick in version X.Y.Z seems unnecessarily strict
-unless there are known problems with a particular release, and it
-makes it more difficult for distributions to package b4.  Drop the
-trailing digit from all of the version identifiers, allowing both Y
-and Z to increase.
+Applied, thanks!
 
-Signed-off-by: Kyle Meyer <kyle@kyleam.com>
----
- setup.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+[1/1] Loosen compatible release identifiers for install_requires
+      commit: 31348a14afdb1d39e7faf9576eaddea1ced76e19
 
-diff --git a/setup.py b/setup.py
-index 358e6a7..a21ec76 100644
---- a/setup.py
-+++ b/setup.py
-@@ -41,9 +41,9 @@ def find_version(source):
-     data_files =3D [('share/man/man5', ['man/b4.5'])],
-     keywords=3D['git', 'lore.kernel.org', 'patches'],
-     install_requires=3D[
--        'requests~=3D2.24.0',
--        'dkimpy~=3D1.0.5',
--        'dnspython~=3D2.0.0',
-+        'requests~=3D2.24',
-+        'dkimpy~=3D1.0',
-+        'dnspython~=3D2.0',
-     ],
-     python_requires=3D'>=3D3.6',
-     entry_points=3D{
-
-base-commit: f93bbd3e50b1fb4507aa537f4004da545af9d890
---=20
-2.30.1
-
+Best regards,
+-K
