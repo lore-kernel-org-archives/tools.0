@@ -1,68 +1,81 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
- by mx.groups.io with SMTP id smtpd.web09.2854.1614627917690786233
- for <tools@linux.kernel.org>;
- Mon, 01 Mar 2021 11:45:17 -0800
-Authentication-Results: mx.groups.io;
- dkim=pass header.i=@linuxfoundation.org header.s=google header.b=cImXu8gz;
- spf=pass (domain: linuxfoundation.org, ip: 209.85.222.171, mailfrom: konstantin@linuxfoundation.org)
-Received: by mail-qk1-f171.google.com with SMTP id b130so6208819qkc.10
-        for <tools@linux.kernel.org>; Mon, 01 Mar 2021 11:45:17 -0800 (PST)
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FCC61
+	for <tools@linux.kernel.org>; Mon,  8 Mar 2021 16:33:57 +0000 (UTC)
+Received: by mail-qk1-f181.google.com with SMTP id d20so9886746qkc.2
+        for <tools@linux.kernel.org>; Mon, 08 Mar 2021 08:33:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7FTvHuXtgZn6JvORTC1Hp1g+gmipxS7ew8owUr7M4L4=;
-        b=cImXu8gz4cpEb0UuGRjtWCcE1UL8vR+bWy+uTnd2t84H0Ew1cUMMVzaGP5dqajw166
-         TOQtwy49uTLfpCrrylHD5RTJ3zYsklO8oFZh6OwHaG50yBeIMXY9VhWNxJCY4PVP3GUl
-         TtGHmZhnNXtX0cu1JlvP0t1Uq9CDiD3UVNLys=
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=O+pVkG316wVWBUkYRAS7B3yYK4u4i1IbIh6zitD0mbs=;
+        b=P1bUAm1NRGB/Xf5Mbd2JOiKIz3JZ/FIXdjiWriypO40IM1MCq7y2HK5lB+XkB8PL+O
+         J9kZ9powkfQP/uEUgrhKaArein/+W02w3d+l0ZTp855M8kWYpynNhNLgkMI2lPf1Uw+t
+         Jv3jXHteM95ao7e+Ui4a7J1QCFJALcIstQSvM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7FTvHuXtgZn6JvORTC1Hp1g+gmipxS7ew8owUr7M4L4=;
-        b=r4feVuw0ey/+D16xrE2oPGK9dsObNuA6EsfpOFMEgKr5ZbFjN5LQNmoUxW1vYQz80J
-         m6sZw8RnnD7wcL7I9nzRaCkmfohcIeQSvasjpDB9v9p2PMHkGmQ38IYDz5HwPaOr8JTD
-         oDoU9wfpZ8M+hmsdZrn6FTYlXpHIWYfKc+zEmtovVbzSf9EWYQqyAheHR9abG7aiTs9e
-         V/lL8GZsyrMwI9bH0VM1apzO1WJFhsJbgZL9cAmuclNPyVvJb8UVbL1Wbo2jZcQuEoS/
-         SsEvYnZQcZ9ukUndY3KvQS9YJK+gR5w43iNRN3vtMl7DqFdQBxvPKw8BqjFPSVdQ5Euy
-         FIPA==
-X-Gm-Message-State: AOAM532+AeAzHzwoTPYD5B8ShN5j/Y15fcxxoUoD9QSuo0VUpV3ewgPO
-	f4Q9+KCOoMHRJC6Tqshq2xsUQw==
-X-Google-Smtp-Source: ABdhPJwK9pGwUNSyblpN11fCMmChBedFCLyLRKp8dAI28XOyD+SPuwG9MxJbu2gmbcmj2fRlzRit+Q==
-X-Received: by 2002:ae9:edc1:: with SMTP id c184mr14607422qkg.453.1614627916650;
-        Mon, 01 Mar 2021 11:45:16 -0800 (PST)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id f27sm7217015qkh.118.2021.03.01.11.45.15
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=O+pVkG316wVWBUkYRAS7B3yYK4u4i1IbIh6zitD0mbs=;
+        b=stWEkVMhZS7/AtWBkdwTzHFJ9tFAF4FgsCnMTqd/6hwtgl5SVeQYu2khKoImflNcYs
+         NkhM8+8ZlxOQqY1SRzvFsqQD5jGVjpp6es8guACL2N7sPKUzrtz/JvpbfxvLbuQoBHv/
+         EiNqIvc1CWbTWevPMTnKfvfd6gc+vEU0Jf1dZFjVJ+5HmyjlBLnSz29n7ZPyFZNp6G4H
+         vt/LL+tbaoG5K3tjSA6BEVp6PzkNlv12jHaU/c6ZMJN07FYh+urnQypnV++Q/oCr4dRJ
+         qGKVqZhkD80uoDBepExsUcSaeGTEI6w/vfPWB8c8FCw2jWDL6GEVsMaMhW/wPa0VWum9
+         uOpA==
+X-Gm-Message-State: AOAM532m6CZuy6Qcl4K2r7Dmha/9NrG3/2HHN5PduadkdUzXidvAaYkl
+	N/yzKkorhXyB9QvcOK8v44Bj7xTDPylpdg==
+X-Google-Smtp-Source: ABdhPJxv6dfMOhewpZvSagR6PcjwHKh1PM4iCniyzoT08Sym/1CRGbcG16ULwXU26M9apwRd033kZA==
+X-Received: by 2002:a37:7c8:: with SMTP id 191mr21528039qkh.53.1615221236185;
+        Mon, 08 Mar 2021 08:33:56 -0800 (PST)
+Received: from chatter.i7.local (bras-base-mtrlpq5031w-grc-32-216-209-220-18.dsl.bell.ca. [216.209.220.18])
+        by smtp.gmail.com with ESMTPSA id g11sm8126590qkk.5.2021.03.08.08.33.55
+        for <tools@linux.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Mar 2021 11:45:15 -0800 (PST)
-Date: Mon, 1 Mar 2021 14:45:13 -0500
-From: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-To: Kyle Meyer <kyle@kyleam.com>, tools@linux.kernel.org
-Subject: Re: [PATCH b4] Loosen compatible release identifiers for install_requires
-Message-ID: <161462765924.1338541.17855550955663212424.b4-ty@linuxfoundation.org>
-References: <20210226042557.19210-1-kyle@kyleam.com>
+        Mon, 08 Mar 2021 08:33:55 -0800 (PST)
+Date: Mon, 8 Mar 2021 11:33:54 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: tools@linux.kernel.org
+Subject: The tools list has been migrated
+Message-ID: <20210308163354.2wt67naizztu6xkn@chatter.i7.local>
+X-Mailing-List: tools@linux.kernel.org
+List-Id: <tools.linux.kernel.org>
+List-Subscribe: <tools+subscribe@linux.kernel.org>
+List-Unsubscribe: <tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20210226042557.19210-1-kyle@kyleam.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="b25l2csep6tyhxqe"
+Content-Disposition: inline
+
+
+--b25l2csep6tyhxqe
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
-On Thu, 25 Feb 2021 23:25:57 -0500, Kyle Meyer wrote:
-> The install_requires entries use a compatible release operator.  As an
-> example, "requests~=2.24.0" maps to a requirement of ">= 2.24.0 and ==
-> 2.24.*".  With the current version of requests (2.25.1), this leads to
-> a ContextualVersionConflict failure at runtime.
-> 
-> Allowing only Z to tick in version X.Y.Z seems unnecessarily strict
-> unless there are known problems with a particular release, and it
-> makes it more difficult for distributions to package b4.  Drop the
-> trailing digit from all of the version identifiers, allowing both Y
-> and Z to increase.
+Hi, all:
 
-Applied, thanks!
+You may have received a subscription notification earlier today and wondered
+what was going on. This list got moved from groups.io to our own mailing list
+service in order to better integrate with public-inbox and less depend on
+proprietary infra behind groups.io.
 
-[1/1] Loosen compatible release identifiers for install_requires
-      commit: 31348a14afdb1d39e7faf9576eaddea1ced76e19
+We now also finally have proper public-inbox archives for the list and I will
+be adding them to lore.kernel.org in the near future.
+
+If you have any questions or concerns, please let me know.
 
 Best regards,
 -K
+
+--b25l2csep6tyhxqe
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYEZR8gAKCRC2xBzjVmSZ
+bFfjAQCP4c05g1NIDDV2CiCiChxeWUgJGFN8szv/qL//Z6ZykQEAwU5PTEVmvq0g
+SVwMiR5EKOrSsVhjMkR5/bUwW18PdwE=
+=Os4R
+-----END PGP SIGNATURE-----
+
+--b25l2csep6tyhxqe--
