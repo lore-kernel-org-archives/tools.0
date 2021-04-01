@@ -1,69 +1,60 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C7A259E
-	for <tools@linux.kernel.org>; Thu,  1 Apr 2021 21:25:58 +0000 (UTC)
-Received: by mail-qv1-f54.google.com with SMTP id t5so1716532qvs.5
-        for <tools@linux.kernel.org>; Thu, 01 Apr 2021 14:25:58 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10D7259E;
+	Thu,  1 Apr 2021 22:16:17 +0000 (UTC)
+Received: by mail-yb1-f170.google.com with SMTP id g38so3293281ybi.12;
+        Thu, 01 Apr 2021 15:16:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=R8APVMFq6bWzQ081tA+8R2mv2uMmOGvERS00NaycroQ=;
-        b=K12Xmpo+YBX3wDRKvPkO1PKyXygDPd9mgMQ1kN8sEhuOOfG4dFCFixsJHCIXP0BWMg
-         gRu0UJRXNIlcOe3Di3NzjMzAFzHg4M1knGF1w8EnhCe6dwZ1aIR2312634vlaCM7EJbp
-         Vrezc8kut+SkE4fJ/om6nWMZGpCVTDoeU7gBU=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=mvm+Fbn1YXNwLCzVbIc5UwURS3nB5TcmggwkZGNSNXY=;
+        b=PQTfyo5+/5vCq1p3cXXyat+jp9NRdbLbrRSosOV8Mreme6xyeL2AoihOinvyd9k9LA
+         griT1hkNnjuGI5nulNPINm8kWagiMdPpfXjsd28u9uKxQycmAeiS2TmvBdfHh1tvhXzu
+         bw84UP5BoOYp7Y85cBYU4TW7llsJdgF6ygf9hLaoZSulOobYEIvVyZjSsERlQVVf4pCe
+         Fy6lxGrF/xLes46V5MOJaYRXsm/vovKqfymP9vM0Hls5URWvML3aQsVhV+Ixbx3F7lsd
+         hVARZTrZy5L93/paelUXW55dy+EYFFIuOecrnInqbMznqTFHQ6GS3SsmYThOcjPaStbd
+         tCjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=R8APVMFq6bWzQ081tA+8R2mv2uMmOGvERS00NaycroQ=;
-        b=aa5PKX90DYtshKsygsbtDZ/kX20eNjPwoeTpdbMTVvlWQiA7osFOlbsCoP9/abtsok
-         rfMg0fRWoM0HgzrW4Hmme/1m3XM/H5nXeYXG99cbi/u21gAVU2p9uleyGDTq/nGNmqUG
-         kp/q7/cyxrIf5nLAFwpIZnQi5pF9hibjR7ckHCrQIL2oD27QO7JOQjYztcqBYded0a3S
-         PBMGTEZ6kXbgMD9eUnNBDMh3Ko9ENr5l8+248C7/X3h3uw0Lqhrw5rz7DtmVT1IKXPg2
-         Fh4USMp0hXKI9KER8/mWYFmmRf31egBwldEqB1SiYB8QJnP6gASx7b/xlUVQaS5nYpa2
-         0zfA==
-X-Gm-Message-State: AOAM531YuBC6WXM0eJHSZAWR66deChe6yKf1gUkEUoAezihnMsJhHpgi
-	kchKUCKXstgnE19pWMjV8HmXjnemMZrKahPWzrw=
-X-Google-Smtp-Source: ABdhPJwT1pGd57NQRt3RLqY5z3XTOG8DL2TsJjYNqacJi4KLvf12AZMzxT51IqxyahEsFuATs4ZpWA==
-X-Received: by 2002:a0c:ac4c:: with SMTP id m12mr9923271qvb.35.1617312357234;
-        Thu, 01 Apr 2021 14:25:57 -0700 (PDT)
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id j12sm4422598qtn.36.2021.04.01.14.25.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Apr 2021 14:25:56 -0700 (PDT)
-Date: Thu, 1 Apr 2021 17:25:53 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: James Bottomley <James.Bottomley@hansenpartnership.com>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: Lore link problems with lossy lists
-Message-ID: <20210401212553.wsaqzxfwf45tf7cx@chatter.i7.local>
-Mail-Followup-To: James Bottomley <James.Bottomley@hansenpartnership.com>,
-	users@linux.kernel.org, tools@linux.kernel.org
-References: <13b77ad8f00b5590baca6203cc7b073df477e993.camel@HansenPartnership.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=mvm+Fbn1YXNwLCzVbIc5UwURS3nB5TcmggwkZGNSNXY=;
+        b=EynPlhgeiIcCith+jvVxizhh1MygAR86faFnTYGpeLUL14yZoLpPoa13g62kgVfN7k
+         s24e806b0SkZq+PccgWbrOKPWWhbP9Je2v3bjBg9o21kQchLQml8RmcmX+czBQvR/ThN
+         pOd8lxs4ukiMAejlTmyU5apn4IthZJDsW/T2l7nU6jlMQj/ncZte1GC3oGUz8qL/jUX7
+         IoZ1OluxeOWwGN10eJX9hz8m1gX/R49xaEXQudSFBUyIANM2ngozXlUO1d7jLf3NREPD
+         oWsW3t2o4x75n+4CriRFKEIx0OXFNplFxFphKbObyEppcz1h3UwxLrTzn45dIFlKqQmi
+         wM6Q==
+X-Gm-Message-State: AOAM532nsswmomTmmN/u9iPuO36QK8NLpTr9QLqzCieOiBKzTzg05tpR
+	/y4Gtv1aoZWKJ66hzO0cpE69lbPxBTaR2njkqESqEDrRI1Ue9g==
+X-Google-Smtp-Source: ABdhPJyMtkV1FWshjLC2Ga47wSCTVq5facLNdFntbxL7sA9ks8Jv2gDajjz/15J1WSWyyvQwVeIMyJ7LTV6aStjh8t8=
+X-Received: by 2002:a25:b781:: with SMTP id n1mr9538943ybh.115.1617315376939;
+ Thu, 01 Apr 2021 15:16:16 -0700 (PDT)
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <13b77ad8f00b5590baca6203cc7b073df477e993.camel@HansenPartnership.com>
+References: <20210401192706.dlsv574jmhvszuq5@chatter.i7.local>
+In-Reply-To: <20210401192706.dlsv574jmhvszuq5@chatter.i7.local>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Fri, 2 Apr 2021 00:16:05 +0200
+Message-ID: <CANiq72maNPt60YvRGfjnETn0Q6s_ZXZdyzB_=sxQ0Tz5bmrWWA@mail.gmail.com>
+Subject: Re: [sig-prover] random tarball signature verification script
+To: tools@linux.kernel.org, users@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Apr 01, 2021 at 10:07:34AM -0700, James Bottomley wrote:
-> Put more broadly: when pulling up a thread by messageid, could we get a
-> redirect always to the entire set of replies lore has even if they
-> traverse multiple lists ... forget the lossy list problem, annoying
-> people drop and add various lists from CC's all the time, but in spite
-> of this I would like to be able to see the full thread.
+On Thu, Apr 1, 2021 at 9:27 PM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> I resurrected one of my previously unreleased helper scripts that I used to
+> run to randomly check signatures on various kernel tarballs. It will do the
+> following:
 
-Soon (TM).
+Thanks for this! Curious: is it random because it helps avoiding
+others to predict when the checks would be done if run at fixed
+frequency & pattern?
 
-https://lore.kernel.org/workflows/20201201184814.GA32272@dcvr/
-
-I expect this feature will be in place within the next few months, and not
-just in b4 but for all lore lookups.
-
--K
+Cheers,
+Miguel
