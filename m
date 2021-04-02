@@ -1,60 +1,72 @@
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10D7259E;
-	Thu,  1 Apr 2021 22:16:17 +0000 (UTC)
-Received: by mail-yb1-f170.google.com with SMTP id g38so3293281ybi.12;
-        Thu, 01 Apr 2021 15:16:17 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8E370
+	for <tools@linux.kernel.org>; Fri,  2 Apr 2021 00:38:30 +0000 (UTC)
+Received: by mail-qk1-f177.google.com with SMTP id y5so4057911qkl.9
+        for <tools@linux.kernel.org>; Thu, 01 Apr 2021 17:38:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=mvm+Fbn1YXNwLCzVbIc5UwURS3nB5TcmggwkZGNSNXY=;
-        b=PQTfyo5+/5vCq1p3cXXyat+jp9NRdbLbrRSosOV8Mreme6xyeL2AoihOinvyd9k9LA
-         griT1hkNnjuGI5nulNPINm8kWagiMdPpfXjsd28u9uKxQycmAeiS2TmvBdfHh1tvhXzu
-         bw84UP5BoOYp7Y85cBYU4TW7llsJdgF6ygf9hLaoZSulOobYEIvVyZjSsERlQVVf4pCe
-         Fy6lxGrF/xLes46V5MOJaYRXsm/vovKqfymP9vM0Hls5URWvML3aQsVhV+Ixbx3F7lsd
-         hVARZTrZy5L93/paelUXW55dy+EYFFIuOecrnInqbMznqTFHQ6GS3SsmYThOcjPaStbd
-         tCjQ==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BM1S/F++1Ityr4WRYP97CUIXJRuoQ2knAQddz61gNsY=;
+        b=MGoHwQIfD8+jQ6LEjoyMWtPCFIZG4zxvRwXbo81Yp0/NX0tv/Za2UU2J/aewPfcQ7K
+         t4WxUlPjEvz5ba8CWrlmALWEsPNRVPktNgE8VqwcKW2PWo9L78Wzz0jnkvvRLSov1DMi
+         i7b9nzHpEWyGEpZdxFPthQdldmwmAXadK0Ftg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=mvm+Fbn1YXNwLCzVbIc5UwURS3nB5TcmggwkZGNSNXY=;
-        b=EynPlhgeiIcCith+jvVxizhh1MygAR86faFnTYGpeLUL14yZoLpPoa13g62kgVfN7k
-         s24e806b0SkZq+PccgWbrOKPWWhbP9Je2v3bjBg9o21kQchLQml8RmcmX+czBQvR/ThN
-         pOd8lxs4ukiMAejlTmyU5apn4IthZJDsW/T2l7nU6jlMQj/ncZte1GC3oGUz8qL/jUX7
-         IoZ1OluxeOWwGN10eJX9hz8m1gX/R49xaEXQudSFBUyIANM2ngozXlUO1d7jLf3NREPD
-         oWsW3t2o4x75n+4CriRFKEIx0OXFNplFxFphKbObyEppcz1h3UwxLrTzn45dIFlKqQmi
-         wM6Q==
-X-Gm-Message-State: AOAM532nsswmomTmmN/u9iPuO36QK8NLpTr9QLqzCieOiBKzTzg05tpR
-	/y4Gtv1aoZWKJ66hzO0cpE69lbPxBTaR2njkqESqEDrRI1Ue9g==
-X-Google-Smtp-Source: ABdhPJyMtkV1FWshjLC2Ga47wSCTVq5facLNdFntbxL7sA9ks8Jv2gDajjz/15J1WSWyyvQwVeIMyJ7LTV6aStjh8t8=
-X-Received: by 2002:a25:b781:: with SMTP id n1mr9538943ybh.115.1617315376939;
- Thu, 01 Apr 2021 15:16:16 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BM1S/F++1Ityr4WRYP97CUIXJRuoQ2knAQddz61gNsY=;
+        b=IaBS5YeaCCl9pN9nze4fy7fXXL/koSLRJ8ftTZ2qEIDGZ2JqGwGK8DNkxfmCekRG1z
+         RrQfkJM56Fdac6fGvQd3gUq1L3t2HLFheTxXaUIwsNi1BKG92Iz0I+rJOA+ZIcqmQV8S
+         j4HUtPVxXteZbpEBcFPXlf3fBpl5G/vvUuIeijABEdrtBrmRLr7HSKxIpBq1fRQZ/Q3j
+         6/0E9o0e+ds4RN5YWCZ74t5Zofoi83b7akLQGhGjmFIKV7qD/s9tnSpAwOTNZEujJ5eM
+         U9tqe7vMpa1fUvp+wHLJ5+b745TZKXBzkH15wfXrwTOm0EonSa62KrTkDFCfynVmoINl
+         oKzA==
+X-Gm-Message-State: AOAM533XKYbHRhjdZIuBFUT5iYy7pkc7E4Uic/8WMkxdIjULwF82AKV3
+	LeBJrluFrFEOXE7McZl3Z4sdgQ==
+X-Google-Smtp-Source: ABdhPJzuAoBQOOqhom6dC5lMOxNAPIV5mlu6Ly8Do5jEBJjNjMCD8fH8PmR62N4ORnUjNSWZEEcKCA==
+X-Received: by 2002:a37:9c4d:: with SMTP id f74mr11441801qke.202.1617323909546;
+        Thu, 01 Apr 2021 17:38:29 -0700 (PDT)
+Received: from nitro.local (bras-base-mtrlpq5031w-grc-32-216-209-220-18.dsl.bell.ca. [216.209.220.18])
+        by smtp.gmail.com with ESMTPSA id g21sm5489086qkk.72.2021.04.01.17.38.28
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 01 Apr 2021 17:38:29 -0700 (PDT)
+Date: Thu, 1 Apr 2021 20:38:56 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: tools@linux.kernel.org, users@linux.kernel.org
+Subject: Re: [sig-prover] random tarball signature verification script
+Message-ID: <20210402003856.qhganuy2xi2zqu6v@nitro.local>
+References: <20210401192706.dlsv574jmhvszuq5@chatter.i7.local>
+ <CANiq72maNPt60YvRGfjnETn0Q6s_ZXZdyzB_=sxQ0Tz5bmrWWA@mail.gmail.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20210401192706.dlsv574jmhvszuq5@chatter.i7.local>
-In-Reply-To: <20210401192706.dlsv574jmhvszuq5@chatter.i7.local>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Fri, 2 Apr 2021 00:16:05 +0200
-Message-ID: <CANiq72maNPt60YvRGfjnETn0Q6s_ZXZdyzB_=sxQ0Tz5bmrWWA@mail.gmail.com>
-Subject: Re: [sig-prover] random tarball signature verification script
-To: tools@linux.kernel.org, users@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CANiq72maNPt60YvRGfjnETn0Q6s_ZXZdyzB_=sxQ0Tz5bmrWWA@mail.gmail.com>
+User-Agent: NeoMutt/20171215
 
-On Thu, Apr 1, 2021 at 9:27 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> I resurrected one of my previously unreleased helper scripts that I used to
-> run to randomly check signatures on various kernel tarballs. It will do the
-> following:
+On Fri, Apr 02, 2021 at 12:16:05AM +0200, Miguel Ojeda wrote:
+> > I resurrected one of my previously unreleased helper scripts that I used to
+> > run to randomly check signatures on various kernel tarballs. It will do the
+> > following:
+> 
+> Thanks for this! Curious: is it random because it helps avoiding
+> others to predict when the checks would be done if run at fixed
+> frequency & pattern?
 
-Thanks for this! Curious: is it random because it helps avoiding
-others to predict when the checks would be done if run at fixed
-frequency & pattern?
+Mostly, I didn't want it always starting from the top of the dir
+listing, as that would likely result in some files being checked less
+frequently than others. 
 
-Cheers,
-Miguel
+It does remember the files that have already been checked within the
+same running session, so it should eventually check all of them before
+it loops around -- but I think there may be a couple of logic bugs there
+that need ironing out for that statement to be 100% accurate.
+
+-K
