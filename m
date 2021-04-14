@@ -1,91 +1,84 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853A571;
-	Wed, 14 Apr 2021 18:47:22 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9786E61153;
-	Wed, 14 Apr 2021 18:47:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1618426042;
-	bh=9chUaSNL1upPTLS2mDK78Q8O3+IqQYOAIJkz3xNdsbM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FevZs1pIZeHHrKVHoQfT2fwPTUEw2q4qNr/jsPQKm+Nds3kQJ5j2LBdKNj0KHQAQT
-	 vxXzoe2W3nZ07Yi8j6/ZdcFdNdHqkHlx370Pqht5ySrfHHetRM/hguOQebjX/mMGSm
-	 n5+aaWsfcKduRH8fLzwSWWjhdXiVpuaT25u2u4nPO4J2HDiJA+f4ap8gQ8Nd2frsz7
-	 Krs9mRBi6ud8lOywpuYbejlPTAJNX4XrNBMUZ3wvzgOrpmwqREFUeiAWWT6qKjnv5+
-	 1K6uV4aKRgbEZhDoKlNyU0UiQ7WuKPlmIhYtQ5k/FoKi4tUO+/TFzneXmHgLHuzRjP
-	 L4vbUJ0RT3uZg==
-Date: Wed, 14 Apr 2021 19:46:59 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>, Alex Elder <elder@ieee.org>,
-	users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: RFC: Superseded-by: follow-up trailer
-Message-ID: <20210414184659.GF4535@sirena.org.uk>
-References: <20210413172901.1465307c@gandalf.local.home>
- <20210413214031.fenjvgh5helyuqdz@nitro.local>
- <YHaaMaa2uaa6HM9c@hirez.programming.kicks-ass.net>
- <20210414114950.GM227011@ziepe.ca>
- <2f6c16aea7593e25d51ed54501d462443d4b9012.camel@HansenPartnership.com>
- <20210414143618.GN227011@ziepe.ca>
- <20210414145619.packpzwjauqj4fug@nitro.local>
- <20210414155733.GO227011@ziepe.ca>
- <20210414170751.cpdciflb4vqtkvau@nitro.local>
- <20210414172449.GP227011@ziepe.ca>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB39871;
+	Wed, 14 Apr 2021 18:51:35 +0000 (UTC)
+Received: by mail-ua1-f42.google.com with SMTP id z23so5561324uan.8;
+        Wed, 14 Apr 2021 11:51:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tAgOeVuqKdlNrJzHBZ7URdJFWp/Vo/obV82nB4zJERI=;
+        b=jyGYwUzqqe+P5XywEVt5FrbHmx/d0Impcsf1iUgOmtOxies6Mtt4+vlj9qPfCbdUN5
+         bgrTxhYB4A4YOSNTGD8VNLxqvebwijqybFJtrsBrdLe61jfLutWiKcIB9ac6XMPsSlIF
+         woiw5BykRd3HRznA5uPLApNIkfiSGCiE8mZJo1EQuLULx6h8ufN0UbOmx9CI1aKcEO5Q
+         NCcbLdjdjNmWBaoraSiCFZfiuECQMJo5MUoX/ns+Er2nfqgGEdt+b5wwjcP/rU+dSl30
+         HiMUTMhgKWt8hgg/ii/S19nWdS4x7NnbUMcnmaUesY7wa4Q+KZdAcIevtRBHuP2O/xdC
+         xmag==
+X-Gm-Message-State: AOAM530Y1g78Pr1w/XM06PxEENSl9tMXdWu8IjO7SYUO3t2C2fqfMQ3X
+	W8WJalt6vlaB+m/9i2MQ1vOSY2J8u47U9TFD9vk=
+X-Google-Smtp-Source: ABdhPJyLg6XFj5VACUFTYou7phbGtVtxFyco7h5YkrDX68x/nwZEwCbeFoZ4m25paQf7U+X0XnVqe+LkhOjzXrK/kQ0=
+X-Received: by 2002:a9f:3852:: with SMTP id q18mr19708576uad.58.1618426294916;
+ Wed, 14 Apr 2021 11:51:34 -0700 (PDT)
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="l+goss899txtYvYf"
-Content-Disposition: inline
-In-Reply-To: <20210414172449.GP227011@ziepe.ca>
-X-Cookie: George Orwell was an optimist.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20210413204932.yovoa7njwc56jo5v@nitro.local> <fd732fc9-83a9-5502-fba5-f08317bdcaf3@ieee.org>
+ <CAHmME9pFqm00ibpqhQQ9_P61F7mU12yrcOvdNSDYDz8ot8HJDg@mail.gmail.com>
+ <20210413172901.1465307c@gandalf.local.home> <20210413214031.fenjvgh5helyuqdz@nitro.local>
+ <YHaaMaa2uaa6HM9c@hirez.programming.kicks-ass.net> <20210414114950.GM227011@ziepe.ca>
+ <YHb/sM95npXrwKPJ@mit.edu>
+In-Reply-To: <YHb/sM95npXrwKPJ@mit.edu>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 14 Apr 2021 20:51:23 +0200
+Message-ID: <CAMuHMdU3LQsGvS-GOAf0yxk4PcUAPDJ=pLdYUNtgE4h0cVESqg@mail.gmail.com>
+Subject: Re: RFC: Superseded-by: follow-up trailer
+To: "Theodore Ts'o" <tytso@mit.edu>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>, Peter Zijlstra <peterz@infradead.org>, 
+	Steven Rostedt <rostedt@goodmis.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>, Alex Elder <elder@ieee.org>, 
+	users@linux.kernel.org, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Ted et al,
 
---l+goss899txtYvYf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Wed, Apr 14, 2021 at 4:46 PM Theodore Ts'o <tytso@mit.edu> wrote:
+> On Wed, Apr 14, 2021 at 08:49:50AM -0300, Jason Gunthorpe wrote:
+> > v3:
+> >   - blah blah
+> > v2: https://lore.kernel.org/r/foo
+> >   - blah blah
+> > v1: https://lore.kernel.org/r/bar
+>
+> > b4 does a nice job helping the maintainer, but the submitter has no
+> > helpful common tooling currently.
+>
+> It would be nice (and I think possible) if finding the mapping between
+> v1 and https://lore.kernel.org/r/bar could be automated --- and if we
+> had an appropriate hook in git send-email, it should be possible to
+> capture the message-id and stash it in a state file somewhere so the
+> developer could either fetch it manually, or if we had something like
+> debian's "debchange" command to make it easy to compose the changelog,
+> it could fetch it and stash it into the template file before opening
+> up an editor for the developer to update the changelog.
+>
+> What do folks think?
 
-On Wed, Apr 14, 2021 at 02:24:49PM -0300, Jason Gunthorpe wrote:
-> On Wed, Apr 14, 2021 at 01:07:51PM -0400, Konstantin Ryabitsev wrote:
+I recently switched from letting "git send-email" generate Message-IDs
+to letting "git format-patch" generate them (by setting
+format.thread=true in git config). This means the Message-IDs are now
+preserved in the cover letter and individual patch files, which can be
+useful for reporting, or for creating backlinks to the previous version.
 
-> > 3. b4 additionally learns a command to grab new trailers from the list by
-> >    matching the Obsoletes: message-ids and auto-amending commits with any new
-> >    trailers
+Gr{oetje,eeting}s,
 
-> > This would allow you to start working on a new revision whenever you're ready
-> > for it and give b4 a precise match it can rely on when tracking new trailers.
+                        Geert
 
-> While I understand the interest in exact matching patches, I'm not
-> super keen on adding more headers to every patch - this feels alot
-> like the gerrit change-id header that everone hates, just in another
-> format.
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-The big issue people generally have with the gerrit change IDs is that
-they're only meaningful in the context of a gerrit instance that knows
-about that particular change ID, usually one on some corporate network,
-and no tooling other than gerrit uses them.  Message IDs are much more
-generally useful.
-
---l+goss899txtYvYf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmB3OKIACgkQJNaLcl1U
-h9CnvggAhFpmWvrzfVHUf5atMVLDNqasw5KuVa22WHipFdlLKrWVj4msGDo8nS5y
-Gb89oWPbSwHyYlzGep7MMJfe6XTm2IEMOfu1/xPTqu/WaID7jVb1t75VEwB7aSLI
-O2KQQ/190TNVwHyeMGNoDF/skDmZ7XkacMelnUZVyF31RYK00Yvwo/J/YOhGsufz
-kwP2ICObZ1fWDskuP65nCF+MHMhel6b/fjERZzxGmhjrGPYHvAGDbK2jKns5Iij/
-bCffkc8Dtt4mp5Vn2EgVeAIedk/5csW6ppm6oyd/GSbVjMX1tPndgLdi1UM0PMb9
-InR5m0FUFgTLYEWrJFJYO7+2xwyMkQ==
-=lYPa
------END PGP SIGNATURE-----
-
---l+goss899txtYvYf--
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
