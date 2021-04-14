@@ -1,144 +1,174 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2463A6D28
-	for <tools@linux.kernel.org>; Wed, 14 Apr 2021 14:35:08 +0000 (UTC)
-Received: by mail-qv1-f54.google.com with SMTP id j3so9963806qvs.1
-        for <tools@linux.kernel.org>; Wed, 14 Apr 2021 07:35:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FE26D28
+	for <tools@linux.kernel.org>; Wed, 14 Apr 2021 14:36:20 +0000 (UTC)
+Received: by mail-qk1-f172.google.com with SMTP id x11so21545536qkp.11
+        for <tools@linux.kernel.org>; Wed, 14 Apr 2021 07:36:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uf76gkG9N8B+3jOgTGvRdsdZfbE6vIWdDzJYnS/0dZ0=;
-        b=IxVJAA8D0LKjqb9XoAwen52WnmBwU8Ji3G2JA4HRg5RnvRnr81oArJpTAyrf1e8VD/
-         odV3HViBVjajPbsiAQnImeAByO6/4H7p+JT31T2vKLc/9po4C2mj89GlLziSBy/1tJDc
-         NWCgRebT1gC2p/y9vbGdGlIzSsas9zDdnu/D4=
+        d=ziepe.ca; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5jAIRr+TE9K1j3iaaTezhlKlBxSpxCWBwjsv2Locwkc=;
+        b=hoGrkmMly5tq7piZDbCU/PwpZQN8plm8klUu6Gld4J+ZJlkuIdNBTpW7v8/XyXWuqg
+         +D1PDj7MEg1UyJIghhQK1LuUHM/BweLWajZy+js4ZG+QrO2dlpYaM4SJlx9ZcosKpxji
+         8ivQTQuxrppwv2QY0JlIk6AfRiIPyj2TfWBqLeBovn/6EDQIAlmJRGKPQl7ADM8b9O1j
+         8ksq5uWlxWTsPwsBu2XeSncBzxdbwbUN3SqB3MotqPlOs30rrJPZsONarqKR0EI+3Y5H
+         DAffX32W3dUHP9fp6XpcJ8e2WFEsf88ldtA+O9EIzqElqZxrVZKI//u9z7HOaelUZiSW
+         S8Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=uf76gkG9N8B+3jOgTGvRdsdZfbE6vIWdDzJYnS/0dZ0=;
-        b=hjS+N7Q75Q9tISriKTScddg9R33hIUQiXa3KnfdECNzuwJyi5h41pq75Ldvw7TlVqn
-         ttHOc0FwNgfLAJQVrHqOdGOHq36JZUf5r9WJlBua7aWFDgnMif9a4syuJRh1nDYx4x1h
-         joNGivt6Uha2dT+WX0c0p3NAJLgHkKNY5NyyokRB5OliT5Q8xqwsOxlLTFxeEOts9qUY
-         omzByD+luDtTcLchYSMOB5B9A+wclfEchLu66Rn5gpz9bI9oKm1+cip0z7oWyQFBGIel
-         3VwCrqdxHfAYdTSIaHeZeheoPjjjkLJNopF+MaEaf8O3hXyCzy1goJsqoXc/7bO2nHak
-         beSQ==
-X-Gm-Message-State: AOAM5302kL4rRPFMBuuukCa77to4YlgcsQDpuaG2L1KRCh4NBlHsWAa1
-	QiIOmI0CuB11qXjebZ92WDHDTA==
-X-Google-Smtp-Source: ABdhPJwTFLXES2sv84VwV5gAunUC1Lr7vDi8eguyFRe1RhDdPWX5/FBI6M7XoHBLtxmeMnO/+7zxJQ==
-X-Received: by 2002:a0c:a9c5:: with SMTP id c5mr38826559qvb.6.1618410907023;
-        Wed, 14 Apr 2021 07:35:07 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id 132sm8231175qkn.52.2021.04.14.07.35.06
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5jAIRr+TE9K1j3iaaTezhlKlBxSpxCWBwjsv2Locwkc=;
+        b=EEp7KGg+6Z+RxJCxbObP+P3QUvSk3+ru+MwyrRRkWEw8oJo/RbA/SGCPmPITNCj1Rj
+         cUQivJ0gReLFVAmSIylSCIQfffGTsAoS5CdwAK2lW3oUl/7bZ8mRvaRFoeHv7aBYd/xF
+         7Ljk/BPCF+y6Sycd0ycRHK1gsnArdAUBEsebEOsXL8OmD/y5OXiNUVqZZrd9JXtMCK0D
+         opEhZnU/l6A+hEFRFtbe9Rn4zeV5JPjJSeEacYVLKpG4WwhOWvNT8UEcBh+27raw9km9
+         rV9Y2N6+pvUpGTaQfELVkCBqgAkzefZR2hVMIBAt0VJb0vlxtxin3lPUuQyVrbphmEkn
+         AlSw==
+X-Gm-Message-State: AOAM530Vsn68txAEfauJv7uCHUSAinz3LdVziC4lIDxE2us5ZZhWleXZ
+	Y8nsYG4nt6S+xbxuXoO99ofQaw==
+X-Google-Smtp-Source: ABdhPJymaIvpILycBNrIjWJsaleo+E4AbPhvTejgFX0AI8r4DKZ1Zd78kN+n5cS9TK2QjgNKdbEoKQ==
+X-Received: by 2002:a37:6493:: with SMTP id y141mr6737771qkb.200.1618410979222;
+        Wed, 14 Apr 2021 07:36:19 -0700 (PDT)
+Received: from ziepe.ca (hlfxns017vw-142-162-115-133.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.115.133])
+        by smtp.gmail.com with ESMTPSA id p185sm4380145qke.10.2021.04.14.07.36.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Apr 2021 07:35:06 -0700 (PDT)
-Date: Wed, 14 Apr 2021 10:35:04 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>, Alex Elder <elder@ieee.org>,
-	users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: RFC: Superseded-by: follow-up trailer
-Message-ID: <20210414143504.l3txdpd6xbcf6qh5@nitro.local>
-Mail-Followup-To: Peter Zijlstra <peterz@infradead.org>,
+        Wed, 14 Apr 2021 07:36:18 -0700 (PDT)
+Received: from jgg by mlx with local (Exim 4.94)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1lWgcs-0068Bh-2T; Wed, 14 Apr 2021 11:36:18 -0300
+Date: Wed, 14 Apr 2021 11:36:18 -0300
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: James Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: Peter Zijlstra <peterz@infradead.org>,
 	Steven Rostedt <rostedt@goodmis.org>,
 	"Jason A. Donenfeld" <Jason@zx2c4.com>, Alex Elder <elder@ieee.org>,
 	users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: RFC: Superseded-by: follow-up trailer
+Message-ID: <20210414143618.GN227011@ziepe.ca>
 References: <20210413204932.yovoa7njwc56jo5v@nitro.local>
  <fd732fc9-83a9-5502-fba5-f08317bdcaf3@ieee.org>
  <CAHmME9pFqm00ibpqhQQ9_P61F7mU12yrcOvdNSDYDz8ot8HJDg@mail.gmail.com>
  <20210413172901.1465307c@gandalf.local.home>
  <20210413214031.fenjvgh5helyuqdz@nitro.local>
  <YHaaMaa2uaa6HM9c@hirez.programming.kicks-ass.net>
+ <20210414114950.GM227011@ziepe.ca>
+ <2f6c16aea7593e25d51ed54501d462443d4b9012.camel@HansenPartnership.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YHaaMaa2uaa6HM9c@hirez.programming.kicks-ass.net>
+In-Reply-To: <2f6c16aea7593e25d51ed54501d462443d4b9012.camel@HansenPartnership.com>
 
-On Wed, Apr 14, 2021 at 09:30:57AM +0200, Peter Zijlstra wrote:
-> > I'd rather folks used the following notation in the cover letter/patch
-> > basement:
-> > 
-> >     Previous versions:
-> > 
-> >     Link: https://lore.kernel.org/r/foo # v2
-> >     Link: https://lore.kernel.org/r/bar # v1
-> > 
-> > This is much more succinct, indicates the version number in the trailer, and
-> > removes the need to remember how to spell "Superseded", as there seems to be
-> > little consensus. :)
+On Wed, Apr 14, 2021 at 06:57:13AM -0700, James Bottomley wrote:
+> On Wed, 2021-04-14 at 08:49 -0300, Jason Gunthorpe wrote:
+> > b4 does a nice job helping the maintainer, but the submitter has no
+> > helpful common tooling currently.
 > 
-> How would you handle the difference between the above and:
-> 
-> Depends on:
-> 
-> Link: https://lkml.kernel.org/r/foo
-> 
-> Which is also a semi common thing to do with larger work that comes in
-> multiple dependent series.
+> We have git-format-patch/git-send-email. 
 
-It's the "# vX" at the end that we'd be looking for. There's no other reason
-to put it there if you aren't linking to a previous revision of the series, so
-it's a very unambiguous pattern. However, read below.
+I think it is very poor. 
 
-> That is; I supppse; a long winded way of saying that for parsing (both
-> human and machine) it might be useful to have distinct tag names. Now I
-> agree with you that Supersedes is a crap word to spell, but it has the
-> distinction of being clear on intent.
-> 
-> So my 2ct go to adding Supercedes: and Depends-on:
+If you look at what a typical submitter has to deal with:
 
-Hmm... there is an officially sanctioned way to indicate patch
-interdependencies using "prerequisite-patch-id:" footers (see
-https://git-scm.com/docs/git-format-patch#_base_tree_information).
+ - Make a series and write a cover letter. Version control the cover
+   letter. In corporate cases many submitters should be getting internal
+   review of everything, including the cover letter before sending.
+   (Mostly I see people store the cover letter in git as an empty
+   commit, easiest way to share for review)
+ - Formulate the defined series and cover letter into a patch series
+ - Annotate required To and CC's for the series and
+   maintainers/reviewers. 
 
-That said, I've never seen anyone actually use them, I guess for two reasons:
+   Our tooling here is mediocre, we have get_maintainers but it is
+   very hard to review/revise its output in the typical usage of just
+   jamming it into git-send-email
 
-1. it's per-patch, not per-series
-2. it requires running "git patch-id" on each patch in the dependencies
+   Little details like 'add the author and reviewers of the patches in
+   the Fixes: lines' to the CC are often overlooked and are not
+   automated.
 
-We could build upon that using "prerequisite-series-link", but I find that
-unwieldy, especially if it will be followed by a long URL.
+   People seem to struggle to both narrow the CC list of individual
+   patches series and still CC things like the cover letter to
+   everyone.
+ - Upload it to some public git so people can git fetch it
+ - Submit it to SMTP, including using now required OAUTH. (Good luck!)
+ - Keep a local copy of everything that was done.
 
-How about we borrow RPM-spec lingo, for stuff to go into the cover letter or
-below ---, e.g.:
+ For v2:
+ - Pull in all tags from the mailing list and update the git commits
+   (b4 downloads the tags but doesn't automate fixing the local git
+   branch)
+ - Make required changes
+ - Generate a change log and don't forget anything.
 
-    Subject: [PATCH v3] frobdrv: improve frob latency
+   git range-diff from the local copy of v1 is super helpful, but it
+   is annoying to invoke git range-diff by hand.
+ - Figure out the lore links of v1 to include in the cover letter
+ - Revise the cover letter
+ - Update the cc/to list to include discussion participants, people
+   who gave reviewed-by/etc.
+ - Send it again as v2
 
-    Commit message here
+In all steps don't botch anything. Keep all the "state" related to the
+submission in your head over a multiple weeks/months review cycle.
 
-    Signed-off-by: Dave Elloper <dave@example.net>
-    ---
-    Requires: https://link.to/required-patch
-    Obsoletes: https://link.to/v1 # v1
-    Obsoletes: https://link.to/v2 # v2
-    ---
-    Changes in v3:
-    Style tweaks.
+IMHO every single peice of information to drive the conversion of the
+patch series to email should be stored in git itself, otherwise it
+gets messed up/lost when it is revised/resent, and can't be reviewed
+prior to submission.
 
-    [diffstat, patch, etc]
+git even makes very simple steps like editing the commit messages to
+annotate tags/fix spelling overly difficult. Rebase with reword is a
+pretty painfully way to do this.
 
-or:
+The whole thing is quite hard and really time consuming - 'git
+send-email' does almost none of what is needed and its operation of
+relying on a huge list of unique command line arguments is not
+effective.
 
-    Subject: [PATCH v3 0/2] frobdrv: improve frob latency
+I know people who send a lot of patches have their own custom work
+flow scripts, but more casual people skip steps and do way too much
+manual work, IMHO.
 
-    This series improves frob latency by 20%.
+> description of git-format-email but I really think we should use more
+> fields and make it automatic.  It would certainly be helpful if it
+> tracked the last version sent of the same branch so I didn't have to
+> add --version.  It can't, unfortunately, track message id's because
+> that's generated by git-send-email (has to be that way because resends
+> need different message id's).  
 
-    Requires: https://link.to/required-patch
-    Obsoletes: https://link.to/v1 # v1
-    Obsoletes: https://link.to/v2 # v2
+The thing invoking git-send-email can specify the message id, and it
+can generate and track them using an acceptable algorithm. Other than
+lacking OAUTH, git-send-email is an effective way to marshal a
+directory of near-email format patches into SMTP.
 
-    [diffstat, etc]
+For instance I've been using this algorithmic format for message id:
 
-Then I can add automation that will send "Obsoleted-by:" and maybe
-"Required-by:" follow-ups to the linked series when it encounters these tags.
+0-v1-6730d4ee0d32+40e6-gup_combine_put_jgg@nvidia.com
+                       ^^^^^^^^^^^^^^^ my topic name
+                  ^^^^ current time expressed as hex seconds since the
+		       commit date
+     ^^^^^^^^^^^^^ git commit in my tree that is at the top of what is
+                   being sent
+  ^^ Series sersion number
+^  Patch number
 
-Does this work for others?
+Revises get new version numbers and new commit ids, resends get new
+time stamps.
 
--K
+> The problem with the above is it's very fragile when done by two tools
+> the latter of which might not be executed from the tree.  It really
+> sounds like we need a combined tool for this, which includes the
+> ability to resend patch series as well as to increment the version.
+
+A single tool defaulting to supporting a narrow well defined
+"acceptable" workflow would go along way to help the myriad of less
+frequent submitters be more efficient.
+
+Jason
