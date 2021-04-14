@@ -1,78 +1,78 @@
-Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [96.44.175.130])
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [85.220.165.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CFD6D13;
-	Wed, 14 Apr 2021 14:03:21 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by bedivere.hansenpartnership.com (Postfix) with ESMTP id 86EE81280756;
-	Wed, 14 Apr 2021 06:57:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1618408634;
-	bh=fFYzX/6FW24mbCHM7bPY08gpKpNGpMuCzn80gOQjgP8=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=AypGDemxgaeAQdBjCuxCy3cU8RxpMZmBNwSHkSWYRDGNV/QolXLwJyABcz5lP+Ah5
-	 sdaIj7dTQmLn4X1pZQtr79mDC/cJ2M2JIKIKC7aKnC1RfEyWwGG1Ofd6QRMKZei5KK
-	 bEooqrO8F+uxZ1JoM6Hy22iKX++HCykrNlZY+98Q=
-Received: from bedivere.hansenpartnership.com ([127.0.0.1])
-	by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9tpr1tX3UJMt; Wed, 14 Apr 2021 06:57:14 -0700 (PDT)
-Received: from jarvis.int.hansenpartnership.com (unknown [IPv6:2601:600:8280:66d1::527])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id 139FE12806D3;
-	Wed, 14 Apr 2021 06:57:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1618408634;
-	bh=fFYzX/6FW24mbCHM7bPY08gpKpNGpMuCzn80gOQjgP8=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=AypGDemxgaeAQdBjCuxCy3cU8RxpMZmBNwSHkSWYRDGNV/QolXLwJyABcz5lP+Ah5
-	 sdaIj7dTQmLn4X1pZQtr79mDC/cJ2M2JIKIKC7aKnC1RfEyWwGG1Ofd6QRMKZei5KK
-	 bEooqrO8F+uxZ1JoM6Hy22iKX++HCykrNlZY+98Q=
-Message-ID: <2f6c16aea7593e25d51ed54501d462443d4b9012.camel@HansenPartnership.com>
-Subject: Re: RFC: Superseded-by: follow-up trailer
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Jason Gunthorpe <jgg@ziepe.ca>, Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>, "Jason A. Donenfeld"
- <Jason@zx2c4.com>,  Alex Elder <elder@ieee.org>, users@linux.kernel.org,
- tools@linux.kernel.org
-Date: Wed, 14 Apr 2021 06:57:13 -0700
-In-Reply-To: <20210414114950.GM227011@ziepe.ca>
-References: <20210413204932.yovoa7njwc56jo5v@nitro.local>
-	 <fd732fc9-83a9-5502-fba5-f08317bdcaf3@ieee.org>
-	 <CAHmME9pFqm00ibpqhQQ9_P61F7mU12yrcOvdNSDYDz8ot8HJDg@mail.gmail.com>
-	 <20210413172901.1465307c@gandalf.local.home>
-	 <20210413214031.fenjvgh5helyuqdz@nitro.local>
-	 <YHaaMaa2uaa6HM9c@hirez.programming.kicks-ass.net>
-	 <20210414114950.GM227011@ziepe.ca>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825026D13
+	for <tools@linux.kernel.org>; Wed, 14 Apr 2021 14:29:25 +0000 (UTC)
+Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
+	by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1lWgFx-0003D1-Pv; Wed, 14 Apr 2021 16:12:37 +0200
+Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1lWgFx-0006wK-Ex; Wed, 14 Apr 2021 16:12:37 +0200
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: tools@linux.kernel.org
+Subject: [PATCH 2/2] list-archive-maker: better handle mails with misencoded real names
+Date: Wed, 14 Apr 2021 16:12:35 +0200
+Message-Id: <20210414141235.26630-2-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20210414141235.26630-1-u.kleine-koenig@pengutronix.de>
+References: <20210414141235.26630-1-u.kleine-koenig@pengutronix.de>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::7
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: tools@linux.kernel.org
 
-On Wed, 2021-04-14 at 08:49 -0300, Jason Gunthorpe wrote:
-> b4 does a nice job helping the maintainer, but the submitter has no
-> helpful common tooling currently.
+Without this change list-archive-maker just dies with an Exception
 
-We have git-format-patch/git-send-email.  I like the --cover-from-
-description of git-format-email but I really think we should use more
-fields and make it automatic.  It would certainly be helpful if it
-tracked the last version sent of the same branch so I didn't have to
-add --version.  It can't, unfortunately, track message id's because
-that's generated by git-send-email (has to be that way because resends
-need different message id's).  but suppose git-send-email used fields
-to track the cover letter message id and version (provided it's called
-from the git tree), git-format-patch could use them to add a link to
-the prior version.
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
+ list-archive-maker.py | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-The problem with the above is it's very fragile when done by two tools
-the latter of which might not be executed from the tree.  It really
-sounds like we need a combined tool for this, which includes the
-ability to resend patch series as well as to increment the version.
-
-James
-
+diff --git a/list-archive-maker.py b/list-archive-maker.py
+index b4050198e16a..eed4807dfab8 100755
+--- a/list-archive-maker.py
++++ b/list-archive-maker.py
+@@ -62,6 +62,13 @@ WANTHDRS = {'return-path',
+ 
+ __VERSION__ = '2.0'
+ 
++def formataddr(pair):
++    try:
++        return email.utils.formataddr(pair)
++    except UnicodeEncodeError:
++        # This might happen if the realname is encoded in a broken way; just
++        # drop the real name then.
++        return email.utils.formataddr((None, pair[1]))
+ 
+ def process_archives(sources, outdir, msgids, listids, rejectsfile):
+     outboxes = {}
+@@ -199,14 +206,14 @@ def process_archives(sources, outdir, msgids, listids, rejectsfile):
+                         if pair[1] in cc:
+                             # already in Cc, so no need to add it to To
+                             continue
+-                        to.append(email.utils.formataddr(pair))
++                        to.append(formataddr(pair))
+ 
+                 elif lhdrname == 'cc':
+                     for pair in email.utils.getaddresses([hdrval]):
+                         if pair[1] in to:
+                             # already in To, so no need to add it to CCs
+                             continue
+-                        cc.append(email.utils.formataddr(pair))
++                        cc.append(formataddr(pair))
+ 
+                 else:
+                     newhdrs.append((hdrname, hdrval))
+-- 
+2.29.2
 
