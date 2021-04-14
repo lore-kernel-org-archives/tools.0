@@ -1,84 +1,105 @@
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB39871;
-	Wed, 14 Apr 2021 18:51:35 +0000 (UTC)
-Received: by mail-ua1-f42.google.com with SMTP id z23so5561324uan.8;
-        Wed, 14 Apr 2021 11:51:35 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3A16D38
+	for <tools@linux.kernel.org>; Wed, 14 Apr 2021 18:58:40 +0000 (UTC)
+Received: by mail-qk1-f174.google.com with SMTP id e13so12707347qkl.6
+        for <tools@linux.kernel.org>; Wed, 14 Apr 2021 11:58:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ziepe.ca; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=jPf/Os1qbp7a4PEw216XRlJ3LV0pqLVHjrK5MrCYPTs=;
+        b=SPowRYbedtoVXtB4xdoGHtTr14km/CfMzsaY25z2ijYm9DWBTcOuu+HaKuAF9DSiPW
+         SkUb07ma3SXitRkbKhKqR3R8yD4lG7mzRBNwGA6/IoP3BlLxUSPdtq5HxTgGOk5bAReg
+         VCO+ZuIK7xbiz/xKJl5oR9WJWrqCQ2GNmCFSJL9wfQxQRDJeimtahl1KECwFhTkoi7gS
+         lt2Z2mLsV2jKq73dJHQU0Q8Z4tUFX2Yvubx6ppAKwaDZdh2o2cgyKAwstejgf+hiMrxj
+         e7+mGK2mhDj5NFsA9AxjzysMFWzU2cnc0pYhZseOw9NUSbJ9VV9+CY2FnVN8ISaHxfWa
+         9dxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tAgOeVuqKdlNrJzHBZ7URdJFWp/Vo/obV82nB4zJERI=;
-        b=jyGYwUzqqe+P5XywEVt5FrbHmx/d0Impcsf1iUgOmtOxies6Mtt4+vlj9qPfCbdUN5
-         bgrTxhYB4A4YOSNTGD8VNLxqvebwijqybFJtrsBrdLe61jfLutWiKcIB9ac6XMPsSlIF
-         woiw5BykRd3HRznA5uPLApNIkfiSGCiE8mZJo1EQuLULx6h8ufN0UbOmx9CI1aKcEO5Q
-         NCcbLdjdjNmWBaoraSiCFZfiuECQMJo5MUoX/ns+Er2nfqgGEdt+b5wwjcP/rU+dSl30
-         HiMUTMhgKWt8hgg/ii/S19nWdS4x7NnbUMcnmaUesY7wa4Q+KZdAcIevtRBHuP2O/xdC
-         xmag==
-X-Gm-Message-State: AOAM530Y1g78Pr1w/XM06PxEENSl9tMXdWu8IjO7SYUO3t2C2fqfMQ3X
-	W8WJalt6vlaB+m/9i2MQ1vOSY2J8u47U9TFD9vk=
-X-Google-Smtp-Source: ABdhPJyLg6XFj5VACUFTYou7phbGtVtxFyco7h5YkrDX68x/nwZEwCbeFoZ4m25paQf7U+X0XnVqe+LkhOjzXrK/kQ0=
-X-Received: by 2002:a9f:3852:: with SMTP id q18mr19708576uad.58.1618426294916;
- Wed, 14 Apr 2021 11:51:34 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=jPf/Os1qbp7a4PEw216XRlJ3LV0pqLVHjrK5MrCYPTs=;
+        b=m0WS4j99XvQZglrovAcu0aU3fyygkPl4ApIDDjCZdTsiU9+wIrDYYBITPFKsyFocLl
+         /T+YqIkAAhV3C+4a/OtRGTBDff5QrqK7UwlHxMrHMhakIq4OVN2l/f8DjRedh3BOlnBN
+         tr9guF+2s/8ha/tkF9eXCDSMUXsiIifh++LzqiACEKeDEaFtsaWLaThxT+KMUu5MPDlx
+         BL3WxJGVO4vibh9c3fleeX4hJlI/tdu/O3UvXknh5ZL4WoRTTOPR3nirzv9n0O9RVxxQ
+         Y8v8nPBjF2OKxawpJsNPtQ+AGsNfRajOepbrYzEsLKRwJ8BSADbUx7fu0S4qPG7JegVU
+         uVNg==
+X-Gm-Message-State: AOAM533MtpCllnnQTGhKyTuE6jWnC6y095lt2nsrYAB//f7vgi2o9e2U
+	1VJfqS8WhzBSZ6obU3xBKi9dNeicVIn1ZA==
+X-Google-Smtp-Source: ABdhPJy2EZzGoK700UU8RhlWZpljtjxeNVFOSd1DuWftTKVJFNTyceSYvbsU2Zh3JsWTV/8Hq7v6ww==
+X-Received: by 2002:a37:6788:: with SMTP id b130mr15472510qkc.166.1618426719594;
+        Wed, 14 Apr 2021 11:58:39 -0700 (PDT)
+Received: from ziepe.ca (hlfxns017vw-142-162-115-133.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.115.133])
+        by smtp.gmail.com with ESMTPSA id 7sm239891qkl.107.2021.04.14.11.58.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Apr 2021 11:58:39 -0700 (PDT)
+Received: from jgg by mlx with local (Exim 4.94)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1lWkik-006Dze-Cn; Wed, 14 Apr 2021 15:58:38 -0300
+Date: Wed, 14 Apr 2021 15:58:38 -0300
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Mark Brown <broonie@kernel.org>
+Cc: James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>, Alex Elder <elder@ieee.org>,
+	users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: RFC: Superseded-by: follow-up trailer
+Message-ID: <20210414185838.GQ227011@ziepe.ca>
+References: <20210413214031.fenjvgh5helyuqdz@nitro.local>
+ <YHaaMaa2uaa6HM9c@hirez.programming.kicks-ass.net>
+ <20210414114950.GM227011@ziepe.ca>
+ <2f6c16aea7593e25d51ed54501d462443d4b9012.camel@HansenPartnership.com>
+ <20210414143618.GN227011@ziepe.ca>
+ <20210414145619.packpzwjauqj4fug@nitro.local>
+ <20210414155733.GO227011@ziepe.ca>
+ <20210414170751.cpdciflb4vqtkvau@nitro.local>
+ <20210414172449.GP227011@ziepe.ca>
+ <20210414184659.GF4535@sirena.org.uk>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20210413204932.yovoa7njwc56jo5v@nitro.local> <fd732fc9-83a9-5502-fba5-f08317bdcaf3@ieee.org>
- <CAHmME9pFqm00ibpqhQQ9_P61F7mU12yrcOvdNSDYDz8ot8HJDg@mail.gmail.com>
- <20210413172901.1465307c@gandalf.local.home> <20210413214031.fenjvgh5helyuqdz@nitro.local>
- <YHaaMaa2uaa6HM9c@hirez.programming.kicks-ass.net> <20210414114950.GM227011@ziepe.ca>
- <YHb/sM95npXrwKPJ@mit.edu>
-In-Reply-To: <YHb/sM95npXrwKPJ@mit.edu>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Wed, 14 Apr 2021 20:51:23 +0200
-Message-ID: <CAMuHMdU3LQsGvS-GOAf0yxk4PcUAPDJ=pLdYUNtgE4h0cVESqg@mail.gmail.com>
-Subject: Re: RFC: Superseded-by: follow-up trailer
-To: "Theodore Ts'o" <tytso@mit.edu>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>, Peter Zijlstra <peterz@infradead.org>, 
-	Steven Rostedt <rostedt@goodmis.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>, Alex Elder <elder@ieee.org>, 
-	users@linux.kernel.org, tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210414184659.GF4535@sirena.org.uk>
 
-Hi Ted et al,
+On Wed, Apr 14, 2021 at 07:46:59PM +0100, Mark Brown wrote:
+> On Wed, Apr 14, 2021 at 02:24:49PM -0300, Jason Gunthorpe wrote:
+> > On Wed, Apr 14, 2021 at 01:07:51PM -0400, Konstantin Ryabitsev wrote:
+> 
+> > > 3. b4 additionally learns a command to grab new trailers from the list by
+> > >    matching the Obsoletes: message-ids and auto-amending commits with any new
+> > >    trailers
+> 
+> > > This would allow you to start working on a new revision whenever you're ready
+> > > for it and give b4 a precise match it can rely on when tracking new trailers.
+> 
+> > While I understand the interest in exact matching patches, I'm not
+> > super keen on adding more headers to every patch - this feels alot
+> > like the gerrit change-id header that everone hates, just in another
+> > format.
+> 
+> The big issue people generally have with the gerrit change IDs is that
+> they're only meaningful in the context of a gerrit instance that knows
+> about that particular change ID, usually one on some corporate network,
+> and no tooling other than gerrit uses them.  Message IDs are much more
+> generally useful.
 
-On Wed, Apr 14, 2021 at 4:46 PM Theodore Ts'o <tytso@mit.edu> wrote:
-> On Wed, Apr 14, 2021 at 08:49:50AM -0300, Jason Gunthorpe wrote:
-> > v3:
-> >   - blah blah
-> > v2: https://lore.kernel.org/r/foo
-> >   - blah blah
-> > v1: https://lore.kernel.org/r/bar
->
-> > b4 does a nice job helping the maintainer, but the submitter has no
-> > helpful common tooling currently.
->
-> It would be nice (and I think possible) if finding the mapping between
-> v1 and https://lore.kernel.org/r/bar could be automated --- and if we
-> had an appropriate hook in git send-email, it should be possible to
-> capture the message-id and stash it in a state file somewhere so the
-> developer could either fetch it manually, or if we had something like
-> debian's "debchange" command to make it easy to compose the changelog,
-> it could fetch it and stash it into the template file before opening
-> up an editor for the developer to update the changelog.
->
-> What do folks think?
+Well, IMHO, a chain of "obsoletes" is a fairly hacky way to create a
+stable ID for a single commit to assist tooling. The gerrit idea of
+applying a stable id to every commit is much more useful. If we had
+that lore could index those stable IDs and the problem Konstantin is
+chasing here becomes fairly simple to resolve by searching the index
+for other messages related to the stable ID.
 
-I recently switched from letting "git send-email" generate Message-IDs
-to letting "git format-patch" generate them (by setting
-format.thread=true in git config). This means the Message-IDs are now
-preserved in the cover letter and individual patch files, which can be
-useful for reporting, or for creating backlinks to the previous version.
+In turn if lore indexes the stable ID then storing the stable ID in
+the commits becomes useful because lore can turn up everything related
+to it, not just the single message that was used to make the commit.
 
-Gr{oetje,eeting}s,
+Jason
 
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
