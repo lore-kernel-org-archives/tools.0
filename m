@@ -1,93 +1,73 @@
-Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [96.44.175.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E66F29CA;
-	Fri, 16 Apr 2021 21:22:59 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by bedivere.hansenpartnership.com (Postfix) with ESMTP id 36FCD1280544;
-	Fri, 16 Apr 2021 14:22:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1618608179;
-	bh=HTafy4e+GSJqtI7p7iMN1ZzhJHFpizp9hDmmnnK5ZIU=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=je2lyImGRptNzo3I0z/aTLZtxCFEu9UvcKcvyt/MyPREIoLMxRVjvYqdTEG36tNwp
-	 pOAMWaGl+xJYNgXeZ55ivO/YWlDIBsi/YdzQSkgrphwSymzdqnYSzi3NMRvHeQig/o
-	 g3pHiaUtdXNYGZsqQV9J5fSwENb2CAvNWHl8bPDU=
-Received: from bedivere.hansenpartnership.com ([127.0.0.1])
-	by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7H7dSgzQu9YR; Fri, 16 Apr 2021 14:22:59 -0700 (PDT)
-Received: from jarvis.int.hansenpartnership.com (unknown [IPv6:2601:600:8280:66d1::527])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id BED691280541;
-	Fri, 16 Apr 2021 14:22:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1618608178;
-	bh=HTafy4e+GSJqtI7p7iMN1ZzhJHFpizp9hDmmnnK5ZIU=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=G0MEWUxLku1yqXGB1MKIH4Kn2FFxXmE5KKv6aRJ6JUQqomu44MfBZESaKy4D0mUU8
-	 DYGw1Bm8SpkrLJwZ2cZ0l50t5oQqk0I8eQd+8YlIH4afbXvfouZNi3MuOqks5aOEuj
-	 GiE9M076kRgqgCfHN2J+SYWjg/9Lr2hMY6cKESGY=
-Message-ID: <7be28063b8fb355fe1e73df6ca8c4db5e2163353.camel@HansenPartnership.com>
-Subject: Re: Subscriber actions for migrating lists to lists.linux.dev
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2162F29CA
+	for <tools@linux.kernel.org>; Fri, 16 Apr 2021 21:26:54 +0000 (UTC)
+Received: by mail-qk1-f177.google.com with SMTP id s5so21606868qkj.5
+        for <tools@linux.kernel.org>; Fri, 16 Apr 2021 14:26:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=AUkiGM2FUXCR89jtbiHq3B7K6EzfQT7uCfH1gevpRr8=;
+        b=Km9LlKkMwmPESAYIKEdToicXL+sljLvI2BIYKkmSuAIe+XzaRJBT+zp5Z1N5QCIn8e
+         XUliZFwZAOY/sxPiQ7uP23E9P/wYE6Zk4qqeMHULAVa/qbD09WuFc/EADotdctx7n3kx
+         Kdsl+IR47dL7WLAAlsOrlRuLLVe51DPOgHhJE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=AUkiGM2FUXCR89jtbiHq3B7K6EzfQT7uCfH1gevpRr8=;
+        b=MBrAhuBzYdDGMY9hDga2VVxYbdxxv3s3kaLsmRZqTMuKADuXms4yc5ofyk4z8UDBLX
+         /C8NgCMcvwe0dHqy5ZE2WyR2GykxhXy3Bo3Wkv1QHycjFCa4awhbElKd9Q1TVtc9zWXK
+         zIyVu9au0CSOF/dxZINW7fhU07mW+kAQO2hFL6WKHt7ijjNat9y+6URcD3UuIjBABH9d
+         YAzibpuGvmblpuDmsgA+d8OlKVJFcRHnsCX8q0rO2fCaAEkUkGH+iN4FwagClUcfND+X
+         IWSdFbMp/QWkWDqO5HkdEgLmzaQyZbtwKR/OW7vAYssg4l4rnI+ARivRsl51gaxlArX2
+         zZiQ==
+X-Gm-Message-State: AOAM5336fwWie83+LNf4neBpBVCT4C2RDw51kkJ4bipemfd7MO4tEUId
+	0e61uHROFKtM3Zt1QwmWJ/EKPg==
+X-Google-Smtp-Source: ABdhPJwMZCd3C1iKJvKN7qDL9YjoQ8jFG/z5X8rDOsoyaNG+EyGSgaBClplXcR/AOzpe9y3wt27liA==
+X-Received: by 2002:a05:620a:e1a:: with SMTP id y26mr1334008qkm.280.1618608413145;
+        Fri, 16 Apr 2021 14:26:53 -0700 (PDT)
+Received: from nitro.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id d22sm941076qtn.44.2021.04.16.14.26.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Apr 2021 14:26:52 -0700 (PDT)
+Date: Fri, 16 Apr 2021 17:26:51 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: James Bottomley <James.Bottomley@hansenpartnership.com>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
-Date: Fri, 16 Apr 2021 14:22:58 -0700
-In-Reply-To: <20210416211615.7serx3oa2rloe7al@nitro.local>
-References: 
-	<cd77ebe2e456cb80527d9634a5469254006528c5.camel@HansenPartnership.com>
-	 <20210416211615.7serx3oa2rloe7al@nitro.local>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 
+Subject: Re: Subscriber actions for migrating lists to lists.linux.dev
+Message-ID: <20210416212651.rrs3j5xkm3n6gniz@nitro.local>
+Mail-Followup-To: James Bottomley <James.Bottomley@hansenpartnership.com>,
+	users@linux.kernel.org, tools@linux.kernel.org
+References: <cd77ebe2e456cb80527d9634a5469254006528c5.camel@HansenPartnership.com>
+ <20210416211615.7serx3oa2rloe7al@nitro.local>
+ <7be28063b8fb355fe1e73df6ca8c4db5e2163353.camel@HansenPartnership.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7be28063b8fb355fe1e73df6ca8c4db5e2163353.camel@HansenPartnership.com>
 
-On Fri, 2021-04-16 at 17:16 -0400, Konstantin Ryabitsev wrote:
-> On Fri, Apr 16, 2021 at 01:58:22PM -0700, James Bottomley wrote:
-> > I'm fairly certain all I need to do is a bit of duplicate message
-> > elimination and to update my procmail rules, but on the latter,
-> > what is the header I should be sorting on?  For current kernel.org
-> > lists, it's either X-Mailing-list: or List-ID:  Will it be the same
-> > for lists.linux.dev (so I just add to the domain in the rule)?
+On Fri, Apr 16, 2021 at 02:22:58PM -0700, James Bottomley wrote:
+> >  The lists we're currently migrating are moving from other places --
+> > either from domains we don't control (lists.01.org), or from domains
+> > like lists.linuxfoundation.org where there are MLs that will likely
+> > not enjoy mlmmj-style list management and will move to groups.io
+> > instead after we cherry-pick the devel lists.
 > 
-> We still add both List-Id and X-Mailing-List headers, but as "List-
-> Id" is an actual RFC standard, I suggest filtering based on that.
-> E.g. for linux-staging@lists.linux.dev we add the following headers:
+> OK, so for ksummit-discuss and it's ilk I need
 > 
->     X-Mailing-List: linux-staging@lists.linux.dev
->     List-Id: <linux-staging.lists.linux.dev>
->     List-Subscribe: <mailto:linux-staging+subscribe@lists.linux.dev>
->     List-Unsubscribe: <mailto:
-> linux-staging+unsubscribe@lists.linux.dev>
-> 
-> > Ordinarily I'd just wait and see, but given the volumes involved I
-> > wasn't keen on waking up to hundreds of emails suddenly in my INBOX
-> > instead of the list folders.
-> 
-> Note, that once we get around to vger lists, we'll be preserving the
-> address and list-id without changes.
+> * ^List-Id: .*ksummit-discuss.lists.(linuxfoundation.org|linux.dev)
 
-Thanks, I like hearing "you don't have to do anything at all".
+Note, that the new list is without the -discuss part, just
+ksummit@lists.linux.dev, so you'll probably want:
 
->  The lists we're currently migrating are moving from other places --
-> either from domains we don't control (lists.01.org), or from domains
-> like lists.linuxfoundation.org where there are MLs that will likely
-> not enjoy mlmmj-style list management and will move to groups.io
-> instead after we cherry-pick the devel lists.
+* ^List-Id: .*ksummit.*\.lists\.linux.*
 
-OK, so for ksummit-discuss and it's ilk I need
-
-* ^List-Id: .*ksummit-discuss.lists.(linuxfoundation.org|linux.dev)
-
-And I'll be good to go.
-
-Thanks!
-
-James
-
-
+-K
