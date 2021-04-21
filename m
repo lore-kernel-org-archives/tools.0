@@ -1,73 +1,118 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.archlinux.org (mail.archlinux.org [95.216.189.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2162F29CA
-	for <tools@linux.kernel.org>; Fri, 16 Apr 2021 21:26:54 +0000 (UTC)
-Received: by mail-qk1-f177.google.com with SMTP id s5so21606868qkj.5
-        for <tools@linux.kernel.org>; Fri, 16 Apr 2021 14:26:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=AUkiGM2FUXCR89jtbiHq3B7K6EzfQT7uCfH1gevpRr8=;
-        b=Km9LlKkMwmPESAYIKEdToicXL+sljLvI2BIYKkmSuAIe+XzaRJBT+zp5Z1N5QCIn8e
-         XUliZFwZAOY/sxPiQ7uP23E9P/wYE6Zk4qqeMHULAVa/qbD09WuFc/EADotdctx7n3kx
-         Kdsl+IR47dL7WLAAlsOrlRuLLVe51DPOgHhJE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=AUkiGM2FUXCR89jtbiHq3B7K6EzfQT7uCfH1gevpRr8=;
-        b=MBrAhuBzYdDGMY9hDga2VVxYbdxxv3s3kaLsmRZqTMuKADuXms4yc5ofyk4z8UDBLX
-         /C8NgCMcvwe0dHqy5ZE2WyR2GykxhXy3Bo3Wkv1QHycjFCa4awhbElKd9Q1TVtc9zWXK
-         zIyVu9au0CSOF/dxZINW7fhU07mW+kAQO2hFL6WKHt7ijjNat9y+6URcD3UuIjBABH9d
-         YAzibpuGvmblpuDmsgA+d8OlKVJFcRHnsCX8q0rO2fCaAEkUkGH+iN4FwagClUcfND+X
-         IWSdFbMp/QWkWDqO5HkdEgLmzaQyZbtwKR/OW7vAYssg4l4rnI+ARivRsl51gaxlArX2
-         zZiQ==
-X-Gm-Message-State: AOAM5336fwWie83+LNf4neBpBVCT4C2RDw51kkJ4bipemfd7MO4tEUId
-	0e61uHROFKtM3Zt1QwmWJ/EKPg==
-X-Google-Smtp-Source: ABdhPJwMZCd3C1iKJvKN7qDL9YjoQ8jFG/z5X8rDOsoyaNG+EyGSgaBClplXcR/AOzpe9y3wt27liA==
-X-Received: by 2002:a05:620a:e1a:: with SMTP id y26mr1334008qkm.280.1618608413145;
-        Fri, 16 Apr 2021 14:26:53 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id d22sm941076qtn.44.2021.04.16.14.26.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Apr 2021 14:26:52 -0700 (PDT)
-Date: Fri, 16 Apr 2021 17:26:51 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: James Bottomley <James.Bottomley@hansenpartnership.com>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: Subscriber actions for migrating lists to lists.linux.dev
-Message-ID: <20210416212651.rrs3j5xkm3n6gniz@nitro.local>
-Mail-Followup-To: James Bottomley <James.Bottomley@hansenpartnership.com>,
-	users@linux.kernel.org, tools@linux.kernel.org
-References: <cd77ebe2e456cb80527d9634a5469254006528c5.camel@HansenPartnership.com>
- <20210416211615.7serx3oa2rloe7al@nitro.local>
- <7be28063b8fb355fe1e73df6ca8c4db5e2163353.camel@HansenPartnership.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D6A2F81
+	for <tools@linux.kernel.org>; Wed, 21 Apr 2021 20:35:33 +0000 (UTC)
+From: Morten Linderud <foxboron@archlinux.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+	s=dkim-rsa; t=1619036991;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=hOy07RSzxQGF1R08ZbEHASAfq4DZd5fRjX5HhJQjijg=;
+	b=d8Fb0FNVDGp7DxDoTPQyn2g+O2XGCT6j/t1cKBbr80dUJr0QGmViIi/mDtObAoILdCXJhB
+	RZESjDyZg6KbQNGd+ifBPyMyTTlMPHWkK3T9wwZtY2v89IH+tCH48LG5fW/rWECj5B/I3j
+	smLXWaF2DoVPYzMU9WJxYLKFBO4J3Ue7qpdhFenx2Wvm2QKArJTXy+exb/EAX3X6Gv5t0l
+	vugVcLRwt8JahENBYmdN/WNgqvZzT/QCxRntXtteTLxx5d6NiqOzckC356PfnrxASW3pNN
+	K/IQECQbmmA85dmnVkeaA4O4NeBfxodbBczAZ6d1auRHWmhF9wXo1TQp1+KBOoYTCprad1
+	8qLuE62ojzja8rI1BPjP6/Uw5e6FSRJ7fbjeR6Ckmx1wq+6U559fAAuBTuFYeuQ15z+9oK
+	d6aSQqAz0JCJKkqAFwq3D1QOOxsJ+jkt0fDaBRC6B+0nH4Yst5qsyQehqP1xASyvN8NJVf
+	1y3icY9+YssRD2z466MY1BNOd/SXzs3lxacSWpSLIzTOCb1XgB35deAswtUoE8j8N3N01f
+	aOHeZzxJJ00mbAJZTuLb1N2/Rz6o51JYuD1KRoFcLkjZEV6UNKp1j8gN28I78bB1NU+Lr2
+	N40+qolaEa2C7jqqRxHlSiOijZTyk22ckqKf1FmSQXYgZZpoC4MM4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+	s=dkim-ed25519; t=1619036992;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=hOy07RSzxQGF1R08ZbEHASAfq4DZd5fRjX5HhJQjijg=;
+	b=D7rD5pmeUlJF3HILXZl+MX+KpqXMtBAgykBO5WForn/C1za5MgQQOadeQ74jHN0tdxfgsB
+	u1bpgbNebcUyGACQ==
+To: tools@linux.kernel.org
+Cc: Morten Linderud <foxboron@archlinux.org>
+Subject: b4: Ensure we read threadfile for message-id
+Date: Wed, 21 Apr 2021 22:29:42 +0200
+Message-Id: <20210421202942.1358011-1-foxboron@archlinux.org>
+X-Mailer: git-send-email 2.31.1
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7be28063b8fb355fe1e73df6ca8c4db5e2163353.camel@HansenPartnership.com>
+Content-Transfer-Encoding: 8bit
+Authentication-Results: mail.archlinux.org;
+	auth=pass smtp.auth=foxboron smtp.mailfrom=foxboron@archlinux.org
 
-On Fri, Apr 16, 2021 at 02:22:58PM -0700, James Bottomley wrote:
-> >  The lists we're currently migrating are moving from other places --
-> > either from domains we don't control (lists.01.org), or from domains
-> > like lists.linuxfoundation.org where there are MLs that will likely
-> > not enjoy mlmmj-style list management and will move to groups.io
-> > instead after we cherry-pick the devel lists.
-> 
-> OK, so for ksummit-discuss and it's ilk I need
-> 
-> * ^List-Id: .*ksummit-discuss.lists.(linuxfoundation.org|linux.dev)
+This fixes a bug where reading from `get_msgid_from_stdin` couldn't grab
+the message-id when we collect a thread from stdin.
 
-Note, that the new list is without the -discuss part, just
-ksummit@lists.linux.dev, so you'll probably want:
+This is mainly because there is no good way to override `sys.stdin`
+(from what I can see) and it probably makes more sense to try fetch
+message-ids from files instead. This allows us to replace the default
+file "sys.stdin" with the thread file whenever we need.
 
-* ^List-Id: .*ksummit.*\.lists\.linux.*
+No patch:
 
--K
+    $ curl -s "https://lore.kernel.org/lkml/20210421130105.1226686-1-gregkh@linuxfoundation.org/raw" | b4 mbox
+    Looking up https://lore.kernel.org/r/20210421130105.1226686-1-gregkh%40linuxfoundation.org
+    Grabbing thread from lore.kernel.org/lkml
+    272 messages in the thread
+    Unable to find a valid message-id in stdin.
+
+With patch:
+
+    $ curl -s "https://lore.kernel.org/lkml/20210421130105.1226686-1-gregkh@linuxfoundation.org/raw" | .4 mbox
+    Looking up https://lore.kernel.org/r/20210421130105.1226686-1-gregkh%40linuxfoundation.org
+    Grabbing thread from lore.kernel.org/lkml
+    272 messages in the thread
+    Saved ./20210421130105.1226686-1-gregkh@linuxfoundation.org.mbx
+
+Signed-off-by: Morten Linderud <foxboron@archlinux.org>
+---
+ b4/__init__.py | 8 ++++----
+ b4/mbox.py     | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/b4/__init__.py b/b4/__init__.py
+index 32b5c02..e81d395 100644
+--- a/b4/__init__.py
++++ b/b4/__init__.py
+@@ -2179,18 +2179,18 @@ def get_requests_session():
+     return REQSESSION
+ 
+ 
+-def get_msgid_from_stdin():
++def get_msgid_from_file(file):
+     if not sys.stdin.isatty():
+-        message = email.message_from_string(sys.stdin.read())
++        message = email.message_from_string(file.read())
+         return message.get('Message-ID', None)
+     logger.error('Error: pipe a message or pass msgid as parameter')
+     sys.exit(1)
+ 
+ 
+-def get_msgid(cmdargs):
++def get_msgid(cmdargs, file=sys.stdin):
+     if not cmdargs.msgid:
+         logger.debug('Getting Message-ID from stdin')
+-        msgid = get_msgid_from_stdin()
++        msgid = get_msgid_from_file(file)
+         if msgid is None:
+             logger.error('Unable to find a valid message-id in stdin.')
+             sys.exit(1)
+diff --git a/b4/mbox.py b/b4/mbox.py
+index d3bde25..791f545 100644
+--- a/b4/mbox.py
++++ b/b4/mbox.py
+@@ -566,7 +566,7 @@ def main(cmdargs):
+     if cmdargs.wantname:
+         savefile = os.path.join(cmdargs.outdir, cmdargs.wantname)
+     else:
+-        msgid = b4.get_msgid(cmdargs)
++        msgid = b4.get_msgid(cmdargs, file=open(threadfile))
+         savefile = os.path.join(cmdargs.outdir, '%s.mbx' % msgid)
+ 
+     mbx.close()
+-- 
+2.31.1
+
