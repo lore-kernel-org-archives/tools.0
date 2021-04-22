@@ -1,77 +1,85 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9802271
-	for <tools@linux.kernel.org>; Thu, 22 Apr 2021 18:09:13 +0000 (UTC)
-Received: by mail-qk1-f169.google.com with SMTP id s5so38466342qkj.5
-        for <tools@linux.kernel.org>; Thu, 22 Apr 2021 11:09:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=y3ktPdj+pm52S+dOqrPfWpye/O0Sdk06H6yN1Rz1tF8=;
-        b=Cek+H5Stgqj0c0i/n2LSTiVbC1u/XBArOd7GgTuS5fJwWmmgvO+YgMerAgxAm/YLyq
-         7b9tTKe25yeWIrVDp/uTjtLZe88JxLJhJ465Ji5LgOX2/vDmvAX3CvyuWKncKB+Z3bqn
-         hXyPhpylf6YMJjFP5smexouKdmjBbkZLu6noo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=y3ktPdj+pm52S+dOqrPfWpye/O0Sdk06H6yN1Rz1tF8=;
-        b=nCdmcONRHTIDlSoj075RaNR8a5xdK1R0vf6hptJfYFULoJ8yoH3NKFY/aUwxrqGgqw
-         wpXbvUP4AsCpIV/vqnaN2j0ykUuW45ur/wHASmzP4sox4cwrYUyOhAphUMDEEnOZTtmT
-         qL+1WfbwC0MeflngLy9AJ4LfepHM4a0C/DRBk3uLWGweS7G3DV7I0Pxa3XvIDzBtpXAe
-         Qzr03UMrArPqSJXu9aqL+fqyBzcTQUHmQ03pD0TzrTHZRvWmhCSOA5lKxJECb0E9baG7
-         ssNgaX36zS870WPwCPMZ9fPCrrfJujlIW37VIHLFq5d8lVAikSsUJ133pbfcOz0R3Bl6
-         g27Q==
-X-Gm-Message-State: AOAM533GCnh5gfvxFNxvGsffktvsKU2LvQj54zLOSrdsd3sXM7talw1b
-	O6OLiPuLv2lWrHiKgcsGv2+E3dSnxeBH4p9q
-X-Google-Smtp-Source: ABdhPJx9MELPkcZYu4/efxtiLhX3HmcJ0p7tWOOYEcpDXslHVDxBsJQkcoPtJHXEujQ5nev38tTd8A==
-X-Received: by 2002:a05:620a:440a:: with SMTP id v10mr4801818qkp.357.1619114952638;
-        Thu, 22 Apr 2021 11:09:12 -0700 (PDT)
-Received: from nitro.local (bras-base-mtrlpq5031w-grc-32-216-209-220-18.dsl.bell.ca. [216.209.220.18])
-        by smtp.gmail.com with ESMTPSA id j13sm2694026qth.57.2021.04.22.11.09.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Apr 2021 11:09:12 -0700 (PDT)
-Date: Thu, 22 Apr 2021 14:09:10 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Kyle Meyer <kyle@kyleam.com>
-Cc: tools@linux.kernel.org
-Subject: Re: [PATCH b4] Delay dns.resolver.get_default_resolver call
-Message-ID: <20210422180910.kwsn3g5punafbyid@nitro.local>
-Mail-Followup-To: Kyle Meyer <kyle@kyleam.com>, tools@linux.kernel.org
-References: <20210208040722.31203-1-kyle@kyleam.com>
- <87fszji4pb.fsf@kyleam.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A562F81
+	for <tools@linux.kernel.org>; Thu, 22 Apr 2021 18:52:04 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0FFD861424
+	for <tools@linux.kernel.org>; Thu, 22 Apr 2021 18:52:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1619117523;
+	bh=RuTA/k16YDFu6ZKojQzVVG7jVY60UDUHT09FZdubllU=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=k2I/H1c7MWAk5uj+LvM5OnvHEYJ+mX1SD0TH2lVrUvJa1NC2fxBvp9MCqOHQlprYx
+	 DiGqem9gPqAGxV9zsepRsVmN571+ldcKbm1XhCFDOpUB4kPl46N3STjGg9Fub4xKH5
+	 Kramx4R96pNG1H5e9450JevqNfP4xyC5GRhUliiHjwUYDlI/Hk+b89eDr82eXoKSpW
+	 E6GYj9UhAIwRh7fWSTUaVc70mM+5J15xuCgJDJlHgHc5Vhy1RRqV8cQM06+C8wEJKE
+	 QDJXJby08GGfK9M0ZLK8UkoU6I21JqkK7H5kNhXCjVNCs9JhwwVzkbNXS/j2A5Z1by
+	 nFbypiiGledcQ==
+Date: Thu, 22 Apr 2021 21:51:59 +0300
+From: Leon Romanovsky <leon@kernel.org>
+To: tools@linux.kernel.org
+Subject: Re: backfilling threads with b4 (was: Re: [MAINTAINER SUMMIT]
+ Rethinking the acceptance policy for "trivial" patches)
+Message-ID: <YIHFzwXCDjWTLdA9@unreal>
+References: <afc5664dc2b60f912dd97abfa818b3f7c4237b92.camel@HansenPartnership.com>
+ <YID5xhy2vv45fnOv@unreal>
+ <20210422112001.22c64fe9@coco.lan>
+ <20210422125357.uuxprp6rqxewcdsr@nitro.local>
+ <YIG43TuqmxU24evq@unreal>
+ <20210422180540.hj6xs75sqlmnegs6@nitro.local>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87fszji4pb.fsf@kyleam.com>
+In-Reply-To: <20210422180540.hj6xs75sqlmnegs6@nitro.local>
 
-On Wed, Apr 21, 2021 at 07:43:44PM -0400, Kyle Meyer wrote:
-> Kyle Meyer writes:
+On Thu, Apr 22, 2021 at 02:05:40PM -0400, Konstantin Ryabitsev wrote:
+> On Thu, Apr 22, 2021 at 08:56:45PM +0300, Leon Romanovsky wrote:
+> > >     macro index 4 "<pipe-message>~/work/git/korg/b4/b4.sh mbox -f -o ~/Mail<return>"
+> > > 
+> > > You'll need to adjust it to point at where your maildir lives, of course, but
+> > > that's the general idea. With it in place, you can hit "4" in the index view
+> > > to get the rest of the thread (without duplicating the messages you already
+> > > have).
+> > 
+> > Konstantin,
+> > 
+> > I tried the above and here the obstacles which I encounter.
 > 
-> > When b4.attestation-policy is 'off', calling `b4 am` with
-> > --use-local-mbox is conceptually an offline operation, but it still
-> > requires being online because get_default_resolver() is called at the
-> > top-level of b4/__init__.py.
-> >
-> > Support offline operation by delaying the call to
-> > get_default_resolver() until it's needed.  Note that
-> > get_default_resolver() already caches the result, so there's no need
-> > for b4 to store the result as a global variable on its end.
+> This is probably better suited for tools@linux.kernel.org (cc'ing
+> accordingly).
 > 
-> Any thoughts on this patch?
+> > 1. My emails are stored in Maildir. The mb2md script half-worked but ok
+> > for the test.
+> > 2. b4 didn't work if I tried to use lore link from the middle of discussion,
+> > which is very common pattern to me.
+> > 3. b4 didn't grab the discussions, so I got the patches, but didn't get and
+> > won't get any interesting to me responses.
+> 
+> Are you sure you copied the command correctly? 
+> 
+> 1. It should automatically recognize when it's pointed at a maildir, so no
+>    mb2md should be necessary. Are you sure you changed "-o ~/Mail" to be
+>    pointing at your maildir?
 
-Sorry, Kyle, it wasn't my intent to delay for long. I had to refocus my
-efforts on something else for a while, so b4 took a bit of a backseat (plus,
-I'm waiting on public-inbox 1.7 to be out so I can drop a bunch of redundant
-features from b4 before putting in any work on new stuff).
+I didn't want experiment on my main maildir folder so pointed to /tmp,
+and didn't know that b4 recognizes format.
 
-I'll deal with all outstanding patches either tomorrow or early next week.
+> 2. It's supposed to grab the message-id from the piped message, so you
+>    shouldn't need to pass any lore links.
 
--K
+I didn't pass any links, just used as a "feed" one of the replies to the
+series which I don't have.
+
+> 3. Are you sure you're using "b4 mbox" not "b4 am"? The mbox command just
+>    returns the entire thread.
+
+Yes, I used mbox, but will retest it tomorrow, maybe I did something wrong.
+
+> 
+> Please feel free to drop ksummit and others on your reply.
+> 
+> -K
