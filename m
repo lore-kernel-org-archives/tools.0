@@ -1,92 +1,114 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E0C2F80
-	for <tools@linux.kernel.org>; Mon, 26 Apr 2021 23:51:03 +0000 (UTC)
-Received: by mail-wr1-f53.google.com with SMTP id k14so7676589wrv.5
-        for <tools@linux.kernel.org>; Mon, 26 Apr 2021 16:51:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Zy8lWToUipVMvn0XiQVQIZoTcmvgQu3I7mE833hMYwM=;
-        b=ToCV30oNB2ztVsxGgHjZKgWGYHygxvwZYJztsJgiQVka/AYfXPgtqAsCkbKrXUcYSJ
-         Dbk+uYILcXP0AmrWGpJKW+GOr5w6g3RRb6n3pOWgoz6AdCeDYN3X9nv8wwYOMFoCHmXi
-         zXTzcnWvUYUS761p3724CQJUtEHjzKCcj4/s4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Zy8lWToUipVMvn0XiQVQIZoTcmvgQu3I7mE833hMYwM=;
-        b=ubK+9HG0b9TXpMprYXcscnpeKG2JbeK/kY2HPbNimkX7eoTFk1Kk5g0Q+IBOSc9nba
-         3jAag0wSw3mH6VF897PsEAKA7cxAa9gupx2y3S1I9/9+H5w4btsjqgIH6JbKxuDfhheE
-         IHZUL3kdI+t/PRaZzn5lIfiBXhNH29v8YptO4CkJ0wYNg4MMmtHD0+F/47sfkfMxJdfg
-         esbvi+Vs/mfGFydr37SRtROCL9wdzGD20foo+IbKzer+TWDuOSeIGF5Bjylnv4ESyVFu
-         8hgD1Gmavdi8eca5AbgCnYCupMW25Z1xHtCK43E/9NcdO4ho2VN8aHdlbMOlv27Bu2j5
-         dQ9A==
-X-Gm-Message-State: AOAM530V0Q8F/QlY2KBtLtBGuSM3G9t1BKJ1S3sfy3FUA8MZEh2QwDyC
-	Udqe8+YyB39vf25YYJYJmfQfAJNzsBsgPjObrdQVAA==
-X-Google-Smtp-Source: ABdhPJxF32ubQrQ4uMZYbdySNXoobqubGy9cvy/FSDol/Pn1ZTkMzxRMY7W4c++5/sLSKJId0rQ9C+kqf8fEIlSU5dg=
-X-Received: by 2002:adf:e647:: with SMTP id b7mr25328443wrn.43.1619481062390;
- Mon, 26 Apr 2021 16:51:02 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA8870
+	for <tools@linux.kernel.org>; Tue, 11 May 2021 19:01:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1620759677;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=zj2/XQU4aJZZugCnoaE0qq5nRKLb0bwyQMFlZ4CN5CI=;
+	b=IOflcZdsQf+UOxRzrqJ//kE2Yhuw7pqrQiEX3NUAi70Usg1FFYUHdwi9/+JPNn1bYXk3Ly
+	uyZL/hJUupLs20zFiPgCqpUiWAdXMErtXqKqGaPRV/99fccy865LKMRhkmmVT+vSjvqlzb
+	lL02lC2brblYnwgB44eTgiKWjJioI6Q=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-599-JO4yM7pwPwixHH3oUsBKtQ-1; Tue, 11 May 2021 15:01:14 -0400
+X-MC-Unique: JO4yM7pwPwixHH3oUsBKtQ-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mimecast-mx01.redhat.com (Postfix) with ESMTPS id D332B800D62
+	for <tools@linux.kernel.org>; Tue, 11 May 2021 19:01:13 +0000 (UTC)
+Received: from localhost (ovpn-118-47.rdu2.redhat.com [10.10.118.47])
+	by smtp.corp.redhat.com (Postfix) with ESMTP id A22545D9C0
+	for <tools@linux.kernel.org>; Tue, 11 May 2021 19:01:13 +0000 (UTC)
+Date: Tue, 11 May 2021 15:01:12 -0400
+From: Eduardo Habkost <ehabkost@redhat.com>
+To: tools@linux.kernel.org
+Subject: b4 ignoring patch 1/2 on series
+Message-ID: <20210511190112.u724u6roghnfx432@habkost.net>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <YID5xhy2vv45fnOv@unreal> <20210422112001.22c64fe9@coco.lan>
- <YIFfXTVMDmHwVmSR@unreal> <20210422092916.556e5e50@gandalf.local.home>
- <CAL_JsqKS-=shqkLhzKeLHqNPhosGJw5X-fOi+dy1rT3Q_LfBZg@mail.gmail.com>
- <20210423080454.78f4f662@coco.lan> <6c221d801c5a6834168207b5ccadc76ac432c766.camel@perches.com>
- <20210423091320.4f2381b2@coco.lan> <CAD=FV=Xi6TL05M2bYKNgNB-ePY40CvonPzJYeMhXMPGgYKA5_Q@mail.gmail.com>
- <20210423160310.GD5507@sirena.org.uk> <YIMAAFCe5N7ORNRX@unreal>
-In-Reply-To: <YIMAAFCe5N7ORNRX@unreal>
-From: Simon Glass <sjg@chromium.org>
-Date: Tue, 27 Apr 2021 09:50:51 +1000
-Message-ID: <CAPnjgZ2iiv-M3M8MaVFxQzHrT5jhL+YhPv+COxRMjCVU_OAS9w@mail.gmail.com>
-Subject: Re: Better tools for sending patches (was: Re: [MAINTAINER SUMMIT]
- Rethinking the acceptance policy for "trivial" patches)
-To: Leon Romanovsky <leon@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>, Doug Anderson <dianders@chromium.org>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Joe Perches <joe@perches.com>, 
-	Rob Herring <robherring2@gmail.com>, Steven Rostedt <rostedt@goodmis.org>, 
-	James Bottomley <James.Bottomley@hansenpartnership.com>, ksummit@lists.linux.dev, 
-	tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ehabkost@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
 Hi,
 
-The docs are on github also :
-https://github.com/siemens/u-boot/blob/master/tools/patman/README
+I'm trying to understand why b4 is ignoring patch 1/2 in the
+following series:
+https://lore.kernel.org/qemu-devel/20210430134830.254741-1-ckuehl@redhat.com/
 
-I find it relatively easy to update each patch with a little change
-log as I change it. Then I know that when I type 'patman send' it will
-do the right thing.
+I see in the debugging output that b4 recognize both patches, but
+only the second patch is written to the mailbox.  Does anybody
+understand why?
 
-If people have workflows that would benefit from patman's help, but
-need it to do an extra thing, I certainly accept patches to the tool.
+I'm running b4 directly from latest git, version 0.7.0-dev-31348.
 
-Regards,
-Simon
+Debugging output:
 
-On Sat, 24 Apr 2021 at 03:12, Leon Romanovsky <leon@kernel.org> wrote:
->
-> On Fri, Apr 23, 2021 at 05:03:10PM +0100, Mark Brown wrote:
-> > On Fri, Apr 23, 2021 at 07:52:30AM -0700, Doug Anderson wrote:
-> >
-> > > I know it's nearly impossible to get people to change their workflows,
-> > > but if you're open to it I definitely suggest giving it a try. Simon
-> > > Glass (the original author) is also quite receptive to improvements.
-> >
-> > I have something broadly similar (much more simplistic and overall less
-> > capable) which I wrote myself - the things I have that this doesn't have
-> > are:
-> >
-> >  - Attesting the outgoing patches with b4.
-> >  - Tagging the published series in git.
->
-> I have something similar too, which actually wrapper over git format-patch
-> that properly set target (net-next, rdma-next, iproute2, rdma-core, mlx5-next
-> e.t.c) and changes "To;" based on target.
->
-> Thanks
+$ ./b4.sh -d am 20210430134830.254741-1-ckuehl@redhat.com
+Running git --no-pager config -z --get-regexp b4\..*
+Running git --no-pager config -z --get-regexp get-lore-mbox\..*
+Running git --no-pager config -z --get-regexp gpg\..*
+Looking up https://lore.kernel.org/r/20210430134830.254741-1-ckuehl%40redhat.com
+t_mbx_url=https://lore.kernel.org/qemu-devel/20210430134830.254741-1-ckuehl%40redhat.com/t.mbox.gz
+Grabbing thread from lore.kernel.org/qemu-devel
+Using cached copy: /home/ehabkost/.cache/b4/22f427a5006fcd1691c1a76d7d48f203d05b4cb8.pi.mbx
+Looking at: 20210430134830.254741-3-ckuehl@redhat.com
+Kept in thread: 20210430134830.254741-3-ckuehl@redhat.com
+Looking at: 20210430134830.254741-1-ckuehl@redhat.com
+Kept in thread: 20210430134830.254741-1-ckuehl@redhat.com
+Looking at: 20210430134830.254741-2-ckuehl@redhat.com
+Kept in thread: 20210430134830.254741-2-ckuehl@redhat.com
+Looking at: 4988c9d5-27e4-62ce-6f4b-96c3ca2de4d5@redhat.com
+Kept in thread: 4988c9d5-27e4-62ce-6f4b-96c3ca2de4d5@redhat.com
+Analyzing 4 messages in the thread
+Looking at: [RESEND] sev: add missing firmware error conditions
+  adding as patch
+Looking at: [RESEND] SEV firmware error list touchups
+  adding to unknowns
+Looking at: [RESEND] sev: use explicit indices for mapping firmware error codes to strings
+  adding as patch
+Looking at: Re: [PATCH 0/2] [RESEND] SEV firmware error list touchups
+  adding to followups
+Analyzing follow-up: Re: [PATCH 0/2] [RESEND] SEV firmware error list touchups (philmd@redhat.com)
+  no trailers found, skipping
+---
+Writing ./20210430_ckuehl_sev_firmware_error_list_touchups.mbx
+Running git --no-pager config -z --get-regexp user\..*
+Calculating hashes for: [RESEND] sev: add missing firmware error conditions
+Running git --no-pager patch-id --stable
+Running git --no-pager mailinfo --encoding=UTF-8 /tmp/tmpryg0ngwz /tmp/tmpml12him7
+DNS-lookup: mimecast20190719._domainkey.redhat.com.
+DKIM signature did NOT verify
+Retrying with the next DKIM-Signature header, if any
+No DKIM-Signature headers in the message
+  [RESEND] sev: add missing firmware error conditions
+    . Signed-off-by: Connor Kuehl <ckuehl@redhat.com>
+    . Reviewed-by: Philippe Mathieu-Daudé <philmd@redhat.com>
+---
+Total patches: 1
+Running git --no-pager rev-parse --show-toplevel
+---
+Cover: ./20210430_ckuehl_sev_firmware_error_list_touchups.cover
+ Link: https://lore.kernel.org/r/20210430134830.254741-1-ckuehl@redhat.com
+ Base: not found
+       git am ./20210430_ckuehl_sev_firmware_error_list_touchups.mbx
+Wrote 20210430_ckuehl_sev_firmware_error_list_touchups.am for thanks tracking
+
+
+
+-- 
+Eduardo
+
