@@ -1,114 +1,81 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [216.205.24.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA8870
-	for <tools@linux.kernel.org>; Tue, 11 May 2021 19:01:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1620759677;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=zj2/XQU4aJZZugCnoaE0qq5nRKLb0bwyQMFlZ4CN5CI=;
-	b=IOflcZdsQf+UOxRzrqJ//kE2Yhuw7pqrQiEX3NUAi70Usg1FFYUHdwi9/+JPNn1bYXk3Ly
-	uyZL/hJUupLs20zFiPgCqpUiWAdXMErtXqKqGaPRV/99fccy865LKMRhkmmVT+vSjvqlzb
-	lL02lC2brblYnwgB44eTgiKWjJioI6Q=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-599-JO4yM7pwPwixHH3oUsBKtQ-1; Tue, 11 May 2021 15:01:14 -0400
-X-MC-Unique: JO4yM7pwPwixHH3oUsBKtQ-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mimecast-mx01.redhat.com (Postfix) with ESMTPS id D332B800D62
-	for <tools@linux.kernel.org>; Tue, 11 May 2021 19:01:13 +0000 (UTC)
-Received: from localhost (ovpn-118-47.rdu2.redhat.com [10.10.118.47])
-	by smtp.corp.redhat.com (Postfix) with ESMTP id A22545D9C0
-	for <tools@linux.kernel.org>; Tue, 11 May 2021 19:01:13 +0000 (UTC)
-Date: Tue, 11 May 2021 15:01:12 -0400
-From: Eduardo Habkost <ehabkost@redhat.com>
-To: tools@linux.kernel.org
-Subject: b4 ignoring patch 1/2 on series
-Message-ID: <20210511190112.u724u6roghnfx432@habkost.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5AF71
+	for <tools@linux.kernel.org>; Tue, 11 May 2021 20:56:32 +0000 (UTC)
+Received: by mail-qv1-f48.google.com with SMTP id r13so10950920qvm.7
+        for <tools@linux.kernel.org>; Tue, 11 May 2021 13:56:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tY+DZAj7XqnzPLbj7tYHSaLRjglKlAvr6ejW7RWEBeA=;
+        b=DrQK+C+Vf2lBveLIh+ohQRDpf2RA0QQXDk9J4w3IVBaJ1ShgewJL0v+69WMpdEIG/S
+         kgcGB62mzwfzJmw1erXRUETJHHFHv/L/XxYbhWlRUxg1hcY+MrZsSx1iL31BG6OrWG7U
+         frFhJAK8O71Bw0Bwbf6IUZMmdHfO8YkadXI94=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=tY+DZAj7XqnzPLbj7tYHSaLRjglKlAvr6ejW7RWEBeA=;
+        b=qKwyh8LpVs9MXKZliX5dWLxZGHMDUBqiadQlzxmYEqsR0LUvlXrtZDFNI+/cFWFmXq
+         oWmH0jlP40SG6aqtH7NyLLDZJ/IFWqxN0RMAccn6OCbSKg5SQGqnrp7KePjsS+wO6nSE
+         HkYUaCdvkfO5hgKkEft1ONRI5CcDEgmhxqprpkyXomBXirMBo8+o9rp3R8Nx8J3mmpxp
+         xnhiPLY/PKB/Pgtf+fAAIThw3TW51OjRaQWvcqOtlEZzRYLgqeNfrvpZfvce+WkNgmwU
+         6SY2rgcxJMfHGlu9bwmt5lV/74R9SZvas/ZONI5Zmsq/ukKvx36dNtDslYyheV2750oz
+         /tkw==
+X-Gm-Message-State: AOAM5325INiqeDSCCURECE8AvQ1feQh6rfYH6d73Par8WEvwos9ieTNi
+	kKt4DZtNGYvN80CfZNkSisy9mw==
+X-Google-Smtp-Source: ABdhPJyzMvg0jzCQiWoehn0XGrbeqRFjGK+dq/wOIMDfRTWfphjqkIbe09Qny0KQvxdcaK2D1fWhkg==
+X-Received: by 2002:a0c:bf4b:: with SMTP id b11mr31975050qvj.11.1620766591087;
+        Tue, 11 May 2021 13:56:31 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-18.dsl.bell.ca. [216.209.220.18])
+        by smtp.gmail.com with ESMTPSA id e17sm14658887qto.59.2021.05.11.13.56.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 May 2021 13:56:30 -0700 (PDT)
+Date: Tue, 11 May 2021 16:56:29 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Eduardo Habkost <ehabkost@redhat.com>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 ignoring patch 1/2 on series
+Message-ID: <20210511205629.dfe3zaooh7e7ose2@meerkat.local>
+Mail-Followup-To: Eduardo Habkost <ehabkost@redhat.com>,
+	tools@linux.kernel.org
+References: <20210511190112.u724u6roghnfx432@habkost.net>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ehabkost@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210511190112.u724u6roghnfx432@habkost.net>
 
-Hi,
+On Tue, May 11, 2021 at 03:01:12PM -0400, Eduardo Habkost wrote:
+> Hi,
+> 
+> I'm trying to understand why b4 is ignoring patch 1/2 in the
+> following series:
+> https://lore.kernel.org/qemu-devel/20210430134830.254741-1-ckuehl@redhat.com/
+> 
+> I see in the debugging output that b4 recognize both patches, but
+> only the second patch is written to the mailbox.  Does anybody
+> understand why?
 
-I'm trying to understand why b4 is ignoring patch 1/2 in the
-following series:
-https://lore.kernel.org/qemu-devel/20210430134830.254741-1-ckuehl@redhat.com/
+It's because of the [RESEND] in the subject -- I need to fix this to be more
+forgiving. This is the convention we recognize:
 
-I see in the debugging output that b4 recognize both patches, but
-only the second patch is written to the mailbox.  Does anybody
-understand why?
+  Subject: [PATCH RESEND x/2] 
 
-I'm running b4 directly from latest git, version 0.7.0-dev-31348.
+Right now, b4 drops all the [] items in the subject until the rightmost set,
+because that's where it expects to find series information. Unfortunately, if
+there are other [] items after [PATCH x/n], b4 will look into the wrong
+brackets.
 
-Debugging output:
+I'll try to fix it tomorrow, but for now you can do "b4 mbox" to get that
+thread, then manually edit the mbox file to remove the [RESEND], and then run
+"b4 am -m that.mbox".
 
-$ ./b4.sh -d am 20210430134830.254741-1-ckuehl@redhat.com
-Running git --no-pager config -z --get-regexp b4\..*
-Running git --no-pager config -z --get-regexp get-lore-mbox\..*
-Running git --no-pager config -z --get-regexp gpg\..*
-Looking up https://lore.kernel.org/r/20210430134830.254741-1-ckuehl%40redhat.com
-t_mbx_url=https://lore.kernel.org/qemu-devel/20210430134830.254741-1-ckuehl%40redhat.com/t.mbox.gz
-Grabbing thread from lore.kernel.org/qemu-devel
-Using cached copy: /home/ehabkost/.cache/b4/22f427a5006fcd1691c1a76d7d48f203d05b4cb8.pi.mbx
-Looking at: 20210430134830.254741-3-ckuehl@redhat.com
-Kept in thread: 20210430134830.254741-3-ckuehl@redhat.com
-Looking at: 20210430134830.254741-1-ckuehl@redhat.com
-Kept in thread: 20210430134830.254741-1-ckuehl@redhat.com
-Looking at: 20210430134830.254741-2-ckuehl@redhat.com
-Kept in thread: 20210430134830.254741-2-ckuehl@redhat.com
-Looking at: 4988c9d5-27e4-62ce-6f4b-96c3ca2de4d5@redhat.com
-Kept in thread: 4988c9d5-27e4-62ce-6f4b-96c3ca2de4d5@redhat.com
-Analyzing 4 messages in the thread
-Looking at: [RESEND] sev: add missing firmware error conditions
-  adding as patch
-Looking at: [RESEND] SEV firmware error list touchups
-  adding to unknowns
-Looking at: [RESEND] sev: use explicit indices for mapping firmware error codes to strings
-  adding as patch
-Looking at: Re: [PATCH 0/2] [RESEND] SEV firmware error list touchups
-  adding to followups
-Analyzing follow-up: Re: [PATCH 0/2] [RESEND] SEV firmware error list touchups (philmd@redhat.com)
-  no trailers found, skipping
----
-Writing ./20210430_ckuehl_sev_firmware_error_list_touchups.mbx
-Running git --no-pager config -z --get-regexp user\..*
-Calculating hashes for: [RESEND] sev: add missing firmware error conditions
-Running git --no-pager patch-id --stable
-Running git --no-pager mailinfo --encoding=UTF-8 /tmp/tmpryg0ngwz /tmp/tmpml12him7
-DNS-lookup: mimecast20190719._domainkey.redhat.com.
-DKIM signature did NOT verify
-Retrying with the next DKIM-Signature header, if any
-No DKIM-Signature headers in the message
-  [RESEND] sev: add missing firmware error conditions
-    . Signed-off-by: Connor Kuehl <ckuehl@redhat.com>
-    . Reviewed-by: Philippe Mathieu-Daudé <philmd@redhat.com>
----
-Total patches: 1
-Running git --no-pager rev-parse --show-toplevel
----
-Cover: ./20210430_ckuehl_sev_firmware_error_list_touchups.cover
- Link: https://lore.kernel.org/r/20210430134830.254741-1-ckuehl@redhat.com
- Base: not found
-       git am ./20210430_ckuehl_sev_firmware_error_list_touchups.mbx
-Wrote 20210430_ckuehl_sev_firmware_error_list_touchups.am for thanks tracking
-
-
-
--- 
-Eduardo
-
+Regards,
+-K
