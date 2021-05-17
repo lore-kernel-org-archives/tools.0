@@ -1,44 +1,44 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5347370
-	for <tools@linux.kernel.org>; Sun, 16 May 2021 22:52:49 +0000 (UTC)
-Received: by mail-qt1-f173.google.com with SMTP id j19so3652090qtp.7
-        for <tools@linux.kernel.org>; Sun, 16 May 2021 15:52:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563B472
+	for <tools@linux.kernel.org>; Mon, 17 May 2021 16:13:20 +0000 (UTC)
+Received: by mail-qt1-f178.google.com with SMTP id t20so5221765qtx.8
+        for <tools@linux.kernel.org>; Mon, 17 May 2021 09:13:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uSg6OMuIUV+x2oue1Esl0Ff7QPsXShm2NrD4E99nPiw=;
-        b=TVqiMhu5Vr2jRMHmm+a8vKMm9awpIGzEYGLoP6Wb56ByjTmX+chuDCDuenSv/VNXIe
-         7r+DLP69f1Gbmu85/YUTWvmuIRFhzLUF7FsGz5jOBZv5zRDx5/x99XhwPSnEL7ey0tZ2
-         83ZL26oPEQTujbKRTVFxKuWOFIxZxWhQvsAfM=
+         :content-disposition:in-reply-to;
+        bh=KvhZqbHpE7RCfMbgAa1hexe3TCt7n1njgpKc2v7QkS0=;
+        b=NR9qSEPi04Pspw+PZ1FHgzKxLg5lNEURgIYFVBAjA3PUt+D1Dd0TMY+kmJkXblDZva
+         UBmH5ufitnSGkHVPCDAK7yreuX5HP4Y9Axni+1EICbQOC3XvPhkmasDjV+4HBA4X052J
+         Kro6le9shmtl84eEwd+GZm4+fEr0BmWBWomJo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uSg6OMuIUV+x2oue1Esl0Ff7QPsXShm2NrD4E99nPiw=;
-        b=TOgVPgexv3WmGV1DvIhqn1YRy75UXhn0Z7bFzNaFre+/L0JBUgl3hyAuuKwIaINn93
-         QXzWJCmaW7Fr9Ja2LUven+ttLt0ARKLi9Yu0924gPMDB0a96GyQkjojG71oPJNIdVe5+
-         eg3XKSoYvJtdpmpv1zNzW7vCT4Ai2IFzGLg2tuP6BaGnOT7YunL85Yhal5uJd+zAFlYN
-         c+txJO9vIFWkgKUmYWPm/4dIT/vWCFe/HceLg66RCio8YDLE2yeuJSnPpvyMU3uV4qsF
-         cKwyOfuCXuGt8toAG8TyNV+UJ3xgk6veUj7GuGOf++CbosMdsGXaf0yTR2Ze5DKYzTZQ
-         /Dgg==
-X-Gm-Message-State: AOAM530wmpw2sGGYsKcGLkfd/e1rWXj9G6T8+dArzrSxQwGNkw+m3QgZ
-	qaXwtjVqRVNIdlR83O8KSCbwwPQSpzuITQ==
-X-Google-Smtp-Source: ABdhPJxTpyD3kDveQdowEiymuQwxlCHZ4dob6k1Qg+DDTEfXAS35G9gEilrAi6iZw7EjqsD+O4+JhA==
-X-Received: by 2002:a05:622a:549:: with SMTP id m9mr22579521qtx.152.1621205568249;
-        Sun, 16 May 2021 15:52:48 -0700 (PDT)
-Received: from nitro.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id e20sm3404851qto.88.2021.05.16.15.52.47
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 16 May 2021 15:52:47 -0700 (PDT)
-Date: Sun, 16 May 2021 18:52:44 -0400
+         :mime-version:content-disposition:in-reply-to;
+        bh=KvhZqbHpE7RCfMbgAa1hexe3TCt7n1njgpKc2v7QkS0=;
+        b=l845M1xXPUycB38A1CVriau2/V2Fi1ixNQve+Rl7pSmt+3y3OgEwNqbSiGx0cMO0dx
+         Q7VuJsozn814xb6KPKkvOPIGU7P7q6MGHv9tM7T2ZDFwoGxTmjH2vj6kqaBcx5u99sv1
+         P/BSFKO/yBtXzzLEHmMcRm4lbRrXQIaWcBt1Wk3yudR1vOQdZAud0D8N4kUy4dAjgSlm
+         uXiXnPWGxindd32wHpjORNOH5CaTvg2ZleE3+szjJORvwx5aoCjjB+mz+LvsrUg2G0GE
+         7Zqgh1iB8n5fQOHphNGeiJ8cT8GPivR4N0BgKuHRHEhZihB5v650dLb0oF+LUes2iDDe
+         IWAQ==
+X-Gm-Message-State: AOAM532DxFrEA084jPRnIbw3Fbug2FFX99Jb8v/eIounDSnNZlk/MWBh
+	fTTnzlhl8TdlPjpVf9acjthGDw==
+X-Google-Smtp-Source: ABdhPJyxs6PWSiV2DLHbG5VTXGfdt4Ld8ksDaNB1h+Ueg7EaoqWABWTbnZNWpCvrKFF3g9qOKfGy9A==
+X-Received: by 2002:ac8:7c4b:: with SMTP id o11mr262607qtv.336.1621267999162;
+        Mon, 17 May 2021 09:13:19 -0700 (PDT)
+Received: from nitro.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id r16sm10906185qtx.36.2021.05.17.09.13.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 May 2021 09:13:18 -0700 (PDT)
+Date: Mon, 17 May 2021 12:13:17 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: Dan Williams <dan.j.williams@intel.com>
 Cc: tools@linux.kernel.org
 Subject: Re: b4 am support for partial series updates?
-Message-ID: <20210516225244.ye7ty3pq5fzhpqzl@nitro.local>
+Message-ID: <20210517161317.teawoh5qovxpmqdc@nitro.local>
 References: <CAPcyv4ggbuHbqKV33_TpE7pqxvRag34baJrX3yQe-jXOikoATQ@mail.gmail.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -48,7 +48,6 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <CAPcyv4ggbuHbqKV33_TpE7pqxvRag34baJrX3yQe-jXOikoATQ@mail.gmail.com>
-User-Agent: NeoMutt/20171215
 
 On Fri, May 14, 2021 at 03:50:21PM -0700, Dan Williams wrote:
 > I recently had someone grumble at me about my requirement that they
@@ -70,40 +69,32 @@ On Fri, May 14, 2021 at 03:50:21PM -0700, Dan Williams wrote:
 >   ERROR: missing [7/8]!
 >   ERROR: missing [8/8]!
 > 
-> ...which is helpful if v5 was partially sent, but not if all the other
-> patches don't require updates. This feels like a "WANTVER+" option
-> that means "grab latest, but fall back to vX" for missing patches. Has
-> this come up before?
-> 
-> What format would help b4 detect this situation? By default tooling
-> would make the prefix be [PATCH], I manually made that [PATCH v5 5/8]
-> and forced the in-reply-to message-id to the v4 version.
-> 
-> I'm nearing the point where handling this manually is more painful
-> than figuring out a b4 patch, but please consider this for the b4
-> feature backlog in the meantime.
 
-I was generally against handling such situations in the past because
-they introduced ambiguity. E.g. consider this two-patch series:
+Okay, the latest master will handle this situation:
 
-[PATCH v2 1/2] First patch
-\- [PATCH v3 1/2] First patch
-[PATCH v2 2/2] Second patch
-
-It's unclear here what happened:
-
-- is it a single-patch reroll as you describe above?
-- or is it a full reroll and [PATCH v3 2/2] simply got lost en route?
-
-However, we are probably safe to treat it as a partial patch reroll if
-the following conditions are true:
-
-1. The series has a cover letter
-2. Individual patch rerolls are sent as follow-ups to exact same patch
-X/N (e.g. [PATCH v3 3/5] is sent as a follow-up to [PATCH v2 3/5].
-
-Let me brainstorm about this on Monday and I'll share what I came up
-with once I have something to show.
+    Looking up https://lore.kernel.org/r/162096970332.1865304.10280028741091576940.stgit%40dwillia2-desk3.amr.corp.intel.com
+    Grabbing thread from lore.kernel.org/linux-acpi
+    Analyzing 13 messages in the thread
+    Partial reroll detected, reconstituting from v4
+    Will use the latest revision: v5
+    You can pick other revisions using the -vN flag
+    ---
+    Writing /tmp/v5_20210513_dan_j_williams_cxl_port_enumeration_and_plans_for_v5_14.mbx
+    Checking attestation on all messages, may take a moment...
+      [PATCH v4->v5 1/8] cxl/mem: Move some definitions to mem.h
+      [PATCH v4->v5 2/8] cxl/mem: Introduce 'struct cxl_regs' for "composable" CXL devices
+      [PATCH v4->v5 3/8] cxl/core: Rename bus.c to core.c
+      [PATCH v4->v5 4/8] cxl/core: Refactor CXL register lookup for bridge reuse
+      [PATCH     v5 5/8] cxl/acpi: Introduce ACPI0017 driver and cxl_root
+      [PATCH v4->v5 6/8] cxl/Kconfig: Default drivers to CONFIG_CXL_BUS
+      [PATCH     v5 7/8] cxl/port: Introduce cxl_port objects
+      [PATCH v4->v5 8/8] cxl/acpi: Add module parameters to stand in for ACPI tables
+    ---
+    Total patches: 8
+    ---
+    WARNING: v5 is a partial reroll from previous revisions
+             Please carefully review the resulting series to ensure correctness
+             Pass --no-partial-reroll to disable
 
 Best regards,
 -K
