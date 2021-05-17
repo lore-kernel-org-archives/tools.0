@@ -1,101 +1,67 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A99570
-	for <tools@linux.kernel.org>; Mon, 17 May 2021 17:11:19 +0000 (UTC)
-Received: by mail-ed1-f49.google.com with SMTP id w12so79934edx.1
-        for <tools@linux.kernel.org>; Mon, 17 May 2021 10:11:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D5E71
+	for <tools@linux.kernel.org>; Mon, 17 May 2021 22:01:54 +0000 (UTC)
+Received: by mail-qk1-f182.google.com with SMTP id i67so7409672qkc.4
+        for <tools@linux.kernel.org>; Mon, 17 May 2021 15:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PEXJf5Rwgx/QcJEXH8aKH6kGVr7ZCAU/l1JBcvmhzts=;
-        b=1ECYW9T/2BUFMhbKiOwVgfPjeL/pPO5DX+ugjCg3gNKc/XosDu8HOCFFSuVQClbTIb
-         I2ZD1dxcsF1K+kKIEkoy4n1Y7sQxJkJjwLEn5gopUR8AoRR3vnp5V9v0RPlBeoCiRQaY
-         oKzEXRafpGCg9sT2izShAsdNDHxS1fZoRhUeIqL+s5a+QnqNGGOATi9PZJlOoNADHes7
-         NRBpognmRGCNFxvrQGULXvMfUI/CYZyEEJ9ERDgn99pP6kzaxUSap576dah4as23oYwC
-         JAJlmi9Dt7ktgEkFAwaq+YIMNkmw8jPLARTUYIyNxhXuWaRqDRz43m/0qKkOFABL2FOx
-         l3nQ==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yMsxa5MCsvEU9c2pa3oxAB2KPmpiR2yeweWEqyhaoGA=;
+        b=eBWCdhueHnaCA1Gg/AFiO3GtTRVQ/EwpaIOeVTH8cUqFPjDsUMruvzMsuooNAhn2FQ
+         VqwJiCOdGO3BTI8kzvfzKYk3rSiMOa02+9FM3HFtg33Z1hyx33aSdzAD5+iISdZTYlL/
+         OsicZmhs9dKY1D8D8IQ7fDx3MDmXDUdRPmQlw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PEXJf5Rwgx/QcJEXH8aKH6kGVr7ZCAU/l1JBcvmhzts=;
-        b=RWmlWuu6Jf37g8WTNlUp2nzhKxPTqPyROo9XbPq3IaT7W6s08OdYBL7+k+tudZ4z2i
-         26z5ibkTu4O3dacmwbkwQjL1RbV53Lao0drOnbw/u01r4H5NEPmW8s+RYfdh8UuZXgNz
-         7oSD2VFK9IqjfALDhkrUoUyws3n+y3nuCvSTcSIBm4lTlPJymaTIahDxcwZ0TLBiCt2z
-         EWCF3voDRT+x9I3U8QdbwIW6E6HkL7AkGM7kQ6vOOgVOCMeH4O9/UJa4XYxo5/MKFCU8
-         A+iBqLbxEn12GxM/ztjR3NcU1fF31Um1WKxtlfidNQatrPmbsjCFuAjmiQijla2eOFeG
-         3UPQ==
-X-Gm-Message-State: AOAM533h4Vhg4cK3//mkhP0wDXucGdFD35iL7EGLav60RSHyUc7q59fu
-	xmbOL/Dc86Kk4jCSy6WubA0NkxsPfJzM/6V6rhyC2w==
-X-Google-Smtp-Source: ABdhPJzwPchOC/QrsCIwxsReIYjwvxqAoLcN2HXu1L7ybfexgfS7VOVhctJubl7A0KUoI4zmKj6rM5N05CTpAdumIwU=
-X-Received: by 2002:a50:fe8e:: with SMTP id d14mr1264094edt.97.1621271477582;
- Mon, 17 May 2021 10:11:17 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yMsxa5MCsvEU9c2pa3oxAB2KPmpiR2yeweWEqyhaoGA=;
+        b=Vjdvp0rKQ1DR/MgTAQoXQ0zgzdLLV6vzZVgweJTWNbVBA983wt0eb+D4QG6Md4LFpu
+         PftsguteC+Y89JggH/rUd4ofNHxtRfY9ssTZta8Cf85fph/n0+SLpEcIATjVWJvbu7ia
+         hrCmgnp7urvLr3eL/ptoHtgzle6AfxL1dH8IeU8dTIxyaA0MWK/rDVMj2NtA1EdtC63B
+         TVLnXTkCGQNjjJFnu5mI/RzSif8gFcdm7VwGLwp4+CDg4j0HxmeaMxqsN7/fadZFZS8O
+         VEkv86adjeAH/oAiVHC02okHKfT6EbaPERltPEVKSNwc7cyhGytIiPdbAgQHirCQoLf4
+         7VnQ==
+X-Gm-Message-State: AOAM532ZvZ0nNHJfnYXVBVG99B1H+NklopYNLf1/L6Ixs0YVbYpTv0SL
+	9Zko+5wcla0ux2vOqdGuAZcdAg==
+X-Google-Smtp-Source: ABdhPJzGOrQFpVfgTVs5MeCphwTCNounzWfCQuMKpG5+TrMSvIEKOxuPDDlz+J4AQh8ABTsBWv3cHg==
+X-Received: by 2002:a37:9d58:: with SMTP id g85mr2071229qke.426.1621288913606;
+        Mon, 17 May 2021 15:01:53 -0700 (PDT)
+Received: from nitro.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id 11sm11427802qky.71.2021.05.17.15.01.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 May 2021 15:01:53 -0700 (PDT)
+Date: Mon, 17 May 2021 18:01:51 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: tools@linux.kernel.org
+Subject: Re: [REQ] b4: Allow -m from stdin
+Message-ID: <20210517220151.b2bmt5f2jjlgmkos@nitro.local>
+References: <YFETLu8TKWI2WlSF@hirez.programming.kicks-ass.net>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CAPcyv4ggbuHbqKV33_TpE7pqxvRag34baJrX3yQe-jXOikoATQ@mail.gmail.com>
- <20210517161317.teawoh5qovxpmqdc@nitro.local>
-In-Reply-To: <20210517161317.teawoh5qovxpmqdc@nitro.local>
-From: Dan Williams <dan.j.williams@intel.com>
-Date: Mon, 17 May 2021 10:11:06 -0700
-Message-ID: <CAPcyv4hBp5R6ewJKm3_8zVeKPShBCfbCrxnmVQhvDu9qC9NAAg@mail.gmail.com>
-Subject: Re: b4 am support for partial series updates?
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YFETLu8TKWI2WlSF@hirez.programming.kicks-ass.net>
 
-On Mon, May 17, 2021 at 9:13 AM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Fri, May 14, 2021 at 03:50:21PM -0700, Dan Williams wrote:
-> > I recently had someone grumble at me about my requirement that they
-> > repost a full series just so "b4 am" could autograb the full set even
-> > though only a handful of patches changed.
-> >
-> > As an experiment I tried replying to a patch to update and marked it
-> > v5, but b4 am reports:
-> >
-> > # b4 am 162096970332.1865304.10280028741091576940.stgit@dwillia2-desk3.amr.corp.intel.com
-> > ...
-> > Writing ./v5_20210514_dan_j_williams_cxl_acpi_introduce_acpi0017_driver_and_cxl_root.mbx
-> >   ERROR: missing [1/8]!
-> >   ERROR: missing [2/8]!
-> >   ERROR: missing [3/8]!
-> >   ERROR: missing [4/8]!
-> >   [PATCH v5 5/8] cxl/acpi: Introduce ACPI0017 driver and cxl_root
-> >   ERROR: missing [6/8]!
-> >   ERROR: missing [7/8]!
-> >   ERROR: missing [8/8]!
-> >
->
-> Okay, the latest master will handle this situation:
->
->     Looking up https://lore.kernel.org/r/162096970332.1865304.10280028741091576940.stgit%40dwillia2-desk3.amr.corp.intel.com
->     Grabbing thread from lore.kernel.org/linux-acpi
->     Analyzing 13 messages in the thread
->     Partial reroll detected, reconstituting from v4
->     Will use the latest revision: v5
->     You can pick other revisions using the -vN flag
->     ---
->     Writing /tmp/v5_20210513_dan_j_williams_cxl_port_enumeration_and_plans_for_v5_14.mbx
->     Checking attestation on all messages, may take a moment...
->       [PATCH v4->v5 1/8] cxl/mem: Move some definitions to mem.h
->       [PATCH v4->v5 2/8] cxl/mem: Introduce 'struct cxl_regs' for "composable" CXL devices
->       [PATCH v4->v5 3/8] cxl/core: Rename bus.c to core.c
->       [PATCH v4->v5 4/8] cxl/core: Refactor CXL register lookup for bridge reuse
->       [PATCH     v5 5/8] cxl/acpi: Introduce ACPI0017 driver and cxl_root
->       [PATCH v4->v5 6/8] cxl/Kconfig: Default drivers to CONFIG_CXL_BUS
->       [PATCH     v5 7/8] cxl/port: Introduce cxl_port objects
->       [PATCH v4->v5 8/8] cxl/acpi: Add module parameters to stand in for ACPI tables
->     ---
->     Total patches: 8
->     ---
->     WARNING: v5 is a partial reroll from previous revisions
->              Please carefully review the resulting series to ensure correctness
->              Pass --no-partial-reroll to disable
+On Tue, Mar 16, 2021 at 09:21:02PM +0100, Peter Zijlstra wrote:
+> Hi,
+> 
+> Would it be possible for b4 to consume an mbox from stdin; something
+> like:
+> 
+> 	b4 am -sl -m - -o -
 
-Thank you, much appreciated!
+This is now supported by b4 master tip and will be in 0.7.
+
+E.g.:
+
+    curl -sL https://lore.kernel.org/linux-staging/20210517155733.GK1955@kadam/t.mbox.gz | gunzip - | b4 am -sl -m - -o -
+
+Best,
+-K
