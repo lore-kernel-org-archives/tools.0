@@ -1,78 +1,63 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE67F2FB1
-	for <tools@linux.kernel.org>; Wed, 26 May 2021 20:52:33 +0000 (UTC)
-Received: by mail-qk1-f180.google.com with SMTP id q10so2515975qkc.5
-        for <tools@linux.kernel.org>; Wed, 26 May 2021 13:52:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=tDhw09MQm5bH9RhpJoL4itoP9f0I+jlcZ1azTxhZLY4=;
-        b=oOpQIyjuPsy7+8ngIGxiU5IggxruDi99OjfhbPBoaibsjmMk+bjbsp+KkzOjYh4twr
-         /LReJYI9xS/Mil0LKIkGR7ds+FNPT32sjl3PczaYcLoq5p9zCYj27HzffQp60D9xodfj
-         HnODimH3v7Y6/IuczGiZBClat0oookh1wrGOXGmdEPfVbTUrmX2kU6f88mwgBv7dHTN4
-         gdeBvmC7SZfoF7Ultq48+ZNkmSh4IT4TfI/a4D9qVIaXM4ADI3ndf/R/FZow2NbRo+RC
-         DNxEXw9llrEGfrk20Vm89AgML/SFkSJr8KjJmN7TvapHQdd8aWLvO5anBnpHXKVyBFK9
-         Ou8g==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD0470;
+	Thu, 27 May 2021 07:56:38 +0000 (UTC)
+Received: by mail-ua1-f42.google.com with SMTP id f20so2319738uax.6;
+        Thu, 27 May 2021 00:56:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tDhw09MQm5bH9RhpJoL4itoP9f0I+jlcZ1azTxhZLY4=;
-        b=R+eO5vEBSEUke9bybkR4zWx9CKxCOnc2iymdHm4l4YUikOvldWexcU9OJNt2bXqkKd
-         SbUAQSx1ubNqPdPm0sFPbv3nIT9ZwtNFY1jORvxi4aTaAcIeOWnsENaMLEmRypIUPfOg
-         tsefw6MM1xvIeS4K8u/MNnRzj4HclVzaxuxM1TQ+X+jcU0X7Upc6yBR0ZJdPSfC7hSjg
-         3XmzpTSNXfbOsBJQJX50hHjIwNRtim/RF8at9rlCx16oKp0pRbprlOkrs8NA6qRE8oMx
-         vjQJ8WvdKjnE9qt9mMoU9S7t94jbYfFG+eO5fQsuw+1nrooT9cT7qgtxaDXkDEQXHeMK
-         jtyw==
-X-Gm-Message-State: AOAM531LB3TAT4mD39Js1zF0yEuKLKhmWYxooCFEvDcLOozkvk8cDDln
-	JkcG8vW0CnorR/PCakb+Zq784A==
-X-Google-Smtp-Source: ABdhPJxvqVcYmSeirHK4RmgzBWtODwKxeUPzeRUWczjSoGJaFBPPQwCNg5CLwCom3+tSwBVo1xa+/w==
-X-Received: by 2002:a37:917:: with SMTP id 23mr38903qkj.26.1622062352989;
-        Wed, 26 May 2021 13:52:32 -0700 (PDT)
-Received: from ziepe.ca ([206.223.160.26])
-        by smtp.gmail.com with ESMTPSA id d1sm85712qti.72.2021.05.26.13.52.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 May 2021 13:52:30 -0700 (PDT)
-Received: from jgg by mlx with local (Exim 4.94)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1lm0Vx-00FKs9-D2; Wed, 26 May 2021 17:52:29 -0300
-Date: Wed, 26 May 2021 17:52:29 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, users@linux.kernel.org
-Subject: Re: b4 v0.7.0 is available
-Message-ID: <20210526205229.GG1096940@ziepe.ca>
-References: <20210526192558.pex7tuorwqvkzxe3@nitro.local>
- <20210526194117.GF1096940@ziepe.ca>
- <20210526195642.h4yzvykpopuckffz@nitro.local>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FkZFpWElzyckGQkvVgTz5Fyyphx+xQ48ba3cRPmLKD4=;
+        b=tAkYSfnKbtGuP6aDcThJmCEsz7JNLW0/FGYydXfqlGH0Vcf0jRx7YAR+E8ViZpiLsE
+         9ugI57JEmKVI2xYATQotBf9WwFvDfHVeoX575RaV0KXO0Z4nZPu0VH9/RUbf9NKRo1Py
+         ZH6EvLMyQ47233zr3i7uyYNbmPLBMp2E58HPKaP21vu2jhcGCc9ILQLtTPLHDmzLeoyK
+         Q/xcwqObue/m7ccsQ0fNUc73YfK7nvwOnsMuzg1zLvBSFFU+x/9qEO98d++09se6wWes
+         4Y88lQNMvMJtjX+x5DK1bMOYY8CCqbF4X68UyqHMbngLp5+uVW/lIEMSYExNbgfCEpHv
+         jkFw==
+X-Gm-Message-State: AOAM53372LEQr0EImiUqyPdn7I2OjlrnY9XoSIJOegtRSrCB2RAYEYmT
+	hva+2VhRPAUni24iFKUy0wR0a6esj0g42D8qo58=
+X-Google-Smtp-Source: ABdhPJzFup4lzJ4/gfyXqhFZn8XlvFElFUxt14PcVWgkZ8rO+UPcPhMxisF25OkFQW9qX2ZlTSmGCrZk2bgv2BfuWA8=
+X-Received: by 2002:ab0:3d1:: with SMTP id 75mr241894uau.106.1622102197457;
+ Thu, 27 May 2021 00:56:37 -0700 (PDT)
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210526195642.h4yzvykpopuckffz@nitro.local>
+References: <20210526192558.pex7tuorwqvkzxe3@nitro.local>
+In-Reply-To: <20210526192558.pex7tuorwqvkzxe3@nitro.local>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Thu, 27 May 2021 09:56:25 +0200
+Message-ID: <CAMuHMdU5vyhHOZ7x-3d0uQqD9kSLBztaKBt9yq+pNGTmATHxCQ@mail.gmail.com>
+Subject: Re: b4 v0.7.0 is available
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, users@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, May 26, 2021 at 03:56:42PM -0400, Konstantin Ryabitsev wrote:
+Hi Konstantin,
 
-> We already do use patchwork-style patch hashes in b4, so perhaps a better
-> approach would be to closer integrate b4 with patchwork -- if simply on the
-> level of:
+Thanks for the new release!
 
-It would be a nice feature for b4 to be able to fetch "from"
-patchworks, for instance
+On Wed, May 26, 2021 at 9:26 PM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+> - b4 am will warn when it finds a message in the thread with an
+>   "Obsoleted-by:" follow-up trailer. Running "git am -c" will automatically
 
- $ b4 am https://patchwork.kernel.org/project/linux-rdma/list/?series=487923
+"b4 am -c"?
 
-"from" means b4 would go out and query patchworks for the list of
-message IDs that constitute series 487923 and then b4 fetch exactly
-those IDs in the usual way.
+>   retrieve the linked revision, so contributors can now follow-up to the
+>   obsoleted revisions by sending a follow-up reply with:
+>   Obsoleted-by: https://lore.kernel.org/r/new-revision-msgid
 
-I have a script already that does the patchworks side of the above
-using it's JSON API so it isn't too difficult
+Gr{oetje,eeting}s,
 
-Jason
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
