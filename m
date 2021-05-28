@@ -1,65 +1,51 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340AB70
-	for <tools@linux.kernel.org>; Fri, 28 May 2021 12:57:50 +0000 (UTC)
-Received: by mail-qk1-f174.google.com with SMTP id i67so3951699qkc.4
-        for <tools@linux.kernel.org>; Fri, 28 May 2021 05:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=o86Sw9NlihERQdCSgJ+8Poq2lzfP+gMHCpEwfImQFmw=;
-        b=iNC3Wwtd+UFAteMyy8y2Uy0m87ZATnju1D3DEvmNEbUy1Okl/97wfgp63yf+IS6tuS
-         8pmBHulPKM5D/+0wlXKUxovNwVXV+XoQpiHvSnOvjXGoK4HwSN7wbQAGPgwiH6ul1jkR
-         sxEn9r5vp89+KxvMkCwUnOiRgn9LlUGRHduNo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=o86Sw9NlihERQdCSgJ+8Poq2lzfP+gMHCpEwfImQFmw=;
-        b=fQ/ZnwlVE9cXJWGwYuikP+CcKV86C3FsxsM/WmwolSO7Ilc1JJ14T1AX64DGgA+owX
-         0jJBWOdM6E7KZwXmhccoIAfnEKqYYQcdKH+zcopdzUs1/O4/lUcPgOsCdSsuMfTvOfzx
-         ei1G6BMF8EpVN3QeUZwoD+bTJb3Rl7IAUQdFBrqugCnre+6VVN8IwNjPb8GoHychYeMg
-         elMCBAE/UScZD0QBF7p6CB1ZcAz1d2dlrlgvrpwCaAmqjRLWHU+KjI4wVl/+iJh26HB6
-         i3KR71UWr4+oLxJ/i2o4fNOrrAE31X92Z0Ez1OcGMVa+buLSr9UJ9u7dr8rGxySKcWZ7
-         1vzA==
-X-Gm-Message-State: AOAM533Q66kShK3Jh6qMFMoIvh9VoR7yt5LRaXLV6cH5BUFZcz0zq6L0
-	NpmrWBooIUvVwsNIV/XuCXBz1gXBllvHjLaaxyM=
-X-Google-Smtp-Source: ABdhPJy6lyZH2Fs8L72AVmDrBdvxW8vb98PBVsQJFhuq9yia+T2YHsOhzRTbjA5pExe+bZU02zI4Mg==
-X-Received: by 2002:a05:620a:704:: with SMTP id 4mr3722507qkc.66.1622206668999;
-        Fri, 28 May 2021 05:57:48 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id k124sm3311211qkc.132.2021.05.28.05.57.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 05:57:48 -0700 (PDT)
-Date: Fri, 28 May 2021 08:57:47 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, Kyle Meyer <kyle@kyleam.com>
-Subject: Re: [PATCH b4] Limit 'From mboxrd@z' replacement to start of message
-Message-ID: <162220659596.512204.6134246172288158737.b4-ty@linuxfoundation.org>
-References: <20210528042635.24959-1-kyle@kyleam.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4166D0E
+	for <tools@linux.kernel.org>; Fri, 28 May 2021 19:15:08 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A75FD611CA
+	for <tools@linux.kernel.org>; Fri, 28 May 2021 19:15:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1622229308;
+	bh=s2CDRo4NJ0eL+OtAW7w4V1BnZB15R6UeCvaMcjFb4iU=;
+	h=From:Date:Subject:To:From;
+	b=O3R1INSW74Et/l8KfBjPC6cCD8kUtiakEKHN8tsOhCPEKddS+snLbx5lULJKPPOag
+	 tSKOAhxqO3A2x3SDmoeS6j8Dr7NWmGuYIIYnCKLEyecNVg41lE8ro/RIAYPFZHr4Vx
+	 YnS1mCwDyv2gUQU8nIkhhmQe6KSCgCASICs0CaQzsg7IrfxUwIXmCB++Jo8wRxLpHN
+	 F/oy2byzs96A4mYJS1t6/lMB2jXALKzkeLzibOTNdhEXiYugbYAFaeCIMxNgsVR4jx
+	 oQIdEbTcAgvjUUYi+PBlu/mUbnT5DlW13abdY/bXciGuvFKdQSCcE9sszEhk8Lp9Yp
+	 x8ijJPoorMElg==
+Received: by mail-qv1-f54.google.com with SMTP id u33so2436128qvf.9
+        for <tools@linux.kernel.org>; Fri, 28 May 2021 12:15:08 -0700 (PDT)
+X-Gm-Message-State: AOAM532lG8n2mEXgRUC5Euf46Be26fXpPHTMs2Tz5YcQaCPsW8VEnyc3
+	0tlub0D92fjO8WYUWZOd5k+r6f0oy4VXaFMFLFI=
+X-Google-Smtp-Source: ABdhPJyIXYXdafsJkjxnisYqufRtG2a8CBC/MfVR4zHHqWVBCOtT0YnsRqjdbIr1Nn9+6AO3/4QBfjAXboRZ48Piri4=
+X-Received: by 2002:ad4:5343:: with SMTP id v3mr5607249qvs.45.1622229307890;
+ Fri, 28 May 2021 12:15:07 -0700 (PDT)
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210528042635.24959-1-kyle@kyleam.com>
+From: Luis Chamberlain <mcgrof@kernel.org>
+Date: Fri, 28 May 2021 12:14:56 -0700
+X-Gmail-Original-Message-ID: <CAB=NE6UdvJ3QdimXxbWVJr0+vTU+rkqjChtN-bgDyQ8VY83-TA@mail.gmail.com>
+Message-ID: <CAB=NE6UdvJ3QdimXxbWVJr0+vTU+rkqjChtN-bgDyQ8VY83-TA@mail.gmail.com>
+Subject: grokmirror and pi-piper for all emails on a list
+To: tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 28 May 2021 00:26:35 -0400, Kyle Meyer wrote:
-> save_git_am_mbox() replaces 'From mboxrd@z ' with 'From git@z ' to
-> make it clear that the output format is not mboxrd.  However, all
-> occurrences in the message are replaced, corrupting patches that
-> contain 'From mboxrd@z '.  Restrict the replacement to the first line
-> of the message.
+Dearly super-duper admins,
 
-Applied, thanks!
+I just read for the first time:
 
-[1/1] Limit 'From mboxrd@z' replacement to start of message
-      commit: 74c8e095354e5401a4fc02259f7871c40392b690
+https://people.kernel.org/monsieuricon/subscribing-to-lore-lists-with-grokmirror
 
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+And I am extremely excited. After trying it, it seems to work great!
+Just one thing, say I want to actually get all emails on the archive
+to be run through .procmail, how do I do that? So that it would seem I
+subscribed to a mailing list from the very beginning? It would be cool
+if I could do that per mailing list. For instance, I want to enable
+that for all my mailing lists except lkml.
+
+  Luis
