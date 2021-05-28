@@ -1,78 +1,83 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875636D14
-	for <tools@linux.kernel.org>; Fri, 28 May 2021 21:09:52 +0000 (UTC)
-Received: by mail-qt1-f174.google.com with SMTP id h24so3684159qtm.12
-        for <tools@linux.kernel.org>; Fri, 28 May 2021 14:09:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FjKJF5tACXJViANKGSA5makfbUOugxHaElcz4+R1lNQ=;
-        b=fFc0r7Pa/gPR2jTM01Wa6+TV2+m+pLJEw8wi4fD6hH+MGoY9M/orlTITDvaOfHdwEE
-         15ReAzhEk0/Y+YLGheUhbU8QLtwIDq3RsionNQOekYf/CQIvPOvyHH2u/qBQ/8xsAV7q
-         2A7J94Tj8Yn8dSBX2XuOOpMjslrAjBPnLUTrI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FjKJF5tACXJViANKGSA5makfbUOugxHaElcz4+R1lNQ=;
-        b=O9FkNNWMRROlbQLQZE3SYAwwzSA3zB6YjnluN1cpXd/5Fr55tc8raWj+3DfRMv4gWU
-         Ck2WgLQt+vjsNkGXxczutnuvSEn7FqEPeo9kvcOn4wlS2MnyyyXjdgdfmm7W23WKj8fH
-         ZqlwrdgSn+MFFontzZ1xdUJLJJSb+fLqd2CLmiezlYAa/1lkqsQNN7qiW7qLbWt9IyCI
-         OX+vLoGkFKrqJngyc8c87CSCUoNO7CnG611rHUz3sDlszxifgHP+vASWClZRHXBhMTbW
-         zZxHBIN2LFT2uHaqjobygqIdOJeZ5tsXRM7CmwnSnb2wQWwT6uQLpALCueajxRZLCOtF
-         O/Og==
-X-Gm-Message-State: AOAM533CHisSADQ6vWGzGabMBmAGjaCTIhBRQmvkM30vEstG5Xnsy7oc
-	Q3Mx/CHEOJasdIVxRlyrsSYFZQ==
-X-Google-Smtp-Source: ABdhPJzqeNQeACN0MBb+ux8+F9JlhUE0znn0Jq/qeE/xQjwEpO+M7+FB+cSldli+PyBFBZjF+cnQDg==
-X-Received: by 2002:ac8:5c8d:: with SMTP id r13mr5330276qta.69.1622236191408;
-        Fri, 28 May 2021 14:09:51 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id y13sm4089412qkj.84.2021.05.28.14.09.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 14:09:51 -0700 (PDT)
-Date: Fri, 28 May 2021 17:09:49 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: grokmirror and pi-piper for all emails on a list
-Message-ID: <20210528210949.xum3ya7fsucofenp@nitro.local>
-References: <CAB=NE6UdvJ3QdimXxbWVJr0+vTU+rkqjChtN-bgDyQ8VY83-TA@mail.gmail.com>
- <20210528193834.mwf6qvuw6wng7yoz@nitro.local>
- <CAB=NE6We=Vr8hDOBVmfiZxZyDqJXXfA9yz5t13aqMwdrp7pBZA@mail.gmail.com>
- <20210528195320.c2vbhfg3zj365ebw@nitro.local>
- <CAB=NE6WTiopsyy=yGrpaGECqP_m7ANhpCjDEtE+C1x-Jz1pqpA@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519B870
+	for <tools@linux.kernel.org>; Fri, 28 May 2021 22:43:11 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id EE2CD61183
+	for <tools@linux.kernel.org>; Fri, 28 May 2021 22:43:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1622241791;
+	bh=PgkHbqieNOdv21lwIsQAXU88e06TwVZa6GOktuB4RYo=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=ISIIPw/qhAj8oUh0FxnGtWlvp8QNdbhbdXhuELlhVRq/7UhHxWo5EgeXA5f1S6Ztp
+	 6iS6vR9T4VuqLJPoIgMfug2aG0iMarXh/lIrWN+aXXkdoUfwMFFiDnIkUb0PIuI/yj
+	 1u+lBqgUF1fmX3tIlWiUeAA+515XzuiHcGe5Ed5SPm4Z3SFN3NmFn/t3kvDqtBI2qb
+	 paz6h+sPnqgnx3V9og0t0xAGS8K4KyK8u+YWm3mumaNCdZznLKAsWZn3JgkzDVpuIE
+	 YIERVOKANlYHIBaQOO7qc7dnbSC/JN5zlBSseLRH4HgFFMgRSar3MJooa5Pz4dWq9o
+	 poH4x6GyoSRdw==
+Received: by mail-qt1-f170.google.com with SMTP id v4so3871838qtp.1
+        for <tools@linux.kernel.org>; Fri, 28 May 2021 15:43:10 -0700 (PDT)
+X-Gm-Message-State: AOAM531hLnvsz0M5Zbr0EeVcpcyD+lhawT02pFpWv7hpCo4RqJ/Mt8oN
+	0grq/LqS/+gS/VGUXqffkExMCZWmpi1cOcmyWDQ=
+X-Google-Smtp-Source: ABdhPJzMyFZKMGQKLao6jfjH/Zrauzzckp1+B4pfp+mdHNafZK+vej1uzLkrCsc6vUrniQScnk6kQPheNU6LEa04swY=
+X-Received: by 2002:ac8:4750:: with SMTP id k16mr5574541qtp.13.1622241790165;
+ Fri, 28 May 2021 15:43:10 -0700 (PDT)
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAB=NE6WTiopsyy=yGrpaGECqP_m7ANhpCjDEtE+C1x-Jz1pqpA@mail.gmail.com>
+References: <CAB=NE6UdvJ3QdimXxbWVJr0+vTU+rkqjChtN-bgDyQ8VY83-TA@mail.gmail.com>
+ <20210528193834.mwf6qvuw6wng7yoz@nitro.local> <CAB=NE6We=Vr8hDOBVmfiZxZyDqJXXfA9yz5t13aqMwdrp7pBZA@mail.gmail.com>
+ <20210528195320.c2vbhfg3zj365ebw@nitro.local> <CAB=NE6WTiopsyy=yGrpaGECqP_m7ANhpCjDEtE+C1x-Jz1pqpA@mail.gmail.com>
+ <CAB=NE6X5uUWA7Sfu_qvz2smddgc4euBT-x7xGs8=7+K-W5v2RQ@mail.gmail.com>
+In-Reply-To: <CAB=NE6X5uUWA7Sfu_qvz2smddgc4euBT-x7xGs8=7+K-W5v2RQ@mail.gmail.com>
+From: Luis Chamberlain <mcgrof@kernel.org>
+Date: Fri, 28 May 2021 15:42:58 -0700
+X-Gmail-Original-Message-ID: <CAB=NE6VF1W-Wdp9+cmb-ehJ2Gf5_1yqYxNd1qp3Z=acgbYUe3w@mail.gmail.com>
+Message-ID: <CAB=NE6VF1W-Wdp9+cmb-ehJ2Gf5_1yqYxNd1qp3Z=acgbYUe3w@mail.gmail.com>
+Subject: Re: grokmirror and pi-piper for all emails on a list
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, May 28, 2021 at 01:34:03PM -0700, Luis Chamberlain wrote:
-> And, indeed I see it now chugging on procmail doing all the emails.
-> Indeed, I can see this is going to take a while. If only mail
-> processing was parallelized :) Thanks for all this!
-> 
-> > > > Also of note is that the upcoming "lei" tool from public-inbox is going to be
-> > > > a much more robust approach to doing what pi-piper does. I really wrote it
-> > > > mostly so we could feed lore lists into patchwork. :)
-> > >
-> > > Whoa, ok so, before I go on raving about this, I should wait instead
-> > > and rave about lei later?
-> >
-> > You can use lei right now if you like -- I believe it is fairly stable.
-> 
-> Where do I find such a treasure?
+On Fri, May 28, 2021 at 1:46 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
+>
+> Figured folks might be interested... it took only about 5 minutes on
+> the first run, the second run, with my settings took about 8 minutes.
+> Not too shabby (nvme drives)!
 
-For the moment, mostly by cloning https://public-inbox.org/public-inbox.git
-and then reading Documentation/lei-*
+It ran fast as it only processed lkml, but 8 minutes for processing
+the latest epoch for lkml is also not too bad. Anyway let me know if
+anyone has any idea of the following:
 
-The best place to ask follow-up questions would be on meta@public-inbox.org.
+So after some debugging I am seeing that with a setup as follows,
+running grok-pull -c ~/.config/lore.conf seems to not run pi-piper if
+any of the repos being processed doesn't need an update. If I actually
+also force the pi-paper.latest to each repo to say, the last 3rd
+commit, I still don't see the last 3 emails coming up. But if I run
+manually against reach repo like this:
 
-Best,
--K
+grok-pi-piper -c ~/.config/pi-piper.conf
+.local/share/grokmirror/lore/linux-fsdevel/git/0.git/
+
+Then it triggers it to deliver mail as expected. So I am thinking the
+following config may be missing something to force the post hook to
+really run for each repo, or there may be a bug somewhere. I removed
+the new lines from the include as it was not clear if having each
+target repo per line is fine. And if you have each repo, if spaces are
+allowed, or tabs are allowed.
+
+$ cat .config/lore.conf
+[core]
+toplevel = ~/.local/share/grokmirror/lore
+log = ${toplevel}/grokmirror.log
+
+[remote]
+site = https://lore.kernel.org
+manifest = https://lore.kernel.org/manifest.js.gz
+
+[pull]
+post_update_hook = ~/.local/bin/grok-pi-piper -c ~/.config/pi-piper.conf
+refresh = 300
+include = /linux-fsdevel/* /linux-block/* /linux-btrfs/* /linux-xfs/* /lkml/*
