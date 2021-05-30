@@ -1,83 +1,142 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519B870
-	for <tools@linux.kernel.org>; Fri, 28 May 2021 22:43:11 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id EE2CD61183
-	for <tools@linux.kernel.org>; Fri, 28 May 2021 22:43:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1622241791;
-	bh=PgkHbqieNOdv21lwIsQAXU88e06TwVZa6GOktuB4RYo=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=ISIIPw/qhAj8oUh0FxnGtWlvp8QNdbhbdXhuELlhVRq/7UhHxWo5EgeXA5f1S6Ztp
-	 6iS6vR9T4VuqLJPoIgMfug2aG0iMarXh/lIrWN+aXXkdoUfwMFFiDnIkUb0PIuI/yj
-	 1u+lBqgUF1fmX3tIlWiUeAA+515XzuiHcGe5Ed5SPm4Z3SFN3NmFn/t3kvDqtBI2qb
-	 paz6h+sPnqgnx3V9og0t0xAGS8K4KyK8u+YWm3mumaNCdZznLKAsWZn3JgkzDVpuIE
-	 YIERVOKANlYHIBaQOO7qc7dnbSC/JN5zlBSseLRH4HgFFMgRSar3MJooa5Pz4dWq9o
-	 poH4x6GyoSRdw==
-Received: by mail-qt1-f170.google.com with SMTP id v4so3871838qtp.1
-        for <tools@linux.kernel.org>; Fri, 28 May 2021 15:43:10 -0700 (PDT)
-X-Gm-Message-State: AOAM531hLnvsz0M5Zbr0EeVcpcyD+lhawT02pFpWv7hpCo4RqJ/Mt8oN
-	0grq/LqS/+gS/VGUXqffkExMCZWmpi1cOcmyWDQ=
-X-Google-Smtp-Source: ABdhPJzMyFZKMGQKLao6jfjH/Zrauzzckp1+B4pfp+mdHNafZK+vej1uzLkrCsc6vUrniQScnk6kQPheNU6LEa04swY=
-X-Received: by 2002:ac8:4750:: with SMTP id k16mr5574541qtp.13.1622241790165;
- Fri, 28 May 2021 15:43:10 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE4371
+	for <tools@linux.kernel.org>; Sun, 30 May 2021 16:26:47 +0000 (UTC)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 20A035C00D5;
+	Sun, 30 May 2021 12:26:47 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Sun, 30 May 2021 12:26:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pbarker.dev; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=fm1; bh=t7WS8cAweSbJCkrAqapwJUVjwp
+	VWQZWYMisPN+ItafY=; b=cCLyF1SloS1HPcu3ILavDzoWj0TD87lUGNe/Gc5xwa
+	0x9LxGVgLj6uRhUteqqgRSHPCTZv/xtigavQT0sCltdw7oxZq/OMIiVjQpahB2Fk
+	9Jgfi1TbnWzE54xQ42U1ni7oTghdiuQ1Sth4c+ke8qxWrH7RsGlve7h4SSdr227u
+	VpWuyLbNa65snY8YwxjlPWT07w7SXhbQw3gffZuNzOYv6hcDE50g31h5zj2+2gWG
+	2yMRazsU/pPNBpO06g1xgsSWYaP2bi0DGjycNxTmi1fvwjZOIlh+g4XKSBzwYtbe
+	yt2PVlCl1pRCep6ZsPFN78XJadkS3lOK/81XMEkAA+mw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:date:from
+	:message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=t7WS8cAweSbJCkrAq
+	apwJUVjwpVWQZWYMisPN+ItafY=; b=mZMgPtGWw/qLo05mNlgiqi9pRNkZCXkJ1
+	KaQbr6C9UtIPF0msIGJZheoANw3ikb3JLxcwGvEO19ekXJUTdz7OVFJz8dqmFFLW
+	k6oZLIS0R0CCMzO5QtyqzWzImwlwktKS3d3AFvHZdewH1eRGGrLdNmobCs62Yosb
+	PxEjBAo5L8w5WjDosc6pqbSilxyCLfyU7rie3s4zni7rX82khPH3WKQOLl6DEarn
+	kXyOcp/SnnWmffMaccRTC4H9e5LbNbWIVaa/+cY6Lo7r2UZBQeuh0z+1hM1QuZ4c
+	R/Qe1w+JknHyjCmR6WajanNe0eJLomyKnfP1JAOn2DboV7kzbgSCg==
+X-ME-Sender: <xms:xryzYAL4hV58MaXY4UNgOnSW6vj6M0GfxWWfMIHOHwmyAz5vKLdtVw>
+    <xme:xryzYAKBqkGiJIO2mpI37DSjk3Ra4dcsrKB5fBc-C6SbdKZbjNVDD6EZi4SSoJNac
+    Pn8f3iRUqfbzleHCa4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeluddguddtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefhvffufffkofgggfestdekredtredttdenucfhrhhomheprfgruhhluceu
+    rghrkhgvrhcuoehprghulhesphgsrghrkhgvrhdruggvvheqnecuggftrfgrthhtvghrnh
+    epteefleelheeugeejudegiedttddvffdvleefgfdvudegkeduleegudeihfeijedunecu
+    kfhppeektddrjedrudeitddrkedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphgruhhlsehpsggrrhhkvghrrdguvghv
+X-ME-Proxy: <xmx:xryzYAsSucakjompo5aA9lOpPvyKcUh20QA5lpgN8LUClL5MT3rwxQ>
+    <xmx:xryzYNb8CVTYXwlRjLk3so3okK5mU4clU86lS6LrSKsPzCsFRxPi9w>
+    <xmx:xryzYHav9KYxMf1XC7EP3Eu1y5GXSNoPwPsQmLFfF74__ZBPf04XiQ>
+    <xmx:x7yzYIBF9Ci7tC_YeKHvJLKVg_nu7LOdzs4oUOFDzkOrLO_s3SCqQQ>
+Received: from dev.home.b5net.uk (cpc76132-clif11-2-0-cust80.12-4.cable.virginm.net [80.7.160.81])
+	by mail.messagingengine.com (Postfix) with ESMTPA;
+	Sun, 30 May 2021 12:26:46 -0400 (EDT)
+From: Paul Barker <paul@pbarker.dev>
+To: tools@linux.kernel.org,
+	Konstantin Ryabitsev <konstantin.ryabitsev@linux.dev>
+Cc: Paul Barker <paul@pbarker.dev>
+Subject: [patatt][PATCH] Handle MIME encoded-word & other header manglings
+Date: Sun, 30 May 2021 17:26:25 +0100
+Message-Id: <20210530162625.31243-1-paul@pbarker.dev>
+X-Mailer: git-send-email 2.31.1
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CAB=NE6UdvJ3QdimXxbWVJr0+vTU+rkqjChtN-bgDyQ8VY83-TA@mail.gmail.com>
- <20210528193834.mwf6qvuw6wng7yoz@nitro.local> <CAB=NE6We=Vr8hDOBVmfiZxZyDqJXXfA9yz5t13aqMwdrp7pBZA@mail.gmail.com>
- <20210528195320.c2vbhfg3zj365ebw@nitro.local> <CAB=NE6WTiopsyy=yGrpaGECqP_m7ANhpCjDEtE+C1x-Jz1pqpA@mail.gmail.com>
- <CAB=NE6X5uUWA7Sfu_qvz2smddgc4euBT-x7xGs8=7+K-W5v2RQ@mail.gmail.com>
-In-Reply-To: <CAB=NE6X5uUWA7Sfu_qvz2smddgc4euBT-x7xGs8=7+K-W5v2RQ@mail.gmail.com>
-From: Luis Chamberlain <mcgrof@kernel.org>
-Date: Fri, 28 May 2021 15:42:58 -0700
-X-Gmail-Original-Message-ID: <CAB=NE6VF1W-Wdp9+cmb-ehJ2Gf5_1yqYxNd1qp3Z=acgbYUe3w@mail.gmail.com>
-Message-ID: <CAB=NE6VF1W-Wdp9+cmb-ehJ2Gf5_1yqYxNd1qp3Z=acgbYUe3w@mail.gmail.com>
-Subject: Re: grokmirror and pi-piper for all emails on a list
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri, May 28, 2021 at 1:46 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
->
-> Figured folks might be interested... it took only about 5 minutes on
-> the first run, the second run, with my settings took about 8 minutes.
-> Not too shabby (nvme drives)!
+When testing patatt with patches sent to a sr.ht hosted mailing list, it
+was found that long header lines (such as the X-Developer-Signature
+line) were re-encoded using the MIME encoded-word syntax (RFC 2047) when
+an mbox archive is generated, causing patatt to choke on the resulting
+text which looks like this:
 
-It ran fast as it only processed lkml, but 8 minutes for processing
-the latest epoch for lkml is also not too bad. Anyway let me know if
-anyone has any idea of the following:
+    X-Developer-Signature: v=1; a=openpgp-sha256; l=672; h=from:subject;
+     bh=C40yOKgIfnNIUP+OW9WyPdBfljkZPpfUL1NepOODlx8=; =?utf-8?q?b=3DowGbwMvMwCF2?=
+     =?utf-8?q?w7xIXuiX9CvG02pJDAmb67lTNi0+IeF97TL76vtKD7xjSjaluz0o/KfmZLX8rMi7_?=
+     =?utf-8?q?l3M6O0pZGMQ4GGTFFFl2z951+fqDJVt7b0gHw8xhZQIZwsDFKQATydFhZJi+fFfvJ?=
+     =?utf-8?q?8+0MF7GrfzWnP?=
+     K7mAM/3n/r/UC+bprf6/g114QYGdbHcsaK7b1nanfA4IeZi1V0lL26cruXUWxgSEnNDP1FrAA=
 
-So after some debugging I am seeing that with a setup as follows,
-running grok-pull -c ~/.config/lore.conf seems to not run pi-piper if
-any of the repos being processed doesn't need an update. If I actually
-also force the pi-paper.latest to each repo to say, the last 3rd
-commit, I still don't see the last 3 emails coming up. But if I run
-manually against reach repo like this:
+Avoiding this issue by neatly wrapping the X-Developer-Signature header
+before sending doesn't appear to be possible without making invasive
+changes to git-send-email and/or the Net::SMTP perl module. The header
+content generated by patatt is wrapped at 78 characters as can be seen
+here from a locally signed patch file:
 
-grok-pi-piper -c ~/.config/pi-piper.conf
-.local/share/grokmirror/lore/linux-fsdevel/git/0.git/
+    X-Developer-Signature: v=1; a=openpgp-sha256; l=672; h=from:subject;
+    bh=C40yOKgIfnNIUP+OW9WyPdBfljkZPpfUL1NepOODlx8=;
+    b=owGbwMvMwCF2w7xIXuiX9CvG02pJDAmbN1xO2bT4hIT3tcvsq+8rPfCOKdmU7vag8J+ak9XysyLv
+    Xs7p7ChlYRDjYJAVU2TZPXvX5esPlmztvSEdDDOHlQlkCAMXpwBMpG0Dw/9Kpzgpc8UsQwOPK/taW6
+    dFnZyy5QlXPfNCC4WTc76ft9ZnZJjI37a17fP7sxvclKJ1tm36EhITcK62Pphje9KrmOxMJg4A
 
-Then it triggers it to deliver mail as expected. So I am thinking the
-following config may be missing something to force the post hook to
-really run for each repo, or there may be a bug somewhere. I removed
-the new lines from the include as it was not clear if having each
-target repo per line is fine. And if you have each repo, if spaces are
-allowed, or tabs are allowed.
+Running `git send-email --smtp-debug=1 0001.patch` shows that this is
+joined into a single long line before the message is sent:
 
-$ cat .config/lore.conf
-[core]
-toplevel = ~/.local/share/grokmirror/lore
-log = ${toplevel}/grokmirror.log
+    Net::SMTP::_SSL=GLOB(0x5646fbdc3ac8)>>> X-Developer-Signature: v=1; a=openpgp-sha256; l=672; h=from:subject; bh=C40yOKgIfnNIUP+OW9WyPdBfljkZPpfUL1NepOODlx8=; b=owGbwMvMwCF2w7xIXuiX9CvG02pJDAmb571P2bT4hIT3tcvsq+8rPfCOKdmU7vag8J+ak9XysyLv Xs7p7ChlYRDjYJAVU2TZPXvX5esPlmztvSEdDDOHlQlkCAMXpwBM5JA3I8O5hP6Tqm7lJst0rldcux 1V7M4q8T5o1fPU6Zs+hxj+SjvN8D/DK3rn8b0m34/Xy388Yeu8jvFdJf/c6Y6LDU7Hulj01nAAAA==
 
-[remote]
-site = https://lore.kernel.org
-manifest = https://lore.kernel.org/manifest.js.gz
+So we need to accept that the X-Developer-Signature line may be quite
+long and so may be re-encoded by a mail server or archiver.
 
-[pull]
-post_update_hook = ~/.local/bin/grok-pi-piper -c ~/.config/pi-piper.conf
-refresh = 300
-include = /linux-fsdevel/* /linux-block/* /linux-btrfs/* /linux-xfs/* /lkml/*
+The Python email.header module provides the decode_header() and
+make_header() functions which can be used to handle MIME encoded-word
+syntax or other header manglings which may occur. The decode_header()
+function requires a str argument so we must decode our bytes before
+using this function. Thankfully, RFC 2822 makes life easy here as it
+says that all header content must be composed of US-ASCII characters
+(see section 2.2 of the RFC) so decoding is straightforward. The header
+content is re-encoded into bytes after un-mangling to avoid having to
+modify every other location in patatt where the header content is
+accessed.
+
+Signed-off-by: Paul Barker <paul@pbarker.dev>
+---
+ patatt/__init__.py | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/patatt/__init__.py b/patatt/__init__.py
+index 460d282..4e4d5c7 100644
+--- a/patatt/__init__.py
++++ b/patatt/__init__.py
+@@ -91,7 +91,7 @@ class DevsigHeader:
+ 
+     def from_bytes(self, hval: bytes) -> None:
+         self.hval = DevsigHeader._dkim_canonicalize_header(hval)
+-        hval = re.sub(rb'\s*', b'', hval)
++        hval = re.sub(rb'\s*', b'', self.hval)
+         for chunk in hval.split(b';'):
+             parts = chunk.split(b'=', 1)
+             if len(parts) < 2:
+@@ -392,6 +392,14 @@ class DevsigHeader:
+ 
+     @staticmethod
+     def _dkim_canonicalize_header(hval: bytes) -> bytes:
++        # The decode_header() function we're about to call requires a str
++        # argument. Since RFC2822 (sec 2.2), header fields must be ASCII
++        # characters so this is easy to achieve.
++        hval = hval.decode('ascii')
++        # Handle MIME encoded-word syntax or other types of header encoding
++        hval = str(email.header.make_header(email.header.decode_header(hval)))
++        # Convert the header back into bytes for further processing
++        hval = hval.encode('utf-8')
+         # We only do relaxed for headers
+         #    o  Unfold all header field continuation lines as described in
+         #       [RFC5322]; in particular, lines with terminators embedded in
+-- 
+2.31.1
+
