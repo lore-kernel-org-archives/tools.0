@@ -1,94 +1,126 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F42E173
-	for <tools@linux.kernel.org>; Sun, 30 May 2021 16:36:29 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 8BB2C5C009C;
-	Sun, 30 May 2021 12:36:28 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Sun, 30 May 2021 12:36:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pbarker.dev; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding; s=fm1; bh=US2fBDYPGB7MC0SfPEk6UG+qA0
-	SYV1wNnUSOzIvC6zg=; b=djGypxmxKxnWivUJupDgY5GbXH1OzNLJgfbt5o/97W
-	JaandYz43EjyBGkTE6qaAUWY6W4KPvMS4o7/NULMwndqmv02KGvpiGUaCTCilhR7
-	2MPCGNpAlyeLHD0vDl3D7LdUVA9snePSYx+9iUnm0XPQj9Yl/CIhcxtClXIlmza7
-	KyLhHGarOyADoc7YDDtUVQ9ahAEFVu/EsCJCFgAJAOA9BBZLk61HfCoZVZr5YLdy
-	UJCHCj5ISqEjoY5ejx2kJEuLV+l2jn/5CFhRmMG8cEWJg1mW78byy3jZZiLdjKFb
-	YBH1aE75w5aLjaFCBC8WRNxsNg9dJR15oRNjLUezPzKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:date:from
-	:message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=US2fBDYPGB7MC0SfP
-	Ek6UG+qA0SYV1wNnUSOzIvC6zg=; b=mLahX5jKuLm6t1MBVdN6J/AMnnXmWceqW
-	E0u1Y+fYX5rkJejKq3XJHiclifeCFHwTSGoKjWtKRIE4QOEOKnk+esv6m5+tHh8a
-	TZfFWAP9HWE2ntETVM/kmZ5bEYEaqjea1sibWyfk92Wt1u6MLHQnnooOrCkyVaVU
-	mvITDiJFMbH/wfqfjZLvpeMuAITH+JX1+GePBDTOwFhSOx0czd8KFEVTXbvIUjDx
-	2tQtAjfmVmmqcCQIhs9mFjikumzSpGixl+y2qLOdv9BZ5IaIRDls1bYC7E03N3ks
-	JZcH03j689rouLA49e+pkLxkwhnaFtoLL95tqDeAMbQbavcStHdTg==
-X-ME-Sender: <xms:DL-zYFfAvjyWpatihPqCoJ7QfHOlLyYT1nsH3bKQQnzvWmQiWRrlSQ>
-    <xme:DL-zYDMrMEgFPPp6yNNbG9gO2-MeHB6ISByUAT6-zRY6BSOE3FLml81TwWxPZWvG-
-    vB44jv8MYRAwwMEpCE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeluddguddtfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefhvffufffkofgggfestdekredtredttdenucfhrhhomheprfgruhhluceu
-    rghrkhgvrhcuoehprghulhesphgsrghrkhgvrhdruggvvheqnecuggftrfgrthhtvghrnh
-    epteefleelheeugeejudegiedttddvffdvleefgfdvudegkeduleegudeihfeijedunecu
-    kfhppeektddrjedrudeitddrkedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepphgruhhlsehpsggrrhhkvghrrdguvghv
-X-ME-Proxy: <xmx:DL-zYOiOtge6-OaBP9pVoWx99DoRlloP2amdfein_mUwqaQkXbcTeQ>
-    <xmx:DL-zYO-04n_yjrkD1jJN46k_dFT3Ub7ChHHD-j4i8vAxK1Q4UgktcA>
-    <xmx:DL-zYBuIrWxSLEs8Rs09c-hojA86Fifp7vKof1TtKfgFJAPKB43ARg>
-    <xmx:DL-zYP2gH0lSe1HhQZmGygVURLHazv-OWvkAbfdLon0hz0mEbRZnEA>
-Received: from dev.home.b5net.uk (cpc76132-clif11-2-0-cust80.12-4.cable.virginm.net [80.7.160.81])
-	by mail.messagingengine.com (Postfix) with ESMTPA;
-	Sun, 30 May 2021 12:36:27 -0400 (EDT)
-From: Paul Barker <paul@pbarker.dev>
-To: tools@linux.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19B2173
+	for <tools@linux.kernel.org>; Mon, 31 May 2021 13:05:02 +0000 (UTC)
+Received: by mail-qk1-f174.google.com with SMTP id i5so11072875qkf.12
+        for <tools@linux.kernel.org>; Mon, 31 May 2021 06:05:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dq4zPreHho3NrJsxC26qXMMb18vBNM5OoTUeFvap5q0=;
+        b=ZwR7qNmAryE+psOz5LIWDglcxJeSl02+LSK3qjkIJFskcdvxstqTEO3h+G0Od/zCa3
+         FELK4HF8cwR33iFPnoa+V8DnC7Eqa2+gDeGRGaz0tVkSJuQC7jH3qiQtCAydRQc9nlpf
+         agZKb4Ek9H+7/ooJz2IOjPfXBIlM0Y5UgNoAk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dq4zPreHho3NrJsxC26qXMMb18vBNM5OoTUeFvap5q0=;
+        b=d7xAnvl7oZ16ttLlyqjkeZmJPifGbI5EMB4Knakzk9kVeTj5iERT2gCkc97YJsZld3
+         AxAtRBbcEUpR4bd3vDXu9P773hxfcqPJbg2j1FPkm2+6phSSBSsRm9mQ1heR0GkBuWt+
+         35lm3VACp5LIn1gERbsJUxRYUGTjWeDY9FmCCGv4xyCYYEprChApzT3zbV3k8D2eA3y5
+         P8HgWiJldL0XnDdEpI7oM1l6CAZPOGgIF5XYtWk3AQBpy/OmIDIlbx3fI24nPnqro9BS
+         +7rjLG/LQqO+0G19623eDSPlzs86Fh/S3fkGdJPREHYo7ipx+11XSLEqvGFouBxZZ4/l
+         OfSg==
+X-Gm-Message-State: AOAM533S3v0KNksA9riJxIDL6NU/+2meoWPNmGX9rJuIFTk5Usg1nojo
+	XPyP/azUrSIO7v0XHJZ54pImQw==
+X-Google-Smtp-Source: ABdhPJybsqnX5IGONpSNGELXWcy0rsT4CqYQdJO5cxQbjcyhhTMnzOGrn7wG9MhgaU73wASlwjYqOQ==
+X-Received: by 2002:a37:6787:: with SMTP id b129mr16010462qkc.276.1622466301770;
+        Mon, 31 May 2021 06:05:01 -0700 (PDT)
+Received: from nitro.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id z17sm9042785qkb.59.2021.05.31.06.05.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 May 2021 06:05:01 -0700 (PDT)
+Date: Mon, 31 May 2021 09:04:59 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Paul Barker <paul@pbarker.dev>
+Cc: tools@linux.kernel.org,
 	Konstantin Ryabitsev <konstantin.ryabitsev@linux.dev>
-Cc: Paul Barker <paul@pbarker.dev>
-Subject: [patatt][PATCH] Make instructions for automatic signing more reliable
-Date: Sun, 30 May 2021 17:36:23 +0100
-Message-Id: <20210530163623.926-1-paul@pbarker.dev>
-X-Mailer: git-send-email 2.31.1
+Subject: Re: [patatt][PATCH] Handle MIME encoded-word & other header manglings
+Message-ID: <20210531130459.w4tqleti5i5cgkme@nitro.local>
+References: <20210530162625.31243-1-paul@pbarker.dev>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1179; h=from:subject; bh=dQWwQhUhEndiEH/t8Wgdgv0Hq6LDonwfAuE5tPI5ORk=; b=owGbwMvMwCF2w7xIXuiX9CvG02pJDAmb97MwWc+doHBs/4ZLz5vEjstXZWx9/CPKxn+D4fZD8SrX 5dau7ShlYRDjYJAVU2TZPXvX5esPlmztvSEdDDOHlQlkCAMXpwBM5GYmI0NTxcJ/Mm9arOd6NZ5oFm /pEpGv3rn4qnrMVV3hD2URkoUM/8zOreveaKJ7UObWoRvZLtGc9ho1SxqqIvM+V69osin4yQEA
-X-Developer-Key: i=paul@pbarker.dev; a=openpgp; fpr=D2DDFDAE30017AF4CB62AA96A67255DFCCE62ECD
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210530162625.31243-1-paul@pbarker.dev>
 
-We can't assume that the git directory path is '.git' from the root of
-the source tree. For example, this is not the correct path if patatt is
-checked out as a git submodule. We should use `git rev-parse --git-dir`
-to reliably determine the git directory path. We should also surround
-the path in quotes in case the user has cloned patatt in a path
-containing spaces.
+On Sun, May 30, 2021 at 05:26:25PM +0100, Paul Barker wrote:
+> When testing patatt with patches sent to a sr.ht hosted mailing list, it
+> was found that long header lines (such as the X-Developer-Signature
+> line) were re-encoded using the MIME encoded-word syntax (RFC 2047) when
+> an mbox archive is generated, causing patatt to choke on the resulting
+> text which looks like this:
+> 
+>     X-Developer-Signature: v=1; a=openpgp-sha256; l=672; h=from:subject;
+>      bh=C40yOKgIfnNIUP+OW9WyPdBfljkZPpfUL1NepOODlx8=; =?utf-8?q?b=3DowGbwMvMwCF2?=
+>      =?utf-8?q?w7xIXuiX9CvG02pJDAmb67lTNi0+IeF97TL76vtKD7xjSjaluz0o/KfmZLX8rMi7_?=
+>      =?utf-8?q?l3M6O0pZGMQ4GGTFFFl2z951+fqDJVt7b0gHw8xhZQIZwsDFKQATydFhZJi+fFfvJ?=
+>      =?utf-8?q?8+0MF7GrfzWnP?=
+>      K7mAM/3n/r/UC+bprf6/g114QYGdbHcsaK7b1nanfA4IeZi1V0lL26cruXUWxgSEnNDP1FrAA=
 
-Signed-off-by: Paul Barker <paul@pbarker.dev>
----
- README.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Bah. I understand that we must handle this situation, but this is an annoying
+and unncessary hack when WSP characters are already conveniently present in
+the header.
 
-diff --git a/README.rst b/README.rst
-index 924b622..70056bd 100644
---- a/README.rst
-+++ b/README.rst
-@@ -184,8 +184,8 @@ Automatic signing via the sendemail-validate hook
- If everything is working well, you can start automatically signing all
- outgoing patches sent via git-send-email::
- 
--    $ echo 'patatt sign --hook "${1}"' > .git/hooks/sendemail-validate
--    $ chmod a+x .git/hooks/sendemail-validate
-+    $ echo 'patatt sign --hook "${1}"' > "$(git rev-parse --git-dir)/hooks/sendemail-validate"
-+    $ chmod a+x "$(git rev-parse --git-dir)/hooks/sendemail-validate"
- 
- PGP vs ed25519 keys considerations
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- 
-2.31.1
+> Avoiding this issue by neatly wrapping the X-Developer-Signature header
+> before sending doesn't appear to be possible without making invasive
+> changes to git-send-email and/or the Net::SMTP perl module. The header
+> content generated by patatt is wrapped at 78 characters as can be seen
+> here from a locally signed patch file:
+> 
+>     X-Developer-Signature: v=1; a=openpgp-sha256; l=672; h=from:subject;
+>     bh=C40yOKgIfnNIUP+OW9WyPdBfljkZPpfUL1NepOODlx8=;
+>     b=owGbwMvMwCF2w7xIXuiX9CvG02pJDAmbN1xO2bT4hIT3tcvsq+8rPfCOKdmU7vag8J+ak9XysyLv
+>     Xs7p7ChlYRDjYJAVU2TZPXvX5esPlmztvSEdDDOHlQlkCAMXpwBMpG0Dw/9Kpzgpc8UsQwOPK/taW6
+>     dFnZyy5QlXPfNCC4WTc76ft9ZnZJjI37a17fP7sxvclKJ1tm36EhITcK62Pphje9KrmOxMJg4A
+> 
+> Running `git send-email --smtp-debug=1 0001.patch` shows that this is
+> joined into a single long line before the message is sent:
+> 
+>     Net::SMTP::_SSL=GLOB(0x5646fbdc3ac8)>>> X-Developer-Signature: v=1; a=openpgp-sha256; l=672; h=from:subject; bh=C40yOKgIfnNIUP+OW9WyPdBfljkZPpfUL1NepOODlx8=; b=owGbwMvMwCF2w7xIXuiX9CvG02pJDAmb571P2bT4hIT3tcvsq+8rPfCOKdmU7vag8J+ak9XysyLv Xs7p7ChlYRDjYJAVU2TZPXvX5esPlmztvSEdDDOHlQlkCAMXpwBM5JA3I8O5hP6Tqm7lJst0rldcux 1V7M4q8T5o1fPU6Zs+hxj+SjvN8D/DK3rn8b0m34/Xy388Yeu8jvFdJf/c6Y6LDU7Hulj01nAAAA==
 
+This, too, bugs me to no end. :) I've actually considered making --hook not
+perform any wrapping, but I'm hoping that git-send-email can be fixed to not
+do this. To be compliant with (admittedly old and obsoleted) email RFCs,
+headers must be no longer than 78 characters, so I'm pretty sure what
+git-send-email does is an unintentional side-effect.
+
+> So we need to accept that the X-Developer-Signature line may be quite
+> long and so may be re-encoded by a mail server or archiver.
+
+Agreed, thanks for finding this.
+
+>      @staticmethod
+>      def _dkim_canonicalize_header(hval: bytes) -> bytes:
+
+I think it would make sense to wrap this around in:
+
+if hval.find(b'?q?') >= 0:
+
+This will save unnecessary decoding/encoding/header parsing. Do you agree?
+
+> +        # The decode_header() function we're about to call requires a str
+> +        # argument. Since RFC2822 (sec 2.2), header fields must be ASCII
+> +        # characters so this is easy to achieve.
+> +        hval = hval.decode('ascii')
+
+I think we'll want to pass errors='ignore' here just to avoid a backtrace for
+obviously wrong header values.
+
+> +        # Handle MIME encoded-word syntax or other types of header encoding
+> +        hval = str(email.header.make_header(email.header.decode_header(hval)))
+> +        # Convert the header back into bytes for further processing
+> +        hval = hval.encode('utf-8')
+>          # We only do relaxed for headers
+>          #    o  Unfold all header field continuation lines as described in
+>          #       [RFC5322]; in particular, lines with terminators embedded in
+
+Thanks!
+
+-K
