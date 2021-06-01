@@ -1,61 +1,68 @@
-Received: from out0.migadu.com (out0.migadu.com [94.23.1.103])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B379470
-	for <tools@linux.kernel.org>; Mon, 31 May 2021 15:13:05 +0000 (UTC)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1622473984;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=j2wieY6poRoi33S5SPICkQiI+cPLcnmybVwMKwVKMec=;
-	b=Qph1YDSqWFyhV0NYgSQ7/87eT+JzPjE5RSECIQnvY1qApybJX9KVp5QcQH73AOEi+hM8wc
-	7sEbTnv2OenPg6KGlKJ5m3j+p/TtoaWOzIJ7roVWZrtPyot7rtLPqkKV5pFYub/Sj7ZmlC
-	6DA/W3l97xY4BC6Xw4cDUtTHEXILBBA=
-From: Konstantin Ryabitsev <konstantin.ryabitsev@linux.dev>
-To: Paul Barker <paul@pbarker.dev>,
-	tools@linux.kernel.org
-Cc: Konstantin Ryabitsev <konstantin.ryabitsev@linux.dev>
-Subject: Re: [patatt][PATCH v2] Handle MIME encoded-word & other header manglings
-Date: Mon, 31 May 2021 11:12:47 -0400
-Message-Id: <162247394427.416221.8663625239721047804.b4-ty@linux.dev>
-In-Reply-To: <20210531140539.7630-1-paul@pbarker.dev>
-References: <20210531140539.7630-1-paul@pbarker.dev>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6174872;
+	Tue,  1 Jun 2021 20:08:43 +0000 (UTC)
+Received: by mail-ot1-f50.google.com with SMTP id d25-20020a0568300459b02902f886f7dd43so452983otc.6;
+        Tue, 01 Jun 2021 13:08:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qi22XqSl0TrDeT7OJtpve66CIrtSXS/4y0XrU4sNMf8=;
+        b=kKLqG7FIRF/vnyNmIHqGclH4k0bIKzFVQ6+cGHkdO8zWIoprwAX3n/pC2fzBOUN4lF
+         n8bgCdzlj+ifmghrTdZBO5mi79ZN0N53nWxYFhW+qdA+/I5O7+jAyXccGIQhTireFkSB
+         iwvE5AOqv2oXOqMPYhqus2wM//EcnMGWilkoYhtO1g+DCrJecrdpit3MsqN2C0M6RZgh
+         y3LdSD2zYew2jcbtkvQ/HlpNXO/io5hbI+ZF1GhEqN91iLq1HxYFLJ+doo4Sir7R5hFG
+         vUgr07Tw9i6MNmjchI6UfZVrT5SBrjyzXHRpp6+I2E/9NN9jCK27bwVGBHR9P9+ovuNk
+         yTqg==
+X-Gm-Message-State: AOAM531mjIihqCfEBW794lGqIbtUJxVQ13ypn79SlQnQYB1Nn/+8sXat
+	NxUeCw70ZAhMfSDDFI0bRA==
+X-Google-Smtp-Source: ABdhPJwsZU/or6CWUEiwKckuo2bO7iFo9ZoxKL5tn3ctiTzsWMVsNdMDndWmuAglEtDKtNVTy8YrAw==
+X-Received: by 2002:a05:6830:244b:: with SMTP id x11mr22141201otr.151.1622578122539;
+        Tue, 01 Jun 2021 13:08:42 -0700 (PDT)
+Received: from xps15.herring.priv (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.googlemail.com with ESMTPSA id 35sm4032262oth.49.2021.06.01.13.08.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Jun 2021 13:08:38 -0700 (PDT)
+From: Rob Herring <robh@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org,
+	users@linux.kernel.org
+Subject: [PATCH] Fix cache aging cleanup of threads
+Date: Tue,  1 Jun 2021 15:08:35 -0500
+Message-Id: <20210601200835.940887-1-robh@kernel.org>
+X-Mailer: git-send-email 2.27.0
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1064; h=from:subject:message-id; bh=uvZKJUYDcKP2RTgN06RdbjXFCHHIMZSagQ47PE3fFX4=; b=owGbwMvMwCG27YjM47CUmTmMp9WSGBK2/Hl+2qRykuLZa1zxCZt6V7ZwibgEPM8K3+3TbqL2xmqL O9vfjlIWBjEOBlkxRZayfbGbggofesil95jCzGFlAhnCwMUpABP5aMrwT59LuWjn6UuMlrv7ep7PWu LcuGLLrl+zjrzOWvt9+cQEnn8Mf0WStZ6HbC+UmXUq7fBSHefeefnnVNX1n/euezrRdy+PJC8A
-X-Developer-Key: i=konstantin.ryabitsev@linux.dev; a=openpgp; fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: konstantin.ryabitsev@linux.dev
 
-On Mon, 31 May 2021 15:05:39 +0100, Paul Barker wrote:
-> When testing patatt with patches sent to a sr.ht hosted mailing list, it
-> was found that long header lines (such as the X-Developer-Signature
-> line) were re-encoded using the MIME encoded-word syntax (RFC 2047) when
-> an mbox archive is generated, causing patatt to choke on the resulting
-> text which looks like this:
-> 
->     X-Developer-Signature: v=1; a=openpgp-sha256; l=672; h=from:subject;
->      bh=C40yOKgIfnNIUP+OW9WyPdBfljkZPpfUL1NepOODlx8=; =?utf-8?q?b=3DowGbwMvMwCF2?=
->      =?utf-8?q?w7xIXuiX9CvG02pJDAmb67lTNi0+IeF97TL76vtKD7xjSjaluz0o/KfmZLX8rMi7_?=
->      =?utf-8?q?l3M6O0pZGMQ4GGTFFFl2z951+fqDJVt7b0gHw8xhZQIZwsDFKQATydFhZJi+fFfvJ?=
->      =?utf-8?q?8+0MF7GrfzWnP?=
->      K7mAM/3n/r/UC+bprf6/g114QYGdbHcsaK7b1nanfA4IeZi1V0lL26cruXUWxgSEnNDP1FrAA=
-> 
-> [...]
+The cache aging for threads was not running resulting in failures to
+fetch new messages in threads. Fix the empty cache check which should
+be for no '.msgs' directories.
 
-Applied, thanks!
+Fixes: 4950093c0c3e ("Don't use mboxo for anything")
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ b4/__init__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[1/1] Handle MIME encoded-word & other header manglings
-      commit: 30840a6acae935ebc5332d08d61222cebe0b518b
-
-Best regards,
+diff --git a/b4/__init__.py b/b4/__init__.py
+index e16ebe6c8a37..c0ff004eb88d 100644
+--- a/b4/__init__.py
++++ b/b4/__init__.py
+@@ -1882,7 +1882,7 @@ def get_cache_dir(appname: str = 'b4') -> str:
+         expmin = 600
+     expage = time.time() - expmin
+     for entry in os.listdir(cachedir):
+-        if entry.find('.mbx') <= 0 and entry.find('.lookup') <= 0 and entry.find('.msgs'):
++        if entry.find('.mbx') <= 0 and entry.find('.lookup') <= 0 and entry.find('.msgs') <= 0:
+             continue
+         fullpath = os.path.join(cachedir, entry)
+         st = os.stat(fullpath)
 -- 
-Konstantin Ryabitsev <konstantin.ryabitsev@linux.dev>
+2.27.0
+
