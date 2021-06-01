@@ -1,68 +1,49 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6174872;
-	Tue,  1 Jun 2021 20:08:43 +0000 (UTC)
-Received: by mail-ot1-f50.google.com with SMTP id d25-20020a0568300459b02902f886f7dd43so452983otc.6;
-        Tue, 01 Jun 2021 13:08:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qi22XqSl0TrDeT7OJtpve66CIrtSXS/4y0XrU4sNMf8=;
-        b=kKLqG7FIRF/vnyNmIHqGclH4k0bIKzFVQ6+cGHkdO8zWIoprwAX3n/pC2fzBOUN4lF
-         n8bgCdzlj+ifmghrTdZBO5mi79ZN0N53nWxYFhW+qdA+/I5O7+jAyXccGIQhTireFkSB
-         iwvE5AOqv2oXOqMPYhqus2wM//EcnMGWilkoYhtO1g+DCrJecrdpit3MsqN2C0M6RZgh
-         y3LdSD2zYew2jcbtkvQ/HlpNXO/io5hbI+ZF1GhEqN91iLq1HxYFLJ+doo4Sir7R5hFG
-         vUgr07Tw9i6MNmjchI6UfZVrT5SBrjyzXHRpp6+I2E/9NN9jCK27bwVGBHR9P9+ovuNk
-         yTqg==
-X-Gm-Message-State: AOAM531mjIihqCfEBW794lGqIbtUJxVQ13ypn79SlQnQYB1Nn/+8sXat
-	NxUeCw70ZAhMfSDDFI0bRA==
-X-Google-Smtp-Source: ABdhPJwsZU/or6CWUEiwKckuo2bO7iFo9ZoxKL5tn3ctiTzsWMVsNdMDndWmuAglEtDKtNVTy8YrAw==
-X-Received: by 2002:a05:6830:244b:: with SMTP id x11mr22141201otr.151.1622578122539;
-        Tue, 01 Jun 2021 13:08:42 -0700 (PDT)
-Received: from xps15.herring.priv (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.googlemail.com with ESMTPSA id 35sm4032262oth.49.2021.06.01.13.08.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 13:08:38 -0700 (PDT)
-From: Rob Herring <robh@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org,
-	users@linux.kernel.org
-Subject: [PATCH] Fix cache aging cleanup of threads
-Date: Tue,  1 Jun 2021 15:08:35 -0500
-Message-Id: <20210601200835.940887-1-robh@kernel.org>
-X-Mailer: git-send-email 2.27.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B02572;
+	Tue,  1 Jun 2021 20:13:48 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5529D61005;
+	Tue,  1 Jun 2021 20:13:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1622578428;
+	bh=8ztIr0kJZ0bDwW7hvWonUtV+I7iVM2e2Jbkw1BpHVKo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=tdveyZEpVSylXYYY1MBbliOeu1/r+TuLCfGZBp3rnYmuWQaSfmGoXFdQtKQaoX1CR
+	 eVjFAbyiKiFBg1Ge7lZBVXA6HFkn6fCLEzU8ir3WFmiHpTeGTJp9rQNgkG0NXOT2bp
+	 5iecTThRMPvDDVCH3qvxCh8hjoWcFbBmz9j2ImGM=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	users@linux.kernel.org,
+	tools@linux.kernel.org
+Subject: Re: [PATCH] Fix cache aging cleanup of threads
+Date: Tue,  1 Jun 2021 16:13:46 -0400
+Message-Id: <162257835426.622841.9014502698126087963.b4-ty@linuxfoundation.org>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210601200835.940887-1-robh@kernel.org>
+References: <20210601200835.940887-1-robh@kernel.org>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=527; h=from:subject:message-id; bh=8ztIr0kJZ0bDwW7hvWonUtV+I7iVM2e2Jbkw1BpHVKo=; b=owGbwMvMwCG27YjM47CUmTmMp9WSGBK2TfnRNEXSsqyr9tm3+Z0+mxWc3LoeOqtLvVc6Pot5yg8T F23WjlIWBjEOBlkxRZayfbGbggofesil95jCzGFlAhnCwMUpABOZOYnhr2zRBc3YQMFvbQnxQav/P5 xv5/1653njaL1aj61HuE1mTGZkWJZrG+q5yfzWtRv67ZwiASZeAUs2zitSfsUf6hO2m9mUHwA=
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp; fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 Content-Transfer-Encoding: 8bit
 
-The cache aging for threads was not running resulting in failures to
-fetch new messages in threads. Fix the empty cache check which should
-be for no '.msgs' directories.
+On Tue, 1 Jun 2021 15:08:35 -0500, Rob Herring wrote:
+> The cache aging for threads was not running resulting in failures to
+> fetch new messages in threads. Fix the empty cache check which should
+> be for no '.msgs' directories.
 
-Fixes: 4950093c0c3e ("Don't use mboxo for anything")
-Signed-off-by: Rob Herring <robh@kernel.org>
----
- b4/__init__.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ugh, thanks for finding that. Applied to both master and stable-0.7.y.
+This is bad enough to roll a 0.7.1 soon.
 
-diff --git a/b4/__init__.py b/b4/__init__.py
-index e16ebe6c8a37..c0ff004eb88d 100644
---- a/b4/__init__.py
-+++ b/b4/__init__.py
-@@ -1882,7 +1882,7 @@ def get_cache_dir(appname: str = 'b4') -> str:
-         expmin = 600
-     expage = time.time() - expmin
-     for entry in os.listdir(cachedir):
--        if entry.find('.mbx') <= 0 and entry.find('.lookup') <= 0 and entry.find('.msgs'):
-+        if entry.find('.mbx') <= 0 and entry.find('.lookup') <= 0 and entry.find('.msgs') <= 0:
-             continue
-         fullpath = os.path.join(cachedir, entry)
-         st = os.stat(fullpath)
+[1/1] Fix cache aging cleanup of threads
+      commit: b29c92d3e0a74024ce30c2eaf0cd6f9c5ca1fae9
+
+Best regards,
 -- 
-2.27.0
-
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
