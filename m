@@ -1,58 +1,58 @@
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E6870
-	for <tools@linux.kernel.org>; Mon,  7 Jun 2021 10:02:58 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 48B9319E8;
-	Mon,  7 Jun 2021 06:02:58 -0400 (EDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554B970
+	for <tools@linux.kernel.org>; Mon,  7 Jun 2021 10:03:00 +0000 (UTC)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.west.internal (Postfix) with ESMTP id CE094189F;
+	Mon,  7 Jun 2021 06:02:59 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 07 Jun 2021 06:02:58 -0400
+  by compute5.internal (MEProxy); Mon, 07 Jun 2021 06:03:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pbarker.dev; h=
 	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding; s=fm1; bh=YKspZ3Tg4vcZs
-	DkcWsaTc5uoJNsSn0iitYiaGTmKqMk=; b=A24IXPSNVXbPW6JtKRLdomBa+1EWH
-	RZhUijAaJ+Hb2Bx36vpBo39JOapdNgnJtw3JqQRU85efh2OizS/DN0xjIQxy+Dn7
-	ipr/UlBz+sl25jwwV4M/tciOY9UBmzxDKUUYBkNu8y+sZGRk1OMHXK45p8HuAyWB
-	XJ14U1jx6h8VDgZfi5FxM2T7k4vLbp7rbaAsfluLNH7GWRS6LYRu5s5xNRCe8FaN
-	HdMGWXtUSNHD5OpmopE6n23orDdRDWL6kKpPxGPM2+wcR3DvsbHy7r5HIWJOIgDY
-	3hr1WqkFrqBeGufmmqB46oR+njmhGvXHZ5zM/CBVM1DejBYa7Ys05B2IA==
+	:mime-version:content-transfer-encoding; s=fm1; bh=mB7WzX9Fw54Zn
+	kxyU3H2f5Vl+iuJc0gzB/ThVS7QRWM=; b=tqDYrN0TeqoO0eo6fj1nt39B33xZW
+	QdB/BWaEX7dMhLk8ePWO7TlerWbe9c9HQ03/wdEd+Z3cZHUeQpJGECvSmjIxEw4L
+	ar3Xqz4U6EQNM61J0u6JPs4BeZ+ultL6Pv6YsJKi4zie+C6TQrqY9IbYU/0Voi9N
+	1IuPDP4jzeYKlRQwE3xD7K3GN3Tte4lssj17+c6HBD+nWREi0Hf2YxSCyLsBRSj+
+	UIYSAf841EpmTgdCQTT8T8eKezzFubqNBn0sM0jJL4g1zYsnbA98nGQ2u1uGHfyZ
+	sTwYdTu7JPg2Qoeh+CDg4bKE5X/CzdQQ/P4b9w6lz6SJ35BUIKtrOOaiA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:date:from
 	:in-reply-to:message-id:mime-version:references:subject:to
 	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; bh=YKspZ3Tg4vcZsDkcWsaTc5uoJNsSn0iitYiaGTmKqMk=; b=EoXB6ZSu
-	3jJ5Szh7UdhlbTm5nIX8+CoO5uLP7LRQEAQXp1CIfWtM9Dp4zp5PiKkunH+mSWfs
-	JJ+WeSI73Z1a6zpN+cq/JZcitFxS/KagvQGq6PlUZ+uwhO/nooRfEwz1AGDM4qE7
-	fRwDMJry+E4Kd7gEgFadpG9yYlwFRrVODD1Eq4sVW7IAvIe1A/ypa4M1PZvALSyH
-	EJ576FrsNuS5yucjLvKFNnAhOa0G4Fa81m1vnRGaAiIsy2CDKbZB6fUCqHfGwfVu
-	0ELm+dhoG4aeySH0dUaRauDrrSjKiZjeRFhCMjNHm/+Os812ej7Cn91K6AVfirjs
-	bQTFUUVFGywZEQ==
-X-ME-Sender: <xms:0e69YAnVd13Mje-QWHz8q6zOM6AeoHHTYHSRRHgAX3NIGMKNn-Jnkg>
-    <xme:0e69YP3mre-guThREWhJAmsu_lWYNBqpxNTvH86H-k7xMWBHimxsbs-gd3tpPGJzh
-    W8N8-grxXRc9Zjm1hk>
-X-ME-Received: <xmr:0e69YOr_LpkWAMHo3t1l-3YiH95V3HYUhRRBUoZ-k9Tlzl3ymyVh48jUbfjPo6JgpvHAwdfKffg1Cre71BYYTJvJfbbrfaonXHs77RRn1HpN5uBn3VNWJWocS0k>
+	fm3; bh=mB7WzX9Fw54ZnkxyU3H2f5Vl+iuJc0gzB/ThVS7QRWM=; b=pb1neLJd
+	U4ld5WNa7mGGOTum8ML6owi0MUGSUZ5t7e1i1wImFPd22JCPcPU+Ox4gqNpRoV2Z
+	kZN0K0ufPQ+4b/iekJRY0+sc5gHabhu6gV/HUuJw+3lYuUDgYJc+e8s00YUiN7ID
+	aVi3YWZb1UfMX6nIDG+E1dLa1ZiY9ckpYnxfEuPuSpdW8BrrbbUbWd+vF2cFS1fU
+	bAUo4fg5iiYN93E1PJVOrM9+3npzu6JssZOecCZ+KWigVrkZhFcfqejyBz4nnd9O
+	PqU3UYDl0BSgDiOUaHFLobQpUiZ40kWJngXOM9g70uHd2mV8qBBlHwBJi7kggIMg
+	Rgr3FnyM6K6BPw==
+X-ME-Sender: <xms:0-69YPw9vE55Dlb9NQmyhngUOPFDW4_tsvon0nuVFkpnLFXj-tD_0A>
+    <xme:0-69YHToHJpRB14DlqUUeXx7ZVAqZB91dZHa4fwtngXsoQT7CU5slt8PllYLWJfrK
+    PJ3BQC66UL8DlvFhsM>
+X-ME-Received: <xmr:0-69YJWJd3GVK-qab_j7Tsdf-ECxcU47gu8efOuOYL9ULjZTGhLq0FPzfVLjw3Lc1PS2dOtRDTf8mOaPGuBCECMkhUqcRoheRlD-3kvnuGcCca2F9x5AXdRyCp8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedtjedgvddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefrrghulhcu
     uegrrhhkvghruceophgruhhlsehpsggrrhhkvghrrdguvghvqeenucggtffrrghtthgvrh
-    hnpeeuvdduuddtjeehgeegudelkefggeethefhudduveehkeejleefjeekgeevteegvden
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphgruhhlsehpsggrrhhkvghrrdguvghv
-X-ME-Proxy: <xmx:0e69YMmeio_nIbToCC14NVQ-5iyNw__F9N1Zu9WXVy8rEoOmXysVVw>
-    <xmx:0e69YO31PZSVITGf4fBtOYPSK5FucHL5GQo0s4icgW4QXOVzQ7sF5Q>
-    <xmx:0e69YDtAt4apqs1FwQk4XzDp3OMrSu2cA_eQjWJxHtAQqcRrTWaUzw>
-    <xmx:0e69YD9a4X4FZS5tow52pS78rXIGruyuJ8jkQz6xBvvfyi-u6QcjHw>
+    hnpefgvddttefgieekjeeigeevjeelhffgfeevjefhheevveeltdfhffekvedufedvhfen
+    ucffohhmrghinhepmhhsghdrrghsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphgruhhlsehpsggrrhhkvghrrdguvghv
+X-ME-Proxy: <xmx:0-69YJjewAW2ARRZTc6qDVdyepn7cbyX_VTeJpJt-2R9mtvImLniKA>
+    <xmx:0-69YBAbf_uIiSm5WZ5wbkpvMAlBnSs-0wRjZ2zSI_NUqvhHo6YK9Q>
+    <xmx:0-69YCKCFZv7Rnr1BcH8YbO-PJRiNdAJiK1pb8vKFCWq5GAE7k1kEQ>
+    <xmx:0-69YO4kbDcBX05aJ5dcjEEIyiDqYYva9vfQpCkTwTcHLSPSkqZLVg>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Jun 2021 06:02:56 -0400 (EDT)
+ 7 Jun 2021 06:02:58 -0400 (EDT)
 From: Paul Barker <paul@pbarker.dev>
 To: tools@linux.kernel.org,
 	Konstantin Ryabitsev <konstantin.ryabitsev@linux.dev>
 Cc: Paul Barker <paul@pbarker.dev>
-Subject: [b4][PATCH 1/2] Handle MIME encoded-word in DKIM-Signature headers
-Date: Mon,  7 Jun 2021 11:02:51 +0100
-Message-Id: <20210607100252.8253-2-paul@pbarker.dev>
+Subject: [b4][PATCH 2/2] Include dkim log output when -d/--debug argument is passed
+Date: Mon,  7 Jun 2021 11:02:52 +0100
+Message-Id: <20210607100252.8253-3-paul@pbarker.dev>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210607100252.8253-1-paul@pbarker.dev>
 References: <20210607100252.8253-1-paul@pbarker.dev>
@@ -61,45 +61,53 @@ List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1557; h=from:subject; bh=C3NLYjgTik0TUCAAQ6hKT/y0J+HZzPXvo7pt8PtK5CY=; b=owGbwMvMwCG2OjnkzdxdX/IYT6slMSTsfXdyxezum2Zs31K+JlyP//rAb1r8z44z09uDFN2O/Ilm f9Dc2VHKwiDGwSArpsiyuefr/ae9jrwZIbcUYOawMoEMYeDiFICJJBUzMkwt/r1mtnia3PtPfgypt3 7OqlViLs/Lf77JxvOM0nVtHilGhoO74uLXskT1npv40O6za9Mu7d4Qj61mp1S8Fhx/u/LCFR4A
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1727; h=from:subject; bh=RYUoill86MggYgReF1Trxx0KiKUlzbs7fOaTSnZmuSU=; b=owGbwMvMwCG2OjnkzdxdX/IYT6slMSTsfXfqTotK6O89Wyqd72+2UDxqwbDv14IUvZgy7hn/zbUv v91a3lHKwiDGwSArpsiyuefr/ae9jrwZIbcUYOawMoEMYeDiFICJPP/O8FdauCZQrfBL5F3f0/uVBX Lv+J0x7F9zQcZt18yjs28+MrvEyNCTEjRphcx3/weJOz5ZbzvkyNX0Z9H6H7Z3vlxdq7JsgwgvAA==
 X-Developer-Key: i=paul@pbarker.dev; a=openpgp; fpr=98B2AAC100AC3F82BB5D546774975C81B7E66BAC
 Content-Transfer-Encoding: 8bit
 
-As recently found in patatt [1], mail gateways and archivers may mangle
-headers like DKIM-Signature if they are sent as an excessively long
-line. An example of this occuring was found when the DKIM-Signature
-header generated by Microsoft Office 365 collided with the
-header re-encoding performed by lists.sr.ht when generating mbox
-archive files. This encoding causes dkim.verify() to fail.
-
-The Python email.header module provides the decode_header() and
-make_header() functions which can be used to handle MIME encoded-word
-syntax or other header manglings which may occur. Fixing up the header
-content using these functions before calling dkim.verify() allows the
-verification to succeed.
-
-[1]: https://lore.kernel.org/tools/20210531140539.7630-1-paul@pbarker.dev/
+We can pass a logger object to dkim.verify() which will be used to
+report internal errors and debugging info. This can be helpful when
+investigating DKIM verification issues but is probably not wanted during
+normal operation so the log level of each message is reset to DEBUG.
+Each message is also prefixed with 'DKIM: ' to identify its origin when
+debug output is enabled.
 
 Signed-off-by: Paul Barker <paul@pbarker.dev>
 ---
- b4/__init__.py | 4 ++++
- 1 file changed, 4 insertions(+)
+ b4/__init__.py | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/b4/__init__.py b/b4/__init__.py
-index a163364..168b722 100644
+index 168b722..9721e22 100644
 --- a/b4/__init__.py
 +++ b/b4/__init__.py
-@@ -1006,6 +1006,10 @@ class LoreMessage:
+@@ -47,6 +47,17 @@ __VERSION__ = '0.8-dev'
  
-         seenatts = list()
-         for hn, hval in dkhdrs:
-+            # Handle MIME encoded-word syntax or other types of header encoding if
-+            # present.
-+            if '?q?' in hval:
-+                hval = str(email.header.make_header(email.header.decode_header(hval)))
-             errors = list()
-             hdata = LoreMessage.get_parts_from_header(hval)
-             logger.debug('Loading DKIM attestation for d=%s, s=%s', hdata['d'], hdata['s'])
+ logger = logging.getLogger('b4')
+ 
++def _dkim_log_filter(record):
++    # Hide all dkim logging output in normal operation by setting the level to
++    # DEBUG. If debugging output has been enabled then prefix dkim logging
++    # output to make its origin clear.
++    record.levelno = logging.DEBUG
++    record.levelname = 'DEBUG'
++    record.msg = 'DKIM: ' + record.msg
++    return True
++dkimlogger = logger.getChild('dkim')
++dkimlogger.addFilter(_dkim_log_filter)
++
+ HUNK_RE = re.compile(r'^@@ -\d+(?:,(\d+))? \+\d+(?:,(\d+))? @@')
+ FILENAME_RE = re.compile(r'^(---|\+\+\+) (\S+)')
+ 
+@@ -1028,7 +1039,7 @@ class LoreMessage:
+                     signtime = self.date
+ 
+             self.msg._headers.append((hn, hval))  # noqa
+-            res = dkim.verify(self.msg.as_bytes())
++            res = dkim.verify(self.msg.as_bytes(), logger=dkimlogger)
+ 
+             attestor = LoreAttestorDKIM(res, identity, signtime, errors)
+             logger.debug('DKIM verify results: %s=%s', identity, res)
 -- 
 2.31.1
 
