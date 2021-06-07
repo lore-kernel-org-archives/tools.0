@@ -1,62 +1,133 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80DA70
-	for <tools@linux.kernel.org>; Wed,  2 Jun 2021 19:33:28 +0000 (UTC)
-Received: by mail-qk1-f170.google.com with SMTP id o27so3564878qkj.9
-        for <tools@linux.kernel.org>; Wed, 02 Jun 2021 12:33:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=B0DMLfPIswsLM41Ih4hHhgN44Msr1PiEkgfVlveEEb4=;
-        b=iheTg1Z81wtUKEhKN1wI1HH0CsPCMY0p5pwNSm9HuEbdeS6/vuUYoA4KitCmRCCjAx
-         FLrwJCI/WDQR+OTKLqA2FJLKGiE62uxfZboJrUTIOTPREgrVnNz8Wq1C35qs2/inMzt8
-         yNrWMvE2DC5jYQnUANieaClyRKfMXe2jZu9ss=
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B056470;
+	Mon,  7 Jun 2021 07:31:03 +0000 (UTC)
+Received: by mail-ua1-f54.google.com with SMTP id g34so9154524uah.8;
+        Mon, 07 Jun 2021 00:31:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=B0DMLfPIswsLM41Ih4hHhgN44Msr1PiEkgfVlveEEb4=;
-        b=eQDOF7NByPT/6SjzwaVbl6YdF3AbpqmXtk/ccIZ8ECCEQS6L6QNFOtXnEvwpPChhFf
-         qArhFZ7aBZEwjeuFwoN1QADeCwgPtyI1K4DEF+5Y+nROAYWFKDG3/namh3nf65dGrSeb
-         /ndyQRubebTgWuS2jDu/YfLJ0zaweFuP4x79JJOxzGHiMUVXUL2g0we6vcPFWg6sbpe0
-         Xm/kysnlTuOhLrXu4LFcENAmp77RWgdp2l+aRGhZdJKtnvZsO+h3T8em+iPQybFjTKGE
-         9EMVhXY+IdjQJmWlggEYhkoyxhrxRDE3Z0w/8ELlIAHDMf64dE6g8PuQxmAg7EysyxZO
-         s8Sw==
-X-Gm-Message-State: AOAM532KkTABhgnEiUddtmmgkX7HzEcp5uGWk2KaVs1Rd9mAXDDl5p3q
-	tFRYrLkFpOoJvGpRB0ayNFRpKHBIue5IMFpPYaw=
-X-Google-Smtp-Source: ABdhPJw275jTi/G6800J0xX9j7oiLfMu6qI9KIl3E7iMfC+LPAJDQv3BpDJ1XM3eQotT36LR9iSXng==
-X-Received: by 2002:a05:620a:15e3:: with SMTP id p3mr29154923qkm.115.1622662407365;
-        Wed, 02 Jun 2021 12:33:27 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id t15sm418116qtr.35.2021.06.02.12.33.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 12:33:27 -0700 (PDT)
-Date: Wed, 2 Jun 2021 15:33:25 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, users@linux.kernel.org
-Subject: b4-0.7.1 available
-Message-ID: <20210602193325.w44afltca4ucnu7u@nitro.local>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=gisvBDH/GU9MTarl8DWwu2a7/XBdTyPPz0MrxA7MTb4=;
+        b=D0jzC1F/bGy8JfZCkujkDYTDGwEOYVGk6n1xWqbnU+j4sR3WAmrqVac/C8JCUAU8vg
+         FAaii7etItWPrbBFCGUOX4M+wD7SPheY9kuTCciBqMtvYIJbaQuS1/hnnaI+NP61U9fm
+         ujtA2kqONXnpqQBrS3iYoq+qKaMbmAR9FVcVtXI3jp69lAc11GMHdxGXUemN6KPWDvn9
+         fnQ+xevyiqt6aytjDUrLVqODfvNKxeBFBjxw2eFJQO7NesVMX0q8EZVyJOb/L5FeDkRO
+         awXrzRsDqXWzubC1cwlH8QMuLN3clB6AlqOV+GSazpZtHNAVIY1N0NYxfkdHk1tLRRNt
+         pCFg==
+X-Gm-Message-State: AOAM530QNvN89y4mwpHW/a/mDI0mVk5XCedoXkotI6+Lp2UO9fqsFSlV
+	OYQkifLSEhEa0L+g/HpEE0xzWNo2If9kONIrhXQ=
+X-Google-Smtp-Source: ABdhPJxzX7NXXhFOqvleHtYbvpYLOBpr26E0s58DlUBH05I34qmEufLAaPOx/LA4GVJN2wFF7pHbD+Y/y8ZWa9KoSPA=
+X-Received: by 2002:a1f:d8c3:: with SMTP id p186mr7274041vkg.1.1623051062830;
+ Mon, 07 Jun 2021 00:31:02 -0700 (PDT)
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <CAMuHMdV7gLtcuW6sCJh3HyWpgwr1rcCEEaDkN2L+chZgVMQTpw@mail.gmail.com>
+ <20210520220605.6cnct2wdmjxlz52c@nitro.local> <CAMuHMdUstawScbrpwiQSMuH54YFXYzB0Dsm9BuXXvFZU77Nz5w@mail.gmail.com>
+ <20210521122836.lifamz3ikutnc65e@nitro.local> <CAMuHMdWX0iyNFdUV3z8T2dswnczGeXSLLB+txP4thLua+=SiYw@mail.gmail.com>
+In-Reply-To: <CAMuHMdWX0iyNFdUV3z8T2dswnczGeXSLLB+txP4thLua+=SiYw@mail.gmail.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 7 Jun 2021 09:30:51 +0200
+Message-ID: <CAMuHMdWFLeROkPnd6GtKsQ5O+cEBxB3YAmw=KkZzXSL9_2OG5g@mail.gmail.com>
+Subject: Re: b4 not finding explicitly specified patch
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "users@linux.kernel.org" <users@linux.kernel.org>, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello:
+Hi Konstantin,
 
-Version 0.7.1 of b4 is available that fixes an important cache invalidation
-bug that could prevent more recent follow-up trailers from being discovered.
+On Fri, May 21, 2021 at 3:18 PM Geert Uytterhoeven <geert@linux-m68k.org> w=
+rote:
+> On Fri, May 21, 2021 at 2:28 PM Konstantin Ryabitsev
+> <konstantin@linuxfoundation.org> wrote:
+> > On Fri, May 21, 2021 at 09:06:20AM +0200, Geert Uytterhoeven wrote:
+> > > Note that without "-P_", it still downloads the series not containing=
+ the patch
+> > > I specified.
+> >
+> > I'm not sure if I can fix that, because that thread is a bit wonky. You=
+ will
+> > notice that we have:
+> >
+> > [PATCH v1 0/5]
+> > ...
+> > [PATCH v1 5/5]
+> >  \- Re: [PATCH v1 5/5]
+> >   \- [TEST PATCH v1]
+> >
+> > b4 is really built around retrieving series, and here we can't figure o=
+ut
+> > where in the series [TEST PATCH v1] belongs. I *believe* the intent her=
+e is to
+> > replace [PATCH v1 5/5], but it doesn't have any counters on it, so we e=
+nd up
+> > ignoring it because we already have a [PATCH v1 1/5].
+>
+> Yeah, it's a weird case ;-)
 
-To upgrade:
+Just ran into another weird case:
 
-    pip install --upgrade b4
+$ b4 am 1622957313-321-1-git-send-email-schmitzmic@gmail.com
+Looking up https://lore.kernel.org/r/1622957313-321-1-git-send-email-schmit=
+zmic%40gmail.com
+Analyzing 28 messages in the thread
+Checking attestation on all messages, may take a moment...
+---
+  =E2=9C=93 [PATCH RFC 1/2] m68k: io_mm.h: conditionalize ISA address
+translation on Atari
+  =E2=9C=93 [PATCH RFC 2/2] m68k: setup_mm.c: set isa_sex for Atari if
+ATARI_ROM_ISA not used
+  ---
+  =E2=9C=93 Signed: DKIM/gmail.com
+---
+Total patches: 2
+---
+Cover: ./20210602_schmitzmic_fix_m68k_multiplatform_isa_support.cover
+ Link: https://lore.kernel.org/r/1622611267-15825-1-git-send-email-schmitzm=
+ic@gmail.com
+ Base: not found (applies clean to current tree)
+       git am ./20210602_schmitzmic_fix_m68k_multiplatform_isa_support.mbx
 
-(or switch to the stable-0.7.y branch and git update)
+No, that's the RFC.
 
-Thanks to Rob Herring for the bug report and the fix.
+$ b4 am -P_ 1622957313-321-1-git-send-email-schmitzmic@gmail.com
+Looking up https://lore.kernel.org/r/1622957313-321-1-git-send-email-schmit=
+zmic%40gmail.com
+Analyzing 1 messages in the thread
+Checking attestation on all messages, may take a moment...
+---
+  =E2=9C=93 [PATCH] m68k: Fix multiplatform ISA support
+  ---
+  =E2=9C=93 Signed: DKIM/gmail.com
+---
+Total patches: 1 (cherrypicked:
+<1622957313-321-1-git-send-email-schmitzmic@gmail.com>)
+---
+ Link: https://lore.kernel.org/r/1622957313-321-1-git-send-email-schmitzmic=
+@gmail.com
+ Base: not found (applies clean to current tree)
+       git am ./20210606_schmitzmic_m68k_fix_multiplatform_isa_support.mbx
 
--K
+Yeah, that's the one I want.
 
+At least the chain "RFC" -> implicit v1 -> "v2" -> "v3" ... is less fuzzy
+than "[PATCH v1 5/5]" -> "[TEST PATCH v1]"...
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
