@@ -1,89 +1,83 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F4C29CA
-	for <tools@linux.kernel.org>; Wed,  9 Jun 2021 15:45:00 +0000 (UTC)
-Received: by mail-qt1-f178.google.com with SMTP id z4so15323782qts.4
-        for <tools@linux.kernel.org>; Wed, 09 Jun 2021 08:45:00 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E468C2FB5
+	for <tools@linux.kernel.org>; Wed,  9 Jun 2021 19:21:39 +0000 (UTC)
+Received: by mail-qv1-f45.google.com with SMTP id x2so12769269qvo.8
+        for <tools@linux.kernel.org>; Wed, 09 Jun 2021 12:21:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FADrq7CkBKZ6MUQRpjDEOgtZekDD4CKe64imzXyl440=;
-        b=AC/JTUO/fZIhqoEmg1JH5CjGKCtbPT2hnN9JyjUy631Z/9YmHq9jfBHFfH+x+6B7t0
-         wS+F4HB82S+00xD9/zKVvNC46pLlmqLglqdszSt9QWQllXgLh7VAG0/atV4ewm/bncuw
-         s1wWHXhclmLjGG7nLWXWcUnRIUNFWIXMFh68A=
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=5shl6cJFLQJPTbxswGMo0H+1yWxnBxxbTUnEnNlY0M0=;
+        b=b+bE6mlZKaY7WC2Qf6oEZxG2JZXNnHTwvQ0x2J02YAnxDH63LjWSkhTWH8nmHNKHZ3
+         lpmHCbRbz2Quv8iyg8oVTri1uFUHqUfwQ1R3tdTvo+sn3ZXLq6yg2Y9D2ag0hqusva14
+         ibaPcNXPuoQ00QKBtzhhDXV7/Za9bFnCsn9j4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FADrq7CkBKZ6MUQRpjDEOgtZekDD4CKe64imzXyl440=;
-        b=c/x7kjfh00NTZI3onlYQsXdZ6omZ5ShMD/vtK90OVoITbrXtjpF9hVvAC3uj6krVv/
-         30N/5RPOemPUXqCagvCOKfzNMgFwspfYugBIYuMbe4BxijMYL3D89Cl/mHXpe71dEN8B
-         TAeYkzzHlhQk/KASjM7FsPmbh+Qv79WUE7P3G5nI0D08p0TVjl/59IrND5WZPYjOwLDL
-         Wn4KJ6ffEVIP6Cdz58Fkish5Z8gyL+Eb2AyzPj5UzG2JQfc1vwtb7RiGBGutV4qplBUi
-         9JYoD7gdMHU51WOq0rATY+3DZAYE6zF4wboH0SXXSjMJcxh2PR8P5xpL6qKZpHY+QgH1
-         FySg==
-X-Gm-Message-State: AOAM533axmIDGWVasHE1k9q/ekfMP+O2j/K4RplCYjDE67D6DWNtEwVw
-	Qf32rFwkTSBNwOXw+mzKKe98Kk1GOu4h+wlj
-X-Google-Smtp-Source: ABdhPJxs4TUHefwKyD7M9NlSAcAQ2k2AT74F2zmVig92YgNw4Z/3teaHAKzO91MlKyIm1iWg4+Jl4A==
-X-Received: by 2002:ac8:4e95:: with SMTP id 21mr560354qtp.44.1623253500001;
-        Wed, 09 Jun 2021 08:45:00 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=5shl6cJFLQJPTbxswGMo0H+1yWxnBxxbTUnEnNlY0M0=;
+        b=qWUoqwXfTXCeIuOIom4rBhQtEJFkP+8egtzJzLsY+nayyWhiUb7gaHd5gEG5cmq0re
+         5C/rTO/C2gsjkaZKV4KRqbpUjeglvaxXVYtx40OQ4dPTYsPAZFOSR7r0kSvMaBw7LNbH
+         50EmhEa3YdUCd1yCx58PbAqqabypsbSOSf+nLljlzb/ghPCwVQiKeEBFeNJbzhgUc/zb
+         oLTcc/sYp69Nqfiqpt175D06AOj36SAlfrnB0S80G4mpf2accB7F0PR/HyZhP0xyR8QJ
+         QklFUxc2q34ufL0XxnD0N9QzCLSJAp8cVwQvo4Ax01k4EHqp8OW9jTyYUWs+8nSRJGe9
+         1AIQ==
+X-Gm-Message-State: AOAM5332VtjNbEnBqZ45CxFQFxN0Bj+rDkmChzBXzcj8T4EkrI0N/iKd
+	Agn7Q1Zw9O5xbp+f4XK6AJ3V0Xl3Gxw2Hury
+X-Google-Smtp-Source: ABdhPJzsYkRk8JcwT49EPmN0AUoFhNZUfr0X+YE/CG6R1YdHbZMa1dLVIVKkPLubmzfA3ZdrAdYpqQ==
+X-Received: by 2002:a0c:c3d1:: with SMTP id p17mr1614223qvi.44.1623266498671;
+        Wed, 09 Jun 2021 12:21:38 -0700 (PDT)
 Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id w4sm217125qtv.79.2021.06.09.08.44.59
+        by smtp.gmail.com with ESMTPSA id y18sm614755qtx.6.2021.06.09.12.21.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jun 2021 08:44:59 -0700 (PDT)
-Date: Wed, 9 Jun 2021 11:44:57 -0400
+        Wed, 09 Jun 2021 12:21:38 -0700 (PDT)
+Date: Wed, 9 Jun 2021 15:21:36 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Greg KH <greg@kroah.com>
-Cc: tools@linux.kernel.org
-Subject: Re: b4 crash when trying to apply patches with latest version from
- git
-Message-ID: <20210609154457.argnpxaxy6fj6mzr@nitro.local>
-References: <YMB3XJ/NgtCO+YCx@kroah.com>
- <YMC4yWAT3Ubux2gQ@kroah.com>
+To: tools@linux.kernel.org, users@linux.kernel.org
+Subject: b4 v0.7.2 released
+Message-ID: <20210609192136.svadnx42in2ldq2s@nitro.local>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ycew7nuqdfl5fdey"
+Content-Disposition: inline
+
+
+--ycew7nuqdfl5fdey
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YMC4yWAT3Ubux2gQ@kroah.com>
 
-On Wed, Jun 09, 2021 at 02:49:13PM +0200, Greg KH wrote:
-> $ b4 am -t -S https://lore.kernel.org/r/20210607101634.4948-1-ricky_wu@realtek.com
-> Looking up https://lore.kernel.org/r/20210607101634.4948-1-ricky_wu%40realtek.com
-> Analyzing 6 messages in the thread
-> Checking attestation on all messages, may take a moment...
-> ---
->   [PATCH v2] misc: rtsx: separate aspm mode into MODE_REG and MODE_CFG
-> Traceback (most recent call last):
->   File "/mnt/fast_disk/linux/tools/b4/b4/command.py", line 254, in <module>
->     cmd()
->   File "/mnt/fast_disk/linux/tools/b4/b4/command.py", line 237, in cmd
->     cmdargs.func(cmdargs)
->   File "/mnt/fast_disk/linux/tools/b4/b4/command.py", line 51, in cmd_am
->     b4.mbox.main(cmdargs)
->   File "/mnt/fast_disk/linux/tools/b4/b4/mbox.py", line 622, in main
->     make_am(msgs, cmdargs, msgid)
->   File "/mnt/fast_disk/linux/tools/b4/b4/mbox.py", line 92, in make_am
->     am_msgs = lser.get_am_ready(noaddtrailers=cmdargs.noaddtrailers,
->   File "/mnt/fast_disk/linux/tools/b4/b4/__init__.py", line 600, in get_am_ready
->     msg = lmsg.get_am_message(add_trailers=add_trailers, trailer_order=trailer_order, copyccs=copyccs)
->   File "/mnt/fast_disk/linux/tools/b4/b4/__init__.py", line 1476, in get_am_message
->     self.fix_trailers(trailer_order=trailer_order, copyccs=copyccs)
->   File "/mnt/fast_disk/linux/tools/b4/b4/__init__.py", line 1412, in fix_trailers
->     if trailer[3] is not None:
-> IndexError: list index out of range
-> 
-> 
-> I guess it's a different error, but I hate reading python tracebacks so
-> I can't really tell...
+Hello:
 
-Different bug -- fixed now as well and backported to stable-0.7.y.
+B4 version 0.7.2 is now available. This is a bugfix release that corrects a
+couple of crashers:
 
-Thanks!
+- fixes a crash when running "b4 pr" against an unsigned remote
+- fixes a crash when running "b4 am" with --sloppy-trailers
+- fixes a formatting problem when reconstituting a partial reroll
 
-(I swear, I'm going to add a test suite soon -- it's just not very exciting
-work. :))
+To upgrade, run:
+
+    pip install --upgrade b4 patatt
+
+Or "git pull" + "git submodule update" in the checkout.
+
+Best regards,
+-K
+
+--ycew7nuqdfl5fdey
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYMEUwAAKCRC2xBzjVmSZ
+bIq2AP47DyiaiN0FLQrPttDjSViVqLbY7fjcSJJGst038b821wD9E7020LelaZpW
+HpgIP5cFiwfXXwCvVWwOH0qqi9YdLwU=
+=H/W6
+-----END PGP SIGNATURE-----
+
+--ycew7nuqdfl5fdey--
