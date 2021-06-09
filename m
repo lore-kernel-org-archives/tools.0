@@ -1,44 +1,57 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDCB29CA
-	for <tools@linux.kernel.org>; Mon,  7 Jun 2021 12:52:02 +0000 (UTC)
-Received: by mail-qv1-f47.google.com with SMTP id im10so7857619qvb.3
-        for <tools@linux.kernel.org>; Mon, 07 Jun 2021 05:52:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5uKA7FBhnN9mO7HXyMMbmyoEKxIhPhq9xBmdLJHakBw=;
-        b=ZyThm9ZuaRcBOWoq86mMAQ+4zBP5GLpMJWFvi3/voLiqSLgDDNYVhGfuU5I54r62fw
-         GxRFqFt3v9qq+wLoQjzp5jjVIkdi2G+LX+p0K6L/6vPICW2XR2WGcnWRoBOo+mz1o1dx
-         d1CguR3Qx2Rg6Xs6PZ9AgCUmupAMDq4YelQAg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5uKA7FBhnN9mO7HXyMMbmyoEKxIhPhq9xBmdLJHakBw=;
-        b=SFNdp6wonXXKH2DfV5J91g9fyxkX+al4WIEcKRPfSpcOFGcBdEmhhpOVeeRtIuCVOA
-         poimTHL9HPvgMAwmmNIf6o6tXMHCFvz5hshw8/dNOP9b8mWxGscar6I2UEyvZjpAMaGv
-         38hTVcQKrDT4TGZKnmgWOvf4jfWDDAuWTuLJQnEWwXa7Bz/qj6JGznwXVcTIoJCII6vp
-         /gIoSruMHRPjmhiiOd8NiH7bS5Q3lD3WWzhE7O1u9JQ15MVV/ZIULLTYULEJ22HRIxY4
-         XHUu4lOro/vwaxR3xBQU5yBZZI36A0p5nX3Qcub0CgB9j0mbiTGi5ywzby+iW0virAVM
-         IZdQ==
-X-Gm-Message-State: AOAM533zbKJ7VHthMmn+Pa7awvqFPnh0XowUw19Pwuyl0CwEPTqqlduc
-	7ox6RdAmMqM+VokeeD0y9eIYOVrNdpr+qp/SrzI=
-X-Google-Smtp-Source: ABdhPJzTI/hapu0kv1eW8lNwZ8NnyfbL0vLM2uGHZ+LT+fuiFsmp0t4lcwjAF/8S/KGEzrUflvmd4Q==
-X-Received: by 2002:a0c:e185:: with SMTP id p5mr17510628qvl.17.1623070320844;
-        Mon, 07 Jun 2021 05:52:00 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id c77sm7335218qkg.81.2021.06.07.05.52.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 05:52:00 -0700 (PDT)
-Date: Mon, 7 Jun 2021 08:51:58 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, Paul Barker <paul@pbarker.dev>
-Subject: Re: [b4][PATCH 0/2] Improvements to DKIM signature verification
-Message-ID: <162307026797.2170895.15758374531862168765.b4-ty@linuxfoundation.org>
-References: <20210607100252.8253-1-paul@pbarker.dev>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08B570
+	for <tools@linux.kernel.org>; Wed,  9 Jun 2021 08:10:09 +0000 (UTC)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.west.internal (Postfix) with ESMTP id 8DF4E8A2;
+	Wed,  9 Jun 2021 04:10:08 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Wed, 09 Jun 2021 04:10:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:cc:subject:message-id:mime-version:content-type
+	:content-transfer-encoding; s=fm1; bh=nyndYvhR68TYFdHDw4QFuRew2Q
+	Diyw9NnIN0hUcX4Jw=; b=sLlpl5e5Fk2USdCJTYLyr++/DOU3pmE7Z/2gfsXo4I
+	pipsHM0HB0nUBXO1obJgiLl/irLEDk+FamtxKagy5tLxmW163EgDDM9h//wZT6dY
+	veKDOfD75oaAERyinj09CBP/yWTxuC6SFwpxit5RpeiIUq2/mSsa+AEYtlIwHBEu
+	+LdXVTD9PksK8KM7yJpNKgaPexBYVFuNb0dXrwz0YRb+7A9T+P1UamcFBIAthurc
+	2FKzyixd7RVwQ1IBO1uXKki/tTb0bj80Uiw75SpyJTzy6wVeZW1dFhWjpYrc1swy
+	5Sa/rrzr8zwRHjGKBJ6EZ0lt0W6zsHzor7jWC27IlIdg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=nyndYv
+	hR68TYFdHDw4QFuRew2QDiyw9NnIN0hUcX4Jw=; b=e5kshKCTJj+i1QvnGP5wtd
+	OR50aO1lz2UgbYEOyjaH2WO2rWL7vPseS7rHdaGtR9RXHMV3y+N3NTx3sXI3AD0l
+	9EDjEExKZkoqDFlreFyaqmo6Zm6LdM/8I3wUCvzYJYIFctiItDxCY1cx4lMziyvV
+	7XQoefRCegwI8HUgbpJ1mRhITBaWAe4vUFggNwkiVeTTO/BZv1xewAzTthjXdKJc
+	fLfkajx/XYeV0CRD57ouw/JkQ4/AI64Hm7GCmgYU33PEr7xWk/z+8EyA+bXudfQs
+	H0nm8HGBd+mcJxcD6bFR5KhzEPDpRBeKHV6NDW5gpfGgvfW7XauAwdHXFkjX4b0g
+	==
+X-ME-Sender: <xms:YHfAYJwo1qbfGeCHvBFc4kA9T2d9zyZXnWaG6x0ybgMBnmCRd4n3ZA>
+    <xme:YHfAYJSOcXEpHkdyLTgtMZNnYGE1rWSfDXSFr1ZjxliYPuvsJ8cIrzpo1njAWSmrq
+    dBZqKIXKx-xjQ>
+X-ME-Received: <xmr:YHfAYDUFQxPPWSD28ThxNNXC3C05o_aaFgjt5iAaO_UQV7o-Iw-Vmk5bBPYxqwBWi0_5quzsc4P3dIkunAco7mBs1Ee5h03d>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeduuddgtdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfggtggugfesthekredttddtjeenucfhrhhomhepifhrvghgucfm
+    jfcuoehgrhgvgheskhhrohgrhhdrtghomheqnecuggftrfgrthhtvghrnhepleetudejhe
+    dtgefgheetudetfffgueehheevuefghffhieekvdefgfekieetfeeunecuffhomhgrihhn
+    pehkvghrnhgvlhdrohhrghdplhhinhgrrhhordhorhhgnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
+X-ME-Proxy: <xmx:YHfAYLhB9nGqx7cBH68TqPVYo_2UhQL7Jo-arcBF4b1DSqARZHBtHA>
+    <xmx:YHfAYLAPySZtr6iUkeMiqPE4MN0ul-kCJh_ub0lSf3SV-O0O9GXKOg>
+    <xmx:YHfAYEJq2r7qis0ckR81MJg6UoYaitL3CcsEMD7eDZhvljYYYqDjcw>
+    <xmx:YHfAYONi5DHmS4aDAIoNJwElshg1FHZou7MXmD3Q8cC2Yf2OxyIr6Q>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Jun 2021 04:10:07 -0400 (EDT)
+Date: Wed, 9 Jun 2021 10:10:04 +0200
+From: Greg KH <greg@kroah.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Subject: b4 crash when trying to apply patches with latest version from git
+Message-ID: <YMB3XJ/NgtCO+YCx@kroah.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
@@ -46,22 +59,44 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20210607100252.8253-1-paul@pbarker.dev>
+Content-Transfer-Encoding: 8bit
 
-On Mon, 7 Jun 2021 11:02:50 +0100, Paul Barker wrote:
-> Testing 'b4 am' with patches sent via Office 365 to lists.sr.ht showed
-> the same issues I found with patatt in handling re-encoded headers. So
-> there's a patch here to fix this and a patch to improve the ability to
-> investigate DKIM verification failures with debug output.
-> [...]
+On the latest version of b4 from git, a06304fcd63f ("Perform an encoding
+bug avoidance dance"), I get the following traceback:
 
-Applied, thanks!
+Looking up https://lore.kernel.org/r/20210607170054.220975-1-rui.silva%40linaro.org
+Analyzing 3 messages in the thread
+Checking attestation on all messages, may take a moment...
+---
+  ✓ [PATCH v3] MAINTAINERS: usb: add entry for isp1760
+    + Acked-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com> (✓ DKIM/ideasonboard.com)
+  ---
+  ✓ Signed: DKIM/linaro.org
+Traceback (most recent call last):
+  File "/mnt/fast_disk/linux/tools/b4/b4/command.py", line 259, in <module>
+    cmd()
+  File "/mnt/fast_disk/linux/tools/b4/b4/command.py", line 242, in cmd
+    cmdargs.func(cmdargs)
+  File "/mnt/fast_disk/linux/tools/b4/b4/command.py", line 51, in cmd_am
+    b4.mbox.main(cmdargs)
+  File "/mnt/fast_disk/linux/tools/b4/b4/mbox.py", line 598, in main
+    make_am(msgs, cmdargs, msgid)
+  File "/mnt/fast_disk/linux/tools/b4/b4/mbox.py", line 133, in make_am
+    b4.save_git_am_mbox([x[1] for x in am_msgs], sys.stdout.buffer)
+  File "/mnt/fast_disk/linux/tools/b4/b4/mbox.py", line 133, in <listcomp>
+    b4.save_git_am_mbox([x[1] for x in am_msgs], sys.stdout.buffer)
+  File "/usr/lib/python3.9/email/message.py", line 391, in __getitem__
+    return self.get(name)
+  File "/usr/lib/python3.9/email/message.py", line 468, in get
+    name = name.lower()
+AttributeError: 'int' object has no attribute 'lower'
 
-[1/2] Handle MIME encoded-word in DKIM-Signature headers
-      commit: 366bcd1fd8a10b6125e591f0c35cc85b10c9c950
-[2/2] Include dkim log output when -d/--debug argument is passed
-      commit: 506cf91716ff32c3747829b8556ce2d26b1936a4
 
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Any thoughts?
+
+Let me roll back to the last "release" to see if that fixes this.  Yes,
+v0.7.1 doesn't have this problem.
+
+thanks,
+
+greg k-h
