@@ -1,63 +1,66 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9D12FB2
-	for <tools@linux.kernel.org>; Fri, 11 Jun 2021 14:17:02 +0000 (UTC)
-Received: by mail-qv1-f47.google.com with SMTP id u14so13678418qvq.6
-        for <tools@linux.kernel.org>; Fri, 11 Jun 2021 07:17:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OZTKR3yeNjxpBJPMaFpZyVs2Q8cRiVl5tKvigrm/wTE=;
-        b=Kx2ffwL/g1mW/jXNpCGR04TLktAr/qWpz5UdtEPg1wZtlLdb09zSBoRW+lTLZLGJ36
-         kBXNZ02WUrI4Dw2dTxpHL3eUoTFAK2ZbnxtEboA5KOYseuDT18m4FettyxTr207LP/h8
-         djyCsUwpbiSIPfV7BjCXNCzFvoiSXsLHB1Hhk=
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCBB2FB8;
+	Fri, 11 Jun 2021 18:29:53 +0000 (UTC)
+Received: by mail-ua1-f47.google.com with SMTP id f1so2905361uaj.10;
+        Fri, 11 Jun 2021 11:29:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OZTKR3yeNjxpBJPMaFpZyVs2Q8cRiVl5tKvigrm/wTE=;
-        b=F1R9XmJyQQzC6bGMikdgq+QTwIYSPN1HG41ffXjs6AVyt4gRx/uH9Ic5NlXwJM8kLK
-         bfu0ysjjC4SY4nLWHCZqP1NEDbkRgebCPU8i6znKS7SYSHYLpT4InB2bV5iAJVPbAFkJ
-         m4DVuDXwk0AbtugMaUXrgSTKYqCSf3ESjXVoOyVjOrAsx+UvY8w/oECIgzy6jf4/Ui4h
-         qIBYSDxUKHx1V5wfAYMAnVAntxvRLgfIH7tBxP9drah137Hk4i3uXKIwQqWIU/5AOGTV
-         gNcfxR6+DlOwJxTj+le2600eH5/qhoM5reJVyo38NRj2BiVOv8gZ3rMYmlVgpzoqOj2y
-         ZDYA==
-X-Gm-Message-State: AOAM530arVzK9HY+R2ygDKfztDLpHuqDj3I9oGKiqnoPxcd9ctFpNiqu
-	/OBW2ortTQef7E7kZNNiF03Vz5SOMum8Lbmq
-X-Google-Smtp-Source: ABdhPJzVh4HlXSuviFpAqJxcLFNjsBmVIscHx7oAKOSIYQRgrKEk2HlqK7GzwepzOoHS4f+HMVXpog==
-X-Received: by 2002:a0c:f582:: with SMTP id k2mr5139080qvm.51.1623421021436;
-        Fri, 11 Jun 2021 07:17:01 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id l3sm4168555qth.87.2021.06.11.07.17.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jun 2021 07:17:01 -0700 (PDT)
-Date: Fri, 11 Jun 2021 10:16:59 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: tools@linux.kernel.org, users@linux.kernel.org
-Subject: Re: Multi-patch series broken in b4 master
-Message-ID: <20210611141659.kn4duhhqcfjs5vwu@nitro.local>
-References: <CAMuHMdWakx2RcL4W_cmUh8s3NYp3darGmrVu11Hq2-sY0GqUPg@mail.gmail.com>
- <20210611123756.zdnyugrvuf2p23hu@nitro.local>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GltcQ1s+wIQilwomHR+Qo+ZUydziSIz1k5XNeP4f2Zk=;
+        b=smyJYTSnBDHuHlTEhGbd7uOJJ6+xOIuLDLIRDvNEfVxxnun4JWW5i6we9bw4zewnrF
+         soPk57a0zy/0WOVcLNamsOItuYYJZdX1SNVkIiGfmgBK2yIrZcSbHmfBVdZ0t85vAAsf
+         E0hwozi1Z06OrEUKcM65qgQ1A8LY1luPKwFxgaiAC/Y9QafRzmuRyYB0DuEcmk1kLrhM
+         NRpH2kkcV3a3TfmE1Tu9VUm2ylAFAVPF2OfHyzK1Vs9zdHhJvNlzmRdQuBBUfbscd15q
+         /7xajmSpkHivHMmdkklXqadfNh+ZeSzzrReXFxVeWKBMsw/yRpB7yR2txLHVtIE/F0BT
+         32Ww==
+X-Gm-Message-State: AOAM533C8pz1Sp2AUct7bDY2qKvqqll1F56x3odUf8aJ5IIIv5sGM88O
+	ZK4uNB26lXWOhwcFUdYrindngkuhOLe8fcpqlJw=
+X-Google-Smtp-Source: ABdhPJyxR0mKRKzBmQJ6p+zPYd/esS2iLrC3oVuFsDK40EvlQIzHYUWTszQMK/ka220JSza/XV40eOVvFJxtbgXlMdc=
+X-Received: by 2002:ab0:71d9:: with SMTP id n25mr4959296uao.2.1623436192169;
+ Fri, 11 Jun 2021 11:29:52 -0700 (PDT)
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210611123756.zdnyugrvuf2p23hu@nitro.local>
+References: <CAMuHMdWakx2RcL4W_cmUh8s3NYp3darGmrVu11Hq2-sY0GqUPg@mail.gmail.com>
+ <20210611123756.zdnyugrvuf2p23hu@nitro.local> <20210611141659.kn4duhhqcfjs5vwu@nitro.local>
+In-Reply-To: <20210611141659.kn4duhhqcfjs5vwu@nitro.local>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Fri, 11 Jun 2021 20:29:41 +0200
+Message-ID: <CAMuHMdWDFALefqvzwSVj5HcAPkuM+-eHWeNrn8J6KmP4y0oyrg@mail.gmail.com>
+Subject: Re: Multi-patch series broken in b4 master
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, users@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Jun 11, 2021 at 08:37:56AM -0400, Konstantin Ryabitsev wrote:
-> I'll open a bug with Python and work around this in b4.
+Hi Konstantin,
 
-Fixed in master, bug filed as https://bugs.python.org/issue44395
+On Fri, Jun 11, 2021 at 4:17 PM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+> On Fri, Jun 11, 2021 at 08:37:56AM -0400, Konstantin Ryabitsev wrote:
+> > I'll open a bug with Python and work around this in b4.
+>
+> Fixed in master, bug filed as https://bugs.python.org/issue44395
 
-> Thanks for the report -- I'll push out a 0.7.3 shortly.
+Thanks, fix confirmed!
 
-Looks like 0.7.x is unaffected, so no new 0.7 release necessary.
+> > Thanks for the report -- I'll push out a 0.7.3 shortly.
+>
+> Looks like 0.7.x is unaffected, so no new 0.7 release necessary.
 
-Thanks again,
--K
+Yes, v0.7.2 is fine.
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
