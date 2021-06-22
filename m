@@ -1,66 +1,98 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB0B173
-	for <tools@linux.kernel.org>; Mon, 21 Jun 2021 23:07:47 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5566B61001
-	for <tools@linux.kernel.org>; Mon, 21 Jun 2021 23:07:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1624316867;
-	bh=EMI0cTziUsGspfG2kgQM4FAuurht60FAdFGUsWUoSkQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=BSgHw9n+haq08O4AhvLWzNSszrO63gHtxbQv+sOKjtRWyyPkW7b1e2YBlFg8XWVff
-	 GKhYjG/YNhnlVbUr76G58EFj1leCOzSgRp26hCVcEIKQL1ItJ3FAm4SoGFi2jm3sO+
-	 nAYQ49JMV6kdIiiGV3a0xC/9rErK1B7Moq0gUEgYtNefscdvX+YKl8vzKXRjk2/wt8
-	 fyVw4bon12LWgCe66xJ0DFn2mqdqJC+tLXFh4t2opFs91huwV+lgOAV9xTchBo7E8Y
-	 A90NAVhpc1V1lk5fgWSJg6rlWF/wPrfHfvFqqd1+1piT8StX0/2qQEbbmFlbAVessQ
-	 We3V2zyxFIKpg==
-Received: by mail-ej1-f43.google.com with SMTP id gt18so31352417ejc.11
-        for <tools@linux.kernel.org>; Mon, 21 Jun 2021 16:07:47 -0700 (PDT)
-X-Gm-Message-State: AOAM5307Rh3Zb37kZ3fxZ2uh7P2Kg65HBEKbZJDr3XTDJyhWmf8fff7v
-	ZFHPOufx6ojnmfktscxRcVsEazlYUkhG+POOug==
-X-Google-Smtp-Source: ABdhPJyGzXbCqwLCz36imW9SwZICU1RO0Ohcf21gCFTv6NhUr2VyDlxV2nH7lJar4uPc6W16tJnIdJxHPmVcCFhSoDQ=
-X-Received: by 2002:a17:906:1951:: with SMTP id b17mr545595eje.468.1624316865995;
- Mon, 21 Jun 2021 16:07:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2471C71
+	for <tools@linux.kernel.org>; Tue, 22 Jun 2021 14:23:27 +0000 (UTC)
+Received: by mail-qv1-f54.google.com with SMTP id g19so6414351qvx.12
+        for <tools@linux.kernel.org>; Tue, 22 Jun 2021 07:23:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=btoww6t5C6qCLwrNm/OANlh9jadHnyBpvadRrNeZ2qg=;
+        b=fK52ejpsNC0Bkog17UBo4hp+m4ZbxLw1jm+5jvQhUuM6de5yRawnP+S1Uloao+/5YF
+         gEY2NesvKhOIDZLgeQtqo01l3oHe8df8c/YNIgVdEIg6NMzqWx8CTs9xzahC3SFsw0au
+         hKGECpO+d99yDA/j/aRMnWeKYoLDkGz1w1Hdo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=btoww6t5C6qCLwrNm/OANlh9jadHnyBpvadRrNeZ2qg=;
+        b=rmBFy5QdCK025LePOzx3X0yW+arBxqfUfvbvSCmybxB3YHFZlS3BRbQKzUSAKNEWnE
+         MLCcfYia9pDJGqoATrEvewnc8UdTZnbl96FVyZvDkErlK3wiJDWZdZFbdPOjJCX++o+d
+         2WiySvtE+H8VjwsEImvBTukTqolmv7aid497tW9GF2BcaulBnHpcHtuH3FNM1mVBx5JB
+         dqqC8JyGNDZR2cnTIkJcxdnrWfoPLFjqVUlO8ITRH3Z7krfftEGHTccTrmdwtRo70I4W
+         R2kQ6r7JQP7JQ4KgDrlURiljIu82f5X1aheRY3yOQYWu4WNVnPw4IqLiANyiw9OEmDId
+         XeuQ==
+X-Gm-Message-State: AOAM533PYNili5v7T6Lmv0tKAOw0qlice3FBG/T/giPkmLRqhki5GKVH
+	3+DkuuaXP9VAKDhZMUNd3Cp74Q==
+X-Google-Smtp-Source: ABdhPJynWB93X6J1vptRKIhZQIA5AhqI8BcL5zEPu0mQc2o/M/tKWa6tcDUnQcoMZPVuQQCkf7COIA==
+X-Received: by 2002:a0c:ff25:: with SMTP id x5mr26039674qvt.39.1624371806030;
+        Tue, 22 Jun 2021 07:23:26 -0700 (PDT)
+Received: from nitro.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id q199sm12869907qka.112.2021.06.22.07.23.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jun 2021 07:23:25 -0700 (PDT)
+Date: Tue, 22 Jun 2021 10:23:24 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Rob Herring <robh@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: [PATCH 2/2] am: Allow specifying a base to check applying series
+Message-ID: <20210622142324.kotqghzxxro736fl@nitro.local>
+References: <20210618182452.2577871-1-robh@kernel.org>
+ <20210618182452.2577871-2-robh@kernel.org>
+ <20210621200325.zgz4eibneuchus5d@nitro.local>
+ <CAL_JsqKntMMa7PjkxJQjK+YTykEtLbpMc=Hj+YhHCbMGguQ+EA@mail.gmail.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20210618182452.2577871-1-robh@kernel.org> <20210618182452.2577871-2-robh@kernel.org>
- <20210621200325.zgz4eibneuchus5d@nitro.local>
-In-Reply-To: <20210621200325.zgz4eibneuchus5d@nitro.local>
-From: Rob Herring <robh@kernel.org>
-Date: Mon, 21 Jun 2021 17:07:34 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKntMMa7PjkxJQjK+YTykEtLbpMc=Hj+YhHCbMGguQ+EA@mail.gmail.com>
-Message-ID: <CAL_JsqKntMMa7PjkxJQjK+YTykEtLbpMc=Hj+YhHCbMGguQ+EA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] am: Allow specifying a base to check applying series
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAL_JsqKntMMa7PjkxJQjK+YTykEtLbpMc=Hj+YhHCbMGguQ+EA@mail.gmail.com>
 
-On Mon, Jun 21, 2021 at 2:03 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Fri, Jun 18, 2021 at 12:24:52PM -0600, Rob Herring wrote:
-> > Add a new option, '--check-base', to allow the user to specify a specific
-> > base git ref to check applying a series to.
->
-> I just pushed a reimplementation of --guess-base into master -- can you see if
-> it does closer to something that you want?
+On Mon, Jun 21, 2021 at 05:07:34PM -0600, Rob Herring wrote:
+> > I just pushed a reimplementation of --guess-base into master -- can you see if
+> > it does closer to something that you want?
+> 
+> Yeah, it works. It's a bit confusing that the result is 'Base: current
+> tree' when it's not HEAD.
 
-Yeah, it works. It's a bit confusing that the result is 'Base: current
-tree' when it's not HEAD.
+I've added some refinements that will hopefully improve both the matching
+algorithm and the output when using -b.
 
-The more I think about it, the more I think '-b' needs to be a list of
-refs or should be a separate sub-command and the user can iterate thru
-branches themselves. It would work as-is, but it's kind of pointless
-to repeatedly go thru all the 'b4 am' steps each time. A separate
-sub-command would keep with the unix way of commands that do 1 thing.
+> The more I think about it, the more I think '-b' needs to be a list of
+> refs or should be a separate sub-command and the user can iterate thru
+> branches themselves. It would work as-is, but it's kind of pointless
+> to repeatedly go thru all the 'b4 am' steps each time. A separate
+> sub-command would keep with the unix way of commands that do 1 thing.
 
-I don't know that the guessing algorithm is any better now. When I ran
-it with my current tree being something a series doesn't apply to, it
-gave me some pretty arbitrary ref: v5.13-rc1-69-gcfe34bb7a770 (which I
-think happens to be the base I just did a rebase on)
+By default, we'll use --all when matching blob indexes, but if -b is
+specified, we'll pass it as-is to --branches, which is actually a pattern (see
+"man git-log").
 
-Rob
+> I don't know that the guessing algorithm is any better now. When I ran
+> it with my current tree being something a series doesn't apply to, it
+> gave me some pretty arbitrary ref: v5.13-rc1-69-gcfe34bb7a770 (which I
+> think happens to be the base I just did a rebase on)
+
+I believe I've improved it in the latest commit.
+
+NB: I think it's important to recognize that "all blob indexes matched" is not
+a guarantee that the base we find is actually accurate or useful, at least not
+for the purposes of CI -- a patch may be dependent on another set of changes
+that modify totally different blobs than in the patch we're looking at.
+
+E.g.: imagine that you are looking at a patch that changes files lib/foo.c and
+lib/bar.c, but these changes are dependent on lib/baz.c. If you apply a patch
+that modifies lib/baz.c, then the indexes for foo.c and bar.c would still
+match the current tree, but the correct base-commit would actually be *before*
+the baz.c modification.
+
+We already try to handle this situation by not considering changes applied
+after the patch was submitted (we force --until to be the date of the patch),
+but providing an actual base-commit info in the patch/series is always going
+to be more precise and reliable.
+
+-K
