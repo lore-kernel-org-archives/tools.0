@@ -1,47 +1,48 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB47570
-	for <tools@linux.kernel.org>; Tue,  3 Aug 2021 15:24:39 +0000 (UTC)
-Received: by mail-qt1-f182.google.com with SMTP id d9so14155314qty.12
-        for <tools@linux.kernel.org>; Tue, 03 Aug 2021 08:24:39 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003973480
+	for <tools@linux.kernel.org>; Tue,  3 Aug 2021 16:03:17 +0000 (UTC)
+Received: by mail-qt1-f172.google.com with SMTP id t18so14263302qta.8
+        for <tools@linux.kernel.org>; Tue, 03 Aug 2021 09:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=aFjO2HrTVrjcVKxoVmnE2zYU+SBdXSVLt/lhzDqtnr4=;
-        b=Cada6FDUWOC/S2iuOXfq/zWPvuWFEkq0gcn2zeeJ8lhfw1UpRBnUqzYQBroGDtuk2h
-         vzvtVRnzmq9A3FVtJHfXQ0GiyllTcOsFdTq478Mm7+LndEw1kGlrCgRCgr5Fzgg1B5Eh
-         MnlcOkiWn98fzC216jfAp21EuuDgyVejA36us=
+         :content-disposition:in-reply-to;
+        bh=LOuvsiOhltm2nGZRDfW/D8JztFuwlELmQaPu99WEYr0=;
+        b=LXwE/JiJ33Q/LbmWwbuMURHlzvDgT0oiykFWHsmy4MoClSw9YOCVDpVm92MA4KD0BL
+         0q8HtitFnI35uQ5ZLnveZeWdtTZkSLzGtkn7ZGE+3CE2Snl50aGyTo4V9tMnJq8yCq8z
+         rEZui9i4YS8JyzljjuwJTklBIIHiCWJfdwcQI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=aFjO2HrTVrjcVKxoVmnE2zYU+SBdXSVLt/lhzDqtnr4=;
-        b=M7ougk/b/ssgbVnzru6ssRX6gkoX+D2D19v8Og5jw1gUjBm+rETP0AyNgcgaL63z8y
-         sGyllTBgO0iLit9GSCUYR4Cf6NpdhGKISGm5/No6Ai523SYCRcJ+sVfsdQlUuFAqJZtA
-         zI+mD0fryOCv6l1+I6LB3kh/N/fk5VbrZ2eR3jU+QSGgii4sEVL4PxZ3kGGJ25LtmBsQ
-         HSK/mmxa818DdgvA2iykqGiQTabUJFusOk4175JOB/9eIntY3nVupNeBpq6Sm2B/Hh6s
-         2dIjo58SqQeGsc4/4OYfzLkuGQMsxuwNqVSZV/1yWO8WI6bu4RPA5w8ZVKt9RsAyDsl7
-         HLyw==
-X-Gm-Message-State: AOAM5302HXicVJw7cJ+FxC+2YVWBIrCvl3dY5JRR7LzqmSnNvpIPfxqc
-	aP+576HdVnqyDcxLsnPDlUCPyA==
-X-Google-Smtp-Source: ABdhPJwrEZnyghcNF2MkmQk6ZpWqS6vEkeW7ORcSd/PoNj7/XZTJ8GkC7yGsynukgmcCLO+hH3n5RA==
-X-Received: by 2002:ac8:44c2:: with SMTP id b2mr18542878qto.216.1628004278717;
-        Tue, 03 Aug 2021 08:24:38 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to;
+        bh=LOuvsiOhltm2nGZRDfW/D8JztFuwlELmQaPu99WEYr0=;
+        b=hCT5VGgMM8u5PZgUigFv1XDOjg3GOi8IE+w6iv1hJaeYcIjy+L8DMPV2DNQSU4CV0y
+         L0VfyzO8eWg9mPSO9xOdljHQIEGaTAuNwlpnWwYZXIYD7mEgyd6d9LioiNgpM4jLl0Nf
+         mACXRsdUHUZFxd2OpFmeV7GIQkOYiPSlkQhDJr4va7njFKk1GnuK//CLhtB9pv55afhm
+         zdQiuzVuvmhGMsJt1ee6TmzmDNKJeky14TJ0wXrZupzqFpqI5IQklcpq+4BCgLXsQ/xS
+         cxxYSGHy2t43o7LjUru0A28tY6KzaW+ZtYFhmanxhZyrpujS6uQUQhFie48kdcN0J6Tn
+         QnDQ==
+X-Gm-Message-State: AOAM533F+szNBCj0Eir7LvPlqlE/DwmIZ/fz34Jlu5vdBLdanXTGcuti
+	Gk+hQoO6KjDZMhPQptAdy7FlCQ==
+X-Google-Smtp-Source: ABdhPJyV/5K1wV4oBvQg3OALFFfRQ7Yy4ueI4MylCMd40Q71O/4wlfK+0wbcxca5JPfegGknK3TxeQ==
+X-Received: by 2002:a05:622a:1105:: with SMTP id e5mr19292021qty.268.1628006596916;
+        Tue, 03 Aug 2021 09:03:16 -0700 (PDT)
 Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id v7sm8069673qkd.41.2021.08.03.08.24.37
+        by smtp.gmail.com with ESMTPSA id j127sm7917482qkf.20.2021.08.03.09.03.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 08:24:38 -0700 (PDT)
-Date: Tue, 3 Aug 2021 11:24:36 -0400
+        Tue, 03 Aug 2021 09:03:16 -0700 (PDT)
+Date: Tue, 3 Aug 2021 12:03:14 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: tools@linux.kernel.org, Marek Vasut <marex@denx.de>,
-	Stefan Roese <sr@denx.de>, Mark Brown <broonie@kernel.org>
-Subject: Re: b4 picks up Phone: "header" from after the "-- " separator
-Message-ID: <20210803152436.c3fe3s4isesr5gom@nitro.local>
-References: <20210719213535.vw3u4yg5mgxqysaf@pengutronix.de>
+To: Kyle Meyer <kyle@kyleam.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, tools@linux.kernel.org,
+	users@linux.kernel.org
+Subject: Re: [PATCH b4 0/2] Avoid decoding errors when extracting message ID
+ from stdin
+Message-ID: <20210803160314.dwor36uc4md4sa6u@nitro.local>
+References: <20210717212631-mutt-send-email-mst@kernel.org>
+ <20210718043406.26727-1-kyle@kyleam.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -50,32 +51,19 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210719213535.vw3u4yg5mgxqysaf@pengutronix.de>
+In-Reply-To: <20210718043406.26727-1-kyle@kyleam.com>
 
-On Mon, Jul 19, 2021 at 11:35:35PM +0200, Uwe Kleine-König wrote:
-> Hello,
+On Sun, Jul 18, 2021 at 12:34:04AM -0400, Kyle Meyer wrote:
+> Thanks.  I can trigger that on my end too.  Here's a possible fix.
+> The first patch is the actual fix.  The second patch makes this code
+> path do a little less work but isn't necessary.
 > 
-> I just noticed that 
-> 
-> 	b4 am 20210718211143.143557-1-marex@denx.de
-> 	git am ./20210718_marex_spi_imx_mx51_ecspi_fix_low_speed_configreg_delay_calculation.mbx
-> 
-> adds the following line in the s-o-b area:
-> 
-> 	Phone: (+49)-8142-66989-56 Email: marex@denx.de
-> 
-> . This originates from Marek's reply that can be found at
-> https://lore.kernel.org/linux-spi/17bf62a4-af57-1706-f20a-35f9d6cbf9d0@denx.de/
-> .
-> 
-> The same already happend here:
-> https://git.kernel.org/linus/ce91c6220947e4efa0db564cc50baa0151d8872b
-> 
-> I think it would be sensible to not pick up anything from after the "-- "
-> separator.
+>   [1/2] Avoid decoding errors when extracting message ID from stdin
+>   [2/2] Parse just headers when extracting message ID from stdin mbox
 
-Thank you, fixed in master and stable-0.7.y. A new 0.7 release will be coming
-later today.
+I've applied 1/2 and partial 2/2. In the case of b4/pr.py, we actually want to
+parse the entire message, not just headers.
+
+Thanks!
 
 -K
