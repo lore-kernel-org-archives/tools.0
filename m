@@ -1,42 +1,42 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECBF2FB0
-	for <tools@linux.kernel.org>; Fri, 13 Aug 2021 15:01:38 +0000 (UTC)
-Received: by mail-qk1-f178.google.com with SMTP id e14so11066714qkg.3
-        for <tools@linux.kernel.org>; Fri, 13 Aug 2021 08:01:38 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB09168
+	for <tools@linux.kernel.org>; Wed, 18 Aug 2021 19:07:53 +0000 (UTC)
+Received: by mail-qv1-f51.google.com with SMTP id j9so2251194qvt.4
+        for <tools@linux.kernel.org>; Wed, 18 Aug 2021 12:07:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=675HuwNOHl9B8md7Z+uwVbLsOrfArH3QajL0YlKHUKU=;
-        b=DIKHw+L8OL739PbTEYgrnlBl9XVhUL8UjsRe7lduusDTRXBupy6kS0uAoPLDSmwRND
-         0pW5OPFte2CPfNsLImVO2EaYG1HKu6vgGTUOU44xvjzIqdm4dGV+aUWHj0PhAZSuz6RP
-         dP3xWHulwRqEm4yEKwx/LOm5cn3Oml+lGUfbk=
+        bh=Kuk6Gbb1B/glIil/MhDM/OBpE+UMUKteSlemS5BrOYE=;
+        b=Z9zsDcLHrfNPtUVNGvdVuuWfX8U1uqmSCLIJLg8Xu4+ElqG1CJ7pLnEUZoD2ZCR5aS
+         YdTUMx03evJf2OWvL7hyBm9NBWddAINCnBFtvBW6B3O3Edgm5apgcCr/cZLZzrkkOn/X
+         JNY/ZFkY4MkpgsmstJXtWG/Oq4z4Tmmpnlupw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:mime-version
          :content-disposition;
-        bh=675HuwNOHl9B8md7Z+uwVbLsOrfArH3QajL0YlKHUKU=;
-        b=rMzQ4S1v9UVzQP0Z7d8uO7G6zbQLhbuZg/5BpW3jN2ffRl6Y1JpeCNLYyslEk0n434
-         eonDbW5OGERR+XEe4y+AJRLaEJ6Sfv263dZfu3tvYq3ye7pUEMlJ4NqlEbrR/1ghG4Zo
-         pNgF5etN2vBMWw8+/1FNmVg8cRsp5b1zfsKdUGyyP9YbOiQzV2tw2yQ23ad19PAVP3PH
-         80+PrAmZK08PFQISma0T3a6IwLNWlTKb3f5rg8uepAZ6vrcpmtTG++FiaMc1WeWB8NP3
-         m1JR53yh0cGcM5R5oNZFRE5J66/aBURFp30ht1BKMlJodUmIx3tfgN6LuE8TRTrWGsRX
-         AUXw==
-X-Gm-Message-State: AOAM533P0zK8Rezv9uKHRYUslKxoiwyqzoTpZpdY2YLTlKTIYdxWAabY
-	U/fckamH7SczPk07bDlITxpQ//ROHWTHxEOF
-X-Google-Smtp-Source: ABdhPJzi8yDB3b5WHEgOq6PKGCh96XXb4iHCDIfypW8/fHo2bbUCHCmE1hTxyBxfhjK9IePKLTFIwg==
-X-Received: by 2002:a05:620a:4046:: with SMTP id i6mr2630978qko.406.1628866897181;
-        Fri, 13 Aug 2021 08:01:37 -0700 (PDT)
+        bh=Kuk6Gbb1B/glIil/MhDM/OBpE+UMUKteSlemS5BrOYE=;
+        b=gOoO1r8YBEk9k+g7+HEvX8Hr97drT7IAScNzlViMUregt9RuJzFRYsccBxjjDl9+kv
+         0Z1S7X+TQSY/E5hyFQcHRhdixf5eKXgnLN/BNPBzvy2IK7xwKMGXwjACBpzhOln4gFRK
+         QXiEMrPC+QUYotPbhobQjGVyqUvrsFMyZ5QrEddrMlZqrxL0PDuttiOlN2VBS+FpWeKv
+         I9CavKhi8eP1urSqQRIe/rOtaO2R643d2nJ32Q1ALgC3BMpKaB4nBWz9pyNFJGkIDZ7s
+         W1VqV+ZM8eMaKmcwLdSvs4oq7UD8vxU/Sa1f8xDi46TN6ju89DEy+6gPehmC54drYYZq
+         pWVg==
+X-Gm-Message-State: AOAM530UI+Y7QgM8zr7jvhXmMhgogWOC3GqSOQ02oUoRzyejjZdx35Xc
+	zaHMAs6r+7wxgUOf0M4Vxg6Udw==
+X-Google-Smtp-Source: ABdhPJySK407I1Lce8AMEgQOm6IduMi+xaOeDKHpKFjXD1JhvPn1Qh8AXlyAgBCzb6G4Ul86n8sCWw==
+X-Received: by 2002:ad4:5bc8:: with SMTP id t8mr10139061qvt.18.1629313672967;
+        Wed, 18 Aug 2021 12:07:52 -0700 (PDT)
 Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id p4sm1051722qkk.12.2021.08.13.08.01.36
+        by smtp.gmail.com with ESMTPSA id i19sm361459qka.53.2021.08.18.12.07.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Aug 2021 08:01:36 -0700 (PDT)
-Date: Fri, 13 Aug 2021 11:01:35 -0400
+        Wed, 18 Aug 2021 12:07:51 -0700 (PDT)
+Date: Wed, 18 Aug 2021 15:07:50 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, users@linux.kernel.org
-Subject: b4 v0.7.3 is available
-Message-ID: <20210813150135.2lsc26eolfvfhpqi@nitro.local>
+To: users@linux.kernel.org, tools@linux.kernel.org
+Subject: New version of lore available for preview
+Message-ID: <20210818190750.g3xedu7j24sqndo2@nitro.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -44,83 +44,57 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="rwpirpgk3x2gfi5j"
+	protocol="application/pgp-signature"; boundary="gficfe2dugqmdje6"
 Content-Disposition: inline
 
 
---rwpirpgk3x2gfi5j
+--gficfe2dugqmdje6
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello, all:
+Hi, all:
 
-B4 stable release 0.7.3 is now available. This is a bugfix release that
-addresses a few corner-cases and fixes a security issue:
+We will be deploying a newer version of lore.kernel.org soon, with the
+following significant improvements:
 
-- when using "b4 mbox" with messages containing malicious message-ids, b4
-  0.7.2 and earlier could potentially overwrite arbitrary file contents if =
-the
-  message-id contains path escape characters such as "." and "/". It would =
-be
-  difficult to exploit this with a meaningful result, as "b4 mbox" always
-  saves raw rfc2822 messages, containing full email headers. This problem d=
-oes
-  not manifest when using "b4 am" or other subcommands as sanitization was
-  already applied to generated filenames.
+1. The default view becomes /all/, which displays messages from all lists and
+   allows the usual query/retrieval operations across all sources. This
+   achieves multiple goals, such as ability to aggregate threads regardless on
+   which list the follow-up discussion took place and will automatically
+   backfill missing messages if they are present on one list but not on
+   another.
+2. Instead of a single system, lore.kernel.org will be mirrored across three
+   nodes currently serving git.kernel.org. This both reduces single points of
+   failure and makes things faster for folks in EU/APAC.
+3. The web interface will now respect your browser-preferred color scheme and
+   will display dark mode interface if that's how you like it.
 
-Additional fixes in this release:
+You can access the new version at https://x-lore.kernel.org/ and it should be
+fully usable for daily operations.
 
-- Fixes "b4 am --guess-base" (though a much better implementation is in mas=
-ter)
-- Ignores any trailer-like content below standard signature marker "-- "
-- Fixes a crash when a header is incorrectly qp-encoded
-- Fixes a crash when user locale is not utf-8 and a message is passed on st=
-din
+You can use x-lore with b4, though I strongly recommend switching to master
+branch in order to better deal with some of the changes happening on the
+server-side. Simply add the following to your ~/.gitconfig:
 
-Everyone must upgrade.
+[b4]
+  midmask = https://x-lore.kernel.org/r/%s
 
-To upgrade, run:
+Please report any problems or hiccups that you discover. There is no specific
+ETA for the new version go-live, but if all goes well, the hope is to have it
+in place by end of August.
 
-    pip install --upgrade b4
+Best regards,
+-Konstantin
 
-Or simply update to the latest git if using straight from a checkout.
-
----
-
-Special thanks in this release:
-
-- Kyle Meyer
-- Rob Herring
-- Uwe Kleine-K=C3=B6nig
-
-Shortlog:
-
-Konstantin Ryabitsev (6):
-      Up version to 0.7.3-dev
-      Don't append .git unnecessarily
-      Sanitize msgid before using it as savename
-      Don't consider signature contents for trailers
-      Handle decoding incorrectly encoded headers
-      Prepare for 0.7.3 release
-
-Kyle Meyer (1):
-      Avoid decoding errors when extracting message ID from stdin
-
-Rob Herring (1):
-      Allow '.git' to be a file for worktrees
-
--K
-
---rwpirpgk3x2gfi5j
+--gficfe2dugqmdje6
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYRaJTwAKCRC2xBzjVmSZ
-bE+wAP4grI3MVB9aIICOxxFV9LKkbnrLgmlsdIpJrrxfUnV7cQD+JqeuxD6VSFRJ
-pxpjIuv51i3jyix2VQA7taBo6kziowc=
-=iEaH
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYR1ahgAKCRC2xBzjVmSZ
+bNigAQCgk3j1hG8lO1iOtD802LXZZsRZzEefm1bCvgm2Mo+8+wEAmbf0uS30L+91
+AXWQeWedn4WZ5YX6IWHcDxGAFEYEmwY=
+=NYg4
 -----END PGP SIGNATURE-----
 
---rwpirpgk3x2gfi5j--
+--gficfe2dugqmdje6--
