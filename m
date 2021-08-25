@@ -1,76 +1,124 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332FD3FC3
-	for <tools@linux.kernel.org>; Wed, 25 Aug 2021 16:45:02 +0000 (UTC)
-Received: by mail-qv1-f41.google.com with SMTP id v1so288493qva.7
-        for <tools@linux.kernel.org>; Wed, 25 Aug 2021 09:45:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GoLFMBV7t/9e+DZR0keC/Y9bZoe0ytKLEZY6XNeQ16Y=;
-        b=S7o5vxb7kjmBiatSPftBTCEv+j0g3TDOYC0Ce0tmZ/fZvUHhcttQNlc4zzVK13Ohe6
-         kqAcVU0lQo6BVe1uDH3Fmd5QdAOaRmmgdGcWCcJGUTuvJhP2eHgr46InDJOot2/WcjiD
-         8FVssSMDbCbFTsjQPTh28b8vfznV9Gko3siuI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GoLFMBV7t/9e+DZR0keC/Y9bZoe0ytKLEZY6XNeQ16Y=;
-        b=QKJNzJrhh/vrGrgxvkAba4wnOdaAT5RLv1UGTVg3eAKa7G4zy3fcgQ/hqavQu/pIbn
-         Z3mKCnx+52AIdL+Leqq4vJ94A2d6rJkYQUhy35rbaD5PEuBTczva65DwyijPNuqlCFap
-         lYkjVhL6Nq7nNj6PHd2PzknpCVeQsbVFPN9diXIPpSvFm/OnwRsSJDtZhYYMhRL9uhNS
-         b7/b5VbIzMa26/trbzeLdjMcpZslbJVm1XCgTA5boAtG4AzrL2IVIgZGERmU9DT2JiRH
-         vpqeVdtPQ4vp2W94Y1z+1NZFALPhZvcZoJr5D9ZJ9OUI5t4Me0qje/AvVEno1hJXWQXc
-         3cOw==
-X-Gm-Message-State: AOAM531me1aE/eQXZSyH97LhAMEDzv/uQZoIcwaQz6NoKo0pkv5v9/wa
-	v8TTsVmvEk/DsgbtpU8VOa999Q==
-X-Google-Smtp-Source: ABdhPJypZCTIKsiOesyeUuTm+IK5pq0JsPCuaK5pcOUn/jSQQgojGGqnvkP55KITj+7USnedhmDI9A==
-X-Received: by 2002:a05:6214:1142:: with SMTP id b2mr45854973qvt.0.1629909901101;
-        Wed, 25 Aug 2021 09:45:01 -0700 (PDT)
-Received: from nitro.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id a185sm353758qkg.128.2021.08.25.09.45.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Aug 2021 09:45:00 -0700 (PDT)
-Date: Wed, 25 Aug 2021 12:44:59 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Rob Herring <robh@kernel.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C9A3FC0;
+	Wed, 25 Aug 2021 21:39:31 +0000 (UTC)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 5A8B73200A33;
+	Wed, 25 Aug 2021 17:39:31 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Wed, 25 Aug 2021 17:39:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	joshtriplett.org; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=fm1; bh=N41
+	rumlTSLS+5bh7LXNsiOpiurFnrByyF0JvmZ5dNcM=; b=Fs/Oj0nxgKWkDVjO8rc
+	ulJGAFMmzgS+W3FVRKwGXRuamKIzi9XxxazRhKJ/Q3oHbPShoAh8pDFcbGYEwQWD
+	bUuHy+NTQ2Vjn/qK/l4QKhKXCA9qhwHp38pdxQ/MSe9kfmKFOnTRw1nr0Qp0w+TF
+	J3OWCtsvs0jpIzvXe0/6UdsQeY+lL0Hw7U6ezGncRuZ934dutVV4OE6YTnIU0dWh
+	MCcFF+K70yV4KOIjVGXrq9aNn0yhLDYwrVCwgu/Z9CyTIGslUOzRP8KtzC1pLfLp
+	lQb1CLUbIkA6JMXaaYXVPx03lHV2dQBuFzzdiEjazpP/4MYQy0Jh3snUFG6ogzTH
+	eMA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=N41rum
+	lTSLS+5bh7LXNsiOpiurFnrByyF0JvmZ5dNcM=; b=WGiFIomlhNLT6jLuArJ2mo
+	0JOydSoQQYQPQFDO3pLUiUBqwEx+z34o3ESvB/4ToldL2dBGCNTMUF7084XBT6QS
+	SlTNiSX4xl7jF1U+LQTgKmwYgNk7FN8WyqcCsQ1z0EkteKjtz2jSXN2ClSb3y0dU
+	OuPjv4OQGxFGBP/pmbtFbZEKGGdg8ZX+M4g/sVxx7EbR2ixP2DLLSSBXeXNZcbKp
+	fYgPra4w3GRonKBe8IVC0/hw9uYioYDI7uFzfqAQU2/LShqOjACHq825uPB8i2Sz
+	HHeO0IgAyL6kBISswEOnMK/UxRCOg4DYrvW2HDROJM2E+TTYWDhZ5DTRopeB/A0Q
+	==
+X-ME-Sender: <xms:krgmYZpQGtI6-eGeqq1PaykvDbL1xFhz6KqaMV5-qa2mwBx-cBeGuA>
+    <xme:krgmYbrJjDteA1D-c5WMN4x6dXse19bw9HOxR083z_go_fEriYHUCv6hCsYHZOMGp
+    iM9hmLexmg9SPxYEFk>
+X-ME-Received: <xmr:krgmYWNYBxOu9eNMQQvJrVuS0MYKXPz8YkjDhququ3aU9aZjbD_oFi8REKk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddutddgtdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeflohhshhcu
+    vfhrihhplhgvthhtuceojhhoshhhsehjohhshhhtrhhiphhlvghtthdrohhrgheqnecugg
+    ftrfgrthhtvghrnhepudegkeeitdeileehgfekvedvleffgeefteekhfevueeghefhvdff
+    iedukeffieffnecuffhomhgrihhnpehpuhgslhhitgdqihhnsghogidrohhrghdpthhorh
+    hprhhojhgvtghtrdhorhhgpdejfhhhiehtuhgvqhguughpjhihgihjmhhgthguihhuvgih
+    lhiiohhqtheiphhtjehhvggtfehpuhhkhihpthhlmhhohhhoohifvhhhuggvgeihugdroh
+    hnihhonhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehjohhshhesjhhoshhhthhrihhplhgvthhtrdhorhhg
+X-ME-Proxy: <xmx:krgmYU4AsU0z1QEr-cUBTC50oroDamEKNDqwkDV8Fj0MnLOr8L156Q>
+    <xmx:krgmYY75zkIGiYXWK7EVC16tcKUhnDRdz4OuCQhTDHODMXCczM5WBw>
+    <xmx:krgmYchxJBobVQOxrgXOxbABJRAYGpSJI7f2fH8SuKSnsaSQIYk4sQ>
+    <xmx:k7gmYYFq_il05jjGGagsOEjVkX3X4T4VOGBf7e9-1YPIsneInz8e9A>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Aug 2021 17:39:29 -0400 (EDT)
+Date: Wed, 25 Aug 2021 14:39:29 -0700
+From: Josh Triplett <josh@joshtriplett.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Rob Herring <robh@kernel.org>, users@linux.kernel.org,
+	tools@linux.kernel.org
 Subject: Re: New version of lore available for preview
-Message-ID: <20210825164459.5pxaxsl5a6nuipbt@nitro.local>
+Message-ID: <YSa4kYDpTAFOf0az@localhost>
 References: <20210818190750.g3xedu7j24sqndo2@nitro.local>
  <CAL_Jsq+zxVw3BaAzF+58KT9jrFWNzUpELevj=SGPJSrdcVFPSw@mail.gmail.com>
+ <20210825164459.5pxaxsl5a6nuipbt@nitro.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAL_Jsq+zxVw3BaAzF+58KT9jrFWNzUpELevj=SGPJSrdcVFPSw@mail.gmail.com>
+In-Reply-To: <20210825164459.5pxaxsl5a6nuipbt@nitro.local>
 
-On Wed, Aug 25, 2021 at 11:30:37AM -0500, Rob Herring wrote:
-> > You can use x-lore with b4, though I strongly recommend switching to master
-> > branch in order to better deal with some of the changes happening on the
-> > server-side. Simply add the following to your ~/.gitconfig:
-> >
-> > [b4]
-> >   midmask = https://x-lore.kernel.org/r/%s
-> >
-> > Please report any problems or hiccups that you discover. There is no specific
-> > ETA for the new version go-live, but if all goes well, the hope is to have it
-> > in place by end of August.
-> 
-> I've switched over and so far, so good. I'm happy that now I get full
-> threads regardless of the sender's choice of MLs and no more mangling
-> of subjects with commas in them (DT patches frequently have commas).
+On Wed, Aug 25, 2021 at 12:44:59PM -0400, Konstantin Ryabitsev wrote:
+> Great to hear, thank you for sharing that. I've been running b4 in a loop
+> against /all/ as well, and so far so good on my end, too. The plan is to
+> switch over to the new lore on Monday, August 30, but I need to release b4 0.8
+> first, which is needed to better work with the upstream public-inbox changes.
 
-Great to hear, thank you for sharing that. I've been running b4 in a loop
-against /all/ as well, and so far so good on my end, too. The plan is to
-switch over to the new lore on Monday, August 30, but I need to release b4 0.8
-first, which is needed to better work with the upstream public-inbox changes.
+Would you consider applying the following patch, to improve the mobile layout
+on x-lore? Without this change, the mail listing pages are much narrower than
+the device screen, making them hard to read. This *should* make the pages size
+perfectly to the device.
 
-Best regards,
--K
+---- >8 -----
+From bebb1f75e90dd25492430004fee916e92c5eec0a Mon Sep 17 00:00:00 2001
+Message-Id: <bebb1f75e90dd25492430004fee916e92c5eec0a.1629927361.git.josh@joshtriplett.org>
+From: Josh Triplett <josh@joshtriplett.org>
+Date: Tue, 24 Aug 2021 13:00:06 -0700
+Subject: [PATCH] Display shorter public-inbox.org URL in the footer, to
+ improve mobile layout
+
+The long un-wrappable onion URL in the footer causes automatic
+width-detection logic in mobile browsers to make the whole page as wide
+as that URL, rather than a width suitable for displaying the rest of the
+content. This makes the rest of the page substantially narrower than the
+device.
+
+Display the shorter public-inbox.org URL, to make page layout look
+better on mobile devices.
+
+Signed-off-by: Josh Triplett <josh@joshtriplett.org>
+---
+ lib/PublicInbox/WwwStream.pm | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lib/PublicInbox/WwwStream.pm b/lib/PublicInbox/WwwStream.pm
+index 2f8212d4..474b3504 100644
+--- a/lib/PublicInbox/WwwStream.pm
++++ b/lib/PublicInbox/WwwStream.pm
+@@ -12,8 +12,8 @@ our @EXPORT_OK = qw(html_oneshot);
+ use bytes (); # length
+ use PublicInbox::Hval qw(ascii_html prurl ts2str);
+ our $TOR_URL = 'https://www.torproject.org/';
+-our $CODE_URL = [ qw(http://7fh6tueqddpjyxjmgtdiueylzoqt6pt7hec3pukyptlmohoowvhde4yd.onion/public-inbox.git
+-	https://public-inbox.org/public-inbox.git) ];
++our $CODE_URL = [ qw(https://public-inbox.org/public-inbox.git
++	http://7fh6tueqddpjyxjmgtdiueylzoqt6pt7hec3pukyptlmohoowvhde4yd.onion/public-inbox.git) ];
+ 
+ sub base_url ($) {
+ 	my $ctx = shift;
+-- 
+2.33.0
+
+
