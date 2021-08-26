@@ -1,49 +1,45 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7E13FC8
-	for <tools@linux.kernel.org>; Thu, 26 Aug 2021 14:04:30 +0000 (UTC)
-Received: by mail-qv1-f53.google.com with SMTP id eh1so2024252qvb.11
-        for <tools@linux.kernel.org>; Thu, 26 Aug 2021 07:04:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516463FC2
+	for <tools@linux.kernel.org>; Thu, 26 Aug 2021 19:40:42 +0000 (UTC)
+Received: by mail-qk1-f171.google.com with SMTP id ay33so4663682qkb.10
+        for <tools@linux.kernel.org>; Thu, 26 Aug 2021 12:40:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=NP35dhkXlooeGtlUZNgZHo9tS+OZIxf2iq3z1MU4he0=;
-        b=J8+AltBXmHOcxVdDhOdkHSEfeylzcQRE9dGrJg0mwLpFi+W/ZI1QwT4N7k41s3PYJW
-         JOA/5iMiMH5FBYpzOOGIp1226nH4VMmZDT/Ic53Gh+6mZOtZem7PLnhnkYIJYqFW3fFJ
-         HoUF8mAhrhsVeQP+j0RY9RJDK3n9KVfrDWPzc=
+        bh=162gAX4aOqBiaIwHgar4NXCiHiKfXXxkQG1UA1VIx2E=;
+        b=SQF/vgZ5inWru27BfHT1zO9wjlEslvmxR1j6FfS3kNsyQVy5vCuQK8s20glOLq/GnN
+         TOeXipMT2A5SOtRM8TIeKrM1fRghddPBnw0GLa/ZpoDBds7DoU8EbYAzJbor87KDsr9P
+         O8waLBjHRgxjw/BQGYhizc9Ab6xuYBs1JWiv0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=NP35dhkXlooeGtlUZNgZHo9tS+OZIxf2iq3z1MU4he0=;
-        b=K2h/AvZQ3Q7JYAffro8srKjexeZiECTEBtmk+nCcOaUAcfy0k1EW8PXaialmNBM0La
-         +ARn6i9Iv6JSG4LkyjuZ0hOkMpPTjHd6AlvbwW6KbJMHA0lih9GHMnUlxuUa/kBljXqx
-         JfKJCQyUuJb2wpCmmgiP+fr40gUeOquo+KGGVHEvUWkX4jUsbpM/6rgEL46yb4aDeM5i
-         yabbumGsEDeylcSsnF/7jxKOiKNky8d/A1uNXDWvqtLhcaj8AgaN/ct8Bk1PbnXANJa5
-         Q7UgHSDcp8ZJ9jpHv9dPnLw5TlR2VfVxdWCHihGr/ny3lpnaaWSsnw5yIOrbbgE3ci0R
-         J55g==
-X-Gm-Message-State: AOAM5321Xl5RiPE7/7K5nJn1dto2FL49LvhDjXMrYzt9jm7pUXouVPa1
-	2L2165pW0CodQU5GLDApgfd0aQ==
-X-Google-Smtp-Source: ABdhPJy8EXYvva/t5zS1YxW/Rq+vE9WVh/SO0GM2gG57QqwPgQMXibB+sZKu449rNwmBEI7tHcYTnA==
-X-Received: by 2002:a0c:9103:: with SMTP id q3mr4305078qvq.36.1629986669340;
-        Thu, 26 Aug 2021 07:04:29 -0700 (PDT)
+        bh=162gAX4aOqBiaIwHgar4NXCiHiKfXXxkQG1UA1VIx2E=;
+        b=CXp+yep60w8mRWMZsI7LA8600KIO3P9ZZJS1JEOnJ1aqf0fOcu/t5vFtb+mgX4zNPN
+         OYZNFRKJGse1FxREMvYqoMFcDYOzxbsIjvElCxE57/QT/DPJzJZrSWR4hobuRWaoKuuJ
+         jM899dzQ8/CrbU7PUx0m/OgbAGsoyR4NsPiJiDu+xOGE0qRQr0ooFHF5TOjxS/ML0l2f
+         55CIWIc18rt9Urg3kxmC/lBXfqQJJseNBLnqX5pEOQZ8+py+FiqvrVHaPerLX7t5jgPo
+         ADh6siziZe/I23MByIxb2qQF1idIwMsnC90QVrIm09V3yZdERFVRtm8oKMK5MMUaN0ag
+         yrBg==
+X-Gm-Message-State: AOAM531aChL/9EEzIoMEo6lP8sdF+rpTXmXVP2EUxL+nPYFqrD3VcX5G
+	GaBIBATFoqHtiMeWz+7NXXmcPg==
+X-Google-Smtp-Source: ABdhPJwLs1xI3J++e+pe36srhw6giHjDO5xeZcLKhNzVGvJ8S1cUOtmYRGOvysRyPn+V2ECs2qNc1Q==
+X-Received: by 2002:a05:620a:24c1:: with SMTP id m1mr5357489qkn.309.1630006841092;
+        Thu, 26 Aug 2021 12:40:41 -0700 (PDT)
 Received: from nitro.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id p123sm2552245qke.94.2021.08.26.07.04.28
+        by smtp.gmail.com with ESMTPSA id j185sm3230844qkf.28.2021.08.26.12.40.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Aug 2021 07:04:28 -0700 (PDT)
-Date: Thu, 26 Aug 2021 10:04:27 -0400
+        Thu, 26 Aug 2021 12:40:40 -0700 (PDT)
+Date: Thu, 26 Aug 2021 15:40:39 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Josh Triplett <josh@joshtriplett.org>
-Cc: Rob Herring <robh@kernel.org>, users@linux.kernel.org,
-	tools@linux.kernel.org
-Subject: Re: New version of lore available for preview
-Message-ID: <20210826140427.ulnlkvrpzuat3otm@nitro.local>
-References: <20210818190750.g3xedu7j24sqndo2@nitro.local>
- <CAL_Jsq+zxVw3BaAzF+58KT9jrFWNzUpELevj=SGPJSrdcVFPSw@mail.gmail.com>
- <20210825164459.5pxaxsl5a6nuipbt@nitro.local>
- <YSa4kYDpTAFOf0az@localhost>
+To: Philippe Blain <levraiphilippeblain@gmail.com>
+Cc: tools@linux.kernel.org
+Subject: Re: [PATCH b4] Reorder headers for `git imap-send` compatibility
+Message-ID: <20210826194039.e2i3tpfaf3cgvsyy@nitro.local>
+References: <20210811024132.8496-1-levraiphilippeblain@gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -52,25 +48,37 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YSa4kYDpTAFOf0az@localhost>
+In-Reply-To: <20210811024132.8496-1-levraiphilippeblain@gmail.com>
 
-On Wed, Aug 25, 2021 at 02:39:29PM -0700, Josh Triplett wrote:
-> On Wed, Aug 25, 2021 at 12:44:59PM -0400, Konstantin Ryabitsev wrote:
-> > Great to hear, thank you for sharing that. I've been running b4 in a loop
-> > against /all/ as well, and so far so good on my end, too. The plan is to
-> > switch over to the new lore on Monday, August 30, but I need to release b4 0.8
-> > first, which is needed to better work with the upstream public-inbox changes.
+On Tue, Aug 10, 2021 at 10:41:32PM -0400, Philippe Blain wrote:
+> When downloading messages from a public-inbox instance, reorder the
+> "From", "Date" and "Subject" headers in that specific order. This allows
+> the output from 'b4 mbox -o- $url' to be piped to 'git imap-send', which
+> expects these headers in that specific order.
 > 
-> Would you consider applying the following patch, to improve the mobile layout
-> on x-lore? Without this change, the mail listing pages are much narrower than
-> the device screen, making them hard to read. This *should* make the pages size
-> perfectly to the device.
+> An easy place to implement that is in 'mailsplit_bytes', which is called
+> by 'get_pi_thread_by_url' and already loops over the messages in the 'git
+> mailsplit'-ed mbox file to populate the message list.
+> 
+> Note that 'mailsplit_bytes' is also called by 'get_msgs' directly when
+> piping in a local mailbox, i.e. when '-' is used as the value of
+> '--use-local-mbox', but it does no harm to also reorder the headers in
+> that case.
 
-I don't want to diverge from upstream, but I'm working with them on this
-issue. My hope is to move the entire basement view (with mirroring and cloning
-instructions) onto a separate page so it doesn't interfere with thread
-rendering:
+I've decided not to take this patch because it will rearrange headers on all
+processed messages just to work around a deficiency in a single tool
+(git-imap-send). The order of headers in an RFC-2822 message should not
+matter, so any tool that expects them in a specific arrangement is what needs
+fixing.
 
-https://public-inbox.org/meta/20210826132747.6gxuwnhftyf7c6hp@nitro.local/
+Furthermore, reordering headers may actually cause DKIM validation errors in
+the case where there are multiple From, Date or Subject headers. I know this
+sounds contrived, but I've learned not to consider anything too bizarre of a
+corner case when it comes to email.
+
+For your particular case, I suggest you simply make a tiny python command that
+takes an mbox on stdin and spits it out on stdout with headers in the desired
+order, which should be about 20 lines of Python at most. This way you can do
+`b4 mbox -o- $url | reorder.py | git imap-send`.
 
 -K
