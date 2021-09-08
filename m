@@ -1,94 +1,81 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA92372
-	for <tools@linux.kernel.org>; Wed,  8 Sep 2021 09:54:17 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0C21461154;
-	Wed,  8 Sep 2021 09:54:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1631094857;
-	bh=wo7STA5pehFw+TnslW1b6ND67xLJPAIPzyJX25i9TNc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=zXZeGN/to8FjIZ3bP26ikcXReRG+7Mo63HoQimmrl7FIgzP9BsS2z/GfQVwB5wVgc
-	 jNcRtyjekKtEChjHMt4MQegZibZearVZ1Nhqc784Str36K4FuOaZMlxWa+B0kbu874
-	 RlyRyQOEBsAkhAJGRvy9CFQ5704p6nkMvmNXEDa8=
-Date: Wed, 8 Sep 2021 11:54:15 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Saurav Girepunje <saurav.girepunje@gmail.com>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	saurav.girepunje@hotmail.com, tools@linux.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5B372
+	for <tools@linux.kernel.org>; Wed,  8 Sep 2021 13:12:01 +0000 (UTC)
+Received: by mail-qk1-f176.google.com with SMTP id b64so2467622qkg.0
+        for <tools@linux.kernel.org>; Wed, 08 Sep 2021 06:12:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=M0zZ+/nvxDz+vI3Ojz67h6I7L7lG7ODLvpsyn9Z531w=;
+        b=C6gSwraBmPoBr3SZx02IyqjrY5CfJtFkEG+z+dNddS21i8fQWtZkvzYLNUchoTJ6re
+         +bEAa1LvjS+ZYrnlQOy9I6co+L4B89Doy+PUYjZPpp0hhbHJCmTMVnduLSKJqbqXA5Hk
+         QosCx7mitioMOk0PHSCcMbMnj9efyfRDXu0sk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=M0zZ+/nvxDz+vI3Ojz67h6I7L7lG7ODLvpsyn9Z531w=;
+        b=fCG4hUGDdSELso32fJbplN6lUX3JX3ikfcEanOmUoNuCmwLEgfufp0F1Mss+WueILE
+         X03DCvsOU/ACJAyPJvV+wKmNVXP5W20ZjnHOO0iya6wIyl9d8XLOnWTMwgGxGkkzPRVm
+         0Fum8AOAwPsDt4go7hx8KUXObgM9LNx9qkEH2yD7wYVrXtvR6DWHS79fVU8B9YVlqKIA
+         o5QF8ZwI0PYVks8xN9W7bmwJ0cvFwwtueANUT9XGaHFDj594NYxMJYRAjXBNOcB/UK2f
+         N7ofe0COSeLhLz5Q4E2+CYI/0ytKKN0jzBJZMsJ8YZQHZMJzgJCSKSn5oLq9Clc1iyLJ
+         HPUg==
+X-Gm-Message-State: AOAM533PndYeMV+IEiom8RucYc5pS7fT99Ue6ssyF/cu8sIK6gwqqkwR
+	nnIFlYM9jun8BiZ9/HbNS/ruUw==
+X-Google-Smtp-Source: ABdhPJwTakdeiG/xDJz56e/rY9v1hdNn6WoyOXeKhcEIsdsuui4Y5rX1hW/Ml0Pg16vBn4hDPe5S1Q==
+X-Received: by 2002:a05:620a:31aa:: with SMTP id bi42mr3291483qkb.425.1631106720457;
+        Wed, 08 Sep 2021 06:12:00 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id i16sm1440423qtq.52.2021.09.08.06.11.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Sep 2021 06:12:00 -0700 (PDT)
+Date: Wed, 8 Sep 2021 09:11:58 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: Saurav Girepunje <saurav.girepunje@gmail.com>, tools@linux.kernel.org
 Subject: Re: b4 and lore and '/' in a message id
-Message-ID: <YTiIR0nSnWvUc3nG@kroah.com>
+Message-ID: <20210908131158.it5lhuxyc7arw4uv@meerkat.local>
 References: <YTcJNrbjTVMXCQUG@kroah.com>
- <22538765-8ad4-6150-200c-a1f4eb0830f0@gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <22538765-8ad4-6150-200c-a1f4eb0830f0@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YTcJNrbjTVMXCQUG@kroah.com>
 
-On Wed, Sep 08, 2021 at 03:16:53PM +0530, Saurav Girepunje wrote:
+On Tue, Sep 07, 2021 at 08:39:50AM +0200, Greg KH wrote:
+> I've run into problems with a specific user that happens to send patches
+> out with a '/' in the message id field.
 > 
-> 
-> On 07/09/21 12:09 pm, Greg KH wrote:
-> > I've run into problems with a specific user that happens to send patches
-> > out with a '/' in the message id field.
-> > 
-> > I think this is a valid thing, but b4 and lore don't seem to handle this
-> > very well.
-> > 
-> > Here's their latest patch:
-> > 
-> > $ b4 am YTRuXTu/kePBDwAF@user
-> > Looking up https://lore.kernel.org/r/YTRuXTu%2FkePBDwAF%40user
-> > That message-id is not known.
-> > 
-> > And yes, if you go to the above link, it is not found.
-> > 
-> > But, if you go to 'all' it is found:
-> > 	https://lore.kernel.org/all/YTRuXTu%2FkePBDwAF@user
-> > 
-> > Any hints on what to do here?
-> > 
-> > Note, this is the second time this has happened.  First time I wrongly
-> > blamed the developer that they submitted the patch incorrectly, this
-> > time they graciously pointed out that they had sent it correctly,
-> > something was wrong with my side :)
-> > 
-> > Saurav, how are you sending these patches out, using 'git send-email' or
-> > something else?  What is generating that message id?
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> > 
-> 
-> Hi Greg,
-> 
-> I am using mutt to send the patch. Below is muttrc settings.
-> 
-> unset use_domain        # because joe@localhost is just embarrassing
-> 
-> 
-> set realname = "SAURAV GIREPUNJE"
-> 
-> 
-> set from = "saurav.girepunje@gmail.com"
-> 
->                              set use_from = yes
-> 
-> I am using "mutt -H" command to send the patch and that is creating issue on
-> message id.
-> See below link:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833192
+> I think this is a valid thing, but b4 and lore don't seem to handle this
+> very well.
 
-Great, can you update your version of mutt so that this doesn't happen
-any more?  It looks to be fixed in the latest version.
+The latest public-inbox version allows us to do the right thing here, so
+things work as expected now:
 
-thanks,
+	$ b4 am YTRuXTu/kePBDwAF@user
+	Looking up https://lore.kernel.org/r/YTRuXTu%2FkePBDwAF%40user
+	Analyzing 5 messages in the thread
+	Checking attestation on all messages, may take a moment...
+	---
+	  ✓ [PATCH] staging: r8188eu: include: remove duplicate declaration.
+	  ---
+	  ✓ Signed: DKIM/gmail.com
+	---
+	Total patches: 1
+	---
+	 Link: https://lore.kernel.org/r/YTRuXTu/kePBDwAF@user
+	 Base: applies clean to current tree
+		   git am ./20210905_saurav_girepunje_staging_r8188eu_include_remove_duplicate_declaration.mbx
 
-greg k-h
+Best regards,
+-K
