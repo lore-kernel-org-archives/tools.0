@@ -1,48 +1,26 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [217.70.178.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBFF3FF0
-	for <tools@linux.kernel.org>; Thu,  9 Sep 2021 15:00:43 +0000 (UTC)
-Received: by mail-qt1-f181.google.com with SMTP id x5so1632072qtq.13
-        for <tools@linux.kernel.org>; Thu, 09 Sep 2021 08:00:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=L0SJJH6KsAuBecw7sib0mHtjkxy6V/ChAAtJ45vJRik=;
-        b=ajc5KdsTFkIQhy7+lmYgw9sl+xuxOHZrdKpEnP2f7GQLif7nHVkVFXg6cFLApwdBJH
-         Awlvsru3pmrOruEBtY6pArLkTn+8DsNBLolIHYpdKrkoPcfivdcermRl40X96WpY4Ly6
-         Y2MNed7DOS0gzgj66i8JEYvNisUn7/Sb7z4Ps=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=L0SJJH6KsAuBecw7sib0mHtjkxy6V/ChAAtJ45vJRik=;
-        b=MWKrZ+tNiY/E9HdFwzVlXB1GCtLYOwJs0lob04p3txvwEPZOfs6mA8wM7aYOYtFb78
-         hQeHEXxaj37jn/ASBd6HNRBJZaDi5mwvKJa//5r1ijSlNJFfddXQCov6Cl3M6kXoC10I
-         shyuWiGnAGCotRCIYVwhHWPn07t5J88BVD3jMIbLB41pEDuYj7JUuBLrnPfqAcT+K+ba
-         xqzJqbxT6POPHaAR8HSnjdEge0pmaF/9GU5/5HVTTl4gSqru1CMv+rSllSPsDtdliJ3G
-         xtw8Bx0MQDju1OBUs3soPvMSTGbsZ55OHAtDtxxq70wm/tf8VZlSPAolLlvxDNl64fAG
-         xn+Q==
-X-Gm-Message-State: AOAM532EYvN3l+Pg5P9g24fhBgPM3FPcXSElgEET+RN4R8PnKEY48k5s
-	f2LCL9UMJiTRFIiWxTtB8dCPsA==
-X-Google-Smtp-Source: ABdhPJzTz+Yu8ftVfKh6QO0/S0NlrFbudTuLT87tApTvzrvHoqRkdHxduAL3Dgqv6kBp/izyd3+9yg==
-X-Received: by 2002:ac8:578e:: with SMTP id v14mr3215276qta.285.1631199642091;
-        Thu, 09 Sep 2021 08:00:42 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id s6sm1496170qkf.80.2021.09.09.08.00.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Sep 2021 08:00:41 -0700 (PDT)
-Date: Thu, 9 Sep 2021 11:00:39 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc: Lee Jones <lee.jones@linaro.org>, Steven Rostedt <rostedt@goodmis.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC373FF0;
+	Thu,  9 Sep 2021 15:20:34 +0000 (UTC)
+Received: from relay3-d.mail.gandi.net (unknown [217.70.183.195])
+	by mslow1.mail.gandi.net (Postfix) with ESMTP id 7F0D2D3BCD;
+	Thu,  9 Sep 2021 14:51:25 +0000 (UTC)
+Received: (Authenticated sender: alexandre.belloni@bootlin.com)
+	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 2454F6001C;
+	Thu,  9 Sep 2021 14:51:16 +0000 (UTC)
+Date: Thu, 9 Sep 2021 16:51:14 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Lee Jones <lee.jones@linaro.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Jason Gunthorpe <jgg@nvidia.com>, users@linux.kernel.org,
 	tools@linux.kernel.org
 Subject: Re: New version of lore available for preview
-Message-ID: <20210909150039.eyzojexy6okfae7u@meerkat.local>
-References: <20210902201402.bbdttirbb5ckrtiz@meerkat.local>
+Message-ID: <YTofYpb5U1cn66M9@piout.net>
+References: <20210902195332.GA2493828@nvidia.com>
+ <20210902201402.bbdttirbb5ckrtiz@meerkat.local>
  <CAK7LNAQogtzDbAFDtRt7UvDkH6K4tkQgwfmu-2_0rGgo_Uj_iw@mail.gmail.com>
  <20210903152143.nt5mzgwprltl36pa@meerkat.local>
  <CAF2Aj3jbU_vnKvYB2EJXuKdTCeJx3dgZY2h7sriJX4fP6Fsteg@mail.gmail.com>
@@ -51,35 +29,46 @@ References: <20210902201402.bbdttirbb5ckrtiz@meerkat.local>
  <YToM6bH/I9rHQMeE@google.com>
  <20210909133840.hezwxmojt4o6lm7o@meerkat.local>
  <YToQEQPcjU5RUww7@google.com>
- <YTofYpb5U1cn66M9@piout.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YTofYpb5U1cn66M9@piout.net>
+In-Reply-To: <YToQEQPcjU5RUww7@google.com>
 
-On Thu, Sep 09, 2021 at 04:51:14PM +0200, Alexandre Belloni wrote:
-> I did use the stdout piping to git am until I have seen someone on a
-> mailing list adding this to .gitconfig
+On 09/09/2021 14:45:53+0100, Lee Jones wrote:
+> On Thu, 09 Sep 2021, Konstantin Ryabitsev wrote:
 > 
-> [alias]
-> 	b4am = "!sh -c 'b4 am -ctsl -o- $1 | git am' -"
-> 	b4am1 = "!sh -c 'b4 am -ctsl -o- -P_ $1 | git am' -"
+> > On Thu, Sep 09, 2021 at 02:32:25PM +0100, Lee Jones wrote:
+> > > In my current implementation, I have pwclient pull down the patch,
+> > > apply my SoB and apply the it, all in one foul swoop:
+> > > 
+> > >   pwclient git-am -p ${project} -3 -s ${pwid}
+> > > 
+> > > Does b4 provide this functionality too, or do I have to script around
+> > > it?  How have other's chosen to automatically apply the downloaded
+> > > mboxes?
+> > 
+> > b4 am -3 -s -o- msgid | git am
 > 
-> and then you can directly do git b4am <msg-id>
+> Ah yes, piping to stdout and straight into Git works great.
+> 
+> And with "-P _", it does exactly what I want.
+> 
 
-I intend to add a command to just apply the series directly if all the
-prechecks pass:
+I did use the stdout piping to git am until I have seen someone on a
+mailing list adding this to .gitconfig
 
-- attestation is good
-- applies cleanly
-- no trailer warnings
+[alias]
+	b4am = "!sh -c 'b4 am -ctsl -o- $1 | git am' -"
+	b4am1 = "!sh -c 'b4 am -ctsl -o- -P_ $1 | git am' -"
 
-The fact that folks are writing such aliases tells me that this is needed and
-I should stop avoiding modifying the working tree.
+and then you can directly do git b4am <msg-id>
 
--K
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
