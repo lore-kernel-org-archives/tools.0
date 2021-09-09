@@ -1,31 +1,53 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EC93FE9;
-	Thu,  9 Sep 2021 13:57:31 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 05757610FF;
-	Thu,  9 Sep 2021 13:57:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1631195851;
-	bh=FEnJ2ZuqfQyQWTe2b3oXe5m6HcII+lHXWeesALtbyNI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=r2x6G5CZDX/dwcJOMxL2nl6mRBthOHUgXoUEW8vKrKjmyo+ox0jD2n62T2Bb+SKvN
-	 ZjGmQvxji2/bWftJd15JBbrYiELPm7uTykKUZJGvHmU5a6bnEQvFr8b/rduh2PHJ51
-	 lQhNxc7u1K8RjI3exGwa6Elg4+OvGcIocinTNJWDPT1QFO3gt9B+R8IV0r051LI509
-	 jXx4JuOMvh3uzjvcVz5F3Vq2uI/1gldKEDU7O+4uzjSXkSPk1qaNrOupFHhnOxfdRV
-	 7odf/rkmH9nlKeCDw8jXEha/sPlC1v/SRQC0Ze4u+T8If+CpEIGCD+iFlbF5Mcozpk
-	 7jslL6yf1NbXA==
-Date: Thu, 9 Sep 2021 14:56:54 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Lee Jones <lee.jones@linaro.org>
-Cc: Greg KH <greg@kroah.com>, Steven Rostedt <rostedt@goodmis.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7AB3FE9
+	for <tools@linux.kernel.org>; Thu,  9 Sep 2021 14:04:52 +0000 (UTC)
+Received: by mail-wr1-f43.google.com with SMTP id b6so2723953wrh.10
+        for <tools@linux.kernel.org>; Thu, 09 Sep 2021 07:04:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=nQW13q76Y8eKA5KTORa6p4g3K+MabXDhmHn5ZpC8BEc=;
+        b=fmdSyNqOfic6wSkQsoP9NjHWWdopXOLaqksGy2Ic8Rr1DkG0CcEz1qmcva4WYkFBM6
+         NsCW4yu4vzXJJMm9Rd9QBZgGnxKtjVAUFoo6xxB2kMyXs79iSOigxHz2ghGEE0+FEZTR
+         CUgF8Fn0UFxUnAwRkuKdYtebaFhCAX3uLaonXfpp3zWAAYZJiGNLqMaTUgZEpUtgOmAe
+         pWmbugjYGhjp5mPOxmRLdDH9qaKOq26tTng/OtOAKHEJASpWaxkFks+0GtIloLCap5ke
+         uCY2dwAHxa1DCZ+ScxQ8E2e0sGv6zYrY5/n1g1gjMhQXaz/EHMrZfLFQ/QMaSn7So8Fp
+         TWEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=nQW13q76Y8eKA5KTORa6p4g3K+MabXDhmHn5ZpC8BEc=;
+        b=KHlH2b5bD5fPN1TJvEfSClSiA3NEen+6MywzVcl75pk8HrgDN2CYnjVHLZM9IMNEcW
+         ooJqH3ckvbj1vWxmclzkGcnvmipyGp3Tp8Q5Mdo8KD/1KeUhjds0Ga0FPAioAd3BSiE5
+         kuTG8eJSOvknFdZc9dxpbZOqAd/HEpxRiWk+QaK2i1V5WOSKfqOgTIEkrs8dysniG5Xl
+         X8Odqx3I4WHxK5MkcUS54eUxcMIW/cjYpHsn7tjTPxDQrEfT2gef6nFLpnbAweX8KvBA
+         hLLz3R0My9SbyFzZF8zhqvCnIPZxPPB+pO3avWBz3eSE0HlSozsRCN4NXQZCWx6v1Kv6
+         xKrA==
+X-Gm-Message-State: AOAM531xVO3JTBDIdDGUnjIj6ZAAjRq0SgbXjP37XSi8i14MF+6+1fBU
+	V7t4AiXyu9Rb/FZCYftImpAlZQ==
+X-Google-Smtp-Source: ABdhPJzMDpERQOBVCDxzuNB0xBwFFOTbeR68gOcBFn2jFz5oCP9JJ3YqhD2dP2Z+0OL/WLZBqFzvqA==
+X-Received: by 2002:a5d:6741:: with SMTP id l1mr3828050wrw.289.1631196290810;
+        Thu, 09 Sep 2021 07:04:50 -0700 (PDT)
+Received: from google.com ([95.148.6.201])
+        by smtp.gmail.com with ESMTPSA id r36sm1563972wmp.33.2021.09.09.07.04.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Sep 2021 07:04:50 -0700 (PDT)
+Date: Thu, 9 Sep 2021 15:04:48 +0100
+From: Lee Jones <lee.jones@linaro.org>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Jason Gunthorpe <jgg@nvidia.com>, users@linux.kernel.org,
 	tools@linux.kernel.org
 Subject: Re: New version of lore available for preview
-Message-ID: <20210909135654.GC5176@sirena.org.uk>
-References: <20210902195332.GA2493828@nvidia.com>
+Message-ID: <YToUgHL2V/lci+Df@google.com>
+References: <20210818190750.g3xedu7j24sqndo2@nitro.local>
+ <20210902195332.GA2493828@nvidia.com>
  <20210902201402.bbdttirbb5ckrtiz@meerkat.local>
  <CAK7LNAQogtzDbAFDtRt7UvDkH6K4tkQgwfmu-2_0rGgo_Uj_iw@mail.gmail.com>
  <20210903152143.nt5mzgwprltl36pa@meerkat.local>
@@ -33,52 +55,75 @@ References: <20210902195332.GA2493828@nvidia.com>
  <20210908183746.iancht34j3drun77@meerkat.local>
  <20210909084907.271b6df5@gandalf.local.home>
  <YToM6bH/I9rHQMeE@google.com>
- <YToPeUhL+Ro3zlnq@kroah.com>
- <YToR+jmD1TgdQjXJ@google.com>
+ <20210909095514.49e68456@gandalf.local.home>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oTHb8nViIGeoXxdp"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YToR+jmD1TgdQjXJ@google.com>
-X-Cookie: I have become me without my consent.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210909095514.49e68456@gandalf.local.home>
 
+On Thu, 09 Sep 2021, Steven Rostedt wrote:
 
---oTHb8nViIGeoXxdp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> On Thu, 9 Sep 2021 14:32:25 +0100
+> Lee Jones <lee.jones@linaro.org> wrote:
+> 
+> > Well, as beautifully inefficient as that all sounds, it might be
+> > slightly less time consuming if I just succumb to peer pressure and
+> > switch pwclient out for b4.
+> 
+> The old "Show them an even more painful alternative to make the current
+> solution seem good" trick.
 
-On Thu, Sep 09, 2021 at 02:54:02PM +0100, Lee Jones wrote:
-> On Thu, 09 Sep 2021, Greg KH wrote:
+Works every time! :)
 
-> > I do it from my mail client by piping the message to this:
-> > 	b4 am -t -o - | git am -s
+> > Thankfully, my use-case is much simpler than Steven's.
+> 
+> Of course, my solution came before b4 was even thought of (I even mentioned
+> this solution in the kernel summit discussion that started the path to b4).
+> 
+> The one thing I need that b4 doesn't give me, is a place outside of email
+> to keep track of the state of patches. I've failed in all my attempts at
+> using email folders to do this. What I love about patchwork is that I can
+> keep the patches at various states.
+> 
+>  New - I just received it and need to look at it / test it.
+> 
+>  Under review - They have been tested, just need to be pushed to upstream.
+> 
+>  Accepted - they have been accepted.
+> 
+> I also created other states for topics, like "Real Time", "Scheduler",
+> "RCU", etc, so that I can go back if I have time (which currently I never
+> do), and look at these patches.
+> 
+> I also use the "delegate" option to assign patches to myself that are high
+> in priority.
+> 
+> I tried doing this with email folders, and even a git repo, but because I
+> use email and git for so much else, it still gets lost in the noise. I like
+> patchwork because its web based, and I have a window up all the time that
+> shows me what patches I need to work on next.
+> 
+> The pulling into git is actually one of the trivial parts of the process.
 
-> Not sure what -t does:
+I like to keep my setup as KISS as possible.
 
->   Apply trailers sent to the cover letter to all patches
+Fortunately, in terms of upstream reviews I've managed to whittle
+patches down into 3 states;
 
-If someone sends an Acked-by or whatever in reply to the cover letter b4
-will pick that up for all patches in the series.
+ - unread
+ - does not need review
+ - needs review
 
---oTHb8nViIGeoXxdp
-Content-Type: application/pgp-signature; name="signature.asc"
+The latter is represented with Mutt's 'flag-message' functionality.
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmE6EqYACgkQJNaLcl1U
-h9BygAf/V+LSfr0mdokVg1LRpEh22Wnu48Faz8XgOtqGZJOUvRHTjJbRXriQpa+Q
-OwXFAc3V8yPGjUdN/lLWCoO1S5IOjNknHEb7kqPODHVhYUmvAJVeo/ejTZKZcjH0
-IcPRQTRY8F2DgDrWYZYLM/NcHK7osBQ5fmwMEcObSnoJvzr7G88pcVogslNLllpj
-9hHbhKcZupJQqkhCoDn7pRIdQ7riMKLA+ot07J9AAtHm7ySGXjcKwiBEXLn3jxyu
-Rgei8RgUwRirbCZk0FJHPs2axMfnvdf/U48MuIJkQ8w0VT1qjjH3YIAeIbmBjyle
-6Se8TlbUsQ1puOLEi8GToZQXf59QXQ==
-=Bo3t
------END PGP SIGNATURE-----
-
---oTHb8nViIGeoXxdp--
+-- 
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
