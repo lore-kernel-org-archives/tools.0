@@ -1,61 +1,62 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7AB3FE9
-	for <tools@linux.kernel.org>; Thu,  9 Sep 2021 14:04:52 +0000 (UTC)
-Received: by mail-wr1-f43.google.com with SMTP id b6so2723953wrh.10
-        for <tools@linux.kernel.org>; Thu, 09 Sep 2021 07:04:52 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2922FAF
+	for <tools@linux.kernel.org>; Thu,  9 Sep 2021 14:05:39 +0000 (UTC)
+Received: by mail-wr1-f49.google.com with SMTP id u9so2745736wrg.8
+        for <tools@linux.kernel.org>; Thu, 09 Sep 2021 07:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=nQW13q76Y8eKA5KTORa6p4g3K+MabXDhmHn5ZpC8BEc=;
-        b=fmdSyNqOfic6wSkQsoP9NjHWWdopXOLaqksGy2Ic8Rr1DkG0CcEz1qmcva4WYkFBM6
-         NsCW4yu4vzXJJMm9Rd9QBZgGnxKtjVAUFoo6xxB2kMyXs79iSOigxHz2ghGEE0+FEZTR
-         CUgF8Fn0UFxUnAwRkuKdYtebaFhCAX3uLaonXfpp3zWAAYZJiGNLqMaTUgZEpUtgOmAe
-         pWmbugjYGhjp5mPOxmRLdDH9qaKOq26tTng/OtOAKHEJASpWaxkFks+0GtIloLCap5ke
-         uCY2dwAHxa1DCZ+ScxQ8E2e0sGv6zYrY5/n1g1gjMhQXaz/EHMrZfLFQ/QMaSn7So8Fp
-         TWEA==
+        bh=wOVX22zTL7DObKGuCrszi5p0CPfxe+MEWjiJ6h4qd3s=;
+        b=wMCOh6Dh8Cfivo539InzLwmhs9pkklO0qYfgnuM1UYmYbxaENjA9XolC4PqPz1+FDl
+         THXH5Aj+7+6oCkNHPPUOHMM1QrNU+mMF91uomhtxinHx5ydraEBI0bcqNEFcSSVKM1vc
+         M/B7lIDqYfdSMp4w6z9Apd6uyVFOp1OuZ/yf6tQ8kf7lKW3CgyUdpQHgqYTyZKDgsNqE
+         O2fkdShXc5nhPzWw4iNwYKD8q0pMi+dzCbaZeW9Vo2J9Fn0hDSToSLy4pZW5sdYZJFX+
+         TsOckHQF2wpf3Yz6IK3nK1XYNJsuVo8CIhqe4uu7LMSZOvWopo4FlX9SZSn7ann73kdc
+         GUaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=nQW13q76Y8eKA5KTORa6p4g3K+MabXDhmHn5ZpC8BEc=;
-        b=KHlH2b5bD5fPN1TJvEfSClSiA3NEen+6MywzVcl75pk8HrgDN2CYnjVHLZM9IMNEcW
-         ooJqH3ckvbj1vWxmclzkGcnvmipyGp3Tp8Q5Mdo8KD/1KeUhjds0Ga0FPAioAd3BSiE5
-         kuTG8eJSOvknFdZc9dxpbZOqAd/HEpxRiWk+QaK2i1V5WOSKfqOgTIEkrs8dysniG5Xl
-         X8Odqx3I4WHxK5MkcUS54eUxcMIW/cjYpHsn7tjTPxDQrEfT2gef6nFLpnbAweX8KvBA
-         hLLz3R0My9SbyFzZF8zhqvCnIPZxPPB+pO3avWBz3eSE0HlSozsRCN4NXQZCWx6v1Kv6
-         xKrA==
-X-Gm-Message-State: AOAM531xVO3JTBDIdDGUnjIj6ZAAjRq0SgbXjP37XSi8i14MF+6+1fBU
-	V7t4AiXyu9Rb/FZCYftImpAlZQ==
-X-Google-Smtp-Source: ABdhPJzMDpERQOBVCDxzuNB0xBwFFOTbeR68gOcBFn2jFz5oCP9JJ3YqhD2dP2Z+0OL/WLZBqFzvqA==
-X-Received: by 2002:a5d:6741:: with SMTP id l1mr3828050wrw.289.1631196290810;
-        Thu, 09 Sep 2021 07:04:50 -0700 (PDT)
+        bh=wOVX22zTL7DObKGuCrszi5p0CPfxe+MEWjiJ6h4qd3s=;
+        b=xAqBLICnkGOFVkaoxD9gsfvkwS7kMAyp6Gw1OVgtS0pgXGcsoihRkF1YGL0CqKVo92
+         NbYgDDTFulxp5AXiJ+8M7efUVJBfK6Yago/Tu1+dBH5UdL82300UgXlZKepzVXkjueCS
+         7J1XZutQNrZcYXkQkoXPIE0CVKqLRV2VZ1T3bsfOzEjbY8vvQVyp+X92DL68qZJiyWQ0
+         gLoQPxMgp4bgGIse3Gnu2tKn4B1t9VCedXsqSsTdUr6g7WxOXCjVMorGHOc3eP2jB4rk
+         8Uc/Y0nfku+re/C+jbjoG/CNvRIqE/H4D5zQX0t4mpXlVcdozEX5ubDKCLC7ouKfiT1n
+         2ckA==
+X-Gm-Message-State: AOAM530O69aKhi6nxgQzKX+WT+9/stGptzDCAHaiMmCDoanJqWlqE7GT
+	LnkDufi9iSu8NyUFUkzB4LkxXg==
+X-Google-Smtp-Source: ABdhPJyPhLBTNBnreBH/ZXKBIRNcxdd1oCPCqJ43pb3vtNYZsEjge69OXRm/5H6GBjPc2JMbUs1Pxg==
+X-Received: by 2002:adf:9dc6:: with SMTP id q6mr3739187wre.161.1631196338041;
+        Thu, 09 Sep 2021 07:05:38 -0700 (PDT)
 Received: from google.com ([95.148.6.201])
-        by smtp.gmail.com with ESMTPSA id r36sm1563972wmp.33.2021.09.09.07.04.49
+        by smtp.gmail.com with ESMTPSA id n20sm1559886wms.15.2021.09.09.07.05.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Sep 2021 07:04:50 -0700 (PDT)
-Date: Thu, 9 Sep 2021 15:04:48 +0100
+        Thu, 09 Sep 2021 07:05:37 -0700 (PDT)
+Date: Thu, 9 Sep 2021 15:05:35 +0100
 From: Lee Jones <lee.jones@linaro.org>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+To: Mark Brown <broonie@kernel.org>
+Cc: Greg KH <greg@kroah.com>, Steven Rostedt <rostedt@goodmis.org>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Jason Gunthorpe <jgg@nvidia.com>, users@linux.kernel.org,
 	tools@linux.kernel.org
 Subject: Re: New version of lore available for preview
-Message-ID: <YToUgHL2V/lci+Df@google.com>
-References: <20210818190750.g3xedu7j24sqndo2@nitro.local>
- <20210902195332.GA2493828@nvidia.com>
- <20210902201402.bbdttirbb5ckrtiz@meerkat.local>
+Message-ID: <YToUr42jJVsGUI+R@google.com>
+References: <20210902201402.bbdttirbb5ckrtiz@meerkat.local>
  <CAK7LNAQogtzDbAFDtRt7UvDkH6K4tkQgwfmu-2_0rGgo_Uj_iw@mail.gmail.com>
  <20210903152143.nt5mzgwprltl36pa@meerkat.local>
  <CAF2Aj3jbU_vnKvYB2EJXuKdTCeJx3dgZY2h7sriJX4fP6Fsteg@mail.gmail.com>
  <20210908183746.iancht34j3drun77@meerkat.local>
  <20210909084907.271b6df5@gandalf.local.home>
  <YToM6bH/I9rHQMeE@google.com>
- <20210909095514.49e68456@gandalf.local.home>
+ <YToPeUhL+Ro3zlnq@kroah.com>
+ <YToR+jmD1TgdQjXJ@google.com>
+ <20210909135654.GC5176@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -65,62 +66,24 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210909095514.49e68456@gandalf.local.home>
+In-Reply-To: <20210909135654.GC5176@sirena.org.uk>
 
-On Thu, 09 Sep 2021, Steven Rostedt wrote:
+On Thu, 09 Sep 2021, Mark Brown wrote:
 
-> On Thu, 9 Sep 2021 14:32:25 +0100
-> Lee Jones <lee.jones@linaro.org> wrote:
+> On Thu, Sep 09, 2021 at 02:54:02PM +0100, Lee Jones wrote:
+> > On Thu, 09 Sep 2021, Greg KH wrote:
 > 
-> > Well, as beautifully inefficient as that all sounds, it might be
-> > slightly less time consuming if I just succumb to peer pressure and
-> > switch pwclient out for b4.
+> > > I do it from my mail client by piping the message to this:
+> > > 	b4 am -t -o - | git am -s
 > 
-> The old "Show them an even more painful alternative to make the current
-> solution seem good" trick.
+> > Not sure what -t does:
+> 
+> >   Apply trailers sent to the cover letter to all patches
+> 
+> If someone sends an Acked-by or whatever in reply to the cover letter b4
+> will pick that up for all patches in the series.
 
-Works every time! :)
-
-> > Thankfully, my use-case is much simpler than Steven's.
-> 
-> Of course, my solution came before b4 was even thought of (I even mentioned
-> this solution in the kernel summit discussion that started the path to b4).
-> 
-> The one thing I need that b4 doesn't give me, is a place outside of email
-> to keep track of the state of patches. I've failed in all my attempts at
-> using email folders to do this. What I love about patchwork is that I can
-> keep the patches at various states.
-> 
->  New - I just received it and need to look at it / test it.
-> 
->  Under review - They have been tested, just need to be pushed to upstream.
-> 
->  Accepted - they have been accepted.
-> 
-> I also created other states for topics, like "Real Time", "Scheduler",
-> "RCU", etc, so that I can go back if I have time (which currently I never
-> do), and look at these patches.
-> 
-> I also use the "delegate" option to assign patches to myself that are high
-> in priority.
-> 
-> I tried doing this with email folders, and even a git repo, but because I
-> use email and git for so much else, it still gets lost in the noise. I like
-> patchwork because its web based, and I have a window up all the time that
-> shows me what patches I need to work on next.
-> 
-> The pulling into git is actually one of the trivial parts of the process.
-
-I like to keep my setup as KISS as possible.
-
-Fortunately, in terms of upstream reviews I've managed to whittle
-patches down into 3 states;
-
- - unread
- - does not need review
- - needs review
-
-The latter is represented with Mutt's 'flag-message' functionality.
+Got it.  Thanks Mark.
 
 -- 
 Lee Jones [李琼斯]
