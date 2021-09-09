@@ -1,77 +1,85 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4DE72;
-	Thu,  9 Sep 2021 14:52:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=jGdN2vpPbvW1JzAYWyL0u3akhPc1txslcu85hdkpFw4=; b=Ka3zT6bPaoD0vKUiKOiEKgrMPj
-	4hxpKTQ7Hl2M0JipnikmEAJJvCk8JJ4tOLKa/OjoRdT/6s1w0u0N1LHj8RYXMJZnjo95a94Vb4Gtn
-	tFvIYECi12Xm9XphGXoRcCz6qjjdFCC0nckXnyLB3EXsWyP8Q0rfOQ8SEny0+xedohNGeix59qgxn
-	+OPSPEBv2B9yx+EN7M+JUNerEXlVasC3USay2COhJMa45sqSqFylluOo3qw8Hl3ot867/tqeKrJFo
-	S3s9GDR3x3Zlz24BqdAxddNDcTix4c0+eIje9ifcCCHxJbGs60HLF8IxP1TvfR04h73DK2iHR7j6N
-	Kc94zbqQ==;
-Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1mOLP1-00A7K5-Tr; Thu, 09 Sep 2021 14:51:52 +0000
-Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(Client did not present a certificate)
-	by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id AC9753000A9;
-	Thu,  9 Sep 2021 16:51:46 +0200 (CEST)
-Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 5F08220C09052; Thu,  9 Sep 2021 16:51:46 +0200 (CEST)
-Date: Thu, 9 Sep 2021 16:51:46 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Lee Jones <lee.jones@linaro.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBFF3FF0
+	for <tools@linux.kernel.org>; Thu,  9 Sep 2021 15:00:43 +0000 (UTC)
+Received: by mail-qt1-f181.google.com with SMTP id x5so1632072qtq.13
+        for <tools@linux.kernel.org>; Thu, 09 Sep 2021 08:00:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=L0SJJH6KsAuBecw7sib0mHtjkxy6V/ChAAtJ45vJRik=;
+        b=ajc5KdsTFkIQhy7+lmYgw9sl+xuxOHZrdKpEnP2f7GQLif7nHVkVFXg6cFLApwdBJH
+         Awlvsru3pmrOruEBtY6pArLkTn+8DsNBLolIHYpdKrkoPcfivdcermRl40X96WpY4Ly6
+         Y2MNed7DOS0gzgj66i8JEYvNisUn7/Sb7z4Ps=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=L0SJJH6KsAuBecw7sib0mHtjkxy6V/ChAAtJ45vJRik=;
+        b=MWKrZ+tNiY/E9HdFwzVlXB1GCtLYOwJs0lob04p3txvwEPZOfs6mA8wM7aYOYtFb78
+         hQeHEXxaj37jn/ASBd6HNRBJZaDi5mwvKJa//5r1ijSlNJFfddXQCov6Cl3M6kXoC10I
+         shyuWiGnAGCotRCIYVwhHWPn07t5J88BVD3jMIbLB41pEDuYj7JUuBLrnPfqAcT+K+ba
+         xqzJqbxT6POPHaAR8HSnjdEge0pmaF/9GU5/5HVTTl4gSqru1CMv+rSllSPsDtdliJ3G
+         xtw8Bx0MQDju1OBUs3soPvMSTGbsZ55OHAtDtxxq70wm/tf8VZlSPAolLlvxDNl64fAG
+         xn+Q==
+X-Gm-Message-State: AOAM532EYvN3l+Pg5P9g24fhBgPM3FPcXSElgEET+RN4R8PnKEY48k5s
+	f2LCL9UMJiTRFIiWxTtB8dCPsA==
+X-Google-Smtp-Source: ABdhPJzTz+Yu8ftVfKh6QO0/S0NlrFbudTuLT87tApTvzrvHoqRkdHxduAL3Dgqv6kBp/izyd3+9yg==
+X-Received: by 2002:ac8:578e:: with SMTP id v14mr3215276qta.285.1631199642091;
+        Thu, 09 Sep 2021 08:00:42 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id s6sm1496170qkf.80.2021.09.09.08.00.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Sep 2021 08:00:41 -0700 (PDT)
+Date: Thu, 9 Sep 2021 11:00:39 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Lee Jones <lee.jones@linaro.org>, Steven Rostedt <rostedt@goodmis.org>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Jason Gunthorpe <jgg@nvidia.com>, users@linux.kernel.org,
 	tools@linux.kernel.org
 Subject: Re: New version of lore available for preview
-Message-ID: <YTofguBdkTO5ReBb@hirez.programming.kicks-ass.net>
-References: <20210818190750.g3xedu7j24sqndo2@nitro.local>
- <20210902195332.GA2493828@nvidia.com>
- <20210902201402.bbdttirbb5ckrtiz@meerkat.local>
+Message-ID: <20210909150039.eyzojexy6okfae7u@meerkat.local>
+References: <20210902201402.bbdttirbb5ckrtiz@meerkat.local>
  <CAK7LNAQogtzDbAFDtRt7UvDkH6K4tkQgwfmu-2_0rGgo_Uj_iw@mail.gmail.com>
  <20210903152143.nt5mzgwprltl36pa@meerkat.local>
  <CAF2Aj3jbU_vnKvYB2EJXuKdTCeJx3dgZY2h7sriJX4fP6Fsteg@mail.gmail.com>
  <20210908183746.iancht34j3drun77@meerkat.local>
  <20210909084907.271b6df5@gandalf.local.home>
  <YToM6bH/I9rHQMeE@google.com>
+ <20210909133840.hezwxmojt4o6lm7o@meerkat.local>
+ <YToQEQPcjU5RUww7@google.com>
+ <YTofYpb5U1cn66M9@piout.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YToM6bH/I9rHQMeE@google.com>
+In-Reply-To: <YTofYpb5U1cn66M9@piout.net>
 
-On Thu, Sep 09, 2021 at 02:32:25PM +0100, Lee Jones wrote:
-> Does b4 provide this functionality too, or do I have to script around
-> it?  How have other's chosen to automatically apply the downloaded
-> mboxes?
+On Thu, Sep 09, 2021 at 04:51:14PM +0200, Alexandre Belloni wrote:
+> I did use the stdout piping to git am until I have seen someone on a
+> mailing list adding this to .gitconfig
+> 
+> [alias]
+> 	b4am = "!sh -c 'b4 am -ctsl -o- $1 | git am' -"
+> 	b4am1 = "!sh -c 'b4 am -ctsl -o- -P_ $1 | git am' -"
+> 
+> and then you can directly do git b4am <msg-id>
 
-My .muttrc has:
+I intend to add a command to just apply the series directly if all the
+prechecks pass:
 
-macro index B "<tag-prefix><pipe-entry>formail -ds | b4 am -slt -m - -o - | formail -s ~/mutt/mutt-pipe.sh<enter><untag-pattern>~T<enter>"
+- attestation is good
+- applies cleanly
+- no trailer warnings
 
-(which relies on that same muttrc having: set pipe_split=no)
+The fact that folks are writing such aliases tells me that this is needed and
+I should stop avoiding modifying the working tree.
 
-which allows me to tag a (partial) thread using ESC-t (or otherwise) and
-apply the resulting lot (with folding of tags and adding signature and
-all the goodness) to my quilt series (as done by my mutt-pipe.sh
-script).
-
-The initial "formail -ds" is required because mutt pipe output isn't
-exactly the mbox format b4 expects and formail basically reformats it,
-it's mbox in mbox out. Then b4 takes the mbox, folds tags and generates
-a reduced mbox with only patches; formail then splits it and my old and
-trusty mutt-pipe.sh frobs it into quilt one at a time.
-
+-K
