@@ -1,61 +1,75 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40A43FCD
-	for <tools@linux.kernel.org>; Thu,  9 Sep 2021 09:58:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1631181536;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bEsrBogpABYp5wIk4uq0DGi4vFMsovKV5rNr5jWJfx4=;
-	b=W7/epo+S2vsdihkITOX/x8hUml14BMMyxnw5y9V6ZJeMcELkZMDWE2JxE35McCDHMT6vc4
-	40QpH3tefpAGU0/ob0ycLmJu3nKXMGYL0n0QRZygXODDgzxkh18NApQQg5CRZ1/zd6eWc1
-	PxXh9RwDOorTbPVG/IslTyhAQ8ZXcWY=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-562-HA6dnLvYPvKCXw5OgVE4Qw-1; Thu, 09 Sep 2021 05:58:55 -0400
-X-MC-Unique: HA6dnLvYPvKCXw5OgVE4Qw-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com [10.5.11.22])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 9F9EB80006E;
-	Thu,  9 Sep 2021 09:58:54 +0000 (UTC)
-Received: from warthog.procyon.org.uk (unknown [10.33.36.35])
-	by smtp.corp.redhat.com (Postfix) with ESMTP id C7407100EBC1;
-	Thu,  9 Sep 2021 09:58:53 +0000 (UTC)
-Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
-	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
-	Kingdom.
-	Registered in England and Wales under Company Registration No. 3798903
-From: David Howells <dhowells@redhat.com>
-In-Reply-To: <20210830164626.tq5emfrht4o46x33@nitro.local>
-References: <20210830164626.tq5emfrht4o46x33@nitro.local>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: dhowells@redhat.com, users@linux.kernel.org, tools@linux.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB213FC8
+	for <tools@linux.kernel.org>; Thu,  9 Sep 2021 12:31:53 +0000 (UTC)
+Received: by mail-qt1-f176.google.com with SMTP id d11so1206608qtw.3
+        for <tools@linux.kernel.org>; Thu, 09 Sep 2021 05:31:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5ngMoFNrwyDkvmp9myTgXBG/MkbAcFIEoETsidI8kpI=;
+        b=W5MR2JJ3MH4ds0AxduEMPvE8FGb4Ypag6zB8xTuuvC/+mWjHGMOwNdrLNI6NBW5IH5
+         EZe3V+IhDDB7QObxxQdIC8kyX+rbnSCrsJNzn21oTOx4J7U5VVFfPzEDg9sfuUkGl4Xu
+         ufJkwD1P/8R431xv9dDI1lYI7Kszwqlq0IoL4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5ngMoFNrwyDkvmp9myTgXBG/MkbAcFIEoETsidI8kpI=;
+        b=SlNjZU6QSwXN7gSKQja6gxmJ7yJjxlTFC1XoHK+seQptXRAYOj0ZKxdVzBeG/r5Ms6
+         6WRigHEheAYxJnYOJv1yNIKLAUkMuXIhD1lPXVSY/im23j6oXSTwcMQch1p76k3axoB6
+         DzsKiJiPoZ48mXKkAySJO2ZUYFJpV2rpR+rBuURQIlay89YGj8Lz74i1R5DCzAFQWE5o
+         x+O3e0+gjGnATPb5i3GjOUhdfQ8IyKtPd1vQMkPZf7+1UgqK6IyZ7LcWjPZq6cHblUp+
+         96eDAIsuNBCSqdXI7Nl88WRvCKwhsmDKWvzlnYzhpr4yjF7C2hqoOW4mzfhSNUqPrtwK
+         8mtA==
+X-Gm-Message-State: AOAM532blzzrcAv4JSUsgBx2dK32qlkS+4FcgWE6OEmMDa/PO2fzEcQC
+	dWSlCI1WIrWgqs9UvfHDfVa8SA==
+X-Google-Smtp-Source: ABdhPJzzq/8GlAVUZdmUZ1RJPesBAEo7hSpIbYHbq87P3V7zKrw0RCLFnU1UB9FbfVH+ECfHep48+w==
+X-Received: by 2002:ac8:7d4e:: with SMTP id h14mr2514081qtb.404.1631190712342;
+        Thu, 09 Sep 2021 05:31:52 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id n5sm1007520qtp.35.2021.09.09.05.31.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Sep 2021 05:31:51 -0700 (PDT)
+Date: Thu, 9 Sep 2021 08:31:50 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: David Howells <dhowells@redhat.com>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: lore.kernel.org upgrade: Sep 1, 2021
+Message-ID: <20210909123150.fgo7vma4i32t36mg@meerkat.local>
+References: <20210830164626.tq5emfrht4o46x33@nitro.local>
+ <398626.1631181532@warthog.procyon.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 09 Sep 2021 10:58:52 +0100
-Message-ID: <398626.1631181532@warthog.procyon.org.uk>
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=dhowells@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <398625.1631181532.1@warthog.procyon.org.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <398626.1631181532@warthog.procyon.org.uk>
 
-Hi Konstantin,
+On Thu, Sep 09, 2021 at 10:58:52AM +0100, David Howells wrote:
+> Would it be possible to get a search box on the front page into which you can
+> just drop a message ID and have it jump to the message, if present, kind of
+> like lore.kernel.org/r/<msg-id> does?
 
-Would it be possible to get a search box on the front page into which you can
-just drop a message ID and have it jump to the message, if present, kind of
-like lore.kernel.org/r/<msg-id> does?
+You can make it even easier.
 
-Thanks,
-David
+In Firefox:
 
+    * open bookmarks pane (Ctrl-b)
+    * right-click->add bookmark
+    * Name: lore mid, URL: https://lore.kernel.org/%s, Keyword: lore -> Save
+
+In Chrome:
+
+    * Go to chrome://settings/searchEngines
+    * Click "Add" next to "Other search engines"
+    * Search engine: lore mid, Keyword: lore, URL: https://lore.kernel.org/%s -> Add
+
+Now you can type "lore <message-id>" in the toolbar.
+
+-K
