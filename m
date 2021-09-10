@@ -1,52 +1,51 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24193FC2
-	for <tools@linux.kernel.org>; Fri, 10 Sep 2021 06:10:23 +0000 (UTC)
-Received: by mail-wm1-f53.google.com with SMTP id u19-20020a7bc053000000b002f8d045b2caso558989wmc.1
-        for <tools@linux.kernel.org>; Thu, 09 Sep 2021 23:10:23 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAD53FC3
+	for <tools@linux.kernel.org>; Fri, 10 Sep 2021 16:06:57 +0000 (UTC)
+Received: by mail-ot1-f45.google.com with SMTP id k12-20020a056830150c00b0051abe7f680bso2892110otp.1
+        for <tools@linux.kernel.org>; Fri, 10 Sep 2021 09:06:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=iSufy7RKaoXbbZBMkgQEoIZbdU4JvC6JquTXHeNgBrE=;
-        b=cGaxG1KYrUg5JBJvxMOCuWDgNcjLeqlrb0Y3VMQRaVipmDToqN7KMYMLwsT1onAvfL
-         soO4WJbkWOBeazML0m0qfT8fVqlFu2kfK+nHxCW5gB/ZLCoOs9hYjFu2rWFwI+Eh+Rtk
-         9NXa7nJB04PCAWJ5pXeDGtBWkHyHlSjau4YND8mELYj1yvcTOUDgrGbEnjtSF7SAMwqY
-         lEmOLwrugEqBammW6AXVls/COW3qpVmLNOrcRtUWnnlqeNFxZyNOs3m0VgMpK+0U8vDe
-         UVXARYjaU/9LLzdiUX4KDNg8CMbEEzQj1HDhEZNNB/DiREbCPLNdT726c0e/moTclrIM
-         hz9w==
+         :content-disposition:in-reply-to;
+        bh=pKkYWyPmUbQUTkBEajZxM0HZG/egd2PIcpavfQtjsqM=;
+        b=D+4zuoV55F9vgp6yJP/xSH8Kod1/KS50YrR2GAds0M1NoTkrE1XjLk+ver8UXBiigv
+         xyPhN8cAwtQPTYM8BsYgkT8N6vgsNUgEpdnQVxfc2B8jdVZZ8R0r3/HFSEHLiT5Yg9JX
+         Tq0aPHCDQc4/vmQtTdPeATZxQICAu4HgJhob3Q/mnyifMLm+u3gAyeTWQuBEi0YG1tuy
+         d5tlaeKBS+vQbbiBGQOwJZRCZ6lVXI2H1Nclb9+0A0H67aspl+kWwVGUPr3793FmqYRQ
+         TUIXZ9Y0mXXXUU13wPLC3JYO99L5JVaaVmtE1FiCqVw9XPXvTY25HqX8DbZCQLlxf9ef
+         lOgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=iSufy7RKaoXbbZBMkgQEoIZbdU4JvC6JquTXHeNgBrE=;
-        b=H4NpUUlwOp0fpZWzPdrPUYPExni3hhbPYZgxMMu0Xz8lfQaZmcPXTRk7WGx9tIVX0L
-         JuUpnQXOm0KvRen76Z9Z5n8qykZMc2CLUtnrrrN9ub0d9pJZSLHh1YXIno3jESkyhB0z
-         uFOFq5hArtNgCjUImAAh/1a4DINNAWMT13VrtVab69iCIiD135L7igtNhCbzI3DoSL2I
-         iULPhdMD0M1ImkqvnTwV8QJ6wO6kuEvlh4hkHCbsX1gWorxa/URFmMDQvGe7YC7bkIYa
-         I6fNK8wj67AERnda9x64h6xS+6pBDNXezw3oeIzWP5ldCj6lYZK45uysR1cxh2MkBMrw
-         2g/A==
-X-Gm-Message-State: AOAM533Hx/iVun8OxJPwIp9cm3xz6jK0/icabh6IDGEus0VeEWguTNnh
-	3RLEpG3yPIYFhf6FU2bQKs33Gw==
-X-Google-Smtp-Source: ABdhPJxHk6s3EHUOK+ILBBNH7kRE42P4apXtH6oxdtUYjWfOTKWCe7boSFgKo/WFQqIWWLX5swg3Lw==
-X-Received: by 2002:a05:600c:2245:: with SMTP id a5mr6622187wmm.19.1631254221945;
-        Thu, 09 Sep 2021 23:10:21 -0700 (PDT)
-Received: from google.com ([95.148.6.201])
-        by smtp.gmail.com with ESMTPSA id t7sm4061895wrq.90.2021.09.09.23.10.20
+         :mime-version:content-disposition:in-reply-to;
+        bh=pKkYWyPmUbQUTkBEajZxM0HZG/egd2PIcpavfQtjsqM=;
+        b=s4nIRP+SwPr4QPwHHsRn2mk+VK7Lw728F9MO2OhX1ImY0vmRVSH7fBs5gWincLmQ4E
+         +kz4zuf9K+J+WGwMco+fLsafa2iBiNpX50K+rkRhnON+Axzs2GSOr+FF6B3v9itufGvn
+         +xwpRvo/eIJsAIA9r3X2yARXJbCsxyoJsd/h91WKAaexiZxcZNs9eGUhQWenFAodbsTI
+         V0VB5lBd5wfNMokmh16dC9nNxK3n0j9FaAtxTekPmdhFIXmEW7G/iN9V/w5iMKCOdiK6
+         CmlyiNoDvXrlK2z0lYl6nWnzRCTQjh8L0HIbgBAAgW/M8ArvOVGt59ReMoyafN9onkuP
+         Wt2A==
+X-Gm-Message-State: AOAM532a3CqzSZ9HOocMOokc7jTOB/bz6/XFg/F/HJgDyuR//XfOr3oD
+	v69fTmyYlOo4PM2fIqDg5DnGxw==
+X-Google-Smtp-Source: ABdhPJyMSX2WldWYQN8FZbkK/MYZNTAkQBmTD+ReAhZO4JkS9w/PTl3BAKOe6hZILRvOJpglEbEmcw==
+X-Received: by 2002:a9d:7c97:: with SMTP id q23mr5327595otn.136.1631290016163;
+        Fri, 10 Sep 2021 09:06:56 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id a13sm1252936ooi.3.2021.09.10.09.06.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Sep 2021 23:10:21 -0700 (PDT)
-Date: Fri, 10 Sep 2021 07:10:18 +0100
-From: Lee Jones <lee.jones@linaro.org>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>,
+        Fri, 10 Sep 2021 09:06:55 -0700 (PDT)
+Date: Fri, 10 Sep 2021 09:07:52 -0700
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
+To: Greg KH <greg@kroah.com>
+Cc: Lee Jones <lee.jones@linaro.org>, Steven Rostedt <rostedt@goodmis.org>,
 	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Jason Gunthorpe <jgg@nvidia.com>, users@linux.kernel.org,
 	tools@linux.kernel.org
 Subject: Re: New version of lore available for preview
-Message-ID: <YTr2yodaqGl0QqBe@google.com>
+Message-ID: <YTuC2Og65gtLxsQ/@ripper>
 References: <20210818190750.g3xedu7j24sqndo2@nitro.local>
  <20210902195332.GA2493828@nvidia.com>
  <20210902201402.bbdttirbb5ckrtiz@meerkat.local>
@@ -56,52 +55,114 @@ References: <20210818190750.g3xedu7j24sqndo2@nitro.local>
  <20210908183746.iancht34j3drun77@meerkat.local>
  <20210909084907.271b6df5@gandalf.local.home>
  <YToM6bH/I9rHQMeE@google.com>
- <YTofguBdkTO5ReBb@hirez.programming.kicks-ass.net>
+ <YToPeUhL+Ro3zlnq@kroah.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YTofguBdkTO5ReBb@hirez.programming.kicks-ass.net>
+In-Reply-To: <YToPeUhL+Ro3zlnq@kroah.com>
 
-On Thu, 09 Sep 2021, Peter Zijlstra wrote:
+On Thu 09 Sep 06:43 PDT 2021, Greg KH wrote:
 
 > On Thu, Sep 09, 2021 at 02:32:25PM +0100, Lee Jones wrote:
+> > On Thu, 09 Sep 2021, Steven Rostedt wrote:
+> > > On Wed, 8 Sep 2021 14:37:46 -0400
+> > > Konstantin Ryabitsev <konstantin@linuxfoundation.org> wrote:
+> > > 
+> > > > > Can we represent LKML on Patchwork as a reasonable alternative?  
+> > > > 
+> > > > No. That said, what I'm currently working on is a way to provide query-defined
+> > > > public-inbox sources. If you can define what kind of patches you are
+> > > > interested in as a lore.kernel.org query, we can save that search and feed
+> > > > *that* into patchwork. So, instead of feeding all of LKML into patchwork just
+> > > > for the few patches you're interested in, we can just feed the subset of
+> > > > patches that you actually want.
+> > > 
+> > > This is basically what I have done locally. I set up a local instance of
+> > > patchwork. Added a procmail filter to copy all my emails with "PATCH" in the
+> > > subject into its own folder. Then I have a cron job that runs the following
+> > > script to add "List-ID: <rostedt.inbox.com>" to these emails, as my local
+> > > patchwork "listens" to the "mailing list" called "rostedt.inbox.com". And
+> > > then send them off to my local patchwork instance.
+> > > 
+> > > #!/usr/bin/perl -w
+> > > 
+> > > my $state = "none";
+> > > my $patch = 0;
+> > > 
+> > > while (<>) {
+> > >         if (/^From /) {
+> > >                 $state = "head";
+> > >                 $patch = 0;
+> > >         } elsif ($state eq "head") {
+> > >                 if (/^\s*$/) {
+> > >                         print "List-ID: <rostedt.inbox.com>\n" if ($patch);
+> > >                         $state = "body";
+> > >                 } else {
+> > >                         if (/list-id/i) {
+> > >                                 next;
+> > >                         } elsif (/^Subject.*patch/i) {
+> > >                                 $patch = 1;
+> > >                         }
+> > >                 }
+> > >         }
+> > >         print;
+> > > }
+> > > 
+> > > 
+> > > This works great for me, but I can imagine if people have their own public
+> > > inboxes, where we can just create a patchwork instance that feeds off of
+> > > these inboxes, I believe you will get the same functionality that I have.
+> > > 
+> > > Note, I also have filters to read patches that have "[for-next]" and
+> > > "[for-linus]" which converts the patches in patchwork from "New" to "Under
+> > > Review". Then I have a subscription to all commits that go into Linus's
+> > > tree, and I process all of them to go through and "Approve" any patch that
+> > > it finds.
+> > > 
+> > > I still would love a way to download patchwork offline, where it loads
+> > > locally all pending patches, and lets you review / apply them locally
+> > > without needing to be connected online, as this would be useful during
+> > > flights. Then when you land, you can upload your changes.
+> > 
+> > Well, as beautifully inefficient as that all sounds, it might be
+> > slightly less time consuming if I just succumb to peer pressure and
+> > switch pwclient out for b4.
+> > 
+> > Thankfully, my use-case is much simpler than Steven's.
+> > 
+> > In my current implementation, I have pwclient pull down the patch,
+> > apply my SoB and apply the it, all in one foul swoop:
+> > 
+> >   pwclient git-am -p ${project} -3 -s ${pwid}
+> > 
 > > Does b4 provide this functionality too, or do I have to script around
 > > it?  How have other's chosen to automatically apply the downloaded
 > > mboxes?
 > 
-> My .muttrc has:
+> I do it from my mail client by piping the message to this:
+> 	b4 am -t -o - | git am -s
 > 
-> macro index B "<tag-prefix><pipe-entry>formail -ds | b4 am -slt -m - -o - | formail -s ~/mutt/mutt-pipe.sh<enter><untag-pattern>~T<enter>"
+
+The integration directly in the mail client is a really nice trick.
+
+> which will download the whole series of patches, and acks and
+> reviewed-by and apply them, and then apply them with git.
 > 
-> (which relies on that same muttrc having: set pipe_split=no)
-> 
-> which allows me to tag a (partial) thread using ESC-t (or otherwise) and
-> apply the resulting lot (with folding of tags and adding signature and
-> all the goodness) to my quilt series (as done by my mutt-pipe.sh
-> script).
-> 
-> The initial "formail -ds" is required because mutt pipe output isn't
-> exactly the mbox format b4 expects and formail basically reformats it,
-> it's mbox in mbox out. Then b4 takes the mbox, folds tags and generates
-> a reduced mbox with only patches; formail then splits it and my old and
-> trusty mutt-pipe.sh frobs it into quilt one at a time.
 
-This might well be handy.
+Unfortunately when it comes to hardware platform enablement we do get a
+lot of series that spans across multiple subsystems and we've seen
+several examples where applying the whole series causes merge conflicts
+down the road.
 
-I'll probably look into this when I have a need i.e. when I come
-across my first multi-patch merge where there has been subsequent
-reviews (trailers) added to the thread.
+As this is very common in my inbox I've yet to migrate to b4.
 
-Thanks.
+Is this (pick a single msg) supported in b4, am I just missing something
+in the documentation?
 
--- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+Regards,
+Bjorn
