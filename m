@@ -1,72 +1,90 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [185.16.172.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31873FD2
-	for <tools@linux.kernel.org>; Wed, 15 Sep 2021 13:04:14 +0000 (UTC)
-Received: by mail-qv1-f54.google.com with SMTP id w8so1845654qvt.0
-        for <tools@linux.kernel.org>; Wed, 15 Sep 2021 06:04:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=1smzOBSZpc3SOz48EC7sOGCOtabF4rjT2G37P364M6E=;
-        b=Xymj1nfRCGorcv9H44IYHieRUHjzMEh9URefrDURCGH5YvS+E/GKdJIf7cU4mNo9K4
-         kNx/2nmEHm8J5Z3DoToHuzInloo3hy2V4FKiQ5eht4GsF8iky/MqouMy1DGyJ0vdWlFF
-         qPDGknjDfahsasBEpi/W+a+u4iCcDvifY/piU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=1smzOBSZpc3SOz48EC7sOGCOtabF4rjT2G37P364M6E=;
-        b=l1RYVCak8Mm97iV6aaxgno1x6DhxqqDBdeEZcaCoUnyZ4TUTYMVkjKdA5LCpyXBEcM
-         1DkyUWBPiMZig9pfyGHNURBTYSzzcFmTedqlQv3MNMTWPxjNrTnx0oSc3OWqjBf1iyiB
-         Tws+ESnxpyO8Fpf1VO4BIrVYurgnm3L9sPCX36UW2MgweJfYUHr8njFxP//N2k1FpZIg
-         y2ZGZfvpH7fICMmDqm8067NlEhZOq0+1Gsg99yuF5O63jJ9WWWeHODDzjw65WBUCtccc
-         K7F7ygbBKtvPPri1VUAwTDYhGHSX4JSut9htzlBRgh9FccGAq8x0SLkYNaZOQK/0j3cP
-         V10A==
-X-Gm-Message-State: AOAM531E6UDJ3AMznccFpgz8jtEwu8zdgPcv6UkysoNsEZHvz6Tay0t9
-	hIKpK/8CdFo7OlbX6dGMBHKVLg==
-X-Google-Smtp-Source: ABdhPJzkwlhLNvQ0R2TplyGs1FKJlbGxI4kuCWyaq4Q1dkRorZACqhGYF1vELyHp+84iZrRjwvL/nQ==
-X-Received: by 2002:ad4:46ab:: with SMTP id br11mr10654501qvb.15.1631711053940;
-        Wed, 15 Sep 2021 06:04:13 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id h9sm9809199qkl.4.2021.09.15.06.04.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Sep 2021 06:04:13 -0700 (PDT)
-Date: Wed, 15 Sep 2021 09:04:11 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: lore.kernel.org upgrade: Sep 1, 2021
-Message-ID: <20210915130411.uviossd5tyw7w4wh@meerkat.local>
-References: <20210830164626.tq5emfrht4o46x33@nitro.local>
- <20210901131259.7slxtcftirxb4bhp@linutronix.de>
- <20210901132519.vxw2wrly4pifnorv@meerkat.local>
- <20210915120555.3goilbwqeertbexe@linutronix.de>
- <20210915121521.fdsoxbwsfphbxyab@meerkat.local>
- <20210915125305.far7k3clx3tvyokl@linutronix.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6E572
+	for <tools@linux.kernel.org>; Mon, 20 Sep 2021 15:28:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=Content-Disposition:Content-Type:MIME-Version:Message-ID:
+	Subject:To:From:Date:From:Sender:Reply-To:Subject:Date:Message-ID:To:Cc:
+	MIME-Version:Content-Type:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=+wJf5BEi8gQoXyfbhrpX6xqAzaaCJeyS4ky0XaRZrB8=; b=PRxYaESK+9mnBSr5Pw9fMI+q2f
+	y0Q7nJgVru9abFQdhCiQNRZGSQtn56XDzNOXyoPoW3PhtL+0eA5KG+6O1jOQtzegPz+ECA5uNRi1t
+	laIGWtgHHP4MnuAUE86ZTl/RUnkzl8Wdewr7vl/h095zhdXGfKwwU5sMBDI6vuWDl7oU=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1mSKkM-007VY4-U9
+	for tools@linux.kernel.org; Mon, 20 Sep 2021 16:58:18 +0200
+Date: Mon, 20 Sep 2021 16:58:18 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: tools@linux.kernel.org
+Subject: B4 thanks helper
+Message-ID: <YUihigXZKZauguF0@lunn.ch>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210915125305.far7k3clx3tvyokl@linutronix.de>
 
-On Wed, Sep 15, 2021 at 03:00:06PM +0200, Sebastian Andrzej Siewior wrote:
-> On 2021-09-15 08:15:21 [-0400], Konstantin Ryabitsev wrote:
-> > 
-> > This distinction is intentional -- lkml.kernel.org is the primary system from
-> > where lore.kernel.org nodes replicate. Being able to access lkml.kernel.org
-> > without a redirect is a feature, so I can't easily fix this.
+Hi Konstantin
+
+In your LPC talk you said you were working on having B4 generate Thank
+You's for when a patchset is merged.
+
+patchwork already has something like this. Here is one from the netdev
+list. The problem with this is that it is anonymous. You have no idea
+who did the merge. With netdev, there are two maintainers, and other
+subsystems have multiple maintainers.
+
+Maybe this is not an issue for b4, if it is used within the MTA, not a
+bot. But it would be nice if the generated text contained the
+maintainers name doing the merge.
+
+      Andrew
+
+----- Forwarded message from patchwork-bot+netdevbpf@kernel.org -----
+
+Date: Mon, 20 Sep 2021 09:10:07 +0000
+From: patchwork-bot+netdevbpf@kernel.org
+To: Michael Chan <michael.chan@broadcom.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org, kuba@kernel.org, gospo@broadcom.com
+Subject: Re: [PATCH net] bnxt_en: Fix TX timeout when TX ring size is set to the smallest
+X-Spam-Status: No, score=-6.4 required=4.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MAILING_LIST_MULTI, RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.6
+
+Hello:
+
+This patch was applied to netdev/net.git (refs/heads/master):
+
+On Mon, 20 Sep 2021 02:51:52 -0400 you wrote:
+> The smallest TX ring size we support must fit a TX SKB with MAX_SKB_FRAGS
+> + 1.  Because the first TX BD for a packet is always a long TX BD, we
+> need an extra TX BD to fit this packet.  Define BNXT_MIN_TX_DESC_CNT with
+> this value to make this more clear.  The current code uses a minimum
+> that is off by 1.  Fix it using this constant.
 > 
-> ah okay. Don't worry then. I assumed its purporse a redirect to lore.
-> Do you plan to point lkml.k.o to geo.source.k.o with a cert?
+> The tx_wake_thresh to determine when to wake up the TX queue is half the
+> ring size but we must have at least BNXT_MIN_TX_DESC_CNT for the next
+> packet which may have maximum fragments.  So the comparison of the
+> available TX BDs with tx_wake_thresh should be >= instead of > in the
+> current code.  Otherwise, at the smallest ring size, we will never wake
+> up the TX queue and will cause TX timeout.
+> 
+> [...]
 
-No, the final configuration is in place. The only thing lkml.kernel.org should
-really be used for is the lkml.kernel.org/r/<msgid> legacy redirect.
-Otherwise, nobody should be using that hostname for any purpose.
+Here is the summary with links:
+  - [net] bnxt_en: Fix TX timeout when TX ring size is set to the smallest
+    https://git.kernel.org/netdev/net/c/5bed8b0704c9
 
--K
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
+
+----- End forwarded message -----
