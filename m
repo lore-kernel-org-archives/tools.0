@@ -1,96 +1,55 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBD23FC5
-	for <tools@linux.kernel.org>; Tue, 21 Sep 2021 12:49:29 +0000 (UTC)
-Received: by mail-qt1-f180.google.com with SMTP id u21so18726774qtw.8
-        for <tools@linux.kernel.org>; Tue, 21 Sep 2021 05:49:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wMaGLsWedMhIdjMVI+7NEFrirfMcUbWTxTS5xGQ8Mvw=;
-        b=RY+kw2yPsxGCkHu6xTv4RDHX/wHxayPvVaOgx5HKy7HZx3uXu1YH3OiulmKyp/5i8I
-         4Twb7yIBnJz72YEMq38VYAwXTEU2VEEJO10EPf+HtWXCjeHdwR8xULpPJcp8Yc0e0hJz
-         9DlrHaxdFjGtnNsTmKPrkO47f2nH3/aDux5gc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wMaGLsWedMhIdjMVI+7NEFrirfMcUbWTxTS5xGQ8Mvw=;
-        b=hdm8N6wuTNzMCFldfz8OHyBSKbtosQRFB2N0n87CXq9kk0wVAXz5s1wBEVcc5uDrDv
-         us3S+OM3mRL6SW5+MT4GydudZYT+O89gdnz1wmsI/mL08o0JI5CZwdK61fBJ7aSS9qzm
-         VflzQmauvffFCJ8urYTbfn3gQuWBtPh/8tN32zoPS7MAPKBfvUzcad9j04/93plXLnp2
-         CdN2gU1Htpkf1i2l8eINkEEXbK6p5qVSw4+nAUPZeAoLQpXa6qrd85iJGASu3DnMVaqQ
-         JCk9QB8xhvu205L9w73Bp8+P3KoRiiA4+fxeH3CwKWm/4lbASv9lKLomsJ8OsutQIKL3
-         MZ3g==
-X-Gm-Message-State: AOAM531jkNPiEe++8UQ/bmXIFoySbKu8YCtPlVIYYpcVjfBJYZHtlXgp
-	yPH8/kzF4OFfcXyqe247WrY/yw==
-X-Google-Smtp-Source: ABdhPJzAmKdVVBSyKWY4+plBK5iqjVMR/PmzDa81/u7pkwEavKXomJnDavJ9Z6nk2gXGqfvgAiaGqw==
-X-Received: by 2002:ac8:5b8d:: with SMTP id a13mr27355695qta.130.1632228568345;
-        Tue, 21 Sep 2021 05:49:28 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id p12sm10590437qtw.54.2021.09.21.05.49.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 05:49:27 -0700 (PDT)
-Date: Tue, 21 Sep 2021 08:49:26 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Issues escaping Froms
-Message-ID: <20210921124926.5j5z4pdedkk4ulwc@meerkat.local>
-References: <20210921115544.GB4203@sirena.org.uk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0993FC8
+	for <tools@linux.kernel.org>; Tue, 21 Sep 2021 17:49:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:To:From:Date:Reply-To:Cc:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=S4oPrmDen1Fnbc1Poi7x9rQnPbftx/lKG8T8XEmF+rI=; b=hylyynFu969rxoSwvkJOEuOPa6
+	+cfuSJMAkh52kzXqOyzd7+BZ7W0eickOfHbjfOzwT0uOmjjrQ8zMIIHV7JnAF5mXhaJxXBBogWOYS
+	0IDgHYbzvZ9X3XsmUAygjzENnS7GwYS9wKWoEw+oAIsaB7YcfBCLW5waL4ntoF5b9Kr3IKtMOuG1x
+	h6YOD4OE9ovOsD/wiTMQo48OUs3t9McBRF/E7gRSl+YPhf/hqhGWpP7YkcWuzXh3eZFgwW4Llm+Jl
+	HnuAl3eGT8q9qHmHCGBNs5N6+gNCVB2GtSEm0WzUh8BrNvN/clDTtlFuqbxalDmA4k7FwHwLn2MJA
+	9JqR1Yfw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:54712)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <rmk@armlinux.org.uk>)
+	id 1mSjnE-0002ur-4n
+	for tools@linux.kernel.org; Tue, 21 Sep 2021 18:42:56 +0100
+Received: from rmk by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <rmk@shell.armlinux.org.uk>)
+	id 1mSjnD-0003Qp-MV
+	for tools@linux.kernel.org; Tue, 21 Sep 2021 18:42:55 +0100
+Date: Tue, 21 Sep 2021 18:42:55 +0100
+From: Russell King <rmk@armlinux.org.uk>
+To: tools@linux.kernel.org
+Subject: b4 - imap support?
+Message-ID: <YUoZn+BTT7VPdZ3L@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="u2pon5buikuiap5k"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210921115544.GB4203@sirena.org.uk>
+Sender: Russell King <rmk@armlinux.org.uk>
 
+Hi Konstantin,
 
---u2pon5buikuiap5k
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Years ago, I moved away from mbox files for receiving email to imap
+with mutt, but from what I understand from your talk today, b4 doesn't
+support imap. Am I wrong?
 
-On Tue, Sep 21, 2021 at 12:55:44PM +0100, Mark Brown wrote:
-> Attempting to fetch 2d221984-7a2e-7006-0f8a-ffb5f64ee885@axentia.se with
-> b4 am I get a mailbox which is for example interpreted by mutt as:
->=20
-> ->    1 N   09/16 Peter Rosin     (1.7K)
->       2 N C 09/20 Peter Rosin     (  0K) [PATCH] ASoC: pcm512x: Mend acce=
-sses to
->=20
-> Due to the fact that the message has a From line in it as well as a
-> From: but that doesn't get escaped by b4 so mail software interprets it
-> as the start of a new message in the mailbox.
+Nice talk, thanks!
 
-Unfortunately, the "mbox" files that git expects for "git am" are not the
-"mbox" files expected by mutt and other MUAs. If we escape the "From " entr=
-ies
-as mandated by the format, they don't get unescaped by "git am" and make th=
-eir
-way into git commits:
+Regards,
+Russell.
 
-    https://git.kernel.org/torvalds/c/137733d08f4a
-
-There is no working around this, short of saving everything as maildirs.
-
--K
-
---u2pon5buikuiap5k
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYUnUzAAKCRC2xBzjVmSZ
-bCjVAQDIxaCsNhwTYytAPkReayUpROfodjjRz/NG4bRMAPyztQD/TocQ2+vBIdPx
-FrNzN+hkwgluVdjCXkz7kSix0DIFVw0=
-=bCgX
------END PGP SIGNATURE-----
-
---u2pon5buikuiap5k--
+-- 
+Russell King
