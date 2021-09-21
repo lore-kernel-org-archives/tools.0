@@ -1,80 +1,72 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEEC2FB3
-	for <tools@linux.kernel.org>; Tue, 21 Sep 2021 20:25:29 +0000 (UTC)
-Received: by mail-qt1-f175.google.com with SMTP id d8so535905qtd.5
-        for <tools@linux.kernel.org>; Tue, 21 Sep 2021 13:25:29 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8933FC5
+	for <tools@linux.kernel.org>; Tue, 21 Sep 2021 21:04:47 +0000 (UTC)
+Received: by mail-pj1-f50.google.com with SMTP id mv7-20020a17090b198700b0019c843e7233so568963pjb.4
+        for <tools@linux.kernel.org>; Tue, 21 Sep 2021 14:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=V+vIyTC4xqxb5F/1dsUETj2uUQozJawT/pad6SYGc14=;
-        b=eQuUCsQ2QYESjhENBlaNTMofc4X18v2vqYYuqRnA9LI0MaU2K7fofsAP40Fv5mdhi0
-         feeDoaIE0g31V26311vq7VRuQST7Ls2ktjQjWRDivebrTa/KTo7+nRaxTv1Bs5OlsHru
-         GhsLOMPQ+91E5mVhGwhrlCOdIUSh0CtIgP0do=
+        d=intel-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=myOC2GX4MtG92jgVCHnzYHbgpnV+okq1l1XerzQLz/Y=;
+        b=NdwopFEkYw4qfTXLdF8COyu1yqC+Np6biPUjkuHkuhLmspR9XOd/ZAgOGgIzQTXBPi
+         /fAIUpo/VHHE9ViD5CHl/iJ25ufmGVNBT8uIUoEKNCuBfZrVm+kwHyVVbWSxSeUqiDlR
+         8FZJk9CdQcoAQIp9NJHl8HOmKA60MWwC8YsueOJgiDIFSBQv/lbq+VgYHQT2pg2lWnh8
+         eyo9nM3RKNlFtL8xxPwkBTar705MZn2zUEYb5WKnrBAlHX+owr/pe7t8NhGpqwzopFie
+         BSv6dcQbOzLh0Rz4pmmTHKZEtWaCg6JGllGa0iBckPsNocqtGFTrum/7JpPDUUGZ3uNd
+         wOig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=V+vIyTC4xqxb5F/1dsUETj2uUQozJawT/pad6SYGc14=;
-        b=VgyTrV/saqMYW6MzFkGZhMHrJRsY2S/DOl50qVZYb0XJTjqSWL8uzA3b5qpWDL7mXO
-         9gvTdGl9rWtj1ov8Il9B3ryqsPiHgv5Ashh7Ie2d7TjnZ1Gds8SjxrdNumy6SYU3kxvS
-         EbJt+Fjzlh/2hOGo0I1NZJXl/YDl9spBrK3UDKzataAM75hpX6cJpGeLXIC+QSjdqTFi
-         mJMz9+eBJCLVp2PhE0+fzomhPXpJ9+//Cy6Q1H9B/IQ/ynRvG5Rj7UuzgxlpdhgTL5L+
-         gWA0u8UDL1bl9/5x1Mana7alGzmazK2Rs6jyaBIJDa4Mdd0yYIxGwfxAS7YreZ2rd8lJ
-         TupQ==
-X-Gm-Message-State: AOAM532un5MooeMSCjrkP+hY3bDTR4I7gYJhsDjKGm6v0fgnZ01+qDFv
-	H4ybNN7eMDx7NjK/RT1Ode+03nvNzjtsnw==
-X-Google-Smtp-Source: ABdhPJzQ466WTswTHSIMAaLdIwhasiUeGAmx1yYWzaXX14lGAlEVWiJGUpfNr2TUwCHwMukwgsmyZQ==
-X-Received: by 2002:a05:622a:1908:: with SMTP id w8mr30407953qtc.269.1632255928665;
-        Tue, 21 Sep 2021 13:25:28 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id q24sm42735qkj.77.2021.09.21.13.25.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 13:25:28 -0700 (PDT)
-Date: Tue, 21 Sep 2021 16:25:26 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, users@linux.kernel.org
-Subject: b4: introducing b4 shazam (like b4 am -o- | git am)
-Message-ID: <20210921202526.mk2meetobbtl3tvi@meerkat.local>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=myOC2GX4MtG92jgVCHnzYHbgpnV+okq1l1XerzQLz/Y=;
+        b=crDpenMjI9lXiHfmHzk3RjwFIPvMbgwP5NFtYLe4V/TCSrEAqkNmm8B1v1uJxqnXrd
+         G27BZ7OsfOr7KkplU95QZvdmiWd5xNNFoEBbxHe481XTULanNuzzn7CydcZN9WdkLcVd
+         Yy2vxg05lVb1WT32IqjZdHEnGxW1hFMDA0C8K0mFOftkx/653XDiUw7V4wq898IniDRb
+         a4RRMlFMNsvRBbf0hMM9WfzuUEER4VG633WfN4jRcT+vQGniGfGbG9bqKcj+E9/FY/l9
+         Y04i7vLt7ngEaMFP0/n+ub2kkz5eXfuzvEZHz0qoc9zF3zV1dxJEbL20OKgf4aGJ3l5V
+         dYxw==
+X-Gm-Message-State: AOAM531EnL+aw9ITJf80Di2HYXO7ZFOYqBuRg0sx/cKWqm/3OfneSEOZ
+	gsfEDYxUr+EUbX3rQaztiw7+fv8eKwz6X5sb9IftNUEG5ibvWQ==
+X-Google-Smtp-Source: ABdhPJzpwrI5cezMRYWDFXk0zosTaVGjpm/OCR8JIdIGtuL7zAgdH6s6tJNPMMidQVvlm3p1RILGF0UqeZLMdI2lU70=
+X-Received: by 2002:a17:90a:d686:: with SMTP id x6mr7553726pju.8.1632258286413;
+ Tue, 21 Sep 2021 14:04:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+From: Dan Williams <dan.j.williams@intel.com>
+Date: Tue, 21 Sep 2021 14:04:35 -0700
+Message-ID: <CAPcyv4gS6St_EuWWQwVAF-1XbMQmxLFHU8sVKPO3xiBiTS-GMQ@mail.gmail.com>
+Subject: b4 am partial-re-roll vs reviewed-by
+To: tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi, all:
+Hi,
 
-The current master branch landed a new feature that implements a new
-subcommand "shazam". It is the functional equivalent of piping "b4 am" to "git
-am", with some extra safety padding.
+I notice that:
 
-See "b4 shazam --help" to see the available options. You will notice that many
-of them are exactly the same as for "b4 am".
+b4 am 163225205828.3038145.6831131648369404859.stgit@dwillia2-desk3.amr.corp.intel.com
 
-The default operation still tries to be the safest possible:
+...warns about a case where I manually replied with a reviewed-by tag
+of someone else which is a great feature.
 
-- we'll create a temporary sparse worktree that will only contain the files
-  being modified
-- we'll use the base-commit sha, if we find it, or we'll try to guess the base
-  commit from git index info
-- we'll run "git am" against that temporary worktree
-- if successful, we'll fetch from the worktree into your current repo and
-  delete the temporary sparse checkout
-- you can then "git checkout -b foo FETCH_HEAD" or "git merge FETCH_HEAD"
-  or "git rebase" as necessary
+The bit of magic I was also hoping for it to notice is that [PATCH v4
+17/21] picked up a reviewed-by with a note that said effectively "if
+you fix this, then apply my reviewed-by":
 
-Alternatively, if you run "git shazam -A", we'll just run "git am" on the
-current HEAD, which is the exact equivalent of "b4 am -o- | git am".
+https://lore.kernel.org/r/20210910105313.00006408@Huawei.com
 
-This feature is fairly "raw" and lightly tested, so please expect things to
-potentially blow up all over the place. :)
+I then neglected to manually add that tag when sending v5:
 
-If the default operation with getting things ready in FETCH_HEAD is not
-useful, please let me know how you would prefer to see things work instead.
+https://lore.kernel.org/r/163164680798.2831381.838684634806668012.stgit@dwillia2-desk3.amr.corp.intel.com
 
-Best regards,
--K
+It would increase b4's already high levels of usefulness if similar to
+the -S warning there was a warning of "vX picked up a reviewed-by,
+carry that forward by re-running with <option foo>". Sometimes it's an
+oversight to miss a previous review tag, and sometimes it is
+deliberate that the submitter believes that previous review is
+invalidated by the new submission.
+
+No worries if this does not cleanly fit into the b4 series assembly engine.
