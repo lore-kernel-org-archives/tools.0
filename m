@@ -1,75 +1,68 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40853FC5
-	for <tools@linux.kernel.org>; Mon, 20 Sep 2021 20:29:33 +0000 (UTC)
-Received: by mail-qv1-f51.google.com with SMTP id 93so12079042qva.7
-        for <tools@linux.kernel.org>; Mon, 20 Sep 2021 13:29:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Ghe4pFKzt4EBY81QLgY2mQl1+QDFfwLkO1j9b9ZUe0g=;
-        b=IEDDHtb+6QaB33kWyvnXzRPfwAiTZzGXVAIX+FOAfJJu2LH+uzH5Y2P++CZHASPSrS
-         BUIMYXprHPJrQcxJsBvRyhuSodmw2gcjXPPm991G+ElJddqItsPVC24QU7LrT71U7mGb
-         c6uIvYz5xOp+VgJMA4v116jVppdhyV2UOlWw8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ghe4pFKzt4EBY81QLgY2mQl1+QDFfwLkO1j9b9ZUe0g=;
-        b=3gdI2uM1wfcZ4QBd2CXE4GdMzMv3CZApvoke5n1J/HPymu8FFO9G1bTkfEXcNtl7AA
-         LCmdXpnDuemNenbBrMkVLU99j4VeoNiBbNoeZYAZERXtuaX0xbBzEXJXC0Rp12o2hmKh
-         lwxUs/MARd6oENDpmLI64kO3f7vhIKmejZlLmP2zWx1Y0EXwZI4YHIo+imHxAbyBBgo3
-         WaZHfoUCFtAx3wLiKO52HMRxluzxVjwC0FpTOfqRVq8VTw1cVhsjdl62MGslNqTKpeZe
-         h6svUcXmrGLQ1HgdJYrtBwIodXJSSa4zEWbJ6g39+JrbAJHqYuIZbq/cLvZbAxCZ94am
-         RYsA==
-X-Gm-Message-State: AOAM530NI/YWgZOOLhn9/SPoavlZY26nBFMe5/FEGeydF9+ldSxQWBpT
-	pBix9EvnJuyvpvQyoFVr+XUgKBsd6NFypQ==
-X-Google-Smtp-Source: ABdhPJwM/g3ftgFk8nWGHNON1vlSRM8JfsQUzcHyrCIo7IYpV9v7uxc5AjpHLA0//sxL4hLk1HSaIQ==
-X-Received: by 2002:ad4:4b0b:: with SMTP id r11mr27363039qvw.49.1632169772821;
-        Mon, 20 Sep 2021 13:29:32 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id d5sm2115983qtr.61.2021.09.20.13.29.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Sep 2021 13:29:32 -0700 (PDT)
-Date: Mon, 20 Sep 2021 16:29:30 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Andrew Lunn <andrew@lunn.ch>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8387F3FC0
+	for <tools@linux.kernel.org>; Tue, 21 Sep 2021 11:56:28 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id AFC6C60EDF;
+	Tue, 21 Sep 2021 11:56:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1632225388;
+	bh=/4/UCK3gkJBndhDf47U/sfAEC8iG8Ts4KHzFu5LfkN0=;
+	h=Date:From:To:Cc:Subject:From;
+	b=Ro1BzfmJgqW5w7T4FHT7Yx49ZZwREtopOl0Qvm+VaJ+EI2s/P11EF6nfZZWpxYCRx
+	 6d7KIRCdaVqK2jDnnouSbSDyW/RyBEkHrN1XxdZa484OHeabjFnkhQ+nGi90R8GG4H
+	 I9zzKHx6SQn73Rfwu6LF5FmJzCnDE3kEfzBkBomDMgOUL9Fl/TvRVOiy/UFsqR7Qze
+	 vANyrBnHhQovJh9/lQOV5mvE9KDUqBO6yU7xV/frcPEsQJKzN2o+5yh9mLsC4hVRXi
+	 9t/sHKjvc2HRwQ+HANNev+fjwVZ3ddSwShukg2BE5ekDruH5y+hEJavKbve8MliSux
+	 YbnPoomJNJ0rA==
+Date: Tue, 21 Sep 2021 12:55:44 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org
-Subject: Re: B4 thanks helper
-Message-ID: <20210920202930.lw3cgzuuztexrml3@meerkat.local>
-References: <YUihigXZKZauguF0@lunn.ch>
+Subject: Issues escaping Froms
+Message-ID: <20210921115544.GB4203@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="mojUlQ0s9EVzWg2t"
 Content-Disposition: inline
-In-Reply-To: <YUihigXZKZauguF0@lunn.ch>
+X-Cookie: Quack!
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Mon, Sep 20, 2021 at 04:58:18PM +0200, Andrew Lunn wrote:
-> Hi Konstantin
-> 
-> In your LPC talk you said you were working on having B4 generate Thank
-> You's for when a patchset is merged.
-> 
-> patchwork already has something like this. Here is one from the netdev
-> list. The problem with this is that it is anonymous. You have no idea
-> who did the merge. With netdev, there are two maintainers, and other
-> subsystems have multiple maintainers.
 
-It's not really patchwork -- this is done by the git-patchwork-bot, a separate
-(and older) tool that I wrote a while back:
-https://korg.docs.kernel.org/patchwork/pwbot.html
+--mojUlQ0s9EVzWg2t
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Maybe this is not an issue for b4, if it is used within the MTA, not a
-> bot. But it would be nice if the generated text contained the
-> maintainers name doing the merge.
+Attempting to fetch 2d221984-7a2e-7006-0f8a-ffb5f64ee885@axentia.se with
+b4 am I get a mailbox which is for example interpreted by mutt as:
 
-I'll see if I can make the reports include the Author of the merge commit.
-Thanks for the suggestion.
+->    1 N   09/16 Peter Rosin     (1.7K)
+      2 N C 09/20 Peter Rosin     (  0K) [PATCH] ASoC: pcm512x: Mend access=
+es to
 
--K
+Due to the fact that the message has a From line in it as well as a
+=46rom: but that doesn't get escaped by b4 so mail software interprets it
+as the start of a new message in the mailbox.
+
+--mojUlQ0s9EVzWg2t
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmFJyD8ACgkQJNaLcl1U
+h9DzSQf/ZchYfgiaaNhkBhBko/PHEE17MuwPdCffUHRznjLyYvlZynhFscO9SG49
+N7rkNen0+bPLHF02J8CIFVMFdIqzE84O4q3aI+E6gHP92v3H5EU/57NYn+DnBxXZ
+5SMcvKEbIOP7pH7Ehx+ClTjiRau2fgDITgYNMg4nOfVzUT8cbGkiXMASg5d9Owbw
+6RX6KKQ/m7zziiumjtfBM3owJsa6SQuK3c/pYDvSoQ1mwDLYI9khiUipv7dYsVVV
+uMpuYcEe3ZVUNrF/cUw/0UFWH7DpxZQ+v/NDXqZ/RicVkaFJleRH/2ckBuOTPz91
+v5Zeds5oVp6P5DOzFRbVLQwd2gOH7A==
+=r2MA
+-----END PGP SIGNATURE-----
+
+--mojUlQ0s9EVzWg2t--
