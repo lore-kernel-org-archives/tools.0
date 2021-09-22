@@ -1,101 +1,103 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF863FCD
-	for <tools@linux.kernel.org>; Wed, 22 Sep 2021 17:38:05 +0000 (UTC)
-Received: by mail-qv1-f51.google.com with SMTP id cf2so2436630qvb.10
-        for <tools@linux.kernel.org>; Wed, 22 Sep 2021 10:38:05 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EC13FCD
+	for <tools@linux.kernel.org>; Wed, 22 Sep 2021 18:21:57 +0000 (UTC)
+Received: by mail-qt1-f178.google.com with SMTP id c20so3648985qtb.2
+        for <tools@linux.kernel.org>; Wed, 22 Sep 2021 11:21:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
+        d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=U/D99T8JCMk5z+A+HyrDw0XlToh/CpCL7PdT0pFhYy0=;
-        b=XA1uNwd/4fsmLhZkBvX2Sp4yIynQW7n10IaJoInbUtLWTNDrmUu40LowYltHAVw2Da
-         IigSF3K3L+FrqwWU3E4+kh3xeYEpWkVS4DF0QYf4Vg7RPOd3HF48dy30IVs0cjieAik0
-         CFjXZJj51HHTdOj8zjVygXoomLYRp2X85p/WvIGdup7pLXjTV3Hct7zgoMyVjoEWTNjg
-         23aVQkmi4bTELwaWUNhGEDoBb0QHDB95zI2wOnuLQgGxgxdYOVubOcNkL3W6q5+LW8H3
-         AtoBPG090vrzIeiViP1+IeiCG0Uedz719Y1xQ9n3XLNVM81isA2SsrD+yBT/QkiQFk92
-         2qmg==
+        bh=7eWu1aQC6jwysklGRQ9J87QWMVXvhvbf5dKjpF1VMqk=;
+        b=C+zR3YvpWY1gpFoS/OZoxMy98k3PMmVGYHVSVYpGOVsha7lhOo8C+5rV9GBCju1L6F
+         fC16HIbXQ4mOr7x5R7Fs1Fgp3YPDUeT/wYAChhBZulW5RmKKPYdCGyczek7JGrTlnreS
+         QQk4MUmSxSMK7EqK1Hk6R9NsTFmRLPojhaZtc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=U/D99T8JCMk5z+A+HyrDw0XlToh/CpCL7PdT0pFhYy0=;
-        b=xFRvjtFFfj0Cu3n5RX+RY9Z454Roo6idEiftExAO0p7uDLMUS5JCrw7VShc1pMqhI/
-         F0E09LOh5hB7lr+QMhz4FOJDHNFqIA8kl1nnBav184bOczi7YpfamNtUCdR8vz1uE4Sg
-         EYllro7sE1QnCGui0z99IOFuVT6NJswu0dkZ/9Da7LAQgM5drIyhcK2nFdjoMhnuA6Ft
-         QSB6R7UP/H+/OyWRQ+zJOwO5ffVFvRobKX9jfZwg5VDnTx+TgRFALWGmVq6z406rNuz2
-         FL3ro3ERtaVmE6SDdf8Eo+wUbs73P32RHbUOQQa5nrnmB6Gb4eBh9o3YsyRRg2XnJu4v
-         hV9g==
-X-Gm-Message-State: AOAM53174XLMHIZBBB9e/1GSzU/G/oHDjTy7brjU2Yyjj7nv2S5wizVl
-	cWP37R/I3KgSIJRP4k1C5xaEjtze+BLXKA==
-X-Google-Smtp-Source: ABdhPJyQMeisvFI53pYOWU4d9zekWb35KlLGCUlUexfELwD3RR6FtQBuz4BNveEUKsIymeLfomBGvA==
-X-Received: by 2002:ad4:4a01:: with SMTP id m1mr296810qvz.29.1632332284923;
-        Wed, 22 Sep 2021 10:38:04 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-162-113-129.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.113.129])
-        by smtp.gmail.com with ESMTPSA id v3sm1698767qtx.11.2021.09.22.10.38.04
+        bh=7eWu1aQC6jwysklGRQ9J87QWMVXvhvbf5dKjpF1VMqk=;
+        b=GXzhtWab7PUP3LAJ7COmr5w+HNkL63icf+NHdL8zGwM7fJGk3Nvia91FWeXNKt+gpw
+         ZvszVOXd90M4Uev7C2dGMfwj6zVzRNFk7/M/veEDGec/pQI5XaBsPcBETf3Ue+RzQXSi
+         wtxeJaDb42g/+xyK+9RTOsReGGLRSiprQoKd6Bgn/g4qOdAwZX8uQpNmO6OXAASePwdB
+         ZHrJ7xzhawmcOcxdhPqgX3Tzd58MdK6+5PEfZ3kV2C7F28GghK3l8Otlh9chN68gjLoU
+         gXQCSD7vGzaVYbdfB3ON8qFWbw8nKhy2XKe48w3tDNiav3LopZiNcs/RYq6LoAgHvlen
+         dYhg==
+X-Gm-Message-State: AOAM532Gkzxae8HN7STADPr7boDD5vkoyFXsMhdQaKAZwejlk6eEBPGc
+	okxTmMnqPLaA//J063TPXg907W+VdY4xwQ==
+X-Google-Smtp-Source: ABdhPJxzmKsteBwo7IwR7znQFw+9rEAiKB2obN2mQRwyljPKOkfiGoBueqg/YsF1zv4eG9Mh1LrQow==
+X-Received: by 2002:ac8:4583:: with SMTP id l3mr706856qtn.188.1632334916513;
+        Wed, 22 Sep 2021 11:21:56 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id t5sm2402119qkj.61.2021.09.22.11.21.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 10:38:04 -0700 (PDT)
-Received: from jgg by mlx with local (Exim 4.94)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1mT6C3-0043x8-N4; Wed, 22 Sep 2021 14:38:03 -0300
-Date: Wed, 22 Sep 2021 14:38:03 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+        Wed, 22 Sep 2021 11:21:56 -0700 (PDT)
+Date: Wed, 22 Sep 2021 14:21:54 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Jason Gunthorpe <jgg@ziepe.ca>
 Cc: tools@linux.kernel.org, users@linux.kernel.org
 Subject: Re: b4: introducing b4 shazam (like b4 am -o- | git am)
-Message-ID: <20210922173803.GV3544071@ziepe.ca>
+Message-ID: <20210922182154.zqtuvmcsjd4ivfgp@meerkat.local>
 References: <20210921202526.mk2meetobbtl3tvi@meerkat.local>
+ <20210922173803.GV3544071@ziepe.ca>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20210921202526.mk2meetobbtl3tvi@meerkat.local>
+In-Reply-To: <20210922173803.GV3544071@ziepe.ca>
 
-On Tue, Sep 21, 2021 at 04:25:26PM -0400, Konstantin Ryabitsev wrote:
-> Hi, all:
+On Wed, Sep 22, 2021 at 02:38:03PM -0300, Jason Gunthorpe wrote:
+> > - you can then "git checkout -b foo FETCH_HEAD" or "git merge FETCH_HEAD"
+> >   or "git rebase" as necessary
 > 
-> The current master branch landed a new feature that implements a new
-> subcommand "shazam". It is the functional equivalent of piping "b4 am" to "git
-> am", with some extra safety padding.
+> Does it prep the merge message too? ie pull in the text from the cover
+> letter, make the ==== markers/etc? (ie look what davem does:
+> d1bf73387b5adbc12c6a59c1fbaa69e05ee265ed)
+
+We could, theoretically, do that, but you'd have to remember to pass the -F
+--edit flags to "git merge". My concern is mostly that cover letters are very
+much free-form and there isn't a sane approach we can take to automatically
+generate good merge commit messages from them, short of quoting them fully,
+which will be overkill 9 times out of 10.
+
+One thing I will probably do is edit .git/FETCH_HEAD to change the unhelpful
+/tmp/tmpfoobar to say something like:
+
+    [sha]\t\tpatch series from https://lore.kernel.org/r/msgid
+
+This way the default "git merge" message will contain a clickable link for the
+person doing the merge where they can see the cover letter and maybe
+copy-paste from it.
+
+> > Alternatively, if you run "git shazam -A", we'll just run "git am" on the
+> > current HEAD, which is the exact equivalent of "b4 am -o- | git am".
 > 
-> See "b4 shazam --help" to see the available options. You will notice that many
-> of them are exactly the same as for "b4 am".
+> It might be interesting to detect which to do based on what the
+> submitter has done.. No useful base-commit = no merge?
+
+This is where I have to defer to feedback. I expect it would depend on the
+size of the series -- for smaller ones people will probably want to rebase and
+not merge?
+
+> I'm generally of the feeling that git is a VCS and it is completely
+> fine for a tool to do whatever to the tree because I can quickly undo
+> it. So I think b4 is possibly overly cautious here :)
+
+Well, doing it via FETCH_HEAD was also an easy way to use base-commit info
+(whether real or deduced) without asking for things like "what would you like
+the branch to be named" etc.
+
+> > If the default operation with getting things ready in FETCH_HEAD is not
+> > useful, please let me know how you would prefer to see things work instead.
 > 
-> The default operation still tries to be the safest possible:
-> 
-> - we'll create a temporary sparse worktree that will only contain the files
->   being modified
-> - we'll use the base-commit sha, if we find it, or we'll try to guess the base
->   commit from git index info
-> - we'll run "git am" against that temporary worktree
-> - if successful, we'll fetch from the worktree into your current repo and
->   delete the temporary sparse checkout
-> - you can then "git checkout -b foo FETCH_HEAD" or "git merge FETCH_HEAD"
->   or "git rebase" as necessary
+> I would be nice to have some process guidance when maintainers should
+> be using merges and when am'd patches..
 
-Does it prep the merge message too? ie pull in the text from the cover
-letter, make the ==== markers/etc? (ie look what davem does:
-d1bf73387b5adbc12c6a59c1fbaa69e05ee265ed)
+I'll be happy to consider any feedback here.
 
-> Alternatively, if you run "git shazam -A", we'll just run "git am" on the
-> current HEAD, which is the exact equivalent of "b4 am -o- | git am".
-
-It might be interesting to detect which to do based on what the
-submitter has done.. No useful base-commit = no merge?
-
-I'm generally of the feeling that git is a VCS and it is completely
-fine for a tool to do whatever to the tree because I can quickly undo
-it. So I think b4 is possibly overly cautious here :)
-
-> If the default operation with getting things ready in FETCH_HEAD is not
-> useful, please let me know how you would prefer to see things work instead.
-
-I would be nice to have some process guidance when maintainers should
-be using merges and when am'd patches..
-
-Jason
+-K
