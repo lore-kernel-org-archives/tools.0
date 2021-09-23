@@ -1,81 +1,65 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937033FC7
-	for <tools@linux.kernel.org>; Thu, 23 Sep 2021 12:09:05 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A8B9660F6D;
-	Thu, 23 Sep 2021 12:09:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1632398945;
-	bh=6h7pOWicgm0zGiWBmXp52xY4CEE36ptinujggqygGDs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=B79NfGZj9vZAVjKuhDFKqNXWgzvKvOROb7mp488qz8PWnryuFnrd+wCtbOhvSCwOs
-	 QLhZVOtwzmV4+Vqp6+G+gJgedhhITQcCCehXh2gSjLxFJbOJNxJfTPKaeFk8Ed1DbI
-	 r//7pAmUT2CyzccEeLBhOl+XS/GsgDRHlj7eNoXIJaCK9EFzoFgQ08BkVbaojNgSRX
-	 D0b686cs7L1KzCRK2WMw6wGlAy75RXRPUdn5po42fO2bvWa3/J+fdwe5yMyiW8y7W3
-	 ro9NHReYTX9tdB/wVo8wpSSxKPa8ANdnPdTBlYgCv/2+tU3Y0wn2VhibPgzzJL1q6r
-	 6nAqmO6h7wNuQ==
-Date: Thu, 23 Sep 2021 13:08:20 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0D772
+	for <tools@linux.kernel.org>; Thu, 23 Sep 2021 12:31:55 +0000 (UTC)
+Received: by mail-qv1-f52.google.com with SMTP id gs10so3951716qvb.13
+        for <tools@linux.kernel.org>; Thu, 23 Sep 2021 05:31:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LbmkRfayhKQTGyIMYtq4WY5HmBuRNVA1Nh/5xFjVBuY=;
+        b=AlpmvS5W3OklHkHIbb9PZCCIXUtOFDFCR2z0tjiU1AZMsqAU0jTA7nsb4+hYob3xxI
+         qnUb+eDEpK+ukoOzBQB0qAknpWdRjv8fhQqFpeR43G7gBWlhD1/5xhzx/hUxyT+G6yLG
+         6Vk5vv+k7xJc+9NOqCHM+AakG31LmcfEg4CSk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LbmkRfayhKQTGyIMYtq4WY5HmBuRNVA1Nh/5xFjVBuY=;
+        b=RXRG1LBgC662bKR6v/kLmZfKmENjP8xD8a8uU34xVUUz9+DU9RkxSCTSeQgrhdTdr8
+         cHdivQKS9HZzDiCZyb/3UTswIgQnNLyZlzZCE6NAbwbL9Pibnj2nrPJKuaUhyR4at2YY
+         w0+GIl3cDsv2HRXDNLDp0bWXE3xqpGFZ1K6LCJunPiczHvvhiLFw46UROHTz5IHatFbS
+         dMiGfr3cBjdh0syl/syBpphOco4NxEAT1vqKKQgj1iDHQsj4JQnYrqVfS+G3uLafD7K5
+         Cxr5gs+5HBxr0QDo4F36/zONDLp6RLGqK6kGLOaGykje6JH8jHSxUJuhnJjM3ebk2XHD
+         Pi8A==
+X-Gm-Message-State: AOAM530VrmRSF4lPPMDn80so3iEV+KaqYC6SoQ97Jngoxgno4WxGp78G
+	v3NSn6YSMHdh5+jeURB91WGzKg==
+X-Google-Smtp-Source: ABdhPJy4UUv/rd6wKBh3Dq8Eqx0gdOnQbxKrhCmbJ7dykIlwnTCP6m9CPwVyb/88CwP4hvGeOclarg==
+X-Received: by 2002:a0c:9043:: with SMTP id o61mr4100980qvo.54.1632400314251;
+        Thu, 23 Sep 2021 05:31:54 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id j18sm3921384qkl.12.2021.09.23.05.31.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Sep 2021 05:31:53 -0700 (PDT)
+Date: Thu, 23 Sep 2021 08:31:52 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: tools@linux.kernel.org
 Subject: Re: Issues escaping Froms
-Message-ID: <20210923120820.GA5177@sirena.org.uk>
+Message-ID: <20210923123152.bo75gckjbrsibtiu@meerkat.local>
 References: <20210921115544.GB4203@sirena.org.uk>
  <20210921124926.5j5z4pdedkk4ulwc@meerkat.local>
+ <20210923120820.GA5177@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mYCpIKhGyMATD0i+"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20210921124926.5j5z4pdedkk4ulwc@meerkat.local>
-X-Cookie: Password:
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20210923120820.GA5177@sirena.org.uk>
 
+On Thu, Sep 23, 2021 at 01:08:20PM +0100, Mark Brown wrote:
+> > There is no working around this, short of saving everything as maildirs.
+> 
+> Hrm, right.  That's awesome.  There's something fishy going on here
+> somewhere thoguh - I'm also seeing it failing to find the patch in
+> 
+>     60f0c65bbd52479cb83683b8475af435@bytesnap.co.uk
 
---mYCpIKhGyMATD0i+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hmm... this looks like a bug. I'll check it out.
 
-On Tue, Sep 21, 2021 at 08:49:26AM -0400, Konstantin Ryabitsev wrote:
-
-> Unfortunately, the "mbox" files that git expects for "git am" are not the
-> "mbox" files expected by mutt and other MUAs. If we escape the "From " en=
-tries
-> as mandated by the format, they don't get unescaped by "git am" and make =
-their
-> way into git commits:
->=20
->     https://git.kernel.org/torvalds/c/137733d08f4a
->=20
-> There is no working around this, short of saving everything as maildirs.
-
-Hrm, right.  That's awesome.  There's something fishy going on here
-somewhere thoguh - I'm also seeing it failing to find the patch in
-
-    60f0c65bbd52479cb83683b8475af435@bytesnap.co.uk
-
-which has similar kinds of malformation in the incoming message, though
-the result ends up different.
-
---mYCpIKhGyMATD0i+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmFMbjMACgkQJNaLcl1U
-h9B8wgf+JSdxysU536nN2h5p8yq14CTP6Aw0laWqThmM56Q9iBz/RPTmUWdAe5Ou
-AeZvTtxjUOmxPyn/ZaXUCFElS/AzrEPZN82GBg1s/RjoZP9NDWB1III35cbcKVR9
-R67WeK+zF7afOeGaEsykmwaSRVVlX/BPOTuzr44m5GspmkRATTkJvbpqrScEWfUG
-bS34O4IWTtdTR9PxsJQOaRxL9hfrOT2asi+Zqxtc0Bq2ehT4ELkzNN0lDdK1NRcj
-g8Gz7KtLU4wurb3GIhAU0/yeF3vvJ7ofQdWYIXedz1sZcMjwB1UgjqGdBw34Rk4+
-a1CCZTwCfQBRVF+qWt+cNkc/p/zgwA==
-=x6U9
------END PGP SIGNATURE-----
-
---mYCpIKhGyMATD0i+--
+-K
