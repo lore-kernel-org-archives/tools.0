@@ -1,89 +1,107 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B2F3FC3
-	for <tools@linux.kernel.org>; Wed, 29 Sep 2021 18:07:28 +0000 (UTC)
-Received: by mail-qv1-f43.google.com with SMTP id et16so1976025qvb.10
-        for <tools@linux.kernel.org>; Wed, 29 Sep 2021 11:07:28 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9DB2FAF
+	for <tools@linux.kernel.org>; Wed, 29 Sep 2021 21:18:30 +0000 (UTC)
+Received: by mail-qt1-f173.google.com with SMTP id r16so3666700qtw.11
+        for <tools@linux.kernel.org>; Wed, 29 Sep 2021 14:18:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
+        d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=DVusSc5E+lRGg+p8l2M5fQ9D/JNSkP6uqQOATDBi/Bs=;
-        b=n1Jz2DI6j7lHzl1pyzoHxaqDj/W8CYDvsK2i+yMQZwcWrpmY4dl+2SCWVfwa6QHuq6
-         vhCHX8RiMY0zDjjeqAXT9/fitdHtRFYk94WYiCxDoOZc1RP9Ls2+75fEu9IZ0G5YGzPJ
-         s1eIl6u9cAycJTW/XsCxy49TPseEVca+XVX89Kr9ZDpG8o0anj5RKo9TBMMvBcSmNXd2
-         zpODoGXMWZQJHOehGI51NwXD2sB6tWLLdNnM4XzkYPjsgByI+pC+TjsZLeE972ng1HFD
-         3635E5asAWA1hzzuUuy9WFCu8Ma4sHmUVQoq/rnsV/m46O/dQmX1GEvsm8HE6uRzhRKa
-         zT1w==
+        bh=sVnekUEKW8CfrQiq7YdNrytmkDUQ7dT0m7nv5NqbiWY=;
+        b=hTHlNraSL1atg3o6gEW/tf1xt82+skwqPp84m6KDTgfGTf3WqJu/PPQg6qcYAzrKpd
+         x9JqywIb4GPsnhn02kxA+mF92vQe6KLqqjVWC2d+XJUObhAjiwUPeRcXEPP2iL/fz30f
+         P6wo6wGnNnobiR3HLCHiMyLUeTShIEehbc/Bg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=DVusSc5E+lRGg+p8l2M5fQ9D/JNSkP6uqQOATDBi/Bs=;
-        b=T7BXF3OonDTPlzC/aTfYHM4m7zb+PqUtswFCAjfUyBrIpRPQN/UPCvchXfRCh0c0MP
-         PSHgbD7sovxpg0mq2sCGnxle5aLcWlnq/FJVZKov8xLM5IigrE4jwcwZxoYsskwSdUSz
-         gJMR1QEjdPQQwkjEj5w+DsitaN7NLcjKkNvW9otFt9FIblPUZWpzQtKjd3DzGVfCGMnG
-         DhrQjpf5Wea/GvJE/EuhwQ28gdNywCGCz0Zesm+YCa+zfOiGuNCzAVmeud4ax0YZ8x3B
-         o6rKHrhyNNmgO4pbWRcEHzfJO6YY+kSLFsXJKqDUuUEZN5/3NxAYJu95+dE9Oap56DMl
-         9Z1g==
-X-Gm-Message-State: AOAM533j7VC2gJBrqUFjXItue2v3FkP4qUwcy2gSbHQKtV+ke6o7my+y
-	jWg/XsTISygoBWLep14UO8ozQPdkKvo4ng==
-X-Google-Smtp-Source: ABdhPJx48eLhaW3Ss0lPBgXWbCM8oQVNZBmYRQoGXCtjykPsqV5JJdPLnrS5T7xDMEsk0uZpQaEvZw==
-X-Received: by 2002:a0c:b412:: with SMTP id u18mr70663qve.48.1632938847157;
-        Wed, 29 Sep 2021 11:07:27 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-162-113-129.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.113.129])
-        by smtp.gmail.com with ESMTPSA id f83sm287153qke.79.2021.09.29.11.07.26
+        bh=sVnekUEKW8CfrQiq7YdNrytmkDUQ7dT0m7nv5NqbiWY=;
+        b=juTbvanM+7Z1wBdV61bdufyaL2UW0nBV70CD9AybwPjiQ+4j5hqogwEQP2wK9TNBwM
+         H83zGJvjnJOOCLfsOAC9raqeUYBDUtqEpOtEYeeOxF2rAiM/VFuzCe7h4MiPv3XEFM8Z
+         wQgdZi5JFpzHLkNjR/l3X7s1asfpHC84ogyOJqVWepOm5Lo0u25WEn75o/E8ec9MB9Op
+         c9uk+H9rjmtA/TlHVKBPTabBGTj3V2tclQ97XYOIT9VpUEvDxrIRaoaXYyzAdQzZ4Hhq
+         4nMQwMEhQj9vWAVbRChsJs2WaxpUBBzMwXyE14/PrnD5J7MJNLNFOEjsEouZIGxzEo55
+         hMww==
+X-Gm-Message-State: AOAM532+ya2YwiZ0JkWpOF7bsaTtDxnJ+wNrqW7ZEygQrJSjEEPAIPYm
+	ZeJP3U31Od3W1ZeesB9L2naWVQ==
+X-Google-Smtp-Source: ABdhPJybBX8NqUcurLiJz0KbLN+vzXPmfoWRwgpTW2tP/H7P3f3RwZLdqhhcSCiF7nQaIr7hCuRozQ==
+X-Received: by 2002:ac8:4149:: with SMTP id e9mr2428826qtm.106.1632950309439;
+        Wed, 29 Sep 2021 14:18:29 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id l195sm517751qke.98.2021.09.29.14.18.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Sep 2021 11:07:26 -0700 (PDT)
-Received: from jgg by mlx with local (Exim 4.94)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1mVdzK-007ddG-1Z; Wed, 29 Sep 2021 15:07:26 -0300
-Date: Wed, 29 Sep 2021 15:07:26 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Rob Herring <robh@kernel.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	tools@linux.kernel.org, users@linux.kernel.org
+        Wed, 29 Sep 2021 14:18:28 -0700 (PDT)
+Date: Wed, 29 Sep 2021 17:18:27 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: tools@linux.kernel.org, users@linux.kernel.org
 Subject: Re: b4: introducing b4 shazam (like b4 am -o- | git am)
-Message-ID: <20210929180726.GY3544071@ziepe.ca>
+Message-ID: <20210929211827.5yvedlfq3bia2pk7@meerkat.local>
 References: <20210921202526.mk2meetobbtl3tvi@meerkat.local>
- <CAMuHMdWDh=pkFWvxkikFPh3ACyo8ctO1A-DvA6qq7KZ+Lr7X9w@mail.gmail.com>
- <20210924210826.ebi3ljjdfiuie2pr@nitro.local>
- <CAMuHMdUubqhqyDwkO_x98-M_i1tXsA5KfxhM1RDhrbhby8QT5w@mail.gmail.com>
- <CAL_JsqL-_GhC0L7O5BugC6P_TjhoqL_p3dgBmHuoJfX0fy8gaw@mail.gmail.com>
+ <20210922173803.GV3544071@ziepe.ca>
+ <20210922182154.zqtuvmcsjd4ivfgp@meerkat.local>
+ <20210928174653.GH3544071@ziepe.ca>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAL_JsqL-_GhC0L7O5BugC6P_TjhoqL_p3dgBmHuoJfX0fy8gaw@mail.gmail.com>
+In-Reply-To: <20210928174653.GH3544071@ziepe.ca>
 
-On Wed, Sep 29, 2021 at 08:39:25AM -0500, Rob Herring wrote:
+On Tue, Sep 28, 2021 at 02:46:53PM -0300, Jason Gunthorpe wrote:
+> > We could, theoretically, do that, but you'd have to remember to pass the -F
+> > much free-form and there isn't a sane approach we can take to automatically
+> > generate good merge commit messages from them, short of quoting them fully,
+> > which will be overkill 9 times out of 10.
+> 
+> Since the user would be expected to revise it, I think that is
+> fine. Just make the template and push in the raw text and let people
+> edit. It would still save a bunch of time
 
-> Is there a defined right order for Link and committer's Sob? Either we
-> have to define what that is for b4 to implement or b4 has to be
-> configurable. If the committer != author, then Link followed by Sob
-> makes sense. But what about committing your own patches? If you
-> strictly follow the patch trail, you'd end up with your Sob twice:
-> Sob, Link, Sob. In these cases, I've been putting Link last and a
-> single Sob.
+Okay, I implemented something that should be handy. When we find a cover
+letter, we will prepare it as a template merge message in .git/b4-cover, so
+you can do stuff like:
 
-I've been deliberately sorting things to be 
+git merge -F .git/b4-cover --edit FETCH_HEAD
 
-Cc: stable
-Fixes: xx
-Link: xx
-<everything else in chronological order>
+I will eventually make the template configurable, but for now it's hardcoded
+to the following format (using a sample I've been working with):
 
-Ie I think the cc/fixes information is important and should be
-highlighted at the top and the link is sort of a breakpoint indicating
-that the following is chronological providence information.
+    Merge patches from https://lore.kernel.org/r/20210929143600.49379-1-david@redhat.com
 
-I see lots of other things too. Personally I think b4 should push a
-reasonable opinion for the colour of this bike shed..
+    Accept 6 patches from David Hildenbrand <david@redhat.com>
 
-Jason
+    mm/memory_hotplug: Kconfig and 32 bit cleanups
+    ==============================================
+    Some cleanups around CONFIG_MEMORY_HOTPLUG, including removing 32 bit
+    leftovers of memory hotplug support.
+
+    Compile-tested on various architectures, quickly tested memory hotplug
+    on x86-64.
+    ==============================================
+    Link: https://lore.kernel.org/r/20210929143600.49379-1-david@redhat.com
+
+Note, that this is after deleting a bunch of stuff during the --edit stage, as
+we reuse everything that's not a signature.
+
+This change is in the latest master.
+
+> Linus has been repeatedly against working on random git history
+> points, so I think the unreliable auto-base is not something people
+> should be using.
+
+I see. But if they do send a base-commit: line from some place random, is that
+okay to accept it?
+
+> It should only check a set of safe commits (like rc releases and the
+> maintainer's work-in-progress) and everything else should be a
+> failure..
+
+I'll see if I can have a --tags-only mode for guessing base.
+
+-K
