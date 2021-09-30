@@ -1,31 +1,31 @@
 Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AC1168;
-	Thu, 30 Sep 2021 23:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FB83FC6;
+	Thu, 30 Sep 2021 23:29:17 +0000 (UTC)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4HL8RG1LCWz4xbG;
-	Fri,  1 Oct 2021 09:22:34 +1000 (AEST)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4HL8Zz5Ql1z4xbG;
+	Fri,  1 Oct 2021 09:29:15 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canb.auug.org.au;
-	s=201702; t=1633044154;
-	bh=TFf40XJVbD9FAd2hyaELvXEcOUwZ5R8+t2Wcp4buQg4=;
+	s=201702; t=1633044556;
+	bh=XT3vyRRBG/ZQHUn04XqlXo7NOrs2JWWq7yqfHpIo2D0=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=rkKPbWWU9fNciVrCrkgjhZKXuy8HfL7aodCzBB4JmtPLiaPi+XO9XUMOM65Jx36MD
-	 aBIs8mgfTy/nIKs+PNka5GVgKZPbcrTboc3j2xmWql2tNQosTWVtLSnkMU8xMqmN2J
-	 jZ5hueTgB9K0Fvbk5hMfzeqy7CtqIvoW2OitMn9Z1FMjhBxu/7W5Ie94vY8bzWreew
-	 sZv3q8PXDARZ2xOMXldtxEXgcu3BQO/Mm4uiA8RUjFPx4h0EY9dVDx7oU/GX0gOB9L
-	 hInp9IQnq8G/QebOy7aZgwkf2pbZqwx5DU4vkJKzxI37hqDoSlGcDNjd3xStEoNasv
-	 Bpgu1BN9hrSdQ==
-Date: Fri, 1 Oct 2021 09:22:31 +1000
+	b=jebXzy0CCZEw2FRNYUEfuGAQjl/TCaP52LVkF9y7g0ZqmCpFRAA2Pe7oSlPIl5TrA
+	 anS8kpcwwtipkxOnUIT4eW+ZyMvp97M8yp9pZa5vXkmCuOr8Dzwnfev5xorQ4jvnyY
+	 xZGY6ZRY7vJxitipvD7gjunyMd5C0Xt6lggREBtHo9YyEcmb/XwT6ZJXPTy22lYQcZ
+	 WZpE0ebXKAiWJsG8DHEEzQz1cM1c2GMcEoV7Vp9tBXhWo7niz1ToQlrz7R5RE0+XMw
+	 wVJQpnbT62XpV9LwoaZ5vUG+T72qba5Vp7S9Zy6zp45Vzil7nfwug9JD9kqkMPWaWz
+	 P7Bkc4zcP2jnQ==
+Date: Fri, 1 Oct 2021 09:29:14 +1000
 From: Stephen Rothwell <sfr@canb.auug.org.au>
 To: Kees Cook <keescook@chromium.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
  tools@linux.kernel.org, users@linux.kernel.org
 Subject: Re: merging pull requests
-Message-ID: <20211001092231.6fefb6c7@canb.auug.org.au>
+Message-ID: <20211001092914.4738513b@canb.auug.org.au>
 In-Reply-To: <202109301559.A9BFB03@keescook>
 References: <202109301023.B78ABE54B@keescook>
 	<20210930200002.67vxbowvegso2zhg@meerkat.local>
@@ -36,10 +36,10 @@ List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/B=PjX+MnlSRYMKP7fuIZ0DL";
+Content-Type: multipart/signed; boundary="Sig_/spIUc45n.CFDNq=xjUad3uz";
  protocol="application/pgp-signature"; micalg=pgp-sha256
 
---Sig_/B=PjX+MnlSRYMKP7fuIZ0DL
+--Sig_/spIUc45n.CFDNq=xjUad3uz
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: quoted-printable
 
@@ -47,50 +47,46 @@ Hi Kees,
 
 On Thu, 30 Sep 2021 16:09:13 -0700 Kees Cook <keescook@chromium.org> wrote:
 >
-> I think so -- that seems to be sort of what Linus does? There seem to be
-> a few templates (tag, branch, and "patches from Andrew"), e.g.:
+> I guess it depends on the expected order of operations. What do other
+> maintainers do to process a PR? I would think it would be:
 >=20
-> Merge tag 'char-misc-5.15-rc1-2' of git://git.kernel.org/pub/scm/linux/ke=
-rnel/git/gregkh/char-misc
-> Merge branch 'misc.namei' of git://git.kernel.org/pub/scm/linux/kernel/gi=
-t/viro/vfs
-> Merge branch 'akpm' (patches from Andrew)
->=20
-> Though I'd love to know why there's a distinction between "tag" and
-> "branch" here. Are "branch" pulls not checked for signatures?
+> - pull remote branch (to FETCH_HEAD)
+> - review (in FETCH_HEAD? in a "real" branch?)
 
-I assume it depends on what Linus is asked to pull/merge.  i.e. if the
-pull request refers to a tag then Linus will just merge that tag.  Some
-people just ask Linus to merge a branch from their tree.  In Andrew's
-case, he sends patch series which Linus would import into a local
-branch ("akpm") and then merge that.
+Our workflow usually requires that all patches are posted to an
+appropriate mailing list for review.  If the developer then also has a
+git branch/tag containing the patch series (after updating for
+Reviewed-bys etc) then that is a separate issue and (probably) requires
+a level of trust on the part of the maintainer (or a recheck) that the
+patches have not been changed since the final review.
 
-The messages seem to mostly be the default git message for a merge
-(sometimes maybe editted a bit).
+> - merge into my topic branch (where the commit subject should retain deta=
+ils
+>   of the pull location, body has notes from the signed tag, etc...)
+> - review, build, and test
 
-For linux-next, I fetch all the branches into remotes in my tree and
-then merge them later.  I have recently changed my merges to include the
-source tree and branch in the merge message (previously, all you saws
-was the local name of the remote branch).
+"rinse and repeat" :-)
+
+> - push to public tree
 
 --=20
 Cheers,
 Stephen Rothwell
 
---Sig_/B=PjX+MnlSRYMKP7fuIZ0DL
+--Sig_/spIUc45n.CFDNq=xjUad3uz
 Content-Type: application/pgp-signature
 Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAmFWRrcACgkQAVBC80lX
-0GwhNgf+KXf5sPHpYMz+koniWGQ8/DthU7c25bfNhe4tT0/9nJBRAVpXsXO2CDdY
-Z56H4csaIkQXWD6q/AH1Ik6SsIoVHKNTFRAXgevIdPfLpWfpwstl6S/kmVwKQskj
-tWfZZaxy6flEJ+Drzuad9/jjITblbIRXdSv5Mwc4hOXA6a90Xoox63e/r+uV9xdQ
-xVbTAhrSJoj5mLEbgL6Fzse3xgoeuJQkUuDXa0e/xogyZM7DBnV4X7CuzZ2aTfqt
-cRK9KQwuQxC1QZiCuL9s0dMbsqcHMMGropjMNNnE5W94GvSXwiKKu/Xt3OSmUkpS
-z4+lm29TWOOAP3u51ZULUsdSPzQzmA==
-=Zisj
+iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAmFWSEoACgkQAVBC80lX
+0GzAJQgAmPjWk5+xD9jUnwyk8XqhHfJzyIfEHNG17Zg3+DAJRXO5ZNfditE97jTP
++ReRKiDZlfu+FRCVunqOMSquoLAuDSVcIcXaymx6wZLMCSfUYYtLMZJgaawswhOP
+N09xn/VtJ3X3BaRq0kR3wxZn+ZrFPolJa74sCH9yqS8Q/PqHZy38eS3A2KaauvWB
+LUTnldkCjk0PqDBMBqxhHp6dQwyXI9OnmFYqCPXaiTcHhvnehRW9LQuVWxfkacX+
+wFIsuQnLfXvU3ZIBnu+nGqnMW9UVi3Hy9d4yNXsV8cSt/Uw4rTiDjSnSAzxMNk8a
+/T0oCKUAp3zV7mSp2U+1n6hQF6TiDw==
+=1iOq
 -----END PGP SIGNATURE-----
 
---Sig_/B=PjX+MnlSRYMKP7fuIZ0DL--
+--Sig_/spIUc45n.CFDNq=xjUad3uz--
