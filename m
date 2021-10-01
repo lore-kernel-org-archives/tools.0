@@ -1,85 +1,141 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E60D3FDF
-	for <tools@linux.kernel.org>; Fri,  1 Oct 2021 18:26:19 +0000 (UTC)
-Received: by mail-qk1-f181.google.com with SMTP id q81so10079734qke.5
-        for <tools@linux.kernel.org>; Fri, 01 Oct 2021 11:26:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115092FB3
+	for <tools@linux.kernel.org>; Fri,  1 Oct 2021 18:47:32 +0000 (UTC)
+Received: by mail-lf1-f52.google.com with SMTP id m3so41808468lfu.2
+        for <tools@linux.kernel.org>; Fri, 01 Oct 2021 11:47:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mmmre5hf/CXGb59OFH6rPBkT+0ALrvVJu2chNKTjEa8=;
-        b=Rz4ggx94XpHaJ1WwuMlv8QJ84xWhRmEOcoizWsG7rN+Dt386CG+xL+ECAQ2tuw4AH2
-         M7RRW9usfM7EQXqRyKI2WGKS+qMo4uA2arlQYMev7jq3Q8ZAUrFJjnn1+VEtcxugnhQA
-         RNgoEVswtVSqyiWOdU5qU/nHozcfXQ6qG1AOA=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=F9uZy2zzImSIeiIPo8is3fkP+XlDLbnTpMTPqGjuBMo=;
+        b=RySRUcED32vLZfRdmeP4b7Z7m2eRJRy15uA6ywBn/pjB+uhid2vGCIDqakw3ScfaCm
+         580ADtbQXXI/v3EsGz9VofZtmTSwc0Y0xYhLTqL8MPsyTgxetRjY5kYnFlO19UAitiHQ
+         Em1i+M9xkDrVfoZM2yJ5jZLD7NWmpYDwoksMs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mmmre5hf/CXGb59OFH6rPBkT+0ALrvVJu2chNKTjEa8=;
-        b=q384IHGX8J3O4hN1iR3PRzw3mPvlzs6GD1AIpa6/MsmsDG+ZfHtbQbBVrxTLlZpQlN
-         DKDcVjrO2u0dZGlpJtqFeLy510SDAPilBcbtPdFyFVJzLN5pX6/XoKF8Ki724mIuuj5S
-         VKUQ5X/8ayAlXCna/0EXEFa+S1Mhid4Fqb1CUKU3eqCK8lRC9ncotrqA/xvf7JosUntn
-         jHfNfaJoOJpc5U1fbrEL9y6D+H3NZd+LtrROvKRnQ9J7X3U2i4adEwYZzjRaqF0UGEpM
-         i62PftxakV6oWCjB4h3o31Q+/0U8KKtgk/Suys1RvYIL5cNLaRiTtrQobv+kCKJYScKb
-         /WKQ==
-X-Gm-Message-State: AOAM533uQBA2c0zADdJFy/gxseS/9X96KCisPmiwVTXx00+9ak1nN7n4
-	S3dTk3kDxCsoOB8R86NuvWcYiA==
-X-Google-Smtp-Source: ABdhPJytqOImpbwzDJDeG85c7aYUtXdkctvIdFO1okHa+KuqRBwCuO+rrZ0nCJASx2l3O8sdNTWzTw==
-X-Received: by 2002:a37:9eca:: with SMTP id h193mr10750239qke.127.1633112777922;
-        Fri, 01 Oct 2021 11:26:17 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id k2sm3626347qtg.35.2021.10.01.11.26.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 11:26:17 -0700 (PDT)
-Date: Fri, 1 Oct 2021 14:26:15 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Kees Cook <keescook@chromium.org>
-Cc: tools@linux.kernel.org, users@linux.kernel.org
-Subject: Re: merging pull requests
-Message-ID: <20211001182615.bcyuag7vfrkzhefj@meerkat.local>
-References: <202109301023.B78ABE54B@keescook>
- <20210930200002.67vxbowvegso2zhg@meerkat.local>
- <202109301559.A9BFB03@keescook>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=F9uZy2zzImSIeiIPo8is3fkP+XlDLbnTpMTPqGjuBMo=;
+        b=PARw2BREffaKhWhEF5rBjvBii5WDuEaZS0rj0C9C2mQjxOdn61NNJTjFLzsnlBycu9
+         HtOsY4ZWHBhbWkxkzkjVOjki/6WnGcS4FcEj9Lpo0E0P3jmVvd6uOoV7BKANpOC+59HO
+         qnz3WSIfy5GdR6pp1Eg096c3dSOWcg4GsxcX7vO21DhmU5FgLGSJVmmJSdkVg1Xr/mb4
+         8LNyiKMZSJFjpomfpCiCtbzKawWGHt0rvS+jVCia7PCn5SNR1vOG+683LqTOI8Cxm3Wi
+         cN8QGnooHX+SB9YuDoGsXa4e/x4zM/1B5GI0amVlmFWjRLEI5fmtJRov/orc32BnyMff
+         KI9A==
+X-Gm-Message-State: AOAM533HOovJhKg7Q2R8dYq0nKDHpJIA6kC/0Gx90aoPGdHbXX4GDD3z
+	lggsn7jCl2e0NYtpVcjauNorflJTz8El+2HNVkc=
+X-Google-Smtp-Source: ABdhPJyf999Xn9BuOy67nzABxs/VxK7aRdLXHtaBdXgOZf/DQb9KKESEahWOoTuNDL5jwOZfCFjhLg==
+X-Received: by 2002:a2e:8953:: with SMTP id b19mr13009600ljk.335.1633114049580;
+        Fri, 01 Oct 2021 11:47:29 -0700 (PDT)
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com. [209.85.167.45])
+        by smtp.gmail.com with ESMTPSA id i26sm812977lfl.288.2021.10.01.11.47.28
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Oct 2021 11:47:28 -0700 (PDT)
+Received: by mail-lf1-f45.google.com with SMTP id x27so42368940lfu.5
+        for <tools@linux.kernel.org>; Fri, 01 Oct 2021 11:47:28 -0700 (PDT)
+X-Received: by 2002:a05:651c:1250:: with SMTP id h16mr14161981ljh.68.1633114048434;
+ Fri, 01 Oct 2021 11:47:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <202109301559.A9BFB03@keescook>
+References: <202109301023.B78ABE54B@keescook> <20210930200002.67vxbowvegso2zhg@meerkat.local>
+ <202109301559.A9BFB03@keescook> <20211001182615.bcyuag7vfrkzhefj@meerkat.local>
+In-Reply-To: <20211001182615.bcyuag7vfrkzhefj@meerkat.local>
+From: Linus Torvalds <torvalds@linuxfoundation.org>
+Date: Fri, 1 Oct 2021 11:47:12 -0700
+X-Gmail-Original-Message-ID: <CAHk-=whZMDmgs3+djfUoVrx8jj7DwGOJvLWC=vw1dCMicqHJ1g@mail.gmail.com>
+Message-ID: <CAHk-=whZMDmgs3+djfUoVrx8jj7DwGOJvLWC=vw1dCMicqHJ1g@mail.gmail.com>
+Subject: Re: merging pull requests
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Kees Cook <keescook@chromium.org>, tools@linux.kernel.org, users@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Sep 30, 2021 at 04:09:13PM -0700, Kees Cook wrote:
-> I think so -- that seems to be sort of what Linus does? There seem to be
-> a few templates (tag, branch, and "patches from Andrew"), e.g.:
-> 
-> Merge tag 'char-misc-5.15-rc1-2' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc
-> Merge branch 'misc.namei' of git://git.kernel.org/pub/scm/linux/kernel/git/viro/vfs
-> Merge branch 'akpm' (patches from Andrew)
-> 
-> Though I'd love to know why there's a distinction between "tag" and
-> "branch" here. Are "branch" pulls not checked for signatures?
+On Fri, Oct 1, 2021 at 11:26 AM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> I think Linus just manually adds "(patches from Andrew)" to that.
 
-That's just what git does when you merge FETCH_HEAD. It takes the contents of
-.git/FETCH_HEAD, which describe from where the last fetch happened. If you
-fetch a tag, it will say:
+I always manually edit my merge messages fairly extensively.
 
-    [tipsha]\t\ttag 'tagname' of url://of/remote/tree
+And I would very much discourage anybody from thinking that a merge
+commit could be auto-generated. Don't do it. If you do it, you're
+doing things wrong.
 
-if you fetch a branch, it will be
+Merge messages need to be meaningful, and no amount of auto-generation
+will ever make them so.
 
-    [tipsha]\t\tbranch 'branchanme' of url://of/remote/tree
+Even when people use signed tags with all the merge message in them to
+send me pull requests, I will edit things so that at a minimum there's
+proper indentation for me quoting the data, but also to try to make
+merges look somewhat consistent (different people use very different
+formats for listing changes).
 
-When merging FETCH_HEAD, git will just say "Merge %s" with the contents of
-.git/FETCH_HEAD file for that tip.
+I'll spend time making my merge messages look more legible, including
+fixing spelling and grammar for people, and sometimes going to look at
+the individual commits themselves if there is some explanation that
+doesn't make sense to me.
 
-When you merge a local branch instead of FETCH_HEAD, it will default to:
+Yeah, some trivial pull requests with a couple of simple changes,
+maybe the auto-generated shortlog feature ends up being sufficient.
+but honestly, that's _very_ rare. And sometimes the message might be
+just "Small x86 fixes" like in the recent kvm pull I did.
 
-    Merge branch 'localbranchname'
+But if the pull has anything even remotely more subtle, I will
+complain to whoever sent me the pull request if they didn't give me
+enough information.
 
-I think Linus just manually adds "(patches from Andrew)" to that.
+And honestly, when _I_ merge stuff, I generally will need to explain
+things _less_ than most other people, for one very simple and
+fundamental reason: my tree is simply the known upstream tree. So me
+merging some networking pull should explain _what_ I merge, but at the
+same time, I don't really need to explain why it is _I_ that am
+merging it.
 
--K
+When you see me merging networking code into my tree, a simple "Merge
+networking fixes from David/Jakub" is already enough information.
+There's no question about "why is Linus merging from the networking
+maintainers".
+
+So then I get very upset when I see other people merge stuff, and they
+have NO explanations at all.
+
+If you aren't the upstream maintainer for whatever you are merging,
+you should not only explain *what* you are merging, you should explain
+*why* you are merging it.
+
+So put simply: I put a fair amount of effort into making my merge
+messages be meaningful.
+
+Anybody else who does merges should do at LEAST the same, and in
+situations where you're merging something that you aren't the obvious
+maintainer for (like doing back-merges of my tree), you should in fact
+put a lot *more* effort into it.
+
+End result: Please don't make some crazy "b4 shazam" tool that handles
+pull requests and then makes it trivial for people to do automated
+merges too. That's absolutely the last thing we want to see.
+
+Merges need *more* explanation than regular commits. The "why" is
+often very important for a merge, even if you'll sendom see it in my
+merges where the "why" is kind of implicit.
+
+Don't try to do something that avoids that very important manual
+editing step to explain what is going on.
+
+I've said it many times before, and I'll sadly probably have to say it
+many times again: if you can't be bothered to write a good merge
+message, you shouldn't be doing the merge.
+
+It really is that simple.
+
+No automated merges outside of pure test-trees (ie where the merges
+will never be seen by anybody else), because they fundamentally
+violate that very basic rule.
+
+             Linus
