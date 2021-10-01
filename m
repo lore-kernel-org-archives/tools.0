@@ -1,178 +1,179 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C6F3FD0
-	for <tools@linux.kernel.org>; Fri,  1 Oct 2021 00:27:52 +0000 (UTC)
-Received: by mail-pf1-f174.google.com with SMTP id y8so6447847pfa.7
-        for <tools@linux.kernel.org>; Thu, 30 Sep 2021 17:27:52 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD683FCC
+	for <tools@linux.kernel.org>; Fri,  1 Oct 2021 11:59:51 +0000 (UTC)
+Received: by mail-qk1-f173.google.com with SMTP id q125so8774391qkd.12
+        for <tools@linux.kernel.org>; Fri, 01 Oct 2021 04:59:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lixom-net.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=B13GFMlLviK06UiJuEQQeRshnlj6oNrBCX34zrDLfUo=;
-        b=tKHDWDZNl5YIZWq7Z8h/DTFg0IyTfOWx7EmfrhRSgjkTe4QUo7Qz3cVQTaoQPyoKDn
-         jjEevqLQk1A5YzuJjPGzlL8NkapU2VlrYZHU+yOuJzZPg0/tUav5NbiWusu11RzUGOQl
-         PJ9H5ZFMqXXIoPSm8oct1t8Z5+eJDTcvAd10WEV6N+XohIcjSnsuZ6NPp4Pim4L0q7pt
-         wuxF5WuiZAOnOxgv/uvCZ7DSAUtZnU+oOhvVZP9Wv67mFdAw4yKzjBY60sPluit5QlnM
-         Vue/vcdPppp4XFwjo2m6ioGasCZDCxooZ1VdO/kkVbm5zBSLbzyTBbTzFkrAw1hNgd1V
-         u3xQ==
+        d=ziepe.ca; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pkJtp5YGLlhQXwphs4q89yTq7Pk0ylLvU2kldO/rSI8=;
+        b=BjqRrJGVMEK27hxB6R7GzVflQfd2rCtZKGTCm8I0rms3N9TnKMTHL42NU3EN0wLnoC
+         q4CxCMo4IHHFrI/ymrG26xu3OA34C7Tylwmrudv8jWvaNbCmJZLbS4kQtb089HgzK4Yz
+         frRv9GKTIGn6FW+E912OpJIlQGscQBsOaY2u+EfZpvPNMZixjCyisefrtSv1KkuveHdt
+         vWGDUMOD6RRPJLy8tJFyOWbe08lyi5KQ9IkIF0ifzGdm9w1fLxeEkyvFG5nb3S9jUT88
+         jkBUHEvl50BGCTK3d4QSjnMcS7EhTux/40gP0o/Znq6MLJ/syUFwioDfWxoc4Kia+ekq
+         D6/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=B13GFMlLviK06UiJuEQQeRshnlj6oNrBCX34zrDLfUo=;
-        b=KIYVqQ7xXlm+xouReT5fiHwQJP0g1RPUw6h/PHkMZhGV9aTRJG7VKtlAspjx46Ffu+
-         HZ9KzGw2ByObYULliCm7g3Y5ApuY1Igc8bR4y+WXkeMmGA5Lu7TYnxR2BXjLRHeHHpl5
-         2iPGm4nzrRSlNv0outysAVNFAYOnXtG1ghqylH2oSEh4hs48mMPqxBNyLNWCvaueI+Vo
-         lcjfB2b6KqcbNg2WXHn2zTG/tVfgE67SHiUoIX0GFlwlZIA68qFFKvmurI90Oz534J2r
-         Ge7ZClCxdKXwAvhKTybvqY5qO8JfWgqUfcuG4Rk1DITICjIX9fTLMrH4/03igGPRIcP+
-         RZvg==
-X-Gm-Message-State: AOAM533TzyuNTpQRxvJ7kIoiH1ySW/woy2u1zF2875yxqOE8ius7ukO5
-	FPAzPFrnarusO1EXmc6ttNOzTKC4v8ji1ampBlW1PMKyZnHOQQ==
-X-Google-Smtp-Source: ABdhPJyTi/Pb60hwI4lTlEoI2t/eg5sexF8eZewtga9ghnbUCpHJDZHgoKXBO7gtChIkCuInUNokcvq/tSIGPvpQSI8=
-X-Received: by 2002:aa7:8887:0:b0:43c:83fe:2c56 with SMTP id
- z7-20020aa78887000000b0043c83fe2c56mr7111297pfe.82.1633048071850; Thu, 30 Sep
- 2021 17:27:51 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pkJtp5YGLlhQXwphs4q89yTq7Pk0ylLvU2kldO/rSI8=;
+        b=bGM75pNgFf+2WJ9Gf2F8ruIq4YZ7AOeB8NKXayUL1ao9GA4j/ILeuq7heuwXxVl9c0
+         3Zhhd6LNrqEMDHqP/POt14LQAHy0mGwA8En4C1JB3fP6MVhVHOtrnyQtmPNbTbowiR4c
+         0EP6dKbCMIIm12bjsc1dq0MP7NnY5LjbsCQpwq6YITJk83pstfsPe0PxT/5isNY73C6i
+         bPhWwvpjc5OezEt1zjnaFE96Sj7MdkXhTul0YGb4Tj9b390v3hTbGz6K+QSuZacb9qlb
+         TkaKeHPUynGbRJmn1mRhfo3Z29SjqqO2A3tDAkBdLJsVG0hdbOZr+jYHBl9cQ1b1tabF
+         a+AQ==
+X-Gm-Message-State: AOAM532q/4FDzh0Df4gH2lz+C2RsahgGzrkx31xVlejg3VArrumRNsJ7
+	dvk9QW1syWdb/vMkmxSxWuXhwQ==
+X-Google-Smtp-Source: ABdhPJyKqBQGreWzd58y/roFvnBBbFkcKkWfjDgtltG+xZ3RtFtCUoZMb8fRi0Rg+5Y3fxcbmNK75Q==
+X-Received: by 2002:a37:6c06:: with SMTP id h6mr88645qkc.201.1633089590198;
+        Fri, 01 Oct 2021 04:59:50 -0700 (PDT)
+Received: from ziepe.ca (hlfxns017vw-142-162-113-129.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.113.129])
+        by smtp.gmail.com with ESMTPSA id g21sm3119555qtq.53.2021.10.01.04.59.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Oct 2021 04:59:49 -0700 (PDT)
+Received: from jgg by mlx with local (Exim 4.94)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1mWHCe-008P3i-Sm; Fri, 01 Oct 2021 08:59:48 -0300
+Date: Fri, 1 Oct 2021 08:59:48 -0300
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Kees Cook <keescook@chromium.org>
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	tools@linux.kernel.org, users@linux.kernel.org
+Subject: Re: merging pull requests
+Message-ID: <20211001115948.GK3544071@ziepe.ca>
+References: <202109301023.B78ABE54B@keescook>
+ <20210930200002.67vxbowvegso2zhg@meerkat.local>
+ <202109301559.A9BFB03@keescook>
+ <20211001092914.4738513b@canb.auug.org.au>
+ <202109301630.C2646F8B5@keescook>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <202109301023.B78ABE54B@keescook> <20210930200002.67vxbowvegso2zhg@meerkat.local>
- <202109301559.A9BFB03@keescook> <CAOesGMhQBQ0V5GmempB8UhtmAS3gokHb3ACiAiUgQeswwzQPmQ@mail.gmail.com>
- <202109301644.0DC921248@keescook>
-In-Reply-To: <202109301644.0DC921248@keescook>
-From: Olof Johansson <olof@lixom.net>
-Date: Thu, 30 Sep 2021 17:27:40 -0700
-Message-ID: <CAOesGMj9PW1wex=y8VhPOJms8Xzp=J46Yx0_BxBkTdF+YE0NGA@mail.gmail.com>
-Subject: Re: merging pull requests
-To: Kees Cook <keescook@chromium.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, tools@linux.kernel.org, 
-	users@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202109301630.C2646F8B5@keescook>
 
- On Thu, Sep 30, 2021 at 5:09 PM Kees Cook <keescook@chromium.org> wrote:
->
-> On Thu, Sep 30, 2021 at 04:31:20PM -0700, Olof Johansson wrote:
-> > On Thu, Sep 30, 2021 at 4:09 PM Kees Cook <keescook@chromium.org> wrote:
-> > >
-> > > On Thu, Sep 30, 2021 at 04:00:02PM -0400, Konstantin Ryabitsev wrote:
-> > > > On Thu, Sep 30, 2021 at 10:33:56AM -0700, Kees Cook wrote:
-> > > > > Hi!
-> > > > >
-> > > > > I'm just realized that all my workflows have been entirely mbox patch
-> > > > > sets, and I finally have a pull request to take, and ... I have no idea
-> > > > > how to do it "right". :P
-> > > > >
-> > > > > I see "b4 pr", but I was hoping for some kind of three-step process:
-> > > > > 1) get the code
-> > > > > 2) read/verify/test code
-> > > > > 3) merge code into main brain
-> > > >
-> > > > Glad you're still around and doing well, professor Nightingale. ;)
-> > >
-> > > 3 weeks of virtual conferences is wrecking my branch.
-> > >
-> > > > I'm going to cc this to users@, since it's likely to reach more
-> > > > maintainers' eyes (and brains) there.
-> > >
-> > > Good idea; thanks!
-> > >
-> > > > > And that it would end up looking like what I see from Linus (i.e. naming
-> > > > > branching after the tags sent, etc):
-> > > > >
-> > > > > 6e439bbd436e Merge branch 'linus' of git://git.kernel.org/pub/scm/linux/kernel/git/herbert/crypto-2.6
-> > > > > a4e6f95a891a Merge tag 'pinctrl-v5.15-2' of git://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl
-> > > > > 62da74a73570 Merge tag 'vfio-v5.15-rc4' of git://github.com/awilliam/linux-vfio
-> > > > > e7bd807e8c9e Merge tag 'm68k-for-v5.15-tag3' of git://git.kernel.org/pub/scm/linux/kernel/git/geert/linux-m68k
-> > > > > dca50f08a03e Merge tag 'nios2_fixes_for_v5.15_part1' of git://git.kernel.org/pub/scm/linux/kernel/git/dinguyen/linux
-> > > > >
-> > > > > It seems like "b4 pr" does part of step 1, but doesn't build a branch
-> > > > > from the tag (though one can use "-b").
-> > > > >
-> > > > > And for step 3, when I do a "git merge --no-ff $branch", all the tag and
-> > > > > origin (e.g. "tag 'pinctrl-v5.15-2' of git://..." is missing).
-> > > >
-> > > > It shouldn't be if you leave it in FETCH_HEAD, which is what b4 does by
-> > > > default. So, if you do "b4 pr" and then follow it by "git merge", it should
-> > > > retain the pull request origin and make it the default subject there.
-> > >
-> > > I guess it depends on the expected order of operations. What do other
-> > > maintainers do to process a PR? I would think it would be:
-> > >
-> > > - pull remote branch (to FETCH_HEAD)
-> > > - review (in FETCH_HEAD? in a "real" branch?)
-> > > - merge into my topic branch (where the commit subject should retain details
-> > >   of the pull location, body has notes from the signed tag, etc...)
-> > > - review, build, and test
-> > > - push to public tree
-> >
-> > I have a script that I pipe the email to, that parses the pull
-> > request, finds it in PW, updates status, checks out the topic branch I
-> > want it for, and merges it there with a commit message with a link to
-> > lore, etc.
->
-> Yeah, this is what I'm looking for: the scripts that are driven by a PR.
-> (And now I have so many more questions...)
->
-> What's the PW step here? I've only seen PW used for managing emailed
-> patches, not handling RPs. Or is that just a check for "was this sent
-> to a public list"? (And do you end up needing to compare the PR results
-> against the emailed patches? Does your PW do any checks like the netdev
-> PW[1] has running for CI[2]?)
+On Thu, Sep 30, 2021 at 04:42:58PM -0700, Kees Cook wrote:
 
-PW catches pull requests too. Current state hasn't been updated so
-there's some stale material in there, but see
-https://patchwork.kernel.org/project/linux-soc/list/ for reference.
+> The only "hole" I see with the integrity checking is that since only tags
+> or mbox headers are signed, and those aren't part of the merge, there
+> isn't a easy way that I see to follow the integrity chain for a given
+> resulting tree. (Which is technically different from the "trust" chain.)
 
-Our PW does not do any checks today, I've had ambitions to add some
-but my personal time for upstream work has been limited in the last
-year.
+The git tag and signature are part of the merge commit:
 
-> And now that I'm thinking about it -- do the various PWs by various
-> subsystems perform the signature checking that b4 can do? Am I really
-> the only person who has added b4 to their "git send-email" hook? It's so
-> easy! :)
+$ git show --show-signature v5.15-rc3-151-g78c56e53821a7e
+commit 78c56e53821a7ec3462ce448c1fe6a8d44358831
+merged tag 'for-linus'
+gpg: Signature made Wed 29 Sep 2021 09:57:42 PM ADT
+gpg:                using RSA key 7C1EC530B87EF10C4BFBA8B7386DF7157E209B1A
+gpg: Good signature from "Jason Gunthorpe <jgg@nvidia.com>" [ultimate]
+gpg:                 aka "Jason Gunthorpe <jgg@mellanox.com>" [ultimate]
+gpg:                 aka "Jason Gunthorpe <jgg@ziepe.ca>" [ultimate]
+gpg:                 aka "Jason Gunthorpe <jgunthorpe@obsidianresearch.com>" [ultimate]
+gpg:                 aka "Jason Gunthorpe <jgunthorpe@gmail.com>" [ultimate]
+gpg:                 aka "Jason Gunthorpe <jgg@kernel.org>" [ultimate]
+Merge: 02d5e016800d08 e671f0ecfece14
+Author: Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu Sep 30 12:00:46 2021 -0700
+[..]
 
-I don't rely on PW for any checking, I just use it as a state tracker
-for patches/pull requests. For maintainers who send to the right
-alias/list it gives us a safety net for missed pull requests or
-patches as well (but we've had issues with some developers sending us
-patches directly that we shouldn't receive, so it's gotten noisy).
+You can see the raw data like this:
 
-> > I also manually double check merge stats in case the script got something wrong.
-> >
-> > It's a messy script, but I can send it over.
->
-> Sure! How much of it could be replaced by b4, I wonder?
+$ git cat-file commit v5.15-rc3-151-g78c56e53821a7e
+tree cc120d95622f6363c42b7ee9a759aefb11c4f11a
+parent 02d5e016800d082058b3d3b7c3ede136cdc6ddcb
+parent e671f0ecfece14940a9bb81981098910ea278cf7
+author Linus Torvalds <torvalds@linux-foundation.org> 1633028446 -0700
+committer Linus Torvalds <torvalds@linux-foundation.org> 1633028446 -0700
+mergetag object e671f0ecfece14940a9bb81981098910ea278cf7
+ type commit
+ tag for-linus
+ tagger Jason Gunthorpe <jgg@nvidia.com> 1632963221 -0300
+ 
+ RDMA v5.15 first rc pull request
+ 
+ Several core bugs and a batch of driver bug fixes:
+ 
+ - Fix compilation problems in qib and hfi1
+ 
+ - Do not corrupt the joined multicast group state when using SEND_ONLY
+ 
+ - Several CMA bugs, a reference leak for listening and two syzkaller
+   crashers
+ 
+ - Various bug fixes for irdma
+ 
+ - Fix a Sleeping while atomic bug in usnic
+ 
+ - Properly sanitize kernel pointers in dmesg
+ 
+ - Two bugs in the 64b CQE support for hns
+ -----BEGIN PGP SIGNATURE-----
+ 
+ iQIzBAABCgAdFiEEfB7FMLh+8QxL+6i3OG33FX4gmxoFAmFVC4YACgkQOG33FX4g
+ mxrBuw//XpgZqcXtAd/p70Qp0pgMULb44p6BNCh0HixyFnBFybsxvy3jsjAI5qkb
+ +BszhjWRBdkWxwae/LgbIE30TlTu+mFqWhRgBcATa8HujgPiNFDPOxB/oaNpI4Qb
+ SUASou2IcMfTBnxu0T1gZ3v6UVOHhD0RzZJsA86vweVmeReGUNITXzso8QmZtz5Y
+ 7j5x1mWYbmGY3fQx8sur7iKasMIN4i8fPg3ntj84kDOcNTeSg0ir/sVaAX8iSkHB
+ LoF2iXZ6B/2OM0rU238qZVC1bzs3ZXFsfvpRqXs+gR48VH4kKnnWunYeDV5qKLAs
+ V/YRvwZ/fdz/qZ8wLBnYjaEL7pOprvR/zHNx1Bj66/pvBADKcpVs+DlBZ4hfTh6T
+ Qx//LooadcSU3YW3owSXJy2o2orYQlXuD21kdWx3+RTgOlZxDPcMrn6vQe9eEeaB
+ tMt7ueUAch1Dz56ZuxYEPy3RbzHeTeWVQro0j7SEb9vImW8pOnURRSV9WuPn+IeJ
+ 8tMPbBD+vKv7QxnN161fn4i+WbhMiEUmyu4eEjrZgtXZ4Xq0B7QbhsPpPujpNw/I
+ fPs6IHWmRKctMOwBpG337yWpbVQbMJcD8P18A9+rrUHdMvS4q2W/U8mJfApWhF9R
+ PuE5W8wL/tWTrbqEcp6hzHWqMMVWd6iTcYU/iF6RwFstjrndHFU=
+ =PE1D
+ -----END PGP SIGNATURE-----
 
-I'll be honest, b4 is newer than all of this and I have had zero
-cycles to invest in replacing anything with it. Maybe a lot of
-overlap, and maybe all my work is redundant. I don't know.
+Merge tag 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/rdma/rdma
 
-> > We have bots that build the for-next branch after push. I do run a
-> > script iterating on the branch before merging it, looking for the
-> > silly mistakes that otherwise sfr emails about (missing sign-offs,
-> > etc).
->
-> Yeah, I've added "git push" hooks for this now too. I should refresh my
-> kernel-tools tree[3] with those changes.
->
-> > For build coverage, I usually let my bot crank through post-merge when
-> > I push out the for-next contents, many of the pull requests we get
-> > have already been in linux-next.
-> >
-> > As for review, it depends on who it comes from. Some I only glance at,
-> > others I look at in detail for every single patch (usually with tig,
-> > on the pulled branch). If I have a comment on a patch, I respond
-> > saying I didn't merge due to something, and reply with comments to the
-> > patch. It happens surprisingly rarely.
->
-> Right -- this seems pretty common. :)
+Pull rdma fixes from Jason Gunthorpe:
+ "Not much too exciting here, although two syzkaller bugs that seem to
+  have 9 lives may have finally been squashed.
 
-It's... almost as if we had an ad-hoc personal web of trust going.
-Strange, isn't it? :)
+  Several core bugs and a batch of driver bug fixes:
 
+   - Fix compilation problems in qib and hfi1
 
--Olof
+   - Do not corrupt the joined multicast group state when using
+     SEND_ONLY
+
+   - Several CMA bugs, a reference leak for listening and two syzkaller
+     crashers
+
+   - Various bug fixes for irdma
+
+   - Fix a Sleeping while atomic bug in usnic
+
+   - Properly sanitize kernel pointers in dmesg
+
+   - Two bugs in the 64b CQE support for hns"
+
+* tag 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/rdma/rdma:
+  RDMA/hns: Add the check of the CQE size of the user space
+  RDMA/hns: Fix the size setting error when copying CQE in clean_cq()
+  RDMA/hfi1: Fix kernel pointer leak
+  RDMA/usnic: Lock VF with mutex instead of spinlock
+  RDMA/hns: Work around broken constant propagation in gcc 8
+  RDMA/cma: Ensure rdma_addr_cancel() happens before issuing more requests
+  RDMA/cma: Do not change route.addr.src_addr.ss_family
+  RDMA/irdma: Report correct WC error when there are MW bind errors
+  RDMA/irdma: Report correct WC error when transport retry counter is exceeded
+  RDMA/irdma: Validate number of CQ entries on create CQ
+  RDMA/irdma: Skip CQP ring during a reset
+  MAINTAINERS: Update Broadcom RDMA maintainers
+  RDMA/cma: Fix listener leak in rdma_cma_listen_on_all() failure
+  IB/cma: Do not send IGMP leaves for sendonly Multicast groups
+  IB/qib: Fix clang confusion of NULL pointer comparison
+
+Jason
