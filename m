@@ -1,93 +1,93 @@
-Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [96.44.175.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5F529CA;
-	Fri,  1 Oct 2021 17:07:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1633108026;
-	bh=rlTt3LCoomrbqxww7n3cOC99yDdnfQki3GDCP/nS9bg=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=uocFGjU3VcUPIypTrVdpl+8F2+aKa8YTp9gMkeKK5lZy+FpzjrhUzPjhjmYlWRJlw
-	 CDIpOlJYvMK/DWBi5/j/C+6v29TA6P8pjn/4jM3rEc61qpTLvyMkc9whjvoudbodf8
-	 /jOtZC8L1hy0ZaW6Z19hA1Y/HFwJPA/bpnPdKFQo=
-Received: from localhost (localhost [127.0.0.1])
-	by bedivere.hansenpartnership.com (Postfix) with ESMTP id A9A1E12806AB;
-	Fri,  1 Oct 2021 10:07:06 -0700 (PDT)
-Received: from bedivere.hansenpartnership.com ([127.0.0.1])
-	by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JUItKfi04oFX; Fri,  1 Oct 2021 10:07:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1633108026;
-	bh=rlTt3LCoomrbqxww7n3cOC99yDdnfQki3GDCP/nS9bg=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=uocFGjU3VcUPIypTrVdpl+8F2+aKa8YTp9gMkeKK5lZy+FpzjrhUzPjhjmYlWRJlw
-	 CDIpOlJYvMK/DWBi5/j/C+6v29TA6P8pjn/4jM3rEc61qpTLvyMkc9whjvoudbodf8
-	 /jOtZC8L1hy0ZaW6Z19hA1Y/HFwJPA/bpnPdKFQo=
-Received: from [172.20.71.139] (unknown [209.210.2.165])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id 4BE1412804E1;
-	Fri,  1 Oct 2021 10:07:06 -0700 (PDT)
-Message-ID: <cef357f1ee179c8250fa1507eea7fe39e6ee2e78.camel@HansenPartnership.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06353FDF
+	for <tools@linux.kernel.org>; Fri,  1 Oct 2021 17:19:45 +0000 (UTC)
+Received: by mail-qt1-f178.google.com with SMTP id a13so9635571qtw.10
+        for <tools@linux.kernel.org>; Fri, 01 Oct 2021 10:19:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+NE24SuTZIjZYJIf5h4DouOOcA7yuUDArnQoxKeFvqQ=;
+        b=A/rNlwmVzNWXKVqJ14CvFC88A5T4pPCzhzFPvhJuRyxaecIkSQnlf1wAbvtNKAi6WK
+         dz0AovgMWBBCcjTF2Sh6DUfCMCnzE+XZEH1IrevTOL06DJB7OqS7aCcmNqq/QjAZflSV
+         crGmR88Lx0nfPO6ecafb7qgh5VpWcMe/d0D7M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+NE24SuTZIjZYJIf5h4DouOOcA7yuUDArnQoxKeFvqQ=;
+        b=7XYVNxAmL4sJdSkTD7n65DJc7T0aSrBzlvs8B30+qgU+Y8e6pKItcjgYSi6xP9WNtG
+         ZuIOKupfi3SfJnq1dPLyVYa7xi0JRGhpAQDuB000qopZWWIOalAsLJaNoiV7qZq+zzjb
+         bGxdcmbJQFfph3o85dPUo7e75Nyl2Ln3AfhbHqhSXSSvauBy5F3d4gk4qSc5a9I8GhBc
+         +DkNAXQn2pr9ZL62fsYeQVhxou+Crn0B5e0iYOqQSIyiEHJajxCB3OX6HhO6LK+nolTf
+         AtSiqCVerm7JoeFSyi26ZgKgKhKePcxi/R/+uu4B8ZOpv1sxIe7TUUOIc44bQfjReM5J
+         L6RA==
+X-Gm-Message-State: AOAM5301Ea9GXZxpGerST9x3DHXUX4XXh8hDf/1jPtkIyXm/XLXmnTa4
+	LYXxjXpLZtC0yxFzzcpruk8FfA==
+X-Google-Smtp-Source: ABdhPJxTNNLmO9GP14cEnpfHjIc6H7hvsXuyUfh1g4d/FRn7PyWnkWHwg39vC8+MlH5pUYtDlYVcSw==
+X-Received: by 2002:ac8:4052:: with SMTP id j18mr14335151qtl.77.1633108784676;
+        Fri, 01 Oct 2021 10:19:44 -0700 (PDT)
+Received: from nitro.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id h5sm3369747qke.1.2021.10.01.10.19.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Oct 2021 10:19:44 -0700 (PDT)
+Date: Fri, 1 Oct 2021 13:19:42 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Kees Cook <keescook@chromium.org>
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>, tools@linux.kernel.org,
+	users@linux.kernel.org
 Subject: Re: merging pull requests
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Kees Cook <keescook@chromium.org>, Stephen Rothwell
- <sfr@canb.auug.org.au>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
-	tools@linux.kernel.org, users@linux.kernel.org
-Date: Fri, 01 Oct 2021 10:07:05 -0700
-In-Reply-To: <202109301630.C2646F8B5@keescook>
+Message-ID: <20211001171942.oyq7qtly64tyqi72@nitro.local>
 References: <202109301023.B78ABE54B@keescook>
-	 <20210930200002.67vxbowvegso2zhg@meerkat.local>
-	 <202109301559.A9BFB03@keescook> <20211001092914.4738513b@canb.auug.org.au>
-	 <202109301630.C2646F8B5@keescook>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 
+ <20210930200002.67vxbowvegso2zhg@meerkat.local>
+ <202109301559.A9BFB03@keescook>
+ <20211001092914.4738513b@canb.auug.org.au>
+ <202109301630.C2646F8B5@keescook>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <202109301630.C2646F8B5@keescook>
 
-On Thu, 2021-09-30 at 16:42 -0700, Kees Cook wrote:
-[...]
-> The only "hole" I see with the integrity checking is that since only
-> tags or mbox headers are signed, and those aren't part of the merge,
-> there isn't a easy way that I see to follow the integrity chain for a
-> given resulting tree. (Which is technically different from the
-> "trust" chain.)
-> 
+On Thu, Sep 30, 2021 at 04:42:58PM -0700, Kees Cook wrote:
+> The only "hole" I see with the integrity checking is that since only tags
+> or mbox headers are signed, and those aren't part of the merge, there
+> isn't a easy way that I see to follow the integrity chain for a given
+> resulting tree. (Which is technically different from the "trust" chain.)
+
+This is unavoidable with the current workflow because commit messages will
+necessarily get modified when S-o-b and other trailers get injected. I do not
+think attempting the "commits must remain immutable" approach is worthwhile,
+as I think there's more value in allowing maintainers to tweak the code they
+receive.
+
 > For example, for stuff going into my tree:
-> - If it's from an mbox, I can easily check that the patches haven't
-> changed
->   in flight when the author used b4/patatt to wrap the email
-> delivery.
+> - If it's from an mbox, I can easily check that the patches haven't changed
+>   in flight when the author used b4/patatt to wrap the email delivery.
 > - If it's from a remote tag, I can check the tag signature.
 > This is all fine.
 > 
-> Now I publish my tree, and sign a tag for it for a pull request.
-> Whoever does that pull can only check my tag and has to trust I
-> checked what went into my tree. At the end of the day, that's exactly
-> what the tag signature is for: whoever is pulling must trust the PR
-> sender for all kinds of reasons. But there isn't a way to
-> mechanically perform an integrity check on the components of those
-> results: the merged mbox with the signature headers or the remote tag
-> signature aren't associated with the resulting branch any more.
-> 
-> But given that maintainers may tweak what was sent to them or squash
-> fixes, there's likely no point in that kind of integrity chain...
+> Now I publish my tree, and sign a tag for it for a pull request. Whoever
+> does that pull can only check my tag and has to trust I checked what
+> went into my tree.
 
-Well, I think you need to re-examine what it is we're attesting to
-cryptographically.  We already have an attestation process, it's called
-the Signed-off-by: chain.  The DCO is very specific, either: it's your
-contribution; a contribution with attribution you modified or it's an
-unmodified contribution from another.  This is the base level of legal
-attestation the maintainers do and which we're very careful to get
-right.  If you want to try and express this crytpographically, that's
-fine, but it must match the workflow we currently use.
+I think there are two different attestation targets here. What I've been
+working on is in-transit attestation, with the goal to make patches
+tamper-evident. What you're describing sounds to me more like
+cryptographically-backed signoffs. I think tools like sigstore [1] and
+external attestation documents are actually better suited for this.
 
-James
+I don't want to wander too far down that path at the moment, but it's perhaps
+something to consider in the future. With patatt in-header signatures, you
+*can* perform attestation if each commit includes a Link: to the original
+patch message (and that message is cryptographically attested).
 
+[1] https://www.sigstore.dev/
 
+-K
