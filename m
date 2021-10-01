@@ -1,49 +1,49 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E4D3FD5
-	for <tools@linux.kernel.org>; Thu, 30 Sep 2021 23:43:00 +0000 (UTC)
-Received: by mail-pg1-f176.google.com with SMTP id e7so7798280pgk.2
-        for <tools@linux.kernel.org>; Thu, 30 Sep 2021 16:43:00 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC283FD0
+	for <tools@linux.kernel.org>; Fri,  1 Oct 2021 00:09:27 +0000 (UTC)
+Received: by mail-pj1-f47.google.com with SMTP id g13-20020a17090a3c8d00b00196286963b9so7985448pjc.3
+        for <tools@linux.kernel.org>; Thu, 30 Sep 2021 17:09:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=u3kZlcSJCY8A2wrGr/+yQITloGPgL4d/3a/W5zaIw/w=;
-        b=QSLJ96UFadiOnA0aTiDD6qEaamqavGIGcIfYr+4cQ9B6y9+C+U5k0EB5qwhtgXS38Y
-         eA1AfQwf5CRJjMGaIjBiyYucsx8wtK4Y77PyS8MH3TbHCXpdkfzCDtXHEdCAtiMWaRgH
-         q3oqKcR3yGSKLU42f1MpuYYnAT1GHErvafIis=
+        bh=d6YS3r6S2cZhQ0kSlwtQ9muyZ/VH3fx1q6undTXNlDQ=;
+        b=ZiEj/LFw/16dRnMhXYBNZhAV+oIrYUtGyiTbKLZqq/Z0kTphOoRfU8d8rGqL5NGZxS
+         RCNJTwoYmNk6K7/5g+uLO3Aj+g0WA+c8a9EbxOtsoh6R/xX4sCdXnKMQG7HWX4cSWZgi
+         dYR3qksOpo6K2RlsGipINGtng+Eoii//5UYdA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=u3kZlcSJCY8A2wrGr/+yQITloGPgL4d/3a/W5zaIw/w=;
-        b=g4y2pzlzmVVA690s6TjQtxHDigt/0CSvuqZI9fR80JvamPw7+CodjlhrvxUsjrapEh
-         TBM85Ksc0iNkWscJ0G1Bf2lHDTHtkPXPcpYZIA5WPTWM66XGz5AqGlEw1+sbE5fMXE8o
-         8bZTOlCD8oFDobG9ScTq5W3BEfWcNb4b9Q1445unWyEPUizCF+W0L0XiklUk4JP7ybti
-         rwkh1RnRlOdiiIwBbY/xQGE1S6s+AhuJNDfnpdC2a8TjmdneePBaDADRr1TwV29fxgsU
-         bWia8BDI5d584SsX56mylNEBzfW3UFD2mc1gWZJP24v4V+T6vY3OkGgIvm+pbERDhVcB
-         CIug==
-X-Gm-Message-State: AOAM532t8NwQ3GbrU01tY00WhaN5FizoWw2ekYoFmlW9IXahaobleaxC
-	pk+GueK9AILR9a7CfadLRWuN1w==
-X-Google-Smtp-Source: ABdhPJyMsGVDoDgaxgbLm2ky6NHpXsId4uP0aUf+Qleyn5yklGmXJUxT0sS591Rqu+HUtBlnVWZK8Q==
-X-Received: by 2002:aa7:93ba:0:b0:44c:f4d:de2e with SMTP id x26-20020aa793ba000000b0044c0f4dde2emr1993723pff.44.1633045380216;
-        Thu, 30 Sep 2021 16:43:00 -0700 (PDT)
+        bh=d6YS3r6S2cZhQ0kSlwtQ9muyZ/VH3fx1q6undTXNlDQ=;
+        b=zJNkeVhqkeLyV3vf9TJ7tsyreSIoWwz8Coz4hw9pUAMJ+uVRK4eCebFLgXe5ro3aDF
+         FHoFnTyOHyXu4utLxbKkKeqwcQ58S89hYkK8kr2nRflx6gBnjz5+6x/1oA33ahIAhR+K
+         AN0360gdPOYvf5Y55Ls+wUN/yGtlQpU0FzdjMUzor2MCY+9/emsjc9nhn8/hhTccoR5y
+         Icyue7koyiVr75DCOg2B5xH5XzYmjLfDiPq4ILGpQ7IQtpgGHChkr2yA9PC2BMkUh4jY
+         MVqGir6dS6eCt3869s72bKcTwjRW7f/2nTImltwxrvy7eSin5qnLZ+ZQjHpOROgivAzp
+         pYJA==
+X-Gm-Message-State: AOAM533jZTjrzgexhI8r4RE6M/xUidnlRMrgJerftW2U59p5GwLzMntR
+	Fn+pl88ahrw0+g8kPiFdFfojWE/B74kaEw==
+X-Google-Smtp-Source: ABdhPJz/FMBWUL/HW+HMRTEHhGviT+TAXVoKdxUP7pYLNv/oMoaKKraoC8g7m15i5HiY1hJMGM7hig==
+X-Received: by 2002:a17:90b:33cc:: with SMTP id lk12mr9466607pjb.191.1633046966340;
+        Thu, 30 Sep 2021 17:09:26 -0700 (PDT)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id p21sm5948005pjo.26.2021.09.30.16.42.59
+        by smtp.gmail.com with ESMTPSA id q21sm4653082pfj.90.2021.09.30.17.09.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Sep 2021 16:42:59 -0700 (PDT)
-Date: Thu, 30 Sep 2021 16:42:58 -0700
+        Thu, 30 Sep 2021 17:09:25 -0700 (PDT)
+Date: Thu, 30 Sep 2021 17:09:24 -0700
 From: Kees Cook <keescook@chromium.org>
-To: Stephen Rothwell <sfr@canb.auug.org.au>
+To: Olof Johansson <olof@lixom.net>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
 	tools@linux.kernel.org, users@linux.kernel.org
 Subject: Re: merging pull requests
-Message-ID: <202109301630.C2646F8B5@keescook>
+Message-ID: <202109301644.0DC921248@keescook>
 References: <202109301023.B78ABE54B@keescook>
  <20210930200002.67vxbowvegso2zhg@meerkat.local>
  <202109301559.A9BFB03@keescook>
- <20211001092914.4738513b@canb.auug.org.au>
+ <CAOesGMhQBQ0V5GmempB8UhtmAS3gokHb3ACiAiUgQeswwzQPmQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -52,63 +52,114 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211001092914.4738513b@canb.auug.org.au>
+In-Reply-To: <CAOesGMhQBQ0V5GmempB8UhtmAS3gokHb3ACiAiUgQeswwzQPmQ@mail.gmail.com>
 
-On Fri, Oct 01, 2021 at 09:29:14AM +1000, Stephen Rothwell wrote:
-> Hi Kees,
-> 
-> On Thu, 30 Sep 2021 16:09:13 -0700 Kees Cook <keescook@chromium.org> wrote:
+On Thu, Sep 30, 2021 at 04:31:20PM -0700, Olof Johansson wrote:
+> On Thu, Sep 30, 2021 at 4:09 PM Kees Cook <keescook@chromium.org> wrote:
+> >
+> > On Thu, Sep 30, 2021 at 04:00:02PM -0400, Konstantin Ryabitsev wrote:
+> > > On Thu, Sep 30, 2021 at 10:33:56AM -0700, Kees Cook wrote:
+> > > > Hi!
+> > > >
+> > > > I'm just realized that all my workflows have been entirely mbox patch
+> > > > sets, and I finally have a pull request to take, and ... I have no idea
+> > > > how to do it "right". :P
+> > > >
+> > > > I see "b4 pr", but I was hoping for some kind of three-step process:
+> > > > 1) get the code
+> > > > 2) read/verify/test code
+> > > > 3) merge code into main brain
+> > >
+> > > Glad you're still around and doing well, professor Nightingale. ;)
+> >
+> > 3 weeks of virtual conferences is wrecking my branch.
+> >
+> > > I'm going to cc this to users@, since it's likely to reach more
+> > > maintainers' eyes (and brains) there.
+> >
+> > Good idea; thanks!
+> >
+> > > > And that it would end up looking like what I see from Linus (i.e. naming
+> > > > branching after the tags sent, etc):
+> > > >
+> > > > 6e439bbd436e Merge branch 'linus' of git://git.kernel.org/pub/scm/linux/kernel/git/herbert/crypto-2.6
+> > > > a4e6f95a891a Merge tag 'pinctrl-v5.15-2' of git://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl
+> > > > 62da74a73570 Merge tag 'vfio-v5.15-rc4' of git://github.com/awilliam/linux-vfio
+> > > > e7bd807e8c9e Merge tag 'm68k-for-v5.15-tag3' of git://git.kernel.org/pub/scm/linux/kernel/git/geert/linux-m68k
+> > > > dca50f08a03e Merge tag 'nios2_fixes_for_v5.15_part1' of git://git.kernel.org/pub/scm/linux/kernel/git/dinguyen/linux
+> > > >
+> > > > It seems like "b4 pr" does part of step 1, but doesn't build a branch
+> > > > from the tag (though one can use "-b").
+> > > >
+> > > > And for step 3, when I do a "git merge --no-ff $branch", all the tag and
+> > > > origin (e.g. "tag 'pinctrl-v5.15-2' of git://..." is missing).
+> > >
+> > > It shouldn't be if you leave it in FETCH_HEAD, which is what b4 does by
+> > > default. So, if you do "b4 pr" and then follow it by "git merge", it should
+> > > retain the pull request origin and make it the default subject there.
 > >
 > > I guess it depends on the expected order of operations. What do other
 > > maintainers do to process a PR? I would think it would be:
-> > 
+> >
 > > - pull remote branch (to FETCH_HEAD)
 > > - review (in FETCH_HEAD? in a "real" branch?)
-> 
-> Our workflow usually requires that all patches are posted to an
-> appropriate mailing list for review.  If the developer then also has a
-> git branch/tag containing the patch series (after updating for
-> Reviewed-bys etc) then that is a separate issue and (probably) requires
-> a level of trust on the part of the maintainer (or a recheck) that the
-> patches have not been changed since the final review.
-
-Right, that's why I'm such a huge fan of "b4" (and patatt). It makes the
-integrity chain very easy to maintain. (Though see my P.S. below...)
-
 > > - merge into my topic branch (where the commit subject should retain details
 > >   of the pull location, body has notes from the signed tag, etc...)
 > > - review, build, and test
+> > - push to public tree
 > 
-> "rinse and repeat" :-)
+> I have a script that I pipe the email to, that parses the pull
+> request, finds it in PW, updates status, checks out the topic branch I
+> want it for, and merges it there with a commit message with a link to
+> lore, etc.
 
-Indeed. :)
+Yeah, this is what I'm looking for: the scripts that are driven by a PR.
+(And now I have so many more questions...)
+
+What's the PW step here? I've only seen PW used for managing emailed
+patches, not handling RPs. Or is that just a check for "was this sent
+to a public list"? (And do you end up needing to compare the PR results
+against the emailed patches? Does your PW do any checks like the netdev
+PW[1] has running for CI[2]?)
+
+And now that I'm thinking about it -- do the various PWs by various
+subsystems perform the signature checking that b4 can do? Am I really
+the only person who has added b4 to their "git send-email" hook? It's so
+easy! :)
+
+> I also manually double check merge stats in case the script got something wrong.
+> 
+> It's a messy script, but I can send it over.
+
+Sure! How much of it could be replaced by b4, I wonder?
+
+> We have bots that build the for-next branch after push. I do run a
+> script iterating on the branch before merging it, looking for the
+> silly mistakes that otherwise sfr emails about (missing sign-offs,
+> etc).
+
+Yeah, I've added "git push" hooks for this now too. I should refresh my
+kernel-tools tree[3] with those changes.
+
+> For build coverage, I usually let my bot crank through post-merge when
+> I push out the for-next contents, many of the pull requests we get
+> have already been in linux-next.
+> 
+> As for review, it depends on who it comes from. Some I only glance at,
+> others I look at in detail for every single patch (usually with tig,
+> on the pulled branch). If I have a comment on a patch, I respond
+> saying I didn't merge due to something, and reply with comments to the
+> patch. It happens surprisingly rarely.
+
+Right -- this seems pretty common. :)
+
+Thanks!
 
 -Kees
 
-P.S.
-
-The only "hole" I see with the integrity checking is that since only tags
-or mbox headers are signed, and those aren't part of the merge, there
-isn't a easy way that I see to follow the integrity chain for a given
-resulting tree. (Which is technically different from the "trust" chain.)
-
-For example, for stuff going into my tree:
-- If it's from an mbox, I can easily check that the patches haven't changed
-  in flight when the author used b4/patatt to wrap the email delivery.
-- If it's from a remote tag, I can check the tag signature.
-This is all fine.
-
-Now I publish my tree, and sign a tag for it for a pull request. Whoever
-does that pull can only check my tag and has to trust I checked what
-went into my tree. At the end of the day, that's exactly what the
-tag signature is for: whoever is pulling must trust the PR sender for
-all kinds of reasons. But there isn't a way to mechanically perform an
-integrity check on the components of those results: the merged mbox with
-the signature headers or the remote tag signature aren't associated
-with the resulting branch any more.
-
-But given that maintainers may tweak what was sent to them or squash
-fixes, there's likely no point in that kind of integrity chain...
+[1] https://patchwork.kernel.org/project/netdevbpf/list/
+[2] https://github.com/kuba-moo/nipa/tree/master
+[3] https://github.com/kees/kernel-tools
 
 -- 
 Kees Cook
