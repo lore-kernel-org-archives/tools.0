@@ -1,50 +1,47 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06353FDF
-	for <tools@linux.kernel.org>; Fri,  1 Oct 2021 17:19:45 +0000 (UTC)
-Received: by mail-qt1-f178.google.com with SMTP id a13so9635571qtw.10
-        for <tools@linux.kernel.org>; Fri, 01 Oct 2021 10:19:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E60D3FDF
+	for <tools@linux.kernel.org>; Fri,  1 Oct 2021 18:26:19 +0000 (UTC)
+Received: by mail-qk1-f181.google.com with SMTP id q81so10079734qke.5
+        for <tools@linux.kernel.org>; Fri, 01 Oct 2021 11:26:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=+NE24SuTZIjZYJIf5h4DouOOcA7yuUDArnQoxKeFvqQ=;
-        b=A/rNlwmVzNWXKVqJ14CvFC88A5T4pPCzhzFPvhJuRyxaecIkSQnlf1wAbvtNKAi6WK
-         dz0AovgMWBBCcjTF2Sh6DUfCMCnzE+XZEH1IrevTOL06DJB7OqS7aCcmNqq/QjAZflSV
-         crGmR88Lx0nfPO6ecafb7qgh5VpWcMe/d0D7M=
+        bh=mmmre5hf/CXGb59OFH6rPBkT+0ALrvVJu2chNKTjEa8=;
+        b=Rz4ggx94XpHaJ1WwuMlv8QJ84xWhRmEOcoizWsG7rN+Dt386CG+xL+ECAQ2tuw4AH2
+         M7RRW9usfM7EQXqRyKI2WGKS+qMo4uA2arlQYMev7jq3Q8ZAUrFJjnn1+VEtcxugnhQA
+         RNgoEVswtVSqyiWOdU5qU/nHozcfXQ6qG1AOA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=+NE24SuTZIjZYJIf5h4DouOOcA7yuUDArnQoxKeFvqQ=;
-        b=7XYVNxAmL4sJdSkTD7n65DJc7T0aSrBzlvs8B30+qgU+Y8e6pKItcjgYSi6xP9WNtG
-         ZuIOKupfi3SfJnq1dPLyVYa7xi0JRGhpAQDuB000qopZWWIOalAsLJaNoiV7qZq+zzjb
-         bGxdcmbJQFfph3o85dPUo7e75Nyl2Ln3AfhbHqhSXSSvauBy5F3d4gk4qSc5a9I8GhBc
-         +DkNAXQn2pr9ZL62fsYeQVhxou+Crn0B5e0iYOqQSIyiEHJajxCB3OX6HhO6LK+nolTf
-         AtSiqCVerm7JoeFSyi26ZgKgKhKePcxi/R/+uu4B8ZOpv1sxIe7TUUOIc44bQfjReM5J
-         L6RA==
-X-Gm-Message-State: AOAM5301Ea9GXZxpGerST9x3DHXUX4XXh8hDf/1jPtkIyXm/XLXmnTa4
-	LYXxjXpLZtC0yxFzzcpruk8FfA==
-X-Google-Smtp-Source: ABdhPJxTNNLmO9GP14cEnpfHjIc6H7hvsXuyUfh1g4d/FRn7PyWnkWHwg39vC8+MlH5pUYtDlYVcSw==
-X-Received: by 2002:ac8:4052:: with SMTP id j18mr14335151qtl.77.1633108784676;
-        Fri, 01 Oct 2021 10:19:44 -0700 (PDT)
-Received: from nitro.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id h5sm3369747qke.1.2021.10.01.10.19.44
+        bh=mmmre5hf/CXGb59OFH6rPBkT+0ALrvVJu2chNKTjEa8=;
+        b=q384IHGX8J3O4hN1iR3PRzw3mPvlzs6GD1AIpa6/MsmsDG+ZfHtbQbBVrxTLlZpQlN
+         DKDcVjrO2u0dZGlpJtqFeLy510SDAPilBcbtPdFyFVJzLN5pX6/XoKF8Ki724mIuuj5S
+         VKUQ5X/8ayAlXCna/0EXEFa+S1Mhid4Fqb1CUKU3eqCK8lRC9ncotrqA/xvf7JosUntn
+         jHfNfaJoOJpc5U1fbrEL9y6D+H3NZd+LtrROvKRnQ9J7X3U2i4adEwYZzjRaqF0UGEpM
+         i62PftxakV6oWCjB4h3o31Q+/0U8KKtgk/Suys1RvYIL5cNLaRiTtrQobv+kCKJYScKb
+         /WKQ==
+X-Gm-Message-State: AOAM533uQBA2c0zADdJFy/gxseS/9X96KCisPmiwVTXx00+9ak1nN7n4
+	S3dTk3kDxCsoOB8R86NuvWcYiA==
+X-Google-Smtp-Source: ABdhPJytqOImpbwzDJDeG85c7aYUtXdkctvIdFO1okHa+KuqRBwCuO+rrZ0nCJASx2l3O8sdNTWzTw==
+X-Received: by 2002:a37:9eca:: with SMTP id h193mr10750239qke.127.1633112777922;
+        Fri, 01 Oct 2021 11:26:17 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id k2sm3626347qtg.35.2021.10.01.11.26.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 10:19:44 -0700 (PDT)
-Date: Fri, 1 Oct 2021 13:19:42 -0400
+        Fri, 01 Oct 2021 11:26:17 -0700 (PDT)
+Date: Fri, 1 Oct 2021 14:26:15 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: Kees Cook <keescook@chromium.org>
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>, tools@linux.kernel.org,
-	users@linux.kernel.org
+Cc: tools@linux.kernel.org, users@linux.kernel.org
 Subject: Re: merging pull requests
-Message-ID: <20211001171942.oyq7qtly64tyqi72@nitro.local>
+Message-ID: <20211001182615.bcyuag7vfrkzhefj@meerkat.local>
 References: <202109301023.B78ABE54B@keescook>
  <20210930200002.67vxbowvegso2zhg@meerkat.local>
  <202109301559.A9BFB03@keescook>
- <20211001092914.4738513b@canb.auug.org.au>
- <202109301630.C2646F8B5@keescook>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -53,41 +50,36 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <202109301630.C2646F8B5@keescook>
+In-Reply-To: <202109301559.A9BFB03@keescook>
 
-On Thu, Sep 30, 2021 at 04:42:58PM -0700, Kees Cook wrote:
-> The only "hole" I see with the integrity checking is that since only tags
-> or mbox headers are signed, and those aren't part of the merge, there
-> isn't a easy way that I see to follow the integrity chain for a given
-> resulting tree. (Which is technically different from the "trust" chain.)
-
-This is unavoidable with the current workflow because commit messages will
-necessarily get modified when S-o-b and other trailers get injected. I do not
-think attempting the "commits must remain immutable" approach is worthwhile,
-as I think there's more value in allowing maintainers to tweak the code they
-receive.
-
-> For example, for stuff going into my tree:
-> - If it's from an mbox, I can easily check that the patches haven't changed
->   in flight when the author used b4/patatt to wrap the email delivery.
-> - If it's from a remote tag, I can check the tag signature.
-> This is all fine.
+On Thu, Sep 30, 2021 at 04:09:13PM -0700, Kees Cook wrote:
+> I think so -- that seems to be sort of what Linus does? There seem to be
+> a few templates (tag, branch, and "patches from Andrew"), e.g.:
 > 
-> Now I publish my tree, and sign a tag for it for a pull request. Whoever
-> does that pull can only check my tag and has to trust I checked what
-> went into my tree.
+> Merge tag 'char-misc-5.15-rc1-2' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc
+> Merge branch 'misc.namei' of git://git.kernel.org/pub/scm/linux/kernel/git/viro/vfs
+> Merge branch 'akpm' (patches from Andrew)
+> 
+> Though I'd love to know why there's a distinction between "tag" and
+> "branch" here. Are "branch" pulls not checked for signatures?
 
-I think there are two different attestation targets here. What I've been
-working on is in-transit attestation, with the goal to make patches
-tamper-evident. What you're describing sounds to me more like
-cryptographically-backed signoffs. I think tools like sigstore [1] and
-external attestation documents are actually better suited for this.
+That's just what git does when you merge FETCH_HEAD. It takes the contents of
+.git/FETCH_HEAD, which describe from where the last fetch happened. If you
+fetch a tag, it will say:
 
-I don't want to wander too far down that path at the moment, but it's perhaps
-something to consider in the future. With patatt in-header signatures, you
-*can* perform attestation if each commit includes a Link: to the original
-patch message (and that message is cryptographically attested).
+    [tipsha]\t\ttag 'tagname' of url://of/remote/tree
 
-[1] https://www.sigstore.dev/
+if you fetch a branch, it will be
+
+    [tipsha]\t\tbranch 'branchanme' of url://of/remote/tree
+
+When merging FETCH_HEAD, git will just say "Merge %s" with the contents of
+.git/FETCH_HEAD file for that tip.
+
+When you merge a local branch instead of FETCH_HEAD, it will default to:
+
+    Merge branch 'localbranchname'
+
+I think Linus just manually adds "(patches from Andrew)" to that.
 
 -K
