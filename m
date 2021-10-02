@@ -1,51 +1,48 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB323FC9
-	for <tools@linux.kernel.org>; Sat,  2 Oct 2021 00:08:49 +0000 (UTC)
-Received: by mail-pj1-f43.google.com with SMTP id k23so7628525pji.0
-        for <tools@linux.kernel.org>; Fri, 01 Oct 2021 17:08:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FF13FCA
+	for <tools@linux.kernel.org>; Sat,  2 Oct 2021 00:11:42 +0000 (UTC)
+Received: by mail-pg1-f178.google.com with SMTP id 66so10415129pgc.9
+        for <tools@linux.kernel.org>; Fri, 01 Oct 2021 17:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=xixTwyHKLMb3DJvrS2M+3HqtkcfycRLx+NAcuUvpTyU=;
-        b=INlOlePcLungK0Ky9rWoXyKkP7zOF4vcwkFGXISeqA/rh5hUvbr/2lv4hWgX6NDl/+
-         avoxArq7/dW6osvwL9GWtm3D9jy42OiQ3I4V4TvwgHfQZFkX1njztC7b+GX56nwiL12k
-         Yp5zInPANmI4pTEEtOeLRqx8DLeIDfJj19vnE=
+        bh=ASeGm5oSvEcNa3zkMt7/OeRnQqdUuoNi7/NQEZHVncs=;
+        b=MQs15a7EbIksm+vM79g/EAsy9f4gBAq/0OzbiJOntE0+TGlYqPy4Jn8yx7Wkf0bXrc
+         wmhFKa2tAuDjVDxgYllJmDtd+QpWZ8rOIxWK2Q+0HlIJea6kj4zF34BqlhuB8K1aLvRE
+         wh52U1ZtDb+tCVUcE620u7ZH9rbOSA2KAYgTc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=xixTwyHKLMb3DJvrS2M+3HqtkcfycRLx+NAcuUvpTyU=;
-        b=u+erIgdka+OOiuQBo8trFhZI1Bw7ZhJT96dGFD5nLsjry0v7JMqA3ALK14d6bWKpF8
-         LNnQzuFxlqSXh5FrbGTEmIOASTa6yBlMot7/2iVsqgEMoi7z2R5Oi2tYw28lYhFTilH/
-         jBc9AOzvKI5aNd6GUDLLGdqCJVbmWxwu3gL5RPHp1/8kRdSVeI7i649G4sa1b1nQa4Ar
-         UN2pDYz7mIJSFrr7HhSmT4Of3m7XjisepYi5ar3pe8CySBGoqWvTh8x58v0R+zwqjlgT
-         Xc8JUfbaGZP6N54+wdT+NZ2oryIT6yjkgvXlqw1Ymx5WCkQ9WlOTgOdm4gNuaQXHyMTz
-         yklA==
-X-Gm-Message-State: AOAM533C/YY7o208guMHF1z1Rkz9IW++9PGvLwEz3h+oqi3O+9bB9W6U
-	nwksOrc1reE4yvNDp2oJd1VEOyFSGlmQPA==
-X-Google-Smtp-Source: ABdhPJxJaDLEyYJWDixg026+UX5gZQKnG3WXzjm4G/5k+YhPJALGwXJa5N7vi+rcPpym46jvoUnbmw==
-X-Received: by 2002:a17:90a:71c5:: with SMTP id m5mr13428356pjs.105.1633133328117;
-        Fri, 01 Oct 2021 17:08:48 -0700 (PDT)
+        bh=ASeGm5oSvEcNa3zkMt7/OeRnQqdUuoNi7/NQEZHVncs=;
+        b=4+aYn1b68CSVIt2YNZB7xedIHQpMqXiBIO9k4bOT06xworOaV9LXAlknKkwXBBSObN
+         7+rJ+rqqN/fF+wMX2CB2l+fJSMK5RnE1PCtiK3cfEfQ8JGWnrsDNeyQr+vLIm8R3LxZU
+         XkLQKZSTg0Fh+KTJAbxCHobQ9HeBGR236a4pupbo8PY3JI6LTwAe5mE/jWRbcreE6Slr
+         uqBAec3zu62qSka2VPRxeK3NWdPf5/mEp35D/FGRpv2Z7M6lobpzVkuceTnRc6dU6DrL
+         Eej3dE/btiwSKjGBMIRD1XNpn9fBqZdwx83qlKkznrMhX5y/EhGWQ/Nz0G/GezPdFjJz
+         lvCw==
+X-Gm-Message-State: AOAM533QG/SDo417/vqjYp3AKyW/1JkSNBnj0FyrwrF8+Zm8DUWDx4c/
+	e4cZoWs7oZwsJTS6hjX2C03cAD8a8SglJw==
+X-Google-Smtp-Source: ABdhPJyv/vllurZcO38qNE1hn9bIz0N76ss2wfKCMVruA1E4pkALkRwx/JjdiSbfaB4zMvBLe5TSUw==
+X-Received: by 2002:a05:6a00:16d4:b0:44c:22c4:eb88 with SMTP id l20-20020a056a0016d400b0044c22c4eb88mr3206930pfc.75.1633133502012;
+        Fri, 01 Oct 2021 17:11:42 -0700 (PDT)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id p16sm8908753pja.24.2021.10.01.17.08.47
+        by smtp.gmail.com with ESMTPSA id z8sm7150372pgc.53.2021.10.01.17.11.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 17:08:47 -0700 (PDT)
-Date: Fri, 1 Oct 2021 17:08:46 -0700
+        Fri, 01 Oct 2021 17:11:41 -0700 (PDT)
+Date: Fri, 1 Oct 2021 17:11:40 -0700
 From: Kees Cook <keescook@chromium.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Linus Torvalds <torvalds@linuxfoundation.org>, tools@linux.kernel.org,
-	users@linux.kernel.org
+Cc: tools@linux.kernel.org, users@linux.kernel.org
 Subject: Re: merging pull requests
-Message-ID: <202110011706.FE5D4AB@keescook>
+Message-ID: <202110011709.1E20209@keescook>
 References: <202109301023.B78ABE54B@keescook>
  <20210930200002.67vxbowvegso2zhg@meerkat.local>
  <202109301559.A9BFB03@keescook>
  <20211001182615.bcyuag7vfrkzhefj@meerkat.local>
- <CAHk-=whZMDmgs3+djfUoVrx8jj7DwGOJvLWC=vw1dCMicqHJ1g@mail.gmail.com>
- <20211001193022.js63dt3ktovubdz3@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -54,33 +51,44 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211001193022.js63dt3ktovubdz3@meerkat.local>
+In-Reply-To: <20211001182615.bcyuag7vfrkzhefj@meerkat.local>
 
-On Fri, Oct 01, 2021 at 03:30:22PM -0400, Konstantin Ryabitsev wrote:
-> On Fri, Oct 01, 2021 at 11:47:12AM -0700, Linus Torvalds wrote:
-> > End result: Please don't make some crazy "b4 shazam" tool that handles
-> > pull requests and then makes it trivial for people to do automated
-> > merges too. That's absolutely the last thing we want to see.
+On Fri, Oct 01, 2021 at 02:26:15PM -0400, Konstantin Ryabitsev wrote:
+> On Thu, Sep 30, 2021 at 04:09:13PM -0700, Kees Cook wrote:
+> > I think so -- that seems to be sort of what Linus does? There seem to be
+> > a few templates (tag, branch, and "patches from Andrew"), e.g.:
+> > 
+> > Merge tag 'char-misc-5.15-rc1-2' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc
+> > Merge branch 'misc.namei' of git://git.kernel.org/pub/scm/linux/kernel/git/viro/vfs
+> > Merge branch 'akpm' (patches from Andrew)
+> > 
+> > Though I'd love to know why there's a distinction between "tag" and
+> > "branch" here. Are "branch" pulls not checked for signatures?
 > 
-> Okay, it will for sure not do any automated merges. At most, it will provide
-> the contents of the cover letter (if present) as a convenient starting point.
+> That's just what git does when you merge FETCH_HEAD. It takes the contents of
+> .git/FETCH_HEAD, which describe from where the last fetch happened. If you
+> fetch a tag, it will say:
 > 
-> What I like about "b4 shazam" is that it can make patch series work more like
-> pull requests. Once it's fetched and placed into FETCH_HEAD, maintainers can
-> either opt to do a merge, or rebase with their working branch and ff.
+>     [tipsha]\t\ttag 'tagname' of url://of/remote/tree
+> 
+> if you fetch a branch, it will be
+> 
+>     [tipsha]\t\tbranch 'branchanme' of url://of/remote/tree
+> 
+> When merging FETCH_HEAD, git will just say "Merge %s" with the contents of
+> .git/FETCH_HEAD file for that tip.
+> 
+> When you merge a local branch instead of FETCH_HEAD, it will default to:
+> 
+>     Merge branch 'localbranchname'
 
-Right -- I was just trying to save on the copy/paste mechanical process
-of going from a PR email to a local branch I can review, build, test,
-etc.
+Gotcha. I remain curious about the process of between the pull (which
+puts it into FETCH_HEAD) and the merge (with merges FETCH_HEAD into the
+current branch), when I would expect there to be an intermediate step of
+checking FETCH_HEAD out into a branch for review, build, test, etc.
 
-> I expect that merges would be rare and only for large features that do require
-> a merge commit with a proper explanation (as you describe).
-
-Totally, yes. I hope I didn't come across in my initial email as want to
-automatic the commit itself. I did talk a bit about the subject being
-mechanical, but the rest of the log needs as much detail as possible.
-
--Kees
+But, I guess, nothing would actually move FETCH_HEAD in that case, so
+that's why it shows up that way.
 
 -- 
 Kees Cook
