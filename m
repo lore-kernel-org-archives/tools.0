@@ -1,61 +1,60 @@
-Received: from 1wt.eu (wtarreau.pck.nerim.net [62.212.114.60])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 054C23FDE;
-	Sat,  2 Oct 2021 06:28:37 +0000 (UTC)
-Received: (from willy@localhost)
-	by pcw.home.local (8.15.2/8.15.2/Submit) id 1926MkOH030741;
-	Sat, 2 Oct 2021 08:22:46 +0200
-Date: Sat, 2 Oct 2021 08:22:46 +0200
-From: Willy Tarreau <w@1wt.eu>
-To: Linus Torvalds <torvalds@linuxfoundation.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>, tools@linux.kernel.org,
-        users@linux.kernel.org
-Subject: Re: merging pull requests
-Message-ID: <20211002062246.GB30200@1wt.eu>
-References: <202109301023.B78ABE54B@keescook>
- <20210930200002.67vxbowvegso2zhg@meerkat.local>
- <202109301559.A9BFB03@keescook>
- <20211001182615.bcyuag7vfrkzhefj@meerkat.local>
- <CAHk-=whZMDmgs3+djfUoVrx8jj7DwGOJvLWC=vw1dCMicqHJ1g@mail.gmail.com>
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A9E3FDE
+	for <tools@linux.kernel.org>; Mon,  4 Oct 2021 20:39:44 +0000 (UTC)
+Received: by mail-qt1-f169.google.com with SMTP id f15so17176164qtv.9
+        for <tools@linux.kernel.org>; Mon, 04 Oct 2021 13:39:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=3B4yHAbU5+YJbpX3E4mzf6mUXbfys+vaEueOaP0fK44=;
+        b=Jh+7LEEssk48kjLSdgsxv/V6WEhE0JNV9Z/yl9RZ4e3ExgHp/KC1OTEmbxfWDIPXML
+         0Pv6XNuDOWwVk0lZ+b898e1djOlb80FZvLc2e4tkk/ZIz+zMR+HIzuzRgjl9yWWeESgs
+         01QXoegnTbIWCiSdVTtIjzgm38R827gEii0Rk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=3B4yHAbU5+YJbpX3E4mzf6mUXbfys+vaEueOaP0fK44=;
+        b=Fa27RItgBocdRVgt02GFwX41u2qT4rnYVQjxsoarKBnIhmDkQZoluDpvnyA22Vsqhn
+         Q7P9zWlwd1gkQdpZ0UEp8LNrST5wnh8aMj+ilR89GQjgh9x86nCRAtPT9cNqZwRFOEFT
+         MHtnK4F6JRnVsRYez+WzQ51s2amt0MT1gPpZD6DPtcErieHFrI9SXU+PhdfYYBoi8Y/M
+         GXVIvya+XxLJuklCPaVcL7jNwnodbtfMP/6w96HliMplQVoWcX6sT5AGpU+/R0VxeNCp
+         f1Z9Flxs+DDEQZSOPkss34nfw8dSRMwX+E9lw4fAqijrKSZm+2cGRaLOFFRw6+nm7q3w
+         dPtg==
+X-Gm-Message-State: AOAM530HaAPAuROTcb3WBR8Ghu+s7P7aPyhx8dgzQIx0GFhM6o8v8XNm
+	7jHpQASx+TAgjRwm1HPoFb5PsM7+WJLKGg==
+X-Google-Smtp-Source: ABdhPJwm1Rnfp7+wQ8mWJ3Wnwnq2ypECaKCw82vXHYKGTmqjzSeDZLdzxtO8Iwo3mBSxfRbzQkliTg==
+X-Received: by 2002:ac8:5617:: with SMTP id 23mr15815115qtr.257.1633379983205;
+        Mon, 04 Oct 2021 13:39:43 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id b20sm8895206qtt.2.2021.10.04.13.39.42
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Oct 2021 13:39:42 -0700 (PDT)
+Date: Mon, 4 Oct 2021 16:39:41 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: tools@linux.kernel.org
+Subject: patatt: v0.4.9 is out with small bugfixes
+Message-ID: <20211004203941.nuseyqsucipixkjj@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAHk-=whZMDmgs3+djfUoVrx8jj7DwGOJvLWC=vw1dCMicqHJ1g@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Fri, Oct 01, 2021 at 11:47:12AM -0700, Linus Torvalds wrote:
-> The "why" is
-> often very important for a merge, even if you'll sendom see it in my
-> merges where the "why" is kind of implicit.
+Hello:
 
-FWIW I'm facing the same difficulty in other projects where I feel like
-I always have to explain this again and again, but when re-reading my
-own messages later I notice I'm often not better than others at this
-exercise.
+I am happy to announce version 0.4.9 of patatt:
 
-This led me to try to understand why I was not doing well what I'm
-expecting others to do, and to realize that when developers finish a
-series they've been working on for some time, the "why" is so much
-obvious to them that it's difficult to write a good justification
-for it, as what is non-obvious to others becomes hard to grasp. The
-advices I give which seldom work are:
+- Fixes invocation with Google's patched version of git that carries fancy
+  git-hook functionality changes (not yet upstream)
+- Fixes crash when .git/hooks directory is not present
 
-  - try to *sell* me your series. You want me to adopt them and be
-    responsible for them, OK but you have to convince me to do so.
+Thanks to Nick Desaulniers for the reports.
 
-  - explain what we'd lose or break in case we'd later need to revert
-    the series. Very often this is the direct response to the "why".
-
-The two are more or less equivalent but are different approaches to
-the problem, depending on the context or the nature of the changes.
-With a bit of practice it can sometimes be as simple as "this is
-the preliminary changes required for X that extend the API using
-wrappers to temporarily maintain the compatibility with the previous
-one", or stuff like that.
-
-Willy
+-K
