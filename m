@@ -1,74 +1,89 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772173FDE
-	for <tools@linux.kernel.org>; Mon,  4 Oct 2021 20:41:12 +0000 (UTC)
-Received: by mail-qk1-f179.google.com with SMTP id b65so17801648qkc.13
-        for <tools@linux.kernel.org>; Mon, 04 Oct 2021 13:41:12 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F293FFB
+	for <tools@linux.kernel.org>; Tue,  5 Oct 2021 08:01:57 +0000 (UTC)
+Received: by mail-vs1-f46.google.com with SMTP id y14so8696976vsm.9
+        for <tools@linux.kernel.org>; Tue, 05 Oct 2021 01:01:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fk4fdZnMk6tzfDxmGQCN1qNjPwits+1q1kUJ9yNBigU=;
-        b=HKRqisSeFUsUmDYrBmFleJPUX1l5gMM1I9v8DaUR7dm5co4DKhbsMnb7qbDhD2vA0p
-         4k6RSnCe1tdsseyi/sTxMJJjxpsK77qOnTKijBTJY0XyxhthFXiEaT1PpPf/lTx3dukE
-         IuOYoxgb0z+JdAI3qZZ2RE+OUpksnGDnkFiQA=
+        d=linaro.org; s=google;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=O2JFNf45QICVwc2myqDmtUlVv0YZ7kVy4ki2pqVmfjM=;
+        b=tQHATLjNjv/7Z6b0LPgokcUF+644wP/FlDlfo5Dkmte0LwrzwOOeHgifHOMnufHh4a
+         ZhSQdKFLMP6xIJfZpBDA84JMNaTAPR+p3jTMRYopddw1yzIyrg2vjSQY51KWXpG+Jcrz
+         UJeb2oLYMZu4mIHrbmZh3pEMUFj+ZOIJCeanp2gljdmE5Vg2t9NIk7Ty/qdQfjb6G8uk
+         bnpTNeWVqKY9wsOW5KNjVGloetKwKQKVgfsGmj0v892DIqMFowCIhXHADwa0QZ+Gy6r9
+         /NfHFrwAOf+nOC2VW2Yl3KvWJ327ldJcODWKB2m2EEiKW0tWaEK+XhlUkXxF04DqDVuS
+         S/Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fk4fdZnMk6tzfDxmGQCN1qNjPwits+1q1kUJ9yNBigU=;
-        b=aLuyGuMa4nmjibNrDfUBUPO5tJt4qtAIg1H3rGGEjE2sWTNIcfwMdEd+EwohS1w3U1
-         vyxBTF9r29SPydhmiH9y9rqLtf1QglJ4MLqJ2IxiZfG5ApFYudlFUskoUTr4uFl3j3k8
-         zApuyanXI/oWfYh8dE3xkD7vOttlNAJjwi1yYju+3gWoy4dHGAjejdFkz4xHow69xZfl
-         IYBoYf+wF6EGZj/Q0XMiPXqChVF+ChEp0JBRBoO1vtmj73BZKQ20BKSVjDCoyjwsclRb
-         bRHfI+4o6VtQNlprxNnVrPjGyvQGDaflrlcg5bc9rw+9w010wFj8LpqaeLoIuRNv51E7
-         KuZA==
-X-Gm-Message-State: AOAM53390cyO4x4HiZdU0QDCaspz92dUehwG0EXgrfwL/+uQoN2iDokn
-	2tl0YAr2NrQH83DZn29az3b9NA==
-X-Google-Smtp-Source: ABdhPJxToQqE/UzlY9HK/sBYwxbphf7n9lS1Lvy598M78P6m+mNA8FhLPLuko5CO8gAnZr9TmmGVag==
-X-Received: by 2002:a37:668d:: with SMTP id a135mr11435863qkc.288.1633380071427;
-        Mon, 04 Oct 2021 13:41:11 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id h4sm9618885qtb.67.2021.10.04.13.41.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 13:41:11 -0700 (PDT)
-Date: Mon, 4 Oct 2021 16:41:09 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Kees Cook <keescook@chromium.org>
-Cc: tools@linux.kernel.org
-Subject: Re: [PATCH] validation: Report lack of signature
-Message-ID: <163338003298.58022.2348253631013674637.b4-ty@linuxfoundation.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=437;
- h=from:subject:message-id; bh=W1k1P+SlguU+qroohPOfRNm36FLk0X8/NqtVactKR7M=;
- b=owGbwMvMwCG27YjM47CUmTmMp9WSGBKj046FqK2f6Nvy4vT3y9G3Jae9+HZ2HydDxuSnv9q/inP+
- ElJx6ShlYRDjYJAVU2Qp2xe7KajwoYdceo8pzBxWJpAhDFycAjARjz6Gf8ZFvVsf9sh80K3l99k2/S
- 2L87MGDZfasPMu7Z3ZMe9X8DIy7DQUWNejcPPMorDP/MqxixY36ezc9UK2veuit3Jh8/7ljAA=
-X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
- fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
-References: <20211002025717.3337059-1-keescook@chromium.org>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=O2JFNf45QICVwc2myqDmtUlVv0YZ7kVy4ki2pqVmfjM=;
+        b=5y+S9nnV99lxs63drXGBC/1GQsqRYqfV1fTXQKsF5gslojNUrRTiI/AdiNDHXEdeHH
+         pIZRNYYo+ZssNY3gKtKjIDx7s15654pNCK1SFwBLZPq2CatNQ4W0OhlVeXPGELDRmQY4
+         pJSegqjv28rocSvoRoJ877IOlge5UzxeQyi8p7lez4OYwCl36Eb7inwJHTgHPeMCaGAB
+         TrXXvej9SPqS8fqf6aiXoTIxqUp2Q5JYl4uFVF+ZuwxDZFhgV13n169L/DXNQpjK5VF3
+         t30CuB4FpqsabOVhERI/ypMQdASiRSdl8oIKCi5lnKZhgSigQiA7IPR+sX5TKHTx+kRe
+         uBnQ==
+X-Gm-Message-State: AOAM5321ReqTIGHwNMgS2bpXlwt777NXLWSUVYpayDBJWQCAXEFZjhaA
+	jiaVz9VFePp4WNHIu6EYxa+pP6RceDs2aR1PZSjKYw==
+X-Google-Smtp-Source: ABdhPJzjftn8ErpKJgR6ovaIaYCi1Ko6RI4IVWUY3RTfDL9TkcwIgm6IyH4GWndshID6jcIGtqMTye67Ml/YI9SKo4o=
+X-Received: by 2002:a67:f588:: with SMTP id i8mr17466733vso.40.1633420916787;
+ Tue, 05 Oct 2021 01:01:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20211002025717.3337059-1-keescook@chromium.org>
+From: Lee Jones <lee.jones@linaro.org>
+Date: Tue, 5 Oct 2021 09:01:45 +0100
+Message-ID: <CAF2Aj3icJtU+wacosM-LO2aqMChWL69T6bf7dK3xqPMSk6Ux3w@mail.gmail.com>
+Subject: Acked-by missed when applying
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 1 Oct 2021 19:57:17 -0700, Kees Cook wrote:
-> If we're trying to cryptographically validate a message, not having a
-> signature is not a success (exit 0). Use a specific return code for this
-> condition and report it.
-> 
-> 
+Good morning Konstantin,
 
-Applied, thanks!
+Can you think of a reason why `b4` missed Greg's Ack here?
 
-[1/1] validation: Report lack of signature
-      commit: 4870cf5db4325622ee68f6a47f920e5faea3ffff
+https://lore.kernel.org/all/YVLA14jbwqXjNM2f@kroah.com/
 
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+```
++ b4 am -3 -slt -P_ -o -
+'<1828cb783b1ebca0b98bf0b3077d8701adb228f7.1630586862.git.mchehab+huawei@ke=
+rnel.org>'
++ git am
+Looking up https://lore.kernel.org/r/1828cb783b1ebca0b98bf0b3077d8701adb228=
+f7.1630586862.git.mchehab%2Bhuawei%40kernel.org
+Analyzing 2 messages in the thread
+Checking attestation on all messages, may take a moment...
+---
+  =E2=9C=93 [PATCH v2] mfd: hi6421-spmi-pmic: cleanup drvdata
+    + Signed-off-by: Lee Jones <lee.jones@linaro.org>
+    + Link: https://lore.kernel.org/r/1828cb783b1ebca0b98bf0b3077d8701adb22=
+8f7.1630586862.git.mchehab+huawei@kernel.org
+  ---
+  =E2=9C=93 Signed: DKIM/kernel.org
+---
+Total patches: 1 (cherrypicked:
+<1828cb783b1ebca0b98bf0b3077d8701adb228f7.1630586862.git.mchehab+huawei@ker=
+nel.org>)
+Prepared a fake commit range for 3-way merge (a0fd2a641207..b603f718647d)
+---
+ Link: https://lore.kernel.org/r/1828cb783b1ebca0b98bf0b3077d8701adb228f7.1=
+630586862.git.mchehab+huawei@kernel.org
+ Base: applies clean to current tree
+```
+
+Thanks.
+
+--=20
+Lee Jones [=E6=9D=8E=E7=90=BC=E6=96=AF]
+Linaro Services Senior Technical Lead
+Linaro.org =E2=94=82 Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
