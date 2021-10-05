@@ -1,90 +1,70 @@
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF623FD1;
-	Tue,  5 Oct 2021 12:22:16 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D06316117A;
-	Tue,  5 Oct 2021 12:22:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1633436535;
-	bh=nVno1XER7rtjRaq1NqpptpgjnPfJksaRaNdbqGAiRwI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=gO1vHa+8jGdaQ6N4npj8vWOqqp9hq1ATSWX9KzhigEOk9XeDl+r9n2673ED1fWawt
-	 fzHVx7GD1+kh7lH7RGquviK4FQNoFGP960vpEMiBevqpw9O+AH8uAJRK7KRAjo32Sl
-	 ayAWzYzMcg4vt9olgiPwbZveoEaFaLbSHshWv9Inhm3hYEtxRXoCfVBuxSYP/m7uro
-	 O48Dz9rb4EzhT/OEjieG3XI2HlCnJ3OaNyiSJ/FiNnMPUvqbnKkOZAp9cKG9ELLyhC
-	 MdaFcMbLQD1obsi87xdqvbTsP3xIaMoDHH7KEkJo4JoxLjGRDQVdpF76w2uGnFx2+I
-	 bXTlcgeQum+tg==
-Received: by mail-ed1-f53.google.com with SMTP id z20so26329095edc.13;
-        Tue, 05 Oct 2021 05:22:15 -0700 (PDT)
-X-Gm-Message-State: AOAM5322WNsYJCyRrBOTyomL2XFL3kTEmtwTqgvMuyqLd7xhHaT9aK5B
-	qy9Rru2U/tA0M41/w+KLJjSeq9aAqx0NiaAp/w==
-X-Google-Smtp-Source: ABdhPJz86fFMCPW00iJSUcWFXuC8VVINozFIBvl4lE1/M4bNQl+wSixxq59myRCT/N2MsJDGjPNzdsgcL6TJY8X8OyE=
-X-Received: by 2002:a17:906:5a47:: with SMTP id my7mr23828394ejc.128.1633436533484;
- Tue, 05 Oct 2021 05:22:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C470429CA
+	for <tools@linux.kernel.org>; Tue,  5 Oct 2021 12:45:39 +0000 (UTC)
+Received: by mail-qk1-f175.google.com with SMTP id 73so19591060qki.4
+        for <tools@linux.kernel.org>; Tue, 05 Oct 2021 05:45:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yJTtJ+Taqmw11VDL8fk9gJfiQgOJsLBjrsF1Pb2/XHE=;
+        b=WnoVO3hoTg8iBNtOh+mWX6wiLK6ZAqLpCsmuROwFPM4r8IEW4+nfih8mbWeULg7oqD
+         mNzIj4O1sq425N11DL0sVspakxwSnGqV2+CCKz/PkatAx9jsQfJb8BaBks3FFawfWjSG
+         kZ/rK69HVGYgtqKilMBCbziuxHTM7ymLzzaFA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yJTtJ+Taqmw11VDL8fk9gJfiQgOJsLBjrsF1Pb2/XHE=;
+        b=vgbI8IcP6DxDUOFLZGpHDw0tQp5+Kv222XqYmUZJxd7HIKqwsdXZ/n/NtbcM6bLRX0
+         Wucmzalp7XGh04+4vUwaabFvfOzwBSeYCI8EyR7Pc/Tyla/yxpzq2lBaaZyHhBzQA7Gn
+         ia+meKzuV9DWZliVXkqNQGi3NmYfv4Hot/6zVg5G3a3JHUiWo7Vfdhpkn/+rjC9ZGuUT
+         ZdBISaVYJ/TcwQola7ZxLXJv/wp3CbZuul0v1N2jljUh2PZu4ZRPNLuSzN8pokR3b1uh
+         BGhMtXU2HUdPrvqujxvdpjRRbZI4itFvHb1s5bXEEypBIY/Jbv5Zw/6A8HvgEs92B+M5
+         JQ6g==
+X-Gm-Message-State: AOAM532e5fp2RlFbVPCs+lR2NRV32qXcnCDyiOg7z+esHYvlfBhcaeJj
+	ShSz4QC8rzHAHoFmmDrcnfBH6g==
+X-Google-Smtp-Source: ABdhPJySWt/C2ULxRVQ5S7HgVjNH337EOgWQEPVyQnJSTIeJzhrQ9had5fSkud88DV8hWIKwwKckVQ==
+X-Received: by 2002:a37:6851:: with SMTP id d78mr14456369qkc.220.1633437938641;
+        Tue, 05 Oct 2021 05:45:38 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id a13sm512117qkc.78.2021.10.05.05.45.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Oct 2021 05:45:38 -0700 (PDT)
+Date: Tue, 5 Oct 2021 08:45:36 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Lee Jones <lee.jones@linaro.org>, users@linux.kernel.org,
+	tools@linux.kernel.org
+Subject: Re: Acked-by missed when applying
+Message-ID: <20211005124536.ynz4ps5etrppfqxi@meerkat.local>
+References: <CAF2Aj3icJtU+wacosM-LO2aqMChWL69T6bf7dK3xqPMSk6Ux3w@mail.gmail.com>
+ <CAL_JsqKdfMBfrFgu6bmj1HLhwwNFAErj-_dMSizX+dZ0h_B47g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CAF2Aj3icJtU+wacosM-LO2aqMChWL69T6bf7dK3xqPMSk6Ux3w@mail.gmail.com>
-In-Reply-To: <CAF2Aj3icJtU+wacosM-LO2aqMChWL69T6bf7dK3xqPMSk6Ux3w@mail.gmail.com>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 5 Oct 2021 07:22:00 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKdfMBfrFgu6bmj1HLhwwNFAErj-_dMSizX+dZ0h_B47g@mail.gmail.com>
-Message-ID: <CAL_JsqKdfMBfrFgu6bmj1HLhwwNFAErj-_dMSizX+dZ0h_B47g@mail.gmail.com>
-Subject: Re: Acked-by missed when applying
-To: Lee Jones <lee.jones@linaro.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@linux.kernel.org, 
-	tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAL_JsqKdfMBfrFgu6bmj1HLhwwNFAErj-_dMSizX+dZ0h_B47g@mail.gmail.com>
 
-On Tue, Oct 5, 2021 at 3:02 AM Lee Jones <lee.jones@linaro.org> wrote:
->
-> Good morning Konstantin,
->
-> Can you think of a reason why `b4` missed Greg's Ack here?
+On Tue, Oct 05, 2021 at 07:22:00AM -0500, Rob Herring wrote:
+> On Tue, Oct 5, 2021 at 3:02 AM Lee Jones <lee.jones@linaro.org> wrote:
+> >
+> > Good morning Konstantin,
+> >
+> > Can you think of a reason why `b4` missed Greg's Ack here?
+> 
+> Because you applied the first v2 patch, not the second v2 threaded to
+> the 1st one that Greg acked.
 
-Because you applied the first v2 patch, not the second v2 threaded to
-the 1st one that Greg acked.
+Should we issue a warning in such cases? E.g:
 
->
-> https://lore.kernel.org/all/YVLA14jbwqXjNM2f@kroah.com/
->
-> ```
-> + b4 am -3 -slt -P_ -o -
-> '<1828cb783b1ebca0b98bf0b3077d8701adb228f7.1630586862.git.mchehab+huawei@=
-kernel.org>'
-> + git am
-> Looking up https://lore.kernel.org/r/1828cb783b1ebca0b98bf0b3077d8701adb2=
-28f7.1630586862.git.mchehab%2Bhuawei%40kernel.org
-> Analyzing 2 messages in the thread
-> Checking attestation on all messages, may take a moment...
-> ---
->   =E2=9C=93 [PATCH v2] mfd: hi6421-spmi-pmic: cleanup drvdata
->     + Signed-off-by: Lee Jones <lee.jones@linaro.org>
->     + Link: https://lore.kernel.org/r/1828cb783b1ebca0b98bf0b3077d8701adb=
-228f7.1630586862.git.mchehab+huawei@kernel.org
->   ---
->   =E2=9C=93 Signed: DKIM/kernel.org
-> ---
-> Total patches: 1 (cherrypicked:
-> <1828cb783b1ebca0b98bf0b3077d8701adb228f7.1630586862.git.mchehab+huawei@k=
-ernel.org>)
-> Prepared a fake commit range for 3-way merge (a0fd2a641207..b603f718647d)
-> ---
->  Link: https://lore.kernel.org/r/1828cb783b1ebca0b98bf0b3077d8701adb228f7=
-.1630586862.git.mchehab+huawei@kernel.org
->  Base: applies clean to current tree
-> ```
->
-> Thanks.
->
-> --
-> Lee Jones [=E6=9D=8E=E7=90=BC=E6=96=AF]
-> Linaro Services Senior Technical Lead
-> Linaro.org =E2=94=82 Open source software for ARM SoCs
-> Follow Linaro: Facebook | Twitter | Blog
->
+WARNING: Identically numbered patches found, will use the latest by date.
+         Download and edit the mailbox manually for any other outcome.
+
+-K
