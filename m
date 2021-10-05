@@ -1,60 +1,87 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7371A6D18;
-	Tue,  5 Oct 2021 13:29:02 +0000 (UTC)
-Received: from cwcc.thunk.org (pool-72-74-133-215.bstnma.fios.verizon.net [72.74.133.215])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 195DPqZL027716
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Oct 2021 09:25:53 -0400
-Received: by cwcc.thunk.org (Postfix, from userid 15806)
-	id 8B36915C34DF; Tue,  5 Oct 2021 09:25:52 -0400 (EDT)
-Date: Tue, 5 Oct 2021 09:25:52 -0400
-From: "Theodore Ts'o" <tytso@mit.edu>
-To: Mark Brown <broonie@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Rob Herring <robh@kernel.org>, Lee Jones <lee.jones@linaro.org>,
-        users@linux.kernel.org, tools@linux.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BB16D18;
+	Tue,  5 Oct 2021 13:37:39 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C04C061373;
+	Tue,  5 Oct 2021 13:37:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1633441058;
+	bh=jFZ6MgXk2iO1PVd2X/cESWn/IaNpRztjh8FwvP8qXqI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Ileg9UYjuvwGxOCcICe9EK0lvvXlQqCapUVJlox0iv5bpqrc6AJgL5JGiU9hrbHLe
+	 f7ddgm1mwKuZijMuyaZZqySIuaj/5rwD4UodxGIwIoLHRnwSly9qT+F5FGJk+itEu1
+	 euHpN+/BAtowGoA8yW/2BL4rT3wkU8t2KSSjg/JgG8kvadcIg8H/wgnpH6o4tt4F15
+	 8Rf9MMijme1P1IsqHypq5a50G09HRSWl8gZX20CHtJu/jmOyAMXpR32vejiK/+KLJr
+	 mAKmxgG7j70pCfauJAGb5kkGfL2SWMvpd+IE8J0hc85DIE63rQQMD3GZalDgI2hluJ
+	 60sXkPsSHtYow==
+Date: Tue, 5 Oct 2021 15:37:35 +0200
+From: Mauro Carvalho Chehab <mchehab@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Lee Jones <lee.jones@linaro.org>, Rob Herring <robh@kernel.org>,
+ users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: Acked-by missed when applying
-Message-ID: <YVxSYIptCkSZF084@mit.edu>
+Message-ID: <20211005153735.7a50b3c6@coco.lan>
+In-Reply-To: <20211005125328.najo7q5f7pwxdrfy@meerkat.local>
 References: <CAF2Aj3icJtU+wacosM-LO2aqMChWL69T6bf7dK3xqPMSk6Ux3w@mail.gmail.com>
- <CAL_JsqKdfMBfrFgu6bmj1HLhwwNFAErj-_dMSizX+dZ0h_B47g@mail.gmail.com>
- <20211005124536.ynz4ps5etrppfqxi@meerkat.local>
- <YVxJ2Q21vstxIDsX@sirena.org.uk>
+	<CAL_JsqKdfMBfrFgu6bmj1HLhwwNFAErj-_dMSizX+dZ0h_B47g@mail.gmail.com>
+	<YVxJhOU239wRw+no@google.com>
+	<20211005125328.najo7q5f7pwxdrfy@meerkat.local>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.30; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YVxJ2Q21vstxIDsX@sirena.org.uk>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 05, 2021 at 01:49:29PM +0100, Mark Brown wrote:
-> On Tue, Oct 05, 2021 at 08:45:36AM -0400, Konstantin Ryabitsev wrote:
-> > On Tue, Oct 05, 2021 at 07:22:00AM -0500, Rob Herring wrote:
-> 
+Em Tue, 5 Oct 2021 08:53:28 -0400
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> escreveu:
+
+> On Tue, Oct 05, 2021 at 01:48:04PM +0100, Lee Jones wrote:
+> > > > Can you think of a reason why `b4` missed Greg's Ack here?  
+> > > 
 > > > Because you applied the first v2 patch, not the second v2 threaded to
-> > > the 1st one that Greg acked.
+> > > the 1st one that Greg acked.  
+> > 
+> > Not sure I understand.
+> > 
+> > This is the thread of the patch I merged:
+> > 
+> > https://i.imgur.com/k4hD9kO.png
+> > 
+> > Greg's Ack is located in the 5th message down.  
 > 
-> > Should we issue a warning in such cases? E.g:
+> If you look at the thread overview, you'll notice that there are two messages
+> with identical subjects, sent 3 weeks apart:
 > 
+> 2021-09-02 12:47 [PATCH v2] mfd: hi6421-spmi-pmic: cleanup drvdata
+> 
+> and
+> 
+> 2021-09-28  6:58 [PATCH v2] mfd: hi6421-spmi-pmic: cleanup drvdata
+> 
+> As far as b4 is treating things internally, the second v2 (from Sep 28)
+> starts a new thread, so any trailers sent to the Sep-02 version will not
+> apply to the Sep-29 version and vice versa.
+
+The patch is actually identical (and I guess it is also identical
+to version 1). I ended forgetting that I had already submitted it during
+the merge window. So, I ended forgetting to either increase its version
+number or to add a RESEND to it.
+
+Sorry for the mess.
+
+
 > > WARNING: Identically numbered patches found, will use the latest by date.
-> >          Download and edit the mailbox manually for any other outcome.
-> 
+> >          Download and edit the mailbox manually for any other outcome.  
+
 > Please!  In general the messages b4 prints when it resolves any
 > ambiguity are really helpful.
 
-+1.  If b4 could give us the message id's and message time stamps,
-that would be great.  Even better, perhaps b4 could download both, and
-diff the two patches, which might give us some clue if it was just the
-same patch accidentally sent twice, or change in the commit
-description (maybe the sender forgot to add some trailers?), or the
-commit diffs are actually different, in which case maybe the sender
-forgot to increment the version number.
++1
 
-						- Ted
-
+Thanks,
+Mauro
