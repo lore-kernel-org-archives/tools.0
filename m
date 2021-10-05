@@ -1,53 +1,52 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC673FFB
-	for <tools@linux.kernel.org>; Tue,  5 Oct 2021 13:12:13 +0000 (UTC)
-Received: by mail-wr1-f53.google.com with SMTP id o20so19224993wro.3
-        for <tools@linux.kernel.org>; Tue, 05 Oct 2021 06:12:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6788F29CA
+	for <tools@linux.kernel.org>; Tue,  5 Oct 2021 13:22:11 +0000 (UTC)
+Received: by mail-wr1-f46.google.com with SMTP id t2so13762244wrb.8
+        for <tools@linux.kernel.org>; Tue, 05 Oct 2021 06:22:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=w1dofEzJvkOhzpapC6mcakmAes60ZjF/rehDtVHZPrs=;
-        b=B4b11+X20TErx+A0snoqITunqtoOYzzeTeQQOASPCL72EEoH4xBxhrsLlnTZfQzAlv
-         Hdz0gssyIryTWUpRSsEXiFoVPkOgPi904a0Wpuk+zqURtYu+fbF1Ny1r0ksUEfHZWQWD
-         CysPzwu91POCullnR1MfGx1Rr955MPx1qBpfQJfV8rWPKu2cI+45Nc10ukzkoF4liLmA
-         Og8rcHm4VOheyhHy2Vf/k6MATc4ID27F8Vf6rNRvu8TYkOStFCqWN2A+UtE8erqo1yNM
-         emGXwDLvNCA9US99fY8ayoIqzFG8SI1IVCVlmWo/H982S6B8IOYpnH7FYPJJQ0BczAhl
-         fBsA==
+        bh=0Nq4pjk7vhbGAJRrUdmghqTPrtjjDg4uCReSwZD4fi4=;
+        b=sbnu3UfMoH79BrhrvnRiUVHYPQ9dIosHjzvF/E6soqnwhOghK+ceM41mthnu6aPdLm
+         /NIB7iSKJVoFdW1+4LkrpCQEaiivpvBniueJA484MQtfy72TtqaJ/HrzP6N8mJBdPbXf
+         rTTO1NprCLyHzNdQl2jpTQS4vIjnEdSYaAjRYLu1BCNbw1NWTQ/g5XHdKN9rAKqjFYMi
+         2DGt75UPLGAHKqxi8+NiduS48T8ufs7qgt34i/UFjTrj3nvARQR0mIy1fXWXpD15/HUG
+         3CuzBR8eNspJTsSQ5GNVxey7vty2H/IqbXPVMKf5kpoaIkRM/yyJEmBAvnOmYqQJfkEd
+         M1zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=w1dofEzJvkOhzpapC6mcakmAes60ZjF/rehDtVHZPrs=;
-        b=bOeACNnf7kPEhaeM1HzPS0YNfR6PCZU06C6llBmJTXxmc7k+Fc8eTGkcls38906H+v
-         Q7LBTrBB8xyX4PiFsOd9oF/Okxd/dh3oCAkcflhAdjjp5q9Z7HueIgr+xTBsEkySaE2x
-         uYWig6NWbTffGCXA2BrK2WQVB1IPqDza1rt7owkJRWKOpMMDicitRpy0flsYj/LZ7nzr
-         r4JJCGGNSNElsSvt+runBa0nnt8AoUlqNxqICctw10xmZ0KAn2MLNR4SgYfjbYqdMDTQ
-         y3YPbq8AsvlbsPgiAp8atD+LhnLRw2JnplIw1yB/3zEFq6xQx1Km39GxmnqVP0rll5Ht
-         2Ymw==
-X-Gm-Message-State: AOAM533dC47obetRh/0nnX7FQL9xiEYW4MdcuhF6nEUYE1TzSQz8zo1E
-	qndebgsT/XJzRzzXjH6jUalrSg==
-X-Google-Smtp-Source: ABdhPJyzePiiOSGN/C/1RnYjBtxQoR0ZJT+cyo81oAfGXuYeP7vKUIi3tnrgTP3Yx1lWVIHc5ksRow==
-X-Received: by 2002:a5d:6084:: with SMTP id w4mr18277942wrt.176.1633439531350;
-        Tue, 05 Oct 2021 06:12:11 -0700 (PDT)
+        bh=0Nq4pjk7vhbGAJRrUdmghqTPrtjjDg4uCReSwZD4fi4=;
+        b=czOPCrzzQYwGQr4ERfDFz7cUT5Zk12urK6a1PtvkRh+UbJvOP2u+ZOLZwSL+ULbJNC
+         15h4yk4QRT+5hLcxr9Jti/CNlNYiuBxHmL7c/UsX9CHsyWHsW3hqcB4Ji9/X2m/X7u/E
+         Q3vIQyAu9enfWux87AlGvsSc+JlPPtAR6La364t87kd7tsFmU0XWMah2sRJH25Pxjg4p
+         FIBAoo116jGgq7mVbUxWlZ2kszo5fbHF+jkqx2PzhhbUq3D6c7+W7D0AnwdAnCWEMGjh
+         3kAmKeA6BbLYgPWmnV5+cwVC6DSsn5wt/ubPG72xnPwo6iVjqZjTj46D0sjb0WwKBEKF
+         mlXQ==
+X-Gm-Message-State: AOAM531MorhLKHUusHXWQZs3LlNoZLVr/EbqqLD3D0EVN9L0l1A/htLb
+	h+Vtb6vbq3l7atKorMIkKBFlQg==
+X-Google-Smtp-Source: ABdhPJymNDNgVZLWjDFWED9H970QlHWHyJaWUZPl+LqdwIDEYEjdnrwRsDT3GBjPM4ZSRAmy0ezqrA==
+X-Received: by 2002:adf:8b93:: with SMTP id o19mr21425853wra.63.1633440129737;
+        Tue, 05 Oct 2021 06:22:09 -0700 (PDT)
 Received: from google.com ([95.148.6.175])
-        by smtp.gmail.com with ESMTPSA id j4sm17962257wrt.67.2021.10.05.06.12.10
+        by smtp.gmail.com with ESMTPSA id p18sm6451304wrt.96.2021.10.05.06.22.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 06:12:10 -0700 (PDT)
-Date: Tue, 5 Oct 2021 14:12:09 +0100
+        Tue, 05 Oct 2021 06:22:09 -0700 (PDT)
+Date: Tue, 5 Oct 2021 14:22:07 +0100
 From: Lee Jones <lee.jones@linaro.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: Rob Herring <robh@kernel.org>, users@linux.kernel.org,
 	tools@linux.kernel.org
 Subject: Re: Acked-by missed when applying
-Message-ID: <YVxPKVm0K5ctruEg@google.com>
+Message-ID: <YVxRf64H7CYGCkJ9@google.com>
 References: <CAF2Aj3icJtU+wacosM-LO2aqMChWL69T6bf7dK3xqPMSk6Ux3w@mail.gmail.com>
  <CAL_JsqKdfMBfrFgu6bmj1HLhwwNFAErj-_dMSizX+dZ0h_B47g@mail.gmail.com>
- <YVxJhOU239wRw+no@google.com>
- <20211005125328.najo7q5f7pwxdrfy@meerkat.local>
+ <20211005124536.ynz4ps5etrppfqxi@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -57,44 +56,26 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211005125328.najo7q5f7pwxdrfy@meerkat.local>
+In-Reply-To: <20211005124536.ynz4ps5etrppfqxi@meerkat.local>
 
 On Tue, 05 Oct 2021, Konstantin Ryabitsev wrote:
 
-> On Tue, Oct 05, 2021 at 01:48:04PM +0100, Lee Jones wrote:
-> > > > Can you think of a reason why `b4` missed Greg's Ack here?
-> > > 
-> > > Because you applied the first v2 patch, not the second v2 threaded to
-> > > the 1st one that Greg acked.
+> On Tue, Oct 05, 2021 at 07:22:00AM -0500, Rob Herring wrote:
+> > On Tue, Oct 5, 2021 at 3:02 AM Lee Jones <lee.jones@linaro.org> wrote:
+> > >
+> > > Good morning Konstantin,
+> > >
+> > > Can you think of a reason why `b4` missed Greg's Ack here?
 > > 
-> > Not sure I understand.
-> > 
-> > This is the thread of the patch I merged:
-> > 
-> > https://i.imgur.com/k4hD9kO.png
-> > 
-> > Greg's Ack is located in the 5th message down.
+> > Because you applied the first v2 patch, not the second v2 threaded to
+> > the 1st one that Greg acked.
 > 
-> If you look at the thread overview, you'll notice that there are two messages
-> with identical subjects, sent 3 weeks apart:
+> Should we issue a warning in such cases? E.g:
 > 
-> 2021-09-02 12:47 [PATCH v2] mfd: hi6421-spmi-pmic: cleanup drvdata
-> 
-> and
-> 
-> 2021-09-28  6:58 [PATCH v2] mfd: hi6421-spmi-pmic: cleanup drvdata
-> 
-> As far as b4 is treating things internally, the second v2 (from Sep 28)
-> starts a new thread, so any trailers sent to the Sep-02 version will not
-> apply to the Sep-29 version and vice versa.
+> WARNING: Identically numbered patches found, will use the latest by date.
+>          Download and edit the mailbox manually for any other outcome.
 
-Oh I see.
-
-That's not obvious from Mutt or LORE:
-
-  https://i.imgur.com/vFNfGYw.png
-
-Thanks Rob, Konstantin for the explanation.
+Definitely.  Thanks.
 
 -- 
 Lee Jones [李琼斯]
