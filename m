@@ -1,45 +1,45 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AD92C80
-	for <tools@linux.kernel.org>; Thu,  7 Oct 2021 17:42:00 +0000 (UTC)
-Received: by mail-qk1-f171.google.com with SMTP id x12so6754176qkf.9
-        for <tools@linux.kernel.org>; Thu, 07 Oct 2021 10:42:00 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A552C80
+	for <tools@linux.kernel.org>; Thu,  7 Oct 2021 18:10:25 +0000 (UTC)
+Received: by mail-qv1-f42.google.com with SMTP id j12so4702871qvk.12
+        for <tools@linux.kernel.org>; Thu, 07 Oct 2021 11:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=FRSpKmWTaYrIH2/7XosO6XmpHBrt+awSTeXt1iCtx+E=;
-        b=VezWrOxnwe2o9Zlpe5wVmlUdMd9nATn6IiuEuIyEjfA+3diULyupJlLxbU7yzOJlSI
-         7wLXlmGxPs8foKmGR8tzIRDYt77I7xM2i1HmyQkIGYkSlypFQFTaTQMjJ+zQuj/uPn/N
-         1z4otExafNJC8NaFrsI3EVqCpPKUi5O/TLN/8=
+        bh=T65YulvoEqtKPNm/CceAV9GOMpxlfuxx49ERyJnM9WU=;
+        b=gX6DeGRrPs74WsJRnaY8tc52ZyQOtSfn5JEbqQaHTEYOwiODYSGPBLRn3790VmKD8O
+         xkvSVng8oaWZ5F9raZV+hmF+EAaooUXO4vADCsssBM0NIgHgALVs4LutUVh2R2KZhKst
+         qcRvAPFdAY6zPZI3rSE6tGrxalYbqUsO2hNhU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=FRSpKmWTaYrIH2/7XosO6XmpHBrt+awSTeXt1iCtx+E=;
-        b=g6LLI1FQrm9asMq2pBydyZJQdf1eG86WIVcQZ+sCWrtftygjI/WJwx017ZGAtS4TJF
-         4pN4SUozSY0V2S/7mvVJ17yza3emVM11YtQqZ8OfXZySmIPMVGJ3LboDRhCvOIyGwuBU
-         ZScBLoNwHN85EZPJ0ld80mbU+CJCXuCjEHVgYglMRSOiyo3CSghkfHIziB9T3l/TEZhU
-         pDcVhVXC7fpJD5j34ageYp6xqoUbPgjXtV/4QkrqYu8WLsDy01zXhYTW9Y6UstkBOwZN
-         Q2gGinXoWeqS9Dnz6xmqrr0CTFOh9utNE98S2WVVZj8nRTalCMpdXprUAQK4GttDSsxb
-         G7tg==
-X-Gm-Message-State: AOAM533CtiWkjxbJHXO8MCTqAFXx4mMJ/X/6X2Zacn9gnJhj4Tug72tq
-	T7zGL8VZvG1gZ46P/OZnwIyRHg==
-X-Google-Smtp-Source: ABdhPJw0FIWLTOH/SfUzmYaAIFxdXQU8cpiB0/3TawyW5s551qr614uKCk9PUgwsSgbGS7H2QEGJMw==
-X-Received: by 2002:a37:65d6:: with SMTP id z205mr4581824qkb.522.1633628519794;
-        Thu, 07 Oct 2021 10:41:59 -0700 (PDT)
+        bh=T65YulvoEqtKPNm/CceAV9GOMpxlfuxx49ERyJnM9WU=;
+        b=bn5OhgKzp4a32Yn7OW2H0MvSPmLeLqT5zLs81C9YrAxJyC+EJwgPOFx3HMenI5dukX
+         LK6FRCXmWusTtc67o6As45ODHzVjG2dVn0shcwuCQTeX0dfz8nJrTDj3KggIlUH2eKVa
+         UkA1IyQPLX9pg0vXAsgLZ1YvZBqjqOrum4XFrkoakxoYUBNIh0CebZIBGbKLG251na6m
+         aqcLc0Tq4hvTgj6XWlHqzsro32z83O09I9JLs3IRpPVOooZjdMPdHTw3Ov0yANPOZ1AL
+         iEGXZSpcnTs1RbK3zt0x55yte5F2YgkcEaF+8oDhNg2GlbqAfS6SkueO8RQJKVCAaZKM
+         Wo+w==
+X-Gm-Message-State: AOAM532CWihxzzpAEw1VRGKhWUR3TbzYA/7VXT+hZtxZikZmUdob+f+I
+	gVpDchQxryk19kGLDb8ME3cWzA==
+X-Google-Smtp-Source: ABdhPJzPdpeXRuGzmc3PvNOBHIyzq2zSEvcClT8snEQca0UbXs5tt8Iabu4OVduyQePLWK9LN+4iEg==
+X-Received: by 2002:a05:6214:1710:: with SMTP id db16mr5549631qvb.1.1633630224746;
+        Thu, 07 Oct 2021 11:10:24 -0700 (PDT)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id e17sm20927qty.28.2021.10.07.10.41.59
+        by smtp.gmail.com with ESMTPSA id v8sm105983qta.21.2021.10.07.11.10.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 10:41:59 -0700 (PDT)
-Date: Thu, 7 Oct 2021 13:41:57 -0400
+        Thu, 07 Oct 2021 11:10:24 -0700 (PDT)
+Date: Thu, 7 Oct 2021 14:10:22 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: Kees Cook <keescook@chromium.org>
 Cc: tools@linux.kernel.org
-Subject: Re: [PATCH] validate: Use patatt's configured keyring as fallback
-Message-ID: <163362850160.581076.8811630052019728688.b4-ty@linuxfoundation.org>
-References: <20211007165551.2312946-1-keescook@chromium.org>
+Subject: Re: [PATCH] gnupg: Add gpg status output to debug logging
+Message-ID: <163363017951.585602.10034547196331638322.b4-ty@linuxfoundation.org>
+References: <20211007165801.2313136-1-keescook@chromium.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -48,22 +48,19 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20211007165551.2312946-1-keescook@chromium.org>
+In-Reply-To: <20211007165801.2313136-1-keescook@chromium.org>
 
-On Thu, 7 Oct 2021 09:55:51 -0700, Kees Cook wrote:
-> If b4 doesn't have an explicit keyringsrc configured, attempt to fetch
-> it from patatt configuration instead. This avoids some very confusing
-> situations where patatt would validate and b4 would reject. (I had an
-> expired pubkey in my gpg default keyring, but the same pubkey had an
-> updated expiration date in patatt's keyring.)
+On Thu, 7 Oct 2021 09:58:01 -0700, Kees Cook wrote:
+> There wasn't an easy way to see how a failure was being determined by
+> GPG, so add the entire GPG status output to the debug log.
 > 
 > 
-> [...]
 
-Applied, thanks!
+Applied with minor stylistic changes to both main and stable-0.4.y,
+thanks!
 
-[1/1] validate: Use patatt's configured keyring as fallback
-      commit: 3847a92a365a96270ab0de6111f349e98379f930
+[1/1] gnupg: Add gpg status output to debug logging
+      commit: a7ec0c10429bb1e14591e33c08baf3aee28c26dd
 
 Best regards,
 -- 
