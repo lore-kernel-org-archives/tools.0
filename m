@@ -1,59 +1,80 @@
-Received: from dino.nns.ro (dino.nns.ro [185.233.149.117])
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [85.220.165.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163F62C81
-	for <tools@linux.kernel.org>; Mon, 18 Oct 2021 01:54:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=diamondconsulting.ro; s=default; h=Content-Transfer-Encoding:Content-Type:
-	MIME-Version:Message-ID:From:Date:Subject:To:Sender:Reply-To:Cc:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=+eZ2hmr1oxNqpYzvJ0CLSAANPRdxpWLokMC7qXGC+Ys=; b=QiUXL5PKEO7Rqm7SPdjSSMEw9t
-	8QLcmn7lBuzuxgn5+91uYcaGNngkBt33UsL6f2uqYkDWurr5bEznoAS4CLOf5bh2hYLekKY50iPGR
-	ED+FimThE2rowH7kO21UWwjeanPegbsOgr0+dgT+kl4+uoqHIkyMUsl5ZJEgDVG5jGQZwLDSH6Lt6
-	HqbCurJvV1NYQicYhhqqFygPr/ufaRBcwPGniaqXoAIMpwFONxhL/rEX6jpWmMYrvcSV9Z4iZR2P4
-	lFEoSLVh8woBpqYIDI/Z6bTfSyitVnlIYfz2JZjokGUcfVRWq8ZaGKXKfffAnlueRIcqEryWC4tKs
-	kXkpuPyA==;
-Received: from diamond by dino.nns.ro with local (Exim 4.94.2)
-	(envelope-from <diamond@dino.nns.ro>)
-	id 1mcGRt-00AzHT-2z
-	for tools@linux.kernel.org; Mon, 18 Oct 2021 03:24:17 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17422C80
+	for <tools@linux.kernel.org>; Mon, 18 Oct 2021 12:23:49 +0000 (UTC)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1mcRgB-0000Xm-8i; Mon, 18 Oct 2021 14:23:47 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1mcRgA-0000Rp-Jl; Mon, 18 Oct 2021 14:23:46 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1mcRgA-0007bq-J1; Mon, 18 Oct 2021 14:23:46 +0200
+Date: Mon, 18 Oct 2021 14:23:46 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
 To: tools@linux.kernel.org
-Subject: Diamond Consulting - Contact
-X-PHP-Script: www.diamondconsulting.ro/index.php for 85.72.32.44
-X-PHP-Filename: /home/diamond/public_html/index.php REMOTE_ADDR: 85.72.32.44
-Date: Mon, 18 Oct 2021 00:24:16 +0000
-From: Diamond Consulting <no-reply@diamondconsulting.ro>
-Message-ID: <87c2941e1dc674121f89384506c7cf98@www.diamondconsulting.ro>
-X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
+Cc: kernel@pengutronix.de
+Subject: Re: [PATCH v2 0/2 net-next] Let spi drivers return 0 in .remove()
+Message-ID: <20211018122346.ur4lyv345fbijh2o@pengutronix.de>
+References: <20211015065615.2795190-1-u.kleine-koenig@pengutronix.de>
+ <163455901125.7340.7337638653547301526.git-patchwork-notify@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - dino.nns.ro
-X-AntiAbuse: Original Domain - linux.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [1048 994] / [47 12]
-X-AntiAbuse: Sender Address Domain - dino.nns.ro
-X-Get-Message-Sender-Via: dino.nns.ro: authenticated_id: diamond/from_h
-X-Authenticated-Sender: dino.nns.ro: no-reply@diamondconsulting.ro
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ma5ixg3yoed55svk"
+Content-Disposition: inline
+In-Reply-To: <163455901125.7340.7337638653547301526.git-patchwork-notify@kernel.org>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: tools@linux.kernel.org
 
-Nume: 747612196179 
-E-mail: tools@linux.kernel.org
-Subiect: ❤️ Best Dating App! Click here: https://bit.ly/3FS75fm?7a5 ❤️
-Acord GDPR: Sunt de acord ca datele personale colectate in formularul de mai sus sa fie folosite exclusiv pentru scopul de a-mi raspunde la solicitarea pentru care am utilizat formularul de contact
 
-Mesaj:
-73cbl5ri
+--ma5ixg3yoed55svk
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
---
-Acest email a fost trimis printr-un formular de contact pe Diamond Consulting (https://www.diamondconsulting.ro/contact/)
+Hello,
 
+the patchwork bot did something strange, see
+
+	https://lore.kernel.org/r/163455901125.7340.7337638653547301526.git-patchw=
+ork-notify@kernel.org
+
+=2E My email address (see To:) was somehow mangled. The resulting mail
+didn't get into my inbox. (Just noticed because I also get mails sent to
+kernel@pengutronix.de in a different folder.)
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--ma5ixg3yoed55svk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmFtZ08ACgkQwfwUeK3K
+7Any9Af/ZSGxiDNsHqNT8tFJ7YMi/qefgG+V1kzoSOTDwXBOJtVl4GsWX/Vg9u92
+QbNr26I6ZY+/ccjDrCwS9qW3NoXIeU+7ROZn5gz1cYQeCX7yiODFXyFMU823oNWk
+MpHTvkVWycjOiEcO3vG0Kh1X1Nv+jydPCyQDblw2U2mZAL6oirENw+8WiYOmG5FS
+AD6J6/9PgKzxuLsN48R+oV7D2fggyAzsEvCRFIO8210XDQULK1X0LJ+zBp0DE186
+UUSS0DrDfnWgxdJHCqBN1XeHwPy1x87pT5ZU5+wmXeLG/iTLqUFCng8dFGLZQoVc
+KDifMc50LIOv8G9barDkI3dALjLycQ==
+=P5b8
+-----END PGP SIGNATURE-----
+
+--ma5ixg3yoed55svk--
