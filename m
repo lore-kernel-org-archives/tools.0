@@ -1,38 +1,46 @@
-Received: from res2.mijnplesk.com (res2.mijnplesk.com [185.95.44.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C78E72
-	for <tools@linux.kernel.org>; Tue, 19 Oct 2021 16:46:35 +0000 (UTC)
-Received: from res2.mijnplesk.com (localhost [127.0.0.1])
-	by res2.mijnplesk.com (Postfix) with ESMTP id 19BE2696137D
-	for <tools@linux.kernel.org>; Tue, 19 Oct 2021 18:40:41 +0200 (CEST)
-Received: by res2.mijnplesk.com (Postfix, from userid 10169)
-	id 0F8E96961384; Tue, 19 Oct 2021 18:40:41 +0200 (CEST)
-To: tools@linux.kernel.org
-Subject: Peak XV - Thank you
-X-PHP-Originating-Script: 10169:PHPMailer.php
-Date: Tue, 19 Oct 2021 16:40:41 +0000
-From: Peak XV <summit@peakxv.nl>
-Reply-To: summit@peakxv.nl
-Message-ID: <mhJ3cyDysQodH39S8N9sN9vz9bZe2F5HJJiYUUTLfs@www.peakxv.nl>
-X-Mailer: PHPMailer 6.5.0 (https://github.com/PHPMailer/PHPMailer)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6BE2C81
+	for <tools@linux.kernel.org>; Tue, 19 Oct 2021 21:33:38 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 76D8D60FDA;
+	Tue, 19 Oct 2021 21:33:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1634679218;
+	bh=RXqv+1r24SzCI9mcsJezRqWcCKFJd6SkmLXzT8l7ehw=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=mMxQ/aZjUh30CB8vP1ql5EDs/O3I55sDNkfsosw0ARXwhmn9lnwrfOOQVRntdMmze
+	 EBTN/C1f/CdnTyN0O+cTCLT08eshl2A+iBsbMaSUxlnfG54W7YGYMmjXW3zNxyIrVF
+	 7+t+/HYWR2ZCpoY2jj7O3YULhQdNSH198QD9AJeM=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Rob Herring <robh@kernel.org>
+Cc: tools@linux.kernel.org
+In-Reply-To: <20211019144600.225058-1-robh@kernel.org>
+References: <20211019144600.225058-1-robh@kernel.org>
+Subject: Re: [PATCH] Fix shazam for multiple git worktrees
+Message-Id: <163467921838.669261.17961147496477025050.b4-ty@linuxfoundation.org>
+Date: Tue, 19 Oct 2021 17:33:38 -0400
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
 
-Dear ❤️ Alice want to meet you! Click here: https://bit.ly/3DZcUpv?33si ❤️,
+On Tue, 19 Oct 2021 09:46:00 -0500, Rob Herring wrote:
+> The shazam command makes assumptions that '.git' is a directory which is
+> not the case with multiple worktree. Use 'git rev-parse' instead to
+> retrieve the correct paths.
+> 
+> 
 
-thank you for your message. We'll get back to you shortly.
+Applied, thanks!
 
-Many thanks,
-Peak XV Team
+[1/1] Fix shazam for multiple git worktrees
+      commit: a57ec40ef6d57b5aea62fbd1c814175d1da3fd23
 
+Best regards,
 -- 
-This is an automated response from Peak XV - www.peakxv.nl
-
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
