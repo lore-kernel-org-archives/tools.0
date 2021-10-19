@@ -1,93 +1,102 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E49472
-	for <tools@linux.kernel.org>; Mon, 18 Oct 2021 13:44:48 +0000 (UTC)
-Received: by mail-qt1-f176.google.com with SMTP id b12so15298404qtq.3
-        for <tools@linux.kernel.org>; Mon, 18 Oct 2021 06:44:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=zIFW2fKOA7zj+GfN9/ccZbeIX2JSi+GR8121cKWTLF8=;
-        b=SnTPc67pHkJqvJl2a4V0jWcBs8ISblXyJyu6rtNRHkV53QXjlTH6JSy9SBTyHDeI1V
-         VMpPlWs0bob+9q9/AxFJp0fA8G8nKZvfZuMUPvmEfiXh73L031G1QbdqgYWPUy/q5JBd
-         8y1B7VbbGfReuZ1X7HGpWhXrP+aIozeTSEYlc=
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC122C80
+	for <tools@linux.kernel.org>; Tue, 19 Oct 2021 14:46:02 +0000 (UTC)
+Received: by mail-ot1-f52.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so2258868otb.1
+        for <tools@linux.kernel.org>; Tue, 19 Oct 2021 07:46:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=zIFW2fKOA7zj+GfN9/ccZbeIX2JSi+GR8121cKWTLF8=;
-        b=LFb3O+fDKfVekxQGfg9pm31KmqrHMO7+4Iv0je2dPD3HlWwN73HmNHN/39cXMb9CIb
-         4kohw7x5/9NJdSnCVHG93QKEaYcFz/tjRtSt4MJt3caSLTFhAsaoH+T2aUXElv8j5LcP
-         aDLQ+mNL3o4vDvtpb4Yw35DP5Afu85hm8j9lD+eL2Ju/d4QN+YH31SNV6EwVL92gu/bq
-         Kybao/h/USpECeIRKoj+9a0jNqY6Tpro6Z8zAVWRF/pSUEZ055Pg1xXpsGoDLKcD7O4w
-         RO6aSDRmCwNo8+UuqRi77+k8EWJIDaxXyE+h73/BIQogWfV9TF4zI+AU7EBOr3ZNVqRc
-         rKkw==
-X-Gm-Message-State: AOAM531TYxT/N1whWX0lluDTLZa1J5+NCRmlZ1bPy7w/TynZQnxAtX+k
-	IBBkyiGOi7ukWluuSyfYEmOCFA==
-X-Google-Smtp-Source: ABdhPJy6Vsb0mev8WuwH/b79C5PTLrH040D+AgEgy+2K+3wbd6ociOrSr0T2ovqbFJqEe/wu54MrDg==
-X-Received: by 2002:a05:622a:118e:: with SMTP id m14mr30296411qtk.135.1634564687010;
-        Mon, 18 Oct 2021 06:44:47 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id bj37sm2431543qkb.49.2021.10.18.06.44.46
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZMEUKF/B1mZOtvs0hyw2R9B+fOChkCsN1GenqWvTPXQ=;
+        b=hjgsgBi6tFW8JBTqPt96SjOPUVsSURajL1kuppK4PZqat+KKuSZoDfwBlJ9U96o3Rc
+         9YQjOGKjTxpqLBZahDABOS7srpsKrXIRMh0JKvAmu4N6vAwQMgmQn/AAbYBzIs7ndJ3j
+         gVjMxDrE2Dsu3CQuNlPGm5GlyvNZhACDAW5aQyojvAHroobqn8Uu7tm7F+7mRdW8P2hB
+         CJNlwKbsMTDYPkRS2arOd5YOGVlZWo6cNR5DQqY0YnqwG5eCedXl6SfDF+2pdG7xKTB+
+         fjnd7pcFACXMtrlZn/qnuKNB+jT9a+Y2EcXaeEU9IaGoiQZQLVQDwVmuwDepM0XaPkt6
+         aJrg==
+X-Gm-Message-State: AOAM533gdA9djQuVeeM7Ej3v+A1QjVhiFlg616PhKtynmOkm7WcKk4tJ
+	XBbw9HEVneOXiTy7gb9kgCr5zeqAoA==
+X-Google-Smtp-Source: ABdhPJyJF4MIKq6sBoJmXPIJaqgl4E0FTtutz61UnaquuvJOz9wUzbmZ2ExgyeWxHVAMUlpgylHE1Q==
+X-Received: by 2002:a9d:72d8:: with SMTP id d24mr5511880otk.149.1634654761419;
+        Tue, 19 Oct 2021 07:46:01 -0700 (PDT)
+Received: from xps15.herring.priv (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.googlemail.com with ESMTPSA id d18sm3109557ook.14.2021.10.19.07.46.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Oct 2021 06:44:46 -0700 (PDT)
-Date: Mon, 18 Oct 2021 09:44:44 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: tools@linux.kernel.org, kernel@pengutronix.de
-Subject: Re: [PATCH v2 0/2 net-next] Let spi drivers return 0 in .remove()
-Message-ID: <20211018134444.k5k45xiy652cklyl@meerkat.local>
-References: <20211015065615.2795190-1-u.kleine-koenig@pengutronix.de>
- <163455901125.7340.7337638653547301526.git-patchwork-notify@kernel.org>
- <20211018122346.ur4lyv345fbijh2o@pengutronix.de>
+        Tue, 19 Oct 2021 07:46:00 -0700 (PDT)
+From: Rob Herring <robh@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Subject: [PATCH] Fix shazam for multiple git worktrees
+Date: Tue, 19 Oct 2021 09:46:00 -0500
+Message-Id: <20211019144600.225058-1-robh@kernel.org>
+X-Mailer: git-send-email 2.32.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="vaamc6candj7g7lw"
-Content-Disposition: inline
-In-Reply-To: <20211018122346.ur4lyv345fbijh2o@pengutronix.de>
+Content-Transfer-Encoding: 8bit
 
+The shazam command makes assumptions that '.git' is a directory which is
+not the case with multiple worktree. Use 'git rev-parse' instead to
+retrieve the correct paths.
 
---vaamc6candj7g7lw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+Maybe $GIT_DIR/b4-cover is not the best location given it depends on 
+worktree details. Perhaps a .b4/ directory instead? 
 
-On Mon, Oct 18, 2021 at 02:23:46PM +0200, Uwe Kleine-K=C3=B6nig wrote:
-> Hello,
->=20
-> the patchwork bot did something strange, see
->=20
-> 	https://lore.kernel.org/r/163455901125.7340.7337638653547301526.git-patc=
-hwork-notify@kernel.org
->=20
-> . My email address (see To:) was somehow mangled. The resulting mail
-> didn't get into my inbox. (Just noticed because I also get mails sent to
-> kernel@pengutronix.de in a different folder.)
+ b4/mbox.py | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-Good find, let me see if I can fix this. I think I've handled a similar
-problem with b4, so it's just a matter of figuring out what I did there and
-porting it to the patchwork bot.
+diff --git a/b4/mbox.py b/b4/mbox.py
+index 50dd2c36bb49..1b35623c2880 100644
+--- a/b4/mbox.py
++++ b/b4/mbox.py
+@@ -307,9 +307,13 @@ def make_am(msgs, cmdargs, msgid):
+                 logger.critical('Unable to fetch from the worktree')
+                 logger.critical(out.strip())
+                 sys.exit(ecode)
+-            # Edit the FETCH_HEAD to give a better default merge message
+-            fhf = os.path.join(topdir, '.git', 'FETCH_HEAD')
+-            with open(fhf, 'r') as fhh:
++            gitargs = ['rev-parse', '--git-path', 'FETCH_HEAD']
++            ecode, fhf = b4.git_run_command(topdir, gitargs, logstderr=True)
++            if ecode > 0:
++                logger.critical('Unable to find FETCH_HEAD')
++                logger.critical(out.strip())
++                sys.exit(ecode)
++            with open(fhf.rstrip(), 'r') as fhh:
+                 contents = fhh.read()
+             linkurl = config['linkmask'] % top_msgid
+             if len(am_msgs) > 1:
+@@ -321,7 +325,13 @@ def make_am(msgs, cmdargs, msgid):
+                 with open(fhf, 'w') as fhh:
+                     fhh.write(new_contents)
+ 
+-            mmf = os.path.join(topdir, '.git', 'b4-cover')
++            gitargs = ['rev-parse', '--git-dir']
++            ecode, fhf = b4.git_run_command(topdir, gitargs, logstderr=True)
++            if ecode > 0:
++                logger.critical('Unable to find git directory')
++                logger.critical(out.strip())
++                sys.exit(ecode)
++            mmf = os.path.join(fhf.rstrip(), 'b4-cover')
+             if lser.has_cover:
+                 merge_template = DEFAULT_MERGE_TEMPLATE
+                 if config.get('shazam-merge-template'):
+@@ -358,7 +368,7 @@ def make_am(msgs, cmdargs, msgid):
+ 
+         logger.info('You can now merge or checkout FETCH_HEAD')
+         if lser.has_cover:
+-            logger.info('  e.g.: git merge -F .git/b4-cover --signoff --edit FETCH_HEAD')
++            logger.info('  e.g.: git merge -F $(git rev-parse --git-dir)/b4-cover --signoff --edit FETCH_HEAD')
+         thanks_record_am(lser, cherrypick=cherrypick)
+         return
+ 
+-- 
+2.32.0
 
-Thanks,
--K
-
-
---vaamc6candj7g7lw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYW16TAAKCRC2xBzjVmSZ
-bJFTAP976MhXO1zaZx+Xe+3iopLMFxTgwolUbKv7hbHKtl3+cgD+Je10ZN6AMtbO
-cpoiZpwATyGhKo7mCleyhkYDtxtkjAc=
-=xNA/
------END PGP SIGNATURE-----
-
---vaamc6candj7g7lw--
