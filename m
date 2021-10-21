@@ -1,59 +1,90 @@
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FAB72
-	for <tools@linux.kernel.org>; Thu, 21 Oct 2021 22:34:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=7EzOoEfovixqs3i04j7dR3Bs68AY601X00mKzDwoK6U=; b=h3IEW76bqQybr4bhJVI03Qxyu7
-	WzhjNQ386KrmGc5jV0buk5Y2sMqjH2LSisuvF3CvWQkM144zfWrfTW9ZTDNvRi43R8aKjO/6PPOKT
-	fSjB5QVmUmqhRd9MqA99dQQutSs6grCTnGdx2QuVIhwgio4aEwT1tPKrECYANnrxEl++WWvCGAdlh
-	Krrjd/OHwg6ssi8vJ/+gm51OE0DAI59oeGv9VIgxdo/uafEUQ55C4V5Ys7VP7+B0bngl3oqLqVKXw
-	ME364BfrtwgjsE6Jkt0JpjGi8nNWJj8OVapm2/YL7XckZm+p29Dp4b/yhQjrW6o3axHHPMghEOlzb
-	xL4Ld/Fw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:55222)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1mdgT4-000144-Vp; Thu, 21 Oct 2021 23:23:23 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1mdgT4-0000aX-7q; Thu, 21 Oct 2021 23:23:22 +0100
-Date: Thu, 21 Oct 2021 23:23:22 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Kees Cook <keescook@chromium.org>
-Cc: tools@linux.kernel.org, linux-arm-kernel@lists.infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448FC72
+	for <tools@linux.kernel.org>; Thu, 21 Oct 2021 22:57:34 +0000 (UTC)
+Received: by mail-qk1-f171.google.com with SMTP id g20so3110817qka.1
+        for <tools@linux.kernel.org>; Thu, 21 Oct 2021 15:57:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6zsYSHaX3Rn1myrNn9kPr/4NG6vITikITKqlicR6+ng=;
+        b=WzUalZ/leiYo5KFzgz2TyGz68/0zZaabC2tn+LhqeJbj/jzTY+BBaVPICoxO3WbwPB
+         g5oqczcKB01+dECfd/jcRsUhmDwXEr61NK2K8pTawNw8pw1C/sg0jM1lDe9odT2QzVAQ
+         HbcaogVoOYItv4v7I0G9tvYRqA2I7phAf3Gos=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6zsYSHaX3Rn1myrNn9kPr/4NG6vITikITKqlicR6+ng=;
+        b=jjFLwNnL2bvx9oEeIjlX5LaFKXjd0X17hc7fayhE5ctIgE91h8yub3I4CThLntWEqh
+         HsheKyOTuEGTysw+D0YtwB6qF5NZENdTuQNuXf5gDzTSwkBcHGawH/mPZLnyg0zYKcvs
+         qPLFQJU8uxXpuwq8q3I+UhEEi4MOkAXFFgy/dcY4VH2hvDLquH0sUI/S31TldauA4epa
+         Q/ER3J04b0Xw2JEQArWllvYS5jLWaR3WaEqG2PG0eeJWTOX2c9kdc5G8jUQhJjwCQbVz
+         pzPxapr72RxKNtmSceex7WwsvtnNI1IiJK9hVP8hJjF3H2Ban9mR154b5KvQnv9/Cuuc
+         FLUA==
+X-Gm-Message-State: AOAM5303PJtwi3+/V4tbpjkVo4XHKiBEzFxLmewkIweRpDhQmAbbkc54
+	UZ+3uQBO1kp0Ar1BmT05kfnfSQ==
+X-Google-Smtp-Source: ABdhPJzVk1IjPgtzWZyvGG/HfrPb/pw4VCYEB/09eugJLKpy0M2iwaYGQY/9EXMfQqycKpUmptHEBQ==
+X-Received: by 2002:a37:9404:: with SMTP id w4mr6843769qkd.469.1634857053106;
+        Thu, 21 Oct 2021 15:57:33 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id bm25sm3530266qkb.4.2021.10.21.15.57.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Oct 2021 15:57:32 -0700 (PDT)
+Date: Thu, 21 Oct 2021 18:57:31 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: Kees Cook <keescook@chromium.org>, tools@linux.kernel.org,
+	linux-arm-kernel@lists.infradead.org
 Subject: Re: injected body trailers
-Message-ID: <YXHoWksP6cjm0Zdy@shell.armlinux.org.uk>
+Message-ID: <20211021225731.qril46obyaywoqhw@meerkat.local>
 References: <202110211313.B5C5C61@keescook>
+ <20211021204459.xd63t5xn24vktqf3@meerkat.local>
+ <7786271477279d4fbf9292db1f6aede8428eb00d.camel@infradead.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <202110211313.B5C5C61@keescook>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+In-Reply-To: <7786271477279d4fbf9292db1f6aede8428eb00d.camel@infradead.org>
 
-On Thu, Oct 21, 2021 at 01:22:31PM -0700, Kees Cook wrote:
-> 2) Can the linux-arm-kernel mailing list please stop breaking DKIM?
->    Who should authorize this change (rmk, Catalin)? And who can make
->    the change (peterz)?
->    (I realize now that all the mail from linux-arm-kernel has been
->    getting dropped into my Spam folder -- I normally don't notice since
->    I'm usually CCed directly or via some other list on things I wanted
->    to see.)
+On Thu, Oct 21, 2021 at 10:42:46PM +0100, David Woodhouse wrote:
+> > >    (I realize now that all the mail from linux-arm-kernel has been
+> > >    getting dropped into my Spam folder -- I normally don't notice since
+> > >    I'm usually CCed directly or via some other list on things I wanted
+> > >    to see.)
+> > > 
+> > > 3) Are there other lists for which lore is collecting emails where DKIM
+> > >    is persistently broken, and can we fix those lists too?
+> > 
+> > I would also note that lists.infradead.org should not really be adding its own
+> > DKIM signature to messages it sends out. It doesn't really serve any purpose
+> > unless the From: header is rewritten (but please don't do that either).
+> 
+> No, it matches the Sender: header, which is the entity that actually
+> submitted the mail to the system (as opposed to the possibly multiple
+> entities listed in the From: header, which are merely authors of the
+> message).
 
-The lists are nothing to do with me. I also stopped tracking who
-looks after the lists; I've always asked dwmw2 when there's been
-some problem because he's responsible for infradead.org.
+I know that's how it was envisioned to work (it's in the DKIM RFC as
+recommendation for mailing list operators), but this didn't make it into the
+DMARC standard -- DMARC intentionally ignores the Sender: header and will
+*always* look at the From: header when performing DKIM validation.
+(https://datatracker.ietf.org/doc/html/rfc7489#appendix-A.3)
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
+It was a bad idea in the first place, if you think about it. I can take any
+message, add a Sender: header for the domain that I control and force the
+validating system to check the DKIM-Signature header that I injected instead
+of the signature from the originating domain, thus making any message I touch
+pass DMARC verification.
+
+So, I have to double-down on my statement that adding a lists.infradead.org
+DKIM signature doesn't actually serve any purpose, at least not when it comes
+to appeasing DMARC filters.
+
+-K
