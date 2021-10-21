@@ -1,161 +1,87 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9ED72
-	for <tools@linux.kernel.org>; Thu, 21 Oct 2021 23:00:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=MIME-Version:Content-Type:References:
-	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=DTbVmw8ohXaXvpXDpHqXeBmF13AHTPudIqDkh7iSylI=; b=YmvBgQjuW4B3/7GIrFw8RSXWwc
-	H/Klv6SD/rgigXDT8nXe4o10BPAKIL4OPwFz2ELVhxMEQGvsLs22U2u9UpGVaZUsdte+iuQ7rAXSj
-	7Ooxn8FHAftV354URZsMhn5cgkx//nAQ9s8b+drYA81MyFkC8ag89oWxUauz6gbBXqiSfU/Hije6Y
-	1RmLqgG4wkvEmu5AbdZ717vR5Q8vIYXpVRfp/YBn+gJb8HQYLANUCVTpwbuasoSQ4jNoaV//l+Hn3
-	pFYPLWgEoGsL8ePYRS9XsYQ5+yHXQMZXmojdJ5TMoa9NSrVh3ul6u777v5V8F63ZUGCemVP5kNodC
-	sEeZqa4w==;
-Received: from [2001:8b0:10b:1::3ae] (helo=u3832b3a9db3152.ant.amazon.com)
-	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1mdh3F-009GLm-Ti; Thu, 21 Oct 2021 23:00:46 +0000
-Message-ID: <6e943c88546b6924f81c3bc7eff29d771d97018a.camel@infradead.org>
-Subject: Re: injected body trailers
-From: David Woodhouse <dwmw2@infradead.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Kees Cook <keescook@chromium.org>, tools@linux.kernel.org, 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B4F72
+	for <tools@linux.kernel.org>; Thu, 21 Oct 2021 23:33:04 +0000 (UTC)
+Received: by mail-qv1-f54.google.com with SMTP id o13so1444541qvm.4
+        for <tools@linux.kernel.org>; Thu, 21 Oct 2021 16:33:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=zhMJubkycNYnC30RdNdPfSG2SUo8qFFaJD/oh9EUuIY=;
+        b=EP45UDSv4pItB7b0jzylzAJI82KgIRZoWrJ8XgN/2HpcvKpRAZNa/ae59kL+b0CwE9
+         Df7mVe6cjvwxrmMQtw0ajuDKq4HdFieMF/awOXhm3xX1tIJBvraN5CmHL9LnxqakriB8
+         faG9b6v/7ryNmGAiN12s8WrR895pkYXAliV2I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=zhMJubkycNYnC30RdNdPfSG2SUo8qFFaJD/oh9EUuIY=;
+        b=8DHa1zOQ6Mk5AGxB1ivLctxwDI97sSEM69xevdCtbd6/Eohpku4ozxXyJIGTGvO3CC
+         qBXtL4Cbs17ROiO72JnbM0BWk3LGR3qJCCoaIhVr6E0Hw9mLOTRVRRZnhWYLHOmEAI2V
+         cf/zmNUtuy43sNUzPkHPbdNYZ5OqXll0c2qu8ryifQlaCMUbai9Kc7fLOBTIw9uBnnUY
+         81naXGAHxZtz5y/K5D22PPhNh4AaAyy0TQVyvFI+v2PaWjQG8jBTpc031ZgcbgjwF6j4
+         VagkJsESefG4yOme7MjMOGBA+Y2pM9HC9Xc5fCiY7TTU8MnqNmsGcAbZs7gCfO/cq57G
+         NegQ==
+X-Gm-Message-State: AOAM533S2NluUvli/F+GTHL96h4V04G6eytaFCKjRBJW64HSw+CV2fJL
+	HvrtbtwrT2xvgiyXnkJ96bqNfq0e4xE=
+X-Google-Smtp-Source: ABdhPJxggmSf4IOmhpxhk7D1YDiT+U8+uxgHx4wwJ3dV5OHE90yt1ZVGL6sjejW8kbz2soUjBC6zCA==
+X-Received: by 2002:a0c:80ec:: with SMTP id 99mr8047258qvb.53.1634859183899;
+        Thu, 21 Oct 2021 16:33:03 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id b19sm1623612qtb.64.2021.10.21.16.33.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Oct 2021 16:33:03 -0700 (PDT)
+Date: Thu, 21 Oct 2021 19:33:02 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: Kees Cook <keescook@chromium.org>, tools@linux.kernel.org,
 	linux-arm-kernel@lists.infradead.org
-Date: Fri, 22 Oct 2021 00:00:43 +0100
-In-Reply-To: <20211021225731.qril46obyaywoqhw@meerkat.local>
+Subject: Re: injected body trailers
+Message-ID: <20211021233302.f6jw676z47g3mv5e@meerkat.local>
 References: <202110211313.B5C5C61@keescook>
-	 <20211021204459.xd63t5xn24vktqf3@meerkat.local>
-	 <7786271477279d4fbf9292db1f6aede8428eb00d.camel@infradead.org>
-	 <20211021225731.qril46obyaywoqhw@meerkat.local>
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-aPVubU0wKuH8er9lBpry"
-User-Agent: Evolution 3.36.5-0ubuntu1 
+ <20211021204459.xd63t5xn24vktqf3@meerkat.local>
+ <7786271477279d4fbf9292db1f6aede8428eb00d.camel@infradead.org>
+ <20211021225731.qril46obyaywoqhw@meerkat.local>
+ <6e943c88546b6924f81c3bc7eff29d771d97018a.camel@infradead.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6e943c88546b6924f81c3bc7eff29d771d97018a.camel@infradead.org>
 
+On Fri, Oct 22, 2021 at 12:00:43AM +0100, David Woodhouse wrote:
+> > thus making any message I touch pass DMARC verification.
+> 
+> 
+> Er… "thus making any message I *send* pass DMARC verification".
+> 
+> The Sender is the entity who sends the message. Who submits the message
+> to the mail system for transport. The Sender in this case is Mailman,
+> and the DKIM signature correctly passes verification.
+> 
+> All else is based on a fundamental misunderstanding of what the Sender:
+> and From: headers actually mean.
 
---=-aPVubU0wKuH8er9lBpry
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+David, I'm happy to argue whether this makes sense or not, but the fact of the
+matter remains that DMARC specifically ignores the Sender: header, so any
+email gateway performing DMARC validation will mark messages sent by
+lists.infradead.org as failing the check. Unfortunately, anti-phishing
+policies at many companies increasingly quarantine or reject messages failing
+DMARC verification, so DMARC non-compliant mail will be increasingly not
+received by list subscribers.
 
-On Thu, 2021-10-21 at 18:57 -0400, Konstantin Ryabitsev wrote:
-> thus making any message I touch pass DMARC verification.
+DMARC and mailing lists are not mutually incompatible, but to make it work
+correctly the list operators must either not touch the message bodies and any
+pre-existing headers, or rewrite From: to be coming from the mailing list
+domain. In the context of patches, I would strongly argue that the former is
+the only reasonable solution.
 
-
-Er=E2=80=A6 "thus making any message I *send* pass DMARC verification".
-
-The Sender is the entity who sends the message. Who submits the message
-to the mail system for transport. The Sender in this case is Mailman,
-and the DKIM signature correctly passes verification.
-
-All else is based on a fundamental misunderstanding of what the Sender:
-and From: headers actually mean.
-
-
-
---=-aPVubU0wKuH8er9lBpry
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCECow
-ggUcMIIEBKADAgECAhEA4rtJSHkq7AnpxKUY8ZlYZjANBgkqhkiG9w0BAQsFADCBlzELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
-A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
-bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0EwHhcNMTkwMTAyMDAwMDAwWhcNMjIwMTAxMjM1
-OTU5WjAkMSIwIAYJKoZIhvcNAQkBFhNkd213MkBpbmZyYWRlYWQub3JnMIIBIjANBgkqhkiG9w0B
-AQEFAAOCAQ8AMIIBCgKCAQEAsv3wObLTCbUA7GJqKj9vHGf+Fa+tpkO+ZRVve9EpNsMsfXhvFpb8
-RgL8vD+L133wK6csYoDU7zKiAo92FMUWaY1Hy6HqvVr9oevfTV3xhB5rQO1RHJoAfkvhy+wpjo7Q
-cXuzkOpibq2YurVStHAiGqAOMGMXhcVGqPuGhcVcVzVUjsvEzAV9Po9K2rpZ52FE4rDkpDK1pBK+
-uOAyOkgIg/cD8Kugav5tyapydeWMZRJQH1vMQ6OVT24CyAn2yXm2NgTQMS1mpzStP2ioPtTnszIQ
-Ih7ASVzhV6csHb8Yrkx8mgllOyrt9Y2kWRRJFm/FPRNEurOeNV6lnYAXOymVJwIDAQABo4IB0zCC
-Ac8wHwYDVR0jBBgwFoAUgq9sjPjF/pZhfOgfPStxSF7Ei8AwHQYDVR0OBBYEFLfuNf820LvaT4AK
-xrGK3EKx1DE7MA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQGCCsGAQUF
-BwMEBggrBgEFBQcDAjBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgEDBTArMCkGCCsGAQUFBwIBFh1o
-dHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQUzBaBgNVHR8EUzBRME+gTaBLhklodHRwOi8vY3Js
-LmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWls
-Q0EuY3JsMIGLBggrBgEFBQcBAQR/MH0wVQYIKwYBBQUHMAKGSWh0dHA6Ly9jcnQuY29tb2RvY2Eu
-Y29tL0NPTU9ET1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcnQwJAYI
-KwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2NhLmNvbTAeBgNVHREEFzAVgRNkd213MkBpbmZy
-YWRlYWQub3JnMA0GCSqGSIb3DQEBCwUAA4IBAQALbSykFusvvVkSIWttcEeifOGGKs7Wx2f5f45b
-nv2ghcxK5URjUvCnJhg+soxOMoQLG6+nbhzzb2rLTdRVGbvjZH0fOOzq0LShq0EXsqnJbbuwJhK+
-PnBtqX5O23PMHutP1l88AtVN+Rb72oSvnD+dK6708JqqUx2MAFLMevrhJRXLjKb2Mm+/8XBpEw+B
-7DisN4TMlLB/d55WnT9UPNHmQ+3KFL7QrTO8hYExkU849g58Dn3Nw3oCbMUgny81ocrLlB2Z5fFG
-Qu1AdNiBA+kg/UxzyJZpFbKfCITd5yX49bOriL692aMVDyqUvh8fP+T99PqorH4cIJP6OxSTdxKM
-MIIFHDCCBASgAwIBAgIRAOK7SUh5KuwJ6cSlGPGZWGYwDQYJKoZIhvcNAQELBQAwgZcxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
-ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTE5MDEwMjAwMDAwMFoXDTIyMDEwMTIz
-NTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCASIwDQYJKoZIhvcN
-AQEBBQADggEPADCCAQoCggEBALL98Dmy0wm1AOxiaio/bxxn/hWvraZDvmUVb3vRKTbDLH14bxaW
-/EYC/Lw/i9d98CunLGKA1O8yogKPdhTFFmmNR8uh6r1a/aHr301d8YQea0DtURyaAH5L4cvsKY6O
-0HF7s5DqYm6tmLq1UrRwIhqgDjBjF4XFRqj7hoXFXFc1VI7LxMwFfT6PStq6WedhROKw5KQytaQS
-vrjgMjpICIP3A/CroGr+bcmqcnXljGUSUB9bzEOjlU9uAsgJ9sl5tjYE0DEtZqc0rT9oqD7U57My
-ECIewElc4VenLB2/GK5MfJoJZTsq7fWNpFkUSRZvxT0TRLqznjVepZ2AFzsplScCAwEAAaOCAdMw
-ggHPMB8GA1UdIwQYMBaAFIKvbIz4xf6WYXzoHz0rcUhexIvAMB0GA1UdDgQWBBS37jX/NtC72k+A
-CsaxitxCsdQxOzAOBgNVHQ8BAf8EBAMCBaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEF
-BQcDBAYIKwYBBQUHAwIwRgYDVR0gBD8wPTA7BgwrBgEEAbIxAQIBAwUwKzApBggrBgEFBQcCARYd
-aHR0cHM6Ly9zZWN1cmUuY29tb2RvLm5ldC9DUFMwWgYDVR0fBFMwUTBPoE2gS4ZJaHR0cDovL2Ny
-bC5jb21vZG9jYS5jb20vQ09NT0RPUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFp
-bENBLmNybDCBiwYIKwYBBQUHAQEEfzB9MFUGCCsGAQUFBzAChklodHRwOi8vY3J0LmNvbW9kb2Nh
-LmNvbS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3J0MCQG
-CCsGAQUFBzABhhhodHRwOi8vb2NzcC5jb21vZG9jYS5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAC20spBbrL71ZEiFrbXBHonzhhirO1sdn+X+O
-W579oIXMSuVEY1LwpyYYPrKMTjKECxuvp24c829qy03UVRm742R9Hzjs6tC0oatBF7KpyW27sCYS
-vj5wbal+TttzzB7rT9ZfPALVTfkW+9qEr5w/nSuu9PCaqlMdjABSzHr64SUVy4ym9jJvv/FwaRMP
-gew4rDeEzJSwf3eeVp0/VDzR5kPtyhS+0K0zvIWBMZFPOPYOfA59zcN6AmzFIJ8vNaHKy5QdmeXx
-RkLtQHTYgQPpIP1Mc8iWaRWynwiE3ecl+PWzq4i+vdmjFQ8qlL4fHz/k/fT6qKx+HCCT+jsUk3cS
-jDCCBeYwggPOoAMCAQICEGqb4Tg7/ytrnwHV2binUlYwDQYJKoZIhvcNAQEMBQAwgYUxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMSswKQYDVQQDEyJDT01PRE8gUlNBIENlcnRpZmljYXRp
-b24gQXV0aG9yaXR5MB4XDTEzMDExMDAwMDAwMFoXDTI4MDEwOTIzNTk1OVowgZcxCzAJBgNVBAYT
-AkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNV
-BAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAvrOeV6wodnVAFsc4A5jTxhh2IVDzJXkLTLWg0X06WD6cpzEup/Y0dtmEatrQPTRI5Or1u6zf
-+bGBSyD9aH95dDSmeny1nxdlYCeXIoymMv6pQHJGNcIDpFDIMypVpVSRsivlJTRENf+RKwrB6vcf
-WlP8dSsE3Rfywq09N0ZfxcBa39V0wsGtkGWC+eQKiz4pBZYKjrc5NOpG9qrxpZxyb4o4yNNwTqza
-aPpGRqXB7IMjtf7tTmU2jqPMLxFNe1VXj9XB1rHvbRikw8lBoNoSWY66nJN/VCJv5ym6Q0mdCbDK
-CMPybTjoNCQuelc0IAaO4nLUXk0BOSxSxt8kCvsUtQIDAQABo4IBPDCCATgwHwYDVR0jBBgwFoAU
-u69+Aj36pvE8hI6t7jiY7NkyMtQwHQYDVR0OBBYEFIKvbIz4xf6WYXzoHz0rcUhexIvAMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBMBgNVHR8E
-RTBDMEGgP6A9hjtodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDZXJ0aWZpY2F0aW9u
-QXV0aG9yaXR5LmNybDBxBggrBgEFBQcBAQRlMGMwOwYIKwYBBQUHMAKGL2h0dHA6Ly9jcnQuY29t
-b2RvY2EuY29tL0NPTU9ET1JTQUFkZFRydXN0Q0EuY3J0MCQGCCsGAQUFBzABhhhodHRwOi8vb2Nz
-cC5jb21vZG9jYS5jb20wDQYJKoZIhvcNAQEMBQADggIBAHhcsoEoNE887l9Wzp+XVuyPomsX9vP2
-SQgG1NgvNc3fQP7TcePo7EIMERoh42awGGsma65u/ITse2hKZHzT0CBxhuhb6txM1n/y78e/4ZOs
-0j8CGpfb+SJA3GaBQ+394k+z3ZByWPQedXLL1OdK8aRINTsjk/H5Ns77zwbjOKkDamxlpZ4TKSDM
-KVmU/PUWNMKSTvtlenlxBhh7ETrN543j/Q6qqgCWgWuMAXijnRglp9fyadqGOncjZjaaSOGTTFB+
-E2pvOUtY+hPebuPtTbq7vODqzCM6ryEhNhzf+enm0zlpXK7q332nXttNtjv7VFNYG+I31gnMrwfH
-M5tdhYF/8v5UY5g2xANPECTQdu9vWPoqNSGDt87b3gXb1AiGGaI06vzgkejL580ul+9hz9D0S0U4
-jkhJiA7EuTecP/CFtR72uYRBcunwwH3fciPjviDDAI9SnC/2aPY8ydehzuZutLbZdRJ5PDEJM/1t
-yZR2niOYihZ+FCbtf3D9mB12D4ln9icgc7CwaxpNSCPt8i/GqK2HsOgkL3VYnwtx7cJUmpvVdZ4o
-gnzgXtgtdk3ShrtOS1iAN2ZBXFiRmjVzmehoMof06r1xub+85hFQzVxZx5/bRaTKTlL8YXLI8nAb
-R9HWdFqzcOoB/hxfEyIQpx9/s81rgzdEZOofSlZHynoSMYIDyjCCA8YCAQEwga0wgZcxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
-ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA4rtJSHkq7AnpxKUY8ZlYZjANBglghkgB
-ZQMEAgEFAKCCAe0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEx
-MDIxMjMwMDQzWjAvBgkqhkiG9w0BCQQxIgQgXubngjx5f3m7wquyOcv/fH36HK2PivpNX5BN5xaz
-3WYwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
-TWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQx
-PTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1h
-aWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMIHABgsqhkiG9w0BCRACCzGBsKCBrTCBlzELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
-A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
-bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMA0GCSqGSIb3
-DQEBAQUABIIBACPKp9j01uDvcSa82y2vM2txKXS5Q1zQGR3WtJOvyqTdjZDbDnF8os/NRlICL/5n
-OOOpt/sEIJFbreqnIk0MCtJUn5ukcttQwCt6EkeuY0PSj4H10bDczqGFdPMmXzXPGzNxGfYWVVNV
-YLRUsTLiaP2Hfwj/l5oRg2KgxCuH8FKbURj6vkW90I0Kce4732iWryns7owEMM4WqFJ+XjEMFQOv
-TFt3HQIovgkiJQPMDqbFyMixpWNDhAVtcryxQET5U7aKWswZ/gkvIhjtCqADJSjJgN4UOWjSQWal
-leeU6ZpmzgEWEHfyRxe0Y+/geecH8iuk73cwo5A/Zdxtk3ILk/gAAAAAAAA=
-
-
---=-aPVubU0wKuH8er9lBpry--
-
+-K
