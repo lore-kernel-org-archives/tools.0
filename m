@@ -1,91 +1,80 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9AB2C8B
-	for <tools@linux.kernel.org>; Mon, 25 Oct 2021 21:50:41 +0000 (UTC)
-Received: by mail-qv1-f47.google.com with SMTP id t1so8190433qvb.1
-        for <tools@linux.kernel.org>; Mon, 25 Oct 2021 14:50:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uggdsXGn59aYgkLfJizW2dZEpM4CIOLiCMjfmKTtk3E=;
-        b=DnpEAmixpSGQlWkd3zVwHR34MZoxuvAWqtKB/6ZAsJrne3cUjnHYs903gxSXb50Jco
-         GN8EsGpdN1lwW+LodUZsZ5rbfGft72YenAg5iXPyMBnvBaOEbR9GeAlhAhKKJ7tDu8b4
-         Lf2nBpGtbulGB9QdfJwZ9boVQ/MAVczN9+BOQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uggdsXGn59aYgkLfJizW2dZEpM4CIOLiCMjfmKTtk3E=;
-        b=PHqPXuxU9YqBS4XWfBc31zqQ8BB0cbfh3tT1w2LnPJMt5+cnFtxtX/cwDwr4Bjfw7e
-         qi2HdSRbqUocNXM4EeVACHrrOIO3TnyDjzgllR2mVd12QodvheGkHZ7DBvlnVP2EQjNI
-         QOCeMCZ2p83wMcOj14Lb3bHb9PCNNoTx0O+DkqqlZH6dSa3cL7c9hPISOg6zTtKNH7jd
-         GPpqTLms0JHFcQLbOJGbpzg06XPv7BloDcGR+EFzWjdmKWkoZcGYy+if/JAJVdg0BhjS
-         Wl11QmKeLxO5qQ1kMlJYH3v7NxIlyrDVpz4bGn/d6/05cD5zEYiVGiexavJ2wnZJRHbc
-         zenw==
-X-Gm-Message-State: AOAM532L3SkrowMiAFh0LWGwuukYj3YUpKZiv0+5m0Uf4fpJSvClfsVe
-	gIAO8VL9lrKOaS1b3K3LqXcSnG9CZt4zGQ==
-X-Google-Smtp-Source: ABdhPJys2rw5Xvh9l5pzU0571aws7rDNmYttOgwzD+jyrNCCyk/cLNjJyBWcDtVsxcZFSU+IAGOK2w==
-X-Received: by 2002:ad4:5988:: with SMTP id ek8mr18235473qvb.29.1635198640261;
-        Mon, 25 Oct 2021 14:50:40 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id g18sm9066007qto.71.2021.10.25.14.50.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 14:50:39 -0700 (PDT)
-Date: Mon, 25 Oct 2021 17:50:38 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: b4: shazam and ty flag changes
-Message-ID: <20211025215038.iimnihsw57u7bjvs@meerkat.local>
-References: <20211020151043.dwbug4k5yeifqbhe@meerkat.local>
- <YXcHfu5mTWkiHY6L@sirena.org.uk>
- <YXcMYRe5fsHlYIeL@sirena.org.uk>
- <20211025210914.63j2q5cuslxwekwg@meerkat.local>
- <YXci+zYdqNmv0fEF@sirena.org.uk>
- <YXckZtqzanA3QwC0@sirena.org.uk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80B572
+	for <tools@linux.kernel.org>; Tue, 26 Oct 2021 08:30:15 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C69BD60F92;
+	Tue, 26 Oct 2021 08:30:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1635237014;
+	bh=PfpdCgHu82jR8SeWHaqQo9sUUvd4PWxz+6S2xJWrYzE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RJhG9ReKVY4fB9Fx3rYfaRt5Ej34ffsVW8HcsaJkJowBsuGhTf0x5VD3ah4b8txoD
+	 zMy9YNx4aBSGR79Pv4ViD1ft0wi/6dox73y0kSt/L2iL/1wYwRqP/E6bs2xwH3oRb/
+	 FsHiYhTR6+bUZwDVBvY1U8TpcLpaRXU7S1eHOb88YufVJh2ysJ+NQzHn0cwxnXhCH2
+	 Q9YZ+Pg5K7TzAGpnJlgXJyo6moc9p1BvrTrJNESnqMkM6D00woiY7xvP1SnrDZhQuY
+	 FEF9RXYCFjr1zRN6eVzIq5c6KqIcRI0+SWN8v3wgetjUprnk5DIOKhhpFfjVztSNxV
+	 eY8eyrXaAWR2A==
+Date: Tue, 26 Oct 2021 09:30:09 +0100
+From: Will Deacon <will@kernel.org>
+To: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+	Kees Cook <keescook@chromium.org>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	tools@linux.kernel.org,
+	Linux ARM <linux-arm-kernel@lists.infradead.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Olof Johansson <olof@lixom.net>
+Subject: Re: injected body trailers
+Message-ID: <20211026083009.GA20689@willie-the-truck>
+References: <202110211313.B5C5C61@keescook>
+ <20211021204459.xd63t5xn24vktqf3@meerkat.local>
+ <7786271477279d4fbf9292db1f6aede8428eb00d.camel@infradead.org>
+ <202110212044.D38D0993E8@keescook>
+ <CAK8P3a1UrWfPxQP5v757XdOyEz-GE-jkStpQisA2mhAVneKwtw@mail.gmail.com>
+ <CAMj1kXHBNuM3z-8DQ-_RUtU3QvnWV_=E9Ty2aXkR4RMr2P7ANQ@mail.gmail.com>
+ <YXKj6jrS90DoJknq@arm.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="fcclvzrqm5ulttb6"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YXckZtqzanA3QwC0@sirena.org.uk>
+In-Reply-To: <YXKj6jrS90DoJknq@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
+On Fri, Oct 22, 2021 at 12:43:38PM +0100, Catalin Marinas wrote:
+> On Fri, Oct 22, 2021 at 11:41:30AM +0200, Ard Biesheuvel wrote:
+> > On Fri, 22 Oct 2021 at 10:16, Arnd Bergmann <arnd@arndb.de> wrote:
+> > >
+> > > On Fri, Oct 22, 2021 at 5:53 AM Kees Cook <keescook@chromium.org> wrote:
+> > > > On Thu, Oct 21, 2021 at 10:42:46PM +0100, David Woodhouse wrote:
+> > > >
+> > > > How about we reset that password and make the following folks the
+> > > > list admins, assuming they're interested:
+> > > >
+> > > > ARM64 PORT (AARCH64 ARCHITECTURE)
+> > > > M:      Catalin Marinas <catalin.marinas@arm.com>
+> > > > M:      Will Deacon <will@kernel.org>
+> > > >
+> > > > ARM AND ARM64 SoC SUB-ARCHITECTURES (COMMON PARTS)
+> > > > M:      Arnd Bergmann <arnd@arndb.de>
+> > > > M:      Olof Johansson <olof@lixom.net>
+> > >
+> > > Fine with me, as long as I'm not the only one.
+> > >
+> > 
+> > I'm happy to help out if needed.
+> 
+> Same here.
 
---fcclvzrqm5ulttb6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Likewise, with the disclaimer that I haven't helped to manage a mailing
+list before!
 
-On Mon, Oct 25, 2021 at 10:40:54PM +0100, Mark Brown wrote:
-> > 	[sendemail]
-> >         smtpServer =3D mail.kernel.org
-> >         smtpServerPort =3D 587
-> >         smtpEncryption =3D tls
-> >         smtpUser =3D =3D broonie
->=20
-> And now I put this into e-mail I see the double =3D there which is what's
-> breaking it *sigh*.  Sorry for the noise here :(
+An alternative would be to move the list to vger, but I suspect that's
+far too invasive.
 
-No worries. As I often say, my favourite type of problem is the one that
-doesn't require any effort on my part to fix. :)
-
--K
-
---fcclvzrqm5ulttb6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYXcmrgAKCRC2xBzjVmSZ
-bPheAQCEebBu0b/N5ouck/ssmRauhmD4i1GcDkTVnLvVaSnGrwEA7I/hgMhL355H
-SawoTjclwyYP2T9WOKtM3Ut0aNXV5Q8=
-=89p4
------END PGP SIGNATURE-----
-
---fcclvzrqm5ulttb6--
+Will
