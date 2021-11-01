@@ -1,100 +1,84 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D832C80;
-	Mon,  1 Nov 2021 20:05:37 +0000 (UTC)
-Received: by mail-ed1-f50.google.com with SMTP id s1so68232576edd.3;
-        Mon, 01 Nov 2021 13:05:37 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CA62C80
+	for <tools@linux.kernel.org>; Mon,  1 Nov 2021 20:22:23 +0000 (UTC)
+Received: by mail-qk1-f176.google.com with SMTP id bq14so6270649qkb.1
+        for <tools@linux.kernel.org>; Mon, 01 Nov 2021 13:22:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=jtIZcGkKANkHZykd7YHh65abq+wCZzcvoRA3Om389Pg=;
-        b=LzTXFyLNudNj+cN/2vyoyLFAUmaPhsGjnRQKGjn7cTtJa/yyXPEMVMIbkSBZhcjndv
-         fmYgoPOp13zSihxQjNC6lUl47QUIoE7hnOViq1Nbhd3WkCXG5oNTHVHLJm4J5Q9TRVn4
-         z2kFYDrXixW425Or+oIOoLCOLv/DiursbmV2KQuaZwDJ7KNNbF6qHhxzACcUDI2p3U88
-         YIGRHy3Kf+padNbESijpq8wX+h7Wbw2ukyNjUz27fSIEQr6wQYI1bBUlT5wYp3A/lD6c
-         yduMb52GBtRHp7g/AkVzDU+FnyVGbFolUau2rzFsqTFILaNi1fdGWDF8i9Ck3dMA0u+x
-         Y3UA==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=XKYwYIGZwg8PV40HcGh9nupJ42mZTYLzNOttvjw1nEQ=;
+        b=QtZtkWAyIwR5drylX+3yXWhC9CnaEEqQbEzA/nIGOFaV5G5dUJFQqWxPJ2RIvakod6
+         Mxdze9Ink5JUQfWKAvM3nnrQxsYFl5B6vsjPxrd99Z0CxJHutWcaHamVYwy28hO2T0Cy
+         hxBaxpBIVEPGKr/mEVxDq5vqQEEE1kTeBHemQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=jtIZcGkKANkHZykd7YHh65abq+wCZzcvoRA3Om389Pg=;
-        b=H77Zw93/FrhoCAWq8C9LT4Yno9kra3zUyo3V0/a01HIn1oKDYUcKdu2rSJUQKb7f42
-         mRtmS6+Dr4IPtKArFFPIYHAXvjGVAC5g1TYUpsIZAYdaQNoGwv50WXcy/+ms8s03OtyD
-         z3qVfwIc2Fn48jdJi2rke1EQ48RheKmRIzejCcwANMF7z/ANnoQqLh6hPlM5yVKvvQ8m
-         +yHzLRE4IOj/YAxpxtAkguvamqm/6A9nZe7YmnMpY8TBbzQuR2wHSDOjTH9RDM2ffsw2
-         uB3OwXVoT0neIPVsfFnnAHp0MvypNuNry3jCIsJAdBePvuVH1Xx4Zuo4b0zlDWJX8YkV
-         yrrQ==
-X-Gm-Message-State: AOAM532KgeevfoyTxe5CDJWF73LiK5M2QsQCB3ndce6Mqjs2SAZ821Ts
-	oVgDb960vgtrv9vRneusJHM=
-X-Google-Smtp-Source: ABdhPJzZ1kd8C9Ot9JgSQtK2BQIutL3Qlx3YV84uO2nL/OKLHouX3iP+gX2TDEF4bxqoiG4nCpIYFw==
-X-Received: by 2002:a05:6402:42cd:: with SMTP id i13mr44345005edc.396.1635797136151;
-        Mon, 01 Nov 2021 13:05:36 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id qk16sm7488302ejc.12.2021.11.01.13.05.35
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=XKYwYIGZwg8PV40HcGh9nupJ42mZTYLzNOttvjw1nEQ=;
+        b=sucf28hTbWcaEJZ7dgfVTxgRLCwmOVWShbEDoo+dfDcIuYEMr63yqbrrcvtQsBLp3M
+         WxRraQib4CGlIInxr6fU3sV+ij3nY6OrWdw5KM5j7obqRSN+MJVe7mM2TOy6s61HXTat
+         x9P5fHPk/sTxmVOf5BwECWPNa1HHKINcMZ/EIh9gMSjyYC4EtBZjGhdoF0YxI9mCa07Y
+         jLycJRTIjiyWymceyAa0S3fSpRE3NEqG4YU1FEb0s0JN2gkf9hWD+FGNNuU65p6uBkVt
+         nnTtEilBjYcN8dfrvTgckH9DelZx62kEodi072w7lVIDh6Hnc4YsR/1nWmFQskUi/Nm+
+         uRaQ==
+X-Gm-Message-State: AOAM533PzcFTiCv4rj+F8sDV624w2083AOuTLO3yr9cPz0MR/O659c/t
+	dFW5A+ajizLKtv/NFuUCPKsZM0gXv/yIpA==
+X-Google-Smtp-Source: ABdhPJwn5EbIODE1g1oUL2kfmkVLa6++BFG5679+QoOvH609tsPQcKEFuDv4WlMLdRcz33i2OxFmVg==
+X-Received: by 2002:a05:620a:204c:: with SMTP id d12mr17637323qka.80.1635798142858;
+        Mon, 01 Nov 2021 13:22:22 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id i6sm4042682qkn.14.2021.11.01.13.22.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Nov 2021 13:05:35 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-	(envelope-from <avarab@gmail.com>)
-	id 1mhdYl-002BwR-8f;
-	Mon, 01 Nov 2021 21:05:35 +0100
-From: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Eric Wong <e@80x24.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- users@linux.kernel.org, tools@linux.kernel.org, git@vger.kernel.org
+        Mon, 01 Nov 2021 13:22:22 -0700 (PDT)
+Date: Mon, 1 Nov 2021 16:22:20 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc: Eric Wong <e@80x24.org>, users@linux.kernel.org, tools@linux.kernel.org,
+	git@vger.kernel.org
 Subject: Re: b4: unicode control characters -- warn or remove?
-Date: Mon, 01 Nov 2021 21:02:34 +0100
+Message-ID: <20211101202220.dlcebvckeoz6c26k@meerkat.local>
 References: <20211101175020.5r4cwmy4qppi7dis@meerkat.local>
  <20211101190905.M853114@dcvr>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <20211101190905.M853114@dcvr>
-Message-ID: <211101.86bl333als.gmgdl@evledraar.gmail.com>
+ <211101.86bl333als.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <211101.86bl333als.gmgdl@evledraar.gmail.com>
 
+On Mon, Nov 01, 2021 at 09:02:34PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> It checks whitespace because that's something that's commonly a source
+> of patch corruption. I'm not adverse to adding this to core.whitespace,
+> but trying to catch malicious injected code seems like a rather big
+> expansion of its scope, particularly since:
+> 
+>     "[...]sending patches for docs actually written in RTL languages[...]"
+> 
+> Or just code? People write comment and even in their native languages,
+> and not all projects are as anglo-centric as those hosted on kernel.org.
 
-On Mon, Nov 01 2021, Eric Wong wrote:
+My comment about docs was purely within the scope of the Linux kernel.
 
-> Konstantin Ryabitsev <konstantin@linuxfoundation.org> wrote:
->> Hi, all:
->> 
->> Per exhibit a, what should we do in the situation where we discover unicode
->> control characters in an email?
->> 
->> 1. Warn and strip these chars out, because they are extremely unlikely to be
->>    doing anything legitimate in the context of a patch (unless someone is
->>    sending patches for docs actually written in RTL languages)
->> 2. Warn and error out, refusing to produce an mbox
->> 3. Just warn and produce an mbox anyway
->> 
->> I'd normally do #3, but with many people piping things to git-am, I'm not sure
->> if it's the safest choice.
->> 
->> Exibit a: https://lwn.net/Articles/874546/
->
-> +Cc: git@vger
->
-> IMHO, defense for this belongs in git-am (which already checks
-> things like whitespace).
+I think the following would be a sane check:
 
-It checks whitespace because that's something that's commonly a source
-of patch corruption. I'm not adverse to adding this to core.whitespace,
-but trying to catch malicious injected code seems like a rather big
-expansion of its scope, particularly since:
+1. are there unicode control characters (CCs) present?
+2. are there other characters from RTL languages present in the same line?
 
-    "[...]sending patches for docs actually written in RTL languages[...]"
+if both 1 && 2 are true, this is a legitimate use of Unicode CCs. If only 1 is
+true, then it's likely worth a warning.
 
-Or just code? People write comment and even in their native languages,
-and not all projects are as anglo-centric as those hosted on kernel.org.
+Maybe even relax #2 to just check for unicode characters above a certain
+barrier where RTL languages live. I think everyone will agree that if there
+are unicode CCs and no other unicode characters in that same line, it's likely
+not a legitimate use of control characters.
 
-I haven't checked what the overlap is between solving this issue & i18n
-support, but we definitely should not be assuming that git's only using
-by kernel.org users & similar, even something as relatively obscure as
-git-am.
+-K
