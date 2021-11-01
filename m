@@ -1,46 +1,42 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D335A68
-	for <tools@linux.kernel.org>; Mon,  1 Nov 2021 16:00:35 +0000 (UTC)
-Received: by mail-qv1-f48.google.com with SMTP id a24so2580415qvb.5
-        for <tools@linux.kernel.org>; Mon, 01 Nov 2021 09:00:35 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D6E2C85
+	for <tools@linux.kernel.org>; Mon,  1 Nov 2021 17:50:23 +0000 (UTC)
+Received: by mail-qk1-f180.google.com with SMTP id r8so3473696qkp.4
+        for <tools@linux.kernel.org>; Mon, 01 Nov 2021 10:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=sYdk3STpYlkAotMTh1qdc4IlB5/Vj5mimzIQnBH0oAk=;
-        b=CEwH1BVUt9lTG337kMRdgxmsphXfdPYGM4VRdibeuHQQk3WQgzHrebbDlydPE/Wf1s
-         3i+S1i0mbJCsiE3pLLhie2fJsyhX1WG2xUTWeBBWyEsUJpnXYAA8n4vgdCGJPeuv7ZwS
-         ULTh+OidZQwZS9wCfBg4/P/Yq16GEWbb7qcQQ=
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=Wxd9o2Asu7pxH0SN+ZqozXQbQc4IxMXRgAZ+3mlpo7w=;
+        b=BwyhREI5iZrV79j2ZMvDd+rps+PnBL4hoauGL/FqKJ0fKFYjmZEAcIITDE02/uI/5k
+         jh3goPJjjjvrHNdDJZPJJLsbH/MZv8+JggM8WW7tgyzldT28DNmOBGZ9SmA2v0a5F8mR
+         6Dp3wzrAGwU91RycXn4ELa0QqCq0Y9AzzhlMg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=sYdk3STpYlkAotMTh1qdc4IlB5/Vj5mimzIQnBH0oAk=;
-        b=TkP2mW8eBNgExPVMsSyPLD1Qct1ARwADbyvQIGny9AW2OnV4AP/AdWpXwiSZMl43yE
-         KcGhyRqsAfaXCkv9nmuyvLXLkmm4pZZ+huTDgoCB0BlALrBuc/8Dyx+5NQwG2OrNwwmQ
-         l73ppbmIx+bntUdD1CWZsKpkUtGlUwMLMswxrQ3YE4m/LrB7srU8kGw5oiRz7jHZUjUh
-         DSy4ad7sIhi9oWEf/dV/hDYceQFWilkndxqI0cAaGrgnqbeMVyZ2hmj1ZDIwCXCXGpnD
-         LJCMSHYMHiKl7Ad4TqLfdgHvYscK7rs7zeJnq4+hgGNMKnQvueLolUpIYzKOh8LwYYTI
-         ecbQ==
-X-Gm-Message-State: AOAM532RYuuIrEhVszWx5l8pv2XPE9jNeeNvsNtTyFW8LAvGVsuw/fk2
-	0faaTOVQphikk4LC66rYHSYF8g==
-X-Google-Smtp-Source: ABdhPJwakWP0yswmJr+LFp4ei5SjJAP4RK1h9qenj1Y8hD5UD2ltej5401mFUzbPkzJElbv43BL5ag==
-X-Received: by 2002:a05:6214:2aa6:: with SMTP id js6mr29206009qvb.42.1635782434662;
-        Mon, 01 Nov 2021 09:00:34 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=Wxd9o2Asu7pxH0SN+ZqozXQbQc4IxMXRgAZ+3mlpo7w=;
+        b=gQlPZ+1EmIsl6hF9n7PeHyL7/WPZr/yYzfkTKk5LXgK9ypS1jE6raaFuzq99NZJKH1
+         +6EOxj7iKFSfVM3sbqsdw7o+QTYQOpVUXD86PwoHgpNeOWwo2twdeddrh0bIRlCfz/Cr
+         ETctBVqZ6ChDaPrS7/cEv7Lmt2BtK3BP7MYXR3Z0xdaqteBOio6jeD98sIr0QdEjg6Ql
+         zYP49x+59Sh5jRFdnOW7XGrT5mwQVqL+/FmuF8AhM26rECuApwbwHMsXvFB7JOmrflk9
+         HX0bd5tUHtBR7uscuZ+4lftluFv1TQyoWdNL0vuXhe10Aku9wxgwYWcCN/fvYiOHJUaV
+         KW4w==
+X-Gm-Message-State: AOAM533maKAfEVKVlpVOIjTii9n2jDutjGCwDJKjNKq/2qzrTCjSCbZH
+	Dp34dgckUcX5z3k2NgrZ5sSpZoo5pYbF+Q==
+X-Google-Smtp-Source: ABdhPJxfBCmYoNXulyhbtHaa/pleSWfoO6cPU5vF4B8yB4hbwemEYzzVYX9Lnq7HcnUWkjCvR/MukA==
+X-Received: by 2002:a37:8044:: with SMTP id b65mr24279002qkd.295.1635789022079;
+        Mon, 01 Nov 2021 10:50:22 -0700 (PDT)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id y8sm10622766qko.36.2021.11.01.09.00.34
+        by smtp.gmail.com with ESMTPSA id c24sm11276385qkp.43.2021.11.01.10.50.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Nov 2021 09:00:34 -0700 (PDT)
-Date: Mon, 1 Nov 2021 12:00:32 -0400
+        Mon, 01 Nov 2021 10:50:21 -0700 (PDT)
+Date: Mon, 1 Nov 2021 13:50:20 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Crash generating a thanks
-Message-ID: <20211101160032.gz46kfybjruvgb4k@meerkat.local>
-References: <YXxhlEuodVLx8KjI@sirena.org.uk>
+To: users@linux.kernel.org, tools@linux.kernel.org
+Subject: b4: unicode control characters -- warn or remove?
+Message-ID: <20211101175020.5r4cwmy4qppi7dis@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -49,76 +45,21 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YXxhlEuodVLx8KjI@sirena.org.uk>
 
-On Fri, Oct 29, 2021 at 10:03:16PM +0100, Mark Brown wrote:
-> Hi,
-> 
-> Attempting to generate a thanks with current tip:
-> 
-> 750286a7aba7dc091b4407c9f31157129aade588 ty: fix bugs introduced when switching -s to -t
-> 
-> I get a traceback on one particular patch:
-> 
-> Sending: Re: [PATCH] sound: soc: tlv320aic3x: Make aic3x_remove() return void
-> Traceback (most recent call last):
->   File "/home/broonie/git/b4/b4/command.py", line 287, in <module>
->     cmd()
->   File "/home/broonie/git/b4/b4/command.py", line 270, in cmd
->     cmdargs.func(cmdargs)
->   File "/home/broonie/git/b4/b4/command.py", line 96, in cmd_ty
->     b4.ty.main(cmdargs)
->   File "/home/broonie/git/b4/b4/ty.py", line 661, in main
->     auto_thankanator(cmdargs)
->   File "/home/broonie/git/b4/b4/ty.py", line 377, in auto_thankanator
->     send_messages(applied, wantbranch, cmdargs)
->   File "/home/broonie/git/b4/b4/ty.py", line 443, in send_messages
->     smtp.sendmail(fromaddr, sendto, msg.as_string(policy=mypolicy))  # noqa
->   File "/usr/lib/python3.9/smtplib.py", line 859, in sendmail
->     msg = _fix_eols(msg).encode('ascii')
-> UnicodeEncodeError: 'ascii' codec can't encode character '\xf6' in position 55: ordinal not in range(128)
+Hi, all:
 
-Thanks for the report. I think either I misunderstand the SMTP RFCs, or the
-writers of Python's smtplib don't properly understand the difference between
-the 8BITMIME and SMTPUTF8 capabilities. If the server reports 8BITMIME support
-(and they all do, it's not the 90s any more), then anything following DATA
-can contain 8bit content -- whether it's in the headers or the body of the
-message.
+Per exhibit a, what should we do in the situation where we discover unicode
+control characters in an email?
 
-Only when the email addresses themselves contain non-ascii characters AND when
-they are used as either part of MAIL FROM or RCPT TO do we have to worry about
-SMTPUTF8.
+1. Warn and strip these chars out, because they are extremely unlikely to be
+   doing anything legitimate in the context of a patch (unless someone is
+   sending patches for docs actually written in RTL languages)
+2. Warn and error out, refusing to produce an mbox
+3. Just warn and produce an mbox anyway
 
-E.g. this doesn't require SMTPUTF8:
+I'd normally do #3, but with many people piping things to git-am, I'm not sure
+if it's the safest choice.
 
-    MAIL FROM: <me@example.org>
-    RCPT TO: <you@example.org>
-    DATA
-    From: Mé <me@example.org>
-    To: Yôu <you@example.org>
-
-    Hello world.
-    .
-
-Only this does:
-
-    MAIL FROM: <mé@example.org>
-    RCPT TO: <yôu@example.org>
-    DATA
-    From: Mé <mé@example.org>
-    To: Yôu <yôu@example.org>
-
-    Hello world.
-    .
-
-And yet, in certain situations smtplib seems to want to force-convert
-everything to ascii even when you specifically tell it to not do that. It's
-entirely possible that they are right and I'm wrong here, but my hands-on
-testing with a couple of SMTP servers thus far haven't disabused me of this
-understanding of the RFC and what 8BITMIME means.
-
-Anyway, I think I have the fix in master that doesn't trigger this problem.
-Please try it out and let me know if you see any more problems.
+Exibit a: https://lwn.net/Articles/874546/
 
 -K
