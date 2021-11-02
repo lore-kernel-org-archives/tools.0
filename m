@@ -1,112 +1,97 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5993A2C8E
-	for <tools@linux.kernel.org>; Mon,  1 Nov 2021 21:03:02 +0000 (UTC)
-Received: by mail-qk1-f171.google.com with SMTP id br39so4676318qkb.8
-        for <tools@linux.kernel.org>; Mon, 01 Nov 2021 14:03:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=QGfF3G4ZSO5Or9UsksHX62Pusg06Ym+I7UDJgvxBwVA=;
-        b=SaD3ss6UVleAlcyDT3Yb/nZcBcondBs1ZuWAkYhbzwfYDZv/rJv8i7EUj83VedzYPJ
-         PPC3ZfjujN+967FVZRSJRJom2s8G8yv+8Ijp17g7xCT3AC60zJa3iQdk7yZE0iQgf2S0
-         qc/wG6YTrr+roYO0zG/jRdvOEZ4PWduXiWxF0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=QGfF3G4ZSO5Or9UsksHX62Pusg06Ym+I7UDJgvxBwVA=;
-        b=7v9o8BT4NIzNWYXI5tk17NUcT3nVwt1jNHGOjZBvIrHUpMx+9nTywinbHKuBkZxQhw
-         zrAwvFnlXTznlaVvhsQwNi1xZGvRTuVLhQvQNbw+qPSARHTvsPGQiD41zJHN+CZjwZhH
-         X5QNmGaMD6zkfZ6HD5Tzo9kLgIbtCHfpO39nXsaRmnQxZwpwqqldS8WC/7LQb+HO2jkR
-         RCsKvr5ysxZY0AFv0lHA/lEHBfcDcH0DUyyT7/nwKyYAdbQjrnYM67a8YvZ5jHB0zGUi
-         nWqymRi+c974gfs5jmH9056URpC+GKmakZry7tu0zOC7QBU3x9vvrtykTfnzTjwVXOQe
-         GB7Q==
-X-Gm-Message-State: AOAM533sFGCzHPHHFg5lL1ElcCgrvxj7kIK7ANb/vFp0MX9QOZ3jjPbR
-	CudSamHER0UvoZhtEq/lY2sQHTzrj5ZFnw==
-X-Google-Smtp-Source: ABdhPJxEBsmbnVh3UZS4HsLvADdygi2b5vUUIEIP/Jxz/UV7N2LoAvMXu3JV9m5BCRKFEq2iIHsNkg==
-X-Received: by 2002:a05:620a:40c7:: with SMTP id g7mr8327772qko.330.1635800581242;
-        Mon, 01 Nov 2021 14:03:01 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id t13sm6615510qtw.37.2021.11.01.14.03.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Nov 2021 14:03:00 -0700 (PDT)
-Date: Mon, 1 Nov 2021 17:02:59 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Pavel Machek <pavel@ucw.cz>
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Eric Wong <e@80x24.org>, users@linux.kernel.org,
-	tools@linux.kernel.org, git@vger.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEC768;
+	Tue,  2 Nov 2021 08:38:09 +0000 (UTC)
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+	by smtp-out1.suse.de (Postfix) with ESMTP id A1AEA212BE;
+	Tue,  2 Nov 2021 08:38:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1635842282; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bhqHykkhPF1Uazvvloq48w01nlK6vgSliSb9CJ3bdi8=;
+	b=QzByEUjvVpdsZ2JALDVYenX3h5rms8q+0c0HplN/dPatQOsN5xmJ1f4UzgXRsyqQAXRypn
+	rwyC9JWCUXz/2MeQ7L1ykte4WSxJ6NdXiSBQb0cCagbd/oe2lv6ORM9okaqQdg4+a7Z6k7
+	TDfvUO2uy+736ZAcP8KMX+zX+JWoJXo=
+Received: from suse.cz (unknown [10.100.224.162])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by relay2.suse.de (Postfix) with ESMTPS id 81C97A3B83;
+	Tue,  2 Nov 2021 08:38:02 +0000 (UTC)
+Date: Tue, 2 Nov 2021 09:38:02 +0100
+From: Petr Mladek <pmladek@suse.com>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: b4: unicode control characters -- warn or remove?
-Message-ID: <20211101210259.2patkw62rkemdqlt@meerkat.local>
+Message-ID: <YYD46giNXcGF0lCn@alley>
 References: <20211101175020.5r4cwmy4qppi7dis@meerkat.local>
- <20211101190905.M853114@dcvr>
- <211101.86bl333als.gmgdl@evledraar.gmail.com>
- <20211101202220.dlcebvckeoz6c26k@meerkat.local>
- <20211101204914.GA16445@duo.ucw.cz>
+ <CANiq72k-n-u9nQAzE1yUPz-ioF+coas_rBOofyuJnBgdvTZ2Yw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="pn2g6p64hawgdpnr"
-Content-Disposition: inline
-In-Reply-To: <20211101204914.GA16445@duo.ucw.cz>
-
-
---pn2g6p64hawgdpnr
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANiq72k-n-u9nQAzE1yUPz-ioF+coas_rBOofyuJnBgdvTZ2Yw@mail.gmail.com>
 
-On Mon, Nov 01, 2021 at 09:49:14PM +0100, Pavel Machek wrote:
-> > I think the following would be a sane check:
-> >=20
-> > 1. are there unicode control characters (CCs) present?
-> > 2. are there other characters from RTL languages present in the same li=
-ne?
-> >=20
-> > if both 1 && 2 are true, this is a legitimate use of Unicode CCs. If on=
-ly 1 is
-> > true, then it's likely worth a warning.
-> >=20
-> > Maybe even relax #2 to just check for unicode characters above a certain
-> > barrier where RTL languages live. I think everyone will agree that if t=
-here
-> > are unicode CCs and no other unicode characters in that same line, it's=
- likely
-> > not a legitimate use of control characters.
->=20
-> If you are worried about malicious patches, then it should be easy for
-> attackers to add some RTL characters and escape the check...
+On Mon 2021-11-01 19:10:05, Miguel Ojeda wrote:
+> On Mon, Nov 1, 2021 at 6:50 PM Konstantin Ryabitsev
+> <konstantin@linuxfoundation.org> wrote:
+> >
+> > Per exhibit a, what should we do in the situation where we discover unicode
+> > control characters in an email?
+> >
+> > 1. Warn and strip these chars out, because they are extremely unlikely to be
+> >    doing anything legitimate in the context of a patch (unless someone is
+> >    sending patches for docs actually written in RTL languages)
+> > 2. Warn and error out, refusing to produce an mbox
+> > 3. Just warn and produce an mbox anyway
+> 
+> I think option #2 would be the best + a flag to override the error (to
+> be used if the user has verified it is legitimate).
 
-Well, the point of this attack was to trick the reviewer into accepting code
-that the compiler would treat differently (e.g. something that looked to be
-inside a comment block is actually outside of it).
+Yes, please add a --force option to override these kind of errors.
+It should be used only when users know what they are doing.
+The point is that they will have a chance to check, fix, and
+eventually apply the patch.
 
-So, if attackers include some actual RTL text, then the reviewer would no
-longer be (as easily) tricked because there would be stuff other than just
-invisible characters in the line of code.
+For example, I was not able to get a patch that was sent as a followup
+to a patchset by another user. The original patchset was sent
+from @infradead.org. The followup patch from @suse.com.
 
-This actually similar to how we treat unicode domains. Most browsers only
-allow unicode domains when the entire domain name consists of unicode
-characters. I suggest we take a similar approach.
+b4 refused to get it because attestation failed:
 
--K
+$> b4 am -o in YXlKqCPY9suM4mfT@alley "-P "
+Looking up https://lore.kernel.org/r/YXlKqCPY9suM4mfT%40alley
+Grabbing thread from lore.kernel.org/all/YXlKqCPY9suM4mfT%40alley/t.mbox.gz
+Analyzing 16 messages in the thread
+Will use the latest revision: v2
+You can pick other revisions using the -vN flag
+Unknown range value specified: 
+Checking attestation on all messages, may take a moment...
+---
+  ---
+  ✗ BADSIG: DKIM/infradead.org
+---
+Total patches: 0 (cherrypicked:  )
+---
+Cover: in/v2_20211019_willy_improvements_to_pgp.cover
+ Link: https://lore.kernel.org/r/20211019142621.2810043-1-willy@infradead.org
+ Base: not specified
+       git am in/v2_20211019_willy_improvements_to_pgp.mbx
 
---pn2g6p64hawgdpnr
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYYBWAwAKCRC2xBzjVmSZ
-bJz0AQCVJ8fxeC3GQJpFr64VwhBIEH2YMLVBUDC521BJRU9fkQEAoHZ5nIcqWYSu
-mlkiYs+ipc3LyCL2vXBhbPulxAiStgQ=
-=V/dh
------END PGP SIGNATURE-----
+I think that this has already been discussed somewhere and it is a
+rare situation that is not easy to support. Anyway, the patch
+was trivial, correct, and --force option would have helped me
+to handle it easily.
 
---pn2g6p64hawgdpnr--
+Best Regards,
+Petr
