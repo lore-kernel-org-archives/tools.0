@@ -1,109 +1,72 @@
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.avm.de (mail.avm.de [212.42.244.120])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83002C81
-	for <tools@linux.kernel.org>; Mon, 15 Nov 2021 16:36:25 +0000 (UTC)
-Received: by mail-io1-f50.google.com with SMTP id x10so22272068ioj.9
-        for <tools@linux.kernel.org>; Mon, 15 Nov 2021 08:36:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=IZiHCv/gHTVl6R4gQ4phP1rb2bMgLxIB1SFLS4Jcu4E=;
-        b=Fhd2uc7eAopRynqYm6mN/MQbXyG95YxgvGkwXlBo1oUCAsJokpxJdTUySGDtkk+xa4
-         P7SijEOacerO9Gj807o4FtQWR7hIU/kMMwhl2MEUDuoIoAt/XcQGHumRfZhsRUaJLiGv
-         c4mqF7vfjp7BynuyqmwQLbKrG/1wMxG81M8wI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=IZiHCv/gHTVl6R4gQ4phP1rb2bMgLxIB1SFLS4Jcu4E=;
-        b=zqKuGVftm1uKtgVHO3Jlo7a+2ykNb54lB2gWG9C9T/IVwhWkLb51FOR0NH3jtN+jQo
-         wVQlrOSmZs6iVo7vuDkI5P1QVjpenH7ewohIxQBIEVJv5pTExg2HVibdYaJGRQ/kuqf/
-         habVYkfKO66ODJLd8GBjTQzWQBFyThi0LoBmjpV0ylafbFltQ+CiJuPwPA91CMtTUQ7w
-         wduY4QOj50bOg//fmczLwNc0HQui5ipAx6dUFBJSTn1DdlTnf7QXe63PL7mgwhuaTSBt
-         p7+Pmu+0T/a/bXw1l3nglZ6lGkPFTlYmUWdcdKjZodJLb0RPt4/Hxt5/y8mmiND+9kAp
-         a/cQ==
-X-Gm-Message-State: AOAM531yNnGbQ3eg+TN6csh2lelVSlmzkEpktpLvVXGmvK7dCHxVzFIs
-	WiP512PuLC/cYPxL7YzACeqoDidaagcQ0A==
-X-Google-Smtp-Source: ABdhPJyQtiUljV3fmXSWCKoIGe4ZDO+mp7eoM280tyRkrlMUS3V7bv5Fxzrf6OU+mQogRcz7Z88QZg==
-X-Received: by 2002:a6b:b886:: with SMTP id i128mr73638iof.151.1636994184635;
-        Mon, 15 Nov 2021 08:36:24 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id q13sm11072620ilo.25.2021.11.15.08.36.23
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 08:36:24 -0800 (PST)
-Date: Mon, 15 Nov 2021 11:36:22 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org
-Subject: patatt: main branch gained support for openssh signatures
-Message-ID: <20211115163622.vftx6mzu454mdvmm@meerkat.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C4A2C85
+	for <tools@linux.kernel.org>; Thu, 18 Nov 2021 12:15:04 +0000 (UTC)
+Received: from mail-auth.avm.de (unknown [IPv6:2001:bf0:244:244::71])
+	by mail.avm.de (Postfix) with ESMTPS;
+	Thu, 18 Nov 2021 13:05:19 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
+	t=1637237119; bh=kx4HYoTDi5qju9XQjdwr0hOzM+3dqSVDtMNS/pJeCqk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Wh8n0+8ixkjkcRNHPLeiQ68iMXo1s0hw/BDDFF1QDkKV71LvXetnIAgqYysX2rdkg
+	 xUVpM1+HLKCbDQmJkNnH9gNUt7sR2G+hFBMCqYMINztAFkKGGnm6Kc05Uc/pAHx5D9
+	 3sAhc4H6Ln8v2F/Yg6l9IQ/FWb2oK2x0VzxMxCg8=
+Received: from buildd.core.avm.de (buildd-sv-01.avm.de [172.16.0.225])
+	by mail-auth.avm.de (Postfix) with ESMTPA id 5D53B8048C;
+	Thu, 18 Nov 2021 13:05:19 +0100 (CET)
+Received: from nsc-arm64.ads.avm.de (unknown [172.27.14.4])
+	by buildd.core.avm.de (Postfix) with ESMTP id 5322C180EC7;
+	Thu, 18 Nov 2021 13:05:19 +0100 (CET)
+Received: by nsc-arm64.ads.avm.de (Postfix, from userid 1000)
+	id 319C77402D9; Thu, 18 Nov 2021 13:05:19 +0100 (CET)
+From: Nicolas Schier <n.schier@avm.de>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org,
+	Nicolas Schier <n.schier@avm.de>
+Subject: [PATCH 0/1] mbox: Exit with error code if no messages were found
+Date: Thu, 18 Nov 2021 13:05:13 +0100
+Message-Id: <20211118120514.277328-1-n.schier@avm.de>
+X-Mailer: git-send-email 2.30.2
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="e2fkfggf7ql4kehi"
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-purgate-ID: 149429::1637237119-0000060F-C9794C3D/0/0
+X-purgate-type: clean
+X-purgate-size: 767
+X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
+X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
+X-purgate: clean
+
+Hi,
+
+working with b4 on a local public-inbox installation, I stumbled across
+the behaviour of 'b4 am'.  I knew a correct Message-Id and wanted to
+fetch the whole patch set as soon as it reaches the public-inbox
+instance.  Thus I did a stupid
+
+  while ! b4 am MSGID; do sleep 10; done
+
+'b4 am MSGID' showed 'That message-id is not known.' and exited with
+return code 0.  As this seemed strange to me I added a 'sys.exit(0)' to
+fix my use case; but this patch feels too simple to be good.
+
+Can someone point me to some point(s) I am currently too blind to see?
+
+Kind regards,
+Nicolas
 
 
---e2fkfggf7ql4kehi
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Nicolas Schier (1):
+  mbox: Exit with error code if no messages were found
 
-Hi, all:
+ b4/mbox.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Openssh signing is about to become possible with the latest git release, so
-patatt master has gained ability to support openssh signing as well. It
-requires OpenSSH 8.0+, so unless you're running one of those LTS distros, you
-should already have it available.
+-- 
+2.30.2
 
-The signatures don't really look that dramatically different, though they are
-slightly longer than I would have expected for ed25519 keys:
-
-    X-Developer-Signature: v=1; a=openssh-sha256; t=1636987789; l=403;
-     i=konstantin@linuxfoundation.org; s=20211115; h=from:subject;
-     bh=aWNA6NFmS5xpRH5Gpy45nWiKCOnDOKHOYOV7Y6lyLcU=;
-     b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgqCBwATTti8v9QsWJB4x1yVA72ozVqlXw
-     jcZ/ImRjPZsAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAAQGyoMN
-     fuL86rhp2CLqjzAoVC9l1sFREfyvnkT/6QpnYht/gQCkAp+KyvWLOaywWPekG5OGMbmwnMu4WOSKmI
-     0Qo=
-    X-Developer-Key: i=konstantin@linuxfoundation.org; a=openssh;
-     fpr=SHA256:movubj27MLZcp0EAsOhlbu3/RJkj1VF9FfHGUsiB4Gw
-
-To add them to the keyring, just add the person's standard openssh
-pubkey-formatted file into $KEYRINGPATH/openssh/domain/local/selector.
-
-There are interesting benefits of using openssh as opposed to straight-out
-ed25519 keys as generated by patatt:
-
-- openssh keys can be protected by a passphrase and will benefit from
-  ssh-agent passphrase caching
-- this should, in theory, be fully compatible with -sk ssh keys stored on u2f
-  compliant tokens -- though I've yet to test this
-- people are more likely to back up openssh keys than their
-  ~/.local/share/patatt directory
-
-If you're already using PGP keys, then obviously don't switch. However, this
-could be a reasonable option for new people choosing to use patatt.
-
-The support for openssh-signing is in the main branch and I will release
-patatt-0.5 after some more testing.
-
-Best regards,
--K
-
---e2fkfggf7ql4kehi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYZKMhgAKCRC2xBzjVmSZ
-bPkgAQDAqn70TKrfviex3jXHJmomLznRAfxXxx00OBTbgqqVVQD/ZrrslpxJ7GP5
-t3Fr4PDNPhUH8xA4DHV54jdUnSVqGwQ=
-=fM2R
------END PGP SIGNATURE-----
-
---e2fkfggf7ql4kehi--
