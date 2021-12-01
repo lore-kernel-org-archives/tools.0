@@ -1,45 +1,45 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA8429CA
-	for <tools@linux.kernel.org>; Wed,  1 Dec 2021 00:11:28 +0000 (UTC)
-Received: by mail-pf1-f171.google.com with SMTP id n85so22323564pfd.10
-        for <tools@linux.kernel.org>; Tue, 30 Nov 2021 16:11:28 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CD42CA1
+	for <tools@linux.kernel.org>; Wed,  1 Dec 2021 00:11:29 +0000 (UTC)
+Received: by mail-pl1-f173.google.com with SMTP id b13so16279163plg.2
+        for <tools@linux.kernel.org>; Tue, 30 Nov 2021 16:11:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5HNAI8vlYuB449JtweLE9tRLESJSwBrAfAkGgbwr53c=;
-        b=Gquo8R/QbZj5Mg8ttXV6dbbwBwrjCGThZIJpXKcgq7WTBNVHf6qiLC1J7JNugeLFW7
-         UYpLrBF2phpBX5I5UbI/F+5npN0tXa+zB8NXWIRKY5aGcaVUl5fpDYlVcQhdmv+yw9Nu
-         SFIazn+bBzReg86PYEisKSUUBL284yCdAJ0Nk=
+        bh=NePa81kB163QyHEWq9gcWkRRPDFvgTP+CZOUP3wpTAs=;
+        b=NfQm3HenJosIN6/6SeUZHKvKD84i6sy1WZ6VlrD3WOM2n9qVcv3KfsUTSt52pf0UHS
+         D4JDjhC5679AgyCnmtHAkJyvDBfMnqU/2mYo3ukI7jcEF+TMAtHN8aS4pzhGq02mokrF
+         1soLY0Hy6TZQKn9Xh/T8Ip21iQp9R6X6YmHCg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5HNAI8vlYuB449JtweLE9tRLESJSwBrAfAkGgbwr53c=;
-        b=fBe2HR0Nx6LkEoBTEniXCiUq/3kIpFqXjXudh9hQap2pxFQTtayB4sHkTgcJtHOI4K
-         YfrrAZsjBSmviDTFGSybVk/Hb37U7v2BhuJR+LxIjrMkvdiKtdxHD7fEDvR1qu/4HUeN
-         lsWf5l70eYbauzvSEq9otAyzkQeC7c6v7MpkzNwo2qFqi1WLsspBi103ujdP8mEwZdE0
-         HvcGRuf3712h5hnIIDQ5nr4rqxE1W3BXHvieQ8LQdTZZ2HAPhfY3yRJ5hxkovzut3K1b
-         WG9fZ8ciEuVV2Mws0jnQDqu/QyRkS7n0LVybE++cQCdjIBkTnMrBsTW1Lv+BzA+Yj7uU
-         xONQ==
-X-Gm-Message-State: AOAM5312yium6RupRaU2AFidgJPsDeoqN09811ZcyHGwIgFS1GEqlmd0
-	tvoGeF5EQSgcpH8snynPm3W2xUriBkKrIg==
-X-Google-Smtp-Source: ABdhPJzM7FJKDuACvAfcxLVLYMKiS3vr0CNgir1lHGY8+MY4c6WvCi0npfLr3layR/fkCPPU9ReD8A==
-X-Received: by 2002:a05:6a00:8cf:b0:4a8:3ae:1a78 with SMTP id s15-20020a056a0008cf00b004a803ae1a78mr2341376pfu.7.1638317488386;
-        Tue, 30 Nov 2021 16:11:28 -0800 (PST)
+        bh=NePa81kB163QyHEWq9gcWkRRPDFvgTP+CZOUP3wpTAs=;
+        b=iZjN823YoxYv5cUpPFNRVeIpbEt7aZ+IRw1SOBeAu1AzkU6dLXK8x88xnFS+RvhUGN
+         ozpE/iNTuaJmnn5J5aLAJpbo0EtRDw4gWBiZlo2yULkXpLGPA0VN/fFRXuZWs068YYeh
+         HDbRGw6Faa3dbyh/fZuq1pOUZ3q61BrQ8JxxAe7KuXt5zATk3tWM4eaw58jFzHzgqMkc
+         ck21ZIxRrpbca94qkABAPIno7y5YgcPiFcyUnYYY2ps5s3dQh9x3jSG6BHoHUKaKdCBx
+         yf5IoYzOhxHyafHyOeVU810THdYWPlI8K6LIN+5VEDVol/eZrUucH7nNbx85vxkUn83T
+         3n6w==
+X-Gm-Message-State: AOAM531Qp6DIP4XrI24iVwljkRZ3yS8acauEj90KDegjpv86f25Kn6gk
+	j+NEOSCBznmQyA95K/vgO33Ojg==
+X-Google-Smtp-Source: ABdhPJxcboJQz4zj/jrn/I6MMfY+ERW4BktFNHCx8rDURPWQQYaj4BwDV5HuRNIjdrhcwMxsVi+AVg==
+X-Received: by 2002:a17:90a:e7d1:: with SMTP id kb17mr2969544pjb.124.1638317489056;
+        Tue, 30 Nov 2021 16:11:29 -0800 (PST)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id 38sm943737pgl.73.2021.11.30.16.11.27
+        by smtp.gmail.com with ESMTPSA id pc10sm4176314pjb.9.2021.11.30.16.11.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 30 Nov 2021 16:11:27 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: Kees Cook <keescook@chromium.org>,
 	tools@linux.kernel.org
-Subject: [PATCH 4/5] patchwork-bot: Handle repo being a worktree
-Date: Tue, 30 Nov 2021 16:11:25 -0800
-Message-Id: <20211201001126.4106635-5-keescook@chromium.org>
+Subject: [PATCH 2/5] patchwork-bot: Create CACHEDIR if it is missing
+Date: Tue, 30 Nov 2021 16:11:23 -0800
+Message-Id: <20211201001126.4106635-3-keescook@chromium.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211201001126.4106635-1-keescook@chromium.org>
 References: <20211201001126.4106635-1-keescook@chromium.org>
@@ -49,80 +49,32 @@ List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3091; h=from:subject; bh=ZI+bdv5C4l5ULeF2KK5rA9tnNoMcnBAHJMRmVHeCsiE=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhpr2t40p33ROj5seEvkZzEOAPwy7Aw4aucrOXriG4 p7o9LqOJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYaa9rQAKCRCJcvTf3G3AJkiQD/ 4zbnc48tsUcY5b6VlGf93NMhNLwgN5w3SNE20aGdMb0/tUTB6OSX2cDjPr74BBp5jAgTDnWsh88Br/ q48XWx83CNvUKN7D9SCmmFHIoacFoW8E1Z9p/Ha8c7gC6A8tQxSo5Umc/NhNByZ6lnwzFsY3tW3l02 2ry9DNQ7VwmBEkeQtFBZMPPYVsOm0S4JFZtP2UTAPStoMvueS33CHPxVwlcZ8OHy7X9+XB2tXHymBC uo+L2rc0Ogb0fdMht1C9Qnzrl2XjBWntuMhnx+XdgFPEqvjqnGDsPBfgdO0eqw9tCPOJOFZPNYGSZf HLgl+4aKw310+HydyShJxh1tme2Q6wSBwoSgLNFM18QdH1N+gikYkvI0j2Hyj+SC2ib4eBsFTwTA9f uPvDMcvbRoNnYVplqLDTvLUcvtnKJVHYO3V63ADjLTDMkYF5h6mah3mcEtUGsTL0KC52uxv3qwHh8c Shpu1ppHgAD2okOLqoHUEbtr/DpQv7Macu23NugGZqRotD87WD2uF8l15vgTKr541oWpLNwGEB73s2 9O5xFhQCPYN56GVYjziW2F/VffyrMe/vvTgWaW7iPvS8+U1TLaIrO0hp/YixO2dlLwxy5I/nFIJhGx 8vzlh24/T1mw8s2vhD6BbuqjfnIr1iaYR6OQFieCHwZSgJmpzE6GKb2yVViA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=748; h=from:subject; bh=gYNuSa7CqDWoxRa1ApTz8/BbWHcKZPnU0x5DRNkf8Ro=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhpr2tPWQk95pGxYLnMC+fxBPRQPuNOBO57f6kdCaa GY/O3jGJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYaa9rQAKCRCJcvTf3G3AJs7uD/ 9x/C3ODaGesG6NUEKyRRiro3rlv1S1crKGm65Pyu8WbAIg3CVIjcdIIrqEw1j8sLN9z+M2a9wUq3Zl drm1jKGwJVeBq4ad4R9hasTUXOQe1zOUHayu2mW/5kFCfoQ485Z98cCHvrusyT4mdc61QD++6USX7B tZgoC1ffEfxgJIZruOXEytQuR5YqhjphMtdZ8Nd3d0VfcuhfMcTSebl1XcAkTEQT8pvB0vmfwKLg4N hSUWrMhcPddVXK06shTeGUaU8y0mbO3cOJ2TA2yINULFFO1MgnQMmMAh6o8JhwHlpHfKE7sfgB9d6u N2mWcB6BhBm+Nd55cH3NaM82JHcsMuL4HqMANwa8/hUxofOkiyoLhIxeW6rBQwkMPM0ZQuWJSYoIwr Z9eXFFCP7P2Z7KXK7rmntwpvinGIiTq39fz0OLW+xsNP+fpU8heBYcymMYLenddapqxDldkIZegVgi wcv6UIzIFi5pWWMfx71Tyf+540e+/gG3tCguEPndU+M/7uFpohjIUBfxodX4fNo0YHTSM4rIlBzGB3 G8ceIjEc/paWGDfz9zAtHMridAartuS8t4XxiVWhAMZgiEgZHsU3NUlhFefUMCvvc6Sobe+KV8Pgl7 qoaxcbJHIOFgnF43Q7NjLrkObMJlKCbzRQ6bc+DPTVIJfZnF0pYdg8Z/P0cg==
 X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
 
-Locate the real git location when operating on a worktree, allowing
-multiple pw.db files to be stored in a single top-level git repo.
+Create the CACHEDIR if it is missing (e.g. the first time
+git-patchwork-bot is executed).
 
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- git-patchwork-bot.example.yaml |  1 +
- git-patchwork-bot.py           | 27 +++++++++++++++++++++++++--
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ git-patchwork-bot.py | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/git-patchwork-bot.example.yaml b/git-patchwork-bot.example.yaml
-index c3f6c1ea3133..94ab334f5043 100644
---- a/git-patchwork-bot.example.yaml
-+++ b/git-patchwork-bot.example.yaml
-@@ -53,6 +53,7 @@ repos:
-     # For the notification emails
-     treename: 'khilman/linux-amlogic.git'
-     # Optional: limit checking to a single branch (instead of --heads)
-+    # This becomes a required setting if the repo path is a worktree.
-     #branch: 'origin/master'
-     # For the notification emails, must include %s
-     commitlink: 'https://git.kernel.org/khilman/linux-amlogic/c/%.12s'
 diff --git a/git-patchwork-bot.py b/git-patchwork-bot.py
-index fc4d9e384122..9be945d92a8a 100755
+index d1eac6c0c0df..dc10fd0effa9 100755
 --- a/git-patchwork-bot.py
 +++ b/git-patchwork-bot.py
-@@ -1054,8 +1054,28 @@ def pwrun(repo, rsettings):
-         logger.info('Could not get the latest ref in %s', repo)
-         sys.exit(1)
+@@ -1375,6 +1375,9 @@ if __name__ == '__main__':
+         cfgyaml = fh.read()
+     CONFIG = ruamel.yaml.safe_load(cfgyaml)
  
-+    dbpath = repo
-+    # If we're aimed at a worktree, move up from the ".git" file to
-+    # the worktree directory.
-+    if not os.path.isdir(dbpath):
-+        gitdir = open(dbpath).readline().strip()
-+        if not gitdir.startswith('gitdir: '):
-+            logger.info('Could not find git tree in %s', dbpath)
-+            sys.exit(1)
-+        gitdir = gitdir.split(' ', 1)[1]
-+        gitdir, worktree = os.path.split(gitdir)
-+        gitdir, category = os.path.split(gitdir)
-+        if category != "worktrees":
-+            logger.info('Could not find git worktree in %s', dbpath)
-+            sys.exit(1)
-+        # To store multiple pw.db files in a single .git directory,
-+        # add a suffix based on the repo treename.
-+        treename = rsettings.get('treename').replace('/', '_')
-+        dbpath = os.path.join(gitdir, f'pw-{treename}.db')
-+    else:
-+        dbpath = os.path.join(dbpath, 'pw.db')
++    if not os.path.isdir(CACHEDIR):
++        os.makedirs(CACHEDIR, exist_ok=True)
 +
-     # Do we have a pw.db there yet?
--    dbpath = os.path.join(repo, 'pw.db')
-     db_exists = os.path.isfile(dbpath)
-     dbconn = sqlite3.connect(dbpath, sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
-     c = dbconn.cursor()
-@@ -1295,10 +1315,13 @@ def check_repos():
- 
-     for repo in CONFIG['repos']:
-         fullpath = os.path.join(cmdargs.reposdir.rstrip('/'), repo.lstrip('/'))
--        if not os.path.isdir(fullpath):
-+        if not os.path.exists(fullpath):
-             logger.info('Repository not found: %s', repo)
-             continue
-         settings = CONFIG['repos'][repo]
-+        if not os.path.isdir(fullpath) and settings.get('branch', None) == None:
-+            logger.info('Worktree must specify "branch" setting: %s', repo)
-+            continue
-         logger.info('Processing: %s', repo)
-         pwrun(fullpath, settings)
- 
+     if cmdargs.housekeeping:
+         for _pserver, _sconfig in CONFIG['patchworks'].items():
+             for _pname in _sconfig['projects']:
 -- 
 2.30.2
 
