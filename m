@@ -1,113 +1,77 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2A92C99
-	for <tools@linux.kernel.org>; Wed,  1 Dec 2021 00:11:30 +0000 (UTC)
-Received: by mail-pg1-f179.google.com with SMTP id k4so11480749pgb.8
-        for <tools@linux.kernel.org>; Tue, 30 Nov 2021 16:11:30 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E59A2C9D
+	for <tools@linux.kernel.org>; Wed,  1 Dec 2021 00:11:29 +0000 (UTC)
+Received: by mail-pj1-f43.google.com with SMTP id p18-20020a17090ad31200b001a78bb52876so19567046pju.3
+        for <tools@linux.kernel.org>; Tue, 30 Nov 2021 16:11:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TQB4EdQwLW0dEuvfGy3zcM1aNhpWIPrjQOaB8Ydmn1w=;
-        b=YwEWOS5bFYL8XlF2paLSl5Rh/Xe9YoRNltcuujAu/CyXfPSSV+S4OHxRdTb8JTZnF2
-         0hpWBMkm9VcqEoaLOj10TaUFGsXt2+i8BMhNBBaySEc19Ws9ozWAsCVGnNYJGm7VbZlS
-         RrfAKHrtZDwaVF3Co1aWKHE6yodxJcQnpz1nw=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZkuVU66hyH11vnmSkfl5CEnCNwK4vK1mOFl16Y3N+LM=;
+        b=M/W98Dbp8+oCs5k+s/HvUETVDnwrqago4m25MeaK+soVWpDxr4g8/F/cTefz0X8+S6
+         UbR414d8JFlJFm+irPBrX6movezgMBbmWTLi13NjNIda4DTo9Us/XYe9LAVhkXv1NPM+
+         VuDn6IJ4I4UJzX6bCeijJNY1GcAljmg0uVVB4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TQB4EdQwLW0dEuvfGy3zcM1aNhpWIPrjQOaB8Ydmn1w=;
-        b=UeJ4NWXr3UkKccvE0igTPtX3onB7HsAzga9fHIgfbE7hG5D+1J24tR06eLLLcQ8G5M
-         u8GTyriAvUA/F2jVwUoTSlpax+W6qJ9i6GCM4WeC3YpxzXttmS4eQcxsoMXJ9iN4tSFV
-         l6fkx1P8hf8vCCqm60ePxT/ioAp0vPL2YKIy2WOSEDbt4CxAIcIig8Xw3QUR7Myy98OA
-         QG+9ZbHSxdDk4JUGf6wYs8edhHPQYfFlK80mjS5yaTTRl81Ry+TGSoVToi1zg3RJWwf/
-         hGaG1Yv2nkRwOFDfqO2Kxh3aqnwbWSWIIjbgVxV6+5/4sKtl592nk1lJY87fFQ0d7QTt
-         yNrw==
-X-Gm-Message-State: AOAM532X9LkNfYF6iW/w1KX//e8d5lguISRnSK01p7x3LHt5pG6Jn+YL
-	wTJ+237Cyyy7G8QcAU1cHqSvdg==
-X-Google-Smtp-Source: ABdhPJzAxitikgZ/FDyQOweW9wIu+KM5pmkxMRA5Qreihp6qD6eCpppJdco284CPyDEpnZGnhZJskA==
-X-Received: by 2002:a05:6a00:1349:b0:4a0:2f9:e3ab with SMTP id k9-20020a056a00134900b004a002f9e3abmr2361753pfu.80.1638317490081;
-        Tue, 30 Nov 2021 16:11:30 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZkuVU66hyH11vnmSkfl5CEnCNwK4vK1mOFl16Y3N+LM=;
+        b=J5di3+qKPJVpDU7b8Muu9ORxNHSnrnGc9uKiVOQZStG4dg49giimkQCyLnKbRIp+EQ
+         a1jMh+Dv/TAM8pfljEEfKAf3DVVHxrfTCTFxD6H+IDYz+n+K6Xl/+2EwnPIMCeqjCBbj
+         dLnLXWQzRDQQJtK4Np9PoOtuCm01cV/nZskHUDlViRdRhgwVgNijvjGrH891Mbmrbr2y
+         66qN0CcwEAhu4trS1WWwm8wLMBzOuidNMfWTS8VVGShTtBWy/gtvJY+rW455noA856dg
+         rSjiKGzbIQ3FqXZ+an5SeNA9YSQIcOMd6/s0knhKkdJTjZ0zvlIg8YkOJwCTCTYTqz26
+         YkvA==
+X-Gm-Message-State: AOAM530kJHsqNRuZ4kOCl81ZpXTF+nMb/YtuZR4QxdnDWPbul/CNYjCt
+	GQTheTX/EMYY6VlvR2yYOuHKjoOwiKaDRw==
+X-Google-Smtp-Source: ABdhPJxt1BkjYf9nHigRwTEnD+jN3fT7KEzlA8naj5FxHX6gWb+4WE0x4Ho0OUyASTDYPoH3uOH3mw==
+X-Received: by 2002:a17:903:11cd:b0:143:d220:fddb with SMTP id q13-20020a17090311cd00b00143d220fddbmr3132945plh.5.1638317488881;
+        Tue, 30 Nov 2021 16:11:28 -0800 (PST)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id d3sm21976994pfv.57.2021.11.30.16.11.28
+        by smtp.gmail.com with ESMTPSA id u22sm24032852pfk.148.2021.11.30.16.11.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 16:11:29 -0800 (PST)
+        Tue, 30 Nov 2021 16:11:27 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: Kees Cook <keescook@chromium.org>,
 	tools@linux.kernel.org
-Subject: [PATCH 5/5] patchwork-bot: Allow initial database to skip recent commits
-Date: Tue, 30 Nov 2021 16:11:26 -0800
-Message-Id: <20211201001126.4106635-6-keescook@chromium.org>
+Subject: [PATCH 0/5] patchwork-bot: Use worktrees for repos
+Date: Tue, 30 Nov 2021 16:11:21 -0800
+Message-Id: <20211201001126.4106635-1-keescook@chromium.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211201001126.4106635-1-keescook@chromium.org>
-References: <20211201001126.4106635-1-keescook@chromium.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2201; h=from:subject; bh=1RAuWS5nDZVb4yoZ+KhnC3fNNEabyAthcdHbBgRHj5o=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhpr2tE/IOrk+JZjIGbkZ+HdS/3PzVKoVHksKK4HxZ rCNq0TaJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYaa9rQAKCRCJcvTf3G3AJmN1D/ 9tVeBeG29wJP47uA/Hj0pHzdehqSrewlwr82F1kUe+pRfnXULHepnxxppBeMGmKxvDtN1Kj//hCOb/ TSi9qulQ+f6KRKc3wj1GJWltfOvHFNWMNkXv4MwHsplc1XyTzXVm0B7YhlxKonXT5qy23bG35Jwrig 9WwzRM1AlduTwxfmCfGu2dcTCCLkp10of05vZ3nJ5sZ8R1jbNG8bhuYwUnK/al32OAhyH4VErR4nAN u5aX8epSl4FDFMIHsnSTVXmTR2njVU9mCRamdfGzdYLS61zE0pdZYxgifQa6PYWE+Ms296wCQYUw31 xZnkW8aCCnTITTrvCsvJOxvRq12+qUBQhjFO9PttC4z1rkjn7xI46YfLYBnYWYn3eQPJAoRI1sjpVO Ve5AXDjK2+HTERbd5XTpeXey3SSC86jiC3ms398reFSrTD30VlZTE1I6CgpDYBvRL6QQ0y9Ymn9sjW EFbS6oi+f4kw+JQIKvplHnurkqmk+hI4houb+0e6bTYJf7gLbSwOCjLUpaddbfG11KhK1lvFNK7fBg IqnGKr25JMZ3skutrLJp+52lnf4OoPoforwN20HMl21RagUkaHdDun7qYZDUQ6vbpoJVs/QnR4S6uA TULvJnTHGCWN9Mi6KH7SdIEcE7DcEaYcv/o5NLnpx4evHygCJx9/Xqp/Y5nw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=716; h=from:subject; bh=EZfVBPSemhrZ2bKED1OqZqFRIe6heoxfih6QgqA+NOg=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhpr2s4k3STxnPIY2VYbqjpsqyYlistE5mklX+Hlti dZoZ712JAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYaa9rAAKCRCJcvTf3G3AJvKrD/ 0XM4kHK9qiD2V8eBhwbzcfSjB19dSOJtxwmJtOGrKiLMmq8alVNeHz4/CApDeq77Mhe4nH8pZ2OcJh P/MLy0BJia/qI/NzLDD2VA06U3tQl/LMoG4Uf30H9OSgYTBmQy7ePy5e77veb2rPc5stm8X0RyNyIy Tyr2Ktn6NStqzXjeYr0W9alJv9iHZfaZ5yOdg9tkv/ivSnhi7UKGePnqytT7EILDUHWfE1T/fqSyDD kauKTwMDplXKk5KR9g6T8FcpvNkWSZCz/QdRSJnDr8Iy6sHKnK8V70H57LO6KgdBoHfOO+wDmEXwk0 sbn4JDUXuSUA9d8m2f44fx8vPsLFyTBVmKkIbyfQdHxb5yVMCgHMO5/WHVPFgfAgqpVQ1s+k7kqAw3 zA8RnIeIuz+16F9YyTaW8t8zpGcOUeJBMMZrMVDEk8zw6J7Jg/RdPdJCrhHwzhZw5xjT35P+myYcrG 4XU8bC9fm2EE0dJtSRpNmqR2F/+dgDaeaJH+Xx8qVlH5/v8iUZC5pHPz4ajLlFVNUa8xQPl8JW6XK+ HJQHZW8+N44xttaK9nUsCh0Q0zy77/a3MJmXRcS2X+oqF2OOjY8O40gQEIB0GNQWMInt1yDYBZhhSG dUvv+BG0SBQYgP44XYlI+qi2N/uRYGuHPcq1EynrMDfw58J/Z6j2SS8FWXSQ==
 X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
 
-To test patchwork-bot, it is helpful to create the initial database
-without a certain number of the latest commits, so that on the next
-execution, the "missing" commits will appear new, and will be used for
-processing state changes. Add the --ancestors argument (defaulting to
-0, the existing behavior), to provide this ability.
+Hi,
 
-Signed-off-by: Kees Cook <keescook@chromium.org>
----
- git-patchwork-bot.py | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+To use patchwork-bot locally, I wanted to use my existing worktrees for
+various repos. This makes a few small improvements and then adds logic
+to deal with specifying branchs and operating in worktrees.
 
-diff --git a/git-patchwork-bot.py b/git-patchwork-bot.py
-index 9be945d92a8a..2ebe5b4e88e4 100755
---- a/git-patchwork-bot.py
-+++ b/git-patchwork-bot.py
-@@ -409,13 +409,17 @@ def git_run_command(gitdir, args, stdin=None):
-     return output
- 
- 
--def git_get_repo_heads(gitdir, branch):
-+def git_get_repo_heads(gitdir, branch, ancestry=None):
-     refs = list()
-     lines = git_get_command_lines(gitdir, ['show-ref', branch])
-+    if ancestry == None:
-+        ancestry = ''
-+    else:
-+        ancestry = f'~{ancestry}'
-     if lines is not None:
-         for line in lines:
-             (commit_id, refname) = line.split()
--            refs.append((refname, commit_id))
-+            refs.append((refname, commit_id + ancestry))
-     return refs
- 
- 
-@@ -1082,7 +1086,9 @@ def pwrun(repo, rsettings):
- 
-     if not db_exists:
-         db_init_pw_sqlite_db(c)
--        db_save_repo_heads(c, git_heads)
-+        initial_git_heads = git_get_repo_heads(repo, branch=rsettings.get('branch', '--heads'),
-+                                               ancestry=cmdargs.ancestors)
-+        db_save_repo_heads(c, initial_git_heads)
-         # Exit early
-         dbconn.commit()
-         return
-@@ -1353,6 +1359,8 @@ if __name__ == '__main__':
-                         help='Cache directory to use instead of ~/.cache/git-patchwork-bot')
-     parser.add_argument('--domain', default=None,
-                         help='Domain to use when creating message-ids')
-+    parser.add_argument('--ancestors', default=None,
-+                        help='During initial database creation, consider this many ancestor commits as fresh')
- 
-     cmdargs = parser.parse_args()
- 
+Thanks!
+
+-Kees
+
+Kees Cook (5):
+  patchwork-bot: Note which actions are part of "housekeeping"
+  patchwork-bot: Create CACHEDIR if it is missing
+  patchwork-bot: Allow limiting heads to single branch
+  patchwork-bot: Handle repo being a worktree
+  patchwork-bot: Allow initial database to skip recent commits
+
+ git-patchwork-bot.example.yaml |  3 ++
+ git-patchwork-bot.py           | 50 ++++++++++++++++++++++++++++------
+ 2 files changed, 45 insertions(+), 8 deletions(-)
+
 -- 
 2.30.2
 
