@@ -1,45 +1,45 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E59A2C9D
-	for <tools@linux.kernel.org>; Wed,  1 Dec 2021 00:11:29 +0000 (UTC)
-Received: by mail-pj1-f43.google.com with SMTP id p18-20020a17090ad31200b001a78bb52876so19567046pju.3
-        for <tools@linux.kernel.org>; Tue, 30 Nov 2021 16:11:29 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D15A2C82
+	for <tools@linux.kernel.org>; Thu,  2 Dec 2021 23:38:38 +0000 (UTC)
+Received: by mail-pl1-f178.google.com with SMTP id n8so850863plf.4
+        for <tools@linux.kernel.org>; Thu, 02 Dec 2021 15:38:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ZkuVU66hyH11vnmSkfl5CEnCNwK4vK1mOFl16Y3N+LM=;
-        b=M/W98Dbp8+oCs5k+s/HvUETVDnwrqago4m25MeaK+soVWpDxr4g8/F/cTefz0X8+S6
-         UbR414d8JFlJFm+irPBrX6movezgMBbmWTLi13NjNIda4DTo9Us/XYe9LAVhkXv1NPM+
-         VuDn6IJ4I4UJzX6bCeijJNY1GcAljmg0uVVB4=
+        bh=mt8/VFrTpqWz2he9wXvGKgslxpD7wQ3TkMixAkjOf40=;
+        b=E/M/HBKcHrxCJJ8UqAe287GidOvhh0GYF4Qu6OJgvM5lN+5NhNErZ8Y5nLBdbFDwbN
+         r5rWItnf/5R3XbGxEGcZ5t15F8AE0H1Qfj8mj0Fwaqy8+HaYw7p6YY2VqtCJXhoXOs9h
+         PIPXmqe18ZRvI6ytL97445xZ8C7d+ANm8cFb8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ZkuVU66hyH11vnmSkfl5CEnCNwK4vK1mOFl16Y3N+LM=;
-        b=J5di3+qKPJVpDU7b8Muu9ORxNHSnrnGc9uKiVOQZStG4dg49giimkQCyLnKbRIp+EQ
-         a1jMh+Dv/TAM8pfljEEfKAf3DVVHxrfTCTFxD6H+IDYz+n+K6Xl/+2EwnPIMCeqjCBbj
-         dLnLXWQzRDQQJtK4Np9PoOtuCm01cV/nZskHUDlViRdRhgwVgNijvjGrH891Mbmrbr2y
-         66qN0CcwEAhu4trS1WWwm8wLMBzOuidNMfWTS8VVGShTtBWy/gtvJY+rW455noA856dg
-         rSjiKGzbIQ3FqXZ+an5SeNA9YSQIcOMd6/s0knhKkdJTjZ0zvlIg8YkOJwCTCTYTqz26
-         YkvA==
-X-Gm-Message-State: AOAM530kJHsqNRuZ4kOCl81ZpXTF+nMb/YtuZR4QxdnDWPbul/CNYjCt
-	GQTheTX/EMYY6VlvR2yYOuHKjoOwiKaDRw==
-X-Google-Smtp-Source: ABdhPJxt1BkjYf9nHigRwTEnD+jN3fT7KEzlA8naj5FxHX6gWb+4WE0x4Ho0OUyASTDYPoH3uOH3mw==
-X-Received: by 2002:a17:903:11cd:b0:143:d220:fddb with SMTP id q13-20020a17090311cd00b00143d220fddbmr3132945plh.5.1638317488881;
-        Tue, 30 Nov 2021 16:11:28 -0800 (PST)
+        bh=mt8/VFrTpqWz2he9wXvGKgslxpD7wQ3TkMixAkjOf40=;
+        b=VAhxQ9NBAl8Ndj8RCDi4rsF1OEFMsdITPYzDvo6waWYviu0gIWxuJPvFMUbh921x2q
+         Apo/top/slnarnXXViidAP1AItevLmylgKJQ3MGqIV20zB8Mtf7r7h1iJkuh5hb/+iat
+         AfoZ5donkydbwkb2bSs0efGRta1FLylfZjOAImiYE3e4xFf3hhwi3qttWiRdJEZWcFU2
+         Jvb28CBfsYuf2Y7WcgamYqfd7WSELeiz0rAqaQoJRy9pMEwX+ZxERgN8AKub8A29V47f
+         bg0xqUHBIZFhMPvg5mVsUkS00FW56ubQ9h8gshGEYWw7DDF4sucgResmZFZYB95l3nE4
+         3g1Q==
+X-Gm-Message-State: AOAM532twYL15TK0VPFdhxVN2IwbVytR720NKzt2NLancXC8e9CY/Y9g
+	fWprbkZyhCAvxD6RweO+z6GLK0OTUsoTtw==
+X-Google-Smtp-Source: ABdhPJyQq+QoDHAg6Ra0R0SYxtWeWKZf6olVX8iP6kDq7g0qtIcRo6NOzHspn/edRtiJeHT1p9P+mg==
+X-Received: by 2002:a17:902:9888:b0:142:8731:4b55 with SMTP id s8-20020a170902988800b0014287314b55mr18679638plp.51.1638488318562;
+        Thu, 02 Dec 2021 15:38:38 -0800 (PST)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id u22sm24032852pfk.148.2021.11.30.16.11.27
+        by smtp.gmail.com with ESMTPSA id d1sm866397pfv.194.2021.12.02.15.38.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 16:11:27 -0800 (PST)
+        Thu, 02 Dec 2021 15:38:38 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: Kees Cook <keescook@chromium.org>,
 	tools@linux.kernel.org
-Subject: [PATCH 0/5] patchwork-bot: Use worktrees for repos
-Date: Tue, 30 Nov 2021 16:11:21 -0800
-Message-Id: <20211201001126.4106635-1-keescook@chromium.org>
+Subject: [PATCH 0/2] patchwork-bot: Ignore empty context lines
+Date: Thu,  2 Dec 2021 15:38:34 -0800
+Message-Id: <20211202233836.2024510-1-keescook@chromium.org>
 X-Mailer: git-send-email 2.30.2
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
@@ -47,30 +47,25 @@ List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=716; h=from:subject; bh=EZfVBPSemhrZ2bKED1OqZqFRIe6heoxfih6QgqA+NOg=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhpr2s4k3STxnPIY2VYbqjpsqyYlistE5mklX+Hlti dZoZ712JAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYaa9rAAKCRCJcvTf3G3AJvKrD/ 0XM4kHK9qiD2V8eBhwbzcfSjB19dSOJtxwmJtOGrKiLMmq8alVNeHz4/CApDeq77Mhe4nH8pZ2OcJh P/MLy0BJia/qI/NzLDD2VA06U3tQl/LMoG4Uf30H9OSgYTBmQy7ePy5e77veb2rPc5stm8X0RyNyIy Tyr2Ktn6NStqzXjeYr0W9alJv9iHZfaZ5yOdg9tkv/ivSnhi7UKGePnqytT7EILDUHWfE1T/fqSyDD kauKTwMDplXKk5KR9g6T8FcpvNkWSZCz/QdRSJnDr8Iy6sHKnK8V70H57LO6KgdBoHfOO+wDmEXwk0 sbn4JDUXuSUA9d8m2f44fx8vPsLFyTBVmKkIbyfQdHxb5yVMCgHMO5/WHVPFgfAgqpVQ1s+k7kqAw3 zA8RnIeIuz+16F9YyTaW8t8zpGcOUeJBMMZrMVDEk8zw6J7Jg/RdPdJCrhHwzhZw5xjT35P+myYcrG 4XU8bC9fm2EE0dJtSRpNmqR2F/+dgDaeaJH+Xx8qVlH5/v8iUZC5pHPz4ajLlFVNUa8xQPl8JW6XK+ HJQHZW8+N44xttaK9nUsCh0Q0zy77/a3MJmXRcS2X+oqF2OOjY8O40gQEIB0GNQWMInt1yDYBZhhSG dUvv+BG0SBQYgP44XYlI+qi2N/uRYGuHPcq1EynrMDfw58J/Z6j2SS8FWXSQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=467; h=from:subject; bh=yaLYDVYTUWm3bln0T6HmGHjbJkKwxPSdQS7lhZP+4Uo=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhqVj7BFp9XgCjLxB2eZBFsJj+FmTKtLa3rkRg1WWU 1LA1jFqJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYalY+wAKCRCJcvTf3G3AJtfnD/ 9MQbaPpSI2+F7JVzDoi4KeFJdVTF77uH3Y5ukOVz/9K5wO+NiBurecxyV81XTD5ZF35rU9/TDACouo ocnDGVvxtM3uNfFfG7Z6hZVZIZOJe/VimaeTj08PoJ5Nox3HQ0PpqPkxkO1Ts49mEs1UYKyg88MYnk 6c7A1qW/WCPmpfRQ8I/cW8Ao2N0hSJ69vIjG8K4CKPzLm8TIxX5JUdPb4V5KZrQN8M1rHrkLkzPEE+ 1Wxwc1CAfYSdpAlf+OTeWpip83Wp68wfpVCGIuLaS/bHdb9IqcsSwy/iWygFoYIr1cYSQ1m+NzPr8c VWbh4L5SJ98qgNvOp+5eOohmU3Gmd9TW/m0xDWv2SnBpk3CixKT8X6i3DRUoUbk6F06gTyRwQxBDw+ Ib6AZfMRhcC5GbxZ0+Z72+5c9JMtZP6wp4NtQya7HmjWNVNP/dgxdGLV8xGPXltxauh7ib0GBvLujL ciNIqOinm+jG622nuLWqwZEZ/kVI3p4hy/XaJuJz8B3J7kxVlgnPVUOt4d0aKiRuwFhd8lQ/Z9IZgK e6eCTQWNzfUhsgLgMQ8AhuDrjAT4lljJjNeXtpukU0FlzCZDUrwZ3yszhqKPVAh7+LMtKWpzLvvF7G UIi5cK/QH2Ks7e7cx91Rd/KjHZWuLRhBRzVRoCXuPVcsmpw2OQ+IBTs1fdJw==
 X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
 
 Hi,
 
-To use patchwork-bot locally, I wanted to use my existing worktrees for
-various repos. This makes a few small improvements and then adds logic
-to deal with specifying branchs and operating in worktrees.
-
-Thanks!
+I had several patches that seemed to be eluding the automatic state
+changing even though they appeared in mainline. This appears to have
+been caused by a mismatch in whitespace interpretation between git
+and patchwork.
 
 -Kees
 
-Kees Cook (5):
-  patchwork-bot: Note which actions are part of "housekeeping"
-  patchwork-bot: Create CACHEDIR if it is missing
-  patchwork-bot: Allow limiting heads to single branch
-  patchwork-bot: Handle repo being a worktree
-  patchwork-bot: Allow initial database to skip recent commits
+Kees Cook (2):
+  patchwork-bot: Ignore empty context lines
+  patchwork-bot: Add --pwhash for debugging
 
- git-patchwork-bot.example.yaml |  3 ++
- git-patchwork-bot.py           | 50 ++++++++++++++++++++++++++++------
- 2 files changed, 45 insertions(+), 8 deletions(-)
+ git-patchwork-bot.py | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
 -- 
 2.30.2
