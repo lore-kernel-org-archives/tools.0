@@ -1,45 +1,45 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1BD29CA
-	for <tools@linux.kernel.org>; Thu,  2 Dec 2021 23:38:38 +0000 (UTC)
-Received: by mail-pj1-f43.google.com with SMTP id x7so988756pjn.0
-        for <tools@linux.kernel.org>; Thu, 02 Dec 2021 15:38:38 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B38C2CA2
+	for <tools@linux.kernel.org>; Thu,  2 Dec 2021 23:38:39 +0000 (UTC)
+Received: by mail-pj1-f45.google.com with SMTP id nh10-20020a17090b364a00b001a69adad5ebso1022717pjb.2
+        for <tools@linux.kernel.org>; Thu, 02 Dec 2021 15:38:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nCR8fkZR/KTLt029qLEq1YLNY+sRb89/AYMGI6nGFmE=;
-        b=h7mlfuqGk1uXnCrVicIIRPLNxF3+W1AxT9PvKZsHJpIvnxi/5CAyGh2piASi20M/Zr
-         12W1ytB1p5maayXr+WGE7M6xVZqEjj03m+lrLR/BTh2gWyKJf85yG7QwnTKcdKSyICfA
-         I29pGZAWXtQtUjmIpumzFiBpvOfdqmgeEmJrc=
+        bh=Z/73Fj8kV6CEngDOvN7ARtKwVzWTBNBWPci3GT6s2jg=;
+        b=biu4M4D/034rb9cszFeDLprh9LySmw5liuiq/QaxD7mqkgyY57oa2eOD1H90DE4EmB
+         RkuxDo99LMuwU6OwM+Ep+RMqrTJQvXJiZo0S/rmM6GM+cgGMIEJDTRaMEL7wTK6MhUQO
+         y+lzyeciziMbkJLfFaQyIHuOHZI2z8Te2QWq0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nCR8fkZR/KTLt029qLEq1YLNY+sRb89/AYMGI6nGFmE=;
-        b=Z5TocWtj2IaK+/uMFc8ZxvB7OHeVNCdSv8W1H38lQH6NmHyKU83aEngeqCEtNBrS/C
-         jNavBK5nl/IxmEC/ZMSOlVbms1OiN1bSd7IuBll/cL2tch5rejTHOxwvSee9ZeJJmFUk
-         UKi0TRD9ag0Qm5nUpsLd2xVSY/3eb6RqwrQmgkeiveLIZC08oWVK+t2qqvwJkUQJUHTE
-         QCCs9yvikSPpPCb9AEvQyXm+XE0EvXxxXhtv+MnhToISa3WjAjObWzDr4gSNj0JbgltS
-         Nk2NuG8EfsYbywbtTya9vEXHzFQ917t/cj6is0XhJdasa0QtI9E9dEdyFw+trIZbhvfS
-         YejQ==
-X-Gm-Message-State: AOAM5310iYUf1TbepWuijRY+bvxn/p7VpoX8t+wclZ9WAPUJniA983k3
-	YkcRJ/t88bicaznesUykU4h1BJVQlcJRvQ==
-X-Google-Smtp-Source: ABdhPJxR7QYjO/wdmQ3ll1mDXu40kZDduHQCgwW9oH87L4U1gZEf3czXVEB3QkIHLKnYty+6DzItBA==
-X-Received: by 2002:a17:902:9b8f:b0:142:7999:67fb with SMTP id y15-20020a1709029b8f00b00142799967fbmr18678740plp.24.1638488318450;
+        bh=Z/73Fj8kV6CEngDOvN7ARtKwVzWTBNBWPci3GT6s2jg=;
+        b=D4Zvav76BQ4J7sPohUqp22g4d/TOPjaCdHtk2icOwXmjoSQNwNGcFalS2HzXN1Chvv
+         wf8hktT4qtS7XLz75AtxmtZG6eQ2GIx8beRisaUXYJWFsr/WdF05NCLHRzgUz5ARY/sN
+         l9qwX1wLHmKVk4X1h7FbWOBrqEMGfhZfcpOIU0KrkdjlCSVg6UJiaL657dP+GNVxT1Yw
+         TjE7coyzsll8qhlYDan+FljMflut11ikr0x6JNgPxNMumOi8ml3b6Fs5sfjiPxMn4UaG
+         6/hTJz37Aavs6IGLrRNkP3IFVKstgu/pi4ySO8GmW3pQ81pHR+ZGvv/jL5O5jtNobLSD
+         7clQ==
+X-Gm-Message-State: AOAM532Lby4OC9YSQAt0r8ipEJQt3DdvJJ1kwdyIzI0gaEWHhw758YaR
+	cbpXV+Z7e9AMeCXz8YrSaFH5VA==
+X-Google-Smtp-Source: ABdhPJyLzUmkLo3VfWVS6rW652XAlh0nj2jhLsf8DkrbYP3a6Xfem5OFPe4raAi7fWtHf4GIUilNTQ==
+X-Received: by 2002:a17:902:b411:b0:143:6fe8:c60e with SMTP id x17-20020a170902b41100b001436fe8c60emr18668707plr.41.1638488318709;
         Thu, 02 Dec 2021 15:38:38 -0800 (PST)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id q1sm841823pfu.33.2021.12.02.15.38.38
+        by smtp.gmail.com with ESMTPSA id 16sm573621pgu.93.2021.12.02.15.38.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 02 Dec 2021 15:38:38 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: Kees Cook <keescook@chromium.org>,
 	tools@linux.kernel.org
-Subject: [PATCH 1/2] patchwork-bot: Ignore empty context lines
-Date: Thu,  2 Dec 2021 15:38:35 -0800
-Message-Id: <20211202233836.2024510-2-keescook@chromium.org>
+Subject: [PATCH 2/2] patchwork-bot: Add --pwhash for debugging
+Date: Thu,  2 Dec 2021 15:38:36 -0800
+Message-Id: <20211202233836.2024510-3-keescook@chromium.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211202233836.2024510-1-keescook@chromium.org>
 References: <20211202233836.2024510-1-keescook@chromium.org>
@@ -49,53 +49,59 @@ List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1715; h=from:subject; bh=ktqmsVg/vyRZ5SA96OeXlHIa+wpPkJwiS3JVVioCwpI=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhqVj7TxmiAxBlLfdtdDJ42xrXLI6tkNaQTQHIHrqA 1Tg7YLWJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYalY+wAKCRCJcvTf3G3AJqr0D/ 0SzdJtRXrn4eGsLgiAhrQ7SjE3IuyhXSFga2JgG2q4Hsj9Rt/IHuVbdDmuJZzRqlCC5/lQlYCmF2cx mIS82d7xL4GDGEiHzEefhrERW30aImsoXeMPpK3mknI0ZgXYsyZhhpwLRj+XxrCuaQm76lsozV984m VTQlwnyxrCM1m4Axhr70U9MlTDAYPVXPrZDDDSqaJUn72EbmbnpQrAS8VgaQByyF1aFg6j8RY1tkm1 FsF8LrRUuYODOq4CiBDU7K43IMYsNjHddAPo6Cb+2hsiXPpVHZDp6//pFI74RBsWieZPalJZhCNepf fo+6DpMAUkco83HIERTPyS+w41eb0R4KcyHxrro5xuctNcmEHAs/RA4noQIQb8DqJhvLBC2mxjsU0T IpdWoTTEex/XTmixC58Mro9cCe84vaOlu11WZbE0SxIhplwZVZAbG9432mCNeuJgmkN9z0LUFjzYeS k/+AuNIc/hqrzKrY0eDQWOjh/kxhEBls97PE0/S0bwtMSptgN6QCz6ZgYxIirMU2n16HLwodb7oWtN AegtiNyk0IScWLWJI+bocSQpw1CNUYLtfcp5i/q98XK8xQZfBUJeLBNf4u7Svyz8VgRFYgA/Juvs+6 F01r4fzAHZKlmwszXFLLU6gPUPAWxeEtbY6A5WjcQcTmhkzBoW0NKRUbRHHQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2220; h=from:subject; bh=/h12iYkGuAjtoZBLjF5dQQrXIyCDfnCdl8yfaeO7Iv4=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhqVj7euXN7Mg6ckMciiI5Ilh3FJoMrn2IBS761P9Q oMHHrCeJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYalY+wAKCRCJcvTf3G3AJrgDD/ 9Fxj0mU+HFPa3y/gdMziRIqe8jP3VEjexiKQESmJpalueQS9oc/1v3xfdh5FbFnUfL3UVuCdXNt25o LO4blgo6cMnwUfgaZfgC2emfeadZFFxDaasoQgeD8flTbNblTIu3N1UoSmL83QsDwXUqB7pX2EqwG6 DQ6k0jvhfqImvMo0We4Kz8paVEB2TYdZTGsrAoALZwqA9rd7/fsLvX22KOMIidDQiynipOjOK6djZr vFg8opnbInFZnyB+gMaWeSLzUPc68ED/rGtZIbOeNQmfS2XiTbq+UicaBO6shrg11TOsGxbBShjp0e khKce6BFzMfa2q3kI3RJs1mEnmWrPiq855RHonOddx/gYKsG3cWm63YJsO7eKcw72VGO8cSOoiT2Ib ePPqL9ksR5Zi+EUtaajb/OQWAZMqVkRtiuKpDfoLnocSyjRnSOvsHTkvoP4MsyjU58zHvxa6Q0P1jp QvOxYKAV8BMnWPeLAl25GeFqZGBV9L75ykY9ImnLSRNn+CX+Au0fn97AYxddLFKrsu0GH+vAwXlhER 6NWvNGqZIr3cA5v5tBaHQuAu2xyens5mDg5af0ScHlTjEgn91rdje9o9Jqm6BTBEoT8P1iu1PBMDqg HRgD6es4ji9ttFnXJhY33KQmTD62cU8yMRo93Mr7QyKlDOQhN3mXHCrjnReQ==
 X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
 
-It seems that there is some mismatch in diff output (or storage?) between
-git and patchwork under conditions I haven't figured out (MUA or MTA
-whitespace stripping?): patchwork appears to ignore empty context lines
-(i.e. a line that is only a single space). As a result, the patchwork
-hash will not match, and commits will not be identified in patchwork.
-
-As an example of a commit in upstream that patchwork-bot cannot locate
-in patchwork due to a different hash, due to the differing empty context
-lines:
-
-$ MSGID=20210911102818.3804-1-len.baker@gmx.com
-$ wget -qO- https://patchwork.kernel.org/project/linux-hardening/patch/$MSGID/raw/ | \
-	grep '^ $' | wc -l
-0
-
-$ SHA=f11ee2ad25b22c2ee587045dd6999434375532f7
-$ git diff ${SHA}~..${SHA} | \
-	grep '^ $' | wc -l
-2
-
-Teaching patchwork-bot to ignore empty context lines allows pwhashes to
-match in these cases, which lets those patches get located again.
+Finding a 2-character whitespace difference between patches with different
+patchwork hashes strained my sanity, so I want to keep the tooling I
+built to track it down. Using "--pwhash PATCH-ID", patchwork-bot will
+compare the given patch in patchwork (and its hash) against the diff
+from stdin (and its hash).
 
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- git-patchwork-bot.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ git-patchwork-bot.py | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/git-patchwork-bot.py b/git-patchwork-bot.py
-index 2ebe5b4e88e4..4e10385de629 100755
+index 4e10385de629..980928cf7b60 100755
 --- a/git-patchwork-bot.py
 +++ b/git-patchwork-bot.py
-@@ -528,7 +528,9 @@ def get_patchwork_hash(diff):
-             line_nos = list(map(fn, hunk_match.groups()))
-             line = '@@ -%d +%d @@' % tuple(line_nos)
-         elif line[0] in prefixes:
--            # if we have a +, - or context line, leave as-is
-+            # if we have a +, - or context line, leave as-is, except blank lines
-+            if line == ' ':
-+                continue
-             pass
-         else:
-             # other lines are ignored
+@@ -1363,6 +1363,8 @@ if __name__ == '__main__':
+                         help='Domain to use when creating message-ids')
+     parser.add_argument('--ancestors', default=None,
+                         help='During initial database creation, consider this many ancestor commits as fresh')
++    parser.add_argument('--pwhash', default=None, type=int, metavar='PATCH-ID',
++                        help='Debug pwhash mismatches. Compare patchwork hash of diff from stdin to patch id')
+ 
+     cmdargs = parser.parse_args()
+ 
+@@ -1411,6 +1413,24 @@ if __name__ == '__main__':
+     if not os.path.isdir(CACHEDIR):
+         os.makedirs(CACHEDIR, exist_ok=True)
+ 
++    if cmdargs.pwhash:
++        diff = sys.stdin.read()
++        pwhash = get_patchwork_hash(diff)
++        print(pwhash)
++        for pw in CONFIG['patchworks']:
++            print(f"Patchwork: {pw}")
++            for pname, psettings in CONFIG['patchworks'][pw]['projects'].items():
++                print(f"Project: {pname}")
++                project, rm, rpc, pconfig = project_by_name(pname)
++                project_id = project['id']
++                print(get_patchwork_patches_by_project_id_hash(rpc, project_id, pwhash))
++                print('-------')
++                p = rm.get_patch(cmdargs.pwhash)
++                pwdiff = p.get('diff')
++                print(pwdiff)
++                print(get_patchwork_hash(pwdiff))
++        sys.exit(0)
++
+     if cmdargs.housekeeping:
+         for _pserver, _sconfig in CONFIG['patchworks'].items():
+             for _pname in _sconfig['projects']:
 -- 
 2.30.2
 
