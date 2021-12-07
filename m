@@ -1,55 +1,39 @@
-Received: from c8.hpms1.jp (c8.hpms1.jp [183.90.183.38])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from valley-kogyo.jp (valley-kogyo.jp [210.150.59.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB76B2C80
-	for <tools@linux.kernel.org>; Sun,  5 Dec 2021 08:16:23 +0000 (UTC)
-Received: (qmail 963975 invoked by uid 89); 5 Dec 2021 17:09:42 +0900
-Received: from unknown (HELO www.izumosoba.jp) (info@izumosoba.jp@183.90.183.38)
-  by c8.hpms1.jp with SMTP; 5 Dec 2021 17:09:42 +0900
-Date: Sun, 5 Dec 2021 17:09:42 +0900
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CDC32CAE
+	for <tools@linux.kernel.org>; Tue,  7 Dec 2021 20:46:55 +0000 (UTC)
+Received: (qmail 23567 invoked by SAV 20211207.003 by uid 30700001); 8 Dec 2021 05:40:12 +0900
 To: tools@linux.kernel.org
-From: =?UTF-8?B?5pyJ6ZmQ5Lya56S+5Ye66Zuy44Gd44Gw?= <info@izumosoba.jp>
-Reply-To: info@izumosoba.jp
-Subject: =?UTF-8?B?44GK5ZWP44GE5ZCI44KP44Gb44GC44KK44GM44Go44GG44GU44GW44GE44G+?=
- =?UTF-8?B?44GX44Gf?=
-Message-ID: <89074a7e8873be0167d93509399ebfad@www.izumosoba.jp>
-X-Mailer: WPMailSMTP/Mailer/smtp 1.4.2
+Subject: =?ISO-2022-JP?B?GyRCJCpMZCQkOWckbyQ7JCQkPyRAJC0kXiQ3JEYkIiRqJCwkSCQmJDQkNiQkJF4kOSEjGyhC?=
+Date: Tue, 7 Dec 2021 20:40:12 +0000
+From: =?ISO-2022-JP?B?GyRCM3Q8MDJxPFIlUCVqITw5KTZIGyhC?= <support@valley-kogyo.jp>
+Message-ID: <370e6f40ae9bfb82e871999914c04a7e@valley-kogyo.jp>
+X-Priority: 3
+X-Mailer: PHPMailer 5.2.4 (http://code.google.com/a/apache-extras.org/p/phpmailer/)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-2022-JP
 
-お問い合わせありがとうございました
+$B"($3$N%a!<%k$O<+F0JV?.%a!<%k$G$9!#(B
 
-メッセージ本文
-※こちらのメールは自動的にお送りしています。
-本メールに対して返信なさらないようにお願い致します。
-
-❤️ Sue want to meet you! Click Here: http://bit.do/fSMVS?g8dd ❤️様
-
-この度はお問い合わせいただきありがとうございます。
-以下の内容にて受け付けました。
-
-【お客様情報】
---------------------------------------------------------------------------
-
-お名前
-❤️ Sue want to meet you! Click Here: http://bit.do/fSMVS?g8dd ❤️
-
-メールアドレス
-tools@linux.kernel.org
-
-電話番号
-807682615509
-
-お問い合わせ内容
-8sqvcp60
+?? Cheryl want to meet you! Click Here: http://bit.do/fSPrf?17p ?? $B8fCf(B
+76v780rl $BMM(B
 
 
---------------------------------------------------------------------------
-上記内容を確認後、追ってメールにてご連絡させていただきます。
+$B$3$NEY$O!"3t<02q<R%P%j!<9)6H$X$*Ld$$9g$o$;$$$?$@$-$^$7$F(B
+$B@?$K$"$j$,$H$&$4$6$$$^$7$?!#(B
+
+$B$*Ld$$9g$o$;$N7o$K$D$-$^$7$F$O!"@^$jJV$7!"J@<RC4Ev<R$h$j(B
+$B$4O"Mm$r$5$;$F$$$?$@$-$^$9$N$G!"$h$m$7$/$*4j$$$$$?$7$^$9!#(B
+
+-------------------------------------------------------------------------------------
+$B3t<02q<R%P%j!<9)6H(B
+TEL: 03-3775-2311
+FAX: 03-3774-1697
 
