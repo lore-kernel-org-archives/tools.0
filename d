@@ -1,67 +1,55 @@
-Received: from sv25.belposto.ne.jp (ch.ptr16.ptrcloud.net [211.125.65.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from c8.hpms1.jp (c8.hpms1.jp [183.90.183.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD032C9E
-	for <tools@linux.kernel.org>; Sun,  5 Dec 2021 00:08:11 +0000 (UTC)
-Received: by sv25.belposto.ne.jp (Postfix, from userid 502)
-	id 94402260C49; Sun,  5 Dec 2021 08:07:57 +0900 (JST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB76B2C80
+	for <tools@linux.kernel.org>; Sun,  5 Dec 2021 08:16:23 +0000 (UTC)
+Received: (qmail 963975 invoked by uid 89); 5 Dec 2021 17:09:42 +0900
+Received: from unknown (HELO www.izumosoba.jp) (info@izumosoba.jp@183.90.183.38)
+  by c8.hpms1.jp with SMTP; 5 Dec 2021 17:09:42 +0900
+Date: Sun, 5 Dec 2021 17:09:42 +0900
 To: tools@linux.kernel.org
-Subject: =?ISO-2022-JP?B?GyRCJCpMZCQkOWckbyQ7JCIkaiQsJEgkJiQ0JDYkJCReJDkbKEI=?=
-X-PHP-Originating-Script: 10085:class-phpmailer.php
-Date: Sat, 4 Dec 2021 23:07:57 +0000
-From: "?? You have unread messages from Alice (2)! Click Here: http://bit.do/fSMFV?1f1 ??" <tools@linux.kernel.org>
-Message-ID: <010aba712ec4ec620f0f4d3b97466fef@www.ravian.jp>
-X-Priority: 3
-X-Mailer: PHPMailer 5.2.7 (https://github.com/PHPMailer/PHPMailer/)
+From: =?UTF-8?B?5pyJ6ZmQ5Lya56S+5Ye66Zuy44Gd44Gw?= <info@izumosoba.jp>
+Reply-To: info@izumosoba.jp
+Subject: =?UTF-8?B?44GK5ZWP44GE5ZCI44KP44Gb44GC44KK44GM44Go44GG44GU44GW44GE44G+?=
+ =?UTF-8?B?44GX44Gf?=
+Message-ID: <89074a7e8873be0167d93509399ebfad@www.izumosoba.jp>
+X-Mailer: WPMailSMTP/Mailer/smtp 1.4.2
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-$B$3$A$i$O<+F0JV?.MQ%a!<%k$G$9!#(B
-$B2<5-$NFbMF$G$*Ld$$9g$o$;$r>5$j$^$7$?!#(B
+お問い合わせありがとうございました
 
-$B$*L>A0(B:
-?? You have unread messages from Alice (2)! Click Here: http://bit.do/fSMFV?1f1 ?? 
+メッセージ本文
+※こちらのメールは自動的にお送りしています。
+本メールに対して返信なさらないようにお願い致します。
 
-$B%U%j%,%J(B:
-tk68xe
+❤️ Sue want to meet you! Click Here: http://bit.do/fSMVS?g8dd ❤️様
 
+この度はお問い合わせいただきありがとうございます。
+以下の内容にて受け付けました。
 
-$BEEOCHV9f(B:
-025632067765
+【お客様情報】
+--------------------------------------------------------------------------
 
+お名前
+❤️ Sue want to meet you! Click Here: http://bit.do/fSMVS?g8dd ❤️
 
-$B%a!<%k%"%I%l%9(B:
+メールアドレス
 tools@linux.kernel.org
 
+電話番号
+807682615509
 
-$BM9JXHV9f(B:
-
-
-$B$4=;=j(B($BI,?\(B):
-mm9s9uut
-9lqa77hn
-025632067765
+お問い合わせ内容
+8sqvcp60
 
 
-$B$*Ld$$9g$o$;FbMF(B($BI,?\(B):
-qsmrakv
-
-
---
-$B$3$N%a!<%k$O(BRavian (http://www.ravian.jp) $B$N$*Ld$$9g$o$;%U%)!<%`$+$iAw?.$5$l$^$7$?(B
-
-
-====================================
-Ravian$B!J%i%t%#%"%s!K(B
-
-$B")(B807-0831
-$BKL6e=#;TH,H(@>6hB'>>(B5$BCzL\(B11-14
-TEL$B!'(B 093-776-6640
-E-mail$B!'(B info@ravian.jp		
-====================================
+--------------------------------------------------------------------------
+上記内容を確認後、追ってメールにてご連絡させていただきます。
 
