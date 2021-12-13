@@ -1,52 +1,67 @@
-Received: from mta.ai110.secure.ne.jp (ai110.secure.ne.jp [150.60.158.233])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv25.belposto.ne.jp (ch.ptr16.ptrcloud.net [211.125.65.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F412C82
-	for <tools@linux.kernel.org>; Tue, 30 Nov 2021 13:38:12 +0000 (UTC)
-Received: by mta.ai110.secure.ne.jp (Postfix, from userid 10774)
-	id C015C1FD735; Tue, 30 Nov 2021 22:33:03 +0900 (JST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD032C9E
+	for <tools@linux.kernel.org>; Sun,  5 Dec 2021 00:08:11 +0000 (UTC)
+Received: by sv25.belposto.ne.jp (Postfix, from userid 502)
+	id 94402260C49; Sun,  5 Dec 2021 08:07:57 +0900 (JST)
 To: tools@linux.kernel.org
-Subject: =?UTF-8?B?44GK5ZWP44GE5ZCI44KP44Gb44GC44KK44GM44Go44GG44GU44GW44GE44G+?=  =?UTF-8?B?44GX44Gf77yI4oC76Ieq5YuV6L+U5L+h44Oh44O844Or77yJ?=
-X-PHP-Originating-Script: 10774:PHPMailer.php
-Date: Tue, 30 Nov 2021 13:33:03 +0000
-From: =?UTF-8?B?5ZCI6LOH5Lya56S+5LyK6LGG5pys5bqX?= <izu_kame@kamenoo.com>
-Message-ID: <SiGERMEyb3VXp4CDhjt8m2CXg6PDY77OsIiGQCUjvu0@kamenoo.com>
-X-Mailer: PHPMailer 6.2.0 (https://github.com/PHPMailer/PHPMailer)
+Subject: =?ISO-2022-JP?B?GyRCJCpMZCQkOWckbyQ7JCIkaiQsJEgkJiQ0JDYkJCReJDkbKEI=?=
+X-PHP-Originating-Script: 10085:class-phpmailer.php
+Date: Sat, 4 Dec 2021 23:07:57 +0000
+From: "?? You have unread messages from Alice (2)! Click Here: http://bit.do/fSMFV?1f1 ??" <tools@linux.kernel.org>
+Message-ID: <010aba712ec4ec620f0f4d3b97466fef@www.ravian.jp>
+X-Priority: 3
+X-Mailer: PHPMailer 5.2.7 (https://github.com/PHPMailer/PHPMailer/)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=ISO-2022-JP
 
-❤️ Alice want to meet you! Click Here: http://bit.do/fSJV7?btj ❤️ 様
+$B$3$A$i$O<+F0JV?.MQ%a!<%k$G$9!#(B
+$B2<5-$NFbMF$G$*Ld$$9g$o$;$r>5$j$^$7$?!#(B
 
-お問い合わせ頂きありがとうございます。
-以下の内容でお問い合わせを受け付けました。
-後ほど担当者よりご連絡差し上げますので、今しばらくお待ち下さい。
+$B$*L>A0(B:
+?? You have unread messages from Alice (2)! Click Here: http://bit.do/fSMFV?1f1 ?? 
 
-─ご送信内容の確認─────────────
-お名前: ❤️ Alice want to meet you! Click Here: http://bit.do/fSJV7?btj ❤️ 
-ふりがな：qyahdf1m
-メールアドレス：tools@linux.kernel.org
-電話番号:680452859706
-連絡方法:どちらでもOK
-その他ご用件:
-1rm2ow
-────────────────────────────
+$B%U%j%,%J(B:
+tk68xe
 
-このメールに心当たりの無い場合は、お手数ですが
-下記連絡先までお問い合わせください。
 
-この度はお問い合わせ重ねてお礼申し上げます。
+$BEEOCHV9f(B:
+025632067765
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━
-合資会社伊豆本店
-〒811-4152
-福岡県宗像市武丸1060番地
-TEL:0940-32-3001
-FAX:0940-33-0512
-━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+$B%a!<%k%"%I%l%9(B:
+tools@linux.kernel.org
+
+
+$BM9JXHV9f(B:
+
+
+$B$4=;=j(B($BI,?\(B):
+mm9s9uut
+9lqa77hn
+025632067765
+
+
+$B$*Ld$$9g$o$;FbMF(B($BI,?\(B):
+qsmrakv
+
+
+--
+$B$3$N%a!<%k$O(BRavian (http://www.ravian.jp) $B$N$*Ld$$9g$o$;%U%)!<%`$+$iAw?.$5$l$^$7$?(B
+
+
+====================================
+Ravian$B!J%i%t%#%"%s!K(B
+
+$B")(B807-0831
+$BKL6e=#;TH,H(@>6hB'>>(B5$BCzL\(B11-14
+TEL$B!'(B 093-776-6640
+E-mail$B!'(B info@ravian.jp		
+====================================
 
