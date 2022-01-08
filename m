@@ -1,62 +1,52 @@
-Received: from ns224.servidoresadmin.com (ns224.servidoresadmin.com [137.74.235.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1652C80
-	for <tools@linux.kernel.org>; Thu,  6 Jan 2022 03:33:15 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by ns224.servidoresadmin.com (Postfix) with ESMTP id 94365380BA2
-	for <tools@linux.kernel.org>; Thu,  6 Jan 2022 04:24:45 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=elspampols.com;
-	 h=date:date:message-id:from:from:x-mailer
-	:content-transfer-encoding:content-type:content-type
-	:mime-version:subject:subject; s=default; t=1641439485; x=
-	1643253886; bh=B63qqcBrzf31m27TdxOcLcOXQlAwaPXdqa5oA6Q75L0=; b=I
-	OqMkItot9IoMXVgkAB3TXecnrg7/RUCFe+K3yDgiOMSXH+znPjxR5lf5W5EzP9GY
-	DQiLTwIiV92hZ7W4gW2IwjQIzMoBfilmLgGefGVWh0Hmzf7gY0NEOg65oomUYyHO
-	v5f83w2pjMvGLT1oSYXw7dL5o+ftao0+b2cmddFL081xJ/Ym+0HZOmHaPjTyHMo/
-	xgPdRuNNarFOiHNWsF0o8Q8pJKaywAbqsCNXp68o30POS95gPh/OFHbH73aLBDMQ
-	MtSjQPrWv1+H8L9vHjwOwlpCeLj6ENmUsaiFFH5hEu4ZQczIBJzc9ZidZ3ZXep7M
-	DKdv+ikyBb09WIAcVwWQQ==
-X-Virus-Scanned: Debian amavisd-new at ns224.servidoresadmin.com
-Received: from ns224.servidoresadmin.com ([127.0.0.1])
-	by localhost (ns224.servidoresadmin.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4ihSR216gezy for <tools@linux.kernel.org>;
-	Thu,  6 Jan 2022 04:24:45 +0100 (CET)
-Received: by ns224.servidoresadmin.com (Postfix, from userid 5006)
-	id 68C81380BA5; Thu,  6 Jan 2022 04:24:45 +0100 (CET)
+Received: from norma.ablenet.jp (norma.ablenet.jp [58.191.153.48])
+	by smtp.subspace.kernel.org (Postfix) with SMTP id E7AD82C9D
+	for <tools@linux.kernel.org>; Sat,  8 Jan 2022 17:31:14 +0000 (UTC)
+Received: (qmail 42717 invoked by uid 98); 9 Jan 2022 02:24:33 +0900
+Received: from 127.0.0.1 by norma.ablenet.jp (envelope-from <www@norma.ablenet.jp>, uid 89) with qmail-scanner-1.25st; 09 Jan 2022 02:24:33 -0900
+Received: from unknown (HELO norma.ablenet.jp) (127.0.0.1)
+  by norma.ablenet.jp with SMTP; 9 Jan 2022 02:24:33 +0900
+Received: (from www@localhost)
+	by norma.ablenet.jp (8.14.5/8.14.4/Submit) id 208HOXfO042712;
+	Sun, 9 Jan 2022 02:24:33 +0900 (JST)
+	(envelope-from www)
 To: tools@linux.kernel.org
-Subject: =?UTF-8?B?U29swrdsaWNpdHVkIGQnaW5mb3JtYWNpw7M=?=
-X-PHP-Originating-Script: 5006:system.mail.inc
+Subject: =?ISO-2022-JP?B?WxskQjZMQC4ycRsoQl0gGyRCSVRMQDxUTyJNbSVVJSkhPCVgRn5OTzNORyclYSE8JWshSjwrRjBKVj8uIUsbKEI=?=
+X-PHP-Script: onion-kaisei.com/index.php for 5.183.209.134
+Date: Sat, 8 Jan 2022 17:24:33 +0000
+From: =?ISO-2022-JP?B?GyRCNkxALjJxTD5KbTRJTX08VBsoQg==?= <no-return@onion-kaisei.com>
+Message-ID: <e83d1757a04f6ff9fe0f550677acbc69@onion-kaisei.com>
+X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 8Bit
-X-Mailer: Drupal Webform
-Sender: david@moixo.net
-From: "=?UTF-8?B?RWxzIFDDoG1wb2xzIHBldGl0IGhvdGVsIHJ1cmFs?=" <info@elspampols.com>
-Message-Id: <20220106032445.68C81380BA5@ns224.servidoresadmin.com>
-Date: Thu,  6 Jan 2022 04:24:45 +0100 (CET)
+Content-Type: text/plain; charset=ISO-2022-JP
 
-Hola.
-
-Et confirmem que hem rebut la teva sol·licitud i que en breu ens posarem en
-contacte.
-
-A continuació pots trobar les dades de la teva sol·licitud:
-Data: dijous, 6 gener, 2022 - 04:24
-
-Nom: ❤️ You have unread messages from Paula (2)! Click Here:
-http://bit.do/fS4Wh?yas ❤️
-Correu electrònic: tools@linux.kernel.org
-Telèfon: 603092619264
-Assumpte: 60szzrt
-Missatge: cfxlc0k
+$B$3$N%a!<%k$O!"6L@.2q%&%'%V%5%$%H$+$i$N<+F0JV?.%a!<%k$G$9!#(B
+$BJV?.$O$G$-$^$;$s$N$G$4Cm0U$/$@$5$$!#(B
 
 
-Moltes gràcies
-Els Pàmpols petit Hotel Rural
+$B%U%)!<%`$GO"Mm@h$r$*CN$i$;$$$?$@$-$"$j$,$H$&$4$6$$$^$9!#(B
+$BF~NO$$$?$@$$$?FbMF$rL>Jm4IM}<T$KG[Aw$7$^$7$?!#(B
+$BDI2C3NG'$,I,MW$J;v9`$,$"$k>l9g$N$_!"L>Jm4IM}<T$+$i$4O"Mm$7$^$9!#(B
+
+
+$B!c0J2<!"F~NOFbMF!d(B
+
+$B:9=P?M(B: ugrk4gx <tools@linux.kernel.org>
+
+$BB46H4|!'(B ?? Regina is interested in your profile! Click Here: http://inx.lv/jUZE?ukb5n ?? $B4|(B
+$BB46H;~$N%/%i%9!'(B ua6rfz $BAH(B
+$BL>A0!'(B ugrk4gx
+$B%a!<%k%"%I%l%9!'(B tools@linux.kernel.org
+$B=;=j!'(B z6zic4i
+$BEEOCHV9f!'(B 137453413945
+
+$BDL?.Ms!'(B
+wjo6xa
+
+--
+$B$3$N%a!<%k$O(B $BKL3$F;;%KZ3+@.9bEy3X9;F1Ak2q!!6L@.2q(B http://onion-kaisei.com/ $B$NITL@<TO"Mm%U%)!<%`$+$iAw?.$5$l$^$7$?(B
 
