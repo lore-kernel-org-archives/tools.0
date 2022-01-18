@@ -1,40 +1,42 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C081429CA;
-	Tue, 18 Jan 2022 21:08:30 +0000 (UTC)
-Received: by mail-qk1-f181.google.com with SMTP id z10so505748qkf.7;
-        Tue, 18 Jan 2022 13:08:30 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CE32CA5;
+	Tue, 18 Jan 2022 21:08:36 +0000 (UTC)
+Received: by mail-qv1-f42.google.com with SMTP id jr5so595441qvb.11;
+        Tue, 18 Jan 2022 13:08:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=j2YrH0bLXoPfRw0rcFdDDEcbOHhUEHq40TCQ/Zk0vqc=;
-        b=2D3zd//7pAjhcnckhP79bIVZhLSCK0za0u6LCtWiWG8GqiU7zcDjo6uAkBgMQElfDk
-         MzpSfPVfqUuswVXWCwGoVAKB3LEEN7iRUJPU5QSLvsFDnygCkH7MsJpgDgf10cpT558o
-         MLk5EGssJxuocAm8xi9PAN4oby5LwmFhuPnO/ZdE/dapo15e3hQ/JS9x5DE37lfIjr+h
-         /BnyhoX3gkJdWNMnSmONyMCXUZNQ7lbFLE3D5tkiC3O0O9fuaY+RkrkcJ3D00uf0h4q0
-         SgmZi6IVMEifyzss4qZa2Gma3OdNwYv7gQPSygcY36U56+WxeauqOLzel5dabUVI4SF+
-         e4pA==
-X-Gm-Message-State: AOAM530eXC8kY5gr9ZkwjUX305rRlmdF13vV7MzzRUEMz+zKHFdRXg6y
-	2C1jnheeoBYunpL2wNUpnjY=
-X-Google-Smtp-Source: ABdhPJz2QBh/xxVFyg1RemZimnVaoLhTXnfjPkqTMak1sEfbeOBXSjNZeZJo5Yzjf1oas6Y2pXTZsg==
-X-Received: by 2002:a05:620a:4150:: with SMTP id k16mr417692qko.265.1642540109546;
-        Tue, 18 Jan 2022 13:08:29 -0800 (PST)
-Received: from localhost (fwdproxy-ash-001.fbsv.net. [2a03:2880:20ff:1::face:b00c])
-        by smtp.gmail.com with ESMTPSA id d17sm11458616qtx.96.2022.01.18.13.08.29
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=FRz4CB6pkMlzULjNPyL5owVc3Og4a0YXE3ZrrN2c6HA=;
+        b=iKj12c7fUqDiYTFVjIij7IpQWvuE98jZGwiI0+78VBxDomwk23Wb7Xv8E8JZ20misZ
+         k7Av0TGYxjLFZs98OJix6GDn9h8+jxxVIoqUkaqWxapVJX8S96N+uaWdNMBJelF5SwQQ
+         HPeJxwk5dcieBavHMxaSWH67r2brnhbXQSfrPgew8+mBWL96c2Pnd7nXptel3RAxUXhc
+         JZNpre0HxMWRkYCoKSd6Suzy0Kp0WZ4+FBEHv8OZPSS3WMRDnOk5yy8/q9hmrJFPx7dd
+         Vgm6RW/8TnPtFDkFEA0rvMbHXAvZG/GIsDE75RrFJpLYYSRX0pe8hJTNtdXLctbbJmxC
+         r7fQ==
+X-Gm-Message-State: AOAM533Gh3849pcIOMVk9+YnD9cscpC77nKlITlL7nzN4y2HS7qyMgzc
+	dluBDrt9obiJKmGplJuvKh6EA0B38ns=
+X-Google-Smtp-Source: ABdhPJxtQJ7i3C45evAYc/ipMgdjNhOYrB5/Oyhe9FAx+SehPvKJ8FJtBx1v1QvOWJ3WF6qNkUj00A==
+X-Received: by 2002:a05:6214:258a:: with SMTP id fq10mr24577637qvb.50.1642540115294;
+        Tue, 18 Jan 2022 13:08:35 -0800 (PST)
+Received: from localhost (fwdproxy-ash-000.fbsv.net. [2a03:2880:20ff::face:b00c])
+        by smtp.gmail.com with ESMTPSA id h9sm11557936qkp.106.2022.01.18.13.08.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jan 2022 13:08:29 -0800 (PST)
+        Tue, 18 Jan 2022 13:08:35 -0800 (PST)
 From: David Vernet <void@manifault.com>
 To: konstantin@linuxfoundation.org
 Cc: users@linux.kernel.org,
 	tools@linux.kernel.org,
 	void@manifault.com,
 	kernel-team@fb.com
-Subject: [PATCH 1/2] man: Update man page to mention HTTPS_PROXY
-Date: Tue, 18 Jan 2022 13:08:08 -0800
-Message-Id: <20220118210808.2158914-1-void@manifault.com>
+Subject: [PATCH 2/2] man: Update man page to use bold where appropriate
+Date: Tue, 18 Jan 2022 13:08:10 -0800
+Message-Id: <20220118210808.2158914-2-void@manifault.com>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20220118210808.2158914-1-void@manifault.com>
+References: <20220118210808.2158914-1-void@manifault.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -43,39 +45,46 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 
-Certain b4 commands may send requests to https://lore.kernel.org, such
-as to fetch a thread of patches as an mbox file. b4 internally uses the
-python-requests library to perform these requests, and thus the requests
-may be proxied by setting the HTTPS_PROXY environment variable.
+According to https://man7.org/linux/man-pages/man1/man.1.html, when writing
+a man page for a program, anything that should be typed exactly as shown
+should use bolded text. The b4 man page has a SUBCOMMANDS section where
+subcommands are listed as 'b4 <subcommand>', in italics. So as to match the
+guidance for man pages (as well as to match the examples provided at the
+link above), this diff updates the 'b4' portion of the aforementioned
+subcommand section to be bolded.
 
-The fact that b4 uses the python-requests library is an implementation
-detail, so this diff adds a small 'PROXYING REQUESTS' section to the man
-page that informs the user that they may use the HTTPS_PROXY environment
-variable to enable proxying.
-
-Link: https://lore.kernel.org/all/20220118174144.2445150-1-void@manifault.com/
 Signed-off-by: David Vernet <void@manifault.com>
 ---
- man/b4.5.rst | 6 ++++++
- 1 file changed, 6 insertions(+)
+ man/b4.5.rst | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/man/b4.5.rst b/man/b4.5.rst
-index 19e96af..ab12804 100644
+index ab12804..b45909a 100644
 --- a/man/b4.5.rst
 +++ b/man/b4.5.rst
-@@ -321,6 +321,12 @@ Default configuration, with explanations::
-       # Used when preparing merge messages from cover letters. See shazam-merge-template.example
-       shazam-merge-template = None
+@@ -27,14 +27,14 @@ precursor to Lore and Data in the Star Trek universe.
  
-+PROXYING REQUESTS
-+-----------------
-+Commands making requests to lore may be configured to proxy those requests
-+by setting the **HTTPS_PROXY** environment variable, as described in
-+https://docs.python-requests.org/en/latest/user/advanced/#proxies.
-+
- SUPPORT
+ SUBCOMMANDS
+ -----------
+-* *b4 mbox*: Download a thread as an mbox file
+-* *b4 am*: Create an mbox file that is ready to git-am
+-* *b4 shazam*: Similar to *am*, but lets you apply patches directly
+-* *b4 pr*: Work with pull requests
+-* *b4 diff*: Show range-diff style diffs between patch versions
+-* *b4 ty*: Create templated replies for processed patches and pull requests
+-* *b4 attest*: (EXPERIMENTAL) Add cryptographic attestation to patches
+-* *b4 kr* (EXPERIMENTAL) Operate on patatt-compatible keyrings
++* **b4** *mbox*: Download a thread as an mbox file
++* **b4** *am*: Create an mbox file that is ready to git-am
++* **b4** *shazam*: Similar to *am*, but lets you apply patches directly
++* **b4** *pr*: Work with pull requests
++* **b4** *diff*: Show range-diff style diffs between patch versions
++* **b4** *ty*: Create templated replies for processed patches and pull requests
++* **b4** *attest*: (EXPERIMENTAL) Add cryptographic attestation to patches
++* **b4** *kr* (EXPERIMENTAL) Operate on patatt-compatible keyrings
+ 
+ OPTIONS
  -------
- Please email tools@linux.kernel.org with support requests,
 -- 
 2.30.2
 
