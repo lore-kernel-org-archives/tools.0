@@ -1,19 +1,16 @@
-Received: from ms1.siteone.cz (ms1.siteone.cz [77.78.99.116])
+Received: from users017.phy.heteml.jp (users017.phy.heteml.jp [157.7.188.254])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA8F168
-	for <tools@linux.kernel.org>; Sun,  2 Jan 2022 09:25:54 +0000 (UTC)
-DKIM-Signature: a=rsa-sha256; t=1641115424; x=1641720224; s=201611; d=ms1.siteone.cz; c=relaxed/relaxed; v=1; bh=7fM+T+1/x+NX8U7LV2kiKI9/IY4IqvLJpWcvTo9Byr0=; h=From:Reply-To:Subject:Date:Message-ID:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-   b=l1cCn/bvyueVBE1IUFm5n8zn7TfqrbpbsZGwT32B3LaQABuncZMIzZH7dUITugOdTJ6KuFbKp+g2fTaj92Nh542u4myPrfMvfTId/l9gkiSZKWNunOoEg3c0DNjXo2iyrtb65H2Gx7SIQ9QvP0hUko8kObSLom09/1T9PKe+SXY=
-Received: from www.zlato.cz
-        by ms1.siteone.cz (IceWarp 11.4.2.2 DEB8 x64) with ESMTP (SSL) id 202201021023444205
-        for <tools@linux.kernel.org>; Sun, 02 Jan 2022 10:23:44 +0100
-Date: Sun, 2 Jan 2022 09:23:44 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE127168
+	for <tools@linux.kernel.org>; Tue, 28 Dec 2021 01:42:06 +0000 (UTC)
+Received: by users017.phy.heteml.jp (Postfix, from userid 444)
+	id AD4A3641155; Tue, 28 Dec 2021 10:34:20 +0900 (JST)
 To: tools@linux.kernel.org
-From: Zlato <zlato@siteone.cz>
-Reply-To: Zlato <zlato@siteone.cz>
-Subject: =?UTF-8?Q?Chytr=C3=A9_spo=C5=99en=C3=AD_do_zlata_s_Felixem?=
-Message-ID: <ecbb704ab0cbecc8e296a23dca8869ce@www.zlato.cz>
+Subject: =?UTF-8?B?W2dyZWVud29ya2Vyc13jgYrllY/jgYTlkIjjgo/jgZvjgYLjgoo=?=  =?UTF-8?B?44GM44Go44GG44GU44GW44GE44G+44GZ?=
+X-PHP-Originating-Script: 26673:class-phpmailer.php
+Date: Tue, 28 Dec 2021 01:34:20 +0000
+From: greenworkers <info@greenworkers.jp>
+Message-ID: <ff95a25fbce2913357d8bbe50fb45f9e@www.greenworkers.jp>
 X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
@@ -24,17 +21,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Dobrý den,
+❤️ Dana is interested in your profile! Click Here: http://inx.lv/pIaX?dy4 ❤️様
 
-děkujeme Vám za Váš zájem o Chytré spoření do zlata s Felixem.
+この度はお問い合わせいただきありがとうございます。
+メール内容を確認のうえ、追って担当よりご連絡させていただきます。
 
-Vámi zadané údaje jsou:
-Jméno: ❤️ Cathy is interested in your profile! Click Here: http://inx.lv/pIaX?50sf ❤️
-E-mail: tools@linux.kernel.org
-Telefon: 102798840010
+このメールを受信してから1週間が経っても連絡がない場合は
+誠に恐れ入りますが、下記のメールアドレス宛に
+ご連絡いただけますようお願いいたします。
 
-V nejbližších dnech se s Vámi telefonicky spojí zástupce Zlato a.s., a projedná s Vámi další kroky.
+------------------------------
+名前：
+❤️ Dana is interested in your profile! Click Here: http://inx.lv/pIaX?dy4 ❤️
 
-S přáním příjemného dne
-Zlato a.s.
+メールアドレス：
+tools@linux.kernel.org
+
+お問い合わせ内容:
+f1dxbr9
+
+--
+グリーンワーカーズ運営事務局
+contact.grw@gmail.com
+
+〒382-0005 
+長野県須坂市新田町2606-2（合同会社岡木農園）
+http://www.greenworkers.jp/
 
