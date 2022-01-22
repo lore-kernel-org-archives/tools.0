@@ -1,72 +1,43 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from users303.phy.heteml.jp (users303.phy.heteml.jp [157.7.44.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFA22C80
-	for <tools@linux.kernel.org>; Wed, 19 Jan 2022 18:12:55 +0000 (UTC)
-Received: by mail-ua1-f47.google.com with SMTP id w21so6082468uan.7
-        for <tools@linux.kernel.org>; Wed, 19 Jan 2022 10:12:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=JoZBrTxNsFQphpJG5AfNXozjf7DOY1TRdfTG17iTsr0=;
-        b=RpJjtiv4rlTOcnHZzCLav46DgY7LmnGskTdLv1YVwj1L6LHNWucFu6VLuJ65itkIWU
-         vnXF0t+M0v1AvPhY9eUCPEd45GNSIqBG4ObNxhw1bOubueF2qItBnRrDzw4YUcuZZ9fQ
-         NUSesbMZEEkYjawjqAfHag8h5VZu4ZaxIDDRU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=JoZBrTxNsFQphpJG5AfNXozjf7DOY1TRdfTG17iTsr0=;
-        b=MoIHkEzxuRHlYOp88o79VDmM/RJftGHII33JyyNLahIo/PrGESu46J0cXBFw0uyQEj
-         F28Zv+Ci0dDoGp2qmYRh+wvJPTju3jvHIK66wmUVV9LlX7aZ9ckAMC9dwPJ8EounJDPK
-         /cJTZprEI3RmlmWsfMAhYNafr0BcmvQHTjbfLEzn/6Oo2W01zgV/rwpJDlAMikt9ENVu
-         IHaRCQKqX2ZyoQ7sPSmlldZseHAgNrO/lt/QW3TTtxiCo81VNGx5vysCWvIBTCagwczf
-         pbL8ch7gKyL6DTFHSQoz5WPqbgeM3kauJ+MkEo5fHu7Cqd4iJ/otKXfryOC0+WKCIKhC
-         hlxA==
-X-Gm-Message-State: AOAM530Ips+1qHxjCbsMaIwgggpa4x1CRWIOwfsV10hWW8W5kredCHRi
-	QjFK5x6M6VPXnTJbij6BZML7kg==
-X-Google-Smtp-Source: ABdhPJwBSSPTo8y7HWhlePvi7RrCOHrb+GWEjtPFnRLNPShpRr8nH7MGklWkWDSWj8CtjQVfm4s7ig==
-X-Received: by 2002:ab0:7390:: with SMTP id l16mr12560304uap.73.1642615974605;
-        Wed, 19 Jan 2022 10:12:54 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id s134sm89355vkb.16.2022.01.19.10.12.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jan 2022 10:12:54 -0800 (PST)
-Date: Wed, 19 Jan 2022 13:12:52 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: =?utf-8?B?THVtw61y?= Balhar <lbalhar@redhat.com>
-Cc: tools@linux.kernel.org, Michel Alexandre Salim <michel@michel-slm.name>
-Subject: Re: which version of dnspython b4 really needs?
-Message-ID: <20220119181252.u6qvf4ggmuwpb53t@meerkat.local>
-References: <91cde2a6-f71f-1e76-8bd7-3a3a0fcc6bd0@redhat.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB02B168
+	for <tools@linux.kernel.org>; Sat, 22 Jan 2022 19:25:14 +0000 (UTC)
+Received: by users303.phy.heteml.jp (Postfix, from userid 492)
+	id AE2AA6C1508; Sun, 23 Jan 2022 04:16:28 +0900 (JST)
+To: tools@linux.kernel.org
+Subject: =?UTF-8?B?44OX44Op44K744K544Ov44O844Kv5Y2U5ZCM57WE5ZCI772c44GK5ZWP44GE?=  =?UTF-8?B?5ZCI44KP44Gb44GC44KK44GM44Go44GG44GU44GW44GE44G+44GZ?=
+X-PHP-Originating-Script: 13314:class-phpmailer.php
+Date: Sat, 22 Jan 2022 19:16:28 +0000
+From: 6j7aakm <purasesu1846@ec7.technowave.ne.jp>
+Reply-To: purasesu1846@ec7.technowave.ne.jp
+Message-ID: <d4136b3ad6dff6ea90d002528ede66aa@purasesuwork.com>
+X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <91cde2a6-f71f-1e76-8bd7-3a3a0fcc6bd0@redhat.com>
 
-On Wed, Jan 19, 2022 at 02:31:33PM +0100, Lumír Balhar wrote:
-> Hello.
-> 
-> I'm preparing an update of dnspython for Fedora to version 2.2.0. One of the
-> packages that fails to build with the new version is b4. I'm kinda confused
-> about the version of dnspython b4 needs.
-> 
-> In setup.py, b4 has 'dnspython~=2.0' which includes version 2.2 but
-> requirements.txt contains 'dnspython~=2.1.0' which does not include version
-> 2.2.
-> 
-> Which of these two definitions are correct?
+6j7aakm9  様
 
-We can probably do ~=2.0 in both places. At least, all 2.x versions have
-worked fine so far.
+この度はプラセスワーク協同組合へお問い合わせ頂き誠に有難うございます。
+以下の内容にてお問合せを承りました。
 
-Regards,
--K
+お問い合わせ種別：お問い合わせ
+会社名：❤️ Beverly is interested in your profile! Click Here: https://clck.ru/anbWT?aec2 ❤️<q9fu5ww>
+差出人: 6j7aakm9 <46j4hmn>
+メールアドレス：tools@linux.kernel.org
+電話番号：414800257845
+
+メッセージ本文:
+s83r7f
+
+内容を確認させて頂き、ご連絡させて頂きます。
+
+このメールは プラセスワーク協同組合 (https://purasesuwork.com/) のお問い合わせフォームから送信されました。
+お心当たりのない方は、お手数ですがpurasesu1846@ec7.technowave.ne.jpまでご連絡をお願い致します。
+
