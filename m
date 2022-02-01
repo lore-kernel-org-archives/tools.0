@@ -1,92 +1,61 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9372C82
-	for <tools@linux.kernel.org>; Tue,  1 Feb 2022 15:41:18 +0000 (UTC)
-Received: by mail-qv1-f53.google.com with SMTP id s6so16316886qvv.11
-        for <tools@linux.kernel.org>; Tue, 01 Feb 2022 07:41:18 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F782F21
+	for <tools@linux.kernel.org>; Tue,  1 Feb 2022 15:55:47 +0000 (UTC)
+Received: by mail-qt1-f175.google.com with SMTP id z1so13620396qto.3
+        for <tools@linux.kernel.org>; Tue, 01 Feb 2022 07:55:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=pu4ERIFmW1jWc1Bd0PZM5DqO1VeqWS/aqExXm9m+JnA=;
-        b=c5I+r3ODSGoo3wvdKKAkaABY1xZWA1vJ2wkGekwayQ87PucFgVmmPlLlH11EWpJWc8
-         r0HhVq+TqP76ApHDmcldXNuk/xuD7bBCA7Kmth6APIFD293gSi8Pm9VluaIA9Ebz/Nsp
-         3+BcQFZY0YqLifaL2CMqVrjf4qhzFDP0dzH6w=
+        d=linaro.org; s=google;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=ruu1THbL2naXPqFGHbBjhY1Gugs2i2221HNoESpDuM4=;
+        b=KMD95XQWUHY+YPl6dBhgvkBV/QjGg+trV1XfRZ/O7uC2ySoqqwiE/lOHHAZ40tv8iv
+         /lAQ81V+g1hIIl2+hj8KasOoHfqSU2RLWGPCGJWnAR3KCo70KDAmlFinoJdvbYEoEbfS
+         Gt4MfngUPDxQj7USHZEaGPVRUHPNon/6bryK8IO4da2qM0jHBaYcNGgfjzxBk7TbRTj5
+         0jIIclBC4HzdTCXkRT6oAGzK9Ve4Y/aoVzLr/rxJNlC6syQxY9VFTrq6HpvRvl0axwOO
+         m75YWpyeBkMnPIuWiUjx4ZKGkAIMDR6bdEOf3zvTMpWwChfuvMItQFGyIIXoCPwySt67
+         7hPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pu4ERIFmW1jWc1Bd0PZM5DqO1VeqWS/aqExXm9m+JnA=;
-        b=gJgtayOnq59QEIL2bcwhnXo8F8Ys1VTb/sToTyy9QLMTBV+1M2A9w7veJ9h4d2s2I5
-         jwphFI2CMZ7Z/W00y7zxIhP3RedP1lL07yYw08Z4JbwegXmVrbXw0uC2SWZkdPC8MikL
-         UiPQI9DkTU2DqhkrvK3z35IIP8hNsWtI2qQrE2VZSI+nqPxJgoHil3YSZ7kjCvSSnDw/
-         V6pxZH4MWr32MuDTUqclLptjrTCiPhHfH+MnQY6w3g/FiggW/IJrNEc0dRW4ITKXJz7H
-         0DpRdI+TeNr2zmhbqBuFHpInygWSDG2mMHrqLhesfJ2/ESQVffGuaCoiNAMYPNd3mO1j
-         HOdQ==
-X-Gm-Message-State: AOAM533vbSBdJ24f0GMDCJKkFvilsrMo9VyW2paiKdrJBhBjcHFs/vft
-	Z114lSUqIV4DtCEd4694nuZWvg==
-X-Google-Smtp-Source: ABdhPJw0vw2N3buDYcenXSQvBNSjnXDl+4vDfQi7eDfG2IhheJ0LpQMpT2fiUV8FXPv5PWIgPDw+7A==
-X-Received: by 2002:a05:6214:e46:: with SMTP id o6mr22711553qvc.5.1643730077686;
-        Tue, 01 Feb 2022 07:41:17 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-127.dsl.bell.ca. [216.209.220.127])
-        by smtp.gmail.com with ESMTPSA id r14sm6458826qkp.48.2022.02.01.07.41.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 07:41:17 -0800 (PST)
-Date: Tue, 1 Feb 2022 10:41:15 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Rob Herring <robh@kernel.org>
-Cc: tools@linux.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH] Allow whitespace before a trailer
-Message-ID: <20220201154115.dp75wozotcmgyjdg@meerkat.local>
-References: <20211214214327.4003631-1-robh@kernel.org>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=ruu1THbL2naXPqFGHbBjhY1Gugs2i2221HNoESpDuM4=;
+        b=BfjSaZmK4YUtysw96j3PpUosN96BIHBgyzGCXjG+IZhJAPghgTjkQXmILaumvEteGk
+         BrRZsab7rilj2KXzSDAIl+XxZRrnZH0PiYOJLomjK+yXNbn7q4p2MJ7TYE88WhyiC783
+         ge8ShPZMZOpGXimJ0pXRBwoLhl7WezmmsM7s8eYEIEbc6N7L6MQ6XAcyD2buuNVjzBIa
+         SsV5k4ltgG/79SM8UZCHZILAlLbY8sBu8H3epYPs5Vuk7/hLmTrw4DI1y2NUk7mmlbzo
+         50+nLvWgYax1ybbOJFmtX6Zx16g+BbSCVOiLQZ01eaUBbV6CKDe0G+WO12qf7nk1m1vU
+         N9LA==
+X-Gm-Message-State: AOAM530fBJlD9HJ2gmuDwAVgGqsFTom6hqItC61+1seBv+aL+Sj600YF
+	7//Y38L47hjiE/DhiUT737m5NHUdOPEaBmiU4yH3tGwEsDs=
+X-Google-Smtp-Source: ABdhPJzy6rNpfAz/o+9+AOa+/m0jWkyVzswy2n4AvBdwoG6UbJj1IGcAsWTDPDkcbubruxGEma0/Moh2rNspUjWKygg=
+X-Received: by 2002:a05:622a:164a:: with SMTP id y10mr19606878qtj.629.1643730945885;
+ Tue, 01 Feb 2022 07:55:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20211214214327.4003631-1-robh@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 1 Feb 2022 18:55:35 +0300
+Message-ID: <CAA8EJpoA_Krn02zokkAXBGEqrhR0MBQnScSWrzWySci+z2UAVA@mail.gmail.com>
+Subject: b4 tool and Gmail handling of sujects
+To: tools@linux.kernel.org
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>, 
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Dec 14, 2021 at 03:43:27PM -0600, Rob Herring wrote:
-> Currently, b4 fails to find and add trailers with leading whitespace. Let's
-> be a bit more forgiving and allow for that case.
+Hi Konstantin,
 
-Okay, I think this is fairly safe and hopefully won't result in more
-false-positives.
+Thanks for the b4 tool, which we regularly use.
 
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
-> This thread exhibits the problem:
-> https://lore.kernel.org/r/20211206174113.2295616-1-robh%40kernel.org
-> 
-> Note that patchwork also fails on this. Between fixing b4 or Greg, I 
-> went with b4. :)
-> 
-> ---
->  b4/__init__.py | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/b4/__init__.py b/b4/__init__.py
-> index 11c287eb3433..a4add56c5f80 100644
-> --- a/b4/__init__.py
-> +++ b/b4/__init__.py
-> @@ -1397,7 +1397,7 @@ class LoreMessage:
->          was_trailer = False
->          for line in body.split('\n'):
->              line = line.strip('\r')
-> -            matches = re.search(r'^(\w\S+):\s+(\S.*)', line, flags=re.I)
-> +            matches = re.search(r'^\s?(\w\S+):\s+(\S.*)', line, flags=re.I)
+A small request/suggestion from our team:
+Could you please make the insertion of the '(subset)' token (into the
+email subject) configurable?
+We noticed that always inserting it into b4 replies breaks threading
+in GMail, which is annoying to some of our contributors. Thus we'd
+like to be able to turn it off.
 
-I used a \s* instead, since there may be more than a single whitespace
-character. It's in master and stable-0.8.y.
-
->              if matches:
->                  groups = list(matches.groups())
->                  # We only accept headers if we haven't seen any non-trailer lines
-
-Thanks,
--K
+-- 
+With best wishes
+Dmitry
