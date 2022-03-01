@@ -1,36 +1,38 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gnuweeb.org (gnuweeb.org [51.81.211.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEEE10EE
-	for <tools@linux.kernel.org>; Fri, 25 Feb 2022 03:11:38 +0000 (UTC)
-Received: by mail-oo1-f43.google.com with SMTP id 189-20020a4a03c6000000b003179d7b30d8so4683189ooi.2
-        for <tools@linux.kernel.org>; Thu, 24 Feb 2022 19:11:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Hys96ZMbTW2smbhZyr9/WJtCLkICD+HyBktBv4BQtUw=;
-        b=e77iDeIbeNcaSaobDZgnGzl2V5sK90ZMwvORup63suNQjeGij7l4vRpJvP/C7sF/6q
-         GmmaJ0Ia5Zs/D+EE1mVCIZ38gCdIAAHtMUYQoYGdrT9EfKRcADTVv8OcMuuRmAWqXjuJ
-         y7okJa+CxV1c/dDhfKHyUUWmx1mtprFAU28PC1QyOQR/y7jEzXNPg4GMj6asExlfn3FZ
-         pkbSFMaKLXx8n0dOec61/qeNhr4ek3GRP2FrUWty4+OM+wnsy5+Jk+Owpt5WsCKa8Vx8
-         xPSwLjLiElV1CBJJ/o3CMZ+2XENbkSY8uGfwi+J1UQNATi4wdF1lIGKT+yceLJhruQZW
-         oKhg==
-X-Gm-Message-State: AOAM531N9/9wU8NL5KRWvBjs1SHHfxjFrOz0IA4Yh0PlcxW9vFady0QO
-	zdz0DB/q2PEE6wKK4YnoeKep5RBQ8A==
-X-Google-Smtp-Source: ABdhPJxjYS6Su5TSXvFbhivLPVwWD5pch5LMHNL2/vEOAZ7QsYpCneP58MztjTMnygueopQJCGDDbA==
-X-Received: by 2002:a05:6870:5d9b:b0:d2:89cb:469d with SMTP id fu27-20020a0568705d9b00b000d289cb469dmr516549oab.25.1645758698004;
-        Thu, 24 Feb 2022 19:11:38 -0800 (PST)
-Received: from xps15.herring.priv (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.googlemail.com with ESMTPSA id t11-20020a4ae40b000000b0031cc933b418sm514039oov.40.2022.02.24.19.11.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Feb 2022 19:11:36 -0800 (PST)
-From: Rob Herring <robh@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: [PATCH] Remove URL redirect project lookup
-Date: Thu, 24 Feb 2022 21:11:35 -0600
-Message-Id: <20220225031135.4136158-1-robh@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2780917E4
+	for <tools@linux.kernel.org>; Tue,  1 Mar 2022 04:18:42 +0000 (UTC)
+Received: from integral2.. (unknown [182.2.73.137])
+	by gnuweeb.org (Postfix) with ESMTPSA id BF3617EC80;
+	Tue,  1 Mar 2022 04:11:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gnuweeb.org;
+	s=default; t=1646107903;
+	bh=3w2AxpLXX7FDNdhNQtKsmRuPVl/hBEnkMiP8fFyfR10=;
+	h=From:To:Cc:Subject:Date:From;
+	b=XXlcngaMZLMDjGdg4ozmnsihW6FwV1zp3Ppp8t0wcAiES3d0GHcCuiJ5QY3RRWDpf
+	 /xs+WJPclbKSGyvzzK5wMglLJ9phywcxJvlb7hRxLCMi4ipDlzru8fTXv7KVkVydYy
+	 Nm5yJOet9cpK/Eo/l4ibHM9kXjqBkiuimeqD+ZGMgSWcXXLJsKmsfsrpY/pPqGwfBN
+	 ujA0CQ5uvZfqwRac81ugs5EUNfmPp+4FHn4QbMwUqpsE0iYBNLOvdL2En3Sa0BumHa
+	 PW/xpbsyXMa+WV9hXP/hWsHr6Zci++G1AqbZ3igHneR/ro+ShAHNLxdB9algEyEPnG
+	 KJrAPowaz7zlQ==
+From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+To: Borislav Petkov <bp@suse.de>
+Cc: weidonghui <weidonghui@allwinnertech.com>,
+	tools@linux.kernel.org,
+	linux-kernel@vger.kernel.org,
+	gwml@vger.gnuweeb.org,
+	x86@kernel.org,
+	Ammar Faizi <ammarfaizi2@gnuweeb.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH] scripts/decodecode: Make objdump always use operand-size suffix
+Date: Tue,  1 Mar 2022 11:11:19 +0700
+Message-Id: <20220301041119.55085-1-ammarfaizi2@gnuweeb.org>
 X-Mailer: git-send-email 2.32.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
@@ -40,74 +42,110 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Now that lore indexes all messages, there's no need to lookup the project
-for the message-id. If the project is not specified, then 'all' is used.
+For better reading, always use operand-size suffix for the generated
+AT&T syntax Assembly code.
 
-The primary benefit of this change is that cached accesses can now work
-offline instead of splatting with a network error.
+  $ echo "Code: 50 e0 49 8b 4e 08 48 8b 51 50 48 85 d2 75 03 48 8b 11 48 c7 c7 02 " \
+  "47 40 a1 48 89 c6 48 c7 c1 b6 38 3f a1 31 c0 e8 25 72 d5 df <0f> 0b 41 bc 01" \
+  "00 00 00 e9 da fb ff ff 48 8b 2b 48 8b 7d 08 e8 fc" | scripts/decodecode
 
-Signed-off-by: Rob Herring <robh@kernel.org>
+Before this patch:
+------------------
+
+  All code
+  ========
+     0:   50                    push   %rax
+     1:   e0 49                 loopne 0x4c
+     3:   8b 4e 08              mov    0x8(%rsi),%ecx
+     6:   48 8b 51 50           mov    0x50(%rcx),%rdx
+     a:   48 85 d2              test   %rdx,%rdx
+     d:   75 03                 jne    0x12
+     f:   48 8b 11              mov    (%rcx),%rdx
+    12:   48 c7 c7 02 47 40 a1  mov    $0xffffffffa1404702,%rdi
+    19:   48 89 c6              mov    %rax,%rsi
+    1c:   48 c7 c1 b6 38 3f a1  mov    $0xffffffffa13f38b6,%rcx
+    23:   31 c0                 xor    %eax,%eax
+    25:   e8 25 72 d5 df        call   0xffffffffdfd5724f
+    2a:*  0f 0b                 ud2       <-- trapping instruction
+    2c:   41 bc 01 00 00 00     mov    $0x1,%r12d
+    32:   e9 da fb ff ff        jmp    0xfffffffffffffc11
+    37:   48 8b 2b              mov    (%rbx),%rbp
+    3a:   48 8b 7d 08           mov    0x8(%rbp),%rdi
+    3e:   e8                    .byte 0xe8
+    3f:   fc                    cld
+
+  Code starting with the faulting instruction
+  ===========================================
+     0:   0f 0b                 ud2
+     2:   41 bc 01 00 00 00     mov    $0x1,%r12d
+     8:   e9 da fb ff ff        jmp    0xfffffffffffffbe7
+     d:   48 8b 2b              mov    (%rbx),%rbp
+    10:   48 8b 7d 08           mov    0x8(%rbp),%rdi
+    14:   e8                    .byte 0xe8
+    15:   fc                    cld
+
+After this patch:
+------------------
+
+  All code
+  ========
+     0:   50                      pushq  %rax
+     1:   e0 49                   loopneq 0x4c
+     3:   8b 4e 08                movl   0x8(%rsi),%ecx
+     6:   48 8b 51 50             movq   0x50(%rcx),%rdx
+     a:   48 85 d2                testq  %rdx,%rdx
+     d:   75 03                   jne    0x12
+     f:   48 8b 11                movq   (%rcx),%rdx
+    12:   48 c7 c7 02 47 40 a1    movq   $0xffffffffa1404702,%rdi
+    19:   48 89 c6                movq   %rax,%rsi
+    1c:   48 c7 c1 b6 38 3f a1    movq   $0xffffffffa13f38b6,%rcx
+    23:   31 c0                   xorl   %eax,%eax
+    25:   e8 25 72 d5 df          callq  0xffffffffdfd5724f
+    2a:*  0f 0b                   ud2         <-- trapping instruction
+    2c:   41 bc 01 00 00 00       movl   $0x1,%r12d
+    32:   e9 da fb ff ff          jmpq   0xfffffffffffffc11
+    37:   48 8b 2b                movq   (%rbx),%rbp
+    3a:   48 8b 7d 08             movq   0x8(%rbp),%rdi
+    3e:   e8                      .byte 0xe8
+    3f:   fc                      cld
+
+  Code starting with the faulting instruction
+  ===========================================
+     0:   0f 0b                   ud2
+     2:   41 bc 01 00 00 00       movl   $0x1,%r12d
+     8:   e9 da fb ff ff          jmpq   0xfffffffffffffbe7
+     d:   48 8b 2b                movq   (%rbx),%rbp
+    10:   48 8b 7d 08             movq   0x8(%rbp),%rdi
+    14:   e8                      .byte 0xe8
+    15:   fc                      cld
+
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Borislav Petkov <bp@suse.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 ---
+ scripts/decodecode | 2 ++
+ 1 file changed, 2 insertions(+)
 
-My usecase is twofold. First I want to speed up opening a thread by 
-having it fetched in the background and cached. Second, I want to be 
-able to work offline by fetching a list of threads (my PW queue) in 
-advance and using the offline copy. With a sufficiently long cache 
-timeout, the cache works perfectly for this use. Though maybe a 'use the 
-cache if there's a network failure' mode is needed instead of always 
-timing out the cache.
-
-I also have this working using b4 to fetch my queue to an mbox and 
-then using the 'use local mbox' option. This mostly works except for 
-the handling of 'From ' in message bodies which is problematic for mbox 
-format. The cache manages to avoid this problem.
-
-Rob
-
- b4/__init__.py | 23 +++++++----------------
- 1 file changed, 7 insertions(+), 16 deletions(-)
-
-diff --git a/b4/__init__.py b/b4/__init__.py
-index 0d506bbaa649..ec1a6da44144 100644
---- a/b4/__init__.py
-+++ b/b4/__init__.py
-@@ -2235,6 +2235,9 @@ def get_pi_thread_by_url(t_mbx_url, nocache=False):
-         logger.critical('Grabbing thread from %s', t_mbx_url.split('://')[1])
-         session = get_requests_session()
-         resp = session.get(t_mbx_url)
-+        if resp.status_code == 404:
-+            logger.critical('That message-id is not known.')
-+            return None
-         if resp.status_code != 200:
-             logger.critical('Server returned an error: %s', resp.status_code)
-             return None
-@@ -2263,22 +2266,10 @@ def get_pi_thread_by_url(t_mbx_url, nocache=False):
- def get_pi_thread_by_msgid(msgid, useproject=None, nocache=False, onlymsgids: Optional[set] = None):
-     qmsgid = urllib.parse.quote_plus(msgid)
-     config = get_main_config()
--    # Grab the head from lore, to see where we are redirected
--    midmask = config['midmask'] % qmsgid
--    loc = urllib.parse.urlparse(midmask)
--    if useproject:
--        projurl = '%s://%s/%s' % (loc.scheme, loc.netloc, useproject)
--    else:
--        logger.info('Looking up %s', midmask)
--        session = get_requests_session()
--        resp = session.head(midmask)
--        if resp.status_code < 300 or resp.status_code > 400:
--            logger.critical('That message-id is not known.')
--            return None
--        # Pop msgid from the end of the redirect
--        chunks = resp.headers['Location'].rstrip('/').split('/')
--        projurl = '/'.join(chunks[:-1])
--        resp.close()
-+    loc = urllib.parse.urlparse(config['midmask'])
-+    if not useproject:
-+        useproject = 'all'
-+    projurl = '%s://%s/%s' % (loc.scheme, loc.netloc, useproject)
-     t_mbx_url = '%s/%s/t.mbox.gz' % (projurl, qmsgid)
-     logger.debug('t_mbx_url=%s', t_mbx_url)
+diff --git a/scripts/decodecode b/scripts/decodecode
+index c711a196511c..ab400891610f 100755
+--- a/scripts/decodecode
++++ b/scripts/decodecode
+@@ -98,6 +98,8 @@ disas() {
+ 		fi
+ 	fi
  
++	OBJDUMPFLAGS="$OBJDUMPFLAGS -M suffix"
++
+ 	${CROSS_COMPILE}objdump $OBJDUMPFLAGS -S $t.o | \
+ 		grep -v "/tmp\|Disassembly\|\.text\|^$" > $t.dis 2>&1
+ }
+
+base-commit: 7e57714cd0ad2d5bb90e50b5096a0e671dec1ef3
 -- 
 2.32.0
 
