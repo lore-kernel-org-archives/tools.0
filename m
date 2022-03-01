@@ -1,151 +1,63 @@
-Received: from gnuweeb.org (gnuweeb.org [51.81.211.47])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2780917E4
-	for <tools@linux.kernel.org>; Tue,  1 Mar 2022 04:18:42 +0000 (UTC)
-Received: from integral2.. (unknown [182.2.73.137])
-	by gnuweeb.org (Postfix) with ESMTPSA id BF3617EC80;
-	Tue,  1 Mar 2022 04:11:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gnuweeb.org;
-	s=default; t=1646107903;
-	bh=3w2AxpLXX7FDNdhNQtKsmRuPVl/hBEnkMiP8fFyfR10=;
-	h=From:To:Cc:Subject:Date:From;
-	b=XXlcngaMZLMDjGdg4ozmnsihW6FwV1zp3Ppp8t0wcAiES3d0GHcCuiJ5QY3RRWDpf
-	 /xs+WJPclbKSGyvzzK5wMglLJ9phywcxJvlb7hRxLCMi4ipDlzru8fTXv7KVkVydYy
-	 Nm5yJOet9cpK/Eo/l4ibHM9kXjqBkiuimeqD+ZGMgSWcXXLJsKmsfsrpY/pPqGwfBN
-	 ujA0CQ5uvZfqwRac81ugs5EUNfmPp+4FHn4QbMwUqpsE0iYBNLOvdL2En3Sa0BumHa
-	 PW/xpbsyXMa+WV9hXP/hWsHr6Zci++G1AqbZ3igHneR/ro+ShAHNLxdB9algEyEPnG
-	 KJrAPowaz7zlQ==
-From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
-To: Borislav Petkov <bp@suse.de>
-Cc: weidonghui <weidonghui@allwinnertech.com>,
-	tools@linux.kernel.org,
-	linux-kernel@vger.kernel.org,
-	gwml@vger.gnuweeb.org,
-	x86@kernel.org,
-	Ammar Faizi <ammarfaizi2@gnuweeb.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACEA17E
+	for <tools@linux.kernel.org>; Tue,  1 Mar 2022 08:41:58 +0000 (UTC)
+Received: from nazgul.tnic (dynamic-002-247-255-128.2.247.pool.telefonica.de [2.247.255.128])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 0F6081EC0531;
+	Tue,  1 Mar 2022 09:41:45 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1646124106;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=fv/wsRJ+/2kkhDuBlBBli91a0adPA17Sg0dPsAfIbxY=;
+	b=HGDxqWIu/qkSwkTdKw5GUczVrJQWtfFWf2W5viNl+J+6ZMgufvZdSkRwNGF9fE5K/ntTLM
+	50TQ23eOIjh54Rq1YxZMXUrTR74kuPuzuweIaCmZgg1exunrx8prxwh74NbZ9FF1aRLfqg
+	uYctWPRdhuBaRUXCfrx+ghws46a2h5w=
+Date: Tue, 1 Mar 2022 09:41:50 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+Cc: weidonghui <weidonghui@allwinnertech.com>, tools@linux.kernel.org,
+	linux-kernel@vger.kernel.org, gwml@vger.gnuweeb.org, x86@kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Andy Lutomirski <luto@kernel.org>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
+	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
 	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH] scripts/decodecode: Make objdump always use operand-size suffix
-Date: Tue,  1 Mar 2022 11:11:19 +0700
-Message-Id: <20220301041119.55085-1-ammarfaizi2@gnuweeb.org>
-X-Mailer: git-send-email 2.32.0
+Subject: Re: [PATCH] scripts/decodecode: Make objdump always use operand-size
+ suffix
+Message-ID: <Yh3cPSf/qKNPv1C9@nazgul.tnic>
+References: <20220301041119.55085-1-ammarfaizi2@gnuweeb.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220301041119.55085-1-ammarfaizi2@gnuweeb.org>
 
-For better reading, always use operand-size suffix for the generated
-AT&T syntax Assembly code.
+On Tue, Mar 01, 2022 at 11:11:19AM +0700, Ammar Faizi wrote:
+> For better reading, always use operand-size suffix for the generated
 
-  $ echo "Code: 50 e0 49 8b 4e 08 48 8b 51 50 48 85 d2 75 03 48 8b 11 48 c7 c7 02 " \
-  "47 40 a1 48 89 c6 48 c7 c1 b6 38 3f a1 31 c0 e8 25 72 d5 df <0f> 0b 41 bc 01" \
-  "00 00 00 e9 da fb ff ff 48 8b 2b 48 8b 7d 08 e8 fc" | scripts/decodecode
+What does "better reading" mean here exactly?
 
-Before this patch:
-------------------
+See, there's a reason why -M suffix is not default in objdump. And in
+my experience, I've never looked at objdump output and thought, "hm, so
+the operand size insn mnemonic suffix is missing here". And if at all,
+one usually wants to know the operand size of a single instruction - not
+the whole bunch - and for that we tend to look at the vendor manuals
+directly...
 
-  All code
-  ========
-     0:   50                    push   %rax
-     1:   e0 49                 loopne 0x4c
-     3:   8b 4e 08              mov    0x8(%rsi),%ecx
-     6:   48 8b 51 50           mov    0x50(%rcx),%rdx
-     a:   48 85 d2              test   %rdx,%rdx
-     d:   75 03                 jne    0x12
-     f:   48 8b 11              mov    (%rcx),%rdx
-    12:   48 c7 c7 02 47 40 a1  mov    $0xffffffffa1404702,%rdi
-    19:   48 89 c6              mov    %rax,%rsi
-    1c:   48 c7 c1 b6 38 3f a1  mov    $0xffffffffa13f38b6,%rcx
-    23:   31 c0                 xor    %eax,%eax
-    25:   e8 25 72 d5 df        call   0xffffffffdfd5724f
-    2a:*  0f 0b                 ud2       <-- trapping instruction
-    2c:   41 bc 01 00 00 00     mov    $0x1,%r12d
-    32:   e9 da fb ff ff        jmp    0xfffffffffffffc11
-    37:   48 8b 2b              mov    (%rbx),%rbp
-    3a:   48 8b 7d 08           mov    0x8(%rbp),%rdi
-    3e:   e8                    .byte 0xe8
-    3f:   fc                    cld
+So I don't think this brings any improvement to the output but hey, I
+could be missing a reason.
 
-  Code starting with the faulting instruction
-  ===========================================
-     0:   0f 0b                 ud2
-     2:   41 bc 01 00 00 00     mov    $0x1,%r12d
-     8:   e9 da fb ff ff        jmp    0xfffffffffffffbe7
-     d:   48 8b 2b              mov    (%rbx),%rbp
-    10:   48 8b 7d 08           mov    0x8(%rbp),%rdi
-    14:   e8                    .byte 0xe8
-    15:   fc                    cld
-
-After this patch:
-------------------
-
-  All code
-  ========
-     0:   50                      pushq  %rax
-     1:   e0 49                   loopneq 0x4c
-     3:   8b 4e 08                movl   0x8(%rsi),%ecx
-     6:   48 8b 51 50             movq   0x50(%rcx),%rdx
-     a:   48 85 d2                testq  %rdx,%rdx
-     d:   75 03                   jne    0x12
-     f:   48 8b 11                movq   (%rcx),%rdx
-    12:   48 c7 c7 02 47 40 a1    movq   $0xffffffffa1404702,%rdi
-    19:   48 89 c6                movq   %rax,%rsi
-    1c:   48 c7 c1 b6 38 3f a1    movq   $0xffffffffa13f38b6,%rcx
-    23:   31 c0                   xorl   %eax,%eax
-    25:   e8 25 72 d5 df          callq  0xffffffffdfd5724f
-    2a:*  0f 0b                   ud2         <-- trapping instruction
-    2c:   41 bc 01 00 00 00       movl   $0x1,%r12d
-    32:   e9 da fb ff ff          jmpq   0xfffffffffffffc11
-    37:   48 8b 2b                movq   (%rbx),%rbp
-    3a:   48 8b 7d 08             movq   0x8(%rbp),%rdi
-    3e:   e8                      .byte 0xe8
-    3f:   fc                      cld
-
-  Code starting with the faulting instruction
-  ===========================================
-     0:   0f 0b                   ud2
-     2:   41 bc 01 00 00 00       movl   $0x1,%r12d
-     8:   e9 da fb ff ff          jmpq   0xfffffffffffffbe7
-     d:   48 8b 2b                movq   (%rbx),%rbp
-    10:   48 8b 7d 08             movq   0x8(%rbp),%rdi
-    14:   e8                      .byte 0xe8
-    15:   fc                      cld
-
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Borislav Petkov <bp@suse.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
----
- scripts/decodecode | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/scripts/decodecode b/scripts/decodecode
-index c711a196511c..ab400891610f 100755
---- a/scripts/decodecode
-+++ b/scripts/decodecode
-@@ -98,6 +98,8 @@ disas() {
- 		fi
- 	fi
- 
-+	OBJDUMPFLAGS="$OBJDUMPFLAGS -M suffix"
-+
- 	${CROSS_COMPILE}objdump $OBJDUMPFLAGS -S $t.o | \
- 		grep -v "/tmp\|Disassembly\|\.text\|^$" > $t.dis 2>&1
- }
-
-base-commit: 7e57714cd0ad2d5bb90e50b5096a0e671dec1ef3
 -- 
-2.32.0
+Regards/Gruss,
+    Boris.
 
+https://people.kernel.org/tglx/notes-about-netiquette
