@@ -1,79 +1,103 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B59E6457
-	for <tools@linux.kernel.org>; Mon, 21 Mar 2022 21:59:55 +0000 (UTC)
-Received: by mail-qv1-f50.google.com with SMTP id r1so12466031qvr.12
-        for <tools@linux.kernel.org>; Mon, 21 Mar 2022 14:59:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ah4w6OoRUPZxip9VwA5wtxcHEimFrP1bI+tEzjJbshc=;
-        b=Rt+eR7o175BK7C00p2grlao5QSW1Y0ZBBQys3HPci5c12IqNOOhytsh8o4gcKah5Rl
-         jMKAT3b0d71BHApy9rJDKMr7BpveAVGMfrvkBLq0ldR762cWDI0GJCwXC0q2j9wXFuxh
-         FGmo4DidP8gwRHay/+xlolmVIdKmcixbqf8uA=
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C26E7C
+	for <tools@linux.kernel.org>; Thu, 31 Mar 2022 19:53:49 +0000 (UTC)
+Received: by mail-oo1-f44.google.com with SMTP id z11-20020a4a9c8b000000b00328fdb15e4aso156221ooj.6
+        for <tools@linux.kernel.org>; Thu, 31 Mar 2022 12:53:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ah4w6OoRUPZxip9VwA5wtxcHEimFrP1bI+tEzjJbshc=;
-        b=dOxfg1R9oIkafgDqdnjGPA4ghcUPP/38okcsfH1G5p9Bo6x0iw5Ub1UI+NN+w41F/3
-         pVgm5CcDjdXx7RhMumON8GuoCCthFiLqE1rF2mYyk3SheXDuA4CHAWVyZe8V0rWD9yZb
-         PADIeehOOyMvh3cMi9xhEO6S+Lzbt2p3/mPZ5UXBTXimqs11Et8+7TYtlgJRvSsFyLLd
-         RHOnJNaFu4FeiXJTCNVF40zEO2K9OYwbm6mULWV6NEHpObWL8raNtbS98CE2JIT0ENpJ
-         6d9nz8FVBQ+Ek8ZtosBvVJ+E228bwSr+5gxnYcx+zDf0Y3OIcVlTMZXzsFV3bJOA5v8S
-         hULA==
-X-Gm-Message-State: AOAM532Jtrtxhmjp/Av8xMn7kc3YfOdZfF4ZNQ/UecOXwNKs/txSoCwc
-	yf5vPWrOUqQzwh4tB1zVJkskF1T6ryKfPg==
-X-Google-Smtp-Source: ABdhPJzKQ3MXS8vpQJyr2kl5E/QXICAvIa9HMP8sLVHjJGpvGWAugtkhBn8Q4c+gcEa3lLbSyrD+Rg==
-X-Received: by 2002:ad4:5d6b:0:b0:441:bad:b469 with SMTP id fn11-20020ad45d6b000000b004410badb469mr9759921qvb.101.1647899994192;
-        Mon, 21 Mar 2022 14:59:54 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-127.dsl.bell.ca. [216.209.220.127])
-        by smtp.gmail.com with ESMTPSA id u17-20020ac858d1000000b002e1cdbb50besm12463901qta.78.2022.03.21.14.59.53
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Pgzn+i26lI8pKMzZ8eQEu4BVCSuT8CezBeIhQtpK7cg=;
+        b=iMhG1+eyuTYiZW6j0dcs+UQ6zO/vjhWyGCYYkv+xWLvT2xQXKUa+imStyHyKUqBuVY
+         Ef7MJ9CuD4nwqiABC1xCYCzhfm31QcO0TexDzi87OpFalUZP1VGj/FhF5OhIyG7Bfo0x
+         ETLvk+7dDKH+uc3hg3XaH9ROCnjQinICJ/iOuNd9IrovmGbk/SfxJrcKqPNHDF+0+BKM
+         jS8nsraSXlQ7CfK/TVhXKV0tR691BBVEme7kH2NxJqrlEWfXuqohGaBk6JQkTC7Lt4n3
+         72NYGDa2OoZ8D4E00Ymj7lc8L05Ba4H6xhMfSfEHVGFULmp9KGEBjYQ+FOBRTfu2+1mi
+         kPJQ==
+X-Gm-Message-State: AOAM533ze+oP8FBZE/kjzxMYyjMixnOHU/cvFrxso9IdnHdhMa1lhE3B
+	V8tEdw7HfpY4Gqt14Dyfq9GEeT3tuA==
+X-Google-Smtp-Source: ABdhPJzQMc2FDpbIb1z/56Lg4EVX0p9c3TLsfFxhVTflb70BTm/ukT0vh2AfT3j5SITCCHelZ4fiZA==
+X-Received: by 2002:a4a:d307:0:b0:324:b2d7:a5f with SMTP id g7-20020a4ad307000000b00324b2d70a5fmr5745465oos.33.1648756427889;
+        Thu, 31 Mar 2022 12:53:47 -0700 (PDT)
+Received: from xps15.. (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.googlemail.com with ESMTPSA id q11-20020a4a330b000000b003289cbe97c6sm218861ooq.13.2022.03.31.12.53.47
+        for <tools@linux.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 14:59:53 -0700 (PDT)
-Date: Mon, 21 Mar 2022 17:59:52 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Rob Herring <robh@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: [PATCH] Remove URL redirect project lookup
-Message-ID: <20220321215952.p3ywzfr4waq5klmv@meerkat.local>
-References: <20220225031135.4136158-1-robh@kernel.org>
- <CAL_JsqJrXXtGG52s6nzwLaCi48OutGbyGxEQEdmPZCZofNShfA@mail.gmail.com>
+        Thu, 31 Mar 2022 12:53:47 -0700 (PDT)
+From: Rob Herring <robh@kernel.org>
+To: tools@linux.kernel.org
+Subject: [PATCH] am: Fix broken guessbranch handling
+Date: Thu, 31 Mar 2022 14:53:46 -0500
+Message-Id: <20220331195346.1384515-1-robh@kernel.org>
+X-Mailer: git-send-email 2.32.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAL_JsqJrXXtGG52s6nzwLaCi48OutGbyGxEQEdmPZCZofNShfA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 21, 2022 at 11:41:20AM -0500, Rob Herring wrote:
-> > My usecase is twofold. First I want to speed up opening a thread by
-> > having it fetched in the background and cached. Second, I want to be
-> > able to work offline by fetching a list of threads (my PW queue) in
-> > advance and using the offline copy. With a sufficiently long cache
-> > timeout, the cache works perfectly for this use. Though maybe a 'use the
-> > cache if there's a network failure' mode is needed instead of always
-> > timing out the cache.
-> >
-> > I also have this working using b4 to fetch my queue to an mbox and
-> > then using the 'use local mbox' option. This mostly works except for
-> > the handling of 'From ' in message bodies which is problematic for mbox
-> > format. The cache manages to avoid this problem.
-> >
-> > Rob
-> >
-> >  b4/__init__.py | 23 +++++++----------------
-> >  1 file changed, 7 insertions(+), 16 deletions(-)
-> 
-> Ping!
+b4's usage of git-log '--branches' option is broken. The option takes a
+glob pattern *only* and must have an '=', but b4 ends up passing
+'--branches <guessbranch>' to git-log. This will kind of work, but is
+not checking only 'guessbranch'. For example, these 3 commands all do
+something different:
 
-Sorry, I've been a bit verklempt about things over the past few weeks. I'll
-try to get to outstanding patches in very short order.
+git log -1 --branches=master
 
-Best regards,
--K
+git log -1 --branches master
+
+git log -1 --branches=*aster
+
+A maintainer wanting to apply a patch or series likely has a small set of
+known branches they apply patches to. Using a glob pattern is not a good
+fit for that. Instead, allow --guess-branch to be repeated and to take
+fixed refs.
+
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ b4/__init__.py | 4 ++--
+ b4/command.py  | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/b4/__init__.py b/b4/__init__.py
+index ec1a6da44144..be934e53ca0d 100644
+--- a/b4/__init__.py
++++ b/b4/__init__.py
+@@ -643,7 +643,7 @@ class LoreSeries:
+ 
+         return len(self.indexes), mismatches
+ 
+-    def find_base(self, gitdir: str, branches: Optional[str] = None, maxdays: int = 30) -> Tuple[str, len, len]:
++    def find_base(self, gitdir: str, branches: Optional[list] = None, maxdays: int = 30) -> Tuple[str, len, len]:
+         # Find the date of the first patch we have
+         pdate = datetime.datetime.now()
+         for lmsg in self.patches:
+@@ -655,7 +655,7 @@ class LoreSeries:
+         # Find latest commit on that date
+         guntil = pdate.strftime('%Y-%m-%d')
+         if branches:
+-            where = ['--branches', branches]
++            where = branches
+         else:
+             where = ['--all']
+ 
+diff --git a/b4/command.py b/b4/command.py
+index 3a2d58f364e5..6d3c899480ec 100644
+--- a/b4/command.py
++++ b/b4/command.py
+@@ -133,7 +133,7 @@ def cmd():
+                        help='Save patches in a quilt-ready folder')
+     sp_am.add_argument('-g', '--guess-base', dest='guessbase', action='store_true', default=False,
+                        help='Try to guess the base of the series (if not specified)')
+-    sp_am.add_argument('-b', '--guess-branch', dest='guessbranch', default=None,
++    sp_am.add_argument('-b', '--guess-branch', dest='guessbranch', nargs='+', action='extend', type=str, default=None,
+                        help='When guessing base, restrict to this branch (use with -g)')
+     sp_am.add_argument('--guess-lookback', dest='guessdays', type=int, default=21,
+                        help='When guessing base, go back this many days from the patch date (default: 2 weeks)')
+-- 
+2.32.0
+
