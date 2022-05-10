@@ -1,31 +1,50 @@
-Received: from toddlekind.com (devalfone.xyz [5.181.80.196])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78B2C23C2
-	for <tools@linux.kernel.org>; Tue, 10 May 2022 07:13:04 +0000 (UTC)
+Received: from timbreartloft.com (necyradin.xyz [188.214.104.179])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA3A428E1
+	for <tools@linux.kernel.org>; Tue, 10 May 2022 11:55:01 +0000 (UTC)
 To: tools@linux.kernel.org
-Subject: customer leads generation service
-Message-ID: <c98ea8790fbd7531c67d72c9850acba9@alltiresupply.com>
-Date: Tue, 10 May 2022 09:11:31 +0200
-From: "Jason Williams" <jasonld@altentreptow.de>
-Reply-To: info@336763.com
+Subject: photo clipping path and retouching
+Message-ID: <4179a55468d2a346ec2abec649436d0f@redpointclimb.com>
+Date: Tue, 10 May 2022 13:14:08 +0200
+From: "Jerry" <jerryye@all-about-vinylrecords.com>
+Reply-To: info@224244.com
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Mailer-Sent-By: 2
+X-Mailer-Sent-By: 1
 Content-Type: text/plain; format=flowed; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 
 Hi,
 
-How are you doing?
-I have mailed you a couple of times from last week.
+Hope you are doing well.
 
-We provide customer leads generation and we can generate you new business
-leads and increase your sales.
-Please reply today so we can go over options for you.
+We provide an extensive range of photo editing services such as image
+enhancement,
+background removal, portrait retouching, clipping path, real estate photo
+editing,
+HDR blending, commercial photo editing, panorama image stitching, wedding
+photo
+retouching and more. Our photo editing professionals work with optimistic
+attitude to deliver you quality results in each project.
+
+We are also a full-service commercial printer, we provide a broad range of
+digital,
+offset, large format printing and comprehensive finishing services for all.
+Our clients include medium to large-sized businesses such as, convention
+centers,
+hotels, sports teams, nonprofit organizations, financial institutions, as
+well as
+smaller businesses like bakeries, lawn care companies, and restaurants.
+
+If you have any photo work project, please send to us for review and we can
+provide testing for you to judge our quality.
 
 Thanks,
-Jason Williams
+Jerry Parker
+The photo and video specialist
+
+
 
