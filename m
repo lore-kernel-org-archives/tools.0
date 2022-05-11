@@ -1,19 +1,19 @@
-Received: from timbreartloft.com (necyradin.xyz [188.214.104.179])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA3A428E1
-	for <tools@linux.kernel.org>; Tue, 10 May 2022 11:55:01 +0000 (UTC)
+Received: from malibusugar.com (unknown [193.160.32.175])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17FE717C4
+	for <tools@linux.kernel.org>; Wed, 11 May 2022 10:12:27 +0000 (UTC)
 To: tools@linux.kernel.org
-Subject: photo clipping path and retouching
-Message-ID: <4179a55468d2a346ec2abec649436d0f@redpointclimb.com>
-Date: Tue, 10 May 2022 13:14:08 +0200
-From: "Jerry" <jerryye@all-about-vinylrecords.com>
-Reply-To: info@224244.com
+Subject: fleece bathrobes and blankets - can add your logo
+Message-ID: <8e04ebb58c9444e6c26f3cda2eee1c17@bedbathandbeyond.com>
+Date: Wed, 11 May 2022 10:07:19 +0200
+From: "Eric Dike" <ericjy@luelstudio.com>
+Reply-To: info@277702.com
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Mailer-Sent-By: 1
+X-Mailer-Sent-By: 2
 Content-Type: text/plain; format=flowed; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 
@@ -21,30 +21,25 @@ Hi,
 
 Hope you are doing well.
 
-We provide an extensive range of photo editing services such as image
-enhancement,
-background removal, portrait retouching, clipping path, real estate photo
-editing,
-HDR blending, commercial photo editing, panorama image stitching, wedding
-photo
-retouching and more. Our photo editing professionals work with optimistic
-attitude to deliver you quality results in each project.
+Our company is a professional manufacturer and exporter of home textile
+products located in China.
+Our main products are: polar fleece blankets, coral fleece blankets, anti
+pilling blankets, camping/travel/picnic blankets, kids’ blankets, sleeve
+blankets, bathrobes, cushions & pillows and animal cushions.
 
-We are also a full-service commercial printer, we provide a broad range of
-digital,
-offset, large format printing and comprehensive finishing services for all.
-Our clients include medium to large-sized businesses such as, convention
-centers,
-hotels, sports teams, nonprofit organizations, financial institutions, as
-well as
-smaller businesses like bakeries, lawn care companies, and restaurants.
-
-If you have any photo work project, please send to us for review and we can
-provide testing for you to judge our quality.
+We have 10 years experience in this field. Now we own one big factory and
+have nice cooperation with another two partnership factories.
+We have about 300 experienced workers and over 350 sewing machines that
+ensure us to provide products with stable high quality & nice price in very
+short time. Quality is always put in the first place.
+More than 95% of our products are directly exported to Europe, North
+America and Japan. We are very efficient, reliable and responsible.
+We know our customers needs and try our best to meet them.
+If you have any inquires related to our product lines, please contact us.
 
 Thanks,
-Jerry Parker
-The photo and video specialist
+Eric Dike
+
 
 
 
