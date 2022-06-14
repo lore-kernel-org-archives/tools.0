@@ -1,44 +1,45 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A8F1FC1
-	for <tools@linux.kernel.org>; Tue, 14 Jun 2022 20:25:58 +0000 (UTC)
-Received: by mail-qv1-f52.google.com with SMTP id 89so7324522qvc.0
-        for <tools@linux.kernel.org>; Tue, 14 Jun 2022 13:25:58 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2377A1FC1
+	for <tools@linux.kernel.org>; Tue, 14 Jun 2022 20:27:49 +0000 (UTC)
+Received: by mail-qv1-f50.google.com with SMTP id 43so7303286qvb.3
+        for <tools@linux.kernel.org>; Tue, 14 Jun 2022 13:27:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ecdGaX1jtv7/UUE80xTW/gskhwhHBu41CiEDuz1s3qY=;
-        b=GkU+OqBd6ff/R4sZbHuxxIzYJTZrgZmYDYVgkfDXY42eCCtGobvMQT/6Yblcut+m/T
-         qZSlaV6J0LytnCNoU1SyVX3ToJAjpWu1Juc7xL6+COgDvUn3/nRVwWLuaeJWUt4C8nH/
-         m0jPcQPI6EzmINh1DtjbHvTN6iBj23lQ9X2DE=
+        bh=FFFHrXFDo/8wqWjx73widgrj7pjh1TYuLmvshO7QJ78=;
+        b=Nzqr+ANsKRjkHsFTY4Eci0GilfmY6VinVR6/hRB4yd8uukiOyuh9DfmDIUDwGOnGkX
+         oaUX2zu9lKMEF/KiLFjDXSiaVkmY1lb7fnENmv1CgDHfO5myMUfarRN2V+iWPugPqazS
+         nfwD4Br08W+PhM5PdfV0P7K+dEbocWsJghY7U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ecdGaX1jtv7/UUE80xTW/gskhwhHBu41CiEDuz1s3qY=;
-        b=JMPiOCEdUTMN3dG9cmAS+pwR+m4vIlI1tT1lTVJUJry0B7zg/qLWf4CsrRaQqP7oET
-         kYCd171rPz/gdOJ3dY77DFmmk7/IpJu20TVVsK0Xt7qiUa2/0KQKfwTBKFSXLNYSKhxZ
-         T22Upk0sZdpu38J6SmOuOqfpKgSJgCo2ATynFgJIxkTBHflvRYXIfiAAYZaTBRkJlzgf
-         5nxFtdsfaF/KUUxPH67KLtgaA8mi2zKkVxIAggAtEIhTKtdAf44a3CT9spzBUmM8Rd/r
-         Sortz+4e5HYGlXlnBTMOeDVRlktblDTJpytCGQAT5uyJWbo6w6A6AtZhf7uQzKoIPJpZ
-         Rzjg==
-X-Gm-Message-State: AJIora/iDhoYObxtEjpe+xnxagDW3FCPN4hWq9cs1wjHYFuQs9qed6/A
-	zzwYn78bvLK8b74ChW0iTDq6xGFIEDez8w==
-X-Google-Smtp-Source: AGRyM1sgvN79G6PT5Cyq+s5h6ySGrb01YsHQ3lbkJaDyv0pWnbwp8KhYhIxvGZaQTAt8/qEVHm0bFw==
-X-Received: by 2002:a05:6214:508b:b0:467:de79:4f7d with SMTP id kk11-20020a056214508b00b00467de794f7dmr4867757qvb.101.1655238357711;
-        Tue, 14 Jun 2022 13:25:57 -0700 (PDT)
+        bh=FFFHrXFDo/8wqWjx73widgrj7pjh1TYuLmvshO7QJ78=;
+        b=vXEV9WQs99kOUEipRINaDjLd5F6GInF5/wjSnth7vxfd3pJzmNV+G+MHTT39pHYFNw
+         N84f4z8jVpd5p4FuAqJjGUqCgdPF5uq/1D51mGY5eAPv8hIU48I4JfRP/I2olQ7aWbCu
+         IyT0EDRla8Qq03RgQxqgAviNskMQIwHOTSuHKCeihIglp8BKG+zP/L5pRa1J9I6nSMQV
+         myj13nnnxy4GnG7u4tSDoR2oPUWKG6RZISk/mfvnMcCMdP0gY745BipUDafAVR86xkfX
+         1HGxy2kSoz9Y711V6Bu4Jc51QpS27PbXmOF96AyFSrfYyoH9wal+hgR+MuEdMJKZ7Dol
+         prBg==
+X-Gm-Message-State: AJIora9vNrTeUKIXzBYvvbMQRuSbAPKntm/GW7VdZwFcSiuj09yEjMMp
+	Zg93TC5U921nhpOE2pdQjxB+WRz6cJu3Ng==
+X-Google-Smtp-Source: AGRyM1uC+DI+aiShpQa8do26illt9hnhDBI4LkvQZ0ADK7r718Ra+bZ2NbjN30H17TgIUTuFItcExQ==
+X-Received: by 2002:a05:6214:d48:b0:464:5048:c14f with SMTP id 8-20020a0562140d4800b004645048c14fmr5152375qvr.125.1655238468017;
+        Tue, 14 Jun 2022 13:27:48 -0700 (PDT)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id j9-20020ae9c209000000b006a377a015d4sm9998631qkg.39.2022.06.14.13.25.55
+        by smtp.gmail.com with ESMTPSA id m4-20020a05620a24c400b006a098381abcsm10426971qkn.114.2022.06.14.13.27.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jun 2022 13:25:55 -0700 (PDT)
-Date: Tue, 14 Jun 2022 16:25:53 -0400
+        Tue, 14 Jun 2022 13:27:47 -0700 (PDT)
+Date: Tue, 14 Jun 2022 16:27:46 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: robh@kernel.org, tools@linux.kernel.org
-Subject: Re: [PATCH] am: Fix broken guessbranch handling
-Message-ID: <165523827762.24677.15302189224501428827.b4-ty@linuxfoundation.org>
-References: <20220331195346.1384515-1-robh@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: [PATCH] Remove URL redirect project lookup
+Message-ID: <20220614202746.zlpbdf636uftiehd@meerkat.local>
+References: <20220225031135.4136158-1-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -47,24 +48,20 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220331195346.1384515-1-robh@kernel.org>
+In-Reply-To: <20220225031135.4136158-1-robh@kernel.org>
 
-On Thu, 31 Mar 2022 14:53:46 -0500, Rob Herring wrote:
-> b4's usage of git-log '--branches' option is broken. The option takes a
-> glob pattern *only* and must have an '=', but b4 ends up passing
-> '--branches <guessbranch>' to git-log. This will kind of work, but is
-> not checking only 'guessbranch'. For example, these 3 commands all do
-> something different:
-> 
-> git log -1 --branches=master
-> 
-> [...]
+On Thu, Feb 24, 2022 at 09:11:35PM -0600, Rob Herring wrote:
+> Now that lore indexes all messages, there's no need to lookup the project
+> for the message-id. If the project is not specified, then 'all' is used.
 
-Applied, thanks!
+Rob:
 
-[1/1] am: Fix broken guessbranch handling
-      commit: c95e4d16d87c7c71589c64b1ac94973b354d0820
+Sorry for the long delay, but I did finally get around to it. I didn't quite
+use your patch directly, because the goal is to also support non-lore
+public-inbox installations, and they may not provide the unified index in
+/all/, so we needed to keep the old lookup option available.
 
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+The change is in master as commit bfe5df6694c8115fa8402943b125c6e47c8eec08.
+
+Thanks,
+-K
