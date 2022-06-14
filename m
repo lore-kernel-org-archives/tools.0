@@ -1,98 +1,66 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E87423C3
-	for <tools@linux.kernel.org>; Tue, 14 Jun 2022 21:39:59 +0000 (UTC)
-Received: by mail-qk1-f178.google.com with SMTP id p63so7406465qkd.10
-        for <tools@linux.kernel.org>; Tue, 14 Jun 2022 14:39:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA032560
+	for <tools@linux.kernel.org>; Tue, 14 Jun 2022 21:48:24 +0000 (UTC)
+Received: by mail-qv1-f45.google.com with SMTP id a9so7427530qvt.6
+        for <tools@linux.kernel.org>; Tue, 14 Jun 2022 14:48:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=oJunlsAmzGkFE+eYonEN7ePIMkPBJmtXhZS1qoyxgjE=;
-        b=EduGzTJxrJm2sAnPayk6sMXbxSrYGYlSfQZkTSawg25NSZHneCdQjv5IBE4ACLTzIz
-         QUrL4LI0dgsDoLaSR+3e2AZmYcodYFxweql84RSeEbcZDTFmPPjzWtOSPcQlC6Fv+U7b
-         JVZkayi6iZU19yynSm3NviCk8fGIfuB3y58ow=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=InPBwsA8tkuadTHGeyBDmB40PTk1tezIG6IOURywnL8=;
+        b=eiT+n7+eZj7nVPZNbAef20q7oxFX1VqLD9aAjNjl6SyUeHNPR5vJ7GisU8QviUJGFa
+         AO7fEWzglvyKqv+VxMC2PohQT6YuZT3wkANMJBD5NuhKrknsHTQeT5YqrFNMv52mpRbH
+         Tae/P+tOuJcJUz1RlTMXmCppgOcET9i4Bi5f8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=oJunlsAmzGkFE+eYonEN7ePIMkPBJmtXhZS1qoyxgjE=;
-        b=wXmwh9cs45BHjcYVX201DEeyqvUS65zaC4BnnNCwhGeCX6HL8GXknoV36oV2Kr+FLs
-         VO/UjiyIyGXAvr5vk6cAYMwtgt/tv/TlpUbs7OWIIoVVR7iwXShpgrz/RTDeTAijk60B
-         drtvZT6dY6w5GblhE4SnnuXIc1B0vLlKWINHrnNcZRXxx72vs1Ss2dQbsPMGGUKg2lWN
-         iIDDq6dVqQTppeeC0U5YeOBxKcgS8iSp5GfUBqMSdytdjrCKbuhjzrJwF+0Fc/PA+GfR
-         DEk07z0Kcn6wsFZ3dCwsC8lTkc2TOr96/95PTdWYlJtgCBKM2M8Yb+okIitNWtvm4exR
-         vUcw==
-X-Gm-Message-State: AOAM533j7zVDf89vCL1zxY0yqqqNblIvmxxLajtOHpzV2JXhfM/pyWQC
-	qidoJpBZCedlb/5DTCSGa477bNiiboKhVA==
-X-Google-Smtp-Source: ABdhPJyRttHGW+x43FKGjTlPqLNLF+gkW4XUepXtGXiMZUfB7kkNk3l63zWiqi6aEuaB2s8GLD8dqQ==
-X-Received: by 2002:a05:620a:1272:b0:6a6:bdc1:8f92 with SMTP id b18-20020a05620a127200b006a6bdc18f92mr5729030qkl.330.1655242798080;
-        Tue, 14 Jun 2022 14:39:58 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=InPBwsA8tkuadTHGeyBDmB40PTk1tezIG6IOURywnL8=;
+        b=e1CPgx4IVDNxQ5A4FbRgeW9TEeOkkdURcHzUC6DOCqC+asheiRZOESQ88O9rSvdpc7
+         3lli1L0nfVl7bHfMDJ45mW49EsjhWU5P3lMGfUYEncHPbBHad36iYaQznDXw+ZPTzmzq
+         zkQobLeuIR9X+w6TRqpJyta46O1aZxLwo6U5XK6X4tzcG+RBDr73VJganO1PbiYMBdXQ
+         ZZTpevAysAI64d6O7HLlUYkt3cd9kc1gFS9XshoWLwBoPIUGZsSd/RCLS3cCAJgh9suJ
+         50KXhJIpXJAUYTlnSHXU4J6esTCm7rATm1SBnz8VYCMk5eMKIt7aKe7Xjv24zSV9omQv
+         6Ywg==
+X-Gm-Message-State: AJIora/j1JtS7tR0T9cTvUQivraX7w2R3FSEX2rdMPd1khRKZLmRpCM+
+	8kSAx5he4kz/a+vrKfXB3V4ppQ==
+X-Google-Smtp-Source: AGRyM1tqhL84aK4aSxIio4d7ei82uNDch6QzjJzTMoOSIjXltcR3P44w9y3Y6/WRW+g64HmsOY75eQ==
+X-Received: by 2002:ad4:5fcd:0:b0:46a:a0f8:db51 with SMTP id jq13-20020ad45fcd000000b0046aa0f8db51mr5563900qvb.11.1655243303708;
+        Tue, 14 Jun 2022 14:48:23 -0700 (PDT)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id cf11-20020a05622a400b00b003050de40028sm7716837qtb.84.2022.06.14.14.39.57
+        by smtp.gmail.com with ESMTPSA id m6-20020ac85b06000000b00304defdb1b3sm8479872qtw.85.2022.06.14.14.48.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jun 2022 14:39:57 -0700 (PDT)
-Date: Tue, 14 Jun 2022 17:39:55 -0400
+        Tue, 14 Jun 2022 14:48:23 -0700 (PDT)
+Date: Tue, 14 Jun 2022 17:48:21 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: users@linux.kernel.org, tools@linux.kernel.org
-Subject: b4 Link: trailer disambiguation poll
-Message-ID: <20220614213955.eyex4bekp44iroud@meerkat.local>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: b4 Link: trailer disambiguation poll
+Message-ID: <20220614214821.efd3f54cj6fk525g@meerkat.local>
+References: <20220614213955.eyex4bekp44iroud@meerkat.local>
+ <CAHmME9phFaM25WqgwNj7OofWn5sJfGLvzroThEp6hH2KgBFYPw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="iowow3kig7lom65t"
-Content-Disposition: inline
-
-
---iowow3kig7lom65t
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAHmME9phFaM25WqgwNj7OofWn5sJfGLvzroThEp6hH2KgBFYPw@mail.gmail.com>
 
-Hello, all:
+On Tue, Jun 14, 2022 at 11:44:07PM +0200, Jason A. Donenfeld wrote:
+> The option I don't see in the poll just not automatically adding any Link
+> trailer, and leaving that up to humans to decide a relevant link exists vs
+> not.
 
-It is common practice to use Link: trailers in commits to provide a way to
-view the series as original patches sent to the list; "b4 am" will do this
-automatically in the presence of the -l flag.
+That is accomplished by not passing the -l switch to "b4 am", so it's already
+a choice left to the human.
 
-Recently, Linus suggested that this should be disambiguated in order to help
-maintainers distinguish pure archival links from actual list discussion
-threads where the feature/fix is discussed. See this conversation for conte=
-xt:
+However, tying commits to their exact list message is extremely useful for a
+lot of automation -- e.g. I rely on them heavily in integrations such as
+patchwork. I don't want to discourage people from adding these links in.
 
-https://lore.kernel.org/CAHk-=3Dwj9zKJGA_6SJOMPiQEoYke6cKX-FV3X_5zNXOcFJX1k=
-OQ@mail.gmail.com
-
-One of the suggested solutions is to use "PatchLink: " which is similar to
-"BugLink" already used for linking to bug reports.=20
-
-However, other options were also suggested, and I want to survey everyone's
-general preference.
-
-So, please vote on this poll to help decide what the trailer for linking to
-patch series should be:
-
-https://docs.google.com/forms/d/e/1FAIpQLSf8fiT3Q_9LhqEvE2K8n22HZ0B2t7kpEK_=
-XapoGK_kE0SOb4A/viewform?usp=3Dsf_link
-
-The winning option will go into b4 v0.9.
-
-Thanks,
 -K
-
---iowow3kig7lom65t
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYqkAKwAKCRC2xBzjVmSZ
-bFmzAQDMRjjbDrycjZcoaMmBLL95ZfOiZlo640tFSF7RzBN49gEAyAYGVUF1L5j2
-7opqsc6Fd049nynA6OdYpOT/x02ucgI=
-=W3Ao
------END PGP SIGNATURE-----
-
---iowow3kig7lom65t--
