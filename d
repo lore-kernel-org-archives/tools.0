@@ -1,24 +1,18 @@
-Received: from sv8324.xserver.jp (sv8324.xserver.jp [183.181.90.5])
+Received: from users303.phy.heteml.jp (users303.phy.heteml.jp [157.7.44.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937C32CA3
-	for <tools@linux.kernel.org>; Wed, 26 Jan 2022 14:48:56 +0000 (UTC)
-Received: from virusgw12003.xserver.jp (virusgw12003.xserver.jp [103.3.3.12])
-	by sv8324.xserver.jp (Postfix) with ESMTP id C88D11407A1C27
-	for <tools@linux.kernel.org>; Wed, 26 Jan 2022 23:41:14 +0900 (JST)
-Received: from sv8324.xserver.jp (183.181.90.5)
- by virusgw12003.xserver.jp (F-Secure/fsigk_smtp/521/virusgw12003.xserver.jp);
- Wed, 26 Jan 2022 23:41:14 +0900 (JST)
-X-Virus-Status: clean(F-Secure/fsigk_smtp/521/virusgw12003.xserver.jp)
-Received: by sv8324.xserver.jp (Postfix, from userid 20157)
-	id C6AC214079AC33; Wed, 26 Jan 2022 23:41:14 +0900 (JST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB02B168
+	for <tools@linux.kernel.org>; Sat, 22 Jan 2022 19:25:14 +0000 (UTC)
+Received: by users303.phy.heteml.jp (Postfix, from userid 492)
+	id AE2AA6C1508; Sun, 23 Jan 2022 04:16:28 +0900 (JST)
 To: tools@linux.kernel.org
-Subject: =?UTF-8?B?44GK5ZWP44GE5ZCI44KP44Gb44GC44KK44GM44Go44GG44GU44GW44GE44G+?=  =?UTF-8?B?44GZ44CC?=
-Date: Wed, 26 Jan 2022 14:41:14 +0000
-From: =?UTF-8?B?5qCq5byP5Lya56S+44GX44KH44GG44G277yI6I+W6JKy6Z2S5p6c77yJ?= <contact@sho-bu.com>
-Reply-To: syoubuseika@fol.hi-ho.ne.jp
-Message-ID: <0c49vffktcZwR5GDo693Depvx8ZTxU25JkZZzpFw@sho-bu.com>
-X-Mailer: PHPMailer 6.2.0 (https://github.com/PHPMailer/PHPMailer)
+Subject: =?UTF-8?B?44OX44Op44K744K544Ov44O844Kv5Y2U5ZCM57WE5ZCI772c44GK5ZWP44GE?=  =?UTF-8?B?5ZCI44KP44Gb44GC44KK44GM44Go44GG44GU44GW44GE44G+44GZ?=
+X-PHP-Originating-Script: 13314:class-phpmailer.php
+Date: Sat, 22 Jan 2022 19:16:28 +0000
+From: 6j7aakm <purasesu1846@ec7.technowave.ne.jp>
+Reply-To: purasesu1846@ec7.technowave.ne.jp
+Message-ID: <d4136b3ad6dff6ea90d002528ede66aa@purasesuwork.com>
+X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -28,27 +22,22 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-jjz2ppj様
+6j7aakm9  様
 
-この度はお問い合わせありがとうございます。
-株式会社しょうぶでございます。
+この度はプラセスワーク協同組合へお問い合わせ頂き誠に有難うございます。
+以下の内容にてお問合せを承りました。
 
-折り返しご連絡させていただきますが、数日お時間を頂く場合がございます。
+お問い合わせ種別：お問い合わせ
+会社名：❤️ Beverly is interested in your profile! Click Here: https://clck.ru/anbWT?aec2 ❤️<q9fu5ww>
+差出人: 6j7aakm9 <46j4hmn>
+メールアドレス：tools@linux.kernel.org
+電話番号：414800257845
 
-何卒こ了承くださいませ。
+メッセージ本文:
+s83r7f
 
-━━━━━━━━━━━━━━━━━━━━━━━━
-以下の内容でメールを受け付けました。
-━━━━━━━━━━━━━━━━━━━━━━━━
-■ 会社名　❤️ Mary is interested in your profile! Click Here: http://inx.lv/D6Vl?2og0 ❤️
-■ 業種　aimg0gi
-■ ご担当者様　jjz2ppj
-■ 住所　m6wbcrv
-■ お電話番号:576886621916
-■ メールアドレス　tools@linux.kernel.org
-■ お問い合わせ内容
+内容を確認させて頂き、ご連絡させて頂きます。
 
-gq7tr1
--- 
-このメールは 株式会社しょうぶ（菖蒲青果） (https://sho-bu.com) のお問い合わせフォームから送信されました
+このメールは プラセスワーク協同組合 (https://purasesuwork.com/) のお問い合わせフォームから送信されました。
+お心当たりのない方は、お手数ですがpurasesu1846@ec7.technowave.ne.jpまでご連絡をお願い致します。
 
