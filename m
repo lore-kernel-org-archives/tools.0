@@ -1,85 +1,70 @@
-Received: from correo.sidesoftcorp.com (correo.sidesoftcorp.com [159.203.99.92])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C157A
-	for <tools@linux.kernel.org>; Fri, 10 Jun 2022 19:10:07 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by correo.sidesoftcorp.com (Postfix) with ESMTP id 44B9120ADF7
-	for <tools@linux.kernel.org>; Thu,  9 Jun 2022 12:41:09 +0000 (UTC)
-Received: from correo.sidesoftcorp.com ([127.0.0.1])
-	by localhost (correo.sidesoftcorp.com [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id sPbfcKrM2cxn for <tools@linux.kernel.org>;
-	Thu,  9 Jun 2022 12:41:09 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by correo.sidesoftcorp.com (Postfix) with ESMTP id F190B20ADF8
-	for <tools@linux.kernel.org>; Thu,  9 Jun 2022 12:41:08 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.10.3 correo.sidesoftcorp.com F190B20ADF8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sidesoftcorp.com;
-	s=BA48B0C4-6E58-11EC-90F4-4E4CB08BC0A5; t=1654778468;
-	bh=DwTJcRGcbatO9cjTht5OydlTQ4caGvJSs1+f65FW/UM=;
-	h=Message-ID:Date:MIME-Version:To:From;
-	b=MWLeHBD1m3PLymwCEoz+KHZdG9tU31s6xPqQrKq20JHX4G0slA9KLEnCYsVWQLyL4
-	 b8b7ub7kTlRj1Y4bidIkEVBgYkm9ZnevcJRR/tyWAvPkWXt05wKEgzhEw1cufbhatq
-	 7PA/y/BoEtJn2f69IjSD83wWlPwdaJF+oItuRyw08Ix9yWW6CoEv1uxI1EdXbTIDVC
-	 SM0BSE7wPd1o4N0Zgzxsx/SDGud7lkYFQfWpBHorAwH1t3zWrMnkS/wi9qCh0q9+e8
-	 6d4BjIEl33+Hp5hV17f/c1oLcME0WnESnZRkqEEGL2AVVMQmLqP6bLkdE0Vt+AUZri
-	 8V/hwMn9GSFLA==
-X-Virus-Scanned: amavisd-new at correo.sidesoftcorp.com
-Received: from correo.sidesoftcorp.com ([127.0.0.1])
-	by localhost (correo.sidesoftcorp.com [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 5XqnsNvWCMcB for <tools@linux.kernel.org>;
-	Thu,  9 Jun 2022 12:41:08 +0000 (UTC)
-Received: from [127.0.0.1] (unknown [103.129.64.202])
-	by correo.sidesoftcorp.com (Postfix) with ESMTPSA id D9DEE20ADF7
-	for <tools@linux.kernel.org>; Thu,  9 Jun 2022 12:41:07 +0000 (UTC)
-Subject: It is all about your reputation
-Message-ID: <Owens0.89216.8492046195778.JavaMail.jboss-dh@sidesoftcorp.com>
-Content-Transfer-Encoding: utf8
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 9 Jun 2022 14:41:09 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A8F1FC1
+	for <tools@linux.kernel.org>; Tue, 14 Jun 2022 20:25:58 +0000 (UTC)
+Received: by mail-qv1-f52.google.com with SMTP id 89so7324522qvc.0
+        for <tools@linux.kernel.org>; Tue, 14 Jun 2022 13:25:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ecdGaX1jtv7/UUE80xTW/gskhwhHBu41CiEDuz1s3qY=;
+        b=GkU+OqBd6ff/R4sZbHuxxIzYJTZrgZmYDYVgkfDXY42eCCtGobvMQT/6Yblcut+m/T
+         qZSlaV6J0LytnCNoU1SyVX3ToJAjpWu1Juc7xL6+COgDvUn3/nRVwWLuaeJWUt4C8nH/
+         m0jPcQPI6EzmINh1DtjbHvTN6iBj23lQ9X2DE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ecdGaX1jtv7/UUE80xTW/gskhwhHBu41CiEDuz1s3qY=;
+        b=JMPiOCEdUTMN3dG9cmAS+pwR+m4vIlI1tT1lTVJUJry0B7zg/qLWf4CsrRaQqP7oET
+         kYCd171rPz/gdOJ3dY77DFmmk7/IpJu20TVVsK0Xt7qiUa2/0KQKfwTBKFSXLNYSKhxZ
+         T22Upk0sZdpu38J6SmOuOqfpKgSJgCo2ATynFgJIxkTBHflvRYXIfiAAYZaTBRkJlzgf
+         5nxFtdsfaF/KUUxPH67KLtgaA8mi2zKkVxIAggAtEIhTKtdAf44a3CT9spzBUmM8Rd/r
+         Sortz+4e5HYGlXlnBTMOeDVRlktblDTJpytCGQAT5uyJWbo6w6A6AtZhf7uQzKoIPJpZ
+         Rzjg==
+X-Gm-Message-State: AJIora/iDhoYObxtEjpe+xnxagDW3FCPN4hWq9cs1wjHYFuQs9qed6/A
+	zzwYn78bvLK8b74ChW0iTDq6xGFIEDez8w==
+X-Google-Smtp-Source: AGRyM1sgvN79G6PT5Cyq+s5h6ySGrb01YsHQ3lbkJaDyv0pWnbwp8KhYhIxvGZaQTAt8/qEVHm0bFw==
+X-Received: by 2002:a05:6214:508b:b0:467:de79:4f7d with SMTP id kk11-20020a056214508b00b00467de794f7dmr4867757qvb.101.1655238357711;
+        Tue, 14 Jun 2022 13:25:57 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id j9-20020ae9c209000000b006a377a015d4sm9998631qkg.39.2022.06.14.13.25.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jun 2022 13:25:55 -0700 (PDT)
+Date: Tue, 14 Jun 2022 16:25:53 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: robh@kernel.org, tools@linux.kernel.org
+Subject: Re: [PATCH] am: Fix broken guessbranch handling
+Message-ID: <165523827762.24677.15302189224501428827.b4-ty@linuxfoundation.org>
+References: <20220331195346.1384515-1-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-To: tools@linux.kernel.org
-From: Owens <facturacion@sidesoftcorp.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220331195346.1384515-1-robh@kernel.org>
 
-Hello!
+On Thu, 31 Mar 2022 14:53:46 -0500, Rob Herring wrote:
+> b4's usage of git-log '--branches' option is broken. The option takes a
+> glob pattern *only* and must have an '=', but b4 ends up passing
+> '--branches <guessbranch>' to git-log. This will kind of work, but is
+> not checking only 'guessbranch'. For example, these 3 commands all do
+> something different:
+> 
+> git log -1 --branches=master
+> 
+> [...]
 
-I am a hacker who has access to your operating system.
-I also have full access to your account.
+Applied, thanks!
 
-I've been watching you for a few months now.
-The fact is that you were infected with malware through an adult site that you visited.
+[1/1] am: Fix broken guessbranch handling
+      commit: c95e4d16d87c7c71589c64b1ac94973b354d0820
 
-If you are not familiar with this, I will explain.
-Trojan Virus gives me full access and control over a computer or other device.
-This means that I can see everything on your screen, turn on the camera and microphone, but you do not know about it.
-
-I also have access to all your contacts and all your correspondence.
-
-Why your antivirus did not detect malware?
-Answer: My malware uses the driver, I update its signatures every 4 hours so that your antivirus is silent.
-
-I made a video showing how you satisfy yourself in the left half of the screen, and in the right half you see the video that you watched.
-With one click of the mouse, I can send this video to all your emails and contacts on social networks.
-I can also post access to all your e-mail correspondence and messengers that you use.
-
-If you want to prevent this,
-transfer the amount of $1100 to my bitcoin address (if you do not know how to do this, write to Google: "Buy Bitcoin").
-
-My bitcoin address (BTC Wallet) is: bc1qwaxxf3ea7tjpg6ev9wl29tw726qxk6l9s6n8ah
-
-After receiving the payment, I will delete the video and you will never hear me again.
-I give you 50 hours (more than 2 days) to pay.
-I have a notice reading this letter, and the timer will work when you see this letter.
-
-Filing a complaint somewhere does not make sense because this email cannot be tracked like my bitcoin address.
-I do not make any mistakes.
-
-If I find that you have shared this message with someone else, the video will be immediately distributed.
-
-Best regards!
-
+Best regards,
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
