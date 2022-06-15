@@ -1,100 +1,101 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029F5291A
-	for <tools@linux.kernel.org>; Wed, 15 Jun 2022 18:23:18 +0000 (UTC)
-Received: by mail-ej1-f51.google.com with SMTP id me5so24928553ejb.2
-        for <tools@linux.kernel.org>; Wed, 15 Jun 2022 11:23:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163CA7A
+	for <tools@linux.kernel.org>; Wed, 15 Jun 2022 18:44:18 +0000 (UTC)
+Received: by mail-qk1-f173.google.com with SMTP id l192so7255577qke.13
+        for <tools@linux.kernel.org>; Wed, 15 Jun 2022 11:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=K6aWxeFHqXRgfPln71EbYZyRWrmN0NT+mkE5GF2L+4M=;
-        b=e1bU5zP7a1iQYuY572xq0k1w3zJ8P1JMFlMymbgh93caTYNJRqT89OplCKEBQy9X04
-         KVp7WJOcd0t6ktwR9bCb14XDgDe7EjFqXuLxxl1Zci9EnLYM2EJAttoZwIPpV18HSQlo
-         0LQzLqNydIcrj0G2zrqkMGrQyzkTvLzdHRJ04=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=UMYm4Okz8pcCLzNkKoGHC3aAbQSrn4/v18HGXzPSixI=;
+        b=gUhPd4AsDfRxJ7puaoceDTcDA7604Hsvl8D+ZOIMnR6USxSTXDWi+2gUbDuYwjW3gx
+         Dk79RzPZG7gzWo1oNAhwPLoN/k449Q5WFRjt50iUg2q7qqbHnu2XFSQy6nJNI7gsxAMg
+         zKVCfisSVnBC/BRvYoIseXzUACBcAjeW0gSD4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=K6aWxeFHqXRgfPln71EbYZyRWrmN0NT+mkE5GF2L+4M=;
-        b=xTk2hnhLB203mOs10+Ipvl9dOeRpMRrHcO9NyhFE81CS5fn7ClP0hIicG1k/L68SGq
-         h+QK/cL+gzbFj8Yze0z0vUXQJ/5qUcdaZzYXuWLyYxr00oObkJQFkgmMcKhu7QXDxeTq
-         fUuaxqvpohltM+FsP8j8yGaFRyceOcN5yLUIGlqm81j2glzNJyZc4u4o9y6CLCz0d+PD
-         vy38HdAc7Y1OTmol3tsKSjmu4CQKpQZbROeeeRVSdbcX54F76PKo8xWVJtp1TruJVUBc
-         5/AHksFdK9RJtbhKUte+H+ynM2LjVe92izLbM9UalCPPH4atRX1lOdXXvwErQTSnYLcE
-         bC/A==
-X-Gm-Message-State: AJIora/oOwvAlx2DGw2DUNIUEqi2s72ShiLex4c9GzIKSWIpU0Zj6S00
-	62pJWHZgqIZsbLC4oWnXxKG5hXxOV/2/LiwVs+o=
-X-Google-Smtp-Source: AGRyM1tmYcaSe48p7cqcltCydEa+2RgUE2TplnNoen6ZlK3GXYBIBDgR8JE0Jz7ruvpJKI270GqwpA==
-X-Received: by 2002:a17:907:7f8f:b0:711:623e:b344 with SMTP id qk15-20020a1709077f8f00b00711623eb344mr1072198ejc.230.1655317396920;
-        Wed, 15 Jun 2022 11:23:16 -0700 (PDT)
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com. [209.85.221.46])
-        by smtp.gmail.com with ESMTPSA id q4-20020a50aa84000000b0042617ba638esm9937285edc.24.2022.06.15.11.23.16
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jun 2022 11:23:16 -0700 (PDT)
-Received: by mail-wr1-f46.google.com with SMTP id x17so16462037wrg.6
-        for <tools@linux.kernel.org>; Wed, 15 Jun 2022 11:23:16 -0700 (PDT)
-X-Received: by 2002:a05:6000:1b0f:b0:210:313a:ef2a with SMTP id
- f15-20020a0560001b0f00b00210313aef2amr1010669wrz.281.1655317395866; Wed, 15
- Jun 2022 11:23:15 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=UMYm4Okz8pcCLzNkKoGHC3aAbQSrn4/v18HGXzPSixI=;
+        b=IoZhlzXZp8YMCLV0etc7Qamg5Tjl+8hhcsVveGRpEbpSKsvFqoqcpN0Uon/FvHKK0S
+         FBrnsgWgh9BK+o0JfQrlwZN2LXKEvWfWM36Rehty2vs9vXJ+YobWytIaLSIyCPT+PCSy
+         kvg8GWwyuWFS8zgawcE5mVF4ae3+mQkCY+548bFJqijdIuv55emr6QzIxF5cKpt4iAR+
+         5e4Cj/lININPlfhBh2F3y4B67Bwn4wwUxDU+rLHny0ReVElrIUJYzB2qPO0qO0YbmZys
+         2yuh0QjuI+GyEu2SsUQlftri2uc+/GMtdYmfOsjyQlZhaLUNGdGqcPQACgM0jaKe95mC
+         rLmQ==
+X-Gm-Message-State: AJIora/GVkmq15iHDFH4I6ePEe6mRUAfJSq+d7iZKIorx6GDgqa6TG40
+	CcGlKmGiILctU6igQpa1yIb2SA==
+X-Google-Smtp-Source: AGRyM1tpdAauJspyMVXwyyYkDs7eiWzcl8d1VP9maZVE07FJJ5Oi2bfzWvgqPm0UK6pUekNw5Np8kA==
+X-Received: by 2002:a05:620a:400c:b0:6a6:f8e6:92cc with SMTP id h12-20020a05620a400c00b006a6f8e692ccmr905348qko.561.1655318657845;
+        Wed, 15 Jun 2022 11:44:17 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id n7-20020a37a407000000b006a66f3d3708sm11751646qke.129.2022.06.15.11.44.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jun 2022 11:44:17 -0700 (PDT)
+Date: Wed, 15 Jun 2022 14:44:15 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Linus Torvalds <torvalds@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: b4 Link: trailer disambiguation poll
+Message-ID: <20220615184415.7nanay7fmvajxv5n@meerkat.local>
+References: <20220614213955.eyex4bekp44iroud@meerkat.local>
+ <CAHk-=wgzRUT1fBpuz3xcN+YdsX0SxqOzHWRtj0ReHpUBb5TKbA@mail.gmail.com>
+ <20220615181705.5e5o7h7p6sk3vlpv@meerkat.local>
+ <CAHk-=wiziwMm+tryjjiX6nyNddMKYu_z3K3AasQ75rT5u1MR=Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20220614213955.eyex4bekp44iroud@meerkat.local>
- <CAHk-=wgzRUT1fBpuz3xcN+YdsX0SxqOzHWRtj0ReHpUBb5TKbA@mail.gmail.com> <20220615181705.5e5o7h7p6sk3vlpv@meerkat.local>
-In-Reply-To: <20220615181705.5e5o7h7p6sk3vlpv@meerkat.local>
-From: Linus Torvalds <torvalds@linuxfoundation.org>
-Date: Wed, 15 Jun 2022 11:22:59 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wiziwMm+tryjjiX6nyNddMKYu_z3K3AasQ75rT5u1MR=Q@mail.gmail.com>
-Message-ID: <CAHk-=wiziwMm+tryjjiX6nyNddMKYu_z3K3AasQ75rT5u1MR=Q@mail.gmail.com>
-Subject: Re: b4 Link: trailer disambiguation poll
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wiziwMm+tryjjiX6nyNddMKYu_z3K3AasQ75rT5u1MR=Q@mail.gmail.com>
 
-On Wed, Jun 15, 2022 at 11:17 AM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> Well, it's not intended to be worthwhile to maintainers -- maybe just to
-> lawyers, researchers, and automation tooling. :)
+On Wed, Jun 15, 2022 at 11:22:59AM -0700, Linus Torvalds wrote:
+> Why can't we just have a nice sane patch-ID gateway, and get rid of
+> this silly thing?
+> 
+> That would be *SUPERIOR*.
 
-Honestly, I really despise that argument.
+This is already an accepted upstream feature:
+https://public-inbox.org/meta/20220512193859.M526956@dcvr/
 
-If you are a researcher or whatever else, you need to do this by patch
-ID *ANYWAY*.
+It's not in the code yet and will require a full reindex, so I don't yet have
+an ETA when searching by git-patch-id will become available.
 
-Please.
+> It would give you the different versions of the same patch that got
+> posted multiple times and maybe got discussion.
+> 
+> The whole argument that the "original submission" is special is pure
+> and utter garbage. It's not special, and trying to make it so only
+> takes real information away.
+> 
+> Really. You are making things worse, not better.
+> 
+> b4 already depends on lore automation, so why not improve that
+> automation so that you can look up things by commit ID, which looks up
+> patch ID, which is indexed by lore when it sees patches?
 
-Why can't we just have a nice sane patch-ID gateway, and get rid of
-this silly thing?
+Well, b4 doesn't actually depend on lore that much -- it can work with a local
+maildir just as well. I am trying hard not to add too many features that would
+make kernel development fully dependent on lore being up and running.
 
-That would be *SUPERIOR*.
+> Then you will automatically also see things like "oh, look, this same
+> patch was then submitted to stable after it was committed". Things
+> that you literally *CANNOT* do in the commit itself as a link, because
+> it would require time travel.
+> 
+> And no, the whole "but people edit patches and the patch ID might
+> change" isn't an argument either. At that point it's no longer a "b4"
+> thing to add a link.
 
-It would give you the different versions of the same patch that got
-posted multiple times and maybe got discussion.
+My problem is that maintainers still want automation to properly recognize
+that it's the same patch and its status on patchwork should be moved to
+"Accepted".
 
-The whole argument that the "original submission" is special is pure
-and utter garbage. It's not special, and trying to make it so only
-takes real information away.
+Maybe the better answer is to integrate patchwork API into b4, so that I have
+to do less guessing on the git-patchwork-bot side of things.
 
-Really. You are making things worse, not better.
-
-b4 already depends on lore automation, so why not improve that
-automation so that you can look up things by commit ID, which looks up
-patch ID, which is indexed by lore when it sees patches?
-
-Then you will automatically also see things like "oh, look, this same
-patch was then submitted to stable after it was committed". Things
-that you literally *CANNOT* do in the commit itself as a link, because
-it would require time travel.
-
-And no, the whole "but people edit patches and the patch ID might
-change" isn't an argument either. At that point it's no longer a "b4"
-thing to add a link.
-
-               Linus
+-K
