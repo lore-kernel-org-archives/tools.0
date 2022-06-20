@@ -1,116 +1,95 @@
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [85.220.165.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9677E0
-	for <tools@linux.kernel.org>; Mon, 20 Jun 2022 06:31:27 +0000 (UTC)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1o3AwR-00039y-E3; Mon, 20 Jun 2022 08:31:19 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1o3AwO-001ajD-FG; Mon, 20 Jun 2022 08:31:17 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1o3AwP-00HX6M-9B; Mon, 20 Jun 2022 08:31:17 +0200
-Date: Mon, 20 Jun 2022 08:31:17 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: patchwork-bot+linux-samsung-soc@kernel.org, helpdesk@kernel.org
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	tools@linux.kernel.org
-Subject: Re: [PATCH] pwm: samsung: Implement .apply() callback
-Message-ID: <20220620063117.ggowp5g3kmsdzjam@pengutronix.de>
-References: <20220328073434.44848-1-u.kleine-koenig@pengutronix.de>
- <165450388336.27627.15000754926080179182.git-patchwork-notify@kernel.org>
- <20220619202152.y7jvzs4jtkvdl67j@pengutronix.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADCC7E6;
+	Mon, 20 Jun 2022 08:40:47 +0000 (UTC)
+Received: by mail-qk1-f174.google.com with SMTP id b142so7342362qkg.2;
+        Mon, 20 Jun 2022 01:40:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+MJFmcLo7kLJeylHoCidO7Q0ygtjQt1V2wKBZ6cv0Tg=;
+        b=uQ5BwnxCfK/e54WMMeEbIveLiPhkLiuNNtUFUWIMAqSZ6c2yh7FXPmXcr5FByOorQp
+         jOr4hKwY/crfIXbMkjDkYunQPLCZOhcbxq5wLpStxBETLCfm1f5VaMPZRMCbkUgNHIsX
+         XOq/xFw+XEYaP19zbYAtUub9+CW6zzqP02RmqISL2SdUOftoVw9hnBlCuFjTOVoksc7q
+         HE0BFv+eTUcbnEdNcc0mNzH4zaOxuRLOIJDkqFWtbqSmBYuQ/PDvKEXp0kwG1Fz+3zsO
+         E6kOJRPkSA9slazGa+x3rZPI4u095yu30+5XsWfZy9NR0O8ucXwLga2TubhbR+5xpx/A
+         +UZQ==
+X-Gm-Message-State: AJIora+dNZS6dmS3y9+m7b9TjfGef87PpYLVK1mPJrV9YKM+MHfblOIK
+	PCtJsZSZT/plh7QaUi/PNjBu3V7N3z9iiA==
+X-Google-Smtp-Source: AGRyM1s5+SrtcAV5mXCm5sAqDc40o4JslTdoLJPqtl6njtMbHj575W932sePJYp9MsADdk7Sn/OMMQ==
+X-Received: by 2002:a37:a5d3:0:b0:6a6:87cc:202c with SMTP id o202-20020a37a5d3000000b006a687cc202cmr14950338qke.732.1655714446539;
+        Mon, 20 Jun 2022 01:40:46 -0700 (PDT)
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com. [209.85.219.175])
+        by smtp.gmail.com with ESMTPSA id m19-20020a05622a055300b00304fc3d144esm10764860qtx.1.2022.06.20.01.40.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Jun 2022 01:40:46 -0700 (PDT)
+Received: by mail-yb1-f175.google.com with SMTP id w6so17730785ybl.4;
+        Mon, 20 Jun 2022 01:40:46 -0700 (PDT)
+X-Received: by 2002:a05:6902:a:b0:65c:b38e:6d9f with SMTP id
+ l10-20020a056902000a00b0065cb38e6d9fmr25207478ybh.36.1655714445955; Mon, 20
+ Jun 2022 01:40:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gmgm2vaffmqdrjgo"
-Content-Disposition: inline
-In-Reply-To: <20220619202152.y7jvzs4jtkvdl67j@pengutronix.de>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: tools@linux.kernel.org
+References: <20220617190153.tvi5lkzlvemeqou5@meerkat.local>
+In-Reply-To: <20220617190153.tvi5lkzlvemeqou5@meerkat.local>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 20 Jun 2022 10:40:34 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdV54SN7ghTTUnba+3p_9M2NkcXQ6R8KzQXEsWfPWXD6mg@mail.gmail.com>
+Message-ID: <CAMuHMdV54SN7ghTTUnba+3p_9M2NkcXQ6R8KzQXEsWfPWXD6mg@mail.gmail.com>
+Subject: Re: b4-0.9.0 available
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, users@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Konstantin,
 
---gmgm2vaffmqdrjgo
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, Jun 17, 2022 at 9:02 PM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+> After a bit of a hiatus, I am finally able to work on b4 again, so here's
+> version 0.9.0 that implements one major new feature and adds some other
+> improvements to existing features.
 
-On Sun, Jun 19, 2022 at 10:21:54PM +0200, Uwe Kleine-K=F6nig wrote:
-> Hello,
->=20
-> just a short note about a few things I noticed about this patch status
-> mail:
->=20
-> The To is strange, didn't try to understand it and just keep it to
-> learn, if it does the right thing. Still looks wrong. (For reference:
-> 	To: =3D?utf-8?q?Uwe_Kleine-K=3DC3=3DB6nig_=3D3Cu=3D2Ekleine-koenig=3D40p=
-engutronix=3D2Ede=3D3E?=3D@ci.codeaurora.org
-> )
+Thanks for your continued support on improving our workflow!
 
-I learned it doesn't work, my mailer daemon told me, this won't work.
+> # new: b4 shazam
+>
+> This command is very similar to "b4 am", but it allows you to apply patches
+> directly to the git repository without the need pipe the output of "b4 am" to
+> "git am".
+>
+> The shazam command has three modes of operation:
+>
+> 1. default mode that applies patches directly to your git repository, just
+>    like passing the .mbox file to git-am
+> 2. with -H, shazam will try to prepare the patch series into FETCH_HEAD, which
+>    can then be checked out into a branch or merged with git-merge. This
+>    effectively makes patch series work similar to pull requests.
+> 3. with -M, shazam will do the same as with -H, but will also exec git-merge
+>    with the cover letter prepared as part of the merge commit message. You can
+>    see it in action here: https://asciinema.org/a/502421
 
-Ah, I reported something like that already earlier, see
-https://lore.kernel.org/tools/20211018134444.k5k45xiy652cklyl@meerkat.local
-expanded Cc: accordingly. I keep the context below around for the new
-recipents. Note there is another issue pointed out there.
+So if I want to run checkpatch, I have to keep on using "b4 am"
+and "git am" separately, right?  I never apply patches without running
+checkpatch first[1].
+Perhaps "b4 shazam" could gain some --checker option to support this?
 
-Best regards
-Uwe
+Thanks!
 
-> On Mon, Jun 06, 2022 at 08:24:43AM +0000, patchwork-bot+linux-samsung-soc=
-@kernel.org wrote:
-> > This patch was applied to pinctrl/samsung.git (for-next)
-> > by Thierry Reding <thierry.reding@gmail.com>:
-> >=20
-> > On Mon, 28 Mar 2022 09:34:34 +0200 you wrote:
-> > > To eventually get rid of all legacy drivers convert this driver to the
-> > > modern world implementing .apply().
-> > >=20
-> > > The size check for state->period is moved to .apply() to make sure th=
-at
-> > > the values of state->duty_cycle and state->period are passed to
-> > > pwm_samsung_config without change while they are discarded to int.
-> > >=20
-> > > [...]
-> >=20
-> > Here is the summary with links:
-> >   - pwm: samsung: Implement .apply() callback
-> >     https://git.kernel.org/pinctrl/samsung/c/daa986d5f8d8
->=20
-> This is a bit misleading, because the patch was actually merged via
-> Thierry's tree into v5.19-rc1 and (I guess) only entered the
-> samsung-pinctrl tree via an update to a new upstream version.
+[1] Currently I use "cat *mbx | formail -s scripts/checkpatch.pl".
 
+Gr{oetje,eeting}s,
 
+                        Geert
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
---gmgm2vaffmqdrjgo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmKwFDIACgkQwfwUeK3K
-7AmF3Qf/dZrtxoLLu+yXStnjBLsXqLso1JkB2AhEb+GDYcZlM0dkN1EhJgpRQJzJ
-Tpy1jU4xv/KhclJRk3btl4dNKvKadkZLVpv5b/q5zOvBxOqTi9/5cTuU1JHjCSDY
-ZNPq1OiVLj9Tz4fN33iFwpvWzCejanilhe5Ua/PtpRmuGwL5ak3DXCefxX1WvMag
-jEGOGRBg1U5uxUpCCFIj2I4xaU9ZDK99HPGAnW/t4EIeaQjUMPrQCb4yjR+oe8Hh
-ReMI6FUEfykx0pknvyilusNIEqDRV+Vw4EcAKhxozzeSIn7qWZTZOuYUA7PZYHtX
-Mw5RK3oUCYqU9cdTm5zg5z++P2K8Yw==
-=uTXW
------END PGP SIGNATURE-----
-
---gmgm2vaffmqdrjgo--
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
