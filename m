@@ -1,46 +1,32 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE117483
-	for <tools@linux.kernel.org>; Tue, 21 Jun 2022 18:29:57 +0000 (UTC)
-Received: by mail-qv1-f47.google.com with SMTP id o43so21660355qvo.4
-        for <tools@linux.kernel.org>; Tue, 21 Jun 2022 11:29:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/slWNEfwdQqnAiaxVJDM1kTYiUqVoR6MZiK5rHAfky4=;
-        b=Spqi5xN8SrnGs+F/dFlImXNZV6dL/DPfbpGzRTzo9h6QKe3GiO0JaUnQ258FTgVMKA
-         zzEkYKq9kuc6SOF7GwQRKQ6PoDNGgvGS8YMZ+i7cs8lyqy+jnMB83biTBshhQL6MTXiS
-         DRX9Vf4jiSsnoT4yKYv7n9SrB7yjvfR6kh1BM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/slWNEfwdQqnAiaxVJDM1kTYiUqVoR6MZiK5rHAfky4=;
-        b=5AJJ1PkII4G2CthKeRtclYjDfopGOAB3SPtvzux5ccvdk9lUiQ0GDT+ZGuAn2bQQd9
-         Qi/wsYgeAVVCPfBhth1/tsWpySxW8mvh9Ef4TVxA0M0qfPGakII0Af4FbZ3wOH/3GXY0
-         VWD8HM+vQUNUxGs1hyfniilaSGryghM/LxJDaRy/Okvwf30Arrm8ed/qbnPel81ivIPS
-         ENuGtJp0afmLk/qjYAF9H8Ngpx+f+ijC1H35gyWKUdHU6cOp1jfH9HET23ngfi4wBChN
-         qodli/5A0GGkpsaXBg/qSJyZ/+hHFTsLFlPCNJQhRSbsghQ7As17h2ZfNi236U/csXu3
-         LIWQ==
-X-Gm-Message-State: AJIora/Mr507Z+Gfb8x4jKTixSRhAiV36aLplENKa4N/LTVRLaLWDj47
-	wuO/YWAx5shMPzymExEZSv0bEQ==
-X-Google-Smtp-Source: AGRyM1sZ91YS3cZotJlfwyqBChN/j/BdPNI/2iT1ngnMYzQ8axdlFI9bVqI3ve6q66X7CeGgD05JOA==
-X-Received: by 2002:ad4:5fce:0:b0:470:3da8:bc33 with SMTP id jq14-20020ad45fce000000b004703da8bc33mr11914569qvb.38.1655836196843;
-        Tue, 21 Jun 2022 11:29:56 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id p6-20020a37bf06000000b006a6a4b43c01sm13868962qkf.38.2022.06.21.11.29.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 11:29:56 -0700 (PDT)
-Date: Tue, 21 Jun 2022 14:29:53 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28106EA3;
+	Tue, 21 Jun 2022 18:45:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C04C3411C;
+	Tue, 21 Jun 2022 18:45:50 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="nZH6F8zc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1655837148;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4mA4298rg0OiELifH+SYsf3/0+nUJl+PqGB/bazWakU=;
+	b=nZH6F8zc9atxHsCjnawvcMix25eiPCf5etJ7WgY/KXghFUsjd7/cKEy4oCMctisJEgBQFl
+	0Xnuxr7iqBzc8ryYEDK0tYlZZARebi/EByUASkuQZsug/g7XPbxSbUQbtgbyFgAVbZZ4z3
+	gtt3JCr6JihGGTGSRGfunv3gnmY3YnI=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 72c632d9 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+	Tue, 21 Jun 2022 18:45:48 +0000 (UTC)
+Date: Tue, 21 Jun 2022 20:45:46 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: Linus Torvalds <torvalds@linuxfoundation.org>,
 	Geert Uytterhoeven <geert@linux-m68k.org>, tools@linux.kernel.org,
 	users@linux.kernel.org
 Subject: Re: b4-0.9.0 available
-Message-ID: <20220621182953.p5asczznnz3pn6dl@meerkat.local>
+Message-ID: <YrIR2v7GdC3qIt2E@zx2c4.com>
 References: <20220617190153.tvi5lkzlvemeqou5@meerkat.local>
  <CAMuHMdV4AHH1TM6xf26MP0-dUQ0-fB+62GeeuVuth9pgWgdu7Q@mail.gmail.com>
  <20220621152903.czivp7fdn6me775i@meerkat.local>
@@ -49,6 +35,7 @@ References: <20220617190153.tvi5lkzlvemeqou5@meerkat.local>
  <CAHmME9p+zRErOsvA1zC=kTHtpYD_sGjFxVsj0pMwteAp4dCdjQ@mail.gmail.com>
  <20220621165953.z25hwos7gom6bp6s@meerkat.local>
  <YrIEnmt5vDMcbOiG@zx2c4.com>
+ <20220621182953.p5asczznnz3pn6dl@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -57,23 +44,39 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YrIEnmt5vDMcbOiG@zx2c4.com>
+In-Reply-To: <20220621182953.p5asczznnz3pn6dl@meerkat.local>
 
-On Tue, Jun 21, 2022 at 07:49:18PM +0200, Jason A. Donenfeld wrote:
-> IMO, you should remove both the "sort S-o-b into meaninglessness" and
-> the "add a useless Link: trailer that wastes my time when I middle click
-> it" options, so that it's harder to make these mistakes.
+Hi Konstantin,
 
-I mean, I'm happy to make any changes, but I implemented these in the first
-place as a response to requests or established practices. Some maintainers do
-very much like to sort their trailers, and others like to link to the list
-origins of the patch.
+On Tue, Jun 21, 2022 at 02:29:53PM -0400, Konstantin Ryabitsev wrote:
+> If there is someone who is willing to compile a definitive list of "Linux
+> Kernel commit do's and dont's", then I'll happily stick to that.
 
-If there is someone who is willing to compile a definitive list of "Linux
-Kernel commit do's and dont's", then I'll happily stick to that.
+I dunno about a "definitive list". But it seems like a lot of
+conventions get solidified by way of tools that are ironed out over
+time. For example, every time a code style discussion comes up, Joe
+Perches arrives on the scene to make sure checkpatch.pl is current. And
+now the clang-format file is starting to also accumulate collective
+preferences. It seems like b4 is pretty widely used and will eventually
+serve a similar purpose if it doesn't already do so.
 
-For now, the default operation is already exactly as you ask -- we neither
-sort the trailers nor add the link unless both of these are explicitly
-requested.
+Anyway, in lieu of a complete and thorough list of all of the things, it
+seems like in the last week or so we at least have two things that can
+be be reflected in the tooling:
 
--K
+- Don't add `Link:` if the URL hasn't been hand selected as being
+  particularly relevant; the lkml patch email alone doesn't cut it. This
+  suggests that automatically adding `Link:` is invariably wrong, since
+  automatic != "hand selected", so maybe there's no point in
+  `-l,--add-link`, and you can just remove that option.
+
+- Don't reorder `Signed-off-by:`. The simplest thing to do would be to
+  remove the `trailer-order` option all together. But some people do
+  want to sort the trailers (within each S-o-b segment) for aesthetic
+  purposes. So if you don't want to take that away from them, maybe
+  S-o-b needs to be unconditionally special-cased so that it forms a
+  reorder barrier.
+
+  #define sob(name) do { smp_mb(); __sob(name); } while (0)
+
+Jason
