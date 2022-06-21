@@ -1,77 +1,72 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE52138F;
-	Tue, 21 Jun 2022 15:53:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C65C3411C;
-	Tue, 21 Jun 2022 15:53:12 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ihbaeP3G"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1655826789;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wtAsXwpYwkWvN5ju+WNRNyPoJCPmfu96018hvgkn5WU=;
-	b=ihbaeP3GzDuWQHj8+vQ7jJEFurlZ8T9hzTFXPkoc6q4sDmaV7s7wHmFFtKcymS47kCRgoS
-	znt5FHFyZT7rPZk4T/NZlBADDKne/GMDM/TTS69oP9Q4vlOHwtsgkajKUuglXoOf0BoXXX
-	WA7T2BT6ppzjTQlhtXk2a5cKBBhhh6M=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d39b3aa8 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Tue, 21 Jun 2022 15:53:09 +0000 (UTC)
-Received: by mail-io1-f44.google.com with SMTP id d123so14668590iof.10;
-        Tue, 21 Jun 2022 08:53:08 -0700 (PDT)
-X-Gm-Message-State: AJIora9cozvNJzTRUZhx4PIkN5C7YeWIK4KgBOaokhtBO6fdUFt8Wh9+
-	AXheTqf9SBmglx+LMHoxpizqlORB50miJRTTf94=
-X-Google-Smtp-Source: AGRyM1vDvTYrPj5VMISksrhWbV7wY3tLjymYcV40C6KrYNUH9fEy8tt6oA4O2snO0XSJsb8fKSuk4uwLCA2jPg7gA8Q=
-X-Received: by 2002:a05:6638:2113:b0:331:feae:af81 with SMTP id
- n19-20020a056638211300b00331feaeaf81mr16247694jaj.196.1655826787674; Tue, 21
- Jun 2022 08:53:07 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB4F33F4
+	for <tools@linux.kernel.org>; Tue, 21 Jun 2022 15:55:34 +0000 (UTC)
+Received: by mail-ed1-f41.google.com with SMTP id cf14so10216301edb.8
+        for <tools@linux.kernel.org>; Tue, 21 Jun 2022 08:55:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fmxNIZCyRROVj4XgYXcq+wg46UI2YIvRF8SqEdoAZFM=;
+        b=NdNFIGi4MY9HTkmiAj0/XSCAPnRkJly8EK9qAmvfQJaOallAA0CAit69HpWpooaaoo
+         Ri5067Orpt2M95Zepky2rGkCqFfA9TFbFF/YcJtVQpsv3clLCuaS1Yojv3cLQga1NPOM
+         yvQeN7I9sS0mnNc9usTt8bRwtKH/sKsBBUzEQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fmxNIZCyRROVj4XgYXcq+wg46UI2YIvRF8SqEdoAZFM=;
+        b=ASx9kJL0y7/UDOBLiED5jbf8w3PPgKcOSEUw5irYiXgmgwikftxAo8hQhp4DE1Wzgf
+         uKv4IJ6vFjOE/Usf2cDxZ/yPL9kq/pfwvOktgUUhNLcEeteAtFhJRLZNSpwOsStoPSfB
+         lsSgpthSau4/A+jUZC5f9/mwadL0u0Ww3PeZq70Y5eSviZ+F9nNnvBErVranDk1JYx+D
+         HnZMGZEabwrZMPgLuy3VgHVZJpnkJpaqnN7SgTYG7WrIl8WkaPrj8WDxkKBhm2ImK0T4
+         Got/O0S+dZlZXGen6f/Q3d0T0u1Pq9JJl1i/CUVS6FLOtDWGvRpbgA67dJPfurb6+SEu
+         FfYQ==
+X-Gm-Message-State: AJIora+L7JwY8cqb1J06VZ3vWN0LCwFHHxw/0nwTOH5f0OUEtNYlkR8D
+	pvAUkBJIu97BZF2jhOKdQ69J66/qr2XcJZxs
+X-Google-Smtp-Source: AGRyM1tCzPkvTeJCACt51TrsVmCsMUS0mHZccYWLoebU4egUrQiTS0W7wEv2R11yXO9zo6KzzlaeVg==
+X-Received: by 2002:a05:6402:3551:b0:431:51e1:856f with SMTP id f17-20020a056402355100b0043151e1856fmr36481047edd.323.1655826933088;
+        Tue, 21 Jun 2022 08:55:33 -0700 (PDT)
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
+        by smtp.gmail.com with ESMTPSA id 17-20020a170906211100b007109b15c109sm7866758ejt.66.2022.06.21.08.55.32
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jun 2022 08:55:32 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id w17so19546939wrg.7
+        for <tools@linux.kernel.org>; Tue, 21 Jun 2022 08:55:32 -0700 (PDT)
+X-Received: by 2002:a05:6000:1251:b0:21a:efae:6cbe with SMTP id
+ j17-20020a056000125100b0021aefae6cbemr22372924wrx.281.1655826931735; Tue, 21
+ Jun 2022 08:55:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Received: by 2002:a05:6e02:791:0:0:0:0 with HTTP; Tue, 21 Jun 2022 08:53:06
- -0700 (PDT)
-In-Reply-To: <20220621152903.czivp7fdn6me775i@meerkat.local>
 References: <20220617190153.tvi5lkzlvemeqou5@meerkat.local>
- <CAMuHMdV4AHH1TM6xf26MP0-dUQ0-fB+62GeeuVuth9pgWgdu7Q@mail.gmail.com> <20220621152903.czivp7fdn6me775i@meerkat.local>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 21 Jun 2022 17:53:06 +0200
-X-Gmail-Original-Message-ID: <CAHmME9p60mMq230jkUL2s7JEUGA4SC=1XRJ+R=X0NvHcJFZePw@mail.gmail.com>
-Message-ID: <CAHmME9p60mMq230jkUL2s7JEUGA4SC=1XRJ+R=X0NvHcJFZePw@mail.gmail.com>
+ <CAMuHMdV4AHH1TM6xf26MP0-dUQ0-fB+62GeeuVuth9pgWgdu7Q@mail.gmail.com>
+ <20220621152903.czivp7fdn6me775i@meerkat.local> <CAMuHMdWz8=Zr8hnXNGBZVfe70F8oVdK670Z41=Dtib0GMDgAug@mail.gmail.com>
+In-Reply-To: <CAMuHMdWz8=Zr8hnXNGBZVfe70F8oVdK670Z41=Dtib0GMDgAug@mail.gmail.com>
+From: Linus Torvalds <torvalds@linuxfoundation.org>
+Date: Tue, 21 Jun 2022 10:55:15 -0500
+X-Gmail-Original-Message-ID: <CAHk-=wiQzp+aurcmj15=LAa2ntvRZH0Ee2dn-PLjcFpmRE6Jcw@mail.gmail.com>
+Message-ID: <CAHk-=wiQzp+aurcmj15=LAa2ntvRZH0Ee2dn-PLjcFpmRE6Jcw@mail.gmail.com>
 Subject: Re: b4-0.9.0 available
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>, tools@linux.kernel.org, users@linux.kernel.org
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, tools@linux.kernel.org, 
+	users@linux.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On 6/21/22, Konstantin Ryabitsev <konstantin@linuxfoundation.org> wrote:
-> On Tue, Jun 21, 2022 at 05:20:02PM +0200, Geert Uytterhoeven wrote:
->> > 1. default mode that applies patches directly to your git repository,
->> > just
->> >    like passing the .mbox file to git-am
->>
->> I gave it a try, and noticed a difference: with b4 am + git am, the
->> Link tag is added first, followed by my SoB, while b4 shazam does
->> the reverse, and adds my SoB first.
->> I believe the b4 am + git am behavior is correct.
+On Tue, Jun 21, 2022 at 10:41 AM Geert Uytterhoeven
+<geert@linux-m68k.org> wrote:
 >
-> I'm guessing you were adding the SoB with "git am -s" as opposed to letting
-> b4
-> do it?
->
-> I'm not sure there's an established "correct" behaviour here, as various
-> maintainers either stick to arbitrary ordering, chain-of-custody ordering,
-> or
-> have a very strict "I like all my trailers sorted in a very particular
-> order"
-> approach.
+> FWIW, I follow the chain-of-custody ordering.
 
-Chain of custody is the only order that has any applicable meaning for
-S-o-b. Otherwise what's the point of S-o-b in the first place? These
-tools should be encouraging the right ways to do things rather than
-catering to a potpourri of wrong ways.
+I don't think different kinds of links have any particular ordering,
+but yes,the "Signed-off-by:" ones should basically be sorted by
+"author -> email chain -> committer" order so that you can see which
+actual "path" the patch took.
 
-Jason
+               Linus
