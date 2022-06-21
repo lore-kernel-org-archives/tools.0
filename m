@@ -1,42 +1,44 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75F17496;
-	Tue, 21 Jun 2022 20:29:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42A0C3411C;
-	Tue, 21 Jun 2022 20:29:36 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="QRTuhE/A"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1655843375;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tFwNJ7i9IawOpbShviK9D+VXno3ix+alAf8Ubkbi5aM=;
-	b=QRTuhE/A9Ep/XlMjx3ux9iDsJJ5laDHLmQ6xXjBbx+XUJbCzc7p+q0ZJGf/RI6nTIUDQH1
-	4AmRmQ36rN/Gy8+EFWhuQjGlfzyiY+cIJzJ8d/gFrYHG8Xt+1TmfIn/ljlWRJECRav14eK
-	3Y6nU8JUwyPrTpfaVd9WaW6O7pNOCaU=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 824624fa (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Tue, 21 Jun 2022 20:29:35 +0000 (UTC)
-Date: Tue, 21 Jun 2022 22:29:33 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	tools@linux.kernel.org, users@linux.kernel.org
-Subject: Re: b4-0.9.0 available
-Message-ID: <YrIqLabIjPyorTJ5@zx2c4.com>
-References: <CAHk-=wiQzp+aurcmj15=LAa2ntvRZH0Ee2dn-PLjcFpmRE6Jcw@mail.gmail.com>
- <CAHmME9p+zRErOsvA1zC=kTHtpYD_sGjFxVsj0pMwteAp4dCdjQ@mail.gmail.com>
- <20220621165953.z25hwos7gom6bp6s@meerkat.local>
- <YrIEnmt5vDMcbOiG@zx2c4.com>
- <20220621182953.p5asczznnz3pn6dl@meerkat.local>
- <YrIR2v7GdC3qIt2E@zx2c4.com>
- <20220621192724.ls6q6fyr6ehtsyah@meerkat.local>
- <CAMuHMdU1EZ9vwyOec6EKGaW=Ghy_p5D0dbcun24BqoSok6maLQ@mail.gmail.com>
- <YrIg+vV8YMVrhHME@zx2c4.com>
- <20220621200640.7kczqkwwap2wehsy@meerkat.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BEFEC1
+	for <tools@linux.kernel.org>; Tue, 21 Jun 2022 20:43:29 +0000 (UTC)
+Received: by mail-qk1-f171.google.com with SMTP id v6so311738qkh.2
+        for <tools@linux.kernel.org>; Tue, 21 Jun 2022 13:43:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding;
+        bh=sjjomEARVKHsF4sAPQATUpxRpNUtS4HvJOq5acgn+Vk=;
+        b=ayepoac0Km4zqFVO2aq9KMEXuc4QUA1GMhlS+AO7reMbuwFRLtckdmi78lSrFKYAur
+         dlyQEk4jtfPZzUe5tpaTDkbMp5oxQObePt6EL06z2rDly6wKwYX2q86xqM2Cf2KV4kQJ
+         1QyZtsW5sLwn5eVkpHc96vUXobzS4JXgTRWQ0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding;
+        bh=sjjomEARVKHsF4sAPQATUpxRpNUtS4HvJOq5acgn+Vk=;
+        b=cYlYsb1G2WHDOdNZQ9psUOIhk8eMD8dL0VltNdvNP2zYWo89Lq7MuwF5GJnwgliXdi
+         PIChYurvXdSr7BlDqrbUHbXQudtL1bO3sjJJfMccGCOw7FhCu1+BTbNTYbrjUwc20lbC
+         UmjEI4QShnM3Ney7TfazYwQoQ3v9oYwT60nXL5BdFkKW73NqW5B0X+nFKj1A0Ij4f+H2
+         0uHVnxc0f8WH49qn/vShvWT6mKm6IGE70yaMmW0JgUIdBRBv3Onqev5pm2k7ako2EO9N
+         Bkj3+MJVw36iWfyURUbmuli5Ab16y7Kg4yjMk3BD6yBDj8zeu3Jic9SQ6K+weKVXNscd
+         5e1Q==
+X-Gm-Message-State: AJIora8SM20yRC8vbzSdFEbP0qqqkO9wPilmFfwaSc1zUiO/y6A9Sa6w
+	N7IdDs0DQvC8tEkWjIOue8gL4o5rwBljTw==
+X-Google-Smtp-Source: AGRyM1soCCtmTf2NZG83GYxZjte9//UF1a+NHF+9ILQvmqH/Nnl6+dixAnT/Ea4kWzJ97+ZGgQsDOA==
+X-Received: by 2002:a05:620a:4248:b0:6a8:3259:6a76 with SMTP id w8-20020a05620a424800b006a832596a76mr21878379qko.175.1655844207636;
+        Tue, 21 Jun 2022 13:43:27 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id g10-20020a05620a40ca00b006a6bb044740sm15720914qko.66.2022.06.21.13.43.27
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jun 2022 13:43:27 -0700 (PDT)
+Date: Tue, 21 Jun 2022 16:43:25 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: tools@linux.kernel.org
+Subject: b4: initial patchwork integration support
+Message-ID: <20220621204325.6npz7euargqk3atp@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -45,27 +47,99 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220621200640.7kczqkwwap2wehsy@meerkat.local>
+Content-Transfer-Encoding: 8bit
 
-Hi Konstantin,
+Hello, all:
 
-On Tue, Jun 21, 2022 at 04:06:40PM -0400, Konstantin Ryabitsev wrote:
-> On Tue, Jun 21, 2022 at 09:50:18PM +0200, Jason A. Donenfeld wrote:
-> > On the contrary, the thing you want is a service where you paste a
-> > commit and you get a LKML thread. That sounds like something lore could
-> > grow, or any other service that has that database handy. And it could do
-> > it *better* too, since it could show multiple matches sorted by
-> > relevance and matching distance to the actual git patch.
-> 
-> FWIW, this is something we should be able to do on git.kernel.org soon -- a
-> commit view will add a link to look up that patch on lore. The backend changes
-> for public-inbox to add automatic indexing on "git-patch-id --stable" just
-> landed in the past few days. I just need to figure out if I can do this sanely
-> with cgit -- and if I cannot, then at least all the guilty parties are already
-> here to add the necessary bits in. :)
+I know some of you use patchwork alongside b4, so if you're already a heavy
+"b4 ty" user, you can also have it set patchwork state of those patches.
 
-Oh excellent. Keep me posted if you have trouble on the cgit side. I
-could use a bit of new motivation to pick up some maintenance tasks
-there, and this sounds like a good impetus.
+What you will need:
 
-Jason
+1. latest b4 master branch
+2. a patchwork project (obviously)
+3. a patchwork API token (obtained from your profile page)
+
+To enable the integration, add the following config in the relevant repo:
+
+    [b4]
+      pw-key = your_api_token_here
+      pw-url = https://patchwork.kernel.org
+      pw-project = your-project (e.g. linux-usb)
+      pw-review-state = under-review
+      pw-accept-state = accepted
+      pw-discard-state = deferred
+
+Explanation of states:
+
+pw-review-state: will be applied to patches when you retrieve them with
+am/shazam/pr subcommands. E.g.:
+
+    $ b4 am -o/tmp https://patchwork.kernel.org/project/linux-usb/patch/20220613095957.1669829-1-xji@analogixsemi.com/
+    Grabbing thread from lore.kernel.org/all/20220613095957.1669829-1-xji%40analogixsemi.com/t.mbox.gz
+    Analyzing 5 messages in the thread
+    Checking attestation on all messages, may take a moment...
+    ---
+      ✓ [PATCH v10 1/3] usb: typec: tcpci: move tcpci.h to include/linux/usb/
+        + Reviewed-by: Guenter Roeck <linux@roeck-us.net> (✓ DKIM/gmail.com)
+      ✓ [PATCH v10 2/3] dt-bindings: usb: Add analogix anx7411 PD binding
+      ✓ [PATCH v10 3/3] usb: typec: anx7411: Add Analogix PD ANX7411 support
+      ---
+      ✓ Signed: DKIM/analogixsemi.onmicrosoft.com (From: xji@analogixsemi.com)
+    ---
+    Total patches: 3
+    ---
+     Link: https://lore.kernel.org/r/20220613095957.1669829-1-xji@analogixsemi.com
+     Base: applies clean to current tree
+           git checkout -b v10_20220613_xji_analogixsemi_com HEAD
+           git am /tmp/v10_20220613_xji_usb_typec_tcpci_move_tcpci_h_to_include_linux_usb.mbx
+    ---
+    Patchwork: setting state on patchwork.kernel.org/linux-usb
+     -> under-review : [v10,1/3] usb: typec: tcpci: move tcpci.h to include/linux/usb/
+     -> under-review : [v10,2/3] dt-bindings: usb: Add analogix anx7411 PD binding
+     -> under-review : [v10,3/3] usb: typec: anx7411: Add Analogix PD ANX7411 support
+
+pw-accept-state: will be applied when you run "b4 ty" (with -t or -a). E.g.:
+
+    $ b4 ty -a
+    Auto-thankanating commits in usb-next
+    Found 3 of your commits since 1.week
+    Calculating patch hashes, may take a moment...
+      Located: [PATCH v10 1/3] usb: typec: tcpci: move tcpci.h to include/linux/usb/
+    ---
+    Generating 1 thank-you letters
+      Writing: ./xji_analogixsemi_com_patch_v10_1_3_usb_typec_tcpci_move_tcpci_h_to_include_linux_usb_.thanks
+    ---
+    Patchwork: setting state on patchwork.kernel.org/linux-usb
+     -> accepted : [v10,1/3] usb: typec: tcpci: move tcpci.h to include/linux/usb/
+     -> accepted : [v10,2/3] dt-bindings: usb: Add analogix anx7411 PD binding
+     -> accepted : [v10,3/3] usb: typec: anx7411: Add Analogix PD ANX7411 support
+    ---
+    You can now run:
+      git send-email ./*.thanks
+
+Note: it also works with "b4 ty -S" and won't do anything in --dry-run mode.
+
+pw-discard-state: will be applied if you run "b4 ty -d". E.g.:
+
+    $ b4 ty -d 24
+    Discarding 1 messages
+      Discarded: [PATCH] USB: serial: option: add Quectel EM05-G modem
+    ---
+    Patchwork: setting state on patchwork.kernel.org/linux-usb
+     -> deferred : USB: serial: option: add Quectel EM05-G modem
+
+You can also override the configured default state with the --pw-set-state
+switch to "b4 ty", e.g.:
+
+    $ b4 ty -d 24 --pw-set-state rejected
+    Discarding 1 messages
+      Discarded: [PATCH] USB: serial: option: add Quectel EM05-G modem
+    ---
+    Patchwork: setting state on patchwork.kernel.org/linux-usb
+     -> rejected : USB: serial: option: add Quectel EM05-G modem
+
+
+Please give it a whirl and report any explosions or wrongness.
+
+-K
