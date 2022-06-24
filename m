@@ -1,118 +1,123 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36354697;
-	Thu, 23 Jun 2022 23:35:25 +0000 (UTC)
-Received: from letrec.thunk.org (c-24-1-67-28.hsd1.il.comcast.net [24.1.67.28])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 25NNX0xn012738
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jun 2022 19:33:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1656027184; bh=m0pArqLwsZTZk5uPrsrebt51y0GFxqrVf+pn4TWHNV8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=S3cm8rU7kO9d7h3lzfgXBdx71QyJ8jmy20Zz8cWKViq/n0FphSyE55mt5nnmCQTBB
-	 y1nii21QRWcMiffPriAWeFxaoNfo+BbrPDRbu7BabM87bdzUkoqlCpaOVTUBrNPf/p
-	 gbcN5iIMKIYhfqh4FEtHCtvcihhFrnrRaEC0BxgeDcoLvf39gVxM3JM7arsc3O9mbY
-	 ik9YCtua7zXVivp8RugruygmSvxXfh1TIwxedW8K51uO9u2IRBjydQGIjKDKgfcs4u
-	 CJnwoqSD/QbA59FioDQkrDDDXAQ1rWesY2dDD5WTlc3S3JDwkkrC2tWm77cIDcI6zk
-	 CnqefBWiraekQ==
-Received: by letrec.thunk.org (Postfix, from userid 15806)
-	id 4A9188C3295; Thu, 23 Jun 2022 19:33:00 -0400 (EDT)
-Date: Thu, 23 Jun 2022 19:33:00 -0400
-From: "Theodore Ts'o" <tytso@mit.edu>
-To: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Linus Torvalds <torvalds@linuxfoundation.org>,
-        Geert Uytterhoeven <geert@linux-m68k.org>, tools@linux.kernel.org,
-        users@linux.kernel.org
-Subject: Re: b4-0.9.0 available
-Message-ID: <YrT4LIq6ssD1mhMQ@mit.edu>
-References: <CAMuHMdV4AHH1TM6xf26MP0-dUQ0-fB+62GeeuVuth9pgWgdu7Q@mail.gmail.com>
- <20220621152903.czivp7fdn6me775i@meerkat.local>
- <CAMuHMdWz8=Zr8hnXNGBZVfe70F8oVdK670Z41=Dtib0GMDgAug@mail.gmail.com>
- <CAHk-=wiQzp+aurcmj15=LAa2ntvRZH0Ee2dn-PLjcFpmRE6Jcw@mail.gmail.com>
- <CAHmME9p+zRErOsvA1zC=kTHtpYD_sGjFxVsj0pMwteAp4dCdjQ@mail.gmail.com>
- <20220621165953.z25hwos7gom6bp6s@meerkat.local>
- <YrIEnmt5vDMcbOiG@zx2c4.com>
- <20220621182953.p5asczznnz3pn6dl@meerkat.local>
- <YrIR2v7GdC3qIt2E@zx2c4.com>
- <YrI3W46GUS/Dap5J@ripper>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7637C;
+	Fri, 24 Jun 2022 08:34:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1656059660; x=1687595660;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=buHvzfqP6HDWOnBNbXkm1ECwoeG4OWeYeWWmf+Pp2dQ=;
+  b=uvWL5CtkbA3l24pt9H/s1mrq1N7ZYmMTCL6uS22BwDl8GKrg8BafGfGv
+   2OIVsTGyZ+TtaNlHZIZ5MSwHSXik+YBCmX/+71tQP2pJzdLFSg8SBXKlK
+   lxsYDzCtXGRkzhHIOdZJibjEujwL4QYmqRSjouRhXoKAEZdSmK1chZXGH
+   fYPoGHSU04Q2qRfE6BKq4pbN+B45cTxG9Fsg071fxaqIKkr+uCQyWu0J+
+   EFR2VNlt2WWeWD8VNa+yMCV8/3TV2ADu4LCMPuDegL/Je6JNW0nH3Gspn
+   iYZeHVy5f4lu2xZL2RN0RKw5W9nOcQax3z+PsBeM9rILixI62WkuwNShl
+   w==;
+X-IronPort-AV: E=Sophos;i="5.92,218,1650956400"; 
+   d="scan'208";a="169445615"
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 24 Jun 2022 01:34:12 -0700
+Received: from chn-vm-ex02.mchp-main.com (10.10.85.144) by
+ chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.17; Fri, 24 Jun 2022 01:34:11 -0700
+Received: from [10.12.72.26] (10.10.115.15) by chn-vm-ex02.mchp-main.com
+ (10.10.85.144) with Microsoft SMTP Server id 15.1.2375.17 via Frontend
+ Transport; Fri, 24 Jun 2022 01:34:10 -0700
+Message-ID: <3d00ccd4-509b-f350-2612-ea0b0c8d2743@microchip.com>
+Date: Fri, 24 Jun 2022 10:34:09 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: b4-0.9.0 available
+Content-Language: en-US
+To: Bjorn Andersson <bjorn.andersson@linaro.org>, "Jason A. Donenfeld"
+	<Jason@zx2c4.com>, Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+CC: Linus Torvalds <torvalds@linuxfoundation.org>, Geert Uytterhoeven
+	<geert@linux-m68k.org>, <tools@linux.kernel.org>, <users@linux.kernel.org>
+References: <20220617190153.tvi5lkzlvemeqou5@meerkat.local>
+ <CAMuHMdV4AHH1TM6xf26MP0-dUQ0-fB+62GeeuVuth9pgWgdu7Q@mail.gmail.com>
+ <20220621152903.czivp7fdn6me775i@meerkat.local>
+ <CAMuHMdWz8=Zr8hnXNGBZVfe70F8oVdK670Z41=Dtib0GMDgAug@mail.gmail.com>
+ <CAHk-=wiQzp+aurcmj15=LAa2ntvRZH0Ee2dn-PLjcFpmRE6Jcw@mail.gmail.com>
+ <CAHmME9p+zRErOsvA1zC=kTHtpYD_sGjFxVsj0pMwteAp4dCdjQ@mail.gmail.com>
+ <20220621165953.z25hwos7gom6bp6s@meerkat.local> <YrIEnmt5vDMcbOiG@zx2c4.com>
+ <20220621182953.p5asczznnz3pn6dl@meerkat.local> <YrIR2v7GdC3qIt2E@zx2c4.com>
+ <YrI3W46GUS/Dap5J@ripper>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
+Organization: microchip
 In-Reply-To: <YrI3W46GUS/Dap5J@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jun 21, 2022 at 02:25:47PM -0700, Bjorn Andersson wrote:
-> On Tue 21 Jun 11:45 PDT 2022, Jason A. Donenfeld wrote:
-> > - Don't add `Link:` if the URL hasn't been hand selected as being
-> >   particularly relevant; the lkml patch email alone doesn't cut it. This
-> >   suggests that automatically adding `Link:` is invariably wrong, since
-> >   automatic != "hand selected", so maybe there's no point in
-> >   `-l,--add-link`, and you can just remove that option.
+On 21/06/2022 at 23:25, Bjorn Andersson wrote:
+> EXTERNAL EMAIL: Do not click links or open attachments unless you know the content is safe
 > 
+> On Tue 21 Jun 11:45 PDT 2022, Jason A. Donenfeld wrote:
+> 
+>> Hi Konstantin,
+>>
+>> On Tue, Jun 21, 2022 at 02:29:53PM -0400, Konstantin Ryabitsev wrote:
+>>> If there is someone who is willing to compile a definitive list of "Linux
+>>> Kernel commit do's and dont's", then I'll happily stick to that.
+>>
+>> I dunno about a "definitive list". But it seems like a lot of
+>> conventions get solidified by way of tools that are ironed out over
+>> time. For example, every time a code style discussion comes up, Joe
+>> Perches arrives on the scene to make sure checkpatch.pl is current. And
+>> now the clang-format file is starting to also accumulate collective
+>> preferences. It seems like b4 is pretty widely used and will eventually
+>> serve a similar purpose if it doesn't already do so.
+>>
+>> Anyway, in lieu of a complete and thorough list of all of the things, it
+>> seems like in the last week or so we at least have two things that can
+>> be be reflected in the tooling:
+>>
+>> - Don't add `Link:` if the URL hasn't been hand selected as being
+>>    particularly relevant; the lkml patch email alone doesn't cut it. This
+>>    suggests that automatically adding `Link:` is invariably wrong, since
+>>    automatic != "hand selected", so maybe there's no point in
+>>    `-l,--add-link`, and you can just remove that option.
+
+Please no...
+
 > FWIW I find it very helpful to have the lore-Link in patches, as that
 > allow me to quickly find and share a pointer to already landed
 > patch/patchset - in particular when the recipient doesn't have
 > linux-next synced and checked out locally.
-
-I'll also note that a number of maintainers (including myself) are
-adding the Link to the lore via a git hook:
-
-#!/bin/sh
-# For .git/hooks/applypatch-msg
-#
-. git-sh-setup
-perl -pi -e 's|^Message-Id:\s*<?([^>]+)>?$|Link: https://lore.kernel.org/r/$1|g;' "$1"
-test -x "$GIT_DIR/hooks/commit-msg" &&
-        exec "$GIT_DIR/hooks/commit-msg" ${1+"$@"}
-:
-
-This predates my use of b4, because it means that I can save a message
-from my inbox, and then run "git am -s /tmp/patch-mbox" and the Link
-line is added.  No one has really complained, and I've found it useful
-on occasion when doing code archeology when I'm trying to figure out
-why a patch was added, or to pick up discussion *about* the patch that
-happened during the code review.
-
-It's not perfect, especially for large patch series where there is
-say, a v27 patch series before it finally gets accepted, unless the
-cover letter of v27 has a URL link to all of the previous patch
-series.  In some ways, this is why the Gerrit scheme of having a
-ChangeId trailer is so helpful.  It's an invariant across different
-versions of the patch, and it means that assuming the Gerrit server is
-still up, you can see the entire code review history in a single web
-page.
-
-It would be ***great*** if the lore/b4/git workflow had a similar
-functionality.  Perhaps that means some kind of tool to automate
-generation of the cover letter, or hiding the previous URL link after
-the --- line in the e-mailed version of the patch?
-
+> 
 > And I don't mind there being multiple Link: tags to different resources,
 > as the various automation use cases I've run into have been easily
 > solved by just filtering the tags by domain...
 
-I don't mind because when I *have* had to go back in time to do code
-archeology ("what *was* I thinking two years ago...") having an easy
-way to do that has been worth its weight in gold.
++1
 
-That being said, it isn't easy to distinguish between a Link to a bug
-report that was submitted to a vger mailing list, and as I've
-mentioned, there isn't a good way to find the previous versions of the
-patch, since previous versions of the patch or patch series tend be on
-separate e-mail threads, and some of the more critical code review
-discussions happen on earler versions of the patch/patch series, not
-the final version where it's mostly about fixing the final nits, as
-opposed to the design/architectural discussions.
+"Link: " addition has been very useful also for me several times when 
+coming back to applied patches, even simple one carrying no real 
+information at first sight.
 
-Cheers,
+Even the lack of discussion associated to a patch is sometimes a good 
+indicator that the merged patch was not questioned or exercised enough, 
+and we can easily realize this by following the "Link:" tag.
 
-						- Ted
+Not only it links to email thread at the time of patch merging, but as 
+time passes, it could even link to a discussion that happened *after* 
+that the patch had been merged. This discussion can address regressions, 
+remarks or request for follow-up. As developers, *easily* following this 
+"Link:" brings value in my opinion.
+
+[..]
+
+Best regards,
+   Nicolas
+
+-- 
+Nicolas Ferre
