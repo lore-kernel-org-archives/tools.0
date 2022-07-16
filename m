@@ -1,104 +1,189 @@
-Received: from out01.mta.xmission.com (out01.mta.xmission.com [166.70.13.231])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826232F29
-	for <tools@linux.kernel.org>; Mon, 11 Jul 2022 22:43:08 +0000 (UTC)
-Received: from in02.mta.xmission.com ([166.70.13.52]:55648)
-	by out01.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1oB1eC-009pJi-Vp; Mon, 11 Jul 2022 16:12:57 -0600
-Received: from ip68-227-174-4.om.om.cox.net ([68.227.174.4]:47124 helo=email.froward.int.ebiederm.org.xmission.com)
-	by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1oB1eC-00C71j-1j; Mon, 11 Jul 2022 16:12:56 -0600
-From: "Eric W. Biederman" <ebiederm@xmission.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- tools@linux.kernel.org
-References: <87a69fct75.fsf@email.froward.int.ebiederm.org>
-	<CAHk-=wge5Dh6ukEQoueSh9dzn6GPqGiRtDQqfSnP5vWEXKJzXw@mail.gmail.com>
-Date: Mon, 11 Jul 2022 17:12:50 -0500
-In-Reply-To: <CAHk-=wge5Dh6ukEQoueSh9dzn6GPqGiRtDQqfSnP5vWEXKJzXw@mail.gmail.com>
-	(Linus Torvalds's message of "Mon, 11 Jul 2022 15:02:06 -0700")
-Message-ID: <87y1wz8fj1.fsf@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429D07A
+	for <tools@linux.kernel.org>; Sat, 16 Jul 2022 14:29:58 +0000 (UTC)
+Received: by mail-qv1-f48.google.com with SMTP id m10so1727562qvu.4
+        for <tools@linux.kernel.org>; Sat, 16 Jul 2022 07:29:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=P/VdNp4hEqnU1+pOX4WT9AeG5r0NKHfub0DGmx2Nu6w=;
+        b=TzvODleLZPr3pklzTxjnOMED6+LIuBOfpH5Ow3ImGktE4+sx6NQftL7qZ2mQUn0HOc
+         oAZEGq066Rse+oS7OWdYKYHrYJjwOd1ayzWNZMMVTglQnFTqQlCr02lX1kbUdJGoX3Zy
+         vR4weJ4ISAm1LfoHfrYvXXQF3yvaLJmP9qBLE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=P/VdNp4hEqnU1+pOX4WT9AeG5r0NKHfub0DGmx2Nu6w=;
+        b=bPxF67ewldYQHnU1LuITsSDycqUqXXmx85S6uLCqJ2v3vusbdNmdaGRGDrqAMeDBp5
+         OkgehO+wabuA/zD+rafgkfuZG+8SqVq9cr5xpT8+CcSchStc7irLDCZC4J5gbj/yoKIy
+         cxUgFnoUn/y3YpGpL70b9p+F/fmiToaICvuweCEC1P/rtqIayDwfhlL+rYhqryrug9EJ
+         Qet1815oMDP4gTgMlT0QyflJQzjGtR8ncdknS5ocSVw2tXiPUhN/fiIZNEqgz+QCYy2Z
+         ka0eWgkNQbHd82h+O/URnYz6ajLPCZI/VMjeOoTO6xC6XZn6xo2/GP8P3//7cG7LhEW2
+         wXwA==
+X-Gm-Message-State: AJIora9W9qW1JfLUl6FxhKxB9YjqDlvGPeEko5fQaOttnkHX2iRzmgSp
+	FTqvE3fUGng0VcGVm8PrLG7LWg==
+X-Google-Smtp-Source: AGRyM1v5DBvyLvSmSJfx+fZQHX9oi5THMBacS6tqPJrN6OqySFuFwUGgC87lYBf4raa40NH+3xOPLQ==
+X-Received: by 2002:ad4:5be6:0:b0:473:9831:541a with SMTP id k6-20020ad45be6000000b004739831541amr13854685qvc.118.1657981796969;
+        Sat, 16 Jul 2022 07:29:56 -0700 (PDT)
+Received: from nitro.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id w18-20020a05620a445200b006a37c908d33sm7116927qkp.28.2022.07.16.07.29.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 Jul 2022 07:29:56 -0700 (PDT)
+Date: Sat, 16 Jul 2022 10:29:54 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: users@linux.kernel.org, tools@linux.kernel.org
+Subject: b4 submit ready for beta testing
+Message-ID: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1oB1eC-00C71j-1j;;;mid=<87y1wz8fj1.fsf@email.froward.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=68.227.174.4;;;frm=ebiederm@xmission.com;;;spf=softfail
-X-XM-AID: U2FsdGVkX1+Mg+ojls4Xs7EhAmmgqKaQ2yeORcmvbZU=
-X-SA-Exim-Connect-IP: 68.227.174.4
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on sa08.xmission.com
-X-Spam-Level: *****
-X-Spam-Status: No, score=5.2 required=8.0 tests=ALL_TRUSTED,BAYES_50,
-	DCC_CHECK_NEGATIVE,T_SCC_BODY_TEXT_LINE,T_TM2_M_HEADER_IN_MSG,
-	XMSubLong,XMSubMetaSxObfu_03,XMSubMetaSx_00,XM_SPF_SoftFail
-	autolearn=disabled version=3.4.2
-X-Spam-Report: 
-	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
-	*  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-	*      [score: 0.4092]
-	*  0.7 XMSubLong Long Subject
-	*  0.0 T_TM2_M_HEADER_IN_MSG BODY: No description available.
-	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
-	*      [sa08 1397; Body=1 Fuz1=1 Fuz2=1]
-	*  1.2 XMSubMetaSxObfu_03 Obfuscated Sexy Noun-People
-	*  2.5 XM_SPF_SoftFail SPF-SoftFail
-	*  1.0 XMSubMetaSx_00 1+ Sexy Words
-	* -0.0 T_SCC_BODY_TEXT_LINE No description available.
-X-Spam-DCC: XMission; sa08 1397; Body=1 Fuz1=1 Fuz2=1 
-X-Spam-Combo: *****;Linus Torvalds <torvalds@linux-foundation.org>
-X-Spam-Relay-Country: 
-X-Spam-Timing: total 428 ms - load_scoreonly_sql: 0.04 (0.0%),
-	signal_user_changed: 13 (3.0%), b_tie_ro: 11 (2.5%), parse: 0.80
-	(0.2%), extract_message_metadata: 13 (3.1%), get_uri_detail_list: 1.21
-	(0.3%), tests_pri_-1000: 15 (3.4%), tests_pri_-950: 1.45 (0.3%),
-	tests_pri_-900: 1.12 (0.3%), tests_pri_-90: 138 (32.2%), check_bayes:
-	135 (31.6%), b_tokenize: 5.0 (1.2%), b_tok_get_all: 41 (9.7%),
-	b_comp_prob: 2.1 (0.5%), b_tok_touch_all: 82 (19.2%), b_finish: 1.41
-	(0.3%), tests_pri_0: 232 (54.2%), check_dkim_signature: 0.52 (0.1%),
-	check_dkim_adsp: 2.8 (0.7%), poll_dns_idle: 0.64 (0.2%), tests_pri_10:
-	2.0 (0.5%), tests_pri_500: 9 (2.1%), rewrite_mail: 0.00 (0.0%)
-Subject: Re: [GIT PULL] ipc: Fix free mq_sysctls when ipc namespace creation
- fails
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Hello, all:
 
-> On Mon, Jul 11, 2022 at 1:04 PM Eric W. Biederman <ebiederm@xmission.com> wrote:
->>
->> Please pull the free-mq_sysctls-for-v5.19 tag from the git tree:
->>
->>   git://git.kernel.org/pub/scm/linux/kernel/git/ebiederm/user-namespace.git free-mq_sysctls-for-v5.19
->
-> The pr-tracker-bot doesn't seem to understand octopus merges, so this
-> one didn't get a pr-tracker-bot response despite being merged.
->
-> I don't do octopus merges very often, but since I had done the ptrace
-> fix as a hotfix for rc6 and your other pull request thus didn't bring
-> in any new code (just a new commit), I did your two pull requests as
-> one single merge:
->
->   23458ac91dc8 ("Merge tags 'free-mq_sysctls-for-v5.19' and
-> 'ptrace_unfreeze_fix-for-v5.19' of
-> git://git.kernel.org/pub/scm/linux/kernel/git/ebiederm/user-namespace").
->
-> just FYI.
+I've committed the initial b4-submit features to the master branch, and I
+need some volunteers to test it. If you routinely send patches to the Linux
+kernel mailing lists, then I hope that volunteer is you. :)
 
-Thanks for letting me know.  I took a quick look and everything appears
-to be there so I don't have any complaints.
+## What it does
 
-Trivial topic branches confusing bots since 2022 ;)
+The goal behind "b4 submit" is simplifying the submitter's workflow by
+automating away a lot of menial tasks, such as creating cover letters,
+collecting trailers, rerolling new revisions, remembering all the flags to
+git-format-patch and git-send-email, etc. The main workflow can be described
+like this:
 
-I have Cc'd Konstantin so he knows that octopus merges can confuse bots.
+1. b4 submit --new my-new-feature [-f v5.19-rc6]
 
-Eric
+This will create a new branch called "b4/my-new-feature". If -f is not
+specified, the branch will be created from the current HEAD (but this is
+rarely what you want, so you'll want to pick a tag to work from).
+
+After the branch is created, b4 will create an empty commit that will serve to
+store the cover letter contents and some tracking information. You can view
+the raw commit with "git log" just like any other commit, and you can even
+edit it with "git rebase" but it's not recommended. It's much better to use
+"b4 submit --edit-cover".
+
+2. b4 submit --edit-cover
+
+This allows you to work on the cover letter using $EDITOR or core.editor
+as defined in git-config. Once the editing is complete, the empty commit will
+be updated and the entire branch rebased using git-filter-repo.
+
+3. use regular git operations for the rest of your work
+
+You can apply, rebase, edit, squash, etc -- just avoid touching the cover
+letter commit. You can also push the b4/my-new-feature branch to any remote
+and pull it from anywhere else if you want to switch computers.
+
+4. b4 submit --send
+
+When you are ready to send off your series, you can review the resulting
+patches by running:
+
+  b4 submit --send --dry-run
+
+or
+
+  b4 submit --send -o /tmp/somedir
+
+The first will print out the patches to send on stdout, exactly as they would
+be fed to the SMTP server, and the second will output the patches into the
+specified directory a-la git-format-patch -- useful for running "checkpatch"
+or any other checks, as necessary.
+
+When you are satisfied that the patches are looking sane, you can fire off the
+actual --send command.
+
+NOTE: when we find a scripts/get_maintainer.pl in the repo toplevel, we will
+automatically run the most-recommended (that I could find) combination of
+flags to automatically populate the To: and Cc: list in addition to whatever
+we get out of the cover letter and commit trailers. You can turn this off with
+--no-auto-to-cc.
+
+NOTE: at this time, a working SMTP server and a valid [sendemail] section are
+required for sending patches. The web submission endpoint work is not yet
+completed.
+
+5. b4 submit --reroll
+
+After you send your series and when you're ready to start working on a new
+revision, you'll want to --reroll to increment your tracked version. This will
+automatically update the cover letter commit to add a "Changes in v[N]"
+section that will also contain a link to the v[N-1] series, creating a
+historical breadcrumb of revisions.
+
+6. b4 submit --update-trailers [--signoff]
+
+As you receive feedback on your patches, you can retrieve any received
+trailers from lore.kernel.org and apply them directly to your branch. This is
+accomplished by retrieving any threads matching the unique "change-id"
+submitted as part of the cover letter.
+
+One thing to keep in mind here is that actual trailer matching is done by
+comparing the patch-id (see git-patch-id for details). This has the following
+important bonuses and caveats:
+
+  - You can rearrange patches or modify summaries without it affecting the
+    match.
+  - If you modify actual code (even as much as fixing a typo in a string), any
+    received trailers will no longer match. This is as designed, because if
+    you change the code, it's no longer reviewed (but we won't remove any
+    existing trailers that were already applied).
+  - when you use --signoff, this will move your own "Signed-off-by" trailer
+    below any other trailers in all series commits, which is commonly
+    recommended for the chain-of-custody purposes.
+
+7. b4 submit --send
+
+GOTO 4.
+
+In addition to the above, please see "b4 submit --help" for other flags you
+can use with these operations.
+
+### Editing the cover letter commit manually
+
+If you ever need to edit the cover letter commit manually (e.g. to fix
+something about the tracking section json), you can use regular "git rebase
+-i" with the "reword" action. When rebase bails complaining about the empty
+commit, just run "git commit --amend --allow-empty" to edit the cover letter
+and then "git rebase --continue".
+
+Again, this is not recommended and it's best to always use "b4 submit
+--edit-cover".
+
+## Getting the b4 dev version
+
+To install the b4 development version, you will need to run it from the git
+checkout:
+
+  git clone https://git.kernel.org/pub/scm/utils/b4/b4.git
+  cd b4
+  git submodule update --init
+  alias b4="$PWD/b4.sh"
+
+You can find out more details in the README file. You will also want to make
+sure that git-filter-repo is installed (either from your distro packages or
+from pip).
+
+If you're already running b4 from the git checkout, make sure you run "git
+submodule update" to pull in the latest unreleased patatt version.
+
+## Feedback
+
+I hope you have a positive experience using b4 submit. I will be happy to
+receive any feedback, as I have to make a lot of assumptions and they aren't
+always the right ones. :) The best place for this feedback is on the
+tools@linux.kernel.org list.
+
+Best regards,
+Konstantin
+
