@@ -1,49 +1,50 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52D27A
-	for <tools@linux.kernel.org>; Sun, 17 Jul 2022 15:40:59 +0000 (UTC)
-Received: by mail-qk1-f172.google.com with SMTP id o21so7122701qkm.10
-        for <tools@linux.kernel.org>; Sun, 17 Jul 2022 08:40:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C88667F
+	for <tools@linux.kernel.org>; Sun, 17 Jul 2022 15:43:47 +0000 (UTC)
+Received: by mail-qt1-f173.google.com with SMTP id b21so4072782qte.12
+        for <tools@linux.kernel.org>; Sun, 17 Jul 2022 08:43:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=g2q6u5bPjsgvHXfjntd5661m3pjITzjfWFdilAC2kZ0=;
-        b=Av1DqgQzUi1tmo2dv2bcNy+Z2KvWRbQb+GakWK6Hgd+gzVLX5J7seJ079QJGCSp0A9
-         Zc2nFtCfIYE9vln8cWRY/aYLJrGQ+kEOWz6dCwFv8O742Hta+QAQ1SCOkTtO3SrLjMws
-         8BmA9Nj317gUFRn6a18pg2KM5jtFi4CoZliqM=
+        bh=yKW+zf31rAFN+jzbvAm49JrGxEGyFXrOULADD5pr1Rg=;
+        b=FVJ7TjpVi8E/QLwEV1Xz160lY1Hc4O0UyGlo213zK8KrrqZAeWN5+vDFReYtGMDLm5
+         MVZrcg3n41jPQEZSdG+cfVUlEFa/krOX8y+q0sBJe1Wa5iWR7Ym9aYrMzRf35oJeVWFv
+         jub4C8Pnns/oo5mO2JlZlFIswZ3MbcFZRCBgg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=g2q6u5bPjsgvHXfjntd5661m3pjITzjfWFdilAC2kZ0=;
-        b=Hp5mBpS8ffvABZBPXHDH8lQuM/wSHNpdKDWXZGdvQBLbYmEJ8vFwteIgCUIvNv3DHr
-         /FOto6A6tYb/e1CHdoWcbJOx+pn204R0tzSYskqWAHfKA87PWOZ4wQfEPt99HtzhELr3
-         m4DK0jLcj3UqEOKmeEVyNds06pbqeEnsZbaeFymWGVu0QuLKSTKODZXbTSzayuE9GcTY
-         aUef5dwaAGXuaAYthBnMErxnUNdZXjdKub/TMlXsATq2wuW3GenMRLpOGtBi796LFDPz
-         EXYGsfG28t7+5uP4cDDPEY+rPJ0QFxMkIbIvQPX+eKuohZExnHGj+pr8BZRb4esa4iA2
-         6Eww==
-X-Gm-Message-State: AJIora8uySZ+RKkzba7wTbWwq8b1GnQXfv459NeEv+w8d43jtewtbaIQ
-	Fac6CpQ+pOF3Uy+o6sWD02aU4A==
-X-Google-Smtp-Source: AGRyM1s4kpEVgAu5ufm414avcIaeYW9HYsOVDo9SIjHweob79qHk2qTIvc78ujj5r6/awysmRm+Lzw==
-X-Received: by 2002:a05:620a:190c:b0:6b5:9f6b:77d9 with SMTP id bj12-20020a05620a190c00b006b59f6b77d9mr15426010qkb.142.1658072458662;
-        Sun, 17 Jul 2022 08:40:58 -0700 (PDT)
+        bh=yKW+zf31rAFN+jzbvAm49JrGxEGyFXrOULADD5pr1Rg=;
+        b=T7YHnXgG6adyF7Huu9Kq2U7J8s6lVPoXb/KaHhe2bLhGY30ZGu8YRBbdBNvTjbaS3e
+         YthU9RRI2qiJWZYUEsqCZWJQp5+lLuENLJLalQM9v+IkwW1krUOXaGkX2InwJSlIBBUc
+         qDqrU7Kp75B7XlMSiQdZpJ25xBRxRR9qZ3+9ow3EtsKi6xhx2lEFcs5pZyw9ZdHLNBUY
+         GqP7pYhIxHZbj+Wj6V9meaJklvl9yj2CZp1hKZQXsCEgpjNCJHN/rfnbMJ/rqQULZPXn
+         KNee9BPY3hYPy2upnqqknqFmtrYhZHwk3evK60oWF4N80OHzAvBjLnJtp76tCHV+oJdS
+         iVGA==
+X-Gm-Message-State: AJIora9jgn00XR35ojhIG2+Hh6zYvqhcFEE/qUa+xkHHS2zPEsOjhNL0
+	FViJvX2MupUmvO8Mx6rrHDvZXQ==
+X-Google-Smtp-Source: AGRyM1t6KXYJy+RSbAYHUBMgd2wH/MFE97oZqDLLsbz4BHbswJlf9VRIQXRzPeqx3hUUB04txUPnkw==
+X-Received: by 2002:ac8:4e87:0:b0:31e:d0a4:4ba1 with SMTP id 7-20020ac84e87000000b0031ed0a44ba1mr14479943qtp.230.1658072626180;
+        Sun, 17 Jul 2022 08:43:46 -0700 (PDT)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id bj27-20020a05620a191b00b006a79479657fsm9007082qkb.108.2022.07.17.08.40.57
+        by smtp.gmail.com with ESMTPSA id j18-20020ac86652000000b00304fc3d144esm7299773qtp.1.2022.07.17.08.43.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Jul 2022 08:40:58 -0700 (PDT)
-Date: Sun, 17 Jul 2022 11:40:56 -0400
+        Sun, 17 Jul 2022 08:43:45 -0700 (PDT)
+Date: Sun, 17 Jul 2022 11:43:44 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
+To: Conor Dooley <mail@conchuod.ie>
 Cc: James Bottomley <James.Bottomley@hansenpartnership.com>,
 	users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220717154056.ebbf7x3g56cdto5q@meerkat.local>
+Message-ID: <20220717154344.jnbmklayhjgdekdu@meerkat.local>
 References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
  <4c4652b0e333bd81b91f71346ac6142322682eff.camel@HansenPartnership.com>
  <20220716145638.ubuwwc7xtjw6ugy7@meerkat.local>
- <CAMuHMdU8H98M2u9OXM347+Gz8Y9erwTejv-3U_=8KTK1XgMdow@mail.gmail.com>
+ <6ad8ce3aa0d14d8a09a3c117affe19928a44f639.camel@HansenPartnership.com>
+ <d611454a-6a23-eb09-c8ec-84f1b4b49746@conchuod.ie>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -52,16 +53,21 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAMuHMdU8H98M2u9OXM347+Gz8Y9erwTejv-3U_=8KTK1XgMdow@mail.gmail.com>
+In-Reply-To: <d611454a-6a23-eb09-c8ec-84f1b4b49746@conchuod.ie>
 
-On Sun, Jul 17, 2022 at 11:58:08AM +0200, Geert Uytterhoeven wrote:
-> Empty commits are very likely to be lost on a rebase, as the default is
-> to drop them while doing an interactive rebase (unless --keep-empty).
+On Sat, Jul 16, 2022 at 06:14:37PM +0100, Conor Dooley wrote:
+> >> So, it was either using notes (which almost everyone forgets to push
+> >> anyway), or using an empty commit. I agree it's hurky, but it
+> >> currently the only thing that fits in the "least likely to end up
+> >> lost on a rebase or workstation switch" category.
+> 
+> 
+> Is it silly to suggest that b4 could handle the a notes to
+> description & description to notes conversion in a "b4 push-series"
+> or "b4 fetch-series" type of command? 
 
-Geert:
-
-I think this is no longer the case with the later git versions that use the
-merge backend for rebase. I just tested "rebase -i" and the cover letter
-commit was successfully kept without any extra flags being required.
+It's not silly, but it's significantly more fragile. Pushing and fetching
+requires reachable remotes and some kind of ability to handle conflicts, keys,
+etc. I'd much rather avoid going down that road.
 
 -K
