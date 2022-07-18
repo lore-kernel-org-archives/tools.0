@@ -1,249 +1,177 @@
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B4B320E;
-	Mon, 18 Jul 2022 15:16:00 +0000 (UTC)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id C421A5C00CE;
-	Mon, 18 Jul 2022 11:15:59 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Mon, 18 Jul 2022 11:15:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm2; t=1658157359; x=1658243759; bh=xLQH5EylzQ
-	cZV6St7zVCoINrK+7CGhdZwQ0L+u4xLh0=; b=Du7LDWRQ+EEQHe1joCoQlnBNqT
-	zZB5KBThePMoNT/KkvX+QeraX37Hav/cTd+RNI3S3pzPE+5oE2SWzIdXbCGXSixQ
-	RQnEce4CDVku9f3y9k94xjr2PZm4OA02Jj6cdqaQhGeWk3wiurWRZdzgWD+mwfTl
-	YYTGWkSBYTvC0OjkhRdyCDIHCL+YnC3lRf5ASB2hdpucHa3bz9wSxm8eem23R1r8
-	4irgmE5kx/OriBHMAqsU+jF3amg3YtgUK2PCPoYXq6ivwSzsMu5v8PcsxJ8OL16/
-	2w/S0E1d0rN+rnPz14fHdsctDFhhe26AD4v5KrRB/YSd51BKm+7ZLcVy5GhA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1658157359; x=1658243759; bh=xLQH5EylzQcZV6St7zVCoINrK+7C
-	GhdZwQ0L+u4xLh0=; b=fJmUpiLoWlgc7YXj0gvKKkUD/cqPFYdDv4rTrnq2iIzX
-	lIQvJYeZllt+lIOEwYnsOMrM5eErdO3dnPCNBEn02koimu2UGnai13HxbYzb46QT
-	Tl9zDKMyurrZcvaO9t6dcXHTeiuJe9878tm1Ow8xjXIgtYEqx4uMkcFt+m61elzL
-	97NCuU1C6fTdofzZ+AO1Y5RHmbpZPUfwMBbTeLQv9zXl0zGSbw2DhzwiNgmJnPCi
-	+LmCaL9MaqVKwnT2KN5GVyFARI7cq+O5bNXwvaI81bpTDmlmJ6cJHpR2pvkPxrJ5
-	ZPtxFnvBZbdBxh4Fc4jE9d4/UtN4syFdn28MqulHog==
-X-ME-Sender: <xms:L3nVYs6bGSwrnjn5TVZ55FkcV-MmKT-kyEz7Xp-4iUcgyLqhMPTOUQ>
-    <xme:L3nVYt6GwFb0eaMk7YF4McP4xCpLq2O45UvWGu7jEgcUWrhPlZ5EDNUnLxqOK05-t
-    Hmb--G9WLAnWlXbxV8>
-X-ME-Received: <xmr:L3nVYrc4Lbl2n5YMe9wZp0tamvLuK9qiNQSPDIllOAUYR9WJZaz00NBaBSK7wMPFOX2yLWKC-Vql89kx18tPzo5VzCZkBr7zhc67p-I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudekkedgkeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpefhkeehfedthfejfeejtdfhvddvueeigeejjeeuteegveffhfffgeffieeu
-    ueduvdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepmhgrgihimhgvsegtvghrnhhordhtvggt
-    hh
-X-ME-Proxy: <xmx:L3nVYhL8zLgV0y3s1IX9Fsb2cWK1TdFoYClD0KcpSubifkdHImT6BA>
-    <xmx:L3nVYgJEmxIf390AowOoPRrD3UftRt-5eEqtRJ7NXMfhC5lgPXdTqA>
-    <xmx:L3nVYixd9FkZ7XLvqBUG9sxLVevUCMxRMI0P5wI-BvPWFUiF33-sbw>
-    <xmx:L3nVYqi37No94mNl4jhavuFl09DHFBnwzeFwy7AOxEFNgcCDmlmAiw>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Jul 2022 11:15:59 -0400 (EDT)
-Date: Mon, 18 Jul 2022 17:15:56 +0200
-From: Maxime Ripard <maxime@cerno.tech>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220718151556.qulqg23yzbpr562e@houat>
-References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
- <20220718084927.nlomzhq3ipni5alf@houat>
- <20220718143347.qo3ton7ocmcksgsy@meerkat.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A02C33CC;
+	Mon, 18 Jul 2022 17:15:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D91C341C0;
+	Mon, 18 Jul 2022 17:15:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1658164513;
+	bh=73feTqj11LSDAfKYDkg9YFW6xzdRvUEIVZDpKDNXF5Y=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=X+9LyCv3kNU7y49g99u/LYxZtpK8z5v83Aa4LgXHeK5no8W5PsBmjeGa6q5KkuQsw
+	 jdbAzvEni6s+MQyLKUcp4jKxe3YdFbCfRQMhhqUcvXQIz27NHdPNwEkyTZwPC2TDrC
+	 tOCsWLTMYfWINSiyulkafOzgJZqkFSLVS9xmXR6vsplzLaOBqXNxsbZ7D3/PwszPSF
+	 QFupXas/fYb4NdqIjE3Q2UD+BqrNRDtVv1/lelQt06YvxkhJ8uuNagyxPh+TfODItT
+	 fmdJ1uZYUPoF/TmK98xtm1YbKQ6akYry9SdLIglrKeJ8eyih8vL9uTiJ5Skl9/yxEh
+	 4fXOIC4E45D7Q==
+Received: by mail-vs1-f41.google.com with SMTP id 185so1388652vsi.2;
+        Mon, 18 Jul 2022 10:15:13 -0700 (PDT)
+X-Gm-Message-State: AJIora9Lew1VVMVUJXR0l5BLiMdUskS5MSYhSqs68z1NSgknpQiQDsy9
+	u2zfjYC1tE4ps1WNkqOR7NjLSPHWmIL2dNeCEA==
+X-Google-Smtp-Source: AGRyM1s3GDtyyCYPkVwn54lettHMN15yQpizDk/zWw29iIdUAtIo+3PzYXbZHDZf1t79AaOIEx8x4TM8ukQ2jkqDf1c=
+X-Received: by 2002:a67:c082:0:b0:356:eccb:f5c9 with SMTP id
+ x2-20020a67c082000000b00356eccbf5c9mr8889585vsi.85.1658164512751; Mon, 18 Jul
+ 2022 10:15:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uaarucg7srveo5os"
-Content-Disposition: inline
-In-Reply-To: <20220718143347.qo3ton7ocmcksgsy@meerkat.local>
+References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
+In-Reply-To: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
+From: Rob Herring <robh@kernel.org>
+Date: Mon, 18 Jul 2022 11:15:00 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKSU6RkynTPyqM9uqdccjRxT1WmVYq4CWLvq0+_TXN+yA@mail.gmail.com>
+Message-ID: <CAL_JsqKSU6RkynTPyqM9uqdccjRxT1WmVYq4CWLvq0+_TXN+yA@mail.gmail.com>
+Subject: Re: b4 submit ready for beta testing
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Sat, Jul 16, 2022 at 8:30 AM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> Hello, all:
+>
+> I've committed the initial b4-submit features to the master branch, and I
+> need some volunteers to test it. If you routinely send patches to the Linux
+> kernel mailing lists, then I hope that volunteer is you. :)
+>
+> ## What it does
+>
+> The goal behind "b4 submit" is simplifying the submitter's workflow by
+> automating away a lot of menial tasks, such as creating cover letters,
+> collecting trailers, rerolling new revisions, remembering all the flags to
+> git-format-patch and git-send-email, etc. The main workflow can be described
+> like this:
+>
+> 1. b4 submit --new my-new-feature [-f v5.19-rc6]
+>
+> This will create a new branch called "b4/my-new-feature". If -f is not
+> specified, the branch will be created from the current HEAD (but this is
+> rarely what you want, so you'll want to pick a tag to work from).
+
+It would be nice if an existing branch could be used. Either as an
+enroll this branch as-is with b4 submit or create a new branch based
+on the existing branch. Often, I start working on something for a
+while, and then start thinking about submitting, how to split patches,
+and a cover letter some time later. I guess that would involve
+rebasing the branch with the empty commit approach (which the branch
+description approach would not need).
 
 
---uaarucg7srveo5os
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> After the branch is created, b4 will create an empty commit that will serve to
+> store the cover letter contents and some tracking information. You can view
+> the raw commit with "git log" just like any other commit, and you can even
+> edit it with "git rebase" but it's not recommended. It's much better to use
+> "b4 submit --edit-cover".
+>
+> 2. b4 submit --edit-cover
+>
+> This allows you to work on the cover letter using $EDITOR or core.editor
+> as defined in git-config. Once the editing is complete, the empty commit will
+> be updated and the entire branch rebased using git-filter-repo.
+>
+> 3. use regular git operations for the rest of your work
+>
+> You can apply, rebase, edit, squash, etc -- just avoid touching the cover
+> letter commit. You can also push the b4/my-new-feature branch to any remote
+> and pull it from anywhere else if you want to switch computers.
+>
+> 4. b4 submit --send
+>
+> When you are ready to send off your series, you can review the resulting
+> patches by running:
+>
+>   b4 submit --send --dry-run
+>
+> or
+>
+>   b4 submit --send -o /tmp/somedir
+>
+> The first will print out the patches to send on stdout, exactly as they would
+> be fed to the SMTP server, and the second will output the patches into the
+> specified directory a-la git-format-patch -- useful for running "checkpatch"
+> or any other checks, as necessary.
+>
+> When you are satisfied that the patches are looking sane, you can fire off the
+> actual --send command.
+>
+> NOTE: when we find a scripts/get_maintainer.pl in the repo toplevel, we will
+> automatically run the most-recommended (that I could find) combination of
+> flags to automatically populate the To: and Cc: list in addition to whatever
+> we get out of the cover letter and commit trailers. You can turn this off with
+> --no-auto-to-cc.
+>
+> NOTE: at this time, a working SMTP server and a valid [sendemail] section are
+> required for sending patches. The web submission endpoint work is not yet
+> completed.
+>
+> 5. b4 submit --reroll
+>
+> After you send your series and when you're ready to start working on a new
+> revision, you'll want to --reroll to increment your tracked version. This will
+> automatically update the cover letter commit to add a "Changes in v[N]"
+> section that will also contain a link to the v[N-1] series, creating a
+> historical breadcrumb of revisions.
 
-On Mon, Jul 18, 2022 at 10:33:47AM -0400, Konstantin Ryabitsev wrote:
-> On Mon, Jul 18, 2022 at 10:49:27AM +0200, Maxime Ripard wrote:
-> > > After the branch is created, b4 will create an empty commit that will=
- serve to
-> > > store the cover letter contents and some tracking information. You ca=
-n view
-> > > the raw commit with "git log" just like any other commit, and you can=
- even
-> > > edit it with "git rebase" but it's not recommended. It's much better =
-to use
-> > > "b4 submit --edit-cover".
-> >=20
-> > So, I've been using a lot git-publish since a couple of years
-> > (https://github.com/stefanha/git-publish), and this creates arbitrary
-> > constraints that aren't great from a usability point of view compared to
-> > git-publish:
-> >=20
-> >   - The fact that you need to create a branch beforehand prevents to
-> >     easily use it for one-off series. I'm sure it's doable, but it's not
-> >     clear to me why you would want a special branch in the first
-> >     place...
->=20
-> When approaching this work, I was trying to see it from the point of view=
- of
-> someone who is an occasional contributor. This is easy for me, because I =
-do,
-> very occasionally, contribute to the documentation tree. So, my choices w=
-ere
-> dictated mainly by the following considerations:
->=20
-> 1. it should be obvious where everything is stored and how to view it
-> 2. we should use as little git magic as possible
-> 3. it should be easy to blow away and start over
+As you are rebasing anyways, an option for a new base would be useful here.
 
-Yeah, full agree on this :)
+>
+> 6. b4 submit --update-trailers [--signoff]
+>
+> As you receive feedback on your patches, you can retrieve any received
+> trailers from lore.kernel.org and apply them directly to your branch. This is
+> accomplished by retrieving any threads matching the unique "change-id"
+> submitted as part of the cover letter.
+>
+> One thing to keep in mind here is that actual trailer matching is done by
+> comparing the patch-id (see git-patch-id for details). This has the following
+> important bonuses and caveats:
+>
+>   - You can rearrange patches or modify summaries without it affecting the
+>     match.
+>   - If you modify actual code (even as much as fixing a typo in a string), any
+>     received trailers will no longer match. This is as designed, because if
+>     you change the code, it's no longer reviewed (but we won't remove any
+>     existing trailers that were already applied).
 
-However, I think trying to stick as close as we can to the regular git
-workflow is part of those goals too, otherwise you will effectively ask
-for the occasional user to learn some more b4 magic, that won't be
-obvious at first.
+A Reviewed-by would typically stand for something like a typo fix.
+Often minor changes are pointed out by the reviewer and a Reviewed-by
+is given assuming those are fixed. At a minimum, I think we want an
+override option on this perhaps with warnings or confirmation prompt.
 
-> I was not aware of git-publish before you mentioned it, but I did consider
-> using annotated tags to store cover commit information, just like git-pub=
-lish
-> does.
+Knowing what to do here is a common issue for new submitters. Both
+just knowing that they need to run update-trailers and when to keep or
+drop them. It's common enough that I run checks for not adding tags.
 
-For the record, prior to git-publish I was using git-series:
-https://github.com/git-series/git-series
+>   - when you use --signoff, this will move your own "Signed-off-by" trailer
+>     below any other trailers in all series commits, which is commonly
+>     recommended for the chain-of-custody purposes.
 
-That was also imposing a bunch of commands to maintain a series of
-patches (to start a new branch, like b4, but also to rebase for
-example). git-publish is, to me, much more convenient to use since I can
-use any tool, frontend I want, and I don't have to remember all the time
-whether I'm on a git-series branch, and if I need to use git series
-rebase or git rebase.
+I would think that is more commonly desired than not, so I think that
+should be the default.
 
-> My main worries about using this approach were:
->=20
-> 1. Pushing tags is a separate step from pushing commits, which is not obv=
-ious
->    to a lot of occasional contributors. Someone could do "git push origin=
-" and
->    assume their cover letters are preserved, but they won't be.
+>
+> 7. b4 submit --send
+>
+> GOTO 4.
 
-That's true, but when I'm pushing a branch for a PR or someone to test,
-I don't really care about pushing the cover letter itself. That might be
-just me though. It might be useful for archival when a PR is merged, but
-for any other purpose it's not useful at all to me.
+It seems like you are mixing sub-commands and options. Wouldn't 'b4
+submit new|reroll|send|update-trailers ..." or a new executable/link
+for 'b4 submit' be better? This is fairly disjoint from the maintainer
+side of b4 functions.
 
-> 2. This requires us to assume (or track) the base branch in order to know
->    where the series starts. For example, git-publish assumes it's "master=
-" and
->    allows you to override that with -b, but a lot of subtrees require that
->    all series are based off of "next" or some other branch. Using a speci=
-al
->    empty commit allows me to completely ignore any other branches in the =
-repo
->    that can go away or get force-pulled into some weird state, resulting =
-in a
->    completely unpredictable patch series.
-
-Yeah, but that info is one of the metadata stored in the tag, so if it's
-set as long as you don't change it, you don't have to provide it.
-
-> 3. This creates a lot of tags that are detached from any heads, and they =
-are
->    probably never going to get cleaned up. This is mostly a nitpick, but I
->    find this messy. :)
->=20
-> >   - ... Apart from that special commit. I'm not sure it's great either
-> >     and am almost certain I'm going to screw up rebases all the time,
-> >     dropping that special commit.
->=20
-> I know everyone worries about that, but I really think this is no longer =
-the
-> case ever since git-rebase switched to the merge backend. It's really
-> difficult these days to unintentionally drop empty commits from your hist=
-ory.
-
-It's not just about the merge strategy (which I probably forced somehow,
-since it definitely complains about empty commits here), but it's also
-very easy to drop it if it's something you can handle. If you do a git
-rebase $base --onto $newbase for example, you can definitely mess up the
-base commit and drop the "metadata" commit in the process.
-
-A tag is a separate item, and still more convenient than a note when it
-comes to rebasing or pushing.
-
-> > This also allows to easily rollback to a previous series version and
-> > it's transparent to others whether you're using it or not, the history
-> > is clean. You can even send the PR directly from the branch if you want
-> > to.
->=20
-> Yes, this is my main worry -- that these empty commits will somehow make =
-their
-> way into a pull request and annoy Linus or other maintainers. This is
-> basically the only reason why I would consider abandoning them in favour =
-of
-> something else.
-
-We should definitely expect it to happen. I know it will happen to me at
-some point ;)
-
-> > > After you send your series and when you're ready to start working on =
-a new
-> > > revision, you'll want to --reroll to increment your tracked version. =
-This will
-> > > automatically update the cover letter commit to add a "Changes in v[N=
-]"
-> > > section that will also contain a link to the v[N-1] series, creating a
-> > > historical breadcrumb of revisions.
-> >=20
-> > Similarly, I'm pretty sure I'm going to mess this up all the time :)
-> >=20
-> > If you start tracking which version has been sent last, b4 submit can
-> > just reuse it and add 1 by default, or something else if one needs to.
->=20
-> I wanted to avoid situations like "it got sent, but the list bounced it, =
-so I
-> should resend it now with the same revision", which is why I didn't want =
-to
-> auto-increment after each time we send. I will add a check for "are we se=
-nding
-> again with the same revision number as last time", to help avoid confusing
-> collisions.
-
-Sending an incremented version when we didn't mean too doesn't have any
-consequence though. The worst that could happen is that maintainers will
-complain about a new series that wasn't really necessary, but it will be
-obvious to everyone which one should be picked, maintainers, lore/b4, etc.
-
-Sending a new series with the same number though is very bad and will
-confuse/piss off everyone.
-
-If we can detect it reliably, we shouldn't rely on user action, we
-should just do it.
-
-Maxime
-
---uaarucg7srveo5os
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYtV5LAAKCRDj7w1vZxhR
-xbFpAP0RyOkbzWtpI1xS9gykfaRL157zYLivy123Za+2LaaJ2QEAo8/95xDXgZsG
-sBBiY5z0LFRJ3lMnAy0JAQYr2qgUUAc=
-=7rvA
------END PGP SIGNATURE-----
-
---uaarucg7srveo5os--
+Rob
