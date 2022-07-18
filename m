@@ -1,93 +1,68 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057C133CC
-	for <tools@linux.kernel.org>; Mon, 18 Jul 2022 18:20:47 +0000 (UTC)
-Received: by mail-qk1-f178.google.com with SMTP id o21so9380468qkm.10
-        for <tools@linux.kernel.org>; Mon, 18 Jul 2022 11:20:47 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A59433CC
+	for <tools@linux.kernel.org>; Mon, 18 Jul 2022 18:23:11 +0000 (UTC)
+Received: by mail-qt1-f172.google.com with SMTP id c20so9359722qtw.8
+        for <tools@linux.kernel.org>; Mon, 18 Jul 2022 11:23:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
+        d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=STWp22FgI/12c9MxSTXvwHl+PO6IgChjRE20+Sz3xS0=;
-        b=VVBgsWSLjtPLuMcceYQeoLZu5MpoyEeJBCwnWgfNMYRZanyBTsaW+dLO18tvydiW9W
-         s8hH8EAH0+YSw1FOP91yPtRGLLRsqEnlQdFT0jEhOu40oc4j+wlye2Bq06xzf8KLEvOt
-         Xjb/Ln8+s/3OcOnLyAu68luG9YOBr5nVOU2GIwgA7Fr7JR3f3v7cQqBVnAnJ1LlwIDA+
-         Uw1mgiy0x8+ALlh10+hTt2Ihsoc34Cxwt7hCy5gOjoT3qmHzns31TjTDZh7YCtprazmv
-         mj/+kQIfT2AtG+Lfjbg40NNbFdFv39ZNhn9Oo5so/0Xwb0M0U9it9nAuBt+syYp9xEs/
-         Poaw==
+        bh=nUxZjhEBbU1/EFGvvTepeiaY9Q8ty2hINXbeKvN/WEw=;
+        b=TGDAb3WdpoKVJSiZRLfhACDieL0Pu1j4HlW6DrXxNB767exSYh3g9Vr5hnzu0I7Xkn
+         +fWsWsbcWEGcgrfkSSKajs66MuSktfi39HUDJNe3O2fWq0/smjEna1V5DxquXzxKjP1+
+         6PIiE1bpvn/ItUyqlohcgnJ4rjmNpIlhTGUZ0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=STWp22FgI/12c9MxSTXvwHl+PO6IgChjRE20+Sz3xS0=;
-        b=m24RblX9U+i3RlcfRlEBCIwRtdYq6amcElVrMjkOyH6bQptGm2EhkF1W+0Z2uYelLA
-         N9sqFcF8g6pZlCXApfddaUVh3Fznbj0dO1tAhNLVputl7r48dDl39OOOYZF4FylK76A+
-         6bdqcNfXzqRqUt3IziyVlL4gZTdHei9OoCEDIH6oAHk5CfffW9vuCxT1KPW34Oa6wuzY
-         m8JwA08VyqyoUZcvKtDxkJzHM5yzNBM+lb9M0qTfwPW3JuwdiEQXXMmMLeeJFTIpbqLX
-         Ri03cmEOo3wwk3k6GKBVgWcfeqVcbexqgAHlK20rsgrtorljuMXsD6GDqNXZoxtL5eUl
-         WKYg==
-X-Gm-Message-State: AJIora9s/4GPwwo+/d3cr/OQOXial+COXlUfWX1KN9HSOpU4qFiH8Rd6
-	G3MdNOTA5HIlN4fuCipdQBXoEkIA770Kew==
-X-Google-Smtp-Source: AGRyM1vvZTRWts7fF0WN7FUNnUbfFQdDDyDwan25cgDA9/9v2f5Es2bcH1D+Y0ZZYSR+CJ6bVlJ9pg==
-X-Received: by 2002:a05:620a:f0e:b0:6b5:48f6:91da with SMTP id v14-20020a05620a0f0e00b006b548f691damr17739809qkl.446.1658168447021;
-        Mon, 18 Jul 2022 11:20:47 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-162-113-129.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.113.129])
-        by smtp.gmail.com with ESMTPSA id az44-20020a05620a172c00b006af4a816963sm12859967qkb.133.2022.07.18.11.20.46
+        bh=nUxZjhEBbU1/EFGvvTepeiaY9Q8ty2hINXbeKvN/WEw=;
+        b=quHMbQSmVrOjm3xUtY2IoFbLdn9Y4gqC/ylK0rjBtnBg9rMBudHLrvILRzsO1HwIox
+         mONb4JjOlq9va2uoAdZdUCluv7n3W0hHnEDNOhkG/YraKsolCAyxpGc2+ma0eDRn4pjC
+         8qzauSjIhSU2ZmcUH7ufpDrP6NtsYlzEHrBOqTA92W0JBOWZBMgKAeVKqJkFA5vEdHBu
+         2J9NrVEwHtYnQfQAraooi/+FIm7DfVXzus9IUFVh6W3Pw3N3vh42o7I2g/3we+Pi1tGA
+         yw3bjxa50LTuEQnRHe7PoSYNjGPf3vpMDCDok53NwakysCjtC8qprjZjCTbXzlYxEpou
+         WWUA==
+X-Gm-Message-State: AJIora+1sAsp2xxHpy+Non4yIyJLTcrsUSRM8tkw5KnjOUXyeLVqbev6
+	DX2fSl2dHgMASGTdU7pOPfPuRw==
+X-Google-Smtp-Source: AGRyM1tpfNy9hxFxu2XzUOej72vorKFu7QfdwC3g02CK3t9+G7V/a0UAVy3pFYWqLr8rIl8cyWf29Q==
+X-Received: by 2002:ac8:59cd:0:b0:31e:ed36:fffc with SMTP id f13-20020ac859cd000000b0031eed36fffcmr5236183qtf.394.1658168590048;
+        Mon, 18 Jul 2022 11:23:10 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id bl13-20020a05620a1a8d00b006b5f8f32a8fsm867181qkb.114.2022.07.18.11.23.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 11:20:46 -0700 (PDT)
-Received: from jgg by mlx with local (Exim 4.94)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1oDVMM-000JD3-1b; Mon, 18 Jul 2022 15:20:46 -0300
-Date: Mon, 18 Jul 2022 15:20:46 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Maxime Ripard <maxime@cerno.tech>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@linux.kernel.org, tools@linux.kernel.org
+        Mon, 18 Jul 2022 11:23:09 -0700 (PDT)
+Date: Mon, 18 Jul 2022 14:23:08 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Rob Herring <robh@kernel.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220718182046.GD5049@ziepe.ca>
+Message-ID: <20220718182308.jqauh37cttwfojfy@meerkat.local>
 References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
- <20220718084927.nlomzhq3ipni5alf@houat>
- <bd6f5628-1afe-efc9-9c2a-44685d730bfb@redhat.com>
+ <CAL_JsqKSU6RkynTPyqM9uqdccjRxT1WmVYq4CWLvq0+_TXN+yA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <bd6f5628-1afe-efc9-9c2a-44685d730bfb@redhat.com>
+In-Reply-To: <CAL_JsqKSU6RkynTPyqM9uqdccjRxT1WmVYq4CWLvq0+_TXN+yA@mail.gmail.com>
 
-On Mon, Jul 18, 2022 at 02:38:48PM +0200, Paolo Bonzini wrote:
-> On 7/18/22 10:49, Maxime Ripard wrote:
-> > > 
-> > > One thing to keep in mind here is that actual trailer matching is done by
-> > > comparing the patch-id (see git-patch-id for details). This has the following
-> > > important bonuses and caveats:
-> > > 
-> > >    - You can rearrange patches or modify summaries without it affecting the
-> > >      match.
-> > >    - If you modify actual code (even as much as fixing a typo in a string), any
-> > >      received trailers will no longer match. This is as designed, because if
-> > >      you change the code, it's no longer reviewed (but we won't remove any
-> > >      existing trailers that were already applied).
+On Mon, Jul 18, 2022 at 11:15:00AM -0600, Rob Herring wrote:
 
-IMHO, I don't like this. It means even minor changes that don't
-invalidate a given "reviewed-by" will not be taken. It should only be
-up to the user to make these decisions when tags should be dropped.
+[skipped a lot due to ongoing work changing some underlying things.
+Not ignoring, I promise.]
 
-> > >    - when you use --signoff, this will move your own "Signed-off-by" trailer
-> > >      below any other trailers in all series commits, which is commonly
-> > >      recommended for the chain-of-custody purposes.
-> > Ok, that part is really awesome:)
-> 
-> Yeah, and it's the part that I'd like to have as a standalone tool in b4.
-> Can we have some kind of "b4 update-trailers <MSGID>" subcommand?
+> It seems like you are mixing sub-commands and options. Wouldn't 'b4
+> submit new|reroll|send|update-trailers ..." or a new executable/link
+> for 'b4 submit' be better? This is fairly disjoint from the maintainer
+> side of b4 functions.
 
-+1
+Yeah, the current set of flags aren't great. Unfortunately, I'm limited by
+what python's argparse is able to do, and it can only do a single level of
+subcommands. Maybe I will use a separate command for submit, as you suggest.
 
-Updating trailers by hand is a PITA..
-
-Jason
+-K
