@@ -1,80 +1,90 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2429633CC
-	for <tools@linux.kernel.org>; Mon, 18 Jul 2022 18:26:30 +0000 (UTC)
-Received: by mail-qk1-f172.google.com with SMTP id o26so9417951qkl.6
-        for <tools@linux.kernel.org>; Mon, 18 Jul 2022 11:26:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=6PN9i+n8DeC51O3miOCJbWGxSkRR6vRe3113dFuIEJ0=;
-        b=BfbG2eRCwul5NZtMdZRlUZM8lTfqeGE8B8HeiBYx0J51g9XOgLHylRV0v/6n92V21S
-         lTV+v73iERSle4zK3jtGCWmbDaHXoDeHzMq6eznDEpCyOBViAsyMQhLMD1fjvi7aw5U5
-         5tYersqMz2fHkqmT1/hLMHSaKcUel6amvwfE8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6PN9i+n8DeC51O3miOCJbWGxSkRR6vRe3113dFuIEJ0=;
-        b=laeJWlmCD3mJfWzaPtMrBmkLge514/GVrS+6MOiAtgCZ7xrz6W7rL6cY58L8dArJBG
-         uTJ6jifL/egfPxHtjDaClAfUMLfmW6fgEBW3G9ivEloYGZ076V94rMZQbTyTyyTtwbxY
-         mpimmAZUMmUeMePQ5DT453zlbMAPOj/iEfIgCMLy2vRMOtcZCtrBPVIFv4V9lEne1Ut/
-         FbyiBvPorSmtrDNkGvbgz8yxhjvx91p+0dFlp1SC1BNAvBl+Wl/kMrvqAQKlbUwYgQJw
-         da4AhYhHQXRb2hxR47w7gWCy9JZJMbJugW4jLbSkcwFCYwlq+SsIqC9H4iVbADwZbga4
-         9HAw==
-X-Gm-Message-State: AJIora+0OuGvxDgp+ynnd0Z6s8t4laaHt4M/WHkq6ACm9HsrhdB5SVzf
-	OW5kG6p1Y+ScdR1kduSXfEfu6A==
-X-Google-Smtp-Source: AGRyM1vuM9FqOoPOpXJIV4L4ptT5lj0zA2VuKJj+AQOTosUgOSRbLRVXaS2XBDJ2PbhyUE9Le+JeqQ==
-X-Received: by 2002:ae9:e8d0:0:b0:6b5:bee3:51a7 with SMTP id a199-20020ae9e8d0000000b006b5bee351a7mr15607826qkg.345.1658168789089;
-        Mon, 18 Jul 2022 11:26:29 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id o19-20020a05622a139300b0031eeefd896esm2850071qtk.3.2022.07.18.11.26.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 11:26:28 -0700 (PDT)
-Date: Mon, 18 Jul 2022 14:26:27 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Maxime Ripard <maxime@cerno.tech>,
-	users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220718182627.ajyopwr2gqeikxty@meerkat.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE3D2F22;
+	Mon, 18 Jul 2022 18:34:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1658169242; x=1689705242;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=b6ev1szWqQm66NJMPMU1LxSwvIlfILu2gKHvtHSteOo=;
+  b=V2Pyrmkj8s07e8jJpA8qyqZITy4/eKEhQw4f3kVIGDrifSAusorRW99i
+   erm8TEb3WTPGGDCSjB/LPBEawUOghfr5TbVF7UwPTGc6u9SjPsfHuVeOt
+   wTpKLbIrEdc73ARZ8Bpd4smpXss61/lVVAw3YrIlj99CAboDutiL+H1vZ
+   qN9y6/uMITU6SySDs6TSus/kiuHCb9ZUUiXB87LXs0CZL8TE4dFUm0YIN
+   2Kjf5bTI+aN+c4C+umJhEg8Lt5EeX18VOoacmoTQB/QtpRgGjfC2e2dBJ
+   hHeS4V149R1OWMS83opJuMC4t33ik+Md8b6ZeqQS+a0OG6CN5k+WbAy0Q
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10412"; a="269316581"
+X-IronPort-AV: E=Sophos;i="5.92,281,1650956400"; 
+   d="scan'208";a="269316581"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2022 11:34:02 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,281,1650956400"; 
+   d="scan'208";a="547603954"
+Received: from fmsmsx604.amr.corp.intel.com ([10.18.126.84])
+  by orsmga003.jf.intel.com with ESMTP; 18 Jul 2022 11:34:01 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx604.amr.corp.intel.com (10.18.126.84) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Mon, 18 Jul 2022 11:34:01 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Mon, 18 Jul 2022 11:34:00 -0700
+Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
+ fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.027;
+ Mon, 18 Jul 2022 11:34:00 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Jason Gunthorpe <jgg@ziepe.ca>, Konstantin Ryabitsev
+	<konstantin@linuxfoundation.org>
+CC: Conor Dooley <mail@conchuod.ie>, James Bottomley
+	<James.Bottomley@hansenpartnership.com>, "users@linux.kernel.org"
+	<users@linux.kernel.org>, "tools@linux.kernel.org" <tools@linux.kernel.org>
+Subject: RE: b4 submit ready for beta testing
+Thread-Topic: b4 submit ready for beta testing
+Thread-Index: AQHYmSCNinb/c7VF7EuEr0riPOOcz62Bh9yAgAADuwCAACExAIAABV2AgAF48ACAAbx6gP//jvIw
+Date: Mon, 18 Jul 2022 18:34:00 +0000
+Message-ID: <685efc725a554f008fbff3165f3e5abd@intel.com>
 References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
- <20220718084927.nlomzhq3ipni5alf@houat>
- <bd6f5628-1afe-efc9-9c2a-44685d730bfb@redhat.com>
- <20220718182046.GD5049@ziepe.ca>
+ <4c4652b0e333bd81b91f71346ac6142322682eff.camel@HansenPartnership.com>
+ <20220716145638.ubuwwc7xtjw6ugy7@meerkat.local>
+ <6ad8ce3aa0d14d8a09a3c117affe19928a44f639.camel@HansenPartnership.com>
+ <d611454a-6a23-eb09-c8ec-84f1b4b49746@conchuod.ie>
+ <20220717154344.jnbmklayhjgdekdu@meerkat.local>
+ <20220718181435.GB5049@ziepe.ca>
+In-Reply-To: <20220718181435.GB5049@ziepe.ca>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.500.17
+x-originating-ip: [10.22.254.132]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220718182046.GD5049@ziepe.ca>
 
-On Mon, Jul 18, 2022 at 03:20:46PM -0300, Jason Gunthorpe wrote:
-> > > >    - If you modify actual code (even as much as fixing a typo in a string), any
-> > > >      received trailers will no longer match. This is as designed, because if
-> > > >      you change the code, it's no longer reviewed (but we won't remove any
-> > > >      existing trailers that were already applied).
-> 
-> IMHO, I don't like this. It means even minor changes that don't
-> invalidate a given "reviewed-by" will not be taken. It should only be
-> up to the user to make these decisions when tags should be dropped.
+> The empty commit scheme also lets you make multi-series branches and
+> reliably share them in a way that other people can understand the
+> structure.
 
-Should we go with "patch-id OR commit subject"?
+What's the advantage of an empty commit?  Couldn't you start with a commit
+that creates a "cover-letter" file in the root of the project? Then users c=
+ould add
+as they go along by editing and committing changes to the cover letter (nee=
+d
+to take care not to have a commit that touches both the cover letter and ot=
+her
+"real" files ... but I expect tools could figure out how to fix that if it =
+happened).
 
--K
-
-> > Yeah, and it's the part that I'd like to have as a standalone tool in b4.
-> > Can we have some kind of "b4 update-trailers <MSGID>" subcommand?
-> 
-> +1
-
-Yes, this is easy -- just a matter of sanely identifying how far back we start
-looking to match commits to patches. I will probably go with "find all commits
-by the current user for the past month and match subjects/patch-ids."
-
--K
+-Tony
