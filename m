@@ -1,63 +1,58 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313D83203
-	for <tools@linux.kernel.org>; Tue, 19 Jul 2022 15:32:50 +0000 (UTC)
-Received: by mail-qt1-f178.google.com with SMTP id a9so11247995qtw.10
-        for <tools@linux.kernel.org>; Tue, 19 Jul 2022 08:32:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1ED3203
+	for <tools@linux.kernel.org>; Tue, 19 Jul 2022 15:34:04 +0000 (UTC)
+Received: by mail-qv1-f54.google.com with SMTP id t7so1133754qvz.6
+        for <tools@linux.kernel.org>; Tue, 19 Jul 2022 08:34:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ziepe.ca; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=WH4T1BXtBlFKhiMsWysBqR895IQKKMPicE0BTh2wpxQ=;
-        b=d8ZGYhrWcysFQNxyctXh2I3AIPEOQKD8xZHXgGk5tSweM9UaKnGU6n6tsz6z+A6Xcv
-         1uEjRhsqErZNRv5nSqiO9taNFUqEqdKLrMPChylKMDwAxkWZFbdpIbfsMKVVDBPsqPW9
-         nle2U+zXbJlaTzqqrCexCUcEKvnQLaDVdVu4P1qk56p5SoBsgmuXqNut7c6d8igVLECH
-         lWsRibvyPzjITaHYfL18TW9fpSAIIPUOJ50X6QKcnGjeTImh7WyoJHK6lLiNSg9igozS
-         S2m3FzjBPIpcs9MXxNVibHZGVoBsWTSuEanG4mxHd9SJIF8q1DMYo7o9knjXOw7jnoTJ
-         0Fug==
+        bh=i7XXqR3uanZ4atwxqlt9SB2Z5bC2RJE4ITOs/mBjxfA=;
+        b=QdgDgdP/eQre1HNL2iLAoMDFJroYoBMLjYkCu0jd/NuSFNOBIXiPlkEtoR7JKUFcgy
+         R0m60+dRvuDJsjumFRpMUalvguXrWRQTQv8Fn2GnxU9pntMrRC8iqWF9nLoJeYPvm5QV
+         3vKCubTSW/SQm6zAKlXjLuDr6hkfv0oRZLrwchvWfFPO9R+EV61KQT6Xsfy1OSWDPcI+
+         Ksm8C4i0mzj0Xa2atipH8inLXeVlFIOPMquACJnsliqInk5R/GoXst1yu0KOJYEHA/HX
+         6B3sQFerrGfw+k+0B+bZu3H0bru5Cd6clCxe0wmcJKJPEkgYKfTvV80YVDAbiUbR2yf9
+         tJrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=WH4T1BXtBlFKhiMsWysBqR895IQKKMPicE0BTh2wpxQ=;
-        b=gSh4Q8McWtpGNW0w/mpH9XKCO6xZFKI/ELJSLQZyjv5FiMcIfI7/Uf/keRtD4oawD0
-         4lHVl4/UgvLbuun+hGn02cUWUvUOdO01Y0l8cvql3q7rSpjE/O8Ojr8sXc5VaQ69Cvyf
-         M8keN8jEoku04BjoiK0T7JbtmIBeRL9wkKy5D00hxnNjEA0R8V6yPXa72GA8fR9Vhnw9
-         B82+1LEmi4kFDOWUlQdj1vRMVr4tqNq5ZTosHJ78l4jqbuMxfjuAG8PvK0UkA2+hX4fU
-         0jP//fArvexFd9fcTAzp9yGWXY8tkPOl+K1Cw3OVtaxTgWrXsjfWPiM+Mk+/+mFpxsJv
-         bhhQ==
-X-Gm-Message-State: AJIora/5kTBCdp8aA44unA3FBrVEhuzazkxJhO13tvpdUD2qTR8EKqBn
-	wZemcKeQTv8OYObGM20i6N3rmw==
-X-Google-Smtp-Source: AGRyM1uyEU+Wn2zWTqqSDv0RXJnOK6DrL+jolrU2wxF6RkLdEFGsYa44IiBngLHgqP8Q1FfjcNWBcw==
-X-Received: by 2002:ac8:5c09:0:b0:31f:bd:fd30 with SMTP id i9-20020ac85c09000000b0031f00bdfd30mr2047408qti.67.1658244768889;
-        Tue, 19 Jul 2022 08:32:48 -0700 (PDT)
+        bh=i7XXqR3uanZ4atwxqlt9SB2Z5bC2RJE4ITOs/mBjxfA=;
+        b=g1gqIp/Uex/ZfAqSN9ruWipAKB5cCywzsvcnPJBc72emhRvTuUCSJFJA+RvTrCJBZ9
+         lidnwpgasxZLzQ4v6lVxarvR9bqxUVL1UwR/sotxC18N9DXotDNwYRV9H3ZjXG4Vfg5k
+         iZJADpKfH5d7hJx5Mz55HQ/c+jQJLUcocBqKNe4xhDniEFzjOuwnHyZB33Azd3jOG8YQ
+         AodSKCHagSlGyTKxEDHlQOTrHboCTL2xkHJvwfAE4rNkOMvl/IBdnqqlKb4kQEk/gI8O
+         3ipRR83j1xxW5mnObQzP08wNhUYyO++CYZ/HSpFNABgfpSkrzingVJicAQwM8GDRSOYa
+         OptQ==
+X-Gm-Message-State: AJIora9jLJDQxjGxtqqb7a3ptUyjEgqwOYclD6pQAkDQlkrPlJ0RvW38
+	H4eyFj9C1TkBcGMT5dEayToi4g==
+X-Google-Smtp-Source: AGRyM1usppu2DGvieSVnfIYz/GVNA7HMOjl5AHt/mMyem8D+zLYvCe9G9AUcZaTmGNrixbtji5AC8g==
+X-Received: by 2002:a0c:8143:0:b0:473:6748:6da4 with SMTP id 61-20020a0c8143000000b0047367486da4mr25359774qvc.33.1658244843876;
+        Tue, 19 Jul 2022 08:34:03 -0700 (PDT)
 Received: from ziepe.ca (hlfxns017vw-142-162-113-129.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.113.129])
-        by smtp.gmail.com with ESMTPSA id m6-20020a05620a290600b006b5c492aafesm13045951qkp.86.2022.07.19.08.32.47
+        by smtp.gmail.com with ESMTPSA id x20-20020a05620a0b5400b006a6ab259261sm14065180qkg.29.2022.07.19.08.34.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 08:32:48 -0700 (PDT)
+        Tue, 19 Jul 2022 08:34:03 -0700 (PDT)
 Received: from jgg by mlx with local (Exim 4.94)
 	(envelope-from <jgg@ziepe.ca>)
-	id 1oDpDL-000mhG-6S; Tue, 19 Jul 2022 12:32:47 -0300
-Date: Tue, 19 Jul 2022 12:32:47 -0300
+	id 1oDpEY-000miP-LC; Tue, 19 Jul 2022 12:34:02 -0300
+Date: Tue, 19 Jul 2022 12:34:02 -0300
 From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Maxime Ripard <maxime@cerno.tech>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
+To: James Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
 	users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220719153247.GI5049@ziepe.ca>
-References: <6ad8ce3aa0d14d8a09a3c117affe19928a44f639.camel@HansenPartnership.com>
+Message-ID: <20220719153402.GJ5049@ziepe.ca>
+References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
+ <4c4652b0e333bd81b91f71346ac6142322682eff.camel@HansenPartnership.com>
+ <20220716145638.ubuwwc7xtjw6ugy7@meerkat.local>
+ <6ad8ce3aa0d14d8a09a3c117affe19928a44f639.camel@HansenPartnership.com>
  <20220717160218.a5ccu4chbaoj3uxv@meerkat.local>
  <20220718181732.GC5049@ziepe.ca>
- <CAMuHMdWgjimmGRxP6kLK_mzv3Fo=5S6SjYj5sbk24eSHLWKZHg@mail.gmail.com>
- <20220718231012.GE5049@ziepe.ca>
- <CAMuHMdUQiMwcC=r5NUZzniLC1qLkfcsB0rj+VnGm15+-ztjRqA@mail.gmail.com>
- <20220719123434.GF5049@ziepe.ca>
- <CAMuHMdVfrbnBmh=MCoX5S5y0JaMhZ7o8Do3bFORk1a_sF7MDOA@mail.gmail.com>
- <20220719130039.GH5049@ziepe.ca>
- <20220719135949.jlw3pfe3qz7xk53h@houat>
+ <d99a81d4f725eda056722b17c8749e8b96735e75.camel@HansenPartnership.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -66,47 +61,34 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220719135949.jlw3pfe3qz7xk53h@houat>
+In-Reply-To: <d99a81d4f725eda056722b17c8749e8b96735e75.camel@HansenPartnership.com>
 
-On Tue, Jul 19, 2022 at 03:59:49PM +0200, Maxime Ripard wrote:
-
-> > I'm puzzled why people are saying this is non-standard, it is well
-> > supported by git and works well with all the review and web tools. The
-> > only missing bit in git is a git format-patch flag to process it
-> > automatically into to the cover letter email.
+On Tue, Jul 19, 2022 at 09:01:36AM -0400, James Bottomley wrote:
+> On Mon, 2022-07-18 at 15:17 -0300, Jason Gunthorpe wrote:
+> > On Sun, Jul 17, 2022 at 12:02:18PM -0400, Konstantin Ryabitsev wrote:
+> > 
+> > > Perhaps, but I also have other reasons to like using an empty
+> > > commit for this. For example, it makes it very easy to mark where
+> > > exactly our series starts.
+> > 
+> > It is a good point, but it is backwards to how alot of people have
+> > been doing things already for a long time..
+> > 
+> > Putting the commit last makes it work a lot more like the usual
+> > merge-commit approach to preserve the cover letter. Particularly if
+> > you open the branch in any of the web viewers for git, or gitk you
+> > get a very nice view of the cover letter explaining the branch
+> > followed by the usual code in reverse patch order.
+> > 
+> > It would be nice to use merge commits to mark the series boundary,
+> > but IMHO, the tooling is poor for this.
 > 
-> So, I definitely haven't been around for as long as you, but I still
-> have been using git daily for the last 15 years. It's literally the
-> first time I'm hearing about someone using that workflow.
+> The problem with empty commit is that a lot of the projects I
+> contribute to can be pains about only taking one or two commits in a
+> series, which means I use rebase to figure out the exactness of what
+> they've done and drop included commits.  I can't keep this behaviour
+> and work with empty commits.
 
-To be fair, I didn't encounter this until I started to have to work
-with gerrit, maybe 5 years ago.
-
-It seems common enough, eg I can find other communities using gerrit
-documenting this methodology:
-
-https://fabric-documentations.readthedocs.io/en/latest/Gerrit/best-practices.html#creating-a-cover-letter-for-a-topic
-
-If you are working alone you can get by with tags or the branch
-description, but as we discussed it really doesn't scale into a team
-environment because the data falls outside the natural source control.
-
-> I'm sure that it works great for you and others using that workflow, but
-> it's far from widely used still. I wouldn't call it non-standard
-> because, well, there's pretty much no standard when it comes to how you
-> should use git, but if we're targeting outsiders we shouldn't go too far
-> off the typical workflow.
-
-I think this thread shows exactly that there is no typical workflow
-here.
-
-IMHO Konstantin shoul decide if the goal if this b4 feature is to
-support everyone's unique idea of a work flow, or to implement a
-reasonable broadly useful workflow that is simple to use and
-understand.
-
-And I think it is a legitimate point that it would be nice if 'git
-format-email' could be taught to natively handle whatever cover-letter
-storage b4 wants to use.
+Why not? rebase works fine with empty commits.
 
 Jason
