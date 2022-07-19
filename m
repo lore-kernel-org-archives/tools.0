@@ -1,83 +1,70 @@
-Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [96.44.175.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14E81C04;
-	Tue, 19 Jul 2022 13:01:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1658235699;
-	bh=rSZaouvNalY70zAOvYVWnldNuRr56OQf9XJqBtUZ6OQ=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=HB8CSDKGufMsx2hlTR1k3uuMe5fbfLbASQdALNgHT4IFMYoSbxqlqjDg3uZhgALVH
-	 ccUiQLwFdRoPHm2lsW5Kyo5B1feJ6iYY5CJOtlis6xzSatZKAEtjkaoP5mECwDDnxY
-	 hCnfisEagogkG0V4D/FddorZq9ifRSyTq7blHcRs=
-Received: from localhost (localhost [127.0.0.1])
-	by bedivere.hansenpartnership.com (Postfix) with ESMTP id 521F7128692C;
-	Tue, 19 Jul 2022 09:01:39 -0400 (EDT)
-Received: from bedivere.hansenpartnership.com ([127.0.0.1])
-	by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Wa6xdPcYGCBw; Tue, 19 Jul 2022 09:01:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1658235699;
-	bh=rSZaouvNalY70zAOvYVWnldNuRr56OQf9XJqBtUZ6OQ=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=HB8CSDKGufMsx2hlTR1k3uuMe5fbfLbASQdALNgHT4IFMYoSbxqlqjDg3uZhgALVH
-	 ccUiQLwFdRoPHm2lsW5Kyo5B1feJ6iYY5CJOtlis6xzSatZKAEtjkaoP5mECwDDnxY
-	 hCnfisEagogkG0V4D/FddorZq9ifRSyTq7blHcRs=
-Received: from [IPv6:2601:5c4:4300:c551:a71:90ff:fec2:f05b] (unknown [IPv6:2601:5c4:4300:c551:a71:90ff:fec2:f05b])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id B448A1281C2B;
-	Tue, 19 Jul 2022 09:01:38 -0400 (EDT)
-Message-ID: <d99a81d4f725eda056722b17c8749e8b96735e75.camel@HansenPartnership.com>
-Subject: Re: b4 submit ready for beta testing
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Jason Gunthorpe <jgg@ziepe.ca>, Konstantin Ryabitsev
-	 <konstantin@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBB21C08
+	for <tools@linux.kernel.org>; Tue, 19 Jul 2022 13:09:39 +0000 (UTC)
+Received: by mail-qv1-f43.google.com with SMTP id mi10so11011903qvb.1
+        for <tools@linux.kernel.org>; Tue, 19 Jul 2022 06:09:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=A+IVkAfCztuZQT1i11xz21e3YrxeixT6GSiVAWax9ro=;
+        b=T9jfSZv7POMe/lh4mUkmVQ+hCXo2tIwkbORYvVzRcaY7x6uqz69DogWGX1WnjNIU/m
+         mCHOj2kg9p+Gn4CdB3X91zYWLISqXzthcugnZnOwN8R6/SbyMzBFTY/4+fkOAv7ueKHS
+         /FtkGE13DUdUvuHma1rEk9HRDoA3EXP6+8KB0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=A+IVkAfCztuZQT1i11xz21e3YrxeixT6GSiVAWax9ro=;
+        b=7mIRXaAc6kMcmqZEkahY5Vmr5OlQbz501eXHeF2Zvs/8JwzbHaZO8N0pq3LhSm4KQQ
+         fs8YscauMh83ZaZYCFHHIA/xEBccv8ucx6rXxQdO67R+xrREayc2XRt2ANmNZFuZ6NVg
+         T/ihJOsZ5LP/woM4PzeE21I8ULltmRxaFcdc0OMHzKxPLKotveMGU2S/iA3FbyHXPejO
+         LHkFxF7mNdF3f9/5wZa9GfSiKe9IF8GfvITAefT32Ry260XmDGzvKJNlRVJ9XGiWGa93
+         R8YFb7tm9Ygb9MCcx6D3LxD59UDxpEJg6SkVC2nis52Gqobp1WYaNC9cG7DnM9wKjFhC
+         9WNQ==
+X-Gm-Message-State: AJIora8C+V2515J53+9J8PQtGZkg1djJn7C/s7mEBCV+iighT10WsA93
+	IjE/bzZJ56q65zfimxbsz10CQA==
+X-Google-Smtp-Source: AGRyM1teMVx3dVuSeBzFEXlnD8APDO3/PDGtW/yGvTrLba1D7K3R7RTE84iAcSvL6LfEl3E6MQd29g==
+X-Received: by 2002:a05:6214:5297:b0:473:7607:3ea4 with SMTP id kj23-20020a056214529700b0047376073ea4mr24954415qvb.28.1658236178345;
+        Tue, 19 Jul 2022 06:09:38 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id br38-20020a05620a462600b006b5f06186aesm3961090qkb.65.2022.07.19.06.09.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Jul 2022 06:09:37 -0700 (PDT)
+Date: Tue, 19 Jul 2022 09:09:36 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mattijs Korpershoek <mkorpershoek@baylibre.com>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
-Date: Tue, 19 Jul 2022 09:01:36 -0400
-In-Reply-To: <20220718181732.GC5049@ziepe.ca>
+Subject: Re: b4 submit ready for beta testing
+Message-ID: <20220719130936.h7jitpwdm4kj6sdl@meerkat.local>
 References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
-	 <4c4652b0e333bd81b91f71346ac6142322682eff.camel@HansenPartnership.com>
-	 <20220716145638.ubuwwc7xtjw6ugy7@meerkat.local>
-	 <6ad8ce3aa0d14d8a09a3c117affe19928a44f639.camel@HansenPartnership.com>
-	 <20220717160218.a5ccu4chbaoj3uxv@meerkat.local>
-	 <20220718181732.GC5049@ziepe.ca>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 
+ <87ilnti947.fsf@baylibre.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ilnti947.fsf@baylibre.com>
 
-On Mon, 2022-07-18 at 15:17 -0300, Jason Gunthorpe wrote:
-> On Sun, Jul 17, 2022 at 12:02:18PM -0400, Konstantin Ryabitsev wrote:
+On Tue, Jul 19, 2022 at 02:23:52PM +0200, Mattijs Korpershoek wrote:
+> ## using b4 submit -o, we see that the order is not the same:
+> $ mkdir b4-submit
+> $ b4 submit --send --no-sign -o b4-submit 
+> Converted the branch to 3 patches
+> Populating the To: and Cc: fields with automatically collected addresses
+>   0000-cover-title-for-patch-ordering.patch
+>   0001-newest-commit.patch
+>   0002-newer-commit.patch
+>   0003-oldest-commit.patch
 > 
-> > Perhaps, but I also have other reasons to like using an empty
-> > commit for this. For example, it makes it very easy to mark where
-> > exactly our series starts.
-> 
-> It is a good point, but it is backwards to how alot of people have
-> been doing things already for a long time..
-> 
-> Putting the commit last makes it work a lot more like the usual
-> merge-commit approach to preserve the cover letter. Particularly if
-> you open the branch in any of the web viewers for git, or gitk you
-> get a very nice view of the cover letter explaining the branch
-> followed by the usual code in reverse patch order.
-> 
-> It would be nice to use merge commits to mark the series boundary,
-> but IMHO, the tooling is poor for this.
+> Is this the expected behaviour ?
 
-The problem with empty commit is that a lot of the projects I
-contribute to can be pains about only taking one or two commits in a
-series, which means I use rebase to figure out the exactness of what
-they've done and drop included commits.  I can't keep this behaviour
-and work with empty commits.
+Hah, no. I messed up. :) I'll fix this in the next commit. Thanks for pointing
+it out.
 
-James
-
-
+-K
