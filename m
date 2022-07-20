@@ -1,92 +1,72 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740927492
-	for <tools@linux.kernel.org>; Wed, 20 Jul 2022 23:39:43 +0000 (UTC)
-Received: by mail-qk1-f169.google.com with SMTP id b25so167340qka.11
-        for <tools@linux.kernel.org>; Wed, 20 Jul 2022 16:39:43 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C2D7497
+	for <tools@linux.kernel.org>; Wed, 20 Jul 2022 23:41:18 +0000 (UTC)
+Received: by mail-ed1-f47.google.com with SMTP id r6so252250edd.7
+        for <tools@linux.kernel.org>; Wed, 20 Jul 2022 16:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3pmyim3eLkUGO1W4EQARx63jh+6ewapw5hbNSQNs2Nc=;
-        b=dojeGFvozQURCgdz3e0wIiV7hKz+i9fNrnFKpGTw9W67vVLp3sFBQzCXHaxMbQmPJA
-         nveQcav1sAly0bg05+CVI5aLckDQSCFgzXj1O9FjNM6jsJuppuA1U6JzqVbXTWWCWvAq
-         KxR57rs143AkfG5bFj1172ykKwYfDksEY+SRbwA0MAoIxdBTQnLaJgEDNXuwCZGU7DKe
-         4tzP0S2qJOrI+rmo3bJCMtxXG0ePOqf9/gLebheKB0d51hun83zB97LXjy6JfnN4Qnm7
-         fgm0fNGxG8ORL13dv/qnXeTH/S21kOp9XdteIWSOhjE+RtL7cXhBk8sBfv86arv5xPfE
-         HRWg==
+        d=linuxfoundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=S5uxfcz63P0/wkjT1Vb9bAi7ah0Vn6sDs6cvpMISAIc=;
+        b=ahEp/lOjaijTecK64rcXUA8uOrWVdXkRIV2hx7CUcj0LK5zZc02gCWkW1E/4xIgaQG
+         FMlns6LCi7nFjycpQqQ3hyJ9CZ9gBACx2+Oc42hya4yixri4g8at7K3SUNjV56o4In26
+         Soe7hrZmqijFyhl3jeTlInspqReMY3r2WL4Bc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3pmyim3eLkUGO1W4EQARx63jh+6ewapw5hbNSQNs2Nc=;
-        b=f3SzKWBqKuK8UPUndKgFIM3ilFU5Gg5ppxeGXqnciI8NhqbF5T6josjMgssqj2TPm/
-         Gdg9rjzNcJWXsFmtXN+jeTf6xExsqPCtJE4p9O62+758VHhcN8y8X8N6sV1vNy0ZQ7V9
-         iTwtRy6LYmL4E8GMb/4+rPJPkj9ND1RrTpV5Tfs4fkS0Q5Flxs/Jy9fAOQawJ45BO0+r
-         tTxaBoLHXnNCFl4fvtfOmzFdztFHB9eNAzsqULdrRAwgYBzGerRY7u5m9Ag4bHHNH4Kz
-         i48ZmQpptjz1fnPzRWAx8bWtBhTNXRYH4ZmYHTx+qrhGQdT+EDGLpZxTd859Tkth0Yop
-         1OxQ==
-X-Gm-Message-State: AJIora+Om6SP4/Y8T9WNFmrFLqtdLfKLyxGhOFVny0hFVg/qoAvaJEtw
-	7x96j1czfWEYIqdMaEN4xPuoEw==
-X-Google-Smtp-Source: AGRyM1sUaAEDsGGbzwD18koX8G3+1BxGNsNqsK1SEgRcfNwVlHNS7yaXJ/xf5DM1Lfq7qisiM4S7FA==
-X-Received: by 2002:a05:620a:2710:b0:6b5:bf24:10e9 with SMTP id b16-20020a05620a271000b006b5bf2410e9mr24040120qkp.28.1658360382303;
-        Wed, 20 Jul 2022 16:39:42 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-162-113-129.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.113.129])
-        by smtp.gmail.com with ESMTPSA id u12-20020a05620a454c00b006a716fed4d6sm394689qkp.50.2022.07.20.16.39.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 16:39:41 -0700 (PDT)
-Received: from jgg by mlx with local (Exim 4.94)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1oEJI4-001hgi-SJ; Wed, 20 Jul 2022 20:39:40 -0300
-Date: Wed, 20 Jul 2022 20:39:40 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Linus Torvalds <torvalds@linuxfoundation.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220720233940.GO5049@ziepe.ca>
-References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
- <20220720184835.uhnkucai54alhgo6@nitro.local>
- <20220720192456.GM5049@ziepe.ca>
- <xmqqmtd31ip8.fsf@gitster.g>
- <CAHk-=wgWY5920sr5AUxZVP6hs85wiTzR0AMH9pc5epfzTeC3wA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=S5uxfcz63P0/wkjT1Vb9bAi7ah0Vn6sDs6cvpMISAIc=;
+        b=x4nDmS4w3A/O1ZYZQRdlWmBacim3Er97eXC4xdSDr8bZMWK/2G02ZkrKTScMR28yNW
+         82VaezzLFUs5k+zvH1N5pI7wRtLEDRGEsl2q4odAdfyWJNaHqVPtL2QAs24u9Z5RukAC
+         aLzN5Y7Q3PEztJMXV4PnyDQQ6EGUmwdIRfutJeFJPa8AxTRHUhL9+u6e/icUj4urp9+6
+         G1pKWSqRwPiF4DdOScwRiumCdvHLdXeeo39kSx1GO1Eah+0kt3KYdlg17du5UsHToIGt
+         TblpBUKGTuTReGsiKYQ8mhs6InpD/bth0BJ9TM0uTfJYpUV096IEDelMzJ7Dp4UdVUHX
+         4JtQ==
+X-Gm-Message-State: AJIora/DDwu/YrBFTUwP7VDPWEhdtfyLlYd0qfmWqp2P/LgxO/9IoefT
+	fT6T3SH6QGs+U79v/KEW+FfLknA1PKk0PExfRzw=
+X-Google-Smtp-Source: AGRyM1tkk7pLcVedrqtGXFmhkvANaztxcsJrnIAicTByyoJGumdwrb3cXKx5GTKynficcV0FjBwi7Q==
+X-Received: by 2002:a05:6402:354a:b0:43a:d32f:cc62 with SMTP id f10-20020a056402354a00b0043ad32fcc62mr52394659edd.48.1658360476643;
+        Wed, 20 Jul 2022 16:41:16 -0700 (PDT)
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com. [209.85.128.45])
+        by smtp.gmail.com with ESMTPSA id bd9-20020a056402206900b0043a09f6fc24sm174782edb.47.2022.07.20.16.41.15
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Jul 2022 16:41:15 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id b6so118516wmq.5
+        for <tools@linux.kernel.org>; Wed, 20 Jul 2022 16:41:15 -0700 (PDT)
+X-Received: by 2002:a05:600c:2d07:b0:3a3:585:5d96 with SMTP id
+ x7-20020a05600c2d0700b003a305855d96mr5908467wmf.38.1658360475148; Wed, 20 Jul
+ 2022 16:41:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wgWY5920sr5AUxZVP6hs85wiTzR0AMH9pc5epfzTeC3wA@mail.gmail.com>
+References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local> <20220720184835.uhnkucai54alhgo6@nitro.local>
+ <20220720192456.GM5049@ziepe.ca> <xmqqmtd31ip8.fsf@gitster.g>
+ <CAHk-=wgWY5920sr5AUxZVP6hs85wiTzR0AMH9pc5epfzTeC3wA@mail.gmail.com> <20220720233940.GO5049@ziepe.ca>
+In-Reply-To: <20220720233940.GO5049@ziepe.ca>
+From: Linus Torvalds <torvalds@linuxfoundation.org>
+Date: Wed, 20 Jul 2022 16:40:58 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgEmH89HpOB5ZYO9owwZ67=O6cikbre2-PShM+AsXhYcg@mail.gmail.com>
+Message-ID: <CAHk-=wgEmH89HpOB5ZYO9owwZ67=O6cikbre2-PShM+AsXhYcg@mail.gmail.com>
+Subject: Re: b4 submit ready for beta testing
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@linux.kernel.org, 
+	tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jul 20, 2022 at 04:23:57PM -0700, Linus Torvalds wrote:
+On Wed, Jul 20, 2022 at 4:39 PM Jason Gunthorpe <jgg@ziepe.ca> wrote:
+>
+> If the cover letter is the last commit then 'git commit --amend'
+> allows editing it as easily as 'git branch --edit description'.
 
-> The argument against branch descriptions was always that they didn't
-> move around with the branch when you use git pull/push, but for the
-> stated use of "branch for sending emailed patches with a cover
-> letter", the notion of just having it in the branch description seems
-> to be exactly the rigth thing to do.
+.. and what about adding new commits during development?
 
-The thing is not all workflows are "single developer working on their
-local machine and then emailing patches". We have "team" workflows
-where patches are being shuffled around with push/pull, not email, so
-those push/pull problems quickly become relevant. 
+That sounds oh-so-*very* inconvenient.
 
-Quite often the person who writes the patches and the cover letter is
-not the person in the team who is going to git send-email them.
-
-> It also has the advantage that you can edit it at any point, so people
-> who don't want to write the cover letter until the very end (as
-> somebody piped up in this thread) can continue to do that
-
-If the cover letter is the last commit then 'git commit --amend'
-allows editing it as easily as 'git branch --edit description'.
-
-Generally though I think git could use a good built-in tool to edit
-commit messages quickly without having to rebase or touch the working
-tree.
-
-Jason
+               Linus
