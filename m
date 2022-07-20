@@ -1,77 +1,91 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5657B
-	for <tools@linux.kernel.org>; Wed, 20 Jul 2022 19:24:59 +0000 (UTC)
-Received: by mail-qt1-f172.google.com with SMTP id h22so14120145qta.3
-        for <tools@linux.kernel.org>; Wed, 20 Jul 2022 12:24:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BDD7465
+	for <tools@linux.kernel.org>; Wed, 20 Jul 2022 19:40:18 +0000 (UTC)
+Received: by mail-qv1-f50.google.com with SMTP id l11so14249432qvu.13
+        for <tools@linux.kernel.org>; Wed, 20 Jul 2022 12:40:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
+        d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=J/6E5wUqDwWRLwWe1jJxNjJow1MZswr5nfdjY7Eksk4=;
-        b=b699zNJv6RzwRPJqX2y51nPntKhQ7PhU1t3GAvE79FZOIhIYpKsIglwQRF79B4RsTE
-         5xyQp33T9V9T5nJAPqZoWEh/rrC+HnXLsv9NXztNKATXrGmHKWUkrNbOHDldywHxMh4B
-         jJNwcXLgUxcroewN2Li+fPUqcL5z+q4AkSRUbnmeP3CosfjQAsayxBSqszsIT8zl008m
-         bv29IwQFaVI0F/rkSEAg5QT8tpKQh3OU0TPkZ8nLW6W9V7TN/svfUgJeqFWBBlHXjXAC
-         Uz67n8olErBjjQHz44xp1hrRIBQiLwwKwCWRyWI3ItBvvzDviHWK/DPhwqipZWRqHIbp
-         olag==
+        bh=pSr8DxepD85jtMBx0GUCkgo/78Rhha5W5uf3yEbaUeA=;
+        b=gKXAiOfpo+hFNoiR+YqLeCg5T6gs+nUR+sS6+XYnSXq4WgyJdF/WR7TSC5lox5YaPl
+         i/jw61Smiry1ULB+vbKcUuBUNsnuNwTz8eu1JZJZhYkKESYB0Uj8LmbGRwslwj0LJQVj
+         u865Oyi2btKTbT+MAGTOftoHMK2TzncXgjJno=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=J/6E5wUqDwWRLwWe1jJxNjJow1MZswr5nfdjY7Eksk4=;
-        b=rn9lXTAGkGrysbebWWj61yETiHIm6Pz+YzsKGEuFAHiZ+WSHvPoGZTF1ENsfCG4nvj
-         N11OiIVqlT1qmL2EdeK0Rd/gP2qnNsQP+9xju5mxdHPYfZRkEyteAxwB8hMhgfjTXP9I
-         BSr9NLKvjzImoTSsziBzZ4DC9PfdPFpVQG+pWvfeiXMSSbPvocw1V7wzXbmk7Un6O9EZ
-         lMGupMrMdYAuo0RBlYapVAzpvCgKHadz77cH/A43IXw1Nh0hNK9jl6DDc3pUWGygciZM
-         ibEgWKvjgNu0UR9UO/F9xtsHttx0latuj/8CJz4jH3eynxnHBVPUpLe4s8EJBZNwvKKY
-         Z0tA==
-X-Gm-Message-State: AJIora/tTDBVmzh5jGuu2gLZodGwpPHy6zR+svijm55JaPMgX22xaAWn
-	qQA/Vu2hCGBODFVYd1s5q6sZPQ==
-X-Google-Smtp-Source: AGRyM1u7a/XlMRLKhEEQmLJ6TeyQnj6ZxSb87NSfr7yG2/0cBFHmRK82ztJ8RDkG5IWZ5/KUWNkeRw==
-X-Received: by 2002:ac8:5c45:0:b0:31e:eee2:d64a with SMTP id j5-20020ac85c45000000b0031eeee2d64amr10720556qtj.179.1658345098157;
-        Wed, 20 Jul 2022 12:24:58 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-162-113-129.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.113.129])
-        by smtp.gmail.com with ESMTPSA id do16-20020a05620a2b1000b006b5ab88e544sm17534703qkb.124.2022.07.20.12.24.57
+        bh=pSr8DxepD85jtMBx0GUCkgo/78Rhha5W5uf3yEbaUeA=;
+        b=eT7X0sBxyV4KtVL9MzYjmf6EiROx7trMpZ8WW4dWfr1k6bGQ3IzcM7Ul0Ma2zW4crE
+         M/QKqcy71j/4EqgYTYUiqcDIlL8u5IiZbhkbvVfNTiX2KTBOCwQ97nC8is2xS93UBD7P
+         C2XooYOYShphofze+tMtK9uF35rkPkTRIWa3V0TwHKC5jrAhBbSTtCFBanpinSHiserD
+         qzl/9IuvBkz09z/RaCQtqi5znTYSlexTduD4wDXUrVXumEYtwquKXmN7+TAYT++G5dWE
+         H5pAWMLJb6JxfvkyWkZm4MsS+oatoag6PuQgmzoI9MDLi/IDztNxJ7fWB1hUNclxXU3R
+         AdIg==
+X-Gm-Message-State: AJIora9E6DEQ8eq/1a/EA+r5pZ5v1Dck9AtnmPG2GbfREnAW6TwEEEU7
+	8RS5d+w++brSka7aZ0PSgR0yEvDacYLH4g==
+X-Google-Smtp-Source: AGRyM1u7NBd43yjIgnYIulI8SdpSvrcoHlMfiMbLSYUyGDHYrXsEuFKq5kvn2FN6WwBrje+01jUNLA==
+X-Received: by 2002:a05:6214:4113:b0:473:74dd:de77 with SMTP id kc19-20020a056214411300b0047374ddde77mr31414420qvb.84.1658346017468;
+        Wed, 20 Jul 2022 12:40:17 -0700 (PDT)
+Received: from nitro.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id g25-20020ac842d9000000b0031ede43512bsm18935qtm.44.2022.07.20.12.40.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 12:24:57 -0700 (PDT)
-Received: from jgg by mlx with local (Exim 4.94)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1oEFJY-001exe-A3; Wed, 20 Jul 2022 16:24:56 -0300
-Date: Wed, 20 Jul 2022 16:24:56 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+        Wed, 20 Jul 2022 12:40:16 -0700 (PDT)
+Date: Wed, 20 Jul 2022 15:40:14 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Jason Gunthorpe <jgg@ziepe.ca>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220720192456.GM5049@ziepe.ca>
+Message-ID: <20220720194014.uvuij422zypbjxrf@nitro.local>
 References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
  <20220720184835.uhnkucai54alhgo6@nitro.local>
+ <20220720192456.GM5049@ziepe.ca>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220720184835.uhnkucai54alhgo6@nitro.local>
+In-Reply-To: <20220720192456.GM5049@ziepe.ca>
 
-On Wed, Jul 20, 2022 at 02:48:35PM -0400, Konstantin Ryabitsev wrote:
-> Hello, all:
+On Wed, Jul 20, 2022 at 04:24:56PM -0300, Jason Gunthorpe wrote:
+> > 1. Pluggable cover letter strategies
+> >    The goal is to support 3 different cover-letter strategies:
+> > 
+> >    "commit": same as first implementation with the cover letter stored in an
+> >    empty commit at the beginning of the series.
 > 
-> Based on your feedback, I've refactored the submit functionality and it's
-> ready for some more poking and testing. Here are the implemented changes:
-> 
-> 1. Pluggable cover letter strategies
->    The goal is to support 3 different cover-letter strategies:
-> 
->    "commit": same as first implementation with the cover letter stored in an
->    empty commit at the beginning of the series.
+> How about an 'end of the series' option if we are doing lots of
+> choices?
 
-How about an 'end of the series' option if we are doing lots of
-choices?
+Like, in a tip commit? Wouldn't that make it super awkward to add more
+commits?
 
-I've never actually seen 'start of the series' in the wild before..
+With the "empty commit at start" approach I solve two important problems:
 
-Jason
+1. I clearly mark where the series starts, which is super non-trivial with
+   git. With other strategies like branch-description we use the "base branch"
+   to find the fork-point, but even there are common situations that can mess
+   things up, e.g.:
+
+   git remote update origin
+   git rebase origin/master
+
+   If we have the local "master" branch as our tracked base branch, and we
+   didn't actually fast-forward it to match origin/master, then what we
+   consider "our series" has suddenly grown by a bunch of commits.
+
+2. I have a place to store tracking information (the json bits) from the
+   moment the branch is created, which is handy.
+
+I guess we can add a "tip-commit" cover letter strategy that we can use when
+enrolling existing branches, but then I'd have to consider the situation where
+there are commits past the cover letter tip commit and what to do with those.
+Overall, it's doable, but only as an additional strategy to the "commit at the
+start of the series."
+
+-K
