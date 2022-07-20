@@ -1,126 +1,77 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2297B
-	for <tools@linux.kernel.org>; Wed, 20 Jul 2022 18:48:38 +0000 (UTC)
-Received: by mail-qk1-f180.google.com with SMTP id o1so14367780qkg.9
-        for <tools@linux.kernel.org>; Wed, 20 Jul 2022 11:48:38 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5657B
+	for <tools@linux.kernel.org>; Wed, 20 Jul 2022 19:24:59 +0000 (UTC)
+Received: by mail-qt1-f172.google.com with SMTP id h22so14120145qta.3
+        for <tools@linux.kernel.org>; Wed, 20 Jul 2022 12:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
+        d=ziepe.ca; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=nMfst/SFkyvP3GDnNf/Vhd6mCR3L0SG7rJln3yrTBRc=;
-        b=bY6aAHSHgKmJUEwgtVFnkqXXciMTpL/QkmhJsNp3ColT/0IaxN2F9p6xftjO7vKTHn
-         Tq6lMLMkBkbn+tC+38JEj6IpIq4UXveAjZ74SmM+msutWZ+EA2POG074W61LCmvnkP+W
-         fKdeSyvSOCAkwp0gDafddBdhI1CxaR0jiBZ4Y=
+        bh=J/6E5wUqDwWRLwWe1jJxNjJow1MZswr5nfdjY7Eksk4=;
+        b=b699zNJv6RzwRPJqX2y51nPntKhQ7PhU1t3GAvE79FZOIhIYpKsIglwQRF79B4RsTE
+         5xyQp33T9V9T5nJAPqZoWEh/rrC+HnXLsv9NXztNKATXrGmHKWUkrNbOHDldywHxMh4B
+         jJNwcXLgUxcroewN2Li+fPUqcL5z+q4AkSRUbnmeP3CosfjQAsayxBSqszsIT8zl008m
+         bv29IwQFaVI0F/rkSEAg5QT8tpKQh3OU0TPkZ8nLW6W9V7TN/svfUgJeqFWBBlHXjXAC
+         Uz67n8olErBjjQHz44xp1hrRIBQiLwwKwCWRyWI3ItBvvzDviHWK/DPhwqipZWRqHIbp
+         olag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=nMfst/SFkyvP3GDnNf/Vhd6mCR3L0SG7rJln3yrTBRc=;
-        b=6+l+iuIncKEJ4MTll/BaTziE/+PN6/CLT9uprpLcrZJ09QajgMK0dRjw8cfQeq+xuH
-         VxDeJ+HZR9B45KbWBJhYK2igOUqLuk12rVMvDZymBxaBRNdSiK3wG2kAMTWbnStNOztX
-         TCodTn7IMPLwcUfaeBErWpi/JCXGuOMT0Nkg6sO8up5eSSetbeBMLhF3pRjtnwg6onJR
-         rqlWcbr/7vq9r/e6jNgbMaitI+5328AU5KrrlWwQEODBp4Lx9ZtG2IO5YN9hZnJ3x3Dw
-         ywsHn8Iz/XiBA+NoXE3sn4u9zN19Rl6fNCj+bPV8FMNciUpWBr3Sr7/fTFTdboTSUqF3
-         xY8A==
-X-Gm-Message-State: AJIora/Re5El/K6kqMToF89DhZkZS9Nlp9QLGBTPu0ZnXcw3c500YDdB
-	ZVpSn9yduNaNO3LNsjFaK/PnT0T58EXKaA==
-X-Google-Smtp-Source: AGRyM1spE6FEY4QK0Rx6vxU4Towh1mXJK0OI9ARqYPbbkR5bYuZbQpmbnNpI6yJbT+3c0TjxGAFNnA==
-X-Received: by 2002:a37:65c8:0:b0:6b6:de7:4366 with SMTP id z191-20020a3765c8000000b006b60de74366mr3476009qkb.776.1658342917398;
-        Wed, 20 Jul 2022 11:48:37 -0700 (PDT)
-Received: from nitro.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id c26-20020a05620a269a00b006b5ba7b9a6fsm16492788qkp.35.2022.07.20.11.48.36
+        bh=J/6E5wUqDwWRLwWe1jJxNjJow1MZswr5nfdjY7Eksk4=;
+        b=rn9lXTAGkGrysbebWWj61yETiHIm6Pz+YzsKGEuFAHiZ+WSHvPoGZTF1ENsfCG4nvj
+         N11OiIVqlT1qmL2EdeK0Rd/gP2qnNsQP+9xju5mxdHPYfZRkEyteAxwB8hMhgfjTXP9I
+         BSr9NLKvjzImoTSsziBzZ4DC9PfdPFpVQG+pWvfeiXMSSbPvocw1V7wzXbmk7Un6O9EZ
+         lMGupMrMdYAuo0RBlYapVAzpvCgKHadz77cH/A43IXw1Nh0hNK9jl6DDc3pUWGygciZM
+         ibEgWKvjgNu0UR9UO/F9xtsHttx0latuj/8CJz4jH3eynxnHBVPUpLe4s8EJBZNwvKKY
+         Z0tA==
+X-Gm-Message-State: AJIora/tTDBVmzh5jGuu2gLZodGwpPHy6zR+svijm55JaPMgX22xaAWn
+	qQA/Vu2hCGBODFVYd1s5q6sZPQ==
+X-Google-Smtp-Source: AGRyM1u7a/XlMRLKhEEQmLJ6TeyQnj6ZxSb87NSfr7yG2/0cBFHmRK82ztJ8RDkG5IWZ5/KUWNkeRw==
+X-Received: by 2002:ac8:5c45:0:b0:31e:eee2:d64a with SMTP id j5-20020ac85c45000000b0031eeee2d64amr10720556qtj.179.1658345098157;
+        Wed, 20 Jul 2022 12:24:58 -0700 (PDT)
+Received: from ziepe.ca (hlfxns017vw-142-162-113-129.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.113.129])
+        by smtp.gmail.com with ESMTPSA id do16-20020a05620a2b1000b006b5ab88e544sm17534703qkb.124.2022.07.20.12.24.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 11:48:36 -0700 (PDT)
-Date: Wed, 20 Jul 2022 14:48:35 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: users@linux.kernel.org, tools@linux.kernel.org
+        Wed, 20 Jul 2022 12:24:57 -0700 (PDT)
+Received: from jgg by mlx with local (Exim 4.94)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1oEFJY-001exe-A3; Wed, 20 Jul 2022 16:24:56 -0300
+Date: Wed, 20 Jul 2022 16:24:56 -0300
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220720184835.uhnkucai54alhgo6@nitro.local>
+Message-ID: <20220720192456.GM5049@ziepe.ca>
 References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
+ <20220720184835.uhnkucai54alhgo6@nitro.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
+In-Reply-To: <20220720184835.uhnkucai54alhgo6@nitro.local>
 
-Hello, all:
-
-Based on your feedback, I've refactored the submit functionality and it's
-ready for some more poking and testing. Here are the implemented changes:
-
-1. Pluggable cover letter strategies
-   The goal is to support 3 different cover-letter strategies:
-
-   "commit": same as first implementation with the cover letter stored in an
-   empty commit at the beginning of the series.
-
-   "branch-description": stores the cover letter in the branch description
-   (which really just means the git config file). The cover letter can be
-   edited using the same b4 --cover-letter command, or just with "git branch
-   --edit-description".
-
-   "tag" (not yet implemented): will store the cover letter in tags a-la
-   git-publish.
-
-   The default cover strategy remains "commit", but you can switch using
-   b4.ez-cover-strategy, e.g. in your ~/.gitconfig:
-
-       [b4]
-         ez-cover-strategy = branch-description
-
-  Note, that switching from one to the other for existing tracked series is
-  not supported (and I'm not sure will be). It's also not currently possible
-  to enroll an existing branch into ez-series with the "commit" strategy
-  (because I haven't yet figured out how to insert a random commit into
-  history with git-filter-repo, but I'm sure it's possible).
-
-2. "b4 submit" command got split into 3 different commands:
-
-  - "b4 ez-series" to create/enroll branches and manage cover letters
-
-  - "b4 ez-trailers" for retrieving trailer updates and updating your local
-    branch. Note, that with -F this can run on any branch, not necessarily the
-    branch managed by ez-series. E.g.:
-
-        git checkout arbitrary-branch
-        b4 ez-trailers -us -F [arbitrary-msgid]
-
-  - "b4 ez-send" for sending the series to the mailing list. It has all the
-    same flags as formerly for "b4 submit", e.g.:
-
-        b4 ez-send --no-auto-to-cc --dry-run
-
-    There is no more --reroll command, as using ez-send will automatically
-    increment the tracked revision number (unless RESEND was in the prefixes).
-
-    There's still no support on the web submission endpoint, but it's coming
-    in the near future.
-
-Thank you for everyone's feedback, and please continue testing it out. If you
-want to test the dev version of b4, use the same instructions:
-
-> ## Getting the b4 dev version
+On Wed, Jul 20, 2022 at 02:48:35PM -0400, Konstantin Ryabitsev wrote:
+> Hello, all:
 > 
-> To install the b4 development version, you will need to run it from the git
-> checkout:
+> Based on your feedback, I've refactored the submit functionality and it's
+> ready for some more poking and testing. Here are the implemented changes:
 > 
->   git clone https://git.kernel.org/pub/scm/utils/b4/b4.git
->   cd b4
->   git submodule update --init
->   alias b4="$PWD/b4.sh"
+> 1. Pluggable cover letter strategies
+>    The goal is to support 3 different cover-letter strategies:
 > 
-> You can find out more details in the README file. You will also want to make
-> sure that git-filter-repo is installed (either from your distro packages or
-> from pip).
-> 
-> If you're already running b4 from the git checkout, make sure you run "git
-> submodule update" to pull in the latest unreleased patatt version.
+>    "commit": same as first implementation with the cover letter stored in an
+>    empty commit at the beginning of the series.
 
-Best regards,
-Konstantin
+How about an 'end of the series' option if we are doing lots of
+choices?
+
+I've never actually seen 'start of the series' in the wild before..
+
+Jason
