@@ -1,52 +1,34 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FB21854
-	for <tools@linux.kernel.org>; Thu, 21 Jul 2022 00:02:59 +0000 (UTC)
-Received: by mail-qv1-f43.google.com with SMTP id h18so4986351qvr.12
-        for <tools@linux.kernel.org>; Wed, 20 Jul 2022 17:02:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FATxzEJGaO/v8vnmDOphJFvU30/HQ7VSfNYox3QH/7w=;
-        b=MQv6Ayiz8jzEo1T6FJEQL3ukNtTm7vDUFIqNuAeE7F3Wn6HDWI8oUpDjbZLBHscbCs
-         zjn0tc80DqgmuKf525JOJp1RlKX20Xcair0I6VoBDLffsr1OiVyFKgPTo7X8PF1km1rw
-         diq+5rItBLDPxMCRwG8TsKeQ8MbRnIf3iPuOnWTizpgjHyfGkAJn04/QCMJv7U2yBdIO
-         JZsZL0qjbr79+mKYj12q3B7yPhvg6P0mYo1GlsDm+LQ9PX1EsufDzJ3jynExg0nzReVe
-         7gaodGSq5331rBZ9nlB60dIVmrjlTqUZWiuf4wlb6cHLBrGDTAgQOIU/W7iyhTGj7Trp
-         Is4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FATxzEJGaO/v8vnmDOphJFvU30/HQ7VSfNYox3QH/7w=;
-        b=ex71tecptyrYMleREi6SWWDwEmlMIt94w54S77Y3DkQte1w5fGGFEO7TkmNHJLVdDb
-         I0YmJ1dwjgX93937aABK1QcR6nh5Ue1vRSgyEB1pZ5S4Sp2O8fjpLILdLzycHETv+rnK
-         Sh0YAd/zDyUyfMr0oIlBQjSYp2eqjL9N2cq7LvNiTyGvv0WSCm6M0kRlS+8HKwnVKna+
-         sAqlOZoBlWaCTL3PK1Fyfv1Qk7RXCBq8D3I00JJtHd3BvkB3SfrZaX9kNQPEfrSFhlKF
-         DcdsnwG3mD3+upBSYTeqGKacuw8iy0l/EbHUTHbk0NeQjprpgg+1a5D/DxINGmkE8ZIE
-         Tbsw==
-X-Gm-Message-State: AJIora9gqTxYRZffbLg1uVpmKIXEFLrNehyVuxWngEvHDVpctaA2+31k
-	YHKcYAd2cJkICKcu/CksapW9UA==
-X-Google-Smtp-Source: AGRyM1v79x0V8XoJIU9/bTH+hNRmmXY1HXER+e0iPAf7a9Q8p8uWLd4EfgI/AhMEuG9z+KRGw9J6aw==
-X-Received: by 2002:ad4:5966:0:b0:474:5fa:69af with SMTP id eq6-20020ad45966000000b0047405fa69afmr3946774qvb.128.1658361777812;
-        Wed, 20 Jul 2022 17:02:57 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-162-113-129.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.113.129])
-        by smtp.gmail.com with ESMTPSA id cb8-20020a05622a1f8800b0031ece8b6666sm377436qtb.43.2022.07.20.17.02.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 17:02:57 -0700 (PDT)
-Received: from jgg by mlx with local (Exim 4.94)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1oEJea-001hys-9r; Wed, 20 Jul 2022 21:02:56 -0300
-Date: Wed, 20 Jul 2022 21:02:56 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Linus Torvalds <torvalds@linuxfoundation.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@linux.kernel.org, tools@linux.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D1D1FA5;
+	Thu, 21 Jul 2022 00:59:40 +0000 (UTC)
+Received: from cwcc.thunk.org (pool-173-48-118-63.bstnma.fios.verizon.net [173.48.118.63])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 26L0xVKZ002402
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Jul 2022 20:59:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1658365173; bh=ZHTYxMug+BsRXfz9anHCjQwFZB5+ekvjOtFW41X+o74=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=JvLCnOudkrFmXYK29CmgKTd3ewwrnBLN9rLPZDw/TuHbRdZRTZLuXKqXaMTkLC9LX
+	 JI5Jl+fp7hA3WVpQsu7QaGblOZi7F3m85L660XkmO7LyGjUPGwJzBcDEQ5M6zWRJ5u
+	 z9i1fWIJPl3Q3uSzkpLAOxNENHlFU4I88bYHd6m8WkWc3q04K9lDfG/WNgNKVFMWAH
+	 7lJkcg7f5yYxEffOXDgY3PQAtECkiYNV4VkEP95FrRpyh9Lh4pKyyR9ho22E9BeNRI
+	 zieHCDCW6uVbrL4cVW9YJTzt/2DKu3+Bj8OIFPkCWDPSCF1WdUpfKywydtSvIEfipj
+	 UIF8haDpevEcg==
+Received: by cwcc.thunk.org (Postfix, from userid 15806)
+	id 6BB5A15C3EBF; Wed, 20 Jul 2022 20:54:07 -0400 (EDT)
+Date: Wed, 20 Jul 2022 20:54:07 -0400
+From: "Theodore Ts'o" <tytso@mit.edu>
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linuxfoundation.org>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220721000256.GS5049@ziepe.ca>
+Message-ID: <Ytijr4YQn1OB88P8@mit.edu>
 References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
  <20220720184835.uhnkucai54alhgo6@nitro.local>
  <20220720192456.GM5049@ziepe.ca>
@@ -55,6 +37,7 @@ References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
  <20220720233940.GO5049@ziepe.ca>
  <CAHk-=wgEmH89HpOB5ZYO9owwZ67=O6cikbre2-PShM+AsXhYcg@mail.gmail.com>
  <CAPc5daWCm=8Bket5t9Q+SJ+6pRL3PPSYVqU3Z98miKV+D_bFFQ@mail.gmail.com>
+ <20220721000256.GS5049@ziepe.ca>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -63,41 +46,39 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPc5daWCm=8Bket5t9Q+SJ+6pRL3PPSYVqU3Z98miKV+D_bFFQ@mail.gmail.com>
+In-Reply-To: <20220721000256.GS5049@ziepe.ca>
 
-On Wed, Jul 20, 2022 at 04:42:44PM -0700, Junio C Hamano wrote:
- 
-> On Wed, Jul 20, 2022 at 4:41 PM Linus Torvalds <torvalds@linuxfoundation.org> wrote:
-> >
-> > On Wed, Jul 20, 2022 at 4:39 PM Jason Gunthorpe <jgg@ziepe.ca> wrote:
-> > >
-> > > If the cover letter is the last commit then 'git commit --amend'
-> > > allows editing it as easily as 'git branch --edit description'.
-> >
-> > .. and what about adding new commits during development?
-> >
-> > That sounds oh-so-*very* inconvenient.
->
-> "git rebase -i" is your friend ;-)
+On Wed, Jul 20, 2022 at 09:02:56PM -0300, Jason Gunthorpe wrote:
+> 
+> I'm getting the impression that people are building series in git
+> without using a lot of 'rebase -i' ? How is this done ?
 
-Yeah, exactly.
+There are lots of different mechanisms.  Some of them are syntactic
+sugar on top of git rebase and/or git cherry-pick.  For example, there
+is "Stacked Git"[1].
 
-New commits are not even that likely to be added at the end of the
-series anyhow. A new commit needs to be added at the logical place it
-belongs in the sequence, so someone should already be proficient using
-rebase to shuffle commit order around.
+I used to use "guilt"[2], which I liked because it stored the patch
+series as a quilt patch series, but when you used commands like "guilt
+push" it would apply the patch to the current git branch, and "guilt
+pop" would remove the patch from git branch (i.e., the moral
+equivalent of "git reset --hard HEAD^").  You could then edit the
+current using "git commit --amend" and then "guilt refresh" would
+update the quilt series to reflect the changes made with "git commit
+--amend".
 
-Either write the commit at the end and 'rebase -i' it into place, or
-'rebase -i' with "edit" to directly author it where it belongs.
+The reason why I liked guilt is that since the source of truth was a
+quilt patch series directory, I could keep the quilt patch series
+under checked into a git repo, and so I could easily look at a
+previous version of the patch series if I screwed up.  Rebasing to a
+newer baseline was also pretty easy --- "guilt pop -a; git pull .... ;
+guilt push -a".
 
-An empty commit is trivial to reorder with 'rebase -i' - guarenteed no
-conflicts :)
+Alas, "guilt" is now unmaintained, and I've gotten a lot matter at
+using "git rebase -i" and tagging different versions of the patch
+series.  But there are certainly a large number tools for different
+developer's work flow.
 
-And when there are issues in the commits I generally end up with
-fixup! commits and repeated "rebase -i --autosquash"'s until the
-series is done.
+[1] https://stacked-git.github.io/
+[2] https://github.com/jeffpc/guilt
 
-I'm getting the impression that people are building series in git
-without using a lot of 'rebase -i' ? How is this done ?
-
-Jason
+					- Ted
