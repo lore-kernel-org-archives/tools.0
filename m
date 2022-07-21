@@ -1,116 +1,106 @@
-Received: from mail104.syd.optusnet.com.au (mail104.syd.optusnet.com.au [211.29.132.246])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 967101FA0;
-	Thu, 21 Jul 2022 02:52:08 +0000 (UTC)
-Received: from dread.disaster.area (pa49-181-2-147.pa.nsw.optusnet.com.au [49.181.2.147])
-	by mail104.syd.optusnet.com.au (Postfix) with ESMTPS id B436062C95B;
-	Thu, 21 Jul 2022 12:31:15 +1000 (AEST)
-Received: from dave by dread.disaster.area with local (Exim 4.92.3)
-	(envelope-from <david@fromorbit.com>)
-	id 1oELy5-003OG4-5H; Thu, 21 Jul 2022 12:31:13 +1000
-Date: Thu, 21 Jul 2022 12:31:13 +1000
-From: Dave Chinner <david@fromorbit.com>
-To: Theodore Ts'o <tytso@mit.edu>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220721023113.GO3600936@dread.disaster.area>
-References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
- <20220720184835.uhnkucai54alhgo6@nitro.local>
- <20220720192456.GM5049@ziepe.ca>
- <xmqqmtd31ip8.fsf@gitster.g>
- <CAHk-=wgWY5920sr5AUxZVP6hs85wiTzR0AMH9pc5epfzTeC3wA@mail.gmail.com>
- <20220720233940.GO5049@ziepe.ca>
- <CAHk-=wgEmH89HpOB5ZYO9owwZ67=O6cikbre2-PShM+AsXhYcg@mail.gmail.com>
- <CAPc5daWCm=8Bket5t9Q+SJ+6pRL3PPSYVqU3Z98miKV+D_bFFQ@mail.gmail.com>
- <20220721000256.GS5049@ziepe.ca>
- <Ytijr4YQn1OB88P8@mit.edu>
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8361FAE;
+	Thu, 21 Jul 2022 08:48:28 +0000 (UTC)
+Received: by mail-qv1-f41.google.com with SMTP id j11so674455qvt.10;
+        Thu, 21 Jul 2022 01:48:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NinDAa9K6Spdw9xD38BxhvnprbSGIzcxC+wEdVjtKEc=;
+        b=rCtfQ9p1HQcFzGpncI2DwWgej7S8PFqaWLMWLnJadg5BVb0eZaoLwI/sw0md2Cn3pK
+         bGCDrfGW1t4ZuHEO8PLXzncTeUhnwpg3JvErVwk+ha5qVtx/tJjV5nJzjMUc5/6Ej1pV
+         GMgtsoKzZZDjF3tvIUOUvZJz9DcryV0oX5EIgf2ovQdFkGMGznSgyNhi3bsqq47Un6jE
+         BBSCfIYJ2fBd8zlcPpxaDE5G1hWNNYYTsC8UPy7gZhrxcA/4yqHg2N2VQk+6s0CxzGFo
+         mel8g6pI/phHyf1aw43n4EuVJmcevp7DSfFt1PHMcAUYd3+1E36rAnYG0LVHz7/0dz+4
+         wQ8Q==
+X-Gm-Message-State: AJIora+pd8Apae4j49PXO2TLC1ZS9gRB8BL9Iy9w6dF/TY4v1kP3BOJD
+	sy4gkz87iZtmTnC5PPJ+U/Up2XSLgnOlsg==
+X-Google-Smtp-Source: AGRyM1vhjsbv42PJKtFcZSwuKeb/CUDiBqHlvCxxm+pZApL3W9W+tCNEITviwp100x5zBc1nhUAwHQ==
+X-Received: by 2002:a05:6214:3009:b0:473:990:6d08 with SMTP id ke9-20020a056214300900b0047309906d08mr32638532qvb.121.1658393307167;
+        Thu, 21 Jul 2022 01:48:27 -0700 (PDT)
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com. [209.85.219.173])
+        by smtp.gmail.com with ESMTPSA id y28-20020a37f61c000000b006b5f7d0d0b6sm1044157qkj.4.2022.07.21.01.48.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Jul 2022 01:48:26 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id e69so1699050ybh.2;
+        Thu, 21 Jul 2022 01:48:26 -0700 (PDT)
+X-Received: by 2002:a05:6902:38c:b0:670:b6bc:6ed5 with SMTP id
+ f12-20020a056902038c00b00670b6bc6ed5mr1612064ybs.604.1658393306469; Thu, 21
+ Jul 2022 01:48:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Ytijr4YQn1OB88P8@mit.edu>
-X-Optus-CM-Score: 0
-X-Optus-CM-Analysis: v=2.4 cv=VuxAv86n c=1 sm=1 tr=0 ts=62d8ba74
-	a=ivVLWpVy4j68lT4lJFbQgw==:117 a=ivVLWpVy4j68lT4lJFbQgw==:17
-	a=kj9zAlcOel0A:10 a=RgO8CyIxsXoA:10 a=7-415B0cAAAA:8
-	a=7LDZOF_M7FJHwPsqoYYA:9 a=CjuIK1q_8ugA:10 a=biEYGPWJfzWAr4FL6Ov7:22
+References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local> <20220720184835.uhnkucai54alhgo6@nitro.local>
+ <20220720192456.GM5049@ziepe.ca> <xmqqmtd31ip8.fsf@gitster.g>
+ <CAHk-=wgWY5920sr5AUxZVP6hs85wiTzR0AMH9pc5epfzTeC3wA@mail.gmail.com>
+ <20220720233940.GO5049@ziepe.ca> <CAHk-=wgEmH89HpOB5ZYO9owwZ67=O6cikbre2-PShM+AsXhYcg@mail.gmail.com>
+ <CAPc5daWCm=8Bket5t9Q+SJ+6pRL3PPSYVqU3Z98miKV+D_bFFQ@mail.gmail.com> <20220721000256.GS5049@ziepe.ca>
+In-Reply-To: <20220721000256.GS5049@ziepe.ca>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Thu, 21 Jul 2022 10:48:14 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdUB2F3BeaG2qH0jCDM87tJjzWhp=-Xx7xq+Y=oc76322Q@mail.gmail.com>
+Message-ID: <CAMuHMdUB2F3BeaG2qH0jCDM87tJjzWhp=-Xx7xq+Y=oc76322Q@mail.gmail.com>
+Subject: Re: b4 submit ready for beta testing
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Junio C Hamano <gitster@pobox.com>, Linus Torvalds <torvalds@linuxfoundation.org>, 
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@linux.kernel.org, 
+	tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jul 20, 2022 at 08:54:07PM -0400, Theodore Ts'o wrote:
-> On Wed, Jul 20, 2022 at 09:02:56PM -0300, Jason Gunthorpe wrote:
-> > 
-> > I'm getting the impression that people are building series in git
-> > without using a lot of 'rebase -i' ? How is this done ?
-> 
-> There are lots of different mechanisms.  Some of them are syntactic
-> sugar on top of git rebase and/or git cherry-pick.  For example, there
-> is "Stacked Git"[1].
-> 
-> I used to use "guilt"[2],
+Hi Jason,
 
-I still use guilt.
+On Thu, Jul 21, 2022 at 2:03 AM Jason Gunthorpe <jgg@ziepe.ca> wrote:
+> On Wed, Jul 20, 2022 at 04:42:44PM -0700, Junio C Hamano wrote:
+> > On Wed, Jul 20, 2022 at 4:41 PM Linus Torvalds <torvalds@linuxfoundation.org> wrote:
+> > > On Wed, Jul 20, 2022 at 4:39 PM Jason Gunthorpe <jgg@ziepe.ca> wrote:
+> > > >
+> > > > If the cover letter is the last commit then 'git commit --amend'
+> > > > allows editing it as easily as 'git branch --edit description'.
+> > >
+> > > .. and what about adding new commits during development?
+> > >
+> > > That sounds oh-so-*very* inconvenient.
+> >
+> > "git rebase -i" is your friend ;-)
+>
+> Yeah, exactly.
+>
+> New commits are not even that likely to be added at the end of the
+> series anyhow. A new commit needs to be added at the logical place it
+> belongs in the sequence, so someone should already be proficient using
+> rebase to shuffle commit order around.
+>
+> Either write the commit at the end and 'rebase -i' it into place, or
+> 'rebase -i' with "edit" to directly author it where it belongs.
+>
+> An empty commit is trivial to reorder with 'rebase -i' - guarenteed no
+> conflicts :)
+>
+> And when there are issues in the commits I generally end up with
+> fixup! commits and repeated "rebase -i --autosquash"'s until the
+> series is done.
 
-I have a hacked version of it that can store the commit description
-in an empty commit as the first patch in the series, and 'guilt
-patchbomb' has an option to take that first patch as the cover
-letter for the series being patchbombed.
+I'm wondering how this rebasing is working well with the "team"
+workflows where patches are being shuffled around with push/pull?
 
-However, I don't use that anymore, because updating the cover letter
-as I work on the series turned out to be a PITA. These days I have
-a series of untracked files in the tree root that are named
-"changelog-<branch-name>.txt" and I edit them as I need as I work on
-the series.
+> I'm getting the impression that people are building series in git
+> without using a lot of 'rebase -i' ? How is this done ?
 
-But then there's the problems of using those branches for pull
-requests: it's not really possible because we want an editted
-version of the cover letter in the signed tag for the pull request
-so it ends up in the merge commit, not as an empty, unrelated commit
-in the tree.
+FTR, I use "rebase -i" all the time.
 
-Hence when I sign the tag for the branch, I pull up the branch
-description file and chop all the bits that aren't relevant out of
-it (e.g. change logs, last testing status, what it was last rebased
-on, where to pull it from for testing/review, etc) so it only
-contains things directly relevant to the code that is being merged.
+Gr{oetje,eeting}s,
 
-I'm only mentioning this because it's relevant to the discussion:
-I've moved directly from using the the "empty commit holds cover
-letter" model to the "branch description holds cover letter" model
-because the branch description model has much lower overhead to
-maintain and allows for far more flexibility in my local
-workflows...
+                        Geert
 
-> which I liked because it stored the patch
-> series as a quilt patch series, but when you used commands like "guilt
-> push" it would apply the patch to the current git branch, and "guilt
-> pop" would remove the patch from git branch (i.e., the moral
-> equivalent of "git reset --hard HEAD^").  You could then edit the
-> current using "git commit --amend" and then "guilt refresh" would
-> update the quilt series to reflect the changes made with "git commit
-> --amend".
-> 
-> The reason why I liked guilt is that since the source of truth was a
-> quilt patch series directory, I could keep the quilt patch series
-> under checked into a git repo, and so I could easily look at a
-> previous version of the patch series if I screwed up.  Rebasing to a
-> newer baseline was also pretty easy --- "guilt pop -a; git pull .... ;
-> guilt push -a".
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-Yup. if I cared enough, I would have hacked guilt to store a
-"description" file alongside the series file added a command like
-'guilt description --edit' and then plumbed that into commands like
-patchbomb. If it was still maintained, I'd probably do that work.
-But it's not, and keeping the description in guilt does not save any
-time or operations in my workflow, so I haven't.
-
-Cheers,
-
-Dave.
--- 
-Dave Chinner
-david@fromorbit.com
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
