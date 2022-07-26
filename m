@@ -1,174 +1,85 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335BE2568
-	for <tools@linux.kernel.org>; Tue, 26 Jul 2022 13:11:11 +0000 (UTC)
-Received: by mail-wm1-f48.google.com with SMTP id r1-20020a05600c35c100b003a326685e7cso812582wmq.1
-        for <tools@linux.kernel.org>; Tue, 26 Jul 2022 06:11:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
-        h=from:to:subject:in-reply-to:references:date:message-id:mime-version;
-        bh=c6n7W8RlwsEeza1NZslWzWRrSwxr435Oxj4x5AdbA/c=;
-        b=t0Mc8z+ZtyrjhhMdYIn3rNlBnm2bSggFvcLYgGYIXjFak5N3VF4G9AnrKBYp99hc43
-         NKH8cV/tXO5zo5h+pSkpCsIexZ6MpUBbgO2HfeX1aX4mF9xgcA24gyxWOYFQFw/3/b0/
-         oQ7zkJtnYlyD2BtKLC+73ZpOU7az3EI1pcv7RXdsO9qd8w9Y0JjLg3vDstAXGVqsYiK/
-         Bg7Nf9A1VrXUwTcpH5rYELWTPVTYZHIvSzQVwrnjfJ7aycmOys3373NkYXKW59GSK2yb
-         BzvDNmbl5WZnDm9yW7gnEMgigYlnsVqHP3IaBbN+ff3B6U/JgQfw/YXRu0tCOfb8ppuT
-         yG5w==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478492579
+	for <tools@linux.kernel.org>; Tue, 26 Jul 2022 13:55:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1658843731;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bMNevkPRVsmSz/BO2eC/tfT5iRc/lw+2ZAYK/3JDFNc=;
+	b=NHJXw0BsY9OZtkwo2CsVJbQZOJAXwST5/p9ZFULd0o63YODLyqIIMNz5Nd/9ID4QmMk+6X
+	N9u5PuJe15Tl3Jpi12B6nDEjQg9u0Sd1PwvrZq0ujPXCK3Rd6x4CIgUrj7lLGttMwwfCi8
+	gPwiAUDvYjDkwA92Ydbm7I8dopwZj0Y=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-172-5slXjPyRMxa5LJ6nn7trQA-1; Tue, 26 Jul 2022 09:55:30 -0400
+X-MC-Unique: 5slXjPyRMxa5LJ6nn7trQA-1
+Received: by mail-ej1-f71.google.com with SMTP id hq20-20020a1709073f1400b0072b9824f0a2so4408205ejc.23
+        for <tools@linux.kernel.org>; Tue, 26 Jul 2022 06:55:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:in-reply-to:references:date
-         :message-id:mime-version;
-        bh=c6n7W8RlwsEeza1NZslWzWRrSwxr435Oxj4x5AdbA/c=;
-        b=5RlYj9Buxe/BWu9HypkguEHcafFyfVhQkCgX834Uzo/BQHDIMrc7571rzmcs69el8m
-         fs+sBkK+qBE8JLJBpON2qz/8oxwQ1a9sj9pzQbKmQfldpvKDKjFaFkd7Igah9dRFjlQP
-         4c2UVjDSNolysdZ6omWiJGNN8mqBe7v2ERioLPZNvU2c/majR3tLVGS+fdFEAiTPXE7D
-         P3cCq9jtZaasDbvYcQ2WpS/fprTpKkRNet8I8W9RCcKNb+yUseMohgmNB0Wj2N5DB/ej
-         ZQzvVmeRSMsw7IcKKGQS1ke82/zfLwVXXZeOU5zNix3oeG89Jfo3ya/QbKTaHfDIKyX7
-         aZxw==
-X-Gm-Message-State: AJIora/J/FW4lICEXRMEA0Tt1xZPoeLVGe5L8KQZX5MlOVtzX8LPk64P
-	u3Pyw1F+QQOx6BfV9pS52E7qig==
-X-Google-Smtp-Source: AGRyM1uiqF7Jel6UK5b2951UrzW4NRaVy0cLyI9L/ZzkhFSmljx9egN1/fmmA0V5LC2UcsoGMtVxzw==
-X-Received: by 2002:a05:600c:3caa:b0:394:8fb8:716 with SMTP id bg42-20020a05600c3caa00b003948fb80716mr24543642wmb.105.1658841069262;
-        Tue, 26 Jul 2022 06:11:09 -0700 (PDT)
-Received: from localhost ([82.66.159.240])
-        by smtp.gmail.com with ESMTPSA id f8-20020a05600c154800b00397402ae674sm24132164wmg.11.2022.07.26.06.11.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 06:11:08 -0700 (PDT)
-From: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4 submit ready for beta testing
-In-Reply-To: <20220720184835.uhnkucai54alhgo6@nitro.local>
-References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
- <20220720184835.uhnkucai54alhgo6@nitro.local>
-Date: Tue, 26 Jul 2022 15:11:07 +0200
-Message-ID: <87k08010k4.fsf@baylibre.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=bMNevkPRVsmSz/BO2eC/tfT5iRc/lw+2ZAYK/3JDFNc=;
+        b=4YzRs0lkri/SpDwBArTgJyw2ak/SnhztdBnj8AaHf2KeC1w07eUxqH3pq+M2jOesVi
+         EbcCC4FIqncBLwSpe1mGygaU3YvUhTwkCRUSpmKdxZp3GNSyfg4HyZe09okAzhFtQ7AE
+         3/eh/a+eC/0ZB2n/fYCltdFnNpQOPlKuDivxze+HfekQpjDkb+vmq3nrWRZYRub29BhE
+         Hia9AxqJHMzHO4KtnwPXCRhL4zkqJQRGHHV1++XQT2/bx8KxGhrXFTJQ+U4HAXylaNmw
+         bN5Fk9XIW2PY7rskqGJZTaMvv6B2sdZ2ZK5YwJ8lWZ6MLQMGjXd5AhxIVljBCS6Av9kN
+         MXTQ==
+X-Gm-Message-State: AJIora9Gs9a7YJM+aGgqruzedTplzEoPCTuAhwa3baPazvkkzpxe+1+Q
+	E3xD18NW3WXlJxf77Ejn8Pw5y1UFx9Bh90wZg068r2hUXDPaG8li5sMa+GaAFGjMgBGi6yoroXI
+	wT/D+BKRKy997c0j0
+X-Received: by 2002:a17:906:8a71:b0:72b:11d6:29fc with SMTP id hy17-20020a1709068a7100b0072b11d629fcmr13671943ejc.494.1658843728923;
+        Tue, 26 Jul 2022 06:55:28 -0700 (PDT)
+X-Google-Smtp-Source: AGRyM1u5rmC8NYGXIlAF9QLXYPzC9Ka4PZaeNlhMSU0H4oUTf2S1Fi0dzVHZkaZbDYxbh9Z4Unc25A==
+X-Received: by 2002:a17:906:8a71:b0:72b:11d6:29fc with SMTP id hy17-20020a1709068a7100b0072b11d629fcmr13671922ejc.494.1658843728545;
+        Tue, 26 Jul 2022 06:55:28 -0700 (PDT)
+Received: from ?IPV6:2001:b07:6468:f312:9af8:e5f5:7516:fa89? ([2001:b07:6468:f312:9af8:e5f5:7516:fa89])
+        by smtp.googlemail.com with ESMTPSA id fu3-20020a170907b00300b0072f47838640sm6480745ejc.71.2022.07.26.06.55.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Jul 2022 06:55:27 -0700 (PDT)
+Message-ID: <02bd5767-6458-9015-484e-2c7156aa93a9@redhat.com>
+Date: Tue, 26 Jul 2022 15:55:25 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: b4 submit ready for beta testing
+To: Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+ users@linux.kernel.org, tools@linux.kernel.org
+References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
+ <20220720184835.uhnkucai54alhgo6@nitro.local> <87pmhs1d8h.fsf@baylibre.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <87pmhs1d8h.fsf@baylibre.com>
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Konstantin,
+On 7/26/22 10:37, Mattijs Korpershoek wrote:
+> The "ez-" part has, in my opinion, no added value for users. It
+> assumes that using these commands is so easy that "you can't use it,
+> you're really incompetent". I think we should use more "neutral" langage
+> for commands (without judging if it's easy or difficult).
 
-On Wed, Jul 20, 2022 at 14:48, Konstantin Ryabitsev <konstantin@linuxfoundation.org> wrote:
+I agree, and in fact I'm wondering if the series/send part really 
+belongs in b4 (as opposed to a separate git-publish-like tool).  b4 
+right now is a lore-specific tool, while series and send apply generally 
+to mail-based patch processing.
 
-> Hello, all:
->
-> Based on your feedback, I've refactored the submit functionality and it's
-> ready for some more poking and testing. Here are the implemented changes:
->
-> 1. Pluggable cover letter strategies
->    The goal is to support 3 different cover-letter strategies:
->
->    "commit": same as first implementation with the cover letter stored in an
->    empty commit at the beginning of the series.
->
->    "branch-description": stores the cover letter in the branch description
->    (which really just means the git config file). The cover letter can be
->    edited using the same b4 --cover-letter command, or just with "git branch
->    --edit-description".
->
->    "tag" (not yet implemented): will store the cover letter in tags a-la
->    git-publish.
->
->    The default cover strategy remains "commit", but you can switch using
->    b4.ez-cover-strategy, e.g. in your ~/.gitconfig:
->
->        [b4]
->          ez-cover-strategy = branch-description
->
->   Note, that switching from one to the other for existing tracked series is
->   not supported (and I'm not sure will be). It's also not currently possible
->   to enroll an existing branch into ez-series with the "commit" strategy
->   (because I haven't yet figured out how to insert a random commit into
->   history with git-filter-repo, but I'm sure it's possible).
->
-> 2. "b4 submit" command got split into 3 different commands:
->
->   - "b4 ez-series" to create/enroll branches and manage cover letters
->
->   - "b4 ez-trailers" for retrieving trailer updates and updating your local
->     branch. Note, that with -F this can run on any branch, not necessarily the
->     branch managed by ez-series. E.g.:
->
->         git checkout arbitrary-branch
->         b4 ez-trailers -us -F [arbitrary-msgid]
->
->   - "b4 ez-send" for sending the series to the mailing list. It has all the
->     same flags as formerly for "b4 submit", e.g.:
->
->         b4 ez-send --no-auto-to-cc --dry-run
->
->     There is no more --reroll command, as using ez-send will automatically
->     increment the tracked revision number (unless RESEND was in the prefixes).
->
->     There's still no support on the web submission endpoint, but it's coming
->     in the near future.
->
-> Thank you for everyone's feedback, and please continue testing it out. If you
+Paolo
 
-I would like to file another bug around b4 ez-send --dry-run.
-When using the --dry-run option, the To: section is not shown for all
-patches. In fact, we only see the To: section on the cover letter email.
-
-This is not reproduced when using b4 ez-send -o <folder>.
-
-revision of b4:
-  78725ba63b2f ("ez-send: initial support for tagging sent revisions")
-
-git submodule status:
-  0eb41be65707a1e156a59fd25ea9824c1a9e95ce patatt (v0.5.0-1-g0eb41be65707)
-
-Steps to reproduce:
-
-## prepare branch/work
-$ b4 ez-series -n dry-run -f next-20220725
-$ b4 ez-series --edit-cover # to remove EDITME and be able to use --dry-run/-o
-
-## make an edit on a file which is maintained by Matthias Brugger
-$ vim drivers/soc/mediatek/mt8167-mmsys.h # make some change
-$ git add drivers/soc/mediatek/mt8167-mmsys.h && git commit -s -m "Example change for mt8167-mmsys.h"
-$ ./scripts/get_maintainer.pl --m drivers/soc/mediatek/mt8167-mmsys.h
-Matthias Brugger <matthias.bgg@gmail.com> (maintainer:ARM/Mediatek SoC support)
-[...]
-
-## show dry run
-$ b4 ez-send --dry-run --no-sign
-
-## show output in .patch files
-$ mkdir dry-run
-$ b4 ez-send --no-sign -o dry-run
-$ vim dry-run/0001-example-change-for-mt8167-mmsys-h.patch
-
-Is this the expected behaviour?
-To me, -o and --dry-run should produce as close as possible results.
-
-Thanks,
-Mattijs
-
-
-> want to test the dev version of b4, use the same instructions:
->
->> ## Getting the b4 dev version
->> 
->> To install the b4 development version, you will need to run it from the git
->> checkout:
->> 
->>   git clone https://git.kernel.org/pub/scm/utils/b4/b4.git
->>   cd b4
->>   git submodule update --init
->>   alias b4="$PWD/b4.sh"
->> 
->> You can find out more details in the README file. You will also want to make
->> sure that git-filter-repo is installed (either from your distro packages or
->> from pip).
->> 
->> If you're already running b4 from the git checkout, make sure you run "git
->> submodule update" to pull in the latest unreleased patatt version.
->
-> Best regards,
-> Konstantin
