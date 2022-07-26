@@ -1,104 +1,121 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B48B2590
-	for <tools@linux.kernel.org>; Tue, 26 Jul 2022 14:37:12 +0000 (UTC)
-Received: by mail-qt1-f181.google.com with SMTP id a9so10534227qtw.10
-        for <tools@linux.kernel.org>; Tue, 26 Jul 2022 07:37:12 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BC52590
+	for <tools@linux.kernel.org>; Tue, 26 Jul 2022 14:54:12 +0000 (UTC)
+Received: by mail-wm1-f45.google.com with SMTP id a11so8898655wmq.3
+        for <tools@linux.kernel.org>; Tue, 26 Jul 2022 07:54:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WHCSQs8JZFCAZDg0etKGf4MtMfRgdgQ+zfWq4ATWPL0=;
-        b=Vqh881gpRfHwijwdKpMjAuvacsWtGqVgN+k51c32LmvXxSN6Vd/CW4nHajN57vnnjR
-         ZuV5zzhBaBrJTne5kiZIB9BiJCC3/vdkaSbBTjBQEF8X55mWbHrE1SDxJascAy1cUplB
-         1rvJRhvXec482qA0ootQTwfbMRE1k52GMEzAE=
+        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
+        h=from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version;
+        bh=GeezJ+ERQjDiDfzjK9fkXCzjcojTivk9d/XTj7sJr/Y=;
+        b=71ZQeSPXlKOA6AGWu5FoPjwZMhO2Y5BxRtTcB2uEBrGCW2HwLY5dbj9lfzztm8EfW2
+         qsdrJH3EqYP+ec5Hu5cD3zJodw6UhtsHBFGnLtJHiAdeHnbgeb9LyEmpXUpNin+i5E9P
+         YM3uzJwqxaGMeba646FzpFxNmm13ikukHwn7VxNgVnLFBg28C6LqMqrvwS7l0xByTiBD
+         qFj+o/O1bJVRHmxoPwTDrSp04+TSNHRHl2CswGlvIRKQqCD7n5XXCVnHkXARsJnVIlJ1
+         KEDLqLFpnPTSOEHiOVZN2yfmq5YZ1eSk/4FvPI9/T5GohqWJRG2RPreOLTq4w9q6HlNw
+         Nr8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WHCSQs8JZFCAZDg0etKGf4MtMfRgdgQ+zfWq4ATWPL0=;
-        b=yMNVwWBKG04rZBdCDT8zVldQI7oFqaXr/fK/y2E0+rDGEU4X0mVSZcY1pPEGMlpwr/
-         rDhiBueFI4G9kYJkoSXAJCtrSExcBYA12hOmn1ojfsyYxI498vdn3BbWyjwHHrjWjoTX
-         7/eaprULyZiFKiZId0M/tD991Lu0BdkcTfWP1M2DNoVIHeyxKTYhNKGkKiffcp43CU5B
-         e6724qLYj7TXdM72UDynldKqQ1WdWAytQgNM0DbaxODel5id/ZGjpz0NLrtbI6LVdGH4
-         5gtmg2p1wuwHdIRCdiCm5vQxAcD/4kj6y5XsXouNMYLfgpX+0sYYjLrET1Zz30YkKvi/
-         SQzw==
-X-Gm-Message-State: AJIora8z2Qrx0+swJ2Zc2g1X+PwggeFXeH6pQAbCgEak2JOScpyR8YFo
-	o8XwCdgpW74jM4TpzxZNjA+4gVNEYhyfNQ==
-X-Google-Smtp-Source: AGRyM1v1elJO9hTAvQgP1VzATBLw6IudY48zy6ZdVtsAuZaX42DonjUcGBMlbQs/4z8JRT8YESddjQ==
-X-Received: by 2002:ac8:5bcf:0:b0:31e:f981:184a with SMTP id b15-20020ac85bcf000000b0031ef981184amr14527002qtb.653.1658846231326;
-        Tue, 26 Jul 2022 07:37:11 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id d21-20020ac85ad5000000b0031ea1ad6c5asm9767526qtd.75.2022.07.26.07.37.10
+        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
+         :message-id:mime-version;
+        bh=GeezJ+ERQjDiDfzjK9fkXCzjcojTivk9d/XTj7sJr/Y=;
+        b=IfuEGb4TZnFUBc92NJHKWGUuH5BVT5NhcU4caCRm7lswFnZnmJbJ8Kk7/TNTKvF7dZ
+         3sosZcjQJj1VhPtGAe/XzB4WjJuO3wZKSO0kcR3ZugWL/3d5pKgwDX2LNZp5KNhOuBM2
+         ojnKfamcu+o4Ey2/FhpNBpEe6XweNOXoTBs11i0BtM8qeC1JEG1y6zMOxy4ns6hvXQbZ
+         G2gIOOJhtrhKluSvV7VCbPh2e0Zm4msLH9yTermZUXUmuDwISSrO0iLBE2gbzDOeyDZk
+         h0imy5IRtku/yYmwuqauTAAN69+QP0SBk/soA1e0pQ9UOS+AR44TtLeWmY4Tb91XWgNA
+         Zy8Q==
+X-Gm-Message-State: AJIora/YdQ4736gvOSUZDC039ras4X3cU74qzsZfhSx0RHVfASesiacH
+	zA7YHYTuKfG4KBllH5ZcMtfK0w==
+X-Google-Smtp-Source: AGRyM1up6rv7WgGMTR+snbfsOS4Xzhb3SBtSo0twrVHRu9drVI00Jh3OSzlepOSRopWMjwg8FlC3Pw==
+X-Received: by 2002:a05:600c:64a:b0:3a3:25d5:fa5 with SMTP id p10-20020a05600c064a00b003a325d50fa5mr12076133wmm.125.1658847251168;
+        Tue, 26 Jul 2022 07:54:11 -0700 (PDT)
+Received: from localhost ([82.66.159.240])
+        by smtp.gmail.com with ESMTPSA id bo27-20020a056000069b00b0021e51c039c5sm14319506wrb.80.2022.07.26.07.54.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 07:37:10 -0700 (PDT)
-Date: Tue, 26 Jul 2022 10:37:09 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+        Tue, 26 Jul 2022 07:54:10 -0700 (PDT)
+From: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220726143709.tipfxgptm3rfrb5r@meerkat.local>
+In-Reply-To: <20220726142743.dllhmbivtb2yk4uk@meerkat.local>
 References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
  <20220720184835.uhnkucai54alhgo6@nitro.local>
- <87k08010k4.fsf@baylibre.com>
+ <87pmhs1d8h.fsf@baylibre.com>
+ <20220726142743.dllhmbivtb2yk4uk@meerkat.local>
+Date: Tue, 26 Jul 2022 16:54:09 +0200
+Message-ID: <87bktbapri.fsf@baylibre.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87k08010k4.fsf@baylibre.com>
+Content-Type: text/plain
 
-On Tue, Jul 26, 2022 at 03:11:07PM +0200, Mattijs Korpershoek wrote:
-> I would like to file another bug around b4 ez-send --dry-run.
-> When using the --dry-run option, the To: section is not shown for all
-> patches. In fact, we only see the To: section on the cover letter email.
+On Tue, Jul 26, 2022 at 10:27, Konstantin Ryabitsev <konstantin@linuxfoundation.org> wrote:
 
-Yeah, this is a bug I added recently.
-I'll fix it this afternoon after I'm done rebooting the world.
+> On Tue, Jul 26, 2022 at 10:37:18AM +0200, Mattijs Korpershoek wrote:
+>> > 2. "b4 submit" command got split into 3 different commands:
+>> 
+>> While I do agree that these commands make life easier, I don't think
+>> that we should "ez-" as a prefix.
+>> 
+>> The "ez-" part has, in my opinion, no added value for users. It
+>> assumes that using these commands is so easy that "you can't use it,
+>> you're really incompetent". I think we should use more "neutral" langage
+>> for commands (without judging if it's easy or difficult).
+>
+> Yeah, ez- is a gimmick and may not stay. It's easy to type and tab-complete,
+> though, which is why I went with that (not that tab completion bits are done
+> for b4 yet).
 
-> ## prepare branch/work
-> $ b4 ez-series -n dry-run -f next-20220725
-> $ b4 ez-series --edit-cover # to remove EDITME and be able to use --dry-run/-o
-> 
-> ## make an edit on a file which is maintained by Matthias Brugger
-> $ vim drivers/soc/mediatek/mt8167-mmsys.h # make some change
-> $ git add drivers/soc/mediatek/mt8167-mmsys.h && git commit -s -m "Example change for mt8167-mmsys.h"
-> $ ./scripts/get_maintainer.pl --m drivers/soc/mediatek/mt8167-mmsys.h
-> Matthias Brugger <matthias.bgg@gmail.com> (maintainer:ARM/Mediatek SoC support)
-> [...]
-> 
-> ## show dry run
-> $ b4 ez-send --dry-run --no-sign
-> 
-> ## show output in .patch files
-> $ mkdir dry-run
-> $ b4 ez-send --no-sign -o dry-run
-> $ vim dry-run/0001-example-change-for-mt8167-mmsys-h.patch
-> 
-> Is this the expected behaviour?
-> To me, -o and --dry-run should produce as close as possible results.
+Ok. I really think it should be removed because it gives a judgment on
+the user. For some folks it's also "easy" to "just use git send-email".
 
-When we use "-o" we operate in the git-format-patch compatibility mode, which
-doesn't collect to/cc addresses (this is done at the git-send-email stage).
-Perhaps this should be split into two different commands
+>
+>> How about:
+>> - b4 series (for creating/handling series. Also includes "send"/"submit")
+>
+> I think that makes it hard to distinguish from "b4 am/shazam" that also
+> operate on series. In my mind, the command should indicate that it's
+> specifically for working on series for submitting them upstream as opposed to
+> for retrieving series for inclusion into your repos.
+>
+> Perhaps "b4 prep"?
 
-instead of:
+Understood. series is indeed ambiguous and "prep" or "prepare" seems
+more appropriate.
 
-    b4 send --output-dir OUTPUT_DIR
+>
+>> - b4 trailers (for handling trailer updates)
+>
+> Okay, since one of the plans is to add a way for maintainers to quickly send
+> their own follow-up trailers, e.g.:
+>
+>     b4 trailers --ack [--trailer 'My-Trailer: Foo Bar <eml@addr.foo>'] <msgid>
+>
+> this would allow defining keybindings in mutt to quickly submit an "Acked-by"
+> or any other trailer.
 
-do:
+That looks awesome :)
 
-    b4 prep --format-patch OUTPUT_DIR
-    b4 send --dry-run [-o OUTPUT_DIR]
+>
+>> >         b4 ez-send --no-auto-to-cc --dry-run
+>> 
+>> In my opinion, "b4 send" should be part of series because we cannot send
+>> series that were not created with "b4 series".
+>
+> It won't be limited to just series, though -- you'll soon be able to send pull
+> requests as well, and that will accept arbitrary tags. So, I intend to keep it
+> separate from "prep".
 
-and then fix "b4 send -o" to output the same thing as --dry-run, but into
-files as opposed to stdout, complete with all the headers as they will be
-sent.
+Ok. I did not think about the pull requests part (I'm an
+occasional contributor). It makes sense to keep them separated.
 
-I'll implement this change this afternoon.
-
--K
+>
+> Thanks for your feedback!
+>
+> -K
