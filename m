@@ -1,78 +1,74 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11953234
-	for <tools@linux.kernel.org>; Thu, 28 Jul 2022 16:24:37 +0000 (UTC)
-Received: by mail-qt1-f174.google.com with SMTP id x11so1455625qts.13
-        for <tools@linux.kernel.org>; Thu, 28 Jul 2022 09:24:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qg+h8/nWh5sSywZpWg+H+2qlQPrQSLBqUAPCZJcJXVE=;
-        b=MaY9ll0/KH7TAAAA9I2Yk9O3v3z8hvsfVdkgzSI7qAHvHk0mjIyo92zxyAd9P1gylx
-         rai7mcLzSO49kl/Nmh/lWz7j8nX8Nuc9TQIOI2+/pDZSs0iLhKefpsQedmAmElOff/Yu
-         BxAyooKhSq4yxtIP37QaSTuugbJiCPQ05K+yI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qg+h8/nWh5sSywZpWg+H+2qlQPrQSLBqUAPCZJcJXVE=;
-        b=VVr/u4G9DnfopznvdBi9WP57Xg6oz3H/+25GhIPCv/FWBkGKIIzuA+jU7VfjfBQO89
-         YW10S+S9WRlP2KSv6w37ph5ozWr4OaiHwMwlAuKDsJBqed0nZ3svt6LgA2QcDBth8shB
-         HHwvs6HC57/KRvLNuxJzzl8ZzqIHyrqFjE73boCoXY2fphbcGxb6SyEHY1kwvAlnvWkp
-         OGLc3WIRfcyP0oJe1RE/BDpm4hTREAOCRGzkh+THnz6q9OkK10UpfcUrQ/6nFRpOAQYh
-         YeooZQz0uuQC9HGQg0siROs9fxaajBuE2yyj5azWKTy9EI/ozorvjGoVl5nPn+lpvkNL
-         pZcA==
-X-Gm-Message-State: AJIora+bSW1Fkg+nTS1rWxU1w5B0hWFO8EH3zk5fHzRA2U2Kth7bZLWo
-	lg30WGol8Wkgg1by+TUoW8Ry2g==
-X-Google-Smtp-Source: AGRyM1scXvcUEukWDWBrizanh3GsRT5CyHYCyfwbrj5TB6TqYmpYxWFohuW/qCt9H6jAWJm1mzjC6w==
-X-Received: by 2002:ac8:4e43:0:b0:31e:f583:7e5 with SMTP id e3-20020ac84e43000000b0031ef58307e5mr23446436qtw.384.1659025476749;
-        Thu, 28 Jul 2022 09:24:36 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id dm52-20020a05620a1d7400b006a6ab259261sm799370qkb.29.2022.07.28.09.24.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 09:24:36 -0700 (PDT)
-Date: Thu, 28 Jul 2022 12:24:34 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Maxime Ripard <maxime@cerno.tech>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4 submit ready for beta testing
-Message-ID: <20220728162434.eedqnx42sezb2vbe@meerkat.local>
-References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
- <20220720184835.uhnkucai54alhgo6@nitro.local>
- <20220728160418.sgfns5jsisjsz5hr@penduick>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F74E29AC
+	for <tools@linux.kernel.org>; Sun, 14 Aug 2022 22:05:23 +0000 (UTC)
+Received: from mx0.riseup.net (mx0-pn.riseup.net [10.0.1.42])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
+	(Client CN "mx0.riseup.net", Issuer "R3" (not verified))
+	by mx1.riseup.net (Postfix) with ESMTPS id 4M5WTV22R3zDqBX
+	for <tools@linux.kernel.org>; Sun, 14 Aug 2022 21:56:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+	t=1660514206; bh=w8Xf4rwc/5+ZL81d9STRMhqzjJFeu/tKOQ61A1Q5yA4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=I697jnzd7JwxKSZQ+Sat4O7EU0rULZX8D47KEsgMHQxl5RuDAxdbLZISe6WjEXyMA
+	 Cm0j6+8ODTrGMUrorMuGn9hS5pCfFlbR6cpH9/qdj1jkXckCbJ6Y8nu9PbqfuOep3i
+	 zG6XyQo+f0ItYK0980Vlvm4AcWMap2JBfy5776cc=
+Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
+	(Client CN "mail.riseup.net", Issuer "R3" (not verified))
+	by mx0.riseup.net (Postfix) with ESMTPS id 4M5WTN5Y3vz9sQY;
+	Sun, 14 Aug 2022 21:56:40 +0000 (UTC)
+X-Riseup-User-ID: 1734643F7E85C007366BCB45B23C26D09C9510432857B48B0C0EA748568708D4
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	 by fews1.riseup.net (Postfix) with ESMTPSA id 4M5WTM1fGXz5vW0;
+	Sun, 14 Aug 2022 21:56:38 +0000 (UTC)
+From: =?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>
+To: tools@linux.kernel.org
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>
+Subject: [PATCH b4] Add dnf package on the Installing section
+Date: Sun, 14 Aug 2022 18:56:24 -0300
+Message-Id: <20220814215624.89760-1-mairacanal@riseup.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220728160418.sgfns5jsisjsz5hr@penduick>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 28, 2022 at 06:04:18PM +0200, Maxime Ripard wrote:
-> I've started to test the current master (9e95d523c9b9), and there's a
-> typo in b4/ez.py:
-> 
-> sed -i 's/crtitical/critical/' b4/ez.py
+b4 is provided by Fedora Linux repositories through the package
+python3-b4 [1]. That said, add dnf package installation method
+on the README for Fedora-based systems.
 
-Thank you, fixed in the latest master. I'm surprised pycharm didn't complain
-about it.
+[1] https://src.fedoraproject.org/rpms/python-b4
 
-> I also have a branch based on an linux-next tag that I'd want to enroll,
-> but it looks like we can't enroll branches based on arbitrary commits?
-> 
-> Neither the commit ID or the tag seems to work:
-> 
-> $ b4 prep -e 37b355fdaf31
-> CRITICAL: Could not find common ancestor with 37b355fdaf31
-> 
-> $ b4 prep -e next-20220714
-> CRITICAL: Could not find common ancestor with next-20220714
+Signed-off-by: Maíra Canal <mairacanal@riseup.net>
+---
+ README.rst | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-You're right, we should support this using -f. 
-I'll work on getting that in.
+diff --git a/README.rst b/README.rst
+index ca4718c..ebbe195 100644
+--- a/README.rst
++++ b/README.rst
+@@ -16,6 +16,10 @@ To install from pypi::
+ 
+     python3 -m pip install --user b4
+ 
++On Fedora-based systems, you can also install it from dnf::
++
++    dnf install python3-b4
++
+ Upgrading
+ ---------
+ If you previously installed from pypi::
+-- 
+2.37.1
 
--K
