@@ -1,74 +1,135 @@
-Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F74E29AC
-	for <tools@linux.kernel.org>; Sun, 14 Aug 2022 22:05:23 +0000 (UTC)
-Received: from mx0.riseup.net (mx0-pn.riseup.net [10.0.1.42])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
-	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
-	(Client CN "mx0.riseup.net", Issuer "R3" (not verified))
-	by mx1.riseup.net (Postfix) with ESMTPS id 4M5WTV22R3zDqBX
-	for <tools@linux.kernel.org>; Sun, 14 Aug 2022 21:56:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-	t=1660514206; bh=w8Xf4rwc/5+ZL81d9STRMhqzjJFeu/tKOQ61A1Q5yA4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=I697jnzd7JwxKSZQ+Sat4O7EU0rULZX8D47KEsgMHQxl5RuDAxdbLZISe6WjEXyMA
-	 Cm0j6+8ODTrGMUrorMuGn9hS5pCfFlbR6cpH9/qdj1jkXckCbJ6Y8nu9PbqfuOep3i
-	 zG6XyQo+f0ItYK0980Vlvm4AcWMap2JBfy5776cc=
-Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
-	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
-	(Client CN "mail.riseup.net", Issuer "R3" (not verified))
-	by mx0.riseup.net (Postfix) with ESMTPS id 4M5WTN5Y3vz9sQY;
-	Sun, 14 Aug 2022 21:56:40 +0000 (UTC)
-X-Riseup-User-ID: 1734643F7E85C007366BCB45B23C26D09C9510432857B48B0C0EA748568708D4
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	 by fews1.riseup.net (Postfix) with ESMTPSA id 4M5WTM1fGXz5vW0;
-	Sun, 14 Aug 2022 21:56:38 +0000 (UTC)
-From: =?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>
-To: tools@linux.kernel.org
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>
-Subject: [PATCH b4] Add dnf package on the Installing section
-Date: Sun, 14 Aug 2022 18:56:24 -0300
-Message-Id: <20220814215624.89760-1-mairacanal@riseup.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E050E2914;
+	Mon, 15 Aug 2022 16:18:01 +0000 (UTC)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.west.internal (Postfix) with ESMTP id C8CA03200972;
+	Mon, 15 Aug 2022 12:18:00 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Mon, 15 Aug 2022 12:18:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1660580280; x=1660666680; bh=6LdlUZCA+v
+	ew5xQY+O7osX/jO1wo6mgaDUvfizjLxKY=; b=qlmcPXE7lxalS/NPybmRWdDmw5
+	BzItirOtjispsvgBe0N1OAdAFS2LXnJDd2W8SlxwncQAZHBMmc+6nEpK+66uKGqh
+	D1hDA6nYMT1fOA+7HhS/ysQfr+H2B9ZkLQ9B5RQGgXhA6tqM6I8OlVoDKjfxJdhh
+	xl6lp9q8x5wn45PXjqpHO2m5r0+EZKoFHfstUUmHIIowl6aRV2OtdMxNwh2HP5g1
+	HcldnWxugwTk7Ds3Q4CCTCAXuIQLdikDz4LzvEWWFG9rpS/GnWpPH9PV7f96Fxza
+	0ax5ilCUukcJ3aodpV911MvpH+A360JSDMN/X4dc9A/JYfS65sceZBD3zcVg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1660580280; x=1660666680; bh=6LdlUZCA+vew5xQY+O7osX/jO1wo
+	6mgaDUvfizjLxKY=; b=jT/WBxRp9Hn+CdhNUFrD1X4oEAjOU1/2ke+ZJ3yTQW1a
+	BpFuq+TlqoSnzr0prVPNWRYHXOJV4h1415lOwRk2O9RZqCUkqj2YS8r9byr/CRa4
+	rvgRkil86DwJxJ7mxCo5dw654Hc+5ij0RM83WQjvwwEvy1JWWSWs9RLCOjQI6h9z
+	NVwV73b8MaGpZ9gQED5KE8IsxXipvapEq1JCOArIUtWO4JTbdFEGSqX6VrjA/9L5
+	Rnasz56KAMPs9bcBnqV1KKWZnZ8Vqbpkzij8kEflcA4pW23b1vKusd6vrGN/mEU2
+	9TMh9X/wljEvmxMB7vUkFfIZy58eoGCX5hDHLRJ2Vw==
+X-ME-Sender: <xms:uHH6YrL022ecI-S8HsSGVzXdsEUwBhwW6tkijMcQO43vrHI7MjVCqg>
+    <xme:uHH6YvI3jQ6gvY09EjtmYkvhI6zj7JaM5_ezv9DP51F3cm9uc7gFml-y29XwWF1hx
+    rHReG22jg1BOUgvQVs>
+X-ME-Received: <xmr:uHH6YjuW3HizSuJTm_evql1yKSelxyMs-jmyQhMUrvfzXJF8IRTmqKZvdnN1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehvddguddttdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgig
+    ihhmvgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrf
+    grthhtvghrnhepteefffefgfektdefgfeludfgtdejfeejvddttdekteeiffejvdfgheeh
+    fffhvedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epmhgrgihimhgvsegtvghrnhhordhtvggthh
+X-ME-Proxy: <xmx:uHH6YkZlLJLuuIQjuK0Xyf4PkmquyCj8m9fqIJU7_kuT02Bp0hzDcQ>
+    <xmx:uHH6YibHr2yKPde7h__iaW2Ynz-MmBUhrxhV8_Km2qXWExxqeDcLLw>
+    <xmx:uHH6YoCLsj8PP1UCxLchVGt0tlpc9G2uwjehBK6Gqqu77k8jTbjX7w>
+    <xmx:uHH6YlyTFKPR60Sm2ah1JDv2OLN8Dg_6H1dqxiiFvpeVCGFlY9fxPA>
+Feedback-ID: i8771445c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Aug 2022 12:17:59 -0400 (EDT)
+Date: Mon, 15 Aug 2022 18:17:57 +0200
+From: Maxime Ripard <maxime@cerno.tech>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: b4 submit ready for beta testing
+Message-ID: <20220815161757.yr5vkjuoulsy226g@houat>
+References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
+ <20220720184835.uhnkucai54alhgo6@nitro.local>
+ <20220728160418.sgfns5jsisjsz5hr@penduick>
+ <20220728162434.eedqnx42sezb2vbe@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="727gkvu6n6nivn36"
+Content-Disposition: inline
+In-Reply-To: <20220728162434.eedqnx42sezb2vbe@meerkat.local>
 
-b4 is provided by Fedora Linux repositories through the package
-python3-b4 [1]. That said, add dnf package installation method
-on the README for Fedora-based systems.
 
-[1] https://src.fedoraproject.org/rpms/python-b4
+--727gkvu6n6nivn36
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Maíra Canal <mairacanal@riseup.net>
----
- README.rst | 4 ++++
- 1 file changed, 4 insertions(+)
+On Thu, Jul 28, 2022 at 12:24:34PM -0400, Konstantin Ryabitsev wrote:
+> On Thu, Jul 28, 2022 at 06:04:18PM +0200, Maxime Ripard wrote:
+> > I've started to test the current master (9e95d523c9b9), and there's a
+> > typo in b4/ez.py:
+> >=20
+> > sed -i 's/crtitical/critical/' b4/ez.py
+>=20
+> Thank you, fixed in the latest master. I'm surprised pycharm didn't compl=
+ain
+> about it.
+>=20
+> > I also have a branch based on an linux-next tag that I'd want to enroll,
+> > but it looks like we can't enroll branches based on arbitrary commits?
+> >=20
+> > Neither the commit ID or the tag seems to work:
+> >=20
+> > $ b4 prep -e 37b355fdaf31
+> > CRITICAL: Could not find common ancestor with 37b355fdaf31
+> >=20
+> > $ b4 prep -e next-20220714
+> > CRITICAL: Could not find common ancestor with next-20220714
+>=20
+> You're right, we should support this using -f.=20
+> I'll work on getting that in.
 
-diff --git a/README.rst b/README.rst
-index ca4718c..ebbe195 100644
---- a/README.rst
-+++ b/README.rst
-@@ -16,6 +16,10 @@ To install from pypi::
- 
-     python3 -m pip install --user b4
- 
-+On Fedora-based systems, you can also install it from dnf::
-+
-+    dnf install python3-b4
-+
- Upgrading
- ---------
- If you previously installed from pypi::
--- 
-2.37.1
+I've used b4 prep a bit more, and a few more rough edges:
 
+  * If the repo has untracked files, b4 trailers errors out. Adding
+    --untracked-files=3Dno to the args list of git_get_repo_status
+    makes it work fine.
+
+  * b4 prep -n will create a branch with the tracking commit last, but
+    b4 prep -e will add the commit first.
+
+  * If we have a branch tracked by b4 (and using a tracking commit), and
+    we want to enroll another branch based on that first branch, b4 prep
+    -e will refuse to enroll it stating that it's already tracked.
+
+    It seems like this is due to is_prep_branch() returning True because
+    find_cover_commit() will consider the entire history and not only
+    the base..HEAD range.
+
+Thanks again for working on b4
+Maxime
+
+--727gkvu6n6nivn36
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHQEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYvpxtQAKCRDj7w1vZxhR
+xZUeAQCCV/qMKUhoJKevndOqjMepFfxGtlpMqXcB723vUTwHQQD41qVtVQtc3WTb
+pyVT+0AD+mqfNiUCvNQQ5VawRbwVBg==
+=ZU8r
+-----END PGP SIGNATURE-----
+
+--727gkvu6n6nivn36--
