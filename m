@@ -1,105 +1,117 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFD24A07
-	for <tools@linux.kernel.org>; Thu, 18 Aug 2022 21:22:43 +0000 (UTC)
-Received: by mail-wr1-f53.google.com with SMTP id u14so3092737wrq.9
-        for <tools@linux.kernel.org>; Thu, 18 Aug 2022 14:22:43 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD08B7496
+	for <tools@linux.kernel.org>; Fri, 19 Aug 2022 20:43:08 +0000 (UTC)
+Received: by mail-qv1-f54.google.com with SMTP id m5so1348908qvo.4
+        for <tools@linux.kernel.org>; Fri, 19 Aug 2022 13:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=conchuod.ie; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=Vz+lfVJjuZL/wKRCqi/Lbfc4QZY0hUUqYTvSovxoHh4=;
-        b=Fid3rBFHL2eUCYLrsRkuowIReRNOmMWQj46daI2uzyIGIeV/7SuRUI11t4uiRkqPw9
-         1q3JqwcnI7fvQx/3bznz2NdzHUpJ/tZau48OzGS6jBZdkRkgTp+XcUEcOGu7ewuPy6BP
-         ADQOLeCuVTVHvvGKM9D8MXONOZ6NB5L901pbY1+mIQ6DnSVwRyS3euavcyKIlGXQ+lMe
-         EyMBWXYuYmLNd5pQrqDRpBMvO6ruSPT2PXp25uGjsxm+qOAz2s7X4SxpzNHQ2/EUxF3r
-         RpeMTbp1ru/7zcJWTPvVu6tfDIne4lTkCF8xadGOcYXtI0TiSKxOL8VAmvO0CaekzwAd
-         V/Sg==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=CCGVLYrrHcTrllF0E7FqwfkRpG4pxtpfhRMWE2adNQc=;
+        b=Bjq08KxehIooXNpMbwR3b8A7mvGFpQ5v6nIX0CNNTwCUqWW03n0zZR1pDCMh+iKUPT
+         lHGb0K2DwnAYSHXo+iUQCqb8VeO7+/iuvBXJufqIBLu8QLpAEk06hCvVWrIEEYRm1+SI
+         ZQutBCKmQimidiniAFbcTTLjrh5jEhv7F2ipY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=Vz+lfVJjuZL/wKRCqi/Lbfc4QZY0hUUqYTvSovxoHh4=;
-        b=BL+0AujpHsbsImb4pEGLjqboxHBS5DPH7FJd44WlKPI9hwDQEl2LFVq07Oj5kYAOTF
-         OLxEGKmhX5aYPUJMTNW8UrYR52Lz3dpZnAtEq6L+RbQXAK1/UJbLrqgn5/su8L472+Cn
-         4/CMupf/jSZ4cKr8OXH7ZGUAntMJ5Btd1yJZB7ojVzZ3O2kgJOXenQxUtXR5+DDupwht
-         5GURJB/Y8lNR62ZPG2tk/LOXhWIyC65f06jKC5IXR2/S/UQ/UyMpi4v8OniWaACnUaSg
-         HoUZbRwbtnfA17yG+ETqk9dos5/0CUQZIEcsdik/w28rd+rdBHuE7NcvkjTACIrAsp0V
-         ukGQ==
-X-Gm-Message-State: ACgBeo1mog5jhhDFfYh08/1Dx0vbi0g/1F7tWZaBJfAJUpIYAhOZt0SD
-	xyVOffymP2oAEBECECocS37UebxVJjpp3NP5
-X-Google-Smtp-Source: AA6agR7En8QH+N0/FFjLT+HvqAZc6WxblguUnv0mjmdud7DU1YQXAHHZr50L0w0VzaAtFVXCZJHoeg==
-X-Received: by 2002:adf:d1c6:0:b0:220:676b:74bf with SMTP id b6-20020adfd1c6000000b00220676b74bfmr2461139wrd.262.1660857761962;
-        Thu, 18 Aug 2022 14:22:41 -0700 (PDT)
-Received: from [192.168.2.222] ([109.76.58.63])
-        by smtp.gmail.com with ESMTPSA id a17-20020adffb91000000b002207a0b93b4sm2325052wrr.49.2022.08.18.14.22.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Aug 2022 14:22:41 -0700 (PDT)
-Message-ID: <91fe0c5d-58d0-59e2-febc-a0b78177ab67@conchuod.ie>
-Date: Thu, 18 Aug 2022 22:22:40 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=CCGVLYrrHcTrllF0E7FqwfkRpG4pxtpfhRMWE2adNQc=;
+        b=nQ0YFOAJVIBwPfmF+uIFB27Gh2jE1lWpxhd2HA4QIpEdFEie2Hov6qKbGaQ8KivV7Z
+         ZgozwDQFTFlXDuXfuZ/vbO78mvRG5Lgt1Ae9w327PhHYQUJcKdNaWGwNNOnSwDDP7zoR
+         PjJvCCREovQ35FLzHSb+MwavHHKm9eURXlOJXsFLF+/aUnO5XoQUHUrTPj0P4+G8TC8d
+         UN5EXa4+QpX9xcNOAHl9+3AW6JWt9ED8rGlX9mGNay5xJTgWlJG9yL8FWuWDZLW70FJ+
+         8ephR8mcLl6cIWHoQTiBx6I6RfBYpBXNV9ZRlrNfqG6A2zGVSmUZ9GoD2FOEmjsDJMCY
+         46tw==
+X-Gm-Message-State: ACgBeo04VYPaZT+sdKAdlHU4Ldo+Jd5+ASS9//3ORzkkcUq4RTNucpLu
+	PGu3T5SfkJ+lvQa5bZ4M+UAQFA==
+X-Google-Smtp-Source: AA6agR7xL8D6oKyQuY8ZoRJkcmxdI7SPPsuFzxuB5NHRm390cG07DR6QeKaDGPMj3XQY3h05uu02TQ==
+X-Received: by 2002:ad4:5b88:0:b0:47a:fe4f:aa28 with SMTP id 8-20020ad45b88000000b0047afe4faa28mr8113910qvp.83.1660941787714;
+        Fri, 19 Aug 2022 13:43:07 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id bi24-20020a05620a319800b006b9d4f45c83sm4348313qkb.97.2022.08.19.13.43.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Aug 2022 13:43:07 -0700 (PDT)
+Date: Fri, 19 Aug 2022 16:43:04 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Conor Dooley <mail@conchuod.ie>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: b4 submit ready for beta testing
+Message-ID: <20220819204304.42w2ctexcrhnw72p@meerkat.local>
+References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
+ <20220720184835.uhnkucai54alhgo6@nitro.local>
+ <87pmhs1d8h.fsf@baylibre.com>
+ <20220726142743.dllhmbivtb2yk4uk@meerkat.local>
+ <87bktbapri.fsf@baylibre.com>
+ <20220726205653.yjmafga3utcwjef7@meerkat.local>
+ <e2ca58f1-3c10-0dc6-ebdb-3ca088b430d7@conchuod.ie>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: b4 submit ready for beta testing
-Content-Language: en-US
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-References: <20220716142954.voq4ucnl5wkq7h2b@nitro.local>
- <20220720184835.uhnkucai54alhgo6@nitro.local> <87pmhs1d8h.fsf@baylibre.com>
- <20220726142743.dllhmbivtb2yk4uk@meerkat.local> <87bktbapri.fsf@baylibre.com>
- <20220726205653.yjmafga3utcwjef7@meerkat.local>
- <e2ca58f1-3c10-0dc6-ebdb-3ca088b430d7@conchuod.ie>
- <e2198b0d-9688-099d-75cb-99a5bf12191a@conchuod.ie>
- <20220818210442.spgrtaktztqrxded@meerkat.local>
-From: Conor Dooley <mail@conchuod.ie>
-In-Reply-To: <20220818210442.spgrtaktztqrxded@meerkat.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e2ca58f1-3c10-0dc6-ebdb-3ca088b430d7@conchuod.ie>
 
-On 18/08/2022 22:04, Konstantin Ryabitsev wrote:
-> On Thu, Aug 18, 2022 at 09:12:54PM +0100, Conor Dooley wrote:
->>> Apologies if I am missing something that (should) be obvious here.
->>> I am trying to use "b4 trailers" to update a local branch that was
->>> not created using b4. I ran:
+On Thu, Aug 18, 2022 at 08:30:03PM +0100, Conor Dooley wrote:
+> Apologies if I am missing something that (should) be obvious here.
+> I am trying to use "b4 trailers" to update a local branch that was
+> not created using b4. I ran:
 > 
-> Thank you for testing it out -- I've only lightly tested this code in the
-> context of not using a fully-managed branch, so you're probably hitting some
-> very nice bugs.
-
-It was fine, a rebase fixed it up again nicely.
-
+> b4 trailers -u --trailers-from 20220817201212.990712-1-mail@conchuod.ie
 > 
->>> b4 trailers -u --trailers-from 20220817201212.990712-1-mail@conchuod.ie
->>>
->>> It took 5 minutes before I got any output from b4, so I actually
->>> began writing this email in the meantime as a bug report...
->>> It eventually worked, outputting:
->>> Calculating patch-ids from 16806 commits
-> 
-> Ew, this is going horribly wrong already! It's only supposed to find recent
-> commits where you're the committer (git log --committer=your@email),  so I'm
-> wondering how it's matching 16806 commits in the first place, unless you've
-> done some really crazy rebases.
+> It took 5 minutes before I got any output from b4, so I actually
+> began writing this email in the meantime as a bug report...
+> It eventually worked, outputting:
+> Calculating patch-ids from 16806 commits
 
-Possibly I rebased the original branch on -rc1, but I wouldn't count
-that as crazy. Committer should be Linus. I supplied --base=v6.0-rc1 to
-format-patch.
+I found the problem that was causing this to happen -- there was an off-by-one
+logic bug when we were looking at the non-contiguous ranges. In your
+particular case, we were running:
 
-Hmm I wonder if it might be because I am sending mail from mail@conchuod.ie
-but my committer/author email is conor.dooley@microchip.com?
+	$ git --no-pager log -F --committer=conor.dooley@microchip.com --since=3.months --format="%H %P" --no-merges
+	2e80b31e5fda2503b96cf810c827fd22eef71a3c 31b809d2e455925a3d13ef4bfed62dac13ba45be
+	31b809d2e455925a3d13ef4bfed62dac13ba45be adbeff44dcd5989a6508dfc3aa1c7f549bdea9de
+	adbeff44dcd5989a6508dfc3aa1c7f549bdea9de e620e1db41c2d5a9024b12d24db1e86fa55e3fe6
+	e620e1db41c2d5a9024b12d24db1e86fa55e3fe6 568035b01cfb107af8d2e4bd2fb9aea22cf5b868
+	88d319c6abaeb37f0e2323275eaf57a8388e0265 3f8ccf5f1a8c349364055b73caf1bb0314229976
+	efa310ba00716d7a872bdc5fa1f5545edc9efd69 5e757deddd918edb8cb2fdb56eb79656ffc6dade
+	3f8ccf5f1a8c349364055b73caf1bb0314229976 294b2111ff1027a942c362d523b847d73d91b70c
+	5e757deddd918edb8cb2fdb56eb79656ffc6dade f2906aa863381afb0015a9eb7fefad885d4e5a56
 
-> 
-> I'll take a look at it first thing tomorrow.
+The goal is to find the most recent contiguous set of your own commits and use
+that as the base for lookups. In the above output, the break was here:
 
 
-Whenever you get a chance :)
-Thanks,
-Conor.
+	2e80b31e5fda2503b96cf810c827fd22eef71a3c 31b809d2e455925a3d13ef4bfed62dac13ba45be
+	31b809d2e455925a3d13ef4bfed62dac13ba45be adbeff44dcd5989a6508dfc3aa1c7f549bdea9de
+	adbeff44dcd5989a6508dfc3aa1c7f549bdea9de e620e1db41c2d5a9024b12d24db1e86fa55e3fe6
+	e620e1db41c2d5a9024b12d24db1e86fa55e3fe6 568035b01cfb107af8d2e4bd2fb9aea22cf5b868
+    -- 8< --
+	88d319c6abaeb37f0e2323275eaf57a8388e0265 3f8ccf5f1a8c349364055b73caf1bb0314229976
+	efa310ba00716d7a872bdc5fa1f5545edc9efd69 5e757deddd918edb8cb2fdb56eb79656ffc6dade
+	3f8ccf5f1a8c349364055b73caf1bb0314229976 294b2111ff1027a942c362d523b847d73d91b70c
+	5e757deddd918edb8cb2fdb56eb79656ffc6dade f2906aa863381afb0015a9eb7fefad885d4e5a56
+
+When I tested, there was only the single range of commits, which is why it
+worked in my tests. However, in your case there are two sets of contiguous
+commits, and we were using the wrong one as the starting commit (the next in
+line). So, instead of a nice selection of just 4 commits, which we wanted:
+
+    $ git rev-list e620e1db41c2d5a9024b12d24db1e86fa55e3fe6~1..2e80b31e5fda2503b96cf810c827fd22eef71a3c | wc -l
+    4
+
+We ended up doing this:
+
+	$ git rev-list 88d319c6abaeb37f0e2323275eaf57a8388e0265~1..2e80b31e5fda2503b96cf810c827fd22eef71a3c | wc -l
+	16806
+
+And then calculating patch-ids on each one of those. I'm shocked it only took 5
+minutes.
+
+The fix is in master.
+
+-K
