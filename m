@@ -1,36 +1,36 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31623C14;
-	Thu, 25 Aug 2022 18:25:08 +0000 (UTC)
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-11c896b879bso25942320fac.3;
-        Thu, 25 Aug 2022 11:25:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19263D68;
+	Thu, 25 Aug 2022 18:25:21 +0000 (UTC)
+Received: by mail-ot1-f49.google.com with SMTP id o15-20020a9d718f000000b00638c1348012so14505117otj.2;
+        Thu, 25 Aug 2022 11:25:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc;
-        bh=tEdL6aNs70GkfN982FtLQIs2X4kI0WzRvCsLmV0y2O0=;
-        b=2DzoIkcVGBh91OfxN8XphHM3Oig12VkgnNrQVM1t/jDi15X3OAwhatKk5gJUhdjr0t
-         xwjkGU4nIOWuj/LBELk4BDc9fkljpKDk+wRU5Fb9vE8mHGEXgemuFPBN8W+B3H/+JdqC
-         H6xoq1nD+w3lNO50WqNMkQHSkIfvXG7KzbCKpKGLdDfuCsqV/wxl54U9o2iqOA3eQZ2X
-         A4NEa6Z5yuDPo9a+wLsjCoRi5eR6ZtBQ5uD4uqtNtPt+v3WynMdoexNx1mPV03fB/XJ/
-         mQZK9X54VlQ0xhB2gxhF9VxTOKoWzsIXTI99MR946IVd8JxYTH8rIizBNcTdnsRNsp6L
-         Qccw==
-X-Gm-Message-State: ACgBeo3fcoru+TAFfo3vjRk0AqPCvbwrGwgj361wmro1lz/tWlFJkZ2R
-	878O9C5d+KRA4Js0uqEldZqVuj0X7w==
-X-Google-Smtp-Source: AA6agR7PJzsQt0T0DTJFDIPrVHS+QyvxW/p99xtlyFTZ+0apdm8JzR3hEQYm0oFBO4I/dzQe/JYLLg==
-X-Received: by 2002:a05:6870:608f:b0:fe:340d:df8e with SMTP id t15-20020a056870608f00b000fe340ddf8emr191724oae.15.1661451907482;
-        Thu, 25 Aug 2022 11:25:07 -0700 (PDT)
+        bh=IiSPUW4V7ovPoKD3+Vi6AGJ363Hr0kV0N+m+ZPRHE/4=;
+        b=eD3NBSapGALK8QhcdqTzP8c8bhGQi6wxJqozVsqZ0o5YmKdxoyxIdK6ROqObisQiII
+         Iirzd0gMyCTwPxBHnJAlaJvGlXa1bKgrd81XmZdC5iDJda2qV0Xey51Am5AP4zf6L/3s
+         xNzY5OZ+35VOO+251JH0GrrUhe1XPZiNNQXOt48YiVYS7exfWIEIfum3fYN1FUXAX1n1
+         1CNoH5OrW3SBg9U3o5ax0TGSKOrQQ9cbPa7i/ciX4ZOHqw/wSsW5KYJftWPthPayEtki
+         swiG0BpPt/Z90v43nruBrF4YnCWWbNQM9QcsYzYQ7iEJtjL7fdNZy/uXyh6JfaOkTV0K
+         RDiw==
+X-Gm-Message-State: ACgBeo2ZYLbppK4zPwxQr/GgbVOS4jgYuZ7gyh1MeP7u2a9OHCFCzkFX
+	u8t55F+RI44z8rI5wlwLAcMtrsPs3w==
+X-Google-Smtp-Source: AA6agR4o9tb/QQpc27Wbj6pP7+UVWbVkYI6h0WlMH2dnVAqED0tizM+bV13WvL8hMqDXjZ5v22F4eg==
+X-Received: by 2002:a9d:3b8:0:b0:638:df67:781d with SMTP id f53-20020a9d03b8000000b00638df67781dmr145638otf.21.1661451920656;
+        Thu, 25 Aug 2022 11:25:20 -0700 (PDT)
 Received: from xps15.. (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.googlemail.com with ESMTPSA id c8-20020a544e88000000b0034536748843sm28222oiy.3.2022.08.25.11.25.06
+        by smtp.googlemail.com with ESMTPSA id u21-20020a056870421500b0010830c24aaasm5880808oac.56.2022.08.25.11.25.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Aug 2022 11:25:07 -0700 (PDT)
+        Thu, 25 Aug 2022 11:25:20 -0700 (PDT)
 From: Rob Herring <robh@kernel.org>
 To: tools@linux.kernel.org
 Cc: users@linux.kernel.org
-Subject: [PATCH] send: Use only the default git 'sendemail' config when no identity is set
-Date: Thu, 25 Aug 2022 13:25:06 -0500
-Message-Id: <20220825182506.1449442-1-robh@kernel.org>
+Subject: [PATCH] ez: Fix adding 'RESEND' to patch subject
+Date: Thu, 25 Aug 2022 13:25:19 -0500
+Message-Id: <20220825182519.1449744-1-robh@kernel.org>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
@@ -40,31 +40,28 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-With no git sendemail 'identity' set, b4 send picks up all the identities
-and uses the wrong settings.
+If --resend option is given, the 'RESEND' prefix is not added to the patch
+subject(s). This is because the original command line prefix list is
+passed rather than the modified prefix list.
 
 Signed-off-by: Rob Herring <robh@kernel.org>
 ---
-This only partially fixes the sendemail handling. If an identity is set,
-we need to merge the identity's section with the default section as an
-identity may not contain a complete configuration.
----
- b4/__init__.py | 2 +-
+ b4/ez.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/b4/__init__.py b/b4/__init__.py
-index 4296b109d118..a8ddf8534eaf 100644
---- a/b4/__init__.py
-+++ b/b4/__init__.py
-@@ -2759,7 +2759,7 @@ def get_smtp(identity: Optional[str] = None,
-         sconfig = get_config_from_git(rf'sendemail\.{identity}\..*')
-         sectname = f'sendemail.{identity}'
-     else:
--        sconfig = get_config_from_git(rf'sendemail\..*')
-+        sconfig = get_config_from_git(rf'sendemail\.[^.]+$')
-         sectname = 'sendemail'
-     if not len(sconfig):
-         raise smtplib.SMTPException('Unable to find %s settings in any applicable git config' % sectname)
+diff --git a/b4/ez.py b/b4/ez.py
+index 280eb0d4e969..d42a7b748d35 100644
+--- a/b4/ez.py
++++ b/b4/ez.py
+@@ -944,7 +944,7 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
+         prefixes.append('RESEND')
+ 
+     try:
+-        patches = get_prep_branch_as_patches(prefixes=cmdargs.prefixes)
++        patches = get_prep_branch_as_patches(prefixes=prefixes)
+     except RuntimeError as ex:
+         logger.critical('CRITICAL: Failed to convert range to patches: %s', ex)
+         sys.exit(1)
 -- 
 2.34.1
 
