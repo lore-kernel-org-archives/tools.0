@@ -1,45 +1,48 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BECA48
-	for <tools@linux.kernel.org>; Thu,  1 Sep 2022 21:32:12 +0000 (UTC)
-Received: by mail-qt1-f177.google.com with SMTP id h22so169965qtu.2
-        for <tools@linux.kernel.org>; Thu, 01 Sep 2022 14:32:12 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AC47480
+	for <tools@linux.kernel.org>; Thu,  1 Sep 2022 21:40:49 +0000 (UTC)
+Received: by mail-qk1-f176.google.com with SMTP id b9so407526qka.2
+        for <tools@linux.kernel.org>; Thu, 01 Sep 2022 14:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=C8UZl3wfLVpJJVaXmJkf5wRIfDlyWdUwatA8KQp/RQs=;
-        b=FJheJA1QN7pLVWc85HFLSb40IC0gpou23+FvvMUiHPFjyvtw/fvlAYky34CdB82Oh9
-         HOcsSBK1xnohFzqK0+0VLUmVou49ukvHI/7mmLZysxXgW+QtYZmkfrLClOMgFepg9mkc
-         dLs0e/VGZrleeQIxvgP2dbNdhxKvaPEzsGtes=
+        bh=cQJqRAz3OqP1uCe/xgpzkzJmIpmG4t/J+tAnO41gsMI=;
+        b=fGFev1urSEYkVclMbzwtUN9FjfF5XvWjtT/H78OEuBBxnvYILEYCHBX4AYBvYPfpkw
+         wQ0uB/KmKavVwY7OdRAwR9o2Pe9azcJrYdagEHSQJJ854GxAJJm8cjoQ4JXJ572T1lFm
+         fPKwj+boYXINJiU9a5ehpF1fAVfgyMYXrRl2w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=C8UZl3wfLVpJJVaXmJkf5wRIfDlyWdUwatA8KQp/RQs=;
-        b=rKCQDdP08hmNjibkgEThanVDm0gG2yaJZoX53VvBvTzgSt27CrvV9IegrvH+TfjQYq
-         i/PboB/5wetdTWRWJknW4Ggw0EpJHCQMf6E/NMdy4jn7A9xEyOKWp9qklY6oU956zneW
-         58mifCvFGIiqWoKyedOmqRUV9AD36cvFXSPzZ5ytKuv7iGnqLAAAtk8OWVxTrrYxtQ+u
-         abyHzinDX+bxbh0HgxtzgFT4Rl7lIVp2tnXf1u+3zysgAhtr6WU499aPPEG4G++sHJNd
-         r+w9SZRKsUlOI+Zy4Ff7sF7T7Dus0nLFpDq9Nh+Kf7XWFdq7xXkde4WmH9d9DEQK6y3s
-         m9uA==
-X-Gm-Message-State: ACgBeo0uKUTYvzILKoAWQkFub9ADuF6/uJ5eDdpMDsYsmty/9pvoxK7X
-	28LtmOO9TNz2+UGgL6zwIcFag1QbM72erQ==
-X-Google-Smtp-Source: AA6agR7dQ5auOFbvDT2s/qBsftTYSiO9Wfpaja9eTQ9wXTEOM/n7AfU6OIL8Whl3h0QK3Pyo2Hp8XQ==
-X-Received: by 2002:ac8:7d96:0:b0:344:8cb0:ae8b with SMTP id c22-20020ac87d96000000b003448cb0ae8bmr25883299qtd.628.1662067931593;
-        Thu, 01 Sep 2022 14:32:11 -0700 (PDT)
+        bh=cQJqRAz3OqP1uCe/xgpzkzJmIpmG4t/J+tAnO41gsMI=;
+        b=AkP/pz0+j3zyqrDfk3qjPaZHcVPP2F2OXA4jW/s4ZMlOkPorJ3Bs8GKQDUNrCdmcVC
+         XhvjjH+s7PJykCONAHT0BlnteUPNg9djyM5ibBuNh3cMU+qaA0bFQBUh1VQMNZkWkQ19
+         uPr2JLYBjrd0H5uCedJDwp1Aea34XY6Emem8ymzj1RHfkKzeNabuh72DhVXiCmWgNwym
+         t4xt4rRwY0Jq3UJBx3LsIuk2TVoPPYowf823TEPpJL7s9Ame12lukIYjr4l+y2Aevvtr
+         pxQ9j1O/aBW+UzvNT6ndMmlLxLwZeyNVGz1LyFgXupREWSKdHMFrOGkcF1RpihOIE2gq
+         OJxA==
+X-Gm-Message-State: ACgBeo0QuztfUzPjRfDMYfl/6tABZ81oE2R0S/aXHNNgWRiZU720ojrZ
+	XESdux7Em9At38ojE5+t5TLVYtPmQGI92Q==
+X-Google-Smtp-Source: AA6agR4FMQy2svzXkDxU7MgrESPAg4C0QWJRAQSr4+OJDrdkThgDqVZjA+U60MJtqUFXLUxAsr+1pQ==
+X-Received: by 2002:a05:620a:c50:b0:6b9:6e6:428d with SMTP id u16-20020a05620a0c5000b006b906e6428dmr21063839qki.280.1662068448878;
+        Thu, 01 Sep 2022 14:40:48 -0700 (PDT)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id k19-20020a05620a143300b006bb83e2e65fsm45515qkj.42.2022.09.01.14.32.10
+        by smtp.gmail.com with ESMTPSA id i11-20020a05620a248b00b006bb29d932e1sm44807qkn.105.2022.09.01.14.40.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 14:32:11 -0700 (PDT)
-Date: Thu, 1 Sep 2022 17:32:09 -0400
+        Thu, 01 Sep 2022 14:40:48 -0700 (PDT)
+Date: Thu, 1 Sep 2022 17:40:47 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Philippe Blain <levraiphilippeblain@gmail.com>
+To: Leon Romanovsky <leon@kernel.org>
 Cc: tools@linux.kernel.org
-Subject: Re: Using b4 with full URLs still uses lore.kernel.org by default
-Message-ID: <20220901213209.hpoqzskcozhkxnqn@meerkat.local>
-References: <f2b0f3c1-d98d-979d-1513-18f2491f4267@gmail.com>
+Subject: Re: Please return trailer-order option
+Message-ID: <20220901214047.oyrmg4hyyihkdbbg@meerkat.local>
+References: <YtZZE/6BOR5m86Kq@unreal>
+ <7bb8b97f-dc03-41af-866e-767e4c15df62@www.fastmail.com>
+ <20220728171351.4v65ytd2s5wp2lb7@meerkat.local>
+ <20c1ca09-58e8-4ed4-a586-871a2daad70f@www.fastmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -48,28 +51,26 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f2b0f3c1-d98d-979d-1513-18f2491f4267@gmail.com>
+In-Reply-To: <20c1ca09-58e8-4ed4-a586-871a2daad70f@www.fastmail.com>
 
-On Tue, Aug 30, 2022 at 01:00:20PM -0400, Philippe Blain wrote:
-> $ b4 mbox -o- https://inbox.sourceware.org/gdb-patches/cover.1661868744.git.aburgess@redhat.com/T/#t
-> Grabbing thread from lore.kernel.org/gdb-patches/cover.1661868744.git.aburgess%40redhat.com/t.mbox.gz
-> Server returned an error: 404
+On Thu, Jul 28, 2022 at 09:42:10PM +0300, Leon Romanovsky wrote:
+> >> Do you think that it is acceptable to return that option?
+> >
+> > Yes, it will probably come back as "trailer-priority" and preserve the
+> > chain-of-custody ordering as discussed on the list. It should make it back in
+> > by 0.10 release.
 > 
-> It does work correctly if I set 'b4.midmask' to 'https://inbox.sourceware.org/r/%s'
-> in my local Git config file, but sometimes I used b4 outside of any Git 
-> repository just to transfer threads to my IMAP account (piping b4 mbox to git imap-send)
-> so it would be convenient if full URLs were not re-written.
+> Sounds awesome.
 
-Okay, I pushed a change that should allow you to do that, but this will only
-reasonably work with "b4 am" or "b4 mbox". To properly work for all other
-cases, the midmask and linkmask settings need to be properly set to point at
-the proper server, e.g.:
+FYI, this option is back as of today. It's still called "trailer-order", so
+you shouldn't need to change anything. There are some important changes in how
+it works:
 
-[b4]
-  linkmask = 'https://inbox.sourceware.org/%s'
-  midmask = 'https://inbox.sourceware.org/%s'
+1. we only reorder trailers that are in your own chain-of-custody section
+   (below the last Signed-off-by that isn't yours)
+2. we always move your own Signed-off-by to the bottom of your own
+   chain-of-custody section
 
-However, for what you are trying to do it should work now. The change is both
-in master and in stable-0.9.y. If all goes well, I'll release 0.9.1 tomorrow.
+Please let me know if this new behaviour is working as you would expect it.
 
 -K
