@@ -1,115 +1,104 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903534C62
-	for <tools@linux.kernel.org>; Fri,  9 Sep 2022 16:11:20 +0000 (UTC)
-Received: by mail-qv1-f54.google.com with SMTP id v15so1576899qvi.11
-        for <tools@linux.kernel.org>; Fri, 09 Sep 2022 09:11:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=RxIED189E+TUNFi0BBTbVuXu/Z/qKwiR3J4tiz2mh6o=;
-        b=Qs7h05l+jh7UO9kA52DzPj2i24w1LDq+PRpKhBDmilQHmiZDaACgm+UNdFMYF2i0AA
-         R2o//Z+j0qMNAbMDTdoOhZOUEFT01QsYkiJfeQ80jmWz+3XFaK3uW3UTr3tli0oyPnfI
-         OBG0cfwENBxBWgogjv2ceNyWpt3vJBSPHf478=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=RxIED189E+TUNFi0BBTbVuXu/Z/qKwiR3J4tiz2mh6o=;
-        b=jZAOMRLyGvHvlo4L+7c6oUze5vBgqgLc6pa6TaNdxtzF55xCG5r3KHhhhCZ+hd3Xw+
-         aEtHa0VwyitVy0vTscdmurf1PISWEh8iVRDQW37NMIUr6UGosLw0FXNueUXGdnZykxmX
-         HXYkzgViTfqukeIo6wBMWoPtpZXzBz+frKdbU9hbOkvqLl0T0V+WacT2fc9L+rqNpdhd
-         fs3jrODISc0X1XPJqYjdrb5LHf8ELczDpT7CFCia1xjX3NCNaXICPlnjZUJBbdOQ6yQj
-         ycM6YZo+DgkJpnssS/gUdveQ9Cn8e4VlC4NDcUd4n/9bHXo4J79p26uedDMhNAuAk1+b
-         afJw==
-X-Gm-Message-State: ACgBeo3pcvk4Fl/of7dgwwAqenNkfBxrWMbfdV5A7VstHk0WrOZxwVq7
-	k6ZZeO+hyPu8kALK+Zx1n2m+8iGcvXDBzg==
-X-Google-Smtp-Source: AA6agR4Mc1uc6EOwq4gex9T+RtfmisKQ5oqAm2hb/q7UmYgDxFlobfhADoOhi/WiUFjDPPmLmTaeUw==
-X-Received: by 2002:a05:6214:21a3:b0:49a:76a8:1c76 with SMTP id t3-20020a05621421a300b0049a76a81c76mr12391362qvc.57.1662739879305;
-        Fri, 09 Sep 2022 09:11:19 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id y19-20020a05620a25d300b006b8e8c657ccsm751558qko.117.2022.09.09.09.11.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 09:11:18 -0700 (PDT)
-Date: Fri, 9 Sep 2022 12:11:17 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: tools@linux.kernel.org
-Subject: Re: Couple of bugs(?) in b4 send
-Message-ID: <20220909161117.m3xs23x2cmndyysi@meerkat.local>
-References: <20220908201359.tlm3tlykpsm5j3iu@ldmartin-desk2.lan>
- <20220908203914.yxgmjm5tsk7jvfoh@meerkat.local>
- <20220908222212.2ofc3atbin2k3fm4@ldmartin-desk2.lan>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B77A28F2;
+	Mon, 12 Sep 2022 12:21:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9261C433C1;
+	Mon, 12 Sep 2022 12:21:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1662985311;
+	bh=q/9M9uY0fTbaa4yH+9uXtyQLS0JMRBdwA2mPvEKJb3g=;
+	h=Date:From:To:Cc:Subject:From;
+	b=YP0OUTvfpX0tK3FiVcEixdM5FM4eZBEQj9D3gMMm1UGNI9tx/Ln2lepMSwvvZJ1Al
+	 T0J4Lw7AsZercSrGzljR6tEpra54YyhYJTk/wUgUVeeeNBRTRKvZXbHOZ4vViP/q/d
+	 r0s2eP1NS3VyXRJ6wTW3DDzXHuKNuVQY5rgD/QE8xxLSZPzD9GU4mXjFXu8MgmHI58
+	 +00oI3kvejpkR6VmotURXHfqXrfsCQjk4q6fX+7wq+Z6Y1UNP053L4vpXQ7ihouHLF
+	 CET0hg+Lc1v8H4NvvgG/U2uZl1sAZ0gpdH2tHVzRFDVOqOE+YrV2s1UCmIJA2TBOkJ
+	 UyO2lBw3hTldA==
+Date: Mon, 12 Sep 2022 13:21:48 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Resolver splat from b4 am
+Message-ID: <Yx8kXFRXB0chuYkL@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="8fxQom/0k8nMx7FU"
 Content-Disposition: inline
-In-Reply-To: <20220908222212.2ofc3atbin2k3fm4@ldmartin-desk2.lan>
+X-Cookie: One FISHWICH coming up!!
 
-On Thu, Sep 08, 2022 at 03:22:12PM -0700, Lucas De Marchi wrote:
-> > I'd say this is a feature, as aliases may be defined in any number of ways and
-> > I'm not sure we should try to locate all possible places where this may be set.
-> > 
-> > The idea is that people wouldn't really use it via cli, but via
-> > b4.send-series-to and b4.send-series-cc, e.g. for a project like git, you'd
-> > define:
-> > 
-> >    [b4]
-> >      send-series-to = git@vger.kernel.org
-> > 
-> > I'm thinking of automatically including git-topdir/.b4-config when found, so
-> > repos using b4 to send/retrieve patches can predefine a bunch of b4 settings
-> > relevant to their project.
-> 
-> Leaving it in the configuration for me is a non-starter. For
-> drm subsystem I already have a few mailing lists that I may want in the
-> To header depending on what I'm touching.  Having to create a separate
-> worktree for the rare moments I send a patch to nouveau for example
-> doesn't seem like a good solution
->
-> send-series-to in the configuration may work well for projects that
-> have a single mailing list, but that is not the Linux kernel.
 
-Oh, indeed, I was not intending this for kernel repos, just for projects that
-only have a single list where to send everything (git, dev tools, etc). I was
-just explaining the reason for its existence.
+--8fxQom/0k8nMx7FU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> I wonder if we could have a configuration to import headers from
-> git-format-patch, so even things like format.add-header would just work.
-> Then Cc/To would already be resolved by git itself.
+Using a current git version of b4 I'm currently seeng a Python
+splat which appears to be due to trying to verify a DKIM
+signature:
 
-I'm not sure it's a good goal to replace git-format-patch and git-send-email
-with this work -- the target is really the folks who look at the man-page for
-those two commands, get super confused, and ask why they can't just submit a
-pull request.
+$ b4 am 00ffdd42-2cb6-112e-3bb5-b9ef1105fc4f@linux.intel.com
+Analyzing 4 messages in the thread
+Checking attestation on all messages, may take a moment...
+Traceback (most recent call last):
+  File "/home/broonie/git/b4/b4/command.py", line 352, in <module>
+    cmd()
+  File "/home/broonie/git/b4/b4/command.py", line 335, in cmd
+    cmdargs.func(cmdargs)
+  File "/home/broonie/git/b4/b4/command.py", line 91, in cmd_am
+    b4.mbox.main(cmdargs)
+  File "/home/broonie/git/b4/b4/mbox.py", line 764, in main
+    make_am(msgs, cmdargs, msgid)
+  File "/home/broonie/git/b4/b4/mbox.py", line 104, in make_am
+    am_msgs = lser.get_am_ready(noaddtrailers=cmdargs.noaddtrailers,
+  File "/home/broonie/git/b4/b4/__init__.py", line 552, in get_am_ready
+    checkmark, trailers, attcrit = lmsg.get_attestation_trailers(attpolicy, maxdays)
+  File "/home/broonie/git/b4/b4/__init__.py", line 1301, in get_attestation_trailers
+    for attestor in self.attestors:
+  File "/home/broonie/git/b4/b4/__init__.py", line 1152, in attestors
+    self._load_dkim_attestors()
+  File "/home/broonie/git/b4/b4/__init__.py", line 1195, in _load_dkim_attestors
+    res = dkim.verify(self.msg.as_bytes(), logger=dkimlogger)
+  File "/usr/lib/python3/dist-packages/dkim/__init__.py", line 1352, in verify
+    return d.verify(dnsfunc=dnsfunc)
+  File "/usr/lib/python3/dist-packages/dkim/__init__.py", line 940, in verify
+    return self.verify_sig(sig, include_headers, sigheaders[idx], dnsfunc)
+  File "/usr/lib/python3/dist-packages/dkim/__init__.py", line 773, in verify_sig
+    self.pk, self.keysize, self.ktag, self.seqtlsrpt = load_pk_from_dns(name,
+  File "/usr/lib/python3/dist-packages/dkim/__init__.py", line 481, in load_pk_from_dns
+    s = dnsfunc(name, timeout=timeout)
+  File "/usr/lib/python3/dist-packages/dkim/dnsplug.py", line 88, in get_txt
+    txt = _get_txt(unicode_name, timeout)
+  File "/usr/lib/python3/dist-packages/dkim/dnsplug.py", line 31, in get_txt_dnspython
+    a = dns.resolver.query(name, dns.rdatatype.TXT,raise_on_no_answer=False, lifetime=timeout)
+  File "/usr/lib/python3/dist-packages/dns/resolver.py", line 1221, in query
+    return resolve(qname, rdtype, rdclass, tcp, source,
+  File "/usr/lib/python3/dist-packages/dns/resolver.py", line 1205, in resolve
+    return get_default_resolver().resolve(qname, rdtype, rdclass, tcp, source,
+  File "/usr/lib/python3/dist-packages/dns/resolver.py", line 1040, in resolve
+    (nameserver, port, tcp, backoff) = resolution.next_nameserver()
+  File "/usr/lib/python3/dist-packages/dns/resolver.py", line 598, in next_nameserver
+    raise NoNameservers(request=self.request, errors=self.errors)
+dns.resolver.NoNameservers: All nameservers failed to answer the query 20210112._domainkey.quanta-corp-partner-google-com.20210112.gappssmtp.com. IN TXT: Server 172.16.32.1 UDP port 53 answered ; Server 172.16.32.1 TCP port 53 answered [Errno 111] Connection refused
 
-For many, running "b4 prep --format-patch" followed by git-send-email may be
-the better approach.
 
-> > How about:
-> > 
-> >    --no-auto-cc  : skips adding addresses found in trailers
-> >    --no-tocc-cmd : skips executing tocmd/cccmd (get_maintainer.pl, if found)
-> 
-> lgtm
+--8fxQom/0k8nMx7FU
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Another thought I had is to add:
+-----BEGIN PGP SIGNATURE-----
 
-    b4 trailers --auto-cc
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmMfJFsACgkQJNaLcl1U
+h9C36wf6AolPFCAiQP7d6vL8bMLENNj9iokEX92MKz7EN/kEFpkSrlHMn3rDVUl8
+uC3HEmznE2BaH8OAwnRjW2SSbn+lIq3ZKu4dDRuKS62K3zBLeHJVtplU2V7dMWDx
+HQ+C1FSUU0K6Xzwoq8LOYN9bwKvftlC4ygCbtmea8q/d2ATBLbdJ4LNv1VyjCo6P
+z/taYDG/X+YwsJI5h8MT0jsWz6QORs2QzvzJNHgpy53tiKLXqE//TqrfUEKnZ49o
+HB5hFkMroiDrV/ru39if5mLxe1+FnJFpxmc5DumNQlyaLQ3lZ2/NlSfZoqJ6PNNN
+prIY8OC8CjnImeM/okbJHLEagNnwJg==
+=0XZt
+-----END PGP SIGNATURE-----
 
-This would populate the Cc: trailers from what is output by tocmd and cccmd
-(excluding any addresses already present in trailers), plus anything found in
-format.to and format.cc.
-
-I haven't done this before because I was worried that the list would be too
-huge on some of the commits, but the upside is that the submitter can then
-clean them up and get the Cc list looking exactly as they want it on a
-per-commit basis.
-
--K
+--8fxQom/0k8nMx7FU--
