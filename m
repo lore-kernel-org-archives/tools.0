@@ -1,67 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BBB7C;
-	Tue, 20 Sep 2022 18:33:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8320EC433D7;
-	Tue, 20 Sep 2022 18:33:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1663698811;
-	bh=581moto/y7K94GK8ggTu8hdKhvFj2795nqucKrog5nA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YPReLLRpjMU9E89JxVAWCjm4WL4aYDgsHJy6TnsuyiCvoKvt9U9NB2N9vwlUIcza6
-	 XAZzziiGWrzkbKKrQmXgJd36rQZoyoUhW2TwUBFKiQFkDjADeRxYFECrdn0lDZoKFx
-	 Le1NFEc4tMrqvf6E5BR9CHflPv6mzkxHRGqmj8LFOEya2kTE1nC9GwWKOSOykv+pHD
-	 u8cbTSXpuTqXZYvi3lApIe2FrriX2p6xz/LFWmgxJxkOSo/Lo+Axvy9mY9c7bDWi3l
-	 n518IT/VuX5RFIbJZY+Phy2InnvxQfVUWyre3b3wKPk2b067BNlKz6gCnYAhnETpp8
-	 V6Q5ze3/FMIfw==
-Date: Tue, 20 Sep 2022 21:33:26 +0300
-From: Leon Romanovsky <leon@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7129F7E08
+	for <tools@linux.kernel.org>; Tue, 20 Sep 2022 18:59:41 +0000 (UTC)
+Received: by mail-qv1-f54.google.com with SMTP id ml1so2740768qvb.1
+        for <tools@linux.kernel.org>; Tue, 20 Sep 2022 11:59:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=HBQHThos45NjE+e26vJ2kMU1zbXi311HfWBPCRHMyKY=;
+        b=CAuUhaAI3mpXSkpXvflyEjxhE+H5n9EEFdyHTHHw5/NmaG5Bp/XmtArDj+qkAW7+n1
+         CmWjy1v/LuiXUasLuS6/qB6gc+tsSgQ6/spa79yEshraLRZ+TkqYiHlc4FlQJPSmsSAd
+         IncaF6ozIItVcI3psej2ket13cq72I5ryWrPI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=HBQHThos45NjE+e26vJ2kMU1zbXi311HfWBPCRHMyKY=;
+        b=jxDdwsfGXzClYtpkeKrVHVIl6cwnet0t0pOSN2hTNIJOeHNIo4HsFGPRFGth+NrQtx
+         AfgfDxqHGrSZlrcSIR5avFYkG8DoguzrRic/1ekEKJt5sfsvTtjUiQ2MHrM+8dmpfsj7
+         /eiQkUeJs2sWDnkXAq0xTl4EzPqn6x6WO6282725fi8mM6JXGlLzIravSyaKrZuqPFz1
+         OqYvXxG5hHxLrhZ+k0sXSLV6JPT8vyFNUuvHVU4YqVatKuUss3PfaVhrkUe79l9aaAyM
+         +0VILqXQNOnYsfiv6HhBbTVXEZzaQtUADHzdx5Dvh4mvNd740GJPtnFageFurMa02Sux
+         NdQg==
+X-Gm-Message-State: ACrzQf3dlN73ma7+H5g6kzlonxB4VtLsUs+KJD2fjVjmaI0D/hmiJGw8
+	PeH0lvLqAsMMBxZoGxpB5VrA1A==
+X-Google-Smtp-Source: AMsMyM585mK6aO9e5tuGn8fPK7O+MXKQu/LL7Z5ZPazVOaY3wsByKp8791coWfAlkHxiZnpCpksRkw==
+X-Received: by 2002:a05:6214:20e2:b0:4ac:b9a6:17be with SMTP id 2-20020a05621420e200b004acb9a617bemr19754300qvk.104.1663700380336;
+        Tue, 20 Sep 2022 11:59:40 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id u9-20020ac80509000000b0034454067d24sm221864qtg.64.2022.09.20.11.59.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Sep 2022 11:59:39 -0700 (PDT)
+Date: Tue, 20 Sep 2022 14:59:38 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Leon Romanovsky <leon@kernel.org>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
 Subject: Re: b4 v0.10.0 is available
-Message-ID: <YyoHdo7wjKzz6UXb@unreal>
+Message-ID: <20220920185938.i5mq7m743wdcw5tr@meerkat.local>
 References: <20220916181319.okfskienqh6kfeor@meerkat.local>
  <YymDlmJG8fNhvHSY@unreal>
  <20220920144855.bxe4qtmibbu472rh@meerkat.local>
  <Yynz6A51ULumuBVJ@unreal>
  <20220920181538.3pswzay3ewbpu6z5@meerkat.local>
+ <YyoHdo7wjKzz6UXb@unreal>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220920181538.3pswzay3ewbpu6z5@meerkat.local>
+In-Reply-To: <YyoHdo7wjKzz6UXb@unreal>
 
-On Tue, Sep 20, 2022 at 02:15:38PM -0400, Konstantin Ryabitsev wrote:
-> On Tue, Sep 20, 2022 at 08:10:00PM +0300, Leon Romanovsky wrote:
-> > Thanks, it fixed the splat, but I still can't send emails with ty.
+On Tue, Sep 20, 2022 at 09:33:26PM +0300, Leon Romanovsky wrote:
+> So only patchworks, that is not updated, left :)
 > 
-> Oh, I see how it is -- it actually expects recipients to be on cmdline, not
-> just in the message headers. I think I have it now, please try master again.
+>    52 [b4]
+>    53         pw-url = https://patchwork.kernel.org/
+>    54         pw-project = linux-rdma
+>    55         pw-key = my_secret_key
 
-Thanks, it sends now.
+The docs were lying, you need three more entries. Here's how it should look
+like:
 
-So only patchworks, that is not updated, left :)
+    [b4]
+      pw-url = https://patchwork.kernel.org/
+      pw-project = linux-rdma
+      pw-key = my_secret_key
+      pw-review-state = under-review
+      pw-accept-state = accepted
+      pw-discard-state = deferred
 
-   52 [b4]
-   53         pw-url = https://patchwork.kernel.org/
-   54         pw-project = linux-rdma
-   55         pw-key = my_secret_key
+The docs shouldn't lie any more with the latest commit.
 
-> 
-> > BTW, git send-email ... works well.
-> 
-> Well, git-send-email is a 2000-line perl script with lots of really
-> questionable decisions (like supporting paths for an option called
-> "smtpServer"). So, full bug-for-bug compatibility is hard to achieve. :)
-> Thank you for being patient.
-
-Thank you for all your work.
-
-> 
-> -K
-> 
+-K
