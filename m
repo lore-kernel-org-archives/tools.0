@@ -1,93 +1,109 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4192560;
-	Thu, 22 Sep 2022 21:10:38 +0000 (UTC)
-Received: by mail-pj1-f52.google.com with SMTP id y11so11038330pjv.4;
-        Thu, 22 Sep 2022 14:10:38 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F068B1B;
+	Thu, 22 Sep 2022 21:43:02 +0000 (UTC)
+Received: by mail-pl1-f171.google.com with SMTP id d11so2626056pll.8;
+        Thu, 22 Sep 2022 14:43:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=i2oN8YDgefiVDxn9HYVC14Sbr+zrO/LS91/n1YEulpM=;
-        b=oRrWA17EtUusGqYwds7Cx08qZWLvk9j35r4NtDc+anVTCNlaIsDvQmt3Nm93g5tXsv
-         OqQTAh4MTx4m1OdIHbZyIgMoJIPNhX9IaI52Vd06XeLFx0avxAwFTnqttWEpkIiMoH48
-         9hGCWI1IhQU7k/hUs9Ck2pHC7kobvBb8Ugh8IWCb5BVN/sIdfpGX6TDmKDhzFRfLTEgm
-         PnH61Elmqc9mOkVJW2jn9lu+G7DBIq6eBWQpBS5z2p5GCmJ9Z5n29sGOdsO8FHZP1GLY
-         HxyX8IHrIpQRhP4BpvlaWPqw/ahQKBnguF0IeCvbLLhXWg2Ke86KyfqsfKnQtFF6YW8m
-         at+Q==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date;
+        bh=9v6WybS0Crfa+ik4fdXepaAOXmKiF+c2u04+aA53ye4=;
+        b=SwcLyBAQYK+2nXZ7+YcTxDHlA7Xal9nuDUVkmTr7jNExh6juvPHl6L0ikIHEhCNcSv
+         EKFw4jbUBa9RYYmXtM6FF97h7HeOMxJU9odBHPSKOxZDOrUpyF/SsMQsnKXDgw7p0nfC
+         vPyTHGVqezM8xeDVBK6MJCi/HXQY9iayugq6AHh0LLOiB4WrdqSqqE8EZKobce14aU4e
+         dLuywlznuRJMlLQWSfWjRXZraQquLBEVMCRjIJvwKHmz0W6Bhq7XvKAlx2Hw6AH0VA9t
+         IBhfTW411iBItHrSARagQ6kVChLXUHKJO07KlB1Nh+lUI7V0FzaPN+WRi6PzJFEkiGuY
+         Iu3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=i2oN8YDgefiVDxn9HYVC14Sbr+zrO/LS91/n1YEulpM=;
-        b=rEKJPAWsnC0ovgIJV6NBadVxW05VSgt/JfwToFQgN1TyJqAUEisZs29S/F5HFU4qr8
-         AsTxomiOcg3EQdG1JY8wRq52xF5cMDfWBS/YBd4f/ikwCYhmjlDyfmW+RWHY3iIGC7be
-         Vo6FWYSYx+AaOEhzgM6syJAjEiwJypvTtMo0h80nMu5nwgioAMghcY6GnOLRrPCeeCyK
-         iPg7Kp6PjhfBgFpdvDb/lObyih/hiFRLWv0xqA1OZIfhGAP6od7lCM/MX8QWjYsKzY/w
-         z0YQBepynSLhFgP0/Yjtk7uiMF+xYPHrIo09L3DAZFMI/2wdFRjRWIq9HcNFlXkITmE7
-         l0Yg==
-X-Gm-Message-State: ACrzQf37AWjB2megciSXUQ5a7KuRWsBJk4l6f9asjix3yQouk0CZyy2n
-	jpNpP7yeCZNx1ghM/Xijo3s=
-X-Google-Smtp-Source: AMsMyM50/mlIPxm9ElaMOK0XtwLMJv91ISBxhXPhJxAjm+aREGsuaUou+kyeYmwCckWyHRn9HjZN+g==
-X-Received: by 2002:a17:902:e5c9:b0:178:5a6f:6eb8 with SMTP id u9-20020a170902e5c900b001785a6f6eb8mr5364613plf.42.1663881037904;
-        Thu, 22 Sep 2022 14:10:37 -0700 (PDT)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=9v6WybS0Crfa+ik4fdXepaAOXmKiF+c2u04+aA53ye4=;
+        b=YFITVdAwx2sSKRbCp+uigyDNR3j8rzQlo1nNtZHkxq9W/ZMRSX8Zkdp3UFAX5tiKvJ
+         23iNrJ1RQNgeddwzAm/2qppi08lvWp4KIF1596ct8tiUuhIFD2tSYWUn82a6R8DI/Oko
+         f4wi8TS+hKYOTg8zZzwK46p4oPba24VexQCNs8yWT0+hbk6D6eBgWogM2vpOdx8OhUyH
+         Hjvwo4ZaJkE/C2EZ4Qw1pIga3dTOkUdvCLEodjcvVM9jxKQ4AFIaXpodgff0QpdV0QPd
+         ApAwO8U29BvN30KrETnic5lbC0ZjyE2P5FxPBNqNmbeqsoYUq5OfVn9RNBfKdpyXU617
+         8e8A==
+X-Gm-Message-State: ACrzQf0wvt86nlsNeriXNWqaCUsrkcGPguBP6vXlZKNRBSFBqbhHfFyP
+	aeLhZJfZssg7ga0sPAfij2U=
+X-Google-Smtp-Source: AMsMyM5iHzchpw/a8uc8/yE6qrxDVFXH79vH2FeLN7g5WyT5Cq1gQj/krByMLT3tsQxh+YS7kaVJZw==
+X-Received: by 2002:a17:90b:3d91:b0:202:dc14:16c0 with SMTP id pq17-20020a17090b3d9100b00202dc1416c0mr18007562pjb.44.1663882982064;
+        Thu, 22 Sep 2022 14:43:02 -0700 (PDT)
 Received: from google.com ([2620:15c:202:201:c558:d894:7bf:3842])
-        by smtp.gmail.com with ESMTPSA id v1-20020aa799c1000000b005360da6b26bsm4802037pfi.159.2022.09.22.14.10.37
+        by smtp.gmail.com with ESMTPSA id x18-20020a634852000000b004388f33b80esm4342411pgk.2.2022.09.22.14.43.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Sep 2022 14:10:37 -0700 (PDT)
-Date: Thu, 22 Sep 2022 14:10:34 -0700
+        Thu, 22 Sep 2022 14:43:01 -0700 (PDT)
+Date: Thu, 22 Sep 2022 14:42:59 -0700
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: b4 is having trouble with unicode emails
-Message-ID: <YyzPSrTcGliahL+a@google.com>
+Subject: Re: "b4 trailers -u" chops off patch subjects
+Message-ID: <YyzW46WQ47HUKTSx@google.com>
+References: <YyzWI/zCGli+3UcQ@google.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <YyzWI/zCGli+3UcQ@google.com>
 
-Hi Konstantin,
+[CC-ing mailing lists...]
 
-It looks like b4 does not like non-acsii in emails, and fails for emails
-like "Marek Beh�n <kabel@kernel.org>":
-
-dtor@dtor-ws:~/kernel/linux-next (get_gpiod_from_child-remove)$ b4 send --no-sign --not-me-too --to='Marek Beh�n <kabel@kernel.org>' -o patches/gpiod-from-child
-Converted the branch to 4 messages
-Populating To/Cc addresses
-Will write out messages into patches/gpiod-from-child
-Traceback (most recent call last):
-  File "/usr/local/google/home/dtor/b4/b4/command.py", line 358, in <module>
-    cmd()
-  File "/usr/local/google/home/dtor/b4/b4/command.py", line 341, in cmd
-    cmdargs.func(cmdargs)
-  File "/usr/local/google/home/dtor/b4/b4/command.py", line 86, in cmd_send
-    b4.ez.cmd_send(cmdargs)
-  File "/usr/local/google/home/dtor/b4/b4/ez.py", line 1268, in cmd_send
-    msg.add_header('To', b4.format_addrs(allto))
-  File "/usr/local/google/home/dtor/b4/b4/__init__.py", line 2878, in format_addrs
-    addrs.add(email.utils.formataddr(pair))  # noqa
-  File "/usr/lib/python3.10/email/utils.py", line 91, in formataddr
-    address.encode('ascii')
-UnicodeEncodeError: 'ascii' codec can't encode character '\xfa' in position 9: ordinal not in range(128)
-dtor@dtor-ws:~/kernel/linux-next (get_gpiod_from_child-remove)$ b4 send --no-sign --not-me-too --to='Marek Behun <kabel@kernel.org>' -o patches/gpiod-from-child
-Converted the branch to 4 messages
-Populating To/Cc addresses
-Will write out messages into patches/gpiod-from-child
-  0000-get-rid-of-devm_fwnode_get_-index_-gpiod_from_child.eml
-  0001-devm_fwnode_get_gpiod_from_child-is-going-away-as-the-name-is-too-unwieldy-let-s-switch-to-using-the-new-devm_fwnode_gpiod_get.eml
-  0002-devm_fwnode_get_gpiod_from_child-is-going-away-as-the-name-is-too-unwieldy-let-s-switch-to-using-the-new-devm_fwnode_gpiod_get.eml
-  0003-now-that-there-are-no-more-users-of-these-apis-in-the-kernel-we-can-remove-them.eml
----
-DRYRUN: Would have sent 4 messages
-
-Thanks!
+On Thu, Sep 22, 2022 at 02:39:47PM -0700, Dmitry Torokhov wrote:
+> Hi Konstantin,
+> 
+> It looks like "b4 trailers -u" removes patch subjects from commits,
+> leaving only body:
+> 
+> dtor@dtor-ws:~/kernel/linux-next (get_gpiod_from_child-remove)$ git log --oneline -5
+> a31ab9768271 (HEAD -> get_gpiod_from_child-remove) gpiolib: remove devm_fwnode_get_[index_]gpiod_from_child()
+> 359e79d23882 leds: lgm-sso: switch to using devm_fwnode_gpiod_get()
+> 991ff1b001c0 leds: gpio: switch to using devm_fwnode_gpiod_get()
+> 7820e4c4f360 Get rid of devm_fwnode_get_[index_]gpiod_from_child()
+> 483fed3b5dc8 (tag: next-20220921, origin/master, origin/HEAD) Add linux-next specific files for 20220921
+> dtor@dtor-ws:~/kernel/linux-next (get_gpiod_from_child-remove)$ b4 trailers -u
+> Calculating patch-ids from 2 commits
+> Checking change-id "20220902-get_gpiod_from_child-remove-a62638849e91"
+> Grabbing search results from lore.kernel.org
+> ---
+>   leds: gpio: switch to using devm_fwnode_gpiod_get()
+>     + Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com> (✓ DKIM/gmail.com)
+>     + Reviewed-by: Linus Walleij <linus.walleij@linaro.org> (✓ DKIM/linaro.org)
+>   leds: lgm-sso: switch to using devm_fwnode_gpiod_get()
+>     + Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com> (✓ DKIM/gmail.com)
+>     + Reviewed-by: Linus Walleij <linus.walleij@linaro.org> (✓ DKIM/linaro.org)
+>   gpiolib: remove devm_fwnode_get_[index_]gpiod_from_child()
+>     + Acked-by: Bartosz Golaszewski <brgl@bgdev.pl> (✓ DKIM/bgdev-pl.20210112.gappssmtp.com)
+>     + Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com> (✓ DKIM/gmail.com)
+>     + Reviewed-by: Linus Walleij <linus.walleij@linaro.org> (✓ DKIM/linaro.org)
+> ---
+> Invoking git-filter-repo to update trailers.
+> New history written in 0.12 seconds...
+> Completely finished after 0.52 seconds.
+> Trailers updated.
+> dtor@dtor-ws:~/kernel/linux-next (get_gpiod_from_child-remove)$ git log --oneline -5
+> fcd562595314 (HEAD -> get_gpiod_from_child-remove) Now that there are no more users of these APIs in the kernel we can remove them.
+> 34557baea2d5 devm_fwnode_get_gpiod_from_child() is going away as the name is too unwieldy, let's switch to using the new devm_fwnode_gpiod_get().
+> 443abc336e8d devm_fwnode_get_gpiod_from_child() is going away as the name is too unwieldy, let's switch to using the new devm_fwnode_gpiod_get().
+> 7820e4c4f360 Get rid of devm_fwnode_get_[index_]gpiod_from_child()
+> 483fed3b5dc8 (tag: next-20220921, origin/master, origin/HEAD) Add linux-next specific files for 20220921
+> dtor@dtor-ws:~/kernel/linux-next (get_gpiod_from_child-remove)$
+> 
+> Please see how patches changed after running b4. This is with ToT checkout:
+> 
+> 6c215d8 ez: don't send a cover letter for a 1-patch series
+> 
+> Thanks!
+> 
 
 -- 
 Dmitry
