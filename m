@@ -1,73 +1,79 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436152F2D
-	for <tools@linux.kernel.org>; Thu, 22 Sep 2022 11:37:52 +0000 (UTC)
-Received: by mail-lj1-f180.google.com with SMTP id h3so10653841lja.1
-        for <tools@linux.kernel.org>; Thu, 22 Sep 2022 04:37:51 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24CD1854
+	for <tools@linux.kernel.org>; Thu, 22 Sep 2022 13:29:13 +0000 (UTC)
+Received: by mail-qk1-f178.google.com with SMTP id q11so6105283qkc.12
+        for <tools@linux.kernel.org>; Thu, 22 Sep 2022 06:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
-        h=to:subject:message-id:date:mime-version:user-agent:from:from:to:cc
-         :subject:date;
-        bh=mEu4V4gXz7ujA4wHBZmPPhna+dLPp4U+IcOtKwiQocI=;
-        b=JTE4moEXdPCmBIqxXKtBx+u+MOVO3OybhtiX5eMfcTaK/zSUbhpP6ghX1ivd5Ax4IS
-         iap0LDcwTFB0Tk4EcDIdHsBLy0bt1/1d6VHZQLtup2UE2kcaLnPVdauEXCzL+lCj32H6
-         H6XJdFsmCg6/lRC+tRHcCzOD2sMw7P6/o88I4+1I0HiyMozOx0sw8KsM85pdi97QjK1y
-         vtnYsuXN6n7ISlVg69svfELkV4E84S/jxduxkLR+hWFbUn/N5OOYI+Ap3rsSIYuKayiE
-         7mRNeLv8WuQERu1XNDbPU/V/QYXhOBjGEV7xT19Nj8xnehWdKLVjlKmtzvNDnJ14SzOn
-         ROpQ==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=LcUfyWtpzv/j9hTENzWxFQZoLwLFD6l6/FzTixTz4J8=;
+        b=PEX/KXuvwnvysRZWjC7ozsIwWm6jqEvSK4Dn3s7dpZoCqx8aMzfzIeRLfwl2cvORLW
+         yqZaCxQwUcuvA4Gfy7fRwfFpfC0Wv3Ok/2oIBXus9cwMVNC4D6SWng5qrtn4nF8aKoXi
+         YLA5jmAWlhpuTefftLkFgXnxZfuaokXYuk8jU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:mime-version:user-agent:from
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=mEu4V4gXz7ujA4wHBZmPPhna+dLPp4U+IcOtKwiQocI=;
-        b=tf+gfW5C5WicaGTWw99TizgoEMDbKXPsyumNaoBcBnGQ/d7f23/FXu7/RQafHim/gR
-         CqoH/QNEqCHDXbI9krORhcvlYTViDbu5mKVgv6hvfV+kfIqeYKGZhVw0qXFn+wZ9Y9px
-         XishPzLUHbLGnTDSdvZbfFtQ3ek+Pi1g9NYzBgwQQ9i9KdPMm6eqHt7fFp5FIL0Q31nL
-         jmcDWa0VKMIEQEmaKB05dDgnIqSCBc/82uecon/tUCHsvfa01TQfwkSofgw8mBZin0u0
-         0xWsdvsPGpT14ss22t2Ff0WQXCVjXTfbuVspgu9CblPwNPX985lo8VmiJR+eHXsR+EBN
-         vQXg==
-X-Gm-Message-State: ACrzQf17trFhYrzOrCldzx5rfnBpR0n+yqfJMfTwT6Q9fs8n0/tjyptX
-	FNF5PzEATX9tH8hKtCcVf2NSVFYtmnVc24nNIZNjzobDrO8=
-X-Google-Smtp-Source: AMsMyM4rTPgbS4d0UU4nx8P8Tk/EwN6kN6N9oEVv/PIZ4WdP2iYOk2w0+Kj+3KXMbcREw+w7ZCCJFnwAHZrklFw/OPE=
-X-Received: by 2002:a2e:3112:0:b0:24f:132a:fd71 with SMTP id
- x18-20020a2e3112000000b0024f132afd71mr914959ljx.522.1663846668044; Thu, 22
- Sep 2022 04:37:48 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 22 Sep 2022 04:37:44 -0700
-From: Guillaume Ranquet <granquet@baylibre.com>
-User-Agent: meli 0.7.2
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=LcUfyWtpzv/j9hTENzWxFQZoLwLFD6l6/FzTixTz4J8=;
+        b=hCiLzKVwVYGndzriRHMv+xGQfLUnE2hpjcPoMVbdqMH3aMEb9Ptck4qqHL8UTDLEZv
+         wsEnQFSU53b0EJuqyLt7Cv3HJ3L56oswK+Ox7arVQ+1GPFjg3CCgBRF0hJSoIpU8FcWu
+         C4l7/z91cRgqsr34I4jekqYQlif65eckJfMfsfRUk4SmkPlPHpMRcVOzvsWaMlljmAev
+         OArrGYgXrK/jixf8Lsrg4fzc0grE3q1J6E99cK898kCdqS+MEDOtyrhSgQRclu7m0Ezk
+         qmD6WlxQOcKC4TvjWSy0Va2KYaCJW7FyVH/5yjPz7h9TiIwqGKLcntA9n6EVuUE6CGP2
+         puhA==
+X-Gm-Message-State: ACrzQf0sSU5PH5SKUS8NriWfywQOjZl/PmCwhGdVjmvpEFYfDG2GLObS
+	QBp+9FuKnS6iu9lNr+CdLA/qd2tUTb6fvA==
+X-Google-Smtp-Source: AMsMyM48cQJ+IMFxY6htuBrbLPT8pthvmnNj8pjNDSy0+9+v1sgnP5zxMOOyIZIWFu2UbGF1e5hdcw==
+X-Received: by 2002:a05:620a:4609:b0:6ce:7de5:302 with SMTP id br9-20020a05620a460900b006ce7de50302mr1940423qkb.681.1663853352666;
+        Thu, 22 Sep 2022 06:29:12 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id o10-20020ac841ca000000b00339163a06fcsm3451294qtm.6.2022.09.22.06.29.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Sep 2022 06:29:12 -0700 (PDT)
+Date: Thu, 22 Sep 2022 09:29:10 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Guillaume Ranquet <granquet@baylibre.com>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 send: missing diffstat in individual patches
+Message-ID: <20220922132910.gz66mwjcdd7ljd6j@meerkat.local>
+References: <CABnWg9uBOGqJMq=yCtn7SoEME=+2u1-ZK9ftb6=_jRhkhL_jiw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 22 Sep 2022 04:37:44 -0700
-Message-ID: <CABnWg9uBOGqJMq=yCtn7SoEME=+2u1-ZK9ftb6=_jRhkhL_jiw@mail.gmail.com>
-Subject: b4 send: missing diffstat in individual patches
-To: tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABnWg9uBOGqJMq=yCtn7SoEME=+2u1-ZK9ftb6=_jRhkhL_jiw@mail.gmail.com>
 
-Hello,
+On Thu, Sep 22, 2022 at 04:37:44AM -0700, Guillaume Ranquet wrote:
+> Hello,
+> 
+> I've recently sent a patch series with b4 and diffstats are missing
+> from individual patches.
 
-I've recently sent a patch series with b4 and diffstats are missing
-from individual patches.
+You're right, I've never actually noticed that. I guess that's the difference
+when generating the message using --format=email.
 
-Which in itself is not an issue as I understand this is only comments
-that are irrelevant to
-the patch itself.
+> Which in itself is not an issue as I understand this is only comments
+> that are irrelevant to
+> the patch itself.
+> 
+> Though, I've had some complaints that my patches looks broken...
+> people seem to expect the
+> diffstat to be present.
+> 
+> The serie was sent with 0.10.0-dev (master from some weeks ago).
+> I've just retried a dry-run with the latest and the diffstat is still missing.
+> 
+> I haven't seen any option in b4 send to produce the individual commit
+> diffstat, I will have
+> a quick look if I can propose a patch.
 
-Though, I've had some complaints that my patches looks broken...
-people seem to expect the
-diffstat to be present.
+I'll try to put that in today.
 
-The serie was sent with 0.10.0-dev (master from some weeks ago).
-I've just retried a dry-run with the latest and the diffstat is still missing.
-
-I haven't seen any option in b4 send to produce the individual commit
-diffstat, I will have
-a quick look if I can propose a patch.
-
-Thx,
-Guillaume.
+-K
