@@ -1,71 +1,85 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DDA163;
-	Fri, 23 Sep 2022 16:46:46 +0000 (UTC)
-Received: by mail-pj1-f46.google.com with SMTP id s14-20020a17090a6e4e00b0020057c70943so6414882pjm.1;
-        Fri, 23 Sep 2022 09:46:46 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA3D4400;
+	Fri, 23 Sep 2022 16:47:44 +0000 (UTC)
+Received: by mail-pl1-f180.google.com with SMTP id l10so679678plb.10;
+        Fri, 23 Sep 2022 09:47:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=N8lUNA7EJCaL2znw7hua8Q5vq2bH6WYnLDAudoSVA0s=;
-        b=GVpWIMp8Pl+0E1xUhlB2cAD8RgNDLDSBkztjlMloURNwha4FL1EP7WBSXWPMSzF8jA
-         iJ7OrkvzXJOP9Jezspear+OAMzzx2ja5ERlwNc0UDS0ljqPyqQQ8UKI+8241/gKu1xbi
-         tGFfCBnuNem2igHKmAdeVeyd+699XUhteGfHkz/xbyP6Noo98x7ieHXX3ecizR53N091
-         l5c1YL7tGG3WoUseFZYTW1fvlRacPPUDd2ty0KEQLmoeBuv6a062z/htxlObDk7SI/yZ
-         GA4+I1dvzKY4sF+Px9VTeKFvUs8CF1XS2AG6bItI4MDZj2zsz4eKiCDF3Q1behnqAxYc
-         Pbqw==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date;
+        bh=486JDvYEUbxKyDG5YNXkeoGMZkTwJrv9NJ76gWB/xYc=;
+        b=q7wkwoK7lkX4pj3nLjkG/c8jpTHebAkma6rcDTUeiCz4rfRL/xVN5xP9WMHXiWruKT
+         MUaaMZZA6KXuLFBsg+7SSA7haSINUlJMh4RRP86WvrDhjv2DNtRvF31/fYW0dRw+fcnD
+         dCbYbxMgvIsaK5Orerw49jmvP8EbEq1t9URCEfgCTKFR4QfR7HIjN0eqdq62ckdKGFhH
+         o+u8ais1W8vSJgvZDbmLzlnoQqEKODrjW8se/bT0WoHjjlSNUYlsqL0YDD77FMDST46L
+         5/2lsTBHc6AMX0OjpAvr991wBBxbjUciv0gyYBv2R4L9cVKbH7NmM08mrrOb1YunI43Y
+         zu7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=N8lUNA7EJCaL2znw7hua8Q5vq2bH6WYnLDAudoSVA0s=;
-        b=0AmZIxw1/6KlLYu8KQ719JW1lIQkdpjY8Tx0t37G53+0UJCCnzGpN7mUynGX9ZaSwq
-         TSx2xyLxr8k9WWv7QMyrnwuG6mnSMkpeK2OeO0tSKX0FjExoscXl+/EppIY0uJaZ8GRO
-         AuANYoQSFWPy+s0mQND4lzyuZs3Nw0Ep3zuGQXqfPsJOvdDvd/uGiwQ+2iHqTlSo7fAV
-         Jiy0XKDLOxSepA6nCIxu3BykQrkkPbIQPYAsCiRmcd9ph7SNxyNK5AT+D+dHuhTffBUL
-         vWnVuVc+D3i0pUfi23FWCtUGNWeapDBuSmgU1RmNoChyb4jIco3uFK6DoT5d8ZZQ21Z/
-         o6Dg==
-X-Gm-Message-State: ACrzQf3h6iRHG8IMsQCV0gSfKp1/0CZ4K9K2y+MNJwK/rpmjdjPsDMsW
-	qLGiMtX3FJxwSFF3XK4Up7M=
-X-Google-Smtp-Source: AMsMyM6UK0eCrjeQ7DJBvbj+JelK3MNoxaeo8qfVvZtVq6E5y6EgXAJ1f8AJtdsfKWDcWZAhO8/ELg==
-X-Received: by 2002:a17:902:aa81:b0:173:3f68:e768 with SMTP id d1-20020a170902aa8100b001733f68e768mr9327199plr.80.1663951605476;
-        Fri, 23 Sep 2022 09:46:45 -0700 (PDT)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=486JDvYEUbxKyDG5YNXkeoGMZkTwJrv9NJ76gWB/xYc=;
+        b=gD3O9/eYo4PrOjYx4CXZgfXNeTwPgzhj4sIFIn0lJ4cFGNC9u6X+ANEP/KdpgN0su1
+         SRmCaP1DFdp06EMEZbt4NhIRKDi/c16G72oasdFSX+hFexSvRSfyqXCLanVmjubLgX+q
+         63ovNz5jKF9mVqw0XlYoejp4KzpfEFfkAewQoPY8WY7s0U8TcGsw20Qmz4JAHjwNFcE3
+         SVv61da1M+5Ji3AXv0625WTHOcuBubSrc6WCDIw1PqKPx2sSbOhsLKalpIlkx8hZK5gv
+         SYhm4IMgqjp5GlQpBpg254TElN2q/E1OVnhnM0UmVnWeMfjOZr9xyj4AXkGEzNK4eOCc
+         zx0Q==
+X-Gm-Message-State: ACrzQf1uQK8q3zfUzXL11XQaNQU4Nq9sswA6d+XMji82C+PBDZ7C2tjQ
+	xd6b29p0maNJLzp3sbzb6yI=
+X-Google-Smtp-Source: AMsMyM64GDERGGhhB6qzuWWf/MCDx86HPZF/uecFppS/b2fuvdE1azdUcedHJcdGOlRo4Q13lUK4ug==
+X-Received: by 2002:a17:902:e402:b0:176:e82f:3f4 with SMTP id m2-20020a170902e40200b00176e82f03f4mr9459086ple.107.1663951663501;
+        Fri, 23 Sep 2022 09:47:43 -0700 (PDT)
 Received: from google.com ([2620:15c:202:201:8b46:be3c:2c54:68a5])
-        by smtp.gmail.com with ESMTPSA id v1-20020aa799c1000000b005360da6b26bsm6613195pfi.159.2022.09.23.09.46.44
+        by smtp.gmail.com with ESMTPSA id i22-20020a17090acf9600b002008d0df002sm1792100pju.50.2022.09.23.09.47.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Sep 2022 09:46:45 -0700 (PDT)
-Date: Fri, 23 Sep 2022 09:46:42 -0700
+        Fri, 23 Sep 2022 09:47:43 -0700 (PDT)
+Date: Fri, 23 Sep 2022 09:47:40 -0700
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: "b4 trailers -u" chops off patch subjects
-Message-ID: <Yy3i8hrcdRw9jW1S@google.com>
-References: <YyzWI/zCGli+3UcQ@google.com>
- <YyzW46WQ47HUKTSx@google.com>
- <20220922220523.5lwelntnjvma7tgt@meerkat.local>
+Subject: Re: b4 is having trouble with unicode emails
+Message-ID: <Yy3jLFwqnUrfWSno@google.com>
+References: <YyzPSrTcGliahL+a@google.com>
+ <20220922214840.fw7kdyjidsp2g4vi@meerkat.local>
+ <YyzasbZ80Osek12a@google.com>
+ <20220922221138.52m4ghjv6gyoaxni@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20220922220523.5lwelntnjvma7tgt@meerkat.local>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220922221138.52m4ghjv6gyoaxni@meerkat.local>
 
-On Thu, Sep 22, 2022 at 06:05:23PM -0400, Konstantin Ryabitsev wrote:
-> On Thu, Sep 22, 2022 at 02:42:59PM -0700, Dmitry Torokhov wrote:
-> > > It looks like "b4 trailers -u" removes patch subjects from commits,
-> > > leaving only body:
+On Thu, Sep 22, 2022 at 06:11:38PM -0400, Konstantin Ryabitsev wrote:
+> On Thu, Sep 22, 2022 at 02:59:13PM -0700, Dmitry Torokhov wrote:
+> > > The latest master/stable-0.10.y should have handle this properly.
+> > 
+> > No, if you look closely in my log there were 2 invocations, one with
+> > 
+> > 	--to 'Marek Behún <kabel@kernel.org>'
+> > 
+> > which dies with UnicodeEncodeError exception, while another, with
+> > 
+> > 	--to='Marek Behun <kabel@kernel.org>'
+> > 
+> > works properly.
 > 
-> Yikes. This is fixed in master/stable-0.10.y. I'd just introduced it earlier
-> today due to a refactor. I need to add this to the tests.
-> 
-> Thank you for the report.
+> Sure, but the problem was as I described. If we properly parse the --to
+> parameter as a header-like email address, as opposed to just expecting a bare
+> email address there, the fix does the right thing.
 
-Thank you for the quick fix. I can confirm it is working for me now.
+Ah, I understand now.
+
+The new ToT does work for me now, thank you for fixing this.
 
 -- 
 Dmitry
