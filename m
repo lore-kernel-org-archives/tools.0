@@ -1,94 +1,100 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5E14422
-	for <tools@linux.kernel.org>; Mon, 26 Sep 2022 17:29:06 +0000 (UTC)
-Received: by mail-qv1-f45.google.com with SMTP id j8so4696790qvt.13
-        for <tools@linux.kernel.org>; Mon, 26 Sep 2022 10:29:06 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73AA7E1
+	for <tools@linux.kernel.org>; Tue, 27 Sep 2022 09:34:08 +0000 (UTC)
+Received: by mail-wm1-f52.google.com with SMTP id o20-20020a05600c4fd400b003b4a516c479so5101189wmq.1
+        for <tools@linux.kernel.org>; Tue, 27 Sep 2022 02:34:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=2080zhmrdabzahWiCHdFe/XbzjO8Mvc1FBCGQMODTuE=;
-        b=ZDfDgzgOYN9gLWbE5ZCj5TQnBAP8LBjrSQjGKc5IOVnDSvWBEyLUhXZQIpu0whocR4
-         QeOzOC2+gBY8Vj4rZWPu3jgE+/QYKtw98L3bZdwZw2PiBA96OyZ3cLdjgTF2oNegyr58
-         jRfFQYsxhzUp6/EoL6w/GrQowIcZstI8MhhiI=
+        bh=t8JG3emlLH9vVF8ksycqCfDqLoVAzF8OEzIko5ATrvE=;
+        b=JAPsLmUc5f9rcYUBPZu/fa+gdQAvAzPKZFmz1vySe98y9uOdS3wtCKVPj+704oPhgC
+         ZeF47Yirimb20k2uiLHMkg3+gCqO37TkBamAh6TnAc12ts4PXQB7WmioGP7UBqCaJW62
+         oDnmzUT6PNP1lYR38dLYzyd0q+x0XPhzdOT/XhizTO2BKSLaGwTp4Xhp+a/FANiP/S9E
+         Idf1SCplYmlcQ+rJq9NTqUzyeufwLfZvMjkypM+66dFewDh1em9mGCOeJxO4p4T8oLB1
+         jFhFlYyypEk7UC3HS56Xy373SEur3ePnyjH353X78sLHHVeOCcc2K/7K4v92u113H388
+         xYDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=2080zhmrdabzahWiCHdFe/XbzjO8Mvc1FBCGQMODTuE=;
-        b=rhwp+o9k1hZqvQiLuSoby5TT9BeNI2L7LxWq7YozKcLeZIkUWrQZ/SahugQHSBdNz/
-         /T9RgnET5mV+K+Hz46E2DCeXXAj/VuGle18EMVVHBktXqDsFzoxeXkzR871fYByv4JDT
-         ZEJXvyv+OsNyGJXkLGg4L1/7teRPNgza2VJ049G7HK3vrzIF8t524ddpFrpbhai+UEe+
-         8P8RafAnTz/tcNNrByxL4xlCTxzbkYbDWSd2yimwrgKJ62XC2qop6Y16WjpEDQ11Q9u+
-         2gvWbWi9kkyiiEZ31mb+fkGSMPuRke8lUM5by6VCHen6fFKjk5fKb9KFgSxzd3si5UxA
-         4QbQ==
-X-Gm-Message-State: ACrzQf34w6zoAlv2/p+MOReAMAmusMq6jMaRhfsH+QQE9OzFr/RglTJg
-	fZ7EJZxSEBnmZGpAMk4czMh88ovfnujqug==
-X-Google-Smtp-Source: AMsMyM7bTk/JjcJbdFcEFCDR5OPLqs+rTF45otniO/J2febUgFUAlXL7JPC+kxTW77u3UUn/xYfK9w==
-X-Received: by 2002:a05:6214:27ca:b0:4a9:d3f8:9cfb with SMTP id ge10-20020a05621427ca00b004a9d3f89cfbmr18058553qvb.56.1664213345698;
-        Mon, 26 Sep 2022 10:29:05 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id x1-20020a05620a14a100b006ced196a73fsm11956607qkj.135.2022.09.26.10.29.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 10:29:05 -0700 (PDT)
-Date: Mon, 26 Sep 2022 13:29:03 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org
-Cc: users@linux.kernel.org
-Subject: b4 v0.10.1 is available
-Message-ID: <20220926172903.f3mudqmts5woudll@meerkat.local>
+        bh=t8JG3emlLH9vVF8ksycqCfDqLoVAzF8OEzIko5ATrvE=;
+        b=ffukOOES3NlqsIYidSlJzBn6TwNoRKqytktieCg8K892lkd5Fu+Go3PnDR3DgjE+Q0
+         N90kYQI/zp7bL3VRqjwz57+NK4UryRjyMdVLhs1Yypuil+TTAxDsazsHEpgTkRu7oiq7
+         aOxCrzYL+5hgqFQGTdqgn5Eyy0y39WYl0zjAsjyM28YFaeSw04/PEJqiB3krIhjk8cJK
+         ZKuNbEU+mWDqqAfn0hnP020wCJRJ5yZfOthzSKqSgPmiGD+y9sjoUIIdxSLwc+lRWuBZ
+         07x/dRsEBJRltruUa83fXILG5BfRK6MSiICuWQjhmWLXZ66gYTGYR2b4nO9h4Fhtvh7V
+         5lnQ==
+X-Gm-Message-State: ACrzQf2OuXlmVez0WmLtNSVbMaJeZ3VyzEn4jfsaUmekY7i3Rpcn8FWJ
+	7Q0v/i3Q+s8hd+mD7B5YekC3AA==
+X-Google-Smtp-Source: AMsMyM7LCVE+yKS4PeuZFtNXfaUSkJqeHwIMpmc5NHcRJzmuDt16dxuVsRKFQek0KWPBUgk6ExI+Cw==
+X-Received: by 2002:a05:600c:221a:b0:3b4:75b8:3f7f with SMTP id z26-20020a05600c221a00b003b475b83f7fmr1844413wml.175.1664271246750;
+        Tue, 27 Sep 2022 02:34:06 -0700 (PDT)
+Received: from [192.168.0.20] (210.145.15.109.rev.sfr.net. [109.15.145.210])
+        by smtp.gmail.com with ESMTPSA id c11-20020a5d528b000000b00228dc37ce2asm1250665wrv.57.2022.09.27.02.34.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Sep 2022 02:34:04 -0700 (PDT)
+Message-ID: <5eb13320-bbc6-42ff-9161-24b789292098@baylibre.com>
+Date: Tue, 27 Sep 2022 11:34:02 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2u6avzzkctpjngo2"
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: b4 cover-letter in single patch submission
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+References: <3b1af982-83f1-d5ed-6df1-c654df481899@baylibre.com>
+ <20220922180119.jnggtlpwu5yhxoc7@meerkat.local>
+Content-Language: en-US
+From: Amjad Ouled-Ameur <aouledameur@baylibre.com>
+In-Reply-To: <20220922180119.jnggtlpwu5yhxoc7@meerkat.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Konstantin,
 
---2u6avzzkctpjngo2
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+On 9/22/22 20:01, Konstantin Ryabitsev wrote:
+> On Wed, Sep 21, 2022 at 02:23:18PM +0200, Amjad Ouled-Ameur wrote:
+>> Hi,
+>>
+>> I would like to open a discussion regarding b4 tool. I read in the b4 doc
+>> that it will always include a cover-letter even when sending a single patch
+>> [0]. This is regarded as a proactive feature in case the submitter is later
+>> asked to split up the single the patch to many patches.
+>>
+>> However, this can upset maintainers and reviewers when a single patch (that
+>> does not need to be split up) is sent with a cover letter that would
+>> probably contain the same title and text as the single patch.
+>>
+>> My humble opinion is, adding a cover letter to a single patch should be an
+>> optional feature.
+>>
+>> In this case, it might even be convenient to keep the change-id and
+>> changelog in the patch's comment section.
+> I agree, I never really liked forcing the cover letter on a single-patch
+> series. I've committed the initial implementation of mixing in the contents of
+> the cover letter into the patch basement itself. The implementation is not as
+> clean as I would have hoped it to be, but it seems to do the right thing in
+> most of my tests.
+>
+> Please try it out and see if that's more like something you were thinking.
+>
+> I'll backport it to 0.10.y as well.
 
-Hello:
+Thank you for taking this into consideration, looking forward to using 
+v0.10.1 :)
 
-B4 version 0.10.1 is now available. This release contains the following
-changes compared to 0.10.0 (among other minor improvements):
+Regards,
 
-- Fixes the crash with "b4 ty" when using a local binary to send mail, and
-  generally improves the [sendemail] configuration section compatibility
-- The "send" and "prep" commands now properly include diffstats into generated
-  patches
-- Does not force single-patch series to have a cover letter. The contents of
-  the cover letter are now appended to the basement section of the patch.
-- Does not force "v1" to be added to the prefixes
+Amjad
 
-For upgrading instructions, please see docs:
-https://b4.docs.kernel.org/en/stable-0.10.y/installing.html
-
-Special thanks to the following people for the testing and bugreports:
-
-- Leon Romanovsky <leon@kernel.org>
-- Guillaume Ranquet <granquet@baylibre.com>
-- Amjad Ouled-Ameur <aouledameur@baylibre.com>
-- Dmitry Torokhov <dmitry.torokhov@gmail.com>
-
-Best regards,
-Konstantin
-
---2u6avzzkctpjngo2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCYzHhXwAKCRC2xBzjVmSZ
-bCuPAP999XW0ZWWJATwfPtHxDbxq5/4ujJVHO5oquJzLCI7yhgEAv15gXTsgUkkQ
-kdXU+w5UJ8Qf2PMO3Ij/N5u004muTQ4=
-=8tjl
------END PGP SIGNATURE-----
-
---2u6avzzkctpjngo2--
+>
+> -Konstantin
