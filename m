@@ -1,100 +1,137 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73AA7E1
-	for <tools@linux.kernel.org>; Tue, 27 Sep 2022 09:34:08 +0000 (UTC)
-Received: by mail-wm1-f52.google.com with SMTP id o20-20020a05600c4fd400b003b4a516c479so5101189wmq.1
-        for <tools@linux.kernel.org>; Tue, 27 Sep 2022 02:34:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53632EA2
+	for <tools@linux.kernel.org>; Wed, 28 Sep 2022 09:37:48 +0000 (UTC)
+Received: by mail-wm1-f53.google.com with SMTP id t4so8138342wmj.5
+        for <tools@linux.kernel.org>; Wed, 28 Sep 2022 02:37:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=t8JG3emlLH9vVF8ksycqCfDqLoVAzF8OEzIko5ATrvE=;
-        b=JAPsLmUc5f9rcYUBPZu/fa+gdQAvAzPKZFmz1vySe98y9uOdS3wtCKVPj+704oPhgC
-         ZeF47Yirimb20k2uiLHMkg3+gCqO37TkBamAh6TnAc12ts4PXQB7WmioGP7UBqCaJW62
-         oDnmzUT6PNP1lYR38dLYzyd0q+x0XPhzdOT/XhizTO2BKSLaGwTp4Xhp+a/FANiP/S9E
-         Idf1SCplYmlcQ+rJq9NTqUzyeufwLfZvMjkypM+66dFewDh1em9mGCOeJxO4p4T8oLB1
-         jFhFlYyypEk7UC3HS56Xy373SEur3ePnyjH353X78sLHHVeOCcc2K/7K4v92u113H388
-         xYDg==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:organization:subject:from:reply-to
+         :content-language:to:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date;
+        bh=zLEa7ykOu1dhwKz/VlCTt6kgKcDzwwFWI4MQ2gEUSdI=;
+        b=tk9+GOnXjzCm1Yb38TugFq5lrNjOG/MGdQSBWNQcu9T30QUJfsY+jMJPZHCc4rZQqi
+         YF5OEcKAg4DBPBiJdQtiC/gx3LayFeypebElPffeWD+Uy0Mij9WJj2Hd+jWbaDTIznsV
+         YYDspZ+9kBe8zcd2RjOF+4WFtf5ML+F7YQdQJhntRyNiPBl4OJ+C1UKQKu6/LUOC9/1Y
+         WjyB49BqIrAX1q8P/tyGQOqRaQB/n6iSzJa6JQTw5Joa9csZ2f9whqMgZMXRobo6hJlJ
+         f11Oh6xH1iZtGVuIwdo1jpKKRr26ZED9WdmtiA5crij9+pHvoynskWbsroj5DmavOwSj
+         fPKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:organization:subject:from:reply-to
+         :content-language:to:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=t8JG3emlLH9vVF8ksycqCfDqLoVAzF8OEzIko5ATrvE=;
-        b=ffukOOES3NlqsIYidSlJzBn6TwNoRKqytktieCg8K892lkd5Fu+Go3PnDR3DgjE+Q0
-         N90kYQI/zp7bL3VRqjwz57+NK4UryRjyMdVLhs1Yypuil+TTAxDsazsHEpgTkRu7oiq7
-         aOxCrzYL+5hgqFQGTdqgn5Eyy0y39WYl0zjAsjyM28YFaeSw04/PEJqiB3krIhjk8cJK
-         ZKuNbEU+mWDqqAfn0hnP020wCJRJ5yZfOthzSKqSgPmiGD+y9sjoUIIdxSLwc+lRWuBZ
-         07x/dRsEBJRltruUa83fXILG5BfRK6MSiICuWQjhmWLXZ66gYTGYR2b4nO9h4Fhtvh7V
-         5lnQ==
-X-Gm-Message-State: ACrzQf2OuXlmVez0WmLtNSVbMaJeZ3VyzEn4jfsaUmekY7i3Rpcn8FWJ
-	7Q0v/i3Q+s8hd+mD7B5YekC3AA==
-X-Google-Smtp-Source: AMsMyM7LCVE+yKS4PeuZFtNXfaUSkJqeHwIMpmc5NHcRJzmuDt16dxuVsRKFQek0KWPBUgk6ExI+Cw==
-X-Received: by 2002:a05:600c:221a:b0:3b4:75b8:3f7f with SMTP id z26-20020a05600c221a00b003b475b83f7fmr1844413wml.175.1664271246750;
-        Tue, 27 Sep 2022 02:34:06 -0700 (PDT)
-Received: from [192.168.0.20] (210.145.15.109.rev.sfr.net. [109.15.145.210])
-        by smtp.gmail.com with ESMTPSA id c11-20020a5d528b000000b00228dc37ce2asm1250665wrv.57.2022.09.27.02.34.03
+        bh=zLEa7ykOu1dhwKz/VlCTt6kgKcDzwwFWI4MQ2gEUSdI=;
+        b=6zFx3tUpUW0BZzQi7su0SxMCsbILRpGqyp7gCv/2Y31N6PIm9qu5S1SihsPH7zMavG
+         9H3pKEqUnjnObiTQKZF2qFxgXScKwl88Wt3V0MmQUxRWcuagws+n94MKTs5Si5MvvTFl
+         m6B7t/3zJ14ZU4BqepIis/PjbHJ5hmri7R47RVLd/H1Xsg8uoY1dj86R04vsSg4kLxTU
+         jOSoNDymzHi4ijGUzRVz0pq85PzF03NQK5cTb6oTeSyxQvH79HRF/kz0AOBJld+ucGhF
+         aOi645oYxxeKFIEEJ93gJc50ewUd6pPbPJZoOZUmtL+P6eKG3XxyEeMciYZray7x1Pc/
+         jiXw==
+X-Gm-Message-State: ACrzQf3sU185c5QPqgCaiQkBQ0YACNfmRcLOrmPsq441+TCpmcPTrLNV
+	qYxp7Q+nUa9Y8Wlfio/9EP5zeHSEkvcJrttA
+X-Google-Smtp-Source: AMsMyM7l2HLthMywKPd/4g4N0Hb8JYVJvUyqJlLz0mOkLgvSg9qSzt28vd/HmBvPA3Jeb31O8u7kDw==
+X-Received: by 2002:a05:600c:198d:b0:3b4:a62c:a085 with SMTP id t13-20020a05600c198d00b003b4a62ca085mr5784228wmq.140.1664357866616;
+        Wed, 28 Sep 2022 02:37:46 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:11d4:7c71:accf:6521? ([2a01:e0a:982:cbb0:11d4:7c71:accf:6521])
+        by smtp.gmail.com with ESMTPSA id s14-20020a5d6a8e000000b002252ec781f7sm3964592wru.8.2022.09.28.02.37.45
+        for <tools@linux.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Sep 2022 02:34:04 -0700 (PDT)
-Message-ID: <5eb13320-bbc6-42ff-9161-24b789292098@baylibre.com>
-Date: Tue, 27 Sep 2022 11:34:02 +0200
+        Wed, 28 Sep 2022 02:37:45 -0700 (PDT)
+Message-ID: <eb5d38af-ed64-38fd-2515-e489120cbb0b@linaro.org>
+Date: Wed, 28 Sep 2022 11:37:45 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: b4 cover-letter in single patch submission
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-References: <3b1af982-83f1-d5ed-6df1-c654df481899@baylibre.com>
- <20220922180119.jnggtlpwu5yhxoc7@meerkat.local>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+To: tools@linux.kernel.org
 Content-Language: en-US
-From: Amjad Ouled-Ameur <aouledameur@baylibre.com>
-In-Reply-To: <20220922180119.jnggtlpwu5yhxoc7@meerkat.local>
+Reply-To: neil.armstrong@linaro.org
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: b4 send crashes when sendemail from is missing
+Organization: Linaro Developer Services
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Konstantin,
+Hi !
 
-On 9/22/22 20:01, Konstantin Ryabitsev wrote:
-> On Wed, Sep 21, 2022 at 02:23:18PM +0200, Amjad Ouled-Ameur wrote:
->> Hi,
->>
->> I would like to open a discussion regarding b4 tool. I read in the b4 doc
->> that it will always include a cover-letter even when sending a single patch
->> [0]. This is regarded as a proactive feature in case the submitter is later
->> asked to split up the single the patch to many patches.
->>
->> However, this can upset maintainers and reviewers when a single patch (that
->> does not need to be split up) is sent with a cover letter that would
->> probably contain the same title and text as the single patch.
->>
->> My humble opinion is, adding a cover letter to a single patch should be an
->> optional feature.
->>
->> In this case, it might even be convenient to keep the change-id and
->> changelog in the patch's comment section.
-> I agree, I never really liked forcing the cover letter on a single-patch
-> series. I've committed the initial implementation of mixing in the contents of
-> the cover letter into the patch basement itself. The implementation is not as
-> clean as I would have hoped it to be, but it seems to do the right thing in
-> most of my tests.
->
-> Please try it out and see if that's more like something you were thinking.
->
-> I'll backport it to 0.10.y as well.
+First, thanks for the b4 work !
 
-Thank you for taking this into consideration, looking forward to using 
-v0.10.1 :)
+I've finally tried the b4 prep/send feature and when doing the first send I got this crash:
 
-Regards,
+$ b4 send --no-sign
 
-Amjad
+Converted the branch to 7 patches
 
->
-> -Konstantin
+Populating To/Cc addresses
+
+Will send the following messages:
+
+---
+
+To: <snip>
+
+Cc: <snip>
+---
+
+   [PATCH v1 0/7] <snip>
+---
+
+Press Enter to send or Ctrl-C to abort
+
+Connecting to smtp.gmail.com:587
+
+---
+
+   [PATCH v1 0/7] <snip>
+Traceback (most recent call last):
+
+   File "/home/narmstrong/bin/b4", line 8, in <module>
+
+     sys.exit(cmd())
+
+   File "/home/narmstrong/.local/lib/python3.10/site-packages/b4/command.py", line 341, in cmd
+
+     cmdargs.func(cmdargs)
+
+   File "/home/narmstrong/.local/lib/python3.10/site-packages/b4/command.py", line 86, in cmd_send
+
+     b4.ez.cmd_send(cmdargs)
+
+   File "/home/narmstrong/.local/lib/python3.10/site-packages/b4/ez.py", line 1259, in cmd_send
+
+     sent = b4.send_mail(smtp, send_msgs, fromaddr=fromaddr, destaddrs=alldests, patatt_sign=sign,
+
+   File "/home/narmstrong/.local/lib/python3.10/site-packages/b4/__init__.py", line 3210, in send_mail
+
+     smtp.sendmail(fromaddr, destaddrs, bdata)
+
+   File "/usr/lib/python3.10/smtplib.py", line 881, in sendmail
+
+     (code, resp) = self.mail(from_addr, esmtp_opts)
+
+   File "/usr/lib/python3.10/smtplib.py", line 545, in mail
+
+     self.putcmd("mail", "FROM:%s%s" % (quoteaddr(sender), optionlist))
+
+   File "/usr/lib/python3.10/smtplib.py", line 154, in quoteaddr
+
+     if addrstring.strip().startswith('<'):
+
+AttributeError: 'NoneType' object has no attribute 'strip'
+
+
+I figured the "from" field was missing from my gitconfig sendemail entry.
+
+I checked and nowhere this "from" is required for git-send-email, perhaps get user.email or sendemail.smtpuser as fallback ?
+
+Neil
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+Senior Software Engineer - Linaro Developer Services
+https://linaro.org/services
