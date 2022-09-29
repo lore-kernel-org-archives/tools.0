@@ -1,136 +1,72 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1F7EA0
-	for <tools@linux.kernel.org>; Thu, 29 Sep 2022 08:43:57 +0000 (UTC)
-Received: by mail-wm1-f49.google.com with SMTP id e18so463510wmq.3
-        for <tools@linux.kernel.org>; Thu, 29 Sep 2022 01:43:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429262579
+	for <tools@linux.kernel.org>; Thu, 29 Sep 2022 15:05:48 +0000 (UTC)
+Received: by mail-qv1-f44.google.com with SMTP id de14so955239qvb.5
+        for <tools@linux.kernel.org>; Thu, 29 Sep 2022 08:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=C0BtYW9Oc4ODnTJcQ+hUwWfPiui/RxO1GOv8YVjmO2A=;
-        b=tllliwhIstfK6H6Y4+EEfTdzxc1F3/ec0/xc2xwTXEv6pYqOD6jzyMkdYoYhvNlMh5
-         PEGUYcu9k51qBSYakJv/4CIskgztJrib9285NDneWm/DTebn73H1UddGXPLReLgpdc/v
-         h4dQOeHDThbGb/7jA131enRFJtNsPYdSpxpp8TsTaPOe5Gm3FS4ruBsO8kPRx+WmRqm9
-         bJI9p0xbrY91HznLu4ZXUBMw5sk8FvEbsLw8dqK/jrDALlmZpj+RIuGiRfVKfAJcXI0i
-         xn+aIoJ5CILUPLfqlO3phjdgz+Y0zv8wNmE0O4tP80CtKM1LY7bEVSsa6kUHDtyoGoeK
-         PMow==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=3MsvAh8EuomSUCyHcAQ3wfb2wHMqJUIrA0iSJ3V3AGM=;
+        b=hSTbUNIssRo12LBqBq0WPU/eyCHzU9pqp9fhqnjcBjioBPnaDqH5lZg4pq/klh+Yoq
+         ylBbJQ52tj4gpohNWA9fmuYwhWm6S/4AWc0SeELajlWNcVDqe3q/poEjRTADnkDr/WM5
+         /EnUmiUjjz4F6R+RLApOqRrlm+GaZ4cGNji4s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=C0BtYW9Oc4ODnTJcQ+hUwWfPiui/RxO1GOv8YVjmO2A=;
-        b=DjKlQxcIeGqze6fZH0Fr8m6xiciKjaX4AIfcwtM/ghOjppWcri73l1jl4rLSWopR/q
-         VcelE1c1FtvE+akOYaL4y0c4d5h8/LfC3Shy+LrTcolYqYjbGtue3xU+yJvs/T2TG5/i
-         uunpv1LV39rXjAr09eCk5X4Mgp0KOO0Xbdh3N2ZXHd2+54wS+ZhTCx8RaZLn4RHbBYNe
-         mphWw9QYjCCDSuXB/Oc46qNBA91QQJ5PbsmZ6eA0oa0CDdLhZ5o0+RsT5TC/2UhzT2s5
-         0W2m0fWRwW2Oms8R84EFY9iUwuoJEr4qWLp9ZGwq8zoBtI0R5DRuf4fWt0IaJD0yASMl
-         oX2g==
-X-Gm-Message-State: ACrzQf3m5NX6jWMDhVUu70suC6jAZdGmVCGKITHZN6hXnEZ1fHxM9Zem
-	9fy/I0eY/PAA1xBvIaSZA6RG2A==
-X-Google-Smtp-Source: AMsMyM4fxYnsQMNLdH9T0STbQETMDCUac/CDLsg803pMTnbJmv9I8z1RHXV2y0JBJR0Ozp3XUZ/uWw==
-X-Received: by 2002:a05:600c:3b1a:b0:3b4:858b:aef1 with SMTP id m26-20020a05600c3b1a00b003b4858baef1mr1384395wms.193.1664441036286;
-        Thu, 29 Sep 2022 01:43:56 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:1f17:3ea3:4e46:dff? ([2a01:e0a:982:cbb0:1f17:3ea3:4e46:dff])
-        by smtp.gmail.com with ESMTPSA id bq21-20020a5d5a15000000b0022afe4fb459sm6303391wrb.51.2022.09.29.01.43.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 01:43:55 -0700 (PDT)
-Message-ID: <85c182a4-0ecb-9983-26ac-235cd432afd7@linaro.org>
-Date: Thu, 29 Sep 2022 10:43:55 +0200
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=3MsvAh8EuomSUCyHcAQ3wfb2wHMqJUIrA0iSJ3V3AGM=;
+        b=Irpwk/cD8tIAjrockZZK4PYkJEUJQph1BZohinkdhlJeeZeYnYijFZtsxiNW9MHQpA
+         c6iIYospq9rydHljd1zdo3yxjTFR0bMfl/+0d7B/8Dfvpwg5hAVT6fVphShGM08Vjd9e
+         F1HxZRnQTTy63mFHVPwuNYbDEKW7cDzeQRLtUorI663AII9hb0Fy3PfpiTbtS2SV0PFO
+         3+AaucsIv6oya+i57xx2DFtw5eZyZ+TBlgbzQpYpt9fi4p3dGpPN77pqB8/uUFGd7wSV
+         XrDTCzMeRjYAWofLpQVX2/8aFZe/OVNEyIl1RKgva405lFxrD4xkyTAf1/F+FeLhWsgU
+         8KBg==
+X-Gm-Message-State: ACrzQf2ib3Wb02hnlou7OwMNDbL+/rTnjt8wmMqb6o/Zp0pt5C5dD8Pv
+	tgpdUMx/QwgR+KzOU7/oeVXe/CZmZeZLIw==
+X-Google-Smtp-Source: AMsMyM7lZSlGtEy3/rOhkXQFF2zBq7ug0O5IbervDpkfvPgTf5Jjyxmpb8kSNDd8BBHftHYUex2nHg==
+X-Received: by 2002:a05:6214:2a89:b0:4ac:8360:6c65 with SMTP id jr9-20020a0562142a8900b004ac83606c65mr2887324qvb.110.1664463947003;
+        Thu, 29 Sep 2022 08:05:47 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id z8-20020ac87108000000b003445d06a622sm5673514qto.86.2022.09.29.08.05.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Sep 2022 08:05:46 -0700 (PDT)
+Date: Thu, 29 Sep 2022 11:05:44 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 send crashes when sendemail from is missing
+Message-ID: <20220929150544.47vywh3e3fwj3gw4@meerkat.local>
+References: <eb5d38af-ed64-38fd-2515-e489120cbb0b@linaro.org>
+ <20220928135617.ffe5gd23vr5f2lp7@meerkat.local>
+ <85c182a4-0ecb-9983-26ac-235cd432afd7@linaro.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: b4 send crashes when sendemail from is missing
-Content-Language: en-US
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-References: <eb5d38af-ed64-38fd-2515-e489120cbb0b@linaro.org>
- <20220928135617.ffe5gd23vr5f2lp7@meerkat.local>
-Organization: Linaro Developer Services
-In-Reply-To: <20220928135617.ffe5gd23vr5f2lp7@meerkat.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <85c182a4-0ecb-9983-26ac-235cd432afd7@linaro.org>
 
-On 28/09/2022 15:56, Konstantin Ryabitsev wrote:
-> On Wed, Sep 28, 2022 at 11:37:45AM +0200, Neil Armstrong wrote:
->> Hi !
->>
->> First, thanks for the b4 work !
->> I've finally tried the b4 prep/send feature and when doing the first send I got this crash:
->>
->> $ b4 send --no-sign
+On Thu, Sep 29, 2022 at 10:43:55AM +0200, Neil Armstrong wrote:
+>   File "/home/narmstrong/.local/lib/python3.10/site-packages/patatt/__init__.py", line 366, in _sign_openpgp
+>     raise SigningError('Running gpg failed', errors=err.decode().split('\n'))
 > 
-> Or, you know, you can just sign things. ;)
+> patatt.SigningError: Running gpg failed
 
-It also crashed without a comprehensive error, I need to debug why!
+Can you run:
 
-Converted the branch to 7 patches
+    git format-patch -1 --stdout | patatt -d sign 2>/tmp/debug
 
-Populating To/Cc addresses
+/tmp/debug should contain the command it's trying to run to PGP-sign things,
+e.g. for me:
 
-Will write out messages into <snip>
+    Running gpg --batch --no-auto-key-retrieve --no-auto-check-trustdb -s -u B6C41CE35664996C!
 
-Traceback (most recent call last):
+That should help troubleshoot what's failing.
 
-   File "/home/narmstrong/bin/b4", line 8, in <module>
-
-     sys.exit(cmd())
-
-   File "/home/narmstrong/.local/lib/python3.10/site-packages/b4/command.py", line 341, in cmd
-
-     cmdargs.func(cmdargs)
-
-   File "/home/narmstrong/.local/lib/python3.10/site-packages/b4/command.py", line 86, in cmd_send
-
-     b4.ez.cmd_send(cmdargs)
-
-   File "/home/narmstrong/.local/lib/python3.10/site-packages/b4/ez.py", line 1259, in cmd_send
-
-     sent = b4.send_mail(smtp, send_msgs, fromaddr=fromaddr, destaddrs=alldests, patatt_sign=sign,
-
-   File "/home/narmstrong/.local/lib/python3.10/site-packages/b4/__init__.py", line 3145, in send_mail
-
-     bdata = patatt.rfc2822_sign(bdata)
-
-   File "/home/narmstrong/.local/lib/python3.10/site-packages/patatt/__init__.py", line 1002, in rfc2822_sign
-
-     pm.sign(algo, keydata, identity=config.get('identity'), selector=config.get('selector'))
-
-   File "/home/narmstrong/.local/lib/python3.10/site-packages/patatt/__init__.py", line 569, in sign
-
-     hv, pkinfo = ds.sign(keyinfo)
-
-   File "/home/narmstrong/.local/lib/python3.10/site-packages/patatt/__init__.py", line 264, in sign
-
-     bval, pkinfo = DevsigHeader._sign_openpgp(digest, keyinfo)
-
-   File "/home/narmstrong/.local/lib/python3.10/site-packages/patatt/__init__.py", line 366, in _sign_openpgp
-
-     raise SigningError('Running gpg failed', errors=err.decode().split('\n'))
-
-patatt.SigningError: Running gpg failed
-
-> 
->> I figured the "from" field was missing from my gitconfig sendemail entry.
->>
->> I checked and nowhere this "from" is required for git-send-email, perhaps get user.email or sendemail.smtpuser as fallback ?
-> 
-> Yes, the latest master/stable-0.10.y will fall back to user.email if
-> sendemail.from is not set. Thank you for the report.
-
-Great, thanks !
-
-> 
-> -K
-
-Neil
+-K
