@@ -1,92 +1,96 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9684C76
-	for <tools@linux.kernel.org>; Fri,  7 Oct 2022 18:11:26 +0000 (UTC)
-Received: by mail-qt1-f170.google.com with SMTP id l27so3281264qtv.4
-        for <tools@linux.kernel.org>; Fri, 07 Oct 2022 11:11:26 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C2C23A4
+	for <tools@linux.kernel.org>; Mon, 10 Oct 2022 07:05:31 +0000 (UTC)
+Received: by mail-wm1-f45.google.com with SMTP id r8-20020a1c4408000000b003c47d5fd475so2727021wma.3
+        for <tools@linux.kernel.org>; Mon, 10 Oct 2022 00:05:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=m8WkOZAbqY1yZlXTTSHiul0PsjeTb0nBZfpFmhiDvsE=;
-        b=Ia7z8lnQbaWDz0oVvxtqq5mUkGjgcydQ9VcfiVQyWXqFdzOHpT0xIGirxIe06L1Oe5
-         SMQmwEG8OJpD4Un/OHNC7njrNdqLUpwuNRqCEx9mO2V/R1V8sO66Z9hrPQjx8avU1qXj
-         8oBcjoDS+kqncwyudkvMjHNtDfrLxMp0AQrfQ=
+        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4URLla8M8RvmBjRF9XeGwoWiEU8CSEWlDgEhQ5Nys+Q=;
+        b=3ssr439B7Q4uXTioDBnRxvTf+dSBKWPEt3fgZbnLaCOPV4H9Ihc6CIgxGzJwsrLB01
+         lWiq+XJhO4xaQNpUvFkB97BhtRPe4IR+r4XeKAVdZgBcVHW0JKhVdx0/gsM5xKcqN2+M
+         T3NC+dakEXlmOI+txI/dc+xvO7E9Qc3A2bb2avm9PJZdb3JDhUXss5lFBWxtO/3QgAYR
+         dVG+X7weKGZvvIMB+X/M8x8W5SpbhMrPApUBv9ho2FnqvqoEPlab6kdrydR4jJrGRxEY
+         FXUwrOTKdoKENpsHR8yZhVjssg13P8v/F96udrOluKavcHoekTW8uob8KDD9fxNddnsN
+         +KAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m8WkOZAbqY1yZlXTTSHiul0PsjeTb0nBZfpFmhiDvsE=;
-        b=Klzt3gEVwm0UDmye/5UlTXzkvwhctTDVjuXv0ooD/McH3oE03WnVfpOr3v80B8rAql
-         KtS2td6HOUckbaNXfLkuj5nttF/GO9iZABWbWwsQVpMRim1OrfKLnG6jTGSqld9sKVG7
-         b1s92rvG95x5z6KWQRBQz3YoY3ocLZiXnce1JnKKLVR9W4HjmG+VpAezzN8d6PYv47Be
-         nAA5Qe/ByBiEu+v9s8KOikQvQiyhk9oNPPGQ1CUBjWpPuUHn48lt16hsP1zT2APPWp9g
-         q3lxMTgQLKwMi3Hj9Qx32qqNflJNQL11Th/XpmuUkcuKvfcCWJHb0qeXlnM0bN+q0BsI
-         JUiQ==
-X-Gm-Message-State: ACrzQf1Ww7vMsTXmzxs9VM6yNuM5PwMZss28tAzKG1M7XMB7QzD29rqH
-	gQXavLMRITsd268H31jiGLaPLw==
-X-Google-Smtp-Source: AMsMyM72/tc5DLCkntELZtzB0Trr5YjZ0ofmglQVLEUu3Jnsokor3GrkiGoQ9jSxQo59NHf6nb4+aw==
-X-Received: by 2002:a05:622a:1c8:b0:35d:50a5:3d2c with SMTP id t8-20020a05622a01c800b0035d50a53d2cmr5230096qtw.520.1665166285255;
-        Fri, 07 Oct 2022 11:11:25 -0700 (PDT)
-Received: from nitro.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id v13-20020ac8728d000000b0038cdc487886sm2476889qto.80.2022.10.07.11.11.24
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4URLla8M8RvmBjRF9XeGwoWiEU8CSEWlDgEhQ5Nys+Q=;
+        b=7rvqkU1d8kRH47xbAKGlE0QT8/0CFZzWFLccxpkZK8HO7pW9A277cEGXR5zlzLQmin
+         xxNB7ck5ytRKC8FuX2/z2kD02GEYQXAT2KMko6Ajbn6QLkz4FEjGCWMoevyrNnCrfpyU
+         tt+gf0fk+ubf4O74abGDQtGdZEMnG4kfJJYu4xipBGUj07e0uunrRbvlG4khVd1KNXTy
+         I6zddjN0cIQw3kytvMa2H2FNGO3ANevyrT3DkYb15S7X/6Bz0yTO1l9T0BOlnSJLUuWz
+         rJslQDENvnYZZOLVc/qtusiNV+wbfmyll3pEtkNDF75Q6AWQgUwIFivcDl+heMDwZhpW
+         Katg==
+X-Gm-Message-State: ACrzQf0aP+cuQCDW+uWJ3qdXxSJf9nt/AxkNqNntyC3RFcqGVAKNpKhT
+	xY7W+vnEOpndMxBhsljdwQRn8w==
+X-Google-Smtp-Source: AMsMyM550gDTHglBHsa61n5zDBQMuw5KbP+lmtAUfXW9ZPeODfWKq2aa3+SEhEqsO6D4Chb8e/9JfQ==
+X-Received: by 2002:a05:600c:1547:b0:3b4:c56b:a3a6 with SMTP id f7-20020a05600c154700b003b4c56ba3a6mr11740240wmg.29.1665385529579;
+        Mon, 10 Oct 2022 00:05:29 -0700 (PDT)
+Received: from localhost ([2a01:cb19:85e6:1900:5824:6e63:e7a6:5af])
+        by smtp.gmail.com with ESMTPSA id z14-20020a5d654e000000b0022abcc1e3cesm7992619wrv.116.2022.10.10.00.05.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Oct 2022 11:11:24 -0700 (PDT)
-Date: Fri, 7 Oct 2022 14:11:23 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Rob Herring <robh@kernel.org>
-Cc: tools@linux.kernel.org, users@linux.kernel.org
-Subject: Re: b4 v0.10.1 is available
-Message-ID: <20221007181123.xnc2ihmbmefk5q2x@nitro.local>
-References: <20220926172903.f3mudqmts5woudll@meerkat.local>
- <CAL_JsqJVY5Mk0e+wLXQBJnY0OwR=vh24MhqTqmaozBjaBAULKQ@mail.gmail.com>
+        Mon, 10 Oct 2022 00:05:28 -0700 (PDT)
+From: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, Amjad Ouled-Ameur
+ <aouledameur@baylibre.com>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 cover-letter in single patch submission
+In-Reply-To: <20221007180808.bhqo4do4ultivud3@nitro.local>
+References: <3b1af982-83f1-d5ed-6df1-c654df481899@baylibre.com>
+ <20220922180119.jnggtlpwu5yhxoc7@meerkat.local>
+ <5eb13320-bbc6-42ff-9161-24b789292098@baylibre.com>
+ <01b74898-c1b0-3837-26e5-193339b74267@baylibre.com>
+ <20221007180808.bhqo4do4ultivud3@nitro.local>
+Date: Mon, 10 Oct 2022 09:05:27 +0200
+Message-ID: <87tu4cp39k.fsf@baylibre.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAL_JsqJVY5Mk0e+wLXQBJnY0OwR=vh24MhqTqmaozBjaBAULKQ@mail.gmail.com>
+Content-Type: text/plain
 
-On Tue, Oct 04, 2022 at 02:03:08PM -0500, Rob Herring wrote:
-> I found a couple of issues with trailers and send. I'm on the current master.
-> 
-> In 'b4 trailers', if the patch id doesn't match exactly and it finds
-> some trailers, b4 just prints 'No trailer updates found.' which is
-> misleading. Can it have a fallback to subject matching or at least
-> print when there isn't an exact match and list the trailers found.
+On ven., oct. 07, 2022 at 14:08, Konstantin Ryabitsev <konstantin@linuxfoundation.org> wrote:
 
-Strange, I thought we already did fall back to subject matching when we
-couldn't match by patch-id. I'll work to set up a couple of testcases so we
-can easily identify such regressions (if that's what it is) in the future.
+> On Tue, Oct 04, 2022 at 12:08:36PM +0200, Amjad Ouled-Ameur wrote:
+>> Hi Konstantin,
+>> 
+>> I have tried v0.10.1, cover letter is no longer sent when dealing with a
+>> single patch, thank you for the fix. However, the cover letter is instead
+>> embedded into the "under-the-cut" portion of the patch, this means the user
+>> still has to unnecessary fill the cover letter ; because keeping the cover
+>> template as-is will result into "b4 send" failing. My suggestion is not
+>> include the cover's title and description into the patch, I think keeping
+>> only "base-commit" and "change-id" is enough.
+>
+> I felt there were good reasons to go with the solution that I put in place,
+> specifically:
+>
+> 1. keeping a separate cover letter makes it easy to keep track of changelog
+>    entries
+> 2. breaking a single patch up into multiple patches is a very common feedback
 
-> It's quite common to either have minor changes (and a judgement call
-> on whether tags still apply) or a review that's 'With X fixed,
-> Reviewed-by: ...".
-> 
-> The 2nd issue is with 'b4 send' and seems to have been introduced
-> recently. I have a commit msg like this:
-> "
-> Some commit
-> 
-> Signed-off-by: ...
-> ---
->  v2: https://lore.kernel.org/all/20220909204509.2169512-1-robh@kernel.org/
->    - Rework YACC code to handle configN formats in C code
->    - Add a warning when an unknown configN attr is found
-> "
-> 
-> I'm putting '---' in the commit to store the changes for the commit.
-> The patch ends up with 2 '---' lines, but git drops everything after
-> the first one. The issue is that
-> '//lore.kernel.org/all/20220909204509.2169512-1-robh@kernel.org/' is
-> added to the Cc list.
+I agree with Konstantin on this. I've used b4 for single patch sending
+as well and to me it works well the way it is today:
+* changelog (for the single patch) is done in the separate commit
+* changelog is then appended
 
-Thank you for the report -- I wasn't expecting to find changelog entries in
-the commits, so I'll add that to tests as well and fix it up.
+I do remove the "commit title" from the cover letter commit to have a
+better overall format.
 
--K
+>
+> One of the biggest problems I'm trying to deal with right now is the fact that
+> cover letters are so free-form. When we encounter a cover letter format that
+> we don't recognize, we're likely to do something wrong.
+>
+> I'm considering enforcing the cover letter format to be more rigid -- at least
+> when managed by b4, but I'm likely to encounter resistance from users.
+>
+> -K
