@@ -1,45 +1,45 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3986130
-	for <tools@linux.kernel.org>; Wed, 12 Oct 2022 23:04:31 +0000 (UTC)
-Received: by mail-pj1-f44.google.com with SMTP id gf8so365717pjb.5
-        for <tools@linux.kernel.org>; Wed, 12 Oct 2022 16:04:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD1B612F
+	for <tools@linux.kernel.org>; Wed, 12 Oct 2022 23:04:33 +0000 (UTC)
+Received: by mail-pg1-f174.google.com with SMTP id 128so78319pga.1
+        for <tools@linux.kernel.org>; Wed, 12 Oct 2022 16:04:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=rivosinc-com.20210112.gappssmtp.com; s=20210112;
         h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
          :subject:from:to:cc:subject:date:message-id:reply-to;
-        bh=c8+oJRTDl+LkORsNo2RtFAh54r3YxJqQQKAxLkhtx1k=;
-        b=Od9S6sDOv8k5vAs1L80W/Ehf12kCzhsT12ENZkGq9jtXGajjHpS2Ickfhri+ItC0z+
-         dvcdf21uOtdvPh5mpvGbKzVAfplY009G86ElqjdxRfTmUHsCzcWsW9CYM0ZbW8zhlQ9Y
-         BDTNe1survhPBIZvALSjF7CVYC3ItwlZw9hTaFv9Hdnr/ZPZfmPVIaGMpui8VOwVW2Am
-         tE9n4xWZfqYDf4rcyqcVuGD/oSpTtSlba0vbD1Ds0upo8eRIgSw3rRJ9YxVHUZnMetfC
-         nLdABfGZUXFaeqzBWLz37Ptg3ltyfYtium1BLEKIhUdfFkABLR5F+bbrse6lmd/ojC74
-         l2HQ==
+        bh=iO4XZOY9wRrRrofJa1iOreX1rI6Orql0TquOMUiruc0=;
+        b=d91WU8TD1BQiYcAx5kxSHyE6EH0CJousu7iedujo5tU7T0RDWngRffAcBIjeMoR74u
+         4Asdq36B0Sp5GSk3YMRPHEG4OK+SwTeDKi4RbiXPutHqraXrws8eryIgWQoZxg4NHYXI
+         TiUMj0hEWii1HQ2JvJT4Cvzgp3Byv2/sMyoNHhzBfYh/JSSuNZghaLN7Yu71C9t6AAU+
+         SYfHDFzTPbQjdtkiPtxIpEbZDGo7VrIet3W1hY4GThTDEpyXC+0IpiecR05iyKVMDay3
+         3QdHKUvHe3xv+3432ERkeH67v6o2JqhWWsts0QzXuMV7E/UFE9Z1KHj/bchilhQ5ErQm
+         5Szg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
          :subject:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=c8+oJRTDl+LkORsNo2RtFAh54r3YxJqQQKAxLkhtx1k=;
-        b=Oc+233+KMr6fTzrhpClSfAxiCh4jymiNYXS+jE1DmDVswGQZx9O4ls8nRrsnrJxlwR
-         F4AnVfmUPxX7Ar/iwU1N6Syxs6gdNimB7xFeY3ltSVoykNj31GMGuIhhV2q3vy9J8Gqv
-         6O75JXJIy2PnMrlZ35TgcGFHfRKFsmWfKZ1B+fHuJy/vOenFM6kqac8cpPBCthn7g4PO
-         a3Rkaugci6FOuCG0Cn6LFMu2a0CxSr5QFU3OU98bhy5gjtP/BPCOXhK7Q/NtENLk41rp
-         lN9QxLcZG4MuQXGCREF4wkmzA2v4YiSf1SrifW6J7JcvDfMKT3TgRbcmQuGh27mUYL8D
-         RQ7Q==
-X-Gm-Message-State: ACrzQf2yb/Sb1b4lNJ695UplygUfxIJQZLPw7DEWQkro4JEsmlIxaUvE
-	NbYyWbUXn8Lo1kjbZqNJJC1BQvF9urFFYg==
-X-Google-Smtp-Source: AMsMyM54x4QB5MyKLjhy/Z678ZpTbElvQ3VLMDp+EBp/yUbzJfR5IyRvWqQp5FCclXHCLxsGB83TEw==
-X-Received: by 2002:a17:90b:1d4d:b0:20a:794a:f6e7 with SMTP id ok13-20020a17090b1d4d00b0020a794af6e7mr7752923pjb.151.1665615871347;
-        Wed, 12 Oct 2022 16:04:31 -0700 (PDT)
+        bh=iO4XZOY9wRrRrofJa1iOreX1rI6Orql0TquOMUiruc0=;
+        b=6T/rjWEreQ2MpYQMqu+uk6kAUv/mEIWyRzy0ZqtL+o8mRQJLQioOzIsjEKmzXdo6ow
+         NVEUJwxe9phALdFHcPAkKis4HhJqC8jTa3anhs1dE9YhiqRiI5LaV/a1JwwJbORT6vh8
+         vMAzdNG0XmHrZCq71bFpFkT3Rocr7wPpzgVKKlSiqlCvWNsvB7KJxEBrBnVQtZotD9zv
+         D20tel5D5LSGvmqSINEd6Q/3hAK72gSjreTDtc7oJxKEtydyKC45ieq8izuQX2X5P4gp
+         PIkog6nmk5bdT+ZWGrR3VH8rdT8etkqjIHL70uQwlLfFY7sP5eCoGmxAqFmaGoKWyIzi
+         Y5zQ==
+X-Gm-Message-State: ACrzQf12dX/P253scVG70yI3nqhuiNmFN0R3/ZUx+pNok2N3aK8ohvrb
+	grXLoAi48FsVUzGgAhxxrDJ52/BtwFsSMQ==
+X-Google-Smtp-Source: AMsMyM5h4T3byicZOIv+JD1Z/YW4+oLSkU8ExiV5ndGuXfIZu+Cvm2VmtXshMU44u3vh4ZnaIASgRQ==
+X-Received: by 2002:a65:56cb:0:b0:460:442e:b293 with SMTP id w11-20020a6556cb000000b00460442eb293mr20599785pgs.49.1665615872604;
+        Wed, 12 Oct 2022 16:04:32 -0700 (PDT)
 Received: from localhost ([50.221.140.188])
-        by smtp.gmail.com with ESMTPSA id d64-20020a633643000000b0046ae818b626sm1052297pga.30.2022.10.12.16.04.30
+        by smtp.gmail.com with ESMTPSA id x17-20020a17090a531100b0020a7d076bfesm1935855pjh.2.2022.10.12.16.04.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 16:04:31 -0700 (PDT)
-Subject: [PATCH] pr: Provide more information on PR fetch failures
-Date: Wed, 12 Oct 2022 16:02:00 -0700
-Message-Id: <20221012230200.29306-1-palmer@rivosinc.com>
+        Wed, 12 Oct 2022 16:04:32 -0700 (PDT)
+Subject: [PATCH] pr: Add --nostdin, to disable TTY detection
+Date: Wed, 12 Oct 2022 16:02:11 -0700
+Message-Id: <20221012230211.29402-1-palmer@rivosinc.com>
 X-Mailer: git-send-email 2.38.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
@@ -52,38 +52,62 @@ Cc: Palmer Dabbelt <palmer@rivosinc.com>
 From: Palmer Dabbelt <palmer@rivosinc.com>
 To:          tools@linux.kernel.org
 
-The error message that triggers when b4 is unable to fetch a PR doesn't
-indicate whether the trouble was in parsing the message ID or in
-fetching from the remote.  This provides more information.
+I'm running b4 from a bash script that does all sorts of wacky stuff to
+try and talk to the Yubikey, which causes "b4 pr" to think I'm trying to
+pass it message IDs from standard in when I'm actually trying to do some
+via positional arguments.  This adds a --nostdin command-line argument
+to turn off the automatic TTY-based detection and just force positional
+arguments.
 
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 ---
-Turns out this was just a PEBKAC, I'd forgotten to turn on my Yubikey so
-I couldn't fetch from kernel.org via SSH.  So I don't really need this
-any more, but maybe it'll help someone else who ends up doing the same
-thing.
+I added this to b4.5.rst, not sure if that was the right place to put
+it.  I noticed some other arguments in the source that don't appear to
+be documented in there.
 ---
- b4/pr.py | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ b4/command.py | 2 ++
+ b4/pr.py      | 2 +-
+ man/b4.5.rst  | 1 +
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
+diff --git a/b4/command.py b/b4/command.py
+index b16043e..7fcf73f 100644
+--- a/b4/command.py
++++ b/b4/command.py
+@@ -194,6 +194,8 @@ def cmd():
+                              'the identity must match a [sendemail "identity"] config section'))
+     sp_pr.add_argument('--dry-run', dest='dryrun', action='store_true', default=False,
+                        help='Force a --dry-run on git-send-email invocation (use with -s)')
++    sp_pr.add_argument('--nostdin', dest='nostdin', action='store_true', default=False,
++                       help="Disable TTY detection for stdin.")
+     sp_pr.add_argument('msgid', nargs='?',
+                        help='Message ID to process, or pipe a raw message')
+     sp_pr.set_defaults(func=cmd_pr)
 diff --git a/b4/pr.py b/b4/pr.py
-index 1c00e75..f728828 100644
+index 1c00e75..6c5da58 100644
 --- a/b4/pr.py
 +++ b/b4/pr.py
-@@ -495,7 +495,12 @@ def main(cmdargs):
-                     break
+@@ -472,7 +472,7 @@ def main(cmdargs):
+     gitdir = cmdargs.gitdir
+     lmsg = None
  
-     if lmsg is None or lmsg.pr_remote_tip_commit is None:
--        logger.critical('ERROR: Could not find pull request info in %s', cmdargs.msgid)
-+        reason = None
-+        if lmsg is None:
-+            reason = "unable to determine Message-IDe"
-+        else:
-+            reason = "unable to determite remote tip commit"
-+        logger.critical('ERROR: Could not find pull request info in %s, %s', cmdargs.msgid, reason)
-         sys.exit(1)
+-    if not sys.stdin.isatty():
++    if not sys.stdin.isatty() and not cmdargs.nostdin:
+         logger.debug('Getting PR message from stdin')
+         msg = email.message_from_bytes(sys.stdin.buffer.read())
+         cmdargs.msgid = b4.LoreMessage.get_clean_msgid(msg)
+diff --git a/man/b4.5.rst b/man/b4.5.rst
+index 073f32a..4dd079d 100644
+--- a/man/b4.5.rst
++++ b/man/b4.5.rst
+@@ -253,6 +253,7 @@ optional arguments:
+   -l, --retrieve-links  Attempt to retrieve any Link: URLs (use with -e)
+   -f MAILFROM, --from-addr MAILFROM
+                         Use this From: in exploded messages (use with -e)
++  --nostdin             Disable TTY detection for stdin.
  
-     if not lmsg.pr_tip_commit:
+ *Example*: b4 pr 202003292120.2BDCB41@keescook
+ 
 -- 
 2.38.0
 
