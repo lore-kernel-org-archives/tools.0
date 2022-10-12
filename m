@@ -1,74 +1,83 @@
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74343173
-	for <tools@linux.kernel.org>; Wed, 12 Oct 2022 08:30:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1665563443; x=1697099443;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=oVLqGoXvkA91qwnb3oW4149KIT1m/o/W9ceeT0oU5k0=;
-  b=DkjdHVhRlgFve5GtL6UuXbV5vCRybRhQ+twT7AwGkRl5zN6j1evgsPZT
-   z6TUapcvjer/7JTj518ZtGlFG1zmSvBLoTnOPBmb1il2cqv8BRXbaVOQO
-   OmbpEv0SpHPUe5DAL8ET5I41cPVuOIhkVXuqIn1t2V0L/PavKdxm8gikL
-   ZOZwD8cVOrd1Qyg0CiNn7xJku+Xi0UR/8J6ooL12edvNCIl07wuhJRhPX
-   q4tbZwZG83LmSwZLMn8eLJpPA1m9GXUccy4vnn2wq3si45jciomS7m2IF
-   rKVeHbCBhqgTP4L65VZsFbyQy/v8wlGBBZaPBqp1PpZHGchFs81elOA5C
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10497"; a="302347167"
-X-IronPort-AV: E=Sophos;i="5.95,178,1661842800"; 
-   d="scan'208";a="302347167"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2022 01:30:43 -0700
-X-IronPort-AV: E=McAfee;i="6500,9779,10497"; a="695388322"
-X-IronPort-AV: E=Sophos;i="5.95,178,1661842800"; 
-   d="scan'208";a="695388322"
-Received: from freeb-mobl.ger.corp.intel.com (HELO localhost) ([10.252.49.24])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2022 01:30:40 -0700
-From: Jani Nikula <jani.nikula@intel.com>
-To: tools@linux.kernel.org, dri-devel@lists.freedesktop.org
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>, Konstantin Ryabitsev
- <konstantin@linuxfoundation.org>, Dave Airlie <airlied@gmail.com>
-Subject: Re: pr-tracker-bot for drm subsystem?
-In-Reply-To: <87a670spdw.fsf@intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <87a670spdw.fsf@intel.com>
-Date: Wed, 12 Oct 2022 11:30:41 +0300
-Message-ID: <87pmexwij2.fsf@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF210612F
+	for <tools@linux.kernel.org>; Wed, 12 Oct 2022 23:04:30 +0000 (UTC)
+Received: by mail-pl1-f173.google.com with SMTP id c24so230660pls.9
+        for <tools@linux.kernel.org>; Wed, 12 Oct 2022 16:04:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rivosinc-com.20210112.gappssmtp.com; s=20210112;
+        h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sx5Ur4EnXWwHa31eZTHv/UsoGVlZUyx80aW7q37HmmI=;
+        b=2KYqbIj9j1/K95aoq0/VPJE5CXfxONXqqd4SpJGlDQ0G69fmtGRSzvXtN8PtoMnqOn
+         sDXkbBopnnLInS+nCkVWdhMosaBcWvtUMhSas6NP3Q1FbfA8T16Rxnl93pFxw2qK3T3S
+         46z/3ZqFYlDrgqG+K7ysBzR+d2wTj8hYxkqAvwWwj5wQGNJksnXBWrmtVLnJYp1oja9N
+         Gg//KLzpk3YB2k1GM02RttSgSvMzIsmTNJ4Un9M5CDkxrlyJDgFA4LzVfweDYl9CUgdI
+         Un57/DGy7owAU/8BhZRGDmKhBupqczvG7F8y0oI2jV+ieupfkAT2NDu3tlwugeecK5uY
+         whyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Sx5Ur4EnXWwHa31eZTHv/UsoGVlZUyx80aW7q37HmmI=;
+        b=jydeSPwG/f5kSOgb64aYIXxcJ0z0VZfJeVoS41jBQ9Z1bTXfd1n0kx7YY/Qa97SKbu
+         kpsHchRrD/Zzx46RMoKcnZ2qrmZXeG3tG5YLtlVLR1plZj2d8UI2MwFc6c2crvKBsxsX
+         d6jxovPw5ADqvLVopau0MInxBTY51K/0DMqoZCMkt0j9nC12OWMyIPxXfgRitj251mEg
+         6g8IIdgXCQrngjVyimfUQbwLZ0iLXa2Ej6VvaLnnAWrWUfTHokmuMxc12ei1AFP/0ru3
+         22xsfLoLPz1Ukhrf8naz2Y79yyrCs9b+13oQe32TGLP4EZyeMmyyHgaVj4eOv78Mu7Ic
+         K0pw==
+X-Gm-Message-State: ACrzQf0JTJgSPjNv4xsFF9HRJFGciSaUHRDwCDp+8k/QfykuE7hhcN9l
+	vPDB4jbjDI9jakyawjcwo13t5YYA8fS74g==
+X-Google-Smtp-Source: AMsMyM79Ww0FI/cLJroCQH9UfldsIAPo8IROEwaFnAw6Y/488zGi2RYyi3LIsGzb+pONa4Woa2OHIw==
+X-Received: by 2002:a17:90b:1e0b:b0:20d:7ddf:9b08 with SMTP id pg11-20020a17090b1e0b00b0020d7ddf9b08mr7634806pjb.187.1665615870091;
+        Wed, 12 Oct 2022 16:04:30 -0700 (PDT)
+Received: from localhost ([50.221.140.188])
+        by smtp.gmail.com with ESMTPSA id x9-20020a170902a38900b0017f9db0236asm11150442pla.82.2022.10.12.16.04.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Oct 2022 16:04:29 -0700 (PDT)
+Subject: [PATCH] Add a doc for contributors
+Date: Wed, 12 Oct 2022 16:01:21 -0700
+Message-Id: <20221012230121.29033-1-palmer@rivosinc.com>
+X-Mailer: git-send-email 2.38.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+From: Palmer Dabbelt <palmer@rivosinc.com>
+To:          tools@linux.kernel.org
 
+No idea if this is accurate, but I'm trying to send some patches and
+didn't find anything else documenting how to do so.  I'm following my
+own guide to see how accurate it is...
 
-Ping?
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+---
+ CONTRIBUTING.rst | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+ create mode 100644 CONTRIBUTING.rst
 
-On Thu, 15 Sep 2022, Jani Nikula <jani.nikula@intel.com> wrote:
-> Hey all, I'd be interested in having the pr-tracker-bot [1] set up for
-> the drm subsystem, following the dri-devel mailing list [2] and
-> notifying when the pull requests have been merged to either the drm-next
-> or drm-fixes branches of the main drm repository [3].
->
-> What would this require in terms of the tracker bot code?
->
-> Is the idea that the service could be expanded to cover subsystems
-> instead of just LKML and mainline, or would all subsystems have to set
-> it up for themselves with their own cron jobs on their own servers?
->
-> Other considerations?
->
->
-> BR,
-> Jani.
->
->
-> [1] https://korg.docs.kernel.org/prtracker.html
-> [2] https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> [3] https://cgit.freedesktop.org/drm/drm/
-
+diff --git a/CONTRIBUTING.rst b/CONTRIBUTING.rst
+new file mode 100644
+index 0000000..9089da7
+--- /dev/null
++++ b/CONTRIBUTING.rst
+@@ -0,0 +1,10 @@
++Submitting Patches to b4
++========================
++
++The current b4 source code can be found at::
++
++  git clone https://git.kernel.org/pub/scm/utils/b4/b4.git/
++
++patches can be sent to::
++
++  tools@linux.kernel.org
 -- 
-Jani Nikula, Intel Open Source Graphics Center
+2.38.0
+
