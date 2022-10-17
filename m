@@ -1,83 +1,70 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.avm.de (mail.avm.de [212.42.244.119])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2924C4405
-	for <tools@linux.kernel.org>; Thu, 13 Oct 2022 18:14:08 +0000 (UTC)
-Received: by mail-pj1-f42.google.com with SMTP id t12-20020a17090a3b4c00b0020b04251529so2578919pjf.5
-        for <tools@linux.kernel.org>; Thu, 13 Oct 2022 11:14:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rivosinc-com.20210112.gappssmtp.com; s=20210112;
-        h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:to:cc:subject:date:message-id:reply-to;
-        bh=PaT2psA0xgeFPeL+VkvSQkj9TAM4BdkkuPQAvqOtWTQ=;
-        b=dhA5zgkSoGQcst2Hl0kqpIxH2wQ/xyGIj0VC3MmvDp/hfHIDxjs/AkM16yD2ciWMXT
-         h0rRyjjlNva6wW6T+vXD/tUuudvZplq+5YcC7j7MfRKuhNhQQyhKvc1ioCH+ZVFSv8z9
-         85aUgFkvlpI5VyRgUSpL0NqP3ES/gvf/txA1EbP20Ztw+DFHjpsLeJqw2qzTcs63ragh
-         lF7wIyxL68YOD4eyfvet/jZLJaWmg3RttfY628g3ZOrYlVj7PE1J0vWt0NX2Xzx364+i
-         d4OZx73y06hSBskqaVsmy/KbjpaP+k4sn6RciD6ZFM5fz/LzUehDhaYWqCBMknwdBN+F
-         xHOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
-         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PaT2psA0xgeFPeL+VkvSQkj9TAM4BdkkuPQAvqOtWTQ=;
-        b=bZQw8KJfg8bSvKKeShnp8VWvOkKuagKOUG8mE8RfeqnRYFf6s+KVxhP48g99bwPB/w
-         AP+NzJhwSj35eDKWnWMIe1rqKPVP81Bpp+CJCA5a7Hmg6VP1aBd50LxR92mzLsqTaFyh
-         oeI1+vVDjbt2YoYL9d1zCufDZnUbUyvaCFilAOqn1JZVJLh3fuBNjtWRibK1Uu/Y0TCx
-         vrFltFS7GrZdwj7E+bHbJudIf+yJ9eKlZ4Trub0JgbdP93mFdjm8D8DAYQXEHf/Qqzdp
-         CRmYPiTwiy2QGgbOhXOGwjA1UFTlLO6T+iH09tY58S9qRouTGrvrC2L6xZnkMyTcVbOv
-         VKNw==
-X-Gm-Message-State: ACrzQf0FnZTmKH13L4j/yvFj9KcybOTU13De2AEx5DxwWVFHzmMIANEJ
-	y+Dafoxn4mIQrkeHVxHjWhsj4JHKwliqgQ==
-X-Google-Smtp-Source: AMsMyM4Ae8CLbNwVM5MbkuK5S05Bx9Re6xSeXYGxqgOxfdovQlElC6+HtJO0YUQtDqr5uK9UtcmAGg==
-X-Received: by 2002:a17:903:31d6:b0:17f:8879:190b with SMTP id v22-20020a17090331d600b0017f8879190bmr1195835ple.119.1665684848458;
-        Thu, 13 Oct 2022 11:14:08 -0700 (PDT)
-Received: from localhost ([50.221.140.188])
-        by smtp.gmail.com with ESMTPSA id s22-20020a170902b19600b00172f6726d8esm136591plr.277.2022.10.13.11.14.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Oct 2022 11:14:07 -0700 (PDT)
-Subject: [PATCH] shazam: Don't use "git merge --edit" when non-interactive
-Date: Thu, 13 Oct 2022 11:10:31 -0700
-Message-Id: <20221013181031.23823-1-palmer@rivosinc.com>
-X-Mailer: git-send-email 2.38.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8066E1C12
+	for <tools@linux.kernel.org>; Mon, 17 Oct 2022 14:10:20 +0000 (UTC)
+Received: from mail-auth.avm.de (unknown [IPv6:2001:bf0:244:244::71])
+	by mail.avm.de (Postfix) with ESMTPS;
+	Mon, 17 Oct 2022 16:02:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
+	t=1666015356; bh=tk8f3N6qLO1zB9HUFpCEeiH8T5g7PHIo+PQcsl2YvK8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=V8ku7GAmfe2EaiuFX7YLMN/5+4lv5ItCPDpdsCurQVbYhaFx7CW3nAvI9cUeNO6Th
+	 DFyp+W05+rGo6Nru6vpzXKeF4PjPgAXw4syP3KTqXAk3QeLO0nQNBY9eF0Jz+B3iFI
+	 aJP64BQMIGK8dIogQBHwGgtFe4E4rZdLDtUCVVsc=
+Received: from buildd.core.avm.de (buildd-sv-01.avm.de [172.16.0.225])
+	by mail-auth.avm.de (Postfix) with ESMTPA id 4E4A580276;
+	Mon, 17 Oct 2022 16:02:36 +0200 (CEST)
+Received: by buildd.core.avm.de (Postfix, from userid 1000)
+	id 4040D181445; Mon, 17 Oct 2022 16:02:36 +0200 (CEST)
+Date: Mon, 17 Oct 2022 16:02:36 +0200
+From: Nicolas Schier <n.schier@avm.de>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Subject: Re: [PATCH b4] mbox: Exit with error code if no messages were found
+Message-ID: <Y01gfNMHorrzMkZq@buildd.core.avm.de>
+References: <20220825064109.550092-1-n.schier@avm.de>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
-From: Palmer Dabbelt <palmer@rivosinc.com>
-To:          tools@linux.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220825064109.550092-1-n.schier@avm.de>
+X-purgate-ID: 149429::1666015356-39780AFC-0B883D3C/0/0
+X-purgate-type: clean
+X-purgate-size: 867
+X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
+X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
+X-purgate: clean
 
-Most text editors are interactive, so call "git merge --no-edit" when in
-b4's non-interactive mode.
+On Thu, Aug 25, 2022 at 08:41:09AM +0200, Nicolas Schier wrote:
+> When mbox.main() is unable to retrieve any messages, some kind of error
+> happend (e.g. msgid has not been found).  Forward error state to the
+> parent process by exiting with exit code 1, to allow proper
+> handling.
+> 
+> Signed-off-by: Nicolas Schier <n.schier@avm.de>
+> ---
+>  b4/mbox.py | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/b4/mbox.py b/b4/mbox.py
+> index 9a6ea9c..0d258da 100644
+> --- a/b4/mbox.py
+> +++ b/b4/mbox.py
+> @@ -755,7 +755,7 @@ def main(cmdargs):
+>  
+>      msgid, msgs = get_msgs(cmdargs)
+>      if not msgs:
+> -        return
+> +        sys.exit(1)
+>  
+>      if len(msgs) and cmdargs.checknewer:
+>          msgs = get_extra_series(msgs, direction=1, useproject=cmdargs.useproject)
+> -- 
+> 2.37.2
 
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
----
- b4/mbox.py | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/b4/mbox.py b/b4/mbox.py
-index ff96a11..59073be 100644
---- a/b4/mbox.py
-+++ b/b4/mbox.py
-@@ -374,7 +374,12 @@ def make_am(msgs, cmdargs, msgid):
-         mergeflags = config.get('shazam-merge-flags', '--signoff')
-         sp = shlex.shlex(mergeflags, posix=True)
-         sp.whitespace_split = True
--        mergeargs = ['merge', '--no-ff', '-F', mmf, '--edit', 'FETCH_HEAD'] + list(sp)
-+        edit = None
-+        if cmdargs.no_interactive:
-+            edit = '--no-edit'
-+        else:
-+            edit = '--edit'
-+        mergeargs = ['merge', '--no-ff', '-F', mmf, edit, 'FETCH_HEAD'] + list(sp)
-         mergecmd = ['git'] + mergeargs
- 
-         thanks_record_am(lser, cherrypick=cherrypick)
--- 
-2.38.0
-
+ping.  Any feedback?
