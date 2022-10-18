@@ -1,80 +1,86 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA824A37;
-	Tue, 18 Oct 2022 20:29:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A20C433D6;
-	Tue, 18 Oct 2022 20:29:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1666124989;
-	bh=HVoRdeuniV0NvpQy56LEkes0CuGtQr4sfZcQVvfL1pU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eCDdeU8P0w5Lbfyg2BCsuN/+/LzsI8rBuhb1HaZNSTNaBn9fx1UuNDnc9sf4kq4Xw
-	 D/cWZLpr+EGhI9smqRl3gpN9nRryjHN4wuDCLUog4/YWr/+VtUiUJePRHuZif0lxfD
-	 SnURx5acl/LepADurL3/kDoQMqPFNC+qM+EXRXczoaOj43h+OpvC6RhurVChWU9bvH
-	 vfb+4gsT8mxIcD6IxiYQMfmh1an8ER7YN5rtWfJLINkMSl29hZPelgFKIS5yNXXQ0D
-	 iQ4c+4KUJUuYCp8+KmNsTsMk03TTI3qfRTGJn79kTJMF5xKzmlJQ2RrfLCM76AROmu
-	 IihpDSqA9PjTg==
-Date: Tue, 18 Oct 2022 21:29:44 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDCB4A24
+	for <tools@linux.kernel.org>; Tue, 18 Oct 2022 20:37:53 +0000 (UTC)
+Received: by mail-qt1-f170.google.com with SMTP id s3so10459813qtn.12
+        for <tools@linux.kernel.org>; Tue, 18 Oct 2022 13:37:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5vlEfNKPSzphnDkv9d0RVPKCp20AE2nvJobkOjmr+9U=;
+        b=HJM6mKohPRDDfiuAKWXhEcoEezY2wGy3T2+iHXebNOsPnd0hC3HYp/QmFeqbC52uKR
+         FcrSyI2RkgAbUET1QrLbUjNxpMLeFgz6cZuBmGoV7BITFeNsH0Ov6GUHablETnTYyHQ5
+         vrfwWXtoHwIUiXpSLzLGRzYY6HzchEPzc2pZM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5vlEfNKPSzphnDkv9d0RVPKCp20AE2nvJobkOjmr+9U=;
+        b=IKTfZ1XuDAwg+ZJFCmaZrOsLbvLKnVlqFDr3Q/1YaWFruVue999AEA+HPYKEXZYZ1f
+         4BkJq4iV2LGfMri7LGB8D6ycEEzRNuv8qgK4O7sUH9IfzrsALTwmhARuCxuvV4MC6VF1
+         vXIi9q77XSdC31xFghrADF7cwSjsov7kmsFANhzocuzCfwesQajtKmSyoprjOumdMiGG
+         rNCobQr88DFfeSDO1J0lbEdJpuiUovegWrJtHDb7/20W5bWtqEbfXrwpeuOMobeZRPEC
+         paeT4qpawAyxa1pv1eZHS2Tl2Py5IqzlmPeUsmya233uX4k+vqD/wmRuqDTcjb3uUKq7
+         JWVw==
+X-Gm-Message-State: ACrzQf1Y6Dwk55Mhr689dSA0nQfAPWx/8A8a3YOFUoU9eOHHLXbIxYSS
+	XdlKTmdB1go5EReHGpQdkoemYjrHkgpzHw==
+X-Google-Smtp-Source: AMsMyM4bxXjCUmAU3latiTtiDxIH80JtLrYJWa61P3qWfMtXuL4yGnOTJkN9JTktUMpN3/AOH9LYtg==
+X-Received: by 2002:a05:622a:1a9f:b0:39c:ae32:9f7f with SMTP id s31-20020a05622a1a9f00b0039cae329f7fmr3823443qtc.80.1666125472250;
+        Tue, 18 Oct 2022 13:37:52 -0700 (PDT)
+Received: from nitro.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id a21-20020a05620a067500b006e54251993esm2934180qkh.97.2022.10.18.13.37.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Oct 2022 13:37:51 -0700 (PDT)
+Date: Tue, 18 Oct 2022 16:37:49 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: Maxime Ripard <maxime@cerno.tech>, users@linux.kernel.org,
 	tools@linux.kernel.org
 Subject: Re: b4 bugs / future improvements
-Message-ID: <Y08MuItOLxqpBr+/@sirena.org.uk>
+Message-ID: <20221018203749.o4i5h2qt6artzezx@nitro.local>
 References: <20221018153620.tyuedbldi2ofbe2x@houat>
  <20221018201804.na5x7lohm4yszg5h@nitro.local>
+ <Y08MuItOLxqpBr+/@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qrJDWDdC513xdzih"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221018201804.na5x7lohm4yszg5h@nitro.local>
-X-Cookie: Lake Erie died for your sins.
+In-Reply-To: <Y08MuItOLxqpBr+/@sirena.org.uk>
 
+On Tue, Oct 18, 2022 at 09:29:44PM +0100, Mark Brown wrote:
+> > >    - It's a bit tedious to do. One needs to rebase and then edit the
+> > >      cover letter by hand without b4 being involved. I don't think doing
+> > >      the rebase interface all over again is reasonable, but maybe we
+> > >      could add a subcommand to set a new base?
+> 
+> > Interesting. I'm not sure I fully understand the problem, but then all my
+> > rebase tests were all very simple cases of running "git rebase <newtag>"
+> 
+> > Is there a reason why you have to manually edit the cover letter after a
+> > rebase?
+> 
+> If you're doing an inter-version changelog it's common to say something
+> like "rebased against foo" in there.  It's a bit clearer about things
+> than base-commit.
 
---qrJDWDdC513xdzih
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+No, I don't think that's what Maxime means -- "rebased against foo" can be
+done using "b4 prep --edit-cover". I think there's two things going on:
 
-On Tue, Oct 18, 2022 at 04:18:04PM -0400, Konstantin Ryabitsev wrote:
-> On Tue, Oct 18, 2022 at 05:36:20PM +0200, Maxime Ripard wrote:
+1. he's using a different cover strategy that requires base-branch tracking
+2. he's rebasing on a different branch, as opposed to a newer tag within the
+   same branch
 
-> >  - Generally speaking, rebasing a b4 series is a bit troublesome:
-> >=20
-> >    - It's a bit tedious to do. One needs to rebase and then edit the
-> >      cover letter by hand without b4 being involved. I don't think doing
-> >      the rebase interface all over again is reasonable, but maybe we
-> >      could add a subcommand to set a new base?
+That would indeed be as cumbersome as described (and why I'm using the "cover
+letter as an empty commit at the start of the series" strategy as the
+default).
 
-> Interesting. I'm not sure I fully understand the problem, but then all my
-> rebase tests were all very simple cases of running "git rebase <newtag>"
+Maxime, is that correct? I assume you're using "tip-commit"?
 
-> Is there a reason why you have to manually edit the cover letter after a
-> rebase?
-
-If you're doing an inter-version changelog it's common to say something
-like "rebased against foo" in there.  It's a bit clearer about things
-than base-commit.
-
---qrJDWDdC513xdzih
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmNPDLgACgkQJNaLcl1U
-h9A7xQf+MgiUmGjBblInwKOCStmzNNzwk6kCOCziqxms0I4mLGal3lGVd0WND/zc
-GIeRZFTzkfpBjMI8/+pHfIiCfgANc3egWoVWkqFaJiKQ4TyEXuGSZev4u5OJNHj6
-1wH91KdYIOPaVVommecfamC7XHhls3P+gK0CAQNEBoerjON7veq7uocfm91VIpNZ
-REo90zNxc7qbQ1c0YhiperJHWInet/4rD8LFhm8hb18WBSzNZ4+0q4JoLC1u7p7I
-Me8ruc3kbgUWSoKAhVrj6txjLxgAMFmPNIY7eJEqVpBq96VrMcXZ3EMAhfSKeSYy
-hR3JsVHDtMMiBPONP7QI0O7V16ckZQ==
-=G8on
------END PGP SIGNATURE-----
-
---qrJDWDdC513xdzih--
+-K
