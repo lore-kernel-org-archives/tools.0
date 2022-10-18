@@ -1,69 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4FF7F
-	for <tools@linux.kernel.org>; Mon, 17 Oct 2022 21:22:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE3B2C433D6;
-	Mon, 17 Oct 2022 21:22:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1666041736;
-	bh=JxVQvVqPkVzgnU96SB+1/zNTlRhJWUjc5JJK8I8FUqU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=YaVRjgvSxFiKaZH4vcJY2hKk7I0MMzum/u8sQ1hBF4GB8zAd2TMLqV+I7JLQAThXA
-	 DHXSCeJaLPxl0EdAqNPFIwW/RLgt3IiJveCz2H1MfrjO7kOuEX6XiZoF+uf57fTSLF
-	 GVodxdg6H1TbiFz7TlicisWo2u76AxrNH+fNMx3PCsC+JWs6XWcH0LcLo5ieesKXHY
-	 zij38F1SSDWEqsETmcNRielNgYocPqutKbMmDvJYuI8NAF8WedgiwzuDCf6wP7gtvp
-	 LUfUWW/AcAduGbgM2x5fWaQQDqpCIR1YaFH4ZRS/W2bCNfuqucVlJtVdT+bLgqBhm9
-	 PeKIDoss4xppQ==
-Date: Mon, 17 Oct 2022 16:22:15 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEB34C64
+	for <tools@linux.kernel.org>; Tue, 18 Oct 2022 14:23:36 +0000 (UTC)
+Received: by mail-qt1-f170.google.com with SMTP id g16so4884821qtu.2
+        for <tools@linux.kernel.org>; Tue, 18 Oct 2022 07:23:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=MT1gVnjxZlWQkvppbyXf2rlHhpErir7RQboqMqsgUOQ=;
+        b=EYne0ly2kYoWfUxY3XyFfPa3dH9r2tlTb7k1TzG/+wlbBEDv2beR9FwFM/6JzK3OHa
+         Gw6A4HuHY8zl6tz3BGn77VOV4ksraKOc+DjmZcqVr+cmoFDm14svDBD1RGIF9rt+Cn0y
+         lDYyRXNfCEZQ/Eg19/S9IiSqrcWFGbUrQ0E7k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MT1gVnjxZlWQkvppbyXf2rlHhpErir7RQboqMqsgUOQ=;
+        b=Q4uA5k8LA1l1cDoTfOHJVscZ9XOkazjTgyJtnRXvYUum+g6o1V0zLG/rT6Z9WC9RF1
+         kJr8wNcWCuZ1zoPe5xWGu4wpM8ed6nvkr1c8utMfE33eBBghMOSlwazq9rp0iFzAvQVS
+         2UxqrQWflXzcUBJfiHjYKyUYeuMmUe/GRbowpvEpKyoL9wFfZY75+1aq3J+1e/A/+w1t
+         xjW759jrNNCioA5Bhrvz2m4LoItAEFqjlRwO6ieEZ5PGW/+dPYqjMRoKLLjtxdXu5s1y
+         WLFpymt4jdHh7xhBqxsbeIcscRUOHLKxmA5r2ZFQCKIM9wz4xIlAsaaRVF3riLlTKA77
+         BhSA==
+X-Gm-Message-State: ACrzQf25KYMpWo7rH4+PoXPrJxzgStnSZkYyp01qfG4dTcuAdTgRGCOy
+	7ufReGCd6l1YxKahKH5b7Pi9j1gY0Zd1+A==
+X-Google-Smtp-Source: AMsMyM4bzpii3eg/qtwvl/U+ba7Jd74EGl2Y5v8NhtwC6dTXhXRYQjwYJB3E92rpiFcr7eMRzrdFRg==
+X-Received: by 2002:ac8:7f8c:0:b0:39c:db49:29cc with SMTP id z12-20020ac87f8c000000b0039cdb4929ccmr2295970qtj.224.1666103014958;
+        Tue, 18 Oct 2022 07:23:34 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id c25-20020a05620a269900b006ec51f95e97sm2442717qkp.67.2022.10.18.07.23.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Oct 2022 07:23:34 -0700 (PDT)
+Date: Tue, 18 Oct 2022 10:23:33 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Nicolas Schier <n.schier@avm.de>
 Cc: tools@linux.kernel.org
-Subject: Re: "b4 ty -d all" crash
-Message-ID: <20221017212215.GA3735451@bhelgaas>
+Subject: Re: [PATCH b4] mbox: Exit with error code if no messages were found
+Message-ID: <20221018142333.h5qme44sz6qqpl5l@meerkat.local>
+References: <20220825064109.550092-1-n.schier@avm.de>
+ <Y01gfNMHorrzMkZq@buildd.core.avm.de>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221017202214.dyt7lokid4shpqsv@nitro.local>
+In-Reply-To: <Y01gfNMHorrzMkZq@buildd.core.avm.de>
 
-On Mon, Oct 17, 2022 at 04:22:14PM -0400, Konstantin Ryabitsev wrote:
-> On Mon, Oct 17, 2022 at 12:23:23PM -0500, Bjorn Helgaas wrote:
-> > I've used "b4 am" for a long time, but I'm a first-time and naive
-> > "b4 ty" user:
+On Mon, Oct 17, 2022 at 04:02:36PM +0200, Nicolas Schier wrote:
+> On Thu, Aug 25, 2022 at 08:41:09AM +0200, Nicolas Schier wrote:
+> > When mbox.main() is unable to retrieve any messages, some kind of error
+> > happend (e.g. msgid has not been found).  Forward error state to the
+> > parent process by exiting with exit code 1, to allow proper
+> > handling.
 > > 
-> >   12:17:52 ~/linux (for-linus)$ b4 ty -d all
-> >   Discarding 707 messages
+> > Signed-off-by: Nicolas Schier <n.schier@avm.de>
+> > ---
+> >  b4/mbox.py | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/b4/mbox.py b/b4/mbox.py
+> > index 9a6ea9c..0d258da 100644
+> > --- a/b4/mbox.py
+> > +++ b/b4/mbox.py
+> > @@ -755,7 +755,7 @@ def main(cmdargs):
+> >  
+> >      msgid, msgs = get_msgs(cmdargs)
+> >      if not msgs:
+> > -        return
+> > +        sys.exit(1)
+> >  
+> >      if len(msgs) and cmdargs.checknewer:
+> >          msgs = get_extra_series(msgs, direction=1, useproject=cmdargs.useproject)
+> > -- 
+> > 2.37.2
 > 
-> Oh my.
-> 
-> >     Discarded: [PATCH 0/5] Handled return value of platform_get_irq correctly
-> >   Traceback (most recent call last):
-> >     File "/home/bjorn/.local/bin/b4", line 8, in <module>
-> >       sys.exit(cmd())
-> >     File "/home/bjorn/.local/lib/python3.8/site-packages/b4/command.py", line 341, in cmd
-> >       cmdargs.func(cmdargs)
-> >     File "/home/bjorn/.local/lib/python3.8/site-packages/b4/command.py", line 106, in cmd_ty
-> >       b4.ty.main(cmdargs)
-> >     File "/home/bjorn/.local/lib/python3.8/site-packages/b4/ty.py", line 678, in main
-> >       discard_selected(cmdargs)
-> >     File "/home/bjorn/.local/lib/python3.8/site-packages/b4/ty.py", line 578, in discard_selected
-> >       msgids.append(pdata[2])
-> >   IndexError: list index out of range
-> 
-> I think it's most likely due to tracking file format changes between when this
-> feature was first introduced and subsequent changes, especially considering
-> that your first tracked series are from:
-> 
-> > 	 Date: Mon, 4 May 2020 07:18:10 +0200
-> 
-> I suggest you just delete them manually by going into ~/.local/share/b4 and
-> deleting all *.am files.
+> ping.  Any feedback?
 
-Solved, thanks! :)
+Yes, the feedback is that I clearly need my own patchwork project. :) I've set
+one up now, so I'm less likely to miss incoming patches. Thank you for your
+patience.
 
-Bjorn
+-K
