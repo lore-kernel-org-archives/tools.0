@@ -1,86 +1,89 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDCB4A24
-	for <tools@linux.kernel.org>; Tue, 18 Oct 2022 20:37:53 +0000 (UTC)
-Received: by mail-qt1-f170.google.com with SMTP id s3so10459813qtn.12
-        for <tools@linux.kernel.org>; Tue, 18 Oct 2022 13:37:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5vlEfNKPSzphnDkv9d0RVPKCp20AE2nvJobkOjmr+9U=;
-        b=HJM6mKohPRDDfiuAKWXhEcoEezY2wGy3T2+iHXebNOsPnd0hC3HYp/QmFeqbC52uKR
-         FcrSyI2RkgAbUET1QrLbUjNxpMLeFgz6cZuBmGoV7BITFeNsH0Ov6GUHablETnTYyHQ5
-         vrfwWXtoHwIUiXpSLzLGRzYY6HzchEPzc2pZM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5vlEfNKPSzphnDkv9d0RVPKCp20AE2nvJobkOjmr+9U=;
-        b=IKTfZ1XuDAwg+ZJFCmaZrOsLbvLKnVlqFDr3Q/1YaWFruVue999AEA+HPYKEXZYZ1f
-         4BkJq4iV2LGfMri7LGB8D6ycEEzRNuv8qgK4O7sUH9IfzrsALTwmhARuCxuvV4MC6VF1
-         vXIi9q77XSdC31xFghrADF7cwSjsov7kmsFANhzocuzCfwesQajtKmSyoprjOumdMiGG
-         rNCobQr88DFfeSDO1J0lbEdJpuiUovegWrJtHDb7/20W5bWtqEbfXrwpeuOMobeZRPEC
-         paeT4qpawAyxa1pv1eZHS2Tl2Py5IqzlmPeUsmya233uX4k+vqD/wmRuqDTcjb3uUKq7
-         JWVw==
-X-Gm-Message-State: ACrzQf1Y6Dwk55Mhr689dSA0nQfAPWx/8A8a3YOFUoU9eOHHLXbIxYSS
-	XdlKTmdB1go5EReHGpQdkoemYjrHkgpzHw==
-X-Google-Smtp-Source: AMsMyM4bxXjCUmAU3latiTtiDxIH80JtLrYJWa61P3qWfMtXuL4yGnOTJkN9JTktUMpN3/AOH9LYtg==
-X-Received: by 2002:a05:622a:1a9f:b0:39c:ae32:9f7f with SMTP id s31-20020a05622a1a9f00b0039cae329f7fmr3823443qtc.80.1666125472250;
-        Tue, 18 Oct 2022 13:37:52 -0700 (PDT)
-Received: from nitro.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id a21-20020a05620a067500b006e54251993esm2934180qkh.97.2022.10.18.13.37.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Oct 2022 13:37:51 -0700 (PDT)
-Date: Tue, 18 Oct 2022 16:37:49 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: Maxime Ripard <maxime@cerno.tech>, users@linux.kernel.org,
-	tools@linux.kernel.org
-Subject: Re: b4 bugs / future improvements
-Message-ID: <20221018203749.o4i5h2qt6artzezx@nitro.local>
-References: <20221018153620.tyuedbldi2ofbe2x@houat>
- <20221018201804.na5x7lohm4yszg5h@nitro.local>
- <Y08MuItOLxqpBr+/@sirena.org.uk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64CF1FA8;
+	Wed, 19 Oct 2022 02:05:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A49BC433B5;
+	Wed, 19 Oct 2022 02:05:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1666145122;
+	bh=myNbiRh9MKR0eACVIm5NrnCePXKBsmap/yqJMdJ8RsE=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=TAEYnWL8X0XWR+L4gNOMR0ql8y8M5+y8IPN8w/f4/IaZZKX4XiejnFBmwgmNh3Bd3
+	 SWE708b5hZU8eQFBamnMklRgjzxNww29ZTXbN7V70WtSOo/Bfvan0UK9c7qV1hyqGB
+	 9P6vuQuG1UFNDkk76kJGHJJhE+Ewv2Oxg1+h4Tty9g3ocHTFtTwai01KwTclcJ1ERf
+	 gL0NFQ1LkclT1wY9+foExcPiYIcGU5eJTC+hHeghHuffjJ6zvahOhivm6G4EmjNCXJ
+	 1dtbbKlN9KaM+ifviCklD5krEfDcXh1IaGGigsDJC8FtD9fhnkbsG8+EQ378GY1FRp
+	 AAm+ryICj9jxQ==
+Received: by mail-vs1-f44.google.com with SMTP id 1so12224490vsx.1;
+        Tue, 18 Oct 2022 19:05:22 -0700 (PDT)
+X-Gm-Message-State: ACrzQf1DXW/yIBJny+YMPHPSoFa5tV0MMTv9wREbj0GXJQX4F8VdmYE1
+	QytfNp8m9f8kLUL+wZKNCuTEBvDxv1nSUD9mhw==
+X-Google-Smtp-Source: AMsMyM7tCDPrJ6qXB4HcjjxVL71aid1J/rMpTUQuHXn+ci/tOQuqejP/b0dLzqBuyAnBDuancgp9lOScRHsx7qG0ieU=
+X-Received: by 2002:a67:c088:0:b0:39b:1bb3:bdd1 with SMTP id
+ x8-20020a67c088000000b0039b1bb3bdd1mr2770791vsi.85.1666145121218; Tue, 18 Oct
+ 2022 19:05:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y08MuItOLxqpBr+/@sirena.org.uk>
+References: <20221018153620.tyuedbldi2ofbe2x@houat> <20221018201804.na5x7lohm4yszg5h@nitro.local>
+In-Reply-To: <20221018201804.na5x7lohm4yszg5h@nitro.local>
+From: Rob Herring <robh@kernel.org>
+Date: Tue, 18 Oct 2022 21:05:11 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJQx8T_a4M+78p2AyAGBD4esX+=Zs+XT9mT9oDd2z=oWg@mail.gmail.com>
+Message-ID: <CAL_JsqJQx8T_a4M+78p2AyAGBD4esX+=Zs+XT9mT9oDd2z=oWg@mail.gmail.com>
+Subject: Re: b4 bugs / future improvements
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Maxime Ripard <maxime@cerno.tech>, users@linux.kernel.org, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Oct 18, 2022 at 09:29:44PM +0100, Mark Brown wrote:
-> > >    - It's a bit tedious to do. One needs to rebase and then edit the
-> > >      cover letter by hand without b4 being involved. I don't think doing
-> > >      the rebase interface all over again is reasonable, but maybe we
-> > >      could add a subcommand to set a new base?
-> 
-> > Interesting. I'm not sure I fully understand the problem, but then all my
-> > rebase tests were all very simple cases of running "git rebase <newtag>"
-> 
-> > Is there a reason why you have to manually edit the cover letter after a
-> > rebase?
-> 
-> If you're doing an inter-version changelog it's common to say something
-> like "rebased against foo" in there.  It's a bit clearer about things
-> than base-commit.
+On Tue, Oct 18, 2022 at 3:18 PM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Tue, Oct 18, 2022 at 05:36:20PM +0200, Maxime Ripard wrote:
+> > Hi Konstantin,
+> >
+> > Thanks again for b4, it's really great :)
+>
+> I'm glad you're trying out the "send" functionality, despite its experimental
+> state -- your feedback is very welcome.
+>
+> > There's a bunch of things I have noticed in the recent weeks:
+> >
+> >  - It looks like 87e0e464959c breaks msmtp which doesn't recognize the
+> >    -f option, and will just error out
+>
+> There's got to be something else going on, since -f is required for sendmail
+> compatibility. The msmtp manpage specifically mentions that is supports it:
+> https://manpages.ubuntu.com/manpages/trusty/man1/msmtp.1.html
+>
+> (see under "options specific to sendmail mode")
+>
+> >  - Generally speaking, rebasing a b4 series is a bit troublesome:
+> >
+> >    - It's a bit tedious to do. One needs to rebase and then edit the
+> >      cover letter by hand without b4 being involved. I don't think doing
+> >      the rebase interface all over again is reasonable, but maybe we
+> >      could add a subcommand to set a new base?
+>
+> Interesting. I'm not sure I fully understand the problem, but then all my
+> rebase tests were all very simple cases of running "git rebase <newtag>"
+>
+> Is there a reason why you have to manually edit the cover letter after a
+> rebase?
+>
+> >    - If one sends a version, rebases, and then runs b4 trailers -u, then
+> >      no tag is found for that series. I assume it's because the
+> >      change-id has changed, but maybe for series that differ from the
+> >      last sent version we could also look for the last sent change-id?
+>
+> This is really strange, there's got to be something else going on. Here's a
+> simple test I just did:
 
-No, I don't think that's what Maxime means -- "rebased against foo" can be
-done using "b4 prep --edit-cover". I think there's two things going on:
+Isn't this the same issue I reported where the patch hash changes and
+no trailers are found.
 
-1. he's using a different cover strategy that requires base-branch tracking
-2. he's rebasing on a different branch, as opposed to a newer tag within the
-   same branch
-
-That would indeed be as cumbersome as described (and why I'm using the "cover
-letter as an empty commit at the start of the series" strategy as the
-default).
-
-Maxime, is that correct? I assume you're using "tip-commit"?
-
--K
+Rob
