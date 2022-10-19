@@ -1,98 +1,83 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E1E53A3
-	for <tools@linux.kernel.org>; Wed, 19 Oct 2022 19:21:28 +0000 (UTC)
-Received: by mail-qk1-f176.google.com with SMTP id z30so11378178qkz.13
-        for <tools@linux.kernel.org>; Wed, 19 Oct 2022 12:21:28 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7B853A3
+	for <tools@linux.kernel.org>; Wed, 19 Oct 2022 19:32:12 +0000 (UTC)
+Received: by mail-qv1-f41.google.com with SMTP id j8so699046qvo.6
+        for <tools@linux.kernel.org>; Wed, 19 Oct 2022 12:32:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vg1hxaLMIkXnxou84VWTSh5UkgItEQCmO+g4vuPuMvQ=;
-        b=T0U7jUL6BjJX0qzDnhIu7+LS2VjbCICbmPhemfJV8HYtv2/vq2ihBYBlWHh7eze0P1
-         Y1PPGy3Iz2krBBlfo2EGRXrS6O4+UPU/vy2ibdLC7AXH+PGWDrPuOuZSMxv1+4Bgnaap
-         UNCqxC3qJ+oTZqHaqetUIS7TR3BqrztqO1Mmc=
+        bh=5EjmUm1EkcwfYBGVzqPbJaGvkHlPZZfBQVYBbHX5MT8=;
+        b=ZZViwwn2zsiXNQiJ0cQb6iPHBzBzOgiH3ppgdi2xDNyUyS4gpNCoAlJd3UhaXaZprI
+         9buz6xKHWIPQ9tm7SkC7KNLgHNCYoalu/Fm2ih1jO1E0lq8Z5rtNbh3HM/CxKqoo7/5j
+         05SZOtpOEP8GLdE1hwrQSxu0wjeDs/P9NqZSg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Vg1hxaLMIkXnxou84VWTSh5UkgItEQCmO+g4vuPuMvQ=;
-        b=QOVpkAUabWURSJJQFaUB84y+dMPsbLYKqJwc0S2JuBcvqW2PU6sS5BE8dvFcBztfZN
-         NdEO8lWYGmHKHW37Z28Q14oKs6QcLxnmalz+FeZxibojJwprQFr0EXMULyGZJ/X3FJfC
-         Cv1OGpPtimS0G9lQkC1pAT4PLec3G+HPXClP9mAiSn5yUGImb5+eqIeRXZgLwYJ4gWn+
-         SxxHwf1hzl4z8T501l8By8rHIp2Uq5QXr4TosAmqYYGw/Se2J/zIFc28bMC1xDdKfB0N
-         z0jwXyPpbNOc1aUD8QbJD9JLwLMiSePIOstTZbsQ5RL2wgCKw4DajUJKHeEQjvDPWCQi
-         yFOA==
-X-Gm-Message-State: ACrzQf37dTRkBGhAoXHXAMt8wv0o9LQ4AJLoGehm+THfB4PkVRQPXhTw
-	jjpfuz5Ly1F4LqhdeTlJzzBmGw==
-X-Google-Smtp-Source: AMsMyM4Z72L/0HTlVnYi0r1jo3lHkXWEovhBUAx2T9zgNvUQuG40c4ejFKA9fx4Q8QeHY62JMLr4dA==
-X-Received: by 2002:a05:620a:4250:b0:6cf:a822:7c7e with SMTP id w16-20020a05620a425000b006cfa8227c7emr6973627qko.503.1666207287519;
-        Wed, 19 Oct 2022 12:21:27 -0700 (PDT)
+        bh=5EjmUm1EkcwfYBGVzqPbJaGvkHlPZZfBQVYBbHX5MT8=;
+        b=1Mv4BcRBn7Nu5GKZH0yh3A7At8g5aBcwVG37WGCREzBYGqRJun43UUVaOO4fbpChXw
+         6h2wMg5j2c5DTOydaEkGu6XXTCTbhhZFVGC+l9skIwkCAg6v9I2qJwwfEocfXjUpg5A8
+         t3KqkqhbzWBQ0wthtATZ2zyyaNdwpMnQp6l8AKqM1tWpPTSCNP0RB4/jGYe3fcpCzlC7
+         xetaQDPFLB3dtYHUG9qF0NUoGbB6Q17gU+DP2Pw6kYcnrQ7AsynWCN3qdlrNuNFJVJU1
+         I0tFBWD6sSwTRvVWIdjbZYV7cf8AZyDdfV321AFxzqNRrkDheay0/pOzBbxv2/KC2GO/
+         4wig==
+X-Gm-Message-State: ACrzQf3NiuOqrPNlCEn9ckD6yL+K3izFjoPgpp6xI+HxMuaO/ZoHfJA3
+	CbsBSQcIYXa2V16UPhazw6Y3hyVQTyV8ww==
+X-Google-Smtp-Source: AMsMyM4OnL4Uc1seLnhHf2i3/+V5iNIqKTBOvE4oBgXjqB7spxBH5XBof8ol5ERA6/oX3+llnsrNgg==
+X-Received: by 2002:a05:6214:27c3:b0:4b3:f75a:a59a with SMTP id ge3-20020a05621427c300b004b3f75aa59amr7804956qvb.11.1666207931400;
+        Wed, 19 Oct 2022 12:32:11 -0700 (PDT)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id bn4-20020a05622a1dc400b0039ccbf75f92sm4504202qtb.11.2022.10.19.12.21.26
+        by smtp.gmail.com with ESMTPSA id r8-20020a05620a298800b006be8713f742sm5784162qkp.38.2022.10.19.12.32.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Oct 2022 12:21:27 -0700 (PDT)
-Date: Wed, 19 Oct 2022 15:21:25 -0400
+        Wed, 19 Oct 2022 12:32:10 -0700 (PDT)
+Date: Wed, 19 Oct 2022 15:32:08 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Maxime Ripard <maxime@cerno.tech>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4 bugs / future improvements
-Message-ID: <20221019192125.oujf476b7niajhd4@meerkat.local>
-References: <20221018153620.tyuedbldi2ofbe2x@houat>
- <20221018201804.na5x7lohm4yszg5h@nitro.local>
- <20221019080140.zc42aqi7gwjpvczs@houat>
+To: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 send --output-dir eml's sent with git send-email creates two
+ From: in the mail body
+Message-ID: <20221019193208.euw2lv2d2anpzvdf@meerkat.local>
+References: <9bdb42f7-661a-77ed-97e5-33ba7a31fd9e@theobroma-systems.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ntkwtk4ifttk4geq"
-Content-Disposition: inline
-In-Reply-To: <20221019080140.zc42aqi7gwjpvczs@houat>
-
-
---ntkwtk4ifttk4geq
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <9bdb42f7-661a-77ed-97e5-33ba7a31fd9e@theobroma-systems.com>
 
-On Wed, Oct 19, 2022 at 10:01:40AM +0200, Maxime Ripard wrote:
-> > Is there a reason why you have to manually edit the cover letter after a
-> > rebase?
->=20
-> I was under the impression that we needed to update the base-branch
-> field? b4 prep -e sets it, so I was assuming it was important, but I
-> might just be wrong and it's not needed.
+On Wed, Oct 19, 2022 at 06:23:09PM +0200, Quentin Schulz wrote:
+> Hi,
+> 
+> I recently encountered some issue with my particular setup.
+> 
+> https://lore.kernel.org/lkml/20221019-upstream-puma-sd-40mhz-v1-0-754a76421518@theobroma-systems.com/raw
+> is the problematic mail, note the two From: lines in the mail body.
+> 
+> This particular patch has a git author (Jakob) different from my local git
+> identity (Quentin Schulz <quentin.schulz at theobroma-systems.com>) which is
+> different from the sendemail.from configuration (Quentin Schulz <foss+kernel
+> at 0leil.net>).
 
-Right, we set it initially for all cover letter strategies, but if you're
-using the default "commit" strategy (keeping the cover letter in an empty
-commit at the start of the series), then it's purely informational and we
-don't use it for anything.
+I'm going to point fingers at git-send-email here, because it shouldn't stick
+another From: into the body when it already sees a From: there. You should
+report this to git maintainers as a bug.
 
-> However, if there's a conflict (which is still fairly common when one
-> rebases) and we do a merge conflict resolution it's not able to anymore.
-> Rob's hint in his mail that there's a patch hash to retrieve the trailer
-> would explain it, the patch content (and context) has potentially
-> changed after a rebase.
+That said...
 
-I'll work on fixing that -- I just need to do some yak shaving in pytest
-so I can write some tests around it first.
+> The eml file created by b4 send --output-dir has the From: field using the
+> current git identity which I assume is the issue.
+
+Right, we're not doing quite the right thing here either, because when there's
+a sendemail.from set up, we should be using that instead of the user.name +
+user.email. I'll see how we can fix this up to do the right thing.
+
+Thank you for the report.
 
 -K
-
---ntkwtk4ifttk4geq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCY1BOMgAKCRC2xBzjVmSZ
-bPk4AP9VegdIpXi/tID++KB8Fh+2PusvC4360PyZe+C8uDj10gEAniaaAZJKhNeJ
-JbbfmiqX2GsUiWkIhsyJvNnz2tlD2AM=
-=tNLT
------END PGP SIGNATURE-----
-
---ntkwtk4ifttk4geq--
