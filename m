@@ -1,119 +1,155 @@
-Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [96.44.175.130])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309FD33DF;
-	Mon, 31 Oct 2022 17:33:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1667237616;
-	bh=M7h6WhlAAiIBPQDAKBVKeV7ZjlYX1GwgOYuPxB+zzSc=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=TOut6cC/6Om0TNlyc9JjeWg9b0lSKjXUkWmmUW3nQ5TkL5DM4IVvyKtn1NeDoKIvl
-	 5xOpbQU/YVazKU4KMwA3tOGN0PFDGAt0vOAtqO7lv7kjbRhTo4hYiaqb6356frocaa
-	 hnFhpipSrI5VfMtdg306cxQ4zt6te4uR0P/EXJmI=
-Received: from localhost (localhost [127.0.0.1])
-	by bedivere.hansenpartnership.com (Postfix) with ESMTP id 6C18C128657D;
-	Mon, 31 Oct 2022 13:33:36 -0400 (EDT)
-Received: from bedivere.hansenpartnership.com ([127.0.0.1])
-	by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xVx1OY62Vwfx; Mon, 31 Oct 2022 13:33:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1667237609;
-	bh=M7h6WhlAAiIBPQDAKBVKeV7ZjlYX1GwgOYuPxB+zzSc=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=saIGs07FV+GOeP0D7AA5miXXKkZBTNJxpylv5JTv4uw529gOpKyNGvyav1SimsT1H
-	 AuXu3ISR63SDLNzTzuTDsm28+DiDs2zcgPLIk2Mcab25MG7nfwJacbsUBfNQ9Zu3PV
-	 +7ofV2ME5qRaZkfYcZGKoOZhUHyIma8M9V7Mjfjo=
-Received: from [172.20.4.96] (unknown [160.72.53.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id 3CDD1128652D;
-	Mon, 31 Oct 2022 13:33:29 -0400 (EDT)
-Message-ID: <9214fe10dee071bfc637fe1d90e251aa7f62480a.camel@HansenPartnership.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31E53C00
+	for <tools@linux.kernel.org>; Mon, 31 Oct 2022 17:37:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1667237865;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LbXFFKbbsf9Zr9GNMfn1Y11G0KB/LuRSATTiS6oErG4=;
+	b=iEZwh8WeROJlG+0w806SDJF6rMJtkxwWmxR4oTgKcdxFO2wWziSNiy9+3Wl9mLlmYEY54P
+	1A6CbM2PsZlwSRxGR0jUQ7YUumnOAAfTdZ4gZt/IvdOKyb5Nl2hf1Dv/dDT9e6sYVHeMH0
+	y/fBDA8qmj3ck4Lkpu8OwsjcPeCBbg0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-479-npmMkfYeMZGwBIM2kh6wSw-1; Mon, 31 Oct 2022 13:37:44 -0400
+X-MC-Unique: npmMkfYeMZGwBIM2kh6wSw-1
+Received: by mail-wr1-f70.google.com with SMTP id d23-20020adfa417000000b002364a31b7c9so3268215wra.15
+        for <tools@linux.kernel.org>; Mon, 31 Oct 2022 10:37:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LbXFFKbbsf9Zr9GNMfn1Y11G0KB/LuRSATTiS6oErG4=;
+        b=jcYVihQPJnTIlIm6h1NlKhS/uyuFeBsMJsZ5tsS+XEQgh9VOtlAB6lRgApexLiPIbP
+         DozYU3RA4BE1clYQ1jyaAz8EFRyxyJTawJU6hnTNG9T1EhJo4eUODru3XLtDEpFXEx+w
+         YaikZuYyHrabwS3XViztwe/3Lngoy0hQu1SN+cfJcWmNd2dfGWFkzaSnfb1sisM62yCO
+         zebIWYp091Bn1zAV5oGvWuX037cdFfwtZ7efm0a0x/FugeuSBIhYUVt739ljs+gTf6Y2
+         frPZdO/y4Y9FUC4/tNZ5YrodyGT/f1GxFnRM2iI6HzL4q7Bq4YNd7n30n7cTgL15p1XG
+         EovA==
+X-Gm-Message-State: ACrzQf3HSNTI+DkY/eihTCG/IZqd5Nr78/zwRnjyIvPZvHal9FNBOnUx
+	w2JnSCaHN/JopbMeorHNxztshheOmll1P4RSIvdb5Do3Y5a3VPES9x6P291OyUh0etO9d4N9Rpg
+	u8kS0u2qi9V9F6ZkS
+X-Received: by 2002:adf:ec8a:0:b0:236:5b80:da83 with SMTP id z10-20020adfec8a000000b002365b80da83mr8642963wrn.509.1667237863493;
+        Mon, 31 Oct 2022 10:37:43 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM729CTorTP4Cvche4nr8oAHq6fJnrRN5oJsfWOBzJCoH3826RCXbRAsB+qdBz+5SWNXedkMBA==
+X-Received: by 2002:adf:ec8a:0:b0:236:5b80:da83 with SMTP id z10-20020adfec8a000000b002365b80da83mr8642939wrn.509.1667237863175;
+        Mon, 31 Oct 2022 10:37:43 -0700 (PDT)
+Received: from redhat.com ([2.52.15.189])
+        by smtp.gmail.com with ESMTPSA id jb1-20020a05600c54e100b003c6b874a0dfsm8369308wmb.14.2022.10.31.10.37.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Oct 2022 10:37:42 -0700 (PDT)
+Date: Mon, 31 Oct 2022 13:37:39 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, Lee Jones <lee@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	tools@linux.kernel.org, users@linux.kernel.org
 Subject: Re: DCO chain of custody revisited (was Re: [PATCH v4 08/11] mfd:
  qcom-pm8xxx: drop unused PM8018 compatible)
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Lee Jones <lee@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- tools@linux.kernel.org, users@linux.kernel.org
-Date: Mon, 31 Oct 2022 13:33:27 -0400
-In-Reply-To: <20221031172319.znosu3gleyipeje5@meerkat.local>
+Message-ID: <20221031133130-mutt-send-email-mst@kernel.org>
 References: <20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org>
-	 <20220928-mdm9615-dt-schema-fixes-v4-8-dac2dfaac703@linaro.org>
-	 <Y1/qnCyav/S35mRo@google.com>
-	 <6858acf3-eb90-41aa-b714-a2ceb6afe9db@linaro.org>
-	 <20221031165842.vxr4kp6h7qnkc53l@meerkat.local>
-	 <7b25ea15b6e508f435ca36967d9f4d4408f9a690.camel@HansenPartnership.com>
-	 <20221031172319.znosu3gleyipeje5@meerkat.local>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 
+ <20220928-mdm9615-dt-schema-fixes-v4-8-dac2dfaac703@linaro.org>
+ <Y1/qnCyav/S35mRo@google.com>
+ <6858acf3-eb90-41aa-b714-a2ceb6afe9db@linaro.org>
+ <20221031165842.vxr4kp6h7qnkc53l@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20221031165842.vxr4kp6h7qnkc53l@meerkat.local>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Mon, 2022-10-31 at 13:23 -0400, Konstantin Ryabitsev wrote:
-> On Mon, Oct 31, 2022 at 01:10:58PM -0400, James Bottomley wrote:
-> > > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > > Reviewed-by: Krzysztof Kozlowski <
-> > > > krzysztof.kozlowski@linaro.org>
-> > > > Signed-off-by: Lee Jones <lee@kernel.org>
-> > > 
-> > > This would indicate that it's *Lee* who is claiming
-> > > responsibility
-> > > for collecting the Reviewed-by tag from Krzysztof, because it is
-> > > in
-> > > his chain of custody. However, this is not the case -- it was
-> > > Neil
-> > > who collected the tag, and therefore the "more correct" order
-> > > should
-> > > be:
-> > > 
-> > > > Reviewed-by: Krzysztof Kozlowski <
-> > > > krzysztof.kozlowski@linaro.org>
-> > > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > > Signed-off-by: Lee Jones <lee@kernel.org>
-> > > 
-> > > If my reasoning is incorrect, then I need to go back to the
-> > > drawing
-> > > board.
+On Mon, Oct 31, 2022 at 12:58:42PM -0400, Konstantin Ryabitsev wrote:
+> Hijacking this thread for greater good.
+> 
+> On Mon, Oct 31, 2022 at 04:35:38PM +0100, Neil Armstrong wrote:
+> > Hi,
 > > 
-> > You're way over thinking this.
+> > On 31/10/2022 16:32, Lee Jones wrote:
+> > > On Fri, 21 Oct 2022, Neil Armstrong wrote:
+> > > 
+> > > > The PM8018 compatible is always used with PM8921 fallback, so PM8018
+> > > > compatible can be safely removed from device ID table
+> > > > 
+> > > > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > > 
+> > > Tags should appear chronologically.
+> > 
+> > Indeed, they were added by b4, I'll report this.
 > 
-> Yes, but it's my job to overthink this, so nobody else has to. :)
+> My trouble is that there are seemingly as many opinions about the order of
+> trailers as there are subsystem maintainers. The last time we had a long
+> discussion about this on the users list I got a strong message that what
+> matters most is the chain of custody, and the Signed-off-by trailer indicates
+> the chain of custody boundary.
 > 
-> > The only tag that matters from the DCO point of view is Signed-off-
-> > by. That's the ordering we care about for the chain of
-> > custody.  All other tags are irrelevant.  Of course, it's nice to
-> > think that reviews happen *after* the code was modified, which is
-> > why most of us like to see the Reviewed-by after the initial author
-> > signoff,
+> In the scenario below, the chain consists of 3 people:
 > 
-> But this is where it becomes complicated. The Reviewed-By trailer was
-> sent to the v2 of the series, and incorporated into v3(via b4
-> trailers). If we stick it below Signed-off-by, then it may suggest
-> that Krzysztof reviewed the v4 of the patch.
+> | Suggested-by: Reporter 1 <...>
+> | Signed-off-by: Developer 1 <...> -- initial DCO boundary
+> | Reviewed-by: Reviewer 1 <...>
+> | Tested-by: Tester 1 <...>
+> | Signed-off-by: Submaintainer 1 <...> -- intermediate DCO boundary
+> | Acked-by: Submaintainer 2 <...>
+> | Signed-off-by: Maintainer 1 <...> -- final DCO boundary
+> 
+> In terms of DCO, this makes the following claims:
+> 
+> Developer 1:
+>  - I am responsible for this change
+>  - It was suggested by Reporter 1
+> 
+> Submaintainer 1:
+>  - I am signing off on this change
+>  - I have collected the trailers from Reviewer 1 and Tester 1
+> 
+> Maintainer 1:
+>  - I am signing off on this change
+>  - I have collected the trailer from Submaintainer 2
+> 
+> In the current case, and using this principle, the following order is correct:
+> 
+> | Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> | Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> 
+> Because the Reviewerd-by trailer was sent to the v2 of the series and was
+> collected by Neil, so Neil is the person who is the DCO signatory of that
+> chain of custody in the v4 of the series.
+> 
+> I assume that in the final commit Lee rearranged the tags in the following
+> order:
+> 
+> | Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> | Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> | Signed-off-by: Lee Jones <lee@kernel.org>
+> 
+> This would indicate that it's *Lee* who is claiming responsibility for
+> collecting the Reviewed-by tag from Krzysztof, because it is in his chain of
+> custody. However, this is not the case -- it was Neil who collected the tag,
+> and therefore the "more correct" order should be:
 
-If the changes from v2 to v4 were material enough for that question to
-be relevant then the Reviewed-by tag shouldn't have been kept because
-the patch needed reviewing again.
 
-> By placing it above the Signed-off-by line, we at least clearly
-> indicate that it's Neil who put it there.
+I think this is often incorrect:
+I often pick a patch, then amend it adding tags from reviewers,
+typically I add tags at the end just because it's easier,
+and tools like git-interpret-trailers exist.
 
-Who put it there does not matter, so it's not really a problem that
-needs solving.
-
-However, there is a problem if b4 is preserving Reviewed-by tags for
-patches with material changes ... the review has to be redone and thus
-the tag should be lost.  You can only keep Reviewed-by tags for
-cosmetic changes (or obviously patches which don't change from version
-to version).
-
-James
-
+> | Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> | Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> | Signed-off-by: Lee Jones <lee@kernel.org>
+> 
+> If my reasoning is incorrect, then I need to go back to the drawing board.
+> 
+> -K
 
