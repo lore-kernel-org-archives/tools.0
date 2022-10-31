@@ -1,47 +1,52 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C771C27
-	for <tools@linux.kernel.org>; Thu, 27 Oct 2022 19:39:01 +0000 (UTC)
-Received: by mail-qv1-f44.google.com with SMTP id c8so2331047qvn.10
-        for <tools@linux.kernel.org>; Thu, 27 Oct 2022 12:39:01 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD0433C8
+	for <tools@linux.kernel.org>; Mon, 31 Oct 2022 16:58:45 +0000 (UTC)
+Received: by mail-qv1-f47.google.com with SMTP id i12so8734465qvs.2
+        for <tools@linux.kernel.org>; Mon, 31 Oct 2022 09:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=di5Bm19oQf6oYkttQqnG7QuW4JHpZkWMF+yq/wKBjz8=;
-        b=fA5/T2lYj9uL/+DQ1dS14fBwdvsRVMxeTN5BqpmbriKz+Zr5wkDAB/UHfq8lQqmal8
-         +BS347WCwbAY1hwK74Ct+1CiKp0YVdYBtDGQiy8Ygy+YXlrQaGqENqknzqyL7bqXzznh
-         dOC9OjVlck5vLFK0QGorL1tzmQF4QkzdBiH+I=
+        bh=mio9EjUcwmKVpYskhiJVRxg19wxsVwwzVAVlGabDIJs=;
+        b=JhMNJCn3FJtIvWXaMiQ4UJeDFJzHAeLD5jdbBcDGYqau0FdUBTnEolBcu4VV4HnaAr
+         0hOX8pEMY83Yv654A6PcxgbKu0yTu9KaxoRKkITXKFsf8P7WuNvHPDIZ3kAb3mpYC3FG
+         RjgPIPqTZDngGUKpn4nuUI9aZBvX3u5Ip4F2c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=di5Bm19oQf6oYkttQqnG7QuW4JHpZkWMF+yq/wKBjz8=;
-        b=ExVATBxUbMTfzTbE6SNEUXuQuTdi2W3e39HMKzfikV+SOLygGuauPtiuXFTkVO8dPb
-         IVhMjTT3Nlc/Rqx+1SOiaZMAldlvQVyNKP7+0VIEH4i70zxRXF3yeqah09KYq7D9xhgs
-         9DQLt7Kef5OzPUfw0qJEusENfQ/qAQtzN6yw6uFzdoHVpdNsXRcjXOA31qbFyYdnKHt/
-         KXiaXtpr0AVG407lN7oRa6SDW5jrGDgeYzzi99T07bwFJIYEPRcKIBjl1hLuo/WTxdJU
-         BLsj3GQZNDPIv7R1o1JC0cpl68HuxwErlbGFx9xqRAhxNIJY0mhgjmeysTbQ8yEKWqv0
-         EF5Q==
-X-Gm-Message-State: ACrzQf18UZhQ3oOfQu/nTLUydYm7NyGmn9bbj6FoSS7mcHrenZmWE0S/
-	c8wwJtu41GVWSIOpJagZRgq43g==
-X-Google-Smtp-Source: AMsMyM4cDMQ18sXLiW9LFu/rU3wEP1cUmkCZScYtly/VIQGQ9KHTbIgX5GpWi9yuj6uiSV3IpR+vqA==
-X-Received: by 2002:a05:6214:d06:b0:4b3:f2ea:f67c with SMTP id 6-20020a0562140d0600b004b3f2eaf67cmr42904953qvh.84.1666899540452;
-        Thu, 27 Oct 2022 12:39:00 -0700 (PDT)
+        bh=mio9EjUcwmKVpYskhiJVRxg19wxsVwwzVAVlGabDIJs=;
+        b=nhS5G9U6CJS3n8SZXluPdQLSIfVmkHcFcT5z4dSyKTBEb3ceEiCGWV0HBhnuY6HRn3
+         zMbDFM3WbLsoksJEZCNgsb5peYs+OHPK3OtfaPRNl4B77AFb0gTZeo8SDW73FbebmnqO
+         RnuWk1jT9lIAgwt8oHbqv4A4JFwltTZEFug9A6HrUkImboe4Gn/bZyDpgVHjyF88lNuz
+         4dyABzJABbxCbyw9JCTQEWVRvOI4PbGKBfdWH3d9Ty8xbCXci/O5sPII/przcSOxniqx
+         r7G+IvbBtmRus9AFU/X9WkNAQKEaqq4i8uig8DPwwLH0KwwRNaItUUwk+48n63TIUQZm
+         34Ow==
+X-Gm-Message-State: ACrzQf2wRGrHwTF7EOX+JhXwOPjWqv42liqv4z9RGeiCaSEzJE5WkgDY
+	G20XNpgSjSW2ZhbEO9CCHx83qg==
+X-Google-Smtp-Source: AMsMyM6PcgcJQu3W6Rf8+ZnLLRJW0cyaysmRxxpYXXNBmBgb1VRJ34Tj6gKErSjlngA7MgVmOEHXYQ==
+X-Received: by 2002:a0c:e651:0:b0:4bb:a726:3392 with SMTP id c17-20020a0ce651000000b004bba7263392mr11973773qvn.0.1667235524100;
+        Mon, 31 Oct 2022 09:58:44 -0700 (PDT)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id k10-20020a05620a414a00b006be8713f742sm1581680qko.38.2022.10.27.12.38.59
+        by smtp.gmail.com with ESMTPSA id g1-20020a05620a40c100b006cebda00630sm1278471qko.60.2022.10.31.09.58.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 12:39:00 -0700 (PDT)
-Date: Thu, 27 Oct 2022 15:38:58 -0400
+        Mon, 31 Oct 2022 09:58:43 -0700 (PDT)
+Date: Mon, 31 Oct 2022 12:58:42 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Rob Herring <robh@kernel.org>
-Cc: tools@linux.kernel.org, users@linux.kernel.org
-Subject: Re: b4 v0.10.1 is available
-Message-ID: <20221027193858.uoifoamajszkqhdi@meerkat.local>
-References: <20220926172903.f3mudqmts5woudll@meerkat.local>
- <CAL_JsqJVY5Mk0e+wLXQBJnY0OwR=vh24MhqTqmaozBjaBAULKQ@mail.gmail.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Lee Jones <lee@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	tools@linux.kernel.org, users@linux.kernel.org
+Subject: DCO chain of custody revisited (was Re: [PATCH v4 08/11] mfd:
+ qcom-pm8xxx: drop unused PM8018 compatible)
+Message-ID: <20221031165842.vxr4kp6h7qnkc53l@meerkat.local>
+References: <20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org>
+ <20220928-mdm9615-dt-schema-fixes-v4-8-dac2dfaac703@linaro.org>
+ <Y1/qnCyav/S35mRo@google.com>
+ <6858acf3-eb90-41aa-b714-a2ceb6afe9db@linaro.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -50,38 +55,81 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAL_JsqJVY5Mk0e+wLXQBJnY0OwR=vh24MhqTqmaozBjaBAULKQ@mail.gmail.com>
+In-Reply-To: <6858acf3-eb90-41aa-b714-a2ceb6afe9db@linaro.org>
 
-On Tue, Oct 04, 2022 at 02:03:08PM -0500, Rob Herring wrote:
-> I found a couple of issues with trailers and send. I'm on the current master.
-> 
-> In 'b4 trailers', if the patch id doesn't match exactly and it finds
-> some trailers, b4 just prints 'No trailer updates found.' which is
-> misleading. Can it have a fallback to subject matching or at least
-> print when there isn't an exact match and list the trailers found.
-> It's quite common to either have minor changes (and a judgement call
-> on whether tags still apply) or a review that's 'With X fixed,
-> Reviewed-by: ...".
-> 
-> The 2nd issue is with 'b4 send' and seems to have been introduced
-> recently. I have a commit msg like this:
-> "
-> Some commit
-> 
-> Signed-off-by: ...
-> ---
->  v2: https://lore.kernel.org/all/20220909204509.2169512-1-robh@kernel.org/
->    - Rework YACC code to handle configN formats in C code
->    - Add a warning when an unknown configN attr is found
-> "
-> 
-> I'm putting '---' in the commit to store the changes for the commit.
-> The patch ends up with 2 '---' lines, but git drops everything after
-> the first one. The issue is that
-> '//lore.kernel.org/all/20220909204509.2169512-1-robh@kernel.org/' is
-> added to the Cc list.
+Hijacking this thread for greater good.
 
-Thank you for your report. Both of these should be now fixed in the latest
-master and stable-0.10.y.
+On Mon, Oct 31, 2022 at 04:35:38PM +0100, Neil Armstrong wrote:
+> Hi,
+> 
+> On 31/10/2022 16:32, Lee Jones wrote:
+> > On Fri, 21 Oct 2022, Neil Armstrong wrote:
+> > 
+> > > The PM8018 compatible is always used with PM8921 fallback, so PM8018
+> > > compatible can be safely removed from device ID table
+> > > 
+> > > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > 
+> > Tags should appear chronologically.
+> 
+> Indeed, they were added by b4, I'll report this.
+
+My trouble is that there are seemingly as many opinions about the order of
+trailers as there are subsystem maintainers. The last time we had a long
+discussion about this on the users list I got a strong message that what
+matters most is the chain of custody, and the Signed-off-by trailer indicates
+the chain of custody boundary.
+
+In the scenario below, the chain consists of 3 people:
+
+| Suggested-by: Reporter 1 <...>
+| Signed-off-by: Developer 1 <...> -- initial DCO boundary
+| Reviewed-by: Reviewer 1 <...>
+| Tested-by: Tester 1 <...>
+| Signed-off-by: Submaintainer 1 <...> -- intermediate DCO boundary
+| Acked-by: Submaintainer 2 <...>
+| Signed-off-by: Maintainer 1 <...> -- final DCO boundary
+
+In terms of DCO, this makes the following claims:
+
+Developer 1:
+ - I am responsible for this change
+ - It was suggested by Reporter 1
+
+Submaintainer 1:
+ - I am signing off on this change
+ - I have collected the trailers from Reviewer 1 and Tester 1
+
+Maintainer 1:
+ - I am signing off on this change
+ - I have collected the trailer from Submaintainer 2
+
+In the current case, and using this principle, the following order is correct:
+
+| Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+| Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+Because the Reviewerd-by trailer was sent to the v2 of the series and was
+collected by Neil, so Neil is the person who is the DCO signatory of that
+chain of custody in the v4 of the series.
+
+I assume that in the final commit Lee rearranged the tags in the following
+order:
+
+| Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+| Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+| Signed-off-by: Lee Jones <lee@kernel.org>
+
+This would indicate that it's *Lee* who is claiming responsibility for
+collecting the Reviewed-by tag from Krzysztof, because it is in his chain of
+custody. However, this is not the case -- it was Neil who collected the tag,
+and therefore the "more correct" order should be:
+
+| Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+| Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+| Signed-off-by: Lee Jones <lee@kernel.org>
+
+If my reasoning is incorrect, then I need to go back to the drawing board.
 
 -K
