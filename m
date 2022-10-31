@@ -1,94 +1,79 @@
-Received: from 1wt.eu (wtarreau.pck.nerim.net [62.212.114.60])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DFD97C;
-	Mon, 31 Oct 2022 20:25:11 +0000 (UTC)
-Received: (from willy@localhost)
-	by pcw.home.local (8.15.2/8.15.2/Submit) id 29VKG6Cu021656;
-	Mon, 31 Oct 2022 21:16:06 +0100
-Date: Mon, 31 Oct 2022 21:16:06 +0100
-From: Willy Tarreau <w@1wt.eu>
-To: Alex Elder <elder@ieee.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        James Bottomley <James.Bottomley@hansenpartnership.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>, Lee Jones <lee@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        tools@linux.kernel.org, users@linux.kernel.org
-Subject: Re: DCO chain of custody revisited (was Re: [PATCH v4 08/11] mfd:
- qcom-pm8xxx: drop unused PM8018 compatible)
-Message-ID: <20221031201606.GB21566@1wt.eu>
-References: <20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org>
- <20220928-mdm9615-dt-schema-fixes-v4-8-dac2dfaac703@linaro.org>
- <Y1/qnCyav/S35mRo@google.com>
- <6858acf3-eb90-41aa-b714-a2ceb6afe9db@linaro.org>
- <20221031165842.vxr4kp6h7qnkc53l@meerkat.local>
- <7b25ea15b6e508f435ca36967d9f4d4408f9a690.camel@HansenPartnership.com>
- <20221031172319.znosu3gleyipeje5@meerkat.local>
- <89ce6b7a-3500-6026-0044-9916f5a567b7@ieee.org>
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1904424
+	for <tools@linux.kernel.org>; Mon, 31 Oct 2022 21:09:57 +0000 (UTC)
+Received: by mail-qt1-f171.google.com with SMTP id h21so3235158qtu.2
+        for <tools@linux.kernel.org>; Mon, 31 Oct 2022 14:09:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0wguFyywCE/UUfHPf5s+KAFvCwI/UjnR4jtvD3ob6I0=;
+        b=Fjecu3Sv4z0AcEIWBpc/1tWIHQEZRxHi57c4U7NltgTFQ7LktI48TTJW8H8jqyafIi
+         Brl7wuuXVrIoMIpajV/OhI1CpCeMe38S40/8NpCq42uKnqJcw/ysqBhtvSsabWx6xJ6n
+         TljdhoX0XPAmzpTY1+7X8gAgh8J5na/59lcQk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0wguFyywCE/UUfHPf5s+KAFvCwI/UjnR4jtvD3ob6I0=;
+        b=ECqJ6fL6icU4+15iW2tiqbiM2pB5IaWvnxrCAXdTGkXBA+1qA+Dm3Jr8HbpJpEvIDO
+         xuGNPZcTcX69dFUZB7wBpRWEp/KfBHAwh/tvDuFtatSYq7DueuFFbXtXeZrbgmIsKhKc
+         cBZazcJGGSt0gJ5aVW8VSEz937swBZw07e2l+MID9GTINDhb5rSaTT8P3oXlsqNpIDGf
+         WZXMssAOLLmM7IxoWMOdaj62A5hC7uheElY3z8Oy6vdbTQbNm0Gs8lQ6cOXG2dEOLtvW
+         ZF8v1Pmj7s5fRseCiBWA8K5GIP0LRodE3aL8nEtQ9AcsldnDIss2vSBvmaB7C+4Tthjd
+         V0Pw==
+X-Gm-Message-State: ACrzQf0oo4MGNh/SLNfdTK+UCjLtMnPJymo4IlPCga5/s/mQ9CWdSNtZ
+	8s0wQ4okz2ffbgcurRpPbcT40ucW97pUlA==
+X-Google-Smtp-Source: AMsMyM7vOvr8uADXj7VNpFxsu2d6liAfTyfoCuKfaQ4+LTpZ1juHaPcQSwu22ch5wOvRTZX3t8vldw==
+X-Received: by 2002:a05:622a:152:b0:39c:b772:290 with SMTP id v18-20020a05622a015200b0039cb7720290mr12477632qtw.35.1667250596901;
+        Mon, 31 Oct 2022 14:09:56 -0700 (PDT)
+Received: from nitro.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id s13-20020a05620a254d00b006cf8fc6e922sm5332423qko.119.2022.10.31.14.09.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Oct 2022 14:09:56 -0700 (PDT)
+Date: Mon, 31 Oct 2022 17:09:55 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	tools@linux.kernel.org
+Subject: Re: b4 send --output-dir eml's sent with git send-email creates two
+ From: in the mail body
+Message-ID: <20221031210955.o5e4saatypmdfizc@nitro.local>
+References: <20221019193208.euw2lv2d2anpzvdf@meerkat.local>
+ <20221021195727.GA303980@bhelgaas>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <89ce6b7a-3500-6026-0044-9916f5a567b7@ieee.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20221021195727.GA303980@bhelgaas>
 
-On Mon, Oct 31, 2022 at 12:33:30PM -0500, Alex Elder wrote:
-> On 10/31/22 12:23 PM, Konstantin Ryabitsev wrote:
-> > On Mon, Oct 31, 2022 at 01:10:58PM -0400, James Bottomley wrote:
-> > > > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > > > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > > > > Signed-off-by: Lee Jones <lee@kernel.org>
-> > > > 
-> > > > This would indicate that it's *Lee* who is claiming responsibility
-> > > > for collecting the Reviewed-by tag from Krzysztof, because it is in
-> > > > his chain of custody. However, this is not the case -- it was Neil
-> > > > who collected the tag, and therefore the "more correct" order should
-> > > > be:
-> > > > 
-> > > > > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > > > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > > > Signed-off-by: Lee Jones <lee@kernel.org>
-> > > > 
-> > > > If my reasoning is incorrect, then I need to go back to the drawing
-> > > > board.
-> > > 
-> > > You're way over thinking this.
+On Fri, Oct 21, 2022 at 02:57:27PM -0500, Bjorn Helgaas wrote:
+> > > The eml file created by b4 send --output-dir has the From: field using the
+> > > current git identity which I assume is the issue.
 > > 
-> > Yes, but it's my job to overthink this, so nobody else has to. :)
-> > 
-> > > The only tag that matters from the DCO point of view is Signed-off-by.
-> > > That's the ordering we care about for the chain of custody.  All other tags
-> > > are irrelevant.  Of course, it's nice to think that reviews happen *after*
-> > > the code was modified, which is why most of us like to see the Reviewed-by
-> > > after the initial author signoff,
-> > 
-> > But this is where it becomes complicated. The Reviewed-By trailer was sent to
-> > the v2 of the series, and incorporated into v3(via b4 trailers). If we stick
-> > it below Signed-off-by, then it may suggest that Krzysztof reviewed the v4 of
-> > the patch.
-> > 
-> > By placing it above the Signed-off-by line, we at least clearly indicate that
-> > it's Neil who put it there.
+> > Right, we're not doing quite the right thing here either, because when there's
+> > a sendemail.from set up, we should be using that instead of the user.name +
+> > user.email. I'll see how we can fix this up to do the right thing.
 > 
-> I prefer this interpretation.  That is, the "outer" (last) sign-off
-> is essentially indicating that everything within (above) it is what
-> their sign-off applies to.
+> I think I'm seeing a similar issue.  I have:
 > 
-> Most (all?) of the other tags (like Suggested-by, etc.) don't necessarily
-> have a strong requirement or precise meaning, so in
-> a way it doesn't matter that much.  But I think this convention
-> adds a small amount of value.
+>   [user]
+>         name = Bjorn Helgaas
+>         email = bhelgaas@google.com
+> 
+>   [sendemail]
+>         from = Bjorn Helgaas <helgaas@kernel.org>
 
-At least for stable backports we've been using this a lot because we
-often have to adapt patches that get backported, and it's often
-convenient to add a small comment summarizing the changes after the
-last s-o-b and before the backporter's. But I agree that most tags
-probably do not care much about ordering if the contents are not
-changed.
+I have a fix in master and stable-0.10.y that should do the right thing when
+sendemail.from is set. I still need to write tests for it, but it appears to
+be doing the right thing.
 
-Sometimes a maintainer might reword a commit message and in this case
-maybe the reviewed-by order may be relevant.
-
-Willy
+Best regards,
+Konstantin
