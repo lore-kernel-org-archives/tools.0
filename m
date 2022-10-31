@@ -1,79 +1,76 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1904424
-	for <tools@linux.kernel.org>; Mon, 31 Oct 2022 21:09:57 +0000 (UTC)
-Received: by mail-qt1-f171.google.com with SMTP id h21so3235158qtu.2
-        for <tools@linux.kernel.org>; Mon, 31 Oct 2022 14:09:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0wguFyywCE/UUfHPf5s+KAFvCwI/UjnR4jtvD3ob6I0=;
-        b=Fjecu3Sv4z0AcEIWBpc/1tWIHQEZRxHi57c4U7NltgTFQ7LktI48TTJW8H8jqyafIi
-         Brl7wuuXVrIoMIpajV/OhI1CpCeMe38S40/8NpCq42uKnqJcw/ysqBhtvSsabWx6xJ6n
-         TljdhoX0XPAmzpTY1+7X8gAgh8J5na/59lcQk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0wguFyywCE/UUfHPf5s+KAFvCwI/UjnR4jtvD3ob6I0=;
-        b=ECqJ6fL6icU4+15iW2tiqbiM2pB5IaWvnxrCAXdTGkXBA+1qA+Dm3Jr8HbpJpEvIDO
-         xuGNPZcTcX69dFUZB7wBpRWEp/KfBHAwh/tvDuFtatSYq7DueuFFbXtXeZrbgmIsKhKc
-         cBZazcJGGSt0gJ5aVW8VSEz937swBZw07e2l+MID9GTINDhb5rSaTT8P3oXlsqNpIDGf
-         WZXMssAOLLmM7IxoWMOdaj62A5hC7uheElY3z8Oy6vdbTQbNm0Gs8lQ6cOXG2dEOLtvW
-         ZF8v1Pmj7s5fRseCiBWA8K5GIP0LRodE3aL8nEtQ9AcsldnDIss2vSBvmaB7C+4Tthjd
-         V0Pw==
-X-Gm-Message-State: ACrzQf0oo4MGNh/SLNfdTK+UCjLtMnPJymo4IlPCga5/s/mQ9CWdSNtZ
-	8s0wQ4okz2ffbgcurRpPbcT40ucW97pUlA==
-X-Google-Smtp-Source: AMsMyM7vOvr8uADXj7VNpFxsu2d6liAfTyfoCuKfaQ4+LTpZ1juHaPcQSwu22ch5wOvRTZX3t8vldw==
-X-Received: by 2002:a05:622a:152:b0:39c:b772:290 with SMTP id v18-20020a05622a015200b0039cb7720290mr12477632qtw.35.1667250596901;
-        Mon, 31 Oct 2022 14:09:56 -0700 (PDT)
-Received: from nitro.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id s13-20020a05620a254d00b006cf8fc6e922sm5332423qko.119.2022.10.31.14.09.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 14:09:56 -0700 (PDT)
-Date: Mon, 31 Oct 2022 17:09:55 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	tools@linux.kernel.org
-Subject: Re: b4 send --output-dir eml's sent with git send-email creates two
- From: in the mail body
-Message-ID: <20221031210955.o5e4saatypmdfizc@nitro.local>
-References: <20221019193208.euw2lv2d2anpzvdf@meerkat.local>
- <20221021195727.GA303980@bhelgaas>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264618F52;
+	Mon, 31 Oct 2022 21:33:08 +0000 (UTC)
+Received: from letrec.thunk.org (guestnat-104-133-8-97.corp.google.com [104.133.8.97] (may be forged))
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 29VLTnJE030919
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 31 Oct 2022 17:29:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1667251792; bh=19DsnjZBbcrjzitVSUwFR+54FSioY0uGtcL5hkBs6P0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=HDmg7PWAUJ2Bc9m+cr78LTFXXI9ruRt98mg/Dv3ubnv3g+BYcRxW97Tmtgd0EQD+q
+	 Bxhdc+kwBtuTClfW4Mf8EF3/dBuEihHCRoewXN+8cUWqYpHaIIs4BTjdP7M54xVehc
+	 Xr9DukHUqkxEUOHT1vUFgI4MAen3d1Ex14R/L4uDtiNtFfxOE0IpsjJ7Z32ddX9mli
+	 9HW3VEIq1RLMjKSymI0aabK6xPahpPY3z9xSh1giA9N8Y5M6Wgc5HOszD9DggrDG57
+	 ntxZxNcA0cyVk4DN1A91bjooK56BanWcueA7QBhE5ofc63aGRu5lXR0q72ZVZcppI3
+	 vemdwPmLqgSAA==
+Received: by letrec.thunk.org (Postfix, from userid 15806)
+	id B53EB8C2A08; Mon, 31 Oct 2022 17:29:48 -0400 (EDT)
+Date: Mon, 31 Oct 2022 17:29:48 -0400
+From: "Theodore Ts'o" <tytso@mit.edu>
+To: James Bottomley <James.Bottomley@hansenpartnership.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>, Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        tools@linux.kernel.org, users@linux.kernel.org
+Subject: Re: DCO chain of custody revisited (was Re: [PATCH v4 08/11] mfd:
+ qcom-pm8xxx: drop unused PM8018 compatible)
+Message-ID: <Y2A+TMwdsMn3C5Wm@mit.edu>
+References: <20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org>
+ <20220928-mdm9615-dt-schema-fixes-v4-8-dac2dfaac703@linaro.org>
+ <Y1/qnCyav/S35mRo@google.com>
+ <6858acf3-eb90-41aa-b714-a2ceb6afe9db@linaro.org>
+ <20221031165842.vxr4kp6h7qnkc53l@meerkat.local>
+ <7b25ea15b6e508f435ca36967d9f4d4408f9a690.camel@HansenPartnership.com>
+ <20221031172319.znosu3gleyipeje5@meerkat.local>
+ <9214fe10dee071bfc637fe1d90e251aa7f62480a.camel@HansenPartnership.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221021195727.GA303980@bhelgaas>
+In-Reply-To: <9214fe10dee071bfc637fe1d90e251aa7f62480a.camel@HansenPartnership.com>
 
-On Fri, Oct 21, 2022 at 02:57:27PM -0500, Bjorn Helgaas wrote:
-> > > The eml file created by b4 send --output-dir has the From: field using the
-> > > current git identity which I assume is the issue.
-> > 
-> > Right, we're not doing quite the right thing here either, because when there's
-> > a sendemail.from set up, we should be using that instead of the user.name +
-> > user.email. I'll see how we can fix this up to do the right thing.
+On Mon, Oct 31, 2022 at 01:33:27PM -0400, James Bottomley wrote:
+> Who put it there does not matter, so it's not really a problem that
+> needs solving.
 > 
-> I think I'm seeing a similar issue.  I have:
-> 
->   [user]
->         name = Bjorn Helgaas
->         email = bhelgaas@google.com
-> 
->   [sendemail]
->         from = Bjorn Helgaas <helgaas@kernel.org>
+> However, there is a problem if b4 is preserving Reviewed-by tags for
+> patches with material changes ... the review has to be redone and thus
+> the tag should be lost.  You can only keep Reviewed-by tags for
+> cosmetic changes (or obviously patches which don't change from version
+> to version).
 
-I have a fix in master and stable-0.10.y that should do the right thing when
-sendemail.from is set. I still need to write tests for it, but it appears to
-be doing the right thing.
+What I've seen some reviewers do is to request some additional changes
+(please add more details in the comments, or please drop the test if
+the poitner is non-NULL before calling kfree(), and then they add the
+Reviewed-by tag.  In fact, in some cases they explicitly say, "please
+fix these things and then you may add "Reviewed-by: Jon Q. Random
+<random@example.com>"
 
-Best regards,
-Konstantin
+(For example, IIRC, Jan Kara does this a fair amount.)
+
+I understand that b4 can't possibly parse english, and if it does
+start gaining Skynet abilities, we've got bigger problems, but suffice
+it to say, there *are* times the Reviewed-By tag should be kept even
+though non-commit-description and/or non-commit changes were made.
+
+       			      	     			     - Ted
+
