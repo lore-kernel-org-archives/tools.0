@@ -1,196 +1,169 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D93ABA55
-	for <tools@linux.kernel.org>; Mon,  7 Nov 2022 13:41:04 +0000 (UTC)
-Received: by mail-qt1-f178.google.com with SMTP id fz10so6852624qtb.3
-        for <tools@linux.kernel.org>; Mon, 07 Nov 2022 05:41:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kJ1D98Og0RlzbZGK3Cftr9O29Xv1CoD4y0q0wWlWafw=;
-        b=InY4yhvmzvbkg6MuZ8dwclFoYpjBxKD9OcRtwhfiIAXKeBctoK5bTyuz9wo+IXh0Gc
-         +Wt7t2A09hL8rzHqRop7f0dhguVsZUJU31gjIe30bpBjdbFXZUkVBWSKLvX8pcK9O07T
-         R1KtYy5oriIbhBb5Ebcl75qQOWYUsYtWcldiLi+AB1UcnJjEMQykMZYaXhY8ivpCUWlC
-         owQWil5qz68jb9ycXpDmCB9bgK8idWJiEynV88xZsIkDy0xgc7u6LRd4tLaFF1Bv73pE
-         /nxwA+ImZ5O6HnIUkKiuUrd4yKxKmItqqFKEjYiEup6fRQqHkjOi5NFq4aJX+PWb0EUl
-         q84w==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D404182;
+	Tue,  8 Nov 2022 11:09:13 +0000 (UTC)
+Received: by mail-qk1-f182.google.com with SMTP id z30so8816578qkz.13;
+        Tue, 08 Nov 2022 03:09:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kJ1D98Og0RlzbZGK3Cftr9O29Xv1CoD4y0q0wWlWafw=;
-        b=fqFRe+aw5mOMubfYsNnO/RiqUIYphqDegKPXtV2m4wCJbYoLjNfMh8a9oxR0vIFCuk
-         clZKih2Z5ghAN9j3z/fRP1J9JRGWSysot3B1BBviGig+BNhzqOzMK9MFt1pDKhQJgY0V
-         t3atjI2T8EMQskabZk40+4BIeIlWyTztmCPLozCV6+pOGD4Hwi8zDeYq9te1SpCK4ya2
-         nY1lNEM+zb+NBlVJ78Qv/ou0DsNixVpqe6nWccx/QwRQBBw3vZmb6EQB3bi7KyVm+mF7
-         UXV/LTjTdt58e8AIA+A7JB3WIByRffonTu32UcNHYnUkYGPn5ka2Qk/OfOQw5AKjXI5o
-         C/JQ==
-X-Gm-Message-State: ACrzQf0ihwnD72II6G3fS/lgxBOWZuAOAz8C151DK9JYMfbV1qKvyDlE
-	lRXOJI3sgRoSp77HK/S+1hjcDArgUYY=
-X-Google-Smtp-Source: AMsMyM6yLEfD9KYz9xd5Y+cZyz9KNQnultvZ3ubp55izlndhK62aIHZ4yuxiYZ9yD72hSD9ewWbORw==
-X-Received: by 2002:ac8:5714:0:b0:3a5:757d:dc8d with SMTP id 20-20020ac85714000000b003a5757ddc8dmr9725418qtw.402.1667828463183;
-        Mon, 07 Nov 2022 05:41:03 -0800 (PST)
-Received: from localhost.localdomain (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id ca23-20020a05622a1f1700b00398ed306034sm6069824qtb.81.2022.11.07.05.41.01
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 07 Nov 2022 05:41:02 -0800 (PST)
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-To: konstantin@linuxfoundation.org
-Cc: tools@linux.kernel.org
-Subject: [PATCH b4] Fix 'LoreSeries::make_fake_am_range' with renamed, then modified file
-Date: Mon,  7 Nov 2022 08:40:54 -0500
-Message-Id: <20221107134054.75514-1-levraiphilippeblain@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20221031195132.bnezxkjboseihynx@meerkat.local>
-References: <20221031195132.bnezxkjboseihynx@meerkat.local>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wpvAbuZxq5VJZiEQ5OE+F5auxXpM+jCT8nNefkcfr9s=;
+        b=IGaLmO0Z352ljW5r8SxTxv8AjJU52qkom1QtoUATcT0g7b9ffFSERwZXUnnD2SByeS
+         c/ayIMEz2wsnBO76l3AqE0xCwTqtxKt0XnGGYPbJsuymIVzKkM+x2LKls5+TqAbQ7zRb
+         08yn8d84mZx4L/DSxWieAP32To3XO1Gx+VVO2Yhl1E19AVfjimZw242kV9x14HxYxh8m
+         3VABC67rFblW5rqm6/IcSfnEL7IETvJSIwKyvDmJv0dRvScvrYvO/AblqTqLhH0q/mDZ
+         C3l218dJl7w3bYuR25PpOP+vvYXqHYy/8u2n4eAqWzNBTXge6u8f+e4eP1hh720/5260
+         nN4g==
+X-Gm-Message-State: ACrzQf1+L/U0WsB3SIwa/C3W2Su9dZUFgH+xAEOgfOvMuopV1U+djias
+	vYWrFKiMpiezoMEZEYfUIAaBPvq0spA2bw==
+X-Google-Smtp-Source: AMsMyM5surQ6u8d2C6RckOWeCs1v5y/ExFfsKcmyBoaOIw1UT/35HhZtJV72NYouMS8vzQNU2Esg5w==
+X-Received: by 2002:a05:620a:909:b0:6fa:1031:33a5 with SMTP id v9-20020a05620a090900b006fa103133a5mr38475139qkv.496.1667905751810;
+        Tue, 08 Nov 2022 03:09:11 -0800 (PST)
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com. [209.85.128.179])
+        by smtp.gmail.com with ESMTPSA id n8-20020ac85a08000000b0039492d503cdsm8164496qta.51.2022.11.08.03.09.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Nov 2022 03:09:11 -0800 (PST)
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-367b8adf788so130483587b3.2;
+        Tue, 08 Nov 2022 03:09:11 -0800 (PST)
+X-Received: by 2002:a81:9c49:0:b0:34a:de:97b8 with SMTP id n9-20020a819c49000000b0034a00de97b8mr51945425ywa.384.1667905750934;
+ Tue, 08 Nov 2022 03:09:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Tue, 8 Nov 2022 12:08:59 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdUNMCEFgPXva3zL9GW7JO=J-kTHxR8mBafnjLavyDD5Dw@mail.gmail.com>
+Message-ID: <CAMuHMdUNMCEFgPXva3zL9GW7JO=J-kTHxR8mBafnjLavyDD5Dw@mail.gmail.com>
+Subject: Multiple independent patches sent in one series
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Prabhakar <prabhakar.csengg@gmail.com>, users@linux.kernel.org, 
+	tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When invoking 'b4 diff', LoreSeries::make_fake_am_range is used to
-create the old and new versions of a series in a temporary worktree.
+Hi Konstantin,
 
-The code is currently unprepared for a series that renames a file
-and then modifies it in a subsequent commit.
+I've ryn into a new oddity:
 
-The first issue is that LoreMessage::get_indexes fails to set
-blob_indexes for a renamed file since the 'diff --git' header for such a
-change has different file names for the "old" and "new" file, but that
-function skips any diff where "old" and "new" do not match. Fix that by
-removing that condition.
+    $ b4 am 20221107172953.63218-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+    Grabbing thread from
+lore.kernel.org/all/20221107172953.63218-1-prabhakar.mahadev-lad.rj%40bp.re=
+nesas.com/t.mbox.gz
+    Analyzing 2 messages in the thread
+    Assuming new revision: v2 ([PATCH] arm64: dts: renesas: r9a07g054:
+Drop #address-cells from pinctrl node)
+    Will use the latest revision: v2
+    You can pick other revisions using the -vN flag
+    Checking attestation on all messages, may take a moment...
+    ---
+      =E2=9C=93 [PATCH] arm64: dts: renesas: r9a07g054: Drop #address-cells
+from pinctrl node
+      ---
+      =E2=9C=93 Signed: DKIM/gmail.com
+    ---
+    Total patches: 1
+    ---
+     Link: https://lore.kernel.org/r/20221107172953.63218-2-prabhakar.mahad=
+ev-lad.rj@bp.renesas.com
+     Base: not specified
+           git am
+./v2_20221107_prabhakar_csengg_arm64_dts_renesas_r9a07g054_drop_address_cel=
+ls_from_pinctrl_node.mbx
+    $ b4 am 20221107172953.63218-2-prabhakar.mahadev-lad.rj@bp.renesas.com
+    Grabbing thread from
+lore.kernel.org/all/20221107172953.63218-2-prabhakar.mahadev-lad.rj%40bp.re=
+nesas.com/t.mbox.gz
+    Analyzing 2 messages in the thread
+    Checking attestation on all messages, may take a moment...
+    ---
+      =E2=9C=93 [PATCH] arm64: dts: renesas: r9a07g054: Drop #address-cells
+from pinctrl node
+      ---
+      =E2=9C=93 Signed: DKIM/gmail.com
+    ---
+    Total patches: 1
+    ---
+     Link: https://lore.kernel.org/r/20221107172953.63218-2-prabhakar.mahad=
+ev-lad.rj@bp.renesas.com
+     Base: not specified
+           git am
+./20221107_prabhakar_csengg_arm64_dts_renesas_r9a07g054_drop_address_cells_=
+from_pinctrl_node.mbx
 
-The second issue is that LoreSeries::make_fake_am_range itself is
-unprepared for a series that renames a file and then modifies it in a
-separate commit. This is because when processing each commit to create
-the "Initial fake commit", the file is added to the index with its new
-name when the commit that modifies it is processed. This causes the 'git
-am' invocation to fail at the earlier rename patch, because the new file
-name is already in the index (since it was created in the "Initial fake
-commit").
+Running "git am -s *mbx" fails with a conflict, as the bogus v2 mbox
+contains the same patch (the second).
+As I first thought I did something wrong, I removed both mbox files,
+and retried:
 
-Fix this by also recording the new file name in the 'blob_indexes'
-tuple, in addition to the old file name and hash, and making use of this
-new information in 'make_fake_am_range' by explicitely checking for
-rename patches when processing each commit to create the "Initial fake
-commit", adjusting the 'seenfiles' list accordingly. Note that we must
-also adjust the other user of 'blob_indexes', LoreSeries::populate_indexes.
+    $ b4 am 20221107172953.63218-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+    Analyzing 2 messages in the thread
+    Checking attestation on all messages, may take a moment...
+    ---
+      =E2=9C=93 [PATCH] arm64: dts: renesas: r9a07g054: Drop #address-cells
+from pinctrl node
+      ---
+      =E2=9C=93 Signed: DKIM/gmail.com
+    ---
+    Total patches: 1
+    ---
+     Link: https://lore.kernel.org/r/20221107172953.63218-2-prabhakar.mahad=
+ev-lad.rj@bp.renesas.com
+     Base: not specified
+           git am
+./20221107_prabhakar_csengg_arm64_dts_renesas_r9a07g054_drop_address_cells_=
+from_pinctrl_node.mbx
+    $ b4 am 20221107172953.63218-2-prabhakar.mahadev-lad.rj@bp.renesas.com
+    Analyzing 2 messages in the thread
+    Checking attestation on all messages, may take a moment...
+    ---
+      =E2=9C=93 [PATCH] arm64: dts: renesas: r9a07g054: Drop #address-cells
+from pinctrl node
+      ---
+      =E2=9C=93 Signed: DKIM/gmail.com
+    ---
+    Total patches: 1
+    ---
+     Link: https://lore.kernel.org/r/20221107172953.63218-2-prabhakar.mahad=
+ev-lad.rj@bp.renesas.com
+     Base: not specified
+           git am
+./20221107_prabhakar_csengg_arm64_dts_renesas_r9a07g054_drop_address_cells_=
+from_pinctrl_node.mbx
 
-For consistency, also rename local variables:
-- in 'get_indexes', rename 'curfile' to 'oldfile'
-- in 'populate_indexes', rename 'fn' (filename) and 'bh' (blob hash) to
-  'ofn' and 'obh' (old ")
-- in 'make_fake_am_range', rename 'fn' and 'fi' (file index) to 'ofn'
-  and 'ofi' (idem)
+Now I end up with a single mbox, containing only the second patch?
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
+Explicitly requesting the first one fails:
 
-Here is a patch. I was not sure if I should make the same logic changes in
-populate_indexes as I do in make_fake_am_range... I tried to read the code
-paths where populate_indexes is used to see if the same situation could occur,
-but I was not sure. 
+    $ b4 am 20221107172953.63218-1-prabhakar.mahadev-lad.rj@bp.renesas.com =
+-P_
+    Analyzing 2 messages in the thread
+    Specified msgid is not present in the series, cannot cherrypick
 
- b4/__init__.py | 43 ++++++++++++++++++++++++-------------------
- 1 file changed, 24 insertions(+), 19 deletions(-)
+The issue seems to be that both patches were intended to be independent,
+but were sent as a single series, or created in a single "git
+format-patch" run (cfr. In-Reply-To in the second email), without "[PATCH
+n/m]" sequence numbers.  Which does not sound that unusual to me...
 
-diff --git a/b4/__init__.py b/b4/__init__.py
-index 4456414..6c66893 100644
---- a/b4/__init__.py
-+++ b/b4/__init__.py
-@@ -640,16 +640,16 @@ def populate_indexes(self):
-         for lmsg in self.patches[1:]:
-             if lmsg is None or lmsg.blob_indexes is None:
-                 continue
--            for fn, bh in lmsg.blob_indexes:
--                if fn in seenfiles:
-+            for ofn, obh, nfn in lmsg.blob_indexes:
-+                if ofn in seenfiles:
-                     # if we have seen this file once already, then it's a repeat patch
-                     # it's no longer going to match current hash
-                     continue
--                seenfiles.add(fn)
--                if set(bh) == {'0'}:
-+                seenfiles.add(ofn)
-+                if set(obh) == {'0'}:
-                     # New file, will for sure apply clean
-                     continue
--                self.indexes.append((fn, bh))
-+                self.indexes.append((ofn, obh))
- 
-     def check_applies_clean(self, gitdir: str, at: Optional[str] = None) -> Tuple[int, list]:
-         if self.indexes is None:
-@@ -793,29 +793,33 @@ def make_fake_am_range(self, gitdir):
-                     logger.critical('ERROR: some patches do not have indexes')
-                     logger.critical('       unable to create a fake-am range')
-                     return None, None
--                for fn, fi in lmsg.blob_indexes:
--                    if fn in seenfiles:
-+                for ofn, ofi, nfn in lmsg.blob_indexes:
-+                    if ofn in seenfiles:
-                         # We already processed this file, so this blob won't match
-                         continue
--                    seenfiles.add(fn)
--                    if set(fi) == {'0'}:
-+                    seenfiles.add(ofn)
-+                    if set(ofi) == {'0'}:
-                         # New file creation, nothing to do here
--                        logger.debug('  New file: %s', fn)
-+                        logger.debug('  New file: %s', ofn)
-                         continue
-+                    if not ofn == nfn:
-+                        # renamed file, make sure to not add the new name later on
-+                        logger.debug('  Renamed file: %s -> %s', ofn, nfn)
-+                        seenfiles.add(nfn)
-                     # Try to grab full ref_id of this hash
--                    ecode, out = git_run_command(gitdir, ['rev-parse', fi])
-+                    ecode, out = git_run_command(gitdir, ['rev-parse', ofi])
-                     if ecode > 0:
--                        logger.critical('  ERROR: Could not find matching blob for %s (%s)', fn, fi)
-+                        logger.critical('  ERROR: Could not find matching blob for %s (%s)', ofn, ofi)
-                         logger.critical('         If you know on which tree this patchset is based,')
-                         logger.critical('         add it as a remote and perform "git remote update"')
-                         logger.critical('         in order to fetch the missing objects.')
-                         return None, None
--                    logger.debug('  Found matching blob for: %s', fn)
-+                    logger.debug('  Found matching blob for: %s', ofn)
-                     fullref = out.strip()
--                    gitargs = ['update-index', '--add', '--cacheinfo', f'0644,{fullref},{fn}']
-+                    gitargs = ['update-index', '--add', '--cacheinfo', f'0644,{fullref},{ofn}']
-                     ecode, out = git_run_command(None, gitargs)
-                     if ecode > 0:
--                        logger.critical('  ERROR: Could not run update-index for %s (%s)', fn, fullref)
-+                        logger.critical('  ERROR: Could not run update-index for %s (%s)', ofn, fullref)
-                         return None, None
-                 mbx.add(lmsg.msg.as_string(policy=emlpolicy).encode('utf-8'))
- 
-@@ -1517,12 +1521,13 @@ def get_indexes(diff: str) -> Set[tuple]:
-             if line.find('diff ') != 0 and line.find('index ') != 0:
-                 continue
-             matches = re.search(r'^diff\s+--git\s+\w/(.*)\s+\w/(.*)$', line)
--            if matches and matches.groups()[0] == matches.groups()[1]:
--                curfile = matches.groups()[0]
-+            if matches:
-+                oldfile = matches.groups()[0]
-+                newfile = matches.groups()[1]
-                 continue
-             matches = re.search(r'^index\s+([\da-f]+)\.\.[\da-f]+.*$', line)
--            if matches and curfile is not None:
--                indexes.add((curfile, matches.groups()[0]))
-+            if matches and oldfile is not None:
-+                indexes.add((oldfile, matches.groups()[0], newfile))
-         return indexes
- 
-     @staticmethod
+Using "b4 mbox" does give me an mbox with both patches, so I'm happy ;-)
 
-base-commit: cb6764b0d024316eb4a8b3bec5988d842af3b76d
--- 
-2.29.2
+Thanks!
 
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
