@@ -1,169 +1,127 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D404182;
-	Tue,  8 Nov 2022 11:09:13 +0000 (UTC)
-Received: by mail-qk1-f182.google.com with SMTP id z30so8816578qkz.13;
-        Tue, 08 Nov 2022 03:09:13 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wpvAbuZxq5VJZiEQ5OE+F5auxXpM+jCT8nNefkcfr9s=;
-        b=IGaLmO0Z352ljW5r8SxTxv8AjJU52qkom1QtoUATcT0g7b9ffFSERwZXUnnD2SByeS
-         c/ayIMEz2wsnBO76l3AqE0xCwTqtxKt0XnGGYPbJsuymIVzKkM+x2LKls5+TqAbQ7zRb
-         08yn8d84mZx4L/DSxWieAP32To3XO1Gx+VVO2Yhl1E19AVfjimZw242kV9x14HxYxh8m
-         3VABC67rFblW5rqm6/IcSfnEL7IETvJSIwKyvDmJv0dRvScvrYvO/AblqTqLhH0q/mDZ
-         C3l218dJl7w3bYuR25PpOP+vvYXqHYy/8u2n4eAqWzNBTXge6u8f+e4eP1hh720/5260
-         nN4g==
-X-Gm-Message-State: ACrzQf1+L/U0WsB3SIwa/C3W2Su9dZUFgH+xAEOgfOvMuopV1U+djias
-	vYWrFKiMpiezoMEZEYfUIAaBPvq0spA2bw==
-X-Google-Smtp-Source: AMsMyM5surQ6u8d2C6RckOWeCs1v5y/ExFfsKcmyBoaOIw1UT/35HhZtJV72NYouMS8vzQNU2Esg5w==
-X-Received: by 2002:a05:620a:909:b0:6fa:1031:33a5 with SMTP id v9-20020a05620a090900b006fa103133a5mr38475139qkv.496.1667905751810;
-        Tue, 08 Nov 2022 03:09:11 -0800 (PST)
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com. [209.85.128.179])
-        by smtp.gmail.com with ESMTPSA id n8-20020ac85a08000000b0039492d503cdsm8164496qta.51.2022.11.08.03.09.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 03:09:11 -0800 (PST)
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-367b8adf788so130483587b3.2;
-        Tue, 08 Nov 2022 03:09:11 -0800 (PST)
-X-Received: by 2002:a81:9c49:0:b0:34a:de:97b8 with SMTP id n9-20020a819c49000000b0034a00de97b8mr51945425ywa.384.1667905750934;
- Tue, 08 Nov 2022 03:09:10 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EADB17CD3;
+	Wed,  9 Nov 2022 14:15:04 +0000 (UTC)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 56DD332009A4;
+	Wed,  9 Nov 2022 09:15:03 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Wed, 09 Nov 2022 09:15:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to; s=fm2; t=1668003302; x=
+	1668089702; bh=xNx2/6V6yBOcbgjRVPsLADXHWc3a/MAHrWKciAw1SQs=; b=n
+	nk+3/WSWXuHJT7PjzyqxSS8LgBB4pjl0PNttHULCu9Sau960LhDlxjAvONKPAHSw
+	2V/CeT51jdYmlON3GifRs1QdopsMIIislbkURP8ZIVjCeUoxBUf128wRd1cbrzrO
+	l0gsTYB8jG25Rex+T5hXcGlQSvtH6gO04Ih4N1Khjf6zRJC9HW94v8OLa9n0sTTC
+	gt0DUctP4FGgU56cB4ZoD4hzQ+vNy7n/kfweKsnKxVALu19RbWBD8N09YQsJe3lY
+	aRVe8+gXAE7LeGWydfIqwUi0hNajTNrziZ9hgHio9+lzO+i6i2zAJrhfc8m+BnqG
+	3ztS2wqKHqTv5Y3AJ6NDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1668003302; x=
+	1668089702; bh=xNx2/6V6yBOcbgjRVPsLADXHWc3a/MAHrWKciAw1SQs=; b=E
+	/x/AzTc4e4NBiwuow+xNA+IYGQmbByqkBvySXFsDfdVHPVKkEtgTMgYt+AxuT54x
+	UDAQ69VSdtEBxVAI5B2jdiY54cWyTOiIAHusM5KJawHlmAvM1jKLr6xi5q1NqrWU
+	IJAnMMO20zrdcTxX0uja+8Fli1pYdbnOVhN8eO0+hpJU+HLgSLbfHmSp7hv2NlNB
+	1+EzVrvYoFo5Xf7VtYTFgVw5whVC/zYiO1qntHFYcdAnE25eEROiX5G/griCYjrc
+	ycjccDz9Jg2RPVWG0h4x0+m3MHtJX4mS7K4qJEYIY4b7kCfN30jLkg7kqBOKCm96
+	FYDfaXzXCZTTQHH5eQeHQ==
+X-ME-Sender: <xms:5rVrY_PdeHwbAISiqinMfv5ow0C_0UP31_2omKmHTafBBNxLiNRC-Q>
+    <xme:5rVrY5_u2DTTx7x42dnULUAzW5ypmY290yhnLooe4uFKik8ivn7AmfTwss510kHP7
+    cYppGCIf0_WDdG3Bw4>
+X-ME-Received: <xmr:5rVrY-TLtDpDFhVnXkCje6OF2OmjeWecNpsVSm62tKzsViMM4vQkhv3f1yoFuj6I2nAzAOaa21qJgFCHbv_8RdqLPAEnhMxTuXK7oy4mn0oqFg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfedvgdeivdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtugfgjgesthhqredttddtvdenucfhrhhomhepofgrgihi
+    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
+    htthgvrhhnpeeujefhkeegtefgtdeijeetgeetjeekkedtgfeujeeffedvvdelfeetjeff
+    feejleenucffohhmrghinhepuhgsuhhnthhurdgtohhmpdhgihhthhhusgdrtghomhenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmrgigihhm
+    vgestggvrhhnohdrthgvtghh
+X-ME-Proxy: <xmx:5rVrYzsUPWFTcH3wTkE_TEW_7MflilOViQtqeZYKIKhWBx7H4yfNgg>
+    <xmx:5rVrY3dj1lNdcMK9nBQk8xnm_3egYm5K45YcUQrpeIaN7F9z4kG89g>
+    <xmx:5rVrY_3fP7SHa3Mr4EeDXXg-jf36f8kgkUZ4nvUfDNlqdyOmKJ-1bw>
+    <xmx:5rVrY-61JnQM14wcOm5cQe_5yr9Si0-xj3rd76NfRUr9sIOqbuj3RQ>
+Feedback-ID: i8771445c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Nov 2022 09:15:02 -0500 (EST)
+Date: Wed, 9 Nov 2022 15:14:59 +0100
+From: Maxime Ripard <maxime@cerno.tech>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: b4 bugs / future improvements
+Message-ID: <20221109141459.ud2wofasq2jozmks@houat>
+References: <20221018153620.tyuedbldi2ofbe2x@houat>
+ <20221018201804.na5x7lohm4yszg5h@nitro.local>
+ <20221019080140.zc42aqi7gwjpvczs@houat>
+ <20221020084930.vpu552rag6gdvmvm@houat>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 8 Nov 2022 12:08:59 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdUNMCEFgPXva3zL9GW7JO=J-kTHxR8mBafnjLavyDD5Dw@mail.gmail.com>
-Message-ID: <CAMuHMdUNMCEFgPXva3zL9GW7JO=J-kTHxR8mBafnjLavyDD5Dw@mail.gmail.com>
-Subject: Multiple independent patches sent in one series
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Prabhakar <prabhakar.csengg@gmail.com>, users@linux.kernel.org, 
-	tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20221020084930.vpu552rag6gdvmvm@houat>
 
-Hi Konstantin,
+Hi,
 
-I've ryn into a new oddity:
+On Thu, Oct 20, 2022 at 10:49:30AM +0200, Maxime Ripard wrote:
+> On Wed, Oct 19, 2022 at 10:01:40AM +0200, Maxime Ripard wrote:
+> > On Tue, Oct 18, 2022 at 04:18:04PM -0400, Konstantin Ryabitsev wrote:
+> > > > There's a bunch of things I have noticed in the recent weeks:
+> > > >=20
+> > > >  - It looks like 87e0e464959c breaks msmtp which doesn't recognize =
+the
+> > > >    -f option, and will just error out
+> > >=20
+> > > There's got to be something else going on, since -f is required for s=
+endmail
+> > > compatibility. The msmtp manpage specifically mentions that is suppor=
+ts it:
+> > > https://manpages.ubuntu.com/manpages/trusty/man1/msmtp.1.html
+> > >=20
+> > > (see under "options specific to sendmail mode")
+> >=20
+> > It might be the auto argument that confuses it then? I'll check.
+>=20
+> So, here's the behaviour I'm seeing:
+>=20
+> $ printf "From: <maxime@cerno.tech>\nTo: <maxime@cerno.tech>\nSubject: Te=
+st\n\nTest Test." | msmtp -i -f auto maxime@cerno.tech
+> msmtp: recipient address maxime@cerno.tech not accepted by the server
+> msmtp: server message: 504 5.5.2 <auto>: Sender address rejected: need fu=
+lly-qualified address
+> msmtp: could not send mail (account default from /home/max/.config/msmtp/=
+config)
+>=20
+> If I drop the -f auto, it works:
+>=20
+> $ printf "From: <maxime@cerno.tech>\nTo: <maxime@cerno.tech>\nSubject: Te=
+st\n\nTest Test." | msmtp -i maxime@cerno.tech
+> $ echo $?
+> 0
+>=20
+> It seems to be related to
+> https://github.com/marlam/msmtp-mirror/issues/51 except I don't have
+> set_from_header in my config. I've tried to use allow_from_override and
+> force it to off, and it didn't help.
 
-    $ b4 am 20221107172953.63218-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-    Grabbing thread from
-lore.kernel.org/all/20221107172953.63218-1-prabhakar.mahadev-lad.rj%40bp.re=
-nesas.com/t.mbox.gz
-    Analyzing 2 messages in the thread
-    Assuming new revision: v2 ([PATCH] arm64: dts: renesas: r9a07g054:
-Drop #address-cells from pinctrl node)
-    Will use the latest revision: v2
-    You can pick other revisions using the -vN flag
-    Checking attestation on all messages, may take a moment...
-    ---
-      =E2=9C=93 [PATCH] arm64: dts: renesas: r9a07g054: Drop #address-cells
-from pinctrl node
-      ---
-      =E2=9C=93 Signed: DKIM/gmail.com
-    ---
-    Total patches: 1
-    ---
-     Link: https://lore.kernel.org/r/20221107172953.63218-2-prabhakar.mahad=
-ev-lad.rj@bp.renesas.com
-     Base: not specified
-           git am
-./v2_20221107_prabhakar_csengg_arm64_dts_renesas_r9a07g054_drop_address_cel=
-ls_from_pinctrl_node.mbx
-    $ b4 am 20221107172953.63218-2-prabhakar.mahadev-lad.rj@bp.renesas.com
-    Grabbing thread from
-lore.kernel.org/all/20221107172953.63218-2-prabhakar.mahadev-lad.rj%40bp.re=
-nesas.com/t.mbox.gz
-    Analyzing 2 messages in the thread
-    Checking attestation on all messages, may take a moment...
-    ---
-      =E2=9C=93 [PATCH] arm64: dts: renesas: r9a07g054: Drop #address-cells
-from pinctrl node
-      ---
-      =E2=9C=93 Signed: DKIM/gmail.com
-    ---
-    Total patches: 1
-    ---
-     Link: https://lore.kernel.org/r/20221107172953.63218-2-prabhakar.mahad=
-ev-lad.rj@bp.renesas.com
-     Base: not specified
-           git am
-./20221107_prabhakar_csengg_arm64_dts_renesas_r9a07g054_drop_address_cells_=
-from_pinctrl_node.mbx
+I just discovered something else.
 
-Running "git am -s *mbx" fails with a conflict, as the bogus v2 mbox
-contains the same patch (the second).
-As I first thought I did something wrong, I removed both mbox files,
-and retried:
+For various reasons, on one of my series I keep a per-commit changelog,
+in the commit log after a ---
 
-    $ b4 am 20221107172953.63218-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-    Analyzing 2 messages in the thread
-    Checking attestation on all messages, may take a moment...
-    ---
-      =E2=9C=93 [PATCH] arm64: dts: renesas: r9a07g054: Drop #address-cells
-from pinctrl node
-      ---
-      =E2=9C=93 Signed: DKIM/gmail.com
-    ---
-    Total patches: 1
-    ---
-     Link: https://lore.kernel.org/r/20221107172953.63218-2-prabhakar.mahad=
-ev-lad.rj@bp.renesas.com
-     Base: not specified
-           git am
-./20221107_prabhakar_csengg_arm64_dts_renesas_r9a07g054_drop_address_cells_=
-from_pinctrl_node.mbx
-    $ b4 am 20221107172953.63218-2-prabhakar.mahadev-lad.rj@bp.renesas.com
-    Analyzing 2 messages in the thread
-    Checking attestation on all messages, may take a moment...
-    ---
-      =E2=9C=93 [PATCH] arm64: dts: renesas: r9a07g054: Drop #address-cells
-from pinctrl node
-      ---
-      =E2=9C=93 Signed: DKIM/gmail.com
-    ---
-    Total patches: 1
-    ---
-     Link: https://lore.kernel.org/r/20221107172953.63218-2-prabhakar.mahad=
-ev-lad.rj@bp.renesas.com
-     Base: not specified
-           git am
-./20221107_prabhakar_csengg_arm64_dts_renesas_r9a07g054_drop_address_cells_=
-from_pinctrl_node.mbx
+This works generally fine, until I run b4 trailers -u which seems to
+drop the entire content after --- when adding the tags.
 
-Now I end up with a single mbox, containing only the second patch?
-
-Explicitly requesting the first one fails:
-
-    $ b4 am 20221107172953.63218-1-prabhakar.mahadev-lad.rj@bp.renesas.com =
--P_
-    Analyzing 2 messages in the thread
-    Specified msgid is not present in the series, cannot cherrypick
-
-The issue seems to be that both patches were intended to be independent,
-but were sent as a single series, or created in a single "git
-format-patch" run (cfr. In-Reply-To in the second email), without "[PATCH
-n/m]" sequence numbers.  Which does not sound that unusual to me...
-
-Using "b4 mbox" does give me an mbox with both patches, so I'm happy ;-)
-
-Thanks!
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Maxime
