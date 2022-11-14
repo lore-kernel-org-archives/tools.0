@@ -1,90 +1,68 @@
-Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6024C6B
-	for <tools@linux.kernel.org>; Mon, 14 Nov 2022 12:48:21 +0000 (UTC)
-Received: (Authenticated sender: foss@0leil.net)
-	by mail.gandi.net (Postfix) with ESMTPSA id 9FF6D60009;
-	Mon, 14 Nov 2022 12:48:13 +0000 (UTC)
-From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-To: "Kernel.org Tools" <tools@linux.kernel.org>
-Cc: Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: [PATCH] git_range_to_patches: actually add to/cc headers from cover letter to single-commit series
-Date: Mon, 14 Nov 2022 13:47:56 +0100
-Message-Id: <20221114-prep-format-patch-single-patch-to-cc-v1-0-e8dddbd07096@theobroma-systems.com>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B88E4C97
+	for <tools@linux.kernel.org>; Mon, 14 Nov 2022 14:49:14 +0000 (UTC)
+Received: by mail-qt1-f170.google.com with SMTP id h21so6869744qtu.2
+        for <tools@linux.kernel.org>; Mon, 14 Nov 2022 06:49:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=R1F5Vh85CXr0+daftfYY6vwRQu10kJGaVGhiYbQKKX4=;
+        b=h/A3GNkJnrCh4GQ+WARTbUxyF67eDLjqEV9VJVkp/cS4aIKdP5MBhTL8cI9/bKkbpF
+         mEbmfqCXcmw7LbK7+6dJ2Q2gEPPpeb3R2SrPxWEGUmDTr86QJdTBES07sXO+b0Gh/5ns
+         2R9JDvCNNo05ESOkK8ZutImLQ/BwZfWt0+jX4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=R1F5Vh85CXr0+daftfYY6vwRQu10kJGaVGhiYbQKKX4=;
+        b=NN6cwcdHs2k5Z/JWEo2U2/abo6YrU0jqnt72OCjVfXhW95lK8KkXc6k5dtqna9RVZZ
+         5YkzSLQ0IBv8YwuuaxrmlhFdPjFKlJEg3Q9BEBy3e5B6fN2gBPIBRXPff82K2MJDdrH0
+         xUlInVo70hQDK2ud5tRdNo/CXyM459NrU4xDYhJThNYdIGuKYxpMJnRmvj3qSnRSiF/p
+         aJk+Zf2+6hIq+3s82+TXSkgOGSpoD6XGyEbGkrRmHNAN2GZ8zp7RuTX5tIWcl1TWSduW
+         WV3nmsmEV+YmoybWRSxwYuVFex0WjgDCtPz3XO44BvRvF7PJ6Oe8lwqMJcF7nxhJSs+O
+         rCrg==
+X-Gm-Message-State: ANoB5plYhD49HzwV86g3vzIKil5ojy/Utx/7ycOVzmLnwRK4hBZDtlOt
+	TbWPBPNhRqrNaoNdu6maFTjke9/jQ8MVtA==
+X-Google-Smtp-Source: AA0mqf7AUsYPEY06S5dhShuwHBLOKw3PEaNJFvLLt6us2RfTurqJLhHEMce/VvPncBeHxgnvUcqePA==
+X-Received: by 2002:ac8:7443:0:b0:3a5:7a9c:242d with SMTP id h3-20020ac87443000000b003a57a9c242dmr12422005qtr.361.1668437353168;
+        Mon, 14 Nov 2022 06:49:13 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id z2-20020ae9c102000000b006eeae49537bsm6445881qki.98.2022.11.14.06.49.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Nov 2022 06:49:12 -0800 (PST)
+Date: Mon, 14 Nov 2022 09:49:11 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Oliver Smith <ollieparanoid@postmarketos.org>
+Cc: tools@linux.kernel.org
+Subject: Re: [PATCH b4 0/1] How about adding SourceHut lists as 2nd backend?
+Message-ID: <20221114144911.jdvdjkqi6mkzjtv6@meerkat.local>
+References: <20221112131114.2370-1-ollieparanoid@postmarketos.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221112131114.2370-1-ollieparanoid@postmarketos.org>
 
-The intent of the original code was to copy the Cc and To headers from
-the cover letter, previously added with b4 prep --auto-to-cc. However,
-those are added in the commit log which means a newline is inserted
-between the subject header and the start of the commit log, "breaking"
-the mail parsing because the rest is assumed to be the body of the mail.
+On Sat, Nov 12, 2022 at 02:11:13PM +0100, Oliver Smith wrote:
+> Hi,
+> 
+> I found that with relatively few changes it's possible to add SourceHut
+> as alternative backend to b4. Is this desirable to have in b4?
 
-Since the To: and Cc: lines are assumed to be in-body, and therefore not
-parsed by the mail backend, they cannot be fetched with mail.get('To')
-since the header isn't actually set.
+Absolutely, I am all for making b4 work with sourcehut. I haven't yet had a
+chance to review your patch, but I hope to be able to work on it today or
+tomorrow. Some features will require rethinking for sure (e.g. we assume we're
+always talking to a public-inbox instance, so when it's not the case we'll
+have to adjust features like querying the remote for updates based on
+change-id).
 
-Instead, let's use the Cc and To fields returned by get_body_parts of
-the covermsg into ctrailers list of LoreTrailer and then add the ones
-that are supposed to be To or Cc headers to the single-commit patch
-headers.
-
-Fixes: 6c215d83473d ("ez: don't send a cover letter for a 1-patch series")
-Fixes: c748abf6ad2a ("ez: don't send a cover letter for a 1-patch series") #v0.10.1
-Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
----
-git_range_to_patches: actually add to/cc headers from cover letter to single-commit series
-
-I remember also having issues with multiple-commits patch series where the to/cc
-fields of the cover wouldn't be applied to the rest of the series, but that'll
-be another commit/bug report if I find the issue.
-
-Finally, this probably wasn't detected because git-send-email is capable of
-adding the Cc: fields in the "snipped" section of a patch (---) even if not in
-the headers but not the To: fields.
-
-To: "Kernel.org Tools" <tools@linux.kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
----
- b4/__init__.py | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/b4/__init__.py b/b4/__init__.py
-index f5bbc53..61ae2c5 100644
---- a/b4/__init__.py
-+++ b/b4/__init__.py
-@@ -2779,13 +2779,11 @@ def git_range_to_patches(gitdir: Optional[str], start: str, end: str,
- 
-             pbody = LoreMessage.rebuild_message(pheaders, pmessage, ptrailers, newbasement, csignature)
-             pmsg.set_payload(pbody, charset='utf-8')
-+
-             # Add any To: and Cc: headers from the cover_message
--            toh = covermsg.get('To')
--            if toh:
--                pmsg.add_header('To', toh)
--            cch = covermsg.get('Cc')
--            if cch:
--                pmsg.add_header('Cc', cch)
-+            for ctrailer in list(ctrailers):
-+                if ctrailer.name in ('To', 'Cc'):
-+                    pmsg.add_header(ctrailer.name, ctrailer.value)
-             startfrom = 0
-         else:
-             patches.insert(0, (None, covermsg))
-
----
-base-commit: 287477e9e0149b42e444471da9dca629ebacf2e1
-change-id: 20221114-prep-format-patch-single-patch-to-cc-2a878158d50b
-
-Best regards,
--- 
-Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Cheers,
+-K
