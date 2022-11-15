@@ -1,96 +1,87 @@
-Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [217.70.178.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EC924F29
-	for <tools@linux.kernel.org>; Tue, 15 Nov 2022 18:01:24 +0000 (UTC)
-Received: from relay7-d.mail.gandi.net (unknown [217.70.183.200])
-	by mslow1.mail.gandi.net (Postfix) with ESMTP id 97507CBA46
-	for <tools@linux.kernel.org>; Tue, 15 Nov 2022 17:23:52 +0000 (UTC)
-Received: (Authenticated sender: foss@0leil.net)
-	by mail.gandi.net (Postfix) with ESMTPSA id B33E62000A;
-	Tue, 15 Nov 2022 17:23:43 +0000 (UTC)
-From: Quentin Schulz <foss+kernel@0leil.net>
-To: "Kernel.org Tools" <tools@linux.kernel.org>
-Cc: Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: [PATCH v2] git_range_to_patches: actually add to/cc headers from cover letter to single-commit series
-Date: Tue, 15 Nov 2022 18:23:24 +0100
-Message-Id: <20221114-prep-format-patch-single-patch-to-cc-v2-0-70a9019eb90c@theobroma-systems.com>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757FE8AAD
+	for <tools@linux.kernel.org>; Tue, 15 Nov 2022 19:43:25 +0000 (UTC)
+Received: by mail-qt1-f172.google.com with SMTP id c15so9401008qtw.8
+        for <tools@linux.kernel.org>; Tue, 15 Nov 2022 11:43:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CAQTxlfXH2zRVYR60qMbqQWNp153d5osCaQqiAWR2p8=;
+        b=f+WGjaepMoRTET2qqahZoDQSFx+MfzG5C7KzHAPvW4KC2oL9tDvwq1FI3WmnMLojk2
+         bEzTAjo9iN3M6jwMCpnpJlECVrGEbTpHSWsYrJvgpTHMzke+xVj5IIt3YYvJjXTGTbJ8
+         Z9NSIIQ1GXPYVXHmyQQmqcWrQknQm1Bp/79Uc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CAQTxlfXH2zRVYR60qMbqQWNp153d5osCaQqiAWR2p8=;
+        b=Dgl5Zur7iJUnh24qnxISlpXefw3o6bTAgFrSxmwNdjA01hrDoKczbVgdjxgLTIT9Yr
+         aR7hiix8ukyfcW7GHMgg6es+uewmwSYDjvVZZi+KpaDSGbXOOQWOl4my6JQYZZml4rVX
+         k/eN3aRIWPhXUYSo5Dipji5MtH+tvXqRKt2dr6b1VFdW0C7mKgBpSsOpjFrbXohazrux
+         7ljIX+HxE7x6LfmWOWZl6TDnlYpYmievZRWANdIxofdPyuTo6DSexQ6JBLasDZsIjurm
+         NrySzZA6vP5wDoflvmI1ySbv/e4uZPBTDK3Y6pc7UO8I76FpfmzFDxTa7z4W1MyxoLfT
+         p27Q==
+X-Gm-Message-State: ANoB5pnBjs7tfzj3hTd4G0hBX3LifFOZTCnxauqB0c3+2Cd/ZJAx8ZOz
+	ZjRBOx5S8bIzWf/andee52+7lwNauLuyxQ==
+X-Google-Smtp-Source: AA0mqf5LaXnlkwXxtmjg8L4SukRWl2rzUmhwW9Qkr3tD6nUxr3sO7FHC1d3vXsTzw5v5qfAnh7iGjQ==
+X-Received: by 2002:ac8:43d1:0:b0:3a5:280d:31ff with SMTP id w17-20020ac843d1000000b003a5280d31ffmr17728840qtn.646.1668541404260;
+        Tue, 15 Nov 2022 11:43:24 -0800 (PST)
+Received: from nitro.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id l5-20020ac87245000000b0039cc7ebf46bsm7503283qtp.93.2022.11.15.11.43.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Nov 2022 11:43:23 -0800 (PST)
+Date: Tue, 15 Nov 2022 14:43:22 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Cc: Quentin Schulz <foss+kernel@0leil.net>,
+	"Kernel.org Tools" <tools@linux.kernel.org>
+Subject: Re: [PATCH v2] git_range_to_patches: actually add to/cc headers from
+ cover letter to single-commit series
+Message-ID: <20221115194322.ms34zimtooyfsa4h@nitro.local>
+References: <20221114-prep-format-patch-single-patch-to-cc-v2-0-70a9019eb90c@theobroma-systems.com>
+ <0eeb50bf-9a09-6127-ae50-e838a9261042@theobroma-systems.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0eeb50bf-9a09-6127-ae50-e838a9261042@theobroma-systems.com>
 
-From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+On Tue, Nov 15, 2022 at 06:31:04PM +0100, Quentin Schulz wrote:
+> The issue with this patchset is that it only fixes single-commit series
+> (which is already a good start). However, patches generated with b4 prep -p
+> patches for bigger series are broken because the Cc: and To: fields
+> generated by b4 prep --auto-to-cc do not make it to individual patches, only
+> to the cover letter.
 
-The intent of the original code was to copy the Cc and To headers from
-the cover letter, previously added with b4 prep --auto-to-cc. However,
-those are added in the commit log which means a newline is inserted
-between the subject header and the start of the commit log, "breaking"
-the mail parsing because the rest is assumed to be the body of the mail.
+This was intentional -- `b4 prep -p` generates minimal headers (i.e. operates
+in git-format-patch compatible mode). If you want to generate the series as
+ready to sent out, you should use `b4 send -o`, which will populate To/Cc
+fields (among other headers).
 
-Since the To: and Cc: lines are assumed to be in-body, and therefore not
-parsed by the mail backend, they cannot be fetched with mail.get('To')
-since the header isn't actually set.
+> I could suggest to *always* add the To: and Cc: fields from the cover letter
+> into each individual patch headers but I know some contributors/maintainers
+> like to have a patch series with not all patches sent to all people impacted
+> by at least one patch.
 
-Instead, let's use the Cc and To fields returned by get_body_parts of
-the covermsg into ctrailers list of LoreTrailer and then add the ones
-that are supposed to be To or Cc headers to the single-commit patch
-headers.
+I did a (totally unscientific) polling and the results were that almost all
+maintainers preferred to receive the entire patch series and never just
+individual patches, which is why b4 operates this way. The To/Cc destinations
+are only tracked in the cover letter and when "b4 send" is invoked, we
+populate *all* messages with the same set of addresses to make sure that
+everyone gets the entire series.
 
-Fixes: 6c215d83473d ("ez: don't send a cover letter for a 1-patch series")
-Fixes: c748abf6ad2a ("ez: don't send a cover letter for a 1-patch series") #v0.10.1
-Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
----
-git_range_to_patches: actually add to/cc headers from cover letter to single-commit series
+> I could see what I can do for the workflow where all Cc: and To: fields from
+> the mailing lists are added as headers to each individual patch in a series
+> if there's some interest for it?
 
-This probably wasn't detected because git-send-email is capable of
-adding the Cc: fields in the "snipped" section of a patch (---) even if not in
-the headers but not the To: fields.
+Are you sure this isn't already done by `b4 send -o`?
 
-To: "Kernel.org Tools" <tools@linux.kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
----
-Changes in v2:
-- fix From: field,
-- remove list cast for ctrailers as unnecessary,
-- Link to v1: https://msgid.link/20221114-prep-format-patch-single-patch-to-cc-v1-0-e8dddbd07096@theobroma-systems.com
----
- b4/__init__.py | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/b4/__init__.py b/b4/__init__.py
-index f5bbc53..590c756 100644
---- a/b4/__init__.py
-+++ b/b4/__init__.py
-@@ -2779,13 +2779,11 @@ def git_range_to_patches(gitdir: Optional[str], start: str, end: str,
- 
-             pbody = LoreMessage.rebuild_message(pheaders, pmessage, ptrailers, newbasement, csignature)
-             pmsg.set_payload(pbody, charset='utf-8')
-+
-             # Add any To: and Cc: headers from the cover_message
--            toh = covermsg.get('To')
--            if toh:
--                pmsg.add_header('To', toh)
--            cch = covermsg.get('Cc')
--            if cch:
--                pmsg.add_header('Cc', cch)
-+            for ctrailer in ctrailers:
-+                if ctrailer.name in ('To', 'Cc'):
-+                    pmsg.add_header(ctrailer.name, ctrailer.value)
-             startfrom = 0
-         else:
-             patches.insert(0, (None, covermsg))
-
----
-base-commit: 287477e9e0149b42e444471da9dca629ebacf2e1
-change-id: 20221114-prep-format-patch-single-patch-to-cc-2a878158d50b
-
-Best regards,
--- 
-Quentin Schulz <quentin.schulz@theobroma-systems.com>
+-K
