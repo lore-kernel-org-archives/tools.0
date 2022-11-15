@@ -1,49 +1,29 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757FE8AAD
-	for <tools@linux.kernel.org>; Tue, 15 Nov 2022 19:43:25 +0000 (UTC)
-Received: by mail-qt1-f172.google.com with SMTP id c15so9401008qtw.8
-        for <tools@linux.kernel.org>; Tue, 15 Nov 2022 11:43:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CAQTxlfXH2zRVYR60qMbqQWNp153d5osCaQqiAWR2p8=;
-        b=f+WGjaepMoRTET2qqahZoDQSFx+MfzG5C7KzHAPvW4KC2oL9tDvwq1FI3WmnMLojk2
-         bEzTAjo9iN3M6jwMCpnpJlECVrGEbTpHSWsYrJvgpTHMzke+xVj5IIt3YYvJjXTGTbJ8
-         Z9NSIIQ1GXPYVXHmyQQmqcWrQknQm1Bp/79Uc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CAQTxlfXH2zRVYR60qMbqQWNp153d5osCaQqiAWR2p8=;
-        b=Dgl5Zur7iJUnh24qnxISlpXefw3o6bTAgFrSxmwNdjA01hrDoKczbVgdjxgLTIT9Yr
-         aR7hiix8ukyfcW7GHMgg6es+uewmwSYDjvVZZi+KpaDSGbXOOQWOl4my6JQYZZml4rVX
-         k/eN3aRIWPhXUYSo5Dipji5MtH+tvXqRKt2dr6b1VFdW0C7mKgBpSsOpjFrbXohazrux
-         7ljIX+HxE7x6LfmWOWZl6TDnlYpYmievZRWANdIxofdPyuTo6DSexQ6JBLasDZsIjurm
-         NrySzZA6vP5wDoflvmI1ySbv/e4uZPBTDK3Y6pc7UO8I76FpfmzFDxTa7z4W1MyxoLfT
-         p27Q==
-X-Gm-Message-State: ANoB5pnBjs7tfzj3hTd4G0hBX3LifFOZTCnxauqB0c3+2Cd/ZJAx8ZOz
-	ZjRBOx5S8bIzWf/andee52+7lwNauLuyxQ==
-X-Google-Smtp-Source: AA0mqf5LaXnlkwXxtmjg8L4SukRWl2rzUmhwW9Qkr3tD6nUxr3sO7FHC1d3vXsTzw5v5qfAnh7iGjQ==
-X-Received: by 2002:ac8:43d1:0:b0:3a5:280d:31ff with SMTP id w17-20020ac843d1000000b003a5280d31ffmr17728840qtn.646.1668541404260;
-        Tue, 15 Nov 2022 11:43:24 -0800 (PST)
-Received: from nitro.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id l5-20020ac87245000000b0039cc7ebf46bsm7503283qtp.93.2022.11.15.11.43.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Nov 2022 11:43:23 -0800 (PST)
-Date: Tue, 15 Nov 2022 14:43:22 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Cc: Quentin Schulz <foss+kernel@0leil.net>,
-	"Kernel.org Tools" <tools@linux.kernel.org>
-Subject: Re: [PATCH v2] git_range_to_patches: actually add to/cc headers from
- cover letter to single-commit series
-Message-ID: <20221115194322.ms34zimtooyfsa4h@nitro.local>
-References: <20221114-prep-format-patch-single-patch-to-cc-v2-0-70a9019eb90c@theobroma-systems.com>
- <0eeb50bf-9a09-6127-ae50-e838a9261042@theobroma-systems.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB13C8ABA;
+	Tue, 15 Nov 2022 20:18:00 +0000 (UTC)
+Received: (Authenticated sender: alexandre.belloni@bootlin.com)
+	by mail.gandi.net (Postfix) with ESMTPSA id 5FF9720004;
+	Tue, 15 Nov 2022 20:17:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1668543478;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=PLz9m1w6kjPUspj+fiG6rIEsDieaFLsuHz3Pp/OjyG0=;
+	b=LDp9gKotxiDENxxpn/G9wWzjLFw0pYQMOWGW1+mf2vc16cxeo1Ii6LvJPcHOlEqed3U63X
+	E/Ae+AhKssZr7kMzAnV+Fi85aBDul0c+PobqRj37d6c/1/PWjj/gcNOX/6gcUT9zMYA3jW
+	/EztPMC0BeD4AAZV2I/8tK8E4jT0KU290zNc2gnsdzW3NucrFxoHCJcFUcbvxtI320fKZl
+	hTw12z58hW8vbxS+y+u8GklRc/GooUIwkvFpHyfcya13eoaLQnXIDH1TyYPTx7qnRiDZxv
+	YyaYr7WWp8uJq7AEChuoyOE+gVD0MUt5LYAcf1PeqtVP0Dl6OK1dgVQ85TuTpg==
+Date: Tue, 15 Nov 2022 21:17:57 +0100
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, tools@linux.kernel.org,
+	users@linux.kernel.org
+Subject: b4 patch subject issue
+Message-ID: <Y3Pz9Y9Mn1FtnqR1@mail.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -52,36 +32,76 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0eeb50bf-9a09-6127-ae50-e838a9261042@theobroma-systems.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 15, 2022 at 06:31:04PM +0100, Quentin Schulz wrote:
-> The issue with this patchset is that it only fixes single-commit series
-> (which is already a good start). However, patches generated with b4 prep -p
-> patches for bigger series are broken because the Cc: and To: fields
-> generated by b4 prep --auto-to-cc do not make it to individual patches, only
-> to the cover letter.
+Hello Konstantin,
 
-This was intentional -- `b4 prep -p` generates minimal headers (i.e. operates
-in git-format-patch compatible mode). If you want to generate the series as
-ready to sent out, you should use `b4 send -o`, which will populate To/Cc
-fields (among other headers).
+I found a small issue in how b4 handles path subjects:
 
-> I could suggest to *always* add the To: and Cc: fields from the cover letter
-> into each individual patch headers but I know some contributors/maintainers
-> like to have a patch series with not all patches sent to all people impacted
-> by at least one patch.
+linux$ b4 shazam -tsl 5640233.DvuYhMxLoT@kreacher
+Grabbing thread from lore.kernel.org/all/5640233.DvuYhMxLoT%40kreacher/t.mbox.gz
+Checking for newer revisions on https://lore.kernel.org/all/
+Analyzing 9 messages in the thread
+Checking attestation on all messages, may take a moment...
+---
+  [PATCH v2 1/5] rtc: rtc-cmos: Call cmos_wake_setup() from cmos_do_probe()
+    + Reviewed-by: Zhang Rui <rui.zhang@intel.com> (✓ DKIM/intel.com)
+    + Tested-by: Zhang Rui <rui.zhang@intel.com> (✓ DKIM/intel.com)
+    + Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com> (✓ DKIM/intel.com)
+    + Link: https://lore.kernel.org/r/4803444.31r3eYUQgx@kreacher
+    + Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+  [PATCH v2 2/5] rtc: rtc-cmos: Call rtc_wake_setup() from cmos_do_probe()
+    + Reviewed-by: Zhang Rui <rui.zhang@intel.com> (✓ DKIM/intel.com)
+    + Tested-by: Zhang Rui <rui.zhang@intel.com> (✓ DKIM/intel.com)
+    + Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com> (✓ DKIM/intel.com)
+    + Link: https://lore.kernel.org/r/2143522.irdbgypaU6@kreacher
+    + Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+  [PATCH v2 3/5] rtc: rtc-cmos: Eliminate forward declarations of some functions
+    + Reviewed-by: Zhang Rui <rui.zhang@intel.com> (✓ DKIM/intel.com)
+    + Tested-by: Zhang Rui <rui.zhang@intel.com> (✓ DKIM/intel.com)
+    + Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com> (✓ DKIM/intel.com)
+    + Link: https://lore.kernel.org/r/13157911.uLZWGnKmhe@kreacher
+    + Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+  [PATCH v2 4/5] rtc: rtc-cmos: Rename ACPI-related functions
+    + Reviewed-by: Zhang Rui <rui.zhang@intel.com> (✓ DKIM/intel.com)
+    + Tested-by: Zhang Rui <rui.zhang@intel.com> (✓ DKIM/intel.com)
+    + Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com> (✓ DKIM/intel.com)
+    + Link: https://lore.kernel.org/r/3225614.44csPzL39Z@kreacher
+    + Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+  [PATCH v2 5/5] rtc: rtc-cmos: Disable ACPI RTC event on removal
+    + Reviewed-by: Zhang Rui <rui.zhang@intel.com> (✓ DKIM/intel.com)
+    + Tested-by: Zhang Rui <rui.zhang@intel.com> (✓ DKIM/intel.com)
+    + Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com> (✓ DKIM/intel.com)
+    + Link: https://lore.kernel.org/r/2224609.iZASKD2KPV@kreacher
+    + Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+---
+Total patches: 5
+---
+Applying: rtc: rtc-cmos: Call cmos_wake_setup() from cmos_do_probe()
+Applying: rtc: rtc-cmos: Call rtc_wake_setup() from cmos_do_probe()
+Applying: rtc: rtc-cmos:
+Applying: rtc: rtc-cmos: Rename ACPI-related functions
+Applying: rtc: rtc-cmos: Disable ACPI RTC event on removal
+---
+Patchwork: setting state on patchwork.ozlabs.org/rtc-linux
+ -> under-review : [v2,1/5] rtc: rtc-cmos: Call cmos_wake_setup() from cmos_do_probe()
+ -> under-review : [v2,2/5] rtc: rtc-cmos: Call rtc_wake_setup() from cmos_do_probe()
+ -> under-review : [v2,3/5] rtc: rtc-cmos: Eliminate forward declarations of some functions
+ -> under-review : [v2,4/5] rtc: rtc-cmos: Rename ACPI-related functions
+ -> under-review : [v2,5/5] rtc: rtc-cmos: Disable ACPI RTC event on removal
+linux$ git log --oneline -5
+dfe59ef27467 (HEAD -> plop) rtc: rtc-cmos: Disable ACPI RTC event on removal
+f02e8f979e26 rtc: rtc-cmos: Rename ACPI-related functions
+a9f73fde7380 rtc: rtc-cmos:
+70258aa62244 rtc: rtc-cmos: Call rtc_wake_setup() from cmos_do_probe()
+1c399f3090f7 rtc: rtc-cmos: Call cmos_wake_setup() from cmos_do_probe()
 
-I did a (totally unscientific) polling and the results were that almost all
-maintainers preferred to receive the entire patch series and never just
-individual patches, which is why b4 operates this way. The To/Cc destinations
-are only tracked in the cover letter and when "b4 send" is invoked, we
-populate *all* messages with the same set of addresses to make sure that
-everyone gets the entire series.
+For some reason, 3/5 is losing its full subject. I didn't investigate
+but I'm using a freshly updated b4 0.10.1 on fedora.
 
-> I could see what I can do for the workflow where all Cc: and To: fields from
-> the mailing lists are added as headers to each individual patch in a series
-> if there's some interest for it?
+Let me know if I can be of any assistance to debug that.
 
-Are you sure this isn't already done by `b4 send -o`?
-
--K
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
