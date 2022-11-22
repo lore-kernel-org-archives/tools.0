@@ -1,46 +1,54 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62103222
-	for <tools@linux.kernel.org>; Tue, 22 Nov 2022 18:52:52 +0000 (UTC)
-Received: by mail-qv1-f44.google.com with SMTP id e15so10703660qvo.4
-        for <tools@linux.kernel.org>; Tue, 22 Nov 2022 10:52:52 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9537F1229D
+	for <tools@linux.kernel.org>; Tue, 22 Nov 2022 19:44:31 +0000 (UTC)
+Received: by mail-qk1-f171.google.com with SMTP id 8so11058239qka.1
+        for <tools@linux.kernel.org>; Tue, 22 Nov 2022 11:44:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0jn5wlFf+6myIUgyXb61vwy/GJptvYgsTn9XmUMLCQU=;
-        b=ML6JipVAeKHqfxNP3xy/Oe8SKw8GAUFuTd904iS7HKg/kKiErqHhy/d5g2txhpjyij
-         sJ5gJMa0UlOKsjYjpqre9xdu6lZ0/5L4azxuO7CVLQaVwOLHQ2WtHvcIkbs0JwH7Bt6W
-         C8PrlI2kOnB4xxviRPdzpkGr981eGv+qwSee4=
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Y0+HgcccZzB9zt4IfNYL9eXT1kWO7K5B4j8UcO6yi+s=;
+        b=gUkwmDGOxCveHpT77uJhcSSZ234MqnhPpwealH4GjwXukbkfvWVmaHyrDxj8318Bbj
+         0qJgSdARo6fpXx/MbbBEmcuiXJl1nUGCDUI3PpH+OExxAYESYhjsNWp3l0PT1we7+RPJ
+         CYC5q8J3iiOnlfzndfEbWVIknKiE2C9lDl4ZY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0jn5wlFf+6myIUgyXb61vwy/GJptvYgsTn9XmUMLCQU=;
-        b=srhuLgCWJTjrOIlsPT9FuTn7y0AJ5ftPogeNoyrgvKTpnlp80lZfSTzhbTFhm45NfX
-         gzXX6HP07SJUMWbGhTrJ3zvBv2f2iw+YGDJUJTPuWiztXJ21BW6g0/7JwEau8Yys9K8f
-         JUuhAIL1sJVijR/N8SIJbTc2dGrnKz53OetV1XCV59n0Kkpssg9rMNLEFFIPIV1j3bBb
-         LUlr0Is7p9vR2gemhW5zx4z+EyqvPrJ7ECxwCVyPeJ5iyjDhV+C49CaQtJzkz/v3u+93
-         qIprzIwUzCavqyLgSlqedW2szEOs7mCpx0H2Zcfw/JOcLC1xZkV8JOKMjqYocjutEfJf
-         IUcA==
-X-Gm-Message-State: ANoB5pke9hneJnmDRtfIJW9r7fWc4/SCOtef6jOJ01cLjEofO7JLDiME
-	urZrnufuKdiHKMuHy9dmbmzb4YfypTkXEA==
-X-Google-Smtp-Source: AA0mqf5CyM5QkCQQrKXGVu+oVmOz/XYYMbeInn4yOyFmRpY9Q4Q4cLymZzIL8WsqCzZHbAsZexzwNQ==
-X-Received: by 2002:a05:6214:1850:b0:4bb:6b68:9ab6 with SMTP id d16-20020a056214185000b004bb6b689ab6mr11103102qvy.128.1669143171386;
-        Tue, 22 Nov 2022 10:52:51 -0800 (PST)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y0+HgcccZzB9zt4IfNYL9eXT1kWO7K5B4j8UcO6yi+s=;
+        b=A9ntgzxefNHSS23ABkaIfDNA5BpJMlOhzYJSk0YJtNxMObj5cy5O44Tm7od/XNIoM4
+         zdkLWQNmjalWxisZDfMROuht59RnQru9slPbXQpGsWqOlJvDdbVPoifolM5QNDe+JmZ2
+         KTnP50ttQQkdoevcgLaiIfV8JT3CRRLxde504+Bh9CvIKm8xyF0POtDxUaBzCWV5tSFr
+         VuoMWRTT/Hra3ANUPxnLtXA6Tw+XJM7HrkffDknvaqdr3ng4pqzqs9wjjdldMcIFWaSK
+         C2VhbX1x8rOc6+TDhOgUnMhou0Jd1X26prx8c6z3M/rgfhM8sPlO1iWN736JCjj8XMnl
+         E9NA==
+X-Gm-Message-State: ANoB5pntP0d2pW0q4joSyvWaaTSlNpNyD5XNFxalKNTB2xzHsr3BFTcs
+	fAFqrmz3uhs7xFdlsBkjmkLJ7CVF4/56fA==
+X-Google-Smtp-Source: AA0mqf7Cz2PacJSUaSJ0h+8ssE17Wa1FLt2t+I9jRQZvQgyjEn8b7g6L8Mgpl3D1RnnKbLi8oIe0wg==
+X-Received: by 2002:a37:e20b:0:b0:6fa:3710:ba6e with SMTP id g11-20020a37e20b000000b006fa3710ba6emr6733816qki.164.1669146270389;
+        Tue, 22 Nov 2022 11:44:30 -0800 (PST)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id bl6-20020a05620a1a8600b006ce9e880c6fsm10637434qkb.111.2022.11.22.10.52.50
+        by smtp.gmail.com with ESMTPSA id q24-20020a37f718000000b006ed61f18651sm10338951qkj.16.2022.11.22.11.44.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 10:52:50 -0800 (PST)
-Date: Tue, 22 Nov 2022 13:52:49 -0500
+        Tue, 22 Nov 2022 11:44:30 -0800 (PST)
+Date: Tue, 22 Nov 2022 14:44:28 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Christian Brauner <brauner@kernel.org>
+To: Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>
 Cc: tools@linux.kernel.org
-Subject: Re: Preserving notes when updating trailers
-Message-ID: <20221122185249.733ipcpwpgkh5xle@meerkat.local>
-References: <20220929074717.u2xfvfwq4ki732tw@wittgenstein>
+Subject: Error using b4 web endpoint (was Re: git send-email friendly smtp
+ provider anyone?)
+Message-ID: <20221122194428.fmbayuz6vbvdd6uw@meerkat.local>
+References: <1bc45775-0667-01f8-36e1-9f65d3081092@tronnes.org>
+ <20221121151922.jaal6ym7z2ejju4q@houat>
+ <de12952f-8346-8995-236d-69dcb70f19f6@tronnes.org>
+ <20221122155122.edxtmsqpjxgj4dsj@meerkat.local>
+ <3b06dfd5-0eb4-dbfc-6ba8-077b1a92865b@tronnes.org>
+ <20221122185001.q6hmeblp64jqdzvz@meerkat.local>
+ <02bc2442-e3b3-d720-9d13-ffcdfd760fb8@tronnes.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -49,23 +57,41 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220929074717.u2xfvfwq4ki732tw@wittgenstein>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <02bc2442-e3b3-d720-9d13-ffcdfd760fb8@tronnes.org>
 
-On Thu, Sep 29, 2022 at 09:47:17AM +0200, Christian Brauner wrote:
-> Hey Konstantin,
+(Dropping everyone from cc's and adding the tools list.)
+
+On Tue, Nov 22, 2022 at 08:22:22PM +0100, Noralf Trønnes wrote:
+> > Yes. There will be a 0.10.2 in the near future, but the incoming fixes
+> > shouldn't make much difference for the b4 send code.
+> > 
 > 
-> When updating trailers using b4 for a series git notes aren't preserved
-> for the individual commit messages. I have a work around for this. After
-> updating the trailers I can use filter-repo/commit_map which provides a
-> list of the old and new hashes. Then each line can simply be fed to git
-> notes copy. It'd be nice if b4 would be able do this natively e.g., by
-> having a command line option to preserve notes.
+> This is what I got:
+> 
+> $ b4 send --web-auth-verify <challenge string from email>
+> Signing challenge
+> Submitting verification to https://lkml.kernel.org/_b4_submit
+> Traceback (most recent call last):
+>   File "/home/pi/.local/lib/python3.10/site-packages/b4/ez.py", line 188, in auth_verify
+>     res = ses.post(endpoint, json=req)
+> ...
+> TypeError: Object of type bytes is not JSON serializable
 
-After looking into this, I believe it's something that should be fixed in
-git-filter-repo, not in b4. It's a known problem and there's a long-standing
-github issue tracking it:
-https://github.com/newren/git-filter-repo/issues/22
+This is very strange, because this is literally the code in question:
 
-For now, it's just something that will have to be a "known problem."
+    req = {
+        'action': 'auth-verify',
+        'msg': bdata.encode(),
+    }
+    logger.info('Submitting verification to %s', endpoint)
+    ses = b4.get_requests_session()
+    res = ses.post(endpoint, json=req)
 
+I don't see where "Object of type bytes" would come from. Can you possibly
+insert the following above the `res = ses.post` line:
+
+    logger.debug('endpoint=%s, req=%s', endpoint, req)
+
+Regards,
 -K
