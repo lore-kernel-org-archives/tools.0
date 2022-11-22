@@ -1,47 +1,40 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD211C15
-	for <tools@linux.kernel.org>; Tue, 22 Nov 2022 20:44:59 +0000 (UTC)
-Received: by mail-qv1-f42.google.com with SMTP id h10so10891431qvq.7
-        for <tools@linux.kernel.org>; Tue, 22 Nov 2022 12:44:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Nve/9w/+QBfFmD/eliSuXjeXc5nmcRPwlaqtN1dlN1Q=;
-        b=IwO4LKgbKzU4DnOfxh1vrLGXSRcLsLvjZOABvfR/s0CgV5b/KWKkWq4farProJPexo
-         n5szIej8vI5sbhif7elbJzaUEvFyvwIM9Cn6tjtYZkxVuyObhuQGrGx7+00gJILsARJU
-         ZRUxPEjkj3YKS4WAETPpZs19SFABIdMnfe0jc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nve/9w/+QBfFmD/eliSuXjeXc5nmcRPwlaqtN1dlN1Q=;
-        b=42RiLXe7/YcECyikHA25bJJ8JM7U3X7kImbmuYpvdY3IJjuH91BssfV3dFLhLPxMg6
-         xHSjTHIL3508Hme/FhUu6oKJr/gb+Lj3MXrLqeuCcTs4Mnsnt4AqUA/cX6chtJ0kOdO/
-         m4mRhB0eHZotDa9w6qu4QupluGhWmqPOv9APl8NbSKwKLX49xzHCZGzTs9sc/NenRtbh
-         2yR/S7ehSPmjlf2ok5oYxttWebdjX4kI1EZcV7ZLwkyEsL0G8+XseV2MCkRkDsJhWlGn
-         QwmoB78Z/vgGOgxH6W5mVD1yqJlqub14q0WQ9yUptS5ep3AtFxi3C+lvkDkRSawcgQn4
-         EKeA==
-X-Gm-Message-State: ANoB5pmxnAnN1cZHY7YnipMzUKNEM3l0gqOhmMFry7yWVQZ7f57cP5G8
-	HdSUYVvr8oGX5P4cwMN86Ty684+Zyadxvg==
-X-Google-Smtp-Source: AA0mqf758o9Iy9Kc5gFTxrFGD5th+xAtyBFlzKBG20rDV4rRgZZEBsClGc4f0U9xSeekMJUT0/Er/g==
-X-Received: by 2002:a0c:d806:0:b0:4b1:d18b:642a with SMTP id h6-20020a0cd806000000b004b1d18b642amr5041764qvj.11.1669149898526;
-        Tue, 22 Nov 2022 12:44:58 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id x12-20020ae9e90c000000b006b5cc25535fsm10328379qkf.99.2022.11.22.12.44.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 12:44:57 -0800 (PST)
-Date: Tue, 22 Nov 2022 15:44:56 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Error using b4 web endpoint (was Re: git send-email friendly
- smtp provider anyone?)
-Message-ID: <20221122204456.6tqutsoybrisa4xf@meerkat.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3311C15
+	for <tools@linux.kernel.org>; Tue, 22 Nov 2022 21:04:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=tronnes.org
+	; s=ds202112; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=hPqth5zqc9Lj1KUSPssqoR2runE2i8j8+xLwB3nvJqQ=; b=d3erweO56stm3DcZqxEUFNJIwv
+	Oabg3N/WcSTMIe+RUDsXTloYf9sxwkoqgP+6tHpFxIFON9jyQ8S5qgH/GGfXxTd3lkgnVVovmRy/P
+	0RawjWNhpiFYhAeuVgnbkk+mhwwzO2QrxqTNSID8n+iUIkM42daSHMj68IaNTGUrFmo10r0SpKvD7
+	vhFzKtSY0BbC7dnDfUOGtsq/vPX4cGMIlF/46MucZwnKDPTJaQ2SgNaly6XF5NCizgJvhMEPdaNVG
+	SHOTO6YtW2Dhxe3QesC/8w6wF0iXDaam2xByoQt27YksgjLIoR96h+MfD3rKu2HGeFelyeGaE0OwV
+	fRGKs3Aw==;
+Received: from [2a01:799:95e:1700:6395:ccbd:d000:d42b] (port=61624)
+	by smtp.domeneshop.no with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <noralf@tronnes.org>)
+	id 1oxaQw-0003lw-FC; Tue, 22 Nov 2022 22:03:58 +0100
+Message-ID: <4adcd45f-21e7-698e-dc97-70995850ac9f@tronnes.org>
+Date: Tue, 22 Nov 2022 22:03:55 +0100
+Precedence: bulk
+X-Mailing-List: tools@linux.kernel.org
+List-Id: <tools.linux.kernel.org>
+List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
+List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: Error using b4 web endpoint (was Re: git send-email friendly smtp
+ provider anyone?)
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, =?UTF-8?Q?Noralf_Tr=c3=b8nnes?=
+ <noralf@tronnes.org>
 References: <20221122155122.edxtmsqpjxgj4dsj@meerkat.local>
  <3b06dfd5-0eb4-dbfc-6ba8-077b1a92865b@tronnes.org>
  <20221122185001.q6hmeblp64jqdzvz@meerkat.local>
@@ -52,31 +45,35 @@ References: <20221122155122.edxtmsqpjxgj4dsj@meerkat.local>
  <d9951176-24ed-ded1-c5dd-5586f779483d@tronnes.org>
  <20221122202033.jeukag3i5pttqp5d@meerkat.local>
  <4161738f-e2df-2d8e-7646-2c61df2f76b9@tronnes.org>
-Precedence: bulk
-X-Mailing-List: tools@linux.kernel.org
-List-Id: <tools.linux.kernel.org>
-List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
-List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ <20221122204456.6tqutsoybrisa4xf@meerkat.local>
+From: =?UTF-8?Q?Noralf_Tr=c3=b8nnes?= <noralf@tronnes.org>
+In-Reply-To: <20221122204456.6tqutsoybrisa4xf@meerkat.local>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <4161738f-e2df-2d8e-7646-2c61df2f76b9@tronnes.org>
 
-On Tue, Nov 22, 2022 at 09:26:03PM +0100, Noralf Trønnes wrote:
-> > However, I see that it's failing on Debian 11 with the JSON error.
-> > I'll poke some more now that I have a test env and follow up.
-> > 
+
+
+Den 22.11.2022 21.44, skrev Konstantin Ryabitsev:
+> On Tue, Nov 22, 2022 at 09:26:03PM +0100, Noralf Trønnes wrote:
+>>> However, I see that it's failing on Debian 11 with the JSON error.
+>>> I'll poke some more now that I have a test env and follow up.
+>>>
+>>
+>> Yeah that test snippet fails with the same error.
+>>
+>> $ lsb_release -ir
+>> Distributor ID: Ubuntu
+>> Release:        22.04
 > 
-> Yeah that test snippet fails with the same error.
+> Okay, this is not a real fix, but it will get things working for you while I
+> implement the proper solution:
 > 
-> $ lsb_release -ir
-> Distributor ID: Ubuntu
-> Release:        22.04
+> apt install python3-simplejson
+> 
 
-Okay, this is not a real fix, but it will get things working for you while I
-implement the proper solution:
+Thanks, no errors this time.
 
-apt install python3-simplejson
+Series:
+https://lore.kernel.org/dri-devel/20221122-gud-shadow-plane-v1-0-9de3afa3383e@tronnes.org/
 
--K
+Noralf.
