@@ -1,74 +1,71 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F8C29A1
-	for <tools@linux.kernel.org>; Fri, 18 Nov 2022 11:32:17 +0000 (UTC)
-Received: by mail-wr1-f45.google.com with SMTP id l14so8874235wrw.2
-        for <tools@linux.kernel.org>; Fri, 18 Nov 2022 03:32:17 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62103222
+	for <tools@linux.kernel.org>; Tue, 22 Nov 2022 18:52:52 +0000 (UTC)
+Received: by mail-qv1-f44.google.com with SMTP id e15so10703660qvo.4
+        for <tools@linux.kernel.org>; Tue, 22 Nov 2022 10:52:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m2uB52WVfXvn5YbCH6WJGvq5GXUI4YG6UAgjcAMAawE=;
-        b=gIbeEd/wI0fCAVU8iJ/zJ8+vQzFykKnTOa1VPTlLraj/uubKDq9yIzeltt0JLiT3Tu
-         /6iQX5YUp3VFtXbVJxng4T9QzZ9kiXgJXSrZ/YaxL7qJ7Lo/SXubm/w3eYyhYY3ai8KV
-         P0C1JiZW1dAEp1jULdH5yPpZ7ZTKjP3tMbRZzVM4GBw4qDSMN2pB/AxTVExcYxs4ciue
-         h7Je4HODe6VCvP+o+MfWO0OgWb6H/eohwpWKuFY/ykC4TWothljdjmqXsaRnHI2arWyM
-         UI+NXWOhHnVSHgLnEU5FWQ43YpFeCgHKUMc7MnOsohUtD4r0MoUfF0kBTP6xI7aYe2TC
-         ozMA==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0jn5wlFf+6myIUgyXb61vwy/GJptvYgsTn9XmUMLCQU=;
+        b=ML6JipVAeKHqfxNP3xy/Oe8SKw8GAUFuTd904iS7HKg/kKiErqHhy/d5g2txhpjyij
+         sJ5gJMa0UlOKsjYjpqre9xdu6lZ0/5L4azxuO7CVLQaVwOLHQ2WtHvcIkbs0JwH7Bt6W
+         C8PrlI2kOnB4xxviRPdzpkGr981eGv+qwSee4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=m2uB52WVfXvn5YbCH6WJGvq5GXUI4YG6UAgjcAMAawE=;
-        b=hIh9bRYxutCInZIo7+R6BzdfqFBULydUL5DAloNNLNIQ71VUcHNIbWMvmprDX8vgaj
-         /V8qjmI47QpeUHXC0itxEI5Y8pwGJCYJ0pBopI1OiLneLgM6xBDgWPzHiAwRM2EbOKop
-         8CIS2d0nxs+4mdFJhXVX8NBq/poDruaOcWQw7ps2wHeYmpTIyktj+cttUw6Hnaz/oSyD
-         8Z8D5byO/myopatlYSSSVOXm/VqwFxiqaaPJvlw+B10W9bvFW7JX9bzhVUUmMk5j4Hh3
-         Iyysp8jBp++hI4sQTnsFD5zeQvxSTkcdZEaK2Xa1mR1ttYnfhMSOhABcmmAvfnWz8qma
-         uceg==
-X-Gm-Message-State: ANoB5plDzQGN2iJwGfOFiuT8iC5dJ6/VXJgKY51rR6AB67vWeqGZBkTz
-	v/Q3w+Dk903flbep1LzBs/MtvTpo7Lh3qg==
-X-Google-Smtp-Source: AA0mqf4f9SXYo4+Q0dhhQSfyaVyT7CbYPadkozUt1PzV2vUrqn6ecY0tLMmaFRHjPEItkvGeag0yYA==
-X-Received: by 2002:adf:e490:0:b0:236:76ab:3e01 with SMTP id i16-20020adfe490000000b0023676ab3e01mr3835371wrm.107.1668771135766;
-        Fri, 18 Nov 2022 03:32:15 -0800 (PST)
-Received: from [192.168.0.20] (210.145.15.109.rev.sfr.net. [109.15.145.210])
-        by smtp.gmail.com with ESMTPSA id g17-20020a05600c311100b003cf4ec90938sm4633508wmo.21.2022.11.18.03.32.15
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Nov 2022 03:32:15 -0800 (PST)
-Message-ID: <da7e0535-d9f7-1554-f0ea-46bc869f4012@baylibre.com>
-Date: Fri, 18 Nov 2022 12:32:14 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0jn5wlFf+6myIUgyXb61vwy/GJptvYgsTn9XmUMLCQU=;
+        b=srhuLgCWJTjrOIlsPT9FuTn7y0AJ5ftPogeNoyrgvKTpnlp80lZfSTzhbTFhm45NfX
+         gzXX6HP07SJUMWbGhTrJ3zvBv2f2iw+YGDJUJTPuWiztXJ21BW6g0/7JwEau8Yys9K8f
+         JUuhAIL1sJVijR/N8SIJbTc2dGrnKz53OetV1XCV59n0Kkpssg9rMNLEFFIPIV1j3bBb
+         LUlr0Is7p9vR2gemhW5zx4z+EyqvPrJ7ECxwCVyPeJ5iyjDhV+C49CaQtJzkz/v3u+93
+         qIprzIwUzCavqyLgSlqedW2szEOs7mCpx0H2Zcfw/JOcLC1xZkV8JOKMjqYocjutEfJf
+         IUcA==
+X-Gm-Message-State: ANoB5pke9hneJnmDRtfIJW9r7fWc4/SCOtef6jOJ01cLjEofO7JLDiME
+	urZrnufuKdiHKMuHy9dmbmzb4YfypTkXEA==
+X-Google-Smtp-Source: AA0mqf5CyM5QkCQQrKXGVu+oVmOz/XYYMbeInn4yOyFmRpY9Q4Q4cLymZzIL8WsqCzZHbAsZexzwNQ==
+X-Received: by 2002:a05:6214:1850:b0:4bb:6b68:9ab6 with SMTP id d16-20020a056214185000b004bb6b689ab6mr11103102qvy.128.1669143171386;
+        Tue, 22 Nov 2022 10:52:51 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id bl6-20020a05620a1a8600b006ce9e880c6fsm10637434qkb.111.2022.11.22.10.52.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Nov 2022 10:52:50 -0800 (PST)
+Date: Tue, 22 Nov 2022 13:52:49 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Christian Brauner <brauner@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: Preserving notes when updating trailers
+Message-ID: <20221122185249.733ipcpwpgkh5xle@meerkat.local>
+References: <20220929074717.u2xfvfwq4ki732tw@wittgenstein>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-To: tools@linux.kernel.org
-Content-Language: en-US
-From: Amjad Ouled-Ameur <aouledameur@baylibre.com>
-Subject: No longer need to pass current msd-id to "b4 diff -v foo bar"
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220929074717.u2xfvfwq4ki732tw@wittgenstein>
 
-Hi Konstantin,
+On Thu, Sep 29, 2022 at 09:47:17AM +0200, Christian Brauner wrote:
+> Hey Konstantin,
+> 
+> When updating trailers using b4 for a series git notes aren't preserved
+> for the individual commit messages. I have a work around for this. After
+> updating the trailers I can use filter-repo/commit_map which provides a
+> list of the old and new hashes. Then each line can simply be fed to git
+> notes copy. It'd be nice if b4 would be able do this natively e.g., by
+> having a command line option to preserve notes.
 
-I would like to suggest a slight improvement for viewing diffs across different revisions.
+After looking into this, I believe it's something that should be fixed in
+git-filter-repo, not in b4. It's a known problem and there's a long-standing
+github issue tracking it:
+https://github.com/newren/git-filter-repo/issues/22
 
-I think it would be better if b4 falls back to msd-id of the current topical branch, if any,
+For now, it's just something that will have to be a "known problem."
 
-when no msg-id is passed as an argument.
-
-
-Last but not least, thanks for b4! it's a marvel :)
-
-
-Regards,
-
-Amjad
-
+-K
