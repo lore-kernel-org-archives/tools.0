@@ -1,94 +1,76 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B348A1C15
-	for <tools@linux.kernel.org>; Tue, 22 Nov 2022 22:05:13 +0000 (UTC)
-Received: by mail-qk1-f170.google.com with SMTP id j26so4169109qki.10
-        for <tools@linux.kernel.org>; Tue, 22 Nov 2022 14:05:13 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9D12FB6
+	for <tools@linux.kernel.org>; Thu, 24 Nov 2022 17:49:47 +0000 (UTC)
+Received: by mail-io1-f49.google.com with SMTP id b2so1598610iof.12
+        for <tools@linux.kernel.org>; Thu, 24 Nov 2022 09:49:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fPl0HYpelE5V7DMqJkpNhZEd3MJAKZgKeHVlDTFIGu4=;
-        b=EYgkwQCfCafnPCSJL69wlVRT2Na5JI0eYiwskDk8ABJMQvdgwoxHumcDkbz3vCz5zO
-         /pfLiEH9OK8LzxPlGuZn/NPM4JFcBC/BaTyFqvNRgQJugLtfqFdIQ95U6RIUtifqinf5
-         hYM76pIUuK5wHbpHucN2G1kcmohh+jSlNDpZo=
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mrm+SE/XWX3J+o8bdy/xmd+6XcELgvfE+thEwOKFiFQ=;
+        b=MPs+aoqerQ9YTTfub/jetHF9EiagjXROLvN0C+i0W4C/Y1fxR3oRZgiY9AiXAaV9au
+         ZO1ZOe9Xic6LgTQXCz8UIoJ90H+gbZ/WGT1yDT2XxCfcg2B+qHKN2+/x4aNCJA1dsCZ9
+         XREy6QCZ/l3f1gOQqFu2wC19OUnqnEJoUsd3c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fPl0HYpelE5V7DMqJkpNhZEd3MJAKZgKeHVlDTFIGu4=;
-        b=Uj1HCbqlH0Wu+kIzubGETuKb7XHoH5m8jxvpRVvFEtKkqwVvlkT3YdBdDUoxe6hriQ
-         qeuv/i+w1qsi7WLeeoV+jCoi8Z4w1JAAQoYfjKMTgVlHnt2g6OF91yYYNyXNATCREjxt
-         SJ5xBddEC0wJp7vDPLmmcPf8MedGkGAXSprIMc0yzFNotucbMGPYLuvab6+2k4acI0ve
-         L41xullCFraOEEwVMLGEmI2eBOOzJsD7Kf5/4aFSq2H4GDvgMhm9ZFYOYG6vKI8/ZRBS
-         jMTN0THYpCNszS2jK2B3zEVJPwhgj7BN5b7G5LAe2wXxn9uTWnaUcwd7cANGeRntTBrj
-         wkaQ==
-X-Gm-Message-State: ANoB5pnn+mB/t1boPe5vM8taPEUg7kNj+x6r+vf1D0NwnyHOv7m4TS0c
-	ZQPv3PXGwlB3ye0vip9CrkNU/JYgc8lAkA==
-X-Google-Smtp-Source: AA0mqf4f/dpMcUjuhhwoJGLLyOoFTPj3scIVc6eCCawcU55tfEjm7N7qGgofs9kmO9DwzcFqs1X02w==
-X-Received: by 2002:a37:aa51:0:b0:6ee:f54d:e17 with SMTP id t78-20020a37aa51000000b006eef54d0e17mr11124653qke.63.1669154712521;
-        Tue, 22 Nov 2022 14:05:12 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id x30-20020a05620a0b5e00b006fbb833fef8sm10802537qkg.28.2022.11.22.14.05.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 14:05:12 -0800 (PST)
-Date: Tue, 22 Nov 2022 17:05:10 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Error using b4 web endpoint (was Re: git send-email friendly
- smtp provider anyone?)
-Message-ID: <20221122220510.f7b3zubryeincyyn@meerkat.local>
-References: <20221122185001.q6hmeblp64jqdzvz@meerkat.local>
- <02bc2442-e3b3-d720-9d13-ffcdfd760fb8@tronnes.org>
- <20221122194428.fmbayuz6vbvdd6uw@meerkat.local>
- <3d2f9038-435f-f78e-31f4-59dbae587d18@tronnes.org>
- <20221122200049.ma5jpfiawmgmpng2@meerkat.local>
- <d9951176-24ed-ded1-c5dd-5586f779483d@tronnes.org>
- <20221122202033.jeukag3i5pttqp5d@meerkat.local>
- <4161738f-e2df-2d8e-7646-2c61df2f76b9@tronnes.org>
- <20221122204456.6tqutsoybrisa4xf@meerkat.local>
- <4adcd45f-21e7-698e-dc97-70995850ac9f@tronnes.org>
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mrm+SE/XWX3J+o8bdy/xmd+6XcELgvfE+thEwOKFiFQ=;
+        b=JO+WgDW8cAVWuu/JpbYfdMu5oMkelQ5drJ4ymzxdnskqeUt94zRyXNUoUVDBk40y9v
+         hJFThO8LOP+QoUyXaLnSEdEzOSkjDn3ryB5SIAttaRALLZKzB64P4MJgqiMMrvuKAa4S
+         BX8VlfsZBItkriIUR3rIr23cWcM+XIHsLKbOJRLK0h8Yr5oZDHLWDbJmQx8+k/hqer9A
+         3x7XthmXryJuqDKvIMdOz88SU6dqOaSmbdPbkic+TvESjqGMjw1g1AiHYYnRmH4+3tsJ
+         gFjT+ZtP9i5SEw+kK++9AGliqcpdxFTlYCvs6+ru3Oj+IMqJjnOTXv25MfF8p8sOLqFH
+         HmYg==
+X-Gm-Message-State: ANoB5pnURD/EnCWorGFIMjR5L2bpxHyhY0u83Lh+ppglz3ZL+BL2tqUs
+	r2kA0eH3MDW0q5g7DXQAR+pLUOEwaOAvaKzW
+X-Google-Smtp-Source: AA0mqf6aOXZtpAShhVPvPNKOpxVZ+XoHVTOL+kl6UYKeAKPmpH86j7M/Rd42bK+1PxS++MORDcy1uA==
+X-Received: by 2002:a02:ca45:0:b0:363:a4ae:5a80 with SMTP id i5-20020a02ca45000000b00363a4ae5a80mr16121025jal.105.1669312186251;
+        Thu, 24 Nov 2022 09:49:46 -0800 (PST)
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com. [209.85.166.176])
+        by smtp.gmail.com with ESMTPSA id x6-20020a92cc86000000b003024928a9afsm578850ilo.83.2022.11.24.09.49.45
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Nov 2022 09:49:45 -0800 (PST)
+Received: by mail-il1-f176.google.com with SMTP id x13so1046508ilp.8
+        for <tools@linux.kernel.org>; Thu, 24 Nov 2022 09:49:45 -0800 (PST)
+X-Received: by 2002:a05:6e02:c61:b0:300:f4ed:47f8 with SMTP id
+ f1-20020a056e020c6100b00300f4ed47f8mr6293212ilj.243.1669312185167; Thu, 24
+ Nov 2022 09:49:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4adcd45f-21e7-698e-dc97-70995850ac9f@tronnes.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
+Date: Thu, 24 Nov 2022 18:49:34 +0100
+X-Gmail-Original-Message-ID: <CANiDSCs-_bM6kC0cYTCRjCha3n0QVhbC+tTt=N9G4QPwgq3s+g@mail.gmail.com>
+Message-ID: <CANiDSCs-_bM6kC0cYTCRjCha3n0QVhbC+tTt=N9G4QPwgq3s+g@mail.gmail.com>
+Subject: b4 prep/send: single patch mode
+To: tools@linux.kernel.org, konstantin@linuxfoundation.org
+Cc: Mark Brown <broonie@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Nov 22, 2022 at 10:03:55PM +0100, Noralf Trønnes wrote:
-> > On Tue, Nov 22, 2022 at 09:26:03PM +0100, Noralf Trønnes wrote:
-> >>> However, I see that it's failing on Debian 11 with the JSON error.
-> >>> I'll poke some more now that I have a test env and follow up.
-> >>>
-> >>
-> >> Yeah that test snippet fails with the same error.
-> >>
-> >> $ lsb_release -ir
-> >> Distributor ID: Ubuntu
-> >> Release:        22.04
-> > 
-> > Okay, this is not a real fix, but it will get things working for you while I
-> > implement the proper solution:
-> > 
-> > apt install python3-simplejson
-> > 
-> 
-> Thanks, no errors this time.
-> 
-> Series:
-> https://lore.kernel.org/dri-devel/20221122-gud-shadow-plane-v1-0-9de3afa3383e@tronnes.org/
+Hi
 
-Sigh. I clearly need to fix the 8bit header issue (ugh, woe!, etc). I'll try
-to get this done asap. I'm glad the very first use of the web endpoint we had
-is the one where there's 8bit content in the From: header, and we have to
-rewrite it with more 8bit content for DMARC purposes.
+I have moved all my developer workflow to b4 and I am super happy,
+thanks for that :)
 
--K
+There is one caveat though ;):
+
+When I have to send a patchset with only one patch it seems redundant
+to send a cover letter, Most of the time, it is a copy of the commit
+message at 1/1 plus a link to the previous version of the patch in
+lore.
+
+Would it make sense to add that info after the --- and do not send the
+cover-letter if there is only one patch on the set?
+
+Regards
+
+
+-- 
+Ricardo Ribalda
