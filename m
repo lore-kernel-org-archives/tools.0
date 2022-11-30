@@ -1,117 +1,152 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A13BA28;
-	Tue, 29 Nov 2022 20:52:58 +0000 (UTC)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id D859E5C00ED;
-	Tue, 29 Nov 2022 15:52:57 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Tue, 29 Nov 2022 15:52:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm2; t=1669755177; x=1669841577; bh=ih5OYSuRX7
-	9CsMOtjeLVD/Te6Gkp86j0puWT4++yvcc=; b=dMgfIo+KW7OTf7miBQ8GPSJHAY
-	X9VQmER9AttcfBc8+sur3VfO7VMQgnyxN1Mp0O70wxg1lX0bGGXQlov/sKWYLWcz
-	XVc8voVMgJHIKBoVBGhkRa2IDa8FpZsX4iJsfa183Q2kQNtJ76R2pWxkY5z0y86l
-	CithZsoSzAdKtOXpZix7cyEZdEtiKYa9GdlZnvVhch5OGiDijDAWGdfmZaEMhlzL
-	3kVP8fT1VBc7QbgTPBs9Zaaup6sMgbOjVFhMoc0/zGuE02Rzs/ctylPr82y/fQoq
-	dwm1kH9jgPnsJApC9/Ps+vKG53JYwwBhOCFrcEDfjqTT/4wM+6j/+FmXdyag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1669755177; x=1669841577; bh=ih5OYSuRX79CsMOtjeLVD/Te6Gkp
-	86j0puWT4++yvcc=; b=wot6TFo11hITkUHpuhXyoXiCueseMoIdLds13AKXoZ7L
-	ozcVNRG4CQt35i2MmtaYfX4swJ2yhkzO8WPwtybR/YD/X3h53ktylImrd1o+woau
-	F9J9maeuL2VtFdXNDLE5WS2I9NlRl/x5oZqxoDR//gGSyw2gJAR35lquWUtR8y4V
-	/EWRYCHdri/KIQOXzVUpM3Tj96zB/qAzuhQsFUEikuEdHr5HuL20NJgakua8Vr+o
-	mafS/x6QndGDhxjBZfr9axkmDLmHFn5te7pQOrzxX5knqu+Vytbw8nYZ0NuPxCS4
-	Ejq5UlafjF2FHaNhvMkBi3LrZQxrNNagyAwA+PnPEA==
-X-ME-Sender: <xms:KXGGY7lTxHpZ3h9tSQg9422dZg30c1Z5-osAuGwlEYk8ilCfQxMFWA>
-    <xme:KXGGY-33UY1AdWKLnbxWgznAotcoA94mle9Co-SvHmB7YgjctlQLv-8I7DGeMPlA9
-    ER20qr17Ld1q1hDRtI>
-X-ME-Received: <xmr:KXGGYxrWgdwUaOqfASZJSWhg9tVJkm7cm0H3ZTYDH2SyZvPQoSrE3QyOyha-XJSSu3LIUHhtnriYl8zWJStPeaj5QVzE8md5gzAfSg5PU32XUw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrtddtgddutdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpefhkeehfedthfejfeejtdfhvddvueeigeejjeeuteegveffhfffgeffieeu
-    ueduvdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepmhgrgihimhgvsegtvghrnhhordhtvggt
-    hh
-X-ME-Proxy: <xmx:KXGGYznxfrpPwwQRcz3mawhQxFvjpM2-lyjM3rtRZqIziNM7E0tN7g>
-    <xmx:KXGGY52vlX_eCFBO69zX2yyhjJAwENG-ffJedQYmM9Eqn7EPCVADig>
-    <xmx:KXGGYytwJVrwMjnq8D-_PqBh7ZsnX29tNHN0LOxf6KnOM_e9OP--xw>
-    <xmx:KXGGY0SKgRBE9aj5BNc-JINRp9IKUeAe2XrOBoxRxOfQyXWikK_Xsg>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Nov 2022 15:52:57 -0500 (EST)
-Date: Tue, 29 Nov 2022 21:52:55 +0100
-From: Maxime Ripard <maxime@cerno.tech>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: b4 bugs / future improvements
-Message-ID: <20221129205255.pfpuafph6mi2x57o@houat>
-References: <20221018153620.tyuedbldi2ofbe2x@houat>
- <20221018201804.na5x7lohm4yszg5h@nitro.local>
- <20221019080140.zc42aqi7gwjpvczs@houat>
- <20221020084930.vpu552rag6gdvmvm@houat>
- <20221109141459.ud2wofasq2jozmks@houat>
- <20221129171453.f74wxgd3kemsvy6q@meerkat.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3792463C0
+	for <tools@linux.kernel.org>; Wed, 30 Nov 2022 16:17:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=tronnes.org
+	; s=ds202112; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Sl9a9lBCDPVz7u0YjM3J3HqZgfwIYhuAxGDCvEUx4t4=; b=MT4AUxJqY9kL2uSbqTEcYnxtXO
+	lUvLOkvyjko2OVQW9AAyBdZm8oB1lIhkd9o/60gpu7IuY6q0rFgGVl219f0be7pb3UwtQSawVec+3
+	GWIv69uuggiuwuQ+5/gkgrPp5NduOCeM7VqeLpMXmiF3HuuL0yspWP4unTLdiCzIjjCYvLSQGOMV+
+	GIkazwlNj/CACqNCcEse+mi9eFpWgXwf34KED3n44h6w6ZasDuHrewNfvNKjtw2J4/akP1MnM8ufv
+	G2gXBq0GltgBjJt4pVLDPgfAX8VWi0E1DgXLuHQABIfaHrv+Ri1B2aKmFeYfHgBh/X+Si0hApT3VK
+	dKmiwZzQ==;
+Received: from [2a01:799:95e:1700:6395:ccbd:d000:d42b] (port=49734)
+	by smtp.domeneshop.no with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <noralf@tronnes.org>)
+	id 1p0PmM-0006je-8Z; Wed, 30 Nov 2022 17:17:46 +0100
+Message-ID: <b1fb933e-e8b7-a46b-5234-7fd469ea9524@tronnes.org>
+Date: Wed, 30 Nov 2022 17:17:44 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5ry6qly44m7hdzbq"
-Content-Disposition: inline
-In-Reply-To: <20221129171453.f74wxgd3kemsvy6q@meerkat.local>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: Error using b4 web endpoint (was Re: git send-email friendly smtp
+ provider anyone?)
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, =?UTF-8?Q?Noralf_Tr=c3=b8nnes?=
+ <noralf@tronnes.org>
+References: <20221122155122.edxtmsqpjxgj4dsj@meerkat.local>
+ <3b06dfd5-0eb4-dbfc-6ba8-077b1a92865b@tronnes.org>
+ <20221122185001.q6hmeblp64jqdzvz@meerkat.local>
+ <02bc2442-e3b3-d720-9d13-ffcdfd760fb8@tronnes.org>
+ <20221122194428.fmbayuz6vbvdd6uw@meerkat.local>
+ <3d2f9038-435f-f78e-31f4-59dbae587d18@tronnes.org>
+ <20221122200049.ma5jpfiawmgmpng2@meerkat.local>
+ <d9951176-24ed-ded1-c5dd-5586f779483d@tronnes.org>
+ <20221122202033.jeukag3i5pttqp5d@meerkat.local>
+ <4161738f-e2df-2d8e-7646-2c61df2f76b9@tronnes.org>
+ <20221122204456.6tqutsoybrisa4xf@meerkat.local>
+ <4adcd45f-21e7-698e-dc97-70995850ac9f@tronnes.org>
+From: =?UTF-8?Q?Noralf_Tr=c3=b8nnes?= <noralf@tronnes.org>
+In-Reply-To: <4adcd45f-21e7-698e-dc97-70995850ac9f@tronnes.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 
---5ry6qly44m7hdzbq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 29, 2022 at 12:14:53PM -0500, Konstantin Ryabitsev wrote:
-> On Wed, Nov 09, 2022 at 03:14:59PM +0100, Maxime Ripard wrote:
-> > > It seems to be related to
-> > > https://github.com/marlam/msmtp-mirror/issues/51 except I don't have
-> > > set_from_header in my config. I've tried to use allow_from_override a=
-nd
-> > > force it to off, and it didn't help.
-> >=20
-> > I just discovered something else.
-> >=20
-> > For various reasons, on one of my series I keep a per-commit changelog,
-> > in the commit log after a ---
-> >=20
-> > This works generally fine, until I run b4 trailers -u which seems to
-> > drop the entire content after --- when adding the tags.
->=20
-> This took a while to track and fix, but this should no longer happen in m=
-aster
-> and stable-0.10.y. Thank you for the report.
+Den 22.11.2022 22.03, skrev Noralf Trønnes:
+> 
+> 
+> Den 22.11.2022 21.44, skrev Konstantin Ryabitsev:
+>> On Tue, Nov 22, 2022 at 09:26:03PM +0100, Noralf Trønnes wrote:
+>>>> However, I see that it's failing on Debian 11 with the JSON error.
+>>>> I'll poke some more now that I have a test env and follow up.
+>>>>
+>>>
+>>> Yeah that test snippet fails with the same error.
+>>>
+>>> $ lsb_release -ir
+>>> Distributor ID: Ubuntu
+>>> Release:        22.04
+>>
+>> Okay, this is not a real fix, but it will get things working for you while I
+>> implement the proper solution:
+>>
+>> apt install python3-simplejson
+>>
+> 
+> Thanks, no errors this time.
+> 
+> Series:
+> https://lore.kernel.org/dri-devel/20221122-gud-shadow-plane-v1-0-9de3afa3383e@tronnes.org/
+> 
 
-Awesome, I'll give it a try, thanks a lot
+I'm ready to send version 2 of my patchset, but it doesn't work.
 
-Maxime
+$ ~/projects/b4/b4.sh --version
+0.11.0-dev-cc6f6
 
---5ry6qly44m7hdzbq
-Content-Type: application/pgp-signature; name="signature.asc"
+$ ~/projects/b4/b4.sh send
+Converted the branch to 7 messages
+Populating To/Cc addresses
+Will send the following messages:
+---
+To: Maxime Ripard <mripard@kernel.org>
+    Thomas Zimmermann <tzimmermann@suse.de>
+    dri-devel@lists.freedesktop.org
+    Noralf Trønnes <noralf@tronnes.org>
+    stable@vger.kernel.org
+    Javier Martinez Canillas <javierm@redhat.com>
+---
+  [PATCH v2 0/6] drm/gud: Use the shadow plane helper
+  [PATCH v2 1/6] drm/gud: Fix UBSAN warning
+  [PATCH v2 2/6] drm/gud: Don't retry a failed framebuffer flush
+  [PATCH v2 3/6] drm/gud: Split up gud_flush_work()
+  [PATCH v2 4/6] drm/gud: Prepare buffer for CPU access in gud_flush_work()
+  [PATCH v2 5/6] drm/gud: Use the shadow plane helper
+  [PATCH v2 6/6] drm/gud: Enable synchronous flushing by default
+---
+Press Enter to send or Ctrl-C to abort
+---
+Sending via web endpoint https://lkml.kernel.org/_b4_submit
+---
+CRITICAL: Was not able to send messages.
 
------BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCY4ZxJwAKCRDj7w1vZxhR
-xbkvAPwIw/wY3yUI6nCQn/4E+RLCSamE/yCv/rTJv+LRRXNXQQEA5NEl0wzamahf
-p+KiNObOjBCblzLOEbCNcyi66tc6zwo=
-=8QvL
------END PGP SIGNATURE-----
+Printing some more info:
 
---5ry6qly44m7hdzbq--
+diff --git a/b4/__init__.py b/b4/__init__.py
+index 64b36f6..eb62719 100644
+--- a/b4/__init__.py
++++ b/b4/__init__.py
+@@ -3294,9 +3294,12 @@ def send_mail(smtp: Union[smtplib.SMTP,
+smtplib.SMTP_SSL, None], msgs: Sequence[
+             'messages': [x[1].decode() for x in tosend],
+         }
+         ses = get_requests_session()
++        print('ses:', ses)
+         res = ses.post(endpoint, json=req)
++        print('res', res)
+         try:
+             rdata = res.json()
++            print('rdata', rdata)
+             if rdata.get('result') == 'success':
+                 return len(tosend)
+         except Exception as ex:  # noqa
+
+Gives me this:
+
+---
+Sending via web endpoint https://lkml.kernel.org/_b4_submit
+ses: <requests.sessions.Session object at 0x7f8da11e6920>
+res <Response [500]>
+rdata {'title': '500 Internal Server Error'}
+---
+CRITICAL: Was not able to send messages.
+
+So looks like a server error and b4 is unable to pick up on that.
+
+I went straight for the latest dev version this time, let me know if I
+should try 0.10.1 which I used to send the previous patchset.
+
+Noralf.
