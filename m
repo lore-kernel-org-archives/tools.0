@@ -1,47 +1,40 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCE679C0
-	for <tools@linux.kernel.org>; Wed, 30 Nov 2022 19:39:55 +0000 (UTC)
-Received: by mail-qv1-f47.google.com with SMTP id c14so8718259qvq.0
-        for <tools@linux.kernel.org>; Wed, 30 Nov 2022 11:39:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=n1IK82npyo783/NfsA1O9hSr/RpUyEMRvKh67D8KRBM=;
-        b=HD0KmIXIDxfccGnX54JEXR+tYq6c9p7R3gIyA9gSxw9uqmAtqo+qkAfEpoXYAm10NS
-         Cpu2WLot1UI55cMXcejc2+0pJtAceXSIH8YX01YXjUFZdTw0dek72TJoDTE8LqxD9i9r
-         v4R3vs9gxQtT0k0MpvbEhdro3N5QIxdj1uPo0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n1IK82npyo783/NfsA1O9hSr/RpUyEMRvKh67D8KRBM=;
-        b=UlXON7O9R4bT+hZYtZ+2iAocjYWh9dwQHH27IO1MiFZKsFeHQv9DTRv0U/g0+Cu5kQ
-         pI1/BFz8oCG1rKV2peZehkGGwiNHDxSegOOvT+/JJ7cWWgasPF0COY/+eQe1weidU9Ll
-         XV5NY8z9m6tb+2+STf60JViSAHEASYKo2OZt6T5gBHpiFgTLe12pEH1Pj0Qi4IkSXUPg
-         wUOc8crR0Y4HU8JjWWSssYJX1QqCrKzVyB/7n0pKR+Esrhjfq9mprTc3Lvwt9v2uM3GG
-         M6O8348dJQ0lDJ9cab0QhTy0Qh6XWxXhV6saQWiu6UgVS8BFamHzXoYB75jQEW/N3UeE
-         716g==
-X-Gm-Message-State: ANoB5plqPYL+/MpJcH6WPWDf3enVKe+d8HLPfM22o3qjZHhnN2dxFtF8
-	IFS7uCehCbRDVUtFEdy0FuK7n0YGK056sQ==
-X-Google-Smtp-Source: AA0mqf5Qde9U8e3nxAOXxSrT507IghEde4x0QLbwcYZfJgNMy6DJAGBbupFrCN9ot+4p3THLdvJqxw==
-X-Received: by 2002:a05:6214:4201:b0:4bb:6cad:7c82 with SMTP id nd1-20020a056214420100b004bb6cad7c82mr40370216qvb.17.1669837194207;
-        Wed, 30 Nov 2022 11:39:54 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id h19-20020ac85153000000b003a6328ee7acsm1315497qtn.87.2022.11.30.11.39.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 11:39:53 -0800 (PST)
-Date: Wed, 30 Nov 2022 14:39:52 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Error using b4 web endpoint (was Re: git send-email friendly
- smtp provider anyone?)
-Message-ID: <20221130193952.twllu74eduajrauj@meerkat.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E944E79DB
+	for <tools@linux.kernel.org>; Wed, 30 Nov 2022 19:59:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=tronnes.org
+	; s=ds202112; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=s1U7lLK5Rj6Y/cB03AGMu1Agvo9QuHCDmzeHvck9tN0=; b=UZRtkS6RITAtLestdOwN0zHHsV
+	5I48JMc6pOO0AM6Iotn6VJLQl7QBBGCSBGmbwdZvFIhCzw0EULdhKY2UzioHI3h3kVTiYaJGZJ73j
+	kaDhhzByti7Ea7CX+uTDp8YxYe1oSqSxmpYeKfnvPTyuoqcycUH2Lm8INLXTsPMl4TY9jtiiwCHX/
+	NNVSD5xbWaohubMXizKMH6cmwUd1uNj3WpIOtd7yDhdxxkuzfSq6wM7h8VelPWjNt9Kl+oniy/kda
+	rkLSxV8L5wU9CKuzDxLd0bHC3c2ICTA59bveL68d2WSw1qEFJOWn6x1PygdKtiV/esGG1Nez7E+zR
+	G0be2kVA==;
+Received: from [2a01:799:95e:1700:6395:ccbd:d000:d42b] (port=61956)
+	by smtp.domeneshop.no with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <noralf@tronnes.org>)
+	id 1p0TEv-00078L-Qt; Wed, 30 Nov 2022 20:59:29 +0100
+Message-ID: <80b37075-d80b-8de5-319f-8a71e396c910@tronnes.org>
+Date: Wed, 30 Nov 2022 20:59:27 +0100
+Precedence: bulk
+X-Mailing-List: tools@linux.kernel.org
+List-Id: <tools.linux.kernel.org>
+List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
+List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: Error using b4 web endpoint (was Re: git send-email friendly smtp
+ provider anyone?)
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, =?UTF-8?Q?Noralf_Tr=c3=b8nnes?=
+ <noralf@tronnes.org>
 References: <d9951176-24ed-ded1-c5dd-5586f779483d@tronnes.org>
  <20221122202033.jeukag3i5pttqp5d@meerkat.local>
  <4161738f-e2df-2d8e-7646-2c61df2f76b9@tronnes.org>
@@ -52,41 +45,49 @@ References: <d9951176-24ed-ded1-c5dd-5586f779483d@tronnes.org>
  <77d7c98c-2fbe-d23c-b772-634b2a377761@tronnes.org>
  <20221130191736.pdt2x74znz2tcfxy@meerkat.local>
  <da129f85-45b0-2544-aca9-a674ed5357a5@tronnes.org>
-Precedence: bulk
-X-Mailing-List: tools@linux.kernel.org
-List-Id: <tools.linux.kernel.org>
-List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
-List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ <20221130193952.twllu74eduajrauj@meerkat.local>
+From: =?UTF-8?Q?Noralf_Tr=c3=b8nnes?= <noralf@tronnes.org>
+In-Reply-To: <20221130193952.twllu74eduajrauj@meerkat.local>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <da129f85-45b0-2544-aca9-a674ed5357a5@tronnes.org>
 
-On Wed, Nov 30, 2022 at 08:34:45PM +0100, Noralf Trønnes wrote:
-> Thanks, working now:
+
+
+Den 30.11.2022 20.39, skrev Konstantin Ryabitsev:
+> On Wed, Nov 30, 2022 at 08:34:45PM +0100, Noralf Trønnes wrote:
+>> Thanks, working now:
+>>
+>> https://lore.kernel.org/dri-devel/20221122-gud-shadow-plane-v2-0-435037990a83@tronnes.org/T/#t
 > 
-> https://lore.kernel.org/dri-devel/20221122-gud-shadow-plane-v2-0-435037990a83@tronnes.org/T/#t
-
-Great. There's still some weird annoying stuff with encoding happening, but it
-shouldn't really interfere with anything. You're a great testcase because you
-have 8bit content in many headers of the message and it's tripping up a lot of
-my assumptions about how Python would handle things internally.
-
-Thank you for being patient!
-
-> https://patchwork.freedesktop.org/series/111222/
+> Great. There's still some weird annoying stuff with encoding happening, but it
+> shouldn't really interfere with anything. You're a great testcase because you
+> have 8bit content in many headers of the message and it's tripping up a lot of
+> my assumptions about how Python would handle things internally.
 > 
-> Is there an easy way for me to use b4 diff before I send out a new
-> version so I can see the exact changes I've made so I can make sure I've
-> not messed things up or forgotten to fix up something?
+> Thank you for being patient!
+> 
 
-Yes, if you're using the dev version of b4, you can run:
+No problem, you fix this so fast. If it had taken many days, then I
+would have had to find another way to send the patches.
 
-    b4 prep --compare-to v1
+It's also rewarding to help make this work, I guess more and more people
+will have problem using git send-mail as email providers and ISP's are
+tightening security.
 
-This will give you a range-diff of the current branch against any previously
-sent version.
+>> https://patchwork.freedesktop.org/series/111222/
+>>
+>> Is there an easy way for me to use b4 diff before I send out a new
+>> version so I can see the exact changes I've made so I can make sure I've
+>> not messed things up or forgotten to fix up something?
+> 
+> Yes, if you're using the dev version of b4, you can run:
+> 
+>     b4 prep --compare-to v1
+> 
+> This will give you a range-diff of the current branch against any previously
+> sent version.
+> 
 
-Cheers,
--K
+Excellent, just what I was looking for!
+
+Noralf.
