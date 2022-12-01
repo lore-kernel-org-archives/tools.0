@@ -1,27 +1,27 @@
 Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E944E79DB
-	for <tools@linux.kernel.org>; Wed, 30 Nov 2022 19:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B96B10F6
+	for <tools@linux.kernel.org>; Thu,  1 Dec 2022 10:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=tronnes.org
 	; s=ds202112; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
 	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
 	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
 	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
 	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=s1U7lLK5Rj6Y/cB03AGMu1Agvo9QuHCDmzeHvck9tN0=; b=UZRtkS6RITAtLestdOwN0zHHsV
-	5I48JMc6pOO0AM6Iotn6VJLQl7QBBGCSBGmbwdZvFIhCzw0EULdhKY2UzioHI3h3kVTiYaJGZJ73j
-	kaDhhzByti7Ea7CX+uTDp8YxYe1oSqSxmpYeKfnvPTyuoqcycUH2Lm8INLXTsPMl4TY9jtiiwCHX/
-	NNVSD5xbWaohubMXizKMH6cmwUd1uNj3WpIOtd7yDhdxxkuzfSq6wM7h8VelPWjNt9Kl+oniy/kda
-	rkLSxV8L5wU9CKuzDxLd0bHC3c2ICTA59bveL68d2WSw1qEFJOWn6x1PygdKtiV/esGG1Nez7E+zR
-	G0be2kVA==;
-Received: from [2a01:799:95e:1700:6395:ccbd:d000:d42b] (port=61956)
+	bh=76oRxyWh43MQPdPX9yJ4KHkUHYwJFioWsp/rUU+Yt3U=; b=hovTgN6ZEfMOCLG3USupSjaTyh
+	guefbp+o5N5qkSLDVOQXeBoEyCd8kYdURPv9rHX3gVeXz3tTlSCn5+Gs1Axq5cn4RnpofY0vv6MpF
+	/rqAwoAbDthkPWbE0OjElpkCMtGDQ4SUW2kEcqXFCgXjEkaUki9BuAUhl6ddvZn94eOakV3xuON2s
+	wy7363Wja60DupV+2gNuWl8vCl2kwxnQUgEq+lub+GKgKXBGbsQZ3AdepmwKx6HZnxPz+brnzvmVS
+	AS1fBRWjA1wmtx+dX6frFAbwpw4pqZcnVHJLtHqlD2C+7Ja5Py7Vp4a/ZBfX1dohbcPmGdn2irqew
+	kUFKoc9g==;
+Received: from [2a01:799:95e:1700:6395:ccbd:d000:d42b] (port=50492)
 	by smtp.domeneshop.no with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <noralf@tronnes.org>)
-	id 1p0TEv-00078L-Qt; Wed, 30 Nov 2022 20:59:29 +0100
-Message-ID: <80b37075-d80b-8de5-319f-8a71e396c910@tronnes.org>
-Date: Wed, 30 Nov 2022 20:59:27 +0100
+	id 1p0gN4-00026C-Jq; Thu, 01 Dec 2022 11:00:46 +0100
+Message-ID: <1cb40762-5f0a-1739-1670-155f59ec7110@tronnes.org>
+Date: Thu, 1 Dec 2022 11:00:44 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -30,64 +30,69 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: Error using b4 web endpoint (was Re: git send-email friendly smtp
- provider anyone?)
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, =?UTF-8?Q?Noralf_Tr=c3=b8nnes?=
- <noralf@tronnes.org>
-References: <d9951176-24ed-ded1-c5dd-5586f779483d@tronnes.org>
- <20221122202033.jeukag3i5pttqp5d@meerkat.local>
- <4161738f-e2df-2d8e-7646-2c61df2f76b9@tronnes.org>
- <20221122204456.6tqutsoybrisa4xf@meerkat.local>
- <4adcd45f-21e7-698e-dc97-70995850ac9f@tronnes.org>
- <b1fb933e-e8b7-a46b-5234-7fd469ea9524@tronnes.org>
- <20221130165557.7ptog2pdgpa54377@meerkat.local>
- <77d7c98c-2fbe-d23c-b772-634b2a377761@tronnes.org>
- <20221130191736.pdt2x74znz2tcfxy@meerkat.local>
- <da129f85-45b0-2544-aca9-a674ed5357a5@tronnes.org>
- <20221130193952.twllu74eduajrauj@meerkat.local>
+Subject: Re: [PATCH v2 0/6] drm/gud: Use the shadow plane helper
+To: Greg KH <gregkh@linuxfoundation.org>,
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>,
+ Javier Martinez Canillas <javierm@redhat.com>,
+ dri-devel@lists.freedesktop.org, Maxime Ripard <mripard@kernel.org>,
+ stable@kernel.org, tools@linux.kernel.org
+References: <20221122-gud-shadow-plane-v2-0-435037990a83@tronnes.org>
+ <Y4hB5odv9IGaq3Di@kroah.com>
 From: =?UTF-8?Q?Noralf_Tr=c3=b8nnes?= <noralf@tronnes.org>
-In-Reply-To: <20221130193952.twllu74eduajrauj@meerkat.local>
+In-Reply-To: <Y4hB5odv9IGaq3Di@kroah.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 
 
-Den 30.11.2022 20.39, skrev Konstantin Ryabitsev:
-> On Wed, Nov 30, 2022 at 08:34:45PM +0100, Noralf Trønnes wrote:
->> Thanks, working now:
+Den 01.12.2022 06.55, skrev Greg KH:
+> On Wed, Nov 30, 2022 at 08:26:48PM +0100, Noralf Trønnes via B4 Submission Endpoint wrote:
+>> Hi,
 >>
->> https://lore.kernel.org/dri-devel/20221122-gud-shadow-plane-v2-0-435037990a83@tronnes.org/T/#t
-> 
-> Great. There's still some weird annoying stuff with encoding happening, but it
-> shouldn't really interfere with anything. You're a great testcase because you
-> have 8bit content in many headers of the message and it's tripping up a lot of
-> my assumptions about how Python would handle things internally.
-> 
-> Thank you for being patient!
-> 
-
-No problem, you fix this so fast. If it had taken many days, then I
-would have had to find another way to send the patches.
-
-It's also rewarding to help make this work, I guess more and more people
-will have problem using git send-mail as email providers and ISP's are
-tightening security.
-
->> https://patchwork.freedesktop.org/series/111222/
+>> I have started to look at igt for testing and want to use CRC tests. To
+>> implement support for this I need to move away from the simple kms
+>> helper.
 >>
->> Is there an easy way for me to use b4 diff before I send out a new
->> version so I can see the exact changes I've made so I can make sure I've
->> not messed things up or forgotten to fix up something?
+>> When looking around for examples I came across Thomas' nice shadow
+>> helper and thought, yes this is perfect for drm/gud. So I'll switch to
+>> that before I move away from the simple kms helper.
+>>
+>> The async framebuffer flushing code path now uses a shadow buffer and
+>> doesn't touch the framebuffer when it shouldn't. I have also taken the
+>> opportunity to inline the synchronous flush code path and make this the
+>> default flushing stategy.
+>>
+>> Noralf.
+>>
+>> Cc: Maxime Ripard <mripard@kernel.org>
+>> Cc: Thomas Zimmermann <tzimmermann@suse.de>
+>> Cc: dri-devel@lists.freedesktop.org
+>> Signed-off-by: Noralf Trønnes <noralf@tronnes.org>
+>>
+>> ---
+>> Changes in v2:
+>> - Drop patch (Thomas):
+>>   drm/gem: shadow_fb_access: Prepare imported buffers for CPU access
+>> - Use src as variable name for iosys_map (Thomas)
+>> - Prepare imported buffer for CPU access in the driver (Thomas)
+>> - New patch: make sync flushing the default (Thomas)
+>> - Link to v1: https://lore.kernel.org/r/20221122-gud-shadow-plane-v1-0-9de3afa3383e@tronnes.org
 > 
-> Yes, if you're using the dev version of b4, you can run:
+> <formletter>
 > 
->     b4 prep --compare-to v1
+> This is not the correct way to submit patches for inclusion in the
+> stable kernel tree.  Please read:
+>     https://www.kernel.org/doc/html/latest/process/stable-kernel-rules.html
+> for how to do this properly.
 > 
-> This will give you a range-diff of the current branch against any previously
-> sent version.
-> 
+> </formletter>
 
-Excellent, just what I was looking for!
+Care to elaborate?
+Is it because stable got the whole patchset and not just the one fix
+patch that cc'ed stable?
+
+This patchset was sent using the b4 tool and I can't control this
+aspect. Everyone mentioned in the patches gets the whole set.
 
 Noralf.
