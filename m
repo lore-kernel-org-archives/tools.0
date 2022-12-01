@@ -1,84 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E794408
-	for <tools@linux.kernel.org>; Thu,  1 Dec 2022 14:32:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC9FC433D7;
-	Thu,  1 Dec 2022 14:32:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669905140;
-	bh=Pa7QHT6VY6qiNPXdsWcXWv9pGFktxtE5G6MoQvhx4Z8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UFjzqB1oow2Ilr4w5kCuaGgxtfDsJSzGpZQzISOO8nY3wcnV2W/vuH62B38mi0CI5
-	 AC+zfdJf+TdYyErkzEqNQ9QBHL5vRPgRiDIxLIOLdoCtpBvpnVn52N4GDiGm+o8Zn3
-	 ioKmk2DonkXrcg1SaVJNwBpr2j6qB1VyW6SKqa7kQXiFBOJfQX6nCTcdM0M+P8s91+
-	 hCuaLKngXCi7DIKbniEO1Ks5fBeEDRuAHfiXmfUc5AWbkHcGzitbq+CB2AG/m2z+hM
-	 hxtwRrc4X1QydJl3CMU+HFHsXNAV/FRAvJD8BgnLvTelMJwfC/zqTZ8wkT58ss+IJa
-	 +eJ+LYeMkPz3g==
-Date: Thu, 1 Dec 2022 14:32:15 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Greg KH <gregkh@linuxfoundation.org>,
-	Noralf =?iso-8859-1?Q?Tr=F8nnes?= <noralf@tronnes.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	dri-devel@lists.freedesktop.org, Maxime Ripard <mripard@kernel.org>,
-	tools@linux.kernel.org
-Subject: Re: [PATCH v2 0/6] drm/gud: Use the shadow plane helper
-Message-ID: <Y4i672D3GHu2xPS5@sirena.org.uk>
-References: <20221122-gud-shadow-plane-v2-0-435037990a83@tronnes.org>
- <Y4hB5odv9IGaq3Di@kroah.com>
- <1cb40762-5f0a-1739-1670-155f59ec7110@tronnes.org>
- <Y4iaODY6hMVNsfP1@kroah.com>
- <4e75582c-b3d6-fb0e-19b4-e4fd58c6bf55@tronnes.org>
- <Y4iqR94aGFa3NahQ@kroah.com>
- <e57deac6-5344-3f81-8ef5-55dd28b8c363@redhat.com>
- <20221201141642.uvonbrny4rhuacl5@meerkat.local>
- <dad6891d-5ca2-b849-b504-1a37b4741886@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5CE6FCB
+	for <tools@linux.kernel.org>; Thu,  1 Dec 2022 14:42:59 +0000 (UTC)
+Received: by mail-io1-f43.google.com with SMTP id d18so1147071iof.6
+        for <tools@linux.kernel.org>; Thu, 01 Dec 2022 06:42:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hs5TJ77o7rcPn7cTAbFuPaBI+yHhVHUz//A7/w3/Y44=;
+        b=apukca2hf8CNfSoTQDcIMBMhaYoow+X68HIMwgAQ7J1DVacnXLsUN+cYEY9I/XAFNO
+         42+Yyn7F2ekajpoQ8/uusSiyjdIHFRMXo2MQ+FRjcCDRxXpGZ/BIOGY/ODsX4MH5NF+E
+         beqx0ey1A8Mqv0GLr6QPDlIWzazIjFINDfqvY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hs5TJ77o7rcPn7cTAbFuPaBI+yHhVHUz//A7/w3/Y44=;
+        b=LmOwJYndRRQztsBAe+6b5hY7zLqbP4e+RHBORisqnFgTBxeQO8mhVtiYGPAtjE8B4p
+         V67X/T/9jo73IY+0KRHk3n2fHdpPY1/ssCXmKH4Zl+V40ND26sgHbFarlxEVF/TDCJfv
+         fmbxSKs+vkrRef0FUaTpdQavXxpnyESH5MaDYjD5G5f9eefE7mkj3GxqbdzRJaxyNGaB
+         CBf1iOC5cs/g7F2+8BRFn2EP5EKHgwaMUnmCMFF8M7Dh5cnTcFvZM8Jpr81dmRf4Kjx+
+         HP/VUhzG6mQws5DG5TovuBOC4vm3ybf0FTxIxjRYZw33Ld56Dsw74vfCpHhGmysl2k/s
+         D/Og==
+X-Gm-Message-State: ANoB5pmwE+4V89IGG6s0RTULTFg3xSYUkIv5NV+1TjtyOlL/8MGVBbyE
+	E4KUVUQA2SqzuNyBYvFddXpLpOfC6ThEuxVSLiyUfCFkAs3ODw==
+X-Google-Smtp-Source: AA0mqf50C+GaxgrS0UB/4KJ4SNgBkpIyymX4pBTKgmRjcBp5lPjScCupJ3sp6AAcn2zx07HALJRJnjeb9KESCvJ2QZM=
+X-Received: by 2002:a02:3b64:0:b0:376:e17:5e95 with SMTP id
+ i36-20020a023b64000000b003760e175e95mr31692557jaf.183.1669905778330; Thu, 01
+ Dec 2022 06:42:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EDoGb3EXLIQux063"
-Content-Disposition: inline
-In-Reply-To: <dad6891d-5ca2-b849-b504-1a37b4741886@suse.cz>
-X-Cookie: Leveraging always beats prototyping.
+References: <d9951176-24ed-ded1-c5dd-5586f779483d@tronnes.org>
+ <20221122202033.jeukag3i5pttqp5d@meerkat.local> <4161738f-e2df-2d8e-7646-2c61df2f76b9@tronnes.org>
+ <20221122204456.6tqutsoybrisa4xf@meerkat.local> <4adcd45f-21e7-698e-dc97-70995850ac9f@tronnes.org>
+ <b1fb933e-e8b7-a46b-5234-7fd469ea9524@tronnes.org> <20221130165557.7ptog2pdgpa54377@meerkat.local>
+ <77d7c98c-2fbe-d23c-b772-634b2a377761@tronnes.org> <20221130191736.pdt2x74znz2tcfxy@meerkat.local>
+ <da129f85-45b0-2544-aca9-a674ed5357a5@tronnes.org> <20221130193952.twllu74eduajrauj@meerkat.local>
+In-Reply-To: <20221130193952.twllu74eduajrauj@meerkat.local>
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Date: Thu, 1 Dec 2022 09:42:47 -0500
+Message-ID: <CAMwyc-SbsFQyA8tTNbqzRkn+wDeo6ELrnV0ngwsx_6M4maHnPA@mail.gmail.com>
+Subject: Re: Error using b4 web endpoint (was Re: git send-email friendly smtp
+ provider anyone?)
+To: =?UTF-8?Q?Noralf_Tr=C3=B8nnes?= <noralf@tronnes.org>
+Cc: tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, 30 Nov 2022 at 14:39, Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Wed, Nov 30, 2022 at 08:34:45PM +0100, Noralf Tr=C3=B8nnes wrote:
+> > Thanks, working now:
+> >
+> > https://lore.kernel.org/dri-devel/20221122-gud-shadow-plane-v2-0-435037=
+990a83@tronnes.org/T/#t
+>
+> Great. There's still some weird annoying stuff with encoding happening, b=
+ut it
+> shouldn't really interfere with anything. You're a great testcase because=
+ you
+> have 8bit content in many headers of the message and it's tripping up a l=
+ot of
+> my assumptions about how Python would handle things internally.
 
---EDoGb3EXLIQux063
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+For the record, this helped identify a bug in Python:
+https://github.com/python/cpython/issues/99927
 
-On Thu, Dec 01, 2022 at 03:27:32PM +0100, Vlastimil Babka wrote:
+I'll have to work around it in b4, unfortunately, as even if it's
+fixed in 3.11, I'm not sure it'll be backported properly to earlier
+versions.
 
-> I usually do that with git send-email and a custom --cc-cmd script, but
-> additionally it sends the cover letter also to everyone that's on any
-> individual patch's Cc, so everyone gets at least the cover letter + their
-> specific patch(es).
-
-> But that extra logic could be optional.
-
-Yeah, without the cover letter if you've just got an individual patch it
-can be unclear what's going on with dependencies and so on for getting
-the patches merged.
-
---EDoGb3EXLIQux063
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmOIuu4ACgkQJNaLcl1U
-h9A65gf/Zbk112vjsapvsgcV3MZokQBwxTZ00puZdF11qDplABt4WqrH2fk+GxLb
-fhPQu0jW8gfMtmORTjWQAFS+f57NxWLoxghmxAKZWw8JpZm0UTo3lx77WkO49aOP
-8L3CZSB5ljty8Cert5m1wuIzfsNLA7EcM+WQokhECHaN8mrqpUHiQ8j31fqHJybF
-QjH9ZNsYwDFy+vHvF5P0bqONvSmIvKwd9/gl0ChEbXHkZD1nZkaaUF+5DNsA5xQA
-z4qF71ee0BBDPlysmO3vBn1fQ4/D97SoDfTU6lTwXwW0mooTF9KpZVUBFZrvqVwW
-quFqZoDI+VAXJjpWFXZN9V6c3n4ssw==
-=aYf2
------END PGP SIGNATURE-----
-
---EDoGb3EXLIQux063--
+-K
