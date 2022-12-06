@@ -1,44 +1,44 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CAD27713
-	for <tools@linux.kernel.org>; Tue,  6 Dec 2022 16:51:57 +0000 (UTC)
-Received: by mail-qv1-f43.google.com with SMTP id r15so10798234qvm.6
-        for <tools@linux.kernel.org>; Tue, 06 Dec 2022 08:51:57 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6672B568C
+	for <tools@linux.kernel.org>; Tue,  6 Dec 2022 21:53:44 +0000 (UTC)
+Received: by mail-qk1-f182.google.com with SMTP id k2so8663725qkk.7
+        for <tools@linux.kernel.org>; Tue, 06 Dec 2022 13:53:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yF7Bm1d3jhxG/xZET5IK69LOXpGvua8j7Zl/D/MN/qI=;
-        b=hZfQqEBdgsHEdoragD85+9ONd5Wkcyo/4cx0CFq4LQP0Y/B4ZrdkPpQ6tgvIG45Ohf
-         jecx2DBgXXW0lTyi77/h61sfQX4ZoPTkuvvPpJRwXne09Qu142ZGZB1mUbTkZ1h0FMSV
-         wZiQziLPv+V4HcRAMQgmN2sSIH8eb8CDXQ8ks=
+        bh=81I6f0xs5h6IX4WjhoQ0D11guIsPr9rqiMhy3+JHHI0=;
+        b=BvhazVTkeoJgwhE4aLfZ8SrXgQuJGP0ILmykttMAK+zO7UjMGOtPSXf0FWNH5Yu4EE
+         NpY2WMkJdh9sVuGGvKezST39/h8lRrqrzKW0IHCryv5Thg1zwhz5LKwWe8Uils+qXLxx
+         NgTd/D+0hjLpJQI2eriVecWCNMHBuU63XoUg4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yF7Bm1d3jhxG/xZET5IK69LOXpGvua8j7Zl/D/MN/qI=;
-        b=lG+axBYs6RTgOrpNy95Krq2m2yr6H1E1Szt+GaPnMMb6L7FI0C9aGEO31jDPaH/6Tz
-         uAooHnOPF0K6B7EgTnzCwOX4tg2gEc4u0bljvQvmfULvC74IFve8JWNI9NtcRznGvjWB
-         Y8KVBEwH74H79qgK3YEmJfAY48Xu/ji2R2MuPTh7u24YhEbI4YPX2rNWLovNxPU4uMd4
-         898tFuPs0SCJ+zfz7VALYQVjMVFxSaZemR5TDjYUNEZNOap9c7uGyZNVLB43k17kmid6
-         BTYb7zB8kSzvcBD63bKOIVEvpE4sgPZciUgeVex6r9yc0YFsvDken4fF5EPmYETkM6BJ
-         bwHA==
-X-Gm-Message-State: ANoB5pmTsDlSk8HcsAxydaU1kXsWiW+5EwKZi5+42iemXv7no+dAC7Xu
-	dqBhuCFnijlUOQcWcmQKaMSmWjTn+DH5DtDL
-X-Google-Smtp-Source: AA0mqf4Y+hX2AoXSgA9BaCLWs7uklNt0idr11Rh7pn7I2S21zdmR/9wIL7cUQp701g7cj4bl+Vqkwg==
-X-Received: by 2002:a05:6214:2d42:b0:4c7:2d0e:79d4 with SMTP id na2-20020a0562142d4200b004c72d0e79d4mr21374072qvb.70.1670345515921;
-        Tue, 06 Dec 2022 08:51:55 -0800 (PST)
+        bh=81I6f0xs5h6IX4WjhoQ0D11guIsPr9rqiMhy3+JHHI0=;
+        b=RKU9FZfL7X0uao1psHV6+yXMtggjoKH54ne3tWUrJkghUl13Bmv6WgAmyIf9BjNZhb
+         iHTHBD4YBiCDLPcXh5an8udIqprtTq1E8GCQFYLNGKVadBLb22jeDpeDXcxGoGbWeZJ2
+         CcqOpUcloVn7NX6ve0u7okO3ulCN6lIbEjdJsFe+k1vqDn/7h4icricnf/Fx2DKj9KGZ
+         EFuwG1mT5kUWvRbk+nhQqB2s2QTt23SVtHtBE8cjaHnHTQYKoOlPkHgzFKRk7ibMkfS1
+         0oZ4bbbYkhhdqIW3YM7xwc1exX+93GHjrx6BkzZNXcKFlhVyt/KL2vl48FT9/S2adFI3
+         cNVw==
+X-Gm-Message-State: ANoB5pmTf0oEVhNxdFGSyOmaxcOkdMVHxBNkUKHOQbPfx0IJ5Kqw7BdY
+	HQohTTh+qEaWFmV2us5lf7BnhCsEg7Cl/sUC
+X-Google-Smtp-Source: AA0mqf5OCCztXvFV97p18zI4USNV0K2uUvaMohsVi4DyLee5bfM7UuveKyv78fEbVPbbJyPOKI8nrQ==
+X-Received: by 2002:a05:620a:2603:b0:6fa:17ae:34a8 with SMTP id z3-20020a05620a260300b006fa17ae34a8mr78326118qko.3.1670363622894;
+        Tue, 06 Dec 2022 13:53:42 -0800 (PST)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id w17-20020a05620a425100b006eef13ef4c8sm15624402qko.94.2022.12.06.08.51.55
-        for <tools@linux.kernel.org>
+        by smtp.gmail.com with ESMTPSA id d7-20020a05620a240700b006feba101f85sm6536041qkn.13.2022.12.06.13.53.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Dec 2022 08:51:55 -0800 (PST)
-Date: Tue, 6 Dec 2022 11:51:54 -0500
+        Tue, 06 Dec 2022 13:53:42 -0800 (PST)
+Date: Tue, 6 Dec 2022 16:53:40 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: tools@linux.kernel.org
-Subject: b4 change: "send --prefixes" is now "prep --set-prefixes"
-Message-ID: <20221206165154.obuthhlgnkvwju4w@meerkat.local>
+Cc: Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>
+Subject: new: b4 send --reflect
+Message-ID: <20221206215340.556ov3bdfyf3qvyy@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -50,39 +50,37 @@ Content-Disposition: inline
 
 Hi, all:
 
-The previous way of dealing with extra subject line prefixes was to append
-them during the "b4 send" stage:
+Final feature before 0.11 (hopefully) -- there is a new test mode for b4 send
+that will only email the series to yourself instead of the actual destinations
+listed in "To" or "Cc" headers.
 
-    b4 send --prefixes RFC
+This should be particularly useful to anyone using the web submission
+endpoint, because this will allow them to see any post-processing that the
+remote will do to their patches (such as rewriting From: for DMARC purposes).
 
-I realized that some subsystems require more permanent prefixes, such as
-[PATCH netdev] or [PATCH bpf], and it was too easy to forget to add them each
-time the "send" command was invoked. For this reason, I'm making the prefixes
-"sticky" across revisions.
+If you're using b4 from git, I recommend that you get the latest master so it
+can see some testing before the 0.11 release later in the week. 
+The main notable new features in 0.11 as compared to 0.10.y are:
 
-For example, if you want to send an RFC patch series to netdev:
+- b4 prep --compare-to N: shows a range-diff between your current prep branch
+  and the previously submitted revision N
 
-    b4 prep --set-prefixes RFC netdev
+- b4 ty: can be configured to always send mail without requiring the -S switch
+  (via setting b4.ty-send-mail=yes)
 
-To remove the RFC prefix once you're ready for it:
+- b4 send will no longer send the entire series to the addresses found in
+  individual commit Cc: trailers; such addresses will only receive the cover
+  letter and the patches where they are explicitly Cc'd
 
-    b4 prep --set-prefixes netdev
+- you can now set extra [PATCH] prefixes permanently either via b4 prep
+  --set-prefixes or via the cover letter subject line
 
-To remove all prefixes:
+- internal changes to ensure that we generate 7-bit-clean headers for all
+  outgoing mail
 
-    b4 prep --set-prefixes ''
+- b4 send --reflect: prepares the patches but only sends them to yourself
 
-In addition to the "--set-prefixes" command, these extra prefixes can also be
-added to the cover letter subject line (and edited via "b4 prep --edit-cover"):
+If all goes well, I will release 0.11 either Thursday or Friday.
 
-    [RFC netdev] Cover letter subject line
-
-    Cover letter body.
-    ---
-    Changes in v2:
-    ...
-
-This change will be in the 0.11 version of b4, which will probably be released
-later today or tomorrow.
-
--K
+Best wishes,
+Konstantin
