@@ -1,118 +1,63 @@
-Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF132F2D
-	for <tools@linux.kernel.org>; Wed,  7 Dec 2022 18:12:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=tronnes.org
-	; s=ds202112; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:Cc:
-	References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID
-	:Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:
-	Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe
-	:List-Post:List-Owner:List-Archive;
-	bh=V7ZQNungUBHWs6FoCzxNj3SzZZlM6mfSo5BH4o3SZzc=; b=i8Xc5ESjWHollCfgWU95TAu3U8
-	q1e71gr3k9FG+tk+HWDkv5xjzzI7s3LWdox6EqimmlhGqWDyp20WobgZRMGTm7NyVGg1286VPWLzu
-	u9Xm7Nli3RteXMacXXDbJqDyienbAn5YzVwLNXBSUyCjbL1oyXBPuV6YNby+0nwixYr9yuCXhpyA6
-	gYXA0hPPJEBzmI7Fp0ImVVCN3bNgzFNhXs1v4I0BQ+GeUrZMeQRt2Ij09XXQpEzWGhu7+zyo5hvBG
-	DAxfslRHTEN/v1Ku8be8q6V+kEstMzVOl7474deCxlHZpCibYMr/hEDO2eYuUiRF+kDyWkz6lCxuy
-	oBrSRPAA==;
-Received: from [2a01:799:95e:1700:6395:ccbd:d000:d42b] (port=57369)
-	by smtp.domeneshop.no with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <noralf@tronnes.org>)
-	id 1p2yuG-003GcV-HJ;
-	Wed, 07 Dec 2022 19:12:32 +0100
-Message-ID: <90c5f16c-61c4-6f5f-7d11-9fe8de09468d@tronnes.org>
-Date: Wed, 7 Dec 2022 19:12:29 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C34323E
+	for <tools@linux.kernel.org>; Wed,  7 Dec 2022 18:22:00 +0000 (UTC)
+Received: by mail-qv1-f45.google.com with SMTP id p12so13224627qvu.5
+        for <tools@linux.kernel.org>; Wed, 07 Dec 2022 10:22:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=wYminRkg9mkT6EUmW2Uc8bvRNZ3c+J5In/yHFEJ6KlY=;
+        b=fVCcvRWG2tv+Jl5KAeyRiCMmcSfqFnUFpUDZAYrstKuTTF6B8kgXDsQ5DjIPwCt+lN
+         0uVdF8ZiBlePHFS0q3XWvKOwdGaBKLlTYoLFeyeJy8bO2bAjmODLL1cQGWiyEJgH3Ypi
+         RW7bj2Dtkek/pjQp+gQPSLVtGS9Cj4QUN81+8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wYminRkg9mkT6EUmW2Uc8bvRNZ3c+J5In/yHFEJ6KlY=;
+        b=NPTMeVblg/PWYokfI/M+aGvl8kvYtrTdJmgYssbSk31odVlu7npk7guP+iTkYiBRtH
+         wjmxshAEIQtXW07qpZ2vSyPn+OtPYpZcQHFBRDXkCWBb2XOYzE9VKmo1C2iEhwIOSdFY
+         fhXqm6UlJaZ0JX1UWxmBpWDMbUq/s5BLOjb78ScnShDMImZqC3y0+t3Zd2Gwr1DLnpJB
+         1L8bBNHRX66crQgsuhErtVOZsgsJcHb0PPbapb+3VROSUBK8JosCQMXXNsHvDj99IA03
+         TtVgHrDjq1KiJcBicZilmBhfYsfLAr9dFsFoq0LV48STOnqCmdiuBY+y+pUtKL5wRXjO
+         SJeg==
+X-Gm-Message-State: ANoB5pkTDsa9x3Ak57NFYVBQN69FtQDSwL99VVM0ngnu+QSWJ3whQAJj
+	TofVlaam84HhGVKWS32OeEeoGA==
+X-Google-Smtp-Source: AA0mqf4DLEPrsPDBaWxruYdgn29nclj96diAJMDuff9omICFw3mRO/u4/+/gi1TVG2NxWO0Vh63dAg==
+X-Received: by 2002:a05:6214:123:b0:4c7:1608:666d with SMTP id w3-20020a056214012300b004c71608666dmr1217445qvs.17.1670437319390;
+        Wed, 07 Dec 2022 10:21:59 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id u10-20020a05620a430a00b006fa9d101775sm17417876qko.33.2022.12.07.10.21.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Dec 2022 10:21:58 -0800 (PST)
+Date: Wed, 7 Dec 2022 13:21:56 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>
+Cc: tools@linux.kernel.org
+Subject: Re: new: b4 send --reflect
+Message-ID: <20221207182156.zbwmcdckoegef6lf@meerkat.local>
+References: <20221206215340.556ov3bdfyf3qvyy@meerkat.local>
+ <f8d14fd5-58e0-853d-64e0-72cc60e69629@tronnes.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: new: b4 send --reflect
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- tools@linux.kernel.org
-References: <20221206215340.556ov3bdfyf3qvyy@meerkat.local>
- <f8d14fd5-58e0-853d-64e0-72cc60e69629@tronnes.org>
-Cc: =?UTF-8?Q?Noralf_Tr=c3=b8nnes?= <noralf@tronnes.org>
-From: =?UTF-8?Q?Noralf_Tr=c3=b8nnes?= <noralf@tronnes.org>
-In-Reply-To: <f8d14fd5-58e0-853d-64e0-72cc60e69629@tronnes.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <f8d14fd5-58e0-853d-64e0-72cc60e69629@tronnes.org>
 
-
-
-Den 07.12.2022 17.39, skrev Noralf Trønnes:
-> 
-> 
-> Den 06.12.2022 22.53, skrev Konstantin Ryabitsev:
->> Hi, all:
->>
->> Final feature before 0.11 (hopefully) -- there is a new test mode for b4 send
->> that will only email the series to yourself instead of the actual destinations
->> listed in "To" or "Cc" headers.
->>
->> This should be particularly useful to anyone using the web submission
->> endpoint, because this will allow them to see any post-processing that the
->> remote will do to their patches (such as rewriting From: for DMARC purposes).
->>
-> 
-> I've always sent the patches to myself for a final check before sending
-> them off, so this is perfect.
-> 
-> But it doesn't work for me yet:
-> 
-> $ ~/projects/b4/b4.sh send --hide-cover-to-cc --reflect
-> Converted the branch to 1 messages
-> ---
-> To: dri-devel@lists.freedesktop.org
->     tzimmermann@suse.de
->     kernel test robot <lkp@intel.com>
->     Noralf Trønnes <noralf@tronnes.org>
-> ---
->   [PATCH] drm/gud: Fix missing include
-> ---
-> Ready to:
->   - send the above messages to just noralf@tronnes.org (REFLECT MODE)
->   - via web endpoint: https://lkml.kernel.org/_b4_submit
-> 
-> Press Enter to proceed or Ctrl-C to abort
-> ---
-> Reflecting via web endpoint https://lkml.kernel.org/_b4_submit
+On Wed, Dec 07, 2022 at 05:39:40PM +0100, Noralf Trønnes wrote:
 > Error from endpoint: This service only accepts patches
-> ---
-> CRITICAL: Was not able to send messages.
-> 
-> $ ~/projects/b4/b4.sh --version
-> 0.11.0-dev-b77ec
-> 
-> Cover letter:
-> 
-> $ git show 6c2812de7efe
-> commit 6c2812de7efe27951c95c9f736215675009da3fb
-> Author: Noralf Trønnes <noralf@tronnes.org>
-> Date:   Wed Dec 7 12:58:01 2022 +0100
-> 
->     dummy
->     Cc: dri-devel@lists.freedesktop.org
->     Cc: tzimmermann@suse.de
-> 
->     --- b4-submit-tracking ---
->     # This section is used internally by b4 prep for tracking purposes.
->     {
->       "series": {
->         "revision": 1,
->         "change-id": "20221207-gud-missing-include-9ccf56382f8a",
->         "base-branch": null
->       }
->     }
-> 
-> I've attached the 'b4 send --hide-cover-to-cc -o' output.
-> 
 
-I wanted to get this patch out so I dropped the --reflect, but I got the
-same error.
+Stupidly, I never tested it with a single patch, always with a series.
+Please try again.
 
-Noralf.
+-K
