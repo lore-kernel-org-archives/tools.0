@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5672C8F4B
-	for <tools@linux.kernel.org>; Wed,  7 Dec 2022 22:55:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59328C433C1;
-	Wed,  7 Dec 2022 22:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCB18F51
+	for <tools@linux.kernel.org>; Wed,  7 Dec 2022 23:02:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B83C433C1;
+	Wed,  7 Dec 2022 23:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1670453712;
-	bh=kCuwcoqS7VVizUftGwL7kUwX1rx6yCeHcz42gubG9gc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=o6U90uhUDyEQC/D/K7Pm7Kma0HmwNvmONDhpJO1BdwIc6elk8+qcX0JFpiEFaiDMb
-	 oXT6/SxMAski8u9ZOey76RtOJfPQ9pwBnYLLsQ/x0Q+c7Ra/ykf8p5NdSNIEmexee9
-	 W7odE6Lyd9GZ1TJhtitQuL9BzYuwsUeXgUxqPqBmoT3miMsdKCtlJRb7Om+FsBAZrq
-	 OHmGgKHDf0sdJNIHsMQkYv1qKLAQ2+ilJRu2/5bq0gZhGISUdfDdZJP8HRP9WvEiS8
-	 xKoLsuN/pM65j9ZRYr4LRibYgqEnF9OPFy885/zlJCxgkSF5x+4TGkZenU68UBexUC
-	 MxUT82YeNu9DQ==
-Date: Wed, 7 Dec 2022 22:55:07 +0000
+	s=k20201202; t=1670454161;
+	bh=O3Uyq5ST6g5mqmKoW25b1NmQkmPqK42oxMjWI4o+q5w=;
+	h=Date:From:To:Cc:Subject:From;
+	b=AUD9nXQu6s3szZoViJcrHu+IfbK/r/njUEE9EOSHH0CR58anrC/ylCRQGwhmKVe32
+	 Wf+XwtHusr8he0JGD1ktLasdruj+SWHmTKrZNWhoiKzaYI6Piwht8YFQRAZ3UHP/LF
+	 KUqC/+Y/EXR/NPMCQYEq4gsFPbDI9ikX5FeOFMSyo4uiTKjmz0/BSwnvTvKAeEtBzr
+	 9NzxeotJbGRmDWki+tBrnie5Spg9UsvlQueMhz21WQNYxZZA+e1ARGYz5GLSIZ80vc
+	 Vddrn6SMvupLi3q1dcN6esJ7RAoNhCGharlxZtT9GJtdHKL5OCR8TAjYZEhTNGv3Aj
+	 4nsx8p+4gHcNA==
+Date: Wed, 7 Dec 2022 23:02:37 +0000
 From: Mark Brown <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org
-Subject: Re: b4 prep HEAD fails when specifying branch point
-Message-ID: <Y5EZy/qqongS4Teo@sirena.org.uk>
-References: <Y4+9Fz7lkzSnFV72@sirena.org.uk>
- <20221206221546.ezjxmz2w3tuxbzx5@meerkat.local>
- <Y4/I/dzuV+s00L8k@sirena.org.uk>
- <20221207011100.v6dyvrma53hv4oor@nitro.local>
- <Y5CKJ2qs5aIVfWoE@sirena.org.uk>
+Subject: b4 send needs a subject in the cover
+Message-ID: <Y5EbjU+W7vcqtE/d@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -33,46 +28,39 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qcfYt9kpC5cb3zNN"
+	protocol="application/pgp-signature"; boundary="pK5oz2I1DseGAuJH"
 Content-Disposition: inline
-In-Reply-To: <Y5CKJ2qs5aIVfWoE@sirena.org.uk>
 X-Cookie: What!?  Me worry?
 
 
---qcfYt9kpC5cb3zNN
+--pK5oz2I1DseGAuJH
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Wed, Dec 07, 2022 at 12:42:20PM +0000, Mark Brown wrote:
-> On Tue, Dec 06, 2022 at 08:11:00PM -0500, Konstantin Ryabitsev wrote:
+If I've got a patch series with a single patch in it then there's no
+need for a cover letter and if it's the first version no need for a
+changelog so I'd expect to just delete all the text in the b4 cover
+other than the recipients.  However if I do that then what seems to end
+up happening is that the first recipient gets deleted, I'm guessing
+parsed as a subject which then doesn't get used due to this being a
+single message.
 
-> > Since my primary goal with this work is to simplify the process for newbies
-> > and occasional committers, b4 tries to enforce the workflow of 1) switch to
-> > the branch from which you want to fork, b) specify the tag in this branch that
-> > you want to use as the fork-point.
+I can see why this happens but it's a bit of a gotcha - printing the
+subject might help make it clearer what's going on in this case?
 
-> Right, so a common use case here is that you want to fork from a remote
-> branch (generally something in the maintainer's tree).  For me that'd
-> probably mean that I'd end up with a lot of branches tracking a branch
-> called tmp.  I'm not sure if that *matters* though.
-
-Ah, yeah - turns out it really does matter, b4 send gets very confused
-about what it should send if the base branch isn't actually the base
-branch.
-
---qcfYt9kpC5cb3zNN
+--pK5oz2I1DseGAuJH
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmORGcsACgkQJNaLcl1U
-h9BprAf/SGmjf1tlO6JVMTCY+6yogHQTwKcgBMAgb7xT2mwCfAOOHi08A3K9ZD/E
-Z0MlXYRjSvxgscRB3b914oYlvLmnHp/zGHVjiksRdwcwod2kD5/06IZzi1pivRrt
-hLdHXur7zoMC+6Q6ClTEXTZoMAI2xs+WzK4gyudB7TLttI6NmL/O1+4NyCMjHN8u
-d7CsVztXJBZALMS1V8/m02oI9lDq0MW926JY4DIVY1N2gbJt3HZ1DBFeyhn4dL8C
-HGyj4dmKC6CYqYsBtxx1awEznFT9S8U/2oaq1AZBBVSvErZT+5pT/lqj4hExShEZ
-cNacO80HBPDVTYwynE4n0uzGVHhX4Q==
-=vpnk
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmORG40ACgkQJNaLcl1U
+h9CO1gf/dW4jnVdeSejXSnBBaPB87iRMHBGRyEZzZQdhJ5sUOrnZDCNCMJmKycMu
+SpoblCHqLaoB4/7M01p/TZH8D+2T153m8Qmsj0LsqSZsgJF++5VAl7D77gLinhHb
+H0tVMcO2A1t/AXbLcPnENTQ756FIU6Cl8q9uyYit5YXqLyiH/yTiLaTWGKkWcY0b
+z1ggQTADR9WUNYHBiN4PbnGOVszYPv/JHt2MT2r9MXhe6XAsNTST3MHivHYjRV3E
+jde+U+zanOJvDHu2enT8ugG28awai4xgun8E0R+pKKHlyGoeohzLWJfDS0l6DLRT
+eusI7q1gKCvWrzXsTR4yq0vEW3RSDA==
+=OJAK
 -----END PGP SIGNATURE-----
 
---qcfYt9kpC5cb3zNN--
+--pK5oz2I1DseGAuJH--
