@@ -1,63 +1,81 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C34323E
-	for <tools@linux.kernel.org>; Wed,  7 Dec 2022 18:22:00 +0000 (UTC)
-Received: by mail-qv1-f45.google.com with SMTP id p12so13224627qvu.5
-        for <tools@linux.kernel.org>; Wed, 07 Dec 2022 10:22:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wYminRkg9mkT6EUmW2Uc8bvRNZ3c+J5In/yHFEJ6KlY=;
-        b=fVCcvRWG2tv+Jl5KAeyRiCMmcSfqFnUFpUDZAYrstKuTTF6B8kgXDsQ5DjIPwCt+lN
-         0uVdF8ZiBlePHFS0q3XWvKOwdGaBKLlTYoLFeyeJy8bO2bAjmODLL1cQGWiyEJgH3Ypi
-         RW7bj2Dtkek/pjQp+gQPSLVtGS9Cj4QUN81+8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wYminRkg9mkT6EUmW2Uc8bvRNZ3c+J5In/yHFEJ6KlY=;
-        b=NPTMeVblg/PWYokfI/M+aGvl8kvYtrTdJmgYssbSk31odVlu7npk7guP+iTkYiBRtH
-         wjmxshAEIQtXW07qpZ2vSyPn+OtPYpZcQHFBRDXkCWBb2XOYzE9VKmo1C2iEhwIOSdFY
-         fhXqm6UlJaZ0JX1UWxmBpWDMbUq/s5BLOjb78ScnShDMImZqC3y0+t3Zd2Gwr1DLnpJB
-         1L8bBNHRX66crQgsuhErtVOZsgsJcHb0PPbapb+3VROSUBK8JosCQMXXNsHvDj99IA03
-         TtVgHrDjq1KiJcBicZilmBhfYsfLAr9dFsFoq0LV48STOnqCmdiuBY+y+pUtKL5wRXjO
-         SJeg==
-X-Gm-Message-State: ANoB5pkTDsa9x3Ak57NFYVBQN69FtQDSwL99VVM0ngnu+QSWJ3whQAJj
-	TofVlaam84HhGVKWS32OeEeoGA==
-X-Google-Smtp-Source: AA0mqf4DLEPrsPDBaWxruYdgn29nclj96diAJMDuff9omICFw3mRO/u4/+/gi1TVG2NxWO0Vh63dAg==
-X-Received: by 2002:a05:6214:123:b0:4c7:1608:666d with SMTP id w3-20020a056214012300b004c71608666dmr1217445qvs.17.1670437319390;
-        Wed, 07 Dec 2022 10:21:59 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id u10-20020a05620a430a00b006fa9d101775sm17417876qko.33.2022.12.07.10.21.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 10:21:58 -0800 (PST)
-Date: Wed, 7 Dec 2022 13:21:56 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>
-Cc: tools@linux.kernel.org
-Subject: Re: new: b4 send --reflect
-Message-ID: <20221207182156.zbwmcdckoegef6lf@meerkat.local>
-References: <20221206215340.556ov3bdfyf3qvyy@meerkat.local>
- <f8d14fd5-58e0-853d-64e0-72cc60e69629@tronnes.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62C78BF1
+	for <tools@linux.kernel.org>; Wed,  7 Dec 2022 19:36:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=tronnes.org
+	; s=ds202112; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=eoB3Npf4NJglH4/CfmC2EVDpHkrtcBrDjEBUTa+PeCE=; b=mCh1WpJtMuCBUDOxz59g0vgJc5
+	0rDcoyNe1S5wwn+uvJvoaaPk1J6ICM40dajx3ONEGHMg90dWtqRFOXeoEy1CWO6jx7BZ9LbRiShW5
+	PFPFs7y1DOIO+qqeDzr4vvR45dlpzGRw3mGF16wOeTWIu5k5aYvZZci293rsiXul2nYy/yMJmxLh7
+	kBw+YgXnDKW3A1fJru4Jbj1e9yX03CCOF9QTs6/cfFGSe5r1tq3Ko5R41RNiNatgSAKVAZE3W/9wL
+	Ti6PvIa808CbW3EXhPAJaz0hd6SiOvWhV0nWtWZInqJH6XIzyuxHX39JoDd2spaYgYzf7bsfjFqP6
+	85Vm010Q==;
+Received: from [2a01:799:95e:1700:6395:ccbd:d000:d42b] (port=59617)
+	by smtp.domeneshop.no with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <noralf@tronnes.org>)
+	id 1p30Dn-003auO-5M;
+	Wed, 07 Dec 2022 20:36:47 +0100
+Message-ID: <f0394397-0cd3-72db-36c2-91ba1f98b709@tronnes.org>
+Date: Wed, 7 Dec 2022 20:36:44 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: new: b4 send --reflect
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, =?UTF-8?Q?Noralf_Tr=c3=b8nnes?=
+ <noralf@tronnes.org>
+References: <20221206215340.556ov3bdfyf3qvyy@meerkat.local>
+ <f8d14fd5-58e0-853d-64e0-72cc60e69629@tronnes.org>
+ <20221207182156.zbwmcdckoegef6lf@meerkat.local>
+From: =?UTF-8?Q?Noralf_Tr=c3=b8nnes?= <noralf@tronnes.org>
+In-Reply-To: <20221207182156.zbwmcdckoegef6lf@meerkat.local>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <f8d14fd5-58e0-853d-64e0-72cc60e69629@tronnes.org>
 
-On Wed, Dec 07, 2022 at 05:39:40PM +0100, Noralf Trønnes wrote:
-> Error from endpoint: This service only accepts patches
 
-Stupidly, I never tested it with a single patch, always with a series.
-Please try again.
 
--K
+Den 07.12.2022 19.21, skrev Konstantin Ryabitsev:
+> On Wed, Dec 07, 2022 at 05:39:40PM +0100, Noralf Trønnes wrote:
+>> Error from endpoint: This service only accepts patches
+> 
+> Stupidly, I never tested it with a single patch, always with a series.
+> Please try again.
+> 
+
+Getting closer ;)
+
+$ ~/projects/b4/b4.sh send --hide-cover-to-cc --reflect
+Converted the branch to 1 messages
+---
+To: dri-devel@lists.freedesktop.org
+    tzimmermann@suse.de
+    kernel test robot <lkp@intel.com>
+    Noralf Trønnes <noralf@tronnes.org>
+---
+  [PATCH] drm/gud: Fix missing include
+---
+Ready to:
+  - send the above messages to just noralf@tronnes.org (REFLECT MODE)
+  - via web endpoint: https://lkml.kernel.org/_b4_submit
+
+Press Enter to proceed or Ctrl-C to abort
+---
+Reflecting via web endpoint https://lkml.kernel.org/_b4_submit
+Error from endpoint: Destinations must include a mailing list we recognize.
+---
+CRITICAL: Was not able to send messages.
+
+I'm getting the same without --reflect
+
+Noralf.
