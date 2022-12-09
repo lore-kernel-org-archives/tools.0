@@ -1,78 +1,86 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0EE372
-	for <tools@linux.kernel.org>; Thu,  8 Dec 2022 00:39:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC62C433C1;
-	Thu,  8 Dec 2022 00:39:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1670459945;
-	bh=IoQFYTcN3Ol9j7uRyZi4ZXXBWPUdPOL34FPczp+zRgA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NDmRJhu4xH+wB60Dac/OB6gS44fYYYuNO+anOW9puhD9KjQ0ViDwxg3Geg7RXn6Xa
-	 hNPaMdV0T7xgBCoCobwU0sJfOow5K7rgGlqohvz8TIdSWt7cqKo8Zlp79xRldFttOY
-	 1JpQxJC65C6uJumjm5DQUVDJvg3lzjMUxfGpLyo+44IzSkCAyfCkUJFW2hrjFFJIL4
-	 oxQodbwHfjBlT2oC1JuLVR6noCpFvGmXWAYL+DTc/Wu5Vu783xHDg6KdrbYYQNf3SP
-	 tYlcJ/BBe2Ohh2LRieRScQrH2i6FyuLw0npJl0E+aLdJyKEwGOrMrr3PC0u5Z/piqH
-	 f77hhorKB2Y0w==
-Date: Thu, 8 Dec 2022 00:39:01 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: Re: b4 send needs a subject in the cover
-Message-ID: <Y5EyJaSdOXL3Nzwg@sirena.org.uk>
-References: <Y5EbjU+W7vcqtE/d@sirena.org.uk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE8E7E7
+	for <tools@linux.kernel.org>; Fri,  9 Dec 2022 12:35:23 +0000 (UTC)
+Received: by mail-ej1-f52.google.com with SMTP id vv4so11197766ejc.2
+        for <tools@linux.kernel.org>; Fri, 09 Dec 2022 04:35:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=to:from:subject:message-id:date:content-transfer-encoding
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hdBtR7bEur/Uwm5aTifxUFq/b8cnhLuYpHhneZcf0/Q=;
+        b=kzhgeE7ps5ZDrkBhH4rpDc4NmRW7K/358mHq5WfkHT52KPKog87gFIYik0QQ0shzjK
+         +iFWTPzxt84DmdoV35dR9w7vPZOuh8FAhnk0i81fmfpB8k5uwl3pQkth9gyvYm8+N4ID
+         DFeB6+MURyJy2yFuDMKkR8IP8jxswmOAWkeOYQcQaZb36Ziy8MxFjCpOeTssgh6WnVGS
+         tCPCfRbIzISRwDH7Eek3KaiJs85TydAoEOz/f96U5HBMRVVRYL2iPhPbDMM84DWjgTus
+         SmKgyT1/tlnv2EKVFoLi2Khl3D9STjgC21QN6yMO4C6dhs8/BbiRIZEWWjennaTlP4qv
+         ioKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:from:subject:message-id:date:content-transfer-encoding
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hdBtR7bEur/Uwm5aTifxUFq/b8cnhLuYpHhneZcf0/Q=;
+        b=LSeRzxfo32aVOPQH2fk9/Z5trabPzmWDE6WfppGqGC10tUmgkYog9a7TVCZa6LhKjp
+         AwJBpEP7QjcSt/INehUGbVyJilTmSN13spxLQlcyT7xBOthBnb08f0O6gWZt5gSpXf6n
+         ysXwxo4IrfeTkKnfyW1NSF2WLA87YGn/Kn9M1DgYMLGqKmBL6vz4BW/LCLcPDT7A6o31
+         SW4JHd1C+uclniCB2p0+2yuAR8a5uGUOqEs07mM+yQLHDbHaMYQ9WPbb9w5ZrS55pbSj
+         vigE44Yxjwm0/dCA/7b9KLDcqkwTUzOF1do06f96Eu61J4reXEPAxhvf2JVTKYGkTQZP
+         u5zg==
+X-Gm-Message-State: ANoB5plsmUTcNrFAdUpmO3iy9IUR6PzGUhmz7mbaYDn4RdOoykRT3j1T
+	11+MoSYh690Im2h0A62Uq4m3wKyAtbOru1bM
+X-Google-Smtp-Source: AA0mqf6cDvGmQTO/tI/LVhw9JwT2tbyChIb74TF4mMEm2CLnvnSNxeHNKHp3WHNCfeWew3N9mUh9SA==
+X-Received: by 2002:a17:906:81d3:b0:7c1:515:a0ec with SMTP id e19-20020a17090681d300b007c10515a0ecmr680998ejx.63.1670589321723;
+        Fri, 09 Dec 2022 04:35:21 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id ha10-20020a170906a88a00b00781be3e7badsm523793ejb.53.2022.12.09.04.35.21
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Dec 2022 04:35:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nJupnhOsE0eF+41+"
-Content-Disposition: inline
-In-Reply-To: <Y5EbjU+W7vcqtE/d@sirena.org.uk>
-X-Cookie: What!?  Me worry?
-
-
---nJupnhOsE0eF+41+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 09 Dec 2022 13:35:21 +0100
+Message-Id: <COXAHN6YWLQH.33YW8LAHHXH21@otso>
+Subject: Requirement of using smtpPass
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: <tools@linux.kernel.org>
+X-Mailer: aerc 0.13.0
 
-On Wed, Dec 07, 2022 at 11:02:41PM +0000, Mark Brown wrote:
-> If I've got a patch series with a single patch in it then there's no
-> need for a cover letter and if it's the first version no need for a
-> changelog so I'd expect to just delete all the text in the b4 cover
-> other than the recipients.  However if I do that then what seems to end
-> up happening is that the first recipient gets deleted, I'm guessing
-> parsed as a subject which then doesn't get used due to this being a
-> single message.
->=20
-> I can see why this happens but it's a bit of a gotcha - printing the
-> subject might help make it clearer what's going on in this case?
+Hi,
 
-=2E..and further if you look at
+I'm enjoying using b4 so far.
+I've noticed that in both my current git-send-email setups (work &
+personal address) I don't set smtpPass in my git config.
 
-   https://lore.kernel.org/r/20221207-arm64-mvfr-fix-v1-0-0c739eb77bea@kern=
-el.org
+For example for gmail this is the config:
 
-you'll see that the to and Cc lines end up in the sent patch which isn't
-entirely what would be expected.
+[sendemail]
+	smtpserver =3D smtp.gmail.com
+	smtpuser =3D luca.weiss@fairphone.com
+	smtpencryption =3D tls
+	smtpserverport =3D 587
+	confirm =3D always
 
---nJupnhOsE0eF+41+
-Content-Type: application/pgp-signature; name="signature.asc"
+Regular git-send-email just prompts for the password when needed, or
+alternatively I supply it in the invocation with
+--smtp-pass=3D$(get-my-email-password) to avoid putting my email password
+plaintext into the config.
 
------BEGIN PGP SIGNATURE-----
+However b4 just skips authenticating completely leading to more or less
+obscure error messages from the smtp server (b4 only tries to
+authenticate if it has both user *and* password set).
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmORMiQACgkQJNaLcl1U
-h9BVLggAgYY7p495ajiwjoUCtudG9P0282kSX0digUs5fmKF5PDY2fnui9Mj8fek
-SDDNVQYeunaSZevTh6Gwwxe+RfOodxJH0f2Lu+eFYFr/tz7OuBjec/GuBpb0te3S
-FwNI+dPu7XipTIwy+uWUn7IRA6Lgqo5Empy5jsi9cH0AnLM3TEdLXb3cMSY7rGa3
-i1SvvtP7fjE+e/lJJiBxzcMwxcBcs7JrdmEwlEglLvHFuaWzA2F0M8b+WplO/2RC
-49lsP8II/Zxe870/B30HBlVwybtJcaqIjEGaLIAtCE7mmKDnp3sVz+5xAtlng9cX
-LhlMdNwE1l4w3GiqR5MbeldGxNidQA==
-=6xby
------END PGP SIGNATURE-----
+Would be great if I could specify in my config a command that will be
+run that just prints the password on stdout (e.g. keepassxc-cli with
+some parameters) and b4 uses this password then, this is then similar
+functionality to the --smtp-pass=3D$(foo) I wrote above.
 
---nJupnhOsE0eF+41+--
+Regards
+Luca
