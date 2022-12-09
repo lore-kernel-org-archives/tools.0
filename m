@@ -1,82 +1,74 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0422E3214
-	for <tools@linux.kernel.org>; Fri,  9 Dec 2022 21:11:04 +0000 (UTC)
-Received: by mail-qt1-f176.google.com with SMTP id h16so4619258qtu.2
-        for <tools@linux.kernel.org>; Fri, 09 Dec 2022 13:11:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dicy1hf6ZSTK62UUT+j2AbTsEzQ1agEeDM/hwARzU7M=;
-        b=Qg4XebjHiRGumL6c+/t5e1M1TObI4omAWChVR1/Oewn3RND/fHMUv4wvXL9MF/8q1h
-         VqZKy1EYXEwjHMWvfvoao4n4IMxq1zaGixaw1nB4bYIjOT6LmLKTDakaSNsleA5HXYaM
-         ZKl0JOaDqxI8d8agfRqyEXTWeFe/j31lBtwC4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dicy1hf6ZSTK62UUT+j2AbTsEzQ1agEeDM/hwARzU7M=;
-        b=ApzrggYaspYL1GBmtkY1lXryZlbAyLdlDI+vGSpJjKbiBsRCXLbkI0Mi+984p5guNL
-         cqfg6JsJVnSZSfDPJ7O5ZgoEqos7KR/GHmNF7LtyL49ISEszm2tXHZailuZzIK4BNLEN
-         zRvLbOwOYhiPRrweFyOQ91QxkVjy79c6PIS1fnnbUUZw3l5bFPfXSiExZ+Hf3rwIDBb/
-         h+eglDppDI18LuGYg3iN9ew3MlhmxRDXi2E4zqdbUpMkbhsk85h8iRTbVu2er8fXgr0y
-         1yYtwOjk/oU65tObkk8rhz56UHcQv1t6uA7f5fNMM4W3uDYj83vpWwpR3McoNAvor+zJ
-         ro5g==
-X-Gm-Message-State: ANoB5pk9vVbBnWkr9xr/rdBZ4dWmqYwTQ9Bn7ezSjnKGcE8MxpvxA5Ud
-	570WRya2sBOTNL4WjKB0+3vBSl/FHlf2ePYK
-X-Google-Smtp-Source: AA0mqf4dzOHHSAW1WMc/oAghOpU7AhOuwVxrxnUxPOd7tlABGvh5lka4F6i0MMOJzd3sn8wJ7DYv9g==
-X-Received: by 2002:a05:622a:1995:b0:3a7:242:4f3 with SMTP id u21-20020a05622a199500b003a7024204f3mr12161883qtc.66.1670620263881;
-        Fri, 09 Dec 2022 13:11:03 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id a19-20020a05620a067300b006fa4ac86bfbsm636782qkh.55.2022.12.09.13.11.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Dec 2022 13:11:03 -0800 (PST)
-Date: Fri, 9 Dec 2022 16:11:02 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Vishal Verma <vishal@kernel.org>
-Cc: tools@linux.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FD93214
+	for <tools@linux.kernel.org>; Fri,  9 Dec 2022 21:18:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8279BC433D2;
+	Fri,  9 Dec 2022 21:18:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1670620729;
+	bh=FuYH0x2GTWHkQNnQcnFFLaUX7ajvViLivwLUB1dRMlc=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=Df5oXEjM9XdkE/8F6ygEBXtB3RtgfOh1Cob9HBuulRrzAtIbK5KM8bJuNazJKBRKZ
+	 brgw5YhRQHbIhWD1pR1tKD4gNDdO/eoPM1BRp2Raag+EpDbYyqev+rKQG2KBn5LSnP
+	 9Vme8sAmKu45p/4QJVHWPF1d8MK1LZxc4P7zLzaHUwyllTzx/KZVvxml31qVj+2F0/
+	 0VMewr+C7p9RSboPIReIp8igDzmA7Sb8KuADYhju1hAN7IKIRnd33Ad54IeM6Kg5HT
+	 pNkjENgVJYGJiMZ6MNymrDrvWUJnV0wEPbk5uoz/ZIRHyrH7LclHDKgwa+8Lj8rGLX
+	 9gq572xIawZqw==
+Message-ID: <e2ad3a972e389176c3c0dfce128a115e2ceaf2ae.camel@kernel.org>
 Subject: Re: b4 prep + prefix handling
-Message-ID: <20221209211102.qeyyon3mxztcn2lx@meerkat.local>
+From: Vishal Verma <vishal@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Date: Fri, 09 Dec 2022 14:18:48 -0700
+In-Reply-To: <20221209211102.qeyyon3mxztcn2lx@meerkat.local>
 References: <a68d5dc1c7919b16062fa1c477cf12b5c924caa7.camel@kernel.org>
+	 <ezhajRb4PugsMXbJSB_qg_IBP4LS6w7wvEUeDREkucGMQRiW1dSaVNw2jugSG19Z-xUVuiLUuACG68OA8sHkyA==@protonmail.internalid>
+	 <20221209211102.qeyyon3mxztcn2lx@meerkat.local>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.2 (3.46.2-1.fc37) 
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a68d5dc1c7919b16062fa1c477cf12b5c924caa7.camel@kernel.org>
 
-On Tue, Dec 06, 2022 at 03:44:59PM -0700, Vishal Verma wrote:
-> Hi Konstantin,
-> 
-> I found a possible issue with prefixes - and also a suggestion below:
-> 
-> - When a 'git config format.subjectprefix' exists, b4 send does
-> something unexpected:
-> (the .git/config subjectprefix here was "ndctl PATCH")
-> 
->   | Subject: [PATCH 2/2] [ndctl PATCH] meson.build: add a check argument to run_command
-> 
-> - It might be helpful to configure whether the final form is "PATCH
-> prefix" vs "prefix PATCH". I'm used to the latter, but I don't know if
-> the former is considered conventional.
-> 
-> - It might be nice if prefixes from git-config could be added
-> automagically (perhaps b4 prep pulls these in when starting a new
-> set?). I have prefixes based on repos sometimes, like the above
-> example, and it would be nice to get consistent behavior regardless of
-> whether 'b4 prep/send' is used or 'git format-patch/send-email'
+On Fri, 2022-12-09 at 16:11 -0500, Konstantin Ryabitsev wrote:
+> On Tue, Dec 06, 2022 at 03:44:59PM -0700, Vishal Verma wrote:
+> > Hi Konstantin,
+> >=20
+> > I found a possible issue with prefixes - and also a suggestion below:
+> >=20
+> > - When a 'git config format.subjectprefix' exists, b4 send does
+> > something unexpected:
+> > (the .git/config subjectprefix here was "ndctl PATCH")
+> >=20
+> > =C2=A0 | Subject: [PATCH 2/2] [ndctl PATCH] meson.build: add a check ar=
+gument to run_command
+> >=20
+> > - It might be helpful to configure whether the final form is "PATCH
+> > prefix" vs "prefix PATCH". I'm used to the latter, but I don't know if
+> > the former is considered conventional.
+> >=20
+> > - It might be nice if prefixes from git-config could be added
+> > automagically (perhaps b4 prep pulls these in when starting a new
+> > set?). I have prefixes based on repos sometimes, like the above
+> > example, and it would be nice to get consistent behavior regardless of
+> > whether 'b4 prep/send' is used or 'git format-patch/send-email'
+>=20
+> Vishal:
+>=20
+> I believe the latest master should be able to properly co-exist with pref=
+ixes
+> set via format.subjectPrefix and those set directly via b4.
+>=20
+> Please try it out and let me know if it's not what you need.
 
-Vishal:
+Yep works great now - it gets pulled automatically from the git config,
+without needing to b4 prep --set-prefixes
 
-I believe the latest master should be able to properly co-exist with prefixes
-set via format.subjectPrefix and those set directly via b4.
+Thanks for the quick fix!
 
-Please try it out and let me know if it's not what you need.
 
--Konstantin
