@@ -1,86 +1,98 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE8E7E7
-	for <tools@linux.kernel.org>; Fri,  9 Dec 2022 12:35:23 +0000 (UTC)
-Received: by mail-ej1-f52.google.com with SMTP id vv4so11197766ejc.2
-        for <tools@linux.kernel.org>; Fri, 09 Dec 2022 04:35:23 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203053214
+	for <tools@linux.kernel.org>; Fri,  9 Dec 2022 21:06:01 +0000 (UTC)
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-3f15a6f72d0so68147077b3.1
+        for <tools@linux.kernel.org>; Fri, 09 Dec 2022 13:06:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=to:from:subject:message-id:date:content-transfer-encoding
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hdBtR7bEur/Uwm5aTifxUFq/b8cnhLuYpHhneZcf0/Q=;
-        b=kzhgeE7ps5ZDrkBhH4rpDc4NmRW7K/358mHq5WfkHT52KPKog87gFIYik0QQ0shzjK
-         +iFWTPzxt84DmdoV35dR9w7vPZOuh8FAhnk0i81fmfpB8k5uwl3pQkth9gyvYm8+N4ID
-         DFeB6+MURyJy2yFuDMKkR8IP8jxswmOAWkeOYQcQaZb36Ziy8MxFjCpOeTssgh6WnVGS
-         tCPCfRbIzISRwDH7Eek3KaiJs85TydAoEOz/f96U5HBMRVVRYL2iPhPbDMM84DWjgTus
-         SmKgyT1/tlnv2EKVFoLi2Khl3D9STjgC21QN6yMO4C6dhs8/BbiRIZEWWjennaTlP4qv
-         ioKw==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ezLIhP0zsxzmo13QYms/rwu5E0vFxVU1sYpZ5/vbfJA=;
+        b=Lw9Bf9XYuMBYS9KGbktRG9kvNtJucHPfEcEQdWKWpvKUVNsUApqmcBHtf9Bu9m6GAX
+         l+4UK1DAyWRRshLJuTfahUILEcp0MDrtUkgeHVvBjqIMJYxr7D3iQs5You5+hRaFKjV8
+         xc/OOgEGlzEbEYo4VnhcQ4jQfENBXC7zFVAuo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:from:subject:message-id:date:content-transfer-encoding
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hdBtR7bEur/Uwm5aTifxUFq/b8cnhLuYpHhneZcf0/Q=;
-        b=LSeRzxfo32aVOPQH2fk9/Z5trabPzmWDE6WfppGqGC10tUmgkYog9a7TVCZa6LhKjp
-         AwJBpEP7QjcSt/INehUGbVyJilTmSN13spxLQlcyT7xBOthBnb08f0O6gWZt5gSpXf6n
-         ysXwxo4IrfeTkKnfyW1NSF2WLA87YGn/Kn9M1DgYMLGqKmBL6vz4BW/LCLcPDT7A6o31
-         SW4JHd1C+uclniCB2p0+2yuAR8a5uGUOqEs07mM+yQLHDbHaMYQ9WPbb9w5ZrS55pbSj
-         vigE44Yxjwm0/dCA/7b9KLDcqkwTUzOF1do06f96Eu61J4reXEPAxhvf2JVTKYGkTQZP
-         u5zg==
-X-Gm-Message-State: ANoB5plsmUTcNrFAdUpmO3iy9IUR6PzGUhmz7mbaYDn4RdOoykRT3j1T
-	11+MoSYh690Im2h0A62Uq4m3wKyAtbOru1bM
-X-Google-Smtp-Source: AA0mqf6cDvGmQTO/tI/LVhw9JwT2tbyChIb74TF4mMEm2CLnvnSNxeHNKHp3WHNCfeWew3N9mUh9SA==
-X-Received: by 2002:a17:906:81d3:b0:7c1:515:a0ec with SMTP id e19-20020a17090681d300b007c10515a0ecmr680998ejx.63.1670589321723;
-        Fri, 09 Dec 2022 04:35:21 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id ha10-20020a170906a88a00b00781be3e7badsm523793ejb.53.2022.12.09.04.35.21
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Dec 2022 04:35:21 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ezLIhP0zsxzmo13QYms/rwu5E0vFxVU1sYpZ5/vbfJA=;
+        b=lVfA/ccDFIMyouqIU3AmvySSVrORQ5NkslTctJ8uJEobiKmQzquJQBpxhIcLzOc+84
+         yH8e2Vo5Y2TrV2KsYNIxEKatH+EVbwnI1LmHyEak8U/06iRK2J8Y7rxy1azg0VjGhYEu
+         mlzCcZ3/SPdCGQ9atti038vvhLA7WZlGiQzAMtI004myhCBYlJEKfdd1T+1WT6WwT9c1
+         qOGmFXH8yQrUnmS7wWFJswbCtmTTuPtmFcA42NflCi4lIdoyEK8A/EkmpMp/vbSAmnsH
+         J/58m6KZ/UDQf5tBgVqDu9TJeNAdrMfgyuMjOX8chmw3sNdIVuPwHaxMV1EaIN2JlQFj
+         VU7w==
+X-Gm-Message-State: ANoB5plLsA5N1biIBxXE4syHYmk+PNGeEAyJREv4/m6UFSPmoPdZu1tb
+	56gryQb2m5cW2Yr4BHdwx2kKetQonKap0bER
+X-Google-Smtp-Source: AA0mqf6gHEvQNnmrRpbOGWrrFgHBo5BzT2f4F4f5bHnAd8zvx3q+BRGlTISUq4Ua6TD7OwWGtK+nDw==
+X-Received: by 2002:a05:7500:6d0b:b0:ea:a2c4:c346 with SMTP id kd11-20020a0575006d0b00b000eaa2c4c346mr842503gab.68.1670619959857;
+        Fri, 09 Dec 2022 13:05:59 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id y5-20020a05620a44c500b006f956766f76sm751850qkp.1.2022.12.09.13.05.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Dec 2022 13:05:59 -0800 (PST)
+Date: Fri, 9 Dec 2022 16:05:57 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 send needs a subject in the cover
+Message-ID: <20221209210557.dii35qbb3iltxsgd@meerkat.local>
+References: <Y5EbjU+W7vcqtE/d@sirena.org.uk>
+ <Y5EyJaSdOXL3Nzwg@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="kle3dt2kbmtgldux"
+Content-Disposition: inline
+In-Reply-To: <Y5EyJaSdOXL3Nzwg@sirena.org.uk>
+
+
+--kle3dt2kbmtgldux
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 09 Dec 2022 13:35:21 +0100
-Message-Id: <COXAHN6YWLQH.33YW8LAHHXH21@otso>
-Subject: Requirement of using smtpPass
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: <tools@linux.kernel.org>
-X-Mailer: aerc 0.13.0
 
-Hi,
+On Thu, Dec 08, 2022 at 12:39:01AM +0000, Mark Brown wrote:
+> On Wed, Dec 07, 2022 at 11:02:41PM +0000, Mark Brown wrote:
+> > If I've got a patch series with a single patch in it then there's no
+> > need for a cover letter and if it's the first version no need for a
+> > changelog so I'd expect to just delete all the text in the b4 cover
+> > other than the recipients.  However if I do that then what seems to end
+> > up happening is that the first recipient gets deleted, I'm guessing
+> > parsed as a subject which then doesn't get used due to this being a
+> > single message.
+> >=20
+> > I can see why this happens but it's a bit of a gotcha - printing the
+> > subject might help make it clearer what's going on in this case?
+>=20
+> ...and further if you look at
+>=20
+>    https://lore.kernel.org/r/20221207-arm64-mvfr-fix-v1-0-0c739eb77bea@ke=
+rnel.org
+>=20
+> you'll see that the to and Cc lines end up in the sent patch which isn't
+> entirely what would be expected.
 
-I'm enjoying using b4 so far.
-I've noticed that in both my current git-send-email setups (work &
-personal address) I don't set smtpPass in my git config.
+I believe the latest master should fix both of these problems.
 
-For example for gmail this is the config:
+-K
 
-[sendemail]
-	smtpserver =3D smtp.gmail.com
-	smtpuser =3D luca.weiss@fairphone.com
-	smtpencryption =3D tls
-	smtpserverport =3D 587
-	confirm =3D always
+--kle3dt2kbmtgldux
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Regular git-send-email just prompts for the password when needed, or
-alternatively I supply it in the invocation with
---smtp-pass=3D$(get-my-email-password) to avoid putting my email password
-plaintext into the config.
+-----BEGIN PGP SIGNATURE-----
 
-However b4 just skips authenticating completely leading to more or less
-obscure error messages from the smtp server (b4 only tries to
-authenticate if it has both user *and* password set).
+iHUEABYKAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCY5OjNQAKCRC2xBzjVmSZ
+bIQyAP9L/lQG2Cb69dn8wLNVBKWVFstjAC6lzDco24sFJgWCWgEAhraFNwgqa2+z
+5K2woMjxKko9V6KclZpJL0nz7fWQgAk=
+=HMWx
+-----END PGP SIGNATURE-----
 
-Would be great if I could specify in my config a command that will be
-run that just prints the password on stdout (e.g. keepassxc-cli with
-some parameters) and b4 uses this password then, this is then similar
-functionality to the --smtp-pass=3D$(foo) I wrote above.
-
-Regards
-Luca
+--kle3dt2kbmtgldux--
