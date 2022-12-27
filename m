@@ -1,46 +1,46 @@
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC4B29A2
-	for <tools@linux.kernel.org>; Tue, 27 Dec 2022 15:14:36 +0000 (UTC)
-Received: by mail-yb1-f170.google.com with SMTP id g4so14671533ybg.7
-        for <tools@linux.kernel.org>; Tue, 27 Dec 2022 07:14:36 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E7429A2
+	for <tools@linux.kernel.org>; Tue, 27 Dec 2022 15:15:27 +0000 (UTC)
+Received: by mail-qt1-f170.google.com with SMTP id bp44so7978480qtb.0
+        for <tools@linux.kernel.org>; Tue, 27 Dec 2022 07:15:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=i7YhxVGN1IcsPYhhb2PtwiukTXlKqQ9Dr2fc4FmZTKE=;
-        b=d8YMEVMn1W3jczul+kIqKQ+i5rkbJNe9uPUwtD9XMvk1EREx1T7Zaav032OcLqr8uA
-         7uEXgVd3Xvxz2lSM//QNJswVWY+oFrqfO6XlPHeA1QIugsCN2Xh/kbWd+ly8/dnL7eaM
-         iB/FoqH1dZwMgXFhdvdBIx87IzSzbmrViJtJM=
+        bh=LBCbGIBwZNomWw5BmV7H2ZVRszhp0cGaZspB9beSfQo=;
+        b=VPvlWPG02aqlptFOSTwN1zHTkab2RpYMB962jWDRciwJxDHRTz369gPYicMqaAQiEW
+         d/cuMBz8KvDdPiiAbq6+EKVND789Kzv4T5IANBqZLs9kHJKTxvonGmn9yQ0zRlX25nE2
+         8d+y+4d+/AGPMlRTy9l+IG78S2OYtWng/v8/w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i7YhxVGN1IcsPYhhb2PtwiukTXlKqQ9Dr2fc4FmZTKE=;
-        b=p9h1AHBGO9qgc6n8RGhLbZa/zcjgQg1NJl/lUQPtkHhBZv8wFf/g9kKa9NIbwSkN3t
-         7RNj04fxa35gd4mggsuN34Al1ymoPYRqHdmAFuu+Po7ChNLWyDJpPaSMFm4d5gDvPrVU
-         T3Eb/bqEd5bFuR3XfXT09vV2xIR7y4PQVsCuzO770nNzL8kOWVE6ICCGQrHJiZWaxebJ
-         R49MWgfqqgrDMmSVE6LuyanLl0qjqYrcsb5OKe+4pAvZm0hG/27KDWae0QnILFNkZMLb
-         Wcb44j4ae8tUOw1kHxjhYwkTioepQZ9m19b51j+sys2KX8sO/VsmG4vd2XBrlIMWbyDV
-         eigQ==
-X-Gm-Message-State: AFqh2kqS+nur6Xw/rf2Im7pFErhOHZ786ChSYTEX7fkONfI99zZfYDP9
-	MuI4qSBXwYME97f+/Wpq9XDsG98fQyE+MmOr
-X-Google-Smtp-Source: AMrXdXtB+/eLeqxtDvYkswsDGbtNCkD2usOlfHB8EeRQ/Ctrv4lpuSCw7/W+bkpqG2xKFW5GhGeOWQ==
-X-Received: by 2002:a25:f41:0:b0:749:612c:efef with SMTP id 62-20020a250f41000000b00749612cefefmr20811857ybp.18.1672154075777;
-        Tue, 27 Dec 2022 07:14:35 -0800 (PST)
+        bh=LBCbGIBwZNomWw5BmV7H2ZVRszhp0cGaZspB9beSfQo=;
+        b=ZHNoufCE5w7JMZBzh9JJT8vm1swXQhQxPXAbtvOM3chiPa3R8NzaGrxOXtaz+XVvVs
+         mJD7tIou9lDN4WI+LVMnd8VmOz399z5Dbm37OZh15TOdorYAAjFdU+kuRyAG6d3zkzSH
+         TsUicPaDB8DInRbTE5HJJkFOd5RAT8S2pU+5OpGbItXxAAzL2DqYmctmzCX4PPw3/td6
+         SEvxf/Lc7OWevhZIH96S0M6p3oI/H5yB1uZcAcSPjqt6nXyb6wrvB2ZTmP6AIb6fF6/v
+         OSP2RQgXVCTd2A1chn0si8A2QBQ8sUe+nxdaOQghLIF0hZhT3FRY6GGsmlKdHBhzA7Et
+         Ta6g==
+X-Gm-Message-State: AFqh2krLoXdDlc1FjSGLceMgonMrIEiXS9CB8AX3Bbz5A81tkAsRoOGW
+	rMwJTNedSq9KYg9F47HA03pZg+CAmLbZV3iC
+X-Google-Smtp-Source: AMrXdXuQWyITosPo4O/lrYL9xGQmYUOQWevHu1+CXNIBacLern3ZL2t3EcLFZZV37b7ykI6DBUvd4g==
+X-Received: by 2002:ac8:6685:0:b0:3a8:123a:b549 with SMTP id d5-20020ac86685000000b003a8123ab549mr31527124qtp.46.1672154126858;
+        Tue, 27 Dec 2022 07:15:26 -0800 (PST)
 Received: from nitro.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id ay20-20020a05620a179400b006fb0e638f12sm9638505qkb.4.2022.12.27.07.14.35
+        by smtp.gmail.com with ESMTPSA id h20-20020ac85694000000b003a7e9db074asm8377550qta.67.2022.12.27.07.15.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Dec 2022 07:14:35 -0800 (PST)
-Date: Tue, 27 Dec 2022 10:14:33 -0500
+        Tue, 27 Dec 2022 07:15:26 -0800 (PST)
+Date: Tue, 27 Dec 2022 10:15:25 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Markus Schneider-Pargmann <msp@baylibre.com>
+To: Bill Pemberton <wfp5p@worldbroken.com>
 Cc: tools@linux.kernel.org
-Subject: Re: b4 prep from detached HEAD
-Message-ID: <20221227151433.tg4yldmlyyubqpgu@nitro.local>
-References: <20221223101539.xlacupmglv2dw4oz@blmsp>
+Subject: Re: b4 and abbrevCommit
+Message-ID: <20221227151525.3zq5zpx5x7ko7tww@nitro.local>
+References: <01304af2-3412-8385-3336-4dda9104336e@worldbroken.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -49,40 +49,19 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221223101539.xlacupmglv2dw4oz@blmsp>
+In-Reply-To: <01304af2-3412-8385-3336-4dda9104336e@worldbroken.com>
 
-On Fri, Dec 23, 2022 at 11:15:39AM +0100, Markus Schneider-Pargmann wrote:
-> Unfortunately it seems that b4 prep is not able to handle not being on a
-> branch:
+On Fri, Dec 23, 2022 at 05:22:27PM -0500, Bill Pemberton wrote:
+> I've discovered that b4 will not work correctly if you have abbrevCommit set
+> in your .gitconfig file.  For example, a simple 'b4 prep --edit-cover' will
+> result in the cover letter not actually changing. You'll get the edit
+> process and such, but after the fact the commit with the cover letter will
+> still be the default one that b4 creates.
 > 
-> 	git checkout v6.1
-> 	b4 prep -n up/test -f v6.1
-> 		Not able to get current branch (git symbolic-ref HEAD)
-> 		Not able to get current branch (git symbolic-ref HEAD)
-> 		Not able to get current branch (git symbolic-ref HEAD)
-> 		Not able to get current branch (git symbolic-ref HEAD)
-> 		CRITICAL: fork-point v6.1 is not on the current branch.
-> 		          Switch to the branch you want to use as base and try again.
+> I assume all calls to git log and git show need the --no-abbrev-commit
+> option.  Or at least this gotcha should be documented.
 
-Yes, we currently use "what branch you're currently on" as our base tracking
-branch. Knowing the base branch is less important with the default commit
-strategy, but it will come in handy when I add the "prep --cleanup" feature
-that will remove prep-tracked branches if we find that they have been merged
-into the base branch (e.g. master).
+Thank you for the report, I will make sure we cover this case when invoking
+git behind the scenes.
 
-I will probably add a --base-branch flag to go with "prep -n", though, so
-eventually it will be possible to create new prep-tracked branches from
-arbitrary locations in the tree.
-
-In your particular case, you don't need to checkout v6.1 before running prep.
-You can just start in master and rerun "b4 prep -n [name] -f v6.1".
-
-> Also b4 translates my branch name I wanted to use 'up/test' to 'up-test'
-> is there a reason for that?
-
-Yes, the branch name becomes the base of the message-id, which in turn becomes
-the base of lore lookup URL. We replace all non-url-friendly characters to
-avoid a url-encoding mess.
-
-Best wishes,
 -K
