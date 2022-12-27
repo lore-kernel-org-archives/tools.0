@@ -1,46 +1,46 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943472F2D
-	for <tools@linux.kernel.org>; Tue, 27 Dec 2022 15:29:47 +0000 (UTC)
-Received: by mail-vs1-f54.google.com with SMTP id i188so12934463vsi.8
-        for <tools@linux.kernel.org>; Tue, 27 Dec 2022 07:29:47 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F482F2D
+	for <tools@linux.kernel.org>; Tue, 27 Dec 2022 15:50:25 +0000 (UTC)
+Received: by mail-qt1-f180.google.com with SMTP id a16so10659692qtw.10
+        for <tools@linux.kernel.org>; Tue, 27 Dec 2022 07:50:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LbO9n139jb9QluhfZmgzn6Lz69CYZdbpGmJOUuamq80=;
-        b=C6ysi3GYSuOI9pJgVbULoWhm71XFwiWhNxZsLLBn8F9V8Yb8zwjwIJgWcAcROhDyXz
-         9BYhr8D+gjHz2UJ5nMnIHi/RNe8KKFo8D0MNY6eWfqCOkibokjMJl7cIaghW+SyuGOgA
-         7SxXshiNYt3uSpqlWp6d58xRIr7I7N7dFzKis=
+        bh=bu2HjjsyCzli92MXFQcQFEu4fzMZ0r41xGVWxJ3Fi4E=;
+        b=c9CQgyLtZWfVHQi/WrIIIdGRM9RSl0dWfPhAWauDxfCLajvyYcPn0NS3mJxHIl9L24
+         ipKCrNemJbIljLB7ggzEQ18GvqCF+T9qOERivCEG1qUQs2pQeFvpq/YHY9O5z+xj6z+C
+         +nZRaw4CmMPqzBdu3e3GgJXOsl1yOyRywF+Rk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LbO9n139jb9QluhfZmgzn6Lz69CYZdbpGmJOUuamq80=;
-        b=Z7nJsjeinw74vML9R3dN95y+yx0cX9g8GwlGMwEMkt2fVkX4wEfKvExTEbkJbm7c7D
-         CJSOZOd46oR7oBzlpLKpyBuI0I+y6mn2u3We7+nAriNn5yt7HTgZNrjGJLPzlNwzPj7L
-         9MbFtR4ehbTr0wcmn944d+In6+Senyxr6pw78v92JUtPGMnttPcx48uL0v21GWfl+r8P
-         7lbRW7DtYKUo4eB3++1w1m6a5nzOygVftMfsGdbKBTwnQ7z/3RBn7KXkj6OHYGLF2TIt
-         02tc+qv/++VEcdSJg1s5U1wsBu/ILPpbQv5xL4S4Mf1AO0GRWPpd33g0A+lIJzhGJUbg
-         tfcA==
-X-Gm-Message-State: AFqh2koLplk0g+2ZAAEI5s6Yqp/+4JeOLYaxQvTaoEu2QjtMpc9vg5zV
-	EzQoOkl9HtfrMQHMFrda5rZVMmL0fa5P0QcQ
-X-Google-Smtp-Source: AMrXdXsQGXTI7OwXinJDOgyhxBighcfQtw39/Cstt9SCfvUtksJ6G1sa1lREcfgrk+Ze7EdhoyWYUg==
-X-Received: by 2002:a67:fe52:0:b0:3b1:2b5c:4e7a with SMTP id m18-20020a67fe52000000b003b12b5c4e7amr8285669vsr.32.1672154986447;
-        Tue, 27 Dec 2022 07:29:46 -0800 (PST)
+        bh=bu2HjjsyCzli92MXFQcQFEu4fzMZ0r41xGVWxJ3Fi4E=;
+        b=UU20SDdSP2fFTYbUEr07hUeefaxMBb3W3ALGu+PwXgw3TM0ErWUfixdXwgiIp5XQ15
+         x/3enXrKtdmXFpIItUnJUIWH/gahdP4iVAoipZb9DHEG2qQDPbpjHjLuuF1wMiMknrHK
+         534h76i7g9kql0uohrP9lWvrdH94Jeo+gDTdMh2h4vtQoe0aWMysJFr3dLEvSYyRP3iR
+         6vMugtKM0PzIaawin42cCdkrtWdxE17GiauKxBl/ZtDZ2FbZS2lafcaefHNTg3jnfWLl
+         O9t4Bgob9paRiLQUMpKHBg0ZUFE1u6eMCvz8/47z+anol1ebQEHTI4p5ldED/5+BaEja
+         D1kw==
+X-Gm-Message-State: AFqh2kplFf+rY7KGd2lFIcdjZN5zAl+qCFZVIkxCo5mT8uEhJ5FSZIS7
+	8YGUg2HiVYfZGCe4ozCHejZrL7+ErT+FlTI6
+X-Google-Smtp-Source: AMrXdXsgGNr4R4zXPxFmttADgAz97F+FTpkOFdHLuplz2t6sQNsLPP95x4c412KP4egQOOJjAM4erA==
+X-Received: by 2002:ac8:675a:0:b0:3a8:2e:ea22 with SMTP id n26-20020ac8675a000000b003a8002eea22mr28111494qtp.44.1672156224195;
+        Tue, 27 Dec 2022 07:50:24 -0800 (PST)
 Received: from nitro.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id 19-20020a370413000000b006feea093006sm9412609qke.124.2022.12.27.07.29.45
+        by smtp.gmail.com with ESMTPSA id w26-20020a05620a095a00b006fc6529abaesm9469884qkw.101.2022.12.27.07.50.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Dec 2022 07:29:46 -0800 (PST)
-Date: Tue, 27 Dec 2022 10:29:44 -0500
+        Tue, 27 Dec 2022 07:50:23 -0800 (PST)
+Date: Tue, 27 Dec 2022 10:50:22 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Markus Schneider-Pargmann <msp@baylibre.com>
-Cc: tools <tools@linux.kernel.org>
-Subject: Re: b4 prep -n ignores b4.prep-cover-strategy
-Message-ID: <20221227152944.ubsn5itf2u57jlsa@nitro.local>
-References: <20221223170114.oairw4taqptkq3ou@blmsp>
+To: Bill Pemberton <wfp5p@worldbroken.com>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 and abbrevCommit
+Message-ID: <20221227155022.jt2qacjr6wv5qsl2@nitro.local>
+References: <01304af2-3412-8385-3336-4dda9104336e@worldbroken.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -49,35 +49,16 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221223170114.oairw4taqptkq3ou@blmsp>
+In-Reply-To: <01304af2-3412-8385-3336-4dda9104336e@worldbroken.com>
 
-On Fri, Dec 23, 2022 at 06:01:14PM +0100, Markus Schneider-Pargmann wrote:
-> Hi Konstantin,
-> 
-> maybe I am doing something wrong. I set the cover-strategy to
-> branch-description in ~/.gitconfig:
-> 	[b4]
-> 	        prep-cover-strategy = branch-description
-> 
-> Then I create a new branch using b4:
-> 	b4 prep -n up/test -f v6.1
+On Fri, Dec 23, 2022 at 05:22:27PM -0500, Bill Pemberton wrote:
+> I've discovered that b4 will not work correctly if you have abbrevCommit set
+> in your .gitconfig file.  For example, a simple 'b4 prep --edit-cover' will
+> result in the cover letter not actually changing. You'll get the edit
+> process and such, but after the fact the commit with the cover letter will
+> still be the default one that b4 creates.
 
-Weird, I can't replicate this. Something else must be going on that overrides
-the global setting.
-
-> I verified the config variable:
-> 	git config b4.prep-cover-strategy
-> 		branch-description
-
-The only other place I can think of is in .git/config for the up-test branch:
-
-    [branch "b4/up-test"]
-      b4-prep-cover-strategy = commit
-
-However, this should have been deleted when you ran "git branch -D", so I'm
-not sure why it would be left over in your .git/config.
-
-If you can rerun "b4 -d prep -n ..." that should give some debug info during
-branch creation that should help figure out what's going wrong.
+This should now be fixed in master and stable-0.11.y.
+Thank you for the report.
 
 -K
