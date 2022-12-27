@@ -1,50 +1,50 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501552F2D
-	for <tools@linux.kernel.org>; Tue, 27 Dec 2022 15:58:53 +0000 (UTC)
-Received: by mail-wr1-f53.google.com with SMTP id w1so623609wrt.8
-        for <tools@linux.kernel.org>; Tue, 27 Dec 2022 07:58:53 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313653201
+	for <tools@linux.kernel.org>; Tue, 27 Dec 2022 16:06:36 +0000 (UTC)
+Received: by mail-wm1-f46.google.com with SMTP id p1-20020a05600c1d8100b003d8c9b191e0so9598304wms.4
+        for <tools@linux.kernel.org>; Tue, 27 Dec 2022 08:06:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=baylibre-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5D8nEgc6HDscy+BsmBOIAIcRTQRuy/ewAvx6IpyH/fY=;
-        b=Rgh/B1g+dk3/dMXWzBdG4PYrT31p9RUIeo8luw19ZfaHHDTXo+Qu0XZtYzgfwgJ3Mi
-         FwBA0HZS0n1r52OJQ7HirXVgPRXFil/ckKFACUGzRJ9GoJc81ibmpAjndlr41xv2zK8p
-         v6jIzQ2RmP7Ck3w3F7nFwfCjF+Mx/tL5VNZQysKd8lKxv9U1tswok7PLKHAIvPKw+lnE
-         Md3ThLMj0532tIzYRTmgGYNXZe7Ye82R1uvpYpBOJhSXlao/rsu0OB5Gi4MgqkjeTTVj
-         UC4NN4LbX/1WMGTpBMAn8W25RHAvcP/SnUhpP6FjE5uzqiWxUPWDqLugFuNdV+ASi5TR
-         yVCg==
+        bh=hCS3LGB8g8fzkM5gyMQWLaS3d8nyvBf2Jjn0oedWUzc=;
+        b=KjabaFwSmq6531tP6QMu60mGOQZriLIwbuPoYjxC3M0QPOeKu34eft/kFnPfNiO46R
+         4ScWxz+XyCUFO/0FmlfjfzZg2BRHegstVidTkjtJaxBwo9/vOqoo+h/vBMWojXRm03r9
+         bA9KSa6TCuOa8w+NEy5f6BqRgyugMR5VKXOsJMRNiANPACDgttxLevqy2vMSDeFRJ+SG
+         2lXr2dj7x8s64KTYNNB0Wbp+136FpDmJKUNoVeIMpk5aH8T9rKy3sVWWLjZN3xgyoHyW
+         GKezmFfPksIz0bRqSsa3K6uUB0Ej8osl3A7oqTOfTWouj0HqTL7mbeoYfDn/witzOUau
+         P2dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5D8nEgc6HDscy+BsmBOIAIcRTQRuy/ewAvx6IpyH/fY=;
-        b=kguZLXf7emHl0FIfifsMk3/fZHWVpLPezUS3IEIex2/OeMIsar0XhnKiugCteUtqzK
-         RPGO2NdEFAXvUMqt0KY4PtSvjzcCAYjwQK4GvEEv1w1UuYzQn/138XVu+vvkj2Q3MfC/
-         AgjEqxSfIqck/uWRuG7SBpjAkqTzPMINncSmrXQZile+Liijb0I5mHtITaEvw3E0A2vd
-         MB5xXy70bNOEQbBPKFYpQkZr0MxPs2aEkYhKOr6NBR+eRoud9KQjAQPNbVdBuBoCzyvA
-         GrNFyiTqSNNFZsPOm/X8snctVBPDZRXAVjs2/ozNKATcV5gXILmmZdG1A0kYuFlh+1PE
-         mIDQ==
-X-Gm-Message-State: AFqh2koXDQvS7t6s0mCXreZFLgxD0eMAJXKUxfXqciJoni1eudCxzVEq
-	7DVv7S/b7HJc2YZ41+rr+1DUPeI63g/bsE2c
-X-Google-Smtp-Source: AMrXdXsTPp1Cf01erdTZgrS+3utb3pXd073F4yOiEN9dM5N8dUFHlDaEZ0VCyWBtS5wqMgOPvF5YPA==
-X-Received: by 2002:a5d:4dc3:0:b0:271:dd0c:8666 with SMTP id f3-20020a5d4dc3000000b00271dd0c8666mr11223812wru.66.1672156732049;
-        Tue, 27 Dec 2022 07:58:52 -0800 (PST)
+        bh=hCS3LGB8g8fzkM5gyMQWLaS3d8nyvBf2Jjn0oedWUzc=;
+        b=sgPwbt7RGzun0IoKT2SyLioP7HUdwZ56B9F71SAMRRA8YkXUc85ZZenHfVUBcAdFnc
+         EMdS8q/1K1iM2/ZXOV2QNgnLgiIBq/YKwnTstUVcySVEuglfJREtft4v6lazNh4b7bi4
+         1wAmAa/ftivIs8zr2IFXeGTWcw+4Ll/9UNtIsIumskB2J//ReHElV12Ixzlpyv5ZeNHC
+         wtIn6L3Z3M12XUPzOoD4frEfH20dgDOoWERAx319/A9reTgzXMr8rnKHZx5xchPyXOW2
+         1xiVJsXT5Ue0xZWGC6yqAitBHVlt4dDu+yiJKQVv8HwUVw7sitNalDe/KluJao9/4ZGL
+         XYtg==
+X-Gm-Message-State: AFqh2kqodTpVwsy3CW3GtEEhS9OAQItiGFO21mmHVGVhXxN3/gu/qdVJ
+	hxI+RhNAX4Z8dn+SoFfSwmqanA==
+X-Google-Smtp-Source: AMrXdXuQQmfPYlp0T/HgHjGhhB1TI0CS/sk6mqSUhVWcGnaT8RucpEvBp/AdFibUNZHCLCooOcJScw==
+X-Received: by 2002:a05:600c:34cd:b0:3d5:1175:92c3 with SMTP id d13-20020a05600c34cd00b003d5117592c3mr15506543wmq.23.1672157194411;
+        Tue, 27 Dec 2022 08:06:34 -0800 (PST)
 Received: from blmsp ([2001:4091:a245:805c:8713:84e4:2a9e:cbe8])
-        by smtp.gmail.com with ESMTPSA id w12-20020a5d680c000000b002302dc43d77sm12932502wru.115.2022.12.27.07.58.51
+        by smtp.gmail.com with ESMTPSA id r9-20020a05600c35c900b003d6b71c0c92sm30367324wmq.45.2022.12.27.08.06.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Dec 2022 07:58:51 -0800 (PST)
-Date: Tue, 27 Dec 2022 16:58:50 +0100
+        Tue, 27 Dec 2022 08:06:33 -0800 (PST)
+Date: Tue, 27 Dec 2022 17:06:33 +0100
 From: Markus Schneider-Pargmann <msp@baylibre.com>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools <tools@linux.kernel.org>
-Subject: Re: b4 prep -n ignores b4.prep-cover-strategy
-Message-ID: <20221227155850.zcc6ywrjmwqgjrnz@blmsp>
-References: <20221223170114.oairw4taqptkq3ou@blmsp>
- <20221227152944.ubsn5itf2u57jlsa@nitro.local>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 prep from detached HEAD
+Message-ID: <20221227160633.7cnhyote4xgk7agp@blmsp>
+References: <20221223101539.xlacupmglv2dw4oz@blmsp>
+ <20221227151433.tg4yldmlyyubqpgu@nitro.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -53,45 +53,57 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221227152944.ubsn5itf2u57jlsa@nitro.local>
+In-Reply-To: <20221227151433.tg4yldmlyyubqpgu@nitro.local>
 
 Hi Konstantin,
 
-On Tue, Dec 27, 2022 at 10:29:44AM -0500, Konstantin Ryabitsev wrote:
-> On Fri, Dec 23, 2022 at 06:01:14PM +0100, Markus Schneider-Pargmann wrote:
-> > Hi Konstantin,
+On Tue, Dec 27, 2022 at 10:14:33AM -0500, Konstantin Ryabitsev wrote:
+> On Fri, Dec 23, 2022 at 11:15:39AM +0100, Markus Schneider-Pargmann wrote:
+> > Unfortunately it seems that b4 prep is not able to handle not being on a
+> > branch:
 > > 
-> > maybe I am doing something wrong. I set the cover-strategy to
-> > branch-description in ~/.gitconfig:
-> > 	[b4]
-> > 	        prep-cover-strategy = branch-description
-> > 
-> > Then I create a new branch using b4:
+> > 	git checkout v6.1
 > > 	b4 prep -n up/test -f v6.1
+> > 		Not able to get current branch (git symbolic-ref HEAD)
+> > 		Not able to get current branch (git symbolic-ref HEAD)
+> > 		Not able to get current branch (git symbolic-ref HEAD)
+> > 		Not able to get current branch (git symbolic-ref HEAD)
+> > 		CRITICAL: fork-point v6.1 is not on the current branch.
+> > 		          Switch to the branch you want to use as base and try again.
 > 
-> Weird, I can't replicate this. Something else must be going on that overrides
-> the global setting.
+> Yes, we currently use "what branch you're currently on" as our base tracking
+> branch. Knowing the base branch is less important with the default commit
+> strategy, but it will come in handy when I add the "prep --cleanup" feature
+> that will remove prep-tracked branches if we find that they have been merged
+> into the base branch (e.g. master).
 > 
-> > I verified the config variable:
-> > 	git config b4.prep-cover-strategy
-> > 		branch-description
+> I will probably add a --base-branch flag to go with "prep -n", though, so
+> eventually it will be possible to create new prep-tracked branches from
+> arbitrary locations in the tree.
 > 
-> The only other place I can think of is in .git/config for the up-test branch:
-> 
->     [branch "b4/up-test"]
->       b4-prep-cover-strategy = commit
-> 
-> However, this should have been deleted when you ran "git branch -D", so I'm
-> not sure why it would be left over in your .git/config.
+> In your particular case, you don't need to checkout v6.1 before running prep.
+> You can just start in master and rerun "b4 prep -n [name] -f v6.1".
 
-Somehow it wasn't removed, thank you. I am not sure how I got there, I
-can't reproduce it now. So, consider this solved for me, thank you!
+Thanks for explaining. The checkout of v6.1 was just an example. I often
+use detached HEAD on remote branches and tags to not pollute the
+branches that I have. I thought b4 prep would ignore the current state
+of my work directory so I used it similarly to a 'git checkout -b'.
+I may be creating a git helper for me which does a git checkout -b and a
+b4 prep -e afterwards.
+
+> 
+> > Also b4 translates my branch name I wanted to use 'up/test' to 'up-test'
+> > is there a reason for that?
+> 
+> Yes, the branch name becomes the base of the message-id, which in turn becomes
+> the base of lore lookup URL. We replace all non-url-friendly characters to
+> avoid a url-encoding mess.
+
+That does make sense, thank you.
 
 Best,
 Markus
 
 > 
-> If you can rerun "b4 -d prep -n ..." that should give some debug info during
-> branch creation that should help figure out what's going wrong.
-> 
+> Best wishes,
 > -K
