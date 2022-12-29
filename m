@@ -1,112 +1,150 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BBB10E9
-	for <tools@linux.kernel.org>; Wed, 28 Dec 2022 09:39:17 +0000 (UTC)
-Received: by mail-ej1-f54.google.com with SMTP id bj12so37151501ejb.13
-        for <tools@linux.kernel.org>; Wed, 28 Dec 2022 01:39:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aUFhv5hkE3CQRXeQSwc434et11Ild5gUe6l3YYUDPHQ=;
-        b=2v6l+9dLcxIPTHpyzCACa1hhnQDAex7zxN0FgTs2SsbIoJayHwdfsKZI6lViwruBeY
-         elXBYLVh7K2xL9bxKuQsu6M3BNVQNs6zk39+ekgru6ZdrivQB1uRoVd6MoMaFnWqwlrY
-         RvNgAa0+f0DbY55uofuXxGv9G+UG9aZ7nX0eyfekOaU3oNhRmOZdPPIIhTLN2VwUMLsj
-         FVmsVjVdeS1T/ahJVfy2UEVCmiWBw+NsFitNMhTt0esUZNHyHhpeferYScnFbL5H4j3s
-         XFnJZQP8nr5L2xbxARAwSZDpSWMPG6torqU+aga/vpzMG6HehhKmRS9PlyQeqY8cgdpV
-         pEUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aUFhv5hkE3CQRXeQSwc434et11Ild5gUe6l3YYUDPHQ=;
-        b=yoRBxgreSqx2VTE6DPVFFmv+8fqocAHCgV+V0o/ON0B2EMHtB982sjxWdX2GRMj2pr
-         +L6FWZaysD6Wx9RBo041UD3w3nh/fSbwQHMPAs9ejCoUm0p18EHh+NDiUB5qBZVMw/+1
-         NnMljUply1x2D2zxApUWY8UlWMqyhaqa2LMF/d5xp4T9hO8Q8eWlQvJ04bvSqkY6uNOB
-         WTpz/sgLmEEF2FUj8D3YaBJ42zlp//4eTShH0YQgneYANKAVxcu9C9RYUoHlQjmMQW9n
-         Yr49dXKJOYf+a0chNGfOvCMygdW0wtuU4yFq/bCwhro+8/U9vKvuEbjtu/AceH2J/SoD
-         +yrQ==
-X-Gm-Message-State: AFqh2kogXgpDWQf6XZYko6hl5V75FuQ0asiwVY8LbluoikuCg1zLqq2X
-	Slg0WhBw6CAvuprA4wo87QIo9g==
-X-Google-Smtp-Source: AMrXdXvt7yAzIHAlEaRqtAaZBxKYgUeA/8lP4acPN4ZwyjpswwEBebvCQ5X0UG9mSEjukMn4TYQKnQ==
-X-Received: by 2002:a17:907:c28f:b0:83f:5f77:8ff9 with SMTP id tk15-20020a170907c28f00b0083f5f778ff9mr20607287ejc.12.1672220355435;
-        Wed, 28 Dec 2022 01:39:15 -0800 (PST)
-Received: from blmsp ([2001:4091:a245:805c:8713:84e4:2a9e:cbe8])
-        by smtp.gmail.com with ESMTPSA id f20-20020a17090631d400b007bf24b8f80csm5035777ejf.63.2022.12.28.01.39.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 01:39:14 -0800 (PST)
-Date: Wed, 28 Dec 2022 10:39:14 +0100
-From: Markus Schneider-Pargmann <msp@baylibre.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177FE399
+	for <tools@linux.kernel.org>; Thu, 29 Dec 2022 00:24:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94959C433D2;
+	Thu, 29 Dec 2022 00:24:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1672273479;
+	bh=NmVwMOFRb80O/plmGvptUVT4BetNYg/lUyX46hCv28s=;
+	h=Date:From:To:Cc:Subject:From;
+	b=gb06ejbz54Usov1wJYaKn1dSF8VB6UWpKaKtPfu1lzwyEU5TPt9mmyiO94AFpO3jp
+	 sByW94Jc8yrGOT/f3Xmo0vrrEs3UsznyMyxbHOlJeXJceJsu4vTWJU715DSkLrc5Gx
+	 FgJU78VUAOlCmQ6b+OqEfg+yuWTxah9J7KKWy50PlPpRspVbBxsS0I++fcKMEHnwma
+	 F8Nm6u2qWje1lS5YErnVT6YcUBcNEtTdperTuwq/MbBHuM8c67Ekv9yAODAhnBj6T4
+	 cEJzyhD1OLB7KfckCD6jY5gLocSHMI8D3dznI2gR8PUncj80WKdQbsmhg8Yl505ayX
+	 KVFCP29rv6dqQ==
+Date: Wed, 28 Dec 2022 17:24:37 -0700
+From: Nathan Chancellor <nathan@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org
-Subject: Re: b4 prep from detached HEAD
-Message-ID: <20221228093914.dntejnwnrz2mdyxs@blmsp>
-References: <20221223101539.xlacupmglv2dw4oz@blmsp>
- <20221227151433.tg4yldmlyyubqpgu@nitro.local>
- <20221227160633.7cnhyote4xgk7agp@blmsp>
+Subject: Inquiry around 'b4 send' individual patch Cc's
+Message-ID: <Y6zeRaKlqNhh72OD@dev-arch.thelio-3990X>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20221227160633.7cnhyote4xgk7agp@blmsp>
+Content-Transfer-Encoding: 8bit
 
 Hi Konstantin,
 
-On Tue, Dec 27, 2022 at 05:06:33PM +0100, Markus Schneider-Pargmann wrote:
-> Hi Konstantin,
-> 
-> On Tue, Dec 27, 2022 at 10:14:33AM -0500, Konstantin Ryabitsev wrote:
-> > On Fri, Dec 23, 2022 at 11:15:39AM +0100, Markus Schneider-Pargmann wrote:
-> > > Unfortunately it seems that b4 prep is not able to handle not being on a
-> > > branch:
-> > > 
-> > > 	git checkout v6.1
-> > > 	b4 prep -n up/test -f v6.1
-> > > 		Not able to get current branch (git symbolic-ref HEAD)
-> > > 		Not able to get current branch (git symbolic-ref HEAD)
-> > > 		Not able to get current branch (git symbolic-ref HEAD)
-> > > 		Not able to get current branch (git symbolic-ref HEAD)
-> > > 		CRITICAL: fork-point v6.1 is not on the current branch.
-> > > 		          Switch to the branch you want to use as base and try again.
-> > 
-> > Yes, we currently use "what branch you're currently on" as our base tracking
-> > branch. Knowing the base branch is less important with the default commit
-> > strategy, but it will come in handy when I add the "prep --cleanup" feature
-> > that will remove prep-tracked branches if we find that they have been merged
-> > into the base branch (e.g. master).
-> > 
-> > I will probably add a --base-branch flag to go with "prep -n", though, so
-> > eventually it will be possible to create new prep-tracked branches from
-> > arbitrary locations in the tree.
-> > 
-> > In your particular case, you don't need to checkout v6.1 before running prep.
-> > You can just start in master and rerun "b4 prep -n [name] -f v6.1".
-> 
-> Thanks for explaining. The checkout of v6.1 was just an example. I often
-> use detached HEAD on remote branches and tags to not pollute the
-> branches that I have. I thought b4 prep would ignore the current state
-> of my work directory so I used it similarly to a 'git checkout -b'.
-> I may be creating a git helper for me which does a git checkout -b and a
-> b4 prep -e afterwards.
+I have started using 'b4 prep' for a larger series I am getting ready to
+send, thank you for such a great tool, as it makes wrangling and sending
+larger series a lot simplier, especially having the cover letter as a
+part of the history.
 
-A short follow-up. Using
-	git checkout -b BRANCH BASETAG
-	b4 prep -e BASETAG
+I have traditionally used '--to' and '--cc' flags to 'git send-email' to
+send series to people who need to see the whole thing in combination
+with Cc trailers in the cover letter and patches for people who only
+need to acknowledge certain patches but need the full context of the
+series.
 
-unfortunately doesn't work as the code requires another branch to exist
-that contains the tag (not a remote branch only local branches are
-accepted).
+Based on your announcement here [1], it appears that in b4, I would just
+need to add trailers to the cover letter for people who should get the
+whole series and trailers in individual patches for people who should
+get just those patches and the cover letter.
 
-I am not really sure how the normal workflow for non commit strategies
-is supposed to work? Do I need to keep a local master branch that tracks
-linus/master? (I usually don't have that at all and always start new
-branches from remote branches)
+This appears to work for me but I noticed that if there are multiple
+patches that need to be Cc'd to the same people in the series, they are
+not deduplicated for the cover letter. For example, I see the following
+output with 'b4 prep -d' for this series, which has two MIPS patches,
+three PowerPC patches, and three s390 patches, which all include the
+exact same trailers generated from scripts/get_maintainer.pl:
 
-Thanks,
-Markus
+    | To: Masahiro Yamada <masahiroy@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>
+    | Cc: Nicolas Schier <nicolas@fjasle.eu>, Tom Rix <trix@redhat.com>, linux-kbuild@vger.kernel.org,
+    |  llvm@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>, kernel test robot <lkp@intel.com>,
+    |  Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+    |  Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Arvind Sankar <nivedita@alum.mit.edu>,
+    |  Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org,
+    |  Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org,
+    |  Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+    |  Christophe Leroy <christophe.leroy@csgroup.eu>, linuxppc-dev@lists.ozlabs.org,
+    |  Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+    |  Christophe Leroy <christophe.leroy@csgroup.eu>, linuxppc-dev@lists.ozlabs.org,
+    |  Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+    |  Christophe Leroy <christophe.leroy@csgroup.eu>, linuxppc-dev@lists.ozlabs.org,
+    |  Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+    |  Alexander Gordeev <agordeev@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+    |  Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
+    |  Vasily Gorbik <gor@linux.ibm.com>, Alexander Gordeev <agordeev@linux.ibm.com>,
+    |  Christian Borntraeger <borntraeger@linux.ibm.com>, Sven Schnelle <svens@linux.ibm.com>,
+    |  linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+    |  Alexander Gordeev <agordeev@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+    |  Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org, Harry Wentland <harry.wentland@amd.com>,
+    |  Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+    |  Alex Deucher <alexander.deucher@amd.com>, Christian König <christian.koenig@amd.com>,
+    |  "Pan, Xinhui" <Xinhui.Pan@amd.com>, amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org
+
+Do note, I include in the commit message something like:
+
+    Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+    ---
+    Cc: ...
+    Cc: ...
+
+so that they are not added to the patch contents when they are applied.
+
+Additionally, when I reflect this series back to myself, I noticed that
+something appears to get messed up with the linuxppc-dev CC, as it gets
+combined with Michael's name; I see the following in mutt for the same
+series:
+
+    To: Masahiro Yamada <masahiroy@kernel.org>,
+            Nick Desaulniers <ndesaulniers@google.com>
+    Cc: Nicolas Schier <nicolas@fjasle.eu>, Tom Rix <trix@redhat.com>,
+            linux-kbuild@vger.kernel.org, llvm@lists.linux.dev,
+            Nathan Chancellor <nathan@kernel.org>,
+            kernel test robot <lkp@intel.com>,
+            Thomas Gleixner <tglx@linutronix.de>,
+            Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+            Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+            Arvind Sankar <nivedita@alum.mit.edu>,
+            Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+            linux-mips@vger.kernel.org,
+            Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+            linux-mips@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
+            Nicholas Piggin <npiggin@gmail.com>,
+            Christophe Leroy <christophe.leroy@csgroup.eu>,
+            "linuxppc-dev@lists.ozlabs.org , Michael Ellerman" <mpe@ellerman.id.au>,
+            Nicholas Piggin <npiggin@gmail.com>,
+            Christophe Leroy <christophe.leroy@csgroup.eu>,
+            "linuxppc-dev@lists.ozlabs.org , Michael Ellerman" <mpe@ellerman.id.au>,
+            Nicholas Piggin <npiggin@gmail.com>,
+            Christophe Leroy <christophe.leroy@csgroup.eu>,
+            "linuxppc-dev@lists.ozlabs.org , Heiko Carstens" <hca@linux.ibm.com>,
+            Vasily Gorbik <gor@linux.ibm.com>,
+            Alexander Gordeev <agordeev@linux.ibm.com>,
+            ", Christian Borntraeger" <borntraeger@linux.ibm.com>,
+            Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org,
+            Heiko Carstens <hca@linux.ibm.com>,
+            Vasily Gorbik <gor@linux.ibm.com>,
+            Alexander Gordeev <agordeev@linux.ibm.com>,
+            Christian Borntraeger <borntraeger@linux.ibm.com>,
+            Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org,
+            Heiko Carstens <hca@linux.ibm.com>,
+            Vasily Gorbik <gor@linux.ibm.com>,
+            Alexander Gordeev <agordeev@linux.ibm.com>,
+            Christian Borntraeger <borntraeger@linux.ibm.com>,
+            Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org,
+            Harry Wentland <harry.wentland@amd.com>,
+            Leo Li <sunpeng.li@amd.com>,
+            Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+            Alex Deucher <alexander.deucher@amd.com>,
+            Christian König <christian.koenig@amd.com>,
+            "Pan, Xinhui" <Xinhui.Pan@amd.com>, amd-gfx@lists.freedesktop.org,
+            dri-devel@lists.freedesktop.org
+
+If I am doing something wrong, please feel free to let me know! If there
+is anything I can provide or test if this is a real problem, I am more
+than happy to do so.
+
+[1]: https://lore.kernel.org/20221202155644.kbnqvune7mo4khue@meerkat.local/
+
+Cheers,
+Nathan
