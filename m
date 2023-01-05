@@ -1,43 +1,28 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B46CD53F
-	for <tools@linux.kernel.org>; Thu,  5 Jan 2023 16:40:06 +0000 (UTC)
-Received: by mail-vs1-f54.google.com with SMTP id i10so16974384vsr.12
-        for <tools@linux.kernel.org>; Thu, 05 Jan 2023 08:40:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=s9Q+SBXvukexyHVBLw7sSucscC++rEnr5Fcsx0asniA=;
-        b=SPw4cJ19RmXifGuJQUu30CuESBo+cbEU0Gd7/vET/JnOoNWAmsp5TzHxy6A4oOr+md
-         88FYpsWF/MMLpeBCE30hY3iCQTvixO8iVpPix8+DY2AmmasGxwWqUjpqQTsfFF6UdoRg
-         xztsafVKCWBFguCrLHBzYUochtTvnNsXuXDU4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s9Q+SBXvukexyHVBLw7sSucscC++rEnr5Fcsx0asniA=;
-        b=0ZlIhrfsJsd7xBEYabjqcCPhgtTNecrLBJzK0AAzrr0v023qGXw6oEp97Yk3jjayyr
-         UZB2lrp0BiuDKgclMwjawaN8OORaQVqGaheqI6izGM5yV4o5ZZoFir+Kiezfg8guPYqb
-         tDcSMQeLI4cafoQRKizgblhlmzyn8QDEKVrco4BPLtXPubKJUSam9AtRwI8WL/hSm+Nv
-         bNKYJTDn/YWpocQeNJeFov/38EeD3AeNzWKctzpEZmyBaJkR74sV/mWIpM77FZqsOShD
-         9kpDQMfC8Nth+8mnuGyhtSxlYIfezzSnAw9zWYDoebtobqshVqtm/9l1wumDvCQtPfvV
-         7Q4A==
-X-Gm-Message-State: AFqh2kphEwpy1pou/QU3cxG5gIjyEamfkjCi/wzd56bzoZ/0yBdlVhXh
-	PNGiiWaLxAiWZpV68TeRgqNUUIO/WRsxc/3e
-X-Google-Smtp-Source: AMrXdXv5pakjOqSjDbYXNUR/UB1pbp0i/nJJLah3wgmU6BwZQkTnrJgSZAEbJ0LH9ByDmuQsUvHKHQ==
-X-Received: by 2002:a67:f2c6:0:b0:3ce:88b3:d7d8 with SMTP id a6-20020a67f2c6000000b003ce88b3d7d8mr9055004vsn.19.1672936805155;
-        Thu, 05 Jan 2023 08:40:05 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id d136-20020ae9ef8e000000b006fae7e6204bsm25362170qkg.108.2023.01.05.08.40.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Jan 2023 08:40:04 -0800 (PST)
-Date: Thu, 5 Jan 2023 11:40:03 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, users@linux.kernel.org
-Subject: b4 v0.11.2 available
-Message-ID: <20230105164003.kv35ovoeshcvgnia@meerkat.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A6CEB03
+	for <tools@linux.kernel.org>; Thu,  5 Jan 2023 16:55:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A424BC433EF;
+	Thu,  5 Jan 2023 16:55:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1672937718;
+	bh=sSL3UJFx5dNNpWs8t1nTcEzcodthllWqMrCBTtNN5PE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VOg4oFeLeS+0jWsxw2nejVxLqSW3DFnwL/oogeTtu0QdjtM7fsuRA7pTfzb77vK+V
+	 Q08EqeRwWrYO7WTzDOCCJ36JE1R9n1/HFDSNNNT3hOx6uhP9cLqkVEr7lvh6E0okRP
+	 8tthHLVpzvLriLDQZJPkh9T+vZQl3MOPVTTIdiodFMPabi1BoaLWejUswVIY5BZ0R4
+	 vmljHsgn1MG9bTRTI94gitGGqlfjxAe8C4naMqgMpRLCTIob5HRKzWVlgAEaC/2VbM
+	 3aKyxsqvgwwBuvzNVzhOfDoT3kGNP/YgB5SW1BXH78KAvMZNlsOSRvNahEPhh+M8Gx
+	 8JnL4FKXmk8vQ==
+Date: Thu, 5 Jan 2023 16:55:14 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools <tools@linux.kernel.org>
+Subject: Re: b4 prep --show-info for non-current branch
+Message-ID: <Y7cA8vKJc+TvBKKp@sirena.org.uk>
+References: <Y6sm7iI/mOA8/p4H@sirena.org.uk>
+ <20230104195002.xe5fm6nvq5ors3rq@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -45,52 +30,54 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gonl5ey562r5lzvr"
+	protocol="application/pgp-signature"; boundary="0jUpI1U+L+Y/3kvw"
 Content-Disposition: inline
+In-Reply-To: <20230104195002.xe5fm6nvq5ors3rq@meerkat.local>
+X-Cookie: Surprise due today.  Also the rent.
 
 
---gonl5ey562r5lzvr
-Content-Type: text/plain; charset=utf-8
+--0jUpI1U+L+Y/3kvw
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hello:
+On Wed, Jan 04, 2023 at 02:50:02PM -0500, Konstantin Ryabitsev wrote:
+> On Tue, Dec 27, 2022 at 05:10:06PM +0000, Mark Brown wrote:
 
-B4 v0.11.2 is available in the usual places. This is a small bump release with
-a number of hotfixes. Everyone using v0.10 or v0.11 should upgrade to the
-latest version.
+> > I'm now using b4 prep --show-info in my scripting.  Something that would
+> > be really useful would be being able to pass in a branch name to query
+> > information from, so I can do things like push serieses through my CI
+> > without actually having to be on the branch.
 
-To upgrade using pip:
+> I poked at it a bit, but doing it properly will require a bit of refactor=
+ing,
+> because a lot of internal commands will need to be modified. In general, =
+I'm
+> probably going to make this a larger effort -- some commands already acce=
+pt
+> --gitdir and --branch parameters (e.g. b4 ty), so it makes sense to make =
+these
+> flags understood globally instead of per-command.=20
 
-    pip install --upgrade b4
+> Once that work is done, you should be able to run something like:
 
-Shortlog:
+>     b4 [-g path/to/somerepo] [-b b4/some-branch] prep --show-info
 
-	Konstantin Ryabitsev (6):
-		  Always run log with --no-abbrev-commit
-		  Handle series with more than 999 patches
-		  ez: dedupe cover letter CCs taken from individual patches
-		  ez: avoid header wrapping when writing to file
-		  ez: don't crash on non-existent tag in show_info
-		  Prep for 0.11.2
+Thanks - that makes sense and would more than meet my needs.
 
-Special thanks to the following people for their bug reports, in reverse log
-order:
-
-    Quentin Schulz <quentin.schulz@theobroma-systems.com>
-    Nathan Chancellor <nathan@kernel.org>
-    Bill Pemberton <wfp5p@worldbroken.com>
-
--Konstantin
-
---gonl5ey562r5lzvr
+--0jUpI1U+L+Y/3kvw
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCY7b9YwAKCRC2xBzjVmSZ
-bIQYAP9nM7qxGytLvnv3/AlSFoGjBodwTKXIjWZoRSd+/Vh7+gD/ag8nnwzrgbF/
-NZmj1Omq6PdDx0Ts4WsLs6Fd3FAjDAo=
-=RLUz
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmO3APEACgkQJNaLcl1U
+h9BANwf/b3wolGM7Hj0jhbml8U4AZZnb4RSnbX0Su9kxKZnQkOEFTmxs6+nnQ5Yp
+8n1yf6/ccqbhZheLUOgeCNhxY0mF4IJyePZLvgZ0PLgbv2FaivX+gTvNAkDp+9fd
+OHcQke07uWaWj0eG4oFnROHysSCHTb25b0yYtvgvSwI/TOlqhsX9aEJihlY3flF9
+7V7rZ2i6aLtF0SZD2sZxxAISPEyLC2Xpi9sUCkbeaP4dc19QaPAU6pIVN9WQRHGO
+W0KqT+GX5Al3S+XEgIeKKbN35bvdhgD6hdgR8zC/o1ZnMA4g+D9BqquBHERHDK7F
+8yGPqkRAH4K7HjEM1Q0TLSY7XgOTPQ==
+=BD2N
 -----END PGP SIGNATURE-----
 
---gonl5ey562r5lzvr--
+--0jUpI1U+L+Y/3kvw--
