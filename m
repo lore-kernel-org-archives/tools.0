@@ -1,50 +1,48 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5447E8
-	for <tools@linux.kernel.org>; Fri,  6 Jan 2023 18:53:37 +0000 (UTC)
-Received: by mail-qt1-f169.google.com with SMTP id c7so2774187qtw.8
-        for <tools@linux.kernel.org>; Fri, 06 Jan 2023 10:53:37 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD1A2773B
+	for <tools@linux.kernel.org>; Fri,  6 Jan 2023 19:20:21 +0000 (UTC)
+Received: by mail-vk1-f174.google.com with SMTP id 6so1055467vkz.0
+        for <tools@linux.kernel.org>; Fri, 06 Jan 2023 11:20:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2Zfn7viPISgASm8j0I7d0lHYK1+iHDbPNU4EZXycVKw=;
-        b=C895Fznu2QqsISg3pgE6FT8apE3mrF1l9FfQkbR23tVPLaPtpTAGO8QKyFy0YzYDdz
-         jUSGY6uh24uhMjrrHn6Q7GouTmacFriJ/oe7jtE7M3Qn/XQctSaIfcoiXPQGEM+m+a73
-         R31jWjGGKHL7BJ/kCRjvsPhUfliztri2GCDGQ=
+        bh=V1R91iwDD+5b7RDn32Iak8+wtPQQKWdD6425L/aBKjA=;
+        b=Bcftm7YSVyQAcpnZQgJZ41xloz/VEvL4PPNtEN8Afqe/IyjalMhPRT8O3lIu/TfjYO
+         /EQ9GanFlhx0YIHHVHBkb7smEWhVQ+JgoDFCXzb6Q8LXT+j6DRWLG3T/ZmtxWcHRg7a4
+         b1ahjTDnPL6W/EvkZTF5xmfxl4HB57FSFumjc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2Zfn7viPISgASm8j0I7d0lHYK1+iHDbPNU4EZXycVKw=;
-        b=UST8L2IEtfxrDCpjg5l/fAIeqV4EwMeR2FM3sqy6v/7JOGJwzfV7rOnOCEnlTWpikA
-         t0Qk/375MBPt9axx64zSzgkDoQJvdv9ieS7tuuj5BlDESE0y824cYBBxohA9J+hV6ErV
-         wGeZb7eXrAVwPRXgJ9n8LpEmCSUPfjLgqzCx5x8kxa+CDIpyn4QW8Zo3fxY+FNpmnVYq
-         ircXmDg3DatLZeMTxUe605WL3pbKpckAcqbSQfDlpFODXAEjZBo8Ok9qYZRgmEW3kxys
-         jFq+u+C6NOnSBz7Z4x1tc08gK1+nc6+TKNYbqCIKB9Q6/8jhMlzfcVB0ODU8Sr5gwScP
-         2xcQ==
-X-Gm-Message-State: AFqh2krVhA9pppGiT8ti/cQHh6OKg/C6U8hfsZ2Qq0xS7+aWW9LIyxOo
-	SnywIJNaYtA1APR4GYUMxZ0p32UD9t1c0cOG
-X-Google-Smtp-Source: AMrXdXsv5CGsHssYQObIMdJkndzHjquVnEYcgqzsfUz6woAO5dE/QB+Fcc0e6pr52J3SO0Dm/2+Y7A==
-X-Received: by 2002:ac8:5207:0:b0:3a8:177a:665f with SMTP id r7-20020ac85207000000b003a8177a665fmr72100360qtn.50.1673031216445;
-        Fri, 06 Jan 2023 10:53:36 -0800 (PST)
+        bh=V1R91iwDD+5b7RDn32Iak8+wtPQQKWdD6425L/aBKjA=;
+        b=m9IredcFIZkD+1+78DDtr7rat03QNV5g3FXllP8mz/wpBYz9IN74/6pOTij3PbM2lI
+         D9C9aEC18cbtWIydMeFG11SsN6Z6GIOmY6wFZJ8BB69Ypc2gI5c05Q+XzNyIynAQzWpx
+         CQn6J8uyAqRAx/MdliFynTtPUCplU1xz9pYaeP33TdJIMH+wy29f2NyhqvjAzQIjTUnp
+         9MqSl4Nk1mE/wDoVcAiXRxbmt4mfayGpSvpHoD0jC+ZO+/j0Wse4oVHksqf3aAi1uWeh
+         ISWodcAwqic7KpslBMmbTxTj8iEgbmDz2LNZU+l5tlHqZIUe7gD72oa109x67so3hOew
+         R8ng==
+X-Gm-Message-State: AFqh2kp/NTVcPsQZjhHHOtPg0WmcUVyejS9JLnuM+xpLLUk4PbZObMJ9
+	h9Bv6sx7V2b2NwNMzoUQn0z9VEsT4uZJY/iB
+X-Google-Smtp-Source: AMrXdXt45g/pYMeGOVyhnRllziu+wMf61ZJm3z5pH0RlqGGHyElVc2955tXOoTyv57W5o2OJim1ImQ==
+X-Received: by 2002:a1f:4543:0:b0:3d5:b353:cc7f with SMTP id s64-20020a1f4543000000b003d5b353cc7fmr12264583vka.6.1673032820588;
+        Fri, 06 Jan 2023 11:20:20 -0800 (PST)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id r20-20020ac85e94000000b003a7f597dc60sm852779qtx.72.2023.01.06.10.53.36
+        by smtp.gmail.com with ESMTPSA id m7-20020a05620a24c700b006fc2e2198easm981778qkn.95.2023.01.06.11.20.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Jan 2023 10:53:36 -0800 (PST)
-Date: Fri, 6 Jan 2023 13:53:34 -0500
+        Fri, 06 Jan 2023 11:20:20 -0800 (PST)
+Date: Fri, 6 Jan 2023 14:20:18 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools <tools@linux.kernel.org>
-Subject: Re: b4 am doesn't fetch all recipient headers
-Message-ID: <20230106185334.jyefhjur6yjn4w3e@meerkat.local>
-References: <Y7hLWvgqqJCK7+yM@sirena.org.uk>
- <20230106170038.tbdihuu667upvqnr@meerkat.local>
- <Y7hWOEoqPsF+Wrtx@sirena.org.uk>
- <20230106173237.tpsdbdnzjfbgulcg@meerkat.local>
- <Y7hb17cciwrXm4E1@sirena.org.uk>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: Address from trailer on individual patch is sent entire series?
+Message-ID: <20230106192018.ho5yfvj5xirh3ugy@meerkat.local>
+References: <Y7d47SDIpjPBxEwi@dev-arch.thelio-3990X>
+ <20230106163442.aziaoa3tndqtyisp@meerkat.local>
+ <Y7hSRwJd8GbNUNeW@dev-arch.thelio-3990X>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -53,17 +51,27 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y7hb17cciwrXm4E1@sirena.org.uk>
+In-Reply-To: <Y7hSRwJd8GbNUNeW@dev-arch.thelio-3990X>
 
-On Fri, Jan 06, 2023 at 05:35:19PM +0000, Mark Brown wrote:
-> > What if I give you:
-> 
-> >     b4 mbox --refetch mbox
-> 
-> > This will refetch all the messages in the mbox with their original headers?
-> 
-> Yes, that'd also work well I think.
+On Fri, Jan 06, 2023 at 09:54:31AM -0700, Nathan Chancellor wrote:
+> I am sure you are aware this contradicts what git send-email does, which
+> is obviously fine in and of itself (I understand b4 is not a git
+> send-email clone), but I am not sure this difference will be for the
+> better.
 
-It's in master if you want to try it out.
+Yes, thinking about this some more, it's probably best if we emulate the
+most-expected behaviour of "what would git-send-email do". This still does
+both, in a sense:
+
+"b4 prep --auto-to-cc" collects addresses as returned by get_maintainers.pl
+and will send these people/addresses the entire series. However, it will no
+longer add addresses from trailers found in individual commits.
+
+"b4 send" will send patches to any to/cc addresses in the cover letter, plus
+any addresses mentioned in individual commits. The cover letter will still go
+out to everyone, so an address from Reported-by in [PATCH 4/15] will get two
+messages: [PATCH 0/15], [PATCH 4/15].
+
+Will that be closer to your expectations?
 
 -K
