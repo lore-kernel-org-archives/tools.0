@@ -1,87 +1,104 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F532770E
-	for <tools@linux.kernel.org>; Fri,  6 Jan 2023 16:54:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A7FC433D2;
-	Fri,  6 Jan 2023 16:54:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1673024073;
-	bh=eVicTkgxEaeiA2WF2TcXDJKfd7XBXZApq69ZjYjp/CY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kqXcDB/kmXNHBXPgBL+s9XP8BfIzWv6rCT2BM8euMx7ov0k+qEmVFdpETlatIZVeV
-	 DeCnDGL67k1EooRzdZcx0MPwr4q3X5xpAg2uJIl8rO8srKpwLhNiy9MYkSOArDZ1do
-	 4YBbePH4eq+BYWaDZafTT5sxruPH3fN5Di72JC/hRGNPfIDD/R0A3bzaVehitNnwO0
-	 jyXvWWhh0yWJM+BthK4Hxt3TObQ8/ji7EN+EzJ4ri2+5roCBKTWla5i38d+oNwDmpk
-	 EjxZOxytM1L0OZC5FHhx5e+6jeesBKmzeYI73j+LovaqmtgDWDjJhOsnFxTdIsDpFG
-	 oh2gMnzXcSIfQ==
-Date: Fri, 6 Jan 2023 09:54:31 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Address from trailer on individual patch is sent entire series?
-Message-ID: <Y7hSRwJd8GbNUNeW@dev-arch.thelio-3990X>
-References: <Y7d47SDIpjPBxEwi@dev-arch.thelio-3990X>
- <20230106163442.aziaoa3tndqtyisp@meerkat.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC002770E
+	for <tools@linux.kernel.org>; Fri,  6 Jan 2023 17:00:42 +0000 (UTC)
+Received: by mail-qt1-f176.google.com with SMTP id bp44so2683987qtb.0
+        for <tools@linux.kernel.org>; Fri, 06 Jan 2023 09:00:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UwiH7wg29pVr3CAEXSr38JexvNWxjKBUXDVhAx1Us9s=;
+        b=BR8QTDvHHDkOAYapENvYJhpFq9SAQP5yBI8k+8T5wCkAwBuusHCX6sDpi+3G7ieME5
+         cPQBDcJtAHvHOgrEbLS5oTnE2tXv/FowHX4xTwwuavEoJljvaOrALOz0F6i7mk3+k4fK
+         W8HSZ6B0D2kDFTFTBToxb6GJCzqtbI90uB7bM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UwiH7wg29pVr3CAEXSr38JexvNWxjKBUXDVhAx1Us9s=;
+        b=o2W+VrdJ9HTbIWkqnlLu8AziAkI8eTwrtsaAhY0wlGJZmLYyxLLap/QSqekbEuyPgd
+         o8JZBAF5O1aTHJ9oSTyJhI4//QMgUFD/objVL3XH+HRa+ODA4KHhV6e4JKSEeS0EeQXY
+         Kmx6fE3mWywGgpSmBdlAw0/UMMVZereSsmEIbyUk0tiCMSJXY0FGQYIvH3o8Zd55eNkC
+         oIblNdZ8cGf4mOGxg0rJ1IgVmiBs8JSqdbICi/Gb/XSOD8BrzOEhSGwb0XgfWqqUKIyF
+         NYnzieUZ4c5/2/qQcJRbBwWCXSIHLaUyBjjc4eyliwkbmkiPWqwolp7MV+DusfhzeWS0
+         3+tw==
+X-Gm-Message-State: AFqh2krHfZveRTMSPqEQCcoAuhskEAbOf/XmzxZIgkVt2vbET6i7hSx/
+	gFF6BkB232lHPL3C/ee9lrNCj7HWHu5N7klG
+X-Google-Smtp-Source: AMrXdXs8T9SvR5qsKEfi1M5joDeynuzncplxcl4pkGebU9mAj8BGOGTfd2880yZvoJz2GGcY+WmU0A==
+X-Received: by 2002:a05:622a:30d:b0:3a9:86dd:3c67 with SMTP id q13-20020a05622a030d00b003a986dd3c67mr56116038qtw.3.1673024440099;
+        Fri, 06 Jan 2023 09:00:40 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id cq12-20020a05622a424c00b00397e97baa96sm764377qtb.0.2023.01.06.09.00.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Jan 2023 09:00:39 -0800 (PST)
+Date: Fri, 6 Jan 2023 12:00:38 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools <tools@linux.kernel.org>
+Subject: Re: b4 am doesn't fetch all recipient headers
+Message-ID: <20230106170038.tbdihuu667upvqnr@meerkat.local>
+References: <Y7hLWvgqqJCK7+yM@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230106163442.aziaoa3tndqtyisp@meerkat.local>
+In-Reply-To: <Y7hLWvgqqJCK7+yM@sirena.org.uk>
 
-On Fri, Jan 06, 2023 at 11:34:42AM -0500, Konstantin Ryabitsev wrote:
-> On Thu, Jan 05, 2023 at 06:27:09PM -0700, Nathan Chancellor wrote:
-> > Hi Konstantin,
-> > 
-> > I was going over my recent "sent with b4" series and I noticed that the
-> > kernel test robot, a Reported-by: on a specific patch in the series, was
-> > Cc'd on the entire series.
+On Fri, Jan 06, 2023 at 04:24:58PM +0000, Mark Brown wrote:
+> Hi Konstantin,
 > 
-> This is one of those time when people's expectations diverge and either way
-> you do it, someone will find that it's not how they want it to work.
-> 
-> Originally, my polling suggested that everyone always wanted to receive the
-> entire patch series, even if they were only responsible for a single patch.
-> This was later changed for in-patch "Cc:" trailers, because there were actual
-> CI workflows based on that and sending them the entire series was causing more
-> harm than good.
-> 
-> However, every other trailer will still receive the entire series, because I
-> believe it's still more correct than just sending them a single patch.
+> At some point recently b4 am seems to have stopped including any To/Cc
+> headers in the mailboxes it fetches and I can't see an option to get
+> them back.  They're not needed for the am itself but I do find them
+> useful in my workflow, what I'm doing is grabbing the mailbox with am,
+> putting that into CI and then ideally if there's a problem I can just
+> reply to the mail in the saved mailbox to tell the submitter.  I can go
+> and get the mail with all the recipients separately but it's an extra
+> step.
 
-Understood, thanks for taking the time to explain your rationale!
+This change was a side-effect of implementing how we handle trailer updates,
+but it's also "more correct" because there were situations where you would
+send info to the wrong people, e.g. when we restored the in-body "From: "
+committer info:
 
-I am sure you are aware this contradicts what git send-email does, which
-is obviously fine in and of itself (I understand b4 is not a git
-send-email clone), but I am not sure this difference will be for the
-better.
+    From: Sender Person <...>
+    Subject: [PATCH] ...
 
-For example, take the series I just mentioned in my previous mail. There
-are only three patches that are relevant to the s390 folks, so
-previously I Cc'd them on just those three patches along with the cover
-letter so that is what clear what I was expecting (tags for those three
-patches so they could be carried via another tree). I promptly got a
-review and ack from Sven and Heiko respectively, which I added to the
-relevant patches in my local tree.
+    From: Author Person <...>
 
-If I have to send a v2, Heiko and Sven are going to get Cc'd on the
-entire series, which is now entirely irrelevant to them, versus getting
-just those few patches, which they can recognized as ones that they have
-already dealt with. I suppose I am going to get bit by this more often
-than others will because I work all over the tree so perhaps it is not
-that big of a concern in practice.
+    Commit subject
 
-> If that's not the actual consensus and we decide that all other
-> in-patch trailers should be handled the same as Cc: (they get the
-> cover letter plus only the individual patches where they are cc'd), I
-> can certainly implement that as well.
+    Commit message
 
-It would be good to poll others to see what they think, as I could be
-way off base here.
+became:
 
-Cheers,
-Nathan
+    From: Author Person <...>
+    Subject: [PATCH] ...
+
+    Commit subject
+
+    Commit message
+
+So, replying to this message wouldn't actually have gone to the sender, but to
+the commit author.
+
+Here's one way you can get the full thread:
+
+    b4 mbox < am-ready.mbx
+
+This will grab the entire thread that you can then reply to (plus see if
+anyone's already replied to it). You can even fetch that into your existing
+maildir:
+
+    b4 mbox -fo ~/Mail < am-ready.mbx
+
+I know this adds an extra step, but this is also more proper, I think.
+
+-K
