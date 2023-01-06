@@ -1,75 +1,69 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317862770E
-	for <tools@linux.kernel.org>; Fri,  6 Jan 2023 17:35:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330B8C433EF;
-	Fri,  6 Jan 2023 17:35:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1673026523;
-	bh=taCE58kjV7QND+9SWtwvhJKU1rlP3/3AbjKPSrHh3R8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=F4To/p2BGuOSpsKKBwYJZMxxYyBhkH4GtNW31H4yQCb59F0iAbe+mBkv2ne9NIxp/
-	 STehshQbpJX82al2ts+gD97f06qHByWgcOzShX6mVPtr54ByWLfn+ULqhsxJtGuFmM
-	 s+fr+7yMOzKn5S/81TJH6rn9Xvbk5gv/ci67/r/QNQtlRjn42xrqaxyK+Z1IqSNftQ
-	 vfYB8TyH07kd/iv5nXYQ39JoKYwRE3lfs9RIY4v6VzmcSbdVSe2fdXAzK5WgGU7iLA
-	 obEtQCmf6YbRjMGXkxrHluFEFlM2gzD3UMPh60R6+LmVi1iUp+KrDqMdLnuw9Bkm0o
-	 vKQhvvWp+pitw==
-Date: Fri, 6 Jan 2023 17:35:19 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5447E8
+	for <tools@linux.kernel.org>; Fri,  6 Jan 2023 18:53:37 +0000 (UTC)
+Received: by mail-qt1-f169.google.com with SMTP id c7so2774187qtw.8
+        for <tools@linux.kernel.org>; Fri, 06 Jan 2023 10:53:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2Zfn7viPISgASm8j0I7d0lHYK1+iHDbPNU4EZXycVKw=;
+        b=C895Fznu2QqsISg3pgE6FT8apE3mrF1l9FfQkbR23tVPLaPtpTAGO8QKyFy0YzYDdz
+         jUSGY6uh24uhMjrrHn6Q7GouTmacFriJ/oe7jtE7M3Qn/XQctSaIfcoiXPQGEM+m+a73
+         R31jWjGGKHL7BJ/kCRjvsPhUfliztri2GCDGQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2Zfn7viPISgASm8j0I7d0lHYK1+iHDbPNU4EZXycVKw=;
+        b=UST8L2IEtfxrDCpjg5l/fAIeqV4EwMeR2FM3sqy6v/7JOGJwzfV7rOnOCEnlTWpikA
+         t0Qk/375MBPt9axx64zSzgkDoQJvdv9ieS7tuuj5BlDESE0y824cYBBxohA9J+hV6ErV
+         wGeZb7eXrAVwPRXgJ9n8LpEmCSUPfjLgqzCx5x8kxa+CDIpyn4QW8Zo3fxY+FNpmnVYq
+         ircXmDg3DatLZeMTxUe605WL3pbKpckAcqbSQfDlpFODXAEjZBo8Ok9qYZRgmEW3kxys
+         jFq+u+C6NOnSBz7Z4x1tc08gK1+nc6+TKNYbqCIKB9Q6/8jhMlzfcVB0ODU8Sr5gwScP
+         2xcQ==
+X-Gm-Message-State: AFqh2krVhA9pppGiT8ti/cQHh6OKg/C6U8hfsZ2Qq0xS7+aWW9LIyxOo
+	SnywIJNaYtA1APR4GYUMxZ0p32UD9t1c0cOG
+X-Google-Smtp-Source: AMrXdXsv5CGsHssYQObIMdJkndzHjquVnEYcgqzsfUz6woAO5dE/QB+Fcc0e6pr52J3SO0Dm/2+Y7A==
+X-Received: by 2002:ac8:5207:0:b0:3a8:177a:665f with SMTP id r7-20020ac85207000000b003a8177a665fmr72100360qtn.50.1673031216445;
+        Fri, 06 Jan 2023 10:53:36 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id r20-20020ac85e94000000b003a7f597dc60sm852779qtx.72.2023.01.06.10.53.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Jan 2023 10:53:36 -0800 (PST)
+Date: Fri, 6 Jan 2023 13:53:34 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: tools <tools@linux.kernel.org>
 Subject: Re: b4 am doesn't fetch all recipient headers
-Message-ID: <Y7hb17cciwrXm4E1@sirena.org.uk>
+Message-ID: <20230106185334.jyefhjur6yjn4w3e@meerkat.local>
 References: <Y7hLWvgqqJCK7+yM@sirena.org.uk>
  <20230106170038.tbdihuu667upvqnr@meerkat.local>
  <Y7hWOEoqPsF+Wrtx@sirena.org.uk>
  <20230106173237.tpsdbdnzjfbgulcg@meerkat.local>
+ <Y7hb17cciwrXm4E1@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dzl0oZkdOP3owQr+"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230106173237.tpsdbdnzjfbgulcg@meerkat.local>
-X-Cookie: Do not fold, spindle or mutilate.
+In-Reply-To: <Y7hb17cciwrXm4E1@sirena.org.uk>
 
+On Fri, Jan 06, 2023 at 05:35:19PM +0000, Mark Brown wrote:
+> > What if I give you:
+> 
+> >     b4 mbox --refetch mbox
+> 
+> > This will refetch all the messages in the mbox with their original headers?
+> 
+> Yes, that'd also work well I think.
 
---dzl0oZkdOP3owQr+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+It's in master if you want to try it out.
 
-On Fri, Jan 06, 2023 at 12:32:37PM -0500, Konstantin Ryabitsev wrote:
-> On Fri, Jan 06, 2023 at 05:11:20PM +0000, Mark Brown wrote:
-
-> > For this workflow a command that would easily let me fetch a specific
-> > message without pulling in the rest of the series would be ideal, b4
-> > mbox doesn't seem to even have an equivalent of b4 am's message ranges.
-
-> What if I give you:
-
->     b4 mbox --refetch mbox
-
-> This will refetch all the messages in the mbox with their original headers?
-
-Yes, that'd also work well I think.
-
---dzl0oZkdOP3owQr+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmO4W9cACgkQJNaLcl1U
-h9BWpAf8CdaY95PUaRXYXDjJpQToQ/5oiZrz3fBA/6sKwAZUch6NBastVCBAwV21
-1P65deTslhqSq31Gvkh0btjky8NcLD8/vLbD9P5eSISobWkeBFyFxZa2oL89km2Y
-6Z7Q0u4Ain/6BzKIBhKQTmStJzXfmnv4gcuUL8U1a+MBOabAY19ou2eU07uV1r20
-0OObqtYVMEYpIuLA8ToF7QWcWzI0IM1fqYU4h0nN9x9/g4ABpy4RJWmmra49Tf2w
-ZAYLLc8QzDHy/HVteVAEWR70PecLt3wwAVZ/tylLE6tWbLFLhwoMnH+qvFA1asS5
-2Xi/bJunIlEG/h9v7nPCbK1BqSRUKw==
-=SFHk
------END PGP SIGNATURE-----
-
---dzl0oZkdOP3owQr+--
+-K
