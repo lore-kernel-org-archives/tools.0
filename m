@@ -1,81 +1,80 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D63A3C0B
-	for <tools@linux.kernel.org>; Mon,  9 Jan 2023 17:15:05 +0000 (UTC)
-Received: by mail-qt1-f170.google.com with SMTP id c7so8310449qtw.8
-        for <tools@linux.kernel.org>; Mon, 09 Jan 2023 09:15:05 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5673C0B
+	for <tools@linux.kernel.org>; Mon,  9 Jan 2023 17:24:33 +0000 (UTC)
+Received: by mail-ej1-f48.google.com with SMTP id qk9so21941960ejc.3
+        for <tools@linux.kernel.org>; Mon, 09 Jan 2023 09:24:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=uagduGYBaToIciSTPKWkit3IdUCkGvun+f7ohWPFPb4=;
-        b=EX3iF9cHW9/QfL8W/xLC1qK8JsPMyjHmHdK4kuUmgv/fSIaliMh1NO2jbjnG/V+/dp
-         yS5JeoYLOoFJXYWZ/VO6Tjt2QWBjYXgBPQaB7Vez9po86g5KPsxxf8JdDOemjR4+tJcu
-         E+NUGEv8Ctv0WkW3zcWNQKsNOjVYquHI/ljMU=
+        d=tessares.net; s=google;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sbeXhSLJCKF1MnA/55Dlzl7wvkX44YCaU8Fb5JxAyWo=;
+        b=3eyOmCCnpqo2A8jUGSYL9BC95t75cTGxE7MI00RMeW0otv0g2Rtw9DcsuttISq2mo8
+         HvCPwBRCprClVdeKpRC5YbOzIB01dOc9xuUWjA2LHZo0wvD9olx3QCv/w74GAEIASeX7
+         RZkx/0g5UZNhnxcCv1qshw5rbADMdfb6VP0Y7GB9MMnTTxCKdqKUGiS00G/ukN1gEMVc
+         9nMwk8Lht8W639XKwbHHE4ZzQgry/fVKtMOHJuRR+3m3eRNLmhBJdpdzcw4UP5OPIivJ
+         FLjwzhtu6zwcbjt8b3gzMl+/nUQGxMYAKFdFH4fRyEFJMnQk/jROwaSIdqnpUWkn1vcR
+         c1PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uagduGYBaToIciSTPKWkit3IdUCkGvun+f7ohWPFPb4=;
-        b=Vg3bUqYcGPn7xJOS+2FlPMDzSbwcpg5upueqr1ujwWMtFKgueRmC/Vsnpfv8lQ2I3b
-         1Om6k62U7tFFO3GU1P3dcFV9dLs/1qRs4wESMO/jccJtM/Zy54Fsho4n218kM/twjiSX
-         03hmB5zStan339IqHa9GHs9qYXqHiHOJqYd2C7XrNc9Hm1AtgabfP2wFJXZ/uamF5uU7
-         49vcmsGxgAhcZuGfrZg1JtpRU8Nad+zKlczyM2FbQdpVvdLjgd4/tIt1WHAanNSVg82j
-         uf9X3w5gIL3M0atIH2blKSgvSO7cHTAI90f8hEg8aoVkaOSk7dJmkuIjSbP64haNYJ/z
-         YLYg==
-X-Gm-Message-State: AFqh2kpiQlRj9a6ko7zsU8+HL66VTKXZ3zDbtXXpjdj3oT5iyZOwqk85
-	JNXcqMkmeUyAxdvE8Q5WnzVdsG4T8qxqHQhn
-X-Google-Smtp-Source: AMrXdXuDhJoF03Ced4lPUbISllk48HgtHMEsVHONOvl7Xw5SatAOvrEj/NRqmmoIq34reGKEMn0O5w==
-X-Received: by 2002:ac8:4793:0:b0:3a8:1c63:7603 with SMTP id k19-20020ac84793000000b003a81c637603mr95818294qtq.57.1673284504788;
-        Mon, 09 Jan 2023 09:15:04 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id o7-20020ac841c7000000b003a82562c90fsm4787215qtm.62.2023.01.09.09.15.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 09:15:04 -0800 (PST)
-Date: Mon, 9 Jan 2023 12:15:02 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Cc: "Kernel.org Tools" <tools@linux.kernel.org>
-Subject: Re: [BUG b4] misformatted email recipients
-Message-ID: <20230109171502.4ccqujppjr7ag7ft@meerkat.local>
-References: <20230109141516.ddljbbkzwk74bfwe@snowball.t-8ch.de>
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=sbeXhSLJCKF1MnA/55Dlzl7wvkX44YCaU8Fb5JxAyWo=;
+        b=WeNHcv8FROSQaPn82TLrliokvHmy0otlJaTP5oSdcV7PKYJfoRfV4kfQLQNi9utqEx
+         KqmfSiY7uSIrzv1GKZcjZfeDyWhQ4sagBog0of2B9eGj1ktyaEaTUfvMwmxHaMJypv4M
+         ZE+Dl9jTI3DyVhMmj2t8T8BfJub2hnwJchcFRDl3NdhiRmiBIyO6goLJ19plqNXwysQY
+         +zjLr5IhgGPemnnWM4z75hqaPMLvIs2W1wlziVIh6trleo9pArdvxN3HPqhsC6mrXWYz
+         LnDy7A5iyURhX3SgoNwtlLN+mEOZ0/salppUyvLe4QlHpYWTevrcxk2z0sUjPFMOEeUc
+         Z73Q==
+X-Gm-Message-State: AFqh2konWZycYS+0Gu7zVeH0YHbn67D+118TSvLMUBq/9fF6/E9m87Qw
+	DvB27kYqymlSVZvu8kO7O+kp/w==
+X-Google-Smtp-Source: AMrXdXuHeyIChUELgHTmYW0psKbgwnV5BR6O/S5mmJXXtXHvKHKo0MKsOz5Sp0awRAPKUleCN7LXZw==
+X-Received: by 2002:a17:906:d052:b0:7c1:5098:907a with SMTP id bo18-20020a170906d05200b007c15098907amr58544154ejb.35.1673285071825;
+        Mon, 09 Jan 2023 09:24:31 -0800 (PST)
+Received: from [10.44.2.5] ([81.246.10.41])
+        by smtp.gmail.com with ESMTPSA id ku21-20020a170907789500b0084d43def70esm1983494ejc.25.2023.01.09.09.24.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Jan 2023 09:24:31 -0800 (PST)
+Message-ID: <956012a2-6a7b-3347-8b19-975fe71e4ea8@tessares.net>
+Date: Mon, 9 Jan 2023 18:24:30 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230109141516.ddljbbkzwk74bfwe@snowball.t-8ch.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Content-Language: en-GB
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Tools <tools@linux.kernel.org>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
+Subject: [b4] "b4 (shaz)am --no-parent" gets all parents
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jan 09, 2023 at 02:15:16PM +0000, Thomas Weißschuh wrote:
-> Hi,
-> 
-> it seems in certain cases b4 will misfold/misformat email recipient.
-> The exact conditions are that a long address line pushes the comma
-> separating different addresses to a new line during folding and that
-> line contains unicode data that is encoded.
-> In this case the comma is also encoded.
-> 
-> The root cause is a bug in Python email module [0].
+Hi Konstantin,
 
-Ugh, sometimes I feel like I'm the first person to actually use Python for
-sending email. The parsing modules are great, but the number of ways it gets
-outgoing formatting wrong is just amazing. Thank you for reporting it
-upstream.
+First, thank you for maintaining this great tool!
 
-> Such misformatted mails are rejected by some mail servers, for example
-> infradead.org.
-> Also it seems they are not indexed by public-inbox [1].
-> 
-> I hit this case in the wild [2].
+I'm using it for a bit of time now to apply patches in my tree. Today, I
+noticed one issue with "b4 shazam" and its option "--no-parent": when I
+try it on patch 9/12, all its parents are also applied. I don't have
+this issue with any other patches of the series:
 
-I'll have to figure out what to do about this. Clearly, we can't wait for this
-to be fixed upstream.
+  $ b4 shazam --no-parent
+20230104171526.1416746-10-matthieu.baerts@tessares.net
 
--K
+I can easily reproduce the issue when I launch this command on top of
+Linus' tree. No issue with the ID -9- or -11- for example.
+
+I'm using b4 0.11.2 but I can provide more output if needed.
+
+Cheers,
+Matt
+-- 
+Tessares | Belgium | Hybrid Access Solutions
+www.tessares.net
