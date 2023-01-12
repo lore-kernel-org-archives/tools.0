@@ -1,101 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE266BD29
-	for <tools@linux.kernel.org>; Wed, 11 Jan 2023 22:22:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D27C433EF;
-	Wed, 11 Jan 2023 22:22:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1673475760;
-	bh=jqvyQlQSff63xBtqVx9j+q3ZImTO6Ezipk0MviQclVQ=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-	b=RpFYgOHG+6iyYGq1ZX3t2FAzjBlagMJXYRjFhJoInThaTAt1w7X91ENySIorPkUwt
-	 ZlAgAKSznYvvcHaCQ5BRdeW6JV4b6ubJMg49265dwCs3Y/c2M5vZapz94hKxM2cRTm
-	 l1eyH1pNSbMLJ0tDAK0KjxwU8mEGZfpCETIkqkz3lf9jZMtaUMnw4xqOjrXSLAutiO
-	 0VQeTZvP4UnevcrvWw7L1QBOhwt6/3Av2KDeLmmo3gdUKqcz/s/D5fMZdso4lQa0mK
-	 6FKYuYeKgf3cl++fGi62h4nuhzt/AtxQCHmVJvB5jK2UnuHN52xdl0KuIUu3F4CVQu
-	 QkkOlHcdoB7aQ==
-Message-ID: <f886465ad1b69fad361aab450fbbc2fca14326b1.camel@kernel.org>
-Subject: Re: b4 prep -e oddness
-From: Vishal Verma <vishal@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools <tools@linux.kernel.org>
-Date: Wed, 11 Jan 2023 15:22:39 -0700
-In-Reply-To: <20230111220007.b5kjtmcvrq3tn7xj@meerkat.local>
-References: <ad77e06d2cb9ba322abad4f27865d4d6f79f6644.camel@kernel.org>
-	 <LtURL2BzHlyc5ozrnHgbrcad-HXjMZyU1n6qpsGOD4KULaWTgxNP6AfqCh7w0ngAebWLqR7VvQ4JPUaSvIlNIw==@protonmail.internalid>
-	 <20230111220007.b5kjtmcvrq3tn7xj@meerkat.local>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-/7RD/wtv2Hr+KZhroDkG"
-User-Agent: Evolution 3.46.2 (3.46.2-1.fc37) 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3323366
+	for <tools@linux.kernel.org>; Thu, 12 Jan 2023 04:51:44 +0000 (UTC)
+Received: by mail-vs1-f49.google.com with SMTP id t10so7352964vsr.3
+        for <tools@linux.kernel.org>; Wed, 11 Jan 2023 20:51:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=pefoley.com; s=google;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=QGQgHvV4WNKFMQCUarWQQ3S2s5aKyhSUXtDoB18lV0g=;
+        b=IO3PGNxDgj+Q8KOCDOkkGrLBNidfPfkYGZ5PZU90pQY95cH1u44pKiTZtVsyIUNlkN
+         WO+0B28T4EiMy3R3H3tCb28/ZkgiH0011yQFbREhnhM37bjln4ms3lsCgieisaet17GD
+         KVrhzsk9OtAxeKJ2fH7ky99/dqkGh03sI7YEg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QGQgHvV4WNKFMQCUarWQQ3S2s5aKyhSUXtDoB18lV0g=;
+        b=0Rv9jCSY+zf++1FY6vv/ZkJmW9jPJxgQ8ha4quU979qluWHZJ0ezRo+7aaixuze7u5
+         SmXKvT0HpZ8uDhAi20/hgsvC8s67TRN628J65mSs6T/AI+5CsRVrvmtvfNXzOVq9PM4o
+         napTz4vtMxYYy7OFEWz8U9I6OthNJNLFg1DSX0afLSo/LU/v4X5rnCoiWH7vwJjcKdAZ
+         Y94zWiMYvUG4Wzwu/RkbkMNuQBG7U74G1H56yqvkLcLnFf8rMHmhE+HvaGpkg5JBrMDK
+         eFCVQK0mMOJPTWUfKtTUhl30u538MB+1QAcR3nombnPHYsCYLXC+Dji6xEcYRcOw9aTz
+         qeBw==
+X-Gm-Message-State: AFqh2kqDk4pWBmJeLehl0QMyKWKjuDoMEvgDesYlsX8rdtt+P8Gx44sE
+	/RTYDMFZidkK66t3pYfk/ZOyy2TwMWc4+EKpoloE0Gn1VdIZeNGdT4A=
+X-Google-Smtp-Source: AMrXdXvvf/8708qJLSJao4U4gzjf+LifZS+ouRVwhqs4HUHYzXw8uADhMmjCYaU/c/0mhKPDg4odbUE7yC4V86jTQl8=
+X-Received: by 2002:a67:b205:0:b0:3b0:eec8:ce04 with SMTP id
+ b5-20020a67b205000000b003b0eec8ce04mr12778200vsf.16.1673499103028; Wed, 11
+ Jan 2023 20:51:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-
-
---=-/7RD/wtv2Hr+KZhroDkG
+From: Peter Foley <pefoley2@pefoley.com>
+Date: Wed, 11 Jan 2023 20:51:32 -0800
+Message-ID: <CAOFdcFNhD0EKnRwjCG+duttF+zxeEjv7qx31abSyg03csn6B5w@mail.gmail.com>
+Subject: Better error message when trying to use auto-to-cc on an empty branch
+To: tools@linux.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2023-01-11 at 17:00 -0500, Konstantin Ryabitsev wrote:
-> On Wed, Jan 11, 2023 at 01:56:24PM -0700, Vishal Verma wrote:
-> > The problematic step seems to be:
-> >=20
-> > $ git --no-pager merge-base --fork-point master new_branch
-> > 9652673e06ea84926e3be7c5cef0285c60fe31ff
->=20
-> I'm not sure it's problematic as much as it's just not something you're
-> expecting in this particular case.
+Hi,
 
-Agreed.
+I was poking around at
+https://people.kernel.org/monsieuricon/sending-a-kernel-patch-with-b4-part-1
+and ran into a corner case.
 
->=20
-> I did think that finding the actual fork-point would be useful, but I'm h=
-appy
-> to drop that if the expectation is that we're just looking for the best
-> merge-base, as opposed to the actual forking point.
->=20
-> > It looks like --fork-point uses the reflog, which has an entry for, I
-> > guess, a stale new_commit on master. (Maybe a gc will clean this up?)
-> >=20
-> > Instead, if I did this (drop --fork-point and just do a vanilla merge-
-> > base):
-> >=20
-> > $ git --no-pager merge-base master new_branch
-> > b7bfaa761d760e72a969d116517eaa12e404c262
-> >=20
-> > This is what I'd expect (-rc3).
-> >=20
-> > I'm not sure if switching to this breaks other expectations though?
->=20
-> No, this is literally up to what makes most sense. Do we always want to u=
-se
-> the actual merge-base and ignore any reflog forking history when enrollin=
-g
-> branches?
+I had an existing commit that I wanted to try out b4 with, so I ran
+"b4 prep -n kconfig" on top of the commit.
+I then immediately ran b4 prep -c and got this:
+b4 prep -c
+Will collect To: addresses using get_maintainer.pl
+Will collect Cc: addresses using get_maintainer.pl
+Traceback (most recent call last):
+  File "/home/peter/.local/bin/b4", line 8, in <module>
+    sys.exit(cmd())
+  File "/home/peter/.local/lib/python3.10/site-packages/b4/command.py",
+line 359, in cmd
+    cmdargs.func(cmdargs)
+  File "/home/peter/.local/lib/python3.10/site-packages/b4/command.py",
+line 76, in cmd_prep
+    b4.ez.cmd_prep(cmdargs)
+  File "/home/peter/.local/lib/python3.10/site-packages/b4/ez.py",
+line 1902, in cmd_prep
+    return auto_to_cc()
+  File "/home/peter/.local/lib/python3.10/site-packages/b4/ez.py",
+line 1824, in auto_to_cc
+    tos, ccs, tag_msg, patches = get_prep_branch_as_patches()
+  File "/home/peter/.local/lib/python3.10/site-packages/b4/ez.py",
+line 1143, in get_prep_branch_as_patches
+    patches = b4.git_range_to_patches(None, start_commit, 'HEAD',
+  File "/home/peter/.local/lib/python3.10/site-packages/b4/__init__.py",
+line 2766, in git_range_to_patches
+    raise RuntimeError(f'Could not run rev-list {start}..{end}')
+RuntimeError: Could not run rev-list
+17d982ccd4b5d7b274578eec3ca5d903de594d77..HEAD
 
-Reading this[1] about fork-point, I'm not personally seeing use cases
-in a typical b4 prep/send workflow where it would be useful to use
---fork-point
+I eventually figured out that the problem was the commit order (the
+cover letter should have been the ancestor of my commit), so I was
+able to just git rebase -i and swap the two commits. At that point
+things worked fine, but it would be nice if the error message was a
+little more obvious.
 
-I'll let others chime in if this isn't the case!
+Reporting here per the request on
+https://b4.docs.kernel.org/en/latest/index.html
 
-[1]: https://git-scm.com/docs/git-merge-base#_discussion_on_fork_point_mode
+Thanks,
 
-
---=-/7RD/wtv2Hr+KZhroDkG
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQT9vPEBxh63bwxRYEEPzq5USduLdgUCY782rwAKCRAPzq5USduL
-dqA8AP45fOUIdSK+/QhPxh+daYVLjFn656DcR8NSK9ztAW+bQQEAuObhNw23QFmx
-t8Pp084gfThZ0OvtMh/f0eP04z60vAU=
-=FqGt
------END PGP SIGNATURE-----
-
---=-/7RD/wtv2Hr+KZhroDkG--
+Peter Foley
