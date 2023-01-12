@@ -1,123 +1,84 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE0520F2
-	for <tools@linux.kernel.org>; Thu, 12 Jan 2023 09:53:59 +0000 (UTC)
-Received: by mail-wm1-f53.google.com with SMTP id ay40so12791937wmb.2
-        for <tools@linux.kernel.org>; Thu, 12 Jan 2023 01:53:59 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD35979C9
+	for <tools@linux.kernel.org>; Thu, 12 Jan 2023 15:26:23 +0000 (UTC)
+Received: by mail-yb1-f176.google.com with SMTP id a9so2384963ybb.3
+        for <tools@linux.kernel.org>; Thu, 12 Jan 2023 07:26:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:organization:subject:from:reply-to:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eaiVa6umOgDTQCuT1BpTp2CbxZx7pCJTA3RX3XzFCyM=;
-        b=MsSliB8i6VePSHjfIZx2ZlqDlrE+MxZsAWKwGsVqg3SAbmDu9zxYvZn8vZgKSLQBgn
-         MXSb/5OhX3JDO8HO/1fAQvh6ypdLmjscqSxkk34nw4ppRgM24yOZOjp4RcdPyPQl1PdB
-         0EXbttREL7iPtBqHX68F4FPJmvUAljS/lsfYEgl1PoWX/9KvE/wAR2SrKMcR2/uh6DIe
-         T45IJ1HRsgWOF9/Aj6ix0cBMYlfACpIDu5NLUf/qj2sKCszGoY1M+g4ZOJKHQ5O7LlLS
-         TWQyLI/Rc+tqMIYHKviU4PMLPMePJxbZ6woZ1i/VQk5JMGtAYtl1zS7Rd+12hXaxivBu
-         J/WQ==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rcrn6md04NiFMXj0ap8vCY2QeTc/Tqpn60IKPQT9Xlk=;
+        b=NsXbVtCBDxURU0kAjE+Wk6pT8SLAQiNlGWKOrjERP8qP30jM/FullwRr5dNFJ2TUdl
+         W+lTjMiBpdr5SmvbePBIpJkX/lBfHOKp0v52tI+Z7d7gW1c7sjkuOBV7JndX0RsT5rMX
+         WwgYhj52/jYxYjNc1X4mXJ63JdU+XNUhCcK3w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:organization:subject:from:reply-to:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eaiVa6umOgDTQCuT1BpTp2CbxZx7pCJTA3RX3XzFCyM=;
-        b=rcA4sJmu4gb4QxtgmEcmevVd8mtZIvP9AhKRdAOPuCxMUnIU6sC2dyP4DTPlRTkHzM
-         jM2qGBKLOONtS9kSHg2hzDNYMhnA+NnG3e+9HE9cN5Zb9osc2bItyO6q94maNaBRhyNq
-         L+s4G8xF5Fxa9JfOujFXNOYfylNeG/pEdNaH6iTn+wM5+34GS2YO7hnlRZuQTIuOJLac
-         CPsK7gVaQWcHVkdjiVzoeiGMqsYaAxmPzFs6eoR3Axm9N4nFw+8XoUOg+h8CJ99rnsA2
-         j/H1mD+b0AHNs3CyEjRCgVwJOuWprxcPKR/4fp+u202dEWO18jTEO3bEOOpzk/RACD4B
-         PDCQ==
-X-Gm-Message-State: AFqh2kqJcdlrMYDfdnc+69QJUJmOyC651zuYsU3iWihhQtyLl7hPqVA/
-	9wKRAPhbOYGENubisFNxIA7fPjcZxhlBrcwB
-X-Google-Smtp-Source: AMrXdXt+90+eewIu8EPJK7d6jNAMwJy2H/5CEJn5wyRL9mqD6xDaEnnTAr7hY+Qn6iVlf+aWgPUTYA==
-X-Received: by 2002:a05:600c:601e:b0:3d4:a1ba:a971 with SMTP id az30-20020a05600c601e00b003d4a1baa971mr54840257wmb.24.1673517237982;
-        Thu, 12 Jan 2023 01:53:57 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:3b9e:7554:4633:9a59? ([2a01:e0a:982:cbb0:3b9e:7554:4633:9a59])
-        by smtp.gmail.com with ESMTPSA id he5-20020a05600c540500b003d9ed40a512sm17777817wmb.45.2023.01.12.01.53.57
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 01:53:57 -0800 (PST)
-Message-ID: <6b4dc5aa-15a8-438c-ac53-1de49ec95c71@linaro.org>
-Date: Thu, 12 Jan 2023 10:53:56 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Rcrn6md04NiFMXj0ap8vCY2QeTc/Tqpn60IKPQT9Xlk=;
+        b=YuXPd5oZqEF7qJtjIEUagql7BnGCmizSYgzeYj7+jdhxanIMVCZAs6Ua5NiNhx8N8e
+         JE8S4Yydv/rt8ctUvnEMiI+bWKuGt4UcW2lShpWKhsH60WuRfE1fE5mw+zWvgj+vQ36y
+         9a9Fnwud3adsk7Fw7OD1d71PzaF0eBOG8xX/fYgsiGALPnR+fkFNeF35DIMtUZIM2QMn
+         Q7xVrzgZtqm0kitCXKlTXAiaKFYVNY2GwL0hkxXhtD4EMgjpo4exIQ8V4AeH6nX9Brvz
+         vDR+vJTDhAK/skYKRe/wqR1avvKmy5eZZJk8Df6zelnuMf3z8X/U7BUjKiWBrd4JQ0wj
+         hhxg==
+X-Gm-Message-State: AFqh2kpQKuf2cQABHSzeu3YAab1us9ivltey117qxn5SnLoo2hvpOjMn
+	r/8feieGPHGFGXWavkJMz5n4tis2h4vzlY6L
+X-Google-Smtp-Source: AMrXdXtVUw7nGxo5z+5PPRCTw4sEirNa0pkqrfwC00Vydbw7XNnEi4XTXhU5MmdAQUxyoNW5zLdn2g==
+X-Received: by 2002:a25:5e88:0:b0:7ca:d4:19b0 with SMTP id s130-20020a255e88000000b007ca00d419b0mr1375623ybb.51.1673537182818;
+        Thu, 12 Jan 2023 07:26:22 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id t2-20020a37ea02000000b006fb9bbb071fsm10955897qkj.29.2023.01.12.07.26.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Jan 2023 07:26:22 -0800 (PST)
+Date: Thu, 12 Jan 2023 10:26:21 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: tools@linux.kernel.org
+Subject: Re: Message-ID length limit !
+Message-ID: <20230112152621.ersbloeygrvci2ww@meerkat.local>
+References: <6b4dc5aa-15a8-438c-ac53-1de49ec95c71@linaro.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-X-Mozilla-News-Host: news://nntp.lore.kernel.org:119
-Content-Language: en-US
-To: tools@linux.kernel.org
-Reply-To: neil.armstrong@linaro.org
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Message-ID length limit !
-Organization: Linaro Developer Services
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6b4dc5aa-15a8-438c-ac53-1de49ec95c71@linaro.org>
 
+On Thu, Jan 12, 2023 at 10:53:56AM +0100, Neil Armstrong wrote:
+> 
+> Hi,
+> 
+> It seems I'm hitting a message-id length limit when sending with b4, here's a 2 patches thread:
+> 
+> 0/2 https://lore.kernel.org/all/20230110-topic-sm8550-upstream-display-defconfig-v2-0-c29b9714c85f@linaro.org/
+> 1/2 https://lore.kernel.org/all/20230110-topic-sm8550-upstream-display-defconfig-v2-1-c29b9714c85f@linaro.org/
+> 2/2 https://lore.kernel.org/all/20230110-topic-sm8550-upstream-display-defconfig-v2-2-c29b9714c85f@linaro.org/
+> 
+> Neither lore or thunderbird shows the thread correctly, so it seems the message-id is too long, right ?
 
-Hi,
+Oh, look, you found yet another bug in Python's email module. This brings the
+critical bugs count to 4. For no reason at all, it decided to qp-encode the
+References and In-Reply-To headers:
 
-It seems I'm hitting a message-id length limit when sending with b4, here's a 2 patches thread:
+	Message-Id: <20230110-topic-sm8550-upstream-display-defconfig-v2-1-c29b9714c85f@linaro.org>
+	References: =?utf-8?q?=3C20230110-topic-sm8550-upstream-display-defconfig-v2?=
+	 =?utf-8?q?-0-c29b9714c85f=40linaro=2Eorg=3E?=
+    In-Reply-To: =?utf-8?q?=3C20230110-topic-sm8550-upstream-display-defconfig-v?=
+     =?utf-8?q?2-0-c29b9714c85f=40linaro=2Eorg=3E?=
 
-0/2 https://lore.kernel.org/all/20230110-topic-sm8550-upstream-display-defconfig-v2-0-c29b9714c85f@linaro.org/
-1/2 https://lore.kernel.org/all/20230110-topic-sm8550-upstream-display-defconfig-v2-1-c29b9714c85f@linaro.org/
-2/2 https://lore.kernel.org/all/20230110-topic-sm8550-upstream-display-defconfig-v2-2-c29b9714c85f@linaro.org/
+I've reported this as https://github.com/python/cpython/issues/100991
 
-Neither lore or thunderbird shows the thread correctly, so it seems the message-id is too long, right ?
+I can't express how frustrating this is, but at least the work I've done this
+week on completely avoiding Python's email generation modules will help.
 
-And trying to apply the thread with b4 fails :
-$ b4 am 20230110-topic-sm8550-upstream-display-defconfig-v2-0-c29b9714c85f@linaro.org
-Grabbing thread from lore.kernel.org/all/20230110-topic-sm8550-upstream-display-defconfig-v2-0-c29b9714c85f%40linaro.org/t.mbox.gz
-Analyzing 1 messages in the thread
-No patches found.
+I will probably end up releasing 0.12 sooner than later, seeing as everyone's
+work is impacted by the quality of Python's email routines.
 
-$ b4 am 20230110-topic-sm8550-upstream-display-defconfig-v2-1-c29b9714c85f@linaro.org
-Grabbing thread from lore.kernel.org/all/20230110-topic-sm8550-upstream-display-defconfig-v2-1-c29b9714c85f%40linaro.org/t.mbox.gz
-Analyzing 1 messages in the thread
-Checking attestation on all messages, may take a moment...
----
-   ✓ [PATCH v2 1/2] arm64: defconfig: enable SM8550 DISPCC clock driver
-     ✓ Signed: DKIM/linaro.org
-   ERROR: missing [2/2]!
----
-Total patches: 1
----
-WARNING: Thread incomplete!
-  Link: https://lore.kernel.org/r/20230110-topic-sm8550-upstream-display-defconfig-v2-1-c29b9714c85f@linaro.org
-  Base: not specified
-        git am ./v2_20230112_neil_armstrong_arm64_defconfig_enable_sm8550_dispcc_clock_driver.mbx
-
-
-$ b4 am 20230110-topic-sm8550-upstream-display-defconfig-v2-2-c29b9714c85f@linaro.org
-Grabbing thread from lore.kernel.org/all/20230110-topic-sm8550-upstream-display-defconfig-v2-2-c29b9714c85f%40linaro.org/t.mbox.gz
-Analyzing 1 messages in the thread
-Checking attestation on all messages, may take a moment...
----
-   ERROR: missing [1/2]!
-   ✓ [PATCH v2 2/2] arm64: defconfig: enable Visionox VTDR6130 DSI Panel driver
-     ✓ Signed: DKIM/linaro.org
----
-Total patches: 1
----
-WARNING: Thread incomplete!
-  Link: https://lore.kernel.org/r/20230110-topic-sm8550-upstream-display-defconfig-v2-2-c29b9714c85f@linaro.org
-  Base: not specified
-        git am ./v2_20230112_neil_armstrong_arm64_defconfig_enable_visionox_vtdr6130_dsi_panel_driver.mbx
-
-
-I'm running:
-$ b4 --version
-0.11.1
-
-Thanks,
-Neil
-
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
-Senior Software Engineer - Linaro Developer Services
-https://linaro.org/services
+-K
