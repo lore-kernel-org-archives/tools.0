@@ -1,44 +1,44 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE613D6E
-	for <tools@linux.kernel.org>; Thu, 19 Jan 2023 20:56:04 +0000 (UTC)
-Received: by mail-qt1-f175.google.com with SMTP id x7so2565831qtv.13
-        for <tools@linux.kernel.org>; Thu, 19 Jan 2023 12:56:04 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0673D6E
+	for <tools@linux.kernel.org>; Thu, 19 Jan 2023 21:32:28 +0000 (UTC)
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-4d59d518505so46791067b3.1
+        for <tools@linux.kernel.org>; Thu, 19 Jan 2023 13:32:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=content-disposition:mime-version:message-id:subject:to:from:date
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2BvmgJIKAIbDH0ikkoEQnF+Ut8h19rP+kP0l9pq+4Ic=;
-        b=E49q2Nds9qbULI3Of60dObkoU1z7xX6k9L6ZZeZgZydlRE0l33Q3RF9WLWw2cVaiIQ
-         H4NM2Kkjn2XIQYVL/rtDb4LeLpNjuFTZh8JxsjUlejbDnAHGgjw0Vr/tFCu6T7JXQO58
-         sBmokKFg/xjjM73WcgTG/BVpAH/zohQJQrIUk=
+        bh=t7Xr9Yh79bobFkHOEde/aIgosLWC05vAwdacC9Bh63Y=;
+        b=Tx4iiMqtLi2CdJAODb4JeKica64tL8RxV8VsPukpnUQLPhi9Ccpkn45m8d8XI5HbCC
+         OCQHkyVPL52J+NYT/FtBa3xdJZPTwzOAzAIvtCdENNOH/jTL6FHbRXSSOaRSVWqy/oLd
+         osOhWldfaLtpYe0b0QLS1eiehtwdqqHWxC9UQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-disposition:mime-version:message-id:subject:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2BvmgJIKAIbDH0ikkoEQnF+Ut8h19rP+kP0l9pq+4Ic=;
-        b=IBRqM0M6ikSbo4qXUHjSL+o4gtRS4PHx8qjbaUSTW/1G4PGlYQ+NJRRPD72mi2j3h3
-         XMwLwV4Vbh++yM3EJ7l1CNGetyCbkbm/TVUkdoKAewWXgnesZM4x99IlUxXPmQj1sda8
-         Fk5qOlXUJn5kM7Dz0Ural8/A0UorUGbRrB/DWUMCLrIkVQQ/T4Q44PoNvbiG7ybTdG9t
-         w8x33sS1GCPkXQLgebnMDAWd+2BuvI1uhKVE16FPPWLju3WF4PjgDccGKCzBSlIRxt2z
-         DflvSviFDCZCmcrIpN/Z2UqIqCH0KMSRxVFAQpNtzw1JvV6dTtZXNf06vWFGFpegO6eW
-         xchg==
-X-Gm-Message-State: AFqh2kpG9qF7jybWOlzxD2Z0x2KhZ0tgtIANgYdCx+YhzMZOgvd6JUIA
-	AzsVtEjwTFYdgDSkGtLSVnDjTDs3g8FXRe12
-X-Google-Smtp-Source: AMrXdXtvC0ZJKy0muhZ+SClNCjHW6a+TeGUda8lnNkbYkACVyBpJzWY4lBFhMfxlY3ksMygQEbchnQ==
-X-Received: by 2002:ac8:4a09:0:b0:3b6:5d23:8748 with SMTP id x9-20020ac84a09000000b003b65d238748mr8706570qtq.52.1674161763008;
-        Thu, 19 Jan 2023 12:56:03 -0800 (PST)
+        bh=t7Xr9Yh79bobFkHOEde/aIgosLWC05vAwdacC9Bh63Y=;
+        b=D0ewWhL85KeU7TEuKf7G5y5h2m+AuOWpsGh4cKWx4+l5d1ZNR4VTo6Xu5Rc9k/aL5N
+         AihfdRRsWnL8npXP8k93jiYfy8PaD3gSJqrc7dGhGSjWFC+/aXr2fCzxxq0syltom4sP
+         x2qgMxKnoXeWll9xahe/8nUDGpvj1ZoQDJMaeGp6hCdq8ldMcyibIFhTgho4mDyfxpjX
+         W699Yrm0t9UJTnIu7cHVJiil2J2CwuVD+gXunylvmWw5oWiKhCJnurzibsKYTojamaWt
+         rchT+azdM71sbBBbwF2fe3MDLRnfGYBXNky/OODyTC7ig2PU0pxxwJkzPYw0zcJ6Z2ZR
+         E3Qg==
+X-Gm-Message-State: AFqh2kpGkKU7v3JVP+qa89PWoWWeqYg8JGVBuTSFZkuCguesskkRW+f2
+	2cuzqfeDRCJI4M5tAEg0bhAE1Aady3lJdGDX
+X-Google-Smtp-Source: AMrXdXsrB63IHis0R+m2tEhtSE+Eo9ZMO/CZbk0tc+Jcv5c4SCyq1SA29Z4DngAmvr/qnUKbgiopnw==
+X-Received: by 2002:a05:690c:308:b0:4ef:3643:a16a with SMTP id bg8-20020a05690c030800b004ef3643a16amr11499278ywb.52.1674163947433;
+        Thu, 19 Jan 2023 13:32:27 -0800 (PST)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id j19-20020a05620a411300b00704c1f4e756sm24546650qko.14.2023.01.19.12.56.02
+        by smtp.gmail.com with ESMTPSA id l16-20020a37f910000000b00704df12317esm24870287qkj.24.2023.01.19.13.32.26
         for <tools@linux.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 12:56:02 -0800 (PST)
-Date: Thu, 19 Jan 2023 15:56:01 -0500
+        Thu, 19 Jan 2023 13:32:26 -0800 (PST)
+Date: Thu, 19 Jan 2023 16:32:25 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: tools@linux.kernel.org
-Subject: b4 send --hide-cover-to-cc now default
-Message-ID: <20230119205601.wvfebidyugx2rhu5@meerkat.local>
+Subject: Upcoming 0.12 release
+Message-ID: <20230119213225.ccw3dxb42l6bzsyf@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -50,14 +50,13 @@ Content-Disposition: inline
 
 Hi, all:
 
-The To/Cc trailer lists in cover letters tend to be pretty long, and I think
-they visually interfere with the maintainers' work by requiring them to scroll
-to see diffstats.
+I intend to release 0.12.0 tomorrow in order to provide a solution for the
+python email module bugs that we have identified. They are actively causing
+grief for the users of "b4 prep/send" and I'm worried that this will hurt
+the b4 workflow adoption now that it's starting to take off.
 
-For this reason, b4 will now always hide the To: and Cc: trailers from
-generated cover letters, which makes them more succinct and visually more
-appealing.
-
-This change is in master and will go into v0.12.
+I was hoping to add more features to 0.12, but they will have to wait. The
+main feature in this change will be the switch to our own patch generation
+routines.
 
 -K
