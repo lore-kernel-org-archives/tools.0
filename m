@@ -1,141 +1,158 @@
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6815233CD
-	for <tools@linux.kernel.org>; Fri, 20 Jan 2023 16:57:15 +0000 (UTC)
-Received: by mail-vs1-f46.google.com with SMTP id t10so6319987vsr.3
-        for <tools@linux.kernel.org>; Fri, 20 Jan 2023 08:57:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=z2H8mlazaJpdn/pLWXNCKdwGEPT/T0QkTbMGFP5VzYM=;
-        b=VFDiLLH0Nz3bfxUClBeWm3gKDpT/jUPDFvXWTnbNonblV4oidYrj5bxUIB+6L3fErC
-         KlHdeAyrU9NGfn7Y1tU8bK4DMV3I050GimdncnMIOqAnwBRyU2ZjuroUsqHNranrnGBB
-         c8WyOFxN8zaenN1HPy3VaGUmyr1JZFzTkdb4U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z2H8mlazaJpdn/pLWXNCKdwGEPT/T0QkTbMGFP5VzYM=;
-        b=wYaCAIPvgwznJcLbKrhyEFlZaKQO4kdXEbB8AE5PDG4qjfVZitndhfC9vcSOI8tdFJ
-         VaF1nuXhyMXJUMtrnWsDpU7FTSCKW1HMBEmC7RothPDXRp3BWVEdBIqMoJeWVSArwGna
-         +5iWsJk1NJvaSFaOcqiD0SbRACMNj0B1tltZu9vsk0+nJeBZ8QHVr5Zynj5KTobxMwHH
-         OT7LeSCu+yn87oYA0c9q/u/LJPq4lGgsWFaHw7rdotBJBjBX4NALAYf1ZEaQg47yTjdz
-         aRrfgBVaIJ5bQ2/RTh3V3GqXQuoiFYyuCd3uGauRs7tZRzj45sJYeWfRvlM36bA3q5yp
-         BhRA==
-X-Gm-Message-State: AFqh2kqF+sTetUtLBtQI/jqipi+kdsglDmO7X8dbJchmgsEy75z1AMlG
-	9UcX9/ez6zJAbvB+hxYol0RSFu7XJiTZsHsu
-X-Google-Smtp-Source: AMrXdXseERGdokMMWpjNMZj9b0kZPVEvLuhjuM/U1l6G31vfKu340GopU3s+t5jHvKngPhkGL/sXjg==
-X-Received: by 2002:a05:6102:304f:b0:3d3:e24b:fdb6 with SMTP id w15-20020a056102304f00b003d3e24bfdb6mr14500196vsa.0.1674233833979;
-        Fri, 20 Jan 2023 08:57:13 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id dt41-20020a05620a47a900b00705e7daf6f0sm11227560qkb.129.2023.01.20.08.57.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 08:57:13 -0800 (PST)
-Date: Fri, 20 Jan 2023 11:57:12 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, users@linux.kernel.org
-Subject: b4 v0.12.0 available
-Message-ID: <20230120165712.rznwonw6nbfhc7fo@meerkat.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C5A256E
+	for <tools@linux.kernel.org>; Fri, 20 Jan 2023 22:34:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96D9C433D2;
+	Fri, 20 Jan 2023 22:34:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1674254044;
+	bh=Zb83WLbA99e8eI368F+ijxI7lpDMHzn9OFmXTk2z4yA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sIqRvbGu2vN96H3eqBmyrNDjpBPzNZ04NdFt2ZpTbOsj4QV1qpbSvK5Btrbw9o1RM
+	 IBIF4+V76ggjTr+NAIHNe7kGFl7A/v9934BSet8/NAb+F8p9ahq1h/CgZMQEIdUXMT
+	 9IdLoDeJEdG+Lne3UNsdugoERj/OLAKjIN/LPZoeW231EhwDEBVrF6o0MqcsE+GaAg
+	 Xrm4OhadR2ci5WeHdeCnVYHdZAKQA8i5thPju+C+uF/ZopGezTkLCXELQ7HuNoih/X
+	 ys33zBEaYBfXeZ1GQ0Yim9bvPCbmNDwcz0mD+BAesEPmgsD+tAqTFluwz4sc2BzpqP
+	 0891Iyxb0Ak2g==
+Date: Fri, 20 Jan 2023 22:34:01 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Palmer Dabbelt <palmer@rivosinc.com>, konstantin@linuxfoundation.org
+Cc: tools@linux.kernel.org
+Subject: Re: [PATCH] shazam: Add the --merge-base argument
+Message-ID: <Y8sW2QoSQk08315M@spud>
+References: <20221013175727.17139-1-palmer@rivosinc.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zzefuwnop3drud6w"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="KjeDChIcsU0hmb2b"
 Content-Disposition: inline
+In-Reply-To: <20221013175727.17139-1-palmer@rivosinc.com>
 
 
---zzefuwnop3drud6w
-Content-Type: text/plain; charset=utf-8
+--KjeDChIcsU0hmb2b
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello:
+Hey Konstantin,
 
-I am happy to announce b4 v0.12.0. The primary purpose of this release is to
-work around critical bugs discovered in the Python email.message module that
-was causing message corruption when certain conditions were met. Specifical=
-ly,
-we have discovered and reported the following Python bugs:
+On Thu, Oct 13, 2022 at 10:57:27AM -0700, Palmer Dabbelt wrote:
+> I was just handling a patch set where the author used English to
+> describe the dependencies.  They hadn't yet been merged at the time the
+> patch set was posted so I don't think there's really any way to make
+> sure the computers always understand the base, this just lets me quickly
+> override the automatic merge base detection when I run into something
+> non-canonical.
+>=20
+> Link: https://lore.kernel.org/all/20220913061817.22564-1-zong.li@sifive.c=
+om/
 
-- https://github.com/python/cpython/issues/99927
-- https://github.com/python/cpython/issues/100884
-- https://github.com/python/cpython/issues/100900
-- https://github.com/python/cpython/issues/100991
+I guess this just got lost somewhere (missing a CC?), or perhaps we've
+missed some reason why this is not needed?
 
-None of them are fixed at this time, and even if they are, we're still look=
-ing
-at months or years before everyone uses Python versions that do not contain
-them.
+Doesn't apply cleanly against 0.12.0, but with -3 it does & appears to
+work - at least in my simple test cases
+For example, the following gets automagically assigned -rc4 as a base:
 
-For this reason, b4 v0.12 implements its own message generation routines th=
-at
-sidesteps the problem entirely. Since patches are ultimately very simple
-plaintext messages without any mime content, this wasn't too challenging to
-implement, but there are probably subtle bugs hiding in that code as well.
-But, at least we can fix those when they are reported.
+/stuff/b4/b4.sh shazam -s -t shazam 20230119094447.21939-3-walker.chen@star=
+fivetech.com -H
 
-Everyone using "b4 send" really should upgrade to 0.12.
+But I don't want to merge -rc4 into my for-next branch, and being able
+to explicitly pass my preferred base of -rc1 is really useful.
 
-# Other features in 0.12
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-The primary focus was fixing Python's email bugs, so the list of other
-features is small:
+Thanks,
+Conor.
 
-## b4 mbox --refetch <mboxfile>
+> Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+> ---
+>  b4/command.py |  2 ++
+>  b4/mbox.py    | 13 ++++++++-----
+>  man/b4.5.rst  |  2 ++
+>  3 files changed, 12 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/b4/command.py b/b4/command.py
+> index b16043e..5bb674e 100644
+> --- a/b4/command.py
+> +++ b/b4/command.py
+> @@ -171,6 +171,8 @@ def cmd():
+>      sp_sh.add_argument('--guess-lookback', dest=3D'guessdays', type=3Din=
+t, default=3D21,
+>                         help=3D('(use with -H or -M) When guessing base, =
+go back this many days from the patch date '
+>                               '(default: 3 weeks)'))
+> +    sp_sh.add_argument('--merge-base', dest=3D'mergebase', type=3Dstr, d=
+efault=3DNone,
+> +                       help=3D('(use with -H or -M) Force this base when=
+ merging'))
+>      sp_sh.set_defaults(func=3Dcmd_shazam)
+> =20
+>      # b4 pr
+> diff --git a/b4/mbox.py b/b4/mbox.py
+> index ff96a11..c1a0660 100644
+> --- a/b4/mbox.py
+> +++ b/b4/mbox.py
+> @@ -231,14 +231,17 @@ def make_am(msgs, cmdargs, msgid):
+>          logger.critical(' Link: %s', linkurl)
+> =20
+>      base_commit =3D None
+> -    matches =3D re.search(r'base-commit: .*?([\da-f]+)', first_body, re.=
+MULTILINE)
+> -    if matches:
+> -        base_commit =3D matches.groups()[0]
+> +    if cmdargs.mergebase is not None:
+> +        base_commit =3D cmdargs.mergebase
+>      else:
+> -        # Try a more relaxed search
+> -        matches =3D re.search(r'based on .*?([\da-f]{40})', first_body, =
+re.MULTILINE)
+> +        matches =3D re.search(r'base-commit: .*?([\da-f]+)', first_body,=
+ re.MULTILINE)
+>          if matches:
+>              base_commit =3D matches.groups()[0]
+> +        else:
+> +            # Try a more relaxed search
+> +            matches =3D re.search(r'based on .*?([\da-f]{40})', first_bo=
+dy, re.MULTILINE)
+> +            if matches:
+> +                base_commit =3D matches.groups()[0]
+> =20
+>      if not base_commit and topdir and cmdargs.guessbase:
+>          logger.critical(' Base: attempting to guess base-commit...')
+> diff --git a/man/b4.5.rst b/man/b4.5.rst
+> index 073f32a..e889542 100644
+> --- a/man/b4.5.rst
+> +++ b/man/b4.5.rst
+> @@ -226,6 +226,8 @@ options:
+>                          Attempt to merge series as if it were a pull req=
+uest (execs git-merge)
+>    --guess-lookback GUESSDAYS
+>                          (use with -H or -M) When guessing base, go back =
+this many days from the patch date (default: 3 weeks)
+> +  --merge-base COMMIT
+> +                        (use with -H or -M) Force this base when merging
+> =20
+>  *Example*: b4 shazam -H 20200313231252.64999-1-keescook@chromium.org
+> =20
+> --=20
+> 2.38.0
+>=20
 
-Since version 0.11, "b4 am" saves messages with minimal headers. If you wou=
-ld
-like to respond to messages in a saved mbox file as part of your review
-process, you can restore all original headers using:
-
-    b4 mbox --refetch that.mbox
-
-## Always hiding To/Cc trailers in the cover letters
-
-B4 uses the cover letter to track To/Cc addressees. In version 0.12, "b4 se=
-nd"
-always hides them from generated cover letters, so they don't overwhelm
-reviewers (this info is already in the headers anyway).
-
-## Bugfixes
-
-Mostly minor bugfixes and corner-case crashers.
-
-# Upgrading
-
-To upgrade from pip:
-
-    pip install --upgrade b4
-
-# Thanks
-
-The following people helped with this release, in reverse-git-log order:
-
-    Geert Uytterhoeven <geert@linux-m68k.org>
-    Vishal Verma <vishal@kernel.org>
-    Rob Herring <robh@kernel.org>
-    Matthieu Baerts <matthieu.baerts@tessares.net>
-    Thomas Wei=C3=9Fschuh <thomas@t-8ch.de>
-    Nathan Chancellor <nathan@kernel.org>
-    Mark Brown <broonie@kernel.org>
-    Quentin Schulz <quentin.schulz@theobroma-systems.com>
-
--K
-
---zzefuwnop3drud6w
+--KjeDChIcsU0hmb2b
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCY8rH6AAKCRC2xBzjVmSZ
-bLyqAP0QKlTqMi5GbrHDTfwHhazcjYH49goYjFRdoG34l1piggEA+rFctRO8LFfl
-VU+JYpXXgRdRBvmu7xqGzY6I/BxLuws=
-=/hVY
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCY8sW2QAKCRB4tDGHoIJi
+0gHmAQCeJCmkmgcSMY2uKdclaWiYN+6S3VRs6pE74tWQkl7vYQD9EO6MAh6FBpai
+l4pUm3NkzTiUytmmWS4GYNDkbDNZnAU=
+=W3Rw
 -----END PGP SIGNATURE-----
 
---zzefuwnop3drud6w--
+--KjeDChIcsU0hmb2b--
