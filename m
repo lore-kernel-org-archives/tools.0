@@ -1,82 +1,58 @@
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD871C2D
-	for <tools@linux.kernel.org>; Mon, 23 Jan 2023 13:13:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674479618; x=1706015618;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=6p6d8d0A0EQ/w0BUPthiORFjEs/2UH9nG7t++c03jZc=;
-  b=CkO3T6EPRvxmUKXavMMZY9/qX8/341fFcfGGRlZ0Z7jynBkZSHh5Li5j
-   LXdAE53hI8O7Lz+2JRvRFhpvSd2P+5IU8o69DcmCIUxUVoxy7H6BG9aNa
-   ghq3zo8P6zEU0nubXE34TSMgKwpwXGFZ00I+zdCsNWqMIRULy5n6u4tNy
-   WvorvC/R5qGXm4Eg4whF9PGZnmLWfJD7vWSry3vN/EYcO066pojjAKJYt
-   jiWNbFpJQSgzrNJseNKwOyXwgFYX7hkVDDwvAgjNW9WrNAc/3ZnBX9BJk
-   AhqWoYMaLNYE1KLREBO/JD8cB/1/fT1WIAjxvtPZktNSB5bzJKEGgCbe9
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10598"; a="390537239"
-X-IronPort-AV: E=Sophos;i="5.97,239,1669104000"; 
-   d="scan'208";a="390537239"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2023 05:13:37 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10598"; a="990400275"
-X-IronPort-AV: E=Sophos;i="5.97,239,1669104000"; 
-   d="scan'208";a="990400275"
-Received: from possola-mobl.ger.corp.intel.com (HELO localhost) ([10.252.57.125])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2023 05:13:35 -0800
-From: Jani Nikula <jani.nikula@intel.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, dri-devel@lists.freedesktop.org, Daniel Vetter
- <daniel.vetter@ffwll.ch>
-Subject: Re: pr-tracker-bot for drm subsystem?
-In-Reply-To: <20230120151024.nflfvgl55wfl6ppj@meerkat.local>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <87a670spdw.fsf@intel.com> <87a62dadi9.fsf@intel.com>
- <20230120151024.nflfvgl55wfl6ppj@meerkat.local>
-Date: Mon, 23 Jan 2023 15:13:33 +0200
-Message-ID: <871qnl8kci.fsf@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D6246BF
+	for <tools@linux.kernel.org>; Thu, 26 Jan 2023 17:29:02 +0000 (UTC)
+Received: by mail-qt1-f173.google.com with SMTP id j9so1866147qtv.4
+        for <tools@linux.kernel.org>; Thu, 26 Jan 2023 09:29:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JEQprLRH1oNnVgsDBx6iGqn7lTRT9reJZOtAcrRh+rs=;
+        b=Hg6QqrBkMYnIzbsHDFBn2yT0pG7kOySctE/lJyaw4X5e15E4rkAIFc9obMvTrn4jP6
+         9kiQ1IbXTJVlx29FR2EPsl9Y1RPChQuNtYslucq4tqXjpRYtNnIH6kTGkvk0NEohs8Xe
+         PUX5lpRf2hMDDM3K6y/WMph4hybQarC14j1iM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JEQprLRH1oNnVgsDBx6iGqn7lTRT9reJZOtAcrRh+rs=;
+        b=wTvYrdrIgWv1GmAUQeqKXkcUAP5O6ecIjM8pitqavYJHgFgR+HWB7Mi6Fh75xpIXlP
+         CALHQrNOabyU1HJZmAQoQ55iyurhtDG3bBOSXsOPRw2XpZo6mex2FI0Bs8nVmqFdMjD9
+         Pio/VwgP5YX9t3SgzG+piBRes5srArcOIcc6r5DFeuoItMPMNGHFAKxaBZMYOOlH6Bq5
+         lsigs7DMqcDkw1twYndnzcKMgCxrcwIP6vtH7E+hAUMMIviMPbm/XigwEGM2A//noo2k
+         PuTwKVzKhAwKrbgQTk7RNZL0AUMS/+T24/oGQW9KotIVbKeFs/SyzKVWHFSzD4VCvG39
+         +k6A==
+X-Gm-Message-State: AFqh2krl5pJOaXifFPrijyE5r6xUEzzOJA1Hb0HDCPhq6JxEIBeV1Aa1
+	GI8ULm3q0BRV5hdJoWhDMXoCyoe+KnhN2yWe
+X-Google-Smtp-Source: AMrXdXuQOUnDxB97CVHQydP7JonKLiFnjdFs1qrIWeOCzSAQL/OetTW+mAA12IGFndZu6fit2oaILA==
+X-Received: by 2002:ac8:5545:0:b0:3b6:2f0d:1925 with SMTP id o5-20020ac85545000000b003b62f0d1925mr51500751qtr.64.1674754141464;
+        Thu, 26 Jan 2023 09:29:01 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id j7-20020a37b907000000b00706c1fc62desm1228452qkf.112.2023.01.26.09.29.00
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jan 2023 09:29:01 -0800 (PST)
+Date: Thu, 26 Jan 2023 12:28:59 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: tools@linux.kernel.org
+Subject: b4 0.12.1 available (python-3.8 compatibility fix)
+Message-ID: <20230126172859.nwuf5vb7wb22jlfm@meerkat.local>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On Fri, 20 Jan 2023, Konstantin Ryabitsev <konstantin@linuxfoundation.org> wrote:
-> On Fri, Jan 20, 2023 at 09:09:18AM +0200, Jani Nikula wrote:
->> 
->> Konstantin?
->
-> Sorry, I didn't mean to scholz you around.
+Hi, all:
 
-This reply alone was worth the wait. ;D
+Version 0.12.0 was broken on Python-3.8, so this is a bump release to address
+that issue. There are no other changes.
 
-> The pr-tracker-bot is very much a
-> bespoke solution for Linus, so adapting it to other subsystems is not very
-> trivial, which is why I've been sitting on this request without any movement.
->
-> The code for the bot is available here:
-> https://git.kernel.org/pub/scm/linux/kernel/git/mricon/korg-helpers.git/tree/pr-tracker-bot.py
->
-> I can take a look at it in the future, but at the moment I'm still not able to
-> work on it, sorry. :(
+Reported-by: Jon Cormier <jcormier@criticallink.com>
 
-I guess the question still stands: Regardless of who modifies the
-tracker bot and when, do you think you could take on running it for
-other subsystems, provided the changes are to your liking, or should the
-subsystems adapt it and run their own?
-
-If the latter, there's just not all that much incentive to make it nice,
-especially so if you say it's not trivial. It'll just be copy and make
-it bespoke for the other subsystem.
-
-
-BR,
-Jani.
-
-
--- 
-Jani Nikula, Intel Open Source Graphics Center
+-K
