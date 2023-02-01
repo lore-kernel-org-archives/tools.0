@@ -1,98 +1,136 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2C88C15
-	for <tools@linux.kernel.org>; Tue, 31 Jan 2023 16:06:55 +0000 (UTC)
-Received: by mail-wm1-f41.google.com with SMTP id k8-20020a05600c1c8800b003dc57ea0dfeso4846174wms.0
-        for <tools@linux.kernel.org>; Tue, 31 Jan 2023 08:06:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tessares.net; s=google;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K1g7x/C/1Pm4NcPPpziqNhSU4WL3QKlJvWVcH0oqpak=;
-        b=1po0GKDnL7/VBgn8eUYCmu8Rl6ZiipEj+BVboUCRQBbrGHB91fplXIJV+bb4H/pJVf
-         VkezLHyIBLYrmax/8sAtpO6DtbnlDuQ26ZGBpSK+OzAU4FPFTfd4PHG4KOYYo0YBuUrM
-         A2ulhQQJkMFLQhd7Kojss1+J8fKoFy6vIlTsMKHn5ew7l3isPfcF/osMfmLo0SDpy3Sv
-         co3wYVAYNN8fzL5usk4VD2yXRa2rU1Ydadbe28ohDKo/jxbwRQWULIoyk3ZOaf1500xK
-         kTJOn0FdYv4BQFAF/41Xg9Fn0fQa6piK7o6ZqWEUheaCswY4NmkM94qSXC7OFemqrw7+
-         2sSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=K1g7x/C/1Pm4NcPPpziqNhSU4WL3QKlJvWVcH0oqpak=;
-        b=oMPnXrP0uukvcOG+zLBeT20m3Tsj9PtF0XjVmFulnJ67xdDaxx6x0qAHjXw7EDA2Lw
-         ss9I55rbFrl+6Q32iqRnpD1AUaemRMYhMkn3rROcJXPdYlya/SFhW/ERJ3npTd5Hbnl1
-         rI58eh4qU6Lo5GXs5xTwENYip180CJywu/ssm2kz06KJZ6YdxuBKIN1gBWbwR6epL+0/
-         CgIXfx4TlZ5zVZWfK1iBig3E4euFLwFyvZLtQztEeH+GskCtfzlQ/pwfOvPq9InQ092J
-         Y1mJprVy+XV+nf59J4rykLT+Z2kQWok93SaKp9N4LXXEo+iNhmEWVA+6RwCRdF7oEZ+K
-         XXJg==
-X-Gm-Message-State: AO0yUKXmkM65znOr3+gFT7emQ+rK8KuPe21Dn+UVVmDMEXcTx4a/0Bsh
-	aGcnPziHBGv6e5E9RU4LU9jrFzDjjPL9maIvZi7Cbg==
-X-Google-Smtp-Source: AK7set8FT7CnR1dYEDwQK6oJI0zYY9UxNlueZ9i6RvsKJn598g7kdmzbDYZOzXmVhNTqz7L/SIJBaQ==
-X-Received: by 2002:a7b:ca53:0:b0:3d9:ee01:60a4 with SMTP id m19-20020a7bca53000000b003d9ee0160a4mr86248wml.1.1675181213369;
-        Tue, 31 Jan 2023 08:06:53 -0800 (PST)
-Received: from ?IPV6:2a02:578:8593:1200:3c4:638a:a912:cba5? ([2a02:578:8593:1200:3c4:638a:a912:cba5])
-        by smtp.gmail.com with ESMTPSA id ip7-20020a05600ca68700b003dc433bb5e1sm12617559wmb.9.2023.01.31.08.06.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Jan 2023 08:06:52 -0800 (PST)
-Message-ID: <233f0440-7f20-6edf-256c-b8ebec53539e@tessares.net>
-Date: Tue, 31 Jan 2023 17:06:51 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78468483
+	for <tools@linux.kernel.org>; Wed,  1 Feb 2023 17:34:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168A3C433D2;
+	Wed,  1 Feb 2023 17:34:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1675272842;
+	bh=ygc4IOR5OvRlgD4F6Q9hfed4+9m5JcEjPGCgA5dLEDA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bRuHPD5sloF3pF+zjmTTjkinTCyXMfGMUZAM0v9y/0gLtRAPZURJHm/yDsuWusCTB
+	 4NxHVSC9KemAconh0zgTZeVcE2fpGaDS1vOAKhvjF9M9IdFcYrj2Tpb98iZo3c5UTX
+	 e3ogv8StnOTw5FU6RtuhQV8LIwZoGaBgL4i6P96q2gQnQiULfk7cUYbpTy6WsdTluV
+	 FNvf/Zxs+oC+cs9X/101fHIcb+g8vh7le968bkvynicZvIW1QUcMcqc2aVwhxMpC9m
+	 1N3EX0jPszeqUuzEQ7ODup7sOm1T75v2Ps/QMRalKuG9rwRSQQbuJ2NT4vzyRuRayp
+	 9QgfOSTbfPY7Q==
+From: Conor Dooley <conor@kernel.org>
+To: palmer@dabbelt.com,
+	konstantin@linuxfoundation.org
+Cc: conor@kernel.org,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	tools@linux.kernel.org,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH v2] shazam: Add the --merge-base argument
+Date: Wed,  1 Feb 2023 17:33:02 +0000
+Message-Id: <20230201173301.54604-1-conor@kernel.org>
+X-Mailer: git-send-email 2.39.1
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Content-Language: en-GB
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Tools <tools@linux.kernel.org>
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: b4: idea: checkpatch.pl integration / hook support
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Konstantin,
+From: Palmer Dabbelt <palmer@rivosinc.com>
 
-First, thank you for developing and maintaining this great tool!
+I was just handling a patch set where the author used English to
+describe the dependencies.  They hadn't yet been merged at the time the
+patch set was posted so I don't think there's really any way to make
+sure the computers always understand the base, this just lets me quickly
+override the automatic merge base detection when I run into something
+non-canonical.
 
-B4 works very well to send patches. But there are quite a few steps and
-I think it is easy to forget one :)
+Link: https://lore.kernel.org/all/20220913061817.22564-1-zong.li@sifive.com/
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Co-developed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+---
+Been running this fixed up version for a bit now with no issues. Dunno
+if the last submission didn't end up in an inbox for some reason, but
+figured I'd resend with my fixes.
+The changelog is the diff I attached in my response to the v1:
+https://lore.kernel.org/tools/Y8199aCGNIW37YGx@spud/T/#m9fbe4c02429ec0601e5ff93fbe1aaecb368f736c
+---
+ b4/command.py |  2 ++
+ b4/mbox.py    | 17 +++++++++++------
+ man/b4.5.rst  |  2 ++
+ 3 files changed, 15 insertions(+), 6 deletions(-)
 
-For some like "b4 prep --auto-to-cc", that's probably OK to miss this
-command because "b4 send" will mention that these patches will only be
-sent to the author + other emails found in the patches. (It might be
-interesting to have a more visible warning / confirmation if no
-addresses are found in the cover-letter but that's not my main point here.)
-
-But for 'checkpatch.pl' or other scripts specific to some subsystems,
-there will be no reminders from "b4 send" to check that.
-
-
-Do you think it could be possible to integrate such tool to b4 if available?
-
-For the moment, I do this before a "b4 send":
-
-  ./scripts/checkpatch.pl --strict --codespell \
-   --git $(b4 prep --show-info | awk '/^start-commit: / { print $2 }')..
-
-(checkpatch doesn't seem to support empty patches, we have to skip it)
-
-What do you think about having a list of hooks that can be added in
-b4-config file?
-
-For occasional contributors, it could be nice if it is automatically
-executed before sending a patch. But I understand there might be other
-issues to deal with: missing dependences, false positives, different
-rules per subsystem, etc. A mention in the doc and/or before sending the
-patches might be enough.
-
-Cheers,
-Matt
+diff --git a/b4/command.py b/b4/command.py
+index 304450f..3d769ad 100644
+--- a/b4/command.py
++++ b/b4/command.py
+@@ -175,6 +175,8 @@ def setup_parser() -> argparse.ArgumentParser:
+     sp_sh.add_argument('--guess-lookback', dest='guessdays', type=int, default=21,
+                        help=('(use with -H or -M) When guessing base, go back this many days from the patch date '
+                              '(default: 3 weeks)'))
++    sp_sh.add_argument('--merge-base', dest='mergebase', type=str, default=None,
++                       help=('(use with -H or -M) Force this base when merging'))
+     sp_sh.set_defaults(func=cmd_shazam)
+ 
+     # b4 pr
+diff --git a/b4/mbox.py b/b4/mbox.py
+index e0c6a0a..0b0fc40 100644
+--- a/b4/mbox.py
++++ b/b4/mbox.py
+@@ -211,14 +211,17 @@ def make_am(msgs: List[email.message.Message], cmdargs: argparse.Namespace, msgi
+         logger.critical(' Link: %s', linkurl)
+ 
+     base_commit = None
+-    matches = re.search(r'base-commit: .*?([\da-f]+)', first_body, re.MULTILINE)
+-    if matches:
+-        base_commit = matches.groups()[0]
++    if cmdargs.mergebase:
++        base_commit = cmdargs.mergebase
+     else:
+-        # Try a more relaxed search
+-        matches = re.search(r'based on .*?([\da-f]{40})', first_body, re.MULTILINE)
++        matches = re.search(r'base-commit: .*?([\da-f]+)', first_body, re.MULTILINE)
+         if matches:
+             base_commit = matches.groups()[0]
++        else:
++            # Try a more relaxed search
++            matches = re.search(r'based on .*?([\da-f]{40})', first_body, re.MULTILINE)
++            if matches:
++                base_commit = matches.groups()[0]
+ 
+     if base_commit and topdir:
+         # Does it actually exist in this tree?
+@@ -670,8 +673,8 @@ def refetch(dest: str) -> None:
+ 
+ 
+ def main(cmdargs: argparse.Namespace) -> None:
++    # We force some settings
+     if cmdargs.subcmd == 'shazam':
+-        # We force some settings
+         cmdargs.checknewer = True
+         cmdargs.threeway = False
+         cmdargs.nopartialreroll = False
+@@ -683,6 +686,8 @@ def main(cmdargs: argparse.Namespace) -> None:
+             cmdargs.guessbase = True
+         else:
+             cmdargs.guessbase = False
++    else:
++        cmdargs.mergebase = False
+ 
+     if cmdargs.checknewer:
+         # Force nocache mode
+diff --git a/man/b4.5.rst b/man/b4.5.rst
+index dc00ef2..31beae4 100644
+--- a/man/b4.5.rst
++++ b/man/b4.5.rst
+@@ -230,6 +230,8 @@ options:
+                         Attempt to merge series as if it were a pull request (execs git-merge)
+   --guess-lookback GUESSDAYS
+                         (use with -H or -M) When guessing base, go back this many days from the patch date (default: 3 weeks)
++  --merge-base COMMIT
++                        (use with -H or -M) Force this base when merging
+ 
+ *Example*: b4 shazam -H 20200313231252.64999-1-keescook@chromium.org
+ 
 -- 
-Tessares | Belgium | Hybrid Access Solutions
-www.tessares.net
+2.39.1
+
