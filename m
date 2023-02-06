@@ -1,46 +1,46 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B467B
-	for <tools@linux.kernel.org>; Mon,  6 Feb 2023 18:23:33 +0000 (UTC)
-Received: by mail-wm1-f50.google.com with SMTP id j29-20020a05600c1c1d00b003dc52fed235so9564366wms.1
-        for <tools@linux.kernel.org>; Mon, 06 Feb 2023 10:23:33 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15185CAB
+	for <tools@linux.kernel.org>; Mon,  6 Feb 2023 18:23:34 +0000 (UTC)
+Received: by mail-wm1-f45.google.com with SMTP id n13so9316173wmr.4
+        for <tools@linux.kernel.org>; Mon, 06 Feb 2023 10:23:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=tessares.net; s=google;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tp3JkuzllV1vHXdEh6qGoyrtJpxd5cbLTZGLXI29o/w=;
-        b=xF5B0Tlj8vMhn6VxQFY3B8qJe+60pOQx8B1RxSzPEGkn84cnLoyGrUyhlA5AyV7qRp
-         a8w/l1aL47JRiP128i0EyE6wnYqn+B1bp2v93j0sj70nGofNJ1UmB1PveqB7ZiGEWKcX
-         BnAl0LijwjfYYAbB6VJXVodHdWvfz6kCsa1stVqHriMzfOBqiHjQBjnOHqDlMERhJv3T
-         17BC7cUSVH2wVrO3YetDVoEbOXf25TSsJcF6zP+hjKRDXJW7fwDzzbgGp8yLD9Y5F+G1
-         buHPnBZGmDL7wMw4Z6Rree3ueopfg8sV4MCYAgnmra7skkMP+hAYpAFsivo9eE5qKV5X
-         PK8g==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S2ePytGdz/O3wSsLAIZV5u9qK9qkOcrsfSioxbf2AUg=;
+        b=vmhCpiN1FISLJZ/NFItkHcTgmo2u5QmHdQA0+GDPBQ2TIYo2ht2+4VJBEYUEZiAnys
+         OtmL/tSx8OmL1+Lr5EAOz4qHvQABpwEcsuDDuVjwrvRXSd0d1S2Ou5lvhp7W4T10Hyuu
+         HKlkglLQVuA3sbb476Fpp6s64Di83YXMsf+5pUXsFb69Fl4iNNYTWHYghIlEmsQYQeju
+         UJOuLi0DEvg1s1uaGg+Q4yOj7NtkBHHSYg1ZGC85SBItU9EuqzN2mrw/F9kv/W8aVWk7
+         FJtlOB8O1JT0c1g3CtG23ZZi24hVf3Wi7lfiw8M8vcgbmJN4WgUK47FbeK1IS6rjiVe1
+         4xlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tp3JkuzllV1vHXdEh6qGoyrtJpxd5cbLTZGLXI29o/w=;
-        b=jvYx0gMJHPHeFX8dGA86KDTua06DsbWNuGTPlPvX7DfZiIFDtXGItovdSSMTt+GIiw
-         JOyrsalz58GzVripLoymmwfGA70Fgios+h1vqn+yzeR32qKmmW094FeUA/iTGLFcxmXl
-         cFkQpzczAwR6fXu3QZbaWmibM7xP26GreObzpphoI31n4oQXtbemBxFc14ZR9hzvIfwy
-         k4+YOHF3m1+ojaXazP5N6YaLCsjGRCqfqubhay610W9KcFCFHLq6yQTXxnpu0sNrEMNd
-         g5imjEnEqQGfG3Ek4Te1erymaLoaS1qgj8hPvANnpkPua8Pzi04hnCwuY0sYfY+xfQiR
-         IRqQ==
-X-Gm-Message-State: AO0yUKUEHzozevEVYrsEsUPPu3otgNh+r1KUINdRfmuDlHvwvohRoS3p
-	L8AzWM+lUpnRIuXhjbAW1pq730tfrJs9uIwYnBc=
-X-Google-Smtp-Source: AK7set/5tx8M2b8COr/PhZpLnzPuJQNK4nDiOPAhM+mmiSY84nL7B+4RGQYxI1br0iDLInXwq838EA==
-X-Received: by 2002:a05:600c:13ca:b0:3dc:5937:35a2 with SMTP id e10-20020a05600c13ca00b003dc593735a2mr647643wmg.9.1675707811474;
-        Mon, 06 Feb 2023 10:23:31 -0800 (PST)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=S2ePytGdz/O3wSsLAIZV5u9qK9qkOcrsfSioxbf2AUg=;
+        b=pwBA00etPQFTPFS1KA7WqYhwFZK5Jfp0q3JJArZIqHIzQCpZ4zG+glaZ1gElvkzpmC
+         Ncr6IhqczPYN3XZJKrurctQ5JaeXkEdK/sVvbqtHQp3FaRDVhIbKUKZEbR04t4UVXiEY
+         VLcHKF2Dd48Yx3pRCVmk1WE9ne2IJofD0uGwNZhVxPgazxRU9dCioB2xuscvYnWT0dD0
+         Gz5suLrW42bghjTy1Jzp4MJ3KjJMkqy6NHAsk1PWpSi3dY+KOHVCrwQEKN65dhigQcUR
+         W4nh3Jzs7vlD9g2WyGWUdwbuL4eOFYj+1ATiDYVPh8Wr1e7NEbfTZN+tIXxvcUQRe3n7
+         Q53Q==
+X-Gm-Message-State: AO0yUKWR+9YrnarVpcJNQHe7S9vuj3YAZmBy+Fb2wRFFL/CF7CBE0DT0
+	V72+a5G4Ip2yFsMEvXG1wXYYs1c0WXWaE6CZoBs=
+X-Google-Smtp-Source: AK7set9Hil3w3tl4J2QMFTmmEknoSr1ZTo2RdWfJNMEVY8wfzEK2E/yKJZNQlS9gN0d+aMI19KtCmA==
+X-Received: by 2002:a05:600c:44d4:b0:3df:f7f9:7bc6 with SMTP id f20-20020a05600c44d400b003dff7f97bc6mr593945wmo.20.1675707812385;
+        Mon, 06 Feb 2023 10:23:32 -0800 (PST)
 Received: from vdi08.nix.tessares.net (static.219.156.76.144.clients.your-server.de. [144.76.156.219])
-        by smtp.gmail.com with ESMTPSA id h27-20020a05600c2cbb00b003db12112fcfsm12871588wmc.4.2023.02.06.10.23.30
+        by smtp.gmail.com with ESMTPSA id h27-20020a05600c2cbb00b003db12112fcfsm12871588wmc.4.2023.02.06.10.23.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 06 Feb 2023 10:23:31 -0800 (PST)
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: [PATCH b4 RFC 0/3] "b4 prep --new --fork-point" is not clear to me
-Date: Mon, 06 Feb 2023 19:23:01 +0100
-Message-Id: <20230206-b4-prep-fork-point-as-base-branch-v1-0-2732e0c32f5d@tessares.net>
+Date: Mon, 06 Feb 2023 19:23:02 +0100
+Subject: [PATCH b4 RFC 1/3] ez: prep -n: use fork-point as base branch
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -49,67 +49,60 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIVF4WMC/02NQQrCMBBFr1Jm7UBMSytuBQ/QrbjINFM7iEmYF
- BFK727iyuX7D97fILMKZzg3Gyi/JUsMBY6HBqbFhQej+MJgjW2NNT1Sh0k54Rz1iSlKWNFlJJc
- ZSV2YFmyHgciS9b4/Qen8uVp6ubyyVlE6s3x+5zegrk7j9QL3ff8CKWKlhJcAAAA=
+Message-Id: <20230206-b4-prep-fork-point-as-base-branch-v1-1-2732e0c32f5d@tessares.net>
+References: <20230206-b4-prep-fork-point-as-base-branch-v1-0-2732e0c32f5d@tessares.net>
+In-Reply-To: <20230206-b4-prep-fork-point-as-base-branch-v1-0-2732e0c32f5d@tessares.net>
 To: "Kernel.org Tools" <tools@linux.kernel.org>
 Cc: Matthieu Baerts <matthieu.baerts@tessares.net>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1424;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1010;
  i=matthieu.baerts@tessares.net; h=from:subject:message-id;
- bh=hNanyjXh4kJ+t6uD2jM435umdERDF13mvWlkyRi2OYk=;
- b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBj4UWi0rYg2LtXxowIGS81Ugrg778bnKTvXPlWI
- N8C0jAsijmJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCY+FFogAKCRD2t4JPQmmg
- c00fD/9mUzKReBo2ej6htRv+UegjmAPYiZONG2KV/A8wdBRvGdhiHgO28ZUcJtGM4fOvpFjq1f1
- ZWHeMTO8wSsF07Su712imY2tdT4tMFxjUi0E5MjLJ9y0gZdF3rxKrR/Wx4viNpznMttnc1w8Ouu
- 5KiUsXea5N7D4Udm4rGTVd+O/HbdGxxwdo5hZ7PzG/mQvPagPHXtPf0zkPNr/MDav/bctpDKX+s
- sxE3cefYn0KXQ5p6pF3GLAekSqI5sJDEkDdlJggA5zyX/XBEgGNeca1GvxpFzzxVq14+hVNori6
- FuahQeDY//I2TNsxg4dWtZ0ZdvkjD3PELSsCzLTN3BES4JfukyFDwuCFloxnMk8IxrPd12Z8hZf
- mDpBIneiatkzaCtrs+bglGA3jfuJKiPf55H8GU8KaB05KX2M/8dq5krQMENfSNAU1Kyh1zZTzH9
- 8ThnwzdAM6XgC5kcQSShZcdnozHQX3EGhlF2laLZM7/SqI4pjSYONoeSJ578nRkuDvbySYaRdaq
- rSHvQth1J5Nvu4bh94jFST2iDVqjxYdYO/NkqpVxUsF00rBQzUv+xNcXKoUapynUkKYKfjqt/dJ
- J95ba8D1JmbedM/xReln+36g8ntF0aRRC/bQR5mqwFLSG5JxV2vrN+R+ZKZMhcEQwnJMITN0N7G
- 23Y3FJw9ZRq1foQ==
+ bh=1rdF60Dj+3OB3sdeWNdGok8Aj6oEyGWH/aNeHPPg2xY=;
+ b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBj4UWieNGTlfW5bmUJV7aFmRl7eazmtQ5gbOSNR
+ CDLW2sgASmJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCY+FFogAKCRD2t4JPQmmg
+ c8BTEADpmxZ1JvTQQNF74YXnQc4lBLYQl841KJyYuHOGalMvsqUiAnDi3gls3OB4GMPEciXahV+
+ 9VmFKFBvajK8CY9y+BUQ11Gav8O7A4mroHhjB0SHCvcWBZyukPMzHq0U2eS5pqMFaE8lMlPndGQ
+ om5OX5otI3jEOfqgGpuwATj9cTZKzLuui3HTFbZ4HqXMz5ki9LRwaHZhhutGAFUhKp+0RsSB7oS
+ pTsBYCiwehd7qG0COEFpxFVg4TbxRkbXJvAI2FcDigXOOeJ4cx1gj70BA1T+kWQJTHwDXyxpeYX
+ av4bqyG8UdvqPLOZ8BTHxqlIWv89XbopWst3WuRRafiyeu/RYwQGFXwmcoTim5gdBe6m1Pp6uL7
+ xuXMvv7eMC7k3O0YkQlO4dANgjjG/R2wqaYGxXF9akF7eHI+/5ZM8oc8JTbro8utQDQYFN531tU
+ 7gjkKWPlbkSbaVQf9Z8Q6hiHg34XEPQNWDg1wfU687okW40ZUrNtDqRkV3m3TGaWw2yODn3VQ5h
+ GGcJI69xxuNgkUlI5YxRM6DeqNfchwi6X9kOpLOG1luygf/HxL18NIU9UAJb8Soyyz+xkpXfDUy
+ vh6DaDTd75NPaYx6WA0W1N2Em42fKYyAErBp+KzXkOBWg2O12LPBo9H4EDVTR6z1a0qalHaVAUv
+ AKnwqsz5dlEPd2g==
 X-Developer-Key: i=matthieu.baerts@tessares.net; a=openpgp;
  fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
 
-This is an RFC because when looking at the code, I'm not sure I'm using
-this command properly.
+When creating a new branch with a fork point, use it as base branch.
 
-For me, using '--fork-point' is useful to avoid switching to another
-branch before calling 'b4 prep -n', no? On my side, it is especially
-useful if this other branch is not a local one, e.g.
+Without that, when using:
 
-  b4 prep -n foo -f linus/master
+  b4 prep -n ${NEW_SERIES_NAME} -f ${FORK_POINT}
 
-It seems doing what I want by creating the new b4 branch on top of
-'linus/master' one. Except that b4 was using the current branch as 'base
-branch'.
-
-I thought it was a bug and I just changed the line that was problematic
-for me (patch 1).
-
-But when I looked at the code just above, I didn't find a reason why
-the current branch is also used there with the other strategies. I'm
-sure I'm missing something there but just in case, I did this
-modification (patch 2). Maybe all we need is to make sure the given
-argument is a branch (patch 3)?
+The branch ${NEW_SERIES_NAME} will be created on top of ${FORK_POINT}
+but the current branch will be set as base branch. ${FORK_POINT} can be
+quite different from the current branch.
 
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 ---
-Matthieu Baerts (3):
-      ez: prep -n: use fork-point as base branch
-      ez: prep -n: always use fork-point as a base
-      ez: prep -n: validate fork-point is a branch
+ b4/ez.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- b4/ez.py | 26 +++++---------------------
- 1 file changed, 5 insertions(+), 21 deletions(-)
----
-base-commit: ada3021c64dd484e53219eb3af55da6c8f25d0ec
-change-id: 20230206-b4-prep-fork-point-as-base-branch-377bb2b2dd68
+diff --git a/b4/ez.py b/b4/ez.py
+index 74afddc..2722c6c 100644
+--- a/b4/ez.py
++++ b/b4/ez.py
+@@ -345,7 +345,7 @@ def start_new_series(cmdargs: argparse.Namespace) -> None:
+                         basebranch = mybranch
+                         break
+             else:
+-                basebranch = mybranch
++                basebranch = cmdargs.fork_point
+ 
+             if basebranch is None:
+                 logger.critical('CRITICAL: fork-point %s is not on the current branch.', cmdargs.fork_point)
 
-Best regards,
 -- 
-Matthieu Baerts <matthieu.baerts@tessares.net>
+2.38.1
 
