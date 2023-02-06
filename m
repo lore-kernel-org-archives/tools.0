@@ -1,46 +1,46 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15185CAB
-	for <tools@linux.kernel.org>; Mon,  6 Feb 2023 18:23:34 +0000 (UTC)
-Received: by mail-wm1-f45.google.com with SMTP id n13so9316173wmr.4
-        for <tools@linux.kernel.org>; Mon, 06 Feb 2023 10:23:34 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259315CAD
+	for <tools@linux.kernel.org>; Mon,  6 Feb 2023 18:23:35 +0000 (UTC)
+Received: by mail-wm1-f43.google.com with SMTP id m16-20020a05600c3b1000b003dc4050c94aso9540748wms.4
+        for <tools@linux.kernel.org>; Mon, 06 Feb 2023 10:23:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=tessares.net; s=google;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=S2ePytGdz/O3wSsLAIZV5u9qK9qkOcrsfSioxbf2AUg=;
-        b=vmhCpiN1FISLJZ/NFItkHcTgmo2u5QmHdQA0+GDPBQ2TIYo2ht2+4VJBEYUEZiAnys
-         OtmL/tSx8OmL1+Lr5EAOz4qHvQABpwEcsuDDuVjwrvRXSd0d1S2Ou5lvhp7W4T10Hyuu
-         HKlkglLQVuA3sbb476Fpp6s64Di83YXMsf+5pUXsFb69Fl4iNNYTWHYghIlEmsQYQeju
-         UJOuLi0DEvg1s1uaGg+Q4yOj7NtkBHHSYg1ZGC85SBItU9EuqzN2mrw/F9kv/W8aVWk7
-         FJtlOB8O1JT0c1g3CtG23ZZi24hVf3Wi7lfiw8M8vcgbmJN4WgUK47FbeK1IS6rjiVe1
-         4xlg==
+        bh=NyVQ6P/zy9x6/WZlI9Xjyl3p7wAzLgocN7VrMRc1Erw=;
+        b=p7WoWDH29G2AwaqxEfjUAQ78yeVq7f/iq42/9/cmiI5eTzRUZtlBSLtMcEimmpjfgr
+         /t4QCj02c1W05FIX0WM0L5Vn1ejP30ZhucN5rFmq0Vqo9iRBA44huk7p6ggM62XuAaAG
+         rTgDzK0cwxBZMUN83GipraGZLIbRYhYtUfB4NCDd9irAWAxdHvKzQbK6ILwxLmKSW4zX
+         oq0DYewPQarDZzzRU/4QXbUypXuTk5+MxHZhYn3rrq5bAPYWTkXg2oOAoobKMtrTguYT
+         JtB9nUA/z7kKo5+QmdxY3nlWjNc0A2oKtRdZcW6z5z0W2ZHRrovQrJNdJFGdilNAJkkR
+         5nSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=S2ePytGdz/O3wSsLAIZV5u9qK9qkOcrsfSioxbf2AUg=;
-        b=pwBA00etPQFTPFS1KA7WqYhwFZK5Jfp0q3JJArZIqHIzQCpZ4zG+glaZ1gElvkzpmC
-         Ncr6IhqczPYN3XZJKrurctQ5JaeXkEdK/sVvbqtHQp3FaRDVhIbKUKZEbR04t4UVXiEY
-         VLcHKF2Dd48Yx3pRCVmk1WE9ne2IJofD0uGwNZhVxPgazxRU9dCioB2xuscvYnWT0dD0
-         Gz5suLrW42bghjTy1Jzp4MJ3KjJMkqy6NHAsk1PWpSi3dY+KOHVCrwQEKN65dhigQcUR
-         W4nh3Jzs7vlD9g2WyGWUdwbuL4eOFYj+1ATiDYVPh8Wr1e7NEbfTZN+tIXxvcUQRe3n7
-         Q53Q==
-X-Gm-Message-State: AO0yUKWR+9YrnarVpcJNQHe7S9vuj3YAZmBy+Fb2wRFFL/CF7CBE0DT0
-	V72+a5G4Ip2yFsMEvXG1wXYYs1c0WXWaE6CZoBs=
-X-Google-Smtp-Source: AK7set9Hil3w3tl4J2QMFTmmEknoSr1ZTo2RdWfJNMEVY8wfzEK2E/yKJZNQlS9gN0d+aMI19KtCmA==
-X-Received: by 2002:a05:600c:44d4:b0:3df:f7f9:7bc6 with SMTP id f20-20020a05600c44d400b003dff7f97bc6mr593945wmo.20.1675707812385;
-        Mon, 06 Feb 2023 10:23:32 -0800 (PST)
+        bh=NyVQ6P/zy9x6/WZlI9Xjyl3p7wAzLgocN7VrMRc1Erw=;
+        b=TJeV1sWBcgjMR9PIl56WxDmgKqQuveR9LtxYuSkM4/BWx7a6/VOnEKdj0186N/dEO1
+         2+T/RM4B6xk7oOb0/p0econtpHGomsWIAYb/60bTMV+R+StL5xgxIO5DYX+egt3DBvM0
+         OD1n3/PYZePMZ6VXXQyEEkHY0gvHqir/ixr6I21cTdPj6bSk9S68hSqaf58dcvyC1Ukq
+         0ao2ikPZj6YTEt3C5JzSx4BuoINRf0Um/50sqzUyMIK6fjpFJel/uWHTRg/e2nWajWZf
+         HOBahtQkADaFX61z51k6dO/bZX4LYpxTUTBp9OY/EOVl7qz4kSCzB1+6S9Nf3hjzy63y
+         zGiw==
+X-Gm-Message-State: AO0yUKUl6HackY8w+ZLSXZFnlrLSAeDzpgxFaTG9txyR9B4BljFho/iT
+	pgv4TYKeWHNaZu84NQngobQE6wPVLUJSi5zZ6UA=
+X-Google-Smtp-Source: AK7set+JZfaareR0tJTXnIb3UUUsWE953v/h7HagypXLRDMsTPEVnHAurSaCnm2D2ZgilgtctO+PNQ==
+X-Received: by 2002:a05:600c:996:b0:3df:f85a:4724 with SMTP id w22-20020a05600c099600b003dff85a4724mr554814wmp.39.1675707814025;
+        Mon, 06 Feb 2023 10:23:34 -0800 (PST)
 Received: from vdi08.nix.tessares.net (static.219.156.76.144.clients.your-server.de. [144.76.156.219])
-        by smtp.gmail.com with ESMTPSA id h27-20020a05600c2cbb00b003db12112fcfsm12871588wmc.4.2023.02.06.10.23.31
+        by smtp.gmail.com with ESMTPSA id h27-20020a05600c2cbb00b003db12112fcfsm12871588wmc.4.2023.02.06.10.23.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 10:23:31 -0800 (PST)
+        Mon, 06 Feb 2023 10:23:33 -0800 (PST)
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
-Date: Mon, 06 Feb 2023 19:23:02 +0100
-Subject: [PATCH b4 RFC 1/3] ez: prep -n: use fork-point as base branch
+Date: Mon, 06 Feb 2023 19:23:04 +0100
+Subject: [PATCH b4 RFC 3/3] ez: prep -n: validate fork-point is a branch
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -49,59 +49,57 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230206-b4-prep-fork-point-as-base-branch-v1-1-2732e0c32f5d@tessares.net>
+Message-Id: <20230206-b4-prep-fork-point-as-base-branch-v1-3-2732e0c32f5d@tessares.net>
 References: <20230206-b4-prep-fork-point-as-base-branch-v1-0-2732e0c32f5d@tessares.net>
 In-Reply-To: <20230206-b4-prep-fork-point-as-base-branch-v1-0-2732e0c32f5d@tessares.net>
 To: "Kernel.org Tools" <tools@linux.kernel.org>
 Cc: Matthieu Baerts <matthieu.baerts@tessares.net>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1010;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=955;
  i=matthieu.baerts@tessares.net; h=from:subject:message-id;
- bh=1rdF60Dj+3OB3sdeWNdGok8Aj6oEyGWH/aNeHPPg2xY=;
- b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBj4UWieNGTlfW5bmUJV7aFmRl7eazmtQ5gbOSNR
- CDLW2sgASmJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCY+FFogAKCRD2t4JPQmmg
- c8BTEADpmxZ1JvTQQNF74YXnQc4lBLYQl841KJyYuHOGalMvsqUiAnDi3gls3OB4GMPEciXahV+
- 9VmFKFBvajK8CY9y+BUQ11Gav8O7A4mroHhjB0SHCvcWBZyukPMzHq0U2eS5pqMFaE8lMlPndGQ
- om5OX5otI3jEOfqgGpuwATj9cTZKzLuui3HTFbZ4HqXMz5ki9LRwaHZhhutGAFUhKp+0RsSB7oS
- pTsBYCiwehd7qG0COEFpxFVg4TbxRkbXJvAI2FcDigXOOeJ4cx1gj70BA1T+kWQJTHwDXyxpeYX
- av4bqyG8UdvqPLOZ8BTHxqlIWv89XbopWst3WuRRafiyeu/RYwQGFXwmcoTim5gdBe6m1Pp6uL7
- xuXMvv7eMC7k3O0YkQlO4dANgjjG/R2wqaYGxXF9akF7eHI+/5ZM8oc8JTbro8utQDQYFN531tU
- 7gjkKWPlbkSbaVQf9Z8Q6hiHg34XEPQNWDg1wfU687okW40ZUrNtDqRkV3m3TGaWw2yODn3VQ5h
- GGcJI69xxuNgkUlI5YxRM6DeqNfchwi6X9kOpLOG1luygf/HxL18NIU9UAJb8Soyyz+xkpXfDUy
- vh6DaDTd75NPaYx6WA0W1N2Em42fKYyAErBp+KzXkOBWg2O12LPBo9H4EDVTR6z1a0qalHaVAUv
- AKnwqsz5dlEPd2g==
+ bh=/uDrGGCjin05he/6501aK4RlIxHWv42iVskhR6R68lI=;
+ b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBj4UWi4LyHxKjG847OfiO/wr376Qj3hHes4ID1t
+ P8cwcGlzLGJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCY+FFogAKCRD2t4JPQmmg
+ cyraD/4ogLof4aouWJ5mTeOEk7c98Cicrmr9N+6Y1eLSRxpSXnhmbrPNZkYYHKEf5gMakEFP0qH
+ HmzORLO8vwP4+7HlPB+PUV0GAahwqTWWjXdxM81cREvgFGVa7POgQ7Q6cbkZ6d6QncyW7KRM2ZK
+ uitY6HNOtjov1GFEeIm9WWxuhAlSxWc19gHhODnj7CxvH1hrgszn/12TLF2Wm0GzvT5wJtngdEu
+ gHxyHpggjohrpRGiXvRaAumsWC4ga5ltxy1Jz+UTkDYWMn1GB1A/VctYO9CFrYT+rKfxInYY6x1
+ EpWnqIZ7wV6lQI91PKxyTLyFqmsEXScuBPgkbSFMFM2k3ggH50ooDrrhdnM79LSTDCwyBIOkkNf
+ eRnbjBS7lG5LGvixb5eLnrMADHI7f75UDKFNhHZfCBaN3pj0+SFDUVyPY3omJHlisG5JWAlrwh0
+ jYvUyZjvx/gx8zD8Z9D9gGIjofUZowRQ+S5U5uhxiEBfwdQlxfjlYzQoQ4SZDf420DZhazZbdpj
+ 40F+LuQBjdUThQlP8W5n4+XH4TGd3M50lolSS0pfafl/V4jXPpP/azkDfDv0ejggiCWSa689cBS
+ C2DghAQYq4tn+yXS4o0J8JR68beU3ZPELDhbDgYy/IlInv3AawkD2hplEn+m1V9KGnrxNxWmP3X
+ xvPHaLVlnH0UmsA==
 X-Developer-Key: i=matthieu.baerts@tessares.net; a=openpgp;
  fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
 
-When creating a new branch with a fork point, use it as base branch.
+This --fork-point option is used to set the new base branch.
 
-Without that, when using:
-
-  b4 prep -n ${NEW_SERIES_NAME} -f ${FORK_POINT}
-
-The branch ${NEW_SERIES_NAME} will be created on top of ${FORK_POINT}
-but the current branch will be set as base branch. ${FORK_POINT} can be
-quite different from the current branch.
+Make then sure it is one and not a fixed SHA.
 
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 ---
- b4/ez.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ b4/ez.py | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/b4/ez.py b/b4/ez.py
-index 74afddc..2722c6c 100644
+index 9200d03..8d90296 100644
 --- a/b4/ez.py
 +++ b/b4/ez.py
-@@ -345,7 +345,7 @@ def start_new_series(cmdargs: argparse.Namespace) -> None:
-                         basebranch = mybranch
-                         break
-             else:
--                basebranch = mybranch
-+                basebranch = cmdargs.fork_point
+@@ -330,6 +330,12 @@ def start_new_series(cmdargs: argparse.Namespace) -> None:
+         else:
+             basebranch = cmdargs.fork_point
  
-             if basebranch is None:
-                 logger.critical('CRITICAL: fork-point %s is not on the current branch.', cmdargs.fork_point)
++            gitargs = ['show-ref', '--quiet', basebranch]
++            ecode, out = b4.git_run_command(None, gitargs)
++            if ecode > 0:
++                logger.critical('CRITICAL: fork-point %s is not a branch', basebranch)
++                sys.exit(1)
++
+         slug = re.sub(r'\W+', '-', cmdargs.new_series_name).strip('-').lower()
+         branchname = 'b4/%s' % slug
+         args = ['checkout', '-b', branchname, cmdargs.fork_point]
 
 -- 
 2.38.1
