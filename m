@@ -1,46 +1,47 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30D71107
-	for <tools@linux.kernel.org>; Wed, 22 Feb 2023 01:07:59 +0000 (UTC)
-Received: by mail-qt1-f174.google.com with SMTP id k20so3145305qtj.5
-        for <tools@linux.kernel.org>; Tue, 21 Feb 2023 17:07:59 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1BE1107
+	for <tools@linux.kernel.org>; Wed, 22 Feb 2023 01:29:44 +0000 (UTC)
+Received: by mail-qt1-f170.google.com with SMTP id d5so6357446qtn.13
+        for <tools@linux.kernel.org>; Tue, 21 Feb 2023 17:29:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HTWcAHrZxEPC2mq7vZOGEqZXrWS96JBrG69+IX6mxVg=;
-        b=qGHwtwRyxLiqcotbVpYKFUHYw8eDnByYWz1Yy7oK5BJXlMlW81JtjrKFi4UMGRFXGG
-         RK532LQ+r8MfhZWRrSvnD7GaZFsl6r4r7Af/4UexBPTmb73sin1NldMlkti/mY/R3hZm
-         v92WLuDUkAJwWG3/t1SQzUYsGxYbnhpjF9jD8sIkDNFm0hLVtfpyFac8wZhong1Av68K
-         m+ZLsjg35s5qeSwYmMmAHagMpJe2gEJ6YKXTCmyPqEA/ZvIvEN8eXImzv9ckuKftgcCO
-         At7neYkAbX7hKts3sP+1M5Mps8Rys9pm5ELSpoNWMhVvgdwBt1RK6yory8sFcWTFTlcC
-         +Ldg==
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ECAfv659uYWQnO2h/PsxdeMwtxCieH1klKtjer9/xXw=;
+        b=lM+HEd8SjWj4z8EsCqL71qXsyEAxdYthqaZ3gUyTaFybksuzLFAu+ghTLDaPUSIlOw
+         L9XBGiPMLsBiMIo7YrS8qDYOy/nTAZKD5RoCUp5ua4HA9C7LgL/RSLHV6KS2Y2LfyNPB
+         pvRxlPSGjEZyk3xrTaW2vP9TJK04wtT2EXlVuGHXACDZJu4MbiULN3AUJ7g+iC/HvB03
+         FGkAuNEsOZhJ30TcaCRn1edJV4927qr3P/Eu5QRkESOFYk84SlZNUe3U+mjmV/Q882aS
+         +1cIfS6W+DszpC25YMq6zvF8zuiees6aaJ8DaDEpWa9lmD64YqcGIi93L8Ybz8GTAGsX
+         HzzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HTWcAHrZxEPC2mq7vZOGEqZXrWS96JBrG69+IX6mxVg=;
-        b=NRCM6J7qSrHcUDBFLF7dVT7H4ZjPIMHuGDVfGNE3aESoFoWxJhJOU7GxSd28JUK0NF
-         tU7gBwzWkhKvYmQY576iUo47Xd/JnbF6ozd1k97Ed7RcLgqtjK/rhbXAgoUCbq84V4w+
-         eMIjIGP2eEpfZOVHY3Hj2XHzhGcVmcYVnh4v/8b5JwHD0MNFaokBtJLSK6WlxItK2Qq8
-         HF637mnTj5DvMIbbZQ2kdmo+pVzbjcIsm9aPMOK4aphXmQaYzoakIqQjQDdWq3KDqKsX
-         VjqNTrtZUxOGoQlGlB+MmYSWyh54z+Ch2NZDoWZY22kVVtzeopTgceMtW9+5lDGQ/KLH
-         O9Tg==
-X-Gm-Message-State: AO0yUKVW7cdEel4T1nfda8+kiamm8lEVxToSjXP+XRTMc2c8EYSI5FE8
-	PJLaMT2SZNNvPXkj3Rxs+us=
-X-Google-Smtp-Source: AK7set+SU/uff0YMXgF6UnlCZJkhmL/ZuQNOiFK73D2o5SbyajMHQyS6DnRJqcBgLoeQzQaHpf4C1A==
-X-Received: by 2002:ac8:5c02:0:b0:3b8:4cba:e26e with SMTP id i2-20020ac85c02000000b003b84cbae26emr24587163qti.51.1677028078569;
-        Tue, 21 Feb 2023 17:07:58 -0800 (PST)
+        bh=ECAfv659uYWQnO2h/PsxdeMwtxCieH1klKtjer9/xXw=;
+        b=AnTO9XU+n3IW7CPtwgH0bxSnL0B4aq3OlighdZ5a4vZlKt0QVPIW+vjg4bdNk0nlBy
+         whvt8aezz9rxSj20jTNZcTwEOxCS6QzJ5hp0FPE0644AjAHy7YmLoxEL/j340uxDGxjt
+         OekoWY3SzDqgdMWQvdMPUYgVS/IWgSMx5DG3F+eLhPpl1BtcihtVnpFO2188BUBtoRn6
+         XgDMup0Qbmts1l9juzRldjz4krvzjqSHDvS5obKoIzRt4kI/3NrMhQ9AJ0arWdM45E8o
+         S/TFnn4lQKreSmfiTjMrOs7JHjx9Qc1vRmQ7zTLxJWTSoO6ouYRZmUilCwmR1CAcNuFQ
+         4Igg==
+X-Gm-Message-State: AO0yUKUkHbukAUjlEnHL17NKmj5+uSUk4CKl57Z+4sn+SUVeyQtkbyOE
+	JQqud4y6/oczRP4aCp+PaXxSNtfjkrc=
+X-Google-Smtp-Source: AK7set/PRuXAJLcXkxcy6WtOpOuR+nI1EVdfIDX6U/hxkgUtsGyBJ20/ybBUgXkTWFZGjFunmevJyw==
+X-Received: by 2002:a05:622a:5d1:b0:3b9:b1ea:2d0f with SMTP id d17-20020a05622a05d100b003b9b1ea2d0fmr11230279qtb.34.1677029383760;
+        Tue, 21 Feb 2023 17:29:43 -0800 (PST)
 Received: from WQUEN758573.ncr.int.ec.gc.ca (ecodor135.cmc.ec.gc.ca. [205.211.133.135])
-        by smtp.gmail.com with ESMTPSA id m3-20020ac807c3000000b003b8558eabd0sm1395160qth.23.2023.02.21.17.07.56
+        by smtp.gmail.com with ESMTPSA id o190-20020a375ac7000000b0073b45004754sm11872357qkb.34.2023.02.21.17.29.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Feb 2023 17:07:57 -0800 (PST)
+        Tue, 21 Feb 2023 17:29:42 -0800 (PST)
 From: Philippe Blain <levraiphilippeblain@gmail.com>
-Date: Tue, 21 Feb 2023 20:07:46 -0500
-Subject: [PATCH b4] ez: get_series_details: correctly compute 'base_commit'
- for all strategies
+Subject: [PATCH b4 0/3] ez: allow sending all versions of a patch series in
+ the same thread
+Date: Tue, 21 Feb 2023 20:29:16 -0500
+Message-Id: <20230219-send-iterations-in-same-thread-v1-0-59b802382eb5@gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -49,58 +50,40 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230221-fix-base-commit-for-non-commit-strategies-v1-1-0e31f1333d76@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAOFq9WMC/zWOQQrDIBBFrxJm3aHGplJ6ldLFRMfEhRpGUwohd
- 68JdPng/cffoLAELvDsNhD+hBJyatBfOrAzpYkxuMaglb4prXv04YsjFUabYwwVfRZMOf2xVKH
- KU0siKWfYD+buHgZa71yNQsnOR3FdmssUr5FKZTmMRbjlzzcvGAd47/sP/ZURFKEAAAA=
+X-B4-Tracking: v=1; b=H4sIAOxv9WMC/x2OMQ7CMAwAv1J5xiJNy1C+ghicxBAPCVUcEFLVv
+ +MynnQ63QbKTVjhOmzQ+CMqr2owngaImeqTUZIxeOcn58cFlWtC6dyom6ooFZUKY8+NKWG8OJp
+ CnDktDBYJpIyhUY35yLxX7eaVcyG1xmGsjR/y/S/cIMxw3/cfzkxx3pYAAAA=
 To: "Kernel.org Tools" <tools@linux.kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Philippe Blain <levraiphilippeblain@gmail.com>
-X-Mailer: b4 0.13-dev-ccd90
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+X-Mailer: b4 0.13-dev-696ff
 
-In f0fad6e (ez: refactor based on initial feedback, 2022-07-20), support
-was added for the 'branch-description' strategy, but
-'get_series_details' was not changed to account for the fact that if the
-cover letter is stored in the branch description, base_commit and
-start_commit should be the same commit.
+Sending a new iteration of a series in the same thread as the previous
+one is the preferred workflow on some lists, the Git mailing list being
+an example [1].
 
-This was also missed when 9e95d52 (ez: implement tip-commit strategy,
-2022-07-27) added support for the 'tip-commit' strategy and changed
-get_series_details to adjust the end commit of the series.
+This series allows that workflow in b4 by adding a '--same-thread'
+option to 'b4 send', with an associated config option.
 
-Fix that by setting 'base_commit' to 'start_commit's parent only for the
-'commit' strategy, and to 'start_commit' for other strategies.
+Cheers,
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- b4/ez.py | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+Philippe.
 
-diff --git a/b4/ez.py b/b4/ez.py
-index 74afddc..5f4d744 100644
---- a/b4/ez.py
-+++ b/b4/ez.py
-@@ -940,10 +940,13 @@ def get_addresses_from_cmd(cmdargs: List[str], msgbytes: bytes) -> List[Tuple[st
- def get_series_details(start_commit: Optional[str] = None) -> Tuple[str, str, str, List[str], str, str]:
-     if not start_commit:
-         start_commit = get_series_start()
--    gitargs = ['rev-parse', f'{start_commit}~1']
--    lines = b4.git_get_command_lines(None, gitargs)
--    base_commit = lines[0]
-     strategy = get_cover_strategy()
-+    if strategy == 'commit':
-+        gitargs = ['rev-parse', f'{start_commit}~1']
-+        lines = b4.git_get_command_lines(None, gitargs)
-+        base_commit = lines[0]
-+    else:
-+        base_commit = start_commit
-     if strategy == 'tip-commit':
-         cover_commit = find_cover_commit()
-         endrange = b4.git_revparse_obj(f'{cover_commit}~1')
+[1] https://git-scm.com/docs/MyFirstContribution#v2-git-send-email
 
 ---
-base-commit: ada3021c64dd484e53219eb3af55da6c8f25d0ec
-change-id: 20230221-fix-base-commit-for-non-commit-strategies-a0d6ef465d86
+Philippe Blain (3):
+      ez: allow iterations to be sent in a single thread
+      ez: add '--same-thread' option to 'b4 send'
+      ez: add 'b4.send-same-thread' config for 'b4 send --same-thread'
+
+ b4/command.py             |  2 ++
+ b4/ez.py                  | 14 ++++++++++++--
+ docs/config.rst           |  4 ++++
+ docs/contributor/send.rst |  5 +++++
+ 4 files changed, 23 insertions(+), 2 deletions(-)
+---
+base-commit: a3281834d6d5dec44f58071fca2d22e04a97fe18
+change-id: 20230219-send-iterations-in-same-thread-c50a3bc4ed9e
 --
 b4 
 
