@@ -1,523 +1,73 @@
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339D933D6
-	for <tools@linux.kernel.org>; Thu, 23 Feb 2023 20:56:56 +0000 (UTC)
-Date: Thu, 23 Feb 2023 20:56:45 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=t-8ch.de; s=mail;
-	t=1677185808; bh=aPRc71U9iRsLJ0uwGkur973STnO07DfgGLorYvWJH58=;
-	h=Date:From:To:Cc:Subject:From;
-	b=YHBEFrLll0Uq6GFmC8Ow7pEHGmTJE1XTPIMgvzIa25kIZjAyyvbP2GplD8C2vGrfK
-	 aKB4sjtiT/xJ7QzxJddjZYWx7h8/p0Ec4BUQ6rrfPiHi2AG1H/y6V3haAQxUlcjaVW
-	 DKLjpruzvYwqOIMpPiB4o85/6vP9mO7BXcJSkum0=
-From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-To: "Kernel.org Tools" <tools@linux.kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: [BUG] message header mangling on vger.kernel.org and lore.kernel.org
-Message-ID: <a997d239-2678-45bb-8f18-7780409a5013@t-8ch.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E429FAD26
+	for <tools@linux.kernel.org>; Thu, 23 Feb 2023 21:18:18 +0000 (UTC)
+Received: by mail-qv1-f46.google.com with SMTP id ne1so12248155qvb.9
+        for <tools@linux.kernel.org>; Thu, 23 Feb 2023 13:18:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=DHLLKjnxb2WbIxa2UokMwCgGwwvgNqwh1w3jLqPF2io=;
+        b=NI1TRHQQEUc4a9IWTDvTXRR2pbyk+oUPBk99u8pKzY8vXEaJYXxrkYJipm+RcvwWj2
+         ZdycLS5LKPMw+TJ6L1wLgzGEoTxVCOiMawsq0iE0IHRX4boFa1mjU/fVyBLHhic5nz3j
+         k2OdYmHVFKt5vRQx3MaCssuWHtkMHUy6CBLQ4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DHLLKjnxb2WbIxa2UokMwCgGwwvgNqwh1w3jLqPF2io=;
+        b=e+PNKSblnf8vsVfDJwMHOlUKidi61V1X3YkPTkt6c97qVGWXK7WeP9dnVBzcS4d8OZ
+         y4sWL6DHelO55vG00ztNyq0qwduCkSsGS6Q1bl0tGEDt5xvIihRo6lTI6r6oVMTwq9bW
+         Fi0fAh+SmeqqepNoKCm2oW5MKOm7Ma0xVehlLEGFk+umEsUy7egRXGCZcduCfdUukm4Q
+         enFnxAMutDdQPk4TkZWWo42Z+xKJ1dwcdW+HQwnCfecPMZFIy2WNE8/EW3MrfBllRtc6
+         W9q/AhyBmDkqIniPbkdGX9kOrlaaqSLXbIM9u7r9OGFLJsUB6yndcM5bI2hUhuB/CBqY
+         am3A==
+X-Gm-Message-State: AO0yUKXY4dkrV5cuIJDKk9qli0dBdLpvWzW7mqr4Naie2TaTenwkiF58
+	r169HEEbM/3EkPVaRF7dBAQYc5cTJ8g1Cacl
+X-Google-Smtp-Source: AK7set+vmh+wDAmuOjBi9BWQqnKfNUwdhrQifay9fEGG8vb/sIIXMPGFlSfCDMvMhgN2QN3Q7rf3oA==
+X-Received: by 2002:a05:6214:c8e:b0:56e:ba7e:35e0 with SMTP id r14-20020a0562140c8e00b0056eba7e35e0mr25289763qvr.48.1677187097678;
+        Thu, 23 Feb 2023 13:18:17 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id j62-20020a37b941000000b0073baa5ec0besm3759904qkf.115.2023.02.23.13.18.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Feb 2023 13:18:17 -0800 (PST)
+Date: Thu, 23 Feb 2023 16:18:15 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+Cc: "Kernel.org Tools" <tools@linux.kernel.org>
+Subject: Re: [BUG] message header mangling on vger.kernel.org and
+ lore.kernel.org
+Message-ID: <20230223211815.3uzacmodoo5amfnu@meerkat.local>
+References: <a997d239-2678-45bb-8f18-7780409a5013@t-8ch.de>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="hrvfjco2vjotta2b"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <a997d239-2678-45bb-8f18-7780409a5013@t-8ch.de>
 
+On Thu, Feb 23, 2023 at 08:56:45PM +0000, Thomas Weißschuh wrote:
+> Hi,
+> 
+> I tried to "b4 shazam" one of my own patches from lore for which the
+> DKIM check failed.
+> Further investigation revelead what seems to be modifications of message
+> headers by both vger.kernel.org and lore.kernel.org.
+> As this affects DKIM-signed headers the validation fails.
 
---hrvfjco2vjotta2b
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This doesn't really have much to do with b4, it's just a known aspect of vger
+-- it does not do "simple/simple". To make your mail setup work with vger, you
+should change it to "relaxed/simple".
 
-Hi,
+I go into reasons and details in this post:
+https://lore.kernel.org/lkml/20211214150032.nioelgvmase7yyus@meerkat.local/
 
-I tried to "b4 shazam" one of my own patches from lore for which the
-DKIM check failed.
-Further investigation revelead what seems to be modifications of message
-headers by both vger.kernel.org and lore.kernel.org.
-As this affects DKIM-signed headers the validation fails.
-
-Attached are three versions of a patch that exhibits this problem:
-* direct.msg: How the email was stored by by mail server
-* via-list.msg: How I received the message via linux-input@vger.kernel.org
-* on-lore.msg: How the raw message was retrieved from
-  lore.kernel.org/linux-input
-
-The mails where validated by "dkimverify" from python-dkim/dkimpy, which
-is also used by b4.
-
-direct.msg:   DKIM ok
-via-list.msg: DKIM failed
-on-lore.msg:  DKIM failed
-
-Example for the "To:" header in the different messages:
-
-direct.msg:
-To: Jiri Kosina <jikos@kernel.org>,
- Benjamin Tissoires <benjamin.tissoires@redhat.com>
-
-via-list.msg:
-To: Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>
-
-on-lore.msg:
-To:     Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>
-
-
-The Cc: and From: headers are mangled in similar ways.
-
-Thomas
-
---hrvfjco2vjotta2b
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: attachment; filename="direct.msg"
-Content-Transfer-Encoding: 8bit
-
-From linux@weissschuh.net Fri Dec 23 21:30:23 2022
-Return-Path: <linux@weissschuh.net>
-Delivered-To: thomas@t-8ch.de
-Received: from todd.t-8ch.de
-	by todd.t-8ch.de with LMTP
-	id csjCGO8dpmPitwQAxwT2nQ
-	(envelope-from <linux@weissschuh.net>)
-	for <thomas@t-8ch.de>; Fri, 23 Dec 2022 21:30:23 +0000
-From: Thomas =?utf-8?q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=weissschuh.net;
-	s=mail; t=1671831022;
-	bh=tHIlOjWM7+q2TmrVuJ0sxPOrXr74jY1VNP1Ju2+Hm3E=;
-	h=From:Date:Subject:To:Cc:From;
-	b=LXyApAhMiMmMwB72WkKpU8JIk1f1ZJl5mXGfL8OlyL1xog3GIFkS1NGS/0O9l+hpV
-	 9HunEQxHFRkVFMqBsxhdPSMcRNEAIxel9Qd3BFxv+RUVaM8xG8QypRvvQbur8HJy/O
-	 7A58a2f9KfdYP+7Dm5PyUOY/qcxPfz4F6fF25omg=
-Date: Fri, 23 Dec 2022 21:30:19 +0000
-Subject: [PATCH] HID: use standard debug APIs
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Message-Id: <20221223-hid-dbg-v1-1-5dcf8794f7f9@weissschuh.net>
-X-B4-Tracking: v=1; b=H4sIAOsdpmMC/x2MQQqAMAwEv1JyNmBTvPgV8dDaaANSpUURxL8b3
- dssw9xQuQhX6M0NhU+psmUF2xiYks8Lo0RloJbIEjlMEjGGBWl2zPFb50Dt4CtjKD5PSf18rKue
- e+FZrj8/jM/zApifyUJuAAAA
-To: Jiri Kosina <jikos@kernel.org>,
- Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Cc: linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
- Thomas =?utf-8?q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
-X-Mailer: b4 0.11.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1671831020; l=2844;
- i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=tHIlOjWM7+q2TmrVuJ0sxPOrXr74jY1VNP1Ju2+Hm3E=;
- b=SwAsw7VOVSn0nO1bmIYtkjFtd0frpslEZB4ejwJpvuJLlrqRbkhSXVP7JaFcFrOCpUFgDYq9Rihs
- N//M5SNxB9XvChGLd8Q1bjtLdB9flN/aSexIAPpp/9OguFxmY1ru
-X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
-Status: RO
-X-Status: A
-Content-Length: 2761
-
-The custom "debug" module parameter is fairly inflexible.
-It can only manage debugging for all calls dbg_hid() at the same time.
-
-Furthermore it creates a mismatch between calls to hid_dbg() which can
-be managed by CONFIG_DYNAMIC_DEBUG and dbg_hid() which is managed by the
-module parameter.
-
-Furthermore the change to pr_debug() allows the debugging statements to
-be completely compiled-out if desired.
-
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
----
-
-Note: This removes the possibility to enable debugging for the HID core
-and all drivers at the same time.
-If this is still desirable it could probably be implemented with the new
-DYNAMIC_DEBUG class feature.
----
- drivers/hid/hid-core.c | 9 ---------
- include/linux/hid.h    | 8 +-------
- 2 files changed, 1 insertion(+), 16 deletions(-)
-
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index bd47628da6be..4facfb446986 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -41,11 +41,6 @@
-
- #define DRIVER_DESC "HID core driver"
-
--int hid_debug = 0;
--module_param_named(debug, hid_debug, int, 0600);
--MODULE_PARM_DESC(debug, "toggle HID debugging messages");
--EXPORT_SYMBOL_GPL(hid_debug);
--
- static int hid_ignore_special_drivers = 0;
- module_param_named(ignore_special_drivers, hid_ignore_special_drivers, int, 0600);
- MODULE_PARM_DESC(ignore_special_drivers, "Ignore any special drivers and handle all devices by generic driver");
-@@ -2909,10 +2904,6 @@ static int __init hid_init(void)
- {
- 	int ret;
-
--	if (hid_debug)
--		pr_warn("hid_debug is now used solely for parser and driver debugging.\n"
--			"debugfs is now used for inspecting the device (report descriptor, reports)\n");
--
- 	ret = bus_register(&hid_bus_type);
- 	if (ret) {
- 		pr_err("can't register hid bus\n");
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 8677ae38599e..676f501507aa 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -882,8 +882,6 @@ static inline bool hid_is_usb(struct hid_device *hdev)
-
- /* HID core API */
-
--extern int hid_debug;
--
- extern bool hid_ignore(struct hid_device *);
- extern int hid_add_device(struct hid_device *);
- extern void hid_destroy_device(struct hid_device *);
-@@ -1191,11 +1189,7 @@ int hid_pidff_init(struct hid_device *hid);
- #define hid_pidff_init NULL
- #endif
-
--#define dbg_hid(fmt, ...)						\
--do {									\
--	if (hid_debug)							\
--		printk(KERN_DEBUG "%s: " fmt, __FILE__, ##__VA_ARGS__);	\
--} while (0)
-+#define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
-
- #define hid_err(hid, fmt, ...)				\
- 	dev_err(&(hid)->dev, fmt, ##__VA_ARGS__)
-
----
-base-commit: 51094a24b85e29138b7fa82ef1e1b4fe19c90046
-change-id: 20221223-hid-dbg-2f3eeddddd53
-
-Best regards,
---
-Thomas Weißschuh <linux@weissschuh.net>
-
-
---hrvfjco2vjotta2b
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: attachment; filename="via-list.msg"
-Content-Transfer-Encoding: 8bit
-
-From linux-input-owner@vger.kernel.org Fri Dec 23 21:30:30 2022
-Return-Path: <linux-input-owner@vger.kernel.org>
-Delivered-To: thomas@t-8ch.de
-Received: from todd.t-8ch.de
-	by todd.t-8ch.de with LMTP
-	id 0KdyLvYdpmPitwQAxwT2nQ
-	(envelope-from <linux-input-owner@vger.kernel.org>)
-	for <thomas@t-8ch.de>; Fri, 23 Dec 2022 21:30:30 +0000
-Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by todd.t-8ch.de (Postfix) with ESMTP id B00803ED0D
-	for <linux@weissschuh.net>; Fri, 23 Dec 2022 21:30:29 +0000 (UTC)
-Authentication-Results: todd.t-8ch.de;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=weissschuh.net header.i=@weissschuh.net header.a=rsa-sha256 header.s=mail header.b=LXyApAhM;
-	dkim-atps=neutral
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229937AbiLWVa2 (ORCPT <rfc822;linux@weissschuh.net>);
-        Fri, 23 Dec 2022 16:30:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34822 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbiLWVa1 (ORCPT
-        <rfc822;linux-input@vger.kernel.org>);
-        Fri, 23 Dec 2022 16:30:27 -0500
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 002511EEED;
-        Fri, 23 Dec 2022 13:30:24 -0800 (PST)
-From: Thomas =?utf-8?q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=weissschuh.net;
-        s=mail; t=1671831022;
-        bh=tHIlOjWM7+q2TmrVuJ0sxPOrXr74jY1VNP1Ju2+Hm3E=;
-        h=From:Date:Subject:To:Cc:From;
-        b=LXyApAhMiMmMwB72WkKpU8JIk1f1ZJl5mXGfL8OlyL1xog3GIFkS1NGS/0O9l+hpV
-         9HunEQxHFRkVFMqBsxhdPSMcRNEAIxel9Qd3BFxv+RUVaM8xG8QypRvvQbur8HJy/O
-         7A58a2f9KfdYP+7Dm5PyUOY/qcxPfz4F6fF25omg=
-Date: Fri, 23 Dec 2022 21:30:19 +0000
-Subject: [PATCH] HID: use standard debug APIs
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Message-Id: <20221223-hid-dbg-v1-1-5dcf8794f7f9@weissschuh.net>
-X-B4-Tracking: v=1; b=H4sIAOsdpmMC/x2MQQqAMAwEv1JyNmBTvPgV8dDaaANSpUURxL8b3
- dssw9xQuQhX6M0NhU+psmUF2xiYks8Lo0RloJbIEjlMEjGGBWl2zPFb50Dt4CtjKD5PSf18rKue
- e+FZrj8/jM/zApifyUJuAAAA
-To: Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Cc: linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Thomas =?utf-8?q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
-X-Mailer: b4 0.11.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1671831020; l=2844;
- i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=tHIlOjWM7+q2TmrVuJ0sxPOrXr74jY1VNP1Ju2+Hm3E=;
- b=SwAsw7VOVSn0nO1bmIYtkjFtd0frpslEZB4ejwJpvuJLlrqRbkhSXVP7JaFcFrOCpUFgDYq9Rihs
- N//M5SNxB9XvChGLd8Q1bjtLdB9flN/aSexIAPpp/9OguFxmY1ru
-X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
-Precedence: bulk
-List-ID: <linux-input.vger.kernel.org>
-X-Mailing-List: linux-input@vger.kernel.org
-X-Rspamd-Queue-Id: B00803ED0D
-X-Spamd-Result: default: False [1.32 / 15.00];
-	 ARC_NA(0.00)[];
-	 FORGED_SENDER_MAILLIST(0.00)[];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 R_SPF_ALLOW(-0.20)[+a:vger.kernel.org];
-	 PRECEDENCE_BULK(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 R_DKIM_REJECT(1.00)[weissschuh.net:s=mail];
-	 DMARC_NA(0.00)[weissschuh.net];
-	 RCPT_COUNT_FIVE(0.00)[5];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 TO_MATCH_ENVRCPT_SOME(0.00)[];
-	 DKIM_TRACE(0.00)[weissschuh.net:-];
-	 MAILLIST(-0.10)[generic];
-	 RCVD_NO_TLS_LAST(0.10)[];
-	 MIME_TRACE(0.00)[0:+];
-	 R_MIXED_CHARSET(0.63)[subject];
-	 ASN(0.00)[asn:53758, ipnet:2620:137:e000::/44, country:US];
-	 FROM_NEQ_ENVFROM(0.00)[linux@weissschuh.net,linux-input-owner@vger.kernel.org];
-	 MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Server: todd.t-8ch.de
-Status: RO
-Content-Length: 2761
-
-The custom "debug" module parameter is fairly inflexible.
-It can only manage debugging for all calls dbg_hid() at the same time.
-
-Furthermore it creates a mismatch between calls to hid_dbg() which can
-be managed by CONFIG_DYNAMIC_DEBUG and dbg_hid() which is managed by the
-module parameter.
-
-Furthermore the change to pr_debug() allows the debugging statements to
-be completely compiled-out if desired.
-
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
----
-
-Note: This removes the possibility to enable debugging for the HID core
-and all drivers at the same time.
-If this is still desirable it could probably be implemented with the new
-DYNAMIC_DEBUG class feature.
----
- drivers/hid/hid-core.c | 9 ---------
- include/linux/hid.h    | 8 +-------
- 2 files changed, 1 insertion(+), 16 deletions(-)
-
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index bd47628da6be..4facfb446986 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -41,11 +41,6 @@
- 
- #define DRIVER_DESC "HID core driver"
- 
--int hid_debug = 0;
--module_param_named(debug, hid_debug, int, 0600);
--MODULE_PARM_DESC(debug, "toggle HID debugging messages");
--EXPORT_SYMBOL_GPL(hid_debug);
--
- static int hid_ignore_special_drivers = 0;
- module_param_named(ignore_special_drivers, hid_ignore_special_drivers, int, 0600);
- MODULE_PARM_DESC(ignore_special_drivers, "Ignore any special drivers and handle all devices by generic driver");
-@@ -2909,10 +2904,6 @@ static int __init hid_init(void)
- {
- 	int ret;
- 
--	if (hid_debug)
--		pr_warn("hid_debug is now used solely for parser and driver debugging.\n"
--			"debugfs is now used for inspecting the device (report descriptor, reports)\n");
--
- 	ret = bus_register(&hid_bus_type);
- 	if (ret) {
- 		pr_err("can't register hid bus\n");
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 8677ae38599e..676f501507aa 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -882,8 +882,6 @@ static inline bool hid_is_usb(struct hid_device *hdev)
- 
- /* HID core API */
- 
--extern int hid_debug;
--
- extern bool hid_ignore(struct hid_device *);
- extern int hid_add_device(struct hid_device *);
- extern void hid_destroy_device(struct hid_device *);
-@@ -1191,11 +1189,7 @@ int hid_pidff_init(struct hid_device *hid);
- #define hid_pidff_init NULL
- #endif
- 
--#define dbg_hid(fmt, ...)						\
--do {									\
--	if (hid_debug)							\
--		printk(KERN_DEBUG "%s: " fmt, __FILE__, ##__VA_ARGS__);	\
--} while (0)
-+#define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
- 
- #define hid_err(hid, fmt, ...)				\
- 	dev_err(&(hid)->dev, fmt, ##__VA_ARGS__)
-
----
-base-commit: 51094a24b85e29138b7fa82ef1e1b4fe19c90046
-change-id: 20221223-hid-dbg-2f3eeddddd53
-
-Best regards,
--- 
-Thomas Weißschuh <linux@weissschuh.net>
-
-
---hrvfjco2vjotta2b
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: attachment; filename="on-lore.msg"
-Content-Transfer-Encoding: 8bit
-
-From mboxrd@z Thu Jan  1 00:00:00 1970
-Return-Path: <linux-input-owner@vger.kernel.org>
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A136C4332F
-	for <linux-input@archiver.kernel.org>; Fri, 23 Dec 2022 21:30:29 +0000 (UTC)
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229937AbiLWVa2 (ORCPT <rfc822;linux-input@archiver.kernel.org>);
-        Fri, 23 Dec 2022 16:30:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34822 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbiLWVa1 (ORCPT
-        <rfc822;linux-input@vger.kernel.org>);
-        Fri, 23 Dec 2022 16:30:27 -0500
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 002511EEED;
-        Fri, 23 Dec 2022 13:30:24 -0800 (PST)
-From:   Thomas =?utf-8?q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=weissschuh.net;
-        s=mail; t=1671831022;
-        bh=tHIlOjWM7+q2TmrVuJ0sxPOrXr74jY1VNP1Ju2+Hm3E=;
-        h=From:Date:Subject:To:Cc:From;
-        b=LXyApAhMiMmMwB72WkKpU8JIk1f1ZJl5mXGfL8OlyL1xog3GIFkS1NGS/0O9l+hpV
-         9HunEQxHFRkVFMqBsxhdPSMcRNEAIxel9Qd3BFxv+RUVaM8xG8QypRvvQbur8HJy/O
-         7A58a2f9KfdYP+7Dm5PyUOY/qcxPfz4F6fF25omg=
-Date:   Fri, 23 Dec 2022 21:30:19 +0000
-Subject: [PATCH] HID: use standard debug APIs
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Message-Id: <20221223-hid-dbg-v1-1-5dcf8794f7f9@weissschuh.net>
-X-B4-Tracking: v=1; b=H4sIAOsdpmMC/x2MQQqAMAwEv1JyNmBTvPgV8dDaaANSpUURxL8b3
- dssw9xQuQhX6M0NhU+psmUF2xiYks8Lo0RloJbIEjlMEjGGBWl2zPFb50Dt4CtjKD5PSf18rKue
- e+FZrj8/jM/zApifyUJuAAAA
-To:     Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Cc:     linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Thomas =?utf-8?q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
-X-Mailer: b4 0.11.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1671831020; l=2844;
- i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=tHIlOjWM7+q2TmrVuJ0sxPOrXr74jY1VNP1Ju2+Hm3E=;
- b=SwAsw7VOVSn0nO1bmIYtkjFtd0frpslEZB4ejwJpvuJLlrqRbkhSXVP7JaFcFrOCpUFgDYq9Rihs
- N//M5SNxB9XvChGLd8Q1bjtLdB9flN/aSexIAPpp/9OguFxmY1ru
-X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
-Precedence: bulk
-List-ID: <linux-input.vger.kernel.org>
-X-Mailing-List: linux-input@vger.kernel.org
-
-The custom "debug" module parameter is fairly inflexible.
-It can only manage debugging for all calls dbg_hid() at the same time.
-
-Furthermore it creates a mismatch between calls to hid_dbg() which can
-be managed by CONFIG_DYNAMIC_DEBUG and dbg_hid() which is managed by the
-module parameter.
-
-Furthermore the change to pr_debug() allows the debugging statements to
-be completely compiled-out if desired.
-
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
----
-
-Note: This removes the possibility to enable debugging for the HID core
-and all drivers at the same time.
-If this is still desirable it could probably be implemented with the new
-DYNAMIC_DEBUG class feature.
----
- drivers/hid/hid-core.c | 9 ---------
- include/linux/hid.h    | 8 +-------
- 2 files changed, 1 insertion(+), 16 deletions(-)
-
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index bd47628da6be..4facfb446986 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -41,11 +41,6 @@
- 
- #define DRIVER_DESC "HID core driver"
- 
--int hid_debug = 0;
--module_param_named(debug, hid_debug, int, 0600);
--MODULE_PARM_DESC(debug, "toggle HID debugging messages");
--EXPORT_SYMBOL_GPL(hid_debug);
--
- static int hid_ignore_special_drivers = 0;
- module_param_named(ignore_special_drivers, hid_ignore_special_drivers, int, 0600);
- MODULE_PARM_DESC(ignore_special_drivers, "Ignore any special drivers and handle all devices by generic driver");
-@@ -2909,10 +2904,6 @@ static int __init hid_init(void)
- {
- 	int ret;
- 
--	if (hid_debug)
--		pr_warn("hid_debug is now used solely for parser and driver debugging.\n"
--			"debugfs is now used for inspecting the device (report descriptor, reports)\n");
--
- 	ret = bus_register(&hid_bus_type);
- 	if (ret) {
- 		pr_err("can't register hid bus\n");
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 8677ae38599e..676f501507aa 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -882,8 +882,6 @@ static inline bool hid_is_usb(struct hid_device *hdev)
- 
- /* HID core API */
- 
--extern int hid_debug;
--
- extern bool hid_ignore(struct hid_device *);
- extern int hid_add_device(struct hid_device *);
- extern void hid_destroy_device(struct hid_device *);
-@@ -1191,11 +1189,7 @@ int hid_pidff_init(struct hid_device *hid);
- #define hid_pidff_init NULL
- #endif
- 
--#define dbg_hid(fmt, ...)						\
--do {									\
--	if (hid_debug)							\
--		printk(KERN_DEBUG "%s: " fmt, __FILE__, ##__VA_ARGS__);	\
--} while (0)
-+#define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
- 
- #define hid_err(hid, fmt, ...)				\
- 	dev_err(&(hid)->dev, fmt, ##__VA_ARGS__)
-
----
-base-commit: 51094a24b85e29138b7fa82ef1e1b4fe19c90046
-change-id: 20221223-hid-dbg-2f3eeddddd53
-
-Best regards,
--- 
-Thomas Weißschuh <linux@weissschuh.net>
-
-
---hrvfjco2vjotta2b--
+-K
