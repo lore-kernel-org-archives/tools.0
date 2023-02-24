@@ -1,73 +1,138 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E429FAD26
-	for <tools@linux.kernel.org>; Thu, 23 Feb 2023 21:18:18 +0000 (UTC)
-Received: by mail-qv1-f46.google.com with SMTP id ne1so12248155qvb.9
-        for <tools@linux.kernel.org>; Thu, 23 Feb 2023 13:18:18 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB3C15A5
+	for <tools@linux.kernel.org>; Fri, 24 Feb 2023 01:14:39 +0000 (UTC)
+Received: by mail-qt1-f174.google.com with SMTP id d7so13198052qtr.12
+        for <tools@linux.kernel.org>; Thu, 23 Feb 2023 17:14:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=DHLLKjnxb2WbIxa2UokMwCgGwwvgNqwh1w3jLqPF2io=;
-        b=NI1TRHQQEUc4a9IWTDvTXRR2pbyk+oUPBk99u8pKzY8vXEaJYXxrkYJipm+RcvwWj2
-         ZdycLS5LKPMw+TJ6L1wLgzGEoTxVCOiMawsq0iE0IHRX4boFa1mjU/fVyBLHhic5nz3j
-         k2OdYmHVFKt5vRQx3MaCssuWHtkMHUy6CBLQ4=
+        d=gmail.com; s=20210112;
+        h=cc:to:in-reply-to:message-id:content-transfer-encoding:mime-version
+         :subject:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9/ZjUEfLg/X8Poux/I7l2DOSL6tifCPVR1kbrqz3zzE=;
+        b=fMFgtn9Fqu/MO9zxvdi8PGGaKKu8lEc8CYAQ7UDetWlz/gBdzZ3cEX6EBRbakL/jvx
+         S/xIQ6JOszwGBKGeeBTIx3ZAVF1nYKSWgoQEw8Cn2tGTPKgX9fRWPG/f11A76Q7qYZit
+         kRgy0jkfH1BgLjsN3mPg4lZKhXxgqHtIrc7iRPlBdW9WK9x9jhFIYkSXutJzCZbdXXs9
+         UopZ103YgXNZFHKkK07MBiPupYDKbulUx61P8ArPWQZtVLEQJWt2sQijEP02muA3aAoV
+         gGKkh1qZ69Vr2E8Fqvsk/ZlR1wx++a2KNjr7BQ84h4ih9QZJCCp8rEl5XclIAfwtoLQD
+         gj5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DHLLKjnxb2WbIxa2UokMwCgGwwvgNqwh1w3jLqPF2io=;
-        b=e+PNKSblnf8vsVfDJwMHOlUKidi61V1X3YkPTkt6c97qVGWXK7WeP9dnVBzcS4d8OZ
-         y4sWL6DHelO55vG00ztNyq0qwduCkSsGS6Q1bl0tGEDt5xvIihRo6lTI6r6oVMTwq9bW
-         Fi0fAh+SmeqqepNoKCm2oW5MKOm7Ma0xVehlLEGFk+umEsUy7egRXGCZcduCfdUukm4Q
-         enFnxAMutDdQPk4TkZWWo42Z+xKJ1dwcdW+HQwnCfecPMZFIy2WNE8/EW3MrfBllRtc6
-         W9q/AhyBmDkqIniPbkdGX9kOrlaaqSLXbIM9u7r9OGFLJsUB6yndcM5bI2hUhuB/CBqY
-         am3A==
-X-Gm-Message-State: AO0yUKXY4dkrV5cuIJDKk9qli0dBdLpvWzW7mqr4Naie2TaTenwkiF58
-	r169HEEbM/3EkPVaRF7dBAQYc5cTJ8g1Cacl
-X-Google-Smtp-Source: AK7set+vmh+wDAmuOjBi9BWQqnKfNUwdhrQifay9fEGG8vb/sIIXMPGFlSfCDMvMhgN2QN3Q7rf3oA==
-X-Received: by 2002:a05:6214:c8e:b0:56e:ba7e:35e0 with SMTP id r14-20020a0562140c8e00b0056eba7e35e0mr25289763qvr.48.1677187097678;
-        Thu, 23 Feb 2023 13:18:17 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id j62-20020a37b941000000b0073baa5ec0besm3759904qkf.115.2023.02.23.13.18.16
+        h=cc:to:in-reply-to:message-id:content-transfer-encoding:mime-version
+         :subject:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9/ZjUEfLg/X8Poux/I7l2DOSL6tifCPVR1kbrqz3zzE=;
+        b=qERvoLNkvSDPvpYjlTawTuRGOXCPpmEjhQMCchz0F0cprGRg5LjX903PC69axbZos4
+         afWowE8SW2lSknGBJzK8rHC0DPKl3jlWqo3MsGKoHqQ3ZYYQoWTTYiJaOY/gMplyk8OO
+         dRweVzEpyglQgCD+7IeBU7zn5oVxIdh2Is195qMXyGcRCWAN5ztJvWLkvafXYeqXOZny
+         oexK/KVWE3en3ffyBg7A/qtIzCyURYbzdmPNLqOc8DMHnrlaa6+PvtWfd11Q0iA0D1GI
+         szuQxN5x6tkR6Dgf8NZLXyy+8zcEm537FxyG6W6nUesZQ5jKbXA89hmp317ZGwuklXZa
+         mzkw==
+X-Gm-Message-State: AO0yUKWxtILlPU6MqOfTYsLmdUINiuvNIpzBGfeRPo9CRGzIyOzwK0ps
+	7ATvzoMZ9lmQu4oD8c9U/so57ahjXG0=
+X-Google-Smtp-Source: AK7set/3DhE0tKDVCcHiUfpLe+K5WzyUr4I0SGGV9dP2fXjYlP2nRsnvo2cObxOf8d1mq3DTbzyUhA==
+X-Received: by 2002:a05:622a:1191:b0:3b8:2e48:921a with SMTP id m17-20020a05622a119100b003b82e48921amr25383085qtk.57.1677201278300;
+        Thu, 23 Feb 2023 17:14:38 -0800 (PST)
+Received: from WQUEN758573.ncr.int.ec.gc.ca (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id t128-20020ae9df86000000b0073b8459d221sm4698412qkf.31.2023.02.23.17.14.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 13:18:17 -0800 (PST)
-Date: Thu, 23 Feb 2023 16:18:15 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Cc: "Kernel.org Tools" <tools@linux.kernel.org>
-Subject: Re: [BUG] message header mangling on vger.kernel.org and
- lore.kernel.org
-Message-ID: <20230223211815.3uzacmodoo5amfnu@meerkat.local>
-References: <a997d239-2678-45bb-8f18-7780409a5013@t-8ch.de>
+        Thu, 23 Feb 2023 17:14:37 -0800 (PST)
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Date: Thu, 23 Feb 2023 20:14:21 -0500
+Subject: [PATCH b4 v2] ez: allow sending all versions of a patch series in
+ the same thread
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a997d239-2678-45bb-8f18-7780409a5013@t-8ch.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230219-send-iterations-in-same-thread-v2-1-3ae4ac504e07@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAGwP+GMC/42OQQ6CQAxFr2K6tgoDJODKexgXnaFCE2cw05FoC
+ Hd34AQuf/vy8hZQjsIKl8MCkWdRmUIe5ngAN1IYGKXPG0xhqsKUHSqHHiVxpJRRRQmo5BnTGJl
+ 6dE1BlXU19x1DllhSRhspuHHTvF+aMufPnjQ7NuIV+SGfPeEGtoZ7vo2iaYrfvWou98+/AXOJB
+ TadbTPfGrbNdfAkz5ObPNzXdf0BfRLFyvIAAAA=
+In-Reply-To: <20230219-send-iterations-in-same-thread-v1-0-59b802382eb5@gmail.com>
+To: "Kernel.org Tools" <tools@linux.kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Philippe Blain <levraiphilippeblain@gmail.com>
+X-Mailer: b4 0.13-dev-18cd1
 
-On Thu, Feb 23, 2023 at 08:56:45PM +0000, Thomas Weißschuh wrote:
-> Hi,
-> 
-> I tried to "b4 shazam" one of my own patches from lore for which the
-> DKIM check failed.
-> Further investigation revelead what seems to be modifications of message
-> headers by both vger.kernel.org and lore.kernel.org.
-> As this affects DKIM-signed headers the validation fails.
+Some projects prefer further iterations of a patch series to be sent in
+the same thread as previous ones. Usually this means that the cover
+letter of v2 is sent as a reply to the cover letter of v1, etc.
 
-This doesn't really have much to do with b4, it's just a known aspect of vger
--- it does not do "simple/simple". To make your mail setup work with vger, you
-should change it to "relaxed/simple".
+Add a new config option for 'b4 send', 'send-same-thread', defaulting to
+False, and read its value in get_prep_branch_as_patches. When True, add
+an 'In-Reply-To' header to the first mail in the series, referencing the
+Message-ID of the previous iterations's cover letter.
 
-I go into reasons and details in this post:
-https://lore.kernel.org/lkml/20211214150032.nioelgvmase7yyus@meerkat.local/
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+Changes in v2:
+- removed the command-line flag and kept only the config, as suggested
+  by Konstantin
+- Link to v1: https://msgid.link/20230219-send-iterations-in-same-thread-v1-0-59b802382eb5@gmail.com
 
--K
+v1:
+Sending a new iteration of a series in the same thread as the previous
+one is the preferred workflow on some lists, the Git mailing list being
+an example [1].
+
+This series allows that workflow in b4 by adding a '--same-thread'
+option to 'b4 send', with an associated config option.
+
+Cheers,
+
+Philippe.
+
+[1] https://git-scm.com/docs/MyFirstContribution#v2-git-send-email
+---
+ b4/ez.py        | 7 +++++++
+ docs/config.rst | 6 ++++++
+ 2 files changed, 13 insertions(+)
+
+diff --git a/b4/ez.py b/b4/ez.py
+index 74afddc..16e1cf8 100644
+--- a/b4/ez.py
++++ b/b4/ez.py
+@@ -1191,6 +1191,13 @@ def get_prep_branch_as_patches(movefrom: bool = True, thread: bool = True, addtr
+     if addtracking:
+         patches[0][1].add_header('X-B4-Tracking', thdata)
+ 
++    samethread = config.get('send-same-thread', '').lower() in {'yes', 'true', 'y'}
++    if samethread and revision > 1:
++        oldrev = revision - 1
++        voldrev =  f'v{oldrev}'
++        oldmsgid =  tracking['series']['history'][voldrev][-1]
++        patches[0][1].add_header('In-Reply-To', f'<{oldmsgid}>')
++
+     tag_msg = f'{csubject.full_subject}\n\n{cover_letter}'
+     return alltos, allccs, tag_msg, patches
+ 
+diff --git a/docs/config.rst b/docs/config.rst
+index b3ab5ca..a1c424c 100644
+--- a/docs/config.rst
++++ b/docs/config.rst
+@@ -351,6 +351,12 @@ Contributor-oriented settings
+ 
+   Default:: ``scripts/get_maintainer.pl --nogit --nogit-fallback --nogit-chief-penguins --norolestats --nom``
+ 
++``b4.send-same-thread`` (v0.13+)
++  When sending a new version of a series, make it part of the same
++  thread as the previous one. The first mail will be sent as a reply
++  to the previous version's cover letter.
++
++  Default: ``no``
+ 
+ ``b4.prep-cover-strategy`` (v0.10+)
+   Alternative cover letter storage strategy to use (see :ref:`prep_cover_strategies`).
+
+---
+base-commit: a3281834d6d5dec44f58071fca2d22e04a97fe18
+change-id: 20230219-send-iterations-in-same-thread-c50a3bc4ed9e
+--
+b4 
+
