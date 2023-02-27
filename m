@@ -1,84 +1,73 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2175CBD
-	for <tools@linux.kernel.org>; Fri, 24 Feb 2023 14:57:16 +0000 (UTC)
-Received: by mail-qv1-f48.google.com with SMTP id ks17so13713882qvb.6
-        for <tools@linux.kernel.org>; Fri, 24 Feb 2023 06:57:16 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A55279EF
+	for <tools@linux.kernel.org>; Mon, 27 Feb 2023 18:48:58 +0000 (UTC)
+Received: by mail-qt1-f175.google.com with SMTP id r5so7818489qtp.4
+        for <tools@linux.kernel.org>; Mon, 27 Feb 2023 10:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AS2HRVZ4/CsJe4URR8r2FSBgKCMknrP2qGtQe9252i0=;
-        b=TXD2wcv/I5KHgZPgWus8lQhQmXAoqZnt0G+F7BhluT/XRwFF3ElrU+2jQp2FvFF7Tp
-         iPh/qSEG9BqV9SSjHcknB38VXNM0VFZmxjQfKmukVNU6Ao5IOGWOcBuVrHSN60yCbv0h
-         um5iCN+9RuCQ9vZPCvF4t6lgxtJmH1LbB0mvuidZ/bQgf/8uSbCWyegRBZwdcIS/TpOx
-         6abVWMQn65xnSjG/19HJLYF6Z1CrPRryQKisaUonZMTttjwHN1ZZ2vegNR8WrSsF958N
-         /w3tUklfl63XpRth2zKRh3lZ0IJYOXu7p4eIJC0zCm/maQVk8VBllJSRza1qcCbYYS2w
-         pMaQ==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=XzkrdTkWDakhnTRTMC/BlOfEtpV1sHuRvkeYzb1Jc9s=;
+        b=b0aURzIADsvRH/G1HyYYlXsDN2R1Ue68a10kIugjtZJxYSsDmYdZFn9qd0IHwk8Vcd
+         MIVn/bVELV0BmOIfjqyrFvkqZZIYGdxrtnmjKEpYMQSvN3iltNj4wMj/0zUtbuP7ZcgA
+         E57lz56H8TXDMqitBkoxOzKMFmH+BU/FUK8VM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AS2HRVZ4/CsJe4URR8r2FSBgKCMknrP2qGtQe9252i0=;
-        b=bxmX/iEemSZdesb7ro6UhH3YMAesnEdJdDP2UC04VV5Us9IKW2DFiT3k9rEXm1qKFs
-         AJBIY7irkLys1lDBwtAKJDfFGzg+Xv/h3MApJi19si4k2eH+hrZZRcFrjnwzEE1wrT1R
-         +OZ2p8RCQrgdqyQR80IfzIUlUJv3S75umggYQil5umcYVU3cFX3yYWj01JEIm4m2Jyz1
-         zxHKM0J7qYBhxsQvzJZz4HJBIgfjsolkbtd5qr3An6YC0UwqitMUffVz9PRHdwngJGlD
-         IaIFEwZwa4CxIEBYvX/YOnVjXuKwsRAZrpa2SxzD1ph+fKlHFhWWPohEHfBoczs8R4vZ
-         h2yw==
-X-Gm-Message-State: AO0yUKUd+dFgIsOtApyIh1kJWPZ3OS0lGu6IZKhJCyVMCoN065JBnrvR
-	5BP56tUHURGzIOXnHjpKb6JOQYFBt7o=
-X-Google-Smtp-Source: AK7set/Hqy0ytSBUoxpDjXk2BaR2M3O/iKt5uzXwSw7k4HbhTk0W+ruOkeQ+bXvKiI/fOOg+Vmk0dw==
-X-Received: by 2002:a05:6214:1942:b0:56e:9210:e34c with SMTP id q2-20020a056214194200b0056e9210e34cmr34923168qvk.23.1677250635672;
-        Fri, 24 Feb 2023 06:57:15 -0800 (PST)
-Received: from [192.168.1.128] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id s128-20020a374586000000b007426b8eed51sm1868782qka.118.2023.02.24.06.57.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Feb 2023 06:57:15 -0800 (PST)
-Subject: Re: [PATCH] ez: allow remote-tracking branches as 'base-branch'
-To: "Kernel.org Tools" <tools@linux.kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-References: <20230219-allow-remote-branches-as-base-v1-1-a1cf7948b2cc@gmail.com>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <4cfef9ff-2b96-943e-4017-bf8b0829d330@gmail.com>
-Date: Fri, 24 Feb 2023 09:57:14 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XzkrdTkWDakhnTRTMC/BlOfEtpV1sHuRvkeYzb1Jc9s=;
+        b=Vn8aUsLPaNUkNhHTv/VhmSpyiik8FEmh9hlbeSwcdlxnnr0Sn+nAOV1DAPoy8qqjYP
+         /dLlbexfAAwjt6NVDe8P+Bg7GKehXBD5G1SqoJZiiVu8jjrVftwpOxMHyvgzGbSiB/2Q
+         PjRC/QaxkU0v0e6NBoEOKxoPBfwOQiFwu1eAu9iULUiPL4CWU2yZMDxTx1XReiwqoaqM
+         V0nhkBzZN6sf6i3kJHbnCdv1Jcji+pzR23tPEACvA5DKVYYC5BviiBVMmM9vnZtsHSb3
+         RMhHD1tJva7DrQ4KI9+LHpX//bet4tCdeqEtkC6R7Jsu2jqe68wvaQZvBW0DIlf/5mbg
+         /OEQ==
+X-Gm-Message-State: AO0yUKVYEuEoUaYtbR/ta8xtseBACLvoE7h/hpVQb+l3GNGnkBebBa3S
+	5HZwxiRGKEggWC1XLllWQbcU21VV2HUP1R6Q
+X-Google-Smtp-Source: AK7set8Dsuvl0vQA36ws6UzLzFuZPx9NgfvqLUVJwU8sTGhyXZqc9PCedcjJyU995ebCz7BqwFk5GQ==
+X-Received: by 2002:ac8:7d01:0:b0:3bf:a461:e6f0 with SMTP id g1-20020ac87d01000000b003bfa461e6f0mr433612qtb.31.1677523737954;
+        Mon, 27 Feb 2023 10:48:57 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id i13-20020ac813cd000000b003bfb5fd72a7sm5016445qtj.86.2023.02.27.10.48.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Feb 2023 10:48:56 -0800 (PST)
+Date: Mon, 27 Feb 2023 13:48:55 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: tools@linux.kernel.org
+Subject: Re: [PATCH] shazam: Add the --add-message-id argument
+Message-ID: <20230227184855.kkwdcweahglujppo@meerkat.local>
+References: <20230216164841.3356-1-palmer@rivosinc.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20230219-allow-remote-branches-as-base-v1-1-a1cf7948b2cc@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <20230216164841.3356-1-palmer@rivosinc.com>
 
-Hi Konstantin
+On Thu, Feb 16, 2023 at 08:48:41AM -0800, Palmer Dabbelt wrote:
+> Some projects (at least QEMU) want Message-ID headers instead of Link
+> headers.  I couldn't find an easy way to do that, so this just adds an
+> argument to shazam that mirrors "--add-link" but adds a MessageID
+> instead.
 
-Le 2023-02-19 à 19:45, Philippe Blain a écrit :
-> Since 83b185a (ez: support enrolling branches using tags, 2022-08-16),
-> we use 'git show-ref --heads' to check if the argument given to
-> '--enroll-base' is a branch, so that the alternate code path can be
-> taken for tags. This means that since that commit, using a
-> remote-tracking branch as argument to '--enroll-base' does not work
-> well, because such branches are not shown by 'git show-ref --heads'. The
-> code path for tags is taken instead, and this usually leads to a
-> "Multiple branches contain object" error (since several local branches
-> are often based on the same remote-tracking branch).
-> 
-> Pass a fully-qualified ref 'refs/heads/<enroll_base>' as pattern to 'git
-> show-ref', and also pass it a second second pattern
-> 'refs/remotes/<enroll_base>' to allow both local and remote-tracking
-> branches.
+I'd like to go a slightly different way about it. We already have a
+"b4.linkmask" parameter, so I suggest we also add "b4.linktrailer", such as
+you can specify:
 
-I'll send a v2 of this to also allow '@{u}' as enroll-base, so you might want
-to wait before applying it so that the whole series can be applied at the same time.
+    [b4]
+        linktrailer = Message-ID
+        linkmask = <%s>
 
-Cheers,
+This would additionally allow someone to differentiate Link trailers that
+point at code-review links vs. any other links.
 
-Philippe.
+Does that sound like a potential alternative to creating another runtime flag?
+
+-K
