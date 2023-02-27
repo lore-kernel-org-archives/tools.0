@@ -1,74 +1,73 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F3C8471
-	for <tools@linux.kernel.org>; Mon, 27 Feb 2023 20:26:06 +0000 (UTC)
-Received: by mail-pl1-f178.google.com with SMTP id v11so4542234plz.8
-        for <tools@linux.kernel.org>; Mon, 27 Feb 2023 12:26:06 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552F228E1
+	for <tools@linux.kernel.org>; Mon, 27 Feb 2023 20:47:04 +0000 (UTC)
+Received: by mail-qv1-f46.google.com with SMTP id nv15so5376755qvb.7
+        for <tools@linux.kernel.org>; Mon, 27 Feb 2023 12:47:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rivosinc-com.20210112.gappssmtp.com; s=20210112; t=1677529566;
-        h=content-transfer-encoding:mime-version:message-id:to:from:cc
-         :in-reply-to:subject:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0ajTTHZcZm8Jmmg1CmeyVWZGtfRhttL1hrN1XMgLjjE=;
-        b=EGi2qDZFgRnE6ZBM3mx+wqjOSY3qmzBs3tGvSutkHH/6oIHnmdLfr9xJ+SEoUgF93I
-         VrAE97p76SxCuMjERIIaXpQI9Z0oMZQfxRi0w4brx06qTaoWXB6EUKJrTU5K3J3NsnzJ
-         /pdjyM+DNL8SAM/vs5FW5pwayQ8rVpuFs2126pTt+Fe5ejOVzSORNQCC4LlmD5TrJBss
-         5YMbMI/A+uszg50P69c6id0xebCGAJbBBakjQPYBeLk1Tc4wEGhopIZoz1IiYX+InNDW
-         GnVdweVbCae6krXxyr3RIJITYdMUVIm8ScFgmwgT4FDKBd7KoviTXhB1ECcxjYBba3El
-         8b3g==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gMnvWwSoGd4PQcOu6fceOPHYoPwyiaPpZ9TjdPqNhYE=;
+        b=MduW/T3FQXmnpEeijeGDwxzI71cTfGCyuPytxKIJThGEPHvOn70647U+cLgtZxjlNw
+         1BnatdjyEqfeXVsKvk8hKaqoC5rzOY+HaEziPxM7u4xb4YaY7CXBFJIoOir9ojIgYX87
+         HkrFuRTewGURMdpU6mKEyu1gRxPHyVhXad/+E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677529566;
-        h=content-transfer-encoding:mime-version:message-id:to:from:cc
-         :in-reply-to:subject:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0ajTTHZcZm8Jmmg1CmeyVWZGtfRhttL1hrN1XMgLjjE=;
-        b=R0pXjPVD7kEvHtEdk9Pk1kW59aFuTwU9Tc2qwUCdJSDEqCwapGE0FlbR/XqlMVzQIt
-         C9u5TzAFE4NM6diNX15pqxuTL4Rx1veP1MIosESdIfp2O1S4QCYyB8DvyGypMqjqTpxZ
-         7SHXGAiqeQMkYnIdUcXwlhIEONqtkr+IKYd29EbOhPn15Jfsr+ToxTd8+GAZfnGk67g6
-         BrRze0oLbWrrP8+jYX80WfzKjhyOaHiS0Sxaf52ugjFRFRcuYgRL3TxGD2C8wa5x01o9
-         uhhwJkrJqv3mOaQz14LYYeG8g85eQvAoJNoSBUTHWfL/uqydq728Ix9B8kxDcfvl/RT+
-         244w==
-X-Gm-Message-State: AO0yUKVWYnRg5Z4jD71QvtIcE9+sttBXQcTE+Gl/DFgkhrj41/yfV7u5
-	u8/NZH0kXxCNCGxOkDlSI0y+YP1ZahtOgygO
-X-Google-Smtp-Source: AK7set/8pnhuQPhzUuU/N31V6VeOvoxEEfj2VwJWtloFzYiGm9rtdEQrc7KWNSYJNvKaVA3rV+xm0Q==
-X-Received: by 2002:a17:90b:380d:b0:233:d870:f4c7 with SMTP id mq13-20020a17090b380d00b00233d870f4c7mr455454pjb.21.1677529565658;
-        Mon, 27 Feb 2023 12:26:05 -0800 (PST)
-Received: from localhost ([50.221.140.188])
-        by smtp.gmail.com with ESMTPSA id fr19-20020a17090ae2d300b00233bab35b57sm6532501pjb.29.2023.02.27.12.26.04
+        bh=gMnvWwSoGd4PQcOu6fceOPHYoPwyiaPpZ9TjdPqNhYE=;
+        b=2rlYOgGTme0+NlZ20JnrM3UFeqfEPtbyNxrcKFGQ6oajGFcRriZYSNzpwc0U9QLnyU
+         67BG1RX8SIhG+5oZbwdwz8IfuPlob5p8QW2+S73b73bUxAYVUUSTGjAJI4qUDGCWcgvg
+         L2Mf3dpjxt9wP7O4bBALKcXdP3VA1DW+XfQQxOoE/m+0BslKPNX5nxu0nycjSoWbRXtw
+         6YKO/7vhD5DRCWrjx8lu80O9oCoH/s0562aOHXfU2YcHH5G9f5RuOjuKRpij+ezIRngU
+         2LUbAm76NnEVIMzMkAvQaT8OUzm5g2B1yN44zh2rtTfRkqjgVr5k8y1IvsNKxI6S9znD
+         Qn1w==
+X-Gm-Message-State: AO0yUKVZiBxnGvThuAjMV4pIoPEBru4X84fC/OpSDr67YgSlu24RPGz3
+	ml7wVSdzo39ThLpG3CMqk4Th3MNUV4wYuJSc
+X-Google-Smtp-Source: AK7set+PHgtufI1WaD9leQStq0L6jKi8B1bMQp4JoJ7Vb9ZZWgdUBb3wCoIr+JqL5JR38eZ9ooDSIA==
+X-Received: by 2002:ad4:5d41:0:b0:574:8ef8:89cf with SMTP id jk1-20020ad45d41000000b005748ef889cfmr1740330qvb.12.1677530823131;
+        Mon, 27 Feb 2023 12:47:03 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id q15-20020a05620a024f00b0073baa5ec0besm5528394qkn.115.2023.02.27.12.47.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Feb 2023 12:26:04 -0800 (PST)
-Date: Mon, 27 Feb 2023 12:26:04 -0800 (PST)
-X-Google-Original-Date: Mon, 27 Feb 2023 12:25:19 PST (-0800)
-Subject:     Re: [PATCH] shazam: Add the --add-message-id argument
-In-Reply-To: <20230227200930.qdynviatehu5i4br@meerkat.local>
-CC: tools@linux.kernel.org
-From: Palmer Dabbelt <palmer@rivosinc.com>
-To: konstantin@linuxfoundation.org
-Message-ID: <mhng-d926c57f-ccbe-452c-a5a0-3861198c60ce@palmer-ri-x1c9a>
+        Mon, 27 Feb 2023 12:47:02 -0800 (PST)
+Date: Mon, 27 Feb 2023 15:47:00 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: tools@linux.kernel.org
+Subject: Re: [PATCH] shazam: Add the --add-message-id argument
+Message-ID: <20230227204700.22iorqokdzy3tvkb@meerkat.local>
+References: <20230227200930.qdynviatehu5i4br@meerkat.local>
+ <mhng-d926c57f-ccbe-452c-a5a0-3861198c60ce@palmer-ri-x1c9a>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-Mime-Version: 1.0 (MHng)
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <mhng-d926c57f-ccbe-452c-a5a0-3861198c60ce@palmer-ri-x1c9a>
 
-On Mon, 27 Feb 2023 12:09:30 PST (-0800), konstantin@linuxfoundation.org wrote:
-> On Mon, Feb 27, 2023 at 11:05:19AM -0800, Palmer Dabbelt wrote:
->> > Yes, and you can also add it to wtglobs in get_main_config() in init.py, which
->> > should allow setting this in .b4-config for projects that want to add that to
->> > their toplevel.
->> >
->> > Do you feel like doing a v2 with this change?
->>
->> Sure, but if someone else wants to take a whack then I'll be more than happy
->> as it'll likely happen after the Linux merge window, QEMU soft freeze, and
->> GCC branch...
->
-> I can make this change -- should be straightforward. Thanks for the
-> suggestion.
+On Mon, Feb 27, 2023 at 12:26:04PM -0800, Palmer Dabbelt wrote:
+> > > Sure, but if someone else wants to take a whack then I'll be more than happy
+> > > as it'll likely happen after the Linux merge window, QEMU soft freeze, and
+> > > GCC branch...
+> > 
+> > I can make this change -- should be straightforward. Thanks for the
+> > suggestion.
+> 
+> Awesome, thanks.  No rush on my end, I've still got a few other patches in
+> the stack so I'll be running my local copy for a bit either way.
 
-Awesome, thanks.  No rush on my end, I've still got a few other patches 
-in the stack so I'll be running my local copy for a bit either way.
+It's in master if you want to try it out. I ended up doing it slightly
+differently, since we use linkmask in a couple of places, so you'll need to
+set the following config variable in your QEMU repo:
+
+[b4]
+   linktrailermask = Message-ID: <%s>
+
+-K
