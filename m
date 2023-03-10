@@ -1,87 +1,92 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82304DA9A
-	for <tools@linux.kernel.org>; Fri, 10 Mar 2023 19:26:55 +0000 (UTC)
-Received: by mail-qt1-f169.google.com with SMTP id d7so6880710qtr.12
-        for <tools@linux.kernel.org>; Fri, 10 Mar 2023 11:26:55 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5768838
+	for <tools@linux.kernel.org>; Fri, 10 Mar 2023 19:32:49 +0000 (UTC)
+Received: by mail-pj1-f41.google.com with SMTP id me6-20020a17090b17c600b0023816b0c7ceso10950344pjb.2
+        for <tools@linux.kernel.org>; Fri, 10 Mar 2023 11:32:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1678476414;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fNAByfHHpFrjDqY99IOXUyToeyPLipH+DHMu2IMELIU=;
-        b=FZUv1/KTVB2BMR++2OMbfabBDzOLzHXi5X5HVqLr+7XJ7xAYdC8R5+/blifW+mjSdA
-         nx/N79lRcgMx4rW+FkFKhrw6WYfzVxdrbOLjzT7O8/+2NfN7aCAsgeaTRi4LZAB4KOqL
-         kvAQGso4R1nNAvPPSmQ82lirC7qmr8Ynf00Ho=
+        d=dabbelt-com.20210112.gappssmtp.com; s=20210112; t=1678476769;
+        h=content-transfer-encoding:mime-version:message-id:to:from:cc
+         :in-reply-to:subject:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PGe/ZtMK6S0IZoq3fLmJVC8pYj0Y1oeavCIdcx65v2g=;
+        b=GC+cWX69f/jLWi/IT5ai9EcM2Fun8wcUkeUbjLfh8elIpoUJyG/0UsYO/eQ+8AnSin
+         KtwYT0HgBFUQ9l+a0VoML/sv1xOtaaGA2z5jQykLrkiEirzN46Vxvy2jUVVkN0uqcUCU
+         iImkZAnk/LNL9edAaThhJXbDwmJtcpzZTtTsv5p4Oi2WxgPKAviClX9hbCpHBc60O4+3
+         L/9t9BNRi1Mx4pShCa64SZ2yS3amPMHrow3cRK/NUZBMdXW0gI0P5Sfbvkk5I93326GT
+         dAbow9cv921r8BCjkyvI19XrDm2pByTkfXra2x3RJv2lRHz/9KSpcHDHZyLAryfWPWvu
+         QzSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678476414;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20210112; t=1678476769;
+        h=content-transfer-encoding:mime-version:message-id:to:from:cc
+         :in-reply-to:subject:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fNAByfHHpFrjDqY99IOXUyToeyPLipH+DHMu2IMELIU=;
-        b=6A/Z27Y5ZZ62RtQsEvI7bLGY99BQXsu38/tF8dvezKR44bSpjnHgaceAyrYpfEHGdD
-         8HHjxl2FrNd69/+sGt3SDfpnuPO40763kIbPl7s/wQYDUN8DN6IWW1vn66aX8RsO7Nzb
-         irFhwq+mUpuEjEaakeXZ1Cb1d+C1tr7qKDtim4bK1RInv+buOWslX9kUAB93gg11SPdX
-         dkvEqEhxT0cmZhJyAnpifNQOcqCfJCaysfFj8dkIyJab25mdSkOUHmosb8qFs4U8K6Lb
-         Odpg77HNqNWmM/iTbjkw7tBFpwiIu7iG4g0VmJ9srq27BxdaMLz8rUwy1vrNzu+cM5SW
-         KTmA==
-X-Gm-Message-State: AO0yUKWbKRUmR3Za50kp2HV9cbfZbr+MULGVBhUgrAyWFQgeVdXodwB0
-	C17bdb5ojMFvZqSKkpAHBAhPWA==
-X-Google-Smtp-Source: AK7set9Gm2s1X+1cbgF0CvV7cnSBnC1SuqTALGUSeOxEWqT+nbfoCupXdbnEK6st6VZcQvRHXukfMQ==
-X-Received: by 2002:a05:622a:174b:b0:3ba:1bcb:af01 with SMTP id l11-20020a05622a174b00b003ba1bcbaf01mr38114151qtk.59.1678476414390;
-        Fri, 10 Mar 2023 11:26:54 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id r4-20020ac85204000000b003b9a6d54b6csm375068qtn.59.2023.03.10.11.26.53
+        bh=PGe/ZtMK6S0IZoq3fLmJVC8pYj0Y1oeavCIdcx65v2g=;
+        b=3pRZI6qqgSBNJkqXYx91lv7R+nunMkE8sD7cQ5m0WwXVoWsBha3/79KV6p0BMGCPOx
+         vZ/2YJBJQPE2/E9zQU6U0zOB5blmlSLQUvk9YzRLDPFiFUkQrwJeXlNt6V0UnpqD35Mq
+         WrPnffz+owsu/JgDqGowgj08nBKg+z5GZItCGnaagRFX9roRuYWlPsT5wvAwhGmchoj8
+         1Mc6woj6q6GJTNLPNGsaLt5T9KEqnU2nojaHGSIwbdXGFtBxt69ioe+oXkWW26yJQMKh
+         xbzVJYvjL9rJ6v7qdDvBVM3CSks14Mpf0bvug02Lzl4xb3BW+nLYE/Dza+yD1XzD+CKN
+         x/Pg==
+X-Gm-Message-State: AO0yUKV/D8GyybHiLVisM1+kmOSxbz6tvS9RVXwy9zN8ezYXAWEZpFsP
+	js/GIdGrKZ5f2qSTf6VLK2SJxiVXVECuI7ImBEg=
+X-Google-Smtp-Source: AK7set/kCYqMOEpXZ/FMsOEcgWLR13ashkjX0IKq8PfGurXmxdLVAt+tuGRr4KBguxoSZOsycQ5j0Q==
+X-Received: by 2002:a17:90b:4a0c:b0:234:5d3c:b02b with SMTP id kk12-20020a17090b4a0c00b002345d3cb02bmr26979033pjb.42.1678476768875;
+        Fri, 10 Mar 2023 11:32:48 -0800 (PST)
+Received: from localhost ([50.221.140.188])
+        by smtp.gmail.com with ESMTPSA id m15-20020a17090ab78f00b002369e16b276sm277924pjr.32.2023.03.10.11.32.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Mar 2023 11:26:54 -0800 (PST)
-Date: Fri, 10 Mar 2023 14:26:52 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: tools@linux.kernel.org, Conor Dooley <conor@kernel.org>
-Subject: Re: b4 shazam picking up the wrong author from patchwork/lore
-Message-ID: <20230310192652.ymac3w2lucfdf34p@meerkat.local>
-References: <mhng-2765f5e1-e3d9-4f36-82e2-1212e13b0cdd@palmer-ri-x1c9a>
+        Fri, 10 Mar 2023 11:32:48 -0800 (PST)
+Date: Fri, 10 Mar 2023 11:32:48 -0800 (PST)
+X-Google-Original-Date: Fri, 10 Mar 2023 11:31:59 PST (-0800)
+Subject:     Re: b4 shazam picking up the wrong author from patchwork/lore
+In-Reply-To: <20230310192652.ymac3w2lucfdf34p@meerkat.local>
+CC: tools@linux.kernel.org, Conor Dooley <conor@kernel.org>
+From: Palmer Dabbelt <palmer@dabbelt.com>
+To: konstantin@linuxfoundation.org
+Message-ID: <mhng-2296988e-80b6-4e13-9f3c-b61dc0b40c5e@palmer-ri-x1c9a>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <mhng-2765f5e1-e3d9-4f36-82e2-1212e13b0cdd@palmer-ri-x1c9a>
+Mime-Version: 1.0 (MHng)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, Mar 10, 2023 at 09:38:54AM -0800, Palmer Dabbelt wrote:
-> Conor just pointed out that 2a8db5ec4a28 ("RISC-V: Don't check text_mutex
-> during stop_machine") was listed as authored by him, despite having a From
-> in the message body.  That usually works fine so I'm not sure
-> what happened here -- no big deal because neither of us really care about the
-> authorship on this one (and the SOBs are fine), but figured it'd be best to say
-> something in case it bites someone else.
-> 
-> I merged the patch with
-> 
->    b4 shazam -lts https://patchwork.kernel.org/project/linux-riscv/patch/20230303143754.4005217-1-conor.dooley@microchip.com/
-> 
-> which is the way I usually do things.  This is the first time I've noticed any
-> sort of issue like this.
+On Fri, 10 Mar 2023 11:26:52 PST (-0800), konstantin@linuxfoundation.org wrote:
+> On Fri, Mar 10, 2023 at 09:38:54AM -0800, Palmer Dabbelt wrote:
+>> Conor just pointed out that 2a8db5ec4a28 ("RISC-V: Don't check text_mutex
+>> during stop_machine") was listed as authored by him, despite having a From
+>> in the message body.  That usually works fine so I'm not sure
+>> what happened here -- no big deal because neither of us really care about the
+>> authorship on this one (and the SOBs are fine), but figured it'd be best to say
+>> something in case it bites someone else.
+>>
+>> I merged the patch with
+>>
+>>    b4 shazam -lts https://patchwork.kernel.org/project/linux-riscv/patch/20230303143754.4005217-1-conor.dooley@microchip.com/
+>>
+>> which is the way I usually do things.  This is the first time I've noticed any
+>> sort of issue like this.
+>
+> Ooh, very neat catch. This would only happen under the following conditions:
+>
+> - the message had to be patatt-signed
+> - you had to have had the key to properly validate it
+> - and, most importantly, there had to be mailman trailers in the message
+>
+> When all of this was true, we would re-trim the body to the size that was
+> actually passing verification (using the l= parameter from the patatt
+> signature), but this lost the in-body From/Subject headers (because they were
+> moved into the actual message headers during verification). There were
+> workarounds initially for this happening, but they stopped working right
+> around 0.10.
+>
+> This is now fixed in master and backported to 0.12.y. I will hopefully push
+> out a 0.12.2 some time today.
+>
+> Thank you for the report.
 
-Ooh, very neat catch. This would only happen under the following conditions:
-
-- the message had to be patatt-signed
-- you had to have had the key to properly validate it
-- and, most importantly, there had to be mailman trailers in the message
-
-When all of this was true, we would re-trim the body to the size that was
-actually passing verification (using the l= parameter from the patatt
-signature), but this lost the in-body From/Subject headers (because they were
-moved into the actual message headers during verification). There were
-workarounds initially for this happening, but they stopped working right
-around 0.10.
-
-This is now fixed in master and backported to 0.12.y. I will hopefully push
-out a 0.12.2 some time today.
-
-Thank you for the report.
-
--K
+Thanks for fixing it so fast!
