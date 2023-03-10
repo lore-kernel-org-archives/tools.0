@@ -1,26 +1,45 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1613DDA81
-	for <tools@linux.kernel.org>; Fri, 10 Mar 2023 18:14:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02841C433EF;
-	Fri, 10 Mar 2023 18:14:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678472087;
-	bh=u3lgGzRCxR1P9AglZN6WmgnE9sR0HjQRflg7FMDG23Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=evL5bM4egLcoKosWWMWW2yRWQfGGLM4tfLYnC/fqrqHyLGjuswv/EdpcONyYF+mhy
-	 FG0uyrkjvqdEnwldOxQ6pJ3DT33lS9UiTsQzpknCsDypsSLt8k9q8onrJZGOGhFbfH
-	 C540okImMguwfHhjzYfbPz2a0j8j2u6IwA7fhys1tj2UYy3c62/IzwCWuHE6akfEQx
-	 +Cj4u+XQBIYwjUwhgJ0X47AKqpFxfC4uukFjVBLaeeJnnLD0Cq/AKZ6f0jmtfnDjyu
-	 EUMv2gvnffhkgQRn6fQ02roYT3+Y6GUDx20NjeeWA2B3j6np58c3NIJt5aTRKkEvOS
-	 dC23APdhCtJsw==
-Date: Fri, 10 Mar 2023 18:14:44 +0000
-From: Conor Dooley <conor@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82304DA9A
+	for <tools@linux.kernel.org>; Fri, 10 Mar 2023 19:26:55 +0000 (UTC)
+Received: by mail-qt1-f169.google.com with SMTP id d7so6880710qtr.12
+        for <tools@linux.kernel.org>; Fri, 10 Mar 2023 11:26:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1678476414;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fNAByfHHpFrjDqY99IOXUyToeyPLipH+DHMu2IMELIU=;
+        b=FZUv1/KTVB2BMR++2OMbfabBDzOLzHXi5X5HVqLr+7XJ7xAYdC8R5+/blifW+mjSdA
+         nx/N79lRcgMx4rW+FkFKhrw6WYfzVxdrbOLjzT7O8/+2NfN7aCAsgeaTRi4LZAB4KOqL
+         kvAQGso4R1nNAvPPSmQ82lirC7qmr8Ynf00Ho=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678476414;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fNAByfHHpFrjDqY99IOXUyToeyPLipH+DHMu2IMELIU=;
+        b=6A/Z27Y5ZZ62RtQsEvI7bLGY99BQXsu38/tF8dvezKR44bSpjnHgaceAyrYpfEHGdD
+         8HHjxl2FrNd69/+sGt3SDfpnuPO40763kIbPl7s/wQYDUN8DN6IWW1vn66aX8RsO7Nzb
+         irFhwq+mUpuEjEaakeXZ1Cb1d+C1tr7qKDtim4bK1RInv+buOWslX9kUAB93gg11SPdX
+         dkvEqEhxT0cmZhJyAnpifNQOcqCfJCaysfFj8dkIyJab25mdSkOUHmosb8qFs4U8K6Lb
+         Odpg77HNqNWmM/iTbjkw7tBFpwiIu7iG4g0VmJ9srq27BxdaMLz8rUwy1vrNzu+cM5SW
+         KTmA==
+X-Gm-Message-State: AO0yUKWbKRUmR3Za50kp2HV9cbfZbr+MULGVBhUgrAyWFQgeVdXodwB0
+	C17bdb5ojMFvZqSKkpAHBAhPWA==
+X-Google-Smtp-Source: AK7set9Gm2s1X+1cbgF0CvV7cnSBnC1SuqTALGUSeOxEWqT+nbfoCupXdbnEK6st6VZcQvRHXukfMQ==
+X-Received: by 2002:a05:622a:174b:b0:3ba:1bcb:af01 with SMTP id l11-20020a05622a174b00b003ba1bcbaf01mr38114151qtk.59.1678476414390;
+        Fri, 10 Mar 2023 11:26:54 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id r4-20020ac85204000000b003b9a6d54b6csm375068qtn.59.2023.03.10.11.26.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Mar 2023 11:26:54 -0800 (PST)
+Date: Fri, 10 Mar 2023 14:26:52 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: tools@linux.kernel.org
+Cc: tools@linux.kernel.org, Conor Dooley <conor@kernel.org>
 Subject: Re: b4 shazam picking up the wrong author from patchwork/lore
-Message-ID: <185b8d0a-757e-4e23-8031-3828c34f8239@spud>
+Message-ID: <20230310192652.ymac3w2lucfdf34p@meerkat.local>
 References: <mhng-2765f5e1-e3d9-4f36-82e2-1212e13b0cdd@palmer-ri-x1c9a>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
@@ -28,80 +47,41 @@ List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="hSvbFpyjg/EaUcK/"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <mhng-2765f5e1-e3d9-4f36-82e2-1212e13b0cdd@palmer-ri-x1c9a>
-
-
---hSvbFpyjg/EaUcK/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
 On Fri, Mar 10, 2023 at 09:38:54AM -0800, Palmer Dabbelt wrote:
 > Conor just pointed out that 2a8db5ec4a28 ("RISC-V: Don't check text_mutex
 > during stop_machine") was listed as authored by him, despite having a From
 > in the message body.  That usually works fine so I'm not sure
-> what happened here -- no big deal because neither of us really care about=
- the
-> authorship on this one (and the SOBs are fine), but figured it'd be best =
-to say
+> what happened here -- no big deal because neither of us really care about the
+> authorship on this one (and the SOBs are fine), but figured it'd be best to say
 > something in case it bites someone else.
->=20
+> 
 > I merged the patch with
->=20
->    b4 shazam -lts https://patchwork.kernel.org/project/linux-riscv/patch/=
-20230303143754.4005217-1-conor.dooley@microchip.com/
->=20
-> which is the way I usually do things.  This is the first time I've notice=
-d any
+> 
+>    b4 shazam -lts https://patchwork.kernel.org/project/linux-riscv/patch/20230303143754.4005217-1-conor.dooley@microchip.com/
+> 
+> which is the way I usually do things.  This is the first time I've noticed any
 > sort of issue like this.
->=20
-> Just to make some headaches: I've got some out-of-tree patches for b4 sti=
-ll.
-> It reproduced locally for Conor, who I'm assuming has a cleaner tree,
 
-Yah, I have no out-of-tree patches. On the latest master I think:
-0.13-dev-041d1
+Ooh, very neat catch. This would only happen under the following conditions:
 
-> but just
-> for full disclosure here's what I'm running:
->=20
-> * 901c5b9 - (HEAD -> palmer, palmer/palmer) shazam: Add the --add-message=
--id argument (3 weeks ago) <Palmer Dabbelt>
-> * ca426a4 - mbox: Add the --pipe-each-message argument (4 weeks ago) <Pal=
-mer Dabbelt>
-> * f54fa86 - pr: Provide more information on PR fetch failures (4 weeks ag=
-o) <Palmer Dabbelt>
-> * ada3021 - (b4/master) PEP inspection cleanups (5 weeks ago) <Konstantin=
- Ryabitsev>
-> * a328183 - ez: modify --show-info to allow getting single value (5 weeks=
- ago) <Konstantin Ryabitsev>
-> * 9e0bcc5 - Up version to 0.13-dev (5 weeks ago) <Konstantin Ryabitsev>
-> * 7e797fe - shazam: Add the --merge-base argument (5 weeks ago) <Palmer D=
-abbelt>
-> * 173e358 - Use typing compatible with python 3.8 (6 weeks ago) <Konstant=
-in Ryabitsev>
-> * 63004e9 - Update patatt to 0.6.3 (6 weeks ago) <Konstantin Ryabitsev>
-> * 1f7f126 - (tag: v0.12.0) Up version to 0.12.0 (7 weeks ago) <Konstantin=
- Ryabitsev>
->=20
-> That's all in git.kernel.org/palmer/b4 (still meaning to get around to te=
-sting
-> your better version of the Message-ID bits, sorry it's just been crazy he=
-re for
-> a bit).
+- the message had to be patatt-signed
+- you had to have had the key to properly validate it
+- and, most importantly, there had to be mailman trailers in the message
 
---hSvbFpyjg/EaUcK/
-Content-Type: application/pgp-signature; name="signature.asc"
+When all of this was true, we would re-trim the body to the size that was
+actually passing verification (using the l= parameter from the patatt
+signature), but this lost the in-body From/Subject headers (because they were
+moved into the actual message headers during verification). There were
+workarounds initially for this happening, but they stopped working right
+around 0.10.
 
------BEGIN PGP SIGNATURE-----
+This is now fixed in master and backported to 0.12.y. I will hopefully push
+out a 0.12.2 some time today.
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZAtzlAAKCRB4tDGHoIJi
-0my7AQCU8FGd9gzpifOgZSSSiYM9GvEvPAUOs+ChZ/FvdwmDhgEA1Yg3l0cCuQ2k
-sV+nVSdmuxphtfDQIocHwsulgcUvmg8=
-=WFaP
------END PGP SIGNATURE-----
+Thank you for the report.
 
---hSvbFpyjg/EaUcK/--
+-K
