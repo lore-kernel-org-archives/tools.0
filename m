@@ -1,93 +1,91 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EC8A29
-	for <tools@linux.kernel.org>; Mon, 27 Mar 2023 10:20:45 +0000 (UTC)
-Received: by mail-ed1-f49.google.com with SMTP id ek18so33847567edb.6
-        for <tools@linux.kernel.org>; Mon, 27 Mar 2023 03:20:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C401679CE
+	for <tools@linux.kernel.org>; Mon, 27 Mar 2023 21:18:12 +0000 (UTC)
+Received: by mail-qv1-f53.google.com with SMTP id 59so7709890qva.11
+        for <tools@linux.kernel.org>; Mon, 27 Mar 2023 14:18:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tessares.net; s=google; t=1679912444;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LKoxwlYpY1M3GFAopGUG/2U9pz7WOXuVtidYl2iYZBs=;
-        b=d4MOFVllG82mgnoWnzLRs9jw3pwXqh2BMxyNksMFTe1MgHLpIUYM7rb2zzZ3yAYFaP
-         cv2GNSEfRW1KHr93P0IIwwmC/IVMeDi1DlKzYVmtuT7+yMY+d4VqsOFLJ9DFrunmZNKh
-         1EAaq8N8f8b3UkjP86pZg5apCvl3Tfmp71PZP1+x4yOX0y/Dp/qAAqJsiwGy58roVafr
-         ZHM+KBmm7FPguiHlbirLZ2resGuoUHcgl1X0QZssh9KGKMiQ7ntVPBxC6pvyRiWOMMDJ
-         ln6bYu9UppjCTHANFkJD2PSodNO9+jMUN2oVEfd+MiR13jbu3mwvdGSq5XR7E5IM8wyP
-         ci1w==
+        d=linuxfoundation.org; s=google; t=1679951891;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1dfKTVwwVyvOaIVndWkdZuKN9Z4+khJ9Mh02pf1XG0w=;
+        b=H6wXSp2fuRkhulYccTeuJr7z4Tc3GwhNldEQbb6Wd2XWy4P1p4mCrIVCAqmo7B+fp0
+         S7+Ll50GXTjp3AlivwQvONMR18VfuNdL/yIDXyEfsbihezhgFe3izx6Es0NWHtwmH5wv
+         nHFXDb68OWYujVmQvSFN94FRZRUH2Ogn/Op4s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679912444;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LKoxwlYpY1M3GFAopGUG/2U9pz7WOXuVtidYl2iYZBs=;
-        b=bfCdf9kOaeLO7m5F/1ZRylvH0R106s5PU/5wV2sEQY2RflwuCMNjmCumsW20EUCqM8
-         yU2YnzGrjRHM7Ykt4phbpGhsSB1gyYoWmWOK7hGO2P1vbhMeO0SXo96MX0j5CnsVIQEy
-         FrWwK3eVF+BHaNm3u/jbJRDuvZJaKFkLCSTbifZlPNAb0fwne4sTsNZ/LuMDMgTH53ve
-         XdwX2TPdDIEShtt3MNsEVXh3Ilfk0CCP5zxPkBcG9LwPHE7m+rF9RB2AaoHetETa6lo4
-         6Wk2AL5rvpoUptecT209xMjhMo8+piU8/OiSjDzdw5nf8cuPH6BxQnxMPG9PGugqxlxW
-         smjA==
-X-Gm-Message-State: AAQBX9dAEzPgvrmG5mwHXoj2agpHN+OAQ9d1RB6NrRCU65u42EavHbmT
-	e0o6D3hwhIyCIHnu4IImquwb2w==
-X-Google-Smtp-Source: AKy350ZaUOU7ruQ7guqMfO4ZHVEpvAI20J3/m5CMudV6lKdxH4Ihzpv/5BVD8+PlnMdecb4SbAef8A==
-X-Received: by 2002:a17:907:11cf:b0:93d:7ad:a954 with SMTP id va15-20020a17090711cf00b0093d07ada954mr11740729ejb.37.1679912444043;
-        Mon, 27 Mar 2023 03:20:44 -0700 (PDT)
-Received: from [10.44.2.5] ([81.246.10.41])
-        by smtp.gmail.com with ESMTPSA id y4-20020a17090629c400b0092fdb0b2e5dsm13989473eje.93.2023.03.27.03.20.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 03:20:43 -0700 (PDT)
-Message-ID: <9a4ebcd9-9d23-f525-cedd-222970f1b207@tessares.net>
-Date: Mon, 27 Mar 2023 12:20:43 +0200
+        d=1e100.net; s=20210112; t=1679951891;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1dfKTVwwVyvOaIVndWkdZuKN9Z4+khJ9Mh02pf1XG0w=;
+        b=yS2IoGF1neRHG6H2/x3+bmmFalkYYFJVF7gOrCzG1AggWGuGlIgF4Swo3AO08ZF7za
+         8uZ4xwywGEDGELDFX5BCwtugeZxhxHkV/kG8KrgPc7kBNX0Or/Uy8FJcw8ufxk5a58eq
+         6hdfoy7iRKJn7by+zhd7hbqyEVL8yMQl9X1EKf3TMO+B5/GGscC+VwT0omSJkCNCIb6f
+         FhOlSBM+ZYNJ1smRwX83KBwFLc/D1JvIapWTeW+xKXivSsUV8z7wPGChNrvYoUyyJXkQ
+         N0HKB3cyB/ia12bZpg2dS1H2MVuc6YylSDGJQQPkBEO07ECkCAYthb+grusJdX2xOzxh
+         V2RA==
+X-Gm-Message-State: AAQBX9fylsqzgy14R72hdWOsHxlcH8EyLeM1tFW6Iqf8RBn4l3t72y67
+	/TPyTQhVbnSVooh7y+e5dj7vs2hsETB7HRp4HAk=
+X-Google-Smtp-Source: AKy350aNwjFYJURH1ViEeCL1p2lgT48n4eFtCBBvVf0vkq6687lpBGWVX42tAb05EWXgMN+qO97GIg==
+X-Received: by 2002:a05:6214:2025:b0:5a7:e9e4:5010 with SMTP id 5-20020a056214202500b005a7e9e45010mr27483690qvf.14.1679951891556;
+        Mon, 27 Mar 2023 14:18:11 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id mu10-20020a056214328a00b005dd8b9345aasm3208410qvb.66.2023.03.27.14.18.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Mar 2023 14:18:11 -0700 (PDT)
+Date: Mon, 27 Mar 2023 17:18:09 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Matthieu Baerts <matthieu.baerts@tessares.net>
+Cc: Tools <tools@linux.kernel.org>, Christian Brauner <brauner@kernel.org>
+Subject: Re: b4: send: support git notes per patch
+Message-ID: <jx7vyqdj3qt2zwgsxh6hjac6osr52n2vcmkj2pg3elapcth62m@jtl27si2pa3g>
+References: <9a4ebcd9-9d23-f525-cedd-222970f1b207@tessares.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Content-Language: en-GB
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Tools <tools@linux.kernel.org>, Christian Brauner <brauner@kernel.org>
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: b4: send: support git notes per patch
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9a4ebcd9-9d23-f525-cedd-222970f1b207@tessares.net>
 
-Hi Konstantin,
+On Mon, Mar 27, 2023 at 12:20:43PM +0200, Matthieu Baerts wrote:
+> Do you think "b4 send" could attach the "git notes" to the different
+> patches being sent, similar to what "git format-patch --notes" does?
+> 
+> Personally, I find this quite useful: when you have a series with a
+> bunch of patches, it seems interesting to put a detailed changelog per
+> patch instead of putting everything in the cover-letter. It makes even
+> more sense when some people are only Cc with a few patches and not with
+> the whole series. I didn't find a way to do that with b4.
+> 
+> But then, I guess we might need a workaround implemented or shipped with
+> b4 to preserve the notes when git filter-repo is used, no?
 
-Do you think "b4 send" could attach the "git notes" to the different
-patches being sent, similar to what "git format-patch --notes" does?
+Correct, I don't want to touch it until we stop blowing away git notes every
+time we run "b4 trailers".
 
-Personally, I find this quite useful: when you have a series with a
-bunch of patches, it seems interesting to put a detailed changelog per
-patch instead of putting everything in the cover-letter. It makes even
-more sense when some people are only Cc with a few patches and not with
-the whole series. I didn't find a way to do that with b4.
+BTW, another alternative to git notes it to add this info into the commit
+itself, e.g.:
 
-But then, I guess we might need a workaround implemented or shipped with
-b4 to preserve the notes when git filter-repo is used, no? This is
-linked to the issue reported by Christian:
+    libfoo: update foo bar
 
+    This updates foo bar.
 
-https://lore.kernel.org/tools/20221122185249.733ipcpwpgkh5xle@meerkat.local/
-  https://github.com/newren/git-filter-repo/issues/22
+    Signed-off-by: Dev E. Loper <dev@example.com>
 
-I guess this issue is not going to be fixed soon and even if it does, it
-might take time to have it in the different distros. I admit it is quite
-surprising to no longer see the notes after having used b4
-prep/trailer/send! :)
+    ---
 
-Cheers,
-Matt
+    My notes about the patch here that will be preserved by "b4 send" and show
+    up in the patches sent out, but because they are below "---", they aren't
+    going to be part of the commit.
 
-PS: by chance if you can have a look at my patches/questions for 'b4
-prep --fork-point', that would be nice :)
+> PS: by chance if you can have a look at my patches/questions for 'b4
+> prep --fork-point', that would be nice :)
 
+I know that it's been sitting for a while, and I'm not ignoring it, just need
+to find a good stretch of time to dedicate to understanding the RFC set.
 
-https://lore.kernel.org/tools/20230206-b4-prep-fork-point-as-base-branch-v1-0-2732e0c32f5d@tessares.net/
--- 
-Tessares | Belgium | Hybrid Access Solutions
-www.tessares.net
+-K
