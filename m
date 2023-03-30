@@ -1,123 +1,120 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EE42560
-	for <tools@linux.kernel.org>; Tue, 28 Mar 2023 12:15:52 +0000 (UTC)
-Received: by mail-wr1-f47.google.com with SMTP id d17so11944582wrb.11
-        for <tools@linux.kernel.org>; Tue, 28 Mar 2023 05:15:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tessares.net; s=google; t=1680005750;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i1GgnO0rQ9xhwRCVzD0jCpSGg+KgEyNO0HdsjHO5QF0=;
-        b=ZcaLZbYL+iwJAA1z6QFlGP+TwizeMgMny1yrHEmoQOETv++o/Fec9BJwLxHkQ5fjZu
-         R8SQvpI7MPiTV0/93doRpPM1g0r+wP3vjmU0+KoKcuNX10+7xuXLOJ1f5okODSQhJkZp
-         81DbfacEBptU6s+ypF1iJjFvxi3KmLYxKULrtdZEm78SCnnA6EcpdB+kgT/rx+CSS3gd
-         Bu4xt8xx9db+Z959Lxn52Dg1ogDIZ8qA+FAUACMZ/Jo41v3QbMEgu+cf4xMUqof0S7/3
-         +N9ZyeL62hoKZr55uXRgXd03AsHqjYIxH6n/dgO/8oIskIFAl+2bsTTuks+WYqKGUIM7
-         rUIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680005750;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i1GgnO0rQ9xhwRCVzD0jCpSGg+KgEyNO0HdsjHO5QF0=;
-        b=WGUJhdaXs6MYuuAuKvArwgenk3ZeQszCRWvxAVz4M0KECV2bAlua9vMHc90fAwukNf
-         +iSi5WYhSzZJCa/uOrWx9iJiZ9/LaVOFjwtgL0aUr9QkRSWs5LVZ62g9eqCnpoNDuzh3
-         bCvpF8q1npWH6KOLyImuoXtOOnOaBeW7+0IF92AZuG9wnQHZjWj6rzRCeGyym0s8DOjM
-         dWFii6qzhmRrxGXAUKkelld+/H5MOOuctGASW9b3Y5kt8pFj1uRI3m4BA9fH5DwbgnaA
-         mttJEiQ8NYnCTYnnTCfNBGag1RCWgNdSi5kI4vk2V8BtPCTJ84WZlC1ceFrs3GTFk8uG
-         Gmig==
-X-Gm-Message-State: AAQBX9c5evv6s7vzJQLjcqRNDRF96r2MGwyUP5rOoblHCSzgj2UCThcR
-	Hoc55ypYFwVKEqCKA6c4x6vI6/+04ijYpxll0CA=
-X-Google-Smtp-Source: AKy350bWz1QDVswJ7kFLoBb/OJ/wRBtluMmmqZ+xbr/Wab4jzNT0ztONiPtLUA/Bg8hPWINf6XsxTQ==
-X-Received: by 2002:a5d:4688:0:b0:2c8:b9cb:885e with SMTP id u8-20020a5d4688000000b002c8b9cb885emr11336367wrq.24.1680005750406;
-        Tue, 28 Mar 2023 05:15:50 -0700 (PDT)
-Received: from ?IPV6:2a02:578:8593:1200:a2f8:d6d4:26a:a611? ([2a02:578:8593:1200:a2f8:d6d4:26a:a611])
-        by smtp.gmail.com with ESMTPSA id e13-20020a5d4e8d000000b002ceacff44c7sm27637816wru.83.2023.03.28.05.15.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Mar 2023 05:15:50 -0700 (PDT)
-Message-ID: <19f8574c-d743-cd8e-4b61-cb93a02f844a@tessares.net>
-Date: Tue, 28 Mar 2023 14:15:49 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986DC1C3E
+	for <tools@linux.kernel.org>; Thu, 30 Mar 2023 11:10:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1680174614; x=1711710614;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=lSQNzDUljqDB5iIR3Ki76cRU5ph8DflvunyFY20Tiao=;
+  b=FzEy9RWnlq0XPmIGq2pUkgdYF13E4aIeb1/v+7hmiGhdzaqcO9w/6Uof
+   tBQkd4lmpcoZLwNSkgCVmzn2dJebnqTMx2bu6HyqkdE+GvpOfpRhko2ub
+   agt9h1oQRiQs4DvRLFmAtACGv4yYfvf/O6mSJpUIXhC+F+X9UwjXzcEZB
+   8EvHGv1i8TfLMAjPjN/aB6aln295N76xVBniO9mGMGWzmRyz1+UwVxidh
+   wvW8wKfZDCJ/MSyQUTdd5rMjp+z4H5J5OrBHv+Ewvx2OFKMaGR0Z5MGWJ
+   6GuYpaTNOXwL9gzYK8hS773CB9UZDysfhvIWqFjRZtWOIyMLfZMofkXmY
+   w==;
+X-IronPort-AV: E=Sophos;i="5.98,303,1673938800"; 
+   d="scan'208";a="207415726"
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 30 Mar 2023 04:10:13 -0700
+Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
+ chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Thu, 30 Mar 2023 04:10:10 -0700
+Received: from wendy.microchip.com (10.10.115.15) by chn-vm-ex01.mchp-main.com
+ (10.10.85.143) with Microsoft SMTP Server id 15.1.2507.21 via Frontend
+ Transport; Thu, 30 Mar 2023 04:10:09 -0700
+From: Conor Dooley <conor.dooley@microchip.com>
+To: <tools@linux.kernel.org>
+CC: <conor@kernel.org>, <conor.dooley@microchip.com>, <palmer@dabbelt.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH] shazam: warn when overriding base-commit with --merge-base
+Date: Thu, 30 Mar 2023 12:09:10 +0100
+Message-ID: <20230330110909.355701-1-conor.dooley@microchip.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: b4: send: support git notes per patch
-Content-Language: en-GB
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Tools <tools@linux.kernel.org>, Christian Brauner <brauner@kernel.org>
-References: <9a4ebcd9-9d23-f525-cedd-222970f1b207@tessares.net>
- <jx7vyqdj3qt2zwgsxh6hjac6osr52n2vcmkj2pg3elapcth62m@jtl27si2pa3g>
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
-In-Reply-To: <jx7vyqdj3qt2zwgsxh6hjac6osr52n2vcmkj2pg3elapcth62m@jtl27si2pa3g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2906; i=conor.dooley@microchip.com; h=from:subject; bh=lSQNzDUljqDB5iIR3Ki76cRU5ph8DflvunyFY20Tiao=; b=owGbwMvMwCFWscWwfUFT0iXG02pJDCmquZf/f3RJyE07amUgtz01/zf7rHdltqK1C3f+trFx0zjP uGFCRykLgxgHg6yYIkvi7b4WqfV/XHY497yFmcPKBDKEgYtTACay+RPD/1BjDSXFIgHzk7sdPktaH9 eSsjkxUSb/04kQj4DmcBm9q4wM0xaymVcZbJb1CFI74Pht732Viz3MQlvmRYSun2x3/hw3BwA=
+X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp; fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi Konstantin,
+If the --merge-base argument is provided, base-commit information that
+was provided by the submitter is ignored. This behaviour is intentional,
+but warning the user that this has happened (and what the intended base
+was) is helpful.
 
-Thank you for your reply!
+To be able to do this, base-commit can't be set from mergebase until
+after parsing the submission and attempting to guess it.
 
-On 27/03/2023 23:18, Konstantin Ryabitsev wrote:
-> On Mon, Mar 27, 2023 at 12:20:43PM +0200, Matthieu Baerts wrote:
->> Do you think "b4 send" could attach the "git notes" to the different
->> patches being sent, similar to what "git format-patch --notes" does?
->>
->> Personally, I find this quite useful: when you have a series with a
->> bunch of patches, it seems interesting to put a detailed changelog per
->> patch instead of putting everything in the cover-letter. It makes even
->> more sense when some people are only Cc with a few patches and not with
->> the whole series. I didn't find a way to do that with b4.
->>
->> But then, I guess we might need a workaround implemented or shipped with
->> b4 to preserve the notes when git filter-repo is used, no?
-> 
-> Correct, I don't want to touch it until we stop blowing away git notes every
-> time we run "b4 trailers".
+Suggested-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+---
+This should be a valid test:
+b4 shazam -H --merge-base v6.3-rc1 20230330064321.1008373-2-jeeheng.sia@starfivetech.com
 
-It makes sense.
+I wasn't 100% sure if it should go before or after the base commit
+guessing code.
+---
+ b4/mbox.py | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-> BTW, another alternative to git notes it to add this info into the commit
-> itself, e.g.:
-> 
->     libfoo: update foo bar
-> 
->     This updates foo bar.
-> 
->     Signed-off-by: Dev E. Loper <dev@example.com>
-> 
->     ---
-> 
->     My notes about the patch here that will be preserved by "b4 send" and show
->     up in the patches sent out, but because they are below "---", they aren't
->     going to be part of the commit.
-
-Ah yes, good idea, thank you!
-I can use this technique if "git notes" are not supported.
-
->> PS: by chance if you can have a look at my patches/questions for 'b4
->> prep --fork-point', that would be nice :)
-> 
-> I know that it's been sitting for a while, and I'm not ignoring it, just need
-> to find a good stretch of time to dedicate to understanding the RFC set.
-
-Oh sorry, I just noticed there was an up to date and well maintained
-patchwork project for b4[1]. I will stop bothering you now that I can
-see patches have not been dropped by accident!
-
-(in short, for this RFC, I just wanted to understand why there was this
-complexity in the code to find the base-branch when --fork-point was
-given in argument instead of simply using it if it is valid)
-
-Cheers,
-Matt
-
-[1] https://patchwork.kernel.org/project/tools/list/
+diff --git a/b4/mbox.py b/b4/mbox.py
+index 7060564..a983092 100644
+--- a/b4/mbox.py
++++ b/b4/mbox.py
+@@ -211,24 +211,22 @@ def make_am(msgs: List[email.message.Message], cmdargs: argparse.Namespace, msgi
+         logger.critical(' Link: %s', linkurl)
+ 
+     base_commit = None
+-    if cmdargs.mergebase:
+-        base_commit = cmdargs.mergebase
++
++    matches = re.search(r'base-commit: .*?([\da-f]+)', first_body, re.MULTILINE)
++    if matches:
++        base_commit = matches.groups()[0]
+     else:
+-        matches = re.search(r'base-commit: .*?([\da-f]+)', first_body, re.MULTILINE)
++        # Try a more relaxed search
++        matches = re.search(r'based on .*?([\da-f]{40})', first_body, re.MULTILINE)
+         if matches:
+             base_commit = matches.groups()[0]
+-        else:
+-            # Try a more relaxed search
+-            matches = re.search(r'based on .*?([\da-f]{40})', first_body, re.MULTILINE)
+-            if matches:
+-                base_commit = matches.groups()[0]
+ 
+     if base_commit and topdir:
+         # Does it actually exist in this tree?
+         if not b4.git_commit_exists(topdir, base_commit):
+             logger.info(' Base: base-commit %s not known, ignoring', base_commit)
+             base_commit = None
+-        else:
++        elif not cmdargs.mergebase:
+             logger.info(' Base: using specified base-commit %s', base_commit)
+ 
+     if not base_commit and topdir and cmdargs.guessbase:
+@@ -246,6 +244,12 @@ def make_am(msgs: List[email.message.Message], cmdargs: argparse.Namespace, msgi
+         except IndexError:
+             logger.critical(' Base: failed to guess base')
+ 
++    if cmdargs.mergebase:
++        if (base_commit):
++            logger.warn(' Base: overriding submitter provided base-commit %s', base_commit)
++        base_commit = cmdargs.mergebase
++        logger.info(' Base: using CLI provided base-commit %s', base_commit)
++
+     if cmdargs.subcmd == 'shazam':
+         if not topdir:
+             logger.critical('Could not figure out where your git dir is, cannot shazam.')
 -- 
-Tessares | Belgium | Hybrid Access Solutions
-www.tessares.net
+2.39.2
+
