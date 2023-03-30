@@ -1,39 +1,39 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986DC1C3E
-	for <tools@linux.kernel.org>; Thu, 30 Mar 2023 11:10:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1680174614; x=1711710614;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=lSQNzDUljqDB5iIR3Ki76cRU5ph8DflvunyFY20Tiao=;
-  b=FzEy9RWnlq0XPmIGq2pUkgdYF13E4aIeb1/v+7hmiGhdzaqcO9w/6Uof
-   tBQkd4lmpcoZLwNSkgCVmzn2dJebnqTMx2bu6HyqkdE+GvpOfpRhko2ub
-   agt9h1oQRiQs4DvRLFmAtACGv4yYfvf/O6mSJpUIXhC+F+X9UwjXzcEZB
-   8EvHGv1i8TfLMAjPjN/aB6aln295N76xVBniO9mGMGWzmRyz1+UwVxidh
-   wvW8wKfZDCJ/MSyQUTdd5rMjp+z4H5J5OrBHv+Ewvx2OFKMaGR0Z5MGWJ
-   6GuYpaTNOXwL9gzYK8hS773CB9UZDysfhvIWqFjRZtWOIyMLfZMofkXmY
-   w==;
-X-IronPort-AV: E=Sophos;i="5.98,303,1673938800"; 
-   d="scan'208";a="207415726"
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 30 Mar 2023 04:10:13 -0700
-Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
- chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Thu, 30 Mar 2023 04:10:10 -0700
-Received: from wendy.microchip.com (10.10.115.15) by chn-vm-ex01.mchp-main.com
- (10.10.85.143) with Microsoft SMTP Server id 15.1.2507.21 via Frontend
- Transport; Thu, 30 Mar 2023 04:10:09 -0700
-From: Conor Dooley <conor.dooley@microchip.com>
-To: <tools@linux.kernel.org>
-CC: <conor@kernel.org>, <conor.dooley@microchip.com>, <palmer@dabbelt.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH] shazam: warn when overriding base-commit with --merge-base
-Date: Thu, 30 Mar 2023 12:09:10 +0100
-Message-ID: <20230330110909.355701-1-conor.dooley@microchip.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586149455
+	for <tools@linux.kernel.org>; Thu, 30 Mar 2023 20:15:31 +0000 (UTC)
+Received: by mail-ot1-f46.google.com with SMTP id o25-20020a9d4119000000b006a11eb19f8eso9512980ote.5
+        for <tools@linux.kernel.org>; Thu, 30 Mar 2023 13:15:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680207330;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7UkzL3rllHsAvQRVc8PgvCQ7D2bpjDSybU5Ax/yqFNQ=;
+        b=YY2tjxTj0ONjI/f3u62FPGxwx3minSmYDzQ0+omqTb8RuSLqxmaSXig0MJYIp9e2UO
+         w5P641Qkee6HSWngNpAoLBkS7dTLyiykcOs0ybB0bQrFUNeb5rwLGz3V8w9UobJJnkhY
+         dq4Fd+0WgKJMzQlvooHs7AOVJVMA/9v8Xn5E2MkmETZ7FnAYkSoa2vcVEk9Jdgv8Terr
+         6Jj8fAhW5rw44aXOgidET4MiHahQNKHMjSpLwMVxhBNbZoHe09ydhYQEwCqfNNJdwR0j
+         QOBVa6fXXAlYHXnBOhO+WGsZ3D7gLR2Hew2mOFlAOtHD7jG3sTl4QBcKd4oa+1TTjQeo
+         j95A==
+X-Gm-Message-State: AO0yUKXN4ty2oKkr2AuD2XdPObTFpEZCyORhnrtf8F5aJ791Bx1yUJXT
+	wrRsGzndFw7QZU+97Wda2AoURdduhQ==
+X-Google-Smtp-Source: AK7set83CvZIFpWkPrOWtu/229R5Mnxeaz1ef4NELKJFQeSd5pNvwLy2mLKkvVSdq/TkwMFz8Fk6gA==
+X-Received: by 2002:a05:6830:146:b0:69f:9400:ecf2 with SMTP id j6-20020a056830014600b0069f9400ecf2mr11823746otp.7.1680207330405;
+        Thu, 30 Mar 2023 13:15:30 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id m15-20020a9d6acf000000b0069f0794861asm298367otq.63.2023.03.30.13.15.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Mar 2023 13:15:30 -0700 (PDT)
+Received: (nullmailer pid 2744302 invoked by uid 1000);
+	Thu, 30 Mar 2023 20:15:29 -0000
+From: Rob Herring <robh@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Subject: [PATCH] ez: Fix 'trailers -F' used on a single commit
+Date: Thu, 30 Mar 2023 15:15:29 -0500
+Message-Id: <20230330201529.2744290-1-robh@kernel.org>
 X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
@@ -41,80 +41,37 @@ List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2906; i=conor.dooley@microchip.com; h=from:subject; bh=lSQNzDUljqDB5iIR3Ki76cRU5ph8DflvunyFY20Tiao=; b=owGbwMvMwCFWscWwfUFT0iXG02pJDCmquZf/f3RJyE07amUgtz01/zf7rHdltqK1C3f+trFx0zjP uGFCRykLgxgHg6yYIkvi7b4WqfV/XHY497yFmcPKBDKEgYtTACay+RPD/1BjDSXFIgHzk7sdPktaH9 eSsjkxUSb/04kQj4DmcBm9q4wM0xaymVcZbJb1CFI74Pht732Viz3MQlvmRYSun2x3/hw3BwA=
-X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp; fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 
-If the --merge-base argument is provided, base-commit information that
-was provided by the submitter is ignored. This behaviour is intentional,
-but warning the user that this has happened (and what the intended base
-was) is helpful.
+Running 'b4 trailers -u -F <msgid>' on a single commit fails:
 
-To be able to do this, base-commit can't be set from mergebase until
-after parsing the submission and attempting to guess it.
+CRITICAL: Failed to convert range to patches: Could not run rev-list None~1..409ee53c38a1d9a60e76ffa92088cfad07cea850
 
-Suggested-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+The problem is the loop is exited after 1 iteration and prevcommit is never
+set.
+
+Signed-off-by: Rob Herring <robh@kernel.org>
 ---
-This should be a valid test:
-b4 shazam -H --merge-base v6.3-rc1 20230330064321.1008373-2-jeeheng.sia@starfivetech.com
-
-I wasn't 100% sure if it should go before or after the base commit
-guessing code.
+I think a base commit option and/or use upstream tracking branch is needed
+here. There's probably cases where one wants to apply trailers and they
+are not the author.
 ---
- b4/mbox.py | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ b4/ez.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/b4/mbox.py b/b4/mbox.py
-index 7060564..a983092 100644
---- a/b4/mbox.py
-+++ b/b4/mbox.py
-@@ -211,24 +211,22 @@ def make_am(msgs: List[email.message.Message], cmdargs: argparse.Namespace, msgi
-         logger.critical(' Link: %s', linkurl)
- 
-     base_commit = None
--    if cmdargs.mergebase:
--        base_commit = cmdargs.mergebase
-+
-+    matches = re.search(r'base-commit: .*?([\da-f]+)', first_body, re.MULTILINE)
-+    if matches:
-+        base_commit = matches.groups()[0]
+diff --git a/b4/ez.py b/b4/ez.py
+index cf8759015f29..1a9abd642623 100644
+--- a/b4/ez.py
++++ b/b4/ez.py
+@@ -834,6 +834,8 @@ def update_trailers(cmdargs: argparse.Namespace) -> None:
+                 break
+             prevparent = parent
+             prevcommit = commit
++        if prevcommit is None:
++            prevcommit = end
+         start = f'{prevcommit}~1'
      else:
--        matches = re.search(r'base-commit: .*?([\da-f]+)', first_body, re.MULTILINE)
-+        # Try a more relaxed search
-+        matches = re.search(r'based on .*?([\da-f]{40})', first_body, re.MULTILINE)
-         if matches:
-             base_commit = matches.groups()[0]
--        else:
--            # Try a more relaxed search
--            matches = re.search(r'based on .*?([\da-f]{40})', first_body, re.MULTILINE)
--            if matches:
--                base_commit = matches.groups()[0]
- 
-     if base_commit and topdir:
-         # Does it actually exist in this tree?
-         if not b4.git_commit_exists(topdir, base_commit):
-             logger.info(' Base: base-commit %s not known, ignoring', base_commit)
-             base_commit = None
--        else:
-+        elif not cmdargs.mergebase:
-             logger.info(' Base: using specified base-commit %s', base_commit)
- 
-     if not base_commit and topdir and cmdargs.guessbase:
-@@ -246,6 +244,12 @@ def make_am(msgs: List[email.message.Message], cmdargs: argparse.Namespace, msgi
-         except IndexError:
-             logger.critical(' Base: failed to guess base')
- 
-+    if cmdargs.mergebase:
-+        if (base_commit):
-+            logger.warn(' Base: overriding submitter provided base-commit %s', base_commit)
-+        base_commit = cmdargs.mergebase
-+        logger.info(' Base: using CLI provided base-commit %s', base_commit)
-+
-     if cmdargs.subcmd == 'shazam':
-         if not topdir:
-             logger.critical('Could not figure out where your git dir is, cannot shazam.')
+         logger.critical('CRITICAL: Please specify -F msgid to look up trailers from remote.')
 -- 
 2.39.2
 
