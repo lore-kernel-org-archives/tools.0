@@ -1,62 +1,111 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DF93C02
-	for <tools@linux.kernel.org>; Wed, 12 Apr 2023 19:06:13 +0000 (UTC)
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2465e4f1954so987687a91.0
-        for <tools@linux.kernel.org>; Wed, 12 Apr 2023 12:06:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F9E3C02
+	for <tools@linux.kernel.org>; Wed, 12 Apr 2023 19:24:08 +0000 (UTC)
+Received: by mail-qt1-f175.google.com with SMTP id cm23so3713674qtb.3
+        for <tools@linux.kernel.org>; Wed, 12 Apr 2023 12:24:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1681326373; x=1683918373;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=XvLYGm+wjP1kVvSfxjFeaObSCGA9GeYnTy2YhwNkcc4=;
-        b=3ndtnhZ1e6U4Jj/m3irLfAnxlbLNbjuLh2s4aG0fAQlLyGOmF0pljHfsqGS8KSRv1l
-         b21bB3zXYMbS06L+6XRDg5rRdwXfvFQS2gDz+ZOhzhbC0jug59pk+Rf+S2rSzAGrqQzG
-         bf5huIqbDhW7BMjmVWpAi0QF/G8NF7hNETYdiBe3vOjAWDC3HPkY7zx5dGLF4BeK/XSn
-         PERHUNHPeq3uc35CTRLwDOimDIRWx8uBZnhHXL3Rzk6VrG0GUptz+WcBTdNnelsbhkeI
-         QnZfZ0lZCLMSdODcOl9qCcONet84C3LSUXxZ4yf2KjyxRobWy1J1+EHy5R3VS4SyykMg
-         kxFw==
+        d=linuxfoundation.org; s=google; t=1681327448; x=1683919448;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jiGA+JYTMnotDxP3300iA3DA7koIimm8YkzVrLc7HQ4=;
+        b=SVs37zv6HHSSIT8yTCIP2+isTvF6EoKTFqwjU3dLOogBMLyKVZ5CApNF2SMzRMSuno
+         9TiDUEWh+wevvZdAuRfbJw/NtdYZds2zDKsjghphdWUvn3sQIq1PeWJQPdk7xAB+4PBW
+         VjSp33RCOzzounjV7vialKuNP9QlzlT2Vyq+A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681326373; x=1683918373;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XvLYGm+wjP1kVvSfxjFeaObSCGA9GeYnTy2YhwNkcc4=;
-        b=ka38HgJO3l/HSkS6+hUa+vZHCfnCIAFUGC2xPi8v4aPAwEN1i7m2autiVWD38Xyhi/
-         8UU2RwIAV/bbUg6z2+d/rbZrku5ZOwwfZWJmJZszNjbtEA+sBsGCkAQVT2Lyo3kUPbKW
-         ZoyENvzL5S1w5RWSV8f+K+Vi1FMPbEEdV1KP/D9qTONRQJJuMPPG1yu4rkUgWyUZ9//w
-         5Bi1JWgTvNkoG/U5RRGqOGf6BkY0ZG/bEXrqmCweTnlkaGB5Lu1yJXtxQnVbUTdeEDef
-         lICQobZM1oMCRjhaE7KwoQ8DJ7D6f9AysT0pCFPttMeLayps385mWlU/tEXeSN4Y/2+1
-         xWBg==
-X-Gm-Message-State: AAQBX9f+YBAtRmSMg+NPz32Cu/5/A1sx9kpI13lI7w4NO39SR9yugyRN
-	6bvrImG9+tqjyL4Gpk7tjSGAFSGhWuSy7RVyRzcdkuMWayJQ+ydmsyKyQA==
-X-Google-Smtp-Source: AKy350aFn/FeWcQ4nYcHi9ps3jInDUJC5X9oswcdG2JYpdbJOO45tvqkwDnnthp/0AJPe91qDrL+dRYzhod8s5cS5Ek=
-X-Received: by 2002:a05:6a00:190c:b0:62e:1972:fab5 with SMTP id
- y12-20020a056a00190c00b0062e1972fab5mr7491563pfi.4.1681326372554; Wed, 12 Apr
- 2023 12:06:12 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681327448; x=1683919448;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jiGA+JYTMnotDxP3300iA3DA7koIimm8YkzVrLc7HQ4=;
+        b=E3tOevZbUWShk/Sa/CbkyLPhTHiW92n2ivtplamdS4ZboqNjrLtaXnJR/lDHIL3hHE
+         JfDSEOQM+fh1q5XGitNhssTEU10IEDjaGokBGdTzb/KKO/sGGSSPPDdijOogzbOKGvMH
+         WpaDjpn3vwkOdNZ3yf31GVVWQea6Rw7WJ8dk4JADDoo5/jqU5xdO/z8fv9S3ZhS2GJxa
+         lqBCPl2uBN2GJbScdVE0qTWS5sS/7QDXy+dbCXVoFNWMXLGB8l+F0KtGohcgSvm5OJ+v
+         pMCW8qBngC87a6rtxgZzmsNG0x5T+qnQ5cm7ZasFN7fOLrgue2jtBwDfXorfDTl8kPGL
+         i/Mg==
+X-Gm-Message-State: AAQBX9eL7U9MuAqzTu8C2lh5SXj6+CP6NyU940EHiUaEbr9xjgjkGo5D
+	NU5NU6MebeBgq58UXP1Trxua4Y8Ml3PxAiV91Io=
+X-Google-Smtp-Source: AKy350YMO2/tDVmOrS3ancR+bojRskSZZDOvmRKFvNpGJ0RW5FYQ9IPAJsk/6hnHRY34Rp3mr9F4/g==
+X-Received: by 2002:ac8:5ac7:0:b0:3bf:c3f9:70a3 with SMTP id d7-20020ac85ac7000000b003bfc3f970a3mr31854009qtd.26.1681327447853;
+        Wed, 12 Apr 2023 12:24:07 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-132.dsl.bell.ca. [209.226.106.132])
+        by smtp.gmail.com with ESMTPSA id d7-20020ac85347000000b003e3982a6f2bsm4424030qto.18.2023.04.12.12.24.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Apr 2023 12:24:07 -0700 (PDT)
+Date: Wed, 12 Apr 2023 15:24:05 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Nick Desaulniers <ndesaulniers@google.com>
+Cc: icon@mricon.com, tools@linux.kernel.org, mjg59@srcf.ucam.org
+Subject: Re: executable sendemail.smtpserver and b4 --reflect
+Message-ID: <20230412-smokiness-portal-833f99@meerkat>
+References: <CAKwvOdn6_J+9BppRbXEtDc8CW-qqoat7VJ521oWnqXCXHb_d6A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Wed, 12 Apr 2023 12:06:00 -0700
-Message-ID: <CAKwvOdncRCGiUA0Au-DOS0zt8KacouWxR2K3xQLdAS3E_8YpYw@mail.gmail.com>
-Subject: b4 am and cover letter mistakes
-To: tools@linux.kernel.org
-Cc: Mark Brown <broonie@kernel.org>, Josh Poimboeuf <jpoimboe@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAKwvOdn6_J+9BppRbXEtDc8CW-qqoat7VJ521oWnqXCXHb_d6A@mail.gmail.com>
 
-Hello!
-A second recent issue I ran into with b4 was applying a series was
-failing for me because the number of patches was being parsed from the
-header, which had a typo.
+On Wed, Apr 12, 2023 at 12:00:09PM -0700, Nick Desaulniers wrote:
+> $ b4 send --reflect
+> 
+> it seems that my series was sent to the list, surprisingly!
+> https://lore.kernel.org/llvm/20230412-no_stackp-v1-0-46a69b507a4b@google.com/
 
-https://github.com/mricon/b4/issues/2
+Yes, this is bad, as the warning message specifically says that this won't
+happen.
 
-I'm sure such cases are rare, but reporting it here in case there's
-anything to be done in b4 (see something, say something, but this
-isn't at all a blocker for me).
--- 
-Thanks,
-~Nick Desaulniers
+bugbot assign to me
+
+> Internally at my employer, I must use a command line utility to send
+> email outside of the blessed GUI.  As such, my ~/.gitconfig looks
+> like:
+> 
+> ...
+> [user]
+>         name = Nick Desaulniers
+>         email = ndesaulniers@google.com
+> [sendemail]
+>         from = Nick Desaulniers <ndesaulniers@google.com>
+>         smtpserver = /usr/bin/sendgmr
+> ...
+> 
+> From a discussion with you and Matthew on IRC, it sounds like this
+> company-internal sendgmr utility might not be respecting some header
+> b4 adds to the eml file (envelope-from?)?
+
+What happens is that we expect that whatever we talk to will ignore the To/Cc
+headers in the message and only send the message to the recipients specified
+during the outer exchange (e.g. SMTP ignores anything in these headers and
+only pays attention to the recipients passed in "RCPT TO"; the same is true
+for actual "sendmail" command). 
+
+The safe course of action is to bail on --reflect when we recognize that a
+local executable is being used, because there is no guarantee that it will be
+compatible with our expectations that To: and Cc: headers in the message will
+be ignored.
+
+> I can file a bug internally, but I'm not well versed on how to clarify
+> precisely what's going wrong.  Is there anything to be done in b4
+> itself, or help me word such a report I can file internally?
+
+I'm not sure it's worth your effort for this particular case, as sendgmr
+doesn't claim to be sendmail-compatible, it's a tool to use with
+git-send-email and *deliberately* pays attention to To: and Cc: headers in the
+message. To be sendmail-compatible, it would need to ignore To: and Cc:
+headers in the message and only pay to recipients passed as command-line
+arguments, unless -t is specified (e.g. see
+https://man7.org/linux/man-pages/man8/sendmail.8.html).
+
+> I also noticed that my name wasn't being sent on the From: field to
+> LKML. I assume that's an orthogonal issue, but is there anything else
+> I should be doing there?
+
+Do you have "from = " set in your [sendemail] section?
+
+-K
