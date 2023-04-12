@@ -1,84 +1,63 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567F56FD2
-	for <tools@linux.kernel.org>; Wed, 12 Apr 2023 17:23:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F39C433D2;
-	Wed, 12 Apr 2023 17:23:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681320196;
-	bh=h+eG6eksvJlcPsE9F7q+m/OGipBl6KFltzkwo4IQC6g=;
-	h=Date:From:To:Cc:Subject:From;
-	b=CeyTokIaLUafBxWyOxI7CGsDxZhmzTkiAk1Cdlc83WHh0oC1l+rDF69ZXPofbBf0n
-	 LEVOb6ckEZLz8jihr1+aUknDVtAFE7K+CtC1Z3jwn0rElXe8SgiXW7y34P12QVA1gm
-	 f3zvz9Q53KcCsP0A6TZBGW5pPSqdck/zcGzjdf/gL+EI3xHIGh5r9BsRynEEuAkfhy
-	 r5o9vw7LIA4sjX1KTyNvNyegChHzfjvQ+Rt0sQdRJ6bAdaURyVsQ/qvK4M04rrMr1Y
-	 EnISayollbX3sbVZOGb2JQO3sLgQLqaW8p2mckLla5Sj9FTicElwD/MD05MzYl/w+5
-	 sXgmJrAXNoPJg==
-Date: Wed, 12 Apr 2023 18:23:10 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC39746F
+	for <tools@linux.kernel.org>; Wed, 12 Apr 2023 18:09:27 +0000 (UTC)
+Received: by mail-qt1-f175.google.com with SMTP id ej15so1451847qtb.7
+        for <tools@linux.kernel.org>; Wed, 12 Apr 2023 11:09:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1681322966; x=1683914966;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=etYO9WEoyLvdgLTCKKnYMbb8iAs/i77L5h1VlMaWRuQ=;
+        b=GRWdOCr5CJqxVrzqnycW9Amxyv32JrqkuE9g8thPqppwQl9AcsaP9emn2gnWRoNSZj
+         UWw4oBQ07rywc9dxbjf2WerWlOiH1RMYvZkH2xzxb38CsVnl//IBFeAwrbFStID/Snkp
+         7FWN4WezdZeK/SXK10lqAa1vF/BeWCsIkDUmU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681322966; x=1683914966;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=etYO9WEoyLvdgLTCKKnYMbb8iAs/i77L5h1VlMaWRuQ=;
+        b=HothbsbySpx4KnfIGGqOAXka1n4xDRFqkKvlXKkRcbi4Gg1YZs0pqib6MaBo0HvdGL
+         tTEfs5dinzKyPPX6A+uFxGGAqinAaJL9JQUzTq8qneJKsBIq1tvePfYQmdymVqnUgE/5
+         xp4ocWKXqBCcRx7D/Hcb30QKnhXCTT6+ev5+n7pGZBavP+J1eSBwelf806Usy4a4QuXs
+         c0QHcTZg6hoB1y24Z1U4B8eraYcmtkHNXuN8hqMsrqjhbxYod4bHyp0x7m7gHm7pifdY
+         XyOgqcCKwnAuUrWPpsraKvN5yxjo/ZWT8rcZGPMIl6PZsMfwIg4xuQHeWOIot7CMzbT5
+         wdbQ==
+X-Gm-Message-State: AAQBX9dzLOa80kPjgn2lIJDxxO5gYGKzZ9Ol7NIX1+45j4c787Papgty
+	3YpnlmPgWC7y2O34TKZjtc1W4ghhd0qaFlKGmxo=
+X-Google-Smtp-Source: AKy350bqFgOMav7gUUJfPeoqYzGGwfNOECFrMGwc6UFkbX+vsttYCltf1RA/e+brrmJ2tzwljNlZ4Q==
+X-Received: by 2002:a05:622a:1cf:b0:3dc:38e:8b7 with SMTP id t15-20020a05622a01cf00b003dc038e08b7mr11096659qtw.2.1681322966681;
+        Wed, 12 Apr 2023 11:09:26 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-132.dsl.bell.ca. [209.226.106.132])
+        by smtp.gmail.com with ESMTPSA id 69-20020a370548000000b00748448d9a7dsm4853726qkf.106.2023.04.12.11.09.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Apr 2023 11:09:26 -0700 (PDT)
+Date: Wed, 12 Apr 2023 14:09:24 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: tools <tools@linux.kernel.org>
-Subject: b4 trailers --update splats on new branch
-Message-ID: <ZDbo/qTKFgBQdWh4@sirena.org.uk>
+Subject: Re: b4 trailers --update splats on new branch
+Message-ID: <20230412-blinks-stubble-4f40d8@meerkat>
+References: <ZDbo/qTKFgBQdWh4@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NKeZ2FYlxf0QS/I3"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-Cookie: Happy feast of the pig!
+In-Reply-To: <ZDbo/qTKFgBQdWh4@sirena.org.uk>
 
+On Wed, Apr 12, 2023 at 06:23:10PM +0100, Mark Brown wrote:
+> This seems like it should at least print a nicer error, and I'm sure
+> this used to work.
 
---NKeZ2FYlxf0QS/I3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Thanks for the report.
 
-Hi Konstantin,
+bugbot assign to me
 
-If I run b4 trailers --update with current master on a series which I've
-not sent yet (which I do as part of my testing for outbound serieses
-just to make sure I didn't miss anything) then b4 gets upset and prints
-a Python backtrace:
+-K
 
-Calculating patch-ids from commits, this may take a moment...
-Checking change-id "20230303-arm64-cpufeature-helpers-a70213a244e7"
-Grabbing search results from lore.kernel.org
-Traceback (most recent call last):
-  File "/home/broonie/git/b4/b4/command.py", line 381, in <module>
-    cmd()
-  File "/home/broonie/git/b4/b4/command.py", line 364, in cmd
-    cmdargs.func(cmdargs)
-  File "/home/broonie/git/b4/b4/command.py", line 81, in cmd_trailers
-    b4.ez.cmd_trailers(cmdargs)
-  File "/home/broonie/git/b4/b4/ez.py", line 2201, in cmd_trailers
-    update_trailers(cmdargs)
-  File "/home/broonie/git/b4/b4/ez.py", line 890, in update_trailers
-    addtrailers = list(lmsg.followup_trailers)
-AttributeError: 'NoneType' object has no attribute 'followup_trailers'
-
-This seems like it should at least print a nicer error, and I'm sure
-this used to work.
-
-Thanks,
-Mark
-
---NKeZ2FYlxf0QS/I3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQ26P0ACgkQJNaLcl1U
-h9C8yQf7BKjfRTC3LtYQucnqPpDa5jnHPXb5Mgk7K3koCJplHqjf42B1G/K2m4ze
-8nZiThQ/NMAobUc5jq4PQq5qJ8FZwO4v7+KSRsX16hCizOp21yp1OiHTCidV2s+w
-8bwtu2q0UEpCRA18epqZkAu36CRtplcBTEH87+204XaJIbfFAGXfaa3VvcIbwoa6
-qN69TIIW6Zujr63HObxeAdyu+kpjOMpU3jlFstdvv3HcfDoe6Qxy4lS8jP+UMd6a
-RlK6eFrYD95jld9AF3k//LE5m3uUxpwC7hsRwAWbNgymBl+Y8X15fMtHekqT90is
-FV6BgakJNhL+bP13PeHQmxieq1tzwQ==
-=SlH/
------END PGP SIGNATURE-----
-
---NKeZ2FYlxf0QS/I3--
