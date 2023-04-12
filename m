@@ -1,86 +1,87 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B78B3C02;
-	Wed, 12 Apr 2023 12:23:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53377C4339B;
-	Wed, 12 Apr 2023 12:23:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681302211;
-	bh=D85mqhWoBtVu7CAzMrgEbwz60PEDS/RonuJOphKnaSU=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=MsGq+SOydUlADJ4Rg8uCFtXnqlNTiIoBxrN35Fx2Mu3zLkSgmn2z31v/t+t+ViciY
-	 Y8ThdvURExiIc+bohB/Cg8pOQMyFcFQkA8HZuJheruXtVcYy5VDq6nymEklKqdnlEu
-	 NPRbr3YM0FL5BLgCIl7gG06tBJZGDAzkA3WdEN9ayCuDDIM/exN6WowpzytFog53cr
-	 kvhr3QEgj6RFGyqERy3eBZVGRkwfX9QvwN7J1wQuH6kOqic4UskYH4TDI0P74N/4Yk
-	 s1XiP+4C+5cb1e/RbVgAz9EoBmDmME7qAZMg1m2oiRDeez6hXVbPIVZLkJf45d7tg7
-	 386S9gUpb2+XQ==
-From: Kalle Valo <kvalo@kernel.org>
-To: Thorsten Leemhuis <linux@leemhuis.info>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,  workflows@vger.kernel.org,  aros@gmx.com,  linux-kernel@vger.kernel.org,  regressions@lists.linux.dev,  tools@linux.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFCC5694
+	for <tools@linux.kernel.org>; Wed, 12 Apr 2023 14:07:24 +0000 (UTC)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-54c12009c30so328264987b3.9
+        for <tools@linux.kernel.org>; Wed, 12 Apr 2023 07:07:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1681308443; x=1683900443;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1sYxkROq82q/boyHt/eVSeQo3tvT+Mg4dBd4dGtx0j4=;
+        b=VWDLBvponEwAUhE3RhIUHLIsX+mYfv41X54JsZmXuwMsbUpLDPsprmeMamFtHmdbmz
+         Td88LzXDQorKPHuPhELN3MJ7Dpdl+edZYFauXLpDDKdQDtIba8L/nBkHhs4hKaPeUzFn
+         F/Nzs9DyLZsyrVHYb4dezYnsqQ04LJ7UXdRo0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681308443; x=1683900443;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1sYxkROq82q/boyHt/eVSeQo3tvT+Mg4dBd4dGtx0j4=;
+        b=dGDWs7bAhFVD4Tx2PkbnGk6g4SImLmDGPkcY86I+F2gjIY9lhyOoVckFoi8KPcAWPX
+         m2TUvBbbdpWQg/aLo+fbfaIevjjWRHflYyHfdsutafn1IGeAejLAo3oCl/al8YwkR0qt
+         Q/jq4UznpZJXSqe9P8PlcMCvj4dzifz+/rNePDU0hbbO+mZYb0qvYo2I5eNVOg96FEei
+         7JZ2bbZOnjJrkeClyfWcIOoRMrXChUNBOXO1KNWMi/a45Lvkw7UYZXCjpBlZqhjO8AmV
+         X/Kk07BATgu5ZfDDl26/rhaiCBJp2QiH8mfe1haTQQfGmQN43DO1JP9RS1WfzZero3rH
+         YbSA==
+X-Gm-Message-State: AAQBX9dy7WVdPRS2wVZKk+MdC8vRrwGPKOk0i0fOgA0k1SmzpUAlOVFE
+	2IFKKFezCnEqgDzPTKb0Bn4bag==
+X-Google-Smtp-Source: AKy350ZCKH9jN34tPhRn90jaxK8JgGB+RhiEn1nEenc43BnuIAU6jB13VU7S7JgrgNv8T7CS1mYcNA==
+X-Received: by 2002:a0d:f684:0:b0:54f:b875:4976 with SMTP id g126-20020a0df684000000b0054fb8754976mr15436ywf.15.1681308443255;
+        Wed, 12 Apr 2023 07:07:23 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-132.dsl.bell.ca. [209.226.106.132])
+        by smtp.gmail.com with ESMTPSA id s128-20020a372c86000000b0074688c36facsm4703624qkh.56.2023.04.12.07.07.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Apr 2023 07:07:22 -0700 (PDT)
+Date: Wed, 12 Apr 2023 10:07:21 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Kalle Valo <kvalo@kernel.org>
+Cc: Thorsten Leemhuis <linux@leemhuis.info>, workflows@vger.kernel.org, 
+	aros@gmx.com, linux-kernel@vger.kernel.org, regressions@lists.linux.dev, 
+	tools@linux.kernel.org
 Subject: Re: Introducing bugbot
+Message-ID: <20230412-appear-tiring-f5a896@meerkat>
 References: <gmnswy45efztvcyc3xqymm52h7cdfwjz64go2wy3zyeqcqwb76@36fva4hyip4q>
-	<1f0ebf13-ab0f-d512-6106-3ebf7cb372f1@leemhuis.info>
-Date: Wed, 12 Apr 2023 15:23:25 +0300
-In-Reply-To: <1f0ebf13-ab0f-d512-6106-3ebf7cb372f1@leemhuis.info> (Thorsten
-	Leemhuis's message of "Sat, 8 Apr 2023 14:10:40 +0200")
-Message-ID: <87fs958f2a.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+ <1f0ebf13-ab0f-d512-6106-3ebf7cb372f1@leemhuis.info>
+ <87fs958f2a.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87fs958f2a.fsf@kernel.org>
 
-Thorsten Leemhuis <linux@leemhuis.info> writes:
+On Wed, Apr 12, 2023 at 03:23:25PM +0300, Kalle Valo wrote:
+> > But here I decided to *not* use bugbot, as I know Kalle sometimes is
+> > active in bugzilla -- and thus might hate it, if I re-categorize the bug.
+> 
+> Yeah, for me moving ath11k bugs away from Drivers/network-wireless
+> component is not really helpful. And for ath11k I try to look at all
+> reported bugs in bugzilla anyway, though just slowly.
 
-> CCing Kalle (JFYI)
->
-> On 03.04.23 23:45, Konstantin Ryabitsev wrote:
->> 
->> 2. Start mailing list threads from pre-triaged bugzilla bugs. This works the
->>    opposite way and creates mailing list threads based on bug reports filed in
->>    bugzilla. The useful things here are:
->> 
->>    - bugbot only gets triggered on open bugs in Linux/Kernel that have the
->>      "bugbot" flag set to "+", which allows pre-triaging a bug before bugbot
->>      sends it to the mailing list
->> [...]
->
-> Are there any policies or best practices on how people should/are
-> allowed to use this? From what I can see it seems one needs to change
-> the Product/Component of the bug to start a thread. I wonder if a few
-> maintainers that are active in bugzilla might be annoyed by this, as
-> that might break their workflow.
->
-> Which puts me in an awkward position when I see regressions reports in
-> bugzilla and would like to create threads for them. Using bugbot would
-> be better then the manual forwards I do now, like this one:
->
-> https://lore.kernel.org/all/ed31b6fe-e73d-34af-445b-81c5c644d615@leemhuis.info/
->
-> But here I decided to *not* use bugbot, as I know Kalle sometimes is
-> active in bugzilla -- and thus might hate it, if I re-categorize the bug.
+Right, I did mean to say that the bot is only limited to Linux/Kernel during
+the initial tryout stage. Once I'm more confident that it's not exploding and
+mostly doing the right thing, I can enable it for other components.
 
-Yeah, for me moving ath11k bugs away from Drivers/network-wireless
-component is not really helpful. And for ath11k I try to look at all
-reported bugs in bugzilla anyway, though just slowly.
+> While at it, I have some things on my wishlist to make my use of
+> bugzilla.kernel.org easier:
+> 
+> * A new state named UNCONFIRMED and have it as the default state for
+>   reported bugs. This would help triaging bugs as some of the reports
+>   are not valid. In other words only valid bugs would have NEW state.
+>   IIRC the Mozilla project did this back in the day.
 
-While at it, I have some things on my wishlist to make my use of
-bugzilla.kernel.org easier:
+This is more hairy than it looks, but I'll try to figure out what happened to
+the UNCONFIRMED state in our bugzilla.
 
-* A new state named UNCONFIRMED and have it as the default state for
-  reported bugs. This would help triaging bugs as some of the reports
-  are not valid. In other words only valid bugs would have NEW state.
-  IIRC the Mozilla project did this back in the day.
+> * Use P3 as the default priority for the new bugs. I try to keep ath11k
+>   bugs in priority order but new reported bugs having P1 always messes
+>   up the list always.
 
-* Use P3 as the default priority for the new bugs. I try to keep ath11k
-  bugs in priority order but new reported bugs having P1 always messes
-  up the list always.
+Okay, I set the default to P3, which is nicely in the middle.
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+-K
