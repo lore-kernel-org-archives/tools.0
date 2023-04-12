@@ -1,68 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C8220EE;
-	Wed, 12 Apr 2023 16:47:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95008C4339B;
-	Wed, 12 Apr 2023 16:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567F56FD2
+	for <tools@linux.kernel.org>; Wed, 12 Apr 2023 17:23:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F39C433D2;
+	Wed, 12 Apr 2023 17:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681318060;
-	bh=BqTptBLVI1dCnRJ0/GjMix6ij4TtxuV6kJqDROI1j1Q=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=f6oplni109CwS2TqFnZbWPjPKmBqu2qk0XUDILlq7jlI0H5AhPqADCEuPHgJNMi9Q
-	 TMt3vYRC7poMtBsl58dq6guqo6q8wPicuV+ZQfqflOVunfwdWG6h29HPw5uYWfA7NP
-	 v9Xlh3wNUk/bduO2svXz0Mk5pYZDGjC2O9i0rxIQdmMg9q+0tzlzN7zXPn9o+yYqKg
-	 7TLQCUfOZewjc22DBCNxW+bGdUFHraml7r06bMEIzvteHu9LV56kJQOVd6dVrT9ey8
-	 K6SsNKrtKZYqopQlGknxNte1hZtviRqn5adnBbB/7mEiWJ2k59eQpU4VsNbtj5W/fq
-	 7Qeml2g3+RE1g==
-From: Kalle Valo <kvalo@kernel.org>
+	s=k20201202; t=1681320196;
+	bh=h+eG6eksvJlcPsE9F7q+m/OGipBl6KFltzkwo4IQC6g=;
+	h=Date:From:To:Cc:Subject:From;
+	b=CeyTokIaLUafBxWyOxI7CGsDxZhmzTkiAk1Cdlc83WHh0oC1l+rDF69ZXPofbBf0n
+	 LEVOb6ckEZLz8jihr1+aUknDVtAFE7K+CtC1Z3jwn0rElXe8SgiXW7y34P12QVA1gm
+	 f3zvz9Q53KcCsP0A6TZBGW5pPSqdck/zcGzjdf/gL+EI3xHIGh5r9BsRynEEuAkfhy
+	 r5o9vw7LIA4sjX1KTyNvNyegChHzfjvQ+Rt0sQdRJ6bAdaURyVsQ/qvK4M04rrMr1Y
+	 EnISayollbX3sbVZOGb2JQO3sLgQLqaW8p2mckLla5Sj9FTicElwD/MD05MzYl/w+5
+	 sXgmJrAXNoPJg==
+Date: Wed, 12 Apr 2023 18:23:10 +0100
+From: Mark Brown <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Thorsten Leemhuis <linux@leemhuis.info>,  workflows@vger.kernel.org,  aros@gmx.com,  linux-kernel@vger.kernel.org,  regressions@lists.linux.dev,  tools@linux.kernel.org
-Subject: Re: Introducing bugbot
-References: <gmnswy45efztvcyc3xqymm52h7cdfwjz64go2wy3zyeqcqwb76@36fva4hyip4q>
-	<1f0ebf13-ab0f-d512-6106-3ebf7cb372f1@leemhuis.info>
-	<87fs958f2a.fsf@kernel.org> <20230412-appear-tiring-f5a896@meerkat>
-Date: Wed, 12 Apr 2023 19:47:35 +0300
-In-Reply-To: <20230412-appear-tiring-f5a896@meerkat> (Konstantin Ryabitsev's
-	message of "Wed, 12 Apr 2023 10:07:21 -0400")
-Message-ID: <87y1mx6o9k.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Cc: tools <tools@linux.kernel.org>
+Subject: b4 trailers --update splats on new branch
+Message-ID: <ZDbo/qTKFgBQdWh4@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="NKeZ2FYlxf0QS/I3"
+Content-Disposition: inline
+X-Cookie: Happy feast of the pig!
 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-> On Wed, Apr 12, 2023 at 03:23:25PM +0300, Kalle Valo wrote:
->
->> While at it, I have some things on my wishlist to make my use of
->> bugzilla.kernel.org easier:
->> 
->> * A new state named UNCONFIRMED and have it as the default state for
->>   reported bugs. This would help triaging bugs as some of the reports
->>   are not valid. In other words only valid bugs would have NEW state.
->>   IIRC the Mozilla project did this back in the day.
->
-> This is more hairy than it looks, but I'll try to figure out what happened to
-> the UNCONFIRMED state in our bugzilla.
+--NKeZ2FYlxf0QS/I3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I can only imagine how difficult bugzilla can to administer. So if it's
-too hairy to get UNCONFIRMED working again don't use too much on it.
-This is more like a nice to have feature, not a critical thing.
+Hi Konstantin,
 
->> * Use P3 as the default priority for the new bugs. I try to keep ath11k
->>   bugs in priority order but new reported bugs having P1 always messes
->>   up the list always.
->
-> Okay, I set the default to P3, which is nicely in the middle.
+If I run b4 trailers --update with current master on a series which I've
+not sent yet (which I do as part of my testing for outbound serieses
+just to make sure I didn't miss anything) then b4 gets upset and prints
+a Python backtrace:
 
-Nice, thanks!
+Calculating patch-ids from commits, this may take a moment...
+Checking change-id "20230303-arm64-cpufeature-helpers-a70213a244e7"
+Grabbing search results from lore.kernel.org
+Traceback (most recent call last):
+  File "/home/broonie/git/b4/b4/command.py", line 381, in <module>
+    cmd()
+  File "/home/broonie/git/b4/b4/command.py", line 364, in cmd
+    cmdargs.func(cmdargs)
+  File "/home/broonie/git/b4/b4/command.py", line 81, in cmd_trailers
+    b4.ez.cmd_trailers(cmdargs)
+  File "/home/broonie/git/b4/b4/ez.py", line 2201, in cmd_trailers
+    update_trailers(cmdargs)
+  File "/home/broonie/git/b4/b4/ez.py", line 890, in update_trailers
+    addtrailers = list(lmsg.followup_trailers)
+AttributeError: 'NoneType' object has no attribute 'followup_trailers'
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+This seems like it should at least print a nicer error, and I'm sure
+this used to work.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Thanks,
+Mark
+
+--NKeZ2FYlxf0QS/I3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQ26P0ACgkQJNaLcl1U
+h9C8yQf7BKjfRTC3LtYQucnqPpDa5jnHPXb5Mgk7K3koCJplHqjf42B1G/K2m4ze
+8nZiThQ/NMAobUc5jq4PQq5qJ8FZwO4v7+KSRsX16hCizOp21yp1OiHTCidV2s+w
+8bwtu2q0UEpCRA18epqZkAu36CRtplcBTEH87+204XaJIbfFAGXfaa3VvcIbwoa6
+qN69TIIW6Zujr63HObxeAdyu+kpjOMpU3jlFstdvv3HcfDoe6Qxy4lS8jP+UMd6a
+RlK6eFrYD95jld9AF3k//LE5m3uUxpwC7hsRwAWbNgymBl+Y8X15fMtHekqT90is
+FV6BgakJNhL+bP13PeHQmxieq1tzwQ==
+=SlH/
+-----END PGP SIGNATURE-----
+
+--NKeZ2FYlxf0QS/I3--
