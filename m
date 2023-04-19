@@ -1,47 +1,23 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183331868
-	for <tools@linux.kernel.org>; Sat, 15 Apr 2023 19:31:21 +0000 (UTC)
-Received: by mail-qt1-f178.google.com with SMTP id fv6so8986546qtb.9
-        for <tools@linux.kernel.org>; Sat, 15 Apr 2023 12:31:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681587081; x=1684179081;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9uMVTnkWahtCHhlqnepki3K4OYKRJPBqyXo3m+29M1A=;
-        b=BrUAuLhOHxvNR6sv1MdNH0kk8zVY5zQ36vR4kn2G0W7jJ1JoOKv913+EE7G+8Kyq+t
-         CQSIL9DaYJEMpiV7mK38Vjl0HJZC54eh14PEFOUrgCc4H1XGmGQTdlcfNnBQzTZDiHCg
-         AVdWLAK7PINCpI8vdrh4ZvG0rwDsnRQy3b863Zenu3JP4YlBYWm43QcmcYSOCHOOHpcj
-         d0TwJ9lzDy5siPCPzFfYvxcaD7gbhr5Qn1fctuW79MQwucJ+vZMaVHj0/nKFqkDw127T
-         FecVHVgAVPeU0foglwC+HqoJT2ldfWf4VdrIGiQlcJiFl3PL4pSly9oZpXpGSdAqHhio
-         ayfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681587081; x=1684179081;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9uMVTnkWahtCHhlqnepki3K4OYKRJPBqyXo3m+29M1A=;
-        b=MIaM+1Jy9P0fVS4ohiDo+4/NTYjQRY+NXpPLEurqOZS3YGeI9VuzARjZl4cTL+X403
-         fXOxRD3JDJaOfgl5cRMYwiN9rEwMZmACx6trk/b6PqV8I4BUmH6VuvoaWL7ebYE/YGAU
-         AJcAImSWil3uQqZAkp7B3lsNBU0Dw1o4bgXTlQ9ux8DxcWryWySdr6sDp9r2o6SI8iWV
-         UBP+DhaApfalw33TiS1wQAqHtILXHpQAAqxmmE67c22YQyW+5CPY5i8lZT5NF/X8S/ik
-         pGGnnxuMciUFOrNBDw4szoyk5paW8RcWW70g1PJXCyz1oZEzeSuEcUTjD0ive7Yyz3HR
-         aX/Q==
-X-Gm-Message-State: AAQBX9d3AQQ5nZq3IK0eXImNDTnns2XV8WtMGRDcVMXLK5UavqOGFFDq
-	jOaDTV7ESukJTud4VqD13ZA=
-X-Google-Smtp-Source: AKy350bCXbUuY3/3QWEb7QWcOSBEp2spHZyI56jVf6Lut83QvmO91tLu9t9+dath09nq/vQxwrNbtg==
-X-Received: by 2002:ac8:7f8c:0:b0:3e8:fe33:4415 with SMTP id z12-20020ac87f8c000000b003e8fe334415mr16553025qtj.11.1681587080803;
-        Sat, 15 Apr 2023 12:31:20 -0700 (PDT)
-Received: from [127.0.0.1] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id f21-20020ac859d5000000b003e38f7e4562sm2086707qtf.69.2023.04.15.12.31.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Apr 2023 12:31:20 -0700 (PDT)
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Date: Sat, 15 Apr 2023 15:31:00 -0400
-Subject: [PATCH b4 2/2] am, shazam: allow cherry-picking an out-of-series
- patch
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052A9C941
+	for <tools@linux.kernel.org>; Wed, 19 Apr 2023 17:38:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 97861C433EF;
+	Wed, 19 Apr 2023 17:38:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1681925889;
+	bh=WOkkRWw8jqphjDc6Cq2mTFnf8tyzqkvaEAAeZJgDJZ8=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=GhPKRgX2ik1EFT1uWYz3bziyVW+7T+/+J8m5JJcwEmRoLn989Cyx7yGuyY6uIrRm4
+	 pEK6X1cwuvoNxs8DJZcbL+6yA2/qNBmpZCXaxCRRN/JcBElDAOoaVKwhVPtuSpn4Mn
+	 zo99oivQtxO3FjRLQw4wnYtbkEd3GF6xDw+9kiDta/wFpEyMXwNFS6HuiYRVZf87v/
+	 n61JU/PE5vPpuWG9saRawv/bmLWCvuG1gs6ksqqx4ponl5JP6xuPkzTS5VU1FWhZIc
+	 AoLren7JLYFulOXK/2dbCrOlwX9uFRHdnK2q9gOcqEbyyCZjer6XECfi+FKErymC71
+	 xdw7bBup8uhDA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 72B99E3309C;
+	Wed, 19 Apr 2023 17:38:09 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -50,89 +26,31 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230415-am-cherry-pick-suggestion-v1-2-8951a2274256@gmail.com>
-References: <20230415-am-cherry-pick-suggestion-v1-0-8951a2274256@gmail.com>
-In-Reply-To: <20230415-am-cherry-pick-suggestion-v1-0-8951a2274256@gmail.com>
-To: "Kernel.org Tools" <tools@linux.kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Philippe Blain <levraiphilippeblain@gmail.com>
-X-Mailer: b4 0.13-dev-c01b1
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: broonie@kernel.org, konstantin@linuxfoundation.org, 
+ tools@linux.kernel.org
+Message-ID: <20230419-b217331c2-b18774441e89@bugzilla.kernel.org>
+In-Reply-To: <ZDbo/qTKFgBQdWh4@sirena.org.uk>
+References: <ZDbo/qTKFgBQdWh4@sirena.org.uk>
+Subject: Re: b4 trailers --update splats on new branch
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Wed, 19 Apr 2023 17:38:09 +0000 (UTC)
 
-Reviewers sometimes include a patch as a reply when reviewing a
-contributor's series, for example, to suggest tweaks or additional
-changes. The contributor might want to add that patch to their series
-for the next revision.
+Konstantin Ryabitsev writes in commit 00e423af1a0968f2f90a4c3384c202ffee98bc08:
 
-Currently, using 'b4 shazam -P_ $msgid', where msgid is the message-id
-or full URL of the reviewer's message, does not work:
+ez-trailers: don't crash when there are no follow-ups received
 
-    $ b4 am -o- -P_ ZDnCMegeiw0kT5oj@nand.local
-    Analyzing 2 messages in the thread
-    No patches found.
+If there are no follow-up trailers to process, bail early as opposed to
+crashing.
 
-mbox.py::make_am returns early because the LoreSeries 'lser' returned by
-lmbx.get_series is empty ('None'). It is empty because when using '-P_',
-b4::retrieve_messages only retrieves the specific message-id given (and
-its replies), so the LoreSeries 'lmbx' created in make_am does not have
-any series.
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217331
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-Also check if the user asked to cherry-pick a specific message-id before
-returning early in make_am. This allows us to reach the 'if
-cmdargs.cherrypick == '_'' condition, but then we iterate on
-lser.patches to find the patch to cherry-pick, and so get a runtime
-error:
-
-    $ b4 am -o-  -P_ ZDnCMegeiw0kT5oj@nand.local
-    Analyzing 2 messages in the thread
-    Traceback (most recent call last):
-      File "/Users/Philippe/Code/b4/b4/command.py", line 381, in <module>
-        cmd()
-      File "/Users/Philippe/Code/b4/b4/command.py", line 364, in cmd
-        cmdargs.func(cmdargs)
-      File "/Users/Philippe/Code/b4/b4/command.py", line 91, in cmd_am
-        b4.mbox.main(cmdargs)
-      File "/Users/Philippe/Code/b4/b4/mbox.py", line 719, in main
-        make_am(msgs, cmdargs, msgid)
-      File "/Users/Philippe/Code/b4/b4/mbox.py", line 82, in make_am
-        for lmsg in lser.patches[1:]:
-    AttributeError: 'NoneType' object has no attribute 'patches'
-
-Fix this by creating a fake LoreSeries and adding to it any followup
-messages in 'lmbx' with a diff in the body.
-
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- b4/mbox.py | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/b4/mbox.py b/b4/mbox.py
-index 05c40e9..70b866f 100644
---- a/b4/mbox.py
-+++ b/b4/mbox.py
-@@ -57,7 +57,7 @@ def make_am(msgs: List[email.message.Message], cmdargs: argparse.Namespace, msgi
-         reroll = False
- 
-     lser = lmbx.get_series(revision=wantver, sloppytrailers=cmdargs.sloppytrailers, reroll=reroll)
--    if lser is None:
-+    if lser is None and cmdargs.cherrypick != '_':
-         if wantver is None:
-             logger.critical('No patches found.')
-         else:
-@@ -70,6 +70,13 @@ def make_am(msgs: List[email.message.Message], cmdargs: argparse.Namespace, msgi
-     if cmdargs.cherrypick:
-         cherrypick = list()
-         if cmdargs.cherrypick == '_':
-+            # We might want to pick a patch sent as a followup, so create a fake series
-+            # and add followups with diffs
-+            if lser is None:
-+                lser = b4.LoreSeries(revision=1, expected=1)
-+            for followup in lmbx.followups:
-+                if followup.has_diff:
-+                    lser.add_patch(followup)
-             # Only grab the exact msgid provided
-             at = 0
-             for lmsg in lser.patches[1:]:
-
+(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=00e423af1a09)
 -- 
-2.39.1
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
 
