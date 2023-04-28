@@ -1,80 +1,78 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BABD3D8E
-	for <tools@linux.kernel.org>; Fri, 28 Apr 2023 18:32:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7798EC433D2;
-	Fri, 28 Apr 2023 18:32:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1682706730;
-	bh=eJF+PUoQDMycj25ry3uMsB3PwOacEP7IK+wHUtK/eAE=;
-	h=Date:From:To:Cc:Subject:From;
-	b=psK893u96z1oi+5SYq2eZRSvP+NKiZM6p2JNyeLNjqbv42K4IelKTwt1cIY/cXyPc
-	 X/o4l2Ghh/LABoyhWm3BSWuDqLaS3+nyFcJ5/aAAvHVLVSYtRpJrUps3hZ0lWWIYaT
-	 grdAI11ZA2Rh4gnWFgpunzvG8czgaLHTOZ1UOUQyy6Jl/Lm5NyZlFavTsopwTeqaBs
-	 hWXZNUO1iPegMj/f/grkEIvuxM5UTAzXhVVp5EzSUI7Fv9s29i5DPJ7ZCSdEyhwUv5
-	 TaQmlXuYnpV9ZIVxTNvuvK22rfJiXMOnEBxQQRjBrV19EF1SdB+DSlcZ36Ts90VIam
-	 kuBy//AJT9xLA==
-Date: Fri, 28 Apr 2023 19:32:06 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools <tools@linux.kernel.org>
-Subject: Unhelpful cover letter default for single patch serieses
-Message-ID: <ZEwRJqjvbZGqpZpg@sirena.org.uk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C8E3D8E
+	for <tools@linux.kernel.org>; Fri, 28 Apr 2023 18:34:34 +0000 (UTC)
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2472a3bfd23so203531a91.3
+        for <tools@linux.kernel.org>; Fri, 28 Apr 2023 11:34:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1682706874; x=1685298874;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MvBl2+0ut4QIjmx2Y6RzSVrm/OIDGdOIfENgyMpwZhw=;
+        b=4aRzS98gyj/F1aFPdc1FWAXxckbQYZg4xd86oMDliWycObdKC6ZAsoPqxKLsuYpe6S
+         lr+bokmRPl/tkrfOjxQYq0rUMIBVbrChfjIc+8YgVJu36O+DQmyh8X5qWCOkY/dIC7SN
+         eplPsowpcBWAA0PwhJ14NQYvvtz5iNsfAI5l9WddjL2gUN9f6VEgfuzFjV8jT3m+QQfA
+         w3rwYfOiFjbGJnvxfITME9CkTUdBuy4hWSTQEXhT7jI7MnJBDZ/0vKwBX0r6U5QwTVBs
+         1JYqEcaBtD+3XowYQg+BkH6j9pEhE8GvMB97Go1djwBaWz3nXNY1mReG+J2jH5yRCs5O
+         YEZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682706874; x=1685298874;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MvBl2+0ut4QIjmx2Y6RzSVrm/OIDGdOIfENgyMpwZhw=;
+        b=gPUoThyKqjoiDTdVrueOkj8MnTJ4dYxeioGB8hwKnMIJD8WqqxR4S4RrH2e3lhqtMv
+         fx8peCnlu15cctZ28Quu75DbWuecHV3zc0oV+f65kdySBP0abeku+BxmKgtG6u+XuScT
+         xzU63+TbCJBFC7gMVTYjwed/omoObYqp37H+87qKsQK4DrdR+HVS75cSmc18XU80BuED
+         YJdPw6xwkcBUW4E1FOjqcOnZxPBmtyNcvpJkraE7xoo01NH+/NfMBFkJrx1iDLWjsxOU
+         AITK7/FRMQ7GWZ/xMa5Ad/MMJDWIocwVGosEtzJknycqK/aeNIZUp1oO/+NxzWiqGOZg
+         5Gcg==
+X-Gm-Message-State: AC+VfDwh8V9qaK2tTp/ei/knsKWHalKidjb+5XwOdEE+TTeaSEaHDsC4
+	Q2rmCnpjn3bA5vRL3KBVr0IzkTK9gfO6CF7D5pvy6g==
+X-Google-Smtp-Source: ACHHUZ4YMCvvsYHdFhosFIVqTjztx5rQooDtfP04MIckyQMcNZG6K699I1fEhTbONpPsRwPGseNhpB5KZ+3LWFZKcDc=
+X-Received: by 2002:a17:90a:e146:b0:23f:5fe7:25a1 with SMTP id
+ ez6-20020a17090ae14600b0023f5fe725a1mr6261832pjb.13.1682706874015; Fri, 28
+ Apr 2023 11:34:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="i1kbabqZoEn419wj"
-Content-Disposition: inline
-X-Cookie: Love means nothing to a tennis player.
+References: <CAKwvOdn6_J+9BppRbXEtDc8CW-qqoat7VJ521oWnqXCXHb_d6A@mail.gmail.com>
+ <20230419-closure-polymer-f7a6ac@meerkat>
+In-Reply-To: <20230419-closure-polymer-f7a6ac@meerkat>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Fri, 28 Apr 2023 11:34:23 -0700
+Message-ID: <CAKwvOd=h2TeX6_WqHtK8Tf1MqmOB_ao+JfJpnoSmwXUB0qkaug@mail.gmail.com>
+Subject: Re: executable sendemail.smtpserver and b4 --reflect
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: icon@mricon.com, tools@linux.kernel.org, mjg59@srcf.ucam.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Apr 19, 2023 at 11:30=E2=80=AFAM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Wed, Apr 12, 2023 at 12:00:09PM -0700, Nick Desaulniers wrote:
+> > I also noticed that my name wasn't being sent on the From: field to
+> > LKML. I assume that's an orthogonal issue, but is there anything else
+> > I should be doing there?
+>
+> I don't think it's b4 that is doing this. I think Matthew mentioned that
+> sendgmr will rewrite some headers to match your internal authentication,
+> perhaps that's what is replacing the From: header?
 
---i1kbabqZoEn419wj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I see:
 
-Hi,
+$ b4 send
+...
+Sending via "/usr/bin/sendgmr -i -f ndesaulniers@google.com"
 
-When creating single patch serieses I repeately get tripped up by the
-default cover letter behaviour with EDITME.  I run
-
-	b4 prep <make a new branch>
-	<make kernel do thing>
-	b4 prep --auto-to-cc
-
-see that --auto-to-cc did what I wanted then run my CI only to have b4
-send fail afterwards due to the EDITMEs left in the cover letter which I
-never saw since I don't want a cover for a single patch series and
---auto-to-cc did the right thing.
-
-Perhaps this could be addressed by both changing the default cover
-letter to not include the EDITMEs and switching the sense of the check
-so that b4 send requires some magic string in the cover letter to send a
-blank cover letter for a multi-patch series (NOCOVER or something)?
-That'd mean that people would get no cover letter for single patch
-serieses without any friction but still refuse to send a multi-patch
-series without a cover letter unless the user actively intervenes.
-
+Should this be using `/usr/bin/sendgmr -i -f 'Nick Desaulniers
+<ndesaulniers@google.com>'`?
+--=20
 Thanks,
-Mark
-
---i1kbabqZoEn419wj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmRMESUACgkQJNaLcl1U
-h9CgSQf+OLMBp7tGLpkr7A8DHQvNWFRQn46fN7NIWKRNUbe06Y8O8q8rRLSDZYVz
-r66+G4Yk1rrN7SMFsYT7MvPy3U5w5HfvycyE8HE/AtMf3pDOnfiixakOBM2ZH/LO
-hSjevJWnvcFPNJDJzRC16ITykRxmWsgXkCax5ZjkWvnsRyiG40TVfJqaIXu0dWMa
-i2MhQGj+nsUJ2jA6BkRA95+YL532Dfir6i8FdNVYwaHgunYvYmyuvA7+CUg98DtY
-J2UBU3RFMBh7oe29rPDsbtc1gGnJzE+hPKAtjFD6mtaR3rzPBd8Xp+/chXgcZTf5
-M0xfhZqKeojeJyhsBh7fF2QOHh7m8Q==
-=0uiG
------END PGP SIGNATURE-----
-
---i1kbabqZoEn419wj--
+~Nick Desaulniers
