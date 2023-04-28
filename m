@@ -1,78 +1,78 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C8E3D8E
-	for <tools@linux.kernel.org>; Fri, 28 Apr 2023 18:34:34 +0000 (UTC)
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2472a3bfd23so203531a91.3
-        for <tools@linux.kernel.org>; Fri, 28 Apr 2023 11:34:34 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BC13D8E
+	for <tools@linux.kernel.org>; Fri, 28 Apr 2023 18:46:16 +0000 (UTC)
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-3ef59098519so1037831cf.1
+        for <tools@linux.kernel.org>; Fri, 28 Apr 2023 11:46:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1682706874; x=1685298874;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MvBl2+0ut4QIjmx2Y6RzSVrm/OIDGdOIfENgyMpwZhw=;
-        b=4aRzS98gyj/F1aFPdc1FWAXxckbQYZg4xd86oMDliWycObdKC6ZAsoPqxKLsuYpe6S
-         lr+bokmRPl/tkrfOjxQYq0rUMIBVbrChfjIc+8YgVJu36O+DQmyh8X5qWCOkY/dIC7SN
-         eplPsowpcBWAA0PwhJ14NQYvvtz5iNsfAI5l9WddjL2gUN9f6VEgfuzFjV8jT3m+QQfA
-         w3rwYfOiFjbGJnvxfITME9CkTUdBuy4hWSTQEXhT7jI7MnJBDZ/0vKwBX0r6U5QwTVBs
-         1JYqEcaBtD+3XowYQg+BkH6j9pEhE8GvMB97Go1djwBaWz3nXNY1mReG+J2jH5yRCs5O
-         YEZQ==
+        d=linuxfoundation.org; s=google; t=1682707576; x=1685299576;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q35ThzbJ8FLNEI8A4/+nIgDhi2yg0y85oyfxLkE+Vwg=;
+        b=LNHLm/qhBCe22ka/6HSOo3yfMhw9FXgbk131NpMZ1QLDYZIuxkbbwGgtRn2MM1VUIM
+         Q/8TcpI9qe+LQQZw4BthHejslR83TSD4Z5AFjRrkQyS67RWDKHkgeJH6rOor7SurCaXk
+         U6rHP3iG+FQXeBv4hWSg4AD7rEHPfxB1isCIk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682706874; x=1685298874;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MvBl2+0ut4QIjmx2Y6RzSVrm/OIDGdOIfENgyMpwZhw=;
-        b=gPUoThyKqjoiDTdVrueOkj8MnTJ4dYxeioGB8hwKnMIJD8WqqxR4S4RrH2e3lhqtMv
-         fx8peCnlu15cctZ28Quu75DbWuecHV3zc0oV+f65kdySBP0abeku+BxmKgtG6u+XuScT
-         xzU63+TbCJBFC7gMVTYjwed/omoObYqp37H+87qKsQK4DrdR+HVS75cSmc18XU80BuED
-         YJdPw6xwkcBUW4E1FOjqcOnZxPBmtyNcvpJkraE7xoo01NH+/NfMBFkJrx1iDLWjsxOU
-         AITK7/FRMQ7GWZ/xMa5Ad/MMJDWIocwVGosEtzJknycqK/aeNIZUp1oO/+NxzWiqGOZg
-         5Gcg==
-X-Gm-Message-State: AC+VfDwh8V9qaK2tTp/ei/knsKWHalKidjb+5XwOdEE+TTeaSEaHDsC4
-	Q2rmCnpjn3bA5vRL3KBVr0IzkTK9gfO6CF7D5pvy6g==
-X-Google-Smtp-Source: ACHHUZ4YMCvvsYHdFhosFIVqTjztx5rQooDtfP04MIckyQMcNZG6K699I1fEhTbONpPsRwPGseNhpB5KZ+3LWFZKcDc=
-X-Received: by 2002:a17:90a:e146:b0:23f:5fe7:25a1 with SMTP id
- ez6-20020a17090ae14600b0023f5fe725a1mr6261832pjb.13.1682706874015; Fri, 28
- Apr 2023 11:34:34 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682707576; x=1685299576;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Q35ThzbJ8FLNEI8A4/+nIgDhi2yg0y85oyfxLkE+Vwg=;
+        b=Qz+Zta0XNkXoA+bIdPBvKczJH5E+O18rbam90Fh5kJc79dMDILxzFAdD4DWVEdcpq3
+         xTZu9buNIChJ+JXRRy9dgWgEGjprVbJxT9Dd0oayazg3m4Ogj2FTx9FA9hMWlFKcl8fl
+         AIT0BaKDmEQljVECxArjnQnrDrfrBpgH+zXYM/VSZlB1NfuuyIpXveh/SRKoNLmgztQN
+         ONj2z4sDfMO2dBR8OAmFRlg5GjiT/Yw6ON1u0LcErzqTe1sdXRqMlX6PS3pYy498q0Ft
+         HoBNVY9YvIciMwfGBT5+To6e7LKfh55a5f/wotmY1w0itPGl7Si5xseO8vP1w2j5ZFvx
+         Hduw==
+X-Gm-Message-State: AC+VfDyVpKHaUxgjS8vyVwm3M3iqoxBlUa40fYTBBqBNiZEWJA+vYiJT
+	bcSaM74eYDdfViKYaLJwK5WNmQ==
+X-Google-Smtp-Source: ACHHUZ7wlcb7QOxXy1bIXE++pY0nqcZQeV8x/ZTTA2AvrYSvJzeYnzcrbi0ZiI8vqyEI8WOzxVnoDg==
+X-Received: by 2002:a05:622a:1890:b0:3dc:fa58:97fd with SMTP id v16-20020a05622a189000b003dcfa5897fdmr10919372qtc.25.1682707575908;
+        Fri, 28 Apr 2023 11:46:15 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-132.dsl.bell.ca. [209.226.106.132])
+        by smtp.gmail.com with ESMTPSA id e21-20020ac84e55000000b003bd0f0b26b0sm7262247qtw.77.2023.04.28.11.46.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Apr 2023 11:46:14 -0700 (PDT)
+Date: Fri, 28 Apr 2023 14:46:12 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Nick Desaulniers <ndesaulniers@google.com>
+Cc: icon@mricon.com, tools@linux.kernel.org, mjg59@srcf.ucam.org
+Subject: Re: executable sendemail.smtpserver and b4 --reflect
+Message-ID: <20230428-guidance-unvented-692ee1@meerkat>
+References: <CAKwvOdn6_J+9BppRbXEtDc8CW-qqoat7VJ521oWnqXCXHb_d6A@mail.gmail.com>
+ <20230419-closure-polymer-f7a6ac@meerkat>
+ <CAKwvOd=h2TeX6_WqHtK8Tf1MqmOB_ao+JfJpnoSmwXUB0qkaug@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CAKwvOdn6_J+9BppRbXEtDc8CW-qqoat7VJ521oWnqXCXHb_d6A@mail.gmail.com>
- <20230419-closure-polymer-f7a6ac@meerkat>
-In-Reply-To: <20230419-closure-polymer-f7a6ac@meerkat>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Fri, 28 Apr 2023 11:34:23 -0700
-Message-ID: <CAKwvOd=h2TeX6_WqHtK8Tf1MqmOB_ao+JfJpnoSmwXUB0qkaug@mail.gmail.com>
-Subject: Re: executable sendemail.smtpserver and b4 --reflect
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: icon@mricon.com, tools@linux.kernel.org, mjg59@srcf.ucam.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAKwvOd=h2TeX6_WqHtK8Tf1MqmOB_ao+JfJpnoSmwXUB0qkaug@mail.gmail.com>
 
-On Wed, Apr 19, 2023 at 11:30=E2=80=AFAM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Wed, Apr 12, 2023 at 12:00:09PM -0700, Nick Desaulniers wrote:
-> > I also noticed that my name wasn't being sent on the From: field to
-> > LKML. I assume that's an orthogonal issue, but is there anything else
-> > I should be doing there?
->
-> I don't think it's b4 that is doing this. I think Matthew mentioned that
-> sendgmr will rewrite some headers to match your internal authentication,
-> perhaps that's what is replacing the From: header?
+On Fri, Apr 28, 2023 at 11:34:23AM -0700, Nick Desaulniers wrote:
+> > I don't think it's b4 that is doing this. I think Matthew mentioned that
+> > sendgmr will rewrite some headers to match your internal authentication,
+> > perhaps that's what is replacing the From: header?
+> 
+> I see:
+> 
+> $ b4 send
+> ...
+> Sending via "/usr/bin/sendgmr -i -f ndesaulniers@google.com"
+> 
+> Should this be using `/usr/bin/sendgmr -i -f 'Nick Desaulniers
+> <ndesaulniers@google.com>'`?
 
-I see:
+No, the addresses passed via -f are for the envelope-from, not for the message
+headers (the envelope-from is used during the SMTP negotiation and this is
+where the message should bounce to if it's not delivered).
 
-$ b4 send
-...
-Sending via "/usr/bin/sendgmr -i -f ndesaulniers@google.com"
+That said, I don't know how sendgmr works internally, and since it doesn't
+claim to be sendmail-compatible, the flags and how it treats them can be
+anything, really.
 
-Should this be using `/usr/bin/sendgmr -i -f 'Nick Desaulniers
-<ndesaulniers@google.com>'`?
---=20
-Thanks,
-~Nick Desaulniers
+-K
