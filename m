@@ -1,85 +1,64 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A2219E55
-	for <tools@linux.kernel.org>; Mon, 15 May 2023 23:02:36 +0000 (UTC)
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-61d97ab176eso62615526d6.2
-        for <tools@linux.kernel.org>; Mon, 15 May 2023 16:02:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684191756; x=1686783756;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mA9qhJyv/hYHmAZUD9CW80Qvv1pD8bLtFmKuKDSKePY=;
-        b=Iq9+VJFhxdm65+Q9OEth+KECxHjt2tVqJ+V9qJ7oxhtt0MsLAlki+xInarVw6Zaivy
-         ktzKKGnqspPs0IlN9KRdagAxGxtrvJaeHh/fdgE3Hue+By8uAEtCYqQCyIpInVkEnmmE
-         hpLemCnzinOZvEZ5t4upZoT8BHtgZRt9Paty/Wmo7wfBWcC3xUSvYNZ3ZH9u4fUL2tmy
-         zYi1sSDHYVS6tp+MPEDq26h2o8uHfIEJItE0X/D9jOlbMW81MzY5y8xur4z8eZ3XaxbV
-         fe7QQOdanT7DIacKMnJJtwXKrJXC8kd1WKwgzBKeS1hLzYLln+MIme8iw7pVgt+N8jA1
-         052Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684191756; x=1686783756;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mA9qhJyv/hYHmAZUD9CW80Qvv1pD8bLtFmKuKDSKePY=;
-        b=T6UNhmsjpC6kkT/wBlPzoGfGOgI6w8hLpK6VNAS42vVrblUPJjhq+v5f/pRwxqkdm2
-         rsRtzA06GTh4TYUCZBdxWiOr/HpHc/OyK33/rcIYCK453pLnqcMVN10sBPk8eWRcHm7p
-         vOsC2N3MkErirXRWv8ElySQLg/h0omr/JAQGmsJAQSTAVTErjh9PEAsdPqjhBbuptHs8
-         4GeOfBjylWy3JgD0QVuQd/4j5XnbQYwiq6oSeDp706sE9gBGl9+R2aDvsU8m6HCjT3ZL
-         M8lQ5wLAsBz7/pt9mA/dcrrLBcS4pEtXvwmNHSuJ4i11XbXPcKOlaLqflmcIA0S6Vs2K
-         K9Dg==
-X-Gm-Message-State: AC+VfDwEfsqxzg60Le8CQ986zRG3rXl36N7UAOyDQ3TPY6Epg7vrJXNW
-	4AKw48mvcR2hoerJ3SOv+BgobCf092zrI4mYeRI9Lw==
-X-Google-Smtp-Source: ACHHUZ61UOiY14aOfO5Q0OZqMhgppMl/jy93RXPKGNFe8EW8iT89u2kFL8vaty+li9R/5hCkBT1FCDXa0jn2jzVZyrs=
-X-Received: by 2002:a05:6214:3008:b0:621:53d1:3c66 with SMTP id
- ke8-20020a056214300800b0062153d13c66mr31697471qvb.18.1684191755786; Mon, 15
- May 2023 16:02:35 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E2B3C15
+	for <tools@linux.kernel.org>; Tue, 16 May 2023 22:58:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 07ABDC433D2;
+	Tue, 16 May 2023 22:58:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1684277922;
+	bh=iCX1x2ixHNK6nIhApUHus/mtOpn+WAjWfH7DB4RybLY=;
+	h=Date:From:To:In-Reply-To:References:Subject:From;
+	b=i9FTGr/oDrgyHbB5BOKTfHzGF3VsJXv0tPAsmOWaMruXoSumwGPpFhBhdDSTc7kaq
+	 643AE0dgvsBna0XHL5x9MNy4A8+vO3OSPq68692SYucriufUR0FR5+z7GDRHTA2fOH
+	 pjAOUPlwVOeRORHqqsvMAHwXI/5ucFZo9rAGmCU7FaFN6QrUs9QKNZ/6JWrm9e5pUq
+	 HZuV4XrnCsFPFDTj4HPDPScePAXOi7ZDz6d8a7DUVn8WZQz++KWwhpM166QbZTDwAx
+	 tZovb2BlOT0r7noKoOTSLbW+dbCwMg90ZjB1G2ZacASCa/UuWVfbFwh9V5yrVshQcO
+	 yLvz+SfwUZl/A==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DC387E5421B;
+	Tue, 16 May 2023 22:58:41 +0000 (UTC)
+Date: Tue, 16 May 2023 22:58:50 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: konstantin@linuxfoundation.org, icon@mricon.com, tools@linux.kernel.org, 
+ ndesaulniers@google.com, mjg59@srcf.ucam.org
+Message-ID: <20230516-b217332c12-952b313169dc@bugzilla.kernel.org>
+In-Reply-To: <CAKwvOdn6_J+9BppRbXEtDc8CW-qqoat7VJ521oWnqXCXHb_d6A@mail.gmail.com>
 References: <CAKwvOdn6_J+9BppRbXEtDc8CW-qqoat7VJ521oWnqXCXHb_d6A@mail.gmail.com>
- <20230515-b217332c9-1b90c6e4656b@bugzilla.kernel.org> <20230515-version-unnatural-8d0592@meerkat>
-In-Reply-To: <20230515-version-unnatural-8d0592@meerkat>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 15 May 2023 16:02:25 -0700
-Message-ID: <CAKwvOd=sw6nXw1SohLqJsBnzjRsQrgswdfyZY22R6Dh93sbXLw@mail.gmail.com>
 Subject: Re: b4: executable sendemail.smtpserver and b4 --reflect
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Bugbot" <bugbot@kernel.org>, icon@mricon.com, mjg59@srcf.ucam.org, 
-	tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
 
-On Mon, May 15, 2023 at 2:50=E2=80=AFPM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Mon, May 15, 2023 at 09:44:44PM +0000, Kernel.org Bugbot wrote:
-> > I spoke with the maintainer of our internal `sendgmr` tool; they recomm=
-ended that the `-t` flag be used.
-> >
-> > https://man7.org/linux/man-pages/man8/sendmail.8.html
-> >
-> > Can `b4 send` add `-t`?
->
-> Sorry, I'm not sure why we'd want to do that. The purpose of "reflect" mo=
-de is
-> specifically NOT to send to to addresses in the message headers, only to =
-the
-> addresses we pass on the command line. So, adding -t would be the opposit=
-e of
-> what we want to do.
+ndesaulniers writes via Kernel.org Bugzilla:
 
-This is not for reflect mode; sorry for not clarifying.
+(In reply to Bugbot from comment #0)
+> Nick Desaulniers <ndesaulniers@google.com> writes:
+> I also noticed that my name wasn't being sent on the From: field to
+> LKML. I assume that's an orthogonal issue, but is there anything else
+> I should be doing there?
 
->
-> -K
+(In reply to Nick Desaulniers from comment #9)
+> I spoke with the maintainer of our internal `sendgmr` tool; they recommended
+> that the `-t` flag be used.
+> 
+> https://man7.org/linux/man-pages/man8/sendmail.8.html
+> 
+> Can `b4 send` add `-t`?
 
+...specifically not when using --reflect? (Happy to file a second bug to track this second issue, since it's orthogonal to --reflect).
 
+View: https://bugzilla.kernel.org/show_bug.cgi?id=217332#c12
+You can reply to this message to join the discussion.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
 
---=20
-Thanks,
-~Nick Desaulniers
