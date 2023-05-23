@@ -1,35 +1,45 @@
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53AA2111AD
-	for <tools@linux.kernel.org>; Wed, 17 May 2023 18:57:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1684349828; x=1715885828;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:to:cc;
-  bh=6CL4Ha0agnpJHVdNHmQeD6/BGvkZ0nYQoaxorhSTYU0=;
-  b=lrshBkLdXOUubuzXktFpz97Ntvz3H2/gTvWqRnceqyko6M4hFrpCFEC+
-   1RuOT7Wer77480OWl4USJDYhZ7vRHU8WY+LyGvuwt04tWj8Misw7Rpsin
-   Z2xZCNsr6/yqa+LQijc0+ADjteBFwhwZ1R1oMDj/tDHq6EVKrHwb8Ui5K
-   Lum2vk+kF2imDeKWPhxIMAGbMfHsjQ8qMceOLj2W6J9oPNX5MNG6gQgVy
-   Fxwk6zkeXjQCCsT2oA21iFVNiUq9cZpkPx/iNM9v8NvmpZ7oNvxN1zHDk
-   nUVetxJ6rs7YSkaF2dEEEDlLuG2dQiPYoivDoqEADwDg9ckP3oOr5rBT/
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10713"; a="341242254"
-X-IronPort-AV: E=Sophos;i="5.99,283,1677571200"; 
-   d="scan'208";a="341242254"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2023 11:57:07 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10713"; a="948375931"
-X-IronPort-AV: E=Sophos;i="5.99,283,1677571200"; 
-   d="scan'208";a="948375931"
-Received: from iweiny-mobl.amr.corp.intel.com (HELO localhost) ([10.209.143.168])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2023 11:57:07 -0700
-From: Ira Weiny <ira.weiny@intel.com>
-Date: Wed, 17 May 2023 11:56:38 -0700
-Subject: [PATCH b4] b4: Allow prep new branch while on a b4 managed branch
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D434A842
+	for <tools@linux.kernel.org>; Tue, 23 May 2023 10:44:40 +0000 (UTC)
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-51144dddd4cso1104108a12.1
+        for <tools@linux.kernel.org>; Tue, 23 May 2023 03:44:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684838679; x=1687430679;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mvJC79ikDXU4qSsdbBl+rJY1/H+nfDJgTY+0DZduoVI=;
+        b=X8kExs8Qi4DjV55k78J0fG90BJTY5M4SOmKzYj0cwIIfa8di+mtmn4s7ov/8VGA3J8
+         VzyTER2uI+dCu82CCmzOHpoy42M7wfQviS51ubOq6NRMhceox9qw5fE19+CG/tmN0rKO
+         DizqGlhKQJBnTDD23Lq+pN0TeYMUFDqasvpOtVyY6DRZ6+/XCSmfKUMGkpItP78erbLM
+         iJTlwO1F0cg3VYrFuNV0E7kp9rPvPZZkxDnX15gt2Kgl67dFGhIJnUpIqz5/H7AQ1Eue
+         O19TrYxccG2w1LYZum/kSn3VxeKiRiALfKf7c30BufZlhq4nwkz3quO8vpIXgHI1yyLd
+         Z8Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684838679; x=1687430679;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mvJC79ikDXU4qSsdbBl+rJY1/H+nfDJgTY+0DZduoVI=;
+        b=UeRODbB7lMKsthzP/z3spSTKvo0No/LpPnus/idx03RfZjVfGa7MN/dpQ6HeJy79ZG
+         2czzIHwUe+w43DVdKEazq2Vei4Zu+HWJUGpCOpe2xqGd+L4uSmc2KGyusOmaOA8fg4Z5
+         s9reh6L1BgsdorZBaZ35DsJSjHa3zew4slDfHCV/DiEVqtGc8dF6lGv/HCT7Bql+bmqE
+         0eH4Hk3Qxj3wF4cjYKPSW3bIXFpsM2ucF08QGjnOQOqNhP9WodQqwmUrOKRDM5vbW8CZ
+         ajrgu69i6TR+d7e8+wSAZOzR+1c4IrUOrBqnhhK0BsuRseQ2OpomB+ryJQWrJtJpTgoP
+         v1iA==
+X-Gm-Message-State: AC+VfDzIj0w0z5jDH0Y+cgmLDaIhYOeMjpGRsRzyocuUmfKiyLictW1C
+	QKsRT8QA5ceElp2PJ/XjDztfRxX3OvgodD5fPdM=
+X-Google-Smtp-Source: ACHHUZ5bCzaHk50Ho6bwWIlsBn7xDLmtZx2svE8AzwKq3w2cT2n8YxciB+Xc8Ex8Cz8POWdhunnK3A==
+X-Received: by 2002:aa7:d0c3:0:b0:50b:c693:70af with SMTP id u3-20020aa7d0c3000000b0050bc69370afmr11552943edo.2.1684838679030;
+        Tue, 23 May 2023 03:44:39 -0700 (PDT)
+Received: from [192.168.1.149] (i5C7409D3.versanet.de. [92.116.9.211])
+        by smtp.gmail.com with ESMTPSA id b7-20020aa7d487000000b00506b2af49fbsm3866000edr.81.2023.05.23.03.44.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 May 2023 03:44:38 -0700 (PDT)
+From: Erik Schilling <erik.schilling@linaro.org>
+Date: Tue, 23 May 2023 12:44:17 +0200
+Subject: [PATCH b4] docs: fix smtpServerPort option
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -38,81 +48,49 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230517-allow-new-w-fork-point-v1-1-22d2cb938e16@intel.com>
-X-B4-Tracking: v=1; b=H4sIAGUjZWQC/x2NQQqDMBAAvyJ77kK0Ji39SukhiZu61CaykaYg/
- t3ocRiGWSGTMGV4NCsI/ThzihXaSwN+tPFNyENl6FR3Vbq9oZ2mVDBSwYIhyQfnxHHBYPpBG6+
- 9uhuosbOZ0ImNfjzyr80LySFmocD/8/gE18Nr23bVC+2phQAAAA==
+Message-Id: <20230523-fix-smpt-port-config-v1-1-cdc99e39b866@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAACZbGQC/x3N3QrCMAyG4VsZOTYQuwnqrYgH/Um3wExLO0UYu
+ 3eDh+8HD98OnZtwh/uwQ+OPdClqcT4NEBevM6Mka3DkRrq4EbN8sb/qhrW0DWPRLDNOTOl2peg
+ pJzAafGcMzWtcDOt7XW2sjQ3/vx4QJngexw+BdVP+fwAAAA==
 To: "Kernel.org Tools" <tools@linux.kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Ira Weiny <ira.weiny@intel.com>
-X-Mailer: b4 0.13-dev-bb1f4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684349811; l=2037;
- i=ira.weiny@intel.com; s=20221211; h=from:subject:message-id;
- bh=6CL4Ha0agnpJHVdNHmQeD6/BGvkZ0nYQoaxorhSTYU0=;
- b=/wsTvLHlj7STOFtM+O9TOfQwS0xWgLGdB4cX93k9xFU8TlwUdyBIo3yWlP4rGNwkMEOV+R2px
- 2KSwB6vhB8oBG3sbC9U/u+NNMo6nRFHuy4Jle5TdzTjmKUf3LAyL6tc
-X-Developer-Key: i=ira.weiny@intel.com; a=ed25519;
- pk=noldbkG+Wp1qXRrrkfY1QJpDf7QsOEthbOT7vm0PqsE=
+ Erik Schilling <erik.schilling@linaro.org>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684838678; l=934;
+ i=erik.schilling@linaro.org; s=20230523; h=from:subject:message-id;
+ bh=psOfq9u1DrGt+vX6VuFwfmgdWUwpviJn26poLaSwWzQ=;
+ b=nzG7PzvyiZiq0y0x6pREoco1f2sbMi4fy/jzyCwejd0QpVDPs89jCoUuArscoSEDWBjR68t8K
+ VEc7tlmjUOqCkhPuHKw4x18PY1LflG3j04AZZLQJP2lD7b/HknJ7Mqe
+X-Developer-Key: i=erik.schilling@linaro.org; a=ed25519;
+ pk=/nNqy8/YOEdthj1epXl5FgwCTKEiVqTqqnVN1jVal7s=
 
-Creating a new branch from a specified fork point should be allowed when
-sitting on a b4 managed branch.  For example this fails:
+The right name includes a "Server".
 
-	$ b4 prep -n foo -f master
-	Created new branch b4/foo
-	Created the default cover letter, you can edit with --edit-cover.
-
-	$ b4 prep -n bar -f master
-	CRITICAL: This appears to already be a b4-prep managed branch.
-
-Allow a specified fork point to be used regardless of the b4 state of
-the current branch.
-
-Make -n and -e options mutually exclusive early on to clarify the
-difference between them in practical usage.
-
-With this change the following works as expected.
-
-	$ git co b4/allow-new-w-fork-point
-	Switched to branch 'b4/allow-new-w-fork-point'
-
-	$ b4 prep -n bar -f master
-	Created new branch b4/bar
-	Created the default cover letter, you can edit with --edit-cover.
-
-	$ b4 prep -n foobar -e master -f master
-	CRITICAL: -n NEW_SERIES_NAME and -e [ENROLL_BASE] can not be used together.
-
-Cc: tools@linux.kernel.org
-Cc: konstantin@linuxfoundation.org
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://git-scm.com/docs/git-send-email#Documentation/git-send-email.txt---smtp-server-portltportgt
+Signed-off-by: Erik Schilling <erik.schilling@linaro.org>
 ---
- b4/ez.py | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ docs/contributor/send.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/b4/ez.py b/b4/ez.py
-index 47fafc1325f0..d0c06679c143 100644
---- a/b4/ez.py
-+++ b/b4/ez.py
-@@ -2186,8 +2186,12 @@ def cmd_prep(cmdargs: argparse.Namespace) -> None:
-     if cmdargs.compare_to:
-         return compare(cmdargs.compare_to)
+diff --git a/docs/contributor/send.rst b/docs/contributor/send.rst
+index bff67aa..9be8d1c 100644
+--- a/docs/contributor/send.rst
++++ b/docs/contributor/send.rst
+@@ -130,7 +130,7 @@ servers will only need the following settings::
  
-+    if cmdargs.enroll_base and cmdargs.new_series_name:
-+        logger.critical('CRITICAL: -n NEW_SERIES_NAME and -e [ENROLL_BASE] can not be used together.')
-+        sys.exit(1)
-+
-     if cmdargs.enroll_base or cmdargs.new_series_name:
--        if is_prep_branch():
-+        if is_prep_branch() and not cmdargs.fork_point:
-             logger.critical('CRITICAL: This appears to already be a b4-prep managed branch.')
-             sys.exit(1)
- 
+     [sendemail]
+        smtpServer = smtp.example.org
+-       smtpPort = 465
++       smtpServerPort = 465
+        smtpEncryption = ssl
+        smtpUser = alice.developer@example.org
+        smtpPass = [omitted]
 
 ---
 base-commit: bfdf5b3b0835c8c351abbcd9b3b5268acf6545fa
-change-id: 20230517-allow-new-w-fork-point-f64d56c5c086
+change-id: 20230523-fix-smpt-port-config-4e0d980ca0fd
 
 Best regards,
 -- 
-Ira Weiny <ira.weiny@intel.com>
+Erik Schilling <erik.schilling@linaro.org>
 
