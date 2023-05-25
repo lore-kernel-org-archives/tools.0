@@ -1,45 +1,47 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D434A842
-	for <tools@linux.kernel.org>; Tue, 23 May 2023 10:44:40 +0000 (UTC)
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-51144dddd4cso1104108a12.1
-        for <tools@linux.kernel.org>; Tue, 23 May 2023 03:44:40 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6515524157
+	for <tools@linux.kernel.org>; Thu, 25 May 2023 20:11:12 +0000 (UTC)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-3f611ccd06eso273505e9.0
+        for <tools@linux.kernel.org>; Thu, 25 May 2023 13:11:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684838679; x=1687430679;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mvJC79ikDXU4qSsdbBl+rJY1/H+nfDJgTY+0DZduoVI=;
-        b=X8kExs8Qi4DjV55k78J0fG90BJTY5M4SOmKzYj0cwIIfa8di+mtmn4s7ov/8VGA3J8
-         VzyTER2uI+dCu82CCmzOHpoy42M7wfQviS51ubOq6NRMhceox9qw5fE19+CG/tmN0rKO
-         DizqGlhKQJBnTDD23Lq+pN0TeYMUFDqasvpOtVyY6DRZ6+/XCSmfKUMGkpItP78erbLM
-         iJTlwO1F0cg3VYrFuNV0E7kp9rPvPZZkxDnX15gt2Kgl67dFGhIJnUpIqz5/H7AQ1Eue
-         O19TrYxccG2w1LYZum/kSn3VxeKiRiALfKf7c30BufZlhq4nwkz3quO8vpIXgHI1yyLd
-         Z8Jg==
+        d=tessares.net; s=google; t=1685045470; x=1687637470;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZjzF7Q/XIZ1ZCAXWrEeVxv/G/aw3loxJtP27Qy2CZSA=;
+        b=OzOaHBWERDWe0hP8ZHPtTWv/Hd8zTmuhIY2olsFtdmOdvk7EyUHpQix2OOQex861Q8
+         AOLuaNxtO9khrhGftrrEn3Ta8fE/SxWthqTSgUxv0wGVygz0Pjjj2D4vnHI4/vG3+r2D
+         HilV1AqqVo9dBsO6/9AqNE2OHIGdrgWKxgSvkXTonkpFECyYmmV2BlpV4MVXB5ezIMHf
+         qonBGI0pVjgFsdGvCkybPyu9HIzm3QU+9UtV3QXjcfuXyaEIEcasyml2tDzgtatC4A6z
+         SJ17eFfxOU71rplxQbD68gdf7bYoaMAERshYGBBIPkyr0ahJKeR2MocNbpiW4y7Pg26X
+         c/mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684838679; x=1687430679;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1685045470; x=1687637470;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mvJC79ikDXU4qSsdbBl+rJY1/H+nfDJgTY+0DZduoVI=;
-        b=UeRODbB7lMKsthzP/z3spSTKvo0No/LpPnus/idx03RfZjVfGa7MN/dpQ6HeJy79ZG
-         2czzIHwUe+w43DVdKEazq2Vei4Zu+HWJUGpCOpe2xqGd+L4uSmc2KGyusOmaOA8fg4Z5
-         s9reh6L1BgsdorZBaZ35DsJSjHa3zew4slDfHCV/DiEVqtGc8dF6lGv/HCT7Bql+bmqE
-         0eH4Hk3Qxj3wF4cjYKPSW3bIXFpsM2ucF08QGjnOQOqNhP9WodQqwmUrOKRDM5vbW8CZ
-         ajrgu69i6TR+d7e8+wSAZOzR+1c4IrUOrBqnhhK0BsuRseQ2OpomB+ryJQWrJtJpTgoP
-         v1iA==
-X-Gm-Message-State: AC+VfDzIj0w0z5jDH0Y+cgmLDaIhYOeMjpGRsRzyocuUmfKiyLictW1C
-	QKsRT8QA5ceElp2PJ/XjDztfRxX3OvgodD5fPdM=
-X-Google-Smtp-Source: ACHHUZ5bCzaHk50Ho6bwWIlsBn7xDLmtZx2svE8AzwKq3w2cT2n8YxciB+Xc8Ex8Cz8POWdhunnK3A==
-X-Received: by 2002:aa7:d0c3:0:b0:50b:c693:70af with SMTP id u3-20020aa7d0c3000000b0050bc69370afmr11552943edo.2.1684838679030;
-        Tue, 23 May 2023 03:44:39 -0700 (PDT)
-Received: from [192.168.1.149] (i5C7409D3.versanet.de. [92.116.9.211])
-        by smtp.gmail.com with ESMTPSA id b7-20020aa7d487000000b00506b2af49fbsm3866000edr.81.2023.05.23.03.44.38
+        bh=ZjzF7Q/XIZ1ZCAXWrEeVxv/G/aw3loxJtP27Qy2CZSA=;
+        b=Bb9fHbSxjMOihufdg+QcD/VAPiozPqCC9xRsfeluTbSm4m+EW3uRP7idTQyckj0l7F
+         jwarA02LAlnDC7A1xWPoJYGLA2+r4skAQDJcdlozFwgBRit2hMhdBXB6H7ALQFOtq0jX
+         QMn8V6UXriZ/7s3Vt8bcHw4Gdwn4/qdz+OZCgDCMkURnuhySGTT1wGlqq0IZ8s4LNma0
+         cjZVGCKudK1NGqDckmiW2N356U+685v9EbzUJFKwBNN3SHm/GvD1b35nl8EFQ65oJkAH
+         xxa0sw7cWYU6rfUS/PHledhSQsT4YF9Y++cLJxYfvpUgWAsFRFJCF5YmpLTBTARTGhTQ
+         kutQ==
+X-Gm-Message-State: AC+VfDz7inNVf4oZHJc6aMpQ03+NHxKedgwkuIRMM927Vzh8Ec5FAE3l
+	11mzSwHqAiVuN6Ubn1qsE/Ca/Q==
+X-Google-Smtp-Source: ACHHUZ4g/iIJjdA1qmUX/hr4dUYUhWq0OYY5nsSxnasYhr97QcqE8WbhbmmfUQ+J2Ccw9xYTPp+MmA==
+X-Received: by 2002:a5d:564e:0:b0:309:48b9:977b with SMTP id j14-20020a5d564e000000b0030948b9977bmr3105843wrw.22.1685045470276;
+        Thu, 25 May 2023 13:11:10 -0700 (PDT)
+Received: from vdi08.nix.tessares.net (static.219.156.76.144.clients.your-server.de. [144.76.156.219])
+        by smtp.gmail.com with ESMTPSA id f6-20020adff986000000b00306281cfa59sm2802772wrr.47.2023.05.25.13.11.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 03:44:38 -0700 (PDT)
-From: Erik Schilling <erik.schilling@linaro.org>
-Date: Tue, 23 May 2023 12:44:17 +0200
-Subject: [PATCH b4] docs: fix smtpServerPort option
+        Thu, 25 May 2023 13:11:09 -0700 (PDT)
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
+Subject: [PATCH b4 0/2] trailers: accept recognized link trailers +
+ "Closes"
+Date: Thu, 25 May 2023 22:10:35 +0200
+Message-Id: <20230525-closes-tags-v1-0-ed41b1773cb6@tessares.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -48,49 +50,60 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230523-fix-smpt-port-config-v1-1-cdc99e39b866@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAACZbGQC/x3N3QrCMAyG4VsZOTYQuwnqrYgH/Um3wExLO0UYu
- 3eDh+8HD98OnZtwh/uwQ+OPdClqcT4NEBevM6Mka3DkRrq4EbN8sb/qhrW0DWPRLDNOTOl2peg
- pJzAafGcMzWtcDOt7XW2sjQ3/vx4QJngexw+BdVP+fwAAAA==
+X-B4-Tracking: v=1; b=H4sIALvAb2QC/x2NQQqDQAwAvyI5G7Dp7qF+RTxk16iBdi2JlIL49
+ 649DsMwB7iYikPfHGDyUdetVLi1DeSVyyKoU2Wgju5dpIj5ubk47rw4hsdEkdMcMgWoRWIXTMY
+ lr1fzYt/FLvE2mfX73wyQAozn+QNUuKXpegAAAA==
 To: "Kernel.org Tools" <tools@linux.kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Erik Schilling <erik.schilling@linaro.org>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684838678; l=934;
- i=erik.schilling@linaro.org; s=20230523; h=from:subject:message-id;
- bh=psOfq9u1DrGt+vX6VuFwfmgdWUwpviJn26poLaSwWzQ=;
- b=nzG7PzvyiZiq0y0x6pREoco1f2sbMi4fy/jzyCwejd0QpVDPs89jCoUuArscoSEDWBjR68t8K
- VEc7tlmjUOqCkhPuHKw4x18PY1LflG3j04AZZLQJP2lD7b/HknJ7Mqe
-X-Developer-Key: i=erik.schilling@linaro.org; a=ed25519;
- pk=/nNqy8/YOEdthj1epXl5FgwCTKEiVqTqqnVN1jVal7s=
+Cc: Nick Desaulniers <ndesaulniers@google.com>, 
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Matthieu Baerts <matthieu.baerts@tessares.net>, 
+ Follow Upper <follow.upper@example.org>, 
+ Cover Upper <cover.upper@example.org>, 
+ Test Override <test-override@example.com>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1072;
+ i=matthieu.baerts@tessares.net; h=from:subject:message-id;
+ bh=J+RYU4fOzsex4BNKd8Ktg024VKDqhihORnWccD5uBFw=;
+ b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBkb8DdUC7H4Ueooz9gO7wS9ZQqg17rRXo4oa2Li
+ BElIY+geKqJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZG/A3QAKCRD2t4JPQmmg
+ czowD/9xK9mndrfgiQW40P0QXBnwxHxPaGhrrbJ6XGB387/e0sZKwbM1P58MBigP/H++1vaBZBp
+ 6K8bYZOVaBoOd4q4fFbUzeFs6h/lM66VqHmgK0yd4xr5ek8kzwRFQNdpYeHIIog7YseICE6l4GW
+ IQ9r7tWNiaKeN63BYf+tkwUxfFRkGrninIIWqzm1GkaSLpbzOxy2EIKSIyD1lChjl+qw+m5z6yN
+ K8g+DWhTAAV6gabEOYg27a1U9vP18vuj5g65T13D1pKIzPO1EQCBJ/BOkbJqk91Optj/6Hvg6CB
+ 1Zava9FT08LiApauLlhIij6JEmPu4W+xXhfzh0K9Sy3pxG3gNlw72Kh96h4hQU6JjeTyXfFGPwn
+ 7ECrS61BpI1LUnHA7sV+rEI0/UgqJCUkrJ5BA6+Y8cbu/rhLyRTZMt5sksSh4x3U+sgn6QaiB98
+ IOxxwTBkf5Hnki961il/t+0tNQVj///JDfXq8npSNEf3ovSsnnR7z1+FCByY/n9WnSkj1jYAb+6
+ 7h/RHj7tp2yFmsJ1xQmnYlSOOV50+D0Z+V3ltfcsJfDBdr+ljh90nHcRkK3msWjPz/Vx7u/XUCH
+ HLtO04hFieMnt1hytMYA/Q0iMO1KZp3fMHaFaLJ++2OArhdAutd6gcOb2MIqXgqn9ZtAGV/wM8N
+ Of60QzLulfl3JUA==
+X-Developer-Key: i=matthieu.baerts@tessares.net; a=openpgp;
+ fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
 
-The right name includes a "Server".
+Nick reported in [1] that Closes tags were not picked up by b4 when
+updating trailers.
 
-Link: https://git-scm.com/docs/git-send-email#Documentation/git-send-email.txt---smtp-server-portltportgt
-Signed-off-by: Erik Schilling <erik.schilling@linaro.org>
+In fact, it looks like that even Link ones were not picked up. (Or at
+least it was not working when I was testing it :) ).
+
+With this series, Link, BugLink and Closes tags are now automatically
+added when available in follow-up comments.
+
+Link: https://lore.kernel.org/all/CAKwvOdm=Zk8YhrPptN3k7UQo+1n7Ws=Qox=BwTR9bbjPJJYz8A@mail.gmail.com/ [1]
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 ---
- docs/contributor/send.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Matthieu Baerts (2):
+      trailers: accept recognized link trailers
+      trailers: add 'Closes' as recognized link trailer
 
-diff --git a/docs/contributor/send.rst b/docs/contributor/send.rst
-index bff67aa..9be8d1c 100644
---- a/docs/contributor/send.rst
-+++ b/docs/contributor/send.rst
-@@ -130,7 +130,7 @@ servers will only need the following settings::
- 
-     [sendemail]
-        smtpServer = smtp.example.org
--       smtpPort = 465
-+       smtpServerPort = 465
-        smtpEncryption = ssl
-        smtpUser = alice.developer@example.org
-        smtpPass = [omitted]
-
+ b4/__init__.py                                           | 8 +++++---
+ tests/samples/trailers-thread-with-cover-followup.mbox   | 2 ++
+ tests/samples/trailers-thread-with-cover-followup.verify | 2 ++
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 ---
 base-commit: bfdf5b3b0835c8c351abbcd9b3b5268acf6545fa
-change-id: 20230523-fix-smpt-port-config-4e0d980ca0fd
+change-id: 20230525-closes-tags-49d25abf4c24
 
 Best regards,
 -- 
-Erik Schilling <erik.schilling@linaro.org>
+Matthieu Baerts <matthieu.baerts@tessares.net>
 
