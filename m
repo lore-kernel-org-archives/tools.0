@@ -1,47 +1,46 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6515524157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF372415C
 	for <tools@linux.kernel.org>; Thu, 25 May 2023 20:11:12 +0000 (UTC)
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-3f611ccd06eso273505e9.0
-        for <tools@linux.kernel.org>; Thu, 25 May 2023 13:11:11 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-30a8fa6e6fcso1805732f8f.1
+        for <tools@linux.kernel.org>; Thu, 25 May 2023 13:11:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tessares.net; s=google; t=1685045470; x=1687637470;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZjzF7Q/XIZ1ZCAXWrEeVxv/G/aw3loxJtP27Qy2CZSA=;
-        b=OzOaHBWERDWe0hP8ZHPtTWv/Hd8zTmuhIY2olsFtdmOdvk7EyUHpQix2OOQex861Q8
-         AOLuaNxtO9khrhGftrrEn3Ta8fE/SxWthqTSgUxv0wGVygz0Pjjj2D4vnHI4/vG3+r2D
-         HilV1AqqVo9dBsO6/9AqNE2OHIGdrgWKxgSvkXTonkpFECyYmmV2BlpV4MVXB5ezIMHf
-         qonBGI0pVjgFsdGvCkybPyu9HIzm3QU+9UtV3QXjcfuXyaEIEcasyml2tDzgtatC4A6z
-         SJ17eFfxOU71rplxQbD68gdf7bYoaMAERshYGBBIPkyr0ahJKeR2MocNbpiW4y7Pg26X
-         c/mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685045470; x=1687637470;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=tessares.net; s=google; t=1685045471; x=1687637471;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZjzF7Q/XIZ1ZCAXWrEeVxv/G/aw3loxJtP27Qy2CZSA=;
-        b=Bb9fHbSxjMOihufdg+QcD/VAPiozPqCC9xRsfeluTbSm4m+EW3uRP7idTQyckj0l7F
-         jwarA02LAlnDC7A1xWPoJYGLA2+r4skAQDJcdlozFwgBRit2hMhdBXB6H7ALQFOtq0jX
-         QMn8V6UXriZ/7s3Vt8bcHw4Gdwn4/qdz+OZCgDCMkURnuhySGTT1wGlqq0IZ8s4LNma0
-         cjZVGCKudK1NGqDckmiW2N356U+685v9EbzUJFKwBNN3SHm/GvD1b35nl8EFQ65oJkAH
-         xxa0sw7cWYU6rfUS/PHledhSQsT4YF9Y++cLJxYfvpUgWAsFRFJCF5YmpLTBTARTGhTQ
-         kutQ==
-X-Gm-Message-State: AC+VfDz7inNVf4oZHJc6aMpQ03+NHxKedgwkuIRMM927Vzh8Ec5FAE3l
-	11mzSwHqAiVuN6Ubn1qsE/Ca/Q==
-X-Google-Smtp-Source: ACHHUZ4g/iIJjdA1qmUX/hr4dUYUhWq0OYY5nsSxnasYhr97QcqE8WbhbmmfUQ+J2Ccw9xYTPp+MmA==
-X-Received: by 2002:a5d:564e:0:b0:309:48b9:977b with SMTP id j14-20020a5d564e000000b0030948b9977bmr3105843wrw.22.1685045470276;
-        Thu, 25 May 2023 13:11:10 -0700 (PDT)
+        bh=s3dIUL9quv0epIFTeV7Zm+XcdN5CdArA7z2rZlmGDu0=;
+        b=KgfNCX0bSiRsutkwj5c5Rm1Ls6VobQpAHkN+y3o1BuXI37S342f4yW3jPbtEIMUZNj
+         mE1aMhnbucmAoqGNFX2TO2WYEV1LhRdnE8NDS/YKSmBVXMshq7dhlUVDPZwV/5TexMyU
+         vripf29S1nkBoz5s4h2OiEDTidipEv2oceXH0IkLdqf8mK2XDda5Ruq0ye/LVs4Bn1DC
+         MlYQzUFdqAryio8aLLsmKNA9zASY+PkEN2Gi/F2e85oG6vFiXP7fVnV65HP6WpZjIT7j
+         6X5TmfETWZRz0PEs/f99/taMCQK88blM+VbnMEsPEf1PDe6tdJ01a7auZRZ890qj7t17
+         jlkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685045471; x=1687637471;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=s3dIUL9quv0epIFTeV7Zm+XcdN5CdArA7z2rZlmGDu0=;
+        b=b95vIh5TZtq89esPcVXMX0vli1Jpkg0VW6nZIlh1vGYc1f+j//itnmE73yb3x+dSPc
+         1+pNYrKA/LrBCmofFCC1SgXK1nDnutwmHk21GtDGkw38ngxlzl7MCsTOLOTyzfpiRJ0h
+         kzlEBbLyBRZZDdiPZVS4s+iimkPNvVlNcaTLZ49scCD9HMF5lgOnxqiSuPOwWZEyfPa+
+         doqStWqQrxTRZkeJEF7mxVNhZwB8NKYpCXP3WtzaUvRxB5TIYlsOQChfkIlrD4CdAC/V
+         YSlDppRe0nAh7/uxwW/HXQ5Ko4vQ8ZSZ2ohqxikKkTSUb2VWFTSwtvOWjWXWqJ0FZQBb
+         YdQA==
+X-Gm-Message-State: AC+VfDyp9K7DSP4hHjwKV/O+zYpYS41bkYRojVzXcsWJxMXM8cOxCik9
+	dDVxupxkc/dnyVyghjTticlYrw==
+X-Google-Smtp-Source: ACHHUZ7hbjlFul9BhQ6lsFkY6iiT8IZW8bhnKF8+uWKmg2aPtdDCUoOQ4BzCjgUf8788AI2sQCH6Ag==
+X-Received: by 2002:adf:fa87:0:b0:309:36e9:5834 with SMTP id h7-20020adffa87000000b0030936e95834mr3407382wrr.61.1685045471078;
+        Thu, 25 May 2023 13:11:11 -0700 (PDT)
 Received: from vdi08.nix.tessares.net (static.219.156.76.144.clients.your-server.de. [144.76.156.219])
-        by smtp.gmail.com with ESMTPSA id f6-20020adff986000000b00306281cfa59sm2802772wrr.47.2023.05.25.13.11.09
+        by smtp.gmail.com with ESMTPSA id f6-20020adff986000000b00306281cfa59sm2802772wrr.47.2023.05.25.13.11.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 May 2023 13:11:09 -0700 (PDT)
+        Thu, 25 May 2023 13:11:10 -0700 (PDT)
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: [PATCH b4 0/2] trailers: accept recognized link trailers +
- "Closes"
-Date: Thu, 25 May 2023 22:10:35 +0200
-Message-Id: <20230525-closes-tags-v1-0-ed41b1773cb6@tessares.net>
+Date: Thu, 25 May 2023 22:10:36 +0200
+Subject: [PATCH b4 1/2] trailers: accept recognized link trailers
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -50,9 +49,9 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALvAb2QC/x2NQQqDQAwAvyI5G7Dp7qF+RTxk16iBdi2JlIL49
- 649DsMwB7iYikPfHGDyUdetVLi1DeSVyyKoU2Wgju5dpIj5ubk47rw4hsdEkdMcMgWoRWIXTMY
- lr1fzYt/FLvE2mfX73wyQAozn+QNUuKXpegAAAA==
+Message-Id: <20230525-closes-tags-v1-1-ed41b1773cb6@tessares.net>
+References: <20230525-closes-tags-v1-0-ed41b1773cb6@tessares.net>
+In-Reply-To: <20230525-closes-tags-v1-0-ed41b1773cb6@tessares.net>
 To: "Kernel.org Tools" <tools@linux.kernel.org>
 Cc: Nick Desaulniers <ndesaulniers@google.com>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
@@ -61,49 +60,89 @@ Cc: Nick Desaulniers <ndesaulniers@google.com>,
  Cover Upper <cover.upper@example.org>, 
  Test Override <test-override@example.com>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1072;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3135;
  i=matthieu.baerts@tessares.net; h=from:subject:message-id;
- bh=J+RYU4fOzsex4BNKd8Ktg024VKDqhihORnWccD5uBFw=;
- b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBkb8DdUC7H4Ueooz9gO7wS9ZQqg17rRXo4oa2Li
- BElIY+geKqJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZG/A3QAKCRD2t4JPQmmg
- czowD/9xK9mndrfgiQW40P0QXBnwxHxPaGhrrbJ6XGB387/e0sZKwbM1P58MBigP/H++1vaBZBp
- 6K8bYZOVaBoOd4q4fFbUzeFs6h/lM66VqHmgK0yd4xr5ek8kzwRFQNdpYeHIIog7YseICE6l4GW
- IQ9r7tWNiaKeN63BYf+tkwUxfFRkGrninIIWqzm1GkaSLpbzOxy2EIKSIyD1lChjl+qw+m5z6yN
- K8g+DWhTAAV6gabEOYg27a1U9vP18vuj5g65T13D1pKIzPO1EQCBJ/BOkbJqk91Optj/6Hvg6CB
- 1Zava9FT08LiApauLlhIij6JEmPu4W+xXhfzh0K9Sy3pxG3gNlw72Kh96h4hQU6JjeTyXfFGPwn
- 7ECrS61BpI1LUnHA7sV+rEI0/UgqJCUkrJ5BA6+Y8cbu/rhLyRTZMt5sksSh4x3U+sgn6QaiB98
- IOxxwTBkf5Hnki961il/t+0tNQVj///JDfXq8npSNEf3ovSsnnR7z1+FCByY/n9WnSkj1jYAb+6
- 7h/RHj7tp2yFmsJ1xQmnYlSOOV50+D0Z+V3ltfcsJfDBdr+ljh90nHcRkK3msWjPz/Vx7u/XUCH
- HLtO04hFieMnt1hytMYA/Q0iMO1KZp3fMHaFaLJ++2OArhdAutd6gcOb2MIqXgqn9ZtAGV/wM8N
- Of60QzLulfl3JUA==
+ bh=yyNBdgf2YDpZ9rnvnECQ6UVhsIDwg/Rc2bCW8YqiZik=;
+ b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBkb8Dd97avaLfwaNieieEc8MH8OaFhidLoohM2m
+ JmznCrvavuJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZG/A3QAKCRD2t4JPQmmg
+ c1qnEACvuFFYBtnYXjqpzSqfhc+GWapoYnfSp0RskRAenBfdgOVdq+TdMNaREvpGPBesSeIOzVC
+ yZ5yUH0nPU9O8DH4ZWXWdp5f+TBlBuNP2pFaaHgFi69n8xQ8/sKAT5Lg6vmlRtS/7b9/jDI3gPC
+ AP5zEvnUGhACH1F8Gcp8aQYH5p5agqIqpcz7A34G/61ZScSOP2tyGcpcwkVMieVqA64NPFxMqoc
+ qgObihAOFWHeJ/S9fTgCcNjPoFfhOFgI9enEJrHPkfjHZwVhw6V5QTbWjxd7r+56vLShxt6Q+jG
+ m78CG6q9BrcNHvFfvoAWn9aKnbhD1Q5lKljG1FVlDP3PoE93brUanrTSZuD6+r4WS2yQG//MjZS
+ 4OkvfwQ18S9CkuuHlE4jefLrlXXezdWM8vqsLOzrwnlV6hbCmQLMuXsE5VR0ny/360xuNg3ConR
+ 61a0j8TKbGLTuoJQnFnjlcj95BoSnV7tqoudubPxxjwzogRbgdaikTIAEVFHUVleHUWiORlp2HL
+ wDg/zZLPffjnypQn+/KN4hFmwdrOtbLTBPG+vv/WAn7B9s9RnHcgRyQbDSyEbZjn1dWAIzxwbOn
+ GSiUylI6/hFO7U+IGToUhLYs3LmA6WPq9zl02j5hWMsdT6qGJdpeteOIgITUnwse5kItBn09xPH
+ eUTMqlal6wO5XSA==
 X-Developer-Key: i=matthieu.baerts@tessares.net; a=openpgp;
  fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
 
-Nick reported in [1] that Closes tags were not picked up by b4 when
-updating trailers.
+It looks like all all link trailers were ignored.
 
-In fact, it looks like that even Link ones were not picked up. (Or at
-least it was not working when I was testing it :) ).
+Now we accept 'link' and 'buglink' that were already in the list of non
+person categories.
 
-With this series, Link, BugLink and Closes tags are now automatically
-added when available in follow-up comments.
+Note that existing test files have been modified. You will probably need
+to run "pytest --cache-clear" to avoid using the previous version.
 
-Link: https://lore.kernel.org/all/CAKwvOdm=Zk8YhrPptN3k7UQo+1n7Ws=Qox=BwTR9bbjPJJYz8A@mail.gmail.com/ [1]
+Fixes: 7d1a05e ("trailers: ignore non-recognized link trailers")
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 ---
-Matthieu Baerts (2):
-      trailers: accept recognized link trailers
-      trailers: add 'Closes' as recognized link trailer
+ b4/__init__.py                                           | 6 ++++--
+ tests/samples/trailers-thread-with-cover-followup.mbox   | 1 +
+ tests/samples/trailers-thread-with-cover-followup.verify | 1 +
+ 3 files changed, 6 insertions(+), 2 deletions(-)
 
- b4/__init__.py                                           | 8 +++++---
- tests/samples/trailers-thread-with-cover-followup.mbox   | 2 ++
- tests/samples/trailers-thread-with-cover-followup.verify | 2 ++
- 3 files changed, 9 insertions(+), 3 deletions(-)
----
-base-commit: bfdf5b3b0835c8c351abbcd9b3b5268acf6545fa
-change-id: 20230525-closes-tags-49d25abf4c24
+diff --git a/b4/__init__.py b/b4/__init__.py
+index 1af6993..e9e7b64 100644
+--- a/b4/__init__.py
++++ b/b4/__init__.py
+@@ -1656,7 +1656,8 @@ class LoreMessage:
+     def find_trailers(body: str, followup: bool = False) -> Tuple[List[LoreTrailer], List[str]]:
+         ignores = {'phone', 'email'}
+         headers = {'subject', 'date', 'from'}
+-        nonperson = {'fixes', 'subject', 'date', 'link', 'buglink', 'obsoleted-by', 'change-id', 'base-commit'}
++        links = {'link', 'buglink'}
++        nonperson = links | {'fixes', 'subject', 'date', 'obsoleted-by', 'change-id', 'base-commit'}
+         # Ignore everything below standard email signature marker
+         body = body.split('\n-- \n', 1)[0].strip() + '\n'
+         # Fix some more common copypasta trailer wrapping
+@@ -1695,7 +1696,8 @@ class LoreMessage:
+                     if not mperson and lname not in nonperson:
+                         logger.debug('Ignoring %s (not a recognized non-person trailer)', line)
+                         continue
+-                    if re.search(r'https?://', ovalue):
++                    mlink = re.search(r'https?://', ovalue)
++                    if mlink and lname not in links:
+                         logger.debug('Ignoring %s (not a recognized link trailer)', line)
+                         continue
+ 
+diff --git a/tests/samples/trailers-thread-with-cover-followup.mbox b/tests/samples/trailers-thread-with-cover-followup.mbox
+index d9dc64a..bbdeeeb 100644
+--- a/tests/samples/trailers-thread-with-cover-followup.mbox
++++ b/tests/samples/trailers-thread-with-cover-followup.mbox
+@@ -225,6 +225,7 @@ To: list@example.org
+ > Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+ 
+ Tested-by: Follow Upper <follow.upper@example.org>
++Link: https://example.org
+ 
+ -- 
+ Follow Upper
+diff --git a/tests/samples/trailers-thread-with-cover-followup.verify b/tests/samples/trailers-thread-with-cover-followup.verify
+index 6478e6f..b42e1ed 100644
+--- a/tests/samples/trailers-thread-with-cover-followup.verify
++++ b/tests/samples/trailers-thread-with-cover-followup.verify
+@@ -4,6 +4,7 @@ Life imitatus artem.
+ 
+ Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+ Tested-by: Follow Upper <follow.upper@example.org>
++Link: https://example.org
+ Reviewed-by: Cover Upper <cover.upper@example.org>
+ Signed-off-by: Test Override <test-override@example.com>
+ ---
 
-Best regards,
 -- 
-Matthieu Baerts <matthieu.baerts@tessares.net>
+2.39.2
 
