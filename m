@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B853829106
-	for <tools@linux.kernel.org>; Fri, 26 May 2023 18:25:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97BF3C4339B;
-	Fri, 26 May 2023 18:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FFA15BD
+	for <tools@linux.kernel.org>; Fri, 26 May 2023 18:28:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93BAC433EF;
+	Fri, 26 May 2023 18:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685125556;
-	bh=VLLPR9OfoJ1MMhZ334eYQmpWK96MZ85o0J5LE4mcEVU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=qQkfyRxdVcaon5gljWuSTAW1EZCXHeono7g0bMY/uY83E8FH5TGg0sHvJODgDJjXv
-	 O3rlg/nlBIulGcnWn4Ui2sma3hSJpnXpuKQaYQwAn3OO6NRnfBfMUHn9S7P9VDBYY7
-	 wTMwMu6Vpjds5lA1RuG+soWroxk34dSIdFjzXoJo=
+	s=korg; t=1685125733;
+	bh=45twkFwZJtyRIKiUku3m48vI2nZT7RG5Cto8XPpZ2F0=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=OFmM1uBjoAb/rFw3m1KSnU391R3B6xixeputUeFFoK2aBDF8juvXBxmjGwqKjXlGy
+	 NlcZxFLB8Y26GpzIZSUw+t44ywCfE2qk4kQwtYjp+HCSk4+YNApcMUezV1moXJa0Oc
+	 dKYUowBTFDM5tkL6NbOo+ocr466IcbohZSn5r9O8=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, Conor Dooley <conor.dooley@microchip.com>
-Cc: conor@kernel.org, palmer@dabbelt.com, 
- Palmer Dabbelt <palmer@rivosinc.com>
-In-Reply-To: <20230330110909.355701-1-conor.dooley@microchip.com>
-References: <20230330110909.355701-1-conor.dooley@microchip.com>
-Subject: Re: [PATCH] shazam: warn when overriding base-commit with
- --merge-base
-Message-Id: <168512555540.61991.10042284962793080066.b4-ty@linuxfoundation.org>
-Date: Fri, 26 May 2023 14:25:55 -0400
+To: "Kernel.org Tools" <tools@linux.kernel.org>, 
+ Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <20230415-am-cherry-pick-suggestion-v1-0-8951a2274256@gmail.com>
+References: <20230415-am-cherry-pick-suggestion-v1-0-8951a2274256@gmail.com>
+Subject: Re: [PATCH b4 0/2] am, shazam: allow cherry-picking an
+ out-of-series patch
+Message-Id: <168512573270.62751.10929456298761671390.b4-ty@linuxfoundation.org>
+Date: Fri, 26 May 2023 14:28:52 -0400
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -30,24 +29,28 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-91592
+X-Mailer: b4 0.13-dev-02a79
 
 
-On Thu, 30 Mar 2023 12:09:10 +0100, Conor Dooley wrote:
-> If the --merge-base argument is provided, base-commit information that
-> was provided by the submitter is ignored. This behaviour is intentional,
-> but warning the user that this has happened (and what the intended base
-> was) is helpful.
+On Sat, 15 Apr 2023 15:30:58 -0400, Philippe Blain wrote:
+> This series makes am and shazam able to cherry-pick a patch sent by a reviewer
+> as a suggestion (second patch). The first patch is a preparatory
+> simplification.
 > 
-> To be able to do this, base-commit can't be set from mergebase until
-> after parsing the submission and attempting to guess it.
+> If you want to test it, you can do so in a clone of git.git:
+> 
+>     git clone https://github.com/gitgitgadget/git -b pr-1515/phil-blain/doc-auto-merge-v1
+>     git checkout 66c7e51415
+>     b4 am -o- -P_ https://lore.kernel.org/git/ZDnCMegeiw0kT5oj@nand.local/
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] shazam: warn when overriding base-commit with --merge-base
-      commit: 91592bf5d05f312225bf4f49d8bcc9508041bee2
+[1/2] mbox.py::make_am: simplify check for early return
+      commit: 6c9ad4ec28f9a14cd8d20c933eef7bce0285a60a
+[2/2] am, shazam: allow cherry-picking an out-of-series patch
+      commit: 5872a3cfbb27a8511ee8a07f2b1a5bc79163dcd6
 
 Best regards,
 -- 
