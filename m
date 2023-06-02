@@ -1,46 +1,47 @@
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88621332E1
-	for <tools@linux.kernel.org>; Fri,  2 Jun 2023 16:44:19 +0000 (UTC)
-Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-457080dc902so649853e0c.2
-        for <tools@linux.kernel.org>; Fri, 02 Jun 2023 09:44:19 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14018332F6
+	for <tools@linux.kernel.org>; Fri,  2 Jun 2023 16:50:12 +0000 (UTC)
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6261a25e9b6so20466876d6.0
+        for <tools@linux.kernel.org>; Fri, 02 Jun 2023 09:50:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1685724258; x=1688316258;
+        d=linuxfoundation.org; s=google; t=1685724612; x=1688316612;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BeWMHRdm/gIPMPZnqkD8g9PoiM6WDKqIoFUlb3OQkv0=;
-        b=GB2gdNXNYJwbdBFKHntTKAz54JAQdAKGGQxnF9DuEFBsDH/7oZPiZT8lyTO12S3Atv
-         FlL9rz3DnSfRk0D0AXuqRszrajd8Hk60CsNfffFDIxUdexYIeT2sSxpQu0qQrt2USGdq
-         QyVNbxTVhWFEMcb4ies56V62RNNPUTkQ+627A=
+        bh=gVbLQmTWsxdy7RU0iztgxPbFW81BRbBrv74VXGA8Nsc=;
+        b=JEP9+hu4vnPYpfC7cGdMDDghSgishKvX6B2oXtcaLw/ChdBj9m4PpUHecVzLd+590c
+         5mdW8TgKU1ynjA4o9KILNcGaM1H7NmXSXG0xghbsPpJou771gEpt/wBe21JoMAx5uTXS
+         1uOH9VLl4Ikq4+AR3E4Klg99ID/ojglllsRoA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685724258; x=1688316258;
+        d=1e100.net; s=20221208; t=1685724612; x=1688316612;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BeWMHRdm/gIPMPZnqkD8g9PoiM6WDKqIoFUlb3OQkv0=;
-        b=brlJNIf9aonM0LiyvowLjfH6N1az5tz4hc6+rR9JSZdfjANAUyHH6V7ez8NqMb1nLq
-         nmhmrEqtdoTi1XPf0muKe4sXvWtwSOR3gxayxeumm4UUs94SOARMuwntR3BRSvQhiOb7
-         lfKXsi5C4UnD5urJN1JWK84OVXIbWAyHP47VbndwOQV9EdwuTd3Fkyqhu6IAsqnH0Maq
-         MDRj2jop8vmis2GcR5FSIG4W62M8DreHUCk5MDdzGz0+sDYhLxEW/vDPgve2IRWjhsa4
-         JNq9m/Hi6JRkPlGLMcltISErnNCRsvTTzmA/7GI8p+Xqx5BdieKHp8kSkUSd6UvyaWbd
-         zRNw==
-X-Gm-Message-State: AC+VfDzyX/dOw1zsdOj61rq6/CDuI+oLVn65PPA51VUY69rtWtQULw9q
-	7oldCxqtwW+8EwzvagWMUUGXi4j+GGmcucMCBms=
-X-Google-Smtp-Source: ACHHUZ559gxwDGLwphqbvODgUxda4qbOuDEWEmmSqQq1AxRuEhiSRB/NiC4U6FBLOahobp4SuU/aqQ==
-X-Received: by 2002:a1f:5cd5:0:b0:45d:edef:788c with SMTP id q204-20020a1f5cd5000000b0045dedef788cmr2635209vkb.1.1685724258223;
-        Fri, 02 Jun 2023 09:44:18 -0700 (PDT)
+        bh=gVbLQmTWsxdy7RU0iztgxPbFW81BRbBrv74VXGA8Nsc=;
+        b=CasDNvvnRXdXsgrtDw0/rXcoFFEFxTg2C7fSOI12dFrU6IFEbkWzTBQbJlpS0RGI/K
+         YgazQkPFfHgOUpu+Ex6QFnVAov2N5t7lqYO+CS1ntPOSVFL3yCDd3GmcQCmlogxfbyrQ
+         Bgi+Tkz0Ie87fFVpDm89UhRFAKzk5LyMC3yvqNG+ODnCWKNYsg8IGELigIBzg5MHW7mV
+         6//9SugjGC07oaJFa5N/SOw80kvJa78SgPVackl/G4YJDE0/Id7+/k4bnApWthBEcRAR
+         QuezEfa0XmDrkLngSG4P1qZRKoHroIas243zgv72GKXghGAwW4FX4Up2VnhU58jUX/TA
+         z2ug==
+X-Gm-Message-State: AC+VfDzhVVo1CFuQR2fj+j60cYHOmxEdVDp/6l3xTeCm77hCtQgpIZXw
+	DhjSZOEmtGu6AYNd8FOjouWong==
+X-Google-Smtp-Source: ACHHUZ4eJjb3vC5GFzAcMAt7xk4wVIoSso6YO8bDqTsR0hsfEZocO1DGaUDikugUpne2z2jDUXKKVA==
+X-Received: by 2002:a05:6214:2627:b0:61b:6e8a:4366 with SMTP id gv7-20020a056214262700b0061b6e8a4366mr16286949qvb.1.1685724611784;
+        Fri, 02 Jun 2023 09:50:11 -0700 (PDT)
 Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-132.dsl.bell.ca. [209.226.106.132])
-        by smtp.gmail.com with ESMTPSA id l20-20020ae9f014000000b007590cbe71aasm800994qkg.72.2023.06.02.09.44.17
+        by smtp.gmail.com with ESMTPSA id cv7-20020ad44d87000000b006238f82cde4sm1008925qvb.108.2023.06.02.09.50.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jun 2023 09:44:17 -0700 (PDT)
-Date: Fri, 2 Jun 2023 12:44:16 -0400
+        Fri, 02 Jun 2023 09:50:11 -0700 (PDT)
+Date: Fri, 2 Jun 2023 12:50:09 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Maximilian Weigand <mweigand@mweigand.net>
-Cc: tools@linux.kernel.org
-Subject: Re: b4: workflow for selecting to/cc targets of individual patches
-Message-ID: <20230602-underarm-stuffy-e6e9fa@meerkat>
-References: <bdefe087-28a2-d541-933c-ccd743cc8b62@mweigand.net>
+To: Johannes Zink <j.zink@pengutronix.de>
+Cc: users@linux.kernel.org, tools@linux.kernel.org, kernel@pengutronix.de
+Subject: Re: b4: Feature-Request: use salted hash for change-id instead of
+ descriptive-name when using b4 prep
+Message-ID: <20230602-speckled-modulator-ebdc37@meerkat>
+References: <837ab11e-e6c7-0dc6-9377-7889910aea09@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -49,25 +50,38 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <bdefe087-28a2-d541-933c-ccd743cc8b62@mweigand.net>
+In-Reply-To: <837ab11e-e6c7-0dc6-9377-7889910aea09@pengutronix.de>
 
-On Wed, May 31, 2023 at 08:57:58PM +0200, Maximilian Weigand wrote:
-> My understanding (also from reading a bit in the tools archive) is that
-> the cover letter should be addressed to all maintainers and mailing
-> lists targeted in any of the patches, while individual patches should go
-> only to the maintainers (via To:) and lists (via Cc:) they are targeted at.
+On Fri, Jun 02, 2023 at 10:00:11AM +0200, Johannes Zink wrote:
+> Hi,
+> 
+> first of all: thanks for creating and maintaining b4, it makes my daily
+> kernel developer's life so much easier...
+> 
+> Accidentally I came across a (documented [1]) behaviour of b4 prep that is a
+> little dangerous for my workflow: the descriptive-name is incorperated in
+> the MessageID and the changeID in plaintext.
+> 
+> While for most applications this is probably fine, sometimes I use branch
+> names along the line of
+> "upstream-feature-for-$super_secret_customer_project" (or some other stupid
+> branch names [2] - which it at least a bit funny if you know german...),
+> which poses a risk of actually leaking information I do not want to be
+> leaked.
 
-My (very unscientific) polling that I held at the time when I was implementing
-this suggested that pretty much all maintainers want to receive the entire
-series, even if only a single patch out of 10 touches their subsystem. Seeing
-the whole series allows them to better understand the patch in the context of
-the larger change.
+Hm.. this is a certainly not a workflow scenario I had considered.
 
-> Using b4 prep --auto-to-cc is not an option here, as all To:/CC:
-> addresses in the cover letter will be used in all patches (my
-> understanding, based on b4 send --dry-run tests).
+> I would like to ask if there is a possibility to change this to using a
+> salted hash instead (salt is probably required due to rainbow table attacks)
+> for messageID and changeID. If this would break some workflows, it could
+> possibly be added as an optional command line argument for b4 prep?
 
-I believe that you should just use this option and blame the tool if someone
-complains (and I highly doubt that anyone will). :)
+I will consider this request. For now, you can manually edit the cover letter
+commit to change the JSON bit there that records the change-id.
+
+E.g. right after you create a new b4-tracked branch using "b4 prep -n", you
+can run "git commit --amend --allow-empty" and modify the change-id to be
+whatever you like. Note, that you should only do this before you send out any
+revisions.
 
 -K
