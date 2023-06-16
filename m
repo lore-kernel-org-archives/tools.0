@@ -1,47 +1,46 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E355A13AC9
-	for <tools@linux.kernel.org>; Fri, 16 Jun 2023 16:53:28 +0000 (UTC)
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-471266e3dcdso372866e0c.1
-        for <tools@linux.kernel.org>; Fri, 16 Jun 2023 09:53:28 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1FE13AC6
+	for <tools@linux.kernel.org>; Fri, 16 Jun 2023 16:55:00 +0000 (UTC)
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-762389a65a3so53010985a.1
+        for <tools@linux.kernel.org>; Fri, 16 Jun 2023 09:55:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1686934407; x=1689526407;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3jakbQfpviMYKyTeYovmCC6uED5s6dz1j1/HCQGYkPo=;
-        b=RNLh9MASCYNy22DOvxXRYVF7KvSR3YyXPFDMJXj/HYV3PzVpFNEWSJKV95TwoMB28x
-         9hASlmAR2wPlzjgLOn4t5ZumHW+ALelnwE+MSgGPTyfNTVQMLmjcYZn/2XMun782Vd/j
-         GkgL7SjTSQ/XlkcPkcZSOKzyh2IEbP6yctgY8=
+        d=linuxfoundation.org; s=google; t=1686934499; x=1689526499;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=FVqGjsopmFL5w1uFHD/FAJFsP1yfYyb/2n2s3z4foGQ=;
+        b=YCWuArOdQmZupvo/4zrTyxCfnPEf6Yd6lypZOG8oFesTjMJZVhLk3AxN1EaLMfwSyG
+         gpURiRkT9ANxPZcuk8B9qSwDlCt7JfxoWz6Dr+iyD7TY3Bz2i94Sf4VaG6Ul1WXZFDQV
+         HZTohQXqr7bT7Ef05V9lEbZKmx2bNqmHE0YSY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686934407; x=1689526407;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3jakbQfpviMYKyTeYovmCC6uED5s6dz1j1/HCQGYkPo=;
-        b=BF+6qVYQncHKg59ALgJBw8A6ADabeHEj0sIHqXLFWXL06UtZIwPU8PSlE4yb3v0JEI
-         O9hrEhi5dcYuz3X7oVpWEz9xo4pEJYJ9Rw3tuq4TBZqRR6++42gdD9V9zfOz+ctsimrP
-         cmL5ZdiVYrFMt4QfHgAnGZZMKt34sZSswrhbxi49579Q6+0T+jq542BL7LtyEpZoYdT6
-         ybi5TNYGPzMqArXxQNBORnPGradw4sCg6Mq4Rjsd6kJsFKjX0f63zBunXAuF854XbXMZ
-         mWNyZ8To7NGyBydA8AmWZhUVJMJFNMn8dB14SKNpdy+fnuNsCCqENEmf4DBRCQaaaHvw
-         FXyw==
-X-Gm-Message-State: AC+VfDxq/zY/Jq8oQ5lCIlIpPWGJVAKZ1DlckgLYwzY92Q51mqbhv530
-	krVv/CH1JazoE8dGcg0xj0g95zxpa+ebp4dCPlw=
-X-Google-Smtp-Source: ACHHUZ6EVHkRicEQiGcA4s/GlCgZbWrAIJ2+dsFhC8FsDeqW9I6wBY02hYzvhVxVhHHBsHm8ACEb1Q==
-X-Received: by 2002:a1f:5f06:0:b0:43f:b997:beea with SMTP id t6-20020a1f5f06000000b0043fb997beeamr2300747vkb.13.1686934407472;
-        Fri, 16 Jun 2023 09:53:27 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686934499; x=1689526499;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FVqGjsopmFL5w1uFHD/FAJFsP1yfYyb/2n2s3z4foGQ=;
+        b=NLOW5OYOnQ3COZP4wSzkKuPaXuvpOAFmmNcs9A1IuMN50NUXA4sxcl1Y3l0RbLyOsc
+         obKfIhQb0UHDoavNicjbhSMtXvDcy7zDjPTV6tqcDtPpj1LdrBjKsLVgNuFoSJoHeGAW
+         +BPpin+5qYkbumgHp/QHzN9htXWBQM1D3UNOSxL/hZLmk4w9lg9JreYmyjNstg+2Z4BJ
+         TtergLbx24EBoE7CZKe3cgPw1DwhW2/ybkxqTaLP2llAU2SXbiyura9zxNc4950yEdyJ
+         PGZzp67ZmrPstCHO0ags5y+Gm1+VN5kYo0Jo7UUyQR4hrp4OOGNdNOzyJJQg65XgyNDJ
+         saNw==
+X-Gm-Message-State: AC+VfDylh2V3w5YwwvihF6AGLP+f51FUecN14Ies6PGIrsG4Tk01jhn7
+	0wdoy3GdsE72lqiayvJzVhLDtQ==
+X-Google-Smtp-Source: ACHHUZ53kHbauVx+l07sglNK881MO38+WlyIqySNVFIa7BcM4aj4gCQyKL59W7q61iw8UGhG2mwmiA==
+X-Received: by 2002:ad4:5b81:0:b0:5df:4d41:954d with SMTP id 1-20020ad45b81000000b005df4d41954dmr3167705qvp.3.1686934499161;
+        Fri, 16 Jun 2023 09:54:59 -0700 (PDT)
 Received: from nitro.local ([204.48.95.97])
-        by smtp.gmail.com with ESMTPSA id w8-20020ac857c8000000b003f8685c403fsm7526743qta.22.2023.06.16.09.53.26
+        by smtp.gmail.com with ESMTPSA id a10-20020a0ce34a000000b0062febc332f0sm2438861qvm.130.2023.06.16.09.54.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jun 2023 09:53:26 -0700 (PDT)
-Date: Fri, 16 Jun 2023 12:53:24 -0400
+        Fri, 16 Jun 2023 09:54:58 -0700 (PDT)
+Date: Fri, 16 Jun 2023 12:54:56 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: Erik Schilling <erik.schilling@linaro.org>
 Cc: tools@linux.kernel.org
-Subject: Re: [BUG b4] encoding issues with single-patch series
-Message-ID: <20230616-jedi-chess-plea-008b5b@meerkat>
-References: <CTDYR84I395O.2UI69IKNO7B8A@fedora>
+Subject: Re: [BUG b4] resending drops previously configured prefixes
+Message-ID: <20230616-farce-lot-parody-edfe0d@meerkat>
+References: <CTDVYQ01B09D.1FUED4Y6IQUKI@fedora>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -50,21 +49,19 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CTDYR84I395O.2UI69IKNO7B8A@fedora>
+In-Reply-To: <CTDVYQ01B09D.1FUED4Y6IQUKI@fedora>
 
-On Fri, Jun 16, 2023 at 11:22:51AM +0200, Erik Schilling wrote:
-> Earlier, I sent a patch where I tried to CC Alex Bennée. The generated
-> mail included the header:
+On Fri, Jun 16, 2023 at 09:11:35AM +0200, Erik Schilling wrote:
+> If I sent the original series with a prefix, then resend will send
+> with [PATCH RESEND] but will no longer contain the original prefix.
 > 
->     Content-Transfer-Encoding: 7bit
-> 
-> the CC header got correctly escaped, but the mail body contained the CC
-> with UTF-8 encoding:
-> 
->     Cc: Alex Bennée <alex.bennee@linaro.org>
+> I am not sure how one would fix it the best way, it looks like prefixes
+> are not tracked as part of the history. Maybe they should? I might drop
+> a WIP but still want to be able to reproduce a past version... But maybe
+> it would also just be enough to resend with the currently configured
+> prefix (+ RESEND)?
 
-Interesting. I'll check it out.
+I'll check and make sure that we always send the latest configured prefixes.
 
 bugbot assign to me
 
