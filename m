@@ -1,56 +1,71 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F504F9D6
-	for <tools@linux.kernel.org>; Wed, 21 Jun 2023 20:42:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id AB40BC433C0;
-	Wed, 21 Jun 2023 20:42:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1687380126;
-	bh=T1RJv4Vq1z2uPv/eoEFhHwX5eg9AyLUW39+C+J6jkMU=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=juTNFtv68RnUN07t0FcEpvbwswdtO/8RVnW7EkRzwNhT4gN2dFR1XDWnjN1UKBdDa
-	 E811SO+trKfySbomQkVD+WrowP1BlWD37Mw+Mj5GCIyhj5IZgx3uXMXGF3I9K9U4Sf
-	 z5XS/VKJ4btV1IifDCnT9rCb6e2bZ2blvyXRpm1Z5jljukmrceV522dC1ZRjQnmKzG
-	 rfBLSSkb8+jpZib1yAmCn3fkH+VIErkotTv7KwTKiLOyIp0Yhby5rFM0YrPGoGngkm
-	 Eq4W+VtpoaDTCKFeuwnUUJVscVz82qzqNiOs2cJsn7imy/eUiTUZ3NNuzYI8hihFF7
-	 uoVnD4eV8PjAw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8C176C395C7;
-	Wed, 21 Jun 2023 20:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442001F16A
+	for <tools@linux.kernel.org>; Thu, 22 Jun 2023 17:22:53 +0000 (UTC)
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-62ffb475be0so57409236d6.2
+        for <tools@linux.kernel.org>; Thu, 22 Jun 2023 10:22:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1687454573; x=1690046573;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QtvCdhTKpEQg15N5awOFIFLx23IdStR6qWBWHUWVRWY=;
+        b=KU7APKkFENwJqtJqdXKZ+zFb8eZMU4h1SCzb7wFCalkxcRuZO9+l4AYbE/LTmI+nMk
+         C2Pn8ej2L0/obzDpzCyZ+RQVsMpV9hZRUBsdDu7Jcugw8Lzw9zNau0bEFZYcwtviyrgE
+         EOCgfUKM01uFRGSOBv8iGmNiTlEyH7mJjErVQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687454573; x=1690046573;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QtvCdhTKpEQg15N5awOFIFLx23IdStR6qWBWHUWVRWY=;
+        b=FbNSFConnmL99wapAAfWkrAemtOr97iCxdWrFApczqPHrNW5C3eQ6vyAnBlvP2FAhm
+         uLb3BSXOU0KaKN8IpxzGwAKo8bbB7y+O8hpDm0ufHBJF+FY6hBhdExTDCTwqxu8CerTL
+         xhcMEGTHv+gqPSJl8fsBO1VyFef3Em5b5dmao90D+AbFMssrh6QsIZXTrMMQIEaGlNaW
+         /ll9S9AC4v3hGlAosZlR3eAI6VT/QjprM6C56I+NRR/O10mjLIooIESMhGhsL+pfGkW6
+         jJUk2OEMqtBvxaK84wH7RVntRZ/a/ZRExLcW4lFbC6IXtHCUGJ5tRgVtixVkwTrM57Jh
+         IaMw==
+X-Gm-Message-State: AC+VfDzNBV2BIgep80CHmYk85jFmXNKVdsf1q4Yx1KfATm1b2QUx9g0i
+	Ph4o5Ly05Tp8l+f/Nk+3KqbClQ==
+X-Google-Smtp-Source: ACHHUZ7rJb5KRtss0LzDe6wQIpxhBAWmwV2Zh/QdxoCMxLlrGlSiYht+LoOwZ/sJDEupbbuOYWEIRQ==
+X-Received: by 2002:a05:6214:d08:b0:632:30e:314 with SMTP id 8-20020a0562140d0800b00632030e0314mr2109462qvh.44.1687454572930;
+        Thu, 22 Jun 2023 10:22:52 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-132.dsl.bell.ca. [209.226.106.132])
+        by smtp.gmail.com with ESMTPSA id kr30-20020a0562142b9e00b006300e1db3ecsm2304988qvb.141.2023.06.22.10.22.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jun 2023 10:22:51 -0700 (PDT)
+Date: Thu, 22 Jun 2023 13:22:49 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Erik Schilling <erik.schilling@linaro.org>
+Cc: tools@linux.kernel.org
+Subject: Re: [BUG b4] encoding issues with single-patch series
+Message-ID: <20230622-unafraid-dazzler-a413d5@meerkat>
+References: <CTDYR84I395O.2UI69IKNO7B8A@fedora>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: "Kernel.org Bugbot" <bugbot@kernel.org>
-To: broonie@kernel.org, tools@linux.kernel.org, 
- konstantin@linuxfoundation.org
-Message-ID: <20230621-b217388c2-f62ec33c18b9@bugzilla.kernel.org>
-In-Reply-To: <ZEwRJqjvbZGqpZpg@sirena.org.uk>
-References: <ZEwRJqjvbZGqpZpg@sirena.org.uk>
-Subject: Re: Unhelpful cover letter default for single patch serieses
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: peebz 0.1
-Date: Wed, 21 Jun 2023 20:42:06 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CTDYR84I395O.2UI69IKNO7B8A@fedora>
 
-Konstantin Ryabitsev writes in commit cb93cd00e391622db4a49753f8944ce2b29c5d9d:
+On Fri, Jun 16, 2023 at 11:22:51AM +0200, Erik Schilling wrote:
+> Earlier, I sent a patch where I tried to CC Alex Bennée. The generated
+> mail included the header:
+> 
+>     Content-Transfer-Encoding: 7bit
+> 
+> the CC header got correctly escaped, but the mail body contained the CC
+> with UTF-8 encoding:
+> 
+>     Cc: Alex Bennée <alex.bennee@linaro.org>
 
-ez: make it easier to send single-patch series
+I was able to replicate this, thanks.
 
-Do not force developers to edit the cover letter when information from
-it is not going to be included into the single-patch message anyway.
+bugbot assign to me
 
-Suggested-by: Mark Brown <broonie@kernel.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217388
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
-(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=cb93cd00e391)
--- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (peebz 0.1)
-
+-K
