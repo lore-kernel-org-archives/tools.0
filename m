@@ -1,142 +1,81 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jpoiret.xyz (jpoiret.xyz [206.189.101.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73905101D8
-	for <tools@linux.kernel.org>; Fri, 23 Jun 2023 18:10:53 +0000 (UTC)
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-763e1a22a68so81594685a.0
-        for <tools@linux.kernel.org>; Fri, 23 Jun 2023 11:10:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1687543852; x=1690135852;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dFoJNQDKp8UeqApEic2h6nfjPczpAqsiIwOcqpiq9U4=;
-        b=adiihZW2DVQsgcFxdMraxJavqvmDHKywabQtZ1E8PobJflC8GDhDuLK87aiQw/f5GW
-         3wYxT078bYxl3LpdQKKxu5q2fOtJCNWj4DQprZTz1TL8WcCyUVHSn1GrMN9VlFfZPzj3
-         uL0I1ljEidkfINM57meCf+HbDTbFj4gQqup9A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687543852; x=1690135852;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dFoJNQDKp8UeqApEic2h6nfjPczpAqsiIwOcqpiq9U4=;
-        b=H60wt5l4tUZy2PEYNdVNCs22bs6ss0LBpXW1Hee69yh06Q7iPgX/mS8FoRdgr/aLUo
-         jQasvPQWI9GuVkuR4jjat+gEhdzy61IjLVyNMv8UxPDB6qbP4sCZPRM2rxximqVxQhMd
-         OViTImebrJb8kOW/IxMSG6prq0+WHnpRu3F/oBLxzp3KZgVJEA/6lQbk9UNwZYPdZbIx
-         pJnuqoP6YsPDd+BAcbpkybj+qy0hJ9RSFkBDocVywquxe3+V+SkKfk4/nQEWa2FXsqXI
-         zJdf8muQAgooqs+YY1Jv11DDO4uWIMZCEDeFU/6tnuYP476rTvWwiUVxqd8qaCj46e7Y
-         S1Hg==
-X-Gm-Message-State: AC+VfDy5BgGjU0ArXWUxdNtA8ppyYfUDV2fo8uLh0YhQx/PIoby48noF
-	5XwsxtIZwzYGUi6PJG2igxggPf7XwV+hYhJSToo=
-X-Google-Smtp-Source: ACHHUZ62ZbATq3sFUd8eFAvkMNwI9ItQLqaQL8q4tEpayTHfRUvDJQ2KzJzS8EdS9rhLU9d2S8iYbg==
-X-Received: by 2002:a05:620a:424d:b0:75b:23a1:3606 with SMTP id w13-20020a05620a424d00b0075b23a13606mr16397435qko.23.1687543851749;
-        Fri, 23 Jun 2023 11:10:51 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-132.dsl.bell.ca. [209.226.106.132])
-        by smtp.gmail.com with ESMTPSA id u4-20020ae9c004000000b007620864d547sm4721672qkk.120.2023.06.23.11.10.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jun 2023 11:10:50 -0700 (PDT)
-Date: Fri, 23 Jun 2023 14:10:49 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, users@linux.kernel.org
-Subject: b4 0.12.3 available
-Message-ID: <20230623-display-prevalent-44c89b@meerkat>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9930B441A
+	for <tools@linux.kernel.org>; Sat, 24 Jun 2023 10:21:13 +0000 (UTC)
+Received: from authenticated-user (jpoiret.xyz [206.189.101.64])
+	by jpoiret.xyz (Postfix) with ESMTPA id 5FE14185313;
+	Sat, 24 Jun 2023 10:13:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jpoiret.xyz; s=dkim;
+	t=1687601589;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=vU4/yQMNj/himuko2Fp0V6CE8hDUI6JIDcQGFF1cQZY=;
+	b=q+FBR4Ms+7qyDFCSpBoQ5MnKVGTYaf3uz0yAxGN1t6IG2JXbXTdtt8166to33aQeuWXBbi
+	3QUo5pTQEUeuQudZZrrYQe3giJIWn9mCeOTsD9FVuE8f82AmB13rcI3DLHTb6j1STZqgDH
+	49mnMqZMgvH9uD7pFGbo6Mh1xxjyQytdEp+hrMkgIZnAW7g1BJ7cu46nGbkpDt6LbqMvRC
+	EnqXKfxg3k6r9BbqzTfvpPeBDWc29zBfCRSGNRVr5qm9FaOqPM0bmH4Wp/fxr+2sw0kFzu
+	2CX6BoT63zcOMcGcEuJZ/hQRy6yAz8weoEkUDmBFCsCn4C4TDeNkdDTtlMmgFQ==
+From: Josselin Poiret <dev@jpoiret.xyz>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Subject: Re: [PATCH] Quote author name when creating am message.
+In-Reply-To: <20230622-facelift-precook-d9ca32@meerkat>
+References: <5de6864e5999c398700712fdce5d52c77d8b0a2a.1686057776.git.dev@jpoiret.xyz>
+ <20230622-facelift-precook-d9ca32@meerkat>
+Date: Sat, 24 Jun 2023 12:13:07 +0200
+Message-ID: <87bkh5rwwc.fsf@jpoiret.xyz>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5g3cxm6aankr3rcb"
-Content-Disposition: inline
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+X-Spamd-Bar: /
+Authentication-Results: jpoiret.xyz;
+	auth=pass smtp.auth=jpoiret@jpoiret.xyz smtp.mailfrom=dev@jpoiret.xyz
 
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
---5g3cxm6aankr3rcb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Hi Konstantin,
 
-Hello:
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-I am pleased to announce b4 version 0.12.3, which includes many bugfixes and
-minor feature improvements. Everyone must upgrade.
+> Thank you for the report. I didn't take the patch, because there is a bet=
+ter
+> way to do it, but I did give you credit in the commit:
+>
+> https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=3D87aacf279afc3=
+c1eda7b2e6e02e70842b4f99bc7
 
-To upgrade using pip:
+It was my first time looking at b4's source so I'm thankful for the more
+idiomatic code!  I'm hoping to contribute more to b4 in the future since
+we're trying to use that more and more in GNU Guix.
 
-    pip install --upgrade b4
+Best,
+=2D-=20
+Josselin Poiret
 
-If you're using a git checkout, you can just update to the latest
-stable-0.12.y HEAD.
-
-$ git shortlog v0.12.2..v0.12.3
-
-    Dominique Martinet (1):
-          b4.sh: keep existing PYTHONPATH if set
-
-    Erik Schilling (1):
-          docs: fix smtpServerPort option
-
-    Ira Weiny (1):
-          b4: Allow prep new branch while on a b4 managed branch
-
-    Konstantin Ryabitsev (17):
-          Up version to 0.12.3-dev
-          ez-trailers: don't crash when there are no follow-ups received
-          ez: do not trust local commands to properly reflect
-          Add subscribe/unsubscribe to badtrailers
-          ez: better fix for "no follow-up trailers" condition
-          Consider '@' safe in msgid URLs
-          Clean headers before adding them to the pre-scissors email
-          Fix to properly handle under-scissors patches with a unixfrom line
-          ez: only include base-branch when using non-default strategy
-          ez: make message-ids use today's date
-          ez: make it easier to send single-patch series
-          Fix wrong CTR header after 8bit cover content is mixed in
-          trailers: normalize address after parsing
-          shazam: switch to top of git tree before running git-am
-          Properly quote the address before adding into From
-          ez: store sent prefixes with the tag message
-          Up release to 0.12.3
-
-    Matthieu Baerts (2):
-          trailers: accept recognized link trailers
-          trailers: add 'Closes' as recognized link trailer
-
-    Maxime Ripard (1):
-          b4: Fix envelopeSender handling
-
-    Philippe Blain (2):
-          mbox.py::make_am: simplify check for early return
-          am, shazam: allow cherry-picking an out-of-series patch
-
-    Rob Herring (1):
-          ez: Fix 'trailers -F' used on a single commit
-
-Special thanks to the following people who helped with this release (in
-reverse-log order):
-
-    Erik Schilling <erik.schilling@linaro.org>
-    Josselin Poiret <dev@jpoiret.xyz>
-    Andrew Cooper <andrew.cooper3@citrix.com>
-    Mark Brown <broonie@kernel.org>
-    Christian Brauner <brauner@kernel.org>
-    Maxime Ripard <mripard@kernel.org>
-    Philippe Blain <levraiphilippeblain@gmail.com>
-    Rob Herring <robh@kernel.org>
-    Dominique Martinet <asmadeus@codewreck.org>
-    Ira Weiny <ira.weiny@intel.com>
-    Nick Desaulniers <ndesaulniers@google.com>
-    Matthieu Baerts <matthieu.baerts@tessares.net>
-
-Best wishes,
--K
-
---5g3cxm6aankr3rcb
+--=-=-=
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCZJXgKAAKCRC2xBzjVmSZ
-bKyTAP0UPqdcZWuIZN8QsdBVDc9BNxepJ24ZmV4X//bVXDdgigD/acyvSGJ94UYK
-yjWziSAzX+ehew4TrlqjQABO/IGP8Qo=
-=RW6V
+iQHEBAEBCgAuFiEEOSSM2EHGPMM23K8vUF5AuRYXGooFAmSWwbMQHGRldkBqcG9p
+cmV0Lnh5egAKCRBQXkC5FhcaisjiC/9uQPWYN8aGb9DP1kGLVJUV8xHyyDNisOyp
+8iIYKS7h83NIIvo8TdZ8uXMwAyn48ChCD3intrz4C4Q5Nws9YeZGs4OGkuiV40vG
+QxG0RhaO4Arp+OMzVPw+/+ObzPV/gCaH3LHVQBEcj10DOprn0tZAmf96bSQJOFyz
+d+WcZxAcEqBTK73n6/TwRgK0F5Ed6gVnI0SmBXTLlWMJsh7vCRaeyqA/is9Fddg4
+uYct9Pj8RXOQ//amh+kY1FCfhJhB/ax+Lc2nbxYezfVT0qnszpT77VxCVel1YWrx
+8ONTgmD0Bld8pZcH+T6+pHt9hRzpL6rJadsQcsyS9mtNNmlAcvE6CEss5y87adJk
+z51joJ2NoXBy7cJNU+gRi1QgDuc/ZvUl0nt6YZqtQem2wM+fHzxV1IfKSVi9lzF6
+srQtcj71wWobKMsO/kg94xCxgAiexp4UrRqw9Z3ZWtzAYog54pzKU6o9lDDCZ0X0
+CdrG1qkaUFOOo6VLvJc4sEcQua8cQaY=
+=5TqZ
 -----END PGP SIGNATURE-----
-
---5g3cxm6aankr3rcb--
+--=-=-=--
