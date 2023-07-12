@@ -1,90 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B401F95D
-	for <tools@linux.kernel.org>; Wed, 12 Jul 2023 18:58:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7B0C433C8;
-	Wed, 12 Jul 2023 18:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D6D1F95D
+	for <tools@linux.kernel.org>; Wed, 12 Jul 2023 18:59:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90305C433C9;
+	Wed, 12 Jul 2023 18:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1689188316;
-	bh=aJiw3LbIRKSSx8s9iJDeXbsS4uGKgjbbrLDFvgtUGcY=;
+	s=k20201202; t=1689188368;
+	bh=gZUy3aPjkjKRCbAYbkoW1wjpKWSnmjTNz/nowmz26iU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HckbuKVy5HBp+RH25MSbpGM9NyaxvP64rId6vCA04PRjrF21nzH+An9oHIr2yOmEH
-	 rPlPEdqYtzRowPcP/zPQVNCNdBdG2jCKC7EOTi8dX9Xg3QIwIgio9lOLvinAS9VlOC
-	 Hs/LK7/iFi8MYeFvWRXd2EHdtfSF+yWA/4YoxLzbJjS25OGw7M8znh5xHnd7KCJKIS
-	 Fik7a3GkPLYU01tIg37H4nHP/C/8Vzg0rnriE2A1Wuxh7Yde9PJDzG3afvsRCl+V+b
-	 e3cxd7fptS1SMQUUJIi6mGr7KTxEIzfle7ngZAtxlRCQZJ+wnNswDxuvpQxUCMf+fD
-	 P9ZwYCVBsMzEw==
-Date: Wed, 12 Jul 2023 20:58:32 +0200
-From: Christian Brauner <brauner@kernel.org>
+	b=Pbzd7dBBp6P7TjoNNHVNi3/GKWozntxZTaDYAiGL7kriGKb5ttgQRGH3szCcsVxIn
+	 4Xr1UPjNqLsd7FqOsrSvTfdlquTRhwkdEpiQaHJ5A1OYsvCSaTEGItmeOZ9hrG5ZfH
+	 UtmT02jhYrDUkhVOezpNd93D7qI+g8CO+Sq2shPqG1F9ixRrGQeHMpBJLVbH5XGn2V
+	 GpYb7Tf2S8i2pojNfeXwA0ujdRiV1GwHRhAA1G/vO6oK98jrA/ncTEFOLFSJpoqUp5
+	 inAGV9nD+WdVwkmrx46lZrzWUbu4H65XslgL+q8vdUNAwmK6ZjOqih7v/Wd2dpU/ef
+	 KrZIaU21KCHRA==
+Date: Wed, 12 Jul 2023 19:59:24 +0100
+From: Mark Brown <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Picking up changed commit subjects when generating thank you
- messages & patch list generation
-Message-ID: <20230712-nahegehen-stabil-41cfd48e565c@brauner>
-References: <20230711-berechenbar-bordstein-b22e1f7f9835@brauner>
- <20230712-mulch-french-2788cd@meerkat>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	tools@linux.kernel.org
+Subject: Re: [PATCH v2 0/4] ASoC: rt5677: Refactor GPIO and use
+ device_get_match_data()
+Message-ID: <8a6e591d-6e07-4b9f-88e7-443bdc0508d2@sirena.org.uk>
+References: <20230630172155.83754-1-andriy.shevchenko@linux.intel.com>
+ <168916242630.46574.7633971537485557226.b4-ty@kernel.org>
+ <ZK6xI8l7Vdp35yJG@smile.fi.intel.com>
+ <d5cac1ef-1d44-4ab7-a933-b381108b1eaa@sirena.org.uk>
+ <ZK7HUTyKB6hoaBtV@smile.fi.intel.com>
+ <20230712-semifinal-expansive-f9189b@meerkat>
+ <9327ba4e-2df7-4eba-85c5-4da7bd64d2fa@sirena.org.uk>
+ <20230712-overact-conjoined-74c85e@meerkat>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="4XS16WaCo3Dr/Edg"
 Content-Disposition: inline
-In-Reply-To: <20230712-mulch-french-2788cd@meerkat>
+In-Reply-To: <20230712-overact-conjoined-74c85e@meerkat>
+X-Cookie: Dammit Jim, I'm an actor, not a doctor.
 
-On Wed, Jul 12, 2023 at 02:33:18PM -0400, Konstantin Ryabitsev wrote:
-> On Tue, Jul 11, 2023 at 12:05:44PM +0200, Christian Brauner wrote:
-> > Hey everyone,
-> > 
-> > As always, very happy about b4!
-> > 
-> > I have two features requests:
-> 
-> bugbot on
-> 
-> > (1) Automatically picking up changed commit subject lines
-> >     When applying series via shazam or am commit message subjects
-> >     sometimes need to be tweaked afterwards. But while b4 ty picks up
-> >     commit hash changes caused by e.g., git commit --amend it doesn't
-> >     pick up the changed subject.
-> >     
-> >     For example, the patch originally sent with commit subject "aaa" got
-> >     applied. Afterwards it was amended to "bbb". But b4 ty would still
-> >     generate:
-> >     
-> >     [1/1] aaa
-> >           https://git.kernel.org/vfs/vfs/c/7b2edd278691
-> >     
-> >     in the thank you letter.
-> 
-> I can see arguments both for and against it. Since we are responding to the
-> original submission, it makes sense to me to use the original patch subjects.
-> However, I will consider how to best approach this situation.
-> 
-> > (2) Let b4 support generating a patch list for a specified range of commits
-> >     Sometimes there are scenarios where it would be helpful to let b4
-> >     generate a list of applied commits for a range of commits (even if
-> >     not under direct control of b4):
-> > 
-> >     [01/92] subsystem1: long
-> >             https://git.kernel.org/vfs/vfs/c/ead310563ad2
-> >     [02/92] subsystem2: long
-> >     .
-> >     .
-> >     .
-> >     [92/92] subsystem92: list
-> >             https://git.kernel.org/vfs/vfs/c/f42faf14b838
-> > 
-> >     that can then be copy-pasted into a ty message.
-> > 
-> >     b4 has all the nice info and gitconfig options such as:
-> >     thanks-am-template, thanks-treename, thanks-commit-url-mask that
-> >     would make this just ultra useful.
-> 
-> So, you just want a "summary of all commits" from an arbitrary range, using
-> the template? Do we leave To/Cc fields blank, or populate them with all the
-> addresses that we could match either via b4 tracking or via commit trailers?
 
-Could this be config option?
+--4XS16WaCo3Dr/Edg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jul 12, 2023 at 02:47:34PM -0400, Konstantin Ryabitsev wrote:
+> On Wed, Jul 12, 2023 at 07:35:45PM +0100, Mark Brown wrote:
+
+> > The patches are applied from mailboxes fetched with b4 am, then the
+> > thanks mails go out with b4 ty.
+
+> But I think the complaint was about the merge commits being cut off:
+>=20
+>     https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git/com=
+mit/?id=3D5a043fd5c74c66897ad113e5ee34e9361e3f4c11
+
+Oh, I see.  The commit in the mail looked like it might be off and it
+was in reply to the applied mail so I thought that was what was being
+referenced.
+
+> When I try "b4 shazam -M", the merge commit looks different to me, so I w=
+ant
+> to understand how the merge commit is generated in your workflow.
+
+That's generated by my scripts based on the .cover that b4 writes out
+and some sed at the point where a merge is done.  There's a bunch of CI
+happens between applying the patches and me actually merging them so I
+don't use b4 for that bit.  It's just picking the subject line out with
+sed so there's no way it's going to handle multi-line subjects.
+
+--4XS16WaCo3Dr/Edg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSu+AkACgkQJNaLcl1U
+h9Ddkwf/bQufguG3gZdzzC1IkRvk78JFLKQDRZw43gyJxDifE02tIB6lC1YZPB5n
+cUQ6sZesm3gaOlyGLQ0Fmmf9dH6hE6NoZIdnRuJ1vMjx7UfaW3OBuQyVQ7Ca0NZi
+8brPkvDnj4ewa9eBsggjyeDPTSFGRIsVzjjE99LY1tkPIEIoZfEtw9tRC+93OjtQ
+V30hJbOcyeUIjxNXgdfAzMDgxAu3lkrpHnnaah6WATTu13B8mtw9gx/cuTUvwIn2
+ViY2pgBhZa/SfpmJkRoC+FGWkKDzdVO8PP38nt0ASubZI+tKDj6jSrvvVe8atWs6
+0siORV7c1bnrMGLtHouyvM9bVhHyPg==
+=XyIP
+-----END PGP SIGNATURE-----
+
+--4XS16WaCo3Dr/Edg--
