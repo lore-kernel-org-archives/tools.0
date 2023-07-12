@@ -1,47 +1,28 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C2620FBB
-	for <tools@linux.kernel.org>; Wed, 12 Jul 2023 19:18:25 +0000 (UTC)
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7659cb9c42aso608982385a.3
-        for <tools@linux.kernel.org>; Wed, 12 Jul 2023 12:18:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1689189504; x=1691781504;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=n3NfvS1jvjSB+tBL+SX8HbtSmmr9dhlhzwK2rZUd5Hc=;
-        b=dCs5IkXZ3NGwwWVD2+6l3HG1yX4rIm7pHDfgE6cmqIpiezjKcmgHr7dvv56eeGNyFP
-         btslk8+4C4Te9R+XR9ez4WLZSK88YmjEs/TSOzWoLb/EW90IPmLlWsYvj889StnKY9Wt
-         +6dr4jJcE9OAP4WgoSQGbIg50maY+fDWa72OU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689189504; x=1691781504;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n3NfvS1jvjSB+tBL+SX8HbtSmmr9dhlhzwK2rZUd5Hc=;
-        b=IeFmeYvYgH1+k6q274vbRJKwyAj/tL0kySTjprYZQ8FBNIrBo8vb/CQ7z/WSJzJS+l
-         +Zo6dmgBbk152L6q7Ltcore4Zyt184Rbknvf3zqJhCEqYIwV8ozYRAPIUCduVswi698F
-         NWY4yBPkx/BsUgVaBjbDVj+baqxC9obFrmYPIGauRi59Hho7+yRkrJ8+8IRPZ0DtSKr8
-         vyTESFaXmOZ8eU3c85a/iHIk9YYNPXPhefwn/RmbR3mOzgFRFs6QBknsaraEHqSrFo9M
-         c+XOuQhXLzhgWIA19/kkX68AJW9cBrk5i1enQtC+g3PlEEsT2k9wfQIkSLjnFocvdtTN
-         apjw==
-X-Gm-Message-State: ABy/qLYSEJJ9ZTiyCTtsyJZTR+zMbtHYJW8hVafBSGHNXLC4+mDTbqoo
-	3hHmOypQGaTuNLxo0a3UPk0MLaOCkv4vZan8eTs=
-X-Google-Smtp-Source: APBJJlGyDg5JL8Q3d6ucZpXkKk00x+YQsykrtb5V8+HD2MWk/fFqLoMePSOsg5z16Hr3t55IzzccRg==
-X-Received: by 2002:a05:620a:2b31:b0:766:ff0b:7ea6 with SMTP id do49-20020a05620a2b3100b00766ff0b7ea6mr18584528qkb.75.1689189504687;
-        Wed, 12 Jul 2023 12:18:24 -0700 (PDT)
-Received: from meerkat.local ([209.226.106.132])
-        by smtp.gmail.com with ESMTPSA id i2-20020a05620a074200b00767d839aa86sm2362984qki.68.2023.07.12.12.18.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 12:18:24 -0700 (PDT)
-Date: Wed, 12 Jul 2023 15:18:15 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DE934CFA
+	for <tools@linux.kernel.org>; Wed, 12 Jul 2023 20:31:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CBAC433C7;
+	Wed, 12 Jul 2023 20:31:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1689193866;
+	bh=NaUeb+aeIZ+1EwmQfQAILiX/e61yQ20XdhMMLtrm0rE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UpA0TPh4oudVQH0ZvtoM5iyLG1Dn6SDqUHAXnVwfdYNlpnEbvYvYEAF5wfjhjyU+j
+	 Jc0Clz9nzwg8h8NTZnLBkxKunJzDP20+Xvuqwihv3a0yO1Fjn+CHJMEg63tQeL2+40
+	 eIoNYnOtRaXS6RBiZhLZBQiEIgG1ezRBftf/EDh1rm9oZ6feCLxab48FF+QhQHPglV
+	 6QN6d3coBtV0xw59Rdsx/MstcHBYY80ldXEKrbECYcquRBOBJ9rZ2PrCAXceMGhCS9
+	 XeMWvVnTkSdxTuUjr+WLvlPTuyn5KlhbAcwkCitalBPEaJcwsh1C2TJUjyP4Xmd4VT
+	 Eu7y3jgS1adNA==
+Date: Wed, 12 Jul 2023 21:31:02 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	tools@linux.kernel.org
 Subject: Re: [PATCH v2 0/4] ASoC: rt5677: Refactor GPIO and use
  device_get_match_data()
-Message-ID: <20230712-smudge-overthrow-46457c@meerkat>
+Message-ID: <5bfa6021-58b8-4510-bd78-d08e8d0d1fce@sirena.org.uk>
 References: <20230630172155.83754-1-andriy.shevchenko@linux.intel.com>
  <168916242630.46574.7633971537485557226.b4-ty@kernel.org>
  <ZK6xI8l7Vdp35yJG@smile.fi.intel.com>
@@ -51,35 +32,53 @@ References: <20230630172155.83754-1-andriy.shevchenko@linux.intel.com>
  <9327ba4e-2df7-4eba-85c5-4da7bd64d2fa@sirena.org.uk>
  <20230712-overact-conjoined-74c85e@meerkat>
  <8a6e591d-6e07-4b9f-88e7-443bdc0508d2@sirena.org.uk>
+ <20230712-smudge-overthrow-46457c@meerkat>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="2C2kMk7p9qxUGXvt"
 Content-Disposition: inline
-In-Reply-To: <8a6e591d-6e07-4b9f-88e7-443bdc0508d2@sirena.org.uk>
+In-Reply-To: <20230712-smudge-overthrow-46457c@meerkat>
+X-Cookie: Dammit Jim, I'm an actor, not a doctor.
 
-On Wed, Jul 12, 2023 at 07:59:24PM +0100, Mark Brown wrote:
-> > But I think the complaint was about the merge commits being cut off:
-> > 
-> >     https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git/commit/?id=5a043fd5c74c66897ad113e5ee34e9361e3f4c11
-> 
-> Oh, I see.  The commit in the mail looked like it might be off and it
-> was in reply to the applied mail so I thought that was what was being
-> referenced.
-> 
-> > When I try "b4 shazam -M", the merge commit looks different to me, so I want
-> > to understand how the merge commit is generated in your workflow.
-> 
-> That's generated by my scripts based on the .cover that b4 writes out
-> and some sed at the point where a merge is done.  There's a bunch of CI
-> happens between applying the patches and me actually merging them so I
-> don't use b4 for that bit.  It's just picking the subject line out with
-> sed so there's no way it's going to handle multi-line subjects.
 
-Will it help if b4 optionally writes out a foo.merge file in addition to
-foo.cover in the same format as with "b4 shazam"?
+--2C2kMk7p9qxUGXvt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
--K
+On Wed, Jul 12, 2023 at 03:18:15PM -0400, Konstantin Ryabitsev wrote:
+> On Wed, Jul 12, 2023 at 07:59:24PM +0100, Mark Brown wrote:
+
+> > That's generated by my scripts based on the .cover that b4 writes out
+> > and some sed at the point where a merge is done.  There's a bunch of CI
+> > happens between applying the patches and me actually merging them so I
+> > don't use b4 for that bit.  It's just picking the subject line out with
+> > sed so there's no way it's going to handle multi-line subjects.
+
+> Will it help if b4 optionally writes out a foo.merge file in addition to
+> foo.cover in the same format as with "b4 shazam"?
+
+That sounds like it should be good, yes - I can just use that as the
+message rather than generating one (not having seen the specific
+format).
+
+--2C2kMk7p9qxUGXvt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSvDYIACgkQJNaLcl1U
+h9BHYwf/Rqza5+ppNdV0t56N44TdfLpjn1PXVEdzrfraXqiQG6b6i7gyX/29muuV
+AgDUbrFtO5qLbiIlYztFLuY+yXbZDZZ5UZJoyazIOd3WlI7cBCUFtM/cU4Z4ap0/
+98Oa2/NNm8Hh3+8u5alLo6MDmHr7N0cuNSHKLqIMSCDDBrM4rwr15WjQA9ThnnZu
+ELhPvGSHZB8u3CgMv1EZxX+tqWE1KoXFZ5FL/mboiLNsAVGDJCVmKdAbyy9aDbNZ
+G6uzYE1RPFdOTEp7pGChauVVD82fU/X/NKxO/W2bH8Rld3TQnmPlUS+she3uYzXr
+WdmlTb6Bfu7ZKzmPSatzMWhjpIR70g==
+=Tu9S
+-----END PGP SIGNATURE-----
+
+--2C2kMk7p9qxUGXvt--
