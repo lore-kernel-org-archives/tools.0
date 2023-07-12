@@ -1,54 +1,29 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B603C14F91
-	for <tools@linux.kernel.org>; Wed, 12 Jul 2023 18:47:44 +0000 (UTC)
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-767582c6c72so706285485a.2
-        for <tools@linux.kernel.org>; Wed, 12 Jul 2023 11:47:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1689187663; x=1691779663;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=udurjRPM2oxV9GO89UYyqskdq10DRY3XjUVxbwHoflI=;
-        b=AM8VuAhnk8Hbn842iayEnBEh03qHQkagjg904DKrp8suE6uwGhjHpZI+AFydEyXTJv
-         CKq1ypL5x1rR709bT8MvgeNPGIp0bQA6lqK6k5/1pHUOrB/u9m5pC3jqnM4nmD7Odn2B
-         E+Eg7Jhv+byYJbzTX7w0tKPp2y5zMNtK85Gwg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689187663; x=1691779663;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=udurjRPM2oxV9GO89UYyqskdq10DRY3XjUVxbwHoflI=;
-        b=N4E3vYooN6ZYjFCye9Cda/BiM/B4UE7qifEtykiNZTgUU+XwQCt2gq8tjh2M3rXj82
-         /b5ll5bBN8LgaiuMD2JT/4J+QpARkw9HqbaMNLrYtnZ6Dr5SZm9Z0OLbYduyIwO3yfbO
-         C0HwBavEjfx5BS73i/NrgH8tV/xptMUhHfjP/NzAibpTGn/WDS/kL1PgEwfFfNSlcU5Z
-         016Ofw21j6dydX98iTcxwxa8+P3jDl92fi3nwNm4tp5UulcigJ4y2LYYESa0WqkcY+7I
-         Qkb0oH5t9HHRzK0mSgNX4gvwyQsgyg+E0J2xFUnM9lT4k3TLsmPT2xHNUerfGjH63kwt
-         knXA==
-X-Gm-Message-State: ABy/qLatBsFPrEApkjdxu/k2m6ZQEsNHnEzWsh/Y6wRDI4YFi0m2YxNK
-	pbxaGdpTDC2LBGjIChLWf4J7i2Am/0bGDjIXghY=
-X-Google-Smtp-Source: APBJJlHJItGUjoGbzmDGipG1nJ2tsMpkrlmmSCcZJGpkWOBL1yBMZcw0RYFDjSgqmyvJHj9RE6VD7A==
-X-Received: by 2002:a05:620a:410:b0:766:f9b7:b90f with SMTP id 16-20020a05620a041000b00766f9b7b90fmr19086941qkp.5.1689187663447;
-        Wed, 12 Jul 2023 11:47:43 -0700 (PDT)
-Received: from meerkat.local ([209.226.106.132])
-        by smtp.gmail.com with ESMTPSA id v2-20020a05620a122200b00767cdf23ee3sm2336994qkj.92.2023.07.12.11.47.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 11:47:43 -0700 (PDT)
-Date: Wed, 12 Jul 2023 14:47:34 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	tools@linux.kernel.org
-Subject: Re: [PATCH v2 0/4] ASoC: rt5677: Refactor GPIO and use
- device_get_match_data()
-Message-ID: <20230712-overact-conjoined-74c85e@meerkat>
-References: <20230630172155.83754-1-andriy.shevchenko@linux.intel.com>
- <168916242630.46574.7633971537485557226.b4-ty@kernel.org>
- <ZK6xI8l7Vdp35yJG@smile.fi.intel.com>
- <d5cac1ef-1d44-4ab7-a933-b381108b1eaa@sirena.org.uk>
- <ZK7HUTyKB6hoaBtV@smile.fi.intel.com>
- <20230712-semifinal-expansive-f9189b@meerkat>
- <9327ba4e-2df7-4eba-85c5-4da7bd64d2fa@sirena.org.uk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B401F95D
+	for <tools@linux.kernel.org>; Wed, 12 Jul 2023 18:58:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7B0C433C8;
+	Wed, 12 Jul 2023 18:58:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1689188316;
+	bh=aJiw3LbIRKSSx8s9iJDeXbsS4uGKgjbbrLDFvgtUGcY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HckbuKVy5HBp+RH25MSbpGM9NyaxvP64rId6vCA04PRjrF21nzH+An9oHIr2yOmEH
+	 rPlPEdqYtzRowPcP/zPQVNCNdBdG2jCKC7EOTi8dX9Xg3QIwIgio9lOLvinAS9VlOC
+	 Hs/LK7/iFi8MYeFvWRXd2EHdtfSF+yWA/4YoxLzbJjS25OGw7M8znh5xHnd7KCJKIS
+	 Fik7a3GkPLYU01tIg37H4nHP/C/8Vzg0rnriE2A1Wuxh7Yde9PJDzG3afvsRCl+V+b
+	 e3cxd7fptS1SMQUUJIi6mGr7KTxEIzfle7ngZAtxlRCQZJ+wnNswDxuvpQxUCMf+fD
+	 P9ZwYCVBsMzEw==
+Date: Wed, 12 Jul 2023 20:58:32 +0200
+From: Christian Brauner <brauner@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Subject: Re: Picking up changed commit subjects when generating thank you
+ messages & patch list generation
+Message-ID: <20230712-nahegehen-stabil-41cfd48e565c@brauner>
+References: <20230711-berechenbar-bordstein-b22e1f7f9835@brauner>
+ <20230712-mulch-french-2788cd@meerkat>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -57,20 +32,59 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <9327ba4e-2df7-4eba-85c5-4da7bd64d2fa@sirena.org.uk>
+In-Reply-To: <20230712-mulch-french-2788cd@meerkat>
 
-On Wed, Jul 12, 2023 at 07:35:45PM +0100, Mark Brown wrote:
-> > Could you give me something more to go on? Was this done with "b4 shazam" or
-> > via some other way?
+On Wed, Jul 12, 2023 at 02:33:18PM -0400, Konstantin Ryabitsev wrote:
+> On Tue, Jul 11, 2023 at 12:05:44PM +0200, Christian Brauner wrote:
+> > Hey everyone,
+> > 
+> > As always, very happy about b4!
+> > 
+> > I have two features requests:
 > 
-> The patches are applied from mailboxes fetched with b4 am, then the
-> thanks mails go out with b4 ty.
+> bugbot on
+> 
+> > (1) Automatically picking up changed commit subject lines
+> >     When applying series via shazam or am commit message subjects
+> >     sometimes need to be tweaked afterwards. But while b4 ty picks up
+> >     commit hash changes caused by e.g., git commit --amend it doesn't
+> >     pick up the changed subject.
+> >     
+> >     For example, the patch originally sent with commit subject "aaa" got
+> >     applied. Afterwards it was amended to "bbb". But b4 ty would still
+> >     generate:
+> >     
+> >     [1/1] aaa
+> >           https://git.kernel.org/vfs/vfs/c/7b2edd278691
+> >     
+> >     in the thank you letter.
+> 
+> I can see arguments both for and against it. Since we are responding to the
+> original submission, it makes sense to me to use the original patch subjects.
+> However, I will consider how to best approach this situation.
+> 
+> > (2) Let b4 support generating a patch list for a specified range of commits
+> >     Sometimes there are scenarios where it would be helpful to let b4
+> >     generate a list of applied commits for a range of commits (even if
+> >     not under direct control of b4):
+> > 
+> >     [01/92] subsystem1: long
+> >             https://git.kernel.org/vfs/vfs/c/ead310563ad2
+> >     [02/92] subsystem2: long
+> >     .
+> >     .
+> >     .
+> >     [92/92] subsystem92: list
+> >             https://git.kernel.org/vfs/vfs/c/f42faf14b838
+> > 
+> >     that can then be copy-pasted into a ty message.
+> > 
+> >     b4 has all the nice info and gitconfig options such as:
+> >     thanks-am-template, thanks-treename, thanks-commit-url-mask that
+> >     would make this just ultra useful.
+> 
+> So, you just want a "summary of all commits" from an arbitrary range, using
+> the template? Do we leave To/Cc fields blank, or populate them with all the
+> addresses that we could match either via b4 tracking or via commit trailers?
 
-But I think the complaint was about the merge commits being cut off:
-
-    https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git/commit/?id=5a043fd5c74c66897ad113e5ee34e9361e3f4c11
-
-When I try "b4 shazam -M", the merge commit looks different to me, so I want
-to understand how the merge commit is generated in your workflow.
-
--K
+Could this be config option?
