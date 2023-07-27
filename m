@@ -1,68 +1,112 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B26FBEF
-	for <tools@linux.kernel.org>; Thu, 27 Jul 2023 14:43:00 +0000 (UTC)
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-403a3df88a8so6362641cf.3
-        for <tools@linux.kernel.org>; Thu, 27 Jul 2023 07:43:00 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152C627127
+	for <tools@linux.kernel.org>; Thu, 27 Jul 2023 18:47:53 +0000 (UTC)
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-d087ffcc43cso1224002276.3
+        for <tools@linux.kernel.org>; Thu, 27 Jul 2023 11:47:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1690468979; x=1691073779;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Httv0jK8FZxMDhWaPoTVNIHFxb50opx4lPnFuwxv8Qs=;
-        b=UDxDaf3tJWDtMaWD8b8gP0hUYweDfX6ilwS16OXHp0N+q+1iDAR7rJYU0HwrmFhsyG
-         ygWEg9NvuFTBoLsr2nef7GN8+Qq1k04LYYoT7YyRjGfA4WsZk5wlOcB9OlSau1RoFwZ0
-         kyruRYOZ3/ZeYKt01sAQzVkusI1mjQ6s4LkBU=
+        d=google.com; s=20221208; t=1690483673; x=1691088473;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6XvF866ztULgHIPw5eL1RN11YaiqIOMwtk4/chVGttM=;
+        b=IFsbIWOe+YRWY5gZE5970W4X5pq7CD2uSCPIGwo0PUFSi/FBhWnNq8ObbxyqECrhcf
+         /F1c5B4h7ofaFvZTG5PaTCMkThoGWsrkJ2m5x/85gXkMHzKK3vQ5/BatBFgln20tyYjg
+         kien4vKAXExZ4P0Ei+oYJH+CdWB0lZx0meluRlaq6MVNDP94GDkKGnzYvVQjvzbrtb8O
+         NwNqXPqxD7r/TbOw2Gok3Ctl0o4vtt72MwUaFLmBAzJmsGdwQ9kGEkb9rvTZydq2fnt+
+         gKFqyo6FrdajVKx42BP1QwQfVpZFxHFoEi0kEvGNUK8MKu0xyz3FQ999lDaV5S78+h9J
+         c5UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690468979; x=1691073779;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Httv0jK8FZxMDhWaPoTVNIHFxb50opx4lPnFuwxv8Qs=;
-        b=BOUIxD7LamtprG85V4MooGPBi6uDhTPAvvlzPO6M1cs0d/d6wkxCWPiW43kCqiYMWj
-         nNJZVOkaLNn3izVf8h1FHbvr+52u940PJqfmLSzEkyco1kCV2DccJnoYy52x8sax9D5M
-         ASLpn4VOjFst/qgKO46dZa+W4tmS/QA8YhsZyGc5AhGmMmXjDttyNHTjQ68IxJ59JdMc
-         56MLE+Q0XulDlQcu9VO3GVjq4DqRJjhLdGkQJJYlyqork8H1KvG6XaA6BszIO26W3v2i
-         iwZYg3lOHOfir88ITyecouxCu5NoO99ZOdD92lowpO7hm0PcNDW6/ZINFGU8chfenP5M
-         DzRw==
-X-Gm-Message-State: ABy/qLa9S9nXJ33IVTjexVLVKFJ53JzC5Ntx7N7YjKJodblr2a5xDW/u
-	tqtDIeFye45KBWAputzwXfCzFQ==
-X-Google-Smtp-Source: APBJJlHCYvkcNAiDzGn5WtoFYtbokC8XenLhqfnqn+hNwqqsoBOkAiaczEJvIMNfQ+0DgOFWAPKMlg==
-X-Received: by 2002:a05:622a:1790:b0:3f8:4905:9533 with SMTP id s16-20020a05622a179000b003f849059533mr164850qtk.50.1690468979233;
-        Thu, 27 Jul 2023 07:42:59 -0700 (PDT)
-Received: from meerkat.local ([142.113.79.114])
-        by smtp.gmail.com with ESMTPSA id f24-20020ac840d8000000b00404f8e9902dsm481586qtm.2.2023.07.27.07.42.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jul 2023 07:42:58 -0700 (PDT)
-Date: Thu, 27 Jul 2023 10:42:50 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Duje =?utf-8?Q?Mihanovi=C4=87?= <duje.mihanovic@skole.hr>
-Cc: tools@linux.kernel.org
-Subject: Re: [BUG b4] Encoding issues with --auto-to-cc
-Message-ID: <20230727-demise-fruit-52aab8@meerkat>
-References: <1940519.PYKUYFuaPT@radijator>
- <20230726-gush-slouching-a5cd41@meerkat>
- <1858953.tdWV9SEqCh@radijator>
+        d=1e100.net; s=20221208; t=1690483673; x=1691088473;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6XvF866ztULgHIPw5eL1RN11YaiqIOMwtk4/chVGttM=;
+        b=eB2JAEiYiVEwhzELVHAt/bbvsSi+pxuacWfwnoNbWNfzid4QtDiwQ0CjRF7+V+PLue
+         zs91bwNfdxc6PZO3+GBczc+uOTskPtie0agRF261EUJlGFcpTVH7Z2VRB/z9JVK3oDUr
+         zxg7uo1lvoGgeRMdanOmrYmEaQAS8x1kAXAcAotbIwSRzS6ul0DhgcYjwqn4TbmaGxzz
+         XX+gSHhWIOy1nXom4AhBIGPItUFutjcPtxRqyybkoKWecqmqmJoCrrF940xnxUxkAFuR
+         loA+9Plh4GjK3u1ydk06SSXhBCG71E45wD6zYAvrENlx4EVW1b0wuPgJJr8xSaLtY6K8
+         MdcA==
+X-Gm-Message-State: ABy/qLa1YMFz66MAL9MUCSvhZR0HqMoueSbXKNTfH5gjb/65aotKNJTn
+	toZizcRNfuA7kQkt3dqBoukCwzceRY9iyrmeoN9BjwKwy1bJZkDISoTxNoXFBkUhiGuicGspOus
+	siNxIZx/oBObufw/YVjsaAW2a6JYzULYKfDGkT4/IxMVOrdVcTnXSn1vogsbTJqtqI65b9bOD4i
+	k=
+X-Google-Smtp-Source: APBJJlHC0EJ/ZnFMvRwc+vzjo1EJ7tqQHpcDYIDo4IH5U124b4yoxY3GaiX4nIxDTkMdNuvKftKOjR+doQpWtKrh2g==
+X-Received: from jstitt-linux1.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:23b5])
+ (user=justinstitt job=sendgmr) by 2002:a5b:b87:0:b0:d08:ea77:52d4 with SMTP
+ id l7-20020a5b0b87000000b00d08ea7752d4mr1291ybq.12.1690483672710; Thu, 27 Jul
+ 2023 11:47:52 -0700 (PDT)
+Date: Thu, 27 Jul 2023 18:47:36 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1858953.tdWV9SEqCh@radijator>
+Mime-Version: 1.0
+X-B4-Tracking: v=1; b=H4sIAMe7wmQC/x2MQQqAIBAAvxJ7bsGssPpKdNDcag9prBCB9Pek4
+ 8DMZEgkTAmmKoPQzYljKNDUFayHDTsh+8KglW6V0QY3fnCTeOJB1pPgOjRjpzz1pndQqkuoKP9 xBtfB8r4fdDeJKWUAAAA=
+X-Developer-Key: i=justinstitt@google.com; a=ed25519; pk=tC3hNkJQTpNX/gLKxTNQKDmiQl6QjBNCGKJINqAdJsE=
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1690483671; l=1712;
+ i=justinstitt@google.com; s=20230717; h=from:subject:message-id;
+ bh=pw2OnwKxZrU0fqWJMkgCfD8ikP7Zr98XMlM0CGw/HCs=; b=A2pE/g9ugylWNMW57WLW+zpjMGcd4rA3x1kSIAELasXFIvuGartw8/0EXcTAsCmxXMCiovMV1
+ OJubtj1Omd2DCIF+Pgzq/A/NWp9kw08uPvAjwNe48IaFJ/QcDZA7QqI
+X-Mailer: b4 0.12.3
+Message-ID: <20230727-fix-from-header-v1-1-2fb23c0a5da9@google.com>
+Subject: [PATCH b4] b4: fix from header not using real name
+From: Justin Stitt <justinstitt@google.com>
+To: "Kernel.org Tools" <tools@linux.kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+	Nick Desaulniers <ndesaulniers@google.com>, Kees Cook <keescook@chromium.org>, 
+	Justin Stitt <justinstitt@google.com>
+Content-Type: text/plain; charset="utf-8"
 
-On Thu, Jul 27, 2023 at 12:02:16PM +0200, Duje Mihanović wrote:
-> I think it's wrong to say get_maintainer splits up the unicode sequence, it 
-> straight up ignores the first half of the sequence. Perhaps I should file a 
-> bug for get_maintainer.pl?
+When using `b4 send` there seems to be an issue with the real name not
+being included in the From: header.
 
-Yes, you should report the bug for sure. As you can tell from your originally
-submitted series, it's manifested itself multiple times already:
+Here's an example:
+| From:	justinstitt@google.com
 
-	To: =?UTF-8?q?=87?= <duje.mihanovic@skole.hr>
+Whereas, something like the following is preferred:
+| From: Justin Stitt <justinstitt@google.com>
 
--K
+This patch fixes this issue and achieves the preferred behavior (above)
+by properly using both parts of a user's `from` field from their config.
+
+A .gitconfig like this now properly works
+| [sendemail]
+|   from = Justin Stitt <justinstitt@google.com>
+
+It should be noted that myself and Nick (reported this issue) use an
+internal smtpserver called sendgmr. I'm not sure if this is a non-issue
+on other smtpservers but the fix I've outlined in this patch looks
+universal for locally-ran smtp commands.
+
+Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217332#c9
+Signed-off-by: Justin Stitt <justinstitt@google.com>
+---
+ b4/__init__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/b4/__init__.py b/b4/__init__.py
+index b974642..760ba33 100644
+--- a/b4/__init__.py
++++ b/b4/__init__.py
+@@ -3259,7 +3259,7 @@ def get_smtp(dryrun: bool = False) -> Tuple[Union[smtplib.SMTP, smtplib.SMTP_SSL
+         else:
+             envpair = email.utils.parseaddr(fromaddr)
+         if envpair[1]:
+-            smtp += ['-f', envpair[1]]
++            smtp += ['-f', f"{envpair[0]} <{envpair[1]}>"]
+         return smtp, fromaddr
+ 
+     encryption = sconfig.get('smtpencryption')
+
+---
+base-commit: 099c9b47b39b6076752b8c757872080fad8fae56
+change-id: 20230727-fix-from-header-c81940de575b
+
+Best regards,
+--
+Justin Stitt <justinstitt@google.com>
+
