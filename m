@@ -1,46 +1,51 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816481ADCC
-	for <tools@linux.kernel.org>; Tue,  1 Aug 2023 16:14:32 +0000 (UTC)
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-76c4890a220so477931285a.3
-        for <tools@linux.kernel.org>; Tue, 01 Aug 2023 09:14:32 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6710C1F95C
+	for <tools@linux.kernel.org>; Tue,  1 Aug 2023 16:44:56 +0000 (UTC)
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-6873a30d02eso1731438b3a.3
+        for <tools@linux.kernel.org>; Tue, 01 Aug 2023 09:44:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1690906471; x=1691511271;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MMNv7fhK/ipvAP19XkQsCYJRTtXbeiKn2RJ+Ym3NtAo=;
-        b=AY2Kmijx4oD3/ElUBh1QCI3MBa/Rl8ffhESyM1iJFHIarXnclKT0Bqcf9KI2DDrsOQ
-         tcX9+JG3UvnMtFj9Qx5fv0lX+EOF7D9ALbmTvhYKiBkFNseGmej+SpsmP+cQVWDRNbDz
-         jz93PNx41J2xaDnWjwkP+sgPNe/e1Id3MsQE4=
+        d=chromium.org; s=google; t=1690908295; x=1691513095;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=S147MPvqY/qutN/MxWorWre/8LdH2nnh1+DxM4QY/FY=;
+        b=R0GUMN+9KOClhZjASfzXwnHaNqYJ38/hO6m0gvyD1TDA1GMQHJr77YxYn7Cyw4WKbY
+         MOC4hQsPlPAdB0J5jkMdiSzKdAoWwRxVPaGBcqD3fpMg3dm5eSy/2Z5qOL7lgXa6V12c
+         1W5WAJA8U8KoCIEspa+HhBOvqgyX5eUX6a9Lo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690906471; x=1691511271;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MMNv7fhK/ipvAP19XkQsCYJRTtXbeiKn2RJ+Ym3NtAo=;
-        b=DgcAF2VECqBB+PzM0eQeXLE4Vkhw7UVj7XzfgTyr/4YllXjoZx1PAbBWtN3iroSGcr
-         ozDVWhEl0eYX034XI2rl5LutUxANWShDCtisl5L0n+56Pk9MOgDsfPOb6mM+PzTtSXfF
-         4bJqNUGUa6QVIti6MUXwDCQB/Dsma00/7Adc69l/Z95LpJb8tZrjQrWl3Xde3uyPSG9O
-         l8cFqNXNvvD764YhCkSF0r/35yShNYAf51Y22ZdUxpOKa2kOENqvsl5hSOJ9upwBuhl/
-         I56seEfor5kpAg6Nl/fm+YYgAFJFYk+xNMwynjL07neZWpdWO6l2ckIbG0LNnrpXWV2N
-         Ia3Q==
-X-Gm-Message-State: ABy/qLYtON4LubZl/yAWT0iPQsYUU1aqYo4aslcMvZha9VFnw3bGaRw4
-	TENgOsqQeAgOKK4TLB/Bduba7w==
-X-Google-Smtp-Source: APBJJlHRIJ7DE/d/QpgX4yHyxfzrgPPXNaoqI1G2+EHFVU4p+bgnhoygKkZT67Wj5ePntN5qv7RRsg==
-X-Received: by 2002:a05:620a:d83:b0:767:3a10:d6de with SMTP id q3-20020a05620a0d8300b007673a10d6demr14507136qkl.58.1690906470963;
-        Tue, 01 Aug 2023 09:14:30 -0700 (PDT)
-Received: from meerkat.local ([142.113.79.114])
-        by smtp.gmail.com with ESMTPSA id c10-20020a05620a164a00b00767d4a3f4d9sm4242670qko.29.2023.08.01.09.14.30
+        d=1e100.net; s=20221208; t=1690908295; x=1691513095;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=S147MPvqY/qutN/MxWorWre/8LdH2nnh1+DxM4QY/FY=;
+        b=Cn84/+r2o8KiwrOEHmwmQaulxThYPxiHlBFifND3paDsDGqp1LPeVXvQgFBdfiBLua
+         ALL3rI0UyEDmwnHavdDV9aqMtveDUSVtCBfCL38mZ7hsEgOkagrUrGj1IL/vY9byNg4y
+         6rxM4D7+hPSRlmNgDjJKXeBYfjcH9bLxaIQB7R1eLGz29eh3Ive9itVbhsHdsDAdIu+h
+         Td8dfoLefIYJ2JRqXupUlTRMM3RCs6YXUvpGbrFrplZitN/G4HiCSJgNCyIRE4KO8zcV
+         zwLHAlfWDtpIUIGKGJAHiPbpHw2TLXMUlOKCtK3Fgi4RpijJ6kY+Zx2J5V92kvBDFV+x
+         LpXQ==
+X-Gm-Message-State: ABy/qLZzDP0iZl5H2gKR93pl1W6cJgO8kWSzkKWHhRKJPn1ccEbuENXb
+	uUi8Ctvz353aOCFXLlFHjAZnlg==
+X-Google-Smtp-Source: APBJJlEcRQQND32B6FRhBX9nnNKQ8nPbs5rcbbckge4wpLeC585uHE0VJZy7AxEA9nMmWJEjpf0cpA==
+X-Received: by 2002:a05:6a21:33aa:b0:137:f985:f384 with SMTP id yy42-20020a056a2133aa00b00137f985f384mr14632226pzb.0.1690908295598;
+        Tue, 01 Aug 2023 09:44:55 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id bm1-20020a056a00320100b006875be4163csm710988pfb.17.2023.08.01.09.44.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Aug 2023 09:14:30 -0700 (PDT)
-Date: Tue, 1 Aug 2023 12:14:22 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: j.granados@samsung.com
-Cc: "Kernel.org Tools" <tools@linux.kernel.org>
-Subject: Re: [PATCH b4] ez: Add a --web arg to force web endpoint
-Message-ID: <20230801-giggly-postnasal-707142@meerkat>
-References: <20230801-jag-add_web_switch-v1-1-a0021c1ee8c2@samsung.com>
+        Tue, 01 Aug 2023 09:44:54 -0700 (PDT)
+Date: Tue, 1 Aug 2023 09:44:54 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Kees Cook <kees@kernel.org>, Justin Stitt <justinstitt@google.com>,
+	"Kernel.org Tools" <tools@linux.kernel.org>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Subject: Re: [PATCH b4] b4: fix from header not using real name
+Message-ID: <202308010939.9EC4C98@keescook>
+References: <20230727-fix-from-header-v1-1-2fb23c0a5da9@google.com>
+ <A250134A-7A60-47EB-8849-DB39D08B223B@kernel.org>
+ <CAKwvOdn0ePdAfQBby9zaXi7CA64Foc2NRJfzYyQHaOhz2C9+VA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -49,31 +54,56 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230801-jag-add_web_switch-v1-1-a0021c1ee8c2@samsung.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKwvOdn0ePdAfQBby9zaXi7CA64Foc2NRJfzYyQHaOhz2C9+VA@mail.gmail.com>
 
-On Tue, Aug 01, 2023 at 05:03:36PM +0200, Joel Granados via B4 Relay wrote:
-> From: Joel Granados <j.granados@samsung.com>
+On Tue, Aug 01, 2023 at 09:12:35AM -0700, Nick Desaulniers wrote:
+> On Thu, Jul 27, 2023 at 4:20 PM Kees Cook <kees@kernel.org> wrote:
+> >
+> > On July 27, 2023 11:47:36 AM PDT, Justin Stitt <justinstitt@google.com> wrote:
+> > >When using `b4 send` there seems to be an issue with the real name not
+> > >being included in the From: header.
+> > >
+> > >Here's an example:
+> > >| From:        justinstitt@google.com
+> > >
+> > >Whereas, something like the following is preferred:
+> > >| From: Justin Stitt <justinstitt@google.com>
+> >
+> > Hmm. There are actually two "From" fields. There's envelope sender "From" (which is what -f sets), and the in-body "From:" field. I wonder if b4 isn't constructing the in-body From: field, and when missing, the MUAs add it based on the -f flag?
+> >
+> > >This patch fixes this issue and achieves the preferred behavior (above)
+> > >by properly using both parts of a user's `from` field from their config.
+> > >
+> > >A .gitconfig like this now properly works
+> > >| [sendemail]
+> > >|   from = Justin Stitt <justinstitt@google.com>
+> >
+> > Perhaps what's needed is this (which is what I've been using forever):
+> >
+> > [sendemail]
+> >         envelopesender = auto
 > 
-> Make it easier to prefer going through the web endpoint by adding an
-> argument that will force this path. This is for users that want to use
-> B4 for preparing and sharing patchsets over mail and need an argument to
-> activate the web endpoint whenever needed, but want to default to smtp
-> server for the rest.
+> Thanks for the tip; I'll give that a shot. Do you have `from` set
+> under `[sendemail]` as well or no?
 
-Okay, that looks good to me, but can you please make two changes:
+I don't, no. I also don't use "b4 send" (just "git send-email"), so it's
+not clear to me what's actually going wrong here. It still looks to me
+like either "b4 send" isn't writing a "From:" header, or Justin (and
+your?) MUA is removing/replacing it when it processes the "-f" argument.
 
-> @@ -330,6 +330,8 @@ def setup_parser() -> argparse.ArgumentParser:
->                            help='Initiate a new web authentication request')
->      ag_sendh.add_argument('--web-auth-verify', dest='auth_verify', metavar='VERIFY_TOKEN',
->                            help='Submit the token received via verification email')
-> +    ag_sendh.add_argument('--web', dest='send_web', action='store_true', default=False,
-> +                          help="Force the send command to go through the web endpoint")
+FWIW, my MUA is postfix. (Though actually, I guess, it's the MTA, b4 or
+git is the MUA... whatever. The thing I hand off to is postfix.)
 
-1. It doesn't really belong in this argument group (it's just for
-   setting up authentication and says so in the title). You can just put this
-   switch with the main arguments, perhaps as the last entry.
-2. Call it --use-web-endpoint instead of just --web
+For the relevant ~/.gitconfig settings, I have:
 
-Thanks!
+[user]
+        email = keescook@chromium.org
+        name = Kees Cook
+[sendemail]
+        envelopesender = auto
+        confirm = auto
 
--K
+
+-- 
+Kees Cook
