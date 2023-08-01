@@ -1,40 +1,40 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54154DC89
-	for <tools@linux.kernel.org>; Tue,  1 Aug 2023 20:07:54 +0000 (UTC)
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-4fb7dc16ff0so9937089e87.2
-        for <tools@linux.kernel.org>; Tue, 01 Aug 2023 13:07:54 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341644DC94
+	for <tools@linux.kernel.org>; Tue,  1 Aug 2023 22:21:03 +0000 (UTC)
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-79ae250266cso275418241.2
+        for <tools@linux.kernel.org>; Tue, 01 Aug 2023 15:21:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1690920472; x=1691525272;
+        d=google.com; s=20221208; t=1690928463; x=1691533263;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J3mSheMI40WiNqBKdtyo+yyjkhO+ZcVNTKLCp/pP+Lw=;
-        b=zJrEFXkuRUQJGJNvhOSRot+nzdGxANAvMR4Cc7S4XUuhT5D0LdjlW+ipPSGTZ8AEFb
-         cJ6U6oPI/ApuCflzKK0NfxGVMqoBZQvw+kddhsBkTY9GtZo62T4/Frx+gunfNElHcPgR
-         aHuthS/nEnUHlC4br7oEV+NleqT9U8Gt1SulK06Tv0aqE/r7HvclFgIFdvHxfNnZdEQ6
-         v7AD6plPpwUDB90bNQSUvUACCoyC8bdP25rq3yFnVEIb0oPOuLoMXT9qCqpo38YwV4lR
-         /ho2DPf0USv7b9j6ucHE9DliXAIjWDUlTQVt19i+X/9onD7asvOi8GVJppdq3qiIv1oO
-         4o6Q==
+        bh=PN3PfQjTVmib+Dr2WxpOEN5hWpX8VJ/MA2Gqqg3/57M=;
+        b=yKpCw06eM+gEDu6zXqgvXjbj17steWSNnHJ3r0nl/QFc6yFBj6hW8gA0F5MkrlVagN
+         /JXUwm9beib7LF9acQvBQI3wOlCadH1FyicaX8ORzVLgCguUuIQSzgmxqcTI/hEpNjws
+         LsjhVLq7NO46G7s2AM6trPe8s70YqI4H505ZNhzSnl+6MAWfZREp6OCjiJnoaPoKocY7
+         Yi01bzvs6iFMcNniJqPXGFx7pPeATfEwi3owehxZI9T/jkgkzyFibDHreMMkxcBgM90e
+         wP+DyGa7SdYNfpfah3+4tlJTd++Geu9MTHpJegg/cbuB7DnkHOGcdDB12d0VKpSTsGgm
+         tJ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690920472; x=1691525272;
+        d=1e100.net; s=20221208; t=1690928463; x=1691533263;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=J3mSheMI40WiNqBKdtyo+yyjkhO+ZcVNTKLCp/pP+Lw=;
-        b=XIFL0T2feY5m8hvRx7bbunpwymRuqqLoSftKEwE1yXEhWBepjKe7aUEmvKZpB7XybF
-         BPYGkBA4U691GH8gEztIZEvwFrMeuAjWbF29/3TvIs2uF1fUVIpZiF3L+h4TjA1UryL0
-         XgyKIBiulNIBRuPgMsrEUTu4ai/f4U1tX1ZsxIuNSImUmIAnbDFA2wUAxkXtypM6aYMI
-         tEiby02Ipd6cjUbLtXkt5qbwleQjvDq/xxqaYjt27ofI6zUHc776VYEmvktExad/so8L
-         hLE77vyGbQTlKsn33xFu9xyyWvmEgMp0Xfv/XRPxEdhuuNxM3wz6guUPOrBunnDLuw7x
-         sjOw==
-X-Gm-Message-State: ABy/qLYIzQulDLnXL0mfBxLTc5c7OJnk3wWgYZBvq8/gWLYQ5/v+LFUL
-	i/YZwGEZfxRivT7MhLHx1OCknVDzNz9x/lTCpwweVQ==
-X-Google-Smtp-Source: APBJJlEuwnPg5ZtTDQNGrwCWXWgWQif/TbPOwicSE2C9t5DXyyXyND8hE4qwJWdXaltdgwxunEszW4znSoC9P8XdG94=
-X-Received: by 2002:a19:771b:0:b0:4fd:da65:d10 with SMTP id
- s27-20020a19771b000000b004fdda650d10mr2561444lfc.36.1690920472301; Tue, 01
- Aug 2023 13:07:52 -0700 (PDT)
+        bh=PN3PfQjTVmib+Dr2WxpOEN5hWpX8VJ/MA2Gqqg3/57M=;
+        b=ZFvwGoozWnsgLlvUSxSThXSBG1L1zPCIAsQMYfl1PpuhZhcTQfShLisgiXTdho6nbQ
+         rmrYKlVTh6+0WHi9I/tABClPE+nx+A6GVjPbd3+T5gxvUUXy+MLWn3pgFfNPvLilJGzc
+         n7KV5mu1eIH++Zgsbr9LcMy1WIMWBXhH7HtuP8pJc38sPb7uj1dpNuazwnnWe0hoiS05
+         SAPRc4lNd6S/zIt5HO4yCQL1ZGWf2PQCjEeSFI8KjZlmQL6lDJOzscluB+ctbMgAPy0s
+         dEmHQUdwG2dSBXmQkgVkvQ6hEyz8fdi+EC2vS+hYr7ZR7PJXQkpSF22L4aMr/bKxwDLT
+         uDKA==
+X-Gm-Message-State: ABy/qLanZiqweCo2ao6mR6LhGm1fLOXYMWruWh2vwbH18MkioZMHKkyX
+	hcuDKmycjEPNbTeHZMA6JcJf0B1lopoduT38H+8rdA==
+X-Google-Smtp-Source: APBJJlFH4SUh1BmWjOmTiGDqBMQ0yPXg/PM5EIJ9aw9FaLqGBYewsmDPzzRyLRDutt+rTPM0Kz0UW1kQanghv9trGOU=
+X-Received: by 2002:a05:6102:527:b0:444:bf88:c6d5 with SMTP id
+ m7-20020a056102052700b00444bf88c6d5mr3509075vsa.1.1690928462741; Tue, 01 Aug
+ 2023 15:21:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -43,37 +43,98 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 References: <20230727-fix-from-header-v1-1-2fb23c0a5da9@google.com>
  <A250134A-7A60-47EB-8849-DB39D08B223B@kernel.org> <CAKwvOdn0ePdAfQBby9zaXi7CA64Foc2NRJfzYyQHaOhz2C9+VA@mail.gmail.com>
- <202308010939.9EC4C98@keescook> <20230801-exhaust-movie-971927@meerkat>
-In-Reply-To: <20230801-exhaust-movie-971927@meerkat>
-From: Justin Stitt <justinstitt@google.com>
-Date: Tue, 1 Aug 2023 13:07:38 -0700
-Message-ID: <CAFhGd8pA31-dCVf-vuWjZm4UCJpuA+mVbQFtEKzBwwXZLVHCWA@mail.gmail.com>
+ <202308010939.9EC4C98@keescook>
+In-Reply-To: <202308010939.9EC4C98@keescook>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Tue, 1 Aug 2023 15:20:51 -0700
+Message-ID: <CAKwvOdkCCF8iVW2RKJBhn+Ob=dQQxe7R2zc01K4njXdAS7SGxg@mail.gmail.com>
 Subject: Re: [PATCH b4] b4: fix from header not using real name
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Kees Cook <keescook@chromium.org>, Nick Desaulniers <ndesaulniers@google.com>, 
-	Kees Cook <kees@kernel.org>, "Kernel.org Tools" <tools@linux.kernel.org>
+To: Kees Cook <keescook@chromium.org>
+Cc: Kees Cook <kees@kernel.org>, Justin Stitt <justinstitt@google.com>, 
+	"Kernel.org Tools" <tools@linux.kernel.org>, 
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 1, 2023 at 10:05=E2=80=AFAM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
+On Tue, Aug 1, 2023 at 9:44=E2=80=AFAM Kees Cook <keescook@chromium.org> wr=
+ote:
 >
-> On Tue, Aug 01, 2023 at 09:44:54AM -0700, Kees Cook wrote:
-> > I don't, no. I also don't use "b4 send" (just "git send-email"), so it'=
-s
-> > not clear to me what's actually going wrong here. It still looks to me
-> > like either "b4 send" isn't writing a "From:" header, or Justin (and
-> > your?) MUA is removing/replacing it when it processes the "-f" argument=
-.
->
-> I'm pretty sure this is the side-effect of using sendgmr, which forces th=
-e
-> in-header From: to match what was passed in the -f parameter. It's just
-> another way in which it differs from /bin/sendmail.
+> On Tue, Aug 01, 2023 at 09:12:35AM -0700, Nick Desaulniers wrote:
+> > On Thu, Jul 27, 2023 at 4:20=E2=80=AFPM Kees Cook <kees@kernel.org> wro=
+te:
+> > >
+> > > On July 27, 2023 11:47:36 AM PDT, Justin Stitt <justinstitt@google.co=
+m> wrote:
+> > > >When using `b4 send` there seems to be an issue with the real name n=
+ot
+> > > >being included in the From: header.
+> > > >
+> > > >Here's an example:
+> > > >| From:        justinstitt@google.com
+> > > >
+> > > >Whereas, something like the following is preferred:
+> > > >| From: Justin Stitt <justinstitt@google.com>
+> > >
+> > > Hmm. There are actually two "From" fields. There's envelope sender "F=
+rom" (which is what -f sets), and the in-body "From:" field. I wonder if b4=
+ isn't constructing the in-body From: field, and when missing, the MUAs add=
+ it based on the -f flag?
+> > >
+> > > >This patch fixes this issue and achieves the preferred behavior (abo=
+ve)
+> > > >by properly using both parts of a user's `from` field from their con=
+fig.
+> > > >
+> > > >A .gitconfig like this now properly works
+> > > >| [sendemail]
+> > > >|   from =3D Justin Stitt <justinstitt@google.com>
+> > >
+> > > Perhaps what's needed is this (which is what I've been using forever)=
+:
+> > >
+> > > [sendemail]
+> > >         envelopesender =3D auto
+> >
 
-Do you think a patch to b4 specifically catered to `sendgmr` is the
-right call here? If not, I can hold onto my patch locally and use it
-for my purposes + anyone else who wants it.
+Sending via "/usr/bin/sendgmr -i -f auto"
+  [PATCH] word-at-a-time: use the same return type for has_zero
+regardless of endianness
+CRITICAL: Error running /usr/bin/sendgmr -i -f auto: F0801
+15:18:46.325579       1 sendgmr.go:277] Send failed: sending email
+failed (permanent failure): PERM_FAILURE: PERM_FAIL_SENDER_DENIED With
+GMR service:selector "_flex_", the envelope from address can only be
+{LDAP}+anything@google.com.
 
+> > Thanks for the tip; I'll give that a shot. Do you have `from` set
+> > under `[sendemail]` as well or no?
 >
-> -K
+> I don't, no. I also don't use "b4 send" (just "git send-email"), so it's
+
+Well, we're trying to get that working with sendgmr + b4, not postfix
++ git send email.
+
+> not clear to me what's actually going wrong here. It still looks to me
+> like either "b4 send" isn't writing a "From:" header, or Justin (and
+> your?) MUA is removing/replacing it when it processes the "-f" argument.
+>
+> FWIW, my MUA is postfix. (Though actually, I guess, it's the MTA, b4 or
+> git is the MUA... whatever. The thing I hand off to is postfix.)
+>
+> For the relevant ~/.gitconfig settings, I have:
+>
+> [user]
+>         email =3D keescook@chromium.org
+>         name =3D Kees Cook
+> [sendemail]
+>         envelopesender =3D auto
+>         confirm =3D auto
+>
+>
+> --
+> Kees Cook
+
+
+
+--=20
+Thanks,
+~Nick Desaulniers
