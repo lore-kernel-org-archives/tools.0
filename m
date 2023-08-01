@@ -1,72 +1,139 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FACE57A
-	for <tools@linux.kernel.org>; Thu, 27 Jul 2023 23:20:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620AFC433C7;
-	Thu, 27 Jul 2023 23:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F07F4DC6B
+	for <tools@linux.kernel.org>; Tue,  1 Aug 2023 15:03:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 32922C433C7;
+	Tue,  1 Aug 2023 15:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690500008;
-	bh=yU7qfpYbJrjUiSjaVsB3UmyALDfSE45Q5a0ActuCi7w=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=e3Qdoe5zR43yJVO111PY5wP/hOxrQtruccscHxz/FoJxFc3G2AOJ3TfOrJc94x78/
-	 3RTa5ObB0R2UKH5rZs6heJarH3f2vjDisX/C4zE9RRyXQk0NMowZY3AMv7ApTm/6ld
-	 sZDGV4iLvtsQQj1BAoDQjwwOLbib3oUJnn0FGAT/aqPpYZJw2bayVxzT1dFZBkIgDE
-	 kzo2yBArBa/8UiTo1juoe5/ZPfhvr7HSq68Ls1mDzcZJHhTjbAWabOWu8fIM0dCggP
-	 clBpZ23V/4Ey/H+umij+LyK+Qwon5AHmmEYolmJD2RddCBdUwQx/Kribqhvr1IF6Yu
-	 DeDbSpKx7r09w==
-Date: Thu, 27 Jul 2023 16:20:05 -0700
-From: Kees Cook <kees@kernel.org>
-To: Justin Stitt <justinstitt@google.com>,
- "Kernel.org Tools" <tools@linux.kernel.org>
-CC: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- Nick Desaulniers <ndesaulniers@google.com>,
- Kees Cook <keescook@chromium.org>
-Subject: Re: [PATCH b4] b4: fix from header not using real name
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20230727-fix-from-header-v1-1-2fb23c0a5da9@google.com>
-References: <20230727-fix-from-header-v1-1-2fb23c0a5da9@google.com>
-Message-ID: <A250134A-7A60-47EB-8849-DB39D08B223B@kernel.org>
+	s=k20201202; t=1690902230;
+	bh=e2yxKFp91n5gMovn1gJ17pHqUdY4kcMBH4CQJkQKq9c=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=BsH8Nx9JS4ggd3Cv0YmqqJyZvgNJoIHY/IipymVA/kT66aLw8wzRoURiB65LexwI/
+	 +CWmXSdBKmTufu8LTn20hcnQ5uoGNnuOEODMASpOQ8w3XxkbPxuMuTd+x5TzWMUPFV
+	 J1ZDVmWl69Z7le66jMxL47I93MporoKGZ8aVW19J4yE/B3Qt0HNay8HpiB8w+9cCG0
+	 1lIkvSkoKgWkW5sU08imsMrCQtQcKPjkvz6c0SOm7BqhQBs4hIqCvn/fQPX1y4aRcp
+	 nlJgSFfOodVZjRRiok197gVRIRyLAI2y2sKljaVBstm7IDiRVO/Oqw7M7wZfrmYrhW
+	 UCExfjv/IyJzg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D9F1C0015E;
+	Tue,  1 Aug 2023 15:03:50 +0000 (UTC)
+From: Joel Granados via B4 Relay <devnull+j.granados.samsung.com@kernel.org>
+Date: Tue, 01 Aug 2023 17:03:36 +0200
+Subject: [PATCH b4] ez: Add a --web arg to force web endpoint
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230801-jag-add_web_switch-v1-1-a0021c1ee8c2@samsung.com>
+X-B4-Tracking: v=1; b=H4sIAMceyWQC/x3MQQqAIBBA0avErBNskpKuEiGWU02LCo0MpLsnL
+ d/i/wSBPFOArkjg6ebAx55RlQVMq90XEuyyASXWUstKbHYR1jkTaTQh8jWtQqFVqNu20eQgh6e
+ nmZ9/2sOoYHjfD1ogo5RoAAAA
+To: "Kernel.org Tools" <tools@linux.kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Joel Granados <j.granados@samsung.com>
+X-Mailer: b4 0.13-dev-8c87d
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3466;
+ i=j.granados@samsung.com; h=from:subject:message-id;
+ bh=h27KrWtIi1eIyqHt0+SkV95x7OnyS4fVmHaeCUXDJfk=;
+ b=owEB7QES/pANAwAKAbqXzVK3lkFPAcsmYgBkyR7U8pJGV5L9obxlUVTOB30y1+47NtimxBbL5
+ pg0ek+NwiSJAbMEAAEKAB0WIQSuRwlXJeYxJc7LJ5C6l81St5ZBTwUCZMke1AAKCRC6l81St5ZB
+ TzQ/C/9vKrxsGl9dDowgSpGl35TkC23EngAdapv5ONucZQc5uLGmHXaRpxKXEHNXdbe7YxOAbcP
+ Hme6+38RfcA71ThwS6EHhF0VD/lFBYYQbFBKzbp9SqKrNSErbDk0G1ZM2smO7UXmnIQR/Sn859w
+ VWjXoE6RbDrIEmnaKVHjdMIL1saSKdx1gVZ76UUJb9JINWfudTFzxcsBNnOORnihUPCwkPGa39q
+ K1o7/G7BJu6d/kzpPAXhacRi4LR3Z4gklNpqzMVvkvXmBoS/WdJx11XLuvBgkf3Y5gYWNHMyxcA
+ ttcnDx1zJ1wDcOyqyvSs+o2wG3AeOP2kWT8S3trzsT28AAllMOjJwaMcZgYRRejhbh1d1p2NrPa
+ 1282fBgRcw3+F7WyiJaAUMcjnp/dmThARVvEXKeEFw0BfZu36ZJTR1rP+VmY+m90Ixdv0C9X5/j
+ 6B3u62a5oKw0FJCJU2kDE0ryIsUGIvled7qw6vZS+z0k+M2T+bo5IJq5DtLShNQxFxQLA=
+X-Developer-Key: i=j.granados@samsung.com; a=openpgp;
+ fpr=F1F8E46D30F0F6C4A45FF4465895FAAC338C6E77
+X-Endpoint-Received:
+ by B4 Relay for j.granados@samsung.com/default with auth_id=70
+X-Original-From: Joel Granados <j.granados@samsung.com>
+Reply-To: <j.granados@samsung.com>
 
-On July 27, 2023 11:47:36 AM PDT, Justin Stitt <justinstitt@google=2Ecom> w=
-rote:
->When using `b4 send` there seems to be an issue with the real name not
->being included in the From: header=2E
->
->Here's an example:
->| From:	justinstitt@google=2Ecom
->
->Whereas, something like the following is preferred:
->| From: Justin Stitt <justinstitt@google=2Ecom>
+From: Joel Granados <j.granados@samsung.com>
 
-Hmm=2E There are actually two "From" fields=2E There's envelope sender "Fr=
-om" (which is what -f sets), and the in-body "From:" field=2E I wonder if b=
-4 isn't constructing the in-body From: field, and when missing, the MUAs ad=
-d it based on the -f flag?
+Make it easier to prefer going through the web endpoint by adding an
+argument that will force this path. This is for users that want to use
+B4 for preparing and sharing patchsets over mail and need an argument to
+activate the web endpoint whenever needed, but want to default to smtp
+server for the rest.
 
->This patch fixes this issue and achieves the preferred behavior (above)
->by properly using both parts of a user's `from` field from their config=
-=2E
->
->A =2Egitconfig like this now properly works
->| [sendemail]
->|   from =3D Justin Stitt <justinstitt@google=2Ecom>
+Signed-off-by: Joel Granados <j.granados@samsung.com>
+---
+ b4/command.py             |  2 ++
+ b4/ez.py                  |  4 +---
+ docs/contributor/send.rst | 10 ++++++----
+ 3 files changed, 9 insertions(+), 7 deletions(-)
 
-Perhaps what's needed is this (which is what I've been using forever):
+diff --git a/b4/command.py b/b4/command.py
+index 1ae73d2..15ca370 100644
+--- a/b4/command.py
++++ b/b4/command.py
+@@ -330,6 +330,8 @@ def setup_parser() -> argparse.ArgumentParser:
+                           help='Initiate a new web authentication request')
+     ag_sendh.add_argument('--web-auth-verify', dest='auth_verify', metavar='VERIFY_TOKEN',
+                           help='Submit the token received via verification email')
++    ag_sendh.add_argument('--web', dest='send_web', action='store_true', default=False,
++                          help="Force the send command to go through the web endpoint")
+     sp_send.set_defaults(func=cmd_send)
+ 
+     return parser
+diff --git a/b4/ez.py b/b4/ez.py
+index 3799e07..e38827f 100644
+--- a/b4/ez.py
++++ b/b4/ez.py
+@@ -1459,10 +1459,8 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
+         pathlib.Path(cmdargs.output_dir).mkdir(parents=True, exist_ok=True)
+ 
+     sconfig = b4.get_sendemail_config()
+-    # If we have an smtp server defined, always use that instead of the endpoint
+-    # we may make this configurable in the future, but this almost always makes sense
+     endpoint = None
+-    if not sconfig.get('smtpserver'):
++    if not sconfig.get('smtpserver') or cmdargs.send_web:
+         endpoint = config.get('send-endpoint-web', '')
+         if not re.search(r'^https?://', endpoint):
+             logger.debug('Endpoint does not start with https, ignoring: %s', endpoint)
+diff --git a/docs/contributor/send.rst b/docs/contributor/send.rst
+index 9be8d1c..ca7f082 100644
+--- a/docs/contributor/send.rst
++++ b/docs/contributor/send.rst
+@@ -124,9 +124,10 @@ You should now be able to send patches via this web submission endpoint.
+ 
+ Using your own SMTP server
+ --------------------------
+-B4 will use the ``sendemail`` section from your git configuration, but
+-it only supports the most common subset of options. The vast majority of
+-servers will only need the following settings::
++If there is a ``sendmail`` section in your git configuration, B4 will try use
++that by default instead of the web endpoint. Only the most common subset of
++options are supported. The vast majority of servers will only need the
++following settings::
+ 
+     [sendemail]
+        smtpServer = smtp.example.org
+@@ -136,7 +137,8 @@ servers will only need the following settings::
+        smtpPass = [omitted]
+ 
+ You can also set up msmtp or a similar tool and specify the path to the
+-``sendmail``-compliant binary as the value for ``smtpServer``.
++``sendmail``-compliant binary as the value for ``smtpServer``. You can force B4
++to use the web endpoint by passing ``--web`` to the send command.
+ 
+ Sending your patches
+ --------------------
 
-[sendemail]
-	envelopesender =3D auto
+---
+base-commit: 099c9b47b39b6076752b8c757872080fad8fae56
+change-id: 20230801-jag-add_web_switch-42a4287768ed
 
+Best regards,
+-- 
+Joel Granados <j.granados@samsung.com>
 
-
---=20
-Kees Cook
