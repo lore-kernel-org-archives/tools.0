@@ -1,68 +1,77 @@
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB75479CF;
-	Wed,  2 Aug 2023 13:53:24 +0000 (UTC)
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2b9f48b6796so38212531fa.3;
-        Wed, 02 Aug 2023 06:53:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A09479F1
+	for <tools@linux.kernel.org>; Wed,  2 Aug 2023 14:11:44 +0000 (UTC)
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-63d4b5890a0so35993846d6.2
+        for <tools@linux.kernel.org>; Wed, 02 Aug 2023 07:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690984402; x=1691589202;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2tdq5unLUHfqytgeLDysQPslRiRNIboMaKu0ybniGtQ=;
-        b=myuNZNGwE3GaDuDrXmi6xJse/DWtVnUMJYj1rnFqaxnK+lcSkIczxahGCERFuP4ohV
-         drndJI7JL4Tvm/WtlFS6Wd8RyqvZ7BZ0s2dEkfzQ7j0XGvMINmlKRMD+iaysNfMiIWeN
-         QXganT+pVIU88/iG6vr2BRs6iNMpIK5G2dAPHqi/l/reBl8g7ZCYpY90yh0Dz2nXxwUr
-         8RZ/oFOS03NnHPJvH/PB3ASjdHpTdXaRGYCPW8hZjRgDNALt05N1GI3a5OS0ZmMB0JCU
-         n+J/71nFS4aDjvB4jzBTR+6deT0IYlqhtQbTV4mC0p9bC3nzxEZAkp0k4MLaqtH291aJ
-         LquQ==
+        d=linuxfoundation.org; s=google; t=1690985504; x=1691590304;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=kf80teLEbPHcRdOUL6lRjhfpJhOugqIup/sh5NpTGK0=;
+        b=AjBUSO/6lbGkVwHqk32BrIUIm62Oajf6BtzNoiV/NQE+rxfXOluOc/nhm1NPz64EPV
+         kMfPgLLPdpyZhTUg2PbgwB23CSIzOCKCGilqJuJtDlUq8JOzOis1z+1V82nGTHSPnejO
+         tV6B9u0TwhhS2A1UFGxf1zdOjWtA12OjBFkZI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690984402; x=1691589202;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2tdq5unLUHfqytgeLDysQPslRiRNIboMaKu0ybniGtQ=;
-        b=QMn2gP1j/rJyAMLceb879CCoOODk2UZyZy4/cYq7GnW1bCzMC9dWv5cqW0rxjT7wus
-         xOT29GLMEvCqeEzvDucNCBJDpwHBX5HA18Qp1XlUrTpBA1VeieKoWQiUR7GGA76zc0Ea
-         VOuAv3axJTl2JhYbl6P06eS2czfD+qzwy9ofvyWb8qslUzpnPR9sGoUFu201fBdJ9vM8
-         hXP13JkmCLow+zQJTpfyXQAr14P7487E4LPxPdWQTEWv4wLiyE3kn5CMThEpPdRWnfWG
-         27gC8o9XdoJScp5Hrw+VSAjtkb98kQUmX+32fXZbWCQsFOtGs2YHr+GLZBx5GQhFVj22
-         Z1vA==
-X-Gm-Message-State: ABy/qLay/JEQdBukWuvkadJRwGJd27tU8Iyxmo01Vab+zv7QWt0jrRKH
-	9W60w98e+aVdF3T7QnyVkws+vijq2ezEcJMCyfRq+BpZZo4=
-X-Google-Smtp-Source: APBJJlGyfFYjJAJnMWgwikkhNUyjT0lbacUckMF76QjpNdafDY6Yg7DUVqCEg5EUqPu9kGoegPfdItSvB2AhhrBDVSA=
-X-Received: by 2002:a2e:3e07:0:b0:2b9:dd5d:5d0c with SMTP id
- l7-20020a2e3e07000000b002b9dd5d5d0cmr4400327lja.52.1690984402179; Wed, 02 Aug
- 2023 06:53:22 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690985504; x=1691590304;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kf80teLEbPHcRdOUL6lRjhfpJhOugqIup/sh5NpTGK0=;
+        b=BHA4k3jVVv4WFT/4fh3uSNL96kVwDL1ZHUFuxkhKF9PxR6PM+mAbgdd95JvoTMsLPK
+         xpNozDEL7Fv8gKKsY/lB0DVcRX+lJGyTINO6sDAHk43QXM/iVl1HTIwwm494BBNhW6Ed
+         33XU4XWMD+r3reW97puocshJsvsrGOCqAkz8coH1KIfhqaBKmFQ8cR3XmCs8rUuQ3NUF
+         vja5Zd5EMhZFKXrMaGoVrPkoms98G0W93V9jU55ncNA1bBARO3TpqCGsDVMjFBdYsUZl
+         MKA9aSZPb+e0YG8FEYSrymg+9W6pnKcTXceB9y/nbKhOj4bhyVbmsVzZ0In5rjSMT8YL
+         nBbA==
+X-Gm-Message-State: ABy/qLaxTNbMxl6Hlw2apsW/kj6nn4qLD1j3hhTQFu2lFWWkgWzS9pMN
+	3wLEAsFX9y7BxIRYpVwPIOw3HQ==
+X-Google-Smtp-Source: APBJJlFQItntLdpVrAi8VjKbT3SEQgjDvXQYMGkoxR/ylWNHiCQDpSy3blCyu6ShIKd10ritezqAnQ==
+X-Received: by 2002:a0c:fa88:0:b0:63d:8fc:ae8a with SMTP id o8-20020a0cfa88000000b0063d08fcae8amr15349797qvn.2.1690985503928;
+        Wed, 02 Aug 2023 07:11:43 -0700 (PDT)
+Received: from meerkat.local ([142.113.79.114])
+        by smtp.gmail.com with ESMTPSA id p4-20020a0c8c84000000b0063d281e22f1sm5539125qvb.17.2023.08.02.07.11.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Aug 2023 07:11:43 -0700 (PDT)
+Date: Wed, 2 Aug 2023 10:11:34 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Chuck Lever <chucklever@gmail.com>
+Cc: users@linux.kernel.org, tools@linux.kernel.org
+Subject: Re: Most of my "b4 am" runs fail the DKIM test
+Message-ID: <20230802-failing-cheer-6f381c@meerkat>
+References: <CAFMMQGt=-0HRpmb+fD0e_LVeZ_TPr-8QEPnorAkffrVOowb4dQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-From: Chuck Lever <chucklever@gmail.com>
-Date: Wed, 2 Aug 2023 09:53:10 -0400
-Message-ID: <CAFMMQGt=-0HRpmb+fD0e_LVeZ_TPr-8QEPnorAkffrVOowb4dQ@mail.gmail.com>
-Subject: Most of my "b4 am" runs fail the DKIM test
-To: users@linux.kernel.org, tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFMMQGt=-0HRpmb+fD0e_LVeZ_TPr-8QEPnorAkffrVOowb4dQ@mail.gmail.com>
 
-I recently started seeing this quite a bit:
+On Wed, Aug 02, 2023 at 09:53:10AM -0400, Chuck Lever wrote:
+> I recently started seeing this quite a bit:
+> 
+>   ✗ [PATCH v4 1/2] SUNRPC: add verbose parameter to __svc_print_addr()
+>   ✗ [PATCH v4 2/2] NFSD: add rpc_status entry in nfsd debug filesystem
+>   ---
+>   ✗ BADSIG: DKIM/kernel.org
+> 
+> In fact, even my own patches (sent via the kernel.org SMTP relay) fail
+> this check.
+> 
+> What am I doing wrong?
 
-  =E2=9C=97 [PATCH v4 1/2] SUNRPC: add verbose parameter to __svc_print_add=
-r()
-  =E2=9C=97 [PATCH v4 2/2] NFSD: add rpc_status entry in nfsd debug filesys=
-tem
-  ---
-  =E2=9C=97 BADSIG: DKIM/kernel.org
+It's really hard to troubleshoot, but you can try the following:
 
-In fact, even my own patches (sent via the kernel.org SMTP relay) fail
-this check.
+    $ curl -s https://lore.kernel.org/linux-nfs/5b0eff4e3ef9bf9621f5095189933f60def40f0d.1690569488.git.lorenzo@kernel.org/raw | dkimverify
+    signature ok
 
-What am I doing wrong?
+If you don't get "signature ok", then my guess would be that there's some
+problem performing DNS lookups for public keys.
 
-
---=20
-"We cannot take our next breath without the exhale."
- -- Ellen Scott Grable
+-K
