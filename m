@@ -1,52 +1,46 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D31C151
-	for <tools@linux.kernel.org>; Fri,  4 Aug 2023 13:50:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1691157056;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=Zbcs8thIwj/ZC358d0rYtZlqicmQwgT4O+bTysAHFU4=;
-	b=Qvmz67OoCq+0zXij6nUuIMfWkDyn188Ga7j1mz0KXyKm5EHtjH1dXtceKHcCZKSeFYIQxP
-	EC4Td0zFfTw5Lfl29opF7GeF6YFCdO9GMUpthNdBaNC9s9qACzXxLeLViNCZOHNxvhNZLY
-	v+cDYTWCmrQVmKDf3GstYVjzv75o1lA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-LBXLhlGdN7Cw_nAlFIN-Eg-1; Fri, 04 Aug 2023 09:50:55 -0400
-X-MC-Unique: LBXLhlGdN7Cw_nAlFIN-Eg-1
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-3178532c6c8so1139400f8f.1
-        for <tools@linux.kernel.org>; Fri, 04 Aug 2023 06:50:54 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B271CA45
+	for <tools@linux.kernel.org>; Fri,  4 Aug 2023 14:10:25 +0000 (UTC)
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-76c93abeb83so165251285a.0
+        for <tools@linux.kernel.org>; Fri, 04 Aug 2023 07:10:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1691158224; x=1691763024;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pPz4nhsWPoYCutIAUQz4k2i5d13R4ExRrgXURQiYpFw=;
+        b=fBA0Z94qOQJmrDCQikNn9eOyIpoGgICx804SIJotwJ4msDI8n+Mo1UBHTRfRP8BXri
+         kbbw7VqmovFGMIu+QwK7bOvlokwq/Ps7Kc+QvrEILWmRfMenivt/on5xHUcHBBqonmPd
+         PkRXqbhnqvqrQZ53Iq9AoWWxoxAOSeXzNcsPY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691157054; x=1691761854;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zbcs8thIwj/ZC358d0rYtZlqicmQwgT4O+bTysAHFU4=;
-        b=jD7gHg7zw86O836ImrbG12mbkraQz8eSOLkL+Ck7ZQGH8jtwCW3dio3cJ0//bkoj3q
-         1rvjgNvssSYHTceUQETV/RpB6UEqoHi0Mzl0Ume5CyzTt97s95tqAWZWpT/bgbkGml9a
-         X9Yd7SpvYhM6M3s25Rsf09MPEfHlIm005k60+A+lcE9BqQRxyPA00FvwZYBOnbpvRtXc
-         jw6OtZ/HYHRe0qdHlePhlawCgXa1UaW6ySJrbPQZkgqysuo+cWPIN/U5yRfKXP6ihe2C
-         +nZHFva1GwdN91RhfxWV748ap+mgqRP8tdRNg1ugwsivrGBu37i3nX/HB84s0/balj+W
-         5XoQ==
-X-Gm-Message-State: AOJu0YzifSYFiUHqswF7+xJ7yPwRPRUQ3eGLXoo5b1d4/sOAMXtyLYK4
-	bO02MPh0ebybIGvpoPQp1A9YA3YZ/U2jTbcDAaS170arMeXpoPbmsjGEwfD8C25o4GcRgMgJAIu
-	bOP4oujpOfyluOkZt
-X-Received: by 2002:a5d:4578:0:b0:313:e57b:e96d with SMTP id a24-20020a5d4578000000b00313e57be96dmr1498370wrc.36.1691157053904;
-        Fri, 04 Aug 2023 06:50:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IErUD5AmOG6QHLb2GVzixRZyhV9oXC+ENr8v08nDYIx40tRqWCTFTbO5LWotfTLRo+GQBQ80g==
-X-Received: by 2002:a5d:4578:0:b0:313:e57b:e96d with SMTP id a24-20020a5d4578000000b00313e57be96dmr1498356wrc.36.1691157053621;
-        Fri, 04 Aug 2023 06:50:53 -0700 (PDT)
-Received: from localhost ([2a01:e0a:b25:f902::56b])
-        by smtp.gmail.com with ESMTPSA id d10-20020adffd8a000000b003143ba62cf4sm2559927wrr.86.2023.08.04.06.50.53
+        d=1e100.net; s=20221208; t=1691158224; x=1691763024;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pPz4nhsWPoYCutIAUQz4k2i5d13R4ExRrgXURQiYpFw=;
+        b=Vejib5n6DuUe+xpes/yYRfsUdlg+N0EWAfFI5p28k8hYNwYgv8bMnN5saEuCEEJrhH
+         1+4quUeF2ZuDE5yfyPRJMUdwbbanxktd/Kwnr2dOPxR9/Zy9LWDFXAGCK3FQg+KkTSyn
+         Y+b9ym+DTPHGaKehorzXTil6wxR00eMYlEOtdhlp9WHXmEqVkErcEHq6M3eRLnd88jVv
+         TJJCPyutzgeAgkcD3qiTAdKzGqPJPonM/9Md0bO+w65aXALuZx10T7H8bpTJfYiVBhh9
+         Nro9NdcbJKxNUuMKRgXIDvN3dKJ2i5r/F1Ci4UMoyxzZGgFMDqpzjX4B+SWkyoUa+a9g
+         AM5g==
+X-Gm-Message-State: AOJu0Yyt/e1gFstmc4dNCq7c83DniGvaMYINT8qU0Wcdc4i+LtlSyRQr
+	+w1ZO49C3zEQ5YCA226gmKnurQ==
+X-Google-Smtp-Source: AGHT+IG5HsGdyF7rz3JlyMrsZWC5qZfvONlTNRM8+Jtjsx/o6umMBJtxcqx1iELfCipkjCx8gYEPXQ==
+X-Received: by 2002:a05:620a:1aa5:b0:76c:b12c:2ff1 with SMTP id bl37-20020a05620a1aa500b0076cb12c2ff1mr2165586qkb.66.1691158224041;
+        Fri, 04 Aug 2023 07:10:24 -0700 (PDT)
+Received: from meerkat.local ([142.113.79.114])
+        by smtp.gmail.com with ESMTPSA id 7-20020a05620a06c700b00767b24f68edsm664443qky.62.2023.08.04.07.10.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Aug 2023 06:50:53 -0700 (PDT)
-Date: Fri, 4 Aug 2023 15:50:52 +0200
-From: Maxime Ripard <mripard@redhat.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+        Fri, 04 Aug 2023 07:10:23 -0700 (PDT)
+Date: Fri, 4 Aug 2023 10:10:14 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Maxime Ripard <mripard@redhat.com>
 Cc: users@linux.kernel.org, tools@linux.kernel.org
-Subject: End Date in August bug with lore?
-Message-ID: <jbgsz57nc27lwdgfmhyoruvybzwa7dsphdhsiga2zkvnehj5cf@6atzulc4kpad>
+Subject: Re: End Date in August bug with lore?
+Message-ID: <20230804-niece-pregnant-7db381@meerkat>
+References: <jbgsz57nc27lwdgfmhyoruvybzwa7dsphdhsiga2zkvnehj5cf@6atzulc4kpad>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -54,49 +48,47 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nr3wxldyto7grff2"
+	protocol="application/pgp-signature"; boundary="lx7ug76itbcnnoyb"
 Content-Disposition: inline
+In-Reply-To: <jbgsz57nc27lwdgfmhyoruvybzwa7dsphdhsiga2zkvnehj5cf@6atzulc4kpad>
 
 
---nr3wxldyto7grff2
-Content-Type: text/plain; charset=us-ascii
+--lx7ug76itbcnnoyb
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Fri, Aug 04, 2023 at 03:50:52PM +0200, Maxime Ripard wrote:
+> Hi,
+>=20
+> (Sorry, sending the mail again with the ML)
+>=20
+> Hi,
+>=20
+> I've encountered a weird bug with lore, if I do a date search that
+> ends in august, it doesn't return any result:
+>=20
+> https://lore.kernel.org/all/?q=3Df%3Amripard%40kernel.org+AND+d%3A30-07-2=
+023..31-07-2023 -> Works
+>=20
+> https://lore.kernel.org/all/?q=3Df%3Amripard%40kernel.org+AND+d%3A30-07-2=
+023..01-08-2023 -> Doesn't Work
 
-(Sorry, sending the mail again with the ML)
+The date should be in ISO format.
+https://lore.kernel.org/all/?q=3Df%3Amripard%40kernel.org+AND+d%3A2023-07-3=
+0..2023-08-01
 
-Hi,
+-K
 
-I've encountered a weird bug with lore, if I do a date search that
-ends in august, it doesn't return any result:
-
-https://lore.kernel.org/all/?q=f%3Amripard%40kernel.org+AND+d%3A30-07-2023..31-07-2023 -> Works
-
-https://lore.kernel.org/all/?q=f%3Amripard%40kernel.org+AND+d%3A30-07-2023..01-08-2023 -> Doesn't Work
-
-And if we have a search that doesn't cross a month boundary, it still doesn't work:
-https://lore.kernel.org/all/?q=f%3Amripard%40kernel.org+AND+d%3A01-08-2023..04-08-2023
-
-But not specifying the end date does:
-https://lore.kernel.org/all/?q=f%3Amripard%40kernel.org+AND+d%3A01-08-2023..
-
-So it looks to me that if we have an end date, which is in august, it's
-broken for some reason?
-
-Thanks,
-Maxime
-
---nr3wxldyto7grff2
+--lx7ug76itbcnnoyb
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZM0CPAAKCRDj7w1vZxhR
-xU6BAP0TSpHPXJPSTvKQw5sTtD8EUopOjvVBWo6aZmKl0VDDiAEAuUivWu5fU8ea
-ggVFys7ekbhCyPCYMjGmJU4RMRl10ww=
-=rA6x
+iHUEABYKAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCZM0GxgAKCRC2xBzjVmSZ
+bNNdAP9cd1s1yjXU9y0gddo99a0xIjDEI0lAo7Jx3KmkPhTg+AEA/E1fzQjloOu2
+MUf7dJczNvry0CM1jTuGK4DdGbDHzAg=
+=duAE
 -----END PGP SIGNATURE-----
 
---nr3wxldyto7grff2--
-
+--lx7ug76itbcnnoyb--
