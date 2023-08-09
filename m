@@ -1,71 +1,60 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay.hostedemail.com (smtprelay0014.hostedemail.com [216.40.44.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D971D2E9
-	for <tools@linux.kernel.org>; Wed,  9 Aug 2023 17:21:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14367C433C8;
-	Wed,  9 Aug 2023 17:21:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691601715;
-	bh=97KbzLi9Si0wiuAVs4dKvbELDUj4qzzEdAk6c/YCBr4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BQYy9yJcNS6eSDh1GYBGi4bu3L7TH4mFnuYNDJiF2uPlTp2YhLYGEAI7K9Q9MDqFV
-	 Joypdb8zs9XlYky+VIGMYfv+Vaw/RUxqC+h5/+0e30kx/Pt7VB42lECwqgv/ik1YFy
-	 E0o7wTpesm6lAoKxRew5WMehr5F77D7dh2GmmOBBSbqVff5Wf6T4xsO4V96z7+cmC6
-	 MOgGKnphWsyQaHGei0NF0RYd+sVWsqLPrRzvjRONZzR+KSX1R5Ol3dn6sPyaijF4t8
-	 5l9pmckYrLRGmS9RXEXO4CoBllbmipZj1ZwyHT2hFxl8vSkjwtPVx6QVgu+RXf7I+C
-	 vnBWukHcK3Acw==
-Date: Wed, 9 Aug 2023 18:21:51 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Joe Perches <joe@perches.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	"Kernel.org Tools" <tools@linux.kernel.org>,
-	"# 3.4.x" <stable@vger.kernel.org>,
-	LKML <linux-kernel@vger.kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D12E634
+	for <tools@linux.kernel.org>; Thu, 10 Aug 2023 01:09:15 +0000 (UTC)
+Received: from omf11.hostedemail.com (a10.router.float.18 [10.200.18.1])
+	by unirelay05.hostedemail.com (Postfix) with ESMTP id 3033540F39;
+	Wed,  9 Aug 2023 21:32:37 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf11.hostedemail.com (Postfix) with ESMTPA id C7B7D2002F;
+	Wed,  9 Aug 2023 21:32:33 +0000 (UTC)
+Message-ID: <1f4f00799730ae53da67b48b0f4aea60e0d81a45.camel@perches.com>
 Subject: Re: get_maintainer, b4, and CC: stable
-Message-ID: <6dabeab8-d013-40fc-a705-d2d202510549@sirena.org.uk>
-References: <CAKwvOdmOVnhKws_6DdakK9SDxiCCCR1d6VJwvz94Ng_y3V8QCg@mail.gmail.com>
+From: Joe Perches <joe@perches.com>
+To: Mark Brown <broonie@kernel.org>, Nick Desaulniers
+ <ndesaulniers@google.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, "Kernel.org
+ Tools" <tools@linux.kernel.org>, "# 3.4.x" <stable@vger.kernel.org>, LKML
+ <linux-kernel@vger.kernel.org>
+Date: Wed, 09 Aug 2023 14:32:32 -0700
+In-Reply-To: <6dabeab8-d013-40fc-a705-d2d202510549@sirena.org.uk>
+References: 
+	<CAKwvOdmOVnhKws_6DdakK9SDxiCCCR1d6VJwvz94Ng_y3V8QCg@mail.gmail.com>
+	 <6dabeab8-d013-40fc-a705-d2d202510549@sirena.org.uk>
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LWqUKYVMG3UGwyMl"
-Content-Disposition: inline
-In-Reply-To: <CAKwvOdmOVnhKws_6DdakK9SDxiCCCR1d6VJwvz94Ng_y3V8QCg@mail.gmail.com>
-X-Cookie: Necessity is a mother.
+X-Stat-Signature: ros5iojdmbs9dhgybjpbuc41qbwrdh5y
+X-Rspamd-Server: rspamout04
+X-Spam-Status: No, score=-0.94
+X-Rspamd-Queue-Id: C7B7D2002F
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX1/GAX33WtLekNY3FtCoxzml/9XOuULYUJE=
+X-HE-Tag: 1691616753-354429
+X-HE-Meta: U2FsdGVkX1/dCbVfGFSPqx//Rs2O0b1z173ZDQr6AYLThdF8udEXg2MKFpG7QHhaDhAYncYOevebJmKtDuZYE5WM34t+swqtc430QBMaWYriEWsJhaRudjHJMupOOEHGHFYbZUBm38xw5i3nwzfwydHHH69kpqmCTULizTEy1rn4N/HufGb/g80uW12EEY/QZvqPhIvpuGhpWDdPu+VLPBjtYZB3ZVB6cg2XZ72rwu6AuisN1kxb1qrOWNS/wxN4FFBMyuzf7mFbKpOk3zlygsaRky4QuiDpzqqh4+FBZvlyJRyzK1a4TLs3GQ6Ue888
+
+On Wed, 2023-08-09 at 18:21 +0100, Mark Brown wrote:
+> On Wed, Aug 09, 2023 at 09:50:00AM -0700, Nick Desaulniers wrote:
+>=20
+> > I suspect that either b4 or get_maintainer could see the Fixes tag and
+> > then suggest to Cc stable for me.
+>=20
+> > Should get_maintainer.pl make such recommendations?
+>=20
+> People use the Fixes tag all the time for bugs that never made it into a
+> release...
 
 
---LWqUKYVMG3UGwyMl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+As Nick suggests, likely not.  Many fixes do
+not belong in stable and are only commits
+that update the current rc.
 
-On Wed, Aug 09, 2023 at 09:50:00AM -0700, Nick Desaulniers wrote:
+get_maintainer checks the "fixes:" tag and
+cc's the signers of the commit being fixed.
 
-> I suspect that either b4 or get_maintainer could see the Fixes tag and
-> then suggest to Cc stable for me.
-
-> Should get_maintainer.pl make such recommendations?
-
-People use the Fixes tag all the time for bugs that never made it into a
-release...
-
---LWqUKYVMG3UGwyMl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmTTyy4ACgkQJNaLcl1U
-h9A/Qgf9HGkw8mUChyCpqj1Gd7XYPoLdfYsL4xPF8/eVvrohiJHpz5TaO4jE+UAN
-SFPnbZhSINInsqL+/q+MEX3VmwTySCNknhlKflE51q6Zo6CpgSt0TfYCM0BsvrfT
-VrXCnsXlkjONOGnTRmV1FoayrSOGF+wXy7TUxFhaT7UpgR9Ar6a6uiiJmsJC7jO7
-DFd3jt2Uy2bUWOJeUqhdHV0zvBZhcMitut761Wd5QHwtaOq2xhEOzTPOgW6P/0Cb
-HvPQK1mRMePYnEfpbKWxZ5M/2jNtn5hSD1HyopV8byELbf5HS7BtCQmOckp6JyIu
-CahImhLPoqIQWzpys/PykESoFgs3+Q==
-=5jRH
------END PGP SIGNATURE-----
-
---LWqUKYVMG3UGwyMl--
