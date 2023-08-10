@@ -1,60 +1,73 @@
-Received: from relay.hostedemail.com (smtprelay0014.hostedemail.com [216.40.44.14])
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D12E634
-	for <tools@linux.kernel.org>; Thu, 10 Aug 2023 01:09:15 +0000 (UTC)
-Received: from omf11.hostedemail.com (a10.router.float.18 [10.200.18.1])
-	by unirelay05.hostedemail.com (Postfix) with ESMTP id 3033540F39;
-	Wed,  9 Aug 2023 21:32:37 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf11.hostedemail.com (Postfix) with ESMTPA id C7B7D2002F;
-	Wed,  9 Aug 2023 21:32:33 +0000 (UTC)
-Message-ID: <1f4f00799730ae53da67b48b0f4aea60e0d81a45.camel@perches.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638F91E1D2
+	for <tools@linux.kernel.org>; Thu, 10 Aug 2023 16:02:12 +0000 (UTC)
+Received: from cwcc.thunk.org (pool-173-48-112-65.bstnma.fios.verizon.net [173.48.112.65])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 37AG1q0Q030767
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Aug 2023 12:01:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1691683314; bh=rD724fSSexNAtLAwTBj5GC0Srk6wDTCwff8Hnm4ZRXw=;
+	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
+	b=YRLvoSttR80p2QSVJcS/Alz9SbFDmj85v8cV00bxzw7Xzr68StZZICNTuME8ri9et
+	 PGAt/GFzw6gyK6Wye7/7kOh3tPZ9YRlIhJ6rTrEMZ7UxLWyzTEFQR0bZBwQFOFxD8D
+	 UEHsbkrW2OroeIwJgbBWsFyAIqXO2yTGPi1kVg3wRZ1ZsmdPkBjeT7pOg+1klqf6HI
+	 eScDo1osg1sKx40VRNfM4FJpwJN7Pfis7eVoDLXF39zaNFxon1SjeP0UeVjpIrlCT6
+	 CciNq1wlhRInOn07x4jXXTl5OJKEOOiC4IE3pzSCX78fQw+4o20Ducx65ZwqKz3kLa
+	 qsJe+WUQXkRpg==
+Received: by cwcc.thunk.org (Postfix, from userid 15806)
+	id 8705C15C04FF; Thu, 10 Aug 2023 12:01:52 -0400 (EDT)
+Date: Thu, 10 Aug 2023 12:01:52 -0400
+From: "Theodore Ts'o" <tytso@mit.edu>
+To: Mark Brown <broonie@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>, Joe Perches <joe@perches.com>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        "Kernel.org Tools" <tools@linux.kernel.org>,
+        "# 3.4.x" <stable@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Subject: Re: get_maintainer, b4, and CC: stable
-From: Joe Perches <joe@perches.com>
-To: Mark Brown <broonie@kernel.org>, Nick Desaulniers
- <ndesaulniers@google.com>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, "Kernel.org
- Tools" <tools@linux.kernel.org>, "# 3.4.x" <stable@vger.kernel.org>, LKML
- <linux-kernel@vger.kernel.org>
-Date: Wed, 09 Aug 2023 14:32:32 -0700
-In-Reply-To: <6dabeab8-d013-40fc-a705-d2d202510549@sirena.org.uk>
-References: 
-	<CAKwvOdmOVnhKws_6DdakK9SDxiCCCR1d6VJwvz94Ng_y3V8QCg@mail.gmail.com>
-	 <6dabeab8-d013-40fc-a705-d2d202510549@sirena.org.uk>
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
+Message-ID: <20230810160152.GA2247938@mit.edu>
+References: <CAKwvOdmOVnhKws_6DdakK9SDxiCCCR1d6VJwvz94Ng_y3V8QCg@mail.gmail.com>
+ <6dabeab8-d013-40fc-a705-d2d202510549@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Stat-Signature: ros5iojdmbs9dhgybjpbuc41qbwrdh5y
-X-Rspamd-Server: rspamout04
-X-Spam-Status: No, score=-0.94
-X-Rspamd-Queue-Id: C7B7D2002F
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX1/GAX33WtLekNY3FtCoxzml/9XOuULYUJE=
-X-HE-Tag: 1691616753-354429
-X-HE-Meta: U2FsdGVkX1/dCbVfGFSPqx//Rs2O0b1z173ZDQr6AYLThdF8udEXg2MKFpG7QHhaDhAYncYOevebJmKtDuZYE5WM34t+swqtc430QBMaWYriEWsJhaRudjHJMupOOEHGHFYbZUBm38xw5i3nwzfwydHHH69kpqmCTULizTEy1rn4N/HufGb/g80uW12EEY/QZvqPhIvpuGhpWDdPu+VLPBjtYZB3ZVB6cg2XZ72rwu6AuisN1kxb1qrOWNS/wxN4FFBMyuzf7mFbKpOk3zlygsaRky4QuiDpzqqh4+FBZvlyJRyzK1a4TLs3GQ6Ue888
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6dabeab8-d013-40fc-a705-d2d202510549@sirena.org.uk>
 
-On Wed, 2023-08-09 at 18:21 +0100, Mark Brown wrote:
+On Wed, Aug 09, 2023 at 06:21:51PM +0100, Mark Brown wrote:
 > On Wed, Aug 09, 2023 at 09:50:00AM -0700, Nick Desaulniers wrote:
->=20
+> 
 > > I suspect that either b4 or get_maintainer could see the Fixes tag and
 > > then suggest to Cc stable for me.
->=20
+> 
 > > Should get_maintainer.pl make such recommendations?
->=20
+> 
 > People use the Fixes tag all the time for bugs that never made it into a
 > release...
 
+I agree that it probably shouldn't.
 
-As Nick suggests, likely not.  Many fixes do
-not belong in stable and are only commits
-that update the current rc.
+Sometimes the bug was introduced by a commit that didn't have a Cc:
+stable@kernel.org, but it gets automatically pulled into a LTS kernel
+due to dependency reasons, or otherwise gets auto-selected into an LTS
+kernel.  So I try to add Fixes tags even for bugs that never make it
+into the stable kernel --- but that doesn't mean that it should
+automatically get a cc stable tag.
 
-get_maintainer checks the "fixes:" tag and
-cc's the signers of the commit being fixed.
+(Of course, it might be that the AUTOSEL process will automatically
+pull in such commit, and then pull in something probably should not
+been pulled into a stable tree, but this is why XFS has stable
+backports maintainers --- because they don't trust the LTS automation.
+For ext4, we probably see one of those sorts of the auto-backports
+caused a regression maybe once a year?  But that's a different
+debate.)
 
+	    	    	       	 	     - Ted
