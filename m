@@ -1,83 +1,310 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A362C9A
-	for <tools@linux.kernel.org>; Fri, 18 Aug 2023 21:45:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F29CC433C7;
-	Fri, 18 Aug 2023 21:45:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1692395157;
-	bh=uZ3H5Afau9Y6eLtwL/eAJI1tDoK+UkRHa56FalyXzIk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SJkaZDCAoYqRpE0GVIx7EQx1xj+handr364NNHD1AUh8nCIfSmNzns1NtmbpOZptA
-	 nX/kf/5QdVD9nbOKFcIeNRen9oP2gBt85b4tZaEdGMRo2xifUo6XqSA27lGsEE/H+M
-	 xKn9k0DKJmp7N9ULGH8DRqDIfe3HoptcjxeoXYoomEMg0/oAacfWGQ3Ck1KGJVbsbY
-	 v0akce2RhmgRnBxndrvQ9BzYsTJ+erlZuMYSnZp+XQPV8kZJpflU1cRoDpIMFQOwV2
-	 7D2xqO6a6PSgl7pvcAo1xpxOhOIAcCxddm03g0upCwAZMn8FOfoCQrDHNRG0ycNeNZ
-	 fhtaHZx+Kz4Wg==
-Date: Fri, 18 Aug 2023 22:45:53 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Song Liu <song@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	tools@linux.kernel.org
-Subject: Re: feature request: b4 am verifies SHA1 from the Fixes tag exists
- in current branch
-Message-ID: <bf0db0f2-f7c6-4f0a-9a19-7d00f5fac0b6@sirena.org.uk>
-References: <CAPhsuW5Fqv7g=AVCGgQtFotG1oaUO+j5qBEyoTWJy0=n0mJS8w@mail.gmail.com>
- <1a184dc2-8c8b-40e6-8fe8-f0309615f886@sirena.org.uk>
- <CAPhsuW4FOtZLa7S7pYWcvssNMjQxvrTkkUKentyu5A8Ppg6vGg@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89D915AB
+	for <tools@linux.kernel.org>; Sat, 26 Aug 2023 08:08:10 +0000 (UTC)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37Q81E2g002453;
+	Sat, 26 Aug 2023 08:07:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding : content-type; s=qcppdkim1;
+ bh=toTSUxSzKHK82dJG3FdjsK0wlkEXyaoeC5l4iBCP/fY=;
+ b=fizWYDkf09KXMVX5fgKhDjRJz+GZx5PqSGFin5xgbucjMstQun3n7XsUYtTrPliUSs5i
+ H5bSlwFjVoLKXZGjkZ16tzOqPGmwE0LoRtdm0Z7vpYhbscwOU7Z5i3lAcibrX0Q+rsmb
+ pXKcqri3/6AGCZY0s8iENO0moXpyiF1KXTDb1MaPDzAaQ2JQg00q5wgX8kVQJDYjhAIu
+ kx+jnEQJN4AwScSABfoQZzTJqE4iiIVjsN5wiEMD6nqLspwiv4tEzU3Kb49ndwQ0gTay
+ 06uvqVgWIQoO6jzReKb//6zt7S2VMUXkPTUYA+KxF47eO7Ex9A84Vov2Y8MHrNjIGoD3 wQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sq907g91x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 26 Aug 2023 08:07:53 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37Q87qI0023779
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 26 Aug 2023 08:07:52 GMT
+Received: from hu-gurus-sd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Sat, 26 Aug 2023 01:07:49 -0700
+From: Guru Das Srinagesh <quic_gurus@quicinc.com>
+To: Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers
+	<ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        "Nicolas Schier" <nicolas@fjasle.eu>,
+        Konstantin Ryabitsev
+	<konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <quic_pkondeti@quicinc.com>
+CC: <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        <workflows@vger.kernel.org>, <tools@linux.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        "Guru Das
+ Srinagesh" <quic_gurus@quicinc.com>
+Subject: [PATCH v3 1/1] scripts: Add add-maintainer.py
+Date: Sat, 26 Aug 2023 01:07:42 -0700
+Message-ID: <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <cover.1693037031.git.quic_gurus@quicinc.com>
+References: <cover.1693037031.git.quic_gurus@quicinc.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YKugnaJnqkDYnm1v"
-Content-Disposition: inline
-In-Reply-To: <CAPhsuW4FOtZLa7S7pYWcvssNMjQxvrTkkUKentyu5A8Ppg6vGg@mail.gmail.com>
-X-Cookie: Your aim is high and to the right.
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FVDnSdgPZtRCDd6m7P3bOpnVoPIOH3MY
+X-Proofpoint-ORIG-GUID: FVDnSdgPZtRCDd6m7P3bOpnVoPIOH3MY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-26_05,2023-08-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ mlxlogscore=999 bulkscore=0 phishscore=0 adultscore=0 spamscore=0
+ mlxscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308260074
 
+This script runs get_maintainer.py on a given patch file (or multiple
+patch files) and adds its output to the patch file in place with the
+appropriate email headers "To: " or "Cc: " as the case may be. These new
+headers are added after the "From: " line in the patch.
 
---YKugnaJnqkDYnm1v
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Currently, for a single patch, maintainers and reviewers are added as
+"To: ", mailing lists and all other roles are added as "Cc: ".
 
-On Fri, Aug 18, 2023 at 02:22:13PM -0700, Song Liu wrote:
-> On Fri, Aug 18, 2023 at 2:14=E2=80=AFPM Mark Brown <broonie@kernel.org> w=
-rote:
+For a series of patches, however, a set-union scheme is employed in
+order to solve the all-too-common problem of ending up sending only
+subsets of a patch series to some lists, which results in important
+pieces of context such as the cover letter (or other patches in the
+series) being dropped from those lists. This scheme is as follows:
 
-> > Note that one of the most common sources of this error is Fixes: tags
-> > that apply to non-upstream commits which amkees it hard for automation
-> > to catch a commit that's unknown upstream (or at least requires fiddly
-> > configuration).
+- Create set-union of all maintainers and reviewers from all patches and
+  use this to do the following per patch:
+  - add only that specific patch's maintainers and reviewers as "To: "
+  - add the other maintainers and reviewers from the other patches as "Cc: "
 
-> I think we can still have b4-am catch the issue when the SHA is not in
+- Create set-union of all mailing lists corresponding to all patches and
+  add this to all patches as "Cc: "
 
-That'd be one useful approach, yes.  Not saying don't do it, just that
-there's gotchas.
+- Create set-union of all other roles corresponding to all patches and
+  add this to all patches as "Cc: "
 
-> current branch? A rebase may still change the SHA later on, but a check
-> at b4-am time should still catch some issues?
+Please note that patch files that don't have any "Maintainer"s or
+"Reviewers" explicitly listed in their `get_maintainer.pl` output will
+not have any "To: " entries added to them; developers are expected to
+manually make edits to the added entries in such cases to convert some
+"Cc: " entries to "To: " as desired.
 
-Indeed.  A lot of people use something like Greg's scripts for this:
+The script is quiet by default (only prints errors) and its verbosity
+can be adjusted via an optional parameter.
 
-   https://github.com/gregkh/gregkh-linux/tree/master/work/scripts
+Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+---
+ MAINTAINERS               |   5 ++
+ scripts/add-maintainer.py | 164 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 169 insertions(+)
+ create mode 100755 scripts/add-maintainer.py
 
---YKugnaJnqkDYnm1v
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0903d87b17cb..b670e9733f03 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -8721,6 +8721,11 @@ M:	Joe Perches <joe@perches.com>
+ S:	Maintained
+ F:	scripts/get_maintainer.pl
+ 
++ADD MAINTAINER SCRIPT
++M:	Guru Das Srinagesh <quic_gurus@quicinc.com>
++S:	Maintained
++F:	scripts/add-maintainer.py
++
+ GFS2 FILE SYSTEM
+ M:	Bob Peterson <rpeterso@redhat.com>
+ M:	Andreas Gruenbacher <agruenba@redhat.com>
+diff --git a/scripts/add-maintainer.py b/scripts/add-maintainer.py
+new file mode 100755
+index 000000000000..5a5cc9482b06
+--- /dev/null
++++ b/scripts/add-maintainer.py
+@@ -0,0 +1,164 @@
++#! /usr/bin/env python3
++
++import argparse
++import logging
++import os
++import sys
++import subprocess
++import re
++
++def gather_maintainers_of_file(patch_file):
++    all_entities_of_patch = dict()
++
++    # Run get_maintainer.pl on patch file
++    logging.info("GET: Patch: {}".format(os.path.basename(patch_file)))
++    cmd = ['scripts/get_maintainer.pl']
++    cmd.extend([patch_file])
++
++    try:
++        p = subprocess.run(cmd, stdout=subprocess.PIPE, check=True)
++    except:
++        sys.exit(1)
++
++    logging.debug("\n{}".format(p.stdout.decode()))
++
++    entries = p.stdout.decode().splitlines()
++
++    maintainers = []
++    lists = []
++    others = []
++
++    for entry in entries:
++        entity = entry.split('(')[0].strip()
++        if any(role in entry for role in ["maintainer", "reviewer"]):
++            maintainers.append(entity)
++        elif "list" in entry:
++            lists.append(entity)
++        else:
++            others.append(entity)
++
++    all_entities_of_patch["maintainers"] = set(maintainers)
++    all_entities_of_patch["lists"] = set(lists)
++    all_entities_of_patch["others"] = set(others)
++
++    return all_entities_of_patch
++
++def find_pattern_in_lines(pattern, lines):
++    index = 0
++    for line in lines:
++        if re.search(pattern, line):
++            break;
++        index = index + 1
++
++    if index == len(lines):
++        logging.error("Couldn't find pattern {} in patch".format(pattern))
++        sys.exit(1)
++
++    return index
++
++def add_maintainers_to_file(patch_file, entities_per_file, all_entities_union):
++    logging.info("ADD: Patch: {}".format(os.path.basename(patch_file)))
++
++    # For each patch:
++    # - Add all lists from all patches in series as Cc:
++    # - Add all others from all patches in series as Cc:
++    # - Add only maintainers of that patch as To:
++    # - Add maintainers of other patches in series as Cc:
++
++    lists = list(all_entities_union["all_lists"])
++    others = list(all_entities_union["all_others"])
++    file_maintainers = all_entities_union["all_maintainers"].intersection(entities_per_file[os.path.basename(patch_file)].get("maintainers"))
++    other_maintainers = all_entities_union["all_maintainers"].difference(entities_per_file[os.path.basename(patch_file)].get("maintainers"))
++
++    # Specify email headers appropriately
++    cc_lists        = ["Cc: " + l for l in lists]
++    cc_others       = ["Cc: " + o for o in others]
++    to_maintainers  = ["To: " + m for m in file_maintainers]
++    cc_maintainers  = ["Cc: " + om for om in other_maintainers]
++    logging.debug("Cc Lists:\n{}".format('\n'.join(cc_lists)))
++    logging.debug("Cc Others:\n{}".format('\n'.join(cc_others)))
++    logging.debug("Cc Maintainers:\n{}".format('\n'.join(cc_maintainers) or None))
++    logging.debug("To Maintainers:\n{}\n".format('\n'.join(to_maintainers) or None))
++
++    # Edit patch file in place to add maintainers
++    with open(patch_file, "r") as pf:
++        lines = pf.readlines()
++
++    # Get the index of the first "From: <email address>" line in patch
++    from_line = find_pattern_in_lines("^(From: )(.*)<(.*)@(.*)>", lines)
++
++    # Insert our To: and Cc: headers after it.
++    next_line_after_from = from_line + 1
++
++    for l in cc_lists:
++        lines.insert(next_line_after_from, l + "\n")
++    for o in cc_others:
++        lines.insert(next_line_after_from, o + "\n")
++    for om in cc_maintainers:
++        lines.insert(next_line_after_from, om + "\n")
++    for m in to_maintainers:
++        lines.insert(next_line_after_from, m + "\n")
++
++    with open(patch_file, "w") as pf:
++        pf.writelines(lines)
++
++def add_maintainers(patch_files):
++    entities_per_file = dict()
++
++    for patch in patch_files:
++        entities_per_file[os.path.basename(patch)] = gather_maintainers_of_file(patch)
++
++    all_entities_union = {"all_maintainers": set(), "all_lists": set(), "all_others": set()}
++    for patch in patch_files:
++        all_entities_union["all_maintainers"] = all_entities_union["all_maintainers"].union(entities_per_file[os.path.basename(patch)].get("maintainers"))
++        all_entities_union["all_lists"] = all_entities_union["all_lists"].union(entities_per_file[os.path.basename(patch)].get("lists"))
++        all_entities_union["all_others"] = all_entities_union["all_others"].union(entities_per_file[os.path.basename(patch)].get("others"))
++
++    for patch in patch_files:
++        add_maintainers_to_file(patch, entities_per_file, all_entities_union)
++
++    logging.info("Maintainers added to all patch files successfully")
++
++def remove_to_cc_from_header(patch_files):
++    for patch in patch_files:
++        logging.info("UNDO: Patch: {}".format(os.path.basename(patch)))
++        with open(patch, "r") as pf:
++            lines = pf.readlines()
++
++        # Get the index of the first "From: <email address>" line in patch
++        from_line = find_pattern_in_lines("^(From: )(.*)<(.*)@(.*)>", lines)
++
++        # Get the index of the first "Date: " line in patch
++        date_line = find_pattern_in_lines("^(Date: )", lines)
++
++        # Delete everything in between From: and Date:
++        # These are the lines that this script adds - any To: or Cc: anywhere
++        # else in the patch will not be removed.
++        del lines[(from_line + 1):date_line]
++
++        with open(patch, "w") as pf:
++            pf.writelines(lines)
++
++    logging.info("Maintainers removed from all patch files successfully")
++
++def main():
++    parser = argparse.ArgumentParser(description='Add the respective maintainers and mailing lists to patch files')
++    parser.add_argument('patches', nargs='+', help="One or more patch files")
++    parser.add_argument('-v', '--verbosity', choices=['debug', 'info', 'error'], default='error', help="Verbosity level of script output")
++    parser.add_argument('-u', '--undo', action='store_true', help="Remove maintainers added by this script from patch(es)")
++    args = parser.parse_args()
++
++    logging.basicConfig(level=args.verbosity.upper(), format='%(levelname)s: %(message)s')
++
++    for patch in args.patches:
++        if not os.path.isfile(patch):
++            logging.error("File does not exist: {}".format(patch))
++            sys.exit(1)
++
++    if args.undo:
++        remove_to_cc_from_header(args.patches)
++    else:
++        add_maintainers(args.patches)
++
++if __name__ == "__main__":
++    main()
+-- 
+2.41.0
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmTf5pAACgkQJNaLcl1U
-h9AnMgf9H9e/Gr1BusIQ6yxacuhtKeiaKLzwztB2BJFQGPW7qUQOXVjWStXR/YjE
-F1P9eCnOzCbcjSA5nLjdv+AYwRuhMGc2zcqmjItoBjOiSOmMbVigULfib4hxbIcm
-QIwielHkFz71WF1ZJvWluGpEyNBq1ap+llCp1LSm6XIA0VUiIWHdR6u13n4GQ76V
-/mVZ7ErsWKEuzMQ5wqGoiTp86INiKlZKEKLdFE0iwByQgPG5NBnA1vOYqr8wRZPC
-4y9LZuCh7xU0136XE/RNxRPM5+rFHWOu7YwVCmBN7eAgSGMevu8r8NBtZdi/eoo7
-DWbPscByfCRZDyr1tprupxk1Vdtycg==
-=cujf
------END PGP SIGNATURE-----
-
---YKugnaJnqkDYnm1v--
