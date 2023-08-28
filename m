@@ -1,144 +1,89 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F371413AF6
-	for <tools@linux.kernel.org>; Mon, 28 Aug 2023 17:59:58 +0000 (UTC)
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-99cdb0fd093so456022766b.1
-        for <tools@linux.kernel.org>; Mon, 28 Aug 2023 10:59:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693245597; x=1693850397;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BjrkEommxgzVsvPeELM83BT2d5xXvo75H1UStaGsfMI=;
-        b=JTayhNgjtHQx8fxD1S0ic9K2eV0gHdK4jVwPvnPUGd2lV1rXAApieBetsa8bytyDW5
-         kMywhMh+NFRhCXY36/qiT3S+8rQTEW+i/V9PBCqjsV/VcP8DScv2dhRyBuZWwt3ghzRB
-         m8KwSRIQ8hTxsukbALZVslO4oivb0kZSsuC3weid+ly8l8KNNyjRfAZzl3BH+KfHXmDv
-         cVrxK6SpS1YGApwo4iLhrKEIW2iBp1nGzCFWGASuUbfp94glhsFkKKjOQVqARPKZbGIs
-         fAxj62ynY1wCpC7pkNCdi5h+EA10oCOXTjyg2BuRZ+r78s9uIXEdtA/l+JpCzH4OUS7m
-         QCuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693245597; x=1693850397;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BjrkEommxgzVsvPeELM83BT2d5xXvo75H1UStaGsfMI=;
-        b=dDvji3v1FrrzqzwBhcJAKrZyNe9sn8yURZ6qT+D4nRHfLMOFUOwWEbo1zlNJAELgyj
-         K9UEA2oQHWyLksKWULMtBGQDG9jPoRBuUvu7fXquoBX4qXGMDQu8z/9TwLaHKFwubIYw
-         I0JcyxyunsbuEhARKtawsnFesgoc+pxwcLUT0FuFYQdunTZKuxl5wU1tBgCiDIzzO4iW
-         xWtdfAaee8QcnxhYXOl5j2iAHXcCplEak2HuOPKfVd0Smzow8HuXld3B88E5XclmqyZ7
-         lInhcDoeRuZ56auXPMx3AVZp4GlCouT2Er08+9hLXjK5A1E7KrPXKF+pQ1vjbjerziCz
-         K3DQ==
-X-Gm-Message-State: AOJu0Yxz5+70Xkh2niMM3PSYIL4J2o8SXZ0L8XqY65DDAEIlNOM1PwmQ
-	qoID6nNiSLZ+Mngd7WLHJORTJA==
-X-Google-Smtp-Source: AGHT+IEgWbg5t5ZGn+L+7J47VuL32+upXijCivlJd+5GNKo6BO3FJ+P2Y6r8QA61T+yNo9WfJ947sA==
-X-Received: by 2002:a17:906:2921:b0:99c:f966:9ea2 with SMTP id v1-20020a170906292100b0099cf9669ea2mr17270150ejd.25.1693245597040;
-        Mon, 28 Aug 2023 10:59:57 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.225])
-        by smtp.gmail.com with ESMTPSA id b8-20020a170906194800b009920e9a3a73sm4921968eje.115.2023.08.28.10.59.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 10:59:56 -0700 (PDT)
-Message-ID: <78aa33f9-ead8-b128-2a7a-40530a1a3ed0@linaro.org>
-Date: Mon, 28 Aug 2023 19:59:54 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7553313AF8
+	for <tools@linux.kernel.org>; Mon, 28 Aug 2023 19:41:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71876C433C8;
+	Mon, 28 Aug 2023 19:41:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1693251682;
+	bh=5fcdEJYr0tuaLwmg8LrJDpk5WjyT7tChNwaLtJl0EjA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oUGKFwThSSgaRGElIYnOuDUUMA5z60TZfL+K6nMPId0ngzpt1zVG8M54zAjS2boe7
+	 6/aZbfm1q5E1Ln++O8oVSIcnLE/UQJuyQIAJH8cdKpFdtWze+Wvj0Eu3IeHYGMc1Fz
+	 WNO9MMS+4YV6h2ectkU42s4rzr/h9/kzmwGPTQtN6Q9/UpGgufcm+fWtcSz1k31mc3
+	 xWEAk6SeLpB6mkyV3RLgu/4WglWGwUVyDD9El+sA1vZHx8LpuyUDlBxtFZBTHBRBbc
+	 nSe1h82YfUw+/KNnfsvnMJPTHD2qWxKP2KIeQ85cM7quvobqHliltSgrKlIa5HnX7D
+	 O9gl4IrXh/Owg==
+Date: Mon, 28 Aug 2023 20:41:18 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	Kees Cook <keescook@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	quic_pkondeti@quicinc.com, linux-kernel@vger.kernel.org,
+	kernel@quicinc.com, workflows@vger.kernel.org,
+	tools@linux.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-pm@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
+Message-ID: <ZOz4XtX3DFRQpvQY@finisterre.sirena.org.uk>
+References: <cover.1693037031.git.quic_gurus@quicinc.com>
+ <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+ <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
+ <20230828175629.GC23466@quicinc.com>
+ <78aa33f9-ead8-b128-2a7a-40530a1a3ed0@linaro.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-Content-Language: en-US
-To: Masahiro Yamada <masahiroy@kernel.org>,
- Nick Desaulniers <ndesaulniers@google.com>,
- Andrew Morton <akpm@linux-foundation.org>, Nicolas Schier
- <nicolas@fjasle.eu>, Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- Kees Cook <keescook@chromium.org>, Bjorn Andersson <andersson@kernel.org>,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- Will Deacon <will@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, quic_pkondeti@quicinc.com,
- linux-kernel@vger.kernel.org, kernel@quicinc.com, workflows@vger.kernel.org,
- tools@linux.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-pm@vger.kernel.org
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
- <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
- <20230828175629.GC23466@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230828175629.GC23466@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-On 28/08/2023 19:56, Guru Das Srinagesh wrote:
-> On Aug 28 2023 10:21, Krzysztof Kozlowski wrote:
->> On 26/08/2023 10:07, Guru Das Srinagesh wrote:
->>> This script runs get_maintainer.py on a given patch file (or multiple
->>> patch files) and adds its output to the patch file in place with the
->>> appropriate email headers "To: " or "Cc: " as the case may be. These new
->>> headers are added after the "From: " line in the patch.
->>>
->>> Currently, for a single patch, maintainers and reviewers are added as
->>> "To: ", mailing lists and all other roles are added as "Cc: ".
->>>
->>> For a series of patches, however, a set-union scheme is employed in
->>> order to solve the all-too-common problem of ending up sending only
->>> subsets of a patch series to some lists, which results in important
->>> pieces of context such as the cover letter (or other patches in the
->>> series) being dropped from those lists. This scheme is as follows:
->>>
->>> - Create set-union of all maintainers and reviewers from all patches and
->>>   use this to do the following per patch:
->>>   - add only that specific patch's maintainers and reviewers as "To: "
->>>   - add the other maintainers and reviewers from the other patches as "Cc: "
->>>
->>> - Create set-union of all mailing lists corresponding to all patches and
->>>   add this to all patches as "Cc: "
->>>
->>> - Create set-union of all other roles corresponding to all patches and
->>>   add this to all patches as "Cc: "
->>>
->>> Please note that patch files that don't have any "Maintainer"s or
->>> "Reviewers" explicitly listed in their `get_maintainer.pl` output will
->>
->> So before you will ignoring the reviewers, right? One more reason to not
->> get it right...
-> 
-> In v2, Reviewers were added as "Cc:" whereas here in v3 they are added as
-> "To:". Not sure where you're getting "ignoring the reviewers" from.
-> 
->>> not have any "To: " entries added to them; developers are expected to
->>> manually make edits to the added entries in such cases to convert some
->>> "Cc: " entries to "To: " as desired.
->>>
->>> The script is quiet by default (only prints errors) and its verbosity
->>> can be adjusted via an optional parameter.
->>>
->>> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
->>> ---
->>>  MAINTAINERS               |   5 ++
->>>  scripts/add-maintainer.py | 164 ++++++++++++++++++++++++++++++++++++++
->>>  2 files changed, 169 insertions(+)
->>>  create mode 100755 scripts/add-maintainer.py
->>>
->>
->> I do not see the benefits of this script. For me - it's unnecessarily
->> more complicated instead of my simple bash function which makes
-> 
-> Your function adds mailing lists also in "To:" which is not ideal, in my view.
-> You've mentioned before that To or Cc doesn't matter [1] which I disagree
-> with: it doesn't matter, why does Cc exist as a concept at all?
-
-To/Cc does not matter when sending new patch, because maintainers know
-they are maintainers of which parts. I know what I handle.
-
-To/Cc still makes sense in other cases, when for example you ping
-someone asking for reviews. It also makes much more sense in all
-corpo-worlds where such distinction is obvious. We are not a corpo-world
-here.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="hRZyai99SdOpZcQJ"
+Content-Disposition: inline
+In-Reply-To: <78aa33f9-ead8-b128-2a7a-40530a1a3ed0@linaro.org>
+X-Cookie: Give him an evasive answer.
 
 
-Best regards,
-Krzysztof
+--hRZyai99SdOpZcQJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+On Mon, Aug 28, 2023 at 07:59:54PM +0200, Krzysztof Kozlowski wrote:
+> On 28/08/2023 19:56, Guru Das Srinagesh wrote:
+
+> > Your function adds mailing lists also in "To:" which is not ideal, in my view.
+> > You've mentioned before that To or Cc doesn't matter [1] which I disagree
+> > with: it doesn't matter, why does Cc exist as a concept at all?
+
+> To/Cc does not matter when sending new patch, because maintainers know
+> they are maintainers of which parts. I know what I handle.
+
+That might be true for you (and also is for me) but I know there are
+people who pay attention to if they're in the To: for various reasons, I
+gather it's mostly about triaging their emails and is especially likely
+in cases where trees have overlaps in the code they cover.
+
+--hRZyai99SdOpZcQJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmTs+F0ACgkQJNaLcl1U
+h9CeTQf/e9/5RbNg+te42f6gn239bsr10S3eOcOyxTwWayhAg4zAexwks3p016ip
+ZnpfeGr64L9nun8+geqVq6KRC51zTmJPuFST7WbKFxSmYlpH8U8ZtQsC7DCWadLC
+5TfZCHGWyTKvAyrG8q02Z2Pv6kb9Pc19v/1SIfLc/LHBN7s3DIp575SmtCGvT2pe
+uaH3Gor59lyaohr6CPGAhywhJG99zsROT0HXAnPnzmGL2h4hfGOvh4cbrGjfy/Z9
+2Kst0IWghvAAT8AETR9ZNAhSIssP89fa/O7p6uo6TvXQN3YcMDg8iqaYdi03gu6w
+gqn0TzRZXrL/jOLMYvHKGg0uDIfCnQ==
+=8k7s
+-----END PGP SIGNATURE-----
+
+--hRZyai99SdOpZcQJ--
