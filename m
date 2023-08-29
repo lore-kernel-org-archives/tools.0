@@ -1,109 +1,141 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317A01429C
-	for <tools@linux.kernel.org>; Mon, 28 Aug 2023 19:46:01 +0000 (UTC)
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-9a19bf6ab66so474866466b.3
-        for <tools@linux.kernel.org>; Mon, 28 Aug 2023 12:46:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693251960; x=1693856760;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oiqe0gxfgN86bDvtk+BEvYyxTVQVDqi2WsAzVHCVfqE=;
-        b=mJqCSinPqwWv/swpZS9AXlSqdApX2gFQOQeI1Wgyr5SQK3CPfcqTzJvzNRntXNcWLM
-         ysLnxWWDdfqphD5whGdKY9ive1lPzmEgZ28mFOfm51+qhqkheODY789jnq3arcJ5ToqX
-         LXe7CuAxiBnMYJjC5Gyy7W2ni+5K2aifLiyZo9B+9qoufcwK8lxYz1JSvsMH8wAJ+vcF
-         EGFzsXS9gRxE3DVCDduBc8t8ROVC8Q4L76MImcWCmD1dZiJnQNba/YYiCQtnbloHajUx
-         8iKJh2Hnco6OUAzkxC1Czxbr7nQQIKt77NihZbCmksmKx/HHK+JGWDE9uKOf3zwwawNT
-         XN3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693251960; x=1693856760;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oiqe0gxfgN86bDvtk+BEvYyxTVQVDqi2WsAzVHCVfqE=;
-        b=k1MwrdBuN2qC3V17wo1cWmHUwyEe1sZPkua1bUBWF8+HOkJJR1dbFElPEaJE9J8wnC
-         ZwiG9Ui47kbvfY4DPSrgTYwk7Oct/ofpnfx+al55F4eLqtUAOkqgH+Z/PCFQOnFXanVN
-         PufypSAHOWvYp6pU2wIBCJ1SXZw0EmAL09aJ+SC8BqPdNH7Ttd8vbixAA0vM7aIU7NgG
-         Fa52INdNatyC7d8ho4LSzFNxpP+5vxYawgYee6rstZiIpjSn+RD8C+WXARlondqcMThd
-         ol3MIfDUlBhYjDr+juepKTv3mZaO9QBx/tI8bvM4VCetIpFG91wkx3A+fglq2EeyccYu
-         rW0w==
-X-Gm-Message-State: AOJu0YyuHQ6Zpl6RMw3RCjwK0IIiQkZOGu/i7hvuOtoeUR6gWa8/GtE3
-	RkgrNuWtjqNzV0StoCQngquW3Q==
-X-Google-Smtp-Source: AGHT+IGjDB+imRvxhoYsDEK81COTY6JJtmUTK6fjHq5X5OOFVyGN/7ZceR1tHPH5f3sKcM1VuOcdsg==
-X-Received: by 2002:a17:906:8474:b0:9a1:e8c0:7e30 with SMTP id hx20-20020a170906847400b009a1e8c07e30mr10797736ejc.7.1693251960225;
-        Mon, 28 Aug 2023 12:46:00 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.225])
-        by smtp.gmail.com with ESMTPSA id dk13-20020a170906f0cd00b00992e14af9c3sm5106233ejb.143.2023.08.28.12.45.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 12:45:59 -0700 (PDT)
-Message-ID: <670a87e9-2f0c-ec9e-ebb4-9041c8972ace@linaro.org>
-Date: Mon, 28 Aug 2023 21:45:58 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA58EC6
+	for <tools@linux.kernel.org>; Tue, 29 Aug 2023 07:38:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693294698; x=1724830698;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version:content-transfer-encoding;
+  bh=7xbIuAVv6BRYk1f4b+LCb+VtGRsblUZaWwZkr0s2oa0=;
+  b=CSkx6qiqZk4IL3Yz8zktdjj8jbn0IXQfGY2b9gIzwn8vYAbF7yAABpOP
+   BcCPFl5vjZRkDCOS4ydS1Jf0Ezntymj3zz01SljZYUc0rSCKKx47zanH0
+   YCQ2w8bzWzeJM1PqUKMgo2Jw0jBudQZGmQoWOSeAwy5O4q1p4cJWcI55P
+   GTDBQ+YZv+t7lO49RwFPBGTo1Y0sVxmRPVjPysnIT7Bg6bO1ZYqe7p4ac
+   A1RUzU7uDcGjNgzxcjEr55OAHRqz9XXw+k4sRnjOX2z4KHakoyKRCy2Sn
+   Wg3kzGbH1pc2GaIijrrS7STxDQT5uXkCudWop2TN7AmikwjNCJcyO3Ajo
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10816"; a="375263858"
+X-IronPort-AV: E=Sophos;i="6.02,210,1688454000"; 
+   d="scan'208";a="375263858"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 00:38:17 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10816"; a="853178928"
+X-IronPort-AV: E=Sophos;i="6.02,210,1688454000"; 
+   d="scan'208";a="853178928"
+Received: from mnefedov-mobl1.ger.corp.intel.com (HELO localhost) ([10.252.32.206])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 00:38:11 -0700
+From: Jani Nikula <jani.nikula@intel.com>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>, Krzysztof Kozlowski
+ <krzysztof.kozlowski@linaro.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>, Geert Uytterhoeven
+ <geert@linux-m68k.org>, Guru Das
+ Srinagesh <quic_gurus@quicinc.com>, Masahiro Yamada <masahiroy@kernel.org>,
+ Nick Desaulniers <ndesaulniers@google.com>, Andrew Morton
+ <akpm@linux-foundation.org>, Nicolas Schier <nicolas@fjasle.eu>,
+ Konstantin
+ Ryabitsev <konstantin@linuxfoundation.org>, Kees Cook
+ <keescook@chromium.org>, Bjorn Andersson <andersson@kernel.org>,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, Will Deacon
+ <will@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ quic_pkondeti@quicinc.com, linux-kernel@vger.kernel.org,
+ kernel@quicinc.com, workflows@vger.kernel.org, tools@linux.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
+In-Reply-To: <20230828165038.GB818859@hu-bjorande-lv.qualcomm.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <cover.1693037031.git.quic_gurus@quicinc.com>
+ <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+ <87jztf37ny.fsf@intel.com>
+ <20230828133554.GA818859@hu-bjorande-lv.qualcomm.com>
+ <CAMuHMdU+3oj+-3=f5WFVTRsKQjqCpU8SnVqKSZGk8XRxhsDcVQ@mail.gmail.com>
+ <9aec0740-2482-d3ad-caf2-5e6278a050b3@suse.cz>
+ <89c73602-43f1-30a4-ad58-637aadacd653@linaro.org>
+ <20230828165038.GB818859@hu-bjorande-lv.qualcomm.com>
+Date: Tue, 29 Aug 2023 10:38:08 +0300
+Message-ID: <87cyz62t9b.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-Content-Language: en-US
-To: Mark Brown <broonie@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>,
- Nick Desaulniers <ndesaulniers@google.com>,
- Andrew Morton <akpm@linux-foundation.org>, Nicolas Schier
- <nicolas@fjasle.eu>, Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- Kees Cook <keescook@chromium.org>, Bjorn Andersson <andersson@kernel.org>,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- Will Deacon <will@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, quic_pkondeti@quicinc.com,
- linux-kernel@vger.kernel.org, kernel@quicinc.com, workflows@vger.kernel.org,
- tools@linux.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-pm@vger.kernel.org
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
- <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
- <20230828175629.GC23466@quicinc.com>
- <78aa33f9-ead8-b128-2a7a-40530a1a3ed0@linaro.org>
- <ZOz4XtX3DFRQpvQY@finisterre.sirena.org.uk>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ZOz4XtX3DFRQpvQY@finisterre.sirena.org.uk>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 28/08/2023 21:41, Mark Brown wrote:
-> On Mon, Aug 28, 2023 at 07:59:54PM +0200, Krzysztof Kozlowski wrote:
->> On 28/08/2023 19:56, Guru Das Srinagesh wrote:
-> 
->>> Your function adds mailing lists also in "To:" which is not ideal, in my view.
->>> You've mentioned before that To or Cc doesn't matter [1] which I disagree
->>> with: it doesn't matter, why does Cc exist as a concept at all?
-> 
->> To/Cc does not matter when sending new patch, because maintainers know
->> they are maintainers of which parts. I know what I handle.
-> 
-> That might be true for you (and also is for me) but I know there are
-> people who pay attention to if they're in the To: for various reasons, I
-> gather it's mostly about triaging their emails and is especially likely
-> in cases where trees have overlaps in the code they cover.
+On Mon, 28 Aug 2023, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+> On Mon, Aug 28, 2023 at 05:23:58PM +0200, Krzysztof Kozlowski wrote:
+>> On 28/08/2023 17:14, Vlastimil Babka wrote:
+>> > On 8/28/23 15:48, Geert Uytterhoeven wrote:
+>> >> Hi Bjorn,
+>> >>
+>> >> On Mon, Aug 28, 2023 at 3:37=E2=80=AFPM Bjorn Andersson
+>> >> <quic_bjorande@quicinc.com> wrote:
+>> >>> On Mon, Aug 28, 2023 at 11:14:41AM +0300, Jani Nikula wrote:
+>> >>>> On Sat, 26 Aug 2023, Guru Das Srinagesh <quic_gurus@quicinc.com> wr=
+ote:
+>> >>>>> This script runs get_maintainer.py on a given patch file (or multi=
+ple
+>> >>>>> patch files) and adds its output to the patch file in place with t=
+he
+>> >>>>> appropriate email headers "To: " or "Cc: " as the case may be. The=
+se new
+>> >>>>> headers are added after the "From: " line in the patch.
+>> >>>>
+>> >>>> FWIW, I personally prefer tooling to operate on git branches and co=
+mmits
+>> >>>> than patches. For me, the patches are just an intermediate step in
+>> >>>> getting the commits from my git branch to the mailing list. That's =
+not
+>> >>>> where I add the Cc's, but rather in the commits in my local branch,
+>> >>>> where they're preserved. YMMV.
+>> >>>>
+>> >>>
+>> >>> May I ask how you add/carry the recipients in a commit?
+>> >>
+>> >> I guess below a "---" line in the commit description?
+>> >=20
+>> > Does that do anything special in commit log? I'd expect (and I do it t=
+hat
+>> > way) it's rather just adding a
+>>=20
+>> It does. It goes away.
+>
+> Afaict, it's verbatim copied into the .patch, which would mean that it
+> goes away when the patch is applied on the other side.
+>
+> But it's still going to be in the email (followed by another ---), so
+> unless there's another step later in the process that cleans this up I
+> it looks ugly, and not very useful - unless I'm missing something.
+>
+>> >=20
+>> > Cc: Name <email>
+>> >=20
+>> > in the tag area where s-o-b, reviewed-by etc are added.
+>>=20
+>> Why storing autogenerated scripts/get_maintainer.pl CC-entries in commit
+>> msg? The non-maintainer-output but the automated output? There is no
+>> single need to store automated output of get_maintainers.pl in the git
+>> log. It can be easily re-created at any given time, thus its presence in
+>> the git history is redundant and obfuscates the log.
+>>=20
+>
+> Fully agree to this. In particular if the patch is going to be sent as
+> part of a series the recipients list won't be accurate for any patch.
+>
+> The case I was looking for was the case where I want to make sure to
+> include a specific person, beyond the get_maintainers output. So pretty
+> much the usual Cc: tag in the commit message, but I don't necessarily
+> want to write this fact into the git history.
 
-True, there can be cases where people pay attention to addresses of
-emails. Just like there are cases where people pay attention to "To/Cc"
-difference.
+The point is, I *never* use get_maintainer.pl output as-is.
 
-In my short experience with a few patches sent, no one complained to me
-that I put him/her/they in "To" field of a patch instead of "Cc" (with
-remark to not spamming to much, so imagine I send a patch for regulator
-and DTS). Big, multi-subsystem patchsets are different case and this
-script does not solve it either.
+BR,
+Jani.
 
-Anyway, if it is not ideal for Guru, I wonder how his LKML maintainer
-filters work that it is not ideal? What is exactly not ideal in
-maintainer workflow?
 
-Best regards,
-Krzysztof
-
+--=20
+Jani Nikula, Intel Open Source Graphics Center
