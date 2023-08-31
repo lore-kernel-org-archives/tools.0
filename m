@@ -1,111 +1,76 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17DC3FFB
-	for <tools@linux.kernel.org>; Wed, 30 Aug 2023 14:17:00 +0000 (UTC)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37UDR0bn014094;
-	Wed, 30 Aug 2023 14:16:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=t+pa7pawiXHGZsyFpEhyJeURi1Iqk12oeRHuQvv8HfI=;
- b=JJuR33EIgP9wPpvFBDwqZfRoVVFoweXSPTpDpfOxkJiaqmgIfDs+b1jm9/xv/4H2BisG
- O4whebwnwqbjFnV+PvO2z2HHOKp2vo0aFn9y4JRxXq5pNt18BoCtREU3QYHeUS1bjy7P
- XH1gGt3H4fTaiBezGwGzzcf6Gdr1X0fFv+m4eCkatQLgyqNcTNGw2X/mWBDrSVPHXdHt
- WuUhdOdwpMX+jw5CwfiS1jT/+VBNG7GHV8mzd7m5aDG3EfRZ7HX177EOTnLq8691HJHU
- AHO+waUx2eVQBKOPeCoc/w/XrPrmtCAIeJv9NKoNUHIY+EKr5thKEtlJNn20Baa3ePmf Ig== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3st28a8kvx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Aug 2023 14:16:32 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37UEGVeB023380
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Aug 2023 14:16:31 GMT
-Received: from [10.111.178.80] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 30 Aug
- 2023 07:16:28 -0700
-Message-ID: <42177428-c85f-4fa8-af0a-0252dd4aef43@quicinc.com>
-Date: Wed, 30 Aug 2023 07:16:28 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53A119BB4
+	for <tools@linux.kernel.org>; Thu, 31 Aug 2023 20:26:46 +0000 (UTC)
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-410ad0ae052so11065191cf.1
+        for <tools@linux.kernel.org>; Thu, 31 Aug 2023 13:26:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1693513605; x=1694118405; darn=linux.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SZ7ZYa/KLfKCFIbQePPtMA/rY+cy6+mqF1inUWhew5w=;
+        b=dU3T5RoXfj1R+VKqXlbrhoxp/GdQc9NdIzoXMq1Q4+MS/TfD9rXkZNnO1guOZvZDoN
+         reP2WZ+DER90Bh0nBqFsSepm2Wn6R9PUDncMh/NG98FPUei+P4U464Jd6ae70l64vvyU
+         ylDk/9ffWVBLujj/UTDQeEifZLrJaf3Ey78Co=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693513605; x=1694118405;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SZ7ZYa/KLfKCFIbQePPtMA/rY+cy6+mqF1inUWhew5w=;
+        b=RaBnLR5fLr9iUiy2yNQ6PYrjtG30T8amS+et1Maevv6aMgw/+5KnJrZnPqZXhIYuGm
+         9KIg7G0LTD69krVTjnqn7UsH5v0Ar5SjiQ5uTy0lJ29RxUqwadrLrxQt+ulFPoHasjEg
+         BDrZSz6Vnxs14JQqL9JVgwLaDuZMW00Ymj2CE+ScchKAWd4bbME9G9J23ym995Q2wuu7
+         VsJGtU/CteciIi2lD4Itt7NpQVkEau7WFZGzYAbCCJT7Ak4uxpvsnrJNMnKtRK3JASoc
+         zY7pKAPl5lFiNZVlMMAg0Oj8F02x4o3u5N1eN0FXXvnzOwtveWvKbWQWAzhl1RaaM8Cy
+         CB5g==
+X-Gm-Message-State: AOJu0YxuLxzUCC8Z+xNuLbLKRHtxOZisgxB+dYlLJuKWW4LK/sVtlKVH
+	1AUHfB4f2igSEYqG8jBpimkJ8g==
+X-Google-Smtp-Source: AGHT+IHU8X3zPSOUICDXu08lRD4lRLJuk2mkynnppwwGwQeObpiy+g3cQVMK82OcQbZxL3j58YDLQg==
+X-Received: by 2002:ac8:4e55:0:b0:3ff:2cce:c625 with SMTP id e21-20020ac84e55000000b003ff2ccec625mr4733048qtw.19.1693513605492;
+        Thu, 31 Aug 2023 13:26:45 -0700 (PDT)
+Received: from nitro.local ([204.48.79.90])
+        by smtp.gmail.com with ESMTPSA id h3-20020ac85143000000b0040ff121e011sm889246qtn.2.2023.08.31.13.26.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Aug 2023 13:26:45 -0700 (PDT)
+Date: Thu, 31 Aug 2023 16:26:33 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 patch corruption
+Message-ID: <20230831-finale-hurrah-chai-2791dd@meerkat>
+References: <c9643b70-8751-a2a2-185e-174ec2560328@citrix.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-Content-Language: en-US
-To: Mark Brown <broonie@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton
-	<akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        "Konstantin
- Ryabitsev" <konstantin@linuxfoundation.org>,
-        Kees Cook
-	<keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon
-	<will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <quic_pkondeti@quicinc.com>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, <workflows@vger.kernel.org>,
-        <tools@linux.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
- <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
- <20230828175629.GC23466@quicinc.com>
- <78aa33f9-ead8-b128-2a7a-40530a1a3ed0@linaro.org>
- <ZOz4XtX3DFRQpvQY@finisterre.sirena.org.uk>
- <670a87e9-2f0c-ec9e-ebb4-9041c8972ace@linaro.org>
- <20230829231638.GA27843@quicinc.com>
- <0f7b32e1-1b26-4543-bfec-471641a67416@sirena.org.uk>
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <0f7b32e1-1b26-4543-bfec-471641a67416@sirena.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Y99vl80-AQIBPhE1u991VngBk1l7j4Xp
-X-Proofpoint-GUID: Y99vl80-AQIBPhE1u991VngBk1l7j4Xp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-29_16,2023-08-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- lowpriorityscore=0 phishscore=0 malwarescore=0 impostorscore=0
- suspectscore=0 spamscore=0 adultscore=0 bulkscore=0 mlxlogscore=965
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308300132
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c9643b70-8751-a2a2-185e-174ec2560328@citrix.com>
 
-On 8/30/2023 4:22 AM, Mark Brown wrote:
-> On Tue, Aug 29, 2023 at 04:16:39PM -0700, Guru Das Srinagesh wrote:
+On Thu, Aug 17, 2023 at 01:23:06PM +0100, Andrew Cooper wrote:
+> Hi,
 > 
->> If this script is accepted and gains adoption, maintainers like yourself will
->> only be To-ed in patches that touch files that you're a direct "Maintainer" or
->> "Reviewer" of. For all other patches in the series you'll be in "Cc:". I
->> imagine that this can be very useful regardless of the specifics of your
->> workflow.
+> I'm using b4 v0.12.3, and getting some kind of patch corruption issue:
+
+Indeed, I can confirm the problem.
+
+bugbot assign to me
+
+> I can't spot any interesting differences between what failed and what
+> `git format-patch` reproduced, but I'm out of my depth here.
 > 
-> Given that b4 solves a lot more problems and is getting quite widely
-> adopted it's probably going to be more effective to look at trying to
-> get this implemented there.  That might still mean a separate script
-> that b4 can hook into, but it's probably important that whatever you do
-> can be used easily with b4.
+> My gut feeling is that something has been mangled while b4 was
+> processing the change, but it's only a guess.
 
-As someone who has recently moved to using b4 I second this comment.
-b4 makes it so much easier to maintain patch versioning and to add the 
-right folks to the review. And most folks aren't performing tree-wide 
-changes so the per-patch customization doesn't seem to be a big win.
+I'll have to dig deeper, but the main reason is that it's not a patch
+generated with git (you can tell by the lack of diff --git and index lines).
+However, b4 shouldn't corrupt such patches either, so I will have to figure
+out what is throwing it off.
 
-/jeff
+Thanks for the report.
+
+-K
