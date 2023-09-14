@@ -1,102 +1,73 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650B639F
-	for <tools@linux.kernel.org>; Wed, 13 Sep 2023 23:04:02 +0000 (UTC)
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1bd9b4f8e0eso2424955ad.1
-        for <tools@linux.kernel.org>; Wed, 13 Sep 2023 16:04:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1694646241; x=1695251041; darn=linux.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+Ld6lfRcEJe7bKmk98Gb/nH/bWafckY17eZjaURqNng=;
-        b=I18lXeiguSVY9iSPSMHOrkq4K/dDolTqrn9/mpgOnjom7DGmTacnlBiFahEUt1xZaA
-         WfF+FVR8kWdxKaw1CzkueWNdQGLlLsCuMdHg0ddjAsCJh1BNdh62wsGOYq6vV+6RlRkz
-         MkZzgZW4HX4dvQnrk16q30RNA0eKcJbZFdmPY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694646241; x=1695251041;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+Ld6lfRcEJe7bKmk98Gb/nH/bWafckY17eZjaURqNng=;
-        b=hOHSXWWX4b474tnA+hizdVebRWY7OwrjQv+fubhH1RqkIbfrRQzphYYDKm6q+IFZHv
-         kiG4XYUnLQpv0eeVclXmOKA7zd+X/+Lgonw31bB6dPq7NcJ3rQwD0dZqVHX1TSdHi+BO
-         QfnAV+VZmUyawoMoz3OyFzfg/75ZBsoGSAgvtfckJzTUPBcITL316119R68Zc2o1SaeZ
-         1BLUnLroVKqARriDaG+uJpW/K1CVHnbGx4gtU9fslRGaoDIcqxHwOAKJwTubUDF/FB2y
-         DNU6GxReVlWaShBU+4GGDAVUi393j5FnDtTltZAeu/Db79Zu1OqSmXx+yGcyPfG44nvv
-         5VKA==
-X-Gm-Message-State: AOJu0Yy45FFhr0c0WvjrJR4oPh5jd5LtBqkV5xFj5LeIZWfkvVEz3WHZ
-	IyrhV6yI/0lEOuSY2T9OmYzFA+R0UeViH7bTgL0=
-X-Google-Smtp-Source: AGHT+IGXrvF+RUpSfjofkiz51Mq/J8FRsjUPFMzkMaWE8wRczvQ7mHU82r7DnxrOSWmnABRAUk4bWg==
-X-Received: by 2002:a17:902:cec1:b0:1bb:35b6:448f with SMTP id d1-20020a170902cec100b001bb35b6448fmr4788400plg.15.1694646241583;
-        Wed, 13 Sep 2023 16:04:01 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id p6-20020a170902a40600b001bf00317a49sm147325plq.104.2023.09.13.16.04.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Sep 2023 16:04:01 -0700 (PDT)
-Date: Wed, 13 Sep 2023 16:04:00 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	Johannes Berg <johannes.berg@intel.com>
-Cc: tools@linux.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A984B6132
+	for <tools@linux.kernel.org>; Thu, 14 Sep 2023 06:55:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+	Resent-Cc:Resent-Message-ID; bh=8Gc1XaSWZdZOIY4FVdYl16DNrBoTruC8xGxukIvFdaY=;
+	t=1694674530; x=1695884130; b=m3dokknW3Mvua7rQYYk72f5V/ArJ9u3SkxR6zFwBJRyQ3zw
+	o00aSvf/adgVlfENKl4N1Y/y9xyK9LyI3M3WPc2HyrDKKWbxubbkdBRPe8fE24pFBbEN6BN0K26Sz
+	CfGLU0p5pJcPpf3xSdKe/i58LMH3KfeuQhCDHl81ANfSslAl9EqOHPMak9kVj05kaWyH6iAbpjxkj
+	HTo5MmpXx2uSMcIjU1yKpYsQ7tS80ws6RJDcV6uvMsny+meE+MYNVXfPZzffR7k/Gv1dun+k0dXi6
+	FKSjrjLLYoR3reCHrRN7vVdHGGCyYU4Q4GB0VHdOf9krULpQTiUJkXnUaVbwVM1Q==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1qggG6-00GhAe-1X;
+	Thu, 14 Sep 2023 08:55:26 +0200
+Message-ID: <ff72f308879a12f53fa7ace044ab99ab7dd9e060.camel@sipsolutions.net>
 Subject: Re: b4 tag parsing too lax?
-Message-ID: <202309131601.979D5790@keescook>
+From: Johannes Berg <johannes@sipsolutions.net>
+To: Kees Cook <keescook@chromium.org>, Konstantin Ryabitsev
+	 <konstantin@linuxfoundation.org>
+Cc: "tools@linux.kernel.org" <tools@linux.kernel.org>, Kalle Valo
+	 <kvalo@kernel.org>
+Date: Thu, 14 Sep 2023 08:55:25 +0200
+In-Reply-To: <202309131601.979D5790@keescook>
 References: <202309131243.5D508355@keescook>
- <20230913-lunchbox-anemia-a19bc1@meerkat>
+	 <20230913-lunchbox-anemia-a19bc1@meerkat> <202309131601.979D5790@keescook>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230913-lunchbox-anemia-a19bc1@meerkat>
+X-malware-bazaar: not-scanned
 
-On Wed, Sep 13, 2023 at 04:00:27PM -0400, Konstantin Ryabitsev wrote:
-> On Wed, Sep 13, 2023 at 12:44:43PM -0700, Kees Cook wrote:
-> > Hi,
-> > 
-> > I just saw this in commit ef6e1997da63 ("wifi: mac80211: fortify the
-> > spinlock against deadlock by interrupt"):
-> > 
-> >   Reviewed-by: tag, or it goes automatically?
-> > 
-> > I tracked it down to:
-> > 
-> > https://lore.kernel.org/all/074cf5ed-c39d-1c16-12e7-4b14bbe0cac4@alu.unizg.hr/
-> > 
-> > I can't tell if we should just deal with kind of unfortunate misparsing,
-> > or if b4 should require at least a "@" in the tag? (Though plenty of
-> > tags are just someone's name without an email in the cases where no
-> > email was available...)
-> 
-> I don't think b4 did this, because we already have precautions against this in
-> place. E.g. if you retrieve that with b4, you will see that it doesn't get
-> confused by that line:
-> 
-> $ b4 am -o/tmp https://lore.kernel.org/netdev/074cf5ed-c39d-1c16-12e7-4b14bbe0cac4@alu.unizg.hr/
-> Analyzing 5 messages in the thread
-> ...
-> ---
->   ✗ [PATCH v4 1/1] wifi: mac80211: fortify the spinlock against deadlock by interrupt
->     + Reviewed-by: Leon Romanovsky <leonro@nvidia.com> (✓ DKIM/kernel.org)
->   ---
->   ...
-> ---
-> ...
-> 
-> While it's possible that b4 did this, it's not any current version.
+On Wed, 2023-09-13 at 23:04 +0000, Kees Cook wrote:
+> On Wed, Sep 13, 2023 at 04:00:27PM -0400, Konstantin Ryabitsev wrote:
+> > On Wed, Sep 13, 2023 at 12:44:43PM -0700, Kees Cook wrote:
+> > > Hi,
+> > >=20
+> > > I just saw this in commit ef6e1997da63 ("wifi: mac80211: fortify the
+> > > spinlock against deadlock by interrupt"):
+> > >=20
+> > >   Reviewed-by: tag, or it goes automatically?
 
-Okay, weird! I have no idea how that got there then.
+Heh, that's kinda funny.
 
-I should have CCed Johannes Berg to start with, but now I have. :) I'm
-curious what the workflow for that patch was -- do you use b4? (Perhaps
-this was a b4 behavior accidentally back in May?)
+> > While it's possible that b4 did this, it's not any current version.
 
-Anyway, no worries. I only found 1 instance like this in the last year.
+It didn't.
 
--- 
-Kees Cook
+> Okay, weird! I have no idea how that got there then.
+>=20
+> I should have CCed Johannes Berg to start with, but now I have. :) I'm
+> curious what the workflow for that patch was -- do you use b4? (Perhaps
+> this was a b4 behavior accidentally back in May?)
+>=20
+
+We use patchwork in wireless to assign the work between Kalle and I. I
+guess I could still apply patches using b4 though, but don't, at this
+point.
+
+So I guess it's more a bug to report to patchwork, but I'm not sure how
+much good that will do unless we fix it ourselves :)
+
+johannes
