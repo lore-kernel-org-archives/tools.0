@@ -1,46 +1,47 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011C21FA4
-	for <tools@linux.kernel.org>; Thu, 14 Sep 2023 13:44:24 +0000 (UTC)
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-770ef903e80so65480385a.3
-        for <tools@linux.kernel.org>; Thu, 14 Sep 2023 06:44:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E4A14F6B
+	for <tools@linux.kernel.org>; Thu, 14 Sep 2023 16:55:09 +0000 (UTC)
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-68fac346f6aso1048407b3a.3
+        for <tools@linux.kernel.org>; Thu, 14 Sep 2023 09:55:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1694699063; x=1695303863; darn=linux.kernel.org;
+        d=chromium.org; s=google; t=1694710509; x=1695315309; darn=linux.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=e8jSAiLuo9p2fWOKB4Kb4grKw9D6Y9JUnvQ8yQwEeQY=;
-        b=A93LijLQwNOL3OCOsK4Knt8PudCMekUxp8yJOqz+KPrF5jLwI1UJf5TJVxd4x7gGB/
-         fjq/wTsaLkvlkjIzdsmQQSQ4qvg4hcVuF6W600mbMTnbzZzhz6qbwnHcnPYue3pl17td
-         EvmppTkJylCLdJWE9HGcaWGdyIOgaQWx0Pti8=
+        bh=w2Rte4D1NnKPAUNicaX/y+Pw5/c58Jqh8fdioEvviMk=;
+        b=g2DTmTjiC3aUMXBiRQaJwyzG5FzXWdEXbjdd24kBMIZBBQntO+RBD5mG4+tTJTq8/J
+         wUvepPKblCVD1qEzNY3bKpKOapAEw0xmVE+x5MbafX6nfBtOcte+q2s0rZSymJQMSDrR
+         8GV/LLS1UK0bCOJTJmsqCnLBjQuBHL6jA68Nc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694699063; x=1695303863;
+        d=1e100.net; s=20230601; t=1694710509; x=1695315309;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e8jSAiLuo9p2fWOKB4Kb4grKw9D6Y9JUnvQ8yQwEeQY=;
-        b=Vxn+1IUBpn3dl+JSBfmzfQh/p0w4r27ElUkFODKThf/eV4cXnIoz2RiKjtyaPplyB2
-         N6QNPccNYagfxMqy//fuxOSlcJpnDd+bjCF0Ez1JndgsSoJZodhqjjTLPjs2HTljPTnL
-         nYrlQ/8J7XpuAN4/OQO5XBeUhxJ5Ur7jjXM1IuiqTkhHnFh4TMNl/wyd2tvoXCGJIDW0
-         uRCf6kD0BgdbaIi/HdS7WktnBc+XkH8tUBRcWgpbr7qK1MpKMWOxNkv3CHnTm6NEI1nm
-         L0vcXNFL66iwXvTTkXM+nmraqCOSWfpUFgkc8pp4HcTiYxnq4goJ+4bNkwauVw3YAiz0
-         pb3g==
-X-Gm-Message-State: AOJu0Yx1otW4PMnHfWLIPyYDyQ6B1EYhM1Rz+GEB3xYkTeslrdOZCXAP
-	7iC6Hbcr/kdw97ePvqTEUFi/ORv2nR7VcRpnSws=
-X-Google-Smtp-Source: AGHT+IFNyH5idZOi5/sqO7yrWIZKv2we4JFv8PJhQ89C7gZPBT4Q1XMXmLVmozNMWCFqmz/5J6A3qg==
-X-Received: by 2002:ae9:f814:0:b0:770:f1e1:202a with SMTP id x20-20020ae9f814000000b00770f1e1202amr5134250qkh.66.1694699063706;
-        Thu, 14 Sep 2023 06:44:23 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-110.dsl.bell.ca. [209.226.106.110])
-        by smtp.gmail.com with ESMTPSA id i11-20020a37c20b000000b0076e1e2d6496sm479187qkm.104.2023.09.14.06.44.22
+        bh=w2Rte4D1NnKPAUNicaX/y+Pw5/c58Jqh8fdioEvviMk=;
+        b=b8F3Z5qa9xvitFICcCLhbzjrybn2B2oXvJvMPc3J8n2LwogYUkVCiALf2FnK0EEast
+         YwDhfjTShp7giEMNsrDcGCGBt3KmN9tEMPnDCLSp2M+9hBFz6zmkk2xgnmgPxKcRImo3
+         Hy3MjaSLh7Dl14orjdLfHG1I09/breVEC3/FL639+foMbCB6tTXDn+WVxX4vMFjgoQU0
+         jCeDfTYbXeUm66eY8QCYVjvdw1JnGUhEd/spkNnMaSuRxICwZfBl7zj8ayK+wKRFByAR
+         iEyJuDQX+6zpNXnS3/8yu3YHZ7BD1EohIas0do15ef4evppA2qTtvTH1GsnNcr9Dp7k6
+         EBYg==
+X-Gm-Message-State: AOJu0Yyo6X9gvwZe1f2J3CnXmMzJTBsnW5UhVRy69GhaEMVAfItprfKL
+	nFEby7nkrX+peNnInwEI4UtbkA==
+X-Google-Smtp-Source: AGHT+IHaBuHFFDjPxIgReVr+vco+g1cAcX4voJ9bztGJjgDd6fZDhliXCRRgn0RkBqoLh23a5hPriQ==
+X-Received: by 2002:a05:6a20:9144:b0:132:ff57:7fab with SMTP id x4-20020a056a20914400b00132ff577fabmr6900093pzc.2.1694710509025;
+        Thu, 14 Sep 2023 09:55:09 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id e7-20020aa78247000000b0063f0068cf6csm1550816pfn.198.2023.09.14.09.55.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Sep 2023 06:44:23 -0700 (PDT)
-Date: Thu, 14 Sep 2023 09:44:21 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+        Thu, 14 Sep 2023 09:55:08 -0700 (PDT)
+Date: Thu, 14 Sep 2023 09:55:07 -0700
+From: Kees Cook <keescook@chromium.org>
 To: Johannes Berg <johannes@sipsolutions.net>
-Cc: Kees Cook <keescook@chromium.org>, 
-	"tools@linux.kernel.org" <tools@linux.kernel.org>, Kalle Valo <kvalo@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	"tools@linux.kernel.org" <tools@linux.kernel.org>,
+	Kalle Valo <kvalo@kernel.org>
 Subject: Re: b4 tag parsing too lax?
-Message-ID: <20230914-overstuff-dreaded-70e1ae@meerkat>
+Message-ID: <202309140954.3A38E1B14D@keescook>
 References: <202309131243.5D508355@keescook>
  <20230913-lunchbox-anemia-a19bc1@meerkat>
  <202309131601.979D5790@keescook>
@@ -51,18 +52,44 @@ List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <ff72f308879a12f53fa7ace044ab99ab7dd9e060.camel@sipsolutions.net>
 
 On Thu, Sep 14, 2023 at 08:55:25AM +0200, Johannes Berg wrote:
+> On Wed, 2023-09-13 at 23:04 +0000, Kees Cook wrote:
+> > On Wed, Sep 13, 2023 at 04:00:27PM -0400, Konstantin Ryabitsev wrote:
+> > > On Wed, Sep 13, 2023 at 12:44:43PM -0700, Kees Cook wrote:
+> > > > Hi,
+> > > > 
+> > > > I just saw this in commit ef6e1997da63 ("wifi: mac80211: fortify the
+> > > > spinlock against deadlock by interrupt"):
+> > > > 
+> > > >   Reviewed-by: tag, or it goes automatically?
+> 
+> Heh, that's kinda funny.
+> 
+> > > While it's possible that b4 did this, it's not any current version.
+> 
+> It didn't.
+> 
+> > Okay, weird! I have no idea how that got there then.
+> > 
+> > I should have CCed Johannes Berg to start with, but now I have. :) I'm
+> > curious what the workflow for that patch was -- do you use b4? (Perhaps
+> > this was a b4 behavior accidentally back in May?)
+> > 
+> 
 > We use patchwork in wireless to assign the work between Kalle and I. I
 > guess I could still apply patches using b4 though, but don't, at this
 > point.
+> 
+> So I guess it's more a bug to report to patchwork, but I'm not sure how
+> much good that will do unless we fix it ourselves :)
 
-You can integrate b4 with patchwork, to a degree. At the very least, you can
-pass patchwork URLs to `b4 am` and reasonably expect them to do the right
-thing (as long as it's the version of patchwork that uses msgid URLs for
-threads).
+Ah-ha! Patchwork did the collecting. Thanks for taking a look. :)
 
--K
+-Kees
+
+-- 
+Kees Cook
