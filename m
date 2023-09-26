@@ -1,95 +1,143 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E4A14F6B
-	for <tools@linux.kernel.org>; Thu, 14 Sep 2023 16:55:09 +0000 (UTC)
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-68fac346f6aso1048407b3a.3
-        for <tools@linux.kernel.org>; Thu, 14 Sep 2023 09:55:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1694710509; x=1695315309; darn=linux.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=w2Rte4D1NnKPAUNicaX/y+Pw5/c58Jqh8fdioEvviMk=;
-        b=g2DTmTjiC3aUMXBiRQaJwyzG5FzXWdEXbjdd24kBMIZBBQntO+RBD5mG4+tTJTq8/J
-         wUvepPKblCVD1qEzNY3bKpKOapAEw0xmVE+x5MbafX6nfBtOcte+q2s0rZSymJQMSDrR
-         8GV/LLS1UK0bCOJTJmsqCnLBjQuBHL6jA68Nc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694710509; x=1695315309;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w2Rte4D1NnKPAUNicaX/y+Pw5/c58Jqh8fdioEvviMk=;
-        b=b8F3Z5qa9xvitFICcCLhbzjrybn2B2oXvJvMPc3J8n2LwogYUkVCiALf2FnK0EEast
-         YwDhfjTShp7giEMNsrDcGCGBt3KmN9tEMPnDCLSp2M+9hBFz6zmkk2xgnmgPxKcRImo3
-         Hy3MjaSLh7Dl14orjdLfHG1I09/breVEC3/FL639+foMbCB6tTXDn+WVxX4vMFjgoQU0
-         jCeDfTYbXeUm66eY8QCYVjvdw1JnGUhEd/spkNnMaSuRxICwZfBl7zj8ayK+wKRFByAR
-         iEyJuDQX+6zpNXnS3/8yu3YHZ7BD1EohIas0do15ef4evppA2qTtvTH1GsnNcr9Dp7k6
-         EBYg==
-X-Gm-Message-State: AOJu0Yyo6X9gvwZe1f2J3CnXmMzJTBsnW5UhVRy69GhaEMVAfItprfKL
-	nFEby7nkrX+peNnInwEI4UtbkA==
-X-Google-Smtp-Source: AGHT+IHaBuHFFDjPxIgReVr+vco+g1cAcX4voJ9bztGJjgDd6fZDhliXCRRgn0RkBqoLh23a5hPriQ==
-X-Received: by 2002:a05:6a20:9144:b0:132:ff57:7fab with SMTP id x4-20020a056a20914400b00132ff577fabmr6900093pzc.2.1694710509025;
-        Thu, 14 Sep 2023 09:55:09 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id e7-20020aa78247000000b0063f0068cf6csm1550816pfn.198.2023.09.14.09.55.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Sep 2023 09:55:08 -0700 (PDT)
-Date: Thu, 14 Sep 2023 09:55:07 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Johannes Berg <johannes@sipsolutions.net>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	"tools@linux.kernel.org" <tools@linux.kernel.org>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: Re: b4 tag parsing too lax?
-Message-ID: <202309140954.3A38E1B14D@keescook>
-References: <202309131243.5D508355@keescook>
- <20230913-lunchbox-anemia-a19bc1@meerkat>
- <202309131601.979D5790@keescook>
- <ff72f308879a12f53fa7ace044ab99ab7dd9e060.camel@sipsolutions.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1028273DC
+	for <tools@linux.kernel.org>; Tue, 26 Sep 2023 12:02:44 +0000 (UTC)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38QBGOHk009562;
+	Tue, 26 Sep 2023 12:02:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=2a8ACoHIsGvcVxr5BZ9tsHiiT+SNT7xd5y69XlnJqQY=;
+ b=J7lTwAphiiWiKHxu+WgZCtz2LozTWomlVQwehhqeNAdNpUmUsFkHrS3dJSiElv3CEPZd
+ nEEQI4YoHvSE9BecfzfnLaH8/WEssbfNvTjMUQO1rZVgW3Q3RC25ExS3yMlsckIOb7yv
+ NBO6sME/INbBey7rW0sPumiS/UQ5mHPkk62FkAcfRoml7BWL1kSreVihFdquCOsLXMFR
+ Cs5LvoZ4UOxVsP9DiHcw32CabcGmYd8ZqjQTcERWLNt7XGnUorrV3JLxPEfQqdzlUXzz
+ cHtfU2uE4kVEb1SjY5xbUnS5rVCkjJX78HZbLxZdtTlc5ek7zgbPyTnhPBDPay8EMyH9 Tg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tb72sk4kf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Sep 2023 12:02:22 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38QC2Ln2010849
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Sep 2023 12:02:21 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Tue, 26 Sep 2023 05:02:13 -0700
+Date: Tue, 26 Sep 2023 17:32:10 +0530
+From: Pavan Kondeti <quic_pkondeti@quicinc.com>
+To: Guru Das Srinagesh <quic_gurus@quicinc.com>
+CC: Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers
+	<ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        "Nicolas Schier" <nicolas@fjasle.eu>,
+        Konstantin Ryabitsev
+	<konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <quic_pkondeti@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, <workflows@vger.kernel.org>,
+        <tools@linux.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
+Message-ID: <d0711242-df00-45c7-962f-841f7cefa7e3@quicinc.com>
+References: <cover.1693037031.git.quic_gurus@quicinc.com>
+ <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <ff72f308879a12f53fa7ace044ab99ab7dd9e060.camel@sipsolutions.net>
+In-Reply-To: <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NatgBplqSlxKxQknsktnvf_838ZElKmd
+X-Proofpoint-ORIG-GUID: NatgBplqSlxKxQknsktnvf_838ZElKmd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-26_07,2023-09-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ mlxscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1011
+ malwarescore=0 adultscore=0 mlxlogscore=661 spamscore=0 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309260104
 
-On Thu, Sep 14, 2023 at 08:55:25AM +0200, Johannes Berg wrote:
-> On Wed, 2023-09-13 at 23:04 +0000, Kees Cook wrote:
-> > On Wed, Sep 13, 2023 at 04:00:27PM -0400, Konstantin Ryabitsev wrote:
-> > > On Wed, Sep 13, 2023 at 12:44:43PM -0700, Kees Cook wrote:
-> > > > Hi,
-> > > > 
-> > > > I just saw this in commit ef6e1997da63 ("wifi: mac80211: fortify the
-> > > > spinlock against deadlock by interrupt"):
-> > > > 
-> > > >   Reviewed-by: tag, or it goes automatically?
-> 
-> Heh, that's kinda funny.
-> 
-> > > While it's possible that b4 did this, it's not any current version.
-> 
-> It didn't.
-> 
-> > Okay, weird! I have no idea how that got there then.
-> > 
-> > I should have CCed Johannes Berg to start with, but now I have. :) I'm
-> > curious what the workflow for that patch was -- do you use b4? (Perhaps
-> > this was a b4 behavior accidentally back in May?)
-> > 
-> 
-> We use patchwork in wireless to assign the work between Kalle and I. I
-> guess I could still apply patches using b4 though, but don't, at this
-> point.
-> 
-> So I guess it's more a bug to report to patchwork, but I'm not sure how
-> much good that will do unless we fix it ourselves :)
+On Sat, Aug 26, 2023 at 01:07:42AM -0700, Guru Das Srinagesh wrote:
+> +def gather_maintainers_of_file(patch_file):
+> +    all_entities_of_patch = dict()
+> +
+> +    # Run get_maintainer.pl on patch file
+> +    logging.info("GET: Patch: {}".format(os.path.basename(patch_file)))
+> +    cmd = ['scripts/get_maintainer.pl']
+> +    cmd.extend([patch_file])
+> +
+> +    try:
+> +        p = subprocess.run(cmd, stdout=subprocess.PIPE, check=True)
+> +    except:
+> +        sys.exit(1)
+> +
+> +    logging.debug("\n{}".format(p.stdout.decode()))
+> +
+> +    entries = p.stdout.decode().splitlines()
+> +
+> +    maintainers = []
+> +    lists = []
+> +    others = []
+> +
+> +    for entry in entries:
+> +        entity = entry.split('(')[0].strip()
+> +        if any(role in entry for role in ["maintainer", "reviewer"]):
+> +            maintainers.append(entity)
+> +        elif "list" in entry:
+> +            lists.append(entity)
+> +        else:
+> +            others.append(entity)
+> +
+> +    all_entities_of_patch["maintainers"] = set(maintainers)
+> +    all_entities_of_patch["lists"] = set(lists)
+> +    all_entities_of_patch["others"] = set(others)
+> +
+> +    return all_entities_of_patch
+> +
 
-Ah-ha! Patchwork did the collecting. Thanks for taking a look. :)
+FYI, there are couple of issues found while playing around.
 
--Kees
+- Some entries in MAINTAINERS could be "supporter"
+- When names contain ("company"), the script fails to extract name.
 
--- 
-Kees Cook
+Thanks,
+Pavan
+
+diff --git a/scripts/add-maintainer.py b/scripts/add-maintainer.py
+index 5a5cc9482b06..6aa5e7941172 100755
+--- a/scripts/add-maintainer.py
++++ b/scripts/add-maintainer.py
+@@ -29,8 +29,8 @@ def gather_maintainers_of_file(patch_file):
+     others = []
+
+     for entry in entries:
+-        entity = entry.split('(')[0].strip()
+-        if any(role in entry for role in ["maintainer", "reviewer"]):
++        entity = entry.rsplit('(', 1)[0].strip()
++        if any(role in entry for role in ["maintainer", "reviewer", "supporter"]):
+             maintainers.append(entity)
+         elif "list" in entry:
+             lists.append(entity)
+
+
+Thanks,
+Pavan
