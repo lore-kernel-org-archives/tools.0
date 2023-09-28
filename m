@@ -1,152 +1,105 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E896A1C6B3
-	for <tools@linux.kernel.org>; Wed, 27 Sep 2023 22:47:52 +0000 (UTC)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38RMYSAr031747;
-	Wed, 27 Sep 2023 22:47:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=r1Gvu1bF8AwQw7PU6ySJiAjPOzZWal6A/ahP3m0/aNc=;
- b=SCrZtmdngHHoXrS2RAGNAX3zLp1rcfWiFxWsQEm9EpG5dZ87SdvJ282pR60W1TN9zmUI
- /oetP36u4089dTMMZbhujEwmDtst+teSXPnRNycO4BgaxINvoVmsQf7EwB7J1cUmlIBK
- Y4E0IknVWT5iI3t9VVOW9A6CI/kyaDSoODeH/d9lvHyCAk/LwSihM4FcUUYyg+fHDVvq
- thBmYKt9Ln6N/4hmf7yb2jPF/0+wAUo4jLg2bz3txi9WPIpZOZclRkGFiezK1BYL84Zj
- o5kx8tJOcPboVpn1BsgbtB64mrglSUm/qW8kKJYJ2TMtJdzbFDFjvbdE6DRFe0NCLUW3 fw== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tcra20per-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Sep 2023 22:47:21 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38RMlKOj025359
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Sep 2023 22:47:20 GMT
-Received: from quicinc.com (10.49.16.6) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 27 Sep
- 2023 15:47:17 -0700
-Date: Wed, 27 Sep 2023 15:47:16 -0700
-From: Guru Das Srinagesh <quic_gurus@quicinc.com>
-To: Pavan Kondeti <quic_pkondeti@quicinc.com>
-CC: Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Masahiro Yamada
-	<masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "Andrew
- Morton" <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook
-	<keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon
-	<will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <workflows@vger.kernel.org>, <tools@linux.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-Message-ID: <ZRSw9EGuYEpZC6GE@quicinc.com>
-Mail-Followup-To: Pavan Kondeti <quic_pkondeti@quicinc.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	Kees Cook <keescook@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-kernel@vger.kernel.org, kernel@quicinc.com,
-	workflows@vger.kernel.org, tools@linux.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
- <d0711242-df00-45c7-962f-841f7cefa7e3@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E5A749B
+	for <tools@linux.kernel.org>; Thu, 28 Sep 2023 04:54:23 +0000 (UTC)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-9b1ebc80d0aso1287204966b.0
+        for <tools@linux.kernel.org>; Wed, 27 Sep 2023 21:54:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695876862; x=1696481662; darn=linux.kernel.org;
+        h=message-id:subject:from:to:date:content-transfer-encoding
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QqAfxeZYFxRaxu5nApggFRZHaNOiPGKQ1gySmr1YpEs=;
+        b=kkQHyeEa3ep/BlplsjgqCUK7XFglnwQKXNKeJWIECDnQ4SJ2VCfFg2KuR663x0U75z
+         Zwc20rQ/ad0Ma2pLnJ+0RRIqNBe2MjbxZv1L2ml5Bs3xOSiEg25i8m4jq9bCnAIQRlaq
+         wUTblkoFXa5WM4Q2uib7vonadp/sTt4PvTBdnXcrj0M1ocxMYh9cGMNFLGhEkhdifysc
+         xq2SLsRbfVrOUUFm0DZCIUNSUrR/ZkU1XT9vp4mZtT0qoWo92EzgwMNc62XOFfFfqRaS
+         BYdhFc5klbNc7CKPYFC9nXf1nBOVbcvfTaBD+JJtrb+S1S3qWQsHtt/e19jxU1ifjG0u
+         +c4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695876862; x=1696481662;
+        h=message-id:subject:from:to:date:content-transfer-encoding
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QqAfxeZYFxRaxu5nApggFRZHaNOiPGKQ1gySmr1YpEs=;
+        b=ki1MbBNnHXr4ulgnoo+qfB7wYU2r8m/kv04ZOVZsj7HIiac95V9sTwmdRLCZXxsMuB
+         2/mwjrxfqGxAuHPhPnWoAvJ/ELMxBj6NCv1KdzLAUzbDuXGDzMrRpMBuvkqyeBvKp4qd
+         /t5rLDetuM+esBmDhGmKIigeO82UAZ1o2d5OmddkVrDnnPqgnFPnbGDY1CLAuOKElW7y
+         mvhwsBWDu9Yj0nhXKg+v/22TTQLchrC9SsvAYsddIN5Xhezgf8YrRHwF1yWxtHdYokcP
+         WE1fcP5gYYdrEt+AsF+iPzlHvpCkhPg2wAmNDPehvC0E9JyRbZW2Dr3zH3SIcLKb24zR
+         7nEg==
+X-Gm-Message-State: AOJu0YyPSApi5BiUqD5nYHLxFgBG16k89SMC2D7owyTm9SWk6Nv7o+Il
+	JBpCR/opwRNrQa2fNvkUL8UIX5eumONkgoLdjyE=
+X-Google-Smtp-Source: AGHT+IG142RXWNTkC43CRMfeIyTNCPMLCtlfCmds45dqKeP1S1yGB90cIHcgEbDxazOzQxP88o8k2Q==
+X-Received: by 2002:a17:906:2112:b0:9b2:b9bd:a369 with SMTP id 18-20020a170906211200b009b2b9bda369mr159896ejt.45.1695876862357;
+        Wed, 27 Sep 2023 21:54:22 -0700 (PDT)
+Received: from localhost (i5C7438B3.versanet.de. [92.116.56.179])
+        by smtp.gmail.com with ESMTPSA id d11-20020a170906370b00b0097404f4a124sm10228720ejc.2.2023.09.27.21.54.21
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Sep 2023 21:54:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <d0711242-df00-45c7-962f-841f7cefa7e3@quicinc.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zhzRcrILGrIWX2kTrOYxJRxEppcDMjte
-X-Proofpoint-GUID: zhzRcrILGrIWX2kTrOYxJRxEppcDMjte
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-27_15,2023-09-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- spamscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=780
- malwarescore=0 priorityscore=1501 adultscore=0 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309270196
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 28 Sep 2023 06:54:21 +0200
+To: "Kernel.org Tools" <tools@linux.kernel.org>
+From: "Erik Schilling" <erik.schilling@linaro.org>
+Subject: [BUG b4] To/Cc addresses from cover ignored when sending single
+ patch
+Message-Id: <CVUA1530PTVV.1EL4MWO5N2JNI@ablu-work>
+X-Mailer: aerc 0.15.2
 
-On Sep 26 2023 17:32, Pavan Kondeti wrote:
-> On Sat, Aug 26, 2023 at 01:07:42AM -0700, Guru Das Srinagesh wrote:
-> > +def gather_maintainers_of_file(patch_file):
-> > +    all_entities_of_patch = dict()
-> > +
-> > +    # Run get_maintainer.pl on patch file
-> > +    logging.info("GET: Patch: {}".format(os.path.basename(patch_file)))
-> > +    cmd = ['scripts/get_maintainer.pl']
-> > +    cmd.extend([patch_file])
-> > +
-> > +    try:
-> > +        p = subprocess.run(cmd, stdout=subprocess.PIPE, check=True)
-> > +    except:
-> > +        sys.exit(1)
-> > +
-> > +    logging.debug("\n{}".format(p.stdout.decode()))
-> > +
-> > +    entries = p.stdout.decode().splitlines()
-> > +
-> > +    maintainers = []
-> > +    lists = []
-> > +    others = []
-> > +
-> > +    for entry in entries:
-> > +        entity = entry.split('(')[0].strip()
-> > +        if any(role in entry for role in ["maintainer", "reviewer"]):
-> > +            maintainers.append(entity)
-> > +        elif "list" in entry:
-> > +            lists.append(entity)
-> > +        else:
-> > +            others.append(entity)
-> > +
-> > +    all_entities_of_patch["maintainers"] = set(maintainers)
-> > +    all_entities_of_patch["lists"] = set(lists)
-> > +    all_entities_of_patch["others"] = set(others)
-> > +
-> > +    return all_entities_of_patch
-> > +
-> 
-> FYI, there are couple of issues found while playing around.
+Hi!
 
-Thanks for testing this out :) I am no longer working on this due to pushback
-from the maintainers in favour of b4.
+When sending a single-patch, it looks like the To: / Cc: fields from
+the "cover" get ignored:
 
-> 
-> - Some entries in MAINTAINERS could be "supporter"
+  =E2=9D=AF git log
+  commit caa2c0499a3aa347804c305a8e0394f6736df7a5 (HEAD -> b4/useless-clone=
+)
+  Author: Erik Schilling <erik.schilling@linaro.org>
+  Date:   Thu Sep 28 06:34:22 2023 +0200
 
-This was intentional - I didn't want to include "supporter"s.
+      Some commit
+   =20
+      Signed-off-by: Erik Schilling <erik.schilling@linaro.org>
 
-> - When names contain ("company"), the script fails to extract name.
+  commit 7850ad017545e8cd16872f07bf774f1549a21624
+  Author: Erik Schilling <erik.schilling@linaro.org>
+  Date:   Thu Sep 28 06:31:59 2023 +0200
 
-Interesting... I had not tested this out.
+      Some cover
+   =20
+      To: Linux-GPIO <linux-gpio@vger.kernel.org>
+      Cc: Viresh Kumar <viresh.kumar@linaro.org>
+   =20
+      Signed-off-by: Erik Schilling <erik.schilling@linaro.org>
+   =20
+      --- b4-submit-tracking ---
+      # This section is used internally by b4 prep for tracking purposes.
+      {
+        "series": {
+          "revision": 1,
+          "change-id": "20230928-useless-clone-af75c3a58df7",
+          "prefixes": [
+            "libgpiod"
+          ]
+        }
+      }
 
-In any case, I am not devoting resources to work on this unless I see some
-interest from maintainers, which, as it stands currently, is nil.
 
-Thanks for the support, Pavan.
+  =E2=9D=AF b4 send -o /tmp/test/
+  Converted the branch to 1 messages
+  CRITICAL: Could not find any destination addresses (try: b4 prep --auto-t=
+o-cc).
 
-Guru Das.
+See example here: https://github.com/Ablu/libgpiod/tree/b4/useless-clone
+
+Once I add a second commit, everything works.
+
+- Erik
