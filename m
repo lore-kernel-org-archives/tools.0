@@ -1,86 +1,68 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EF1B660
-	for <tools@linux.kernel.org>; Tue, 14 Nov 2023 04:28:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29E354FBC
+	for <tools@linux.kernel.org>; Wed, 22 Nov 2023 16:52:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aXF5y7mr"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6ce2eaf7c2bso3205751a34.0
-        for <tools@linux.kernel.org>; Mon, 13 Nov 2023 20:28:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699936129; x=1700540929; darn=linux.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5VglX0knGmCiNhsukOIPsPOPZeND1JJdOt1mxJTMODA=;
-        b=aXF5y7mrOB+BhzqXI6/lJkU+SjBHNLuMkxJNcKuB/m4/6AGvlN811AVZzWOufuOCJq
-         jNpFbzqsNBF5oyTisZ6woIA6iKAAWgP6rFwCvAQb4Bt96CuIThu818UgHoYpryPCbQTq
-         w04CuX4vpt9aoV+PXEPpY7NFV82AUuViKYw5jtI1ofEUlbRGStSlBeGfh9DWrQIlm1rP
-         irJbcRVYm3naZHsCbmkr7jfBrP98QHdLCblEY8ZbiKeVS2KodoIHuZCfseqZzFp+nX3h
-         zy6BYBhSlAU0cSCTq6Y1vm2JPmAy1zvckBkSd6VB5ldYOa6GuKCF/oZyye0pfYessNwm
-         wgrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699936129; x=1700540929;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5VglX0knGmCiNhsukOIPsPOPZeND1JJdOt1mxJTMODA=;
-        b=VKyC6YnC4xQ3Y5LZ72leT71lOwebNmwmielf8912k8pEGcAyxDN7NGgIuesVdzH1cO
-         yqSihjZntHPmLfmcnjWCiS1O1pf13JhrTcoE1U5MWWoCcxplJyOX6e7uZcZEWT7bjAEU
-         Q9Y/QOE9lXwQQNoYV+oJOvr27170JAhtfkhLIy7tCCQHEVl6WW0bBELsWulqrydJ95br
-         CSIgZ+8HsSbAA2f5ofEicECocvtvzH0XTAx51z4ipV6SzDYM2zzMAwLYLz19CbyLwn1e
-         UCY8Z+m00OQ/Z6a/NQRed9D0OWTPH5iRyYs3dKA3jynmJo1qIB1IrkO5FGO/khdARqYH
-         Nctg==
-X-Gm-Message-State: AOJu0YyoEgQ84X1CeRZo+JztAwDsQ2aFG6sZg/73IuAsEA4ttwm2sK6F
-	BGFYAvziv8P4LDwSzFEC0NnJHGtDdKbNdQ==
-X-Google-Smtp-Source: AGHT+IHE0R5VLNapPFwOD9ntlTuy5RslCWIFWUgzwknIIiuVdQeu72Vkxd0OlvOJ9cfkRHLmMxlulQ==
-X-Received: by 2002:a05:6830:601:b0:6bc:fb5f:7b06 with SMTP id w1-20020a056830060100b006bcfb5f7b06mr1415404oti.17.1699936129121;
-        Mon, 13 Nov 2023 20:28:49 -0800 (PST)
-Received: from localhost.localdomain ([2600:1700:70:f702::778])
-        by smtp.gmail.com with ESMTPSA id w18-20020a056830281200b006d4760cc054sm110474otu.3.2023.11.13.20.28.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Nov 2023 20:28:48 -0800 (PST)
-From: Mario Limonciello <superm1@gmail.com>
-To: tools@linux.kernel.org
-Cc: Mario Limonciello <superm1@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH] Fall back to non-annotated tags for pull requests
-Date: Mon, 13 Nov 2023 22:28:35 -0600
-Message-ID: <20231114042835.48432-1-superm1@gmail.com>
-X-Mailer: git-send-email 2.41.0
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Nze2GiZ4"
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1700671964;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Jr/Y7V7f6fGAsxzikGQR3EngaKckAlq67YJMnyebHus=;
+	b=Nze2GiZ4tmmrzUZaJsqvtJVxRE69XlAUDczYpRLhSH6ybA2eO57YKiZpx1NKD8pqhIENqX
+	6fI57aVUoJVbAqWbEJaCdJvgZvTXr9lgZZrjOxamjO/yvH8OjhR6GAsjrn/DWd1Qh6cP81
+	68HeyEFdDHjhWdoPC0uLITdLzF1IvyA=
+Date: Wed, 22 Nov 2023 16:52:43 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Konstantin Ryabitsev" <konstantin.ryabitsev@linux.dev>
+Message-ID: <ddeefd4d0323df0948565fea2ffb55793fdcc8dc@linux.dev>
+TLS-Required: No
+Subject: Re: [PATCH] x86/hyperv: Use atomic_try_cmpxchg() to micro-optimize
+ hv_nmi_unknown()
+To: "Wei Liu" <wei.liu@kernel.org>, "Uros Bizjak" <ubizjak@gmail.com>
+Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
+ tools@linux.kernel.org
+In-Reply-To: <ZV163ePuUQyyeKUj@liuwe-devbox-debian-v2>
+References: <ZV163ePuUQyyeKUj@liuwe-devbox-debian-v2>
+ <20231114170038.381634-1-ubizjak@gmail.com>
+ <SN6PR02MB41570168279C428D385ADCB0D4B1A@SN6PR02MB4157.namprd02.prod.outlook.com>
+ <CAFULd4Z3DZh0SoEyNHfz3=DM2CkDGtNP_f1gVx64NJkzmWp-Pw@mail.gmail.com>
+X-Migadu-Flow: FLOW_OUT
 
-Not everyone uses an annotated tag, so fallback to a direct ref
-tag if annotated tags fail.
+November 21, 2023 at 10:51 PM, "Wei Liu" <wei.liu@kernel.org> wrote:
+> Uros, just so you know, DKIM verification failed when I used b4 to appl=
+y
+> this patch. You may want to check your email setup.
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
----
- b4/pr.py | 4 ++++
- 1 file changed, 4 insertions(+)
+This is not actually Uros's fault. Recently, Gmail started adding a force=
+d expiration field to their DKIM signatures, via the x=3D field:
 
-diff --git a/b4/pr.py b/b4/pr.py
-index 6c01e2b..e62690b 100644
---- a/b4/pr.py
-+++ b/b4/pr.py
-@@ -71,7 +71,11 @@ def git_get_commit_id_from_repo_ref(repo, ref):
-             lines = b4.git_get_command_lines(None, ['ls-remote', repo, 'refs/tags/%s^{}' % ref])
- 
-     elif ref.find('tags/') == 0:
-+        #try as an annotated tag first
-         lines = b4.git_get_command_lines(None, ['ls-remote', repo, 'refs/%s^{}' % ref])
-+        if not lines:
-+            # try it as a non-annotated tag, then
-+            lines = b4.git_get_command_lines(None, ['ls-remote', repo, 'refs/%s' % ref])
- 
-     else:
-         # Grab it as a head and hope for the best
--- 
-2.41.0
+    DKIM-Signature: v=3D1; a=3Drsa-sha256; c=3Drelaxed/relaxed;
+        d=3Dgmail.com; s=3D20230601; t=3D1699981249; x=3D1700586049; darn=
+=3Dvger.kernel.org;
+                                               ^^^^^^^^^^^^^
 
+This gives the signature an enforced validity of only 7 days. Since the o=
+riginal message was sent on November 14 and you're retrieving it on Novem=
+ber 21, this causes the DKIM check to fail.
+
+I need to figure out how to make b4 ignore the x=3D field, because it's n=
+ot relevant for our purposes, but the library we're using for DKIM doesn'=
+t currently have any mechanism to do so. I will open an RFE with them in =
+the hopes that we can get this implemented.
+
+Regards,
+-K
