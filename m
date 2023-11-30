@@ -1,67 +1,52 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2AE3C06B
-	for <tools@linux.kernel.org>; Thu, 30 Nov 2023 10:39:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r8eSS-0005uc-OP; Thu, 30 Nov 2023 11:39:48 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r8eSS-00Cbrz-BV; Thu, 30 Nov 2023 11:39:48 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r8eSS-00BTVT-2S; Thu, 30 Nov 2023 11:39:48 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: tools@linux.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CDA48782
+	for <tools@linux.kernel.org>; Thu, 30 Nov 2023 14:08:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XI9nCY1W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E11AC433C8;
+	Thu, 30 Nov 2023 14:08:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1701353337;
+	bh=I8X1V70Asz9zT2qleEIdtATaP3qrNqnT5haFta1IWc0=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=XI9nCY1WuzyZw3dgv3j77+EqmRVUNb0f6SBL1rITyp+REfeDc4FWHyE1ylctgRmji
+	 ukm8RX01SA0yFu9ATfuXjdX7OxIr6+mSSyfQ31Qklh4jSXBt8aFB4MOHO4f7kfco2Q
+	 41TDNkGiNUhjlvdhODlpc3tHTWhYAO7BADX61z18=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: tools@linux.kernel.org, 
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
 Cc: kernel@pengutronix.de
-Subject: [PATCH b4] mbox: Suggest git am -3 if b4 am -3 was used
-Date: Thu, 30 Nov 2023 11:39:26 +0100
-Message-ID: <20231130103925.987426-1-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.42.0.586.gbc5204569f7d.dirty
+In-Reply-To: <20231130103925.987426-1-u.kleine-koenig@pengutronix.de>
+References: <20231130103925.987426-1-u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH b4] mbox: Suggest git am -3 if b4 am -3 was used
+Message-Id: <170135333707.2151080.5223110322939815480.b4-ty@linuxfoundation.org>
+Date: Thu, 30 Nov 2023 09:08:57 -0500
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=941; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=H1h1kwTd6nHc2/cCNpvYk955ysa3lXDggG4lWd5kriA=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlaGZdoVP4QNUKoNvUIVOH4jQW/ixo4D70eSC5p bQPRrPf/oGJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZWhmXQAKCRCPgPtYfRL+ TtP4CACIVO52Hh2xF5rFAEPvkYdahDJoeHNvbLRFCx0u/+zbZsOyDqtXXLhvG7ZKLnuW63i026E EJ/4UiRVpADa9acDI1lfq4UyaM+hfeE5mEWjnJws7bzo6Die163JWHLvHUABl3B2jinEHNeoNmW F7hWtAf947+IcLA+RLaBIvORPpx2wsBP0yWD8ZAM3r9V6FFUSi0S14fYKWL7DWnMXcJzY7++CbI 9HGPDFHsaCGYumuZubmP1WSBT3auoxH7EqVqtCOs2bq6GJpozclsI7JJzI77qpi5iYwfDiGKpmi QWep9hjHEq017i6uGCLewbq6gqN9Je5SZu70YLWseWWZgQSS
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: tools@linux.kernel.org
+X-Mailer: b4 0.13-dev-69c0b
 
-Preparing the patches for a 3-way merge is only sensible if they are
-applied benefiting from that additional information. So add -3 to the
-git am cmdline suggested in the output of b4 am -3.
----
- b4/mbox.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/b4/mbox.py b/b4/mbox.py
-index 054bab7bac1d..feba53465e77 100644
---- a/b4/mbox.py
-+++ b/b4/mbox.py
-@@ -418,7 +418,7 @@ def make_am(msgs: List[email.message.Message], cmdargs: argparse.Namespace, msgi
-     if base_commit is not None:
-         logger.critical('       git checkout -b %s %s', gitbranch, base_commit)
-     if cmdargs.outdir != '-':
--        logger.critical('       git am %s', am_filename)
-+        logger.critical('       git am %s%s', '-3 ' if cmdargs.threeway else '', am_filename)
-     thanks_record_am(lser, cherrypick=cherrypick)
- 
- 
+On Thu, 30 Nov 2023 11:39:26 +0100, Uwe Kleine-König wrote:
+> Preparing the patches for a 3-way merge is only sensible if they are
+> applied benefiting from that additional information. So add -3 to the
+> git am cmdline suggested in the output of b4 am -3.
+> 
+> 
 
-base-commit: 5c0668ec3daeae4cc8c6425db360e7a80e060201
+Applied, thanks!
+
+[1/1] mbox: Suggest git am -3 if b4 am -3 was used
+      commit: 69c0b5b3f3c705fc8a52feb03c2fd35936e5a6a7
+
+Best regards,
 -- 
-2.42.0.586.gbc5204569f7d.dirty
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
