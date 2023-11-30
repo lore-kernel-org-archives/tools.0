@@ -1,68 +1,67 @@
-Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29E354FBC
-	for <tools@linux.kernel.org>; Wed, 22 Nov 2023 16:52:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Nze2GiZ4"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2AE3C06B
+	for <tools@linux.kernel.org>; Thu, 30 Nov 2023 10:39:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r8eSS-0005uc-OP; Thu, 30 Nov 2023 11:39:48 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r8eSS-00Cbrz-BV; Thu, 30 Nov 2023 11:39:48 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r8eSS-00BTVT-2S; Thu, 30 Nov 2023 11:39:48 +0100
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: tools@linux.kernel.org
+Cc: kernel@pengutronix.de
+Subject: [PATCH b4] mbox: Suggest git am -3 if b4 am -3 was used
+Date: Thu, 30 Nov 2023 11:39:26 +0100
+Message-ID: <20231130103925.987426-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0.586.gbc5204569f7d.dirty
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1700671964;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Jr/Y7V7f6fGAsxzikGQR3EngaKckAlq67YJMnyebHus=;
-	b=Nze2GiZ4tmmrzUZaJsqvtJVxRE69XlAUDczYpRLhSH6ybA2eO57YKiZpx1NKD8pqhIENqX
-	6fI57aVUoJVbAqWbEJaCdJvgZvTXr9lgZZrjOxamjO/yvH8OjhR6GAsjrn/DWd1Qh6cP81
-	68HeyEFdDHjhWdoPC0uLITdLzF1IvyA=
-Date: Wed, 22 Nov 2023 16:52:43 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Konstantin Ryabitsev" <konstantin.ryabitsev@linux.dev>
-Message-ID: <ddeefd4d0323df0948565fea2ffb55793fdcc8dc@linux.dev>
-TLS-Required: No
-Subject: Re: [PATCH] x86/hyperv: Use atomic_try_cmpxchg() to micro-optimize
- hv_nmi_unknown()
-To: "Wei Liu" <wei.liu@kernel.org>, "Uros Bizjak" <ubizjak@gmail.com>
-Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
- tools@linux.kernel.org
-In-Reply-To: <ZV163ePuUQyyeKUj@liuwe-devbox-debian-v2>
-References: <ZV163ePuUQyyeKUj@liuwe-devbox-debian-v2>
- <20231114170038.381634-1-ubizjak@gmail.com>
- <SN6PR02MB41570168279C428D385ADCB0D4B1A@SN6PR02MB4157.namprd02.prod.outlook.com>
- <CAFULd4Z3DZh0SoEyNHfz3=DM2CkDGtNP_f1gVx64NJkzmWp-Pw@mail.gmail.com>
-X-Migadu-Flow: FLOW_OUT
+X-Developer-Signature: v=1; a=openpgp-sha256; l=941; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=H1h1kwTd6nHc2/cCNpvYk955ysa3lXDggG4lWd5kriA=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlaGZdoVP4QNUKoNvUIVOH4jQW/ixo4D70eSC5p bQPRrPf/oGJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZWhmXQAKCRCPgPtYfRL+ TtP4CACIVO52Hh2xF5rFAEPvkYdahDJoeHNvbLRFCx0u/+zbZsOyDqtXXLhvG7ZKLnuW63i026E EJ/4UiRVpADa9acDI1lfq4UyaM+hfeE5mEWjnJws7bzo6Die163JWHLvHUABl3B2jinEHNeoNmW F7hWtAf947+IcLA+RLaBIvORPpx2wsBP0yWD8ZAM3r9V6FFUSi0S14fYKWL7DWnMXcJzY7++CbI 9HGPDFHsaCGYumuZubmP1WSBT3auoxH7EqVqtCOs2bq6GJpozclsI7JJzI77qpi5iYwfDiGKpmi QWep9hjHEq017i6uGCLewbq6gqN9Je5SZu70YLWseWWZgQSS
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: tools@linux.kernel.org
 
-November 21, 2023 at 10:51 PM, "Wei Liu" <wei.liu@kernel.org> wrote:
-> Uros, just so you know, DKIM verification failed when I used b4 to appl=
-y
-> this patch. You may want to check your email setup.
+Preparing the patches for a 3-way merge is only sensible if they are
+applied benefiting from that additional information. So add -3 to the
+git am cmdline suggested in the output of b4 am -3.
+---
+ b4/mbox.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This is not actually Uros's fault. Recently, Gmail started adding a force=
-d expiration field to their DKIM signatures, via the x=3D field:
+diff --git a/b4/mbox.py b/b4/mbox.py
+index 054bab7bac1d..feba53465e77 100644
+--- a/b4/mbox.py
++++ b/b4/mbox.py
+@@ -418,7 +418,7 @@ def make_am(msgs: List[email.message.Message], cmdargs: argparse.Namespace, msgi
+     if base_commit is not None:
+         logger.critical('       git checkout -b %s %s', gitbranch, base_commit)
+     if cmdargs.outdir != '-':
+-        logger.critical('       git am %s', am_filename)
++        logger.critical('       git am %s%s', '-3 ' if cmdargs.threeway else '', am_filename)
+     thanks_record_am(lser, cherrypick=cherrypick)
+ 
+ 
 
-    DKIM-Signature: v=3D1; a=3Drsa-sha256; c=3Drelaxed/relaxed;
-        d=3Dgmail.com; s=3D20230601; t=3D1699981249; x=3D1700586049; darn=
-=3Dvger.kernel.org;
-                                               ^^^^^^^^^^^^^
+base-commit: 5c0668ec3daeae4cc8c6425db360e7a80e060201
+-- 
+2.42.0.586.gbc5204569f7d.dirty
 
-This gives the signature an enforced validity of only 7 days. Since the o=
-riginal message was sent on November 14 and you're retrieving it on Novem=
-ber 21, this causes the DKIM check to fail.
-
-I need to figure out how to make b4 ignore the x=3D field, because it's n=
-ot relevant for our purposes, but the library we're using for DKIM doesn'=
-t currently have any mechanism to do so. I will open an RFE with them in =
-the hopes that we can get this implemented.
-
-Regards,
--K
