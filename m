@@ -1,49 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8103011D
-	for <tools@linux.kernel.org>; Fri, 15 Dec 2023 19:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CA130127
+	for <tools@linux.kernel.org>; Fri, 15 Dec 2023 19:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbLm4onR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4FEC433C8;
-	Fri, 15 Dec 2023 19:17:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702667833;
-	bh=wOq+mPEZVTr9higfhNmKvJ6rLRpmeSw1u82iKtwBD1k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EbLm4onRmZlK3IECMQOeyyfG8SlOEmyIrS9GbKgatpDXV6fkPTHsutHkn58YdRyIJ
-	 uKSXMe/ulk6vUn+PaBVpPnomKmoMR82FBQVJxrYbz0+dUxt1RTnaIE6hWqvrjNpxvr
-	 jDVBabY59YYev3PBg3eV0swHfsU3e2uPpCsAzAWU=
-Date: Fri, 15 Dec 2023 14:17:12 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: tools@linux.kernel.org
-Subject: Re: b4 send suggestion: handle .git_aliases
-Message-ID: <20231215-rampant-private-numbat-08537f@lemur>
-References: <34582e34-5b62-ab86-682d-dac555e90330@suse.cz>
- <20231212-illustrious-lion-of-psychology-d85d9d@meerkat>
- <8c99d7e8-c389-a4f6-efcc-b36f884cb784@suse.cz>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bna9O8pR"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3B3BAC433C8;
+	Fri, 15 Dec 2023 19:20:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702668023;
+	bh=awcrkUrjV6G91qZBe94eltDkUEOmpVmnjOa0ar8+cpo=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=Bna9O8pROzEE+TI8L0j+E/6SxUMQjMff2FoiQrikLxJ+7PWKrPsTfepdK0VWHIqGl
+	 KfbUpHAbcpVhoaEtzgQv+9BlTSIc/BgxCLIfVVZ/5V+1ZjnpjGO8c2OY+oSsswnS46
+	 PQQ9N+CRdrQB14PaVXRpLVSmNpVy+N4xiGwkAoxurwZExd4P9qk0kCjOsdy1PbRu4I
+	 0svAahov7n4UvuDIPsA0f1qjxH18HI1Bf/fUKCugj0wtdbF0lUpEvjagM5VySl0g4m
+	 GPx0YAB5XNhygeWhc/1X4M0TkbKBgURDEIUMTFSfuYLV/vwI7rN9W5cOI1vGQmuwxY
+	 V2qUKXKJYO6MA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 233A0C4314C;
+	Fri, 15 Dec 2023 19:20:23 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8c99d7e8-c389-a4f6-efcc-b36f884cb784@suse.cz>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: vbabka@suse.cz, tools@linux.kernel.org
+Message-ID: <20231215-b218272-7eb770cda267@bugzilla.kernel.org>
+In-Reply-To: <34582e34-5b62-ab86-682d-dac555e90330@suse.cz>
+References: <34582e34-5b62-ab86-682d-dac555e90330@suse.cz>
+Subject: Re: b4 send suggestion: handle .git_aliases
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Fri, 15 Dec 2023 19:20:23 +0000 (UTC)
 
-On Thu, Dec 14, 2023 at 01:33:22PM +0100, Vlastimil Babka wrote:
-> >> and also if something malformed is given to it (such as an alias it doesn't
-> >> handle now), warn instead of just dropping it silently.
-> > 
-> > That part at least I can handle properly.
-> 
-> Aha, and also just noticed that given multiple --cc parameters b4 only
-> takes the last one and not add them up (--to probably the same).
-> Although --help documents it as such, it seems an unnecessary gotcha for
-> somebody used to git send-email.
+Hello:
 
-Recording this for myself.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=218272
 
-bugbot on
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
+
