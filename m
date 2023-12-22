@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8384928E16
-	for <tools@linux.kernel.org>; Fri, 22 Dec 2023 18:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61912C19C
+	for <tools@linux.kernel.org>; Fri, 22 Dec 2023 18:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvFtaaOo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA931C433C8;
-	Fri, 22 Dec 2023 18:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1CUM/co"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274D6C433C7;
+	Fri, 22 Dec 2023 18:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703268555;
-	bh=xe/amY72nSkkJ1sbCkgSjelZVU7QCqAAa8PxCdYYroQ=;
+	s=korg; t=1703270416;
+	bh=p3u0UAtxcx1Zgokcm+GObQJtwf6zYs8vzIuEkJrBQZk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nvFtaaOoaacIsLEdWB0+s5K9BE3r3iDI6Y4/mKcoemQIntMQAauJye4GGzLiYqFhj
-	 rTwG/sMnDJAjJ4K1/T/gzDKu9m3N5WRYvULlYNDW4GmC/fLgYztbWGd4bxUc6WXtbH
-	 9rBwVE4k1xI0WJfMhU29mg0e10UUwOcE4H3MaG4I=
-Date: Fri, 22 Dec 2023 13:09:14 -0500
+	b=n1CUM/covT0K9jME2tCfUmyLbbm2qx513GWhulOasxvlye5GZmKNoxnZWrTISTULp
+	 dLzsuRC8iQyRi8kiw05N7Aoixb/tDOhqd/2/4ODtTdK5YJXibLaum+YDJv+6OTTkKD
+	 1ydK/QwcjLpOLM15/MyiwcYOulD+XMBoLZcQesAk=
+Date: Fri, 22 Dec 2023 13:40:15 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Paul Moore <paul@paul-moore.com>
+To: Marcos Paulo de Souza <mpdesouza@suse.com>
 Cc: tools@linux.kernel.org
-Subject: Re: Problems with patatt and stacked-git's patchset cover letter
-Message-ID: <20231222-secret-thoughtful-zebu-fedba6@lemur>
-References: <CAHC9VhRCTKD7qwm7u9EvudWkY9nw+CSS1HCOdr5c8OWBU1LCEg@mail.gmail.com>
+Subject: Re: [PATCH RESEND v4 0/3] livepatch: Move modules to selftests and
+ add a new test
+Message-ID: <20231222-horned-caiman-of-freedom-3fec0a@lemur>
+References: <20231220-send-lp-kselftests-v4-0-3458ec1b1a38@suse.com>
+ <55b717dba239f3bedf0da7e25925e390a63459f5.camel@suse.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -29,42 +31,19 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAHC9VhRCTKD7qwm7u9EvudWkY9nw+CSS1HCOdr5c8OWBU1LCEg@mail.gmail.com>
+In-Reply-To: <55b717dba239f3bedf0da7e25925e390a63459f5.camel@suse.com>
 
-On Thu, Dec 21, 2023 at 05:55:25PM -0500, Paul Moore wrote:
-> Hi Konstantin,
-> 
-> I didn't see a place to file issues on the patatt GH, and I'm not sure
-> which mailing list was appropriate, if any, so I'm only sending this
-> bug report to you; feel free to forward if appropriate.
+On Thu, Dec 21, 2023 at 09:17:04AM -0300, Marcos Paulo de Souza wrote:
+> To clarify: this is not a resend, this is the v4 that people were
+> waiting for. I made a mistake with b4 tool, that first I sent the email
+> just to myself, for testing, and it bumped the version to v5, but I
+> asked it to "resend" the v4, but it ended up adding the "RESEND" to the
+> series.
 
-Sounds good, cc'ing the tools list.
+Thank you for sharing that. The expected workflow here would be to use
+--reflect first if you wanted to send something to yourself. Can you think of
+a way that this experience can be less unexpected?
 
-> I'm a little surprised to have run into this, as I believe there are
-> other kernel devs using stacked-git, but perhaps I'm the only one
-> using stacked-git in conjunction with patatt, who knows.  The good
-> news is that things seem to work just fine when sending single
-> patches, or patchsets with no cover letter, however as soon as I try
-> to send a patchset with a cover letter, i.e. 'stg email send --compose
-> ...', I run into an error caused by a missing 'from' header:
-> 
->  % stg email send --to=listname  -a --compose
->  ...
->  error: `git send-email`: patatt: E:
->    The following required headers not present: from
-> 
-> ... which appears to be caused by the cover letter not starting with a
-> "From <hash> <date>" line.
+(Dropping everyone else from cc's and adding the tools list)
 
-No, this means the actual From: header, like:
-
-    From: Foo Bar <foo.bar@example.com>
-
-We require two headers to be present, From: and Subject:, because they make an
-integral part of the git commit. Signing a message without them doesn't make
-sense, which is why we err out.
-
-Can you verify that stgit creates cover letters without the From: header?
-
-Best wishes,
 -K
