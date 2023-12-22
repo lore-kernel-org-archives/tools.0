@@ -1,75 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09A947761
-	for <tools@linux.kernel.org>; Fri, 15 Dec 2023 20:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8384928E16
+	for <tools@linux.kernel.org>; Fri, 22 Dec 2023 18:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T13QMKtH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741BDC433C7;
-	Fri, 15 Dec 2023 20:56:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702673810;
-	bh=KU31Y/iGcQg+LHizShnMotwtCrCXFEBOwTHLmvmRO3w=;
-	h=Date:From:To:Cc:Subject:From;
-	b=T13QMKtHAicraSs+6aIDbfexeUWAEf0mkfmPpdSF+Pkew9TMNG55ckSkhTnxYPVSe
-	 ZxdFMEnWWGM+GWmVQRnLCW+AfO1MOQ8mhCAjWrzP00WjYmGSat/2HZKtXlk9L1dQh2
-	 t6bV09jMv+GvSy0sTzJQIqvDyiojVRsBLCFa6cIrJRz5gnQdmNf2uqqy/o8iQV3lQi
-	 dSzPX/nJUPHmfR5W8OE6As9wZGXQbGXwHd0akTNCnrBuw2x1y8Fw4tkeeDbK+q0l+1
-	 45seH918cUWuriyTP3m4/vHE9fPJIsKUmc1IdGiO4Lb2vJmkMxzub/8r0p+Za1o0u1
-	 Y1l6TPD92fQ+A==
-Date: Fri, 15 Dec 2023 20:56:46 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvFtaaOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA931C433C8;
+	Fri, 22 Dec 2023 18:09:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1703268555;
+	bh=xe/amY72nSkkJ1sbCkgSjelZVU7QCqAAa8PxCdYYroQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nvFtaaOoaacIsLEdWB0+s5K9BE3r3iDI6Y4/mKcoemQIntMQAauJye4GGzLiYqFhj
+	 rTwG/sMnDJAjJ4K1/T/gzDKu9m3N5WRYvULlYNDW4GmC/fLgYztbWGd4bxUc6WXtbH
+	 9rBwVE4k1xI0WJfMhU29mg0e10UUwOcE4H3MaG4I=
+Date: Fri, 22 Dec 2023 13:09:14 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Paul Moore <paul@paul-moore.com>
 Cc: tools@linux.kernel.org
-Subject: Restricting trailers to update for b4 trailers --update
-Message-ID: <39a94633-fde4-4060-9c9e-de7d5a92a6bb@sirena.org.uk>
+Subject: Re: Problems with patatt and stacked-git's patchset cover letter
+Message-ID: <20231222-secret-thoughtful-zebu-fedba6@lemur>
+References: <CAHC9VhRCTKD7qwm7u9EvudWkY9nw+CSS1HCOdr5c8OWBU1LCEg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Aid4s/79A6G+/djx"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-Cookie: PARDON me, am I speaking ENGLISH?
+In-Reply-To: <CAHC9VhRCTKD7qwm7u9EvudWkY9nw+CSS1HCOdr5c8OWBU1LCEg@mail.gmail.com>
 
+On Thu, Dec 21, 2023 at 05:55:25PM -0500, Paul Moore wrote:
+> Hi Konstantin,
+> 
+> I didn't see a place to file issues on the patatt GH, and I'm not sure
+> which mailing list was appropriate, if any, so I'm only sending this
+> bug report to you; feel free to forward if appropriate.
 
---Aid4s/79A6G+/djx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Sounds good, cc'ing the tools list.
 
-Hi,
+> I'm a little surprised to have run into this, as I believe there are
+> other kernel devs using stacked-git, but perhaps I'm the only one
+> using stacked-git in conjunction with patatt, who knows.  The good
+> news is that things seem to work just fine when sending single
+> patches, or patchsets with no cover letter, however as soon as I try
+> to send a patchset with a cover letter, i.e. 'stg email send --compose
+> ...', I run into an error caused by a missing 'from' header:
+> 
+>  % stg email send --to=listname  -a --compose
+>  ...
+>  error: `git send-email`: patatt: E:
+>    The following required headers not present: from
+> 
+> ... which appears to be caused by the cover letter not starting with a
+> "From <hash> <date>" line.
 
-If I attempt to update the trailers for a branch using
+No, this means the actual From: header, like:
 
-	b4 trailers --update --trailers-from ${msgid} --since ${base}
+    From: Foo Bar <foo.bar@example.com>
 
-I would expect that only patches on the current branch after ${base}
-would get rewritten, ${base} would not be touched.  However what I
-appear to be seeing is that at least ${base} gets updated (the base is a
-commit I did, I'm trying to use this to refresh trailers for commits I'm
-applying).
+We require two headers to be present, From: and Subject:, because they make an
+integral part of the git commit. Signing a message without them doesn't make
+sense, which is why we err out.
 
-I'm specifically trying 20231215130300.1247475-1-Syed.SabaKareem@amd.com
-on c27032b402a10d9f258224685322f121de0808e5.
+Can you verify that stgit creates cover letters without the From: header?
 
-Thanks,
-Mark
-
---Aid4s/79A6G+/djx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmV8vY0ACgkQJNaLcl1U
-h9DWRwf/cmAbDdDNOheKLadG0r4l5HfoItUodKDvYHNOjfUTAkNscD1KRhDH7gGh
-xl4Wq5q98eB1AF32PufY3/rg983CiswpGVgyNqPPPRzARykSfRU4tNCPOPL+oIX7
-EgszRSRxdOuwkk7Pkkf+FxuZGef1lmqtzGxMfjweqwwViHk2q6yBGl9HwqplRwQB
-JTD46gQx3vKrKgbTEGMUhHiXGzqAWIM5l7QUVOZDFrKVkRsMlM+UvxvuxR4OrsFW
-mUClplfABl6+hC4h/9D6gH1Ss0XQNqD5qZ6y/zf7L6SOHP2zKsSrY8Yge18lWs0z
-79v6NNqChqsHbuzm6cjaGJKpeAYMvg==
-=UFWW
------END PGP SIGNATURE-----
-
---Aid4s/79A6G+/djx--
+Best wishes,
+-K
