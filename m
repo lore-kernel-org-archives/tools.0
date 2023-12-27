@@ -1,147 +1,188 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B842EB06
-	for <tools@linux.kernel.org>; Fri, 22 Dec 2023 22:20:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=paul-moore.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7624A2113
+	for <tools@linux.kernel.org>; Wed, 27 Dec 2023 00:53:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b="c9lPKqU6"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-db99bad7745so2199811276.0
-        for <tools@linux.kernel.org>; Fri, 22 Dec 2023 14:20:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IAjHO0bT"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5537dd673e5so3793528a12.0
+        for <tools@linux.kernel.org>; Tue, 26 Dec 2023 16:53:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paul-moore.com; s=google; t=1703283659; x=1703888459; darn=linux.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N4xerUATgxBIYL8AfGscv8JvXzlChceY880fblkmNnI=;
-        b=c9lPKqU6c0KlYqhtOJbCvWiUzlDVjloVc2SiosoNr71YdcMYcCWCd7pyaYlkeYazwP
-         0j9CvTGSCJv491aJif4vreycB9pcx1k98m7sk/wv1vmIkpmc2ZQqYjm/jcKY3nIzjiVU
-         GGBZ7583/HNJnnR68XjtnvNApSUjoskRr6AOqL7PTM6KgAGU7lrucw/i6xTBLyH247dB
-         FEy2pNPoOq0Or8AFBExIYDZMAvjJDjn4+1Odn22kVYpQn2QCDSSrWEF9kgHNhFT19jxu
-         5hXTKHDjhMWmOzOtEtGMCSJByN0/xA+JNHpq0AhWrCOkcM8sTYkOoXereUMgSO8o+6E/
-         VYaw==
+        d=linaro.org; s=google; t=1703638416; x=1704243216; darn=linux.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FiUVvKqqjPod0bJnT5xTzBfyfeEzRvvV2er/AkELJcs=;
+        b=IAjHO0bTnEPxenocsLNU/+1AAouxnrkXmNHJTLtFWbKXQ92I2Xive7orAH7mdtLi5x
+         gqFu94DTTMNWf3oQD3+b+Mob52WPM9z3NJ5naWysyAMzsFHZDWNMZAv1iTnMzlqQJUBf
+         XKUgqJ0T93AUWv1A5NUbgLNSmOwTRLEWVCgi/YwoE+JZGNI8QXmuD+kUsXrGS6Kq6isy
+         A7F9Z7qvDgisA0xOij++z7vyy/Ozw8JAxzMWgSZUwSgntudVnrTvQraozStlvouXv0yL
+         X7RnBOtaGXOBwvAwE904BlWtNLEDiMi39m/wceGaj1Bchvs5hGXXBBVMuDxDCIUJp85q
+         dzvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703283659; x=1703888459;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N4xerUATgxBIYL8AfGscv8JvXzlChceY880fblkmNnI=;
-        b=eWyC4QstJp4p0UXpDALRrmNmRJtCtist0JJqA0/uTpU8ArGLP3UjyZxv/S8GTwIgHG
-         TZGy64obYCTDHb7Eg3VWliK4OFOI7mwFHj3msVXRc96p7+cIFqdXCGBuCnZIulUZsPj8
-         K68JFiMI5cfYG6CrcDdiV2Y6xwnFJs3zlmaivFW8HYHmpoHgau12M5g5nNF/JA6TG+FM
-         GT4Erl03KdOO6/Gqns7ZcwllI+pmJb3GHNvmXgdyBPS/8oe25a/qJ/KXP1piSBTGftrE
-         WTqste2oDox8s/Y8NaOjiukMO0dabYitYfSHJLqDXnDPoKz0X0pVJO8gpVsLn+d7PJPu
-         cohg==
-X-Gm-Message-State: AOJu0Yy8bs0ll8tMebmJP3tx880KxaSjOzMYfpi1BRYOMt/inhWTXxK0
-	qDUlXiCq3Y31buZFuQ5V6DIxe+IMsFB5KOBxiJmV8UmBe1/AstxUuf+qyDNZMA==
-X-Google-Smtp-Source: AGHT+IEpYW4koDYOdJ6Vrje73o/PSQUiAJ3OYPX2ZSEoweXQqkv9AWuxuLlbvpDgrpO3I1GRmop+HyHlJd/zC4G/rsM=
-X-Received: by 2002:a25:9385:0:b0:dbd:7510:e0b2 with SMTP id
- a5-20020a259385000000b00dbd7510e0b2mr1651727ybm.86.1703283658945; Fri, 22 Dec
- 2023 14:20:58 -0800 (PST)
+        d=1e100.net; s=20230601; t=1703638416; x=1704243216;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FiUVvKqqjPod0bJnT5xTzBfyfeEzRvvV2er/AkELJcs=;
+        b=iwjxO1mjsIlqH6ZASeuGYwLkKXm4l48Rsz6Z+9e8nz5Jtaut5/aTp4YE9yakfd+uMw
+         VT/D48H57Puu926GVQJp2jSET9cM54r4GqV8wOqAzk1O2a2lmrBAGFjLr8AwPK/KSkdD
+         4xsyA0oaSGrOO3cG0ueP0htj7W8+ZuKV+Umd746Qnxf4smAziPThbw0Toi1CASr5RB0h
+         760FTEa8n3KrDXOdshQ/ROYXw06G8QZoYE/2x9V4ISuYau/4BRWNonSWOC/vwD+7jMuf
+         nhFOUuqAO1RVEXy2Gaq0gCzfEwGIQg3BdJmKXXJ28+E1Vv2+EdrcfkTsGzAlaLo8u4gD
+         DFQg==
+X-Gm-Message-State: AOJu0YwaH6Knnt/UHA6Lmr1F/Hr/bTRpGtIeoHyT93VMdFswEIX6YcCx
+	a2mrvC/WjTWDpCLiw/EhXO5+Kf1Eu7iQRBU4lQ4rKewfP3Y=
+X-Google-Smtp-Source: AGHT+IE7mnE0yZNEtPgDN2YtXaUQg9vNdKqigjAfLpj80l32zvJupGTe5nDIyC0UvK9VCvARJ7cnzw==
+X-Received: by 2002:a50:ab13:0:b0:553:a041:3560 with SMTP id s19-20020a50ab13000000b00553a0413560mr5564179edc.58.1703638416263;
+        Tue, 26 Dec 2023 16:53:36 -0800 (PST)
+Received: from [192.168.199.125] (178235179028.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.28])
+        by smtp.gmail.com with ESMTPSA id c13-20020a0564021f8d00b00554bb95bf3fsm3655856edc.58.2023.12.26.16.53.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Dec 2023 16:53:35 -0800 (PST)
+Message-ID: <f1dd06a5-d5f6-40bf-b4c9-5b073b329b04@linaro.org>
+Date: Wed, 27 Dec 2023 01:53:34 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CAHC9VhRCTKD7qwm7u9EvudWkY9nw+CSS1HCOdr5c8OWBU1LCEg@mail.gmail.com>
- <20231222-secret-thoughtful-zebu-fedba6@lemur>
-In-Reply-To: <20231222-secret-thoughtful-zebu-fedba6@lemur>
-From: Paul Moore <paul@paul-moore.com>
-Date: Fri, 22 Dec 2023 17:20:47 -0500
-Message-ID: <CAHC9VhRTQPAfTutfXQt3yk9267EHdDpSGqE-=GnEAyspSvQ-Zw@mail.gmail.com>
-Subject: Re: Problems with patatt and stacked-git's patchset cover letter
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845: Use the Low Power Island CX/MX
+ for SLPI
+Content-Language: en-US
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <20231220-topic-sdm845_slpi_lcxmx-v1-1-db7c72ef99ae@linaro.org>
+ <9dc9b23b-6ebb-45b2-a03e-1379a4ceab90@linaro.org>
+ <20231222-smooth-jellyfish-of-vigor-1acab8@lemur>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231222-smooth-jellyfish-of-vigor-1acab8@lemur>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 22, 2023 at 1:09=E2=80=AFPM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
-> On Thu, Dec 21, 2023 at 05:55:25PM -0500, Paul Moore wrote:
-> > Hi Konstantin,
-> >
-> > I didn't see a place to file issues on the patatt GH, and I'm not sure
-> > which mailing list was appropriate, if any, so I'm only sending this
-> > bug report to you; feel free to forward if appropriate.
->
-> Sounds good, cc'ing the tools list.
->
-> > I'm a little surprised to have run into this, as I believe there are
-> > other kernel devs using stacked-git, but perhaps I'm the only one
-> > using stacked-git in conjunction with patatt, who knows.  The good
-> > news is that things seem to work just fine when sending single
-> > patches, or patchsets with no cover letter, however as soon as I try
-> > to send a patchset with a cover letter, i.e. 'stg email send --compose
-> > ...', I run into an error caused by a missing 'from' header:
-> >
-> >  % stg email send --to=3Dlistname  -a --compose
-> >  ...
-> >  error: `git send-email`: patatt: E:
-> >    The following required headers not present: from
-> >
-> > ... which appears to be caused by the cover letter not starting with a
-> > "From <hash> <date>" line.
->
-> No, this means the actual From: header, like:
->
->     From: Foo Bar <foo.bar@example.com>
->
-> We require two headers to be present, From: and Subject:, because they ma=
-ke an
-> integral part of the git commit. Signing a message without them doesn't m=
-ake
-> sense, which is why we err out.
->
-> Can you verify that stgit creates cover letters without the From: header?
+On 22.12.2023 19:43, Konstantin Ryabitsev wrote:
+> On Wed, Dec 20, 2023 at 03:16:00PM +0100, Konrad Dybcio wrote:
+>> On 20.12.2023 15:15, Konrad Dybcio wrote:
+>>> The SLPI is powered by the Low Power Island power rails. Fix the incorrect
+>>> assignment.
+>>>
+>>> Fixes: 74588aada59a ("arm64: dts: qcom: sdm845: add SLPI remoteproc")
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>> b4 seems to not have included my "only compile-tested" comment
+> 
+> Can you let me know your expected behaviour vs. what you ended up seeing? 
+Sure!
 
-If I replace my sendemail-validate hook with the following:
+expected: the "Only compile-tested" bit goes under the striped
+line
 
-  % cat .git/hooks/sendemail-validate
-  #!/bin/sh
-  echo ">>> HOOK DUMP"
-  cat "${1}"
-  exit 1
+actual: The line is ignored. And I think this happens quite
+consistently with a single patch with a single line of 'cover
+letter' only, maybe it interprets the series topic, but a
+separate 0/1 message is of course not created.
 
-... and attempt to send a patchset with a cover letter I see this:
 
-  % stg email send --to=3Dselinux -a --compose --dry-run
-  ...
-  error: `git send-email`: >>> HOOK DUMP
-  From Paul Moore <paul@paul-moore.com> # This line is ignored.
-  Reply-To:
-  Subject: SUBJECT
-  BODY TEXT
-  fatal: /home/.../.git/.gitsendemail.msg.C_MjHr.final: rejected by
-    sendemail-validate hook
-  fatal: command 'git hook run --ignore-missing sendemail-validate --
-    <patch> <header>' died with exit code 1
-  warning: no patches were sent
 
-However, if I send a patch without a cover letter I see this:
+Here's the setup:
 
-  % stg email send --to=3Dselinux -a  --dry-run
-  ...
-  error: `git send-email`: >>> HOOK DUMP
-  From 99e622c26aceab38caec40ba173cbf5044adcac6 Mon Sep 17 00:00:00 2001
-  From: Paul Moore <paul@paul-moore.com>
-  Date: Thu, 21 Dec 2023 16:09:34 -0500
-  Subject: [PATCH 01/15] ...
 
-  As part of on ongoing effort ... <rest of patch>
+--------------------------------------------
+commit f516d7b26e4aa2e6ac87f7e989de008a99e5b26b (topic/sdm845_slpi_lcxmx)
+Author: Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Wed Dec 20 15:12:56 2023 +0100
 
-  fatal: /tmp/file.patch: rejected by sendemail-validate hook
-  fatal: command 'git hook run --ignore-missing sendemail-validate --
-    <patch> <header>' died with exit code 1
-  warning: no patches were sent
+    arm64: dts: qcom: sdm845: Use the Low Power Island CX/MX for SLPI
+    
+    The SLPI is powered by the Low Power Island power rails. Fix the incorrect
+    assignment.
+    
+    Fixes: 74588aada59a ("arm64: dts: qcom: sdm845: add SLPI remoteproc")
+    Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Ignore the failure as that is due to the substitute hook always
-returning 1, it normally works fine when sending regular patches.
+commit d8d0c7257dd4cba8ca0f9f8cdfc7ab12adfd3909
+Author: Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Wed Dec 20 15:14:34 2023 +0100
 
-I'm happy to provide more debugging/testing help, but I expect to be
-checking email rather sporadically the next several days so responses
-may be a bit delayed.
+    Only compile-tested
+    
+    To: Bjorn Andersson <andersson@kernel.org>
+    To: Rob Herring <robh+dt@kernel.org>
+    To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+    To: Conor Dooley <conor+dt@kernel.org>
+    To: Dylan Van Assche <me@dylanvanassche.be>
+    Cc: Marijn Suijten <marijn.suijten@somainline.org>
+    Cc: linux-arm-msm@vger.kernel.org
+    Cc: devicetree@vger.kernel.org
+    Cc: linux-kernel@vger.kernel.org
+    Cc: Caleb Connolly <caleb.connolly@linaro.org>
+    Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+    
+    ---
+    Changes in v2:
+    - EDITME: describe what is new in this series revision.
+    - EDITME: use bulletpoints and terse descriptions.
+    - Link to v1: https://lore.kernel.org/r/20231220-topic-sdm845_slpi_lcxmx-v1-1-db7c72ef99ae@linaro.org
+    
+    
+    
+    --- b4-submit-tracking ---
+    # This section is used internally by b4 prep for tracking purposes.
+    {
+      "series": {
+        "revision": 2,
+        "change-id": "20231220-topic-sdm845_slpi_lcxmx-03c4f98a423d",
+        "base-branch": null,
+        "prefixes": [],
+        "history": {
+          "v1": [
+            "20231220-topic-sdm845_slpi_lcxmx-v1-1-db7c72ef99ae@linaro.org"
+          ]
+        }
+      }
+    }
 
---=20
-paul-moore.com
+commit 20d857259d7d10cd0d5e8b60608455986167cfad (tag: next-20231220)
+
+--------------------------------------------
+
+Konrad
