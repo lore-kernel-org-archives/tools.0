@@ -1,71 +1,126 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5728F16409;
-	Tue,  2 Jan 2024 20:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4EA651;
+	Wed,  3 Jan 2024 00:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xH2AEfP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C43C433C8;
-	Tue,  2 Jan 2024 20:49:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1704228586;
-	bh=CUtO/yoV0d1WGFZ7Nns3IW26ygAabZAKXjXlwj1NNWQ=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ogYFl5Oy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87D8C433C8;
+	Wed,  3 Jan 2024 00:44:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704242659;
+	bh=JnUQVPfSXoPy0IVyuoUn2ZGECgFGI/ZGSALpxSQ32QI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=xH2AEfP/vQrZS8rXJ3Gelk1iozWQO79Ff7yl0GB1HsyuN1rRJxrwBARJ8PGoz+5kE
-	 qAaQLoF3c2B65ruyJtYdhNTN9O50B1yd8RNuQV5kq+/UDHsVfbrgZ4HIyt0YX2On5G
-	 eg8uv9aDiehDoE+Ub1QmTNNf3py0DjL6CY/5bapo=
-Date: Tue, 2 Jan 2024 15:49:45 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	b=ogYFl5OyTP6XenTNTFKxpFI8Dn7J5arJSKfVASwJcf/hlYvT02CkmpCKxoeqqgjrF
+	 yJpfCLmONhbyibVQhWNORroRI5DMatuMocKhs//0I/NPNOtMmTQ6VcU0KKIvZnoaKk
+	 YmzkJ5WmyR9Ex9+DLmVP0JxYknw3K4qRL66V0EJ1d8JqmNU9INjxDETuKhI6g/BHKo
+	 3ASM57ZkGmTwsHFsKUj0CZQUqEqenHe+AQARHsMdbcdK+irwUQjEx+lnuaEUiMFkyJ
+	 maN/tzUER5KWBsdRRIDLdzE4sF8zGfAtSj911TnphnddxgYwEzWAVfZYia0hrWLENo
+	 uO9ylH/cQ+SQw==
+Received: by pali.im (Postfix)
+	id CD30C6D7; Wed,  3 Jan 2024 01:44:15 +0100 (CET)
+Date: Wed, 3 Jan 2024 01:44:15 +0100
+From: Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
 To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: users <users@linux.kernel.org>, tools@linux.kernel.org
-Subject: Re: Re: Re: Re: b4 modifying Cc-tags
-Message-ID: <20240102-debonair-beautiful-capybara-afced1@lemur>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	users <users@linux.kernel.org>, tools@linux.kernel.org
+Subject: Re: b4 modifying Cc-tags
+Message-ID: <20240103004415.42xndtocu2ggr2a5@pali>
 References: <CAMuHMdVGqTM08DvsAjZ45wn1HTR0Grh8Ewj9q21pPwJmbok5hw@mail.gmail.com>
  <CAMuHMdVhyjjcyxMAGF8rAqmyqin=xjWH0fhhOjqbq7rH4f-RNw@mail.gmail.com>
  <20240102-axiomatic-gabby-whale-48d3bb@lemur>
  <CAMuHMdVtCfkLCb=d59XDELJO53jXJmo03iLcCwvMq54BFiUpFA@mail.gmail.com>
  <20240102-calculating-purple-dogfish-f4408c@lemur>
  <CAMuHMdW7+ENssXG4aim-Oa0T1pH-i5-YhVB9C+JaFoJjzuQK4g@mail.gmail.com>
+ <20240102-debonair-beautiful-capybara-afced1@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAMuHMdW7+ENssXG4aim-Oa0T1pH-i5-YhVB9C+JaFoJjzuQK4g@mail.gmail.com>
+In-Reply-To: <20240102-debonair-beautiful-capybara-afced1@lemur>
+User-Agent: NeoMutt/20180716
 
-On Tue, Jan 02, 2024 at 06:03:44PM +0100, Geert Uytterhoeven wrote:
-> > Overall, I would suggest that whoever is responsible for linux-m68k.org sets
-> > up all the bits required by the modern email delivery stack (DKIM, SPF,
-> > DMARC).
+On Tuesday 02 January 2024 15:49:45 Konstantin Ryabitsev wrote:
+> On Tue, Jan 02, 2024 at 06:03:44PM +0100, Geert Uytterhoeven wrote:
+> > > Overall, I would suggest that whoever is responsible for linux-m68k.org sets
+> > > up all the bits required by the modern email delivery stack (DKIM, SPF,
+> > > DMARC).
+> > 
+> > That would be me (partially ;-)
+> > 
+> > Looking at linux-foundation.org, I guess that means adding a TXT
+> > record with
+> > 
+> >     "v=spf1 include:_spf.kernel.org include:_spf.google.com ~all"
+> > 
+> > + whatever outgoing servers the users of linux-m68k.org are using?
 > 
-> That would be me (partially ;-)
+> That wouldn't be sufficient, because setting SPF by itself won't really do
+> anything without DKIM signing as well.
+
+Is not it really sufficient to have at least one of them? Because these
+things are different.
+
+SPF in DNS zone specifies which IP addresses are allowed to send emails
+from that DNS domain. DKIM is a signature in the email header, signed by
+the private key and reference to public key is in the email header.
+Reference can point to any DNS domain. Also in email header can be more
+DKIM signatures (e.g. if email is going throw more email servers and
+every one signs email). So basically these techniques are orthogonal to
+each other.
+
+DMARC is what can require that DKIM signature from the sender domain
+must be present in the email.
+
+For a longer time I had experience that DKIM signature was enough to not
+mark emails as spam. But maybe spam filters changed and another
+technique (SPF or DMARC) is required now too? (I do not have issues with
+low traffic servers yet.)
+
+I would recommend you to at least try to setup SPF into your DNS zone
+and see if it improves situation or not. In the worst case you would
+have to revert setup back.
+
+> To set up DKIM with gmail, you'd pretty
+> much need to pay for their Google Workspace product. It's probably a huge
+> overkill for this purpose.
+
+That is pity. But according to following discussion, gmail without
+gsuite is adding DKIM signature (generated by gmail key):
+https://support.google.com/accounts/thread/60798443/dkim-settings-without-gsuite?hl=en
+
+Anyway, I see that linux-m68k.org has MX record pointing to gandi.net.
+In past gmail had an option to send emails for non-gmail address via
+external smtp server (linked account). Cannot you specify gandi smtp
+server + your linux-m68k.org/gandi credentials into gmail settings and
+let gandi to sign your emails with DKIM and send them?
+
+> > Although the latter may not be strictly required?
+> > Or are Greg KH and Andrew Morton not using fastmail.com for sending
+> > email, only for receiving?
 > 
-> Looking at linux-foundation.org, I guess that means adding a TXT
-> record with
+> If you don't want to set things up and maintain them on your own, you can pay
+> a provider like fastmail.com to host the sending/receiving bits for you.
+> Unfortunately, since you have many users sending from @linux-m68k.org, they
+> will all need to start using fastmail to send mail once it's set up.
 > 
->     "v=spf1 include:_spf.kernel.org include:_spf.google.com ~all"
+> Sorry, properly setting up email these days is a thorny process,
+
+I think this is a myth and it is not such hard. Experienced sysadmin
+must be able to do it and less experienced can learn it. All required
+software is available in majority of Linux distributions and manuals and
+guides are written. The problems come up when you need to send tons of
+emails (when you are provider, lkml resender or so).
+
+> which is
+> really why we're down to a handful of major providers who now dictate how
+> things must be done to everyone else.
 > 
-> + whatever outgoing servers the users of linux-m68k.org are using?
+> -K
+> 
 
-That wouldn't be sufficient, because setting SPF by itself won't really do
-anything without DKIM signing as well. To set up DKIM with gmail, you'd pretty
-much need to pay for their Google Workspace product. It's probably a huge
-overkill for this purpose.
-
-> Although the latter may not be strictly required?
-> Or are Greg KH and Andrew Morton not using fastmail.com for sending
-> email, only for receiving?
-
-If you don't want to set things up and maintain them on your own, you can pay
-a provider like fastmail.com to host the sending/receiving bits for you.
-Unfortunately, since you have many users sending from @linux-m68k.org, they
-will all need to start using fastmail to send mail once it's set up.
-
-Sorry, properly setting up email these days is a thorny process, which is
-really why we're down to a handful of major providers who now dictate how
-things must be done to everyone else.
-
--K
+... which is unfortunately truth :-(
