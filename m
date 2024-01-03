@@ -1,126 +1,100 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4EA651;
-	Wed,  3 Jan 2024 00:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACE410958
+	for <tools@linux.kernel.org>; Wed,  3 Jan 2024 04:35:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ogYFl5Oy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87D8C433C8;
-	Wed,  3 Jan 2024 00:44:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704242659;
-	bh=JnUQVPfSXoPy0IVyuoUn2ZGECgFGI/ZGSALpxSQ32QI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ogYFl5OyTP6XenTNTFKxpFI8Dn7J5arJSKfVASwJcf/hlYvT02CkmpCKxoeqqgjrF
-	 yJpfCLmONhbyibVQhWNORroRI5DMatuMocKhs//0I/NPNOtMmTQ6VcU0KKIvZnoaKk
-	 YmzkJ5WmyR9Ex9+DLmVP0JxYknw3K4qRL66V0EJ1d8JqmNU9INjxDETuKhI6g/BHKo
-	 3ASM57ZkGmTwsHFsKUj0CZQUqEqenHe+AQARHsMdbcdK+irwUQjEx+lnuaEUiMFkyJ
-	 maN/tzUER5KWBsdRRIDLdzE4sF8zGfAtSj911TnphnddxgYwEzWAVfZYia0hrWLENo
-	 uO9ylH/cQ+SQw==
-Received: by pali.im (Postfix)
-	id CD30C6D7; Wed,  3 Jan 2024 01:44:15 +0100 (CET)
-Date: Wed, 3 Jan 2024 01:44:15 +0100
-From: Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users <users@linux.kernel.org>, tools@linux.kernel.org
-Subject: Re: b4 modifying Cc-tags
-Message-ID: <20240103004415.42xndtocu2ggr2a5@pali>
-References: <CAMuHMdVGqTM08DvsAjZ45wn1HTR0Grh8Ewj9q21pPwJmbok5hw@mail.gmail.com>
- <CAMuHMdVhyjjcyxMAGF8rAqmyqin=xjWH0fhhOjqbq7rH4f-RNw@mail.gmail.com>
- <20240102-axiomatic-gabby-whale-48d3bb@lemur>
- <CAMuHMdVtCfkLCb=d59XDELJO53jXJmo03iLcCwvMq54BFiUpFA@mail.gmail.com>
- <20240102-calculating-purple-dogfish-f4408c@lemur>
- <CAMuHMdW7+ENssXG4aim-Oa0T1pH-i5-YhVB9C+JaFoJjzuQK4g@mail.gmail.com>
- <20240102-debonair-beautiful-capybara-afced1@lemur>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYRuaa/9"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2cce70ad1a3so51490101fa.1
+        for <tools@linux.kernel.org>; Tue, 02 Jan 2024 20:35:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1704256537; x=1704861337; darn=linux.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PJ7MX7Mkhe1UI4NfzB1cnG2mfBWBxrmXZVOZ14prCdg=;
+        b=eYRuaa/9kmFB/GlcB5/wirVXjBxeqGsTciuNapcmTQGmwMeTjiTyIzN4QSebhhXo81
+         IJcfEMXvTarT1jApJ2YwmmDkzswo8Kksfa/mVqiUQO0G7bwOhYf8NS541llqOHiwc2oB
+         Apqm51HnFrvcA1oZceomL0WpM0zpru8nWOziA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704256537; x=1704861337;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PJ7MX7Mkhe1UI4NfzB1cnG2mfBWBxrmXZVOZ14prCdg=;
+        b=HusgGSJqGbt+vltr9Qa/9qlRjI0w1KC4SWHd7dfBAgg24v349M89IC0rRLMFSZ55Zp
+         o7uGfxkvJALVRRKYq2g44zvGCU/BUgHJrgBl5cz9Ez215onKcouE6Sjv+8v3uZ2Np5ri
+         f/XKA2UyFI1ftrkRQ7HJIdYyeN/G1PndLsfmatl21jhMVvXVzJ7dFegVXLpqHCTiL2T+
+         H51f7OXmptbR3haXTMtmuTTeFviILFM7aEju9gbabuVCosogDTB8UTlq5KPZHeUW2CNC
+         NcELBgUO5haLuEBAabUG/9vmPNyo+qK7dTESsrg31WGp3YH3YcvAF8t4vhV1COJnvCo5
+         lagQ==
+X-Gm-Message-State: AOJu0YxP2Z78aZ4HqQ6m45ClWLbooAlHAIY2DCg0Altb0x8gmNTpeaT2
+	koMQrVdXIJNfluE90uOOG6H2NPwEaULCyNnHrD1R1YpGvyFWQaHE
+X-Google-Smtp-Source: AGHT+IGGffYR/1XVnMzFX35DfLYA2ntpNZ3SKretaIL4AEd73CWekOGATrzmrizMcQkYfRsqZOyzmA==
+X-Received: by 2002:a2e:954b:0:b0:2cc:6016:d0c with SMTP id t11-20020a2e954b000000b002cc60160d0cmr7533106ljh.14.1704256537060;
+        Tue, 02 Jan 2024 20:35:37 -0800 (PST)
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com. [209.85.167.51])
+        by smtp.gmail.com with ESMTPSA id x31-20020a2ea99f000000b002cd0435c50bsm1169263ljq.72.2024.01.02.20.35.36
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jan 2024 20:35:36 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-50e759ece35so7811489e87.3
+        for <tools@linux.kernel.org>; Tue, 02 Jan 2024 20:35:36 -0800 (PST)
+X-Received: by 2002:a05:6512:2204:b0:50e:7d8a:5e84 with SMTP id
+ h4-20020a056512220400b0050e7d8a5e84mr5966605lfu.111.1704256535918; Tue, 02
+ Jan 2024 20:35:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240102-debonair-beautiful-capybara-afced1@lemur>
-User-Agent: NeoMutt/20180716
+References: <CAMuHMdVGqTM08DvsAjZ45wn1HTR0Grh8Ewj9q21pPwJmbok5hw@mail.gmail.com>
+ <CAMuHMdVhyjjcyxMAGF8rAqmyqin=xjWH0fhhOjqbq7rH4f-RNw@mail.gmail.com>
+ <20240102-axiomatic-gabby-whale-48d3bb@lemur> <CAMuHMdVtCfkLCb=d59XDELJO53jXJmo03iLcCwvMq54BFiUpFA@mail.gmail.com>
+ <20240102-calculating-purple-dogfish-f4408c@lemur> <CAMuHMdW7+ENssXG4aim-Oa0T1pH-i5-YhVB9C+JaFoJjzuQK4g@mail.gmail.com>
+ <20240102-debonair-beautiful-capybara-afced1@lemur> <20240103004415.42xndtocu2ggr2a5@pali>
+In-Reply-To: <20240103004415.42xndtocu2ggr2a5@pali>
+From: Linus Torvalds <torvalds@linuxfoundation.org>
+Date: Tue, 2 Jan 2024 20:35:19 -0800
+X-Gmail-Original-Message-ID: <CAHk-=wgZ-s0fHkxF-_7K5=WGW4G1ymom-nSHTFC+E-YAzPeTwQ@mail.gmail.com>
+Message-ID: <CAHk-=wgZ-s0fHkxF-_7K5=WGW4G1ymom-nSHTFC+E-YAzPeTwQ@mail.gmail.com>
+Subject: Re: b4 modifying Cc-tags
+To: =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>, 
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users <users@linux.kernel.org>, 
+	tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tuesday 02 January 2024 15:49:45 Konstantin Ryabitsev wrote:
-> On Tue, Jan 02, 2024 at 06:03:44PM +0100, Geert Uytterhoeven wrote:
-> > > Overall, I would suggest that whoever is responsible for linux-m68k.org sets
-> > > up all the bits required by the modern email delivery stack (DKIM, SPF,
-> > > DMARC).
-> > 
-> > That would be me (partially ;-)
-> > 
-> > Looking at linux-foundation.org, I guess that means adding a TXT
-> > record with
-> > 
-> >     "v=spf1 include:_spf.kernel.org include:_spf.google.com ~all"
-> > 
-> > + whatever outgoing servers the users of linux-m68k.org are using?
-> 
-> That wouldn't be sufficient, because setting SPF by itself won't really do
-> anything without DKIM signing as well.
+On Tue, 2 Jan 2024 at 16:44, Pali Roh=C3=A1r <pali@kernel.org> wrote:
+>
+> For a longer time I had experience that DKIM signature was enough to not
+> mark emails as spam. But maybe spam filters changed and another
+> technique (SPF or DMARC) is required now too? (I do not have issues with
+> low traffic servers yet.)
 
-Is not it really sufficient to have at least one of them? Because these
-things are different.
+DKIM with proper DMARC rules should be sufficient. At worst,
+unmodified emails can be re-sent from other places, but that's kind of
+the point of mailing lists, so that's actually an advantage.
 
-SPF in DNS zone specifies which IP addresses are allowed to send emails
-from that DNS domain. DKIM is a signature in the email header, signed by
-the private key and reference to public key is in the email header.
-Reference can point to any DNS domain. Also in email header can be more
-DKIM signatures (e.g. if email is going throw more email servers and
-every one signs email). So basically these techniques are orthogonal to
-each other.
+But once you've set up DKIM/DMARC, doing SPF too should be so trivial
+that it becomes a "why not just that too?" issue.
 
-DMARC is what can require that DKIM signature from the sender domain
-must be present in the email.
+I note that the kernel.org DKIM setup seems to use "c=3Drelaxed/simple=E2=
+=80=9D,
+which seems bogus. I think it should use "c=3Drelaxed/relaxed" because
+we just know whitespace is too fragile.
 
-For a longer time I had experience that DKIM signature was enough to not
-mark emails as spam. But maybe spam filters changed and another
-technique (SPF or DMARC) is required now too? (I do not have issues with
-low traffic servers yet.)
+At least that seems to be the case with your email (which
+mx.google.com reports as
 
-I would recommend you to at least try to setup SPF into your DNS zone
-and see if it improves situation or not. In the worst case you would
-have to revert setup back.
+   dkim=3Dneutral (body hash did not verify)
 
-> To set up DKIM with gmail, you'd pretty
-> much need to pay for their Google Workspace product. It's probably a huge
-> overkill for this purpose.
+according to the headers I see).
 
-That is pity. But according to following discussion, gmail without
-gsuite is adding DKIM signature (generated by gmail key):
-https://support.google.com/accounts/thread/60798443/dkim-settings-without-gsuite?hl=en
+Konstantin, is that c=3Drelaxed/simple intentional?
 
-Anyway, I see that linux-m68k.org has MX record pointing to gandi.net.
-In past gmail had an option to send emails for non-gmail address via
-external smtp server (linked account). Cannot you specify gandi smtp
-server + your linux-m68k.org/gandi credentials into gmail settings and
-let gandi to sign your emails with DKIM and send them?
-
-> > Although the latter may not be strictly required?
-> > Or are Greg KH and Andrew Morton not using fastmail.com for sending
-> > email, only for receiving?
-> 
-> If you don't want to set things up and maintain them on your own, you can pay
-> a provider like fastmail.com to host the sending/receiving bits for you.
-> Unfortunately, since you have many users sending from @linux-m68k.org, they
-> will all need to start using fastmail to send mail once it's set up.
-> 
-> Sorry, properly setting up email these days is a thorny process,
-
-I think this is a myth and it is not such hard. Experienced sysadmin
-must be able to do it and less experienced can learn it. All required
-software is available in majority of Linux distributions and manuals and
-guides are written. The problems come up when you need to send tons of
-emails (when you are provider, lkml resender or so).
-
-> which is
-> really why we're down to a handful of major providers who now dictate how
-> things must be done to everyone else.
-> 
-> -K
-> 
-
-... which is unfortunately truth :-(
+          Linus
