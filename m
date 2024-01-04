@@ -1,183 +1,165 @@
-Received: from algol.kleine-koenig.org (algol.kleine-koenig.org [162.55.41.232])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CED721A1B;
-	Thu,  4 Jan 2024 12:52:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kleine-koenig.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kleine-koenig.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A959D328A6;
+	Thu,  4 Jan 2024 17:15:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kleine-koenig.org header.i=@kleine-koenig.org header.b="OLWdD1H0"
-Received: from localhost (localhost [127.0.0.1])
-	by algol.kleine-koenig.org (Postfix) with ESMTP id 9AB80C41D0D;
-	Thu,  4 Jan 2024 13:46:00 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kleine-koenig.org;
-	s=2022; t=1704372360;
-	bh=X0RrNNKYyH22xFrGCixPkKZiJMg08gxIzk7tokeWPEI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OLWdD1H0vuybsOaYv+BB1RRk/uHy95hfvRPxPAKBCXrbFib73CqcAcXXqZsQc26J7
-	 6g1zU3OGJ8DFwA2W9UZ7AGReMcka1KJYGh6QFIkLN/PR22ZR3QPVl+/1nW9Y+XKn1e
-	 lXwCAG3c+Yv0Y8LisxCQAEvRU4NHSI4tFeVc32XqnwHLLUhpfkDErwkq0xplBvya0t
-	 7+08TwqiUM/T+j3uDbIy0MAz/MmVS7C9YV6thgqxlxaIAI9tvqfnwfmCd3+8c8hXtC
-	 IrN5wVef6tNHylYlrmEU3lGqRUOjRRdQm6kbPF3y06sVcAL8JPpJfXgUMUGiJymaOV
-	 xKFDdoCW/PYeA==
-Received: from algol.kleine-koenig.org ([IPv6:::1])
-	by localhost (algol.kleine-koenig.org [IPv6:::1]) (amavisd-new, port 10024)
-	with ESMTP id BoQiDTMrUDLz; Thu,  4 Jan 2024 13:46:00 +0100 (CET)
-Received: from taurus.defre.kleine-koenig.org (unknown [IPv6:fdb0:5279:7365:400:e76f:d19e:1462:62fd])
-	by algol.kleine-koenig.org (Postfix) with ESMTPSA;
-	Thu,  4 Jan 2024 13:46:00 +0100 (CET)
-Message-ID: <c4bc2926-e0ea-4e3b-ad92-2227a66203c0@kleine-koenig.org>
-Date: Thu, 4 Jan 2024 13:45:58 +0100
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Gbcil8kc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1704388541; x=1735924541;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=7SXzZR1ImOSMNXvJDcmVYJr9Afh4y9729OM6FcaBTpI=;
+  b=Gbcil8kcJ2X4p7DqkaAZPfdKTNx+JjOQ+LNJycNEqT8B35KB1SQ9WDt9
+   SJovlr+g07mIvqBLiz2NGythI6D+H9iWj7ipsFl8z9RkD3IACPHq0905K
+   I7553I015B25/EHgyandbDbBcDcN//YRvqseM9clS902nn1LgItib14ST
+   ZG2+Olg2mQhrM+09nYikcU6POgbOQ5QFpZcguwC9fr0RgZNiq8LYqyVLE
+   9A0yKE6WRiAHP8xN+GMjfwZJuDQLj5MlMJB4q+FgaHHJ/Dl4ZHJUFrml/
+   PwYgXZaHIT/fyj/hnF4HSdpA0i/TovWKRmwnBygM7FJgtgOMpG/wy8Qxq
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10943"; a="4411508"
+X-IronPort-AV: E=Sophos;i="6.04,331,1695711600"; 
+   d="scan'208";a="4411508"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2024 09:14:03 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10943"; a="756684255"
+X-IronPort-AV: E=Sophos;i="6.04,331,1695711600"; 
+   d="scan'208";a="756684255"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+  by orsmga006.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 04 Jan 2024 09:14:02 -0800
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 4 Jan 2024 09:14:02 -0800
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 4 Jan 2024 09:14:02 -0800
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Thu, 4 Jan 2024 09:14:02 -0800
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (104.47.73.169)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Thu, 4 Jan 2024 09:14:01 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=MBAyYAevymPOxTU7Jd4d6L5ESRezfbfpBVu6qBYifxKhT1xRFORDoUACvx4aeyya/kNwp2g90OCdGD3eQ/W/LuyzD8KnMxMxwa8BsLNaDBfsN+O5bQaqfn2/aXT5bVqnCE06M3W1RdGjmoduQDaCgQJki8GJHuLRgvmL/IFEm1lUEyhKMFHypsrlebz+dKtjPv3PH/XIE3aeTrBDxvuKxwH1HSANe/+0LlvWEiirdLjpuSq59i7o3jZ2G/AhL6mjmtpXrTu4zCccKcgFdky156J6mZEJdzOuU9RljGEAuLOB3OrWciWsXNMiKnf/dRCILhltPaV0UHfMUxn30zmUBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7SXzZR1ImOSMNXvJDcmVYJr9Afh4y9729OM6FcaBTpI=;
+ b=S7cbeSWzdOwHgMTWTsb00vfKY7RJZ+mWVpES07kyQsVVivc9baq4nhMhyoeaSsrQwMUl/ugp2fq9qhUadK5ZRoL5VUf4EDXnjN5KFvB68BAjsVdGHvoLHbiiIPIgA+iRlpPgccmK+D6XFqmrjSjS4CEGHIbzJYP/B6/UC7liCKmOS11bKbngVFrpVO3JgqCG8WMa9DE5s+UX+bkgd3D8hV8m20Qa50yaJYLTnMvuwOgel0QKd8Nuw2PjXdiohsCc8AzK7IpCq0u4jikDhrcuLsQPMhrK5jrKKtZg82PpycKGmtJRKnyazlJhU/krQel8uAkkOlX+wN2R9YF7Xttz+g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
+ by SJ2PR11MB8472.namprd11.prod.outlook.com (2603:10b6:a03:574::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7159.13; Thu, 4 Jan
+ 2024 17:14:00 +0000
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::a136:fb19:acde:7670]) by SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::a136:fb19:acde:7670%6]) with mapi id 15.20.7159.015; Thu, 4 Jan 2024
+ 17:14:00 +0000
+From: "Luck, Tony" <tony.luck@intel.com>
+To: =?iso-8859-1?Q?Pali_Roh=E1r?= <pali@kernel.org>, Linus Torvalds
+	<torvalds@linuxfoundation.org>
+CC: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, Geert Uytterhoeven
+	<geert@linux-m68k.org>, users <users@linux.kernel.org>,
+	"tools@linux.kernel.org" <tools@linux.kernel.org>
+Subject: RE: b4 modifying Cc-tags
+Thread-Topic: b4 modifying Cc-tags
+Thread-Index: AQHaPqjSFwZoSoY5oEyg5ZdrGtNKxLDJ5Ezg
+Date: Thu, 4 Jan 2024 17:14:00 +0000
+Message-ID: <SJ1PR11MB6083F54F7550AA820AE32A4DFC672@SJ1PR11MB6083.namprd11.prod.outlook.com>
+References: <CAMuHMdVhyjjcyxMAGF8rAqmyqin=xjWH0fhhOjqbq7rH4f-RNw@mail.gmail.com>
+ <20240102-axiomatic-gabby-whale-48d3bb@lemur>
+ <CAMuHMdVtCfkLCb=d59XDELJO53jXJmo03iLcCwvMq54BFiUpFA@mail.gmail.com>
+ <20240102-calculating-purple-dogfish-f4408c@lemur>
+ <CAMuHMdW7+ENssXG4aim-Oa0T1pH-i5-YhVB9C+JaFoJjzuQK4g@mail.gmail.com>
+ <20240102-debonair-beautiful-capybara-afced1@lemur>
+ <20240103004415.42xndtocu2ggr2a5@pali>
+ <CAHk-=wgZ-s0fHkxF-_7K5=WGW4G1ymom-nSHTFC+E-YAzPeTwQ@mail.gmail.com>
+ <20240102-exuberant-glaring-dalmatian-d62bc5@lemur>
+ <CAHk-=wg607GVe6NYrM6wi+ByKdVZASqHnWSOO-ij0f07b2ke1Q@mail.gmail.com>
+ <20240104005556.4zxuv3qzkq66vtln@pali>
+In-Reply-To: <20240104005556.4zxuv3qzkq66vtln@pali>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|SJ2PR11MB8472:EE_
+x-ms-office365-filtering-correlation-id: 5dde258c-14e7-4268-b38c-08dc0d488b59
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: sjQZBbIoUN7XSPTuOJZtLS16C9AFA9GxQY6uyxL2KxpvvB3vfym9QbmMxCSHYuBmfdsXjTen41ARd1/tsTEF0QA332XMAHMvR2RBoEYlrHoqvrWPvf0AfWQ1EMINesMK051LanTpkycPhBnXWil8GkVNOfA85APcIX58uD6tfxe9FK19RDJyEymS9E7Nv1VHBXNOxJKNap390KcVhcBSzwMdlLhM2/lbJqomapi5cYKO061stNXZ7myNNOdO22xMR1bY9mkoP3RhGeXDZ4o0O01ySs9R35gJ6HIBLBmUpI4e3ckepLgctKawEwiCHwUwnjYOcZz0PhKrEs4aeehHy6Kb5hlitlhU6AdgXrfi5ovNCYoVzqFtvxHWUJDB3UChWSwAg6yOA8gNa05qCIKiEwXj4kBv41FIeOI/0gcV6PSA9fVOX+1TBj/cNMbmmLU2rZqrKzzdfNiHieC/+J7AWoXbJih0Re64E0VFsCKMx4BWCC1ecDmGOXz7mKcAMwipDrHdRWgc4pvm2D4mrL1zkkle9roFUoCd/XfJHJBNuzXQr570Wgz29E8FQ/Xqm8eNMthHCcgpA1sz5DDiBPQQM7dZi32yhut0O2bYG49AES15RdmMd0rm9ozGEmPMf3R5
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(346002)(396003)(136003)(366004)(39860400002)(230922051799003)(186009)(1800799012)(64100799003)(451199024)(55016003)(33656002)(9686003)(86362001)(6506007)(66476007)(66446008)(66556008)(66946007)(76116006)(64756008)(38070700009)(4744005)(38100700002)(82960400001)(122000001)(71200400001)(41300700001)(26005)(2906002)(478600001)(7696005)(4326008)(5660300002)(54906003)(8936002)(52536014)(8676002)(110136005)(316002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Zfy4ZxS79f6QrXJXTxIfDzDA8EMXB6K1n6oIjdIcKKvna00ksO9hxz95BP?=
+ =?iso-8859-1?Q?zhqx4OXV1+QKNcwwaVmC7MI+HAFio9MXz1IDmeHnzf9PzAzVXuEqhG5Eis?=
+ =?iso-8859-1?Q?fLt8hZruj4Bb3CD0E3xlHA0neRk5OY3dqYo3pLXLyMXlHDPIWxWgliG8qQ?=
+ =?iso-8859-1?Q?wpMMXjADJe9hUh3AuaWPcCJ5bE4Y3+WSgzrzn0SnjDsYnT6nUXBlo7C0B1?=
+ =?iso-8859-1?Q?YoGJUGFaO5xkOXW6ZyfVu0BBovuBD9r2q0ebjQPn5F5o3zbV6KqhQSTdnv?=
+ =?iso-8859-1?Q?M2uy8GZMRPQ8oiOijykuEo+QT1yyAtvV/ba1uibetZm7ps9o7rVMd4EVCc?=
+ =?iso-8859-1?Q?2Afc983W4NYJdzjAKcNuYF+Q/pe+30H9lx3UxDMJ67LEIJFYIJH6PpWfvt?=
+ =?iso-8859-1?Q?HAb3WY708pTCGDCSPOAmN1BfHkqCYzuxWN1YEXijI8wOh9Pj9QZL1ShQrC?=
+ =?iso-8859-1?Q?J4MVK8KOkb3fNPcBPXRol2RTfdpMhlgOZiwBjhG+Y+mGt8arQsAalZqnB7?=
+ =?iso-8859-1?Q?CmuT7TImpvowsmgVBYQbcZa03cdYgQudBKFnDrQwr8lfk9v90NJykF5gqF?=
+ =?iso-8859-1?Q?tsxNupsO/DM/WYzhf4ta5DPU2MBy/mCs5Fo+py4uvs2E2p2F7gnO7d/zEp?=
+ =?iso-8859-1?Q?3vGhXGF8PNthZDqo53bv/RI2eq3e19F9hszHf7w0xkuM2MHh61sCwPi3+e?=
+ =?iso-8859-1?Q?rC5ZFS12FJCWGMlgzifaFEPv889UvAzPwon470/JbosiQlYv3VsXTuIe/J?=
+ =?iso-8859-1?Q?06UvjJEvB5fwOAMKUQH9Zm+MjQGF61xIypVtoO+X/bOTwcheT99jIPS51M?=
+ =?iso-8859-1?Q?CUvDPcPEHXF3bIvEKMF1JvtjNqX33TS3F9PIcEng4U6v8f2TWho/d182bE?=
+ =?iso-8859-1?Q?HzSrN+DchXWpZFvPDYBQeL509lVM/KNl3sVVj6hBEhA6MWNvVc5E6wcQg9?=
+ =?iso-8859-1?Q?koey5GXjkuo9hKa/5Ub3WSsKL4siHvm6glLnNaqtqWQuaBl02ov0tkE6+z?=
+ =?iso-8859-1?Q?00qmKuncjWk/gQOKTMgDcyisfk/4dR3iMbs8L7o5wD+84TQZA4cuecEOqF?=
+ =?iso-8859-1?Q?NVRre0P0JHhCHsKVU79jUlCIMYvRGr8ReGg/Zg87u/ic1w2LizmWvq2HOz?=
+ =?iso-8859-1?Q?WfPu5qxDTWAmHRZskRkgvSetDiFdtmqAyhXc/RQq0T9+h725DIPBDkaCYZ?=
+ =?iso-8859-1?Q?zimvaho0PcT4hGjRV7IHbhuyj+Xd9q4QCeqQUuK5bsyFRNHfCBnRk9xhbu?=
+ =?iso-8859-1?Q?DrLQIlT715EPEdSfoJhdAYzAx0p8d3gEDSGCLBWXThZRQRIH/CRWrMi/Xs?=
+ =?iso-8859-1?Q?pX+KfhPo02Vmx20vHQUiS47OIB4QfHTUXky4IZbchoyql3317Dx0cN8sZP?=
+ =?iso-8859-1?Q?JCMhWxQd4pBnjiTaMzKytKCU4Z91tL/iimFAjnlg0eP7xgYhzNolzkj356?=
+ =?iso-8859-1?Q?ZTE4dCHCqWnbWg96zZ/gj9watzEJu2VtXucTTzRomUGzuMM5X25Ir4dfkC?=
+ =?iso-8859-1?Q?c3IWc/5SADYBQqEGTzOtjkwOLyxiAVbvwQhRbNsuY9u//UG6ORX/REfe34?=
+ =?iso-8859-1?Q?cO8EmrI1Nwd3KEWNjo41Pp67TSxhNYImYMvLr9Hg73rsJ5y73Bef3ODL5u?=
+ =?iso-8859-1?Q?yHLwz2hQgCNuHx1ZJevvtOgOH6S1QQJZ1l?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: b4 modifying Cc-tags
-Content-Language: en-US, de-DE
-To: =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
- James Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- users <users@linux.kernel.org>, tools@linux.kernel.org
-References: <CAMuHMdVGqTM08DvsAjZ45wn1HTR0Grh8Ewj9q21pPwJmbok5hw@mail.gmail.com>
- <CAMuHMdVhyjjcyxMAGF8rAqmyqin=xjWH0fhhOjqbq7rH4f-RNw@mail.gmail.com>
- <20240102-axiomatic-gabby-whale-48d3bb@lemur>
- <CAMuHMdVtCfkLCb=d59XDELJO53jXJmo03iLcCwvMq54BFiUpFA@mail.gmail.com>
- <20240102-calculating-purple-dogfish-f4408c@lemur>
- <CAMuHMdW7+ENssXG4aim-Oa0T1pH-i5-YhVB9C+JaFoJjzuQK4g@mail.gmail.com>
- <20240102-debonair-beautiful-capybara-afced1@lemur>
- <20240103004415.42xndtocu2ggr2a5@pali>
- <CAMuHMdXxzhddGOoxXLxNoyHX2NnLad2PRz9V1sGd_or6UWFkMA@mail.gmail.com>
- <f8d3ddc69bd95bc8553b5908523e55e0be245e84.camel@HansenPartnership.com>
- <20240104004108.zs3wlfju6gzfl2mo@pali>
-From: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <uwe@kleine-koenig.org>
-Autocrypt: addr=uwe@kleine-koenig.org; keydata=
- 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
- FBOP7eYxpCTKpsGohvEE2AA0ITl5OQ==
-In-Reply-To: <20240104004108.zs3wlfju6gzfl2mo@pali>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------cyqF0BKyRUdn08WYQl5cHKAN"
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5dde258c-14e7-4268-b38c-08dc0d488b59
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jan 2024 17:14:00.5878
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: KQ6pj5A+jl0s3v6oCJGVfEj2hGYO6fIZahlitqLv5G+vvUkRHsIzWmtm3sJGe5pj3ewAq8HoJcfNWcodvAYG6Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB8472
+X-OriginatorOrg: intel.com
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------cyqF0BKyRUdn08WYQl5cHKAN
-Content-Type: multipart/mixed; boundary="------------WzGwUFM1Lh0ttGitJVONMa5b";
- protected-headers="v1"
-From: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <uwe@kleine-koenig.org>
-To: =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
- James Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- users <users@linux.kernel.org>, tools@linux.kernel.org
-Message-ID: <c4bc2926-e0ea-4e3b-ad92-2227a66203c0@kleine-koenig.org>
-Subject: Re: b4 modifying Cc-tags
-References: <CAMuHMdVGqTM08DvsAjZ45wn1HTR0Grh8Ewj9q21pPwJmbok5hw@mail.gmail.com>
- <CAMuHMdVhyjjcyxMAGF8rAqmyqin=xjWH0fhhOjqbq7rH4f-RNw@mail.gmail.com>
- <20240102-axiomatic-gabby-whale-48d3bb@lemur>
- <CAMuHMdVtCfkLCb=d59XDELJO53jXJmo03iLcCwvMq54BFiUpFA@mail.gmail.com>
- <20240102-calculating-purple-dogfish-f4408c@lemur>
- <CAMuHMdW7+ENssXG4aim-Oa0T1pH-i5-YhVB9C+JaFoJjzuQK4g@mail.gmail.com>
- <20240102-debonair-beautiful-capybara-afced1@lemur>
- <20240103004415.42xndtocu2ggr2a5@pali>
- <CAMuHMdXxzhddGOoxXLxNoyHX2NnLad2PRz9V1sGd_or6UWFkMA@mail.gmail.com>
- <f8d3ddc69bd95bc8553b5908523e55e0be245e84.camel@HansenPartnership.com>
- <20240104004108.zs3wlfju6gzfl2mo@pali>
-In-Reply-To: <20240104004108.zs3wlfju6gzfl2mo@pali>
+> I guess that recent SMTP software would not have "line too big" issue
+> and would not do rewrapping. But maybe that MS Exchange (or something
+> else) was doing it...
 
---------------WzGwUFM1Lh0ttGitJVONMa5b
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+MS Exchange from ~2012 used to swap tabs for spaces, and wrapped long lines
+(where "long" was somewhere just over 100). MSFT dropped support
+for that version a few years ago. Newer versions of exchange don't do this =
+(so
+I can apply patches that have been through Exchange).
 
-SGVsbG8gUGFsaSwNCg0KT24gMDQuMDEuMjQgMDE6NDEsIFBhbGkgUm9ow6FyIHdyb3RlOg0K
-PiBPbiBXZWRuZXNkYXkgMDMgSmFudWFyeSAyMDI0IDA4OjE5OjE1IEphbWVzIEJvdHRvbWxl
-eSB3cm90ZToNCj4+IFRlY2huaWNhbGx5IGlmIHlvdSdyZSBnb2luZyB0byBkbyBTUEYgbGlr
-ZSB0aGF0LCB5b3UgY2FuIGFsc28gZG8gREtJTSwNCj4+IHlvdSdkIGp1c3QgaGF2ZSB0byBk
-aXN0cmlidXRlIHRoZSBES0lNIGtleSB0byBldmVyeW9uZSB3aG8gdXNlcyB0aGUNCj4+IHNl
-cnZlciAob3IgbW9yZSBsaWtlbHksIGdpdmUgZWFjaCBvbmUgdGhlaXIgb3duIERLSU0ga2V5
-IGFuZCBsYWJlbA0KPj4gd2hpY2ggbWVhbnMgeW91IGNhbiByZXZva2UgaWYgb25lIGxlYWtz
-KS4gIEVhY2ggc2VuZGVyIHdvdWxkIGhhdmUgdG8NCj4+IHJ1biBzb21ldGhpbmcgbGlrZSB0
-aGVpciBvd24gb3BlbmRraW0gaW5zdGFuY2UsIHdoaWNoIGFkZHMgY29tcGxleGl0eQ0KPj4g
-b24gdGhlIHRyYW5zbWl0dGluZyBlbmQsIGJ1dCBpdCBpcyBwb3NzaWJsZS4NCj4gDQo+IElu
-dGVyZXN0aW5nIGlkZWEuIEl0IGlzIHRydXRoIHRoYXQgeW91IGNhbiBoYXZlIG1vcmUgbW9y
-ZSBES0lNIGtleXMgaW4NCj4gRE5TIHpvbmUgKGV2ZXJ5IGtleSBoYXMgaXRzIG93biByZWNv
-cmQpIGJ1dCBJIGhhdmUgbmV2ZXIgaGVhcmQgdGhhdA0KPiBldmVyeSB1c2VyIHdvdWxkIGhh
-dmUgaXRzIG93biBrZXksIGFuZCBkbyBzaWduaW5nIGR1cmluZyBzZW5kaW5nIGVtYWlsLg0K
-PiBGb3IgbWUgaXQgc291bmRzIGxpa2UgdG90YWxseSBjcmF6eSBpZGVhLiBCdXQgd2hlbiB0
-aGlua2luZyBhYm91dCBpdCwNCj4gbWF5YmUgaXQgd291bGQgbm90IGJlIHN1Y2ggaGFyZCB0
-byBjcmVhdGUgZmlsdGVyIHdoaWNoIHJlYWRzIGVtYWlsIGZyb20NCj4gc3RkaW4sIERLSU0t
-c2lnbnMgaXQgYW5kIHdyaXRlcyB0byBzdGRvdXQuIFRoZW4gaXQgd291bGQgYmUgcG9zc2li
-bGUgdG8NCj4gY29tYmluZSBpdCB0b2dldGhlciB3aXRoIHNlbmRtYWlsIG9yIG1zbXRwIGJp
-bmFyaWVzIGFuZCBnaXQgc2VuZC1lbWFpbA0KPiBvciBhbnkgb3RoZXIgdG9vbCB3b3VsZCB3
-b3JrIHdpdGhvdXQgaXNzdWUuIEFsc28gY3JlYXRpbmcgREtJTSBzaWduYXR1cmUNCj4gc2hv
-dWxkIG5vdCBiZSBzdWNoIGhhcmQsIHNvIHRoZSBmaWx0ZXIgYXBwbGljYXRpb24vc2NyaXB0
-IGNhbiBiZSB3cml0dGVuDQo+IGluIFBlcmwgb3IgUHl0aG9uLiBJSVJDIGdpdC1zZW5kLWVt
-YWlsIGlzIHdyaXR0ZW4gaW4gUGVybCwgc28gaXQgY2FuIGJlDQo+IGV4dGVuZGVkIHRvIGFs
-c28gYXBwZW5kIERLSU0gc2lnbmF0dXJlIGFuZCBubyBuZWVkIGZvciBleHRlcm5hbCBkYWVt
-b24NCj4gbGlrZSBvcGVuZGtpbT8gUHJpdmF0ZSBrZXkgY2FuIGJlIHJlYWQgZnJvbSBjb25m
-aWcgZmlsZSwgbGlrZSBzbXRwDQo+IHBhc3N3b3JkLiA6LSkNCg0KRGViaWFuIGhhcyBhIHNl
-dHVwIHRoYXQgaW5jbHVkZXMgdGhhdCBpZGVhLiBJIGRvbid0IHVzZSBpcyBwZXJzb25hbGx5
-LCANCmJ1dCBpdCBzZWVtcyB0byB3b3JrLiBTZWUgDQpodHRwczovL2FuYXJjLmF0L2Jsb2cv
-MjAyMC0wNC0xNC1vcGVuZGtpbS1kZWJpYW4vIGZvciBhIHVzZXIgd2hvIGRvZXMgDQptYWtl
-IHVzZSBvZiBpdC4NCg0KSG93ZXZlciBkZWJpYW4gYWxzbyBwcm92aWRlcyBhIHJlbGF5IHdo
-aWNoIGlzIHByb2JhYmx5IGVhc2llciB0byB1c2UuDQoNCkJlc3QgcmVnYXJkcw0KVXdlDQo=
-
-
---------------WzGwUFM1Lh0ttGitJVONMa5b--
-
---------------cyqF0BKyRUdn08WYQl5cHKAN
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmWWqIYACgkQj4D7WH0S
-/k6aDgf/TNcfo5G4uoOARtD/6D34qUal0K6cEKQLGA8tJ+YQbk7j5xHH+cpWpibP
-Vznlq46+7Btp7LgAbsEa6H50/hhUmGPEqTt9lqj+nXyk3Jv2ZQB5I8dAYtMfIjU1
-+efnIq85vE9CjPoHnf2AvM6M7kXJeHIp2SjrErD8C1QW6zEYzREFF+mgLlVpFwVX
-qF6dipe2p8eG0lSPLzFmwzSHj2LWQvd+Z/HSbM/ufWoULHMAUA4bFUXm3vMwQKiS
-xlNg0XjIXjgIqjvsArQXtm5ubXcXU+zHocEaFKyBxx6BHmaD5pJnlaEN0fKw7zb7
-boywexu1+iLsd9hsDEup265Gw/8/Rg==
-=Jt7f
------END PGP SIGNATURE-----
-
---------------cyqF0BKyRUdn08WYQl5cHKAN--
+-Tony
