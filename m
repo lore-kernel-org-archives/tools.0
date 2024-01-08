@@ -1,43 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C586C1FAD;
-	Fri,  5 Jan 2024 01:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6751046534
+	for <tools@linux.kernel.org>; Mon,  8 Jan 2024 20:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eFHeoGW9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27776C433C7;
-	Fri,  5 Jan 2024 01:27:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704418051;
-	bh=c0iyzA28WaPaA9Y5ps851Y9gsi3Fb5gz7U76z8T4e5Q=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8w7pXY7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC576C433C7;
+	Mon,  8 Jan 2024 20:45:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1704746737;
+	bh=8cOWjBr4Khf8XH3cqx+u3YIwDY76L6gYN2DsNPXUnC0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eFHeoGW9UnQgJnvahg4jucorXPan811YQSAf/NZkGc88H4Pc7rTxTDhA1xii5aV+t
-	 fsDSIJIroHzzp1uvvQBQlmMxLCzWi5dFcUX75clBbQSWVSfm53yUk1cGue9/m0h5oE
-	 SbVS2FJWsEcGoHUoQmbFNX/7SdpmcajIpJ9j+DIsnxtrqMTB3L95MRiTyFM/rKMe5B
-	 48fpldOLNSylco3IjYWm3UazE5vOWZl99kPkJCaP9AnJ730L6I8LqoJvG8Pm56fn+I
-	 GqBYZmgylriZCE7Fl1Q0ZJxAIZQdCQiUpxQIoNzG9RxHasw4PnB8AwL7PfkHdxFn2/
-	 WtjWwY8beC2Yg==
-Received: by pali.im (Postfix)
-	id F03326F7; Fri,  5 Jan 2024 02:27:27 +0100 (CET)
-Date: Fri, 5 Jan 2024 02:27:27 +0100
-From: Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <uwe@kleine-koenig.org>
-Cc: James Bottomley <James.Bottomley@HansenPartnership.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users <users@linux.kernel.org>, tools@linux.kernel.org
-Subject: Re: b4 modifying Cc-tags
-Message-ID: <20240105012727.wrmknqeqmrjsus34@pali>
-References: <20240102-axiomatic-gabby-whale-48d3bb@lemur>
- <CAMuHMdVtCfkLCb=d59XDELJO53jXJmo03iLcCwvMq54BFiUpFA@mail.gmail.com>
- <20240102-calculating-purple-dogfish-f4408c@lemur>
- <CAMuHMdW7+ENssXG4aim-Oa0T1pH-i5-YhVB9C+JaFoJjzuQK4g@mail.gmail.com>
- <20240102-debonair-beautiful-capybara-afced1@lemur>
- <20240103004415.42xndtocu2ggr2a5@pali>
- <CAMuHMdXxzhddGOoxXLxNoyHX2NnLad2PRz9V1sGd_or6UWFkMA@mail.gmail.com>
- <f8d3ddc69bd95bc8553b5908523e55e0be245e84.camel@HansenPartnership.com>
- <20240104004108.zs3wlfju6gzfl2mo@pali>
- <c4bc2926-e0ea-4e3b-ad92-2227a66203c0@kleine-koenig.org>
+	b=m8w7pXY7zzgeWWIAn3swSrlYAw3beiNo7uimE+4kPYYZIogCYqv+GIxumFXAr9zs8
+	 eDT+ve+0Ro1E65oe1a06h4iY3nibyQ78/7og6gSCzcBE5O5D6cbgdr+NSGeCU4NEiq
+	 02Zg25pdFqDK87FZwpsAcauz0UhefzQB4BUo46Kw=
+Date: Mon, 8 Jan 2024 15:45:35 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Paul Moore <paul@paul-moore.com>
+Cc: tools@linux.kernel.org
+Subject: Re: Problems with patatt and stacked-git's patchset cover letter
+Message-ID: <20240108-urban-nice-hyrax-a0ee5f@lemur>
+References: <CAHC9VhRCTKD7qwm7u9EvudWkY9nw+CSS1HCOdr5c8OWBU1LCEg@mail.gmail.com>
+ <20231222-secret-thoughtful-zebu-fedba6@lemur>
+ <CAHC9VhRTQPAfTutfXQt3yk9267EHdDpSGqE-=GnEAyspSvQ-Zw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -46,46 +31,41 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c4bc2926-e0ea-4e3b-ad92-2227a66203c0@kleine-koenig.org>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <CAHC9VhRTQPAfTutfXQt3yk9267EHdDpSGqE-=GnEAyspSvQ-Zw@mail.gmail.com>
 
-On Thursday 04 January 2024 13:45:58 Uwe Kleine-König wrote:
-> Hello Pali,
+On Fri, Dec 22, 2023 at 05:20:47PM -0500, Paul Moore wrote:
+> > Can you verify that stgit creates cover letters without the From: header?
+
+Picking this back up after the holiday hiatus.
+>   % stg email send --to=selinux -a --compose --dry-run
+>   ...
+>   error: `git send-email`: >>> HOOK DUMP
+>   From Paul Moore <paul@paul-moore.com> # This line is ignored.
+
+It's just like above, "From " instead of "From: "? That seems wrong.
+
+>   Reply-To:
+>   Subject: SUBJECT
+>   BODY TEXT
+>   fatal: /home/.../.git/.gitsendemail.msg.C_MjHr.final: rejected by
+>     sendemail-validate hook
+>   fatal: command 'git hook run --ignore-missing sendemail-validate --
+>     <patch> <header>' died with exit code 1
+>   warning: no patches were sent
 > 
-> On 04.01.24 01:41, Pali Rohár wrote:
-> > On Wednesday 03 January 2024 08:19:15 James Bottomley wrote:
-> > > Technically if you're going to do SPF like that, you can also do DKIM,
-> > > you'd just have to distribute the DKIM key to everyone who uses the
-> > > server (or more likely, give each one their own DKIM key and label
-> > > which means you can revoke if one leaks).  Each sender would have to
-> > > run something like their own opendkim instance, which adds complexity
-> > > on the transmitting end, but it is possible.
-> > 
-> > Interesting idea. It is truth that you can have more more DKIM keys in
-> > DNS zone (every key has its own record) but I have never heard that
-> > every user would have its own key, and do signing during sending email.
-> > For me it sounds like totally crazy idea. But when thinking about it,
-> > maybe it would not be such hard to create filter which reads email from
-> > stdin, DKIM-signs it and writes to stdout. Then it would be possible to
-> > combine it together with sendmail or msmtp binaries and git send-email
-> > or any other tool would work without issue. Also creating DKIM signature
-> > should not be such hard, so the filter application/script can be written
-> > in Perl or Python. IIRC git-send-email is written in Perl, so it can be
-> > extended to also append DKIM signature and no need for external daemon
-> > like opendkim? Private key can be read from config file, like smtp
-> > password. :-)
+> However, if I send a patch without a cover letter I see this:
 > 
-> Debian has a setup that includes that idea. I don't use is personally, but
-> it seems to work. See https://anarc.at/blog/2020-04-14-opendkim-debian/ for
-> a user who does make use of it.
+>   % stg email send --to=selinux -a  --dry-run
+>   ...
+>   error: `git send-email`: >>> HOOK DUMP
+>   From 99e622c26aceab38caec40ba173cbf5044adcac6 Mon Sep 17 00:00:00 2001
+>   From: Paul Moore <paul@paul-moore.com>
 
-Nice to see that somebody already got this idea into production state.
+This is the line we need ^^ for things to work.
 
-> However debian also provides a relay which is probably easier to use.
-> 
-> Best regards
-> Uwe
+> I'm happy to provide more debugging/testing help
 
+I'm not familiar with stgit -- how does it keep track of the cover letter? Is
+that something that you're creating on your own?
 
-
+-K
