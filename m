@@ -1,52 +1,52 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2917D2DF73
-	for <tools@linux.kernel.org>; Thu, 18 Jan 2024 20:26:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.55.52.88
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE4B2E63A
+	for <tools@linux.kernel.org>; Thu, 18 Jan 2024 20:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705609564; cv=none; b=pH9e2GwOhW9BSdUvu2dtF6ORhaol5vLjXZZKFaugf1vif+gpHJdz5u+9V7//0X7ICoYT3V5xOLhtPMibyHsQtnUO6urnvLl549+2A/HfD2y+jmTI7wFpCe2Z6IDzxsGgyrduLZgL4rgJclvZcITGDrjik1Qz1szl6V6n0lKtjIk=
+	t=1705609565; cv=none; b=YBQecoVrr+oAfBCT0AbMB38C+lYfPTO1yvVLryC7NAhZza4gmwCqdrqSlj4b4DKxcEDXtqLh4XQQxkcUqO19cJSQk7zQHEyWceZReCiPpGY7K/N4e1NH4xBAwjpkIP/MmceFrCejj+1I1jW5EXS9uXyPBPAKuz+o3nfpxBLB990=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705609564; c=relaxed/simple;
-	bh=44TEVHHlhBDaPHtR+8sPchyv/gNMZg2zZTto3N//D1k=;
+	s=arc-20240116; t=1705609565; c=relaxed/simple;
+	bh=2Tz388nXK6eZ/PgQ/7kCiEMvyOI7hQ3y8LfTbOnWTEY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Fa2G13UM9QQb+bcxCuHtuJBZFWrkkEPI4bl5vxz0F0wPcwz0ODoRJcMRYNO4BO/CtroOoXDXeuV3gw0vmVVEhrKxgN0JvwIt9dgMh9oUiA/lzfaVEBYMHX60GgPJAjbPFCLXKnMg7uYgz4V9IM8sfsakY1Tx1WcfpdZX1goiXrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Hy63XvFJ; arc=none smtp.client-ip=192.55.52.88
+	 MIME-Version; b=YkZDtGLNr+7pkg7lyJhXReiIAsvC8vZuxPclk+zDoDiZQAHUIgY6OiaXHtMP1/mJm1q3xylIyWBBO5IOIfqzvaj5CLzASW3Wje52b0OPA81x40v9hYAGAWLiTPumskDZGC9vk9WK+CEe2rH6cW0RdiwE6xdYtBTRkrVmIwLrh1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GiWt86+I; arc=none smtp.client-ip=198.175.65.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Hy63XvFJ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GiWt86+I"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1705609563; x=1737145563;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=44TEVHHlhBDaPHtR+8sPchyv/gNMZg2zZTto3N//D1k=;
-  b=Hy63XvFJUzhFGVys+VirIieHJ77RCBHqz4y1ekvrbs38iD68P3CIyEi2
-   IVdPUGKQCz0QS+/5PssQM+Wtj6sJfrNIxuBPAxU/MAii3VliU/rleWIwN
-   cRk+Q+GvcXkxaLl22J9463+IJaHNjc2mocAzJLBavEIrScUfASdlD6h1Z
-   s4PFPeqaGlflsktYY4W2RRnalNnc8BIWsCuhjn+23ACIuMXtMhMG8tgWu
-   nHhllcEZISF5NsWqKtDWK52MPR0TDaBaCWVCOPGNbuY81iVyrTTx61WpD
-   PkdnUKG3mY3eW4JrasHy0z9t1Xbo1R/TLx1TVFTPP6PiVGbGgywN923MQ
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10956"; a="431732133"
+  bh=2Tz388nXK6eZ/PgQ/7kCiEMvyOI7hQ3y8LfTbOnWTEY=;
+  b=GiWt86+I6fWHNNFSmKVZoACsi0Jd2KmLBC9ZJNDdCQ0RMWlYm+OAT3Y7
+   LR2LzJ2WlzNvrgC1Hb1eKeHiTz9DBF3Zt+vfpR6P0rwg8ra+Cy0P5vw8h
+   YJ3DQJSQdMUw453FyzndJaoY9MvO04k15VT4uvKRa9mJRML1DHXLF+VcG
+   EZ3BPQiEz9fTkC72WO44WwQW7qe82+E2rHzP4svq3RpYvFM5KoeB2jMqJ
+   NwT/GFF58UvLS7MS+KnRcGpWPtOu2aS1fFaE8P3voZziJW+SvOv0iw8IT
+   ATUUpsUQzRGc1yUn2bAbdtKxnEUtn9cPsvnoNnj6z2CsGK23387bGRRai
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10956"; a="13925419"
 X-IronPort-AV: E=Sophos;i="6.05,203,1701158400"; 
-   d="scan'208";a="431732133"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2024 12:25:57 -0800
+   d="scan'208";a="13925419"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2024 12:26:02 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10956"; a="928226816"
+X-IronPort-AV: E=McAfee;i="6600,9927,10956"; a="1116061531"
 X-IronPort-AV: E=Sophos;i="6.05,203,1701158400"; 
-   d="scan'208";a="928226816"
+   d="scan'208";a="1116061531"
 Received: from amilburn-mobl.ger.corp.intel.com (HELO localhost) ([10.252.57.18])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2024 12:25:55 -0800
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2024 12:26:00 -0800
 From: Jani Nikula <jani.nikula@intel.com>
 To: tools@linux.kernel.org
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
 	jani.nikula@intel.com
-Subject: [PATCH 1/2] init: separate config setup from access
-Date: Thu, 18 Jan 2024 22:25:43 +0200
-Message-Id: <20240118202544.2019009-2-jani.nikula@intel.com>
+Subject: [PATCH 2/2] b4: add --config option to set config options on the command-line
+Date: Thu, 18 Jan 2024 22:25:44 +0200
+Message-Id: <20240118202544.2019009-3-jani.nikula@intel.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240118202544.2019009-1-jani.nikula@intel.com>
 References: <20240118202544.2019009-1-jani.nikula@intel.com>
@@ -59,199 +59,145 @@ MIME-Version: 1.0
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 Content-Transfer-Encoding: 8bit
 
-In preparation for adding support for setting config options on the
-command-line, separate the config setup from regular access.
+It's useful to be able to set and override configuration options on the
+command-line. Add the --config and -c options to do this. This is
+similar to the git -c option.
+
+The basic form is 'b4 -c name=value'. Mimic git -c option for the 'b4 -c
+name' and 'b4 -c name=' forms to set the value to 'true' and the empty
+string, respectively. The name is also the same section.key dotted
+format as in git -c. For example, 'b4 -c
+b4.midmask=https://some.host/%s'.
+
+The argparse action class is handy for special parsing. For details, see
+[1] and [2]. This stores a dict of the config options set on the command
+line to cmdargs.config, mapping the full dotted keys to values. Relevant
+parts for main, user and sendemail configs will be set using
+_cmdline_config_override().
+
+[1] https://docs.python.org/3/library/argparse.html#action
+[2] https://docs.python.org/3/library/argparse.html#action-classes
 
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-
 ---
-
-Note: 'git show -w' helps review the indentation changes.
----
- b4/__init__.py | 129 ++++++++++++++++++++++++++++---------------------
- b4/command.py  |   2 +
- 2 files changed, 75 insertions(+), 56 deletions(-)
+ b4/__init__.py  | 23 +++++++++++++++++++++++
+ b4/command.py   | 24 ++++++++++++++++++++++++
+ docs/config.rst |  5 +++++
+ 3 files changed, 52 insertions(+)
 
 diff --git a/b4/__init__.py b/b4/__init__.py
-index 5b692a1e0ef7..f62ec11f965b 100644
+index f62ec11f965b..38a248aa8ca4 100644
 --- a/b4/__init__.py
 +++ b/b4/__init__.py
-@@ -2719,6 +2719,16 @@ def in_directory(dirname):
-         os.chdir(cdir)
+@@ -2729,6 +2729,22 @@ def setup_config(cmdargs: argparse.Namespace):
+     _setup_sendemail_config(cmdargs)
  
  
-+def setup_config(cmdargs: argparse.Namespace):
-+    """Setup configuration options. Needs to be called before accessing any of
-+    the config options."""
-+    _setup_main_config(cmdargs)
-+    _setup_user_config(cmdargs)
++def _cmdline_config_override(cmdargs: argparse.Namespace, config: dict, section: str):
++    """Use cmdline.config to set and override config values for section."""
++    if not cmdargs.config:
++        return
 +
-+    # Depends on main config!
-+    _setup_sendemail_config(cmdargs)
++    section += '.'
++
++    config_override = {
++        key[len(section):]: val
++        for key, val in cmdargs.config.items()
++        if key.startswith(section)
++    }
++
++    config.update(config_override)
 +
 +
  def git_set_config(fullpath: Optional[str], param: str, value: str, operation: str = '--replace-all'):
      args = ['config', operation, param, value]
      ecode, out = git_run_command(fullpath, args)
-@@ -2759,39 +2769,41 @@ def get_config_from_git(regexp: str, defaults: Optional[dict] = None,
-     return gitconfig
+@@ -2800,6 +2816,8 @@ def _setup_main_config(cmdargs: argparse.Namespace):
+         gpgcfg = get_config_from_git(r'gpg\..*', {'program': 'gpg'})
+         config['gpgbin'] = gpgcfg['program']
  
- 
--def get_main_config() -> dict:
-+def _setup_main_config(cmdargs: argparse.Namespace):
-     global MAIN_CONFIG
--    if MAIN_CONFIG is None:
--        defcfg = copy.deepcopy(DEFAULT_CONFIG)
--        # some options can be provided via the toplevel .b4-config file,
--        # so load them up and use as defaults
--        topdir = git_get_toplevel()
--        wtglobs = ['send-*', '*mask', '*template*', 'trailer*', 'pw-*']
--        if topdir:
--            wtcfg = os.path.join(topdir, '.b4-config')
--            if os.access(wtcfg, os.R_OK):
--                logger.debug('Loading worktree configs from %s', wtcfg)
--                wtconfig = get_config_from_git(r'b4\..*', source=wtcfg)
--                logger.debug('wtcfg=%s', wtconfig)
--                for key, val in wtconfig.items():
--                    if val.startswith('./'):
--                        # replace it with full topdir path
--                        val = os.path.abspath(os.path.join(topdir, val))
--                    for wtglob in wtglobs:
--                        if fnmatch.fnmatch(key, wtglob):
--                            logger.debug('wtcfg: %s=%s', key, val)
--                            defcfg[key] = val
--                            break
--        config = get_config_from_git(r'b4\..*', defaults=defcfg, multivals=['keyringsrc'])
--        config['listid-preference'] = config['listid-preference'].split(',')
--        config['listid-preference'].remove('*')
--        config['listid-preference'].append('*')
--        if config['gpgbin'] is None:
--            gpgcfg = get_config_from_git(r'gpg\..*', {'program': 'gpg'})
--            config['gpgbin'] = gpgcfg['program']
- 
--        MAIN_CONFIG = config
-+    defcfg = copy.deepcopy(DEFAULT_CONFIG)
-+    # some options can be provided via the toplevel .b4-config file,
-+    # so load them up and use as defaults
-+    topdir = git_get_toplevel()
-+    wtglobs = ['send-*', '*mask', '*template*', 'trailer*', 'pw-*']
-+    if topdir:
-+        wtcfg = os.path.join(topdir, '.b4-config')
-+        if os.access(wtcfg, os.R_OK):
-+            logger.debug('Loading worktree configs from %s', wtcfg)
-+            wtconfig = get_config_from_git(r'b4\..*', source=wtcfg)
-+            logger.debug('wtcfg=%s', wtconfig)
-+            for key, val in wtconfig.items():
-+                if val.startswith('./'):
-+                    # replace it with full topdir path
-+                    val = os.path.abspath(os.path.join(topdir, val))
-+                for wtglob in wtglobs:
-+                    if fnmatch.fnmatch(key, wtglob):
-+                        logger.debug('wtcfg: %s=%s', key, val)
-+                        defcfg[key] = val
-+                        break
-+    config = get_config_from_git(r'b4\..*', defaults=defcfg, multivals=['keyringsrc'])
-+    config['listid-preference'] = config['listid-preference'].split(',')
-+    config['listid-preference'].remove('*')
-+    config['listid-preference'].append('*')
-+    if config['gpgbin'] is None:
-+        gpgcfg = get_config_from_git(r'gpg\..*', {'program': 'gpg'})
-+        config['gpgbin'] = gpgcfg['program']
++    _cmdline_config_override(cmdargs, config, 'b4')
 +
-+    MAIN_CONFIG = config
+     MAIN_CONFIG = config
+ 
+ 
+@@ -2896,6 +2914,8 @@ def _setup_user_config(cmdargs: argparse.Namespace):
+     if 'email' not in USER_CONFIG:
+         USER_CONFIG['email'] = os.environ['EMAIL']
+ 
++    _cmdline_config_override(cmdargs, USER_CONFIG, 'user')
 +
  
-+def get_main_config() -> dict:
-     return MAIN_CONFIG
- 
- 
-@@ -2874,16 +2886,18 @@ def save_cache(contents: str, identifier: str, suffix: Optional[str] = None, mod
-     except FileNotFoundError:
-         logger.debug('Could not write cache %s for %s', fullpath, identifier)
- 
--
--def get_user_config():
-+def _setup_user_config(cmdargs: argparse.Namespace):
-     global USER_CONFIG
--    if USER_CONFIG is None:
--        USER_CONFIG = get_config_from_git(r'user\..*')
--        if 'name' not in USER_CONFIG:
--            udata = pwd.getpwuid(os.getuid())
--            USER_CONFIG['name'] = udata.pw_gecos
--        if 'email' not in USER_CONFIG:
--            USER_CONFIG['email'] = os.environ['EMAIL']
-+
-+    USER_CONFIG = get_config_from_git(r'user\..*')
-+    if 'name' not in USER_CONFIG:
-+        udata = pwd.getpwuid(os.getuid())
-+        USER_CONFIG['name'] = udata.pw_gecos
-+    if 'email' not in USER_CONFIG:
-+        USER_CONFIG['email'] = os.environ['EMAIL']
-+
-+
-+def get_user_config() -> dict:
+ def get_user_config() -> dict:
      return USER_CONFIG
+@@ -3532,6 +3552,9 @@ def _setup_sendemail_config(cmdargs: argparse.Namespace):
+         sectname = 'sendemail'
+     logger.debug('Using values from %s', sectname)
  
- 
-@@ -3500,25 +3514,28 @@ def read_template(tptfile):
-     return tpt
- 
- 
--def get_sendemail_config() -> dict:
-+def _setup_sendemail_config(cmdargs: argparse.Namespace):
-     global SENDEMAIL_CONFIG
--    if SENDEMAIL_CONFIG is None:
--        # Get the default settings first
--        config = get_main_config()
--        identity = config.get('sendemail-identity')
--        _basecfg = get_config_from_git(r'sendemail\.[^.]+$')
--        if identity:
--            # Use this identity to override what we got from the default one
--            sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', defaults=_basecfg)
--            sectname = f'sendemail.{identity}'
--            if not len(sconfig):
--                raise smtplib.SMTPException('Unable to find %s settings in any applicable git config' % sectname)
--        else:
--            sconfig = _basecfg
--            sectname = 'sendemail'
--        logger.debug('Using values from %s', sectname)
--        SENDEMAIL_CONFIG = sconfig
- 
-+    # Get the default settings first
-+    config = get_main_config()
-+    identity = config.get('sendemail-identity')
-+    _basecfg = get_config_from_git(r'sendemail\.[^.]+$')
-+    if identity:
-+        # Use this identity to override what we got from the default one
-+        sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', defaults=_basecfg)
-+        sectname = f'sendemail.{identity}'
-+        if not len(sconfig):
-+            raise smtplib.SMTPException('Unable to find %s settings in any applicable git config' % sectname)
-+    else:
-+        sconfig = _basecfg
-+        sectname = 'sendemail'
-+    logger.debug('Using values from %s', sectname)
++    # Note: This can't handle identity, need to use sendemail.key directly
++    _cmdline_config_override(cmdargs, sconfig, 'sendemail')
 +
-+    SENDEMAIL_CONFIG = sconfig
-+
-+
-+def get_sendemail_config() -> dict:
-     return SENDEMAIL_CONFIG
+     SENDEMAIL_CONFIG = sconfig
  
  
 diff --git a/b4/command.py b/b4/command.py
-index d1046375c97c..07b6d67735dc 100644
+index 07b6d67735dc..96d585f6983e 100644
 --- a/b4/command.py
 +++ b/b4/command.py
-@@ -362,6 +362,8 @@ def cmd():
-         parser.print_help()
-         sys.exit(1)
+@@ -111,6 +111,24 @@ def cmd_diff(cmdargs):
+     b4.diff.main(cmdargs)
  
-+    b4.setup_config(cmdargs)
+ 
++class ConfigOption(argparse.Action):
++    """Action class for storing key=value arguments in a dict."""
++    def __call__(self, parser, namespace, keyval, option_string=None):
++        config = getattr(namespace, self.dest, None)
 +
-     if cmdargs.offline_mode:
-         logger.info('Running in OFFLINE mode')
-         b4.can_network = False
++        if config is None:
++            config = dict()
++            setattr(namespace, self.dest, config)
++
++        if '=' in keyval:
++            key, value = keyval.split('=', maxsplit=1)
++        else:
++            # mimic git -c option
++            key, value = keyval, 'true'
++
++        config[key] = value
++
++
+ def setup_parser() -> argparse.ArgumentParser:
+     # noinspection PyTypeChecker
+     parser = argparse.ArgumentParser(
+@@ -132,6 +150,12 @@ def setup_parser() -> argparse.ArgumentParser:
+                         help='Disable TTY detection for stdin')
+     parser.add_argument('--use-web-endpoint', dest='send_web', action='store_true', default=False,
+                         help="Force going through the web endpoint")
++    parser.add_argument('-c', '--config', metavar='NAME=VALUE', action=ConfigOption,
++                        help='''Set config option NAME to VALUE. Override value
++                        from config files. NAME is in dotted section.key
++                        format. Using NAME= and omitting VALUE will set the
++                        value to the empty string. Using NAME and omitting
++                        =VALUE will set the value to "true".''')
+ 
+     subparsers = parser.add_subparsers(help='sub-command help', dest='subcmd')
+ 
+diff --git a/docs/config.rst b/docs/config.rst
+index 8936d2274734..c46d43a16ac0 100644
+--- a/docs/config.rst
++++ b/docs/config.rst
+@@ -12,6 +12,11 @@ Since the purpose of b4 is to work with git repositories, this allows
+ the usual fall-through configuration that can be overridden by more
+ local settings on the repository level.
+ 
++Additionally, you can set and override configuration options on the command-line
++using the ``--config`` (or ``-c``) option, for example::
++
++    b4 --config b4.midmask=https://some.host/%s
++
+ Per-project defaults
+ ~~~~~~~~~~~~~~~~~~~~
+ .. note::
 -- 
 2.39.2
 
