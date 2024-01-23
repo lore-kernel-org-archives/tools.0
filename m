@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA241FBF
-	for <tools@linux.kernel.org>; Tue, 23 Jan 2024 23:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0796210F6;
+	Tue, 23 Jan 2024 23:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706051069; cv=none; b=SRh4O6wbJwpuJZfGZQ0OYoZR+Fcp8UJD579v5d3l6sB5W1VkQYnGiVPF89ne6yxGWo5/ayEx3zbzOpeUW2tdNSbzX9MVodAa4C75Vk9xL+IWKVd39wXl+yDCUzSvb6hvmfvPwoncL8K9XzI0b1w/T5BHYE8ZK5lhcd5MYYU7LEY=
+	t=1706051440; cv=none; b=UixrFLC+GmrH1AEC4gqW2rzOMFfeo/2X/BPG2yJzNDj3wU7Vo6XVcgErREzFwfVWYNs1WxG7saaucCTr7tavCxSMwdpWUyngkR1rrnMvGe6P+6PyC0ZYKw0POO6tcU6KYvWNYTbiCWeUXF4O2ymGsbULUDfzcDTpjK/HaTi6Wjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706051069; c=relaxed/simple;
-	bh=8iGGpYM3+UouVO7ENT/TyJoqnUdeeXqIA549LAokxio=;
+	s=arc-20240116; t=1706051440; c=relaxed/simple;
+	bh=OJH82yUjqfcH6CmG5/AaSZPFmFV6VL2JWGXPFW+Q66g=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Gim9sfy2fr9AGi9CjlpVX1G1AvzRxkcRmBzuzzf7mufMUT15f5V9d7rGcpumPbHhKRZdFXRFeQJRLZGcP5/A7pKwExl6r6mxy3CzEZ2FCb4N6Do/Inm+H7bI+MhJwraJUDeIYlvV+wQGPpqDMf9oD789UTwXz+tRiEV3p5ZTFNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFgsP11g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=m1vNZ7Ei5NnzUGjuseJyosAaah2JR8Nh6y7NaHMQqHryOxUxZSf1iVz7ruZV9Zh4iO9TYf2jzHodZN0/jCY5lmeWEeZWHv0w/e9soVxB4YjHWwFHyORQe9/b8a33wXuMyVhFb9ulO4cf/ltjBuChU/h3Vv6KI97815XVCXl3J4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkJLCoGG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFgsP11g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6064C433F1;
-	Tue, 23 Jan 2024 23:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkJLCoGG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451E7C433F1;
+	Tue, 23 Jan 2024 23:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706051069;
-	bh=8iGGpYM3+UouVO7ENT/TyJoqnUdeeXqIA549LAokxio=;
+	s=korg; t=1706051440;
+	bh=OJH82yUjqfcH6CmG5/AaSZPFmFV6VL2JWGXPFW+Q66g=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=rFgsP11gqsmFGOAVRrzx2OxBKJ9H0LJzOhU2gpwxC+UDjLmaN4FTQil8xpuB4jZjj
-	 kSygee1wLgMzsuJzCuEFWqi6nIfXlt/R3NN31NbpqEgrUTgVGGpeWK9DvqtRRYwFg2
-	 VO3/lPU91Xix//1poeY7qn0ba+aMW3M/WlaX3itg=
+	b=mkJLCoGGg+23zt/YVA+qzOOg8GIVU8VrP5G6zKEXP/Xwoipf0l19UFA5f5eoxgSH2
+	 fDew3FUCzs2NnwOjGhN+/6zLyligaaE79G8Yd+yjNzggQ4he7ha0eNjISvUbLZcc7L
+	 civ1H30P5HY5cSHvn2i2j7r8bksYernz61mjwWy0=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, Mario Limonciello <superm1@gmail.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-In-Reply-To: <20231114042835.48432-1-superm1@gmail.com>
-References: <20231114042835.48432-1-superm1@gmail.com>
-Subject: Re: [PATCH] Fall back to non-annotated tags for pull requests
-Message-Id: <170605106871.53305.14676637143646052785.b4-ty@linuxfoundation.org>
-Date: Tue, 23 Jan 2024 18:04:28 -0500
+To: tools@linux.kernel.org, Ira Weiny <ira.weiny@intel.com>
+Cc: Robert Richter <rrichter@amd.com>, linux-cxl@vger.kernel.org, 
+ Dan Williams <dan.j.williams@intel.com>
+In-Reply-To: <20231207-series-from-non-reply-reply-v1-1-cb02de53857c@intel.com>
+References: <20231207-series-from-non-reply-reply-v1-1-cb02de53857c@intel.com>
+Subject: Re: [PATCH b4] am: Build patch series when additional patches
+ appear in a thread
+Message-Id: <170605144019.54343.6484799199692518847.b4-ty@linuxfoundation.org>
+Date: Tue, 23 Jan 2024 18:10:40 -0500
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,19 +41,26 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-dc0c5
+X-Mailer: b4 0.13-dev-76426
 
 
-On Mon, 13 Nov 2023 22:28:35 -0600, Mario Limonciello wrote:
-> Not everyone uses an annotated tag, so fallback to a direct ref
-> tag if annotated tags fail.
+On Thu, 07 Dec 2023 21:42:37 -0800, Ira Weiny wrote:
+> Dan reported that am/shazam cherry-pick was failing with a particular
+> CXL series.[1]
 > 
+> 	$ b4 shazam -S -P _ 20231116-fix-cdat-devm-free-v1-1-b148b40707d7@intel.com
+> 	Grabbing thread from lore.kernel.org/all/20231116-fix-cdat-devm-free-v1-1-b148b40707d7@intel.com/t.mbox.gz
+> 	Checking for newer revisions
+> 	Grabbing search results from lore.kernel.org
+> 	Analyzing 8 messages in the thread
+> 	Specified msgid is not present in the series, cannot cherrypick
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] Fall back to non-annotated tags for pull requests
-      commit: dc0c5559df0ba626dd42d4fe144419585ea609ba
+[1/1] am: Build patch series when additional patches appear in a thread
+      commit: 76426faacd9216b0a7115262c0058eb29e2d1d69
 
 Best regards,
 -- 
