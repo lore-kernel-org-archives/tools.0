@@ -1,38 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0796210F6;
-	Tue, 23 Jan 2024 23:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254A6171B0
+	for <tools@linux.kernel.org>; Wed, 24 Jan 2024 00:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706051440; cv=none; b=UixrFLC+GmrH1AEC4gqW2rzOMFfeo/2X/BPG2yJzNDj3wU7Vo6XVcgErREzFwfVWYNs1WxG7saaucCTr7tavCxSMwdpWUyngkR1rrnMvGe6P+6PyC0ZYKw0POO6tcU6KYvWNYTbiCWeUXF4O2ymGsbULUDfzcDTpjK/HaTi6Wjw=
+	t=1706054431; cv=none; b=Q4QByAKX1E+VR0FqFIwtWRDVIBjzbjppCobsal/iC1q/hTn6sqcl0VkE8imyeRsJ+xCx4Ec8YJMLSHU7uWv2+9NCgmyFBXyfNcms6o6m0fZ+9z7Gmgw5GgjP418d3ZmhgaE/OmAjYCKyQ04StgtRBegf2fHK+n2zLM+6RIn5Lic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706051440; c=relaxed/simple;
-	bh=OJH82yUjqfcH6CmG5/AaSZPFmFV6VL2JWGXPFW+Q66g=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=m1vNZ7Ei5NnzUGjuseJyosAaah2JR8Nh6y7NaHMQqHryOxUxZSf1iVz7ruZV9Zh4iO9TYf2jzHodZN0/jCY5lmeWEeZWHv0w/e9soVxB4YjHWwFHyORQe9/b8a33wXuMyVhFb9ulO4cf/ltjBuChU/h3Vv6KI97815XVCXl3J4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkJLCoGG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706054431; c=relaxed/simple;
+	bh=TLQaaFxnWlq9cafQKpA4F9IRjSuxKZ+Sa6wayr/cs+4=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=Hh6+eJMTFw+KTZw8sUFFKSll9VOBbsPgQiIijfjHdEb4kWjT5PUGLHW84BgAFyvGpk/Sg0bmGhs0II1rya2dz72cmR34x2VnWFhQBWyI5oAXumODJ2VP89RWImS/Z/iq2BiKmlE9nJgRBldZAjfVVBbOcWUjb0UQyqREsmnCQKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F9WSMvFR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkJLCoGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451E7C433F1;
-	Tue, 23 Jan 2024 23:10:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706051440;
-	bh=OJH82yUjqfcH6CmG5/AaSZPFmFV6VL2JWGXPFW+Q66g=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=mkJLCoGGg+23zt/YVA+qzOOg8GIVU8VrP5G6zKEXP/Xwoipf0l19UFA5f5eoxgSH2
-	 fDew3FUCzs2NnwOjGhN+/6zLyligaaE79G8Yd+yjNzggQ4he7ha0eNjISvUbLZcc7L
-	 civ1H30P5HY5cSHvn2i2j7r8bksYernz61mjwWy0=
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@linux.kernel.org, Ira Weiny <ira.weiny@intel.com>
-Cc: Robert Richter <rrichter@amd.com>, linux-cxl@vger.kernel.org, 
- Dan Williams <dan.j.williams@intel.com>
-In-Reply-To: <20231207-series-from-non-reply-reply-v1-1-cb02de53857c@intel.com>
-References: <20231207-series-from-non-reply-reply-v1-1-cb02de53857c@intel.com>
-Subject: Re: [PATCH b4] am: Build patch series when additional patches
- appear in a thread
-Message-Id: <170605144019.54343.6484799199692518847.b4-ty@linuxfoundation.org>
-Date: Tue, 23 Jan 2024 18:10:40 -0500
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F9WSMvFR"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AB8EDC433F1;
+	Wed, 24 Jan 2024 00:00:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706054430;
+	bh=TLQaaFxnWlq9cafQKpA4F9IRjSuxKZ+Sa6wayr/cs+4=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=F9WSMvFR5uGMHHArVmtWw2mqfDecCuIbxykKVyQtdTbj/YU/0B5DZ19SFGupRBd54
+	 k+zoFoCna0SYeJSYwqFs3G4fiROgTsw3MTpYrdbIiLkiXpgrsDyg/VNkLg3qzGWcYD
+	 dr8J6nuPAmtzL185ibR+O5WF0Z+SGSoOWhv6dAyNqv+RqVcvy3YUB7z3ReBnM9AXYz
+	 MkeyAMcsm1SYTqtiCS498Vwu5rsav0aFy3TDP+LY0SLkEAwJ58Cfr6L9xm0psyr60g
+	 oX/DP4wpol4LAZWLT29Wj/gskGje+Lgfou/E2S45GpDSWyrI9WMnoyC9x66jZSNz6l
+	 YBKFX3G9VWrqg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 95165DFF761;
+	Wed, 24 Jan 2024 00:00:30 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -41,28 +37,32 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-76426
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: broonie@kernel.org, konstantin@linuxfoundation.org, 
+ tools@linux.kernel.org
+Message-ID: <20240124-b218408c2-3e81178c47a1@bugzilla.kernel.org>
+In-Reply-To: <47699f5d-4ba3-4438-8a78-ab6c3345840a@sirena.org.uk>
+References: <47699f5d-4ba3-4438-8a78-ab6c3345840a@sirena.org.uk>
+Subject: Re: Scripting support for telling if a b4 series is sendable
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Wed, 24 Jan 2024 00:00:30 +0000 (UTC)
 
+Konstantin Ryabitsev writes in commit a684c77f981daa92f7f0460dd5178cdd2ae2d81f:
 
-On Thu, 07 Dec 2023 21:42:37 -0800, Ira Weiny wrote:
-> Dan reported that am/shazam cherry-pick was failing with a particular
-> CXL series.[1]
-> 
-> 	$ b4 shazam -S -P _ 20231116-fix-cdat-devm-free-v1-1-b148b40707d7@intel.com
-> 	Grabbing thread from lore.kernel.org/all/20231116-fix-cdat-devm-free-v1-1-b148b40707d7@intel.com/t.mbox.gz
-> 	Checking for newer revisions
-> 	Grabbing search results from lore.kernel.org
-> 	Analyzing 8 messages in the thread
-> 	Specified msgid is not present in the series, cannot cherrypick
-> 
-> [...]
+ez: show if the cover letter needs editing
 
-Applied, thanks!
+If we have "EDITME" in the cover letter, show 'needs-editing' in the
+output of "b4 prep --show-info".
 
-[1/1] am: Build patch series when additional patches appear in a thread
-      commit: 76426faacd9216b0a7115262c0058eb29e2d1d69
+Suggested-by: Mark Brown <broonie@kernel.org>
+Link: https://msgid.link/47699f5d-4ba3-4438-8a78-ab6c3345840a@sirena.org.uk
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218408
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-Best regards,
+(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=a684c77f981d)
 -- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
 
