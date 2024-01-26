@@ -1,54 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5209BA29
-	for <tools@linux.kernel.org>; Fri, 26 Jan 2024 16:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B4B1805E
+	for <tools@linux.kernel.org>; Fri, 26 Jan 2024 16:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706286753; cv=none; b=ZUnlfK81GSPnI07fnmb9uPTYhYdtkOJp6EToJtElrrwk8ge8svBnbTX+GsvmiSUR1uSyq6u82IELsht9xQJrwvKEvZ0xlPZuKVA0Nmccz9Xe9dfBlmI8yhMlvxNpaZJbqmZLh9L3sV08VPLKRc7PWgVoatZh/XBMjYctI7aqOBA=
+	t=1706286923; cv=none; b=s6h/lu85ZQT1IPpKkASXM6Jc23qvm+5UWKhR1Svk2u5I0lAzOZgo+AM1fSZteu4p80NL0Zv++qu51s75aelzWLB4a2KSNhu7V7olpQIztBfZykacpwfxgt5qypIxNXfPAFxX6FgIbTk5VmPatPW7M9aPgH8M+bwYz1LHP8rHO/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706286753; c=relaxed/simple;
-	bh=IDCFpx9npyDZruZeIiLAvpJTF+Yn0e54lqUrRXs/I3g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RZs8/gT/DXw1I0LkVrc6Qs3tGDajUDf+MEHShEsdOM1KsJ+f4jj2kuU3ZL5vrv+mVuIZJcM0DOtdmY51+caA9gj0q1/uvrnl8aDb/hW/MXZnZk+0jZejuYsMDGEorfIfY11pgo3LqLINbkzgU0wwjlEIF7XgeFUWJ3lxISbNp8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faBMqp4W; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706286923; c=relaxed/simple;
+	bh=Jd8WcEawUPirNsw1tTzf6WNVi00bvWOgUa/Yf0DFMbw=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=GTcxY/UdYp5gmAxYemWcK2zMooZJJqrPdm0kRGGDJvKtu33mINLh8GJLeVMz4jfHuXf2AVW2KX5SjKGAiIafbo8SuZEmGVkmHDCkiZlWqV9pdfMSZtPz+s82z1LrnKHE+26PJ3i1WuAAW6JQDgI/Q87vAeqHJYabfQaJjQ+KR6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ppCkThtg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faBMqp4W"
-Received: by smtp.kernel.org (Postfix)
-	id 81845C433F1; Fri, 26 Jan 2024 16:32:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F78C433C7;
-	Fri, 26 Jan 2024 16:32:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706286752;
-	bh=IDCFpx9npyDZruZeIiLAvpJTF+Yn0e54lqUrRXs/I3g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=faBMqp4W3JWtqYKkW6dWbGWdgEbSXw+T4Q5MNo+OuSqgGViHEngXZ7ioOVyGLcp34
-	 O/ql7EIVwo6L9gWnq/H619L7WpkU8gd3UeKYGlaARX5YsKeuGYcj2AQ+bR5OVeLWzN
-	 uu1xm1YaSXVmg/cFoiVoF7WLSjGrk+RTDH1uQlRI=
-Date: Fri, 26 Jan 2024 11:32:27 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Nikolay Borisov <nik.borisov@suse.com>
-Cc: tools@kernel.org
-Subject: Re: b4 diff failure scenario
-Message-ID: <20240126-orca-of-majestic-greatness-f5fdaf@lemur>
-References: <b93b0a56-0207-4538-9413-36d59c20ca2e@suse.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ppCkThtg"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C7BA2C433F1;
+	Fri, 26 Jan 2024 16:35:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706286922;
+	bh=Jd8WcEawUPirNsw1tTzf6WNVi00bvWOgUa/Yf0DFMbw=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=ppCkThtglNl6+/YirWa6oNiyXmAUjbmBbr/vcw02TqBX/EHw5GZfFjohANMlwGqPz
+	 +e2HAlsHuICQ1gGsjpV85yJc4kwt2tQBLNegeAk/JfCpKS8hF7YcKg7B8PgHeDx1Nr
+	 QgquNJw+QDldliKBWZPxg+To5LNYOLXj7t7sndcG/MmLbm/eWvdstb2VdL/zf8rm54
+	 4kTL6U+tzu+AGpdx1MBekJYM41Cd9eVXDbxG64sHu6ppkTgqTB5B7CZAbRaDBsr4rT
+	 m7E/x/bQsbVnh/2P6DyiAe1RRxGpMH36EMaTlJAMSTMkAhdYiAQBCgy6Xn6XzWI6Rj
+	 R3xY0OBMgFdXw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id AC4DADFF760;
+	Fri, 26 Jan 2024 16:35:22 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: tools@kernel.org, nik.borisov@suse.com, tools@linux.kernel.org
+Message-ID: <20240126-b218425-81d6f0159d3f@bugzilla.kernel.org>
 In-Reply-To: <b93b0a56-0207-4538-9413-36d59c20ca2e@suse.com>
+References: <b93b0a56-0207-4538-9413-36d59c20ca2e@suse.com>
+Subject: Re: b4 diff failure scenario
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Fri, 26 Jan 2024 16:35:22 +0000 (UTC)
 
-On Fri, Jan 26, 2024 at 10:51:52AM +0200, Nikolay Borisov wrote:
-> The currently checkedout branch is at commit 83e1bdc94f32dcf52dfcd2025acc7a2b9376b1e8 and both .mbx
-> can be applied cleanly on top. Of course, manually applying them and running git range-diff
-> is a viable workaround but it would have been best if this "had just worked".
+Hello:
 
-Yes, we should try a bit harder before failing.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=218425
 
-bugbot assign to me
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
 
--K
