@@ -1,60 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2584C3F9C6
-	for <tools@linux.kernel.org>; Thu,  1 Feb 2024 21:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F75F60266
+	for <tools@linux.kernel.org>; Fri,  2 Feb 2024 09:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706824098; cv=none; b=MXRIedp60SKGI3tUBEgammyqrvIxgxp0ClpTngv5/x7y0yPBIRyyBxf4RHj3XqxJRCgzlkn2ot1jQIAetzBSIgkmlzbfJ8M9NGmxzUTH9ExzDpjEu1AOn9gQcBpz71f/d8r+E65g3ftArDwk4L+VfyrkxXkrACjHHRqDiE61VTU=
+	t=1706865112; cv=none; b=LTd9i4ASRbuIzlXZ7U/ZQCjLUxtv3OSvoH4niGN/uW40M7kqFiiPyDxDf9moxfhdmS9DTJMPfQ2pRQgG1OQyb/EVcWyhnix4SpwMv5NXY095QSn9ENdWfp8Ii9B1xDqSFfmsZRODTeKip0BB5cif6WrDUiFAOhSUoeehTQLtw8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706824098; c=relaxed/simple;
-	bh=KGGzWKjFUZE7f6aBep+x/LEJFhqIK1wrGwhjuhtk5fA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lRovxdS1ACj2UWA9uyM0F90Xfora2v9it7G75684dcwq181qQ6vubbCXtesqsK3b93wNj36x2SdOpJePUbvRvvwlBOqI8J+tnPwxF/P2nP9zZDyu8QEG4RUDWIWDK+HI9a72HsiEYAl8BlI8Wccc5sS2+PiY/fuTdb3DHr5Oj6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tA3DNd6a; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706865112; c=relaxed/simple;
+	bh=mKbj4nrp4DysHu5ieaVdYJT9MXIIya9/e61lxx3xm20=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XHqXYjIzmTcg4od92nX6bZ0aMZBCb/wfPm0FKwD19S5kHfjvKGdF0MxJfOe14IbMwt9udqESFdSnn/mopkr1aqE5kFfV/0kOyIa6RhC8Wv459TT6oK6o29/fLD6felQq6DEJf4Y8oXmhLAKCEhWpCQP2HDfOlqiwAsTu4JsIXas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=arinc9.com header.i=@arinc9.com header.b=TxRDHImx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tA3DNd6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA65C433F1;
-	Thu,  1 Feb 2024 21:48:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706824097;
-	bh=KGGzWKjFUZE7f6aBep+x/LEJFhqIK1wrGwhjuhtk5fA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tA3DNd6aRnuta8Ai+zBSN6Cjbv4b/Q8YQxbGLFc2pXWgvWs9AkrUCJDS7QbF62rE0
-	 XXv+vSUuHFyaNrRzG03A8vGBKJ54TSNrJgtEY/aFjMeR9m1LqZYokO0RpzD+fTmN/x
-	 fCKkCkS5pyFMsnvFeMoeIBAOvSQ6o9ClAutrY1qI=
-Date: Thu, 1 Feb 2024 16:48:14 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Frank Li <Frank.Li@nxp.com>
-Cc: tools@linux.kernel.org
-Subject: Re: [PATCH 1/1] add --notes at git-show command to include notes in
- patches
-Message-ID: <20240201-graceful-terrestrial-rhino-83c61f@lemur>
-References: <20240131223054.371692-1-Frank.Li@nxp.com>
+	dkim=pass (2048-bit key) header.d=arinc9.com header.i=@arinc9.com header.b="TxRDHImx"
+Received: by smtp.kernel.org (Postfix)
+	id AF350C43394; Fri,  2 Feb 2024 09:11:51 +0000 (UTC)
+Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 16511C433C7;
+	Fri,  2 Feb 2024 09:11:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 16511C433C7
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=arinc9.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=arinc9.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 6671420011;
+	Fri,  2 Feb 2024 09:11:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arinc9.com; s=gm1;
+	t=1706865105;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Y1NoW9zhjmqcQuUi6KkawAZpHX7sdUmwFKBiyO/7PKA=;
+	b=TxRDHImxBW1jNI5WVNtiHiElYu6N+plp8XivTZ6hMBaX315Na0NYYCaDzb66WoE7Cllpb4
+	ru8QC2pbYn+6vFyUANVu4eby5xhX3DrlOAzs3PJQy66gwpVnCp8pqMtI5RCYO83Bl9CPHM
+	7DlGNwhhEwwi5oBsuaGeqAtiAq0yPmOfeug6FBlujbTRFrzrs6j50z5TNOmVmdUH+BNATZ
+	DR6FygpLkPFRWJGxxLg0sTl2eJ4zUBjADblDxwLXOT4FR6bv+eR6P5Xt/ouJbQ5RmbKoez
+	/0K0bQ/uTyBgEZN/MO8qc4GnT6J+xg6AYPPOmr3HEMzU+rVvcSskEvG/+h/JXA==
+Message-ID: <1f0e67ba-edd7-4998-bc20-1de86bd53a68@arinc9.com>
+Date: Fri, 2 Feb 2024 12:11:37 +0300
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240131223054.371692-1-Frank.Li@nxp.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net RFC] net: dsa: mt7530: fix link-local frames that
+ ingress vlan filtering ports
+To: Vladimir Oltean <olteanv@gmail.com>,
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Daniel Golle <daniel@makrotopia.org>, DENG Qingfang <dqfext@gmail.com>,
+ Sean Wang <sean.wang@mediatek.com>, Andrew Lunn <andrew@lunn.ch>,
+ Florian Fainelli <f.fainelli@gmail.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ =?UTF-8?Q?Alvin_=C5=A0ipraga?= <ALSI@bang-olufsen.dk>,
+ Frank Wunderlich <frank-w@public-files.de>,
+ Bartel Eerdekens <bartel.eerdekens@constell8.be>, mithat.guner@xeront.com,
+ erkin.bozoglu@xeront.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, tools@kernel.org
+References: <65bbf40d.170a0220.a87f4.becdSMTPIN_ADDED_BROKEN@mx.google.com>
+ <20240201225943.abphuuavp7bkbrt6@skbuf>
+Content-Language: en-US
+From: =?UTF-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>
+In-Reply-To: <20240201225943.abphuuavp7bkbrt6@skbuf>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: arinc.unal@arinc9.com
 
-On Wed, Jan 31, 2024 at 05:30:54PM -0500, Frank Li wrote:
-> I using notes to record patche's change log. b4 send will discard this. Add
-> --notes options when create patches.
+On 2.02.2024 01:59, Vladimir Oltean wrote:
+> On Thu, Feb 01, 2024 at 10:13:39PM +0300, Arınç ÜNAL via B4 Relay wrote:
+>> base-commit: 4e192be1a225b7b1c4e315a44754312347628859
+>> change-id: 20240201-b4-for-net-mt7530-fix-link-local-that-ingress-vlan-filtering-ports-6a2099e7ffb3
+>>
+>> Best regards,
+>> -- 
+>> Arınç ÜNAL <arinc.unal@arinc9.com>
+> 
+> You sent this patch 3 times. What happened, b4 didn't work so well?
 
-The biggest problem with using notes is that they are not currently preserved
-by git-filter-repo:
+Odd, I've received only a single email of this patch.
 
-https://github.com/newren/git-filter-repo/issues/22
+Looking at lore.kernel.org, it looks like the b4 web endpoint properly
+submitted the patch to the b4-sent mailing list but for some reason changed
+the Message-Id before submitting it to the netdev mailing list.
 
-Yes, there are some (hacky) workarounds to make this work, but even with them,
-I am not comfortable with putting any information into notes that can just
-suddenly be gone.
+This is the email with what the Message-Id should be, which only exists on
+the b4-sent mailing list:
 
-For now, I will keep this in the list of improvements, but I won't take this
-patch until git-filter-repo does the right thing natively.
+https://lore.kernel.org/all/20240201-b4-for-net-mt7530-fix-link-local-that-ingress-vlan-filtering-ports-v1-1-881c1c96b27f@arinc9.com/
 
--K
+This is the email with changed Message-Id that was submitted to the netdev
+mailing list:
+
+https://lore.kernel.org/all/=%3Futf-8%3Fq%3F=3C20240201-b4-for-net-mt7530-fix-link-local-that-ingr%3F=%20=%3Futf-8%3Fq%3Fess-vlan-filtering-ports-v1-1-881c1c96b27f=40arinc9=2Ecom=3E%3F=/
+
+There're no brackets enclosing the Message-Id. That must be why Gmail
+modified it with the SMTPIN_ADDED_BROKEN disclaimer added for you. I can't
+come up with a theory as to why you've received it thrice though.
+
+Konstantin, could you take a look at what happened here?
+
+Arınç
