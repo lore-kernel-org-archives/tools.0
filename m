@@ -1,60 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECA832C8E
-	for <tools@linux.kernel.org>; Mon,  5 Feb 2024 17:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3791133416
+	for <tools@linux.kernel.org>; Mon,  5 Feb 2024 20:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707153326; cv=none; b=UmUjkJC0ivuMKGfQghPQhYonVnM9XpJqKvvpLUrEp2sWDzj0VzvlEasFEL2qtRHN/4ibSzZdYt051LF0IYXLXz5PGrsagS1bs5TL17HVynqXLQ3cUpW9tYqGmlkpCQuu1vt6Be1eR+2pTNjE3HKZbMcWeMkuX6Dpx1QhLce1frg=
+	t=1707164663; cv=none; b=B+FBr1eO0P6zoVsgEyVulE8slIg5uiuiROJHvtQ1gs3eJsBINFudN+SDL4UF8g4oKtcVw5iQyy0J8OSQR7tlsG7tJtWGBOnT89nScPyAUvH/fZdkn/LmY2+Ldbsez3n03TblNA8pEgq+kdoO/JJvMMysie5DEuyv1QRP9hTJqIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707153326; c=relaxed/simple;
-	bh=ZH06u6VeJsvLkP33r6EGDJo3FrcfJvP154VwO4qoFsY=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=B1H2VRGN4gE4S01BvSSTfOleU7uJK3jiD2UR6AScV2RrhSpUFWLAB9QwHD5LZ7chGoZ0pShzeY4Yl45tvlH219zRt9nuE4IOkveP1FuR8h5xIs9Qc2i/8ejQekiq6ApMeve6dTOrvEWKkjU3cX/DhgOv8pMJZN5xxd+mE97RKOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YjbBWiTB; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707164663; c=relaxed/simple;
+	bh=pjvr/I7dTXNHnTgva7B7XrxHkICB2a+rNEz5glnuyBU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l96LK029F6Ro5PCpcLLtpv3yKhEIQRfCuffC3nMkINOmD0ptJ1PGWNsCdR3Sj3JZj74a199ANf0pECfKTYjIsdXNutCLbFhJCH72HoJadjiaBgtTXIURYIr6HqeLaHRCiAEZR/RpSPSugHU4UKs4tIhxeSLHy+dQe6XsPSblQpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+cADej9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YjbBWiTB"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1E56CC433C7;
-	Mon,  5 Feb 2024 17:15:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707153326;
-	bh=ZH06u6VeJsvLkP33r6EGDJo3FrcfJvP154VwO4qoFsY=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=YjbBWiTB2p0yRUxGm/YBMbp9SnqZjQrf89ekx5Auo9JaDnzOMacZ+vRTjHE8T25Ss
-	 tRXcT268LACmCDz3XbDPkQ0g44hYk7UQwF8DHCMpUrzcI48Ae8j4+JdDqnuPtPv4KJ
-	 fJ5092aMk6Kohl92yx3GlghS89Ubm0mmkUv8XOqgbhgfaVxQL9WuKxcolYjFyePevl
-	 YWeg1HqnjgoHU2UuLpf03n9NXAgIwdIYXnlPv7LFaDQs2ze485M8At4H5H/RI3mR/e
-	 wYl8ljPpi/Z+VC0BQS342RqQfudH6rbfSTF2J/a2mWDXHe4dmTqMIbSfXPtM3Gyb+Y
-	 NOoDX8mQgdeVg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 046CEE2F2ED;
-	Mon,  5 Feb 2024 17:15:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+cADej9"
+Received: by smtp.kernel.org (Postfix)
+	id A1748C433C7; Mon,  5 Feb 2024 20:24:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B1CC433F1;
+	Mon,  5 Feb 2024 20:24:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1707164662;
+	bh=pjvr/I7dTXNHnTgva7B7XrxHkICB2a+rNEz5glnuyBU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=I+cADej9tPj1U7p85slFv3035ULoHWZfHOsJjMLO63vRBly9U8yjv0Mu+Y0EBl3GJ
+	 4wiVYwtX3vP41zR9xEa71opi5LhWWML01SCwQtTZQjrMXHeJwFywI8OBAeRh8Ae2Eo
+	 khFRJobmKQMaqSbAhU2iJU8+7G9heW7XO94GjaIo=
+Date: Mon, 5 Feb 2024 15:24:19 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: =?utf-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>
+Cc: Vladimir Oltean <olteanv@gmail.com>, 
+	Daniel Golle <daniel@makrotopia.org>, DENG Qingfang <dqfext@gmail.com>, 
+	Sean Wang <sean.wang@mediatek.com>, Andrew Lunn <andrew@lunn.ch>, 
+	Florian Fainelli <f.fainelli@gmail.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Alvin =?utf-8?Q?=C5=A0ipraga?= <ALSI@bang-olufsen.dk>, 
+	Frank Wunderlich <frank-w@public-files.de>, Bartel Eerdekens <bartel.eerdekens@constell8.be>, 
+	mithat.guner@xeront.com, erkin.bozoglu@xeront.com, netdev@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, tools@kernel.org
+Subject: Re: [PATCH net RFC] net: dsa: mt7530: fix link-local frames that
+ ingress vlan filtering ports
+Message-ID: <20240205-silky-sensible-puffin-8e23ee@lemur>
+References: <65bbf40d.170a0220.a87f4.becdSMTPIN_ADDED_BROKEN@mx.google.com>
+ <20240201225943.abphuuavp7bkbrt6@skbuf>
+ <1f0e67ba-edd7-4998-bc20-1de86bd53a68@arinc9.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: "Kernel.org Bugbot" <bugbot@kernel.org>
-To: tools@linux.kernel.org, lkp@intel.com, lucas.demarchi@intel.com
-Message-ID: <20240205-b218463-da743080207b@bugzilla.kernel.org>
-In-Reply-To: <20220916161835.mpi5oyeka3b4ellx@ldmartin-desk2.lan>
-References: <20220916161835.mpi5oyeka3b4ellx@ldmartin-desk2.lan>
-Subject: Re: trailers update and bots
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: peebz 0.1
-Date: Mon,  5 Feb 2024 17:15:25 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1f0e67ba-edd7-4998-bc20-1de86bd53a68@arinc9.com>
 
-Hello:
+On Fri, Feb 02, 2024 at 12:11:37PM +0300, Arınç ÜNAL wrote:
+> There're no brackets enclosing the Message-Id. That must be why Gmail
+> modified it with the SMTPIN_ADDED_BROKEN disclaimer added for you. I can't
+> come up with a theory as to why you've received it thrice though.
+> 
+> Konstantin, could you take a look at what happened here?
 
-This conversation is now tracked by Kernel.org Bugzilla:
-https://bugzilla.kernel.org/show_bug.cgi?id=218463
+Oh, yay, another python email module bug. *sigh* It's not supposed to break
+items enclosed in brackets.
 
-There is no need to do anything else, just keep talking.
--- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (peebz 0.1)
+I'll see if I can work around it on the submission side of things, but for now
+the silly workaround is not to create branch names that are too long (which
+results in message-ids that are very long).
 
+-K
