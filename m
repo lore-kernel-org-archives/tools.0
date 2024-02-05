@@ -1,59 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2F23F8CA
-	for <tools@linux.kernel.org>; Mon,  5 Feb 2024 17:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECA832C8E
+	for <tools@linux.kernel.org>; Mon,  5 Feb 2024 17:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707152967; cv=none; b=K/OPWsMCSCDBt9xB10oYBW6aaoUUlzpfmTun1OT5KGgWQWSDupPZHhDTn48fw9aTzVxqRSJMyJchbpTVGnq10PUP9LsOU8tw6K4MXer6eVUYoAMFGEOREZkuUg0dITpFCEBBsj7hP+q9QiUR2W/eitSM/Ht3vYyZJRGENArUva0=
+	t=1707153326; cv=none; b=UmUjkJC0ivuMKGfQghPQhYonVnM9XpJqKvvpLUrEp2sWDzj0VzvlEasFEL2qtRHN/4ibSzZdYt051LF0IYXLXz5PGrsagS1bs5TL17HVynqXLQ3cUpW9tYqGmlkpCQuu1vt6Be1eR+2pTNjE3HKZbMcWeMkuX6Dpx1QhLce1frg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707152967; c=relaxed/simple;
-	bh=ImiZCMNuJXKzJmXL7CIyrnYUkcI0b3XVht48qypXXCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h/kh6LgggB7FeWCxOtrOMae9ocTWGKcuyYBa6RqiRnFWo68NoY8kRrKHZwOkM4siVkG+jXrTS8gyTtFsfxfONGulnEzCi9m/LPBa1ytICmvH+urQQh/83ozRLPELe1oFy0VhXqrN6e9uXDO/crowRTrG2WN2zWM9UiV1aMo4HBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiOzYamK; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707153326; c=relaxed/simple;
+	bh=ZH06u6VeJsvLkP33r6EGDJo3FrcfJvP154VwO4qoFsY=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=B1H2VRGN4gE4S01BvSSTfOleU7uJK3jiD2UR6AScV2RrhSpUFWLAB9QwHD5LZ7chGoZ0pShzeY4Yl45tvlH219zRt9nuE4IOkveP1FuR8h5xIs9Qc2i/8ejQekiq6ApMeve6dTOrvEWKkjU3cX/DhgOv8pMJZN5xxd+mE97RKOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YjbBWiTB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiOzYamK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF40C43390;
-	Mon,  5 Feb 2024 17:09:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707152967;
-	bh=ImiZCMNuJXKzJmXL7CIyrnYUkcI0b3XVht48qypXXCU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=yiOzYamKXFZlHEovC2YiLY6Fqs/KO1sLQLKL/y6WXewLCEG2V6CJ0sbqYN2Eirjbj
-	 WPL11z6mH5UBs4r/WpUjnZR90QmCD6tmkAhmbp1mGZON/AjiGfbqy8b+yAJlHXe6Dt
-	 Z63sYUzHfTF6Ic6Yf0fjWA943QejDn+PGA46iTWI=
-Date: Mon, 5 Feb 2024 12:09:23 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: tools@linux.kernel.org, lkp@intel.com
-Subject: Re: trailers update and bots
-Message-ID: <20240205-upbeat-whippet-of-innovation-d26ae9@meerkat>
-References: <20220916161835.mpi5oyeka3b4ellx@ldmartin-desk2.lan>
- <20220916162418.plk3jhc6hezv2ace@meerkat.local>
- <20220916163101.2ij6uznmymqvgklt@ldmartin-desk2.lan>
- <20220916165951.onu7f3p7xl7olw5u@meerkat.local>
- <uq3gvjhhmapxhjwjsdjghc63kr4wdcic6oum6gss5rvlj572up@5eiplp2qzf72>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YjbBWiTB"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1E56CC433C7;
+	Mon,  5 Feb 2024 17:15:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707153326;
+	bh=ZH06u6VeJsvLkP33r6EGDJo3FrcfJvP154VwO4qoFsY=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=YjbBWiTB2p0yRUxGm/YBMbp9SnqZjQrf89ekx5Auo9JaDnzOMacZ+vRTjHE8T25Ss
+	 tRXcT268LACmCDz3XbDPkQ0g44hYk7UQwF8DHCMpUrzcI48Ae8j4+JdDqnuPtPv4KJ
+	 fJ5092aMk6Kohl92yx3GlghS89Ubm0mmkUv8XOqgbhgfaVxQL9WuKxcolYjFyePevl
+	 YWeg1HqnjgoHU2UuLpf03n9NXAgIwdIYXnlPv7LFaDQs2ze485M8At4H5H/RI3mR/e
+	 wYl8ljPpi/Z+VC0BQS342RqQfudH6rbfSTF2J/a2mWDXHe4dmTqMIbSfXPtM3Gyb+Y
+	 NOoDX8mQgdeVg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 046CEE2F2ED;
+	Mon,  5 Feb 2024 17:15:25 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <uq3gvjhhmapxhjwjsdjghc63kr4wdcic6oum6gss5rvlj572up@5eiplp2qzf72>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: tools@linux.kernel.org, lkp@intel.com, lucas.demarchi@intel.com
+Message-ID: <20240205-b218463-da743080207b@bugzilla.kernel.org>
+In-Reply-To: <20220916161835.mpi5oyeka3b4ellx@ldmartin-desk2.lan>
+References: <20220916161835.mpi5oyeka3b4ellx@ldmartin-desk2.lan>
+Subject: Re: trailers update and bots
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Mon,  5 Feb 2024 17:15:25 +0000 (UTC)
 
-On Fri, Feb 02, 2024 at 07:33:42AM -0600, Lucas De Marchi wrote:
-> Reviving this thread as a similar issue occurred and I remembered of
-> this. Besides ignoring trailers from certain addresses, would it be
-> possible to ignore any email at all from certain addresses? Maybe a
-> b4.ignore-from to complement the above?
+Hello:
 
-I think we'll just expand trailers-ignore-from to also match the From: field,
-not just the address in the trailer itself.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=218463
 
--K
-
-bugbot assign to me
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
 
