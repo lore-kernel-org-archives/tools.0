@@ -1,105 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A942D10A16
-	for <tools@linux.kernel.org>; Sat, 10 Feb 2024 06:56:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9981A6125
+	for <tools@linux.kernel.org>; Sat, 10 Feb 2024 21:18:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707548169; cv=none; b=rLF5ZW5GmgRymUlNph8ibM67D6VW0iht5T61Pruyw/NG+UiZX+vKMvSCHiZwdTXDtWcZWKa4/x2FZFdfW4CVKw2p1vlrNkCr9RoRG67Gv8Iwmz+fwyXbw/mE6V7D2Xwjo/HTOI84Nj/vwfH4YxgRJNV7hmbuhmgg1iwXKda1g5c=
+	t=1707599913; cv=none; b=YETqv59OeLrHz7JpaIydTwBuwZG3R0jCip57FdgpWXoKJD6jK0Kuf0pKm3IgirjNi8Awl+4AoUNoqxKSXIrJzC5fIIRdj9CAnIBkmVcCU6qbRnKsrXVz11mVNkx7qIRH8s6TOIhnorZqwXXDHfQqbmuD5TyTVV80N37r/IyL2hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707548169; c=relaxed/simple;
-	bh=NVSOZpQjmNZbvBbytVbKbYZTTj5KexVg9+EBMGPo8iA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P4amY7Cx7KOz6qgwkvuGO+tNxl8K2KaD/LPIfgW4h8UTuRnh9E0Fw0exxZdCJ2p4dZwCW7n4s0ae+GXBn5y5/j4dP8XFjr6KAuS+PkaBgZIl/hYKmURAauqcvIBQf5Rt14oBNdYX4oV8++EFB3sk9EDp3dFK+l99fN8kEaHrAlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ICg348dq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707599913; c=relaxed/simple;
+	bh=SVzCDTaG2GhpC/fJhP+OTviAzlLNcbYQzvx+Kw9YdfQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=aDBtjr7CIkNglHvQnH4dtyyg2YdRFbRBYmFwAGwvNA83QYQk0bwIQFksRTk8ZeCf15MOXAvYlQ2b68Mr0eRdrxSBVHc74Smqjo4gVUUBP+LAQqATACmaC9Wx3fCNht2rvZF1AJTBUffwGBpZzxUb0/znwNhdt3Ec+/RKRzH8I10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LTHCYs1/; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ICg348dq"
-Received: by smtp.kernel.org (Postfix)
-	id 348B4C433C7; Sat, 10 Feb 2024 06:56:09 +0000 (UTC)
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 4F91BC43390
-	for <tools@kernel.org>; Sat, 10 Feb 2024 06:56:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 4F91BC43390
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-296e8c8d218so1228198a91.3
-        for <tools@kernel.org>; Fri, 09 Feb 2024 22:56:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LTHCYs1/"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-42bf29aff0dso12981581cf.3
+        for <tools@linux.kernel.org>; Sat, 10 Feb 2024 13:18:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1707548167; x=1708152967; darn=kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7lqdmVzIJwt0NdDv6XcYQYzL0U+gQtOwIYPw83OVL8g=;
-        b=ICg348dq2gYORloiKT5YAQGk1b64pbg/ybbB5t+phkJ2ZTevFeR1W0XW8qWDhUy/nE
-         2jay4K08Q7s+OBVAhF4+tlBVJKj5ocVCvLnrxa1j6RvCvoWC9BQaIAzmsPPJA35G8WyA
-         mu0QAu9qlGYwgCWdSIPBAqr2WAFStP6SfF4k4=
+        d=gmail.com; s=20230601; t=1707599910; x=1708204710; darn=linux.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zMzeO0wrzZUTwyfDBN6pX0/zT69vnqJU8vtV26igbTI=;
+        b=LTHCYs1/zK2pL5XKK8sfL7qHHMCSWsL7rRdkskTyvSyFHjHfKMPmBPnUSqYiZXlYYI
+         X65LvAOyq34BFNsaiE+BXHPsEg2X3rxlohOZgE08h4OftmMqvnylfDO4IWWMmFKTtoDj
+         kFtMCk7dmb89yxbjqe1RnM1eXovUrgChwMStSGkRW/K4abiK0YqsySmGB/EKQD6JKviY
+         tVMVPA91QbVslYj07uhoAwQmHixLSHOyN0UfkEL0r2dxY4e/9bDjkFV8rj+UwZunWeSS
+         z+A4oiivmuMHdE1wY/lMlfoMC69KGD0h81hMwyKYFbltkVN3UdD/WF+OHBwZBSkKau7K
+         Jo6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707548167; x=1708152967;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7lqdmVzIJwt0NdDv6XcYQYzL0U+gQtOwIYPw83OVL8g=;
-        b=w97XL6huLYoQPXtniLXdeUFmCRASPAH+K1Ro2tOb/Vu/dSvYIqDlpR3GB8UKVeIGhP
-         +chZlNYG1KlCp7Us8zuGuk7zYXoFpZrslXoMD0c1Dqd+7jgDZJRQuGyLfzmL0Xd0IUY6
-         xJJ9mvGM8edaXlXm4VrfxmafrF3i5NjTY064L4QU+e+kr/dimgMgPFPnw+Fod+zG5DDk
-         LPHwBzgH/9rbANGp0HAQF5NOUtDAYNOazBg63JYNxyBJA/VCnyKjc+OE0MVZH1l3r0la
-         tjAzD88kKEds+BE0VH96ErQULbXqeVRC2HBObmHTwSiapAmIQHZIe1WlLGZjjBHJVo0w
-         2TZw==
-X-Gm-Message-State: AOJu0Yz2olVSTykcCjgOLnzzYkR1tY8dgk/lKK9FfzaGlKDRNXQxLsrK
-	BljuWGJ1wsfPONXwJtnsMcy88SCeBTNGPLQA3/NELt3l6d+XhK7GMFDQEaQH1w==
-X-Google-Smtp-Source: AGHT+IG8Uvto3IXh7IM+fA+MZ+Inj6FlHN977ejGAfyv7OajcSC0CUdI70yPsphZgCB7gunDHexmGA==
-X-Received: by 2002:a17:902:f809:b0:1d9:7729:2a6f with SMTP id ix9-20020a170902f80900b001d977292a6fmr1497467plb.61.1707548167643;
-        Fri, 09 Feb 2024 22:56:07 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWHNFwtwo2sj5Hgq9iT4SeharaFb3De5jNs2sKKLiRzhEOcJt9l0HQWoxTSJBuBbvBTHHP+w5FoKVroZZDidVlFmiko3Q3RPTYxPY8x9vc974PFN7dkbXledwzEmaGTCFNB1mAzMCu+0ZatG2sAA/J08eE57foSNwEJSd716ibUiYWvTqrzGTU9I8XM+zcpoHD/fw==
-Received: from www.outflux.net ([198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id jz15-20020a170903430f00b001d9a40f50c4sm2491642plb.301.2024.02.09.22.56.06
+        d=1e100.net; s=20230601; t=1707599910; x=1708204710;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zMzeO0wrzZUTwyfDBN6pX0/zT69vnqJU8vtV26igbTI=;
+        b=vk4Y+VgkW7uKwMrRruO7Nvyrer5ZxS/CvPHst2k4a8Xr4PgKW6l76+udaTLeX98RhZ
+         JCH4J1OHSG3dBuBQUhTcm6muRH+HitHD0x3Ef+7Txj4liymdhNK1i9wgDlgz5854DsB1
+         je5/TBpLStc2l7wmyZrwUXfyTTudUYPuPa/NT418FFUGFXom+Zta3H0zKohwrPT35SzT
+         lInn9E0HD+YV4e/Sok641coRJZm97vki8b5kRPLUsTkiANkomDUFB9qT23FlpEgncGfd
+         IwgZxSS1ZGqHPZS8b09NieHZzi5L55OvoJ9RScvAUI9AsG987YUfRaoQD7P3E3w1I5Qs
+         DHzw==
+X-Gm-Message-State: AOJu0YxNci+yNG8uANCJX7Yenz0RbjKUurgSZcyqeoO/VX50IxvJCLW/
+	+7bElQt/2qJMKD2O6kWXnfKxUdM3VpaB2TSNR6tpfCbqDXcD0VHC17QjbLMWIRs=
+X-Google-Smtp-Source: AGHT+IEH6R68yGttvPjGcGRPeocrSgj8Qg1U91PLGN4rR4Dn/2lYpvushPH0bxP3gZNhmy8eg0CmQQ==
+X-Received: by 2002:ac8:5a46:0:b0:42a:687a:fda5 with SMTP id o6-20020ac85a46000000b0042a687afda5mr4575839qta.39.1707599910196;
+        Sat, 10 Feb 2024 13:18:30 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWlKhwq0x1ArrHnw5LOnSfWrz2/WwahdDg95OFqtuPUUThWNcUgGtdNXVhN7fPfN2wa6RB3cGu9AnjpTsk6ix/dTnwfFBJFvc4Bb34GPg==
+Received: from [127.0.0.1] ([2606:6d00:17:3855:7446:337:f37a:d47])
+        by smtp.gmail.com with ESMTPSA id l10-20020a05622a174a00b0042c010ec2d6sm1741437qtk.97.2024.02.10.13.18.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Feb 2024 22:56:06 -0800 (PST)
-Date: Fri, 9 Feb 2024 22:56:06 -0800
-From: Kees Cook <keescook@chromium.org>
-To: tools@kernel.org, Joe Perches <joe@perches.com>
-Cc: Lee Jones <lee@kernel.org>, Bart Van Assche <bvanassche@acm.org>,
-	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: .mailmap support for removals (was Re: [PATCH 00/10] scsi: Replace
- {v}snprintf() variants with safer alternatives)
-Message-ID: <202402092252.0A0A59A@keescook>
-References: <20240208084512.3803250-1-lee@kernel.org>
- <c9129b08-50fb-4371-aa05-6f6c7cd7acfa@acm.org>
- <20240208174912.GZ689448@google.com>
+        Sat, 10 Feb 2024 13:18:29 -0800 (PST)
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Date: Sat, 10 Feb 2024 16:18:16 -0500
+Subject: [PATCH b4] ez: fall back to regular merge-base if --fork-point
+ mode fails
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240208174912.GZ689448@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240210-ez-merge-base-no-fork-point-v1-1-b3f82cdd3bee@gmail.com>
+X-B4-Tracking: v=1; b=H4sIABfox2UC/x2MywrCMBAAf6Xs2cUkNiL+ivSQ1I0Nkge7UcTSf
+ zf2OAMzKwhxJIHrsALTO0osuYM+DDAvLj8I470zGGVGZbRC+mIi7t47IcwFQ+En1hJzQ3fxVlu
+ rQzidoR8qU4if/X4DP8LU3Z55dnle/t9Xlcbk0jE5acSwbT9gMP2gkwAAAA==
+To: "Kernel.org Tools" <tools@linux.kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Philippe Blain <levraiphilippeblain@gmail.com>
+X-Mailer: b4 0.13-dev-71c1b
 
-On Thu, Feb 08, 2024 at 05:49:12PM +0000, Lee Jones wrote:
-> On Thu, 08 Feb 2024, Bart Van Assche wrote:
-> 
-> > On 2/8/24 00:44, Lee Jones wrote:
-> > > Cc: Andre Hedrick <andre@suse.com>
-> > 
-> > Please take a look at https://lwn.net/Articles/508222/.
-> 
-> get_maintainer.pl pulled it from here:
-> 
-> https://github.com/torvalds/linux/blob/master/drivers/scsi/3w-xxxx.c#L11
+If the 'git merge-base --fork-point' invocation in
+ez::get_base_forkpoint fails and returns nothing, we abort, saying
+basebranch and mybranch have no common ancestors.
 
-Oh. Hm. It seems "git check-mailmap" (and get_maintainers.pl) don't
-support a way to remove an email address -- only redirect it.
+Depending on how the current branch was created, and the state of the
+branch's reflog, it is possible for this invocation to fail even if the
+current branch and the chosen base branch do share a common ancestor,
+for reasons expplained in git-merge-base(1) [1].
 
-It seems we may want to support "don't use this email address" for more
-than just the currently observed rationale. I don't have any good
-suggestions for what the format should look like? Perhaps:
+Support that situation better by adding a second invocation, using the
+regular merge-base syntax 'git merge-base mybranch basebranch', and only
+fail if that second invocation also returns nothing.
 
-"" <address-to-remove@example.com>
+[1] https://git-scm.com/docs/git-merge-base#_discussion_on_fork_point_mode
 
-?
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ b4/ez.py | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
--- 
-Kees Cook
+diff --git a/b4/ez.py b/b4/ez.py
+index 7baff8f..bad8c4a 100644
+--- a/b4/ez.py
++++ b/b4/ez.py
+@@ -233,8 +233,11 @@ def get_base_forkpoint(basebranch: str, mybranch: Optional[str] = None) -> str:
+     gitargs = ['merge-base', '--fork-point', basebranch]
+     lines = b4.git_get_command_lines(None, gitargs)
+     if not lines:
+-        logger.critical('CRITICAL: Could not find common ancestor with %s', basebranch)
+-        raise RuntimeError('Branches %s and %s have no common ancestors' % (basebranch, mybranch))
++        gitargs = ['merge-base', mybranch, basebranch]
++        lines = b4.git_get_command_lines(None, gitargs)
++        if not lines:
++            logger.critical('CRITICAL: Could not find common ancestor with %s', basebranch)
++            raise RuntimeError('Branches %s and %s have no common ancestors' % (basebranch, mybranch))
+     forkpoint = lines[0]
+     logger.debug('Fork-point between %s and %s is %s', mybranch, basebranch, forkpoint)
+ 
+
+---
+base-commit: e790d97805add21c1c5fe22642e403b8c8889ed6
+change-id: 20240210-ez-merge-base-no-fork-point-a8b51551ff36
+
