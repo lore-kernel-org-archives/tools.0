@@ -1,93 +1,66 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD225FF07
-	for <tools@linux.kernel.org>; Tue, 13 Feb 2024 17:38:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DDE10A1F
+	for <tools@linux.kernel.org>; Tue, 13 Feb 2024 18:56:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845904; cv=none; b=V0czcim9ScFyEsH47gpM4448O7vW0wtyUyK1RBCT+RgBY3wSJjV86k53AZVJWL3DT11eL7zNXUamG5+ZNp2k4S3B1odVWeMT7q86UZpKq1bRTu+hm3OHrpXF92nkjskO8mXZabcRR/fLGWq7dGQoillOruWmtbiMu0aecu32O1A=
+	t=1707850615; cv=none; b=J+ycwrprvYEyWFshlw4gdP5TW3yCE4uKNRqJ6hBgnC0ewgtVLGpOzHmqDxy36PsJqOxMLpQk9dAmMcT5aa8lnjYNkDC8MNN1e5Xq7CGU5bn5ym1AbDMMrNuzNBFlaoQg4Gyynk65aCDyccFLiT9k9iAhBZcin1VEiHbicK0JLJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845904; c=relaxed/simple;
-	bh=jlRn2m3RyQRlaIxG/ZKFJ/TSzOW+TDua51aSXcNi4e8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uSHW5qerpStOukalw5i7Siqef6sHX92BdE7j14v89fRNHHfN4kytbu7z/1iJZ4WlzL4b8GFyiyDCB7MrKTbS6fCVerSCkE/GyXPrYqBMeg4ye3jrAojEM+YZgs7sAt/EgK/NIYygps8TTN2Ox6l5KkoIfOzdLo/v/h8AKPfkJ4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com; spf=pass smtp.mailfrom=paul-moore.com; dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b=cupvfEmM; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=paul-moore.com
+	s=arc-20240116; t=1707850615; c=relaxed/simple;
+	bh=Y7CSAj1tiCsykFqbk9RDrDlUTtjuOqHjAPuXJTVt1aQ=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=l+qF6DJA/58/5L24HmvY88eE5bBvhkUbF7Vf19oSO44sXy96Hi3HFlolt61nI+gy/fGg/e4WvoB+uYrA+tct9yVP7A+6zXlFKTbDl17u+EQnJ7IqlUUgT1Tpj8YVvOKoFGn9yDLfDe71xWVcn5om+rWHPTYuZunomZa4DVJ4xNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LHMHv5sm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b="cupvfEmM"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-60757c46e34so12027867b3.1
-        for <tools@linux.kernel.org>; Tue, 13 Feb 2024 09:38:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paul-moore.com; s=google; t=1707845902; x=1708450702; darn=linux.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2IbNqttp3ic3kacjSKQyPi85acSzBBYXGHTbxpMS3Wk=;
-        b=cupvfEmMFFsbjv9A2YpJzn7SZRBt9GSbbacBMTRETLnr3WX8S6KVo1NfyyVYsEzSh2
-         yWzZ4A9q3CdEcVe87k6g06ZqphZyTujielCjZjNxTAGg4P/sxEruHY84WqBuiYHrWldb
-         j7uK1okEYDGBGIH36SnxmWT3X2cnOJXhEWOFwAZVKTVmgvAAIM5zzhXEjrtRTk3WSffK
-         YyqpzzRIc4JCfLXEIEKARKjVPWjD+KW1UMt9jeXVXzS8tneWu6H0HU9KmnpgshbcE7JM
-         +ArbWP5Y6kzcFxqdtfG3Pn9qSJg8ZtjS4RID/laho9IOoyXdkMEyw3Ot6WSZ61232w1n
-         WFqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707845902; x=1708450702;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2IbNqttp3ic3kacjSKQyPi85acSzBBYXGHTbxpMS3Wk=;
-        b=VuaD96HjPpMa/0h+HIQ6ifbwv2EzGSM0m8D3jfT2+ePbyRV7mDEce+sbRlJq0Iddug
-         0qBx6nAl7mh4g3oM8n+k8uvkv42V2TBOIBWCXJmnmIRiGuQpZrz//Qw1VpgMDxNDKDT7
-         I69ysZM+izJS41DJkw0V6vVNWy/1dQeAgRT1u10XWbOcZXaKczabdy2I4UIINA84xcTn
-         AXaQJqC5Ajf5KugqTA6DqAdFssrZbgeIagZqbzNIBo+4f0KmZxfvIqOwY1pyFXsD0THy
-         BHStr659Lub4NUsMVk+NlGeF8SpSl1Q/WOefS20woq/RCypgJqghSbTPuU6/yQY9N1Ef
-         ZwCA==
-X-Gm-Message-State: AOJu0YyZx2lqSPcmGDQ1GcTczOS9zowkXPdIxYfVT4z4WT9L6opeNt/U
-	/8Y95ZXo6EHA7KXz4jqpCEZ7u1SDx/qhE/i7L0rxtCyyGZuq5u1ByyUMA6u5n/PBw6vcx3V9S32
-	2pQO4hWWYbbi/Q9xOt9XMNyjHXK8BGpEK0XURpR4+r8naMS0=
-X-Google-Smtp-Source: AGHT+IG8zm59f/6tPI8ucSZRFDfgTTvO4QJf1yhWJ+1wJli72sTv5oqsfBLFaRNy6S+0eRL23uTZtlFfSvm+hfPVqjs=
-X-Received: by 2002:a0d:e702:0:b0:602:ce22:7079 with SMTP id
- q2-20020a0de702000000b00602ce227079mr29894ywe.41.1707845901813; Tue, 13 Feb
- 2024 09:38:21 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LHMHv5sm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08BAC433F1;
+	Tue, 13 Feb 2024 18:56:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1707850615;
+	bh=Y7CSAj1tiCsykFqbk9RDrDlUTtjuOqHjAPuXJTVt1aQ=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=LHMHv5smkNj+5Vzbvyqq4Zo+cKIke3NHrbBDVTFbBO8NJqmCMh3oUGW8it1X1vu2v
+	 6TuWU6HYEdA98uBXxI3QgYW3lj3Crvw6MWtchCxxAEdKk1FMPE8tmbLn7tWkT6f1Dy
+	 KEoc2tEhR5uh22ux52rRh4s+xnvXSjBWMNtL1itg=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: "Kernel.org Tools" <tools@linux.kernel.org>, 
+ Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <20240210-ez-merge-base-no-fork-point-v1-1-b3f82cdd3bee@gmail.com>
+References: <20240210-ez-merge-base-no-fork-point-v1-1-b3f82cdd3bee@gmail.com>
+Subject: Re: [PATCH b4] ez: fall back to regular merge-base if --fork-point
+ mode fails
+Message-Id: <170785061487.20709.12182053643177607778.b4-ty@linuxfoundation.org>
+Date: Tue, 13 Feb 2024 13:56:54 -0500
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CAHC9VhRCTKD7qwm7u9EvudWkY9nw+CSS1HCOdr5c8OWBU1LCEg@mail.gmail.com>
- <20231222-secret-thoughtful-zebu-fedba6@lemur> <CAHC9VhRTQPAfTutfXQt3yk9267EHdDpSGqE-=GnEAyspSvQ-Zw@mail.gmail.com>
- <20240108-urban-nice-hyrax-a0ee5f@lemur> <CAHC9VhRMksB7Avdcy4u8uYtFGR_i1-C7jNDm+wv2X=yykB2NVA@mail.gmail.com>
- <CAHC9VhQTVZtY-9VfMunERWnEZ7ReDkYRm07QGsmEYwyU3DC7JQ@mail.gmail.com>
-In-Reply-To: <CAHC9VhQTVZtY-9VfMunERWnEZ7ReDkYRm07QGsmEYwyU3DC7JQ@mail.gmail.com>
-From: Paul Moore <paul@paul-moore.com>
-Date: Tue, 13 Feb 2024 12:38:11 -0500
-Message-ID: <CAHC9VhSXHKWHSBiLQjD73emXSrLG8J7DCYLqEuBhVcgZezZOfg@mail.gmail.com>
-Subject: Re: Problems with patatt and stacked-git's patchset cover letter
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-b7ccd
 
-On Tue, Feb 6, 2024 at 4:12=E2=80=AFPM Paul Moore <paul@paul-moore.com> wro=
-te:
-> On Tue, Feb 6, 2024 at 4:00=E2=80=AFPM Paul Moore <paul@paul-moore.com> w=
-rote:
-> > I'll dig up a lore archive link and post this for the stacked-git folks=
- to take a look at too.
->
-> Here is the stacked-git GH issue that I created for this:
->
-> * https://github.com/stacked-git/stgit/issues/414
 
-For those of you who are interested, but not following the GH issue,
-this appears to be an odd interaction between git's send-email command
-and the recommended patatt sendemail-validate hook.  As the stgit
-maintainer pointed out, git's sendemail-validate hook template treats
-a patchset's cover letter differently from the patches.
+On Sat, 10 Feb 2024 16:18:16 -0500, Philippe Blain wrote:
+> If the 'git merge-base --fork-point' invocation in
+> ez::get_base_forkpoint fails and returns nothing, we abort, saying
+> basebranch and mybranch have no common ancestors.
+> 
+> Depending on how the current branch was created, and the state of the
+> branch's reflog, it is possible for this invocation to fail even if the
+> current branch and the chosen base branch do share a common ancestor,
+> for reasons expplained in git-merge-base(1) [1].
+> 
+> [...]
 
-It looks like some time of check should be done in the patatt example
-hook to ensure cover letters are handled correctly.
+Applied, thanks!
 
---=20
-paul-moore.com
+[1/1] ez: fall back to regular merge-base if --fork-point mode fails
+      commit: b7ccd0f51896e38b995fe0e36f2388f65535593c
+
+Best regards,
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+
