@@ -1,66 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DDE10A1F
-	for <tools@linux.kernel.org>; Tue, 13 Feb 2024 18:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D8B626D2
+	for <tools@linux.kernel.org>; Tue, 13 Feb 2024 22:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707850615; cv=none; b=J+ycwrprvYEyWFshlw4gdP5TW3yCE4uKNRqJ6hBgnC0ewgtVLGpOzHmqDxy36PsJqOxMLpQk9dAmMcT5aa8lnjYNkDC8MNN1e5Xq7CGU5bn5ym1AbDMMrNuzNBFlaoQg4Gyynk65aCDyccFLiT9k9iAhBZcin1VEiHbicK0JLJM=
+	t=1707864378; cv=none; b=BIXc1N2GOLgrDiRGmRLFe7DKxF6wbvBDWvfzN1vDZYCN7uxh8z6kGQewB7LAvLNfTax9tz/cF6hdZFB2a7TpryLGLUc6K1ivnv3ri/rkAhDHqe2pesjpZaA+Dsp2Bvy/g0/z7C5HKo12F51eOhozIMvspGl5qp0TiXq33MxSKaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707850615; c=relaxed/simple;
-	bh=Y7CSAj1tiCsykFqbk9RDrDlUTtjuOqHjAPuXJTVt1aQ=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=l+qF6DJA/58/5L24HmvY88eE5bBvhkUbF7Vf19oSO44sXy96Hi3HFlolt61nI+gy/fGg/e4WvoB+uYrA+tct9yVP7A+6zXlFKTbDl17u+EQnJ7IqlUUgT1Tpj8YVvOKoFGn9yDLfDe71xWVcn5om+rWHPTYuZunomZa4DVJ4xNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LHMHv5sm; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707864378; c=relaxed/simple;
+	bh=A2SYX/47mxNW+gOdwH90yDc4ZIpl7AEoZ4dD7fru02M=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=XHLyZYqzDwBl+13l0vVgYXnksq6oq4cDHsuy/TFa4wt1uoRLUPxTatWHmJH6fc+cYxW/PZMgIuIXKgZF9/6GbjjNNaeALRU4JhUMLN2TfBMTLC8/f9GFnCZtqbaNnglLAYCzz0dQveJ+Mdl4PfCQyVXOflnDmmyp7/AMIlQ/qv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XT3m1wSW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LHMHv5sm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08BAC433F1;
-	Tue, 13 Feb 2024 18:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XT3m1wSW"
+Received: by smtp.kernel.org (Postfix)
+	id 44D4BC43394; Tue, 13 Feb 2024 22:46:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F79C43390;
+	Tue, 13 Feb 2024 22:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707850615;
-	bh=Y7CSAj1tiCsykFqbk9RDrDlUTtjuOqHjAPuXJTVt1aQ=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=LHMHv5smkNj+5Vzbvyqq4Zo+cKIke3NHrbBDVTFbBO8NJqmCMh3oUGW8it1X1vu2v
-	 6TuWU6HYEdA98uBXxI3QgYW3lj3Crvw6MWtchCxxAEdKk1FMPE8tmbLn7tWkT6f1Dy
-	 KEoc2tEhR5uh22ux52rRh4s+xnvXSjBWMNtL1itg=
+	s=korg; t=1707864378;
+	bh=A2SYX/47mxNW+gOdwH90yDc4ZIpl7AEoZ4dD7fru02M=;
+	h=Date:From:To:Subject:From;
+	b=XT3m1wSWXi2M0ooPQr9DeBCoYcPGcCr2Y91522aVXVO7py69NoS6QmH9jiQ9amqmX
+	 svswc2mHCEO0/Mz/r88OFLZHqJ3AGrIbH++W1uP2NpVBybbGgmTh/zWrAUW/S1NIiK
+	 y4dHcO6VzorRakjAvOwZ+Rc0oQjdceseIjY0PZRw=
+Date: Tue, 13 Feb 2024 17:46:12 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@linux.kernel.org>, 
- Philippe Blain <levraiphilippeblain@gmail.com>
-In-Reply-To: <20240210-ez-merge-base-no-fork-point-v1-1-b3f82cdd3bee@gmail.com>
-References: <20240210-ez-merge-base-no-fork-point-v1-1-b3f82cdd3bee@gmail.com>
-Subject: Re: [PATCH b4] ez: fall back to regular merge-base if --fork-point
- mode fails
-Message-Id: <170785061487.20709.12182053643177607778.b4-ty@linuxfoundation.org>
-Date: Tue, 13 Feb 2024 13:56:54 -0500
+To: tools@kernel.org
+Subject: [b4] current master likely to become 0.13.0 this week
+Message-ID: <20240213-adaptable-coua-of-acceptance-e6ba2e@meerkat>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-b7ccd
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
+Hello:
 
-On Sat, 10 Feb 2024 16:18:16 -0500, Philippe Blain wrote:
-> If the 'git merge-base --fork-point' invocation in
-> ez::get_base_forkpoint fails and returns nothing, we abort, saying
-> basebranch and mybranch have no common ancestors.
-> 
-> Depending on how the current branch was created, and the state of the
-> branch's reflog, it is possible for this invocation to fail even if the
-> current branch and the chosen base branch do share a common ancestor,
-> for reasons expplained in git-merge-base(1) [1].
-> 
-> [...]
+Just a heads-up that there has been enough churn in the current master to
+warrant a 0.13 release this week. There aren't many large new features there,
+but enough improvements across the tree to call it a "quality of life"
+release. :)
 
-Applied, thanks!
-
-[1/1] ez: fall back to regular merge-base if --fork-point mode fails
-      commit: b7ccd0f51896e38b995fe0e36f2388f65535593c
+Please test out the current master and let me know if something is broken for
+you.
 
 Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
+-K
