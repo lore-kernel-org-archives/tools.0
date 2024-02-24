@@ -1,143 +1,134 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0811013EFE0
-	for <tools@linux.kernel.org>; Thu, 15 Feb 2024 21:56:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F03513FFB
+	for <tools@linux.kernel.org>; Sat, 24 Feb 2024 04:05:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708034173; cv=none; b=QqZggMWl2xdOYWcHYqsqmzV4g+CagMD0jSWpCgTXrj/R0Z2cLSgXm0wTqWRmBay0/v4BemIt+QUZlsTYojWqmym4snlJahwf1KqjrQO4q8qCEJ9C2sTaEr1jFE+VUv/M+EoPzcQfC8gMZ2W1hceUlEGBXG39psXyJc9lQYYzCwk=
+	t=1708747519; cv=none; b=sKZ6P1d/bjec6NrQ1MOkcPii8umjUUg5QI4ea7YRMzLsPWA95nOSdR+DgPOr4XKjDKLIEXDxbSn9uLJNtbWVYJshf/UyDTvyqBhOFg9iMWtn/2f6yWVRaP4fsAhzOLd3WFMeCqhq5lDwxpMoJmGIu9/AlKkP5Fls/n59VvQlB58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708034173; c=relaxed/simple;
-	bh=3yNevusGZAstHmG2p46Xq74gxrzY5HrEUCG+AcA6B2I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l4G2JGxBoB9jlMSvj/F5MCFySF1FqTMuwbTAIX52tS6TiOZn+rRKLYH6VpN9JgEHsupa1ES9bmIGuvAjO3vQhBrXXqVZ5HJB3w41TVqxfEBcMBNkyL7p4UilnAZO0zy1VTe8YiqgZQM3umyEZe1upvoHz+E6UH1P44iguOa56Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com; spf=pass smtp.mailfrom=paul-moore.com; dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b=Qimi7MPs; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=paul-moore.com
+	s=arc-20240116; t=1708747519; c=relaxed/simple;
+	bh=syMPNSdS0bXxMdzOI0oXerlzazA12/Gd8MS0MxH5Tcg=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Z8X/eFLfzGyHzbi/PXWIzKyxBL/8sTaGBm5SlK9zwZEQTRQFWCX3PRbeGPn25acjaLPoA5NAABWqgpm0Zad8+lZ/zH2DwaVrpRrgva73d3igyNgDOuJ890NRLvHcOnzHOOoLEKfvXHUyQw42JpEH5fFOXhsleDB6biaFphJ4/qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b=X0PcWowq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b="Qimi7MPs"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-db3a09e96daso1217053276.3
-        for <tools@linux.kernel.org>; Thu, 15 Feb 2024 13:56:11 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="X0PcWowq"
+Received: by smtp.kernel.org (Postfix)
+	id E8A71C433F1; Sat, 24 Feb 2024 04:05:18 +0000 (UTC)
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id D17DFC433C7
+	for <tools@kernel.org>; Sat, 24 Feb 2024 04:05:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org D17DFC433C7
+Authentication-Results: smtp.kernel.org; dmarc=fail (p=reject dis=none) header.from=citrix.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=cloud.com
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d21a68dd3bso19365651fa.1
+        for <tools@kernel.org>; Fri, 23 Feb 2024 20:05:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paul-moore.com; s=google; t=1708034171; x=1708638971; darn=linux.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=citrix.com; s=google; t=1708747515; x=1709352315; darn=kernel.org;
+        h=content-transfer-encoding:autocrypt:subject:from:content-language
+         :to:user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dPisyb3ERLxYXO1S9iW7eGsiu0wdu1jjayBXbug55iw=;
-        b=Qimi7MPsz4OW7p7nW0EoCvRRYHKY+Z5i/ZdR8gvqhnuQBl8nVW+fOPpSDiiUS4gDnp
-         GSdqo2c+eaKUGoNle0HpNCAjNWuIjTFprdLYuxboLv1vXYXZis8ncNHuwSE2yedjTxvX
-         CzfK0hmHkQVDPkJIdQLQ7BCyK3GCds8MMTNhecOLCM1KX/cFW568VSlyV7/LtrNMfm3i
-         C4+GWKtH/g8+RL65qzmPGNQZ+7FGk5Uz68RzVepPiozc0ehcTvCZtQE2oMqZoO7tUgEQ
-         I7gGwKAw8pZti3NnUblJqTuO0nf1qDpE1+0ti+G8SPjyLaiWpwSc/jaMxf5+1/XMjD2G
-         WhdQ==
+        bh=syMPNSdS0bXxMdzOI0oXerlzazA12/Gd8MS0MxH5Tcg=;
+        b=X0PcWowq1/m7ybuBl0dtuU4Yz+XKhtBc6yprNwbAte3IAkz5w655rDgAfxCAvQSsXx
+         c8tdu2hD0edKOo7srPjcNvY1jF+g9ZBMXQ2PnHiO9PlLrgC4yfVdm19Ds3f6Wl8t+zAE
+         WwdwtWF84PTJfr+xmKjKoRBJlnMm6ltCcxXmE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708034171; x=1708638971;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dPisyb3ERLxYXO1S9iW7eGsiu0wdu1jjayBXbug55iw=;
-        b=Y0jRjljL+7s9JeDaSu21Zt+l6kehormMvE6R7aJPLffa5+HqtB7ngxfizbsKaZZGki
-         Rv0ncTH2j7PDIY4ONNpp/Z4k8gAsDjlvFwMCrjqlXBn8xrY2MAeWSweO8YoXaEPdGmFV
-         /ILCkQO4g6iGosyB2LTi31K7oMpZVET02TePhtJ9zhiyprdNzB6D6phuIStuewJpUbw8
-         V+KQ28t8PorGiuYgXylOU6JWmRT9a+ws/BPI+Sl4G2evQQtPULlumdKem1UtAVK30tHj
-         YaYBwK/pnEzb8K2DFTvbLGrt1jwyI9osUhtHeK450d6N3pF4CUjuHhVFqju+C5vKZkh6
-         pd4w==
-X-Gm-Message-State: AOJu0YyKGXRI5QSKoOHqLwmFrWHMHxMBdoVeuKsxxEL/MCLK1clvplhL
-	WPCRAiVsYfnyJh3MTq0Nosoh6yUrKKnvWJNKOe7LBSq7DfU21bGL8SuEZFb8/W5K9uIhBeSThdA
-	9lwdvooaqshFO2MwRRqHGUIzxN2Hp0radyTX8Nk4C43WexvtXZw==
-X-Google-Smtp-Source: AGHT+IGSOL967OHvWvAlrNbwSAMs0EsW1cdP1vOcJ/HbHhHke8PuRm0DNuIoisweeCEelqRdSMEkVdM+74+lcgiV/eA=
-X-Received: by 2002:a25:8750:0:b0:dbe:9509:141c with SMTP id
- e16-20020a258750000000b00dbe9509141cmr3045554ybn.30.1708034170890; Thu, 15
- Feb 2024 13:56:10 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708747515; x=1709352315;
+        h=content-transfer-encoding:autocrypt:subject:from:content-language
+         :to:user-agent:mime-version:date:message-id:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=syMPNSdS0bXxMdzOI0oXerlzazA12/Gd8MS0MxH5Tcg=;
+        b=WrEVESbGsLU63FhWZOAgHF3wlwlFO5uumx3nEEsyhS37F74AgEiwQJ74Z/VaaIxeQY
+         pXxV5BYYAAjdCTqdm3zH/6XH8yUdrIFcFWjAFP0ZRRv97bP//M2C0qRuhmJGJ3yVl5lK
+         nSj2Ikgl5pgPkYyqbpQsyOi2T6vvRm7WyMcz+1LcoxHznzf6CQ2PCxPoEsB25n1JEwDd
+         EWKira7ADmgUP9rOOkE88/UiIcG5D40G8AC6E63hzMPctiVFB1yfFwpgPs98Fh1KhL3F
+         YKGgI2OdQRn+d3bj5ZLke1QgBYMuDd6C9AuZxdK4jTQgmy1xtBDQGkcqeUiZIa/0BpZT
+         kdYQ==
+X-Gm-Message-State: AOJu0YyIlIYUm3QYC/sCLr+RiseTzr5uthLmlCPZkTpJGp85I07ExydQ
+	ilGeDmEIfYR0NRG2QSqZMiTSuDU1+rsHBgoCGkj9+9YP2GwbJ68x7Fh+nk0pW2p/ATGS4dLKy4G
+	t
+X-Google-Smtp-Source: AGHT+IGdTzHPOKpa0u1f0SGvxu7m5FY27T7Aab5+mflFh5J6nH7z5fGuJwpm2zBhNdQQ+s6KnvrCdA==
+X-Received: by 2002:a2e:9d05:0:b0:2d2:3b0a:d404 with SMTP id t5-20020a2e9d05000000b002d23b0ad404mr491477lji.44.1708747514809;
+        Fri, 23 Feb 2024 20:05:14 -0800 (PST)
+Received: from [192.168.1.10] (host-92-3-248-192.as13285.net. [92.3.248.192])
+        by smtp.gmail.com with ESMTPSA id vz2-20020a05620a494200b00787af8b5c02sm194459qkn.39.2024.02.23.20.05.13
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Feb 2024 20:05:14 -0800 (PST)
+Message-ID: <0137232a-5380-4869-9a9f-8a8db3506782@citrix.com>
+Date: Sat, 24 Feb 2024 04:05:13 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CAHC9VhRCTKD7qwm7u9EvudWkY9nw+CSS1HCOdr5c8OWBU1LCEg@mail.gmail.com>
- <20231222-secret-thoughtful-zebu-fedba6@lemur> <CAHC9VhRTQPAfTutfXQt3yk9267EHdDpSGqE-=GnEAyspSvQ-Zw@mail.gmail.com>
- <20240108-urban-nice-hyrax-a0ee5f@lemur> <CAHC9VhRMksB7Avdcy4u8uYtFGR_i1-C7jNDm+wv2X=yykB2NVA@mail.gmail.com>
- <CAHC9VhQTVZtY-9VfMunERWnEZ7ReDkYRm07QGsmEYwyU3DC7JQ@mail.gmail.com>
- <CAHC9VhSXHKWHSBiLQjD73emXSrLG8J7DCYLqEuBhVcgZezZOfg@mail.gmail.com>
- <20240214-tall-xanthic-chicken-1eb62f@lemur> <20240214-boa-of-nonconcrete-flowers-2c94cb@lemur>
-In-Reply-To: <20240214-boa-of-nonconcrete-flowers-2c94cb@lemur>
-From: Paul Moore <paul@paul-moore.com>
-Date: Thu, 15 Feb 2024 16:55:59 -0500
-Message-ID: <CAHC9VhRt_F9rYEPRtsnbUO4tRN=Y-u7pn5Y8X9N2T2j2+ONnKQ@mail.gmail.com>
-Subject: Re: Problems with patatt and stacked-git's patchset cover letter
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+To: tools@kernel.org
+Content-Language: en-GB
+From: Andrew Cooper <andrew.cooper3@citrix.com>
+Subject: b4 failure to apply patch with ANSI escape sequences
+Autocrypt: addr=andrew.cooper3@citrix.com; keydata=
+ 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
+ 6+ahAA==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Feb 14, 2024 at 9:57=E2=80=AFAM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Wed, Feb 14, 2024 at 09:13:56AM -0500, Konstantin Ryabitsev wrote:
-> > > It looks like some time of check should be done in the patatt example
-> > > hook to ensure cover letters are handled correctly.
-> >
-> > I think the real solution is to fix the bug that's generating invalid h=
-eaders,
-> > not to work around it in patatt. If it's not a bug that's introduced by=
- stgit,
-> > then we should take this up with git proper, which I might do anyway.
->
-> So, after digging a bit deeper, it seems that the real problem is that
-> 'git-send-email --compose' generates a cover letter template that's not w=
-hat
-> is actually going to be sent out. The trouble is that it's then passed to=
- the
-> sendemail-validate hook without actually being a valid RFC2822 message.
->
-> I've added a change to patatt's hook that will specifically refuse to run=
- when
-> it finds evidence of the cover letter template content. Even it it was a =
-valid
-> message, we'd still be wrong to sign it, because it will obviously going =
-to be
-> modified before it's actually sent out, so the signature would end up bei=
-ng
-> invalid anyway.
->
-> Paul, would you be willing to test out this change to the hook?
-> https://github.com/mricon/patatt/commit/60309eefca64e34a8c15615f452354718=
-24f891d
+Hello,
 
-Of course :)
+I'm using b4 0.12.4 from checkout, and am trying to apply
+https://lore.kernel.org/xen-devel/20240220140733.40980-1-anthony.perard@citrix.com/T/#u
 
-Unfortunately I ran into problems:
+The git am fails, and to my surprise --show-current-patch=diff gave me
+hunk 3 back with txt_{info,err}= having a coloured closing quote on an
+otherwise uncoloured diff.
 
-% stg email send -a --to=3Dme --compose --dry-run
-/tmp/tOrGhxHdTV/0001-XXX
-/tmp/tOrGhxHdTV/0010-XXX
-error: `git send-email`: patatt: E: The following required headers not
-  present: from
-fatal: /home/pcmoore/sources/linux/selinux/.git/.gitsendemail.msg.2ZzrjD.fi=
-nal:
-  rejected by sendemail-validate hook
-fatal: command 'git hook run --ignore-missing sendemail-validate -- <patch>
-  <header>' died with exit code 1
-warning: no patches were sent
+patch complains of the mbx being corrupt, and it looks like something
+interpreted the string into a real ESC before handing it to `git am`.
 
-It looks like keying off the "^GIT: " string is not reliable.  I
-believe git/stgit strips those lines before passing the commit to the
-hook.
+Thanks,
 
-FWIW, my current sendemail-validate (minus some comments to myself)
-looks like this, which is based on the git template and it appears to
-work fine:
-
-% cat .git/hooks/sendemail-validate
-#!/bin/sh
-# patatt signing hook
-# https://github.com/mricon/patatt
-
-# https://github.com/stacked-git/stgit/issues/414#issuecomment-1937368793
-if grep -q "^diff --git " "$1"; then
-        exec patatt sign --hook "${1}"
-fi
-
---=20
-paul-moore.com
+~Andrew
