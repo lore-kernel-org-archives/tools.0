@@ -1,134 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F03513FFB
-	for <tools@linux.kernel.org>; Sat, 24 Feb 2024 04:05:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0362A53AA
+	for <tools@linux.kernel.org>; Sun, 25 Feb 2024 22:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708747519; cv=none; b=sKZ6P1d/bjec6NrQ1MOkcPii8umjUUg5QI4ea7YRMzLsPWA95nOSdR+DgPOr4XKjDKLIEXDxbSn9uLJNtbWVYJshf/UyDTvyqBhOFg9iMWtn/2f6yWVRaP4fsAhzOLd3WFMeCqhq5lDwxpMoJmGIu9/AlKkP5Fls/n59VvQlB58=
+	t=1708899152; cv=none; b=efnVweqjROR8E9ozbIiS5cmX5d9y87CkpZTuy1tC7MMM4kxsXtHjpjhWvB7F5DNDlmFaLAKftsC3WXpU1E0VgUusKL/QOAMlqcQRqVHyhlebBv4eg3whEmIH+ZPjFI/bGZgeNyPezCJrI5f2YI72iqKhWS7NX2M4hRtTKpfe77w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708747519; c=relaxed/simple;
-	bh=syMPNSdS0bXxMdzOI0oXerlzazA12/Gd8MS0MxH5Tcg=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Z8X/eFLfzGyHzbi/PXWIzKyxBL/8sTaGBm5SlK9zwZEQTRQFWCX3PRbeGPn25acjaLPoA5NAABWqgpm0Zad8+lZ/zH2DwaVrpRrgva73d3igyNgDOuJ890NRLvHcOnzHOOoLEKfvXHUyQw42JpEH5fFOXhsleDB6biaFphJ4/qE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b=X0PcWowq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708899152; c=relaxed/simple;
+	bh=iKTDr7e+O5pJP1pW7efjhUI60oQnQjrMMTl0UwoAODk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=diRBNyP6DK24NkPiUVULTFTZ8PwhgrnVkc7HG9NAbHvEY7H+LZiBPuU1G01RHQY+rM3EWtcQ2Lp+UP02yhZxR7AhFteTihT4zeUL3Pjn8yhVONp0bij9Wp+ZsDYhDVkwTmG+A+2ryObmeu2YSN08WGECDWfP7MTIK+0WAeKSaQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nEVxpzaJ; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="X0PcWowq"
-Received: by smtp.kernel.org (Postfix)
-	id E8A71C433F1; Sat, 24 Feb 2024 04:05:18 +0000 (UTC)
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id D17DFC433C7
-	for <tools@kernel.org>; Sat, 24 Feb 2024 04:05:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org D17DFC433C7
-Authentication-Results: smtp.kernel.org; dmarc=fail (p=reject dis=none) header.from=citrix.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=cloud.com
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d21a68dd3bso19365651fa.1
-        for <tools@kernel.org>; Fri, 23 Feb 2024 20:05:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nEVxpzaJ"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-78731e444daso191769285a.2
+        for <tools@linux.kernel.org>; Sun, 25 Feb 2024 14:12:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=citrix.com; s=google; t=1708747515; x=1709352315; darn=kernel.org;
-        h=content-transfer-encoding:autocrypt:subject:from:content-language
-         :to:user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=syMPNSdS0bXxMdzOI0oXerlzazA12/Gd8MS0MxH5Tcg=;
-        b=X0PcWowq1/m7ybuBl0dtuU4Yz+XKhtBc6yprNwbAte3IAkz5w655rDgAfxCAvQSsXx
-         c8tdu2hD0edKOo7srPjcNvY1jF+g9ZBMXQ2PnHiO9PlLrgC4yfVdm19Ds3f6Wl8t+zAE
-         WwdwtWF84PTJfr+xmKjKoRBJlnMm6ltCcxXmE=
+        d=gmail.com; s=20230601; t=1708899150; x=1709503950; darn=linux.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hvr4x2nhA2mcnAiUtx/YvVqltrDm/QVYWh/Hwjs00M4=;
+        b=nEVxpzaJzMmncACJ+N4vrw2wjwtc4zw8v7S5z7680FMNc0vKFTlSjmKHbegP6G1rnw
+         5kEcvKMqu11VgLPLiohAAzY/vBBS0Ey7Ilw0vKhak/FGUanVLxHSE1vJmNnSMI1ohLTc
+         7rRuIkVuR6wgEQAae+vujgofWyRTSl7KKNDQV0wH7+eE83cgIF7N6KvEgoTi6pv5XuUT
+         wPq0ue8pDY1OmAM8pnhKFLV6uNwcmOR6UwrRzskk/1yuh/YBZlq6lTpOl9Dj7DVXj81I
+         ONBL/bz609yGbZXqds2yO9JCCabpz6AwIZ8v8uRzv+Le8JVkqJYL8Suc/SnU2YEN6DdB
+         NK8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708747515; x=1709352315;
-        h=content-transfer-encoding:autocrypt:subject:from:content-language
-         :to:user-agent:mime-version:date:message-id:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=syMPNSdS0bXxMdzOI0oXerlzazA12/Gd8MS0MxH5Tcg=;
-        b=WrEVESbGsLU63FhWZOAgHF3wlwlFO5uumx3nEEsyhS37F74AgEiwQJ74Z/VaaIxeQY
-         pXxV5BYYAAjdCTqdm3zH/6XH8yUdrIFcFWjAFP0ZRRv97bP//M2C0qRuhmJGJ3yVl5lK
-         nSj2Ikgl5pgPkYyqbpQsyOi2T6vvRm7WyMcz+1LcoxHznzf6CQ2PCxPoEsB25n1JEwDd
-         EWKira7ADmgUP9rOOkE88/UiIcG5D40G8AC6E63hzMPctiVFB1yfFwpgPs98Fh1KhL3F
-         YKGgI2OdQRn+d3bj5ZLke1QgBYMuDd6C9AuZxdK4jTQgmy1xtBDQGkcqeUiZIa/0BpZT
-         kdYQ==
-X-Gm-Message-State: AOJu0YyIlIYUm3QYC/sCLr+RiseTzr5uthLmlCPZkTpJGp85I07ExydQ
-	ilGeDmEIfYR0NRG2QSqZMiTSuDU1+rsHBgoCGkj9+9YP2GwbJ68x7Fh+nk0pW2p/ATGS4dLKy4G
-	t
-X-Google-Smtp-Source: AGHT+IGdTzHPOKpa0u1f0SGvxu7m5FY27T7Aab5+mflFh5J6nH7z5fGuJwpm2zBhNdQQ+s6KnvrCdA==
-X-Received: by 2002:a2e:9d05:0:b0:2d2:3b0a:d404 with SMTP id t5-20020a2e9d05000000b002d23b0ad404mr491477lji.44.1708747514809;
-        Fri, 23 Feb 2024 20:05:14 -0800 (PST)
-Received: from [192.168.1.10] (host-92-3-248-192.as13285.net. [92.3.248.192])
-        by smtp.gmail.com with ESMTPSA id vz2-20020a05620a494200b00787af8b5c02sm194459qkn.39.2024.02.23.20.05.13
-        for <tools@kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Feb 2024 20:05:14 -0800 (PST)
-Message-ID: <0137232a-5380-4869-9a9f-8a8db3506782@citrix.com>
-Date: Sat, 24 Feb 2024 04:05:13 +0000
+        d=1e100.net; s=20230601; t=1708899150; x=1709503950;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hvr4x2nhA2mcnAiUtx/YvVqltrDm/QVYWh/Hwjs00M4=;
+        b=DrtNaWTTH0YGBOg0XBi16E5NbgLvWVYLrN/taqR//YJfT5UClltPbYhEDApA67LYgZ
+         gM2+wpBjQ11QpoBzWmiEwbgYRMDQQ72BEES7ZNq7jElgG+X0zqyqCZnKzHLCUtcQs57z
+         WlHWWfYmwpCMeQozhdzst2hjfFRr4F4BbPM1b7MUCnng8rf0sMX6zDz3Z/cf2jNOOSJv
+         iDT9Muz+PJscVz3x+qrCRwr/fUIPMzR4lIEaWhNyKAmEaE0zdmVl/VEZ81o6C2lXSKh7
+         JZT1u/5DgLhj/tr5/qhSdQiiZ4k3bLntPMUpn8ESXqEYWYftpnmoWlnWSR/GdKtIn1q0
+         RjbA==
+X-Gm-Message-State: AOJu0YxmL0Jn8QRBtiYWNPvEStfRsEE/+CnRjjEzblpUNm/KrDGcKlDf
+	BtCxG4txyvrwD+GV8hk3nUZjuj08wExehGdv/VurV9nPARFyAYs0
+X-Google-Smtp-Source: AGHT+IFtQNU1HrvlPpPogBQ/2mITlaLXZGqGtOz1z37GKgSQwmb9Y13CcShPdt16Gsi1YyNh5tH8Sg==
+X-Received: by 2002:ae9:f30f:0:b0:787:3aac:5499 with SMTP id p15-20020ae9f30f000000b007873aac5499mr6377118qkg.35.1708899149899;
+        Sun, 25 Feb 2024 14:12:29 -0800 (PST)
+Received: from [127.0.0.1] ([2606:6d00:11:ff90:6090:e182:bd61:ebff])
+        by smtp.gmail.com with ESMTPSA id d11-20020a05620a136b00b0078726073228sm1847129qkl.26.2024.02.25.14.12.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Feb 2024 14:12:29 -0800 (PST)
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: [PATCH b4 0/2] ez: allow inserting a range-diff in the cover
+ letter
+Date: Sun, 25 Feb 2024 17:12:19 -0500
+Message-Id: <20240225-ez-range-diff-cover-letter-v1-0-0df35b63bcf2@gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: tools@kernel.org
-Content-Language: en-GB
-From: Andrew Cooper <andrew.cooper3@citrix.com>
-Subject: b4 failure to apply patch with ANSI escape sequences
-Autocrypt: addr=andrew.cooper3@citrix.com; keydata=
- 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
- 6+ahAA==
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAES722UC/x3MSw6CQBCE4auQXjsRR4jiVYyLmaGQTuSR7pEYC
+ Xe3ZVX5a/GtpBCG0q1YSbCw8jRanA4FpT6MTzhurcmXviq9rx2+Tva/5a5zaVog7oWcbZq6Oft
+ wSbgCZMAs6Piz43eKFT3si0Hhogmp/7PvWbMgDMchqBG0bT+A5LJ6kgAAAA==
+To: "Kernel.org Tools" <tools@linux.kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Philippe Blain <levraiphilippeblain@gmail.com>
+X-Mailer: b4 0.14-dev
 
-Hello,
+Hi Konstantin,
 
-I'm using b4 0.12.4 from checkout, and am trying to apply
-https://lore.kernel.org/xen-devel/20240220140733.40980-1-anthony.perard@citrix.com/T/#u
+In the Git project it is the convention to insert a range-diff in the cover
+letter for subsequent versions of a series, so this patch series adds this
+capability to b4.
 
-The git am fails, and to my surprise --show-current-patch=diff gave me
-hunk 3 back with txt_{info,err}= having a coloured closing quote on an
-otherwise uncoloured diff.
+The first commit is preparatory, to document the allowed tokens for the cover
+letter template.
 
-patch complains of the mbx being corrupt, and it looks like something
-interpreted the string into a real ESC before handing it to `git am`.
+Cheers,
+Philippe
 
-Thanks,
+---
+Philippe Blain (2):
+      docs: document tokens for b4.prep-cover-template
+      ez: allow inserting a range-diff in the cover-letter
 
-~Andrew
+ docs/config.rst | 11 ++++++++++-
+ src/b4/ez.py    | 32 ++++++++++++++++++++++++++++----
+ 2 files changed, 38 insertions(+), 5 deletions(-)
+---
+base-commit: 8bdbe754bd599674330c420f6faa4aeca2233d28
+change-id: 20240225-ez-range-diff-cover-letter-95932a7ce8ee
+
