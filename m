@@ -1,59 +1,60 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FFD1B950
-	for <tools@linux.kernel.org>; Sun, 25 Feb 2024 22:12:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA05553AA
+	for <tools@linux.kernel.org>; Sun, 25 Feb 2024 22:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708899153; cv=none; b=lMXUiswhEJ0U37YUrbB4KFXhrPVvnvN4rkPabcoFACThmRbxoELjGeuHkYpT+w/0qIOFB4zf83XrQT6gpV5XxUvbFHbxh1yGTx/TSslZwX0Qp4VS695A8fwmTff+LNp7KfxSSiUO7e6eMr4Im0SbgN95SxnehWJCq4WNcoeULRw=
+	t=1708899154; cv=none; b=WLJiXMPrxhvYdsP+r90UM+2jPpG3rmnXP5fYmvCuvLaEVhcZR9uldraehFT9yukSY4afH+gH7NyWzRDYG4fcDgpm4gv6EVv1Y1x9ZEgfZ17u+Or0WS6TwlD4Nfm4YbsdsUdpcEJ0CTdKMT67uvBov/92v73EpXt+st01u6OTBig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708899153; c=relaxed/simple;
-	bh=7dWZq2XsFjtZAo2JgEm8+jtVcUao8ekRMqqgbN+OkIk=;
+	s=arc-20240116; t=1708899154; c=relaxed/simple;
+	bh=8PUqgE+lBxvx483zkNFCWt/yT5m8GIsmZxOOtm8Bp3A=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cdxp/9RRzK2MYy15EvXbdQsDoxsMfxGx8jHN3TZuDUAMWEInRI7SFcmzeqX8Jfewoo5rX0ZYAONoMqtaKLeEbYu5nTxcCa9fxx1xkDax8ZcJXnkmKPSyI6iPOWH6Cd1tjCaz7ZeNbQpgVNbNgZU/DUuYxgQdLbNIhv1DRX2EzkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nv1fyvVP; arc=none smtp.client-ip=209.85.222.175
+	 In-Reply-To:To:Cc; b=S0iV9XKp4fP2DT3ADpyGlP/cey3xrFHzBoiPxbRU/OAxOqomHdGrng96QPGDhTvrYkTbtAwkek0IJqfw1UlKO94xtxN+LgNbk+yEaENJS/v/0nHO6t9sIvdGdSjLk9bjlQllwAL3e1+a9emQ2cW779129F1ukhKnOccLBU2lOsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZVKUEBBi; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nv1fyvVP"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-787bc854a77so144818885a.3
-        for <tools@linux.kernel.org>; Sun, 25 Feb 2024 14:12:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZVKUEBBi"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-78731e444daso191770385a.2
+        for <tools@linux.kernel.org>; Sun, 25 Feb 2024 14:12:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708899150; x=1709503950; darn=linux.kernel.org;
+        d=gmail.com; s=20230601; t=1708899151; x=1709503951; darn=linux.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nrkyKCIcPUiAMIfaXx/BPFAfuynLXQHgOz8iWXILpn8=;
-        b=Nv1fyvVPczO6/zSb5w3n0hLr6yGLnCF/31yuCjmPa/dAXH6ENz9N+d3QpidHkUwvIg
-         rTIrsxlIPOi1UEF1N+aakCtXrA15koMHe4XhNykgA8P6gSZOvYWNPizPlJMo+h/y4qb2
-         ZSQR5RiU2bfgJn9OrQ5IgVREtThlfM6yDA1zWq3ou6CtyvguFITp2QBnlMHCll6efnIo
-         qbczdNhVxvWTVsc2WTMOaQpK7ZFN4nZ+lVApqOxAgyTEoRn9OZvWk7Giooivdo19ABlV
-         LhR8yR1myjPuylxUCHaGqb1x+nxrUErTp3qApln63gZoSX+lv7QPXB1k2N1ZGc8qqbhG
-         XM6Q==
+        bh=hzVdp/RGfVBYCkB26Vry0Uj7/AToKypml1Ymy8iXffo=;
+        b=ZVKUEBBizqqVRpEReYIG4giuZekGkIixVESHDGS21ayGwSx4BTh65ea+b2gKA+BMNz
+         3W+dRayYNouYGqkXpNy6gSzfYbyjIeZn7f6/xf0ZTAPF7QptSPiXUYTnOgWCbdchnIk9
+         vHq36Yvm/ddoYvUfNKilSXU9kkj/Aixc4BuoN4meakJ2a3RndvU7sXcHHaUbT6puIUai
+         z1buhIo3nW6YAs9E18eHZ4KLn8o7ZVzu9GKfcxfvyyVS8PPaBDAi+ExQF4k8nHXjeUsP
+         vxgidURDVblCicMNyd0B5MjPMrzf4lCodTfcDtGoutR23+CyL6NuIowIO3myraXpuRX8
+         8/QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708899150; x=1709503950;
+        d=1e100.net; s=20230601; t=1708899151; x=1709503951;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nrkyKCIcPUiAMIfaXx/BPFAfuynLXQHgOz8iWXILpn8=;
-        b=E3XVyp2Vh6csqmQ+0ktJz+vOHg9yb68faY5sn7qr+iBpQudP6I8/4PbommV4kj2/Be
-         W//dcYlhnqn4Jm3ZjMmtPsgDDhJJGkm2NFIBPPNvl3RlhEPfmZHiq80wJG1CmNw2wMB/
-         2mEb8gnBfVNhmFfW3VbDHfDvLYYE8Qqg3PbUhoCJkM411/sxB+zVcnP4l6YEZsRa+0AH
-         5uO1vRhuCsbabBvSlVeo8PY6rbXyZORNVDf8CtdVzom8kbcyrfF/1gQj2S51/80WBzGu
-         COz4IkWuXwJOs59bKtS986M11+isCd/8O5ZwZpSs5Uz2fIKkaWntFtRhhZ6e00ybGpmh
-         MaZw==
-X-Gm-Message-State: AOJu0Yz9wxmUGgcpgLN3MBU3jHSYg+jyaAuyfVkIR8qugR1FdNgEPo8I
-	pgf4hXSm6iicNiMormyDkS1rSP/FwnlSnVKoJn+otTANSaD1fy2QYqxx9pzngYE=
-X-Google-Smtp-Source: AGHT+IFOZnTgD65t3C1BvAdp6qCupoxL6I3exzZu2RYEFX6Ip31xhFJyoQANxVu+V5UbKOg9afdTMQ==
-X-Received: by 2002:a05:620a:7f1:b0:787:5c2d:2b7f with SMTP id k17-20020a05620a07f100b007875c2d2b7fmr7255507qkk.60.1708899150682;
-        Sun, 25 Feb 2024 14:12:30 -0800 (PST)
+        bh=hzVdp/RGfVBYCkB26Vry0Uj7/AToKypml1Ymy8iXffo=;
+        b=BNYziMzdXmyOXlY6mqd35sahlTqbjCksWDRkxxyJG9LrSZGz1sFKChrsSq7D73pzEl
+         okjf3WyZolOQeaPHNOluPnj2dhTVpCeXrX45U7om1Od2Y8O9UdoID6EqJ1K51I0OfOH1
+         /dYDu6NpVDeptu21FpcUyxt4SHo5lhazyipe6DJ558HMyXmLzx4lHc/wzOJvSV6/Jy2O
+         P5hcSahCY5Qvk19IhHmWCHhXk9h1jFxIyaE5quK36ucQL92MlkQulUJYv+JpMt72pyu+
+         +EnrMNGIi3uuqo39X9E0/aXlnTSDQfxLdxwZzTb0yJnbmTIAi1YKn5rdrT016nAjeHAu
+         waiw==
+X-Gm-Message-State: AOJu0YzblX5RZaxHC/FmoUAQm2yoxFaumD6/qtpYPV4J8K99vhABNJGS
+	0eSrxbudZVPczPm9rLEH8pS2jsosa9pWKrVMux4CrHXDCcYYVYH4JwV45yAM/04=
+X-Google-Smtp-Source: AGHT+IHs71bljYZWVoH1+LZ5qsuiPl+RrtJIHEZIkH0cm8l3Xk2gOgTCYUnSFoPYyApRfQ6sEz8PFg==
+X-Received: by 2002:a05:620a:88f:b0:787:cda2:198c with SMTP id b15-20020a05620a088f00b00787cda2198cmr2724007qka.0.1708899151540;
+        Sun, 25 Feb 2024 14:12:31 -0800 (PST)
 Received: from [127.0.0.1] ([2606:6d00:11:ff90:6090:e182:bd61:ebff])
         by smtp.gmail.com with ESMTPSA id d11-20020a05620a136b00b0078726073228sm1847129qkl.26.2024.02.25.14.12.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Feb 2024 14:12:30 -0800 (PST)
+        Sun, 25 Feb 2024 14:12:31 -0800 (PST)
 From: Philippe Blain <levraiphilippeblain@gmail.com>
-Date: Sun, 25 Feb 2024 17:12:20 -0500
-Subject: [PATCH b4 1/2] docs: document tokens for b4.prep-cover-template
+Date: Sun, 25 Feb 2024 17:12:21 -0500
+Subject: [PATCH b4 2/2] ez: allow inserting a range-diff in the
+ cover-letter
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -62,7 +63,7 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240225-ez-range-diff-cover-letter-v1-1-0df35b63bcf2@gmail.com>
+Message-Id: <20240225-ez-range-diff-cover-letter-v1-2-0df35b63bcf2@gmail.com>
 References: <20240225-ez-range-diff-cover-letter-v1-0-0df35b63bcf2@gmail.com>
 In-Reply-To: <20240225-ez-range-diff-cover-letter-v1-0-0df35b63bcf2@gmail.com>
 To: "Kernel.org Tools" <tools@linux.kernel.org>
@@ -70,34 +71,103 @@ Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
  Philippe Blain <levraiphilippeblain@gmail.com>
 X-Mailer: b4 0.14-dev
 
-List the recognized tokens used to construct the cover letter template.
+Some projects recommend inserting in the cover letter a range-diff
+against the previous version when sending subsequent versions of a
+series.
+
+Support this convention by recognizing the token '${range_diff}' in the
+cover letter template, and automatically invoking 'git range-diff'
+against the previous revision when creating the cover letter.
+
+As such, adjust ez.py::compare to allow returning the range-diff output
+instead of 'execvp'-ing the command.
+
+Since the range-diff invocation might take some time, only perform it if
+the corresponding token is found in the cover letter template.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- docs/config.rst | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ docs/config.rst |  1 +
+ src/b4/ez.py    | 32 ++++++++++++++++++++++++++++----
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
 diff --git a/docs/config.rst b/docs/config.rst
-index c46d43a..8523107 100644
+index 8523107..77f70f2 100644
 --- a/docs/config.rst
 +++ b/docs/config.rst
-@@ -400,7 +400,15 @@ Contributor-oriented settings
-   Default: ``commit``
+@@ -406,6 +406,7 @@ Contributor-oriented settings
+   * ``${cover}``: the content of the cover letter itself
+   * ``${shortlog}``: the ``git shortlog`` output for the series
+   * ``${diffstat}``: the ``git diff --stat`` output for the series
++  * ``${range_diff}``: the ``git range-diff`` output against the previous revision of the series
+   * ``${base_commit}``: the base commit of the series
+   * ``${change_id}``: the change-id of the series
+   * ``${signature}``: your signature, either from ``~/.signature`` if found, or from your Git config
+diff --git a/src/b4/ez.py b/src/b4/ez.py
+index 3bf4e9c..11f4cb2 100644
+--- a/src/b4/ez.py
++++ b/src/b4/ez.py
+@@ -76,6 +76,11 @@ Changes in v${newrev}:
  
- ``b4.prep-cover-template`` (v0.10+)
--  Path to the template to use for the cover letter.
-+  Path to the template to use for the cover letter. The following tokens
-+  are recognized:
+ """
+ 
++DEFAULT_RANGEDIFF_TEMPLATE = """
++Range-diff versus v${oldrev}:
 +
-+  * ``${cover}``: the content of the cover letter itself
-+  * ``${shortlog}``: the ``git shortlog`` output for the series
-+  * ``${diffstat}``: the ``git diff --stat`` output for the series
-+  * ``${base_commit}``: the base commit of the series
-+  * ``${change_id}``: the change-id of the series
-+  * ``${signature}``: your signature, either from ``~/.signature`` if found, or from your Git config
++"""
++
  
-   Default: ``None``
+ def get_auth_configs() -> Tuple[str, str, str, str, str, str]:
+     config = b4.get_main_config()
+@@ -1242,6 +1247,18 @@ def get_prep_branch_as_patches(movefrom: bool = True, thread: bool = True, addtr
+         'base_commit': base_commit,
+         'signature': b4.get_email_signature(),
+     }
++    if cover_template.find('${range_diff}') >= 0:
++        if revision > 1:
++            oldrev = revision - 1
++            rangediff_template = DEFAULT_RANGEDIFF_TEMPLATE
++            rd_tptvals = {
++                'oldrev': oldrev,
++            }
++            range_diff = Template(rangediff_template.lstrip()).safe_substitute(rd_tptvals)
++            range_diff += compare(oldrev, execvp=False)
++            tptvals['range_diff'] = range_diff
++        else:
++            tptvals['range_diff'] = ""
+     cover_letter = Template(cover_template.lstrip()).safe_substitute(tptvals)
+     # Store tracking info in the header in a safe format, which should allow us to
+     # fully restore our work from the already sent series.
+@@ -2055,7 +2072,7 @@ def force_revision(forceto: int) -> None:
+     store_cover(cover, tracking)
  
+ 
+-def compare(compareto: str) -> None:
++def compare(compareto: str, execvp: bool = True) -> Union[List[str], None]:
+     cover, tracking = load_cover()
+     # Try the new format first
+     tagname, revision = get_sent_tagname(tracking['series']['change-id'], SENT_TAG_PREFIX, compareto)
+@@ -2085,10 +2102,17 @@ def compare(compareto: str) -> None:
+     lines = b4.git_get_command_lines(None, gitargs)
+     curr_end = lines[0]
+     grdcmd = ['git', 'range-diff', '%.12s..%.12s' % (prev_start, prev_end), '%.12s..%.12s' % (curr_start, curr_end)]
+-    # We exec range-diff and let it take over
+     logger.debug('Running %s', ' '.join(grdcmd))
+-    os.execvp(grdcmd[0], grdcmd)
+-
++    if (execvp):
++        # We exec range-diff and let it take over
++        os.execvp(grdcmd[0], grdcmd)
++    else:
++        ecode, out = b4.git_run_command(None, grdcmd[1:])
++        if ecode:
++            logger.critical('CRITICAL: Could not execute range-diff')
++            sys.exit(1)
++        else:
++            return out
+ 
+ def auto_to_cc() -> None:
+     tocmdstr = None
 
 -- 
 2.39.1
