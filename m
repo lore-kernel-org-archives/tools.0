@@ -1,50 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123A155E50
-	for <tools@linux.kernel.org>; Tue, 27 Feb 2024 23:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213BDA23
+	for <tools@linux.kernel.org>; Wed, 28 Feb 2024 00:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709076977; cv=none; b=f+xOEXLPV08/H5PsyzdDmkQrvuFmHVanEUdL1uyn7CLdvJq+A6tSwljLDPsHNU6aJUE7wDg29r3aF+wIL7C+seP51aaesgDbe3jAQnrPMBcVnpyxi4+9St/f6EEK/xCa5mnEBtn0DQ0hbpLeiVAz9W9Hn4O1uLw6Ekzlpm3rrMo=
+	t=1709081011; cv=none; b=oeotIj9PdRMcQm3nbw5S5ihu/4TZwZ+6HsHtlg2weDJqkPBcr+JvcyGWfLLQHWWnBo3EDyriGHIDzSw8VgLAPbCSb6+N8XhZHNBwuU9d6mfRHZmTmhZnCYSrQ07WQSO2U3kG+/hYuy6fb0wZi5nW9fqA3FQzPSlRD/Oz/irUfTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709076977; c=relaxed/simple;
-	bh=jxG6LpvJFPMwKvthVAFYMswdtFgvTmCuOhxQBi1sjoA=;
+	s=arc-20240116; t=1709081011; c=relaxed/simple;
+	bh=cA+fnwnt//J3NfdO7+rLKW9APEqj65IbB51Mwl9Kg0A=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XpmqTitLtfbo6t8kilvoSrSMmdkyJy1JAMNpzK/XtD0w9s1qTl43FrG2FMM1aa1ln6TH88+Ejgu4SsZ+z/5bVlpJSS1valLvd+AqfyGlKt8QBWF10Bs+7vH0qxvZs1hHIo0H8zgetbJ3o46H6+dvxWgzGF5aJo3+dgwdZMnqI1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	 To:Cc:Content-Type; b=Xv3TBjWQJ9Y4G9CConAkPP4ycTamfY2mUcVPYe/lsXNBN05UZhlr8pi1eiUOgNEeu2pdRrxWT6DAXnaMyc2P72iu1ylNGOq/yy8xhRkNXlxluYcR2F3bJS4jvgMZhuLkKWzFDL6pyeZM7Aj9v69HLawTG7t5lkfoXkqPvkrTs3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVpX1cBQ; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVpX1cBQ"
 Received: by smtp.kernel.org (Postfix)
-	id B30DDC433F1; Tue, 27 Feb 2024 23:36:16 +0000 (UTC)
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	id E24A2C433F1; Wed, 28 Feb 2024 00:43:30 +0000 (UTC)
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id B37E4C433C7;
-	Tue, 27 Feb 2024 23:36:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org B37E4C433C7
-Authentication-Results: smtp.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6e48e42a350so1980809a34.1;
-        Tue, 27 Feb 2024 15:36:15 -0800 (PST)
+	by smtp.kernel.org (Postfix) with ESMTPS id D3B9AC43390
+	for <tools@kernel.org>; Wed, 28 Feb 2024 00:43:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org D3B9AC43390
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a3e75e30d36so55413566b.1
+        for <tools@kernel.org>; Tue, 27 Feb 2024 16:43:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1709081008; x=1709685808; darn=kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4R0JEfuygzXs74mV0uReUDXdjYhtO4vO7wERenZVrWg=;
+        b=dVpX1cBQZpRvcrhQImvVSP4K++RTvPcHcqLxKWOWW9y+g9w54LO+1RNa6tAnJ+K+vx
+         EyKtpDoCatjjqTkitUKiqA3JKO4BKZ2yvCvjEycIGsgBOro9AB16jYmAbMyzPGA7ayVo
+         mHaAPQQrh/qYNvB9wJjhWts+9aPpd2/lScVOI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709076974; x=1709681774;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LdI2X8i39h7lNyezT3MNte/xo0yw1K+6IRHFFnRsFAM=;
-        b=C7FZIl9Z8BmORi/qn71PTLADLPGe50sR6C5NyF3uH1mv0czXaqlXQrl5scmzHypALZ
-         ErGtVlZ9YdqUE0BjwKECGIEOr916Ahjpjy+Zou5PMZi7+OhO1uUyT+hJIVmJxp+HYhWQ
-         nwR8dQc/vh3WrQBCHoZaRHZTnffdwcLf4gy1fvYuO5H4QWV802b2lxAlEBy982SE7e8O
-         TJb2tnJNmvL9dEDVbNNQkUEeaLs1rzvz2tDIJVoXvNTgqcQC/wKVtwB3RF6hJUvspvgD
-         xpn9UK2hq3NkllvO4Ytq3L9Gu30v6pgAKrsoq06XtEGf+uz4TVyMjn59mm9jvl53vPci
-         Nk3g==
-X-Forwarded-Encrypted: i=1; AJvYcCXDbYBrZZGF8Yja/RMZZthMddCu1v+jVRhGBX2JIAM4Uvj6U4IEInOqo9x5k/tWmvGBaSKmGGYRKHO3qU4lqOju
-X-Gm-Message-State: AOJu0YzzXubnZhP3hNOmVRt6zK9kv+lGYgAtEjil+stIkgU4klJJ6eH8
-	LMahgi+i/sFT4vUryMNpt0Qic0PnFPcDAKPKwSYlmiyLnu//qwmwlco4CDiNojLkY0XmPrQhUyT
-	m0HeSWfEtzX7EXHz1LCDs+A31aRP5MZlE
-X-Google-Smtp-Source: AGHT+IGGwElNmh27FqvwDGj9r5hA5yZwhzuu4R0bYdvNk7mMgtBQMdmthqifTbSV2eD8aL3D0LZ7POKzTvcRFsJNmhk=
-X-Received: by 2002:a05:6871:a4c7:b0:21a:5866:f619 with SMTP id
- wb7-20020a056871a4c700b0021a5866f619mr13577837oab.27.1709076974454; Tue, 27
- Feb 2024 15:36:14 -0800 (PST)
+        d=1e100.net; s=20230601; t=1709081008; x=1709685808;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4R0JEfuygzXs74mV0uReUDXdjYhtO4vO7wERenZVrWg=;
+        b=KUrMI+7DXssx/2TVM/PlITWsTDn38KmU9U6YIKjU2NW4/jduTXwE/Qku9X+CT+8BFn
+         ZF9za82OR23Q4XcsHle6gU8piXhLm1VaDKF30yI3b8NLM2BK72yhBb5D7Cp7l0pITkq8
+         WURSECkQZucZPDbYn29o0WP3dQy/N6fYFWurSX8FcjFsAH11AvCewhjgNl3MENqtodjf
+         ZWCq5GR2nSjZo14E3/jXEE76w13utCqaZZR0iF/fbqmegtkkb1VcxC7Z1mr3HfMf6FzY
+         3HFnH150MeV1xEq2vDQHmoQ+nbxdGJq09ZWQ8tfhvTI/b9FaCHPzj79WFy12EE+7DYv2
+         GYMw==
+X-Forwarded-Encrypted: i=1; AJvYcCVCXjs3ag2TPI/ic0aQlUnRtK34llFAWpus4g/QfB3gtv0jQb6LvDQ7eWUXMXvHpJaKYVFiNtCYMa/64/gNxH7I
+X-Gm-Message-State: AOJu0Yy+JjWvT0JdT2EQCwG2UJCMlEgARBQGJVtTdcvcEgHexM51ojMO
+	U3Y9CIaPhM2FD8Yzrak0ZSMwWPrdGDQPZCrxPFTahaPIkS4n5EmvS1rLgaeI7MWEv5IbwvEwZwY
+	R7jx98Q==
+X-Google-Smtp-Source: AGHT+IGD/BF8B82QHszYTuxyXyG3P9npaIZ+RlhUy/ke6xJFD4mLmTkHFH3KsIJPsMFlvhOKht3iCg==
+X-Received: by 2002:a17:906:29d1:b0:a43:af44:9147 with SMTP id y17-20020a17090629d100b00a43af449147mr864403eje.5.1709081007999;
+        Tue, 27 Feb 2024 16:43:27 -0800 (PST)
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com. [209.85.218.46])
+        by smtp.gmail.com with ESMTPSA id cf18-20020a170906b2d200b00a43fc28334fsm62099ejb.27.2024.02.27.16.43.25
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Feb 2024 16:43:26 -0800 (PST)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a3ddc13bbb3so58653866b.0
+        for <tools@kernel.org>; Tue, 27 Feb 2024 16:43:25 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXkGYHcmgsaO22/5tNIXerBU2LG0fELqK7ecbKrZf/pWlnl0kirwSeveVTjdvFoWkvQNOR/7ewavPbPNVxdi7Zy
+X-Received: by 2002:a17:906:4557:b0:a43:1099:7e72 with SMTP id
+ s23-20020a170906455700b00a4310997e72mr772552ejq.35.1709081005598; Tue, 27 Feb
+ 2024 16:43:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -53,68 +73,38 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 References: <20240227-flawless-capybara-of-drama-e09653@lemur>
 In-Reply-To: <20240227-flawless-capybara-of-drama-e09653@lemur>
-From: Junio C Hamano <gitster@pobox.com>
-Date: Tue, 27 Feb 2024 15:35:56 -0800
-Message-ID: <CAPc5daVFWQ0eUrZb+JHiUUAnmME6fwBpc9-qjtRwtCm20dp2JQ@mail.gmail.com>
+From: Linus Torvalds <torvalds@linuxfoundation.org>
+Date: Tue, 27 Feb 2024 16:43:09 -0800
+X-Gmail-Original-Message-ID: <CAHk-=wixuZ3SwabT69MEt6=c7hTJ=s4ptVDSD6UKtP+iBANy1A@mail.gmail.com>
+Message-ID: <CAHk-=wixuZ3SwabT69MEt6=c7hTJ=s4ptVDSD6UKtP+iBANy1A@mail.gmail.com>
 Subject: Re: Toy/demo: using ChatGPT to summarize lengthy LKML threads (b4 integration)
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: users@kernel.org, tools@kernel.org, workflows@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-As somebody who (1) did not read the actual thread and only read the
-text in the demo, (2) would probably not understand the details being
-discussed if he read the actual thread anyway, hence (3) would not
-know if ChatGPT in the demo were merely hallucinating, it was a very
-nice demonstration. Of course, you are interested in knowing if people
-find it "useful", which I unfortunately cannot offer much useful
-input.
-
-On Tue, Feb 27, 2024 at 2:32=E2=80=AFPM Konstantin Ryabitsev
+On Tue, 27 Feb 2024 at 14:32, Konstantin Ryabitsev
 <konstantin@linuxfoundation.org> wrote:
 >
-> Hi, all:
->
-> I was playing with shell-gpt and wrote a quickie integration that would a=
-llow
-> retrieving (slimmed-down) threads from lore, feeding them to ChatGPT, and
-> asking it to provide some basic analysis of the thread contents. Here's a
-> recorded demo session:
->
-> https://asciinema.org/a/643435
->
-> A few notes:
->
-> 1. This is obviously not a replacement for actually reading email, but ca=
-n
->    potentially be a useful asset for a busy maintainer who just wants a q=
-uick
->    summary of a lengthy thread before they look at it in detail.
-> 2. This is not free or cheap! To digest a lengthy thread, you can expect
->    ChatGPT to generate enough tokens to cost you $1 or more in API usage =
-fees.
->    I know it's nothing compared to how expensive some of y'all's time is,=
- and
->    you can probably easily get that expensed by your employers, but for m=
-any
->    others it's a pretty expensive toy. I managed to make it a bit cheaper=
- by
->    doing some surgery on the threads before feeding them to chatgpt (like
->    removing most of the message headers and throwing out some of the quot=
-ed
->    content), but there's a limit to how much we can throw out before the
->    analysis becomes dramatically less useful.
-> 3. This only works with ChatGPT-4, as most threads are too long for
->    ChatGPT-3.5 to even process.
->
-> So, the question is -- is this useful at all? Am I wasting time poking in=
- this
-> direction, or is this something that would be of benefit to any of you? I=
-f the
-> latter, I will document how to set this up and commit the thread minimiza=
-tion
-> code I hacked together to make it cheaper.
->
-> Best regards,
-> -K
->
+> So, the question is -- is this useful at all?
+
+I find the demo intriguing. Useful? Who knows, but the potential is
+certainly there.
+
+The summary didn't seem to take Rafael's last (fairly strongly
+negative) email into account as much as maybe it should have been (my
+first reaction was that maybe Rafael's last email hadn't made it into
+the summary, but going back to it I think it was there, just not
+nearly as forcefully as Rafael's email read to me).
+
+I personally would find it more intriguing still if it actually
+reacted to the code instead of just the discussion, but I suspect
+that's still some way away.
+
+IOW - interesting. But hard to tell how useful and how maintainers
+would actually end up using it.
+
+Would it be something where when you bring a new developer into a long
+discussion, you'd introduce him with a summary of what has gone
+before?  I'm not sure what the use cases would be in practice.
+
+           Linus
