@@ -1,113 +1,122 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C55174413
-	for <tools@linux.kernel.org>; Wed, 28 Feb 2024 19:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D284D11F
+	for <tools@linux.kernel.org>; Wed, 28 Feb 2024 20:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709148758; cv=none; b=PsQpAS9MTqczUEQ4pUpCpJ2/6NOKO0qkJ2iDhxewq4JKPIbitK0c/LpusgZh+nf+ZlRVvBZyjJvgufhq5MG2Qcg+CSjbAdLh/hXOv8uaxAMsphHDFlBnQpMJ5K2TyAgpGRDlaV3YcdNYyB0/g48Zd1kZLxro8bh3iL+FBcIVa0c=
+	t=1709153199; cv=none; b=TBJyniH298mRjf0ek2EBTVaV0TI44xjhLVTFUf8OnXsO/YQQdHGa80AwG5Yhh8fsXg4US5hSapW3pOj3xnrgiHtdRAu46NkMynusQEFkV1H/hxJcR73v5cXrvWsdxeLq9sm5AxUoxXh/IGv6rSqli6y8xNeJhMntI4z/J/483gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709148758; c=relaxed/simple;
-	bh=zDBDdxhkpl+y9N/Zc3Tw3tbsikzREggAr6o46hui5Ok=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LvOsAeOX4QJoobXI19LkcYJyj5FW+I1o6+vOv4PkMFImwYH8i1Cc2PnY7x0NXarwF4iQN68sljekDwi7P77hevZuIO1xnkS+EaVu/m2k5/sDOuWJh/trzaEhpHkYPmiWKaujyZJVWNH9Z0neK1tyaF+ANVWmDgT3s/jazal2lSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=3Obg18px; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709153199; c=relaxed/simple;
+	bh=zeInfVJrEO63s3vNEguiGABOY35s3HM6yuXnyNGFJ0c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LJBN5dZDiR+1p0gNw78xH6HzaAIBu97a9RqStHZKWoQw+F1u7SK6NXjk3+A8g1605/n/JLg4yq+zhP8bKPFBa85zLmP6lHao1GFiISdEjAlgS8UZ7uR5Tu6klcHEGVzqa40+ifdm3qcdrKZkYnPpKp5C7fCSMk/+2Ud82jtmE3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UOoakNYT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="3Obg18px"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UOoakNYT"
 Received: by smtp.kernel.org (Postfix)
-	id 246DAC43390; Wed, 28 Feb 2024 19:32:38 +0000 (UTC)
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	id 8F96DC433F1; Wed, 28 Feb 2024 20:46:38 +0000 (UTC)
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 3F5A8C433C7;
-	Wed, 28 Feb 2024 19:32:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 3F5A8C433C7
-Authentication-Results: smtp.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=Dpq1luyocGQv/sxyjVPfvUqyCaGzg0/LBtSjaqvOnGk=; b=3Obg18px4sVvXKA0SAXrv42i5r
-	X9i7EZ11EzffL/v3bFLTxOW2o8ATTn1W9oP7XRREXRmphgXNuX7nHsxFGfpRWJ2usUUD0TGy1V+Ix
-	HyCVt3m6UF9ACVGEmkv0RfnX+DJjRcMAm24w6hIKstGazZ2T6AGjy6+6TKy8wBODuFPeMHczP5jnL
-	FHnbw0LXpx9pFDcKfwxV6nMEEer9DOCct4t6KbJ+GtzSdrepQJKYOrdWYjblAFrbpdUml0+ZcIe6d
-	ePdQJL2AEI3h/nH4kwsyOeqmmPxSaTIZvJfFaBOjZU52T55RJDwCulNfa7NcvRO+lVElWTBI1AVwd
-	so6aiomQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1rfPfP-0000000AgNv-2i5e;
-	Wed, 28 Feb 2024 19:32:36 +0000
-Date: Wed, 28 Feb 2024 11:32:35 -0800
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Cc: users@kernel.org, tools@kernel.org, workflows@vger.kernel.org
-Subject: Re: Toy/demo: using ChatGPT to summarize lengthy LKML threads (b4
- integration)
-Message-ID: <Zd-KU5lrdeAk4LiT@bombadil.infradead.org>
-References: <20240227-flawless-capybara-of-drama-e09653@lemur>
+	by smtp.kernel.org (Postfix) with ESMTPS id 76BCBC433C7
+	for <tools@kernel.org>; Wed, 28 Feb 2024 20:46:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 76BCBC433C7
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-7bf3283c18dso1151239f.0
+        for <tools@kernel.org>; Wed, 28 Feb 2024 12:46:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1709153196; x=1709757996; darn=kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6FNyEsvJVHeYfZWtn4fHH/WvdRQ34fwWdjZTn2veEVU=;
+        b=UOoakNYT2ppzVoCzf6BKRcdyqv3f2zs9MQEQehLMdWToHZGLIoPIpHk9Z7xwceh0Ij
+         f4SjNSsQ/4nr6+2n449HGQ1aP7C7vQNGB6Pea971sGkAToc4gWjb7KMCmh/uu54hZMpQ
+         MRZxnRchE4wv93VZpX12rtrfZrBCpXQ4D1nVQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709153196; x=1709757996;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6FNyEsvJVHeYfZWtn4fHH/WvdRQ34fwWdjZTn2veEVU=;
+        b=XsRo5tzP6s6d+RTtt87WbimCkB85SsEiMsaviwAhu/SHIycmPCMktCG5wdQdOiE2Bq
+         3in5GfDoQNeeSBxh7DRcPcjeFCPqtQJGA10vniZUxK2XYgXykNFtw+zsPXKYXXK0Gypw
+         KQ0wkkEUjBFpYvD9IrHsAFqTuJ5NvIxugZMOaaSCv6qRobZdlqBCEL+0d91zIFOHyHKh
+         9IISnWuVpLcGayNq+eL2rlo4ia9HI6608oY2liS3hZk/5euaWKS7i87Ay3qAZN6+MRzn
+         rjEJ3Vq+Npf75Neasg2EjauaRhWJ3X3i/TnTSjBFlWbBKalKHQtQNzrUrCErOsb85ugE
+         B6WQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVTLxOr156f2P2WdSLz3lKTAr2qjMrhlwwDfPlEXWd3xe4YqMTQ1khjSg51iyt9bFCV+iUr7imcJ1cUbDNXF/f/
+X-Gm-Message-State: AOJu0Yws/qSgKTRC70U+jpE625G5MQeucxuWBVjxnVtxOryY5F4MxM2P
+	FFbTjCo1/BdDBA00WcRER4WaZwRmxtqyGd9xhoX+Kjo2vSEjO7DQBcXtwVDABeI=
+X-Google-Smtp-Source: AGHT+IHq0jnKtavjBlP7cqqeIx0XWkFAdXjnwHIEy1c4bRepMG0fuN/Ay/QUnZjuXHZSW846mqOJ4w==
+X-Received: by 2002:a6b:580f:0:b0:7c7:99f8:2893 with SMTP id m15-20020a6b580f000000b007c799f82893mr240817iob.2.1709153196492;
+        Wed, 28 Feb 2024 12:46:36 -0800 (PST)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id v8-20020a02cba8000000b004747cb8b342sm33369jap.15.2024.02.28.12.46.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Feb 2024 12:46:36 -0800 (PST)
+Message-ID: <e2c3dcf5-8d13-4694-bf1f-129ba473cab2@linuxfoundation.org>
+Date: Wed, 28 Feb 2024 13:46:35 -0700
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240227-flawless-capybara-of-drama-e09653@lemur>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Toy/demo: using ChatGPT to summarize lengthy LKML threads (b4
+ integration)
+Content-Language: en-US
+To: Linus Torvalds <torvalds@linuxfoundation.org>,
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@kernel.org, tools@kernel.org, workflows@vger.kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20240227-flawless-capybara-of-drama-e09653@lemur>
+ <CAHk-=wixuZ3SwabT69MEt6=c7hTJ=s4ptVDSD6UKtP+iBANy1A@mail.gmail.com>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <CAHk-=wixuZ3SwabT69MEt6=c7hTJ=s4ptVDSD6UKtP+iBANy1A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Feb 27, 2024 at 05:32:34PM -0500, Konstantin Ryabitsev wrote:
-> Hi, all:
+On 2/27/24 17:43, Linus Torvalds wrote:
+> On Tue, 27 Feb 2024 at 14:32, Konstantin Ryabitsev
+> <konstantin@linuxfoundation.org> wrote:
+>>
+>> So, the question is -- is this useful at all?
 > 
-> I was playing with shell-gpt and wrote a quickie integration that would allow
-> retrieving (slimmed-down) threads from lore, feeding them to ChatGPT, and
-> asking it to provide some basic analysis of the thread contents. Here's a
-> recorded demo session:
+> I find the demo intriguing. Useful? Who knows, but the potential is
+> certainly there.
 > 
-> https://asciinema.org/a/643435
+> The summary didn't seem to take Rafael's last (fairly strongly
+> negative) email into account as much as maybe it should have been (my
+> first reaction was that maybe Rafael's last email hadn't made it into
+> the summary, but going back to it I think it was there, just not
+> nearly as forcefully as Rafael's email read to me).
 > 
-> A few notes:
+> I personally would find it more intriguing still if it actually
+> reacted to the code instead of just the discussion, but I suspect
+> that's still some way away.
 > 
-> 1. This is obviously not a replacement for actually reading email, but can
->    potentially be a useful asset for a busy maintainer who just wants a quick
->    summary of a lengthy thread before they look at it in detail.
-> 2. This is not free or cheap! To digest a lengthy thread, you can expect
->    ChatGPT to generate enough tokens to cost you $1 or more in API usage fees.
->    I know it's nothing compared to how expensive some of y'all's time is, and
->    you can probably easily get that expensed by your employers, but for many
->    others it's a pretty expensive toy. I managed to make it a bit cheaper by
->    doing some surgery on the threads before feeding them to chatgpt (like
->    removing most of the message headers and throwing out some of the quoted
->    content), but there's a limit to how much we can throw out before the
->    analysis becomes dramatically less useful.
-> 3. This only works with ChatGPT-4, as most threads are too long for
->    ChatGPT-3.5 to even process.
+> IOW - interesting. But hard to tell how useful and how maintainers
+> would actually end up using it.
 > 
-> So, the question is -- is this useful at all? Am I wasting time poking in this
-> direction, or is this something that would be of benefit to any of you? If the
-> latter, I will document how to set this up and commit the thread minimization
-> code I hacked together to make it cheaper.
+> Would it be something where when you bring a new developer into a long
+> discussion, you'd introduce him with a summary of what has gone
+> before?  I'm not sure what the use cases would be in practice.
+> 
 
-While I probably wouldn't use it day to day, I expect younger
-generations might use this more than us older generations to be more
-productive, even if they get halluciations.
+Konstantin,
 
-An LLM trained with more data relevant to patches might be more
-suitable, and it is why I wanted the tooling for stable candidate patches
-to be opened up, so to enable more exploring in areas like this.
+As I was watching the demo, the same thought popped into my head that
+this could be useful to a new developer. I am starting a mentoring
+session on March 1st with 34 new developers.
 
-A use case example might be training for identifying subsystems with
-more memory safety issues.
+Probably something we could experiment with to see if this helps them?
 
-Another might be to help to summarize further pull requests in one or
-two sentences, or optionally few bullets. So for instance, I try to
-document major bullet list changes for modules here:
+thanks,
+-- Shuah
 
-https://kernelnewbies.org/KernelProjects/modules
 
-So it is easier to track / go down memory lane. Doing this automatically
-would allow me to use a tool to do this.
-
-  Luis
