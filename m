@@ -1,94 +1,197 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF85B168B8
-	for <tools@linux.kernel.org>; Thu, 29 Feb 2024 00:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D1444C9C
+	for <tools@linux.kernel.org>; Thu, 29 Feb 2024 07:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709166832; cv=none; b=PpsVoG2i8GXlgEQ9nPzMGslGt/YNhxC20Pmi2W4lYld9izw76f5ZhSJYFw0gFYiyQu+YJaErFzpIRP30pw60C8kxfQJzgmaDQjJ6oCTwEfDdSvSdGbc1KlqqsMtcuakaRRWwQLyC7jkqbUEJiaPf1mRWkFaNoUWQFCWuuAerOis=
+	t=1709191131; cv=none; b=arf3x5kVLbB+OHn8ZssU+8CLqN9ka4cdjg6s8OkGfOTdic2Rq1Byh2qnkY+HvuPH9pIrMQ8SEgmjeW/NsC7Gp9UW9kWe7/BERJ5hZ6XgtXlZ/PXUrUSIxggkO+U5zMqjD8LCrpVFJfeJ8vzc/KXyqEWNgHcgusyqNkWNbz+WEx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709166832; c=relaxed/simple;
-	bh=fo00jB401P35ZMxe0xPOnl0LGbQYCSGuj2RIivhw74g=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=iv9VNHkxbegV0jcd/SVPW54PpqkC5n6vO3cs51ckaG4K+ziSrgOmJzSRwxeqLaA8UR/Ln/nPVQX1+2b/9MqKk4c+T6V+z7IVhHKqV6IQDgBrPZ34npgkt/EkamqLVMuETY8TEOV6m2hcuKcHnmR3YQMH37TOe0hY7RaWARD4m90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b=mLQ2oDAs; dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b=mLQ2oDAs; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709191131; c=relaxed/simple;
+	bh=1lmtinDg7QI4a5lZe18y8hI08kyulpBZcNUuSvhBtNo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Qjca+o0HDCYcPA/K6e3pn7AZnsoXpqmSnT97J+0ainMM75kHpi2+DwvaI5LOmJAcDScSUybkDhNpPI2+C7jDtp9xeSnF450sbpfVgbcxT8OMf9WMwczM4Cgw0mOvPDluBR4yFQmy2b5ha0IeAA/mGs1zWYj4BZWaOjndth4zHXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qazbOS0L; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Xncoyz0R; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qazbOS0L; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Xncoyz0R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b="mLQ2oDAs";
-	dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b="mLQ2oDAs"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qazbOS0L";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Xncoyz0R";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qazbOS0L";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Xncoyz0R"
 Received: by smtp.kernel.org (Postfix)
-	id 77C39C433F1; Thu, 29 Feb 2024 00:33:52 +0000 (UTC)
-Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [96.44.175.130])
+	id 65B72C433C7; Thu, 29 Feb 2024 07:18:51 +0000 (UTC)
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 635E9C433C7;
-	Thu, 29 Feb 2024 00:33:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 635E9C433C7
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=HansenPartnership.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=HansenPartnership.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1709166830;
-	bh=fo00jB401P35ZMxe0xPOnl0LGbQYCSGuj2RIivhw74g=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=mLQ2oDAsvGjVK0mcvD7bb34UKrSy8qEvwoC7Yga539prexFcRl0ma/a+3Tx3TdPPm
-	 mvd2StuoM0h+obi7X6roEyQ+Z50YYCWVp2MPk/AeL+1NUnRkAnDl8Oi21Fvl2clCxD
-	 CwhWj2VTW4JkY9xlCdj0evS422YMn7QRFYiRceLM=
-Received: from localhost (localhost [127.0.0.1])
-	by bedivere.hansenpartnership.com (Postfix) with ESMTP id 90DF612861A8;
-	Wed, 28 Feb 2024 19:33:50 -0500 (EST)
-Received: from bedivere.hansenpartnership.com ([127.0.0.1])
- by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavis, port 10024)
- with ESMTP id rAeAeLH7ozK5; Wed, 28 Feb 2024 19:33:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1709166830;
-	bh=fo00jB401P35ZMxe0xPOnl0LGbQYCSGuj2RIivhw74g=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=mLQ2oDAsvGjVK0mcvD7bb34UKrSy8qEvwoC7Yga539prexFcRl0ma/a+3Tx3TdPPm
-	 mvd2StuoM0h+obi7X6roEyQ+Z50YYCWVp2MPk/AeL+1NUnRkAnDl8Oi21Fvl2clCxD
-	 CwhWj2VTW4JkY9xlCdj0evS422YMn7QRFYiRceLM=
-Received: from [10.0.15.72] (unknown [49.231.15.39])
+	by smtp.kernel.org (Postfix) with ESMTPS id A7700C43394;
+	Thu, 29 Feb 2024 07:18:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org A7700C43394
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id 349131285E9D;
-	Wed, 28 Feb 2024 19:33:47 -0500 (EST)
-Message-ID: <0dfa0b21553b022f73c0c3b22cfc95110f953a0e.camel@HansenPartnership.com>
-Subject: Re: Toy/demo: using ChatGPT to summarize lengthy LKML threads (b4
- integration)
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Linus Torvalds <torvalds@linuxfoundation.org>, Konstantin Ryabitsev
-	 <konstantin@linuxfoundation.org>
-Cc: users@kernel.org, tools@kernel.org, workflows@vger.kernel.org
-Date: Thu, 29 Feb 2024 07:33:44 +0700
-In-Reply-To: <CAHk-=wixuZ3SwabT69MEt6=c7hTJ=s4ptVDSD6UKtP+iBANy1A@mail.gmail.com>
-References: <20240227-flawless-capybara-of-drama-e09653@lemur>
-	 <CAHk-=wixuZ3SwabT69MEt6=c7hTJ=s4ptVDSD6UKtP+iBANy1A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.4 
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 394602289A;
+	Thu, 29 Feb 2024 07:18:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1709191125; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KiN49q92axG5oRK+pAbaXfOYea52c0MUdWtmB0PwLaA=;
+	b=qazbOS0LCqxos8WXiHSLki6/fYZYkj1H73YiRX5ZeZLyWdU9ZDqvSPIo8Qt0uJxB/2q48f
+	tTNrIYlDlqawfN1H2Zi6WXwiAMrDHjdmDECP7Z6HHKuzZe4nV5decTTvTIyDvAqXn2dyeV
+	VLvtx4oP/glyeCbRh7EpN9aJNroAbRE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1709191125;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KiN49q92axG5oRK+pAbaXfOYea52c0MUdWtmB0PwLaA=;
+	b=Xncoyz0RM+BNK13DHILgW2qgHihXj4TqzFaKVnMo0QcwpIMqoQDYypxaNQ4XqiX8PA3GS1
+	MySWxCt62VgfF7CQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1709191125; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KiN49q92axG5oRK+pAbaXfOYea52c0MUdWtmB0PwLaA=;
+	b=qazbOS0LCqxos8WXiHSLki6/fYZYkj1H73YiRX5ZeZLyWdU9ZDqvSPIo8Qt0uJxB/2q48f
+	tTNrIYlDlqawfN1H2Zi6WXwiAMrDHjdmDECP7Z6HHKuzZe4nV5decTTvTIyDvAqXn2dyeV
+	VLvtx4oP/glyeCbRh7EpN9aJNroAbRE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1709191125;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KiN49q92axG5oRK+pAbaXfOYea52c0MUdWtmB0PwLaA=;
+	b=Xncoyz0RM+BNK13DHILgW2qgHihXj4TqzFaKVnMo0QcwpIMqoQDYypxaNQ4XqiX8PA3GS1
+	MySWxCt62VgfF7CQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C53AB13A58;
+	Thu, 29 Feb 2024 07:18:44 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id /Pu8LdQv4GUwPAAAD6G6ig
+	(envelope-from <hare@suse.de>); Thu, 29 Feb 2024 07:18:44 +0000
+Message-ID: <5758922f-a11a-4bbe-88a4-b724f53b2e6f@suse.de>
+Date: Thu, 29 Feb 2024 08:18:43 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: Toy/demo: using ChatGPT to summarize lengthy LKML threads (b4
+ integration)
+Content-Language: en-US
+To: Bart Van Assche <bvanassche@acm.org>,
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org,
+ tools@kernel.org, workflows@vger.kernel.org
+References: <20240227-flawless-capybara-of-drama-e09653@lemur>
+ <964843ca-891b-4039-94b3-ed1046df2d69@acm.org>
+From: Hannes Reinecke <hare@suse.de>
+In-Reply-To: <964843ca-891b-4039-94b3-ed1046df2d69@acm.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qazbOS0L;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Xncoyz0R
+X-Spamd-Result: default: False [-3.30 / 50.00];
+	 ARC_NA(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	 XM_UA_NO_VERSION(0.01)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 BAYES_HAM(-3.00)[100.00%];
+	 MIME_GOOD(-0.10)[text/plain];
+	 RCPT_COUNT_FIVE(0.00)[5];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	 DKIM_TRACE(0.00)[suse.de:+];
+	 MX_GOOD(-0.01)[];
+	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 RCVD_TLS_ALL(0.00)[];
+	 MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 394602289A
+X-Spam-Level: 
+X-Spam-Score: -3.30
+X-Spam-Flag: NO
 
-On Tue, 2024-02-27 at 16:43 -0800, Linus Torvalds wrote:
-> I personally would find it more intriguing still if it actually
-> reacted to the code instead of just the discussion, but I suspect
-> that's still some way away.
+On 2/28/24 19:55, Bart Van Assche wrote:
+> On 2/27/24 14:32, Konstantin Ryabitsev wrote:
+>> I was playing with shell-gpt and wrote a quickie integration that 
+>> would allow
+>> retrieving (slimmed-down) threads from lore, feeding them to ChatGPT, and
+>> asking it to provide some basic analysis of the thread contents. Here's a
+>> recorded demo session:
+>>
+>> https://asciinema.org/a/643435
+>>
+>> A few notes:
+>>
+>> 1. This is obviously not a replacement for actually reading email, but 
+>> can
+>>     potentially be a useful asset for a busy maintainer who just wants 
+>> a quick
+>>     summary of a lengthy thread before they look at it in detail.
+>> 2. This is not free or cheap! To digest a lengthy thread, you can expect
+>>     ChatGPT to generate enough tokens to cost you $1 or more in API 
+>> usage fees.
+>>     I know it's nothing compared to how expensive some of y'all's time 
+>> is, and
+>>     you can probably easily get that expensed by your employers, but 
+>> for many
+>>     others it's a pretty expensive toy. I managed to make it a bit 
+>> cheaper by
+>>     doing some surgery on the threads before feeding them to chatgpt 
+>> (like
+>>     removing most of the message headers and throwing out some of the 
+>> quoted
+>>     content), but there's a limit to how much we can throw out before the
+>>     analysis becomes dramatically less useful.
+>> 3. This only works with ChatGPT-4, as most threads are too long for
+>>     ChatGPT-3.5 to even process.
+>>
+>> So, the question is -- is this useful at all? Am I wasting time poking 
+>> in this
+>> direction, or is this something that would be of benefit to any of 
+>> you? If the
+>> latter, I will document how to set this up and commit the thread 
+>> minimization
+>> code I hacked together to make it cheaper.
+> 
+> Please do not publish the summaries generated by ChatGPT on the web. If
+> these summaries would be published on the world wide web, ChatGPT or
+> other LLMs probably would use these summaries as input data. If there
+> would be any mistakes in these summaries, then these mistakes would end
+> up being used as input data by multiple LLMs.
+> 
+Now there's a thought. Maybe we should do exactly the opposite, and 
+posting _more_ ChatGPT generated content on the web?
+Sending them into a deadly self-enforcing feedback loop?
 
-So this bit may be closer than you think.  The Software Heritage Org
-announced a LLM trained on all FOSS code in the archive:
+But that's probably beside the point.
 
-https://www.softwareheritage.org/2023/10/19/swh-statement-on-llm-for-code/
+Cheers,
 
-So it should be possible for Konstantin to plug into it.  The question,
-as with all static checkers, would be whether it produces a decent
-enough signal to noise ratio for us to find it useful.  I bet in the
-early days it won't so someone will have to help curate it and improve
-the model as a full time job, but I'm sure the SW Heritage folks would
-love to help.
-
-James
+Hannes
+-- 
+Dr. Hannes Reinecke                  Kernel Storage Architect
+hare@suse.de                                +49 911 74053 688
+SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
+HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
 
