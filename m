@@ -1,197 +1,114 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D1444C9C
-	for <tools@linux.kernel.org>; Thu, 29 Feb 2024 07:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B11642A86
+	for <tools@linux.kernel.org>; Thu, 29 Feb 2024 08:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709191131; cv=none; b=arf3x5kVLbB+OHn8ZssU+8CLqN9ka4cdjg6s8OkGfOTdic2Rq1Byh2qnkY+HvuPH9pIrMQ8SEgmjeW/NsC7Gp9UW9kWe7/BERJ5hZ6XgtXlZ/PXUrUSIxggkO+U5zMqjD8LCrpVFJfeJ8vzc/KXyqEWNgHcgusyqNkWNbz+WEx0=
+	t=1709195862; cv=none; b=NVwHTjaZ7AeZg+g+7kZhff8KVuA0IajRY+96a4FVoIrcJ13SGv1q/D+YVeogAMOD2MTp8mPNj6/ISB7WjWPUgSGdfiSxcYJENpHcCp2rGX6qoPBqbbjNsrXdObogp6FuUb9mV00qJOjKaVZlkJbWdUMM0YGa9aoHdcXSF1R1rjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709191131; c=relaxed/simple;
-	bh=1lmtinDg7QI4a5lZe18y8hI08kyulpBZcNUuSvhBtNo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Qjca+o0HDCYcPA/K6e3pn7AZnsoXpqmSnT97J+0ainMM75kHpi2+DwvaI5LOmJAcDScSUybkDhNpPI2+C7jDtp9xeSnF450sbpfVgbcxT8OMf9WMwczM4Cgw0mOvPDluBR4yFQmy2b5ha0IeAA/mGs1zWYj4BZWaOjndth4zHXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qazbOS0L; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Xncoyz0R; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qazbOS0L; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Xncoyz0R; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709195862; c=relaxed/simple;
+	bh=HQ7QGgZghHp2hnyTXd/cZDHQseHozrhZ0WRpJ3XitjI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ecf0colC92g6ZFC5TiGroKnE+aUHSdPQdmfvyxs9DGRTdFXM/Dr6d52o65ADlpKnmfkU+nCFFUTrm7RN9XI83LlVpKrxwuqbLOG5Xuw+MuBZM5ggT/oKlJF52gwsR3ltz6kwFeLaYzBKwE4U06wIfFF/1RJWolQCQcNViyQJxYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=GJY3QLxB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qazbOS0L";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Xncoyz0R";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qazbOS0L";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Xncoyz0R"
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="GJY3QLxB"
 Received: by smtp.kernel.org (Postfix)
-	id 65B72C433C7; Thu, 29 Feb 2024 07:18:51 +0000 (UTC)
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	id 4BC5DC433F1; Thu, 29 Feb 2024 08:37:42 +0000 (UTC)
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id A7700C43394;
-	Thu, 29 Feb 2024 07:18:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org A7700C43394
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 394602289A;
-	Thu, 29 Feb 2024 07:18:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1709191125; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KiN49q92axG5oRK+pAbaXfOYea52c0MUdWtmB0PwLaA=;
-	b=qazbOS0LCqxos8WXiHSLki6/fYZYkj1H73YiRX5ZeZLyWdU9ZDqvSPIo8Qt0uJxB/2q48f
-	tTNrIYlDlqawfN1H2Zi6WXwiAMrDHjdmDECP7Z6HHKuzZe4nV5decTTvTIyDvAqXn2dyeV
-	VLvtx4oP/glyeCbRh7EpN9aJNroAbRE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1709191125;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KiN49q92axG5oRK+pAbaXfOYea52c0MUdWtmB0PwLaA=;
-	b=Xncoyz0RM+BNK13DHILgW2qgHihXj4TqzFaKVnMo0QcwpIMqoQDYypxaNQ4XqiX8PA3GS1
-	MySWxCt62VgfF7CQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1709191125; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KiN49q92axG5oRK+pAbaXfOYea52c0MUdWtmB0PwLaA=;
-	b=qazbOS0LCqxos8WXiHSLki6/fYZYkj1H73YiRX5ZeZLyWdU9ZDqvSPIo8Qt0uJxB/2q48f
-	tTNrIYlDlqawfN1H2Zi6WXwiAMrDHjdmDECP7Z6HHKuzZe4nV5decTTvTIyDvAqXn2dyeV
-	VLvtx4oP/glyeCbRh7EpN9aJNroAbRE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1709191125;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KiN49q92axG5oRK+pAbaXfOYea52c0MUdWtmB0PwLaA=;
-	b=Xncoyz0RM+BNK13DHILgW2qgHihXj4TqzFaKVnMo0QcwpIMqoQDYypxaNQ4XqiX8PA3GS1
-	MySWxCt62VgfF7CQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C53AB13A58;
-	Thu, 29 Feb 2024 07:18:44 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id /Pu8LdQv4GUwPAAAD6G6ig
-	(envelope-from <hare@suse.de>); Thu, 29 Feb 2024 07:18:44 +0000
-Message-ID: <5758922f-a11a-4bbe-88a4-b724f53b2e6f@suse.de>
-Date: Thu, 29 Feb 2024 08:18:43 +0100
+	by smtp.kernel.org (Postfix) with ESMTPS id 6308CC433C7
+	for <tools@kernel.org>; Thu, 29 Feb 2024 08:37:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 6308CC433C7
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=mit.edu
+Received: from macsyma.thunk.org (c-73-8-226-230.hsd1.il.comcast.net [73.8.226.230])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 41T8bXXf027868
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Feb 2024 03:37:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1709195855; bh=9HRWYCWBiwpSn9z/jgZMmwcrc2o0QbNc5MpPOTV3Pa8=;
+	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
+	b=GJY3QLxB6SrD0NZDDSvvtGVONygyEA1nlndch4j+GZ0+Re3es9fBRes+xicu6K0/l
+	 Ir+3ADWJCYvfUNXNtu2XD2gHcdA70J7I4Hgyze7JB9iPcBbIWKUXBWupYLWn7QdO3G
+	 2C4tLOHfVsdqXuybVJ8EyrNwdMtgdn0y4AFHZ+5VPyytngCHKVu8uWV0zlpLAy4BG8
+	 8CGKAUh+SS/gbGeELp6YAVkikM4Vdmb5laNSmtUAiac3zm0eOxkazofoZGVToyO7OZ
+	 o/znmt8mbQ5erroJ0I7P2sxFFJsoboTpQqliwIGkGwjKly3XXTe/uWJTrckhyzcc9N
+	 GQ73hZDt4sEqQ==
+Received: by macsyma.thunk.org (Postfix, from userid 15806)
+	id B3C42340440; Thu, 29 Feb 2024 02:37:32 -0600 (CST)
+Date: Thu, 29 Feb 2024 02:37:32 -0600
+From: "Theodore Ts'o" <tytso@mit.edu>
+To: Hannes Reinecke <hare@suse.de>
+Cc: Bart Van Assche <bvanassche@acm.org>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        users@kernel.org, tools@kernel.org, workflows@vger.kernel.org
+Subject: Re: Toy/demo: using ChatGPT to summarize lengthy LKML threads (b4
+ integration)
+Message-ID: <20240229083732.GB272762@mit.edu>
+References: <20240227-flawless-capybara-of-drama-e09653@lemur>
+ <964843ca-891b-4039-94b3-ed1046df2d69@acm.org>
+ <5758922f-a11a-4bbe-88a4-b724f53b2e6f@suse.de>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Toy/demo: using ChatGPT to summarize lengthy LKML threads (b4
- integration)
-Content-Language: en-US
-To: Bart Van Assche <bvanassche@acm.org>,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org,
- tools@kernel.org, workflows@vger.kernel.org
-References: <20240227-flawless-capybara-of-drama-e09653@lemur>
- <964843ca-891b-4039-94b3-ed1046df2d69@acm.org>
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <964843ca-891b-4039-94b3-ed1046df2d69@acm.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qazbOS0L;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Xncoyz0R
-X-Spamd-Result: default: False [-3.30 / 50.00];
-	 ARC_NA(0.00)[];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 XM_UA_NO_VERSION(0.01)[];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 BAYES_HAM(-3.00)[100.00%];
-	 MIME_GOOD(-0.10)[text/plain];
-	 RCPT_COUNT_FIVE(0.00)[5];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 DKIM_TRACE(0.00)[suse.de:+];
-	 MX_GOOD(-0.01)[];
-	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 RCVD_TLS_ALL(0.00)[];
-	 MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 394602289A
-X-Spam-Level: 
-X-Spam-Score: -3.30
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5758922f-a11a-4bbe-88a4-b724f53b2e6f@suse.de>
 
-On 2/28/24 19:55, Bart Van Assche wrote:
-> On 2/27/24 14:32, Konstantin Ryabitsev wrote:
->> I was playing with shell-gpt and wrote a quickie integration that 
->> would allow
->> retrieving (slimmed-down) threads from lore, feeding them to ChatGPT, and
->> asking it to provide some basic analysis of the thread contents. Here's a
->> recorded demo session:
->>
->> https://asciinema.org/a/643435
->>
->> A few notes:
->>
->> 1. This is obviously not a replacement for actually reading email, but 
->> can
->>     potentially be a useful asset for a busy maintainer who just wants 
->> a quick
->>     summary of a lengthy thread before they look at it in detail.
->> 2. This is not free or cheap! To digest a lengthy thread, you can expect
->>     ChatGPT to generate enough tokens to cost you $1 or more in API 
->> usage fees.
->>     I know it's nothing compared to how expensive some of y'all's time 
->> is, and
->>     you can probably easily get that expensed by your employers, but 
->> for many
->>     others it's a pretty expensive toy. I managed to make it a bit 
->> cheaper by
->>     doing some surgery on the threads before feeding them to chatgpt 
->> (like
->>     removing most of the message headers and throwing out some of the 
->> quoted
->>     content), but there's a limit to how much we can throw out before the
->>     analysis becomes dramatically less useful.
->> 3. This only works with ChatGPT-4, as most threads are too long for
->>     ChatGPT-3.5 to even process.
->>
->> So, the question is -- is this useful at all? Am I wasting time poking 
->> in this
->> direction, or is this something that would be of benefit to any of 
->> you? If the
->> latter, I will document how to set this up and commit the thread 
->> minimization
->> code I hacked together to make it cheaper.
-> 
-> Please do not publish the summaries generated by ChatGPT on the web. If
-> these summaries would be published on the world wide web, ChatGPT or
-> other LLMs probably would use these summaries as input data. If there
-> would be any mistakes in these summaries, then these mistakes would end
-> up being used as input data by multiple LLMs.
-> 
-Now there's a thought. Maybe we should do exactly the opposite, and 
-posting _more_ ChatGPT generated content on the web?
-Sending them into a deadly self-enforcing feedback loop?
+On Thu, Feb 29, 2024 at 08:18:43AM +0100, Hannes Reinecke wrote:
+> On 2/28/24 19:55, Bart Van Assche wrote:
+> > On 2/27/24 14:32, Konstantin Ryabitsev wrote:
+> > Please do not publish the summaries generated by ChatGPT on the web. If
+> > these summaries would be published on the world wide web, ChatGPT or
+> > other LLMs probably would use these summaries as input data. If there
+> > would be any mistakes in these summaries, then these mistakes would end
+> > up being used as input data by multiple LLMs.
+> > 
+> Now there's a thought. Maybe we should do exactly the opposite, and posting
+> _more_ ChatGPT generated content on the web?
+> Sending them into a deadly self-enforcing feedback loop?
 
-But that's probably beside the point.
+Well, I'll note that last July, when a number of AI companies,
+including Amazon, Anthropic, Google, Inflection, Meta, Microsoft, and
+OpenAI, met with President Biden at the White House, they made a
+commitment to develop watermarking standards to allow AI generated
+contexted to be detected[1].  Obviously, it's a lot easier to do this
+with images, and Google was the first company to release a
+watermarking system for AI-generated images[2].  However, there is
+research on-going on how to add watermarking to text[3].
+
+[1] https://www.whitehouse.gov/briefing-room/statements-releases/2023/07/21/fact-sheet-biden-harris-administration-secures-voluntary-commitments-from-leading-artificial-intelligence-companies-to-manage-the-risks-posed-by-ai/
+[2] https://www.technologyreview.com/2023/08/29/1078620/google-deepmind-has-launched-a-watermarking-tool-for-ai-generated-images/
+[3] https://www.nytimes.com/interactive/2023/02/17/business/ai-text-detection.html
+
+I doubt whether anything we do is going to make a huge difference; one
+of the largest uses of OpenAI's ChatGPT is to generate text to enable
+Search Engine Optimization spam[4].  Another major use of LLM is to
+lay off journalists by creating text explaining why a particular stock
+when up by X% when the market went up or down by Y%.  After all, why
+have to have a human making up stories explaining stock moves, when
+you can have an AI model hallucinate them instead?  :-)
+
+[4] https://www.opace.co.uk/blog/blog/how-openai-gpt-3-enhances-ai-chat-text-generation-for-seo
+
+The bottom line is that there is a vast amount of AI-generated text
+that has been put out on the web *already*.  This is going to be
+poisoning future LLM training, even before we start generating
+summaries of LKML traffic and making them available on the web.  It
+also means that companies who are doing AI work have a large, vested
+interest in develop stardized ways of watermarking AI-generated
+context --- not just because they made a promise to some politicians,
+but if all the companies can use some common watermarking standard,
+hopefully they can all avoid this self-poisoning feedback loop.
 
 Cheers,
 
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
-
+					- Ted
