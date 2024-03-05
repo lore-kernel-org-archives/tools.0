@@ -1,62 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBD914012
-	for <tools@linux.kernel.org>; Tue,  5 Mar 2024 21:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7410026AD0
+	for <tools@linux.kernel.org>; Tue,  5 Mar 2024 21:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709674217; cv=none; b=sGX1yj8pgUPoxccUKrSZhltg/ilIfYusoEvc1D4XtAtHnaYcda/iLfNJ8sA7rdPMCRYsXfoxG8z6O9ncjpDVVaTA7vewW9dD5V86d+0RkhxKZilqppIjbCO8mpBExioPHvRUAswW5U3TjAE2TiB5LvraRuc35ScRZf0WfVhqzrE=
+	t=1709674520; cv=none; b=L8MeoWvW+lYkLr58snk+rnoaSyrqdvAOyfSniyjZhdx42J/q6LcAKq2BJlgUoAvFHQFLl+hC9dV871QknhtGB/eSZLs4PsCk2gDj9qEO/H6sGFOHNNqGcgAJFG8REAkYlXH5bkuZwK7HOS1wCa5t7NqfZ5hFPuZ/lPtI0IYTVJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709674217; c=relaxed/simple;
-	bh=XCkt00BJWWwUCf9nQgdX0GGOlEJYiqSrmRCqgpI3pt4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K7n66dqCRAps78jlEMo8s3wk2UI96lKKNFYT+hSpv2b14oLoTibmf8kzaLvR6pI6J7VNUcJHrkzEjvsO7b5XsLzk/Dd48q/SAX2C6xgeFNhDcazz6b6ir8iGuQ2nzkMytBJGVRuazsgU2Rvwbeh+w9VF1okiKLCHHI07s05tHG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/CqTHAJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709674520; c=relaxed/simple;
+	bh=c41k8r3CxFwStwTV7xfKn22wKFnQBQ1AGaBFDLbA+tk=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=cnzMO9BPrGBZbyAHMWAAJ6pRP0BxvsLhL00ltCdnBv/+d14mMXc7s49o3EFI60qIvCa/uM8iYivt2r9eABSUGkmlpaOGM2M+6EGsMBJKBtXHsyd9bAFIMhfUAsMNOUpHC8PDRJyH/8QKPRslMsjDBRth3dpHos6hRsZtNcAQSMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y/HzyaUk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/CqTHAJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y/HzyaUk"
 Received: by smtp.kernel.org (Postfix)
-	id 4FD1DC43390; Tue,  5 Mar 2024 21:30:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17CC3C433C7;
-	Tue,  5 Mar 2024 21:30:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709674217;
-	bh=XCkt00BJWWwUCf9nQgdX0GGOlEJYiqSrmRCqgpI3pt4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=i/CqTHAJZagoEdz0SyndVJWcdR+kuUFZJLG72gk9LFG3FaV1+tv4yaU9F/Z1kAHjV
-	 51NkDSgXcWVHPXJGBTuZS7owv6jYP5MrW2qX8BrNOobayjCutfFcs+dtPteC5is/yD
-	 xLo+Uh6fcuXazi0GJskJbnGPvfAjpPvZ+ElL07G4=
-Date: Tue, 5 Mar 2024 16:30:14 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: tools@kernel.org
-Subject: Re: b4 failure to apply patch with ANSI escape sequences
-Message-ID: <20240305-excellent-loutish-coucal-9309bf@lemur>
-References: <0137232a-5380-4869-9a9f-8a8db3506782@citrix.com>
+	id 24706C433C7; Tue,  5 Mar 2024 21:35:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 016E2C433F1;
+	Tue,  5 Mar 2024 21:35:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709674520;
+	bh=c41k8r3CxFwStwTV7xfKn22wKFnQBQ1AGaBFDLbA+tk=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=Y/HzyaUksCamZapLwgDLXRN8SetAjIrJbYW0ZpkzkTAe2WNH1IFaFgKaXGdQmyrp/
+	 SdPV1qD5yCYZMXKL5Kiqt4D6ONhLIFW8QQ5ghq1UwsXvQWsI8VwxzarMpGwKzyHqvZ
+	 RDdFJ2/gQ8r2Wd2ceP3fy5Hv0Igk792qgJdJwlmCVVLsPh7Ycib2drvvWvBzJlree8
+	 MgcgmgZQpoGYC1z39u1hgHmH4BJlZm9CvSaPmZWLS58ZMpQ5dEr5pis33ThUMiMIJU
+	 KNc07fM4m7s3javzrD7fNbuAJcQR2oNdBvegQbyK5Cl+xQFV6y1knEzehKbYkMA966
+	 s/BAlchiVzvUw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D888CC04D3F;
+	Tue,  5 Mar 2024 21:35:19 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: tools@kernel.org, andrew.cooper3@citrix.com, tools@linux.kernel.org
+Message-ID: <20240305-b218563-507754436713@bugzilla.kernel.org>
 In-Reply-To: <0137232a-5380-4869-9a9f-8a8db3506782@citrix.com>
+References: <0137232a-5380-4869-9a9f-8a8db3506782@citrix.com>
+Subject: Re: b4 failure to apply patch with ANSI escape sequences
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Tue,  5 Mar 2024 21:35:19 +0000 (UTC)
 
-On Sat, Feb 24, 2024 at 04:05:13AM +0000, Andrew Cooper wrote:
-> Hello,
-> 
-> I'm using b4 0.12.4 from checkout, and am trying to apply
-> https://lore.kernel.org/xen-devel/20240220140733.40980-1-anthony.perard@citrix.com/T/#u
-> 
-> The git am fails, and to my surprise --show-current-patch=diff gave me
-> hunk 3 back with txt_{info,err}= having a coloured closing quote on an
-> otherwise uncoloured diff.
-> 
-> patch complains of the mbx being corrupt, and it looks like something
-> interpreted the string into a real ESC before handing it to `git am`.
+Hello:
 
-You're right, this is no good.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=218563
 
-bugbot assign to me
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
 
--K
