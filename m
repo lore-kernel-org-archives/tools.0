@@ -1,114 +1,127 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9543A5FDD4
-	for <tools@linux.kernel.org>; Wed,  6 Mar 2024 12:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D96013A276
+	for <tools@linux.kernel.org>; Wed,  6 Mar 2024 17:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709726625; cv=none; b=epAgMDpnqel12t+bX6l/E8RyguKYZOMdczaFkbBkDf7wzGH5pYGpNCa7hnheNeXf/J2JoZnTvY42cVDpl+LOeE3D4LUamNZTcJd8csGLFTcwwF14dp4CuAn83oAKbDUa4W9oRSEggflNeNrkAQwAFV7zHGsCxxAOwppUFc4nAN0=
+	t=1709744698; cv=none; b=CcrBXpkiznuh2/rR0ENyhAXLkIJiGc0u8coW/oGQr/iW2nvM6bphQuhDG7R72rhOvkApfTUCqh72lxAw5ZjE7bCziBSSq8uPZQMJYH8XKD357BePLH8KspPS7rTePTBT0qV+9sb+1ScCgZKouxcZ+sDuvD2Nn3PShUTHAvFH3hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709726625; c=relaxed/simple;
-	bh=3nOAkQk9sFKg8BzuPeK9U+48btj+DfmFOK/8yOKWGRM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TRiBhsQG1HtqAITAc93xRcnhr8x4dC66HVqYzrRIfU6cpd3iBuG8m+V9PdHOs9AcokIlMg9d5Zi0gkHxyt7cqQaRXvqlLfY7f8UFy8xv1D3ibJfJktuXfXhbcGrdZy8HxjvVtQx3PVHX4KXe8McYvA/MvRIQp23Y+70UgYEIICs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I6ULRZf2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709744698; c=relaxed/simple;
+	bh=tySBHjWQX2GCnSyc82CqY14zOSjy/jDYwOGGCoXTpWs=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=cpVuKcBI4EgEOD/fKsOp1YMSV91sERXWDHXGRaA4s7hyFNDngfVRNkDgPlDMe4kWiebF8L4Gh6sEWFjEH8e3TaXn14XBya4Q/bJs+G2Whk6MmdNrMd1G4WO1TZfrDwZbjEXUGcLKveWynqpvgr1nyu5wwIF7F7TP8+j4cJIgVQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b=QZHt+ASS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I6ULRZf2"
+	dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="QZHt+ASS"
 Received: by smtp.kernel.org (Postfix)
-	id 426A3C433C7; Wed,  6 Mar 2024 12:03:45 +0000 (UTC)
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	id BDF7FC43399; Wed,  6 Mar 2024 17:04:57 +0000 (UTC)
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 6B971C433F1
-	for <tools@kernel.org>; Wed,  6 Mar 2024 12:03:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 6B971C433F1
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc74435c428so7420078276.2
-        for <tools@kernel.org>; Wed, 06 Mar 2024 04:03:44 -0800 (PST)
+	by smtp.kernel.org (Postfix) with ESMTPS id E477CC433F1
+	for <tools@kernel.org>; Wed,  6 Mar 2024 17:04:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org E477CC433F1
+Authentication-Results: smtp.kernel.org; dmarc=fail (p=reject dis=none) header.from=citrix.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=cloud.com
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5a17274193eso651092eaf.3
+        for <tools@kernel.org>; Wed, 06 Mar 2024 09:04:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709726623; x=1710331423; darn=kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QzZTmOkAk8CG1qezS+bHVqohvj4VV4QWfrchmxEJmeA=;
-        b=I6ULRZf2uB6Jlj5k709hTblXlW/aLWCsJrc0bTRwMNwKu91e1brB5Y+KjRZR1fXaBe
-         xwMyEshmw/VBIablBf116/AchECZ2/QYnnn4OPiv5avxDUAPN3t5iOOnVWQLyD5P6P4R
-         Fxr8aNn5zONUpqLd9cCqaTxcdpfgADDMW7C0QKint8gLpcb26D3IKYnEq8mv91v+SVLb
-         LKdl2AV3W8iLzm8Zt2fpoltRWwPDeGy/f2OBL9+JbiCRJ9ghtxwwEVTagRW3gDOXo+1J
-         F5E3Rnq8KdRm3bKcFf+s4dwPVPrSncxKJuZVBuA6x4VYJRDdWDfqigGAmM161NeidY4A
-         Udpg==
+        d=citrix.com; s=google; t=1709744694; x=1710349494; darn=kernel.org;
+        h=content-transfer-encoding:autocrypt:subject:from:content-language
+         :to:user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tySBHjWQX2GCnSyc82CqY14zOSjy/jDYwOGGCoXTpWs=;
+        b=QZHt+ASSzJbH+iqnOo7nW150z8WTZIU43nGhP+V2dSwO3fsnWeYL5if5dP/9H3F+qm
+         o/PP0YeOcv4foAFE/IHkRPxr32av+eHy+j9Ant+iu+nCGCq4i7tRbcYRof2KKsTvH64H
+         obe9PyPcXy+kla72n0bmwO2y7rHMURnIhiKPc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709726623; x=1710331423;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QzZTmOkAk8CG1qezS+bHVqohvj4VV4QWfrchmxEJmeA=;
-        b=HpyJnWhK00XV4YGQQGAJUR9uz/o1XTO4tvfD0dU3DOUMJ5N0HZWe761uZ1CTyjeevm
-         ku95qol5e3PmxWC3aUZ4fywk86+Lq2Z9xXPUwl/Ccolo/11yHseNyymFYP+0wVLSA9rG
-         EDxZxsjv0bS9lQzTPPW0AaBYZCEs4ywi5SHfgjDYO7saFN34NnJv+2zuQa0A5kRXeNiu
-         dIYytxAlbsSa5helhzZYIRN4p9t38PfeWfgEwjVTvFXz6tDqO+3Of409TybLGcMU2/Dn
-         MY255eFa20pGzkckGxAcGQKH4VKu8tXzfjbEyQ7VrBWFJF160fqW3RkyZzOIkjSIqPut
-         s9Hw==
-X-Gm-Message-State: AOJu0Yz+COomAuF0kKf4Gold292/Axd2kZtRWc8ahlJmnE0oczcuwDjQ
-	EkCmX0Kt4HSpAn1lgqg4CvkD79EwpeRL+SlXVsZZ8teM8nOmtdIrZ725C1cYGiBnStw+guSOmgO
-	mRCF+V1P2X6BySeTRm/OsK94o/Ys=
-X-Google-Smtp-Source: AGHT+IEvyN2F5Jdvyy8tBV2kxxA1e8lETbWDjZ+7uv2pUPI4BnpwNo3yBhx9+TXodllbtdw4ExXhLHMI/Nu3fPMTwkQ=
-X-Received: by 2002:a25:ef44:0:b0:dcb:b3dd:4f95 with SMTP id
- w4-20020a25ef44000000b00dcbb3dd4f95mr11270852ybm.43.1709726623300; Wed, 06
- Mar 2024 04:03:43 -0800 (PST)
+        d=1e100.net; s=20230601; t=1709744694; x=1710349494;
+        h=content-transfer-encoding:autocrypt:subject:from:content-language
+         :to:user-agent:mime-version:date:message-id:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=tySBHjWQX2GCnSyc82CqY14zOSjy/jDYwOGGCoXTpWs=;
+        b=rhZuV9pOLl/2XxcV1ypdy1tahKX43DHFdrlfCIgdorXE35elViE4lQeQT+HkAoV7rV
+         vgUCIdWX4bAVkVbv1IsO331VDbETjLxm1eGndeTMm2MexeOdhCQ9Ll5onbxkKA3HE/HU
+         BCzoIsKV5iv620v1SArCJ0YvlWWlmB+nNyXJZTGL7fdCPKBjcl5Yv5UK/tIUSSfndZnI
+         /uTe+Lb+JqWE0+jxKJzYUWrgFIMo18/tnddbaChDPS7Cc7a/xt8Teg4QM1xd67VZbs+m
+         rRhO+LBw9AJDW5DWaV7B0X+cO35yuisnsoX21QXFzKA0qjA9jInePmQgjdVthXtJzT2P
+         ZhVQ==
+X-Gm-Message-State: AOJu0YwyxKXaIwQny3QQKIoQzylgfGYE6fV/vs/9WxkZgmvt0VgFqbht
+	aoVyKyB3J8Glmlr/e8gu34dZcun0+Qv2NaueNC7wkeOhAKuklF5b5/0X2M5NwAk6WBDqrfMlm2F
+	6
+X-Google-Smtp-Source: AGHT+IGybHM1kPo9zlvDaFNBQ5Z+oTAA+BERBA9f4SjTAb2b7LgflM8WlxaBtcEk3My+5rT4JOWlXA==
+X-Received: by 2002:a05:6358:6f0e:b0:17c:1da1:aa8f with SMTP id r14-20020a0563586f0e00b0017c1da1aa8fmr5783531rwn.24.1709744694623;
+        Wed, 06 Mar 2024 09:04:54 -0800 (PST)
+Received: from [10.80.67.149] (default-46-102-197-194.interdsl.co.uk. [46.102.197.194])
+        by smtp.gmail.com with ESMTPSA id b6-20020ac86786000000b0042f09265a34sm1233537qtp.91.2024.03.06.09.04.53
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Mar 2024 09:04:53 -0800 (PST)
+Message-ID: <16beccd0-db0b-4c9c-a4d1-fcf43f98959c@citrix.com>
+Date: Wed, 6 Mar 2024 17:04:51 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20240301-shell-completion-v2-1-741c88669859@gmail.com> <20240305-obedient-centipede-of-finesse-a35a86@lemur>
-In-Reply-To: <20240305-obedient-centipede-of-finesse-a35a86@lemur>
-From: Emil Velikov <emil.l.velikov@gmail.com>
-Date: Wed, 6 Mar 2024 12:03:31 +0000
-Message-ID: <CACvgo53keELtth1xAapQD91EDrZrdK3XVVeVSVE+NX1cygnn3Q@mail.gmail.com>
-Subject: Re: [PATCH b4 v2] b4: add shell completion via python-shtab
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+To: tools@kernel.org
+Content-Language: en-GB
+From: Andrew Cooper <andrew.cooper3@citrix.com>
+Subject: b4 DKIM checks
+Autocrypt: addr=andrew.cooper3@citrix.com; keydata=
+ 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
+ 6+ahAA==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, 5 Mar 2024 at 20:53, Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Fri, Mar 01, 2024 at 04:59:23PM +0000, Emil Velikov via B4 Relay wrote:
-> > For more details, see the website https://github.com/iterative/shtab
->
-> Thank you for pointing me in that direction. I think I'd rather use their CLI
-> integration, what do you think? E.g. we can have misc/tc-generate.sh with the
-> following contents:
->
->     #!/usr/bin/env bash
->     if [[ -z $1 ]]; then
->         echo "Specify the shell type as parameter (bash, zsh, tcsh)"
->         exit 1
->     fi
->     if which shtab >/dev/null 2>&1; then
->         PYTHONPATH="src${PYTHONPATH:+:$PYTHONPATH}" \
->             exec shtab --shell=$1 -u b4.command.setup_parser
->     fi
->
-> I believe running ./misc/tc-generate.sh from the toplevel dir should
-> get us the exact same result as your patch below, no?
->
-> My preference would be to go this route, because it doesn't create a new
-> dependency on shtab but still lets packagers generate and ship the
-> tab-completion content.
->
+[Summary of an IRC debugging session, as requested]
 
-The above solution can break in a number of cases and since there's no
-CI, it can lurk broken for a while.
-- path changes from src/b4/ to ...
-- parser function is moved from command.py, or command.py itself is renamed
-- parser function is renamed
+b4 DKIM checks on my own patches fail.
 
-Does that seem like a reasonable argument, or do you prefer the
-standalone script approach?
+It worked fine for Konstantin, and it turns out to be because of
+differing TXT record visibility inside and outside of the corporate notwork.
 
-Thanks
-Emil
+~Andrew
