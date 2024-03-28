@@ -1,169 +1,154 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F2D3B784
-	for <tools@linux.kernel.org>; Tue, 19 Mar 2024 04:53:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=10.30.226.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710824034; cv=fail; b=qqQ5p7qXKDx/0qafeLTIrqa4tI7z4zb6GJB77wEcm0Fm2jbG+TumvP0OT2ZJFebQKNf68XP8fmNQCG8wkFPmPs6Dw0S/0YrNz8nSOAnBe4izXX7/QbmxbNR/8pojBQojZBjcCyUJ8XCG1oW/kiUZd0q1alFV5uZOGSl91pfoMn4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710824034; c=relaxed/simple;
-	bh=7gvfeVhwis5+hyofdRFzInuotam4y1jDTsVtCIPWmmE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=H7xmash9lHNGtkTe+2fEire7A8YFpOJVabBEqnGj3c63dP0rJWPe5L1bNiY3zIgjz4ohlzSZ4/2H0t+3p8UFYpxFXG7542dnwcp3oPS+1zJRnDIG525R8aEQDc47+7jG2vfeefOXVlfvkZhJw9cUzCUo01lgiCddgGVVg2gpX3w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b=XdmT8DMA; arc=fail smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05BA18E1E
+	for <tools@linux.kernel.org>; Thu, 28 Mar 2024 09:35:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711618536; cv=none; b=CcMlsDrvR1qaWsHy8kS77O//hd/Rw6eASRheofP+Y+33C35yHiGgxGHFGq/QTpl0185nUzc7ELAno1KFmEuEc2I1324YUIIRD8M1kFnJIaenhfgc+xK/bErVS4QY5C4ORv50jRdF0rnZJZ3l502rip41XGbVGLGSzfFB4dogjGs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711618536; c=relaxed/simple;
+	bh=T84krUeqYanzTm8AWJb336byBlCwRJXIWG26SEX3hiY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nRte4qUMgYdVqJr9LY82k8lRQIA9lofwMlg2Xn347tE37dPF7O0zF9jZuQf3bQnDQKRezSeK8q5fjKEPlBqVRewbgmvcWh3cGv1Z7LVZfOtT+54vrBYjeQuFN/Fuk60Xf8KDGgYvoHBAcWq2Imxv50FEUHpHzYTMKJu750VN3z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Cn+F+slY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b="XdmT8DMA"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Cn+F+slY"
 Received: by smtp.kernel.org (Postfix)
-	id 29800C433F1; Tue, 19 Mar 2024 04:53:54 +0000 (UTC)
-Received: from EUR02-VI1-obe.outbound.protection.outlook.com (mail-vi1eur02on2103.outbound.protection.outlook.com [40.107.241.103])
+	id 55529C43390; Thu, 28 Mar 2024 09:35:36 +0000 (UTC)
+Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 76ACDC4166A;
-	Tue, 19 Mar 2024 04:53:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 76ACDC4166A
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Q5aAquwA/FkONgWeM2wqC1pte3Z1/ia7NSrbxDAPTsuz1UI9/OQ8X43qcc1Zx+bptoZVPIERT95ZqwJ+C1hXwsHMMoEzUShC9TJTX1gEb1XFWXntJOYBXa9UpnB00ozcpPmZXMsqdrzBs8SdU78zOn7xsZ0xy5gwOoST9++rOaXhPF65SQNQlUOxe2VOT9gXcCtIvEpVVrTdkflkj2STISANHyEh81YKYARnb4cNhtjP5lacqKJ/ciO9nDlOIK9udJqV6JkGyeSPpgtv3yNHIzPF/h7z7Ml3J65EArpV/K+UMSorc/O5pulnFLKnXKFu+2pG7Zcv1ClWaQ8X+YH2ag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CAf9gOtCO7lezdCOwI1aw38fEFj8BOnRAVBpDSrSMw4=;
- b=gmHEHojko0Se5e9izJc6UKPVfhZgWBGeVrqtq42gpy5HW4JXo+HJ1+GBDeXwlSiYCiydzG5bJ0DiZHVgR/w+q0XxgpD3VY7VQTSmS+YV/lzp7Ip3hjEU8vjEzsbCM1dk4LNSs0XSZecMTn8M/qUXBzqQXe230xfJh+ds1ZOejrb/Eyf4wpomvNC3EuASUUTldXo0U8zl1MtZjYpn1IWc2bSSm1PkNEWARwPvoJqwsGBcLtPn7J5xXd3ShqCx3zgeOHc3aP2gXk9ei+KC2rVBF/GJVzxykULKgvOuQfVdBdl1defudOSRVOKewU7qEMlkgZ8GfQw5Wkropl+ZtUiF8Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CAf9gOtCO7lezdCOwI1aw38fEFj8BOnRAVBpDSrSMw4=;
- b=XdmT8DMASHpAK7GR3zzAwFR2wzTxW0H7lSDhqyNnPTAYAQ3igIumdf3MGE2/Sn4fnVsVzMGcL9gM3/6h88OhRJXayLeeyLcPxerGTumUQSxRQ5yE2ljM+/I2zu/JbCRR4CVmpSiQ8SJ/WdafPV5qPIgjT5tizWD3vPCSMDfcXes=
-Received: from PAXPR04MB9642.eurprd04.prod.outlook.com (2603:10a6:102:240::14)
- by AS5PR04MB10058.eurprd04.prod.outlook.com (2603:10a6:20b:683::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.26; Tue, 19 Mar
- 2024 04:53:49 +0000
-Received: from PAXPR04MB9642.eurprd04.prod.outlook.com
- ([fe80::3168:91:27c6:edf6]) by PAXPR04MB9642.eurprd04.prod.outlook.com
- ([fe80::3168:91:27c6:edf6%3]) with mapi id 15.20.7386.025; Tue, 19 Mar 2024
- 04:53:49 +0000
-From: Frank Li <Frank.Li@nxp.com>
-To: konstantin@linuxfoundation.org,
-	tools@kernel.org
-Cc: robh@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org
-Subject: [PATCH 2/2] prep: --check run dt_binding_check when patch include yaml file
-Date: Tue, 19 Mar 2024 00:53:32 -0400
-Message-Id: <20240319045332.2304950-2-Frank.Li@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240319045332.2304950-1-Frank.Li@nxp.com>
-References: <20240319045332.2304950-1-Frank.Li@nxp.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SJ0P220CA0027.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:a03:41b::18) To PAXPR04MB9642.eurprd04.prod.outlook.com
- (2603:10a6:102:240::14)
+	by smtp.kernel.org (Postfix) with ESMTPS id 3F12EC433F1
+	for <tools@kernel.org>; Thu, 28 Mar 2024 09:35:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 3F12EC433F1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 4862CE000A;
+	Thu, 28 Mar 2024 09:35:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1711618526;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=jKcpREhZMiOxB97X7Y/OqvQxYBopd0XYAKUT6BsOhOA=;
+	b=Cn+F+slYhHxdJqciHlmrnAUqZ9ZbqfcsCryV5VkX4wq/TQgJ6WZXlCYD1rAhoO+eifUnIr
+	mpvHazw4D3HxPkg+RKxpy9XX6DJ1S4sVBCwubGoHz6H2SP4ovWWtw01vanWUNrFYoN0AoJ
+	N0i+aAmVvpBv+Iia1aM4QCLVozCHaj39tEOlHAcJB6MzjwcyFBpf18b5B7LXes5LLa5IEF
+	px1h6fPWBs4rtPBvV4XW3x5cT7B/NWHJ4VpK2f2SGEJh1bIp41G04Bt3Iap26vgzPhokpC
+	pL1YcNhQyBlTo/Q7+TmwXgUdI7htFzgCTb7sFspUIePC5rbRl78GNjacq4RrsQ==
+From: Louis Chauvet <louis.chauvet@bootlin.com>
+Date: Thu, 28 Mar 2024 10:25:43 +0100
+Subject: [PATCH b4] ez: Prevent overwriting an unrelated cover letter
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR04MB9642:EE_|AS5PR04MB10058:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	EzoCAeNHoP3olARI74YUwaTIFpRoSHQ1cyQvCIxXEYILyIFFJyg4ojZEFPaK4+YdJ80MQhP/5O4QQO07wFCq0QoZxVjoy25Kq1huepZgcdQGsMNkzooFZCe3ijWQ6E2645nycztbzr5SXsrMxziOwr2Af8C52aWo1NYZDbjONbaul0YB4OK8O+uZrF4b5qYrwPfGyGakf2p5LqMRFLOrO4VAU0lfYbHCVxUxCS49Kb0rCponzhCnk0drf6oz8BO1d0kMh1ob1Ib2xPefiWD4swh7eI9HcSbVWhJ22rPVTBMPd1LCmgdwC416nGfNm5Herby9T+tVG1qz7Cke5/LMn8ay4i3Nmww3tppeyomdWFBmGB/+OzKKogW85IWu484crykzuwAV5I23yxMrxVfCfxrPl6m2VO78SZx8yOjh3rZEc0QkMQ74+kchi9QIZ/uWSKT2l2LCTgrsivaf+VCnrUnJtoacrGlP209YaWSK2FUZrqZhNTO46RmHrEh/aIuHD5uB5Kv3CbrsojSu+HqdMyNsafhUSB3omuDPwZz7In5CXHkJsn75WadWcDKV7Gcgt52/2UIWyEHzwrZ/sE/HztzvJbS+4pR/U/YHmQDwwWAI5/gEED1FPxj1s8GmN5PDNKYudlc8A0paSqJIbR2uZhTsHYZabH438lq7vv6dIwzNI7NgLMEfQ5LJjR2y31mgU1POzVFebY21K9NtDg3r65KBhwxi/zSZpAv6/hZEOMg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB9642.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(366007)(52116005)(376005)(38350700005);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?haqGhXeVbIFsX1qWaFT8gn/bHZxqqpwJXamycAl6Sj4nO0PAQOa7oj/u46C1?=
- =?us-ascii?Q?s0+I6KOqYJoqPlwinq842HRoiFaB0vpHaLbnKRz6M61xxSVvAjZPxFCjs+Aq?=
- =?us-ascii?Q?vx+VTk8w35Qqz7L/okiCUD9ikALdZlVI5N6kGNMD4HRl025iUeP5saZSXM6k?=
- =?us-ascii?Q?RLW6u4rQF9vtB0Fe6+e2GfXZ5eon0ijylnko26TozyrFWe4N9MTM0Tla+J/0?=
- =?us-ascii?Q?3uqzcAYAeYNEmLO1SINCQdvQi9bZVuIu4x2Tmd+wVrmhTZtGI+bNkOdqAhxx?=
- =?us-ascii?Q?seF0gS2USX1yuIbarMRYuM0ZbmXIUlAja9jtdI3Qgn87WlMXufPAU6rx/0Tu?=
- =?us-ascii?Q?tKUYQJ3wsMDVisZnMGpk2z5Ja24hlwm3+RUmLFXujWfLSoHi2T8s6NJxVJ7A?=
- =?us-ascii?Q?XawSi64C2il2p+AUlh7dFAfo7BBsBALnZnKDlRWYHHQIt0aqehKFRoLQTqw0?=
- =?us-ascii?Q?ymsu2rH6Jd3hfrsIxa0S/UsT2rsQ4LuNQIUtpdee00LxYrIhrI8a6W8wnFnn?=
- =?us-ascii?Q?MJ8/DhYnrvetTdD96QmNiKF+TWnaLDJonzoIsoVebKZtR5802C/b3sgL0m2M?=
- =?us-ascii?Q?29072rSojNh9xPr+Nib9Aln+6clCoRJAAy7KUFZtX5FjZ1mUsBlzGKJCGUzg?=
- =?us-ascii?Q?g1oyH8SG27qDo24+llSduC1eNuDYrhW43rc+cfQDl2APzjkPZHm59c08DWLF?=
- =?us-ascii?Q?lk/ffIRRKtfDfqc+pG0gjZKFR297OkuABLYaWnis+evYlqK+bya2rJFLSGjZ?=
- =?us-ascii?Q?aWHgeoc3XyRoHi/kZ0Ex66Exee0Tt3eM38jKtLBmi9dx1jqG/tmaU2yrV02s?=
- =?us-ascii?Q?LKZOpAsbqUWbiDO5ZDvTOQI/bJNDSd97hNx1IWFVweYawfHEwBEYoV9clblT?=
- =?us-ascii?Q?A+NThtWp5g8r4Hptn+JQPQugt0hx54wdGOUDdbLoJ7wC7zbHUi1hXE3Rmk3b?=
- =?us-ascii?Q?ZZh8m5vp4F2R4REBt6dtizVUjfLOWrUz83GkfgnQwPdSD+sxhnZPz0xmDqd+?=
- =?us-ascii?Q?CfQTr5g/HMH61am7cZlmwgLxUdgRpEIhzbK7vj+YY0MXiqTT3GRDCeBp3h13?=
- =?us-ascii?Q?RflvKMWRqwLegANFph/p82/yimLuIOoqLYxsvCedVn2iZMlOwTx94wJMr69s?=
- =?us-ascii?Q?y1so5c+v7/cqUsCW9H918HLHh8ExXIztvItv7ef/E/aRYgUqVuYPXl0RAWmj?=
- =?us-ascii?Q?vwHdrP5DEO3E1/Hh1FeX7CeSeiMhXYSgzmPdHab3FD9hgs5LCBLhPNUAr0dM?=
- =?us-ascii?Q?N33GFCgPZ+0dqToyuIS4Gj+JHhPruAOrEKNQkR7hUvE9S/jFGlgt2fYuQSg+?=
- =?us-ascii?Q?1rK4fC7R9IzNDg8o7pNoXaz6p5z2iSYbdpICOcHt1KA4f+9CcuytUL60SAL5?=
- =?us-ascii?Q?wK0Gbq3IEVHka2HjmepjS71zocR7VSAv7lU0dtarzFEvCnm5UV4ceQP1B1tR?=
- =?us-ascii?Q?p1CG2Hp/3WHKvUeHvloBrS4VuwflblUncJIgHTF6GnOIztGg+3gQyY43bsGS?=
- =?us-ascii?Q?4QQest7U5vdtW472L62XEoulovh+/TWN0r/CzV76gyO0kNzr3dfIE0lTYwau?=
- =?us-ascii?Q?BLEyPsB/wBNHqQLfqBYcfCHIthzrtIWefJ5zX5u0?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6a60f909-917c-4092-e474-08dc47d090d5
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB9642.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Mar 2024 04:53:49.0001
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4unvl5HGWfpdh4giYau9Amq/KvntEHKRp3YchuuorjrtczFnqdPohGHES/B/o43tkOsXxH86ETY0H1GM5HHJOA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS5PR04MB10058
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240328-avoid-overwritting-cover-letter-v1-1-161d30ee533c@bootlin.com>
+X-B4-Tracking: v=1; b=H4sIAJY3BWYC/x3NwQqDMBAE0F+RPXfBxgjaX5EeTLLVBUlkE6Ig/
+ nu3PQ0PhpkLMglThldzgVDlzCkqno8G/DrHhZCDGkxrbNuZAeeaOGCqJIdwKRwX9D/hRqVo9L1
+ 1PpjRaR90ZRf68Pl/mMBZeN/3F2sYtNt1AAAA
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ miquel.raynal@bootlin.com, thomas.petazzoni@bootlin.com, 
+ Louis Chauvet <louis.chauvet@bootlin.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2881;
+ i=louis.chauvet@bootlin.com; h=from:subject:message-id;
+ bh=T84krUeqYanzTm8AWJb336byBlCwRJXIWG26SEX3hiY=;
+ b=kA0DAAgBIK0uxlsQLOIByyZiAGYFOdbIZu6PdiZBho1SgVoyooiHgKhV4eZB7EZLN0ZhjGi+EIkC
+ MwQAAQgAHRYhBE+PuD++eDwxDFBZBCCtLsZbECziBQJmBTnWAAoJECCtLsZbECzitNIP/ibbgkubSg
+ SkR6GL2lMQ2mG4UtUYmVxb4PpiIbChyp+NE8+/FuDM4nzuVj4oMe0V9ui/Mnx4iRj8yn/a6ey1qMS9
+ jdYHFTAnky2GeFOfWOHamy6BzIexbgk1LdWQo8Dqsz1H4RhduASNiCcDBBMQMC7HJiR6dq1t2tsQSN
+ T3U4v//tXwjbo1i7W90vNNiz1I8Z/H94qtCHNX2lAQikNGz83plMDMm2BttPF+6aZlm2yXYSQmmFzY
+ B3oUrn0NDYXpbwN/ioSC/XGO8u2P9Yqd+CUA1QFZqJxfz6NlqJhUFfF4O/uAFyJfHRkiPxcfsVZChw
+ KrxnkG+2eJJQ19+in2eUBeJLkRkTgpRKCbOHgh9dHC0Q5eERovCnlpNV5TQXqyj/omm9joxui402HK
+ riqDU46cmVaWZHAfYRSzSaPp9tzDxfpFuH4s5ju8PL6P73Hf/oohq2+C5JSZBWNiOGTvT43Lf6z/wn
+ hwmm+DKf+u4v16QV/je17jmiXXMJmanqizUaZz2g0ks/FKmt5Sy3WpF/y/QCLf+2hAOoMSGJbYu4ei
+ CCkjCsdfSOz+VyHo0KzOjX76FMPrt+9O6aMkJpS83rTxL76PhkWx0QxHu6TZeyxr5c34eRUyCx6not
+ CqLlxbHNTvcAcCIAtYn0hQRRi/n6EigqWkatKuSeIJiLTciZhr
+X-Developer-Key: i=louis.chauvet@bootlin.com; a=openpgp;
+ fpr=8B7104AE9A272D6693F527F2EC1883F55E0B40A5
+X-GND-Sasl: louis.chauvet@bootlin.com
 
-When patch include device binding yaml file, run dt_binding_check
+When editing a cover-letter, b4 expectedly selects as base the
+cover-letter of the currently checked-out Git branch. When
+saving/closing the editor, b4 also saves the changes as the
+new cover-letter for the currently checked-out Git branch.
 
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+While simplistic and apparently totally fine, it does not play well
+when working on multiple branches. Said otherwise, the following
+sequence of events will write the wrong file, possibly smashing a
+valuable cover-letter:
+
+	$ b4 prep --edit-cover
+	<make some changes>
+	$ git checkout another-branch
+	<oh, I forgot to save and close the cover letter editor!>
+	*crunch*
+
+Add a simple check to only overwrite the cover-letter if it corresponds
+to the one that was originally opened, otherwise warn the user and save
+it in a temporary spot.
+
+Cc: tools@kernel.org
+Cc: miquel.raynal@bootlin.com
+Cc: thomas.petazzoni@bootlin.com
+
+Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
 ---
- b4/ez.py | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ src/b4/ez.py | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/b4/ez.py b/b4/ez.py
-index bcf6363..c3bffa0 100644
---- a/b4/ez.py
-+++ b/b4/ez.py
-@@ -2190,8 +2190,30 @@ def prep_check_patch() -> None:
-     cmdargs.append(getcheckpatch)
-     cmdargs.append('-g')
-     cmdargs.append(stc + '..' + endc)
--    ret = subprocess.run(cmdargs)
--    if ret.returncode > 0:
-+    dtret = ret = subprocess.run(cmdargs)
+diff --git a/src/b4/ez.py b/src/b4/ez.py
+index 1d360410d771..c322953564a0 100644
+--- a/src/b4/ez.py
++++ b/src/b4/ez.py
+@@ -8,6 +8,8 @@ __author__ = 'Konstantin Ryabitsev <konstantin@linuxfoundation.org>'
+ import email.message
+ import os
+ import sys
++from tempfile import NamedTemporaryFile
 +
-+    gitargs = ['diff', '--stat', '--name-only', f'{stc}..{endc}']
-+    ecode, diffstat = b4.git_run_command(None, gitargs)
-+
-+    for file in diffstat.split("\n"):
-+         if file.startswith('Documentation/devicetree/bindings/'):
-+             directory, filename = os.path.split(file)
-+             if filename.endswith('.yaml'):
-+                 touchargs = list()
-+                 touchargs.append('touch')
-+                 touchargs.append(file)
-+                 subprocess.run(touchargs)
-+
-+                 logger.info('Run dt_binding_check: ' + filename)
-+                 cmdargs = list()
-+                 cmdargs.append('make')
-+                 cmdargs.append('dt_binding_check')
-+                 cmdargs.append('DT_SCHEMA_FILES=' + filename);
-+                 dtret = subprocess.run(cmdargs)
-+                 if dtret.returncode > 0:
-+                     break
-+
-+    if ret.returncode > 0 or dtret.returncode > 0:
-         logger.critical('CRITICAL: Check patch failure')
+ import b4
+ import re
+ import argparse
+@@ -758,6 +760,8 @@ class FRCommitMessageEditor:
  
- def cmd_prep(cmdargs: argparse.Namespace) -> None:
+ 
+ def edit_cover() -> None:
++    # To avoid losing the cover letter, ensure that we are still on the same branch as when the cover-letter was originally opened.
++    read_branch = b4.git_get_current_branch()
+     cover, tracking = load_cover()
+     bcover = cover.encode()
+     new_bcover = b4.edit_in_editor(bcover, filehint='COMMIT_EDITMSG')
+@@ -768,8 +772,15 @@ def edit_cover() -> None:
+     if not len(new_cover):
+         logger.info('New cover letter blank, leaving current one unchanged.')
+         return
+-
+-    store_cover(new_cover, tracking)
++    write_branch = b4.git_get_current_branch()
++    if write_branch != read_branch:
++        with NamedTemporaryFile(mode="w", prefix=f"cover-{read_branch}".replace("/", "-"), delete=False) as save_file:
++            save_file.write(new_cover)
++            logger.critical(f'The cover letter was read on the branch {read_branch} but the current branch is now {write_branch}.')
++            logger.critical(f'To avoid overwriting an unrelated cover letter, the operation is canceled and your new '
++                            f'cover letter stored at {save_file.name}')
++    else:
++        store_cover(new_cover, tracking)
+     logger.info('Cover letter updated.')
+ 
+ 
+
+---
+base-commit: 23970c613f40356cc88716d07c2d427ca024e489
+change-id: 20240328-avoid-overwritting-cover-letter-554bcd29b240
+
+Best regards,
 -- 
-2.34.1
+Louis Chauvet <louis.chauvet@bootlin.com>
 
