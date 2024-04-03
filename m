@@ -1,70 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96A36F099
-	for <tools@linux.kernel.org>; Wed,  3 Apr 2024 16:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A303E156257
+	for <tools@linux.kernel.org>; Wed,  3 Apr 2024 21:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712163328; cv=none; b=oKK5oICrhiF7BZyjrw0Xs0BPIE3gbxxLlY5PVwLM/4+9KhSKfrC9hm2u34pq27Bp/NZVsRvPT9LTJd92M9srppvcM/oEBNEzN0nmm25k2CseG7ZdsFUHxCmirNOVWzSUZhQr9ntqezQ3C0o8VSxYTI7sMqrTVP4RzHIuvFSLbw4=
+	t=1712178128; cv=none; b=tuNxZjQ7IvyIIs6khm1yvpwWv+rddH1fvybwOcYBiSMkHAmP4wo3w1zfo7MZEDYHM+bsJ1Yt/EgGg01iKhIsFY8CxBs9WuFe/KcLOkDwXbT9ytHuQZ+HpXgDglP2UPknjQlQw1RRErOweIAZbiSnIQgiRj3fItpUAoekAejdLQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712163328; c=relaxed/simple;
-	bh=AZQLJMutpXc7+FCSpHaRN5uP8LedTcvlWInJfp5jmQQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Myr8LBaPKAHB4kdjaP3SYq/9gPQU8X86NI2GHD4DX8GWEkUr3drFz83+6oyjyjEIsJajkHVXa7r2j0ESg2GiY6WcErxARsdoJF2j0R+Nsz3M1Oikftf6tI1uiEyeHFihk+h45j7pNyUvGrUTTOJ/vznQsOEY7PK12t+DeajM1DY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nO3mxYbO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712178128; c=relaxed/simple;
+	bh=oC57JrLy8lYFRjVNsU8c/HnUCTRZSVjmhh+9MDJE2wY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hZX0eDtmkGGLQIMxEyE6Pcjr9wntXmg/w4JtwCtWE8GCCjZPYo2QcsoS8er0NVkTHcb3Yx1MuPijN64RG7W4V9tLUq+3YuvLB9vbCUtzUqNe/2KEhFp3Mlf85SXypRJOCQiqD81eM8kOS4HQy+u1SiG9Ne7rVFs5NrWnR7q+P20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7lRtTYd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nO3mxYbO"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7lRtTYd"
 Received: by smtp.kernel.org (Postfix)
-	id 7447DC433C7; Wed,  3 Apr 2024 16:55:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE47BC433F1;
-	Wed,  3 Apr 2024 16:55:25 +0000 (UTC)
+	id 81014C43394; Wed,  3 Apr 2024 21:02:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A003C43390;
+	Wed,  3 Apr 2024 21:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712163327;
-	bh=AZQLJMutpXc7+FCSpHaRN5uP8LedTcvlWInJfp5jmQQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=nO3mxYbOSgh3G6+HeejxxJTzFqv4PxdqZ/PhJNqFJYLRqs0b8+3iKKqWnpGmjdGej
-	 BspyjcF5vadN+u9yGWQUdOCvjZ8HSpY39b1j2yZPLdK9pcBGPJnnbrX/PceO2VQzQO
-	 xwFdKm/1+HZP3uHCJjhLoTRwX+y54Nw7xGlr5dCM=
+	s=korg; t=1712178128;
+	bh=oC57JrLy8lYFRjVNsU8c/HnUCTRZSVjmhh+9MDJE2wY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=g7lRtTYdIiSm2TEvdulENaL3AQ+PST03JPj1taq6IVqrGIyECvynmjn/E9+WEYgIq
+	 n7mbq/bmhAyMK29yt7NB3sfplCB+5y7YrGogejH4tpYBsAouLTgvOVK8qG7QtBq0HD
+	 bXlVBBLOBFkbpwyK8xfWdO7yA0Zw6UUdyZzbIvRk=
+Date: Wed, 3 Apr 2024 17:02:07 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@kernel.org>, 
- Louis Chauvet <louis.chauvet@bootlin.com>
-Cc: miquel.raynal@bootlin.com, thomas.petazzoni@bootlin.com
-In-Reply-To: <20240403-avoid-overwritting-cover-letter-v2-1-cb43a8df8ce2@bootlin.com>
-References: <20240403-avoid-overwritting-cover-letter-v2-1-cb43a8df8ce2@bootlin.com>
-Subject: Re: [PATCH b4 v2] ez: Prevent overwriting an unrelated cover
- letter
-Message-Id: <171216332586.1200990.607530837912420309.b4-ty@linuxfoundation.org>
-Date: Wed, 03 Apr 2024 12:55:25 -0400
+To: Vitaly Chikunov <vt@altlinux.org>
+Cc: tools@kernel.org
+Subject: Re: grokmirror from kernel.googlesource.com
+Message-ID: <20240403-real-acrid-bug-df6dba@lemur>
+References: <20240330142439.7qjcbbhnqxf2ta3h@altlinux.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14-dev
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240330142439.7qjcbbhnqxf2ta3h@altlinux.org>
 
+On Sat, Mar 30, 2024 at 05:24:39PM +0300, Vitaly Chikunov wrote:
+> Is it OK to mirror git.kernel.org from it's mirror
+> kernel.googlesource.com using grokmirror?
 
-On Wed, 03 Apr 2024 15:29:17 +0200, Louis Chauvet wrote:
-> When editing a cover-letter, b4 expectedly selects as base the
-> cover-letter of the currently checked-out Git branch. When
-> saving/closing the editor, b4 also saves the changes as the
-> new cover-letter for the currently checked-out Git branch.
-> 
-> While simplistic and apparently totally fine, it does not play well
-> when working on multiple branches. Said otherwise, the following
-> sequence of events will write the wrong file, possibly smashing a
-> valuable cover-letter:
-> 
-> [...]
+I don't recommend it because kernel.googlesource.com doesn't publish its own
+manifest, so you are always going to be in a race between our manifest and
+their mirror.
 
-Applied, thanks!
+> (Recently we getting 502 Bad Gateway from git fetch from git.kernel.org
+> directly.)
 
-[1/1] ez: Prevent overwriting an unrelated cover letter
-      commit: cfcbbe6f23943166f11687ecf37252dc20728639
+Well, at least grokmirror should recover from such conditions. It doesn't
+happen very frequently, but every now and again a CI farm will try to use
+git.kernel.org directly and that tends to cause problems.
 
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
+-K
