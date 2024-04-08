@@ -1,67 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260551BF40
-	for <tools@linux.kernel.org>; Thu,  4 Apr 2024 16:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B91D143C57
+	for <tools@linux.kernel.org>; Mon,  8 Apr 2024 18:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712248469; cv=none; b=lPZ/1+0SJEYkk60W1kuGZv7negJXeYu1f9w3Nmwd4terwERYGd/Atve18rjA1uSUjIrJePtss/+MvEZc9Lt6B8uy2HRjeW3rYGOEmebiyuvACDi6SFVNrFYBzVAe55UV8EBb4Og2J4ZQY8iqoCeqgzz/jbCTmswk4gBKaLhA2Vc=
+	t=1712602130; cv=none; b=SE2VEjALF6r2VnZhCDeI5gF4kMLdrGOgW9BCPwcTvBt7st059V+huk8VZO71nhDGW4lr5dbmIZ54wR+8rb5ziTguJdvVez9Tat0OpYLitTowlQGQANcvAL87kGnmPZS/mjeoD2GpfJNaVKiPz89/fTIf3ikaQLp3WXIpjypC1ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712248469; c=relaxed/simple;
-	bh=X4Lw/dih49IW+PWkdCAeI85+hWxo8PM9kQPQUdXpBtU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dCB4vLAbuVh8cLnxNCVQ6NafgfQjUqRhlsPrpB7DcA64Eac+BFYdR47+63XUCyPB+xBlVrH/UAIiX0pBkewCT3XnjvZVF+B3QzRRNLP23UA6NqsBEq2yrCVaZTIPicnuSLXWcSRU2EJJnq5ol7jCbSuB6ye8Eti8rd1i/naFwHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix)
-	id BCBE0C43390; Thu,  4 Apr 2024 16:34:28 +0000 (UTC)
-Received: from vmicros1.altlinux.org (vmicros1.altlinux.org [194.107.17.57])
-	by smtp.kernel.org (Postfix) with ESMTP id 691BDC433C7
-	for <tools@kernel.org>; Thu,  4 Apr 2024 16:34:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 691BDC433C7
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.org
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=altlinux.org
-Received: from imap.altlinux.org (imap.altlinux.org [194.107.17.38])
-	by vmicros1.altlinux.org (Postfix) with ESMTP id 8628272C8CC;
-	Thu,  4 Apr 2024 19:34:24 +0300 (MSK)
-Received: from altlinux.org (sole.flsd.net [185.75.180.6])
-	by imap.altlinux.org (Postfix) with ESMTPSA id 0A60536D0160;
-	Thu,  4 Apr 2024 19:34:24 +0300 (MSK)
-Date: Thu, 4 Apr 2024 19:34:23 +0300
-From: Vitaly Chikunov <vt@altlinux.org>
+	s=arc-20240116; t=1712602130; c=relaxed/simple;
+	bh=/c1ZftEVaTkP0yWRFZ7Nwx3e7fhccU17lEr4T/XByc4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=LDmyF8koKTBP1HKRumQKbJr9V9W0tRzB4IFGBRCczioHdXLE8jvTXVb2R7Zb6LQ0PHY+2ekIUCrvdUY+EN6wNTWbfyqij3Ax7C+lU9S8WSqib9f6EudMNu4vif+0/ZRdFeKxqY7Zf+EyMpDu8Tfbm8VbBqClpCeArUufE+JwQRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ing7vgOI; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ing7vgOI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF1BC433F1;
+	Mon,  8 Apr 2024 18:48:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712602130;
+	bh=/c1ZftEVaTkP0yWRFZ7Nwx3e7fhccU17lEr4T/XByc4=;
+	h=Date:From:To:Cc:Subject:From;
+	b=Ing7vgOILxfvM4MrBo20DLQlFgcHwC+AqXH/O3BYpdfxzN9vXEvDeumXsK23PYpCo
+	 g+TZSUZ/1F+P9mcYZoqqQR62jlXScQ/31qKbjhDtlSvGfUC+eHzYITzGdx2hkXr3/U
+	 +C3mgkgFIzm4gYdTZHB/M3rw7WuovdJt5TXG2T/7ToL3SsHBvkc4RElTyHTC6IEhs4
+	 TOYFsV0SBFrnGhW8cOImMpuJmj0fGPpd/pr3kXG/tIODBi8dNKm3UhQIiF0KmNp1zK
+	 f7yFwm73dk/+Mx4Vp5c418VSBd4SxiYt0T1Z7uyHAQvhz6BKgnwwndUzESLozDJfbJ
+	 Auw93I3TT6QdA==
+Date: Mon, 8 Apr 2024 19:48:46 +0100
+From: Mark Brown <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: Re: grokmirror from kernel.googlesource.com
-Message-ID: <20240404163423.md5wiz2jsb76jjh4@altlinux.org>
-References: <20240330142439.7qjcbbhnqxf2ta3h@altlinux.org>
- <20240403-real-acrid-bug-df6dba@lemur>
- <20240404142934.e5djlrkaorufl6lc@altlinux.org>
- <20240404-outrageous-locust-of-refinement-f9ada3@lemur>
+Cc: tools@linux.kernel.org
+Subject: Checks for recipients
+Message-ID: <ZhQ8DoS1GaT0603l@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="B/Vy1ODv77Ne6ZgB"
 Content-Disposition: inline
-In-Reply-To: <20240404-outrageous-locust-of-refinement-f9ada3@lemur>
+X-Cookie: Drive defensively.  Buy a tank.
 
-On Thu, Apr 04, 2024 at 10:49:02AM -0400, Konstantin Ryabitsev wrote:
-> On Thu, Apr 04, 2024 at 05:29:34PM +0300, Vitaly Chikunov wrote:
-> > Perhaps, with frequent runs it will self-recover. But this brings
-> > another question - what is recommended minimal cron interval for
-> > grok-pull for git.kernel.org (I only want to mirror torvalds and stable
-> > repos)? I have seen in some articles and old READMEs example of every
-> > minute (*) and once per 5 minutes (*/5).
-> 
-> If you are running grokmirror 2.x (and you should be, hopefully), then you can
-> just set "refresh" and run it as a service. You can continue running it as a
-> cronjob, though -- it can be once a minute if you like. It just downloads a
-> static manifest file, and only if it's changed.
 
-That's good!
+--B/Vy1ODv77Ne6ZgB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Hi,
+
+It would be nice for scripting if b4 had a check similar to the
+needs-editing flag in show-info which would allow scripts wrapping it to
+determine if there are any recipients specified for the series.
 
 Thanks,
+Mark
 
-> 
-> -K
+--B/Vy1ODv77Ne6ZgB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmYUPA0ACgkQJNaLcl1U
+h9Ay8Af/ZJdW3SsNCILpfZ6cyJgw1dGRdcjW62W6UXfIeLxsVjzu4ZYsjbkUxCPE
+0nIb0+uVVelVQOHXp+LJRXc9nBa3jeCAC2zCw0iNjr0l1uRRMTGRiD2ps+FH1ywy
+2MiMqVDEOg1XT/5EAf5LHV/ZRaAB0mDzRBTPe4TrhNHoE+JH3p1og49XnJwmvOmu
+6Xu/p9R4xtzxQ2ftW7GnN5VKECqxwNw7all0M9zIV1oSDfFTgIgZC3q0uxCA5Ki4
+Df0vNwIfnwTI/I8za2oIMc06IlGfqptJIVpBkTP5kRnQMbTun6N6M96pBAfwRry8
+a2eLCJXDhr/rMjZrqI5CSGUs/dp7Ig==
+=ubUM
+-----END PGP SIGNATURE-----
+
+--B/Vy1ODv77Ne6ZgB--
