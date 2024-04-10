@@ -1,63 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE24A13D88A
-	for <tools@linux.kernel.org>; Tue,  9 Apr 2024 17:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4451353372
+	for <tools@linux.kernel.org>; Wed, 10 Apr 2024 19:17:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712682366; cv=none; b=sepHtNL5jzOnmyH+vq+HFiidzDRLTvF7txRdYG/m04nZoKl0UpGjUcZ4kGNaQyxHu7zoh4bdZ/huFpNRVCWwVQ9Uq+Q9cGUVF9TVjIw9i+tq6FWbaqasM8WVNNWccZfnDe70iPRHFs1LiT0/Ztsl5XRb4vbkvUZRjaZjAt7Z06U=
+	t=1712776676; cv=none; b=mTRBXtau61n5JgdjPaGTRwSdSblzuVW20Zo718cdSqHTmXTF2TuDcvag9/zFyhd2KGgvxNoNhORBmg8ySYxfjagnvErRvctqytNS7kcbktoMAP9PfT5ISzwYkDp5GvC6RW0CjpWQ6UvOY7bX6Rk9/52Q7k7CQOOzBT3WUl8wKBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712682366; c=relaxed/simple;
-	bh=iLj5XNoTS39Q9B0iVi6LuZYHf9R0Du4aHpZfeFGXYPU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=s0NBT5A7Quh8x4ZrKHNz73g4OkzO7juwu4fUH5q/q45gNoSKtqtkkQs+PxQhOAnzUSIY5PeNJhaaxpcq/hc1wkzFRMttFZbcIFSeYX82pJmGrP+nLM23GsF9IPaPCfjHtx4eLbyHVHaUNlpctLFF8jTMCYW7DJCcir/t12nHSos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFHxX9KC; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712776676; c=relaxed/simple;
+	bh=EzWA5dhFifaQQc55AV9uTf4CcMn3kmu51CZMCBsBYMo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fZBfYaEYSC3ml8zmsn/0oNeBRLgsnB9A72I/yRhHtwYRSpouPR7ZiKLXEVBze9bi2y9v++oAQql/O4XtNPjebvUfw8uFsPzBzy/oT2ilu/61NtndgggC5rV+CwwvbVfbNRilNpkGqpcSe+07WYuIh3kpW3cuRZCgXjB/tL1GoHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKT0nU33; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFHxX9KC"
-Received: by smtp.kernel.org (Postfix)
-	id 57266C433F1; Tue,  9 Apr 2024 17:06:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A11C433C7;
-	Tue,  9 Apr 2024 17:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKT0nU33"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1017C433C7;
+	Wed, 10 Apr 2024 19:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712682366;
-	bh=iLj5XNoTS39Q9B0iVi6LuZYHf9R0Du4aHpZfeFGXYPU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=OFHxX9KCn8IegdZ6sB3THT+rYIyU4gKVApBeKYCFjeas9ozM92Txw4UGzmXxpXdZw
-	 dzknuhVS6e01dCwPooKPCZdtGE0AHHE9KwBNr3f4wSxEBslZZoQgii/e1elnoG2FdG
-	 h+qHOeWiNypFrEUmVlP269QHToHGaMTIxnZihPSQ=
+	s=korg; t=1712776675;
+	bh=EzWA5dhFifaQQc55AV9uTf4CcMn3kmu51CZMCBsBYMo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sKT0nU337I46ry9cAXT5bPCNCJxFCtwwh3hVqFnnVpCmsV48+HvOqW7CP9oZbBsit
+	 BO6Ysj+8JEmgW317td8XarCLu5WRBkGggTC8J6H2zVpzknJ9zhxWxIlzIeD6PUy6m2
+	 RBfnDQq8fiscc0Y1FYvxdK+jCJpyyv947Q563E/Y=
+Date: Wed, 10 Apr 2024 15:17:54 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@kernel.org>, 
- Louis Chauvet <louis.chauvet@bootlin.com>
-Cc: thomas.petazzoni@bootlin.com
-In-Reply-To: <20240409-check_if_branch_exists-v1-1-136504ad81c2@bootlin.com>
-References: <20240409-check_if_branch_exists-v1-1-136504ad81c2@bootlin.com>
-Subject: Re: [PATCH b4] ez: Add a check before returning a commit
-Message-Id: <171268236583.168654.10853538008478323653.b4-ty@linuxfoundation.org>
-Date: Tue, 09 Apr 2024 13:06:05 -0400
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 needs-editing check vs single patch serieses
+Message-ID: <20240410-modest-mini-cuckoo-b6e05a@lemur>
+References: <c9a9347a-b795-4824-8edb-9fba31cdfc5d@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14-dev
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c9a9347a-b795-4824-8edb-9fba31cdfc5d@sirena.org.uk>
 
+On Mon, Apr 08, 2024 at 07:51:36PM +0100, Mark Brown wrote:
+> The needs-editing flag in b4 prep --show-info was intended to support
+> scripting which wraps b4, allowing it to see if b4 would refuse to send.
+> However as implemented the check does not take account of the logic b4
+> has which doesn't require a cover letter for a single patch series, it
+> will just report if EDITME is present in the cover.  Wrappers could do
+> their own version of the single patch check but it would be good if this
+> were done in b4.
 
-On Tue, 09 Apr 2024 11:15:56 +0200, Louis Chauvet wrote:
-> B4 prep utility only works when a branch is checked out. To avoid
-> misterious errors at runtime, add a check and a runtime error with an
-> explicit message when the current branch can't be found.
-> 
-> 
+bugbot assign to me
 
-Applied, thanks!
-
-[1/1] ez: Add a check before returning a commit
-      commit: 3b691d28df6954e8fac742365a08c496f36a3738
-
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
+-K
