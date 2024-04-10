@@ -1,54 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4451353372
-	for <tools@linux.kernel.org>; Wed, 10 Apr 2024 19:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C391802C8
+	for <tools@linux.kernel.org>; Wed, 10 Apr 2024 19:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712776676; cv=none; b=mTRBXtau61n5JgdjPaGTRwSdSblzuVW20Zo718cdSqHTmXTF2TuDcvag9/zFyhd2KGgvxNoNhORBmg8ySYxfjagnvErRvctqytNS7kcbktoMAP9PfT5ISzwYkDp5GvC6RW0CjpWQ6UvOY7bX6Rk9/52Q7k7CQOOzBT3WUl8wKBk=
+	t=1712776825; cv=none; b=aaDZmGJG74QCoWHkA+o8NUy7Iox5cmEXU0qqIKR7oOjCLl35Pr+VHnLYVyBDvZatbxRmVyYTTHO/k3sATcbet10yYutK3hpA/CPYDpaiP0iZu9SDb45HPc3M6iaob3BcZcH8Qx1HmjfXI/COhB8nPG8PjmJqtxhu9R6t2OPAA0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712776676; c=relaxed/simple;
-	bh=EzWA5dhFifaQQc55AV9uTf4CcMn3kmu51CZMCBsBYMo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fZBfYaEYSC3ml8zmsn/0oNeBRLgsnB9A72I/yRhHtwYRSpouPR7ZiKLXEVBze9bi2y9v++oAQql/O4XtNPjebvUfw8uFsPzBzy/oT2ilu/61NtndgggC5rV+CwwvbVfbNRilNpkGqpcSe+07WYuIh3kpW3cuRZCgXjB/tL1GoHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKT0nU33; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712776825; c=relaxed/simple;
+	bh=MZ3ABlT+PcsoCT1k5lr+NnSNRSoMhsKDu6yWjLEPis4=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=g86/L/prUcUsYr9/dNAmlEe89jFNT+oM012I56TtUZDNmMUhf2yGsjX1wifcDUCBHRYsu3AApC2QAsTLuQqPQAdpHVZxZNdA9hw4rxSQzyAzxAGrtO8+0PodIHgAIu1RFAWCHd/whLXOms1++vsBLWf35SJf5tFYtidCobgJB/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BiVM1AWS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKT0nU33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1017C433C7;
-	Wed, 10 Apr 2024 19:17:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712776675;
-	bh=EzWA5dhFifaQQc55AV9uTf4CcMn3kmu51CZMCBsBYMo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sKT0nU337I46ry9cAXT5bPCNCJxFCtwwh3hVqFnnVpCmsV48+HvOqW7CP9oZbBsit
-	 BO6Ysj+8JEmgW317td8XarCLu5WRBkGggTC8J6H2zVpzknJ9zhxWxIlzIeD6PUy6m2
-	 RBfnDQq8fiscc0Y1FYvxdK+jCJpyyv947Q563E/Y=
-Date: Wed, 10 Apr 2024 15:17:54 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: b4 needs-editing check vs single patch serieses
-Message-ID: <20240410-modest-mini-cuckoo-b6e05a@lemur>
-References: <c9a9347a-b795-4824-8edb-9fba31cdfc5d@sirena.org.uk>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BiVM1AWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 7F7B4C433F1;
+	Wed, 10 Apr 2024 19:20:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712776824;
+	bh=MZ3ABlT+PcsoCT1k5lr+NnSNRSoMhsKDu6yWjLEPis4=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=BiVM1AWSSAHxUY3WPG9d3X0ZALK5C9qSuZDia74s1haKgxpfl1wj3LKGPIYRBiTqP
+	 VQgUlPtwk3hBC/JQ/2b7NfpbjgbY2oid8Ggp6hWcSlf3MMlBGWn3tAtw39HpSdvHCm
+	 3lfTbfcERjBBWas5wXABoevyukT+tfgtYeAIqSB8k9zFINTA/euJBIdCm7zXX9hfaU
+	 iUmpt7DRSv2XSmoCJJxktINfrAA6FXIShdzuTALE/BT5GPXq1Id0HUCwIQ/ttfASeI
+	 aOKGPeD3IkujSuf6UpN3jnTaqEyseaKiriU1v2OvTXlnNuFYIEH2nvFmLRPg39t9cf
+	 ymh20wLOFxSlg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 671FCD6030E;
+	Wed, 10 Apr 2024 19:20:24 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: konstantin@linuxfoundation.org, tools@linux.kernel.org, 
+ broonie@kernel.org
+Message-ID: <20240410-b218706-4b7ce5322f27@bugzilla.kernel.org>
 In-Reply-To: <c9a9347a-b795-4824-8edb-9fba31cdfc5d@sirena.org.uk>
+References: <c9a9347a-b795-4824-8edb-9fba31cdfc5d@sirena.org.uk>
+Subject: Re: b4 needs-editing check vs single patch serieses
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Wed, 10 Apr 2024 19:20:24 +0000 (UTC)
 
-On Mon, Apr 08, 2024 at 07:51:36PM +0100, Mark Brown wrote:
-> The needs-editing flag in b4 prep --show-info was intended to support
-> scripting which wraps b4, allowing it to see if b4 would refuse to send.
-> However as implemented the check does not take account of the logic b4
-> has which doesn't require a cover letter for a single patch series, it
-> will just report if EDITME is present in the cover.  Wrappers could do
-> their own version of the single patch check but it would be good if this
-> were done in b4.
+Hello:
 
-bugbot assign to me
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=218706
 
--K
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
+
