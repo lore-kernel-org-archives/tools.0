@@ -1,53 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3A817582
-	for <tools@linux.kernel.org>; Thu, 11 Apr 2024 15:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34C315250B
+	for <tools@linux.kernel.org>; Fri, 12 Apr 2024 21:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712848070; cv=none; b=UUwYrvXJgXIxdWFautONVgRpqawRy/kN/8UfVEgRbto8UCMcwPwm6nVKLa+BzMf7EZfWe7g7DpoSAgUHk41iDvjxP6z3P7rqY4vIVqOAYuk8nfcxPAaTA6NS1LE51XDbwJri2WQDNbk1BK40a5DE3+/acLTZTNpMhhViQHXlvrU=
+	t=1712956184; cv=none; b=GprDUKaCtKmuE7LLFfnOgj9Mlf1RqdsWcjmvWQI2qItynsPixBN4JnwkjoQqbmqihGYicYMJ64fejM/beQyifKBa+WMgNnOxpKq+KLUldRQJguPseImPQVIgRq9sV+5EUJJIYV0AGJHcJSW0AkMOKHnrjtpL4Hzt+qpmzkgTCGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712848070; c=relaxed/simple;
-	bh=CuTXFk8SVpH9bAwJ78Sr0NeaVIli6W0UqoQ/W4nDbpA=;
+	s=arc-20240116; t=1712956184; c=relaxed/simple;
+	bh=qfNSwzDYuhbzZCrA3dy06ibw0uuWY9IBvtLpj2827GM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BAcQj83tGBoJzZpE1xxiCwmmEypZT2S26+ebSFxTC0r718ycVKztDqm3EssUHl/kOApMrNjj9lRP02FrOfGxQAtP1WesF2ofY4D8uT5HECE9h8nJfXYKVuUsRNOlvrm7FuY8e9XqMWcmQVm4PDePlmjtv0Sew1SX0NX0nWIOFKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cpCxADfB; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=FC/vV+ELp0wpsr6pxJSOEMcZYJv/dfophJR2oKtf2QlCXeQF0lciqUJ0DAF7ppEdom7szqC6whH3bq6ncMecGdYngHfaHUNFvdMzTZiwVvlh+jSb6/BIVTH/qTYwDJULXYUup9fZzpPhhFdeJUmGLyKdEW3pcgj3w9poqydkVHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cc9T1z7X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cpCxADfB"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cc9T1z7X"
 Received: by smtp.kernel.org (Postfix)
-	id 4F0E6C4AF08; Thu, 11 Apr 2024 15:07:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2B0C113CD;
-	Thu, 11 Apr 2024 15:07:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712848070;
-	bh=CuTXFk8SVpH9bAwJ78Sr0NeaVIli6W0UqoQ/W4nDbpA=;
+	id 8A40AC2BD11; Fri, 12 Apr 2024 21:09:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51683C113CC;
+	Fri, 12 Apr 2024 21:09:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1712956184;
+	bh=qfNSwzDYuhbzZCrA3dy06ibw0uuWY9IBvtLpj2827GM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cpCxADfBRhPK3MYJZqIA7y+CjSDlrrefPUKuyM0WAgNZLPSdbGnO9jNRT/KvAWGsC
-	 JbntGXbZ7oLL/lelO5KwfP8TxaL98Vns85TYtL5lUGxBBSWRuj/+zgxbYpNHj9w7uf
-	 kD35iD0IvhNR9icnehYe18fRaQbhZ7mHF+6OeNLZnJwWOFbagOw0o9xPQLs3B6pJqw
-	 N2g51Em6GroJ9xJtF1jhvzL3s57lv+6LlkBQVJWjAKzcAiA8rN+LDqD921Wy6QbKa1
-	 fn1NIbL0ZAuoCaeRdNUUfPKa2gQT+8Urbgeazte/gMawz7w4P2L6ol8DXD0U7zRnAj
-	 rKwcbLS2yb/nw==
-Date: Thu, 11 Apr 2024 16:07:44 +0100
-From: Lee Jones <lee@kernel.org>
-To: Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-	Gregory Clement <gregory.clement@bootlin.com>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, tools@kernel.org
-Subject: Re: (subset) [PATCH] dt-bindings: mfd: syscon: Add missing simple
- syscon compatibles
-Message-ID: <20240411150744.GE2399047@google.com>
-References: <20240402202413.757283-1-robh@kernel.org>
- <171283980874.2354899.3662943965972729204.b4-ty@kernel.org>
- <CAL_JsqL5M0gvjBa7VvRm9B3kRpj8=c6f8k2MnG7LbA-jZstB8A@mail.gmail.com>
+	b=cc9T1z7XXlhJood44Qgtucxp6PunryIWUdEeFPi7p3oAkSKXXVz1XrVJfQ70DdT1A
+	 RRiWZOXTwb0vRj7ZVwL7VfWfU1E9so/JmfMtjow6Jr8c4mHPL4LjXKvJSM/XA46JR1
+	 K60KBWcA3CoBKwjlxbRmQmxdnea6TmeIq9BFm49I=
+Date: Fri, 12 Apr 2024 17:09:43 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Frank Li <Frank.Li@nxp.com>
+Cc: tools@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
+	conor+dt@kernel.org
+Subject: Re: [PATCH 1/2] prep: add --check option to run necessary patch check
+Message-ID: <20240412-shaggy-pristine-walrus-319fe3@lemur>
+References: <20240319045332.2304950-1-Frank.Li@nxp.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -56,72 +41,18 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL_JsqL5M0gvjBa7VvRm9B3kRpj8=c6f8k2MnG7LbA-jZstB8A@mail.gmail.com>
+In-Reply-To: <20240319045332.2304950-1-Frank.Li@nxp.com>
 
-+tools@kernel.org
+On Tue, Mar 19, 2024 at 12:53:31AM -0400, Frank Li wrote:
+> This just run script/tools/checkpatch.pl
 
-On Thu, 11 Apr 2024, Rob Herring wrote:
+Hello:
 
-> On Thu, Apr 11, 2024 at 7:50 AM Lee Jones <lee@kernel.org> wrote:
-> >
-> > On Tue, 02 Apr 2024 15:24:11 -0500, Rob Herring wrote:
-> > > Add various "simple" syscon compatibles which were undocumented or
-> > > still documented with old text bindings.
-> > >
-> > > apm,xgene-csw, apm,xgene-efuse, apm,xgene-mcb, apm,xgene-rb,
-> > > fsl,ls1088a-reset, marvell,armada-3700-cpu-misc,
-> > > mediatek,mt2712-pctl-a-syscfg, mediatek,mt6397-pctl-pmic-syscfg, and
-> > > mediatek,mt8173-pctl-a-syscfg were all undocumented, but are in use
-> > > already. Remove the old text binding docs for the others.
-> > >
-> > > [...]
-> >
-> > Applied, thanks!
-> 
-> Note that something is going haywire with b4 or you applied a subset
-> of a single patch... I really wish b4 didn't change the subjects at
-> all since Gmail is incapable of following standard threading.
+Thank you for your contribution. I didn't end up taking it, because I 
+wanted to make it more generic and less tied to the kernel. However, 
+there is now very similar functionality in the current master that can 
+be invoked with "b4 prep --check".
 
-I think "haywire" is a bit drastic. :)
+It's not yet a complete feature, but any feedback is welcome.
 
-It's to do with the way I fetch patches from the list:
-
-    b4 am -3 -slt ${PATCHES} -o - ${id} > ${MBOX}
-
-Where ${PATCHES}:
-
-    if [ "${RANGE}" != "" ]; then
-        PATCHES="-P ${RANGE}"
-    elif [ "${SET}" == "" ]; then
-        PATCHES="-P _"  # We need this to pluck patches from sets
-    fi
-
-`-P _` means cherry-pick, which doesn't appear to know whether we're
-picking up an entire set containing only a single patch or pulling out
-an individual patch from a larger set.
-
-There is an option to add a new Mutt key binding to do it which drops
-the `-P _` part in the former case, but I've ran out of free keys!
-
-Present Mutt bindings for kernel maintenance:
-
-macro index,pager  M         '<pipe-entry>~/bin/apply-patch.sh mfd-next<enter>'
-macro index,pager  F         '<pipe-entry>~/bin/apply-patch.sh mfd-fixes<enter>'
-macro index,pager  B         '<pipe-entry>~/bin/apply-patch.sh backlight-next<enter>'
-macro index,pager  L         '<pipe-entry>~/bin/apply-patch.sh leds-next<enter>'
-macro index,pager  T         '<pipe-entry>~/bin/apply-patch.sh toys<enter>'
-- These all apply single patches (single submissions or cherry-picks from sets)
-
-macro index,pager  S         '<pipe-entry>~/bin/apply-patch.sh set<enter>'
-- This presents a menu of kernel repos, then applies the whole set to ${choice}
-
-macro index,pager  R         '<pipe-entry>~/bin/apply-patch.sh range<enter>'
-- This presents a prompt to enter a given range (e.g. 1-3,6,8)
-- Followed by a menu of kernel repos, then applies the range to ${choice}
-
-macro index,pager  A         '<copy-message>=patches-to-apply<enter><enter>'
-- Manually applies patches from a mail folder (does not use b4)
-
--- 
-Lee Jones [李琼斯]
+-K
