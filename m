@@ -1,86 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03291386A8
-	for <tools@linux.kernel.org>; Tue, 16 Apr 2024 20:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CE715E20F
+	for <tools@linux.kernel.org>; Thu, 18 Apr 2024 17:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713298150; cv=none; b=RI4Szy+0oaMyoF26etTqYv2ngt1d3N9aRi5z8dLtRA/UzAEl7oPPPAeGEFwaJ5nKFT2y7ta76T8NgSi54uFKBjj5Hi6gWyvhWUDtO8OLnZR/8183aqfCp9QLjGz2xH6H0WK0rG+VM3UmRh+zzXF4f1r0gpK8PEzgBYrRkcshspg=
+	t=1713461727; cv=none; b=UonilhUSEMSA2p+X8vy+XFDJb9v0+sVfuu6qHboUOYtjyi3W4hunOdwy/mMZdhmWiTLyskGAVdjaVF4vwMRzjL3h35r9gBM8MrcaG7Th17k+oESg5B67Fqp3aZyXWTcl5Lbgn+LIr8cZvRE1zKz65qFT+Jjo1UtQxZG9UQxbLaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713298150; c=relaxed/simple;
-	bh=ju8v0SKv5whdWoN5cf6kKgvV2/NwC0X2MbaVQW/+CvU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HgEDlfDNC0iWdmyaq17BWiRr+0Bpazh9EGs6r3iGitNc1eeIgy+sosdaCIhlJf2Qi/dtGBZ9dul8mN+04bflxjyKR/8mH01QUGWlNO85p5PZjvjNf0EUdEKaDurJ4vF90GZCDdj2Vb2rvpf5H+hEbq1qc7mPQ6WzzjtPOOWQmAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgsGR/0w; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713461727; c=relaxed/simple;
+	bh=kBAoT4t4zpqWexeJBP5/PoyXtd3gFiyIoMa2dUXGUZY=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=ZnqvUuk1OeCFCp+UugiwlvgsQw7aVN0clBhLONdRAuZ5amfYkpNUUOW6a3/zbWtebhO+HKZgMjCAZ8MGeFDz8PugGH2lclTgbcvUjpZEi0Dgg5SMNUBxMGmARx9jUQerlyYDjQP9bNBvxVn1yX4FgeHmCeaaPLGTk1xuYkD/8NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gkgEfMLu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgsGR/0w"
-Received: by smtp.kernel.org (Postfix)
-	id 859B7C3277B; Tue, 16 Apr 2024 20:09:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4398EC113CE;
-	Tue, 16 Apr 2024 20:09:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713298149;
-	bh=ju8v0SKv5whdWoN5cf6kKgvV2/NwC0X2MbaVQW/+CvU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QgsGR/0wlRk83Uy2KDEfLYUeaHPEQt/zu4NzBQTs8iTPjyho53xVe3FTo0geiFVWW
-	 SpC776nKycwAztV+U6TpJ1O1MG8lgTKGuvZH794M9HGwiejJ7hKIC/txqBs4yN2AeW
-	 pi1nSWOesWfsK4XtpuDV8dXAWIqPdHHgqny5E3CI=
-Date: Tue, 16 Apr 2024 16:09:08 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Frank Li <Frank.li@nxp.com>
-Cc: tools@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
-	conor+dt@kernel.org
-Subject: Re: [PATCH 1/2] prep: add --check option to run necessary patch check
-Message-ID: <20240416-flashy-jacamar-of-aurora-f093eb@lemur>
-References: <20240319045332.2304950-1-Frank.Li@nxp.com>
- <20240412-shaggy-pristine-walrus-319fe3@lemur>
- <Zh2dKbscKTNgC5dW@lizhi-Precision-Tower-5810>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gkgEfMLu"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 09AEAC113CC;
+	Thu, 18 Apr 2024 17:35:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713461727;
+	bh=kBAoT4t4zpqWexeJBP5/PoyXtd3gFiyIoMa2dUXGUZY=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=gkgEfMLuwNiOlRXqqWPQJOsd5dvDaY2cznotFSTizdaOtTInyRX1XY2uLgIf6NluS
+	 dz/NBLY1CHgyYblh3rG88Rd2vn5e3pRlPW6vzI3037K4ZnX3aHhwn+wdZ0NvLX4r1H
+	 FenXa/0Ss/9C5yJgqJ4pmgfa8RkO66FTdwNqIEZVS0hpPiIuEWImQEbmJafeOS8um2
+	 6KI75VUQYT3ERjyWAPLQEMlyzebzitxnuwUW51tWa1+XA5dmcL6dyU8b3N8uWYO7IE
+	 ujyTMCmVITyaK+3kx6hZHY2xJct2bEh396TTvYMq8b8ATeK45aOSSZKu0roVHX1fBJ
+	 w8XTaSKWsoD5A==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E5CB1C4361A;
+	Thu, 18 Apr 2024 17:35:26 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zh2dKbscKTNgC5dW@lizhi-Precision-Tower-5810>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: tools@linux.kernel.org, broonie@kernel.org, 
+ konstantin@linuxfoundation.org
+Message-ID: <20240418-b218706c2-ff833b3314e3@bugzilla.kernel.org>
+In-Reply-To: <c9a9347a-b795-4824-8edb-9fba31cdfc5d@sirena.org.uk>
+References: <c9a9347a-b795-4824-8edb-9fba31cdfc5d@sirena.org.uk>
+Subject: Re: b4 needs-editing check vs single patch serieses
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Thu, 18 Apr 2024 17:35:26 +0000 (UTC)
 
-On Mon, Apr 15, 2024 at 05:33:29PM -0400, Frank Li wrote:
-> On Fri, Apr 12, 2024 at 05:09:43PM -0400, Konstantin Ryabitsev wrote:
-> > On Tue, Mar 19, 2024 at 12:53:31AM -0400, Frank Li wrote:
-> > > This just run script/tools/checkpatch.pl
-> > 
-> > Hello:
-> > 
-> > Thank you for your contribution. I didn't end up taking it, because I 
-> > wanted to make it more generic and less tied to the kernel. However, 
-> > there is now very similar functionality in the current master that can 
-> > be invoked with "b4 prep --check".
-> 
-> Can you point me the functionality name?
+Konstantin Ryabitsev writes in commit 11c5cc46b7f4bb10c134e4ba05e984e8ab13ed6f:
 
-I'm not quite sure what you mean. You should be able to just run "b4 
-prep --check" to use it (with the latest master). E.g.:
+ez: improve needs-editing logic for single-patch series
 
-  $ b4 prep --check
-  Checking patches using:
-	/home/user/work/git/linux/scripts/checkpatch.pl -q --terse --no-summary --mailback --showfile
-  ---
-  ● 0e77d0387477: serial: exar: adding missing CTI and Exar PCI ids
-  ● d60ea7cc5b31: serial: exar: add support for reading from Exar EEPROM
-  ● c78b0d54faac: serial: exar: add support for config/set single MPIO
-  ● 32bd8299e6d3: serial: exar: add optional board_setup function
-  ● 656acc105c50: serial: exar: add some CTI helper functions
-	● checkpatch.pl: drivers/tty/serial/8250/8250_exar.c:606: WARNING: 'transciever' may be misspelled - perhaps 'transceiver'?
-	● checkpatch.pl: drivers/tty/serial/8250/8250_exar.c:612: WARNING: 'transciever' may be misspelled - perhaps 'transceiver'?
-	● checkpatch.pl: drivers/tty/serial/8250/8250_exar.c:652: WARNING: 'interupts' may be misspelled - perhaps 'interrupts'?
-  ● dfda64f51bcc: serial: exar: add CTI board and port setup functions
-	● checkpatch.pl: drivers/tty/serial/8250/8250_exar.c:1147: WARNING: 'interupts' may be misspelled - perhaps 'interrupts'?
-  ● 32ea19edf0da: serial: exar: fix: fix crash during shutdown if setup fails
-  ---
-  Success: 5, Warning: 4, Error: 0
+When sending single-patch series, the cover letter does not need to be
+edited even if it contains EDITME.
 
-Hope this helps.
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218706
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
--K
+(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=11c5cc46b7f4)
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
+
