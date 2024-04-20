@@ -1,67 +1,85 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CE715E20F
-	for <tools@linux.kernel.org>; Thu, 18 Apr 2024 17:35:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72A939B
+	for <tools@linux.kernel.org>; Sat, 20 Apr 2024 01:37:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713461727; cv=none; b=UonilhUSEMSA2p+X8vy+XFDJb9v0+sVfuu6qHboUOYtjyi3W4hunOdwy/mMZdhmWiTLyskGAVdjaVF4vwMRzjL3h35r9gBM8MrcaG7Th17k+oESg5B67Fqp3aZyXWTcl5Lbgn+LIr8cZvRE1zKz65qFT+Jjo1UtQxZG9UQxbLaI=
+	t=1713577080; cv=none; b=lIIfvWRs2w6TnzyY4sNEQK2kluyDpY0+2d4VJAcz/+BsogrEAoj/9cuFmySyktr4AuIi7dLBIOuJXUTIy+5MRoJuDpr30oMH9MpPGq34vjRoyR0rFzUaNjayTV/bAJvisKXa1vL/1TOVFI0FhRtLlttNiIBXqHriQQ5b3gnM+hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713461727; c=relaxed/simple;
-	bh=kBAoT4t4zpqWexeJBP5/PoyXtd3gFiyIoMa2dUXGUZY=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=ZnqvUuk1OeCFCp+UugiwlvgsQw7aVN0clBhLONdRAuZ5amfYkpNUUOW6a3/zbWtebhO+HKZgMjCAZ8MGeFDz8PugGH2lclTgbcvUjpZEi0Dgg5SMNUBxMGmARx9jUQerlyYDjQP9bNBvxVn1yX4FgeHmCeaaPLGTk1xuYkD/8NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gkgEfMLu; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713577080; c=relaxed/simple;
+	bh=bSwQytLLzndZAUXGdV10FzaFkFB6bUUyCEMURXpALII=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AwmT3A8X7e5aPMJr2IRDZCyB7VC2bZwyx1wZc8AWLMc1KDnbJVK+24NqHS0akDb37LCtD6BqU/klzDz95hMR6hMDJxyNvAh/BjSTawmqZPfSonGLgxLA86jvkMzSvVX1K3v7yAbzY/XQD91WueWQPSyToLAi4EpgB38QINDhuls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyEugExl; arc=none smtp.client-ip=209.85.217.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gkgEfMLu"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 09AEAC113CC;
-	Thu, 18 Apr 2024 17:35:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713461727;
-	bh=kBAoT4t4zpqWexeJBP5/PoyXtd3gFiyIoMa2dUXGUZY=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=gkgEfMLuwNiOlRXqqWPQJOsd5dvDaY2cznotFSTizdaOtTInyRX1XY2uLgIf6NluS
-	 dz/NBLY1CHgyYblh3rG88Rd2vn5e3pRlPW6vzI3037K4ZnX3aHhwn+wdZ0NvLX4r1H
-	 FenXa/0Ss/9C5yJgqJ4pmgfa8RkO66FTdwNqIEZVS0hpPiIuEWImQEbmJafeOS8um2
-	 6KI75VUQYT3ERjyWAPLQEMlyzebzitxnuwUW51tWa1+XA5dmcL6dyU8b3N8uWYO7IE
-	 ujyTMCmVITyaK+3kx6hZHY2xJct2bEh396TTvYMq8b8ATeK45aOSSZKu0roVHX1fBJ
-	 w8XTaSKWsoD5A==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E5CB1C4361A;
-	Thu, 18 Apr 2024 17:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyEugExl"
+Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-479dbcdba2dso1018826137.3
+        for <tools@linux.kernel.org>; Fri, 19 Apr 2024 18:37:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1713577077; x=1714181877; darn=linux.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bSwQytLLzndZAUXGdV10FzaFkFB6bUUyCEMURXpALII=;
+        b=fyEugExlKtdOhMfPRZMoGnaCTO3jU6xUuwmsYI2BWQCXkamppXD1hyI7tYGHOx4AqJ
+         Ei/fEknA7dSvyEEToEuXtUBpWxb1dYZbwE75XFd1njPL5TkjRTlN7EwbpaZDw2ivrADu
+         SvNIW2jqWLM/F5VW/8dNiW7m9Itpnghj08X/I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713577077; x=1714181877;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bSwQytLLzndZAUXGdV10FzaFkFB6bUUyCEMURXpALII=;
+        b=jMYL2poyVAZyPAJbiQvrUNFdbdnqnjKIi85qHcKD0jjDKuaxn3QVLl4kZ2PaBx/l1a
+         WT12sexwZINf+WGBaSpyn8hstPqsY/3rowGYnnC/eDVevN9/gqzIV8TnRe63tFWegnbs
+         3DaqCKWd6pb3wR/ibHVE1rxJKl1qeOqkHVs81+re045Hy+iLYjoaBr1Ox/zQUPrKrbcx
+         5Rkrp9XMSnxQDn15io/W6DJrA000xGke2fvPrIMT/KNdaZY5TtLwUkW4lBk0H88SwtrE
+         Gax52t6DqYaBUiAUbunMXap2g00ilqJVfmUmepaMpAU4YafCF3uk761Go4D3YofEEX3I
+         PX7w==
+X-Gm-Message-State: AOJu0Yx36PLM4xoG2mMy9EPrBrliFBFDHHXSOt88EQVcwJsD3khAx508
+	OGOYNO9bBfCQTNx6xC2MxqQQPXe8BFgEPAUiP8J2RGyicHSPvQpptDmY6pTXUUafIb6o3yPOyLM
+	ahExyRTWKjxX8wM60LNWFBoEtAIyX9aDQzTdNcw==
+X-Google-Smtp-Source: AGHT+IE5RMLVchoaE+88FQ5JJ0Ulfn+3maeM27+PgxFre2CfYO/lrhRn4+MyP7wyeEaQeRKeueZ9qqMAZ/oT2nH5hnk=
+X-Received: by 2002:a05:6102:4b0:b0:47a:3b05:8bb4 with SMTP id
+ r16-20020a05610204b000b0047a3b058bb4mr4082022vsa.8.1713577077544; Fri, 19 Apr
+ 2024 18:37:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: "Kernel.org Bugbot" <bugbot@kernel.org>
-To: tools@linux.kernel.org, broonie@kernel.org, 
- konstantin@linuxfoundation.org
-Message-ID: <20240418-b218706c2-ff833b3314e3@bugzilla.kernel.org>
-In-Reply-To: <c9a9347a-b795-4824-8edb-9fba31cdfc5d@sirena.org.uk>
-References: <c9a9347a-b795-4824-8edb-9fba31cdfc5d@sirena.org.uk>
-Subject: Re: b4 needs-editing check vs single patch serieses
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: peebz 0.1
-Date: Thu, 18 Apr 2024 17:35:26 +0000 (UTC)
+References: <ZhQ8DoS1GaT0603l@sirena.org.uk>
+In-Reply-To: <ZhQ8DoS1GaT0603l@sirena.org.uk>
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Date: Fri, 19 Apr 2024 21:37:46 -0400
+Message-ID: <CAMwyc-Q466R2za0sMTD9Chx77hL7xBBuNROokemLmp7dt=i10w@mail.gmail.com>
+Subject: Re: Checks for recipients
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Konstantin Ryabitsev writes in commit 11c5cc46b7f4bb10c134e4ba05e984e8ab13ed6f:
+On Mon, 8 Apr 2024 at 14:48, Mark Brown <broonie@kernel.org> wrote:
+> It would be nice for scripting if b4 had a check similar to the
+> needs-editing flag in show-info which would allow scripts wrapping it to
+> determine if there are any recipients specified for the series.
 
-ez: improve needs-editing logic for single-patch series
+Mark:
 
-When sending single-patch series, the cover letter does not need to be
-edited even if it contains EDITME.
+I added some stuff today that introduces "pre-flight checks." I'm not
+sure if it's quite what you were looking for, but --show-info will now
+give you the following data:
 
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218706
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+- if prep --check needs to be (re-)run
+- if prep --auto-to-cc needs to be (re-)run
 
-(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=11c5cc46b7f4)
--- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (peebz 0.1)
+It doesn't try to be very clever -- basically, if the tip-commit of
+your series changes, we assume that you'll want to rerun the
+prep-check and prep-auto-to-cc, -- but it's effective. I just hope we
+are striking the right balance between "useful" and "annoying." :)
 
+Can you give it a try and let me know what you think?
+
+-K
