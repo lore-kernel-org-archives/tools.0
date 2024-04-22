@@ -1,68 +1,154 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475091514C5
-	for <tools@linux.kernel.org>; Mon, 22 Apr 2024 14:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FB31E49F
+	for <tools@linux.kernel.org>; Mon, 22 Apr 2024 14:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713796175; cv=none; b=Ca/9qQh/mAPhABRKS4HgKuqmPkpgkVOyFs9sUj5IJKjg14KPWuFqDB/qTMwsUEpWboOTs2wCCrq5bezXyfTWigrhaOPoVyBMMXJf1T+G3jOoyBwEQ+yhnp4+EisXEjhgkVpLSGyG1dhvg08T+srRb80EgU/qaOQGyJbt1zkHePE=
+	t=1713797380; cv=none; b=DmBft5u7ny3+FFPhmgN+Q1Ie+w3R0C7niuYKnLH7ndDnEBQI2+ZjYSzoI1q1Bht30LDdvrfWQpwQx3hFgzYS+PGO7y8xRJ2+Q5KJBtfOx6rnHXZyOFnsNyTlrB33CcbeJxgMp7X4+maWf7Lo4aHWOyUy67E5Jp63BxuOlDdYoic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713796175; c=relaxed/simple;
-	bh=CpOU/32rleO50JpLbBN8sGU6d2I8+3jhd93MzNJDtSg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H51Dg0ZLehfehLuXi7Y/m0TPpy8BVb4h+JDVXnxRjlOcRN7FFSy+gFp8mFx0PX97H68q8nF6eFPdKTWOHRBHufSR29MSMmukFyf7VgwiNJn60YiJ0sVBQUwvdF832hXGfDMpX5qGQ6WhZkFiCdz76NdmxQlP0n+M+Htw7y+ov/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ReBsI+Zk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713797380; c=relaxed/simple;
+	bh=W1EiwE9ebnO+fWvv7xjX1fGRlVmYlkU71qMkrB1ko1Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Nrf0FPV1flPbJcQmc4pESAnC0aH3ja1ocPRn0nG0Dop7ePlRGLXzdhVzxg4bXxi1B+X6N3Z0/8YZ6Qn49OKEUNUdr/Ws5taRcWwpwkEKihxEDYnwtlL3VwGcXHIh08yVP0d+aTgd806D7ztWceqgBnNDqJtxikgHueNnzYit3Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OUT9a+ux; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReBsI+Zk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4EC5C113CC;
-	Mon, 22 Apr 2024 14:29:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713796174;
-	bh=CpOU/32rleO50JpLbBN8sGU6d2I8+3jhd93MzNJDtSg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ReBsI+ZkGOw8QE3sEwum4ieuC4imcl+qZ0spQkYkhRQptCli9P0JV4zRS2TLblMu6
-	 F4wI4wWGGNPGdTC1jm6b45GFVPy625t9adAmWVGlSd1GIcLcbsh2ZV44vBC4ShiJ/R
-	 O2sUc8zBe9EOT0Xe+gHuCnwTuOOjvLl/Lx5255ao=
-Date: Mon, 22 Apr 2024 10:29:33 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Checks for recipients
-Message-ID: <20240422-sincere-stallion-from-hyperborea-bffddf@lemur>
-References: <ZhQ8DoS1GaT0603l@sirena.org.uk>
- <CAMwyc-Q466R2za0sMTD9Chx77hL7xBBuNROokemLmp7dt=i10w@mail.gmail.com>
- <ZiPBx36go0AYBWO7@finisterre.sirena.org.uk>
- <20240420-arboreal-natural-sambar-ff61bc@lemur>
- <ZiRiK4sB6kKwdH7p@finisterre.sirena.org.uk>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OUT9a+ux"
+Received: by smtp.kernel.org (Postfix)
+	id 3323BC4AF07; Mon, 22 Apr 2024 14:49:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7725C113CC;
+	Mon, 22 Apr 2024 14:49:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713797380;
+	bh=W1EiwE9ebnO+fWvv7xjX1fGRlVmYlkU71qMkrB1ko1Y=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=OUT9a+uxzdAupPFPcsZjuKXNDC6WwK74ZB4UV/AWLqjhBNW3o0uQ1u7+sadwpTqMO
+	 wkPGem+umIM8vIlJvUCaTORjMhfBU9b3EbXyTwjs3Gx977LBB7enFgfOxLa0gLU6n0
+	 5u6AA5zjHgZraz7iZiVTj8c//mu8FIkZJL4RCAwkgetxRHZLA9tLIIdsVXKHh4waHL
+	 WTUse+Fax2pOV1gtMJzeOGvTUErV/6HSsAKluCsa9mkqPyl+I2COgbQtD63kkK3mv+
+	 wJTQniGe9U9dYJx7A5LWK4d3M0agc+/v4k40wTnHS1aur3yWQ22accOgKVP1McrICj
+	 ZLBQInAQ4fRzw==
+Message-ID: <311c8b64-be13-4740-a659-3a14cf68774a@kernel.org>
+Date: Mon, 22 Apr 2024 16:49:27 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZiRiK4sB6kKwdH7p@finisterre.sirena.org.uk>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/10] sysctl: Remove sentinel elements from kernel dir
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Joel Granados <j.granados@samsung.com>, Luis Chamberlain
+ <mcgrof@kernel.org>, josh@joshtriplett.org, Kees Cook
+ <keescook@chromium.org>, Eric Biederman <ebiederm@xmission.com>,
+ Iurii Zaikin <yzaikin@google.com>, Steven Rostedt <rostedt@goodmis.org>,
+ Masami Hiramatsu <mhiramat@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ Thomas Gleixner <tglx@linutronix.de>, John Stultz <jstultz@google.com>,
+ Stephen Boyd <sboyd@kernel.org>, Andy Lutomirski <luto@amacapital.net>,
+ Will Drewry <wad@chromium.org>, Ingo Molnar <mingo@redhat.com>,
+ Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>,
+ Vincent Guittot <vincent.guittot@linaro.org>,
+ Dietmar Eggemann <dietmar.eggemann@arm.com>, Ben Segall
+ <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+ Daniel Bristot de Oliveira <bristot@redhat.com>,
+ Valentin Schneider <vschneid@redhat.com>, Petr Mladek <pmladek@suse.com>,
+ John Ogness <john.ogness@linutronix.de>,
+ Sergey Senozhatsky <senozhatsky@chromium.org>,
+ "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+ Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+ "David S. Miller" <davem@davemloft.net>, Balbir Singh
+ <bsingharora@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>,
+ John Fastabend <john.fastabend@gmail.com>,
+ Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau
+ <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
+ Yonghong Song <yonghong.song@linux.dev>, KP Singh <kpsingh@kernel.org>,
+ Stanislav Fomichev <sdf@google.com>, Hao Luo <haoluo@google.com>,
+ Jiri Olsa <jolsa@kernel.org>
+Cc: linux-kernel@vger.kernel.org, kexec@lists.infradead.org,
+ linux-fsdevel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+ bpf@vger.kernel.org, tools@kernel.org
+References: <20240328-jag-sysctl_remove_empty_elem_kernel-v3-0-285d273912fe@samsung.com>
+ <36a1ea2f-92c2-4183-a892-00c5b48c419b@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <36a1ea2f-92c2-4183-a892-00c5b48c419b@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, Apr 21, 2024 at 09:47:39AM +0900, Mark Brown wrote:
-> > Thanks for your feedback. I'll make these two changes next:
+On 22/04/2024 16:27, Konrad Dybcio wrote:
 > 
-> > - add a check/report for "needs-recipients" that will be separate from 
-> >   "needs-auto-to-cc"
-> > - add a way to turn off pre-flight checks via b4.prep-pre-flight-checks 
-> >   = off
 > 
-> Thanks - that sounds good.  Perhaps for the pre-flight checks list a
-> pass/block list mechanism might be good so that people can pick which
-> checks work well for them in their workflow?
+> On 3/28/24 16:44, Joel Granados wrote:
+>> What?
+>> These commits remove the sentinel element (last empty element) from the
+>> sysctl arrays of all the files under the "kernel/" directory that use a
+>> sysctl array for registration. The merging of the preparation patches
+>> [1] to mainline allows us to remove sentinel elements without changing
+>> behavior. This is safe because the sysctl registration code
+>> (register_sysctl() and friends) use the array size in addition to
+>> checking for a sentinel [2].
+> 
+> Hi,
+> 
+> looks like *this* "patch" made it to the sysctl tree [1], breaking b4
+> for everyone else (as there's a "--- b4-submit-tracking ---" magic in
+> the tree history now) on next-20240422
+> 
+> Please drop it (again, I'm only talking about this empty cover letter).
 
-Ok, the 'needs-recipients' check is in now.
+Just to clarify, in case it is not obvious:
+Please *do not merge your own trees* into kernel.org repos. Instead use
+b4 shazam to pick up entire patchset, even if it is yours. b4 allows to
+merge/apply also the cover letter, if this is your intention.
 
-I'll work on adding a way to turn off pre-flight checks via:
+With b4 shazam you would get proper Link tags and not break everyone's
+b4 workflow on next. :/
 
-  b4.prep-pre-flight-checks: disable-all
-  b4.prep-pre-flight-checks: disable-needs-auto-to-cc, disable-needs-checking
+Best regards,
+Krzysztof
 
-This should allow turning off either all checks, or just specific ones.
-
--K
