@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDA716ABC0
-	for <tools@linux.kernel.org>; Fri, 26 Apr 2024 18:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C0A5228;
+	Sat, 27 Apr 2024 00:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714154690; cv=none; b=K2flzJuSgPRvOv/LkoEtUxMHTaPIJ1S/7SQmJvnoEdKSFO4PpIHXpDs5aaDzSltkNmb5e3LO2X2Gg1/xp2EcSjILJkQ/thKkQpCImNlz7x3iggRL2mwYUh8MP6JFFITK8VhNkcFsBFg7P2RX+0n5W8u+2CL54ZpxdKKoKFGW5mA=
+	t=1714177742; cv=none; b=PVVbwTQxeGtEL9Tt/WT9gWH6JFBfTHvd5LDgLXr2w9cnqzD+HD8erbP2Bxx6TF45xRx1MlvAVbK9m1PRFFTT2aSa3QUFr9LP2/NRrDqVJqVdmp+QV6+t8aEIyqM+dc0FzcJc9fae8UBINTGzLp6iQgBeKKPvP0u4kLXRmCFQl8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714154690; c=relaxed/simple;
-	bh=kRNNCF6n3zbgxJDxGNjZG7kEIGyhc9xtwYBypPzETE8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ADkar0S+TnF/N3j3GtXkjKAdNLA6NlLxPxQzCqgB8/ZAgwhsvTQqqUPnU4rg+HtNo9nYsL3OBMqgSs5zuDZ+N5tVFEC65CfiYAV44xBHnz3+Fg7/N0Z5E+QK1bIUcj4oX6TFNk2Pz65+wddHwOJjNlcF/eDbWPRjSl/FS1CRINc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLJwwqHz; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1714177742; c=relaxed/simple;
+	bh=z1iMTSz1FTF5BHvEhJcPUplkaY3m40Swft0M6ZuTjHQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=WJl9nL96xEayc1axC2MZFRrwM2yJ8eA9ypHWrUV5AszNkhQFj/89xmRdYt9GQWwMu229VBH6AjpWSLjXwT7YSBcOUrrBgE3+tzRR4wxstG02FkeYMhCvFm6ZDaffykoE6YXdgSW7nbQh2PQFV+IH4wFF71raDx+hsOgseiRkdg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=JutZg4ZP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLJwwqHz"
-Received: by smtp.kernel.org (Postfix)
-	id 62887C2BD10; Fri, 26 Apr 2024 18:04:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8C5C113CD;
-	Fri, 26 Apr 2024 18:04:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714154690;
-	bh=kRNNCF6n3zbgxJDxGNjZG7kEIGyhc9xtwYBypPzETE8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pLJwwqHz9sNQNQr4nAsM3KtxfMb1MW606HOSoWIpqWcL5aEVD2PxuSn3WZKPu3uaU
-	 179TIoTFqjfC5xvcy0VkRNb6WbqqoqvQK0Yq9Rt6ra+0uuAuTJQgI1MMkM1FFHtA4S
-	 60EIGyOKtgXiqrh9NxwYJP5WTs4kF97ClJXXXHzE=
-Date: Fri, 26 Apr 2024 14:04:49 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Cc: tools@kernel.org
-Subject: Re: b4: use new trailers in 'b4 send --resend'
-Message-ID: <20240426-tremendous-rhino-of-assurance-ad5e99@lemur>
-References: <20240426140157.349783d6@booty>
- <20240426-jasper-sloth-from-neptune-82a6f7@lemur>
- <20240426184425.23b606bf@booty>
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="JutZg4ZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010F6C113CD;
+	Sat, 27 Apr 2024 00:29:00 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="JutZg4ZP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1714177738;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=4fd0jz0BChpMTIBqWSjkXJP2P2W/5oQ39jqPV6RAj1M=;
+	b=JutZg4ZPNYap5BiToHwX3apwyIjL638iO+h5ggoieLWJB0BbIpgZKrhfS8cBpDQuxXUCQ2
+	0IvPuUxrKpI5zQO5LrQZNCv1AJxIO8aRp/vcMVok1llKkZH1lgcUhyidE2WjM4Pbi0ibyb
+	np5WSOqgv1IDm51c8KSOwoyP82IVdvM=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b137cfa1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sat, 27 Apr 2024 00:28:58 +0000 (UTC)
+Date: Sat, 27 Apr 2024 02:28:55 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: tools@linux.kernel.org, stable@vger.kernel.org, meta@public-inbox.org
+Cc: sashal@kernel.org, gregkh@linuxfoundation.org, mricon@kernel.org,
+	krzk@kernel.org
+Subject: filtering stable patches in lore queries
+Message-ID: <ZixGx_sTyDmdUlaV@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -42,41 +44,60 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240426184425.23b606bf@booty>
 
-On Fri, Apr 26, 2024 at 06:44:25PM GMT, Luca Ceresoli wrote:
-> > It's not really necessary to resend a series just for trailer 
-> > changes anyway. The maintainer will most likely use b4 to retrieve 
-> > it anyway, and that will pull in any new trailers.
-> 
-> I cannot recall exactly when it did happen and provide a link right now,
-> but I clearly remember having been asked by some maintainer to do
-> exactly this, instead of pinging.
-> 
-> The rationale is that sending a new version just to add review tags was
-> considered bad because one can expect the patches or commit description
-> to have changed somewhat, which it hasn't.
+Hi,
 
-Yes, to be clear -- I wasn't suggesting that you send a new revision 
-just to add trailers either. We're both aligned here.
+Greg and Sasha add the "X-stable: review" to their patch bombs, with the
+intention that people will be able to filter these out should they
+desire to do so. For example, I usually want all threads that match code
+I care about, but I don't regularly want to see thousand-patch stable
+series. So this header is helpful.
 
-> OTOH resending without new trailers can lead to applying a patch
-> without those tags (not recognizing reviewers time), or even worse to
-> discard a patch because it does not show the needed tags.
+However, I'm not able to formulate a query for lore (to pass to `lei q`)
+that will match on negating it. The idea would be to exclude the thread
+if the parent has this header. It looks like public inbox might only
+index on some headers, but can't generically search all? I'm not sure
+how it works, but queries only seem to half way work when searching for
+that header.
 
-I expect this is one of those "every subsystem does things slightly 
-differently" situation. If the maintainer uses b4, this entire step is 
-unnecessary, because any missing trailers will be applied anyway when 
-they run "b4 am". If they don't use b4 -- or if they use a very old 
-version of b4 which didn't match by patch-id to collect trailers sent to 
-other identical submissions -- then they would have a reason to 
-complain.
+In the meantime, I've been using this ugly bash script, which gets the
+job done, but means I have to download everything locally first:
 
-I may have to run a poll among maintainers to see which is the behaviour 
-they want to see:
+    #!/bin/bash
+    PWD="${BASH_SOURCE[0]}"
+    PWD="${PWD%/*}"
+    set -e
+    cd "$PWD"
+    echo "[+] Syncing new mail" >&2
+    lei up "$PWD"
+    echo "[+] Cleaning up stable patch bombs" >&2
+    mapfile -d $'\0' -t parents < <(grep -F -x -Z -r -l 'X-stable: review' cur tmp new)
+    {
+      [[ -f stable-message-ids ]] && cat stable-message-ids
+      [[ ${#parents[@]} -gt 0 ]] && sed -n 's/^Message-ID: <\(.*\)>$/\1/p' "${parents[@]}"
+    } | sort -u > stable-message-ids.new
+    mv stable-message-ids.new stable-message-ids
+    [[ -s stable-message-ids ]] || exit 0
+    mapfile -d $'\0' -t children < <(grep -F -Z -r -l -f - cur tmp new < stable-message-ids)
+    total=$(( ${#parents[@]} + ${#children[@]} ))
+    [[ $total -gt 0 ]] || exit 0
+    echo "# rm <...$total messages...>" >&2
+    rm -f "${parents[@]}" "${children[@]}"
 
-- resend should be identical to what was sent the first time
-- resend should include any additional trailers received since the 
-  initial send-out
+This results in something like:
 
--K
+    zx2c4@thinkpad ~/Projects/lkml $ ./update.bash
+    [+] Syncing new mail
+    # https://lore.kernel.org/all/ limiting ...
+    # /usr/bin/curl -gSf -s -d '' https://lore.kernel.org/all/?x=m&t=1&q=(...
+    [+] Cleaning up stable patch bombs
+    # rm <...24593 messages...>
+
+It works, but it'd be nice to not even download these messages in the
+first place. Since I'm deleting message I don't want, I have to keep
+track of the message IDs of those deleted messages with the stable
+header in case replies come in later. That's some book keeping, sheesh!
+
+Any thoughts on this workflow?
+
+Jason
