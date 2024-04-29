@@ -1,102 +1,112 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC3D28398
-	for <tools@linux.kernel.org>; Mon, 29 Apr 2024 10:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7447C0BF;
+	Mon, 29 Apr 2024 14:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714385844; cv=none; b=dCuxA7llpIrTWU/H/md48E4N5bXFQR9JP+InQ/ydch7ltD2ad+lEvpKObd0uaHLmUQVX/iR1I9/DNz+rrp2zHmwT3pS0oQAautFF+sIKm8fsLGlYG5MSmrXzReyf0I1U8I34+RI1u1p9+I9UZHlDEyRyGESXg6DQgTNAoAGlOc0=
+	t=1714400847; cv=none; b=YyVBFU/Lm9+fj5C1IPQJR+VjKsFZ4LOnfPN6Y9HoP5pSa3RBoM+Wv7Rt2aA+cY38NOal9ZdGwFg77KbnJ2Utg682bUbChT/c5bxtVvPdGU1KDoMInL5NnIwg5dvN64DRcJ86UJINiDSmdl2CAc/Jz+MBqy4tJN8V1Edrdp1oWHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714385844; c=relaxed/simple;
-	bh=MTEpomz4NacoVcriOajKQ83pXD50PzYHyP1KLwSZatY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ib45eCS8Bxh7pHISxAph5E4WhyrUI1zOpL8S42Yg1SZl2XzC5/6k9WKUE+mkVRxx45r2AisAUcGqJ0pNtYwKYtm4LkokASAgihdH9sYUKyYQGwaoYK8uG4/ygsZD4IFToURnmaA/9srmNEpPwlPwyc+cXk7Ufkd+5zGgOOG62SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=KmlITrlH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1714400847; c=relaxed/simple;
+	bh=t+icPM1sViMXtjUYUUlsZstD0bTk4xGQr1Fsw27gD20=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Toka8bWWMunv8Y7cYL/lTiYFqI9vV9q5ibFYvX3ZiHJNPr2u36BN86NnM4hfXrIT8Pf8G03ADuPgBm2UgRzcX0hsj5BbQW1w6GokHq54x2ODUn/wxyEBja+FsS1fw38ME6dba11kzUCz8KGFz1gjeRAJQjMtgxZozaNTc5KtdVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fwlUZcgO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="KmlITrlH"
-Received: by smtp.kernel.org (Postfix)
-	id AD76DC4AF17; Mon, 29 Apr 2024 10:17:23 +0000 (UTC)
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 7445AC116B1
-	for <tools@kernel.org>; Mon, 29 Apr 2024 10:17:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 7445AC116B1
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 2C67FFF802;
-	Mon, 29 Apr 2024 10:17:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1714385834;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=VTa6n8hqJMwmD/f6103XKZfQPDzzxDG+EkzrQXTyS8U=;
-	b=KmlITrlHUkLK3vKo42kMVGlbJB9SsQZ27VxfsSjCdwRHsSvWL8l41ezowKeXLo6k7Hv3nF
-	F9HngkyxgjHwkbZCQOuVh3CS3ZtRdBJAEbHOmVz2fibmu66nz7SPMSfJEwt/bAh2dNEcSf
-	nF/0CpB/XdBn8IwDFf9UTDhNul5kMYt7w7GXmomx98e+cGjvlW+fBPZSE5PeU6X6oj3eiv
-	RMH6lcR3sWaffCegvQGfdeZc6A9+ifAmxEMj42Rk/791YggJahBVGMZ3+JiOOcBG3H6tGc
-	2wFFdQiYX9f4AAVGbpTvsoYgqdbWpeAfDUfFlgaPHUICb4U+7KnTSrDXpqWHyg==
-Date: Mon, 29 Apr 2024 12:17:12 +0200
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: Re: b4: use new trailers in 'b4 send --resend'
-Message-ID: <20240429121712.1b54f5fc@booty>
-In-Reply-To: <20240426-tremendous-rhino-of-assurance-ad5e99@lemur>
-References: <20240426140157.349783d6@booty>
-	<20240426-jasper-sloth-from-neptune-82a6f7@lemur>
-	<20240426184425.23b606bf@booty>
-	<20240426-tremendous-rhino-of-assurance-ad5e99@lemur>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fwlUZcgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE55C116B1;
+	Mon, 29 Apr 2024 14:27:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714400847;
+	bh=t+icPM1sViMXtjUYUUlsZstD0bTk4xGQr1Fsw27gD20=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fwlUZcgOJafqKoDUStWy6NyQjkn1Tn3Zv4wDee+56gQKt+bCaElW9zY9mnc1FnCmT
+	 remALkUXOHf9cLA3+4AlLJh2UFq5BXCPjsr4aZr9gLTRbqzrIFlwyTwm87/b26JZbp
+	 AJCSvJsd8gztJupSP1huosGmCMCojWQzTCDOYr24T3ZvhkmFdADWOUJbzDnYvWZoPc
+	 WdhFk7DiDqVeAPCnBJRjPrMdI4268s8SrkksYJaGSJKjmjzr6h9TxyPDmwjEXVSxDj
+	 1bPWodjsTr0uiP12F+Su1l49VygXoXl9jE0CiEfZ6qxbNvyyKt2pDFKxAAaZIHQ1Wc
+	 +MAlosxJVo/iw==
+Date: Mon, 29 Apr 2024 10:27:25 -0400
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Eric Wong <e@80x24.org>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, tools@linux.kernel.org, 
+	stable@vger.kernel.org, meta@public-inbox.org, sashal@kernel.org, 
+	gregkh@linuxfoundation.org, krzk@kernel.org
+Subject: Re: filtering stable patches in lore queries
+Message-ID: <20240429-antique-hyena-of-glee-d9e4ac@lemur>
+References: <ZixGx_sTyDmdUlaV@zx2c4.com>
+ <20240427071921.M438650@dcvr>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-GND-Sasl: luca.ceresoli@bootlin.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240427071921.M438650@dcvr>
 
-Hello Konstantin,
-
-On Fri, 26 Apr 2024 14:04:49 -0400
-Konstantin Ryabitsev <konstantin@linuxfoundation.org> wrote:
-
-> On Fri, Apr 26, 2024 at 06:44:25PM GMT, Luca Ceresoli wrote:
-> > > It's not really necessary to resend a series just for trailer 
-> > > changes anyway. The maintainer will most likely use b4 to retrieve 
-> > > it anyway, and that will pull in any new trailers.  
-> > 
-> > I cannot recall exactly when it did happen and provide a link right now,
-> > but I clearly remember having been asked by some maintainer to do
-> > exactly this, instead of pinging.
-> > 
-> > The rationale is that sending a new version just to add review tags was
-> > considered bad because one can expect the patches or commit description
-> > to have changed somewhat, which it hasn't.  
+On Sat, Apr 27, 2024 at 07:19:21AM GMT, Eric Wong wrote:
+> Correct, public-inbox currently won't index every header due to
+> cost, false positives, and otherwise lack of usefulness (general
+> gibberish from DKIM sigs, various UUIDs, etc).
 > 
-> Yes, to be clear -- I wasn't suggesting that you send a new revision 
-> just to add trailers either. We're both aligned here.
+> So it doesn't currently know about "X-stable:"
 > 
-> > OTOH resending without new trailers can lead to applying a patch
-> > without those tags (not recognizing reviewers time), or even worse to
-> > discard a patch because it does not show the needed tags.  
+> I started working on making headers indexing configurable last
+> year, but didn't hear a response from the person that
+> potentially was interested:
 > 
-> I expect this is one of those "every subsystem does things slightly 
-> differently" situation. If the maintainer uses b4, this entire step is 
-> unnecessary, because any missing trailers will be applied anyway when 
-> they run "b4 am".
+> https://public-inbox.org/meta/20231120032132.M610564@dcvr/
+> 
+> Right now, indexing new headers + validations can be maintained
+> as a Perl module in the public-inbox codebase.
+> 
+> For lore, it'd make sense to be able to configure a bunch (or
+> all) inboxes at once instead of the per-inbox configuration in
+> my proposed RFC.
+> 
+> At minimum, one would have to know:
+> 
+> 1) the mail header name (e.g. `X-stable')
+> 2) the search prefix to use (e.g. `xstable:') # can't use dash `-' AFAIK
+> 3) the type of header value (phrase, string, sortable numeric, etc...)
 
-Ah, interesting feature. I had no idea about it as I'm using b4 for
-sending patches only. Thanks for the clarification!
+I'm whole-heartedly for this! This ties nicely to my b4 work where I'd 
+like to be able to identify code-review trailers sent for a specific 
+patch, even if that patch itself is not on lore. For example, this could 
+be a patch that is part of a pull-request on a git forge, but we'd still 
+like to be able to collect and find code-review trailers for it when a 
+maintainer applies it.
 
-Luca
+Currently, I am using the following approach:
 
--- 
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+| Reviewed-by: Some Developer <some.dev@example.org>
+| ---
+| for-patch-id: abcd...1234
+
+Then I can query 'nq:"for-patch-id: abcd...1234"', but this is probably 
+much more heavy than if I could provide this in a custom header:
+
+| X-For-Patch-ID: abcd...1234
+
+and query for "xforpatchid:abcd...1234"
+
+> I'm trying to avoid supporting sortable numeric values for this,
+> since supporting them will problems if columns get repurposed
+> with admins changing their minds.   A full reindex would fix it,
+> but those are crazy expensive.
+
+I'm perfectly fine with it only being a string, honestly.
+
+> 
+> So probably just supporting strings and/or phrases to start...
+> 
+> Validation to prevent poisoning by malicious/broken senders can
+> be useful in some cases (and the reason the RFC was a per use
+> case Perl module).  That said, I'm not sure if much validation
+> is necessary for X-stable: headers or if just any text is fine.
+
+I'd let the consumer clients worry about it.
+
+-K
