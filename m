@@ -1,77 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D5654747
-	for <tools@linux.kernel.org>; Thu,  2 May 2024 09:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424FA15E80D
+	for <tools@linux.kernel.org>; Thu,  2 May 2024 18:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714641839; cv=none; b=jZgs9z2jkKYbys5SkWNpNyLamx+qrQsUuO0GbaLufS7nlVmsdVcWLHkq7090hktFKMb/DbsC8TdV+hyknDI+mak6+xGOG8YOEy4ZRyGqTmFS/i/fJvmnsu4CZwRyNIog0WYR+usu5BaLHSIo9JnjYxNrfVgAf4+xl6GUZ0Ak0dc=
+	t=1714674681; cv=none; b=aaDYj+31z/h77hVtvqUr8QQhPv02+kSfmZ9QT0XnsW4oXIOedGranpy2fsKk1CpiQTjw4Lk1dAPjCG+796kV7kit0FbQHCt+npumjZarHj9a+im60KwU5X0WkVCJ8g4+97BI/PNlYpjN8pCsY+CeXS3PJghoNSBGykRm03a7DlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714641839; c=relaxed/simple;
-	bh=yCEZNp+Ch5FgbJFCBwEXd0o5NyuRJ4uNuPs6rRbUYkY=;
+	s=arc-20240116; t=1714674681; c=relaxed/simple;
+	bh=hN2lsYobOe/pFhvsNHuG2sR+bdNsc0+fT6aN3YHWjrk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TDX2DPVDOZAe9XAItrFYqJd6WprEnylcKQXNxKrPIo6ED1Cy/JZOAiyShL1MY5cRVNwU7gugcOtjIo3WLdBtmPmpzXwZh2SYWM77u1YYQC6jkqfkGPeK94SOEoOwSKGp1RGcb6Yqx4nzQS+/Xsd7Zc7DYFHLBMQptl3TyBW+AZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Le+17mJP; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kk1ysD/WDzJMapeGgpe6gRCMZl2l8XcKDQsdLYxUNeCSuVRfcfrrLfC7Q3dnq1MjpwS09MuUHsfz+NkoDAy4Q5+GR+ml3UNYoz4WeQe3pqONL4ukJ2QknG4bQK6QbH6eG+uJmUiGrVLGVTvrmK3MWYF36FtsXtaRVcpdhE5RfhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1kuihUUL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Le+17mJP"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1kuihUUL"
 Received: by smtp.kernel.org (Postfix)
-	id EE64BC116B1; Thu,  2 May 2024 09:23:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE43CC113CC;
-	Thu,  2 May 2024 09:23:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714641838;
-	bh=yCEZNp+Ch5FgbJFCBwEXd0o5NyuRJ4uNuPs6rRbUYkY=;
+	id EA65AC4AF14; Thu,  2 May 2024 18:31:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6605C113CC;
+	Thu,  2 May 2024 18:31:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1714674680;
+	bh=hN2lsYobOe/pFhvsNHuG2sR+bdNsc0+fT6aN3YHWjrk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Le+17mJPqvEocm66cWpYcYP1xFNjpq5GVxuSsSHUMp/yvFevwPd0KvQpc3cmFKhuT
-	 5Y1cXlIVMXUBVB9Fh14cAHPvNCWxziqoI8uAo6YrasmP1UkqdU+/3bQ4vdAD7gOnqK
-	 rDmWDQeOoSd5M4wQpPbQs9N/DiQJ1S3V4KQK36oxp/s/gR6QFivnPlhUeB3WtmiM5o
-	 94xE3RL0UmZLsuJ0xRXdRobEXuJGTQzUbBdwOolm4r+29+HMEG5PHD7ksWhhdPwHC6
-	 G3Fycbkv02+n4WZgBaGsR74EV2YHePVM72x7FctVKpSOzFXL9+NBZBjGkfbErM6sfx
-	 lMThZA/0wLxGA==
-Date: Thu, 2 May 2024 10:23:54 +0100
-From: Will Deacon <will@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org, Jason Gunthorpe <jgg@nvidia.com>,
+	b=1kuihUUL1yzTYaZOjEsnFETjFgkGZQSL2eYcgAL97YzgMali1n6k7ipecMueRrGDr
+	 KU76/nzEz5hH1Pr6dOmUx5OIlOAXO6ZCz1U+uXEeJsUqNXpU9H2gFJY6r59pSWFQeU
+	 hVbwgQi14XZBv4+Dzt0AKNxwtNsgUzZqi61WRhBk=
+Date: Thu, 2 May 2024 14:31:19 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Will Deacon <will@kernel.org>
+Cc: tools@kernel.org, Jason Gunthorpe <jgg@nvidia.com>, 
 	Nicolin Chen <nicolinc@nvidia.com>
 Subject: Re: [PATCH v2 0/2] b4: ty: Fix incorrect patch/commit association
-Message-ID: <20240502092354.GA16551@willie-the-truck>
+Message-ID: <20240502-secret-tireless-emu-acfef2@lemur>
 References: <20240304134241.20447-1-will@kernel.org>
  <171459859217.935458.14461888310866914252.b4-ty@linuxfoundation.org>
+ <20240502092354.GA16551@willie-the-truck>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <171459859217.935458.14461888310866914252.b4-ty@linuxfoundation.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20240502092354.GA16551@willie-the-truck>
 
-On Wed, May 01, 2024 at 05:23:12PM -0400, Konstantin Ryabitsev wrote:
-> 
-> On Mon, 04 Mar 2024 13:42:39 +0000, Will Deacon wrote:
-> > It's me again. This time I fixed my git configuration so that the
-> > authorship is correct and matches the S-o-B line. That's the only change
-> > since the v1 I sent on Friday.
+On Thu, May 02, 2024 at 10:23:54AM GMT, Will Deacon wrote:
+> > Applied, thanks!
 > > 
-> > Enjoy!
-> > 
-> > Will
-> > 
-> > [...]
+> > [1/2] ty: Try subject matching for every commit before using trackers
+> >       commit: 47bd55d3182d875802700670270f5ee0877a8d5d
+> > [2/2] ty: Remove unused 'matches' variable
+> >       commit: dced92071d2135ccbec521cb4face63cafcdc407
 > 
-> Applied, thanks!
+> You applied these already (with different SHAs), I think:
 > 
-> [1/2] ty: Try subject matching for every commit before using trackers
->       commit: 47bd55d3182d875802700670270f5ee0877a8d5d
-> [2/2] ty: Remove unused 'matches' variable
->       commit: dced92071d2135ccbec521cb4face63cafcdc407
+> https://lore.kernel.org/r/170958794467.8875.12454526353405240108.b4-ty@linuxfoundation.org
+> 
+> So I'm not sure what's happened here :/
 
-You applied these already (with different SHAs), I think:
+Bah, you're right. I blame the split brain between b4 and patchwork here 
+-- for some reason in patchwork these were still showing as unprocessed.
 
-https://lore.kernel.org/r/170958794467.8875.12454526353405240108.b4-ty@linuxfoundation.org
+Effectively the 2nd time was a no-op:
 
-So I'm not sure what's happened here :/
+  $ git log --oneline --reverse 590044aff85f3e11cbd5efb9e192847bb3b51b3f..
+  47bd55d ty: Try subject matching for every commit before using trackers
+  dced920 ty: Remove unused 'matches' variable
+  775893e (HEAD -> master, origin/master, github/master) Merge patch series "b4: ty: Fix incorrect patch/commit association"
+  $ git diff 590044aff85f3e11cbd5efb9e192847bb3b51b3f..
+  (no output)
 
-Will
+I am actually annoyed that this operation doesn't throw an error and 
+doubly annoyed that the only way to fix this is to rebase -- but rebase 
+I will.
+
+Sorry about the mess.
+
+-K
