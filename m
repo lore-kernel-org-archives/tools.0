@@ -1,207 +1,166 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AA81514E4
-	for <tools@linux.kernel.org>; Fri,  3 May 2024 12:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EAF15357F
+	for <tools@linux.kernel.org>; Fri,  3 May 2024 13:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714737917; cv=none; b=Vf9RpURPg/w/6WpA6C102RHo8xn/ktlazekWMYSj5F+5vKruEGZIXB9vx3gisk+fmOgYnkDuIYnTosioye5p/L6quO5yocVombtZjRVOO6Gf1y9oK0BPYzEmA1KjVFVsODaa9onRt8yqlTm90QrvBZ4fJoPWa5QJISTG02E9YdY=
+	t=1714742539; cv=none; b=fYpeW92Qkd+u19AgkmgMe4l4ar1hFG1xDGEYgm7UAU1Y2Rk5NUaF2Hc9NiUFKegEZ8WKdFp9reOmNC/ofNfgGXz5lzDVIKFd9R/8gvOz/2tfXml1DWBHU/vHHFEk91Bn5b+NyILqwzXdq1kR4IkaP3VlD4Go3xvn6PbLFcE7N9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714737917; c=relaxed/simple;
-	bh=ums3fALSc9fsktWxk2iPCdYF9u9MxrszcOrhX7rNViM=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:References; b=tQDSXLDNlOD24jzxSj5SiwbryQB0+roRdASTZGc8pZs1LaseFp9tS0yWVBgEHQdX7WLXIrARoG952XwIa8w+Vub2EhdEUGOnnl+gNL+Z0UIZ2b9lMBfrKzQcsrP4NRXvZ+vPaTcGdmtNRRVZIaXrYTl7RebI3Lxqt4NDzHq0/7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=RXmLa06Q; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1714742539; c=relaxed/simple;
+	bh=o3lFTfErFFmxDVds5y5aBk+JNVOpL6if8ksgiaCU0XE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XsXNlMLeph2c9mD/Ol3H9m1Ldg8rrvD5Ou4kvFesuFxSYdhewia111oOUxA2KdnpClAk00bw2nsp5ppSAD2OykcAq6opGO6UgmNMAVBdiJVLfVcs1dYVXhUCl+DWM/lb0vFUZx7jtHQbXwPx6cJejD4ZNsMolqmmoHU2514OM2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHp11Qkf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="RXmLa06Q"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHp11Qkf"
 Received: by smtp.kernel.org (Postfix)
-	id D5A85C2BBFC; Fri,  3 May 2024 12:05:16 +0000 (UTC)
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 07E2EC116B1
-	for <tools@kernel.org>; Fri,  3 May 2024 12:05:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 07E2EC116B1
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20240503120512euoutp01e024cf6ff64b4b809329a55f38a1b4b8~L_QvDfV5Z0779207792euoutp01B
-	for <tools@kernel.org>; Fri,  3 May 2024 12:05:12 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20240503120512euoutp01e024cf6ff64b4b809329a55f38a1b4b8~L_QvDfV5Z0779207792euoutp01B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1714737912;
-	bh=/DKERWLTC/vCggFApij0GBjFr5aGdYVhPDMcFlYYkmc=;
-	h=Date:From:To:Subject:References:From;
-	b=RXmLa06QRLDzJLdBWOBGsZFxvR6+22RMHfgpVrGOntDudHms1HIftsl8/aWB+ZzMm
-	 /hU0b9ZWFYxBBJhAdjh0cQPTfoWRIcJ6pB48gRxw1xP9VohsXFmGRi1X/+ET6fDt97
-	 nJvPgo57MjslNtaiCfoFswehfPb87BYL14fL4H3Y=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20240503120511eucas1p1bb5370e9b90284cc835e7f3e21ec5b7c~L_Qu9nX462554125541eucas1p1S
-	for <tools@kernel.org>; Fri,  3 May 2024 12:05:11 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-	eusmges1new.samsung.com (EUCPMTA) with SMTP id F7.87.09624.7F2D4366; Fri,  3
-	May 2024 13:05:11 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20240503120511eucas1p2a3362abf193471c9b56bd7c2cdcbb79d~L_Qut5-Bl2576225762eucas1p23
-	for <tools@kernel.org>; Fri,  3 May 2024 12:05:11 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-	eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-	20240503120511eusmtrp156a2964378b3416ddb5009088c38a1c6~L_QutdaUk0528305283eusmtrp1L
-	for <tools@kernel.org>; Fri,  3 May 2024 12:05:11 +0000 (GMT)
-X-AuditID: cbfec7f2-bfbff70000002598-1e-6634d2f796e7
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-	eusmgms2.samsung.com (EUCPMTA) with SMTP id CF.4F.09010.7F2D4366; Fri,  3
-	May 2024 13:05:11 +0100 (BST)
-Received: from CAMSVWEXC02.scsc.local (unknown [106.1.227.72]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20240503120511eusmtip22e90f6c8effb6ad12f74cc1c40fa9408~L_Quhkx4z2633726337eusmtip2Z
-	for <tools@kernel.org>; Fri,  3 May 2024 12:05:11 +0000 (GMT)
-Received: from localhost (106.210.248.112) by CAMSVWEXC02.scsc.local
-	(2002:6a01:e348::6a01:e348) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
-	Fri, 3 May 2024 13:05:10 +0100
-Date: Fri, 3 May 2024 14:05:06 +0200
-From: Joel Granados <j.granados@samsung.com>
-To: <tools@kernel.org>
-Subject: b4 is bringing a bit too many trailers
-Message-ID: <20240503120506.p7g5nn6jocrrdlck@joelS2.panther.com>
+	id 80DE5C4AF14; Fri,  3 May 2024 13:22:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49307C116B1;
+	Fri,  3 May 2024 13:22:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1714742538;
+	bh=o3lFTfErFFmxDVds5y5aBk+JNVOpL6if8ksgiaCU0XE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IHp11QkfJe0tl3rlM2Pg5yqYUESlTAMrlq0sXTLJd6FeM+C/nXEaPgRr7f4Je+a4A
+	 3HQ8LWWt3QVK2qLohTLkeIlEihWxBAKbinOk8PJEAiYNHepenK8mQ33RlLNI+df0Zb
+	 G8q4JUQZNDa9AJTJNZgGsU5tZd1FZ+j5PZfpkfOY=
+Date: Fri, 3 May 2024 09:22:17 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Joel Granados <j.granados@samsung.com>
+Cc: tools@kernel.org
+Subject: Re: b4 is bringing a bit too many trailers
+Message-ID: <20240503-tourmaline-jellyfish-of-luxury-9da3cd@meerkat>
+References: <CGME20240503120511eucas1p2a3362abf193471c9b56bd7c2cdcbb79d@eucas1p2.samsung.com>
+ <20240503120506.p7g5nn6jocrrdlck@joelS2.panther.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="yfbtixb42xjdhodu"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-ClientProxiedBy: CAMSVWEXC01.scsc.local (2002:6a01:e347::6a01:e347) To
-	CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsWy7djPc7rfL5mkGaz7bmZxbuNDZgdGj02r
-	OtkCGKO4bFJSczLLUov07RK4Mq50vGAu2C5VsWP+b7YGxpViXYwcHBICJhKL3nN3MXJxCAms
-	YJRY2PqNEcLpZpL4MXMqlNPFJDHz3TX2LkZOsI6/V+9AJZYzSly//pIFrqp9xV+ozBZGiXkH
-	1jCCtLAIqEg8+H2TCcRmE9CROP/mDjPIchEBMYknH/RAwsIC+hJ3zm0FK+cVcJC4fPkRC4Qt
-	KHFy5hMwm1mgQmLihi1grcwC0hLL/3FAHKQscWT7XKjjaiVObbnFBGEv5ZD4e5cPwnaRmL7p
-	IguELSzx6vgWqHoZidOTe8DulxCYzCix/98HdghnNaPEssavUJOsJVquPIHqcJTY9vIYGyTw
-	+CRuvBWEuI1PYtK26cwQYV6JjjYhiGo1idX33rBAhGUkzn2COsdD4tneDUwTGBVnIXlyFpIn
-	ZyE8CRHWkViw+xMbhrC2xLKFr5khbFuJdevesyxgZF/FKJ5aWpybnlpsmJdarlecmFtcmpeu
-	l5yfu4kRmGRO/zv+aQfj3Fcf9Q4xMnEwHmJUAWp+tGH1BUYplrz8vFQlEV7tycZpQrwpiZVV
-	qUX58UWlOanFhxilOViUxHlVU+RThQTSE0tSs1NTC1KLYLJMHJxSDUwxUzOdf6pJTDv87+iH
-	tur0CE4X9cgaOUW23XzX/vQr/rb4V1JpaFo5eeecD1dXH/58quGKzpydlv5zCh++0JS1frDA
-	Ln/CLt1Mbym59+I6/KLv8wQ6ys4tusi44Hnw+cn9Zi8tLMM3X1NiPLwiRur+cRvpstUF6/nS
-	1t+PvyS6Nq/3LOOSfZIMGWaH2hed+9b+Zcfzo5vKjdV7SgXFV8l9ZuPLvHrv+nGZbW+vx0fp
-	bpz6z+/u25ut+13n3XqmMFt+u9+NredXSerx5EffKvbSEX+6U/L5BK8HN5PiM1S83v+9rG3x
-	41Glh+TmrQ1rCzMfblv/NiBuQpHgHk+5kjsKD1R1T+ftzzqkr3rWMuypEktxRqKhFnNRcSIA
-	RCA08a0DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCIsWRmVeSWpSXmKPExsVy+t/xe7rfL5mkGfRvULE4t/EhswOjx6ZV
-	nWwBjFF6NkX5pSWpChn5xSW2StGGFkZ6hpYWekYmlnqGxuaxVkamSvp2NimpOZllqUX6dgl6
-	Gau27GMv2CpV8fpXA0sD43KxLkZODgkBE4m/V+8wdjFycQgJLGWUeDKxnR0iISOx8ctVVghb
-	WOLPtS42iKIOJomDK/ewQDhbGCVe/GljAqliEVCRePD7JpjNJqAjcf7NHeYuRg4OEQExiScf
-	9EDCwgL6EnfObWUEsXkFHCQuX37EAmELSpyc+QTMZhYok7jxFuQiDiBbWmL5Pw6IG5Qljmyf
-	C3VbrcTnv88YJzAKzELSPQtJ9yyEboiwlsSNfy+ZMIS1JZYtfM0MYdtKrFv3nmUBI/sqRpHU
-	0uLc9NxiI73ixNzi0rx0veT83E2MwCjZduznlh2MK1991DvEyMTBeIhRBajz0YbVFxilWPLy
-	81KVRHi1JxunCfGmJFZWpRblxxeV5qQWH2I0BYbPRGYp0eR8YPzmlcQbmhmYGpqYWRqYWpoZ
-	K4nzehZ0JAoJpCeWpGanphakFsH0MXFwSjUwLfFdPfXc5/JL7K93FB+/6nfnxO7/shciT03T
-	dnHt/q99ljvAdvKnv5Xd37m6c5Xzf74JZZRaxczSo56d6vhVeb7+o46qfXFSc+XdOXf4NMer
-	R1dVFnDMPzDRq+ZCbMH1NQHpHUbrVDV3he9KXW/42T1VJVStnv1As9LnOZHhF+Wn7p7yfgKT
-	2+WXq9edu6K/Jcnvt0Imy0/JmnVlrEIsi+PZvkpoi8te6Np3cmWJ1Mqv+fMvXYjp3X3zbrlh
-	Q+uJ7iqeK9n1HRMX7nCKzP8pOo+jMT3y+pIbfW8qdX5MMTHi3TvFt2LKY17/b6yXrZW1fec5
-	dMgy82oxfg7rWxPtap/3UDZl5qcZ+74737+oxFKckWioxVxUnAgA+wcW3icDAAA=
-X-CMS-MailID: 20240503120511eucas1p2a3362abf193471c9b56bd7c2cdcbb79d
-X-Msg-Generator: CA
-X-RootMTR: 20240503120511eucas1p2a3362abf193471c9b56bd7c2cdcbb79d
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20240503120511eucas1p2a3362abf193471c9b56bd7c2cdcbb79d
-References: <CGME20240503120511eucas1p2a3362abf193471c9b56bd7c2cdcbb79d@eucas1p2.samsung.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240503120506.p7g5nn6jocrrdlck@joelS2.panther.com>
 
---yfbtixb42xjdhodu
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, May 03, 2024 at 02:05:06PM GMT, Joel Granados wrote:
+> 2. I do a `b4 trailers -u -F "20240501-jag-sysctl_remset_net-v6-0-370b702b6b4a@samsung.com"`
+>    to bring in all the trailers from v6.
 
-Hey=20
+FYI, you don't need to pass -F here -- we'll find everything using the
+change-id.
 
-I'm hitting unexpected behavior when I use the "trailer" command. Here
-is what I see.
+> 3. It adds the following trailers:
+>       Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+>       Acked-by: Chuck Lever <chuck.lever@oracle.com>
+>       Reviewed-by: Jeffrey Layton <jlayton@kernel.org>
+>       Acked-by: Allison Henderson <allison.henderson@oracle.com>
+>       Tested-by: Valentin Schneider <vschneid@redhat.com>
+>       Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+>       Reviewed-by: Muchun Song <muchun.song@linux.dev>
+>       Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+>       Acked-by: Kees Cook <keescook@chromium.org>
+> 
+> 4. The first 4 are valid trailers for "20240501-jag-sysctl_remset_net-v6-0-370b702b6b4a@samsung.com"
+>    But the last 5 are not.
 
-1. Locally I'm standing on the most resent version of "sysctl: Remove
-   sentinel elements from networking"
-   https://lore.kernel.org/arll/20240501-jag-sysctl_remset_net-v6-0-370b702=
-b6b4a@samsung.com
+Hmm... I cannot replicate this. Here's my test session:
 
-2. I do a `b4 trailers -u -F "20240501-jag-sysctl_remset_net-v6-0-370b702b6=
-b4a@samsung.com"`
-   to bring in all the trailers from v6.
+First, I recreate your series locally:
 
-3. It adds the following trailers:
-      Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-      Acked-by: Chuck Lever <chuck.lever@oracle.com>
-      Reviewed-by: Jeffrey Layton <jlayton@kernel.org>
-      Acked-by: Allison Henderson <allison.henderson@oracle.com>
-      Tested-by: Valentin Schneider <vschneid@redhat.com>
-      Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-      Reviewed-by: Muchun Song <muchun.song@linux.dev>
-      Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-      Acked-by: Kees Cook <keescook@chromium.org>
+    $ b4 prep -n test-trailers-u -F https://lore.kernel.org/all/20240501-jag-sysctl_remset_net-v6-0-370b702b6b4a@samsung.com/
+    Checking attestation on all messages, may take a moment...
+    ---
+      ✓ [PATCH v6 1/8] net: Remove the now superfluous sentinel elements from ctl_table array
+      ✓ [PATCH v6 2/8] net: ipv{6,4}: Remove the now superfluous sentinel elements from ctl_table array
+      ✓ [PATCH v6 3/8] net: rds: Remove the now superfluous sentinel elements from ctl_table array
+      ✓ [PATCH v6 4/8] net: sunrpc: Remove the now superfluous sentinel elements from ctl_table array
+      ✓ [PATCH v6 5/8] net: Remove ctl_table sentinel elements from several networking subsystems
+      ✓ [PATCH v6 6/8] netfilter: Remove the now superfluous sentinel elements from ctl_table array
+      ✓ [PATCH v6 7/8] appletalk: Remove the now superfluous sentinel elements from ctl_table array
+      ✓ [PATCH v6 8/8] ax.25: x.25: Remove the now superfluous sentinel elements from ctl_table array
+      ---
+      ✓ Signed: openpgp/j.granados@samsung.com
+    ---
+    Created new branch b4/test-trailers-u
+    Applying 8 patches
+    ---
+    Applying: net: Remove the now superfluous sentinel elements from ctl_table array
+    Applying: net: ipv{6,4}: Remove the now superfluous sentinel elements from ctl_table array
+    Applying: net: rds: Remove the now superfluous sentinel elements from ctl_table array
+    Applying: net: sunrpc: Remove the now superfluous sentinel elements from ctl_table array
+    Applying: net: Remove ctl_table sentinel elements from several networking subsystems
+    Applying: netfilter: Remove the now superfluous sentinel elements from ctl_table array
+    Applying: appletalk: Remove the now superfluous sentinel elements from ctl_table array
+    Applying: ax.25: x.25: Remove the now superfluous sentinel elements from ctl_table array
+    ---
+    NOTE: any follow-up trailers were ignored; apply them with b4 trailers -u
 
-4. The first 4 are valid trailers for "20240501-jag-sysctl_remset_net-v6-0-=
-370b702b6b4a@samsung.com"
-   But the last 5 are not.
+Then, I run the command you provided:
 
-5. Here is where I think the others came from:
-  5.1 "Acked-by: Kees Cook <keescook@chromium.org>":
-      can be found here https://lore.kernel.org/all/202404150906.C37D8D9DA1=
-@keescook/ but
-      it is part of "[PATCH 0/7] sysctl: Remove sentinel elements from misc=
- directories"
+    $ b4 trailers -u -F "20240501-jag-sysctl_remset_net-v6-0-370b702b6b4a@samsung.com"
+    Calculating patch-ids from commits, this may take a moment...
+    Checking change-id "20240311-jag-sysctl_remset_net-d403a1a93d6b"
+    Grabbing search results from lore.kernel.org
+    Looking for additional code-review trailers on lore.kernel.org
+    ---
+      net: Remove the now superfluous sentinel elements from ctl_table array
+        + Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+      net: ipv{6,4}: Remove the now superfluous sentinel elements from ctl_table array
+        + Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+      net: rds: Remove the now superfluous sentinel elements from ctl_table array
+        + Acked-by: Allison Henderson <allison.henderson@oracle.com> (✓ DKIM/oracle.com)
+        + Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+      net: sunrpc: Remove the now superfluous sentinel elements from ctl_table array
+        + Reviewed-by: Jeffrey Layton <jlayton@kernel.org> (✓ DKIM/kernel.org)
+        + Acked-by: Chuck Lever <chuck.lever@oracle.com> (✓ DKIM/oracle.com)
+        + Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+      net: Remove ctl_table sentinel elements from several networking subsystems
+        + Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+      netfilter: Remove the now superfluous sentinel elements from ctl_table array
+        + Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+      appletalk: Remove the now superfluous sentinel elements from ctl_table array
+        + Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+      ax.25: x.25: Remove the now superfluous sentinel elements from ctl_table array
+        + Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+    ---
+    Invoking git-filter-repo to update trailers.
+    New history written in 1.55 seconds...
+    Completely finished after 1.89 seconds.
+    Trailers updated.
 
-  5.2 "Reviewed-by: Muchun Song <muchun.song@linux.dev>"
-      "Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>"
-      can be found here https://lore.kernel.org/all/0e35e88d-3ea1-4f62-77e4=
--eb12e9f51583@huawei.com/
-      and here  https://lore.kernel.org/all/8E19B519-9035-42E0-92DC-7C21471=
-543D8@linux.dev/
-      but it is part of "[PATCH 0/7] sysctl: Remove sentinel elements from =
-misc directories"
+I can't seem to be able to bring in these trailers from your list:
 
-  5.3 "Tested-by: Valentin Schneider <vschneid@redhat.com>"
-      "Reviewed-by: Valentin Schneider <vschneid@redhat.com>"
-      can be found here https://lore.kernel.org/all/xhsmhil0qaoz7.mognet@vs=
-chneid-thinkpadt14sgen2i.remote.csb/
-      but is part of "[PATCH v3 00/10] sysctl: Remove sentinel elements fro=
-m kernel dir"
+>       Tested-by: Valentin Schneider <vschneid@redhat.com>
+>       Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+>       Reviewed-by: Muchun Song <muchun.song@linux.dev>
+>       Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
 
-6. b4 --version -> 0.13.0
+Notably, the Acked-by from Kees Cook is already in your series since v4, so
+we'll ignore it for the moment.
 
-My expectation is that only the first 4 trailers be brought in. Not sure
-why the others are leaking into my command. Please get back to me if you
-need me to do further testing.
+> 5. Here is where I think the others came from:
+>   5.1 "Acked-by: Kees Cook <keescook@chromium.org>":
+>       can be found here https://lore.kernel.org/all/202404150906.C37D8D9DA1@keescook/ but
+>       it is part of "[PATCH 0/7] sysctl: Remove sentinel elements from misc directories"
+> 
+>   5.2 "Reviewed-by: Muchun Song <muchun.song@linux.dev>"
+>       "Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>"
+>       can be found here https://lore.kernel.org/all/0e35e88d-3ea1-4f62-77e4-eb12e9f51583@huawei.com/
+>       and here  https://lore.kernel.org/all/8E19B519-9035-42E0-92DC-7C21471543D8@linux.dev/
+>       but it is part of "[PATCH 0/7] sysctl: Remove sentinel elements from misc directories"
 
-BTW: I'm loving the b4 workflow!.
+No matter how I try, I'm not able to bring these into your series. Even if I
+pass that thread as -F to the trailers command, I'm still not able to have
+them applied. So, I'm not sure what is going on, unfortunately.
 
-Best
+Can you remove these trailers from your local series with `git rebase -i` and run:
 
---=20
+    b4 -d trailers -u 2>/tmp/trailers-u-debug.out
 
-Joel Granados
+If you still get those trailers pulled in, I'd love to see the debug output
+for it.
 
---yfbtixb42xjdhodu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCgAdFiEErkcJVyXmMSXOyyeQupfNUreWQU8FAmY00vIACgkQupfNUreW
-QU8rVwv+KiyZgJ4bCLYnhOm2KrKHSn5Jv4+5u0xa7+liUslZLZaWskgTO4Mt8tme
-qkBZBY5uHgWYgTUDoDArbqPRb/KFXv7JgjSIumKQxaZS7jJCaOC9aprd5OLDaxur
-+koFwcYky5ObKewDkmQJGKepanMIX2DwBKsnQOnlP4EpnS2nNEdRIOX/CGQRqJg2
-bAA/LdE/jK0qaeExM8HNKIFST11FSz24hty9YQWmHB94WTFtcGzoBWWAnr6E+4Ex
-lTz8SpvQs7/NMczarqMLzcyxgpZLBjQjE69Sm2P2FrV4Jeocyzir4EyCbduZrSsI
-0WTCw/7gIkPs4sBS3ZF4qJ7b+e7Irgdw8r4SScg8PYIh2UzKIH7/eEkDujf0u3WE
-42NLWS5CuIY7aQxQHinTVb2sjxr6zHTS4+L6ofxigqv2yEmF3ZKRSIUnrUyaDu2r
-BHx/x8NWTO5GRqeJbJR9K+Ea7ChyxKlTf12AEpIXZ4sB7vr+XCXud3xiNOCAgPNa
-G+GoL+2m
-=R5Iw
------END PGP SIGNATURE-----
-
---yfbtixb42xjdhodu--
+Cheers,
+-K
