@@ -1,71 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D985B3AC2B
-	for <tools@linux.kernel.org>; Thu,  9 May 2024 14:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969F7157A41
+	for <tools@linux.kernel.org>; Thu,  9 May 2024 15:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715266226; cv=none; b=XE3RvlOhpq0z094uiUZvfJplbKWQV8IrZB0A8TQe5PX9nkGnh57vUeRrNsN5CRxLHWcQ+OyrbltcmxkiqldjInoYatSdE4VMcP0wbjRodYagooWg75Bf06kXeSRGnEQWMOJqOPgydYNoTgiI8QvrbgO4kCko4gYNokTTrQGCmZc=
+	t=1715267103; cv=none; b=J4OCg3/Yn7CUGgmGIPPTsm1tl21+T26zJhBfiS1jb1Hdn01pw6FWlW5OiT4o7RuID+K3GsjMiW6IONrS9Wollb7xBqt73ZTFk29GnJNjqa2Mk+ey0QuZiaxunTs4G14sucqZBzNkSGGMsT5ALXUT4Ub+trpeCvjgY3Xd5Xcyrjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715266226; c=relaxed/simple;
-	bh=JVmXKdMYlQblLAjR0r/6nqv606iJyZquxo9XmOlXkJ4=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=UaC5SkB5rDs4LC0sFOoYLUowY+gIhijCDcNTfn+brcLqc/pyXxlov+RB7c3557UuGyaQFF4kcOOMaO9WcWeNx/V3nSymIa/6Cz46TD0WhLCCzNmQuzyNo6+urfM+UzL/WB+1/40SPrk26Ie80u8J/C3rJdq8VDWK/cZRpGjp16o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PBGaTC57; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715267103; c=relaxed/simple;
+	bh=0ZoWJed8KqGqv4BJgmaKVYafAO0HxcHmUvhCu8MTb1g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QkZH5y3kuBn61xlwCKhwKYsvMvDzJJbR9yT6Q755C0nwtZZMXqT9ie16zHj0Sb6SdrDslwFOIVhhWxJEhXpztD/p6TJNtfVDlcu4HkB6bM2ViMVQj5l3rperupohJbN9ciQ2DKO1/lCK45emF2wSB7bxBsWrwzcpQcfxZRvdLoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmGa7Xs5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PBGaTC57"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmGa7Xs5"
 Received: by smtp.kernel.org (Postfix)
-	id 9CA7CC32781; Thu,  9 May 2024 14:50:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 81867C116B1;
-	Thu,  9 May 2024 14:50:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715266226;
-	bh=JVmXKdMYlQblLAjR0r/6nqv606iJyZquxo9XmOlXkJ4=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=PBGaTC57YPOFLT9Us5rCWVu4GRx3IG8cplSKE67o57E+Sfl8LCRnyksKD5AIzr4RW
-	 csPX1iFK9e2SEFml4+QsiamHedLgmYEg0Nk3ppMvziG5BJnTF/3Lo9SDSyEDpm+92w
-	 E6jLRGJ4UCXPY45duPH2igkXZeWnb49/BcIITMdd+MylsEw4wnwvR0iuhCMuf4c4kj
-	 rQR9kiT2vXnMNEsRpmR5NLc7QoyG0fPRFNFtibWWyoE6pe986T5zBozISFkhBHIH8U
-	 Umc3yNLdLzsWhArZxXiU6RsP5Io5OiWwGjOAm+ag2C7xJDeK4FWDnfXIx+Yu8oxITF
-	 GzRm5WDLEJNfg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 6FDFEC433F2;
-	Thu,  9 May 2024 14:50:26 +0000 (UTC)
+	id 330AAC32781; Thu,  9 May 2024 15:05:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E263BC116B1;
+	Thu,  9 May 2024 15:05:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1715267103;
+	bh=0ZoWJed8KqGqv4BJgmaKVYafAO0HxcHmUvhCu8MTb1g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pmGa7Xs5neGzo6qD6xHwggh0QlOTczvI4kWVYPTt1w//nKoHv8/tozol3aQNPuwvq
+	 yGPaAYCFc67/HAgz4GgDKVPDPRoGJ7oRIPb4MR5SNP4r21TcSz04Xg3cDK41TBDDXY
+	 j4QCUN25ck9hkegsG9bi6ajm7IxVW2Wu/1YroXaw=
+Date: Thu, 9 May 2024 11:05:01 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: tools@kernel.org
+Subject: Re: b4 shazam not stripping ---
+Message-ID: <20240509-elated-augmented-tench-5fbb9f@lemur>
+References: <2510008e-23d5-4c15-a16c-be9de549a425@citrix.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: "Kernel.org Bugbot" <bugbot@kernel.org>
-To: tools@linux.kernel.org, konstantin@linuxfoundation.org, 
- andrew.cooper3@citrix.com, tools@kernel.org
-Message-ID: <20240509-b218824c5-411e972423e9@bugzilla.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <2510008e-23d5-4c15-a16c-be9de549a425@citrix.com>
-References: <2510008e-23d5-4c15-a16c-be9de549a425@citrix.com>
-Subject: Re: b4 shazam not stripping ---
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: peebz 0.1
-Date: Thu,  9 May 2024 14:50:26 +0000 (UTC)
 
-Konstantin Ryabitsev writes in commit f3d47b4f92dfbd09106b06ade5020458a339d960:
+On Thu, May 09, 2024 at 01:05:40AM GMT, Andrew Cooper wrote:
+> Hello,
+> 
+> b4 shazam 33b93fdf-bf16-49b8-aec2-0b2c19f5c471@suse.com
+> 
+> is leaving the notes under --- in the commit message of the finalised patch.
+> 
+> I cant spot anything obvious that should cause it to be mis-recognised,
+> although it isn't a git-written diff.  Reproduces with 0.13.y and 
+> master.
 
-am: fix incorrect parsing of non-git diffs with comments
+This should be now handled properly in master. Thank you for the report.
 
-We were not properly handling patches that were a) not generated with
-"git format-patch" and b) contained a comment after the main commit
-message (where the diffstat would normally go). This fixes it and adds a
-test case to make sure we catch it in the future.
-
-Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218824
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
-(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=f3d47b4f92df)
--- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (peebz 0.1)
-
+-K
