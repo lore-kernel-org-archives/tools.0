@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE570145B3F
-	for <tools@linux.kernel.org>; Thu, 16 May 2024 12:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6F6101DB
+	for <tools@linux.kernel.org>; Mon, 20 May 2024 13:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715863512; cv=none; b=oG4ZgQYotKN4DCZTJ/hrAOLD0ZW7XeVusjZG56Pomz4ZcTuBduCu6yaCT45YMv73viheB+e6sqvn8jPgGFj2T7Cc9V4MyyJ6/S85cGQ+Y9fl2X3zyHbtd4FC1JooU0DR+9+/+8Zr1QxyeyDRaPHuh4Uc35nuwG4i/I5FTXKvXNc=
+	t=1716212735; cv=none; b=YreX28XJ7OVp4U4cBoDbeZfxB8OnmQQDT7NgijkxQ0Kgrbkyn4j/U6R77MMvoraD755GIeNpwuLZUGmpNDe9FaxgpY3sONnuOaQQM3lTPK4kdK7enQFu37tVPk+nA9wEYsREVPPRcihENo5dl8JJGiXrEcBxMq5OrfLEjayn22k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715863512; c=relaxed/simple;
-	bh=zJ4t5KEEe2df+I72/EBB9u4wYvrIAxgeJgL9vFAwug4=;
+	s=arc-20240116; t=1716212735; c=relaxed/simple;
+	bh=FMWRilSCXrfvkPt81GpPkEgP0xRuFt3AQhWIyLcELJs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FsBhHuv7jA+xEtLeEgNnICvh7CZnsqiUngOxJHuRfoIL7NDB0nWmJtM4C6Z1DAaHRIfufxr1k1xQ4aeLWnB/6PE83tUs1CAltAeGLMrdnEq0r0Gdq5Kb2XSIsRGTJtES6LAE5XclBs6llyrVGpLJg6FHns1mXTKoyDpjdIhN17U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WWNYJcWZ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=hn4GXR2x83vMyA4rAZO39iXLzPm297ghYTjVZd+qPP79Wwf+L0YRv+siJF9d4B3PqjGVC6lX9pC7RRAeKIdskcHK07kBo8gF9gD2fuKeM7z5QuPqR0M6CYdUq7bKJc01y2pcN87SygacCBbUlMHUWtqeMfP/xHNfQv1nVcUjVfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oy5Q0GLk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WWNYJcWZ"
-Received: by smtp.kernel.org (Postfix)
-	id 7B273C32789; Thu, 16 May 2024 12:45:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29298C32786;
-	Thu, 16 May 2024 12:45:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oy5Q0GLk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DFCC2BD10;
+	Mon, 20 May 2024 13:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715863512;
-	bh=zJ4t5KEEe2df+I72/EBB9u4wYvrIAxgeJgL9vFAwug4=;
+	s=k20201202; t=1716212734;
+	bh=FMWRilSCXrfvkPt81GpPkEgP0xRuFt3AQhWIyLcELJs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WWNYJcWZf7J0LgdwF+G9nGI8B5RBk1YJXKcearvp7Wja4Yr7cYi5Rx47wLyI5CQWU
-	 AboES3aCSeW6V5238HuSwJT7ZQuDo4nZU+FFTIZ2GCxAr+gONTh2u3aGcijp6EZQ+X
-	 shT6YI4pAQz9TjWVR84XNgtE2g6dm87cnl8zNXC3BNmyGN3uVRr9PLkt4uOeE+qZU6
-	 hdsfPIVlbVtwEsY8XAYMnG8XEAltCeyu0bJbxUynIfSl+5MFmXUA/jX8Yzctschmbv
-	 D2UsSr/chKVzkbRf8XJ59mYgVxQ2/9x+z/JbpVf83kvBqkhumyhFzMc7JGTXG0Tf3E
-	 LbsiXTqTrLi+A==
-Date: Thu, 16 May 2024 13:45:07 +0100
+	b=Oy5Q0GLk3a4CUIaOihHm4GW4fuWrAdFJEhzYx6OdV2QGjX0ev8zEldy+zdcuusZN0
+	 3jZO23WAWee8dEVEF6c+PTUsCCgZePqjc9CdSeKOIoVsNhsoq+w8M3crvIIRA3/Z41
+	 8CpZ7E/kvntaRLIAFt1r1/JtZYEOm3kAofWwfpnl984cjVFC09yaMILGOdjHCn4HRi
+	 EncjC7aOQsPkEi5GODEPhvXYXW3xyMpIYlalLPxWKOJkAIs9760uHxFEfZaqpJm7eA
+	 vy8APd7g07RMTeQuS9+V18roaKltqCkBhqkPyDc32CRg+ycPHprY6nWP3cF1jnfEZO
+	 RmcLk54sztX/w==
+Date: Mon, 20 May 2024 14:45:30 +0100
 From: Mark Brown <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, tools@kernel.org
-Subject: Re: b4 one key git rebase -i
-Message-ID: <e1d383a0-2b01-4635-be51-6707587422af@sirena.org.uk>
-References: <b483c569-66b1-4a4c-913f-3b60ebcd1743@app.fastmail.com>
- <b89ad184-f920-4f6f-af9c-59ff9ef52b8f@sirena.org.uk>
- <20240516-glorious-crocodile-of-adventure-4d5784@lemur>
+Cc: tools@linux.kernel.org
+Subject: Re: Checks for recipients
+Message-ID: <ZktT-sM1I_QFQ8ZH@sirena.org.uk>
+References: <ZhQ8DoS1GaT0603l@sirena.org.uk>
+ <CAMwyc-Q466R2za0sMTD9Chx77hL7xBBuNROokemLmp7dt=i10w@mail.gmail.com>
+ <ZiPBx36go0AYBWO7@finisterre.sirena.org.uk>
+ <20240420-arboreal-natural-sambar-ff61bc@lemur>
+ <ZiRiK4sB6kKwdH7p@finisterre.sirena.org.uk>
+ <20240422-sincere-stallion-from-hyperborea-bffddf@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -44,41 +45,53 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="v4wwrmXx+Na2AsoH"
+	protocol="application/pgp-signature"; boundary="9oiXoKsQ3XPKR/nD"
 Content-Disposition: inline
-In-Reply-To: <20240516-glorious-crocodile-of-adventure-4d5784@lemur>
-X-Cookie: I'm having a MID-WEEK CRISIS!
+In-Reply-To: <20240422-sincere-stallion-from-hyperborea-bffddf@lemur>
+X-Cookie: We are what we are.
 
 
---v4wwrmXx+Na2AsoH
+--9oiXoKsQ3XPKR/nD
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Thu, May 16, 2024 at 08:26:14AM -0400, Konstantin Ryabitsev wrote:
-> On Thu, May 16, 2024 at 12:53:06PM GMT, Mark Brown wrote:
+Hi Konstantin,
 
-> >   b4 prep --show-info | grep base-commit
+With current git b4 (621fa62) I'm getting tracebacks doing
 
-> You don't need to pipe this to grep, this will work, too:
+   b4 update --trailers-from ${MSGID} --since ${COMMIT}
 
->     b4 prep --show-info base-commit
+(I'm using ZktD50C5twF1EuKu@fedora or ZktCpcGZdgHWuN_L@fedora as msgid
+here, ${COMMIT} being what I applied those two to):
 
-Ah, most of my scripted use of properties is checking for specific
-values so the examples that turn up include a value in the grep.
+Calculating patch-ids from commits, this may take a moment...
+Traceback (most recent call last):
+  File "/home/broonie/git/b4/src/b4/command.py", line 428, in <module>
+    cmd()
+  File "/home/broonie/git/b4/src/b4/command.py", line 410, in cmd
+    cmdargs.func(cmdargs)
+  File "/home/broonie/git/b4/src/b4/command.py", line 85, in cmd_trailers
+    b4.ez.cmd_trailers(cmdargs)
+  File "/home/broonie/git/b4/src/b4/ez.py", line 2786, in cmd_trailers
+    update_trailers(cmdargs)
+  File "/home/broonie/git/b4/src/b4/ez.py", line 1107, in update_trailers
+    if lmsg.followup_trailers:
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'followup_trailers'
 
---v4wwrmXx+Na2AsoH
+--9oiXoKsQ3XPKR/nD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZF/9MACgkQJNaLcl1U
-h9BMwAgAg4ICE8EFqE3apLI+ETtFHVerRZQzHWM1Es5jvliLbFgMKXqFuyEn3O9B
-szAOA4XUw12eVrEDx38bcAT/vBhdBg5QmrcJu4HuvHX0B/YAVXqoo+IYHvLfSqQK
-5L+93inu+009i+jZWqn1f8URtUTh8OFZtxbngMzhrDF0IxW4ZQyiaX7Bq7BDJYzl
-F3vmX4UjfzTv3hjwkTTFPNCx8bt8ZASWj++Lz1zYVciF7XoiTxW0D/GWbyZ6unyR
-rOLWEglUz8Wl/xwREZ4hY+XbLL7sgiChSC4YpTdX96E186qpNZHouWz60+IEcqOg
-gXL3aivzac5hGBHi/S6j8Vn7MG9UiA==
-=dfbn
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZLU/kACgkQJNaLcl1U
+h9BDZQf/aQLQ77D56rYXIEOLaTUuM0p2MvKm9BPO/9db68GyDCWriqoq6AHWsBdd
+l2gjukNGVafoU9nTa7rUOTAZZtMl/lYTmQ1ZVzVr9uGYsHbovvsXcG3Rqvz3rHYp
+kgtRSqj6eipzmfZLhpSQx9zGsRvqAT/LF3dnWohLjzG9YvPXiZKkc8Fwjy6w0q2s
+M+zbBRwVefPy8k8TNLTdIiQGQrtI5fvGcRDlwKsPrMDNmHbgnMAejYANK0NMaeTj
+PiLYRbSM4lq9b7HaxgR6aVrryHNG0ZO7m6Ulsf+qKLibRyQaR24KeSBVDhKGenXw
+XsYv2+dIQHs6TlOyDuWAt8RJjvUqQA==
+=xMBV
 -----END PGP SIGNATURE-----
 
---v4wwrmXx+Na2AsoH--
+--9oiXoKsQ3XPKR/nD--
