@@ -1,97 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6F6101DB
-	for <tools@linux.kernel.org>; Mon, 20 May 2024 13:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C61D57318
+	for <tools@linux.kernel.org>; Tue, 21 May 2024 10:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716212735; cv=none; b=YreX28XJ7OVp4U4cBoDbeZfxB8OnmQQDT7NgijkxQ0Kgrbkyn4j/U6R77MMvoraD755GIeNpwuLZUGmpNDe9FaxgpY3sONnuOaQQM3lTPK4kdK7enQFu37tVPk+nA9wEYsREVPPRcihENo5dl8JJGiXrEcBxMq5OrfLEjayn22k=
+	t=1716287940; cv=none; b=ZFZxsqVnmJxPCooN9opfFqt+Vumsq+K3mCbCfSASckoP3nXuEt3/Ptc5ARbI1NiBxFeSbjg46RWRbRxRGYwreJTgtw9Js1SaSyJmYc1/7YEiXjTHqx53r5qPCnbSw6HOUzKzkT7rjnTkNgxMvrezxm3BIp82DGGUTfOnkNYIRLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716212735; c=relaxed/simple;
-	bh=FMWRilSCXrfvkPt81GpPkEgP0xRuFt3AQhWIyLcELJs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hn4GXR2x83vMyA4rAZO39iXLzPm297ghYTjVZd+qPP79Wwf+L0YRv+siJF9d4B3PqjGVC6lX9pC7RRAeKIdskcHK07kBo8gF9gD2fuKeM7z5QuPqR0M6CYdUq7bKJc01y2pcN87SygacCBbUlMHUWtqeMfP/xHNfQv1nVcUjVfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oy5Q0GLk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716287940; c=relaxed/simple;
+	bh=jC18eWoJvPaDkPjYN9LSMM2XWKJ5Ahn4ZgPktxjvAtg=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=mVtQLCnd44Jd+LwOnGtOA1FM2XjkFjqt2U/WlqPTv1/VqjilbdgLIab+avqc52AdcqRb3MtsLn82NuxMoBsRG47tRO6h30tg5GFaowBcFTTiJ4XPeepHXMx8UvBKHAoR8HyTLfWJudRz8XsQVcuq8TyTBnk1E6NvRp0zPBhVGho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m1F8wRMu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oy5Q0GLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DFCC2BD10;
-	Mon, 20 May 2024 13:45:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m1F8wRMu"
+Received: by smtp.kernel.org (Postfix)
+	id 0C591C32786; Tue, 21 May 2024 10:39:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC56C2BD11
+	for <tools@kernel.org>; Tue, 21 May 2024 10:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716212734;
-	bh=FMWRilSCXrfvkPt81GpPkEgP0xRuFt3AQhWIyLcELJs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Oy5Q0GLk3a4CUIaOihHm4GW4fuWrAdFJEhzYx6OdV2QGjX0ev8zEldy+zdcuusZN0
-	 3jZO23WAWee8dEVEF6c+PTUsCCgZePqjc9CdSeKOIoVsNhsoq+w8M3crvIIRA3/Z41
-	 8CpZ7E/kvntaRLIAFt1r1/JtZYEOm3kAofWwfpnl984cjVFC09yaMILGOdjHCn4HRi
-	 EncjC7aOQsPkEi5GODEPhvXYXW3xyMpIYlalLPxWKOJkAIs9760uHxFEfZaqpJm7eA
-	 vy8APd7g07RMTeQuS9+V18roaKltqCkBhqkPyDc32CRg+ycPHprY6nWP3cF1jnfEZO
-	 RmcLk54sztX/w==
-Date: Mon, 20 May 2024 14:45:30 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Checks for recipients
-Message-ID: <ZktT-sM1I_QFQ8ZH@sirena.org.uk>
-References: <ZhQ8DoS1GaT0603l@sirena.org.uk>
- <CAMwyc-Q466R2za0sMTD9Chx77hL7xBBuNROokemLmp7dt=i10w@mail.gmail.com>
- <ZiPBx36go0AYBWO7@finisterre.sirena.org.uk>
- <20240420-arboreal-natural-sambar-ff61bc@lemur>
- <ZiRiK4sB6kKwdH7p@finisterre.sirena.org.uk>
- <20240422-sincere-stallion-from-hyperborea-bffddf@lemur>
+	s=k20201202; t=1716287939;
+	bh=jC18eWoJvPaDkPjYN9LSMM2XWKJ5Ahn4ZgPktxjvAtg=;
+	h=Date:From:To:Subject:From;
+	b=m1F8wRMucIoqyt4zmZUumGyW2qsLYxjGKMD5DPua/FcsplPcJr/Mh+W19DO5Z0bt1
+	 7Xe+iijUGsJdEIQqIdqtwf8PazDmjC5lOaPVB016QekxguGIj/RMXFqBB1o5XZC3m7
+	 BQiX1rBhKgBSNDd5blOMMB8IQEZ4sYLdZsgcBk6f0Yq9dyb0bmY4fTiOIusdGNIwpp
+	 gM+eIX1plcDVLZsHbTbc+1GNkibGfVvl4g0yWXgKYeTF2e5avJ88Eli96SpB17TEZy
+	 x07MNQcBA+zv3pJH0NYRgjNvlTZDICOpBZJ/cis+vq1Dfl9vjK+JJJV3fTZwxhA1/h
+	 2fwDUAOq17XRQ==
+Date: Tue, 21 May 2024 12:38:57 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: tools@kernel.org
+Subject: b4 adds changelog before the cover letter
+Message-ID: <20240521-curious-obedient-dove-cc79a8@houat>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9oiXoKsQ3XPKR/nD"
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="sh4rfdbxv4yxxdbe"
 Content-Disposition: inline
-In-Reply-To: <20240422-sincere-stallion-from-hyperborea-bffddf@lemur>
-X-Cookie: We are what we are.
 
 
---9oiXoKsQ3XPKR/nD
+--sh4rfdbxv4yxxdbe
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-Hi Konstantin,
+Hi,
 
-With current git b4 (621fa62) I'm getting tracebacks doing
+I've just noticed that after sending a series, b4 add the changes before
+the rest of the cover letter.
 
-   b4 update --trailers-from ${MSGID} --since ${COMMIT}
+For example, I've just sent this series:
+https://lore.kernel.org/r/20240521-kms-hdmi-connector-state-v14-0-51950db4fedb@kernel.org
 
-(I'm using ZktD50C5twF1EuKu@fedora or ZktCpcGZdgHWuN_L@fedora as msgid
-here, ${COMMIT} being what I applied those two to):
+Prior to sending the series, this was the commit containing the cover letter:
+https://github.com/mripard/linux/commit/062e28a73fd2
 
-Calculating patch-ids from commits, this may take a moment...
-Traceback (most recent call last):
-  File "/home/broonie/git/b4/src/b4/command.py", line 428, in <module>
-    cmd()
-  File "/home/broonie/git/b4/src/b4/command.py", line 410, in cmd
-    cmdargs.func(cmdargs)
-  File "/home/broonie/git/b4/src/b4/command.py", line 85, in cmd_trailers
-    b4.ez.cmd_trailers(cmdargs)
-  File "/home/broonie/git/b4/src/b4/ez.py", line 2786, in cmd_trailers
-    update_trailers(cmdargs)
-  File "/home/broonie/git/b4/src/b4/ez.py", line 1107, in update_trailers
-    if lmsg.followup_trailers:
-       ^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'followup_trailers'
+Right after b4 send was done, this is now the commit:
+https://github.com/mripard/linux/commit/0d20a4123b4435c41177e2cc9122f7d335f7399e
 
---9oiXoKsQ3XPKR/nD
+It's not clear to me what is going on, but other series on other
+machines with the same system and b4 versions don't show the same
+behaviour, so it's probably an unlikely bug, or related to the local
+configuration.
+
+Maxime
+
+--sh4rfdbxv4yxxdbe
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZLU/kACgkQJNaLcl1U
-h9BDZQf/aQLQ77D56rYXIEOLaTUuM0p2MvKm9BPO/9db68GyDCWriqoq6AHWsBdd
-l2gjukNGVafoU9nTa7rUOTAZZtMl/lYTmQ1ZVzVr9uGYsHbovvsXcG3Rqvz3rHYp
-kgtRSqj6eipzmfZLhpSQx9zGsRvqAT/LF3dnWohLjzG9YvPXiZKkc8Fwjy6w0q2s
-M+zbBRwVefPy8k8TNLTdIiQGQrtI5fvGcRDlwKsPrMDNmHbgnMAejYANK0NMaeTj
-PiLYRbSM4lq9b7HaxgR6aVrryHNG0ZO7m6Ulsf+qKLibRyQaR24KeSBVDhKGenXw
-XsYv2+dIQHs6TlOyDuWAt8RJjvUqQA==
-=xMBV
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZkx5wQAKCRAnX84Zoj2+
+duVaAYCIoN5rZBNe+CApWr1yB4FSa7cWs1Da5LS2ZVzVwfSWsBeM+SqCPiFWKQPV
+TBDvYYwBgPcBe9QsyP3kDnmwrUvBNSpxwNEJHPsyul/+2SVSwM5eA60WmriYiOKH
+chKPRS49QA==
+=LAcA
 -----END PGP SIGNATURE-----
 
---9oiXoKsQ3XPKR/nD--
+--sh4rfdbxv4yxxdbe--
