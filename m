@@ -1,76 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80E71EB40
-	for <tools@linux.kernel.org>; Tue, 21 May 2024 20:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33393BBC9
+	for <tools@linux.kernel.org>; Wed, 22 May 2024 07:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716322311; cv=none; b=rZW0grxsY3J3eRxEHFfj+r4Fbw55HiCyhOQ8bcrADiAsTXYhQD2r6EUPS4WVG2MdUCSD/8odw33Vjq1Qf1kQnx7dX0C/0UJIN6JFUd0E8aK/AOg9sMrEfAOT2AZDGQXV9P2ddt8y4ssEXtUlVmrGIBk+QzdQXN8Zm5ULJbREQSU=
+	t=1716363489; cv=none; b=YyFJcVeybCxvG2n1DFQOZ9LU87HsVM+JGmArSfK7rDjFF9qIuxU/CElkwKN3U4FvQP+I8P4FJ+fBkv9qSghV2OZ4aDe3WtReEitgAadMhNptG3L1uFFfFvqL+2O6mOi/4Wn6sm/2Zyu7ZDh3cQs8+JQ65KIzAE+ZQfYF29qQ2W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716322311; c=relaxed/simple;
-	bh=to7JHg0XwvLma0q5vCGsVJIM40L+Q2Xe2pfZl+v8+/Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=q9cG5KIf0MlUmmR1Jm69NoEDO0f7213WBIJqTJZ2dLPUkqm8j7XWG2NHcdSVBu4TzOjGUx+3fWkSBWMyznzlbQ/SHdCjlqOB4UUAbSjgAgB/4z8ulq7Rp9jJI1f/IZ0PhHwlmLKez4jhOm33ADkp3llCe8B7QZ/5fI7dFVuouJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=gvk5apZn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716363489; c=relaxed/simple;
+	bh=3xt+u96jXZ59FbRvrhmh9xYTdFn2FP/K36lppdtoRfw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DRsMLA7r9BFK9WG9k39msneK6h8r61Ull1dubDl/2z2XH5Mhg750y4ka3c5K/TNWUf6IZPAqPMgprWUq31mtCzY8Gu69u34uK8BaIpe+gEqgw9ek6XYufF9F1l8asA8o4D0VQJVn0JJa/5RtNX+lxG/WxYItMsoKWC/J+ZGakJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oa3rl+Gw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="gvk5apZn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oa3rl+Gw"
 Received: by smtp.kernel.org (Postfix)
-	id 5F69DC32782; Tue, 21 May 2024 20:11:51 +0000 (UTC)
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 5DF92C2BD11
-	for <tools@kernel.org>; Tue, 21 May 2024 20:11:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 5DF92C2BD11
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1716322308;
-	bh=to7JHg0XwvLma0q5vCGsVJIM40L+Q2Xe2pfZl+v8+/Q=;
-	h=Date:From:To:Cc:Subject:From;
-	b=gvk5apZn+Et/EyHerHAv2asGXqSpS9T1iZ07Iv+eHcQuZ8SXqYLko7+Q25KNTOKrW
-	 8tixgP+bfhSv8DSktrq/eMkJkTYukdZRtrgYIXKRBC0gcWguM1iHPYPtoAPW7oBUqt
-	 O4KLL8AR1dECUsWcMkzcn/rdVqQGCJ8OjWIfWS4x0Md7cNKCqyJx6kbMosFrgauBtv
-	 77D8wd5n328iT6NFNLhATVC1onOdwsAgxAHWbSPSlpy4gevqLTe6yK9ltqT9QoX2CX
-	 QwpvZiLReG7j723a8yIpYazFCX3H7ZcH+GWwMXmCnjSUPtu3gE5OtJ6F+Fzi/ZEdvx
-	 sBZRMxJyRx7PA==
-Received: from notapiano (zone.collabora.co.uk [167.235.23.81])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nfraprado)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 9F3AF3782186;
-	Tue, 21 May 2024 20:11:47 +0000 (UTC)
-Date: Tue, 21 May 2024 16:11:45 -0400
-From: =?utf-8?B?TsOtY29sYXMgRi4gUi4gQS4=?= Prado <nfraprado@collabora.com>
-To: tools@kernel.org
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: /all/ vs /r/ URL for messages in lore
-Message-ID: <e45742c0-45ae-4f6f-82ac-c59bea4c9304@notapiano>
+	id 7A316C32789; Wed, 22 May 2024 07:38:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B98C2BD11;
+	Wed, 22 May 2024 07:38:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716363488;
+	bh=3xt+u96jXZ59FbRvrhmh9xYTdFn2FP/K36lppdtoRfw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Oa3rl+GwKb2SpUnKLijfYlsuxUqhm1yWOkqr5AspgSmULPSxXwJJkQoujWzkWIpfX
+	 B8nQWnzkTPY2uTSBdKiaCMp6YKHxKvUZCqKIiTTKukAImzPaNLun9NvpQbuH05jyP6
+	 63sDsy2UTGjFB+p6eH4yHQpAYNS//Db+sTekBLNRfQgdeBJvqDur6J8B/MD891rzXS
+	 0fSP3hNJS6dfJLCaDpqmfLkx13Cq1mEmAXwezmMu3WNriT3m2j8v5zjH0c0tR8wi6w
+	 MqNwi8LlcQntXL48dh3LB8DTO9fObLiI8N/GpSwvdLvlrvEQh2u9wxblTf8IIGPoAy
+	 CLSbKVcbQOVvw==
+Date: Wed, 22 May 2024 09:38:05 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org
+Subject: Re: b4 adds changelog before the cover letter
+Message-ID: <20240522-mindful-dynamic-wolverine-3adcb6@houat>
+References: <20240521-curious-obedient-dove-cc79a8@houat>
+ <20240521-silky-natural-tapir-80defb@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="htdn3czbudkarfuy"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240521-silky-natural-tapir-80defb@lemur>
 
-Hi,
 
-I've noticed that in addition to the 'all' inbox in lore,
-https://lore.kernel.org/all/, there's also a hidden 'r' inbox,
-https://lore.kernel.org/r/, that seems to redirect to 'all'. I've seen mixed
-usage of both in the kernel documentation and am wondering if one should be
-prefered over the other.
+--htdn3czbudkarfuy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Is the 'r' inbox even meant to be used? I'm worried it might not be "officially
-supported" and stop working in the future.
+On Tue, May 21, 2024 at 01:44:04PM GMT, Konstantin Ryabitsev wrote:
+> On Tue, May 21, 2024 at 12:38:57PM GMT, Maxime Ripard wrote:
+> > I've just noticed that after sending a series, b4 add the changes=20
+> > before
+> > the rest of the cover letter.
+> >=20
+> > For example, I've just sent this series:
+> > https://lore.kernel.org/r/20240521-kms-hdmi-connector-state-v14-0-51950=
+db4fedb@kernel.org
+> >=20
+> > Prior to sending the series, this was the commit containing the cover l=
+etter:
+> > https://github.com/mripard/linux/commit/062e28a73fd2
+> >=20
+> > Right after b4 send was done, this is now the commit:
+> > https://github.com/mripard/linux/commit/0d20a4123b4435c41177e2cc9122f7d=
+335f7399e
+> >=20
+> > It's not clear to me what is going on, but other series on other
+> > machines with the same system and b4 versions don't show the same
+> > behaviour, so it's probably an unlikely bug, or related to the local
+> > configuration.
+>=20
+> This is because normally there would be a --- between the trailers and=20
+> the changelog, e.g.:
+>=20
+>   Cc: linux-rockchip@lists.infradead.org
+>   Cc: linux-sunxi@lists.linux.dev
+>   Signed-off-by: Maxime Ripard <mripard@kernel.org>
+>   ---
+>=20
+>   Changes in v14:
+>=20
+> That "---" is crucial for us to properly find the start of the changelog=
+=20
+> section. This logic can certainly be improved to be less fragile, but=20
+> for the moment putting back the --- is the only way to fix this for you.
 
-In any case I think it would be good to choose one and use it consistently
-throughout the documentation.
+Oh, of course. Thanks :)
 
-Thanks,
-Nícolas
+Maxime
+
+--htdn3czbudkarfuy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZk2g3QAKCRAnX84Zoj2+
+dqPNAYCXCEy7TWDd7KtUS6GXFrRw0iY/0rb++4dr/5xsOB9Kk2WyUxBp1rsV6H1U
+jaKV1ZUBfiUXTtkCrQYgF425dS9Raua3iv1izNKTPe8UzRR1N4vJyNgfH8Gu3i0T
+DixUk70Lag==
+=/dM6
+-----END PGP SIGNATURE-----
+
+--htdn3czbudkarfuy--
