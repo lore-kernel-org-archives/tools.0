@@ -1,61 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D9913E888
-	for <tools@linux.kernel.org>; Wed, 22 May 2024 16:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FDF6AD7
+	for <tools@linux.kernel.org>; Wed, 22 May 2024 16:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716395228; cv=none; b=KEMztbW2L35CRXneTfx9wE+3o65zGrDYrJXg9sKX4mIl+1y47ahcjtJcD66KfhWEgqm8EuXcwdIlsXuP+RTniFGg+iQf1lw7pE48UZgosSHuiPKJ75FzhUcOxLQqxgDKun0hgzn0qEuthBtqpZvUZXDSvJIq9xl3vAznbDvkO+w=
+	t=1716395425; cv=none; b=G1uRsEOeFEL032LlXEI0abMhac8pdIUDQegVi6q8FWSoJjIX0toDO+Vnii576AItnChI6vw8KYqx9D+ilp4Ydmzn7Fo1Yvi2hMzYR1YloJ9g4uQymmlAjgTBnlKcQ62HKHm0/86n8qVa04VSm6CUtbfxAi5ug44ESrQaJuXcaN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716395228; c=relaxed/simple;
-	bh=mlkR7PIqeoLufmP7ZAcw5+c8ikkX7aAY+Z/kwqMYNF8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=smhPRAVka3yigPnj+p9ax5w2le15u0Sh+WaIQSnVel3ZElPX23qsVotJira2Zf/0v7MgoUTbaDnFq3Uha00l/7+rTq8oy4sGYX/1Kc5aY9gwsEQuWhg8w1A43dkTFvPH9uk93YZGbpWKW7/6X6xYrjz9lRH/9azta1v7sE5Tdrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fy4JvGHM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716395425; c=relaxed/simple;
+	bh=kxefEOI07ck/WMRfSlKioDhUo/OIEFMUPfD9Qa82JwA=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=IywXCY7ky8JmRlcpJ+cbLfDXahCl0XtmLrFWA6TpoqmY43o/RtVoUjctYmkfEiFX8TLxCMQEkKE2FxhL6Lv2dxg440bjrc6VcVbQjAHMDF+oobfZztxYHvLgdiTvwPWeN8yWio4kZddMgdMwQm+CeAgqNfatI94kw+EXKt55YnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gFkTiUmt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fy4JvGHM"
-Received: by smtp.kernel.org (Postfix)
-	id 44462C4AF11; Wed, 22 May 2024 16:27:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3982C2BD11;
-	Wed, 22 May 2024 16:27:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716395228;
-	bh=mlkR7PIqeoLufmP7ZAcw5+c8ikkX7aAY+Z/kwqMYNF8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fy4JvGHMztWvR9SRHz2ZXiWKc8DxNhHP4nqBWLEyVtCLYQ0xxyFbADgGoqF+7CkT6
-	 vW8t7b0BWZpeIGXBnAAu0DTNSEi3IpHj73sO0VqVyKoUq0SfDB/UPdlvxKcj6x68Ja
-	 lDek6UFFTuTf2X6S/p/Nb/eehKqHQYcil9ddTNrY=
-Date: Wed, 22 May 2024 12:27:03 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Linus Torvalds <torvalds@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: Re: b4 patch selection logic
-Message-ID: <20240522-phenomenal-toad-of-might-4670c7@meerkat>
-References: <CAHk-=wjt8e26xgW190=Ws2hrgDsDN6BhCie2do6uQqrcAzF6JA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gFkTiUmt"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 4A322C2BBFC;
+	Wed, 22 May 2024 16:30:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716395425;
+	bh=kxefEOI07ck/WMRfSlKioDhUo/OIEFMUPfD9Qa82JwA=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=gFkTiUmtruXSOsuWhpBuQpkHSHeyZaw2JCMAL/xiWqSO0XjeqUYQv0cg47HdUIukM
+	 NXCjDw7Nhy1b3a0xq944FuJrRwHKUm66h9iQKcaHODFrbWO6V4ERS6oCMZm5UldxKs
+	 0AAYhGzCPbpziTH9jUCZE0W09RH/+za3ocEHdXT7L4GkREVsyclDkUUOCX7PlTOjAW
+	 Ug2I9I4iYP4fW17JRix+cf/yG2KU0Jg9igtjfCRrHPxUuvQuJrUIoVy543Zk62f6z7
+	 lcVRstBcVMrl00pv4Y2PSJOPvNrA8b1Qr+dhex2HfLWiskqsQLC2BAXmVx0Hh58onI
+	 N4qqmp3IQtmEg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 30F4CC43619;
+	Wed, 22 May 2024 16:30:25 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: tools@linux.kernel.org, tools@kernel.org, torvalds@linuxfoundation.org, 
+ konstantin@linuxfoundation.org
+Message-ID: <20240522-b218874-d82b79cd04b4@bugzilla.kernel.org>
 In-Reply-To: <CAHk-=wjt8e26xgW190=Ws2hrgDsDN6BhCie2do6uQqrcAzF6JA@mail.gmail.com>
+References: <CAHk-=wjt8e26xgW190=Ws2hrgDsDN6BhCie2do6uQqrcAzF6JA@mail.gmail.com>
+Subject: Re: b4 patch selection logic
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Wed, 22 May 2024 16:30:25 +0000 (UTC)
 
-On Wed, May 22, 2024 at 09:10:50AM GMT, Linus Torvalds wrote:
-> But the message ID that I actually pointed at is a *different* patch
-> with a different subject line, and is newer than either the original
-> or the v2 in that thread. So I feel like the patch selection logic is
-> a bit broken here. It's in the same discussion thread, yes, but b4
-> shouldn't walk around and pick an *older* patch with a different
-> subject line just because of that.
+Hello:
 
-I agree that this can be more intuitive -- let me see if I can improve it to
-automatically apply --no-parent logic when we recognize that a patch posted in
-the middle of a longer thread is not within the same series.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=218874
 
-Thank you for providing the use-case.
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
 
-bugbot assign to me
-
--K
