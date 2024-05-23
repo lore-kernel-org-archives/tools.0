@@ -1,84 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACA913B7A6
-	for <tools@linux.kernel.org>; Thu, 23 May 2024 12:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65351E4A0
+	for <tools@linux.kernel.org>; Thu, 23 May 2024 12:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716467117; cv=none; b=dNjQtWaYDOhXur62HkLsbHNRa32g/cutrjnh9dMV2FmaJX7kXLbBuCNDheoiI0UrFLCJHQXTC2C5nFsPREh4Fs81TUu4HAKHlYHbrJB98JbLmt7T4cm1/zf2gOWT26klJ6tdO6y0vh3JdGV/0p8Sk7tAgyqE4OqdDjBj39Rr9/0=
+	t=1716467426; cv=none; b=uHVfJcDBN4ZI5Ci+Jjwy4Criqw3C/X3NP6u4nw2qwPdNHBDcF9ys2OmbUP/k0hwBvE4dKMv1k1pdmMQjCcG0T5G8tidMt7kv8aWUZ4Wnie2vxFKJISHUo2vlegK+F4P+mf/H/GuYUmdlT1TVb9hoMCDpY+yvgJ3ceFN4vAWqVEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716467117; c=relaxed/simple;
-	bh=UJX51IXVA9kCLBKncTmXAuYm26yxPFNpI1bfXQ3Higk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OmexszZ9hX5x0OlT36hwmO1EROXcopaLTdbLmKoOco2408hcqqRfz9M7QQalSmSJ0Dsi/3K6EluV2f4MDmJmT+k4zsYtwPjgfRLU8QmW0WeIvupsvZC9EwT1JUVVDqM5cke+G8iZGylz44fp9ZSc8FsNHHfHZSgL4Nvj4iVhgCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMYwtqfp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716467426; c=relaxed/simple;
+	bh=FQqEHkJ3PjlYnZdHVtUJ2XrMoa9hn5CySDpEXjMNy2Q=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=FTE286/VmnEMH4S1hE4wDWwNv6tu8hYe3aknHPwnWvwjFcHgR28oY8UPy2QA0ZdSlPv0gIasC9qyMtFpEW2pDZuc+k3bCCMWXQau8QWrpfvTJewNiLR3iLXECzZkex42eHI+hypq88R/fHKjvl5tzI3YuFBwU2VgG+QjlBd42Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kzbKeqUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMYwtqfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867EBC2BD10;
-	Thu, 23 May 2024 12:25:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716467116;
-	bh=UJX51IXVA9kCLBKncTmXAuYm26yxPFNpI1bfXQ3Higk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YMYwtqfpVkiCitHsk9EEr7ILK3kCF1JgbHyRsxHEst/GBremTE4fWQNPpl81LmjoN
-	 ICxlali7S8SfxjoBUcEGtsrkbuCIkfP+n4K2ohZ6khBfpPelfJ/w8n8cCvFGpGjkHp
-	 Q57UgxcUDqHBGLWMD7E8f1REvEWYoEjg8trJgr70=
-Date: Thu, 23 May 2024 08:25:11 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-Cc: Matthieu Baerts <matttbe@kernel.org>, tools@linux.kernel.org
-Subject: Re: b4 prep-perpatch-check-cmd conf via .b4-config
-Message-ID: <20240523-charming-steadfast-donkey-bacccf@meerkat>
-References: <87sey8yksi.fsf@baylibre.com>
- <da201b46-c653-45ea-bec2-5110c8116c8c@kernel.org>
- <87pltcyhmz.fsf@baylibre.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kzbKeqUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 62885C2BD10;
+	Thu, 23 May 2024 12:30:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716467426;
+	bh=FQqEHkJ3PjlYnZdHVtUJ2XrMoa9hn5CySDpEXjMNy2Q=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=kzbKeqUAkQ0K0Q4wHIxLEL/bFlqpxIL91bGy99LlgVZgmXCdl6NLuah/C2pYjamNu
+	 9KlrFrrcRGDI19TARdpKKG/jRfkPLZ9EjOXGH0/FOggbFn8/8N/0JGRwkUM2zP+bI+
+	 1DP8Z6XHsW/QRb0jRjTSfJxZHJ9DmnutJaGj02I2l8Lo40DLFoEBsw9M/2IX6r74UE
+	 vYpO2dKplNx9pyy23FmWvuHxh1sMn+H/VQ+WBS5LeajVJ+Vd/YrQGyVudph81O4VKm
+	 W4mDlVufyvenKbaCHtY7EWiD/eTKcZRb7TxOkAJeYSa7FgHUK6YAsXi/INYru5Owur
+	 xBkn/7c2JUs3g==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4B5ABC43333;
+	Thu, 23 May 2024 12:30:26 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87pltcyhmz.fsf@baylibre.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: mkorpershoek@baylibre.com, tools@linux.kernel.org
+Message-ID: <20240523-b218877-383ddd87fe72@bugzilla.kernel.org>
+In-Reply-To: <87sey8yksi.fsf@baylibre.com>
+References: <87sey8yksi.fsf@baylibre.com>
+Subject: Re: b4 prep-perpatch-check-cmd conf via .b4-config
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Thu, 23 May 2024 12:30:26 +0000 (UTC)
 
-On Thu, May 23, 2024 at 11:58:12AM GMT, Mattijs Korpershoek wrote:
-> >> I've noticed that v0.14+ contains the new b4 prep --check command.
-> >> 
-> >> This can be customized via b4.prep-perpatch-check-cmd [1]
-> >> However, we cannot customize this via a project specific .b4-config [2]
-> >> file.
-> >
-> > Even if it is would be handy, this feature has been explicitly removed
-> > for security reasons:
-> >
-> >   https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=a1360385
-> 
-> Ah indeed, I missed that. Seems like a sane reason to not allow this.
+Hello:
 
-I may consider allowing prep-perpatch-check-cmd, but not am-perpatch-check-cmd
-to be set in the .b4-config file. The scenario I'm worried about is where
-someone sends a patch series to review, and that patch series happens to
-contain malicious edits to the .b4-config. This scenario is unlikely to happen
-for a prep-managed branch where the author themselves works on patches.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=218877
 
-It's still something I'd worry about, but it may be an acceptable trade-off if
-the goal is to make it easier for newcomers and one-off contributors to submit
-patches.
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
 
-Let me make this a bug so I don't forget about it.
-
-bugbot assign to me
-
-> > There could be a solution similar to 'direnv' where a 'b4 allow' command
-> > would mark a version of '.b4-config' as trusted, e.g. by adding a
-> > checksum in the local git config and checking it before reading the
-> > config file?
-> 
-> Maybe that's a better idea.
-
-We could use this approach for am-perpatch-check-cmd, but I'd much rather not
-allow setting this via .b4-config at all for the moment.
-
-Regards,
--K
