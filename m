@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AE9179A3
-	for <tools@linux.kernel.org>; Thu, 23 May 2024 16:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5A87E583
+	for <tools@linux.kernel.org>; Thu, 23 May 2024 17:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716480674; cv=none; b=joTdJLF1ycYzaopHjBVBokDEUU6cp7hiKC79qBmxYgEanTVPEa5XRWKsYxQ9g322Q0YWkYbhleWzDR4O+pJ9qzqGOjD7SnVnXmt5dldL2CjKrpu0/jUVZZd84g/JBlZuF2AM+qexCe9O8xQpSKsv8ixLUwucPmZTSea/wWVsAJ0=
+	t=1716483898; cv=none; b=tk0e3SXySeEmYSVFI7O1mJinjo8NSgfGoamFcXETjSDgmbHsXqgH7bJ/dslbPyf301vXGyJkBaoaLcs9sZGHy5vWCy/qGIikPDCf9lUtpVb45t9DWGZY31Wqzo9+GROPqJfafX1W9x4/93vYqMcH3ZWcL9iTcIG9xAR+AVqpiOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716480674; c=relaxed/simple;
-	bh=jj6vNEzGiUDKuiPCqt9qcJCmhEj4m0SeAEN21GwrNZc=;
+	s=arc-20240116; t=1716483898; c=relaxed/simple;
+	bh=uwSXRJRu9uJHeQhzeTNjkDanlZS4NJI9Gd15pd647So=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZOvJzm3+7wAqe54Uj6+ZfUvTbGaEqZ32A6iNTq5KNQdtlp4G+Fx9llmc5K2ftRnKx/a8LON8GbVJhtFnF54RImOG+65xoYRKr+AqLS2fX562AlScY+iZqyz1VT6pZNv51fUsIj7QEVqvtuCYOVo0+wEMDS/0AIIVA94jAYGmFhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8thA5l9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=lqqerzQ37cB+CiLuYMS0j2Z+1y/Y0d1wXiAGQBT9Uzht/Chuyh8+iocRIommFy387oTAT1gZbh1ZVcAgms2XCdzSoHuIOC91PxSI20qulcWj2z6ZLFNnUcjeCufJlLjLD2XEpLrT1YDw+EfbreT9heQMP2Bm1ZO2rDVs05rgdgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tt41ReRu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8thA5l9"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tt41ReRu"
 Received: by smtp.kernel.org (Postfix)
-	id 95FDAC3277B; Thu, 23 May 2024 16:11:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5DBC2BD10;
-	Thu, 23 May 2024 16:11:13 +0000 (UTC)
+	id 58BF4C32781; Thu, 23 May 2024 17:04:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2068CC3277B;
+	Thu, 23 May 2024 17:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716480673;
-	bh=jj6vNEzGiUDKuiPCqt9qcJCmhEj4m0SeAEN21GwrNZc=;
+	s=korg; t=1716483898;
+	bh=uwSXRJRu9uJHeQhzeTNjkDanlZS4NJI9Gd15pd647So=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=x8thA5l92GmcHcjqZI0CDTdLnxFxyItq/yTc7FqqOOJux5eLgZjVDn33bhZEMoCwu
-	 PobcYyoIBsJZ2bOwZtIkjpGuSRFN0x7ETzP8fkT90gQo8svUErLkxyf9YyddnG+3RJ
-	 fNw99K8R8Y0B0iZhpCQspe6apqEidSx/RDLyma0c=
-Date: Thu, 23 May 2024 12:11:10 -0400
+	b=tt41ReRupHPdE2BVtTglsuzKOWH4lrSgZFld9JX/OHre/w56im+o04Ybz4HbioDkp
+	 IbDY7zW5Y6jletWfyeFc0UQBI+knuMQB5cfgjWhB+PnC0MNnLPYOVeGofiFROS1/J9
+	 p9bFHHBiAZj6afr1rt+9+l+5IgUAvelIlK2dfKJU=
+Date: Thu, 23 May 2024 13:04:53 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Jonathan Wakely <jwakely@redhat.com>
+To: =?utf-8?B?TsOtY29sYXMgRi4gUi4gQS4=?= Prado <nfraprado@collabora.com>
 Cc: tools@kernel.org
-Subject: Re: [PATCH] main: Use inbox.sourceware.org for repos hosted there
-Message-ID: <20240523-amorphous-rigorous-herring-89f3d1@meerkat>
-References: <20240523143752.385810-1-jwakely@redhat.com>
- <20240523-strict-fortunate-buffalo-067b15@lemur>
- <CACb0b4nqKbCVLueEtDXPHSYc5iQNUWN9AQXQQtWcdfu5o-p1ew@mail.gmail.com>
+Subject: Re: /all/ vs /r/ URL for messages in lore
+Message-ID: <20240523-industrious-sloppy-heron-f61ac1@lemur>
+References: <e45742c0-45ae-4f6f-82ac-c59bea4c9304@notapiano>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -42,30 +40,35 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CACb0b4nqKbCVLueEtDXPHSYc5iQNUWN9AQXQQtWcdfu5o-p1ew@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e45742c0-45ae-4f6f-82ac-c59bea4c9304@notapiano>
 
-On Thu, May 23, 2024 at 04:56:01PM GMT, Jonathan Wakely wrote:
-> > > I don't know if this patch would be acceptable for b4. It's obviously
-> > > very specific to sourceware projects, but then the existing default is
-> > > very specific to the kernel! :)
-> >
-> > I understand the reason for this, but I'd much rather this was set in
-> > .b4-config, as it would obviously scale much better than hardcoding more
-> > and more projects into the source. Especially if origin URLs happen to
-> > change in the future.
-> >
-> > Have you considered submitting a change that includes a .b4-config into
-> > the repos?
-> 
-> I have now, at least for GCC:
-> https://inbox.sourceware.org/20240523155116.390918-1-jwakely@redhat.com
+On Tue, May 21, 2024 at 04:11:45PM GMT, Nícolas F. R. A. Prado wrote:
+> I've noticed that in addition to the 'all' inbox in lore,
+> https://lore.kernel.org/all/, there's also a hidden 'r' inbox,
+> https://lore.kernel.org/r/, that seems to redirect to 'all'. I've seen mixed
+> usage of both in the kernel documentation and am wondering if one should be
+> prefered over the other.
 
-Great.
+This is largely due to historical legacy. Prior to lore, links were of 
+the format lkml.kernel.org/r/[message-id] and redirected to gmane, but 
+could also be /g/ for mail-archive.com and /m/ for marc.info.
 
-You should also consider including:
+These days, the only important part is the message-id itself, and /r/ is 
+unnecessary (it can be omitted entirely).
+ 
+> Is the 'r' inbox even meant to be used? I'm worried it might not be "officially
+> supported" and stop working in the future.
 
-    send-series-to = gcc-patches@gcc.gnu.org
+It won't stop working, because that would break decades of old links.
 
-This would make it easy to use b4 prep to submit patches to gcc.
+> In any case I think it would be good to choose one and use it consistently
+> throughout the documentation.
+
+The documentation should be recommending lore.kernel.org/r/, but it's 
+really not critical. It's easier for a lot of people to just copy-paste 
+a link with /all/ in it, and we shouldn't nitpick at this -- as long as 
+the message-id is there, that's all that is really required for this to 
+be valid.
 
 -K
