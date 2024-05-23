@@ -1,118 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50DC13D2BF
-	for <tools@linux.kernel.org>; Thu, 23 May 2024 09:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A44A13D521
+	for <tools@linux.kernel.org>; Thu, 23 May 2024 09:58:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716457553; cv=none; b=j/CyDTQhbbsmaxk5jMcscp94lKh1fUpm+W9KuSiFJHoJyTNxosrc2rha5I9WrltdpGlewHXg8tkdxCr+h90EZXiSoP6z9wkN29LFv2EDdvqhnxq7RatO2n3vaMvb4qoj9JftB2xyMG8yYXalZQ29TwUOn4W/32/P8HTr5OzByQ8=
+	t=1716458299; cv=none; b=lXGhOVNJXW8P/FrliY00KaKGnqNOljNtv4QTaNoA2ArY9A20h59AIQ+WfM4KyHKiIIIsFEgyCGP5NZAUkw65/vwamaVwHHIZ+vmvj/9c5W6k6cQD9opKkTe4/+rjuHJx3c05WmSKPTFRgmoLYFhTNqpLR0FtHp7nNTwtB+8uipc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716457553; c=relaxed/simple;
-	bh=cRDbDQqUwkuqjYvMYlw+NWaOwCTYF04E+/maTxt3dLU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=pkcVYWzRVcxzU2qM9CXCKamkwhAw0HEQ5g6bGjI6W6mNSmyhn31R9lnk9TEIt8uxjDuSz/C4i887LMw0a1fE8oe3xrVEwoUZToPk3e80pRpa3m1eRaYhvEXMppRs4c+PbCfSez8H5kfLv019Edl6jXByY6OO9r2sQL6ISsCjePs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ra5Qz5T2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716458299; c=relaxed/simple;
+	bh=ksjtKX6WgVZwdXsxtA5zmETHjcx/EVpSw3Ixp45AcEo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EpfFD4nl8cBiR2kN5pMtxr2YPFdxH9V8h9HvV+lsqSqh6xmoSq6RxiTuwVVH68k9fp1SVUOBdMVwCo3OrDP26JqnTirG3SFFNe6zpAZaroQNlCBt981tsavCon4NAZBWYP+zpjEgxYBCmlVI6jnRAV+JVFUvMqfQYcz49gzMP7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=imWvE484; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ra5Qz5T2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4163C32789;
-	Thu, 23 May 2024 09:45:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716457553;
-	bh=cRDbDQqUwkuqjYvMYlw+NWaOwCTYF04E+/maTxt3dLU=;
-	h=Date:Subject:To:References:From:Cc:In-Reply-To:From;
-	b=ra5Qz5T2XaUE4OmmZbAAmOCbDoVEPF11bKO0n6lPc1mZsPY04r8NcNY7jTOznjVTI
-	 8z86DrLAKLo+XjLFsAcMbZOa3oKMaDMKbkz4LYCUPRku7gBE14J+jr686aa4kbf1eq
-	 5uBzuIqxDbo9Q9gVJSuVbwIJXADXXylABeN36MJ3tHGOutD0VjGMFBRXUg4ZSoghS+
-	 /GzwUFNIaWnEMkxwofWwsQx/kcBPoblfpSwJXuDeIa1By47MfOOA31N5vZsKXc0Cuy
-	 PiW2nDvdU9QNDYDgidLdC+6NFT1kOM7dyP6jU/NsoM+ggaKsR89ARuH71JiiYvNdde
-	 LGA5JfzyglkVg==
-Message-ID: <da201b46-c653-45ea-bec2-5110c8116c8c@kernel.org>
-Date: Thu, 23 May 2024 11:45:43 +0200
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="imWvE484"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42017f8de7aso51918465e9.1
+        for <tools@linux.kernel.org>; Thu, 23 May 2024 02:58:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1716458294; x=1717063094; darn=linux.kernel.org;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=O2ceVavBDQ4QwR2fZTuiAegPYxXBYeUgZcTFPZB+L8w=;
+        b=imWvE484pnpEDjdwBTEMm1wU8LwDeoAdQ68/qxh3wvW6hIz3MpWDVV7VTMnDFKT4R6
+         gk7HQZiSalmIs5W8kElUorTKrUZSaXVwO4V6jx34rH16uI/6NJK78nXip5UtdfJnjnh5
+         1Knq/7PpP6JBwSsss9iLQXuZJvFhjT7yQbXOCBEhtCzJULGpqTL7QYgN1Ell2h4R4e/o
+         cljwo7ZGTkOfnPak9GICmW8wXiFL+Mr6cOrVvpiGTqkjA1TAH14HCdqx8HfU4ZJKfriY
+         EwIXWmO98hn70IxAZdHoKfvQDTrygmCOqy46og+F/+LQvYu/cw9fqn54rgATAaO1Jyk9
+         rqJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716458294; x=1717063094;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=O2ceVavBDQ4QwR2fZTuiAegPYxXBYeUgZcTFPZB+L8w=;
+        b=uk/l7HNEXmcVfbgZhxBkXveybqcJHMXIITe7J+/BbF+tFc2SFLyj1k/xKVugmtpph6
+         3JjzTZLFOHRZh9mG62IKlrKreCFhxkH8Y0hct93wKuqCr1fkUjSupIC4v2wEDISoy83c
+         bpBdoo/E5Uher+z4x4biDO6wkWscMbIg8XtWr/FA7XxnmZbVWR/Npk8b2ZN0oMIY+uPP
+         x64KHkNTVmuMmzGuP3gEHxcBUuaoE6h7uXeze3XbjxPaOIPN5wAPKmHv7mjBZxSb/NHb
+         /LjqpqnlXxTUKd4U0o4gwxyuQQjxss0tV/9rxv0t2J4nLKbyUSoidhn+EXf2ub0P6rZc
+         3hmw==
+X-Gm-Message-State: AOJu0YwChk1EFNWFqB+KD9Oops6JNMpyk0dGa4NmatCvhRu0pz8od1Gk
+	e6MzwZ/+T63goE644beH4SA7fTfdq74ZZSJLhK1LPLHjeQkMAZG02JLHHJwDNAo=
+X-Google-Smtp-Source: AGHT+IFBv8+WHKSIbpoW0ECwQrFnmxMZyGt3mnicj2rIZBcbLGHNmRTGz9B1Jp27HFrLkkVmQAH5Rg==
+X-Received: by 2002:adf:f64e:0:b0:354:fbc8:17d1 with SMTP id ffacd0b85a97d-354fbc81b3emr677447f8f.61.1716458294371;
+        Thu, 23 May 2024 02:58:14 -0700 (PDT)
+Received: from localhost (lfbn-tou-1-402-59.w86-206.abo.wanadoo.fr. [86.206.229.59])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-354f44d6790sm2018092f8f.52.2024.05.23.02.58.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 May 2024 02:58:13 -0700 (PDT)
+From: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+To: Matthieu Baerts <matttbe@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 prep-perpatch-check-cmd conf via .b4-config
+In-Reply-To: <da201b46-c653-45ea-bec2-5110c8116c8c@kernel.org>
+References: <87sey8yksi.fsf@baylibre.com>
+ <da201b46-c653-45ea-bec2-5110c8116c8c@kernel.org>
+Date: Thu, 23 May 2024 11:58:12 +0200
+Message-ID: <87pltcyhmz.fsf@baylibre.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: b4 prep-perpatch-check-cmd conf via .b4-config
-Content-Language: en-GB
-To: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-References: <87sey8yksi.fsf@baylibre.com>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-Cc: tools@linux.kernel.org
-In-Reply-To: <87sey8yksi.fsf@baylibre.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Mattijs,
+Hi Matthieu,
 
-On 23/05/2024 10:50, Mattijs Korpershoek wrote:
+Thank you for your reply.
 
-(...)
+On jeu., mai 23, 2024 at 11:45, Matthieu Baerts <matttbe@kernel.org> wrote:
 
-> I've noticed that v0.14+ contains the new b4 prep --check command.
-> 
-> This can be customized via b4.prep-perpatch-check-cmd [1]
-> However, we cannot customize this via a project specific .b4-config [2]
-> file.
+> Hi Mattijs,
+>
+> On 23/05/2024 10:50, Mattijs Korpershoek wrote:
+>
+> (...)
+>
+>> I've noticed that v0.14+ contains the new b4 prep --check command.
+>> 
+>> This can be customized via b4.prep-perpatch-check-cmd [1]
+>> However, we cannot customize this via a project specific .b4-config [2]
+>> file.
+>
+> Even if it is would be handy, this feature has been explicitly removed
+> for security reasons:
+>
+>   https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=a1360385
 
-Even if it is would be handy, this feature has been explicitly removed
-for security reasons:
+Ah indeed, I missed that. Seems like a sane reason to not allow this.
 
-  https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=a1360385
+>
+> There could be a solution similar to 'direnv' where a 'b4 allow' command
+> would mark a version of '.b4-config' as trusted, e.g. by adding a
+> checksum in the local git config and checking it before reading the
+> config file?
 
-There could be a solution similar to 'direnv' where a 'b4 allow' command
-would mark a version of '.b4-config' as trusted, e.g. by adding a
-checksum in the local git config and checking it before reading the
-config file?
+Maybe that's a better idea.
+Since you pointed using local git config, I actually gave this another
+thought and I can solve my problem by using a project specific git config:
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
+$ cd ~/work/upstream/u-boot
+$ git config b4.prep-perpatch-check-cmd './scripts/checkpatch.pl -q --terse --no-summary --mailback --u-boot --showfile'
 
+Thanks for pointing me in the right direction!
+
+Mattijs
+
+>
+> Cheers,
+> Matt
+> -- 
+> Sponsored by the NGI0 Core fund.
