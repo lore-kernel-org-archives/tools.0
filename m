@@ -1,74 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2302DB64C
-	for <tools@linux.kernel.org>; Thu, 23 May 2024 15:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAAD6AAD
+	for <tools@linux.kernel.org>; Thu, 23 May 2024 15:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716477443; cv=none; b=I1+J+7IwTShKFEdt9GD54KgDyjN3CRF7dDtfpJWUhlpgtnD/QTzMSp+MvlRCsIx5gtG4O5Bf/YzHFoLqRCQ0UvrGNbTipVhYqGr27d8/9FRrFJEOl6Tc1hxP4WFIjVy3A3YVmv3x3nua/VN8DaB3ryeEL20PCDAorecgJCPpF1A=
+	t=1716477631; cv=none; b=FLL4ZfgItiHzS+yhJjqYtcMm58+svPszkwF5/jD0G9WhvFPtfrR/sf7gH/MBE3H7ZJ1XJqST/Q2OJZ7ZdSHoWo3sf4VQ/sr1H4NQ5SaBc2HP/2awJaH5FrdqUpaHdKaLoAo4YIQV7WGomX+weBxb+hh7wB79OMS1cvzVSkpmgq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716477443; c=relaxed/simple;
-	bh=K5rfAHBzNJTd+GsBYaJGub9egy8QlYaY/TMuT65jQsA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=udsUoh371PcwrYcxwzh7D2rb6fUKtvPSZCwqqzFoq1XPUeqjZxgvYjk2RL+cwxD1iD2888Lfw/+QX/zVIwddZHwzD9URTjomX/2i2VwLhE3CZe+to/KATEBJhU4hydj89CBaQmQM41wg10JPRnAqeoCYXfBVmgnQuavBdn/1aBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghShnp33; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716477631; c=relaxed/simple;
+	bh=4BgS1UOZoz3bL71/rbJkh2peVP6R5Viv/QYTddr744g=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=ZjjCwL9KIx1O7Smc8qhk2kGsI5RGEGwz0nTwQuYXBA1sTn41W5bcSKh/cEOIuAkv5gPT5rV9Cp5c2PX8kAhqzFGdUBxPxC7RPyyPG9bbu2vPo+50+zJA3OzQiDnwFWpChD/RALK4BRmN3LsdeRJEAbaLc8QInNec4QflPZjOj64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L6vqANN1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghShnp33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7538CC2BD10;
-	Thu, 23 May 2024 15:17:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716477442;
-	bh=K5rfAHBzNJTd+GsBYaJGub9egy8QlYaY/TMuT65jQsA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ghShnp33EQ8XiCZe4cWQ0XMSj6/2x7A0HxmzWu3VwAN2iMxvP2qmSF+uQXfGiKQSw
-	 W3bE1w/oyssPHX6p4VBIsr1ZbvR4z4gBhAE/ekew84D0uweRUmPLGjbsBAbdY30cSx
-	 MPj+4eCRKvW0bdMWUp5Tpcf/R5DOP5VhwZ0NiSCE=
-Date: Thu, 23 May 2024 11:17:18 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@linux.kernel.org
-Subject: Re: Checks for recipients
-Message-ID: <20240523-pumpkin-hornet-of-performance-0d7da0@lemur>
-References: <ZhQ8DoS1GaT0603l@sirena.org.uk>
- <CAMwyc-Q466R2za0sMTD9Chx77hL7xBBuNROokemLmp7dt=i10w@mail.gmail.com>
- <ZiPBx36go0AYBWO7@finisterre.sirena.org.uk>
- <20240420-arboreal-natural-sambar-ff61bc@lemur>
- <ZiRiK4sB6kKwdH7p@finisterre.sirena.org.uk>
- <20240422-sincere-stallion-from-hyperborea-bffddf@lemur>
- <ZktT-sM1I_QFQ8ZH@sirena.org.uk>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L6vqANN1"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 7494CC2BD10;
+	Thu, 23 May 2024 15:20:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716477630;
+	bh=4BgS1UOZoz3bL71/rbJkh2peVP6R5Viv/QYTddr744g=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=L6vqANN1j0eLBr/e07vP3Lnla9gSGKChrhsdl1iUYLVuXGV3iKB598t9kr4tM/yEz
+	 Fr5uFCFrRj5RYKY80baQfufiyoyFp/SCrwruzkWfbPJ076NGszE6aozBvAlxXypxKg
+	 a3HoxZTgCWxdAj4Ovxmn1M3SgxvLol/HGDfK5tBIRAA2A4QIivPrIR96k31Cwbg2FU
+	 gJzv9uynne7/sxKUmOaLI08gFLmVOQYpMEOuJI19ektwxeu2tAhqIgceDRfei54P0C
+	 C1z+2H66Dbo7NSqx9eEmNL3NlND2kG/iIT4j6b1ef0FwXZKrS8nUeAGjv9WgVnV+HS
+	 x8Zu5Ly+UkznA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 400B0C54BB3;
+	Thu, 23 May 2024 15:20:30 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZktT-sM1I_QFQ8ZH@sirena.org.uk>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: konstantin@linuxfoundation.org, broonie@kernel.org, 
+ tools@linux.kernel.org
+Message-ID: <20240523-b218878-e423837ea2d1@bugzilla.kernel.org>
+In-Reply-To: <ZhQ8DoS1GaT0603l@sirena.org.uk>
+References: <ZhQ8DoS1GaT0603l@sirena.org.uk>
+Subject: Re: Checks for recipients
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
+Date: Thu, 23 May 2024 15:20:30 +0000 (UTC)
 
-On Mon, May 20, 2024 at 02:45:30PM GMT, Mark Brown wrote:
-> Hi Konstantin,
-> 
-> With current git b4 (621fa62) I'm getting tracebacks doing
-> 
->    b4 update --trailers-from ${MSGID} --since ${COMMIT}
-> 
-> (I'm using ZktD50C5twF1EuKu@fedora or ZktCpcGZdgHWuN_L@fedora as msgid
-> here, ${COMMIT} being what I applied those two to):
-> 
-> Calculating patch-ids from commits, this may take a moment...
-> Traceback (most recent call last):
->   File "/home/broonie/git/b4/src/b4/command.py", line 428, in <module>
->     cmd()
->   File "/home/broonie/git/b4/src/b4/command.py", line 410, in cmd
->     cmdargs.func(cmdargs)
->   File "/home/broonie/git/b4/src/b4/command.py", line 85, in cmd_trailers
->     b4.ez.cmd_trailers(cmdargs)
->   File "/home/broonie/git/b4/src/b4/ez.py", line 2786, in cmd_trailers
->     update_trailers(cmdargs)
->   File "/home/broonie/git/b4/src/b4/ez.py", line 1107, in update_trailers
->     if lmsg.followup_trailers:
->        ^^^^^^^^^^^^^^^^^^^^^^
-> AttributeError: 'NoneType' object has no attribute 'followup_trailers'
+Hello:
 
-bugbot assign to me
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=218878
+
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
+
