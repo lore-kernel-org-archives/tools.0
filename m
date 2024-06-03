@@ -1,84 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E78812D767
-	for <tools@linux.kernel.org>; Mon,  3 Jun 2024 13:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0105D59B4A
+	for <tools@linux.kernel.org>; Mon,  3 Jun 2024 13:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717419635; cv=none; b=addBMmiMVAc0vXoy0zRfhhrCyrA6HdMbwDRBodd8PhXEdw2qFBuUqE1k/PglTVV8purF0Sd7InmQtuCIRsW+61wgyJFvmVry9bJHK5PPPcLXxbBDzaX7ymW+pBilrLdfcg51doz+qHLAWWexQ1+pAMTxFYbFrAzGtcGG3NNgui4=
+	t=1717421098; cv=none; b=qBelgIusd6+AGwouUcF8DQU3U94qdIpV965BQKaJTUDFVPAx7Y27ko104xpncWP/0VsOv/yHyt8UgSlAqZOHSHo5kdMoZnvIHRGdspEcSstMYNtKNuZWH8Db3/VleHoeFPSAqqev88KICYuk8YgnyofCTWZxRJoWf0d0v9aJsBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717419635; c=relaxed/simple;
-	bh=PbFwyQa1+rdKiWZap8ZL6ba67++/vEdUXJ345sRMKiI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=laYQO6DZo98nHX3Zgg8le27K0P5Do/3C5QMa7g6Ac1/1uUsi2krULCZCZM1w9PfoJol53dCzuWTyKcJlo5CU8UQmVeTzM9QTZJ9yEAkRaL3rk246TdbTqc8X609R6AG+FZHPuhnfRT0rrFLpB8e2UOBIZRnGhzX/GAkOkcgSBkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JriDMSIP; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717421098; c=relaxed/simple;
+	bh=bk3/BXNCSPzTKH5oNboH4w/TdOl8X3fBDlc8RrSIbRE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dEi3xd/qHkUsRsSupsy5Z4YMaztxTm55e3s7VAlbpq0E4mfZwYD53zLeH0f7QcEZVSxWjEHOK7oK3vB3ajAjS4vCxK81nVRTGU05DKD8X20fA+S6+PBoEA6Bxhd63Y1702e1zWV+dK+2CeLbkqdcS/c22N5v1xtlYV1qvIT1I4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adrq6teo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JriDMSIP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4554EC32789;
-	Mon,  3 Jun 2024 13:00:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717419635;
-	bh=PbFwyQa1+rdKiWZap8ZL6ba67++/vEdUXJ345sRMKiI=;
-	h=Date:From:To:Cc:Subject:From;
-	b=JriDMSIPIgn2oZ9q4j+3hi5kJXucu7KAe13MFOD3KPsb9NGg7qHR6ruqaW/bpAZb8
-	 Io8kaVOaeoVfzwGp9ODsiMDQfn7If/ENUgVlEnw3QsmsEpqntKCxvm2R1SzfecBv8T
-	 FDpwNuLxrY1QNs2Dc2PJT2pk7OTEfFjRxFCeEDCfHcYa7iLyohwFrVTTIGoUT+BEOy
-	 YSFNj7mA90EbNBLjAPlD/N2dK/AXgbFj/+BrTcZrnisS8YO2SfMXFFDhhiMnsTFo9s
-	 C54aTnKSprKQug2eL1WORT9Y9xYusv5bMwkwYhtKOfn7B1sY5U9Bzrj901vlZbsb52
-	 aLwT20PmBtqWg==
-Date: Mon, 3 Jun 2024 14:00:31 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adrq6teo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496AAC2BD10;
+	Mon,  3 Jun 2024 13:24:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1717421097;
+	bh=bk3/BXNCSPzTKH5oNboH4w/TdOl8X3fBDlc8RrSIbRE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=adrq6teonIwzI5hHbxOtXPZ+j/bP9fObaUup3kxTU5UefsKFEDgf/kRAgFQnTPa+L
+	 5NxNiITXAwMYCqwwnT5oKkAcFwsgGVrlNB+tiyC8tRZdwajYGv56+lMDpkpH4BqpdZ
+	 rpUnUgnT+VJ+FPRzsWsq74zP7rl1YcnsqEOGabt0=
+Date: Mon, 3 Jun 2024 09:24:50 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: tools <tools@linux.kernel.org>
-Subject: Thread breaking behaviour for non-patch messages
-Message-ID: <dcbebe7e-5e01-4559-8bf9-37a0749177d2@sirena.org.uk>
+Subject: Re: Thread breaking behaviour for non-patch messages
+Message-ID: <20240603-pygmy-mongoose-of-ampleness-07a4d1@meerkat>
+References: <dcbebe7e-5e01-4559-8bf9-37a0749177d2@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Hp77c5wORa6Stev3"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-Cookie: Natural laws have no pity.
+In-Reply-To: <dcbebe7e-5e01-4559-8bf9-37a0749177d2@sirena.org.uk>
 
+On Mon, Jun 03, 2024 at 02:00:31PM GMT, Mark Brown wrote:
+> Since updating to current git b4 with the new thread breaking support
+> for fetching patches sent in reply to serieses b4 mbox has started
+> misbehaving - if I try to fetch a thread by specifiying a message ID
+> somewhere in the middle it breaks the thread:
+> 
+>   $ b4 mbox CA+EHjTz_u2M-wsNnD_f=_R+dJoYwL9gUrBz=YwdqGZbtTT-aaA@mail.gmail.com
+>   Breaking thread to remove parents of CA+EHjTz_u2M-wsNnD_f=_R+dJoYwL9gUrBz=YwdqGZbtTT-aaA@mail.gmail.com
+>   1 messages in the thread
+>   Saved ./CA+EHjTz_u2M-wsNnD_f__R+dJoYwL9gUrBz_YwdqGZbtTT-aaA@mail.gmail.com.mbx
+> 
+> which is surprising and not so desirable in the non am case.
 
---Hp77c5wORa6Stev3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hi Konstantin,
-
-Since updating to current git b4 with the new thread breaking support
-for fetching patches sent in reply to serieses b4 mbox has started
-misbehaving - if I try to fetch a thread by specifiying a message ID
-somewhere in the middle it breaks the thread:
-
-  $ b4 mbox CA+EHjTz_u2M-wsNnD_f=_R+dJoYwL9gUrBz=YwdqGZbtTT-aaA@mail.gmail.com
-  Breaking thread to remove parents of CA+EHjTz_u2M-wsNnD_f=_R+dJoYwL9gUrBz=YwdqGZbtTT-aaA@mail.gmail.com
-  1 messages in the thread
-  Saved ./CA+EHjTz_u2M-wsNnD_f__R+dJoYwL9gUrBz_YwdqGZbtTT-aaA@mail.gmail.com.mbx
-
-which is surprising and not so desirable in the non am case.
-
-Thanks,
-Mark
-
-
---Hp77c5wORa6Stev3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZdvm4ACgkQJNaLcl1U
-h9CmGAgAgf/n3SEoq+GVcd0g1LlOz3sNYwPtUJOkvoAFYBTDP94dQdAVVDQb4y+7
-tWVsAULwYGuBdnzZMEnzplMMjEXQFGJb3r+1pUEP4XoSaymrgWH4BGaaNJcCVbEH
-AXs1MEastJNkifU8EZD9rfMFXeazyDfkuO8xqV0cIAvQCxKF7QfZJWu7D8gMSshC
-NMx3+QrpBxnCAHPpo4ziCgIXJAH6iPk8EI2Fz+MHvn9XjPOafSuLs642QJZFTUPN
-RDJyScK3Pr1KGMArsHwZHTFPvPHuKyIq8cbsQrlganSyyzdZoW9a470Hwp/+eqzi
-2ONiYyNpa6qslVOagVJLkYpzQq4G+g==
-=Zrmk
------END PGP SIGNATURE-----
-
---Hp77c5wORa6Stev3--
+bugbot assign to me
