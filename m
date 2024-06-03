@@ -1,70 +1,89 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7407582D8E
-	for <tools@linux.kernel.org>; Mon,  3 Jun 2024 14:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0462B3C2D
+	for <tools@linux.kernel.org>; Mon,  3 Jun 2024 16:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717426525; cv=none; b=H3qDfgYwCian34gCHyt1VHcUpMWMCXcNif1R7oTQc5IuujoNoGowLrQN6tYZCYWfWwEewSUsu8Y4vww4iAwxkeOtBZLmOVYS2lyygKeNELMzF3/nzJo4Bc6C4vfvbqXc00THTqThmo7BXrlBNftJrdN/2sskOiw0/GyfSMnpGRc=
+	t=1717430622; cv=none; b=n409PUJ1fKx3JZBOelE7/1bR4Y5m3My+tQIwi0ABBIn6+QIeKa/XLe6Vtenb5Il+gKjv/cTTr1SK2eKWi8y9iqpzMt+t2qM8Zx2kdNsTsHhVweRzRN9jWRRw2shC7ihIf0SKfdnFuKGXzosXnlfhk3ivjCbAf9xWpsQWjCmkGp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717426525; c=relaxed/simple;
-	bh=52SviDeVAXg/8CL2lUpzXGvDNqnvYBzcy66G2A94yB0=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=ONw7pZtk07kJGL8hZu9HWv6J+HIDJ99PZLOd3aw5RHPltnxlv7hVF/+UWzr2DFfvVLK4zuKBoDU9kKcFWTESLeEJFNcAXoQNjUUu6IIUhu78O+tX5y4EDnAPdkTu5EMYMpazYgfxndwDCjoLnvAjblzYKltBQiaPfrt8i1/Ex1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IPEqHNHV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717430622; c=relaxed/simple;
+	bh=TzTS0hgqdzRIcNgb83r5zE1aPVKBGeqorQsy9sszDTA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=JJRu/v78JQQ5BOFvuEzG/zmQkEhHZEhfUrk/J8d+YLEnuNWTDLIDiWw2FR2CuvK07edvW+VnfrbpkT8m64wLBi3r4k33vZA7O5gGKJh/Ra3qAfC80w2jBFpeH2IRo8TMJ/BnvHWwN7OMyPj1fTg/cL0GL7X6DPwilhiZdo5WoJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T+eKOqzm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IPEqHNHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 055A2C2BD10;
-	Mon,  3 Jun 2024 14:55:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T+eKOqzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DCB2C4AF08;
+	Mon,  3 Jun 2024 16:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717426524;
-	bh=52SviDeVAXg/8CL2lUpzXGvDNqnvYBzcy66G2A94yB0=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=IPEqHNHVIxKOR4lAnFQCofkQYzneSNFLRlDqXC9FivJvOUwDWG8ANtOYOigk+c1Ba
-	 6axFJHlgikFfU4aW+4wObpIKqT1PMgXzibxQFd97f8lP67OMpdngWuz5VONst7v+R8
-	 IvcPS2zoghhtgsdZu5H8ouSDQ8hrGcgQWxmnSf80bzLYjG26dUMMb7oVHEf9+/IFvA
-	 bLqputJPHUFJ9p1ifbJm3cDOTmL/dbe0UZj5DpyQY0uKsD9fOR5TDvhVA3epMPf9F+
-	 nWUJjK4QmxvDXxzHkSsxBTLtG35g3Z2lbSnvIaLxhqe5yHvs3eUk/puBhaAD5uiX5I
-	 W4V612Oa1MedA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E3485C4361C;
-	Mon,  3 Jun 2024 14:55:23 +0000 (UTC)
+	s=k20201202; t=1717430621;
+	bh=TzTS0hgqdzRIcNgb83r5zE1aPVKBGeqorQsy9sszDTA=;
+	h=Date:From:To:Cc:Subject:From;
+	b=T+eKOqzmBrU8ftF91UI2gm1cyB2FAODun5GeSbZRxlnQP2pNUrC78hbbpdNQTxAAq
+	 fRZaFCCUc0i4EBB/Wt2pP3iQcDybbJZlvY1UK84nsL87BwNXQ+YxIIWi1PiZSdUFQJ
+	 ljxVbEVl8m+MXkIMjylQvm3o+pwCA9pKDfoalGVfT7R7o2cNwxowdvqwgMP+DQOnvB
+	 f7Lh8xU02S15MqDpf9kfWz3DeKH2Z+oNHg46T6cbw1c74QBd3Yl1niFCJD/UvvhjBT
+	 Elb1Gt//7sPpOy/tA0TJDzS6rwiVE1YU9wq/6xtuuXxIRYY4YogSU6/rNDomDzwafR
+	 CE6cX0z4HYLtw==
+Date: Mon, 3 Jun 2024 17:03:37 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools <tools@linux.kernel.org>
+Subject: Trailer updates to git commits not working
+Message-ID: <15b55c55-8060-4c46-b545-3a3e774a9875@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: "Kernel.org Bugbot" <bugbot@kernel.org>
-To: konstantin@linuxfoundation.org, broonie@kernel.org, 
- tools@linux.kernel.org
-Message-ID: <20240603-b218933c2-614cc0fe68ee@bugzilla.kernel.org>
-In-Reply-To: <dcbebe7e-5e01-4559-8bf9-37a0749177d2@sirena.org.uk>
-References: <dcbebe7e-5e01-4559-8bf9-37a0749177d2@sirena.org.uk>
-Subject: Re: Thread breaking behaviour for non-patch messages
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: peebz 0.1
-Date: Mon,  3 Jun 2024 14:55:23 +0000 (UTC)
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="RiCL8ewnmk+C6rWq"
+Content-Disposition: inline
+X-Cookie: Don't let your status become too quo!
 
-Konstantin Ryabitsev writes in commit d47074144878a7e027e20c90d00159d2e35bd9d1:
 
-Improve auto-noparenting logic to require a diff/diffstat
+--RiCL8ewnmk+C6rWq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-This is a partial fix for the reported problem -- we still need to be
-able to retrieve the full thread in mbox mode, even if we're pointing at
-a standalone patch in the middle of a thread. The auto-noparenting
-should be specific to the am mode. That said, with this change, this
-will likely behave as expected in the vast majority of situations.
+Hi Konstantin,
 
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218933
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+At some point b4 trailers appears to have started having issues matching
+my commits, every time I run it it complains it can't find commits:
 
-(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=d47074144878)
--- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (peebz 0.1)
+   b4 trailers --update --trailers-from 20240603-md-base-regmap-v1-1-ff7a2e5f990f@quicinc.com --since regmap-6.10
+   CRITICAL: could not find any commits where committer=broonie@kernel.org
 
+but git seems to show that I committed things I expectI did, all the
+commits I'm looking at have:
+
+  Commit:     Mark Brown <broonie@kernel.org>
+
+This is with current git, when running the above command on
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/broonie/ci.git filencCojq
+
+(which is commit 76f19626bd35a1791faeb75264d358256ebc544c in case the
+branch goes away, regmap-6.10 is currently at the v6.10-rc2 tag).
+
+Thanks,
+Mark
+
+--RiCL8ewnmk+C6rWq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZd6VgACgkQJNaLcl1U
+h9CR2Qf/ZgPmJw4SL9rsGa2mpYBfaN4I/qRoIybZGTkjt5FpsAcVntF+dkVfaUAw
+HePlgZS+FGgiFayfvlE+Mz++NqgjxQ+vw8M9LPp4UPpifiG8h5Fs3s73th/QrUYu
+j9auwKkW9K92cswaV4Auy9/Z5Cezy202SviREXZed+KdnO9YljhmlggSGpc7sSxI
+90P8hY+1cydic+z2jTW+ApwPHmEaji86Ek3463oD90/QG+o0l9rCpHPsTDQn6IHp
+KhIzE/HRnrLnnlSpfKW1xWaZKRBcNBG1uSu+RygxaVHDHHRg+/9MP31CGsr+kX0J
+AYjzIBfK9vsneW+g5EhnlEbRBFJGyw==
+=CjsC
+-----END PGP SIGNATURE-----
+
+--RiCL8ewnmk+C6rWq--
