@@ -1,126 +1,148 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F6C17F3
-	for <tools@linux.kernel.org>; Thu, 27 Jun 2024 02:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C32F22EF0
+	for <tools@linux.kernel.org>; Thu, 27 Jun 2024 06:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719454993; cv=none; b=CDZZIOViVpDWH/gBpSe9OVraI+Rd1ziDeYDjn/3+rxtpB1AoU+WCGQj5tz49nO/fkNAq3t0rgVl7UjcWYufEootGFJrUR7yemB3XlyjycqcatUQZyCGlsIih2WpAzn48AO9ehBIRaW8mhKmVXeN362UyeHlAU10mmR4A5r/wAqY=
+	t=1719469649; cv=none; b=RqwHvzUNmv/tdHIG4YYhT21Fp9bG1jv7PsbcJiYVSlkAxcuX4UASXXFxy/H5qAuyubr09kOfQ8s4UDDymp/zr9qbiK5eR63azHr94Me6JgBiU78PldiJbNFG/lapb7ZswErghWQmv2LYZVjE/HBriiSxECvO8iddFrzcpBvUsB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719454993; c=relaxed/simple;
-	bh=YMN5teyI+gmK82lgMuQP+F2PJsQfBOYd26SmKSfItMs=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=qVvHpFMjIZvWbi64quVkCbMYTl59TUT1XHHNCJZvfmVsB/vHzNV7EAHc4DFHcZ5KjEkobTY2ph2JrOWdOH3GaFYCONZr3SSaepc7jR7dtkSd2Q7BVdVrKW8G/oUBhOx28A5KjzLTMW9OEaBh7LLNWpyHQzaER058EtCPVWGkB10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VoVzaxPE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719469649; c=relaxed/simple;
+	bh=jx9xFR88fiyGOqfcAIojPcoXbGW8SCOC9Fe1BBWdRVo=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=B/9GfAmievh4Ky3mul2kWuQ2suLzv2Tor4NRXS2T0QByPgCPteIoXeakPpOVunpQyRnjY7VUNejxS5/NYsziJit+1nwNMNfUsfgMFbidryNv1wzpP871UMcCAkIHUY3aMHb8dYBWrR79ixtmJXma8TM+N21m5TJjEb8S7e2MQB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=eJuNDCn4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VoVzaxPE"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="eJuNDCn4"
 Received: by smtp.kernel.org (Postfix)
-	id 15B1FC32782; Thu, 27 Jun 2024 02:23:13 +0000 (UTC)
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id F0EE7C32786; Thu, 27 Jun 2024 06:27:28 +0000 (UTC)
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id A3301C116B1
-	for <tools@kernel.org>; Thu, 27 Jun 2024 02:23:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org A3301C116B1
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45QLWwxi016787
-	for <tools@kernel.org>; Thu, 27 Jun 2024 02:23:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=6A+/QejXlh3oIvDU8gm1gf
-	pWtIEr0C6DqbP6fe882bk=; b=VoVzaxPECG2KrhnRTXi3wiDnoZz44tuDcu0W5S
-	TjtFmX3ePgrue3m23tMqNXCQjEEn6aY0QSVzhXB6wk0NdXcAqAN3I4r6Ql5m6kXt
-	t32Vt+y+DFRVJtAlKXq7ouBY2DS8JkT8qehmuQqn45ndd44eWkMgCQamL2heJYuk
-	vCV+qhYz9y2phLH7rMB9w8JVNgIPu+eSNXfb2reyq5YGpFu5F3rY5oJjbNPPCBXv
-	lEV3b+7G7d3NZ99eI8OI5yU7SfkEnEVRelETQQSgD3VTlKplV9kqHRobxG/UieEy
-	ssqCDzZ+S2oh7WuBwfiGJnUIjvrfyUj5/60Ke5x8LpwoRq7A==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywp6yu3q7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <tools@kernel.org>; Thu, 27 Jun 2024 02:23:04 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45R2N2nS014700
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <tools@kernel.org>; Thu, 27 Jun 2024 02:23:02 GMT
-Received: from [10.48.244.230] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 26 Jun
- 2024 19:23:02 -0700
-Message-ID: <ca8f8cab-e62c-4784-bdf8-9c92b2c0202c@quicinc.com>
-Date: Wed, 26 Jun 2024 19:23:01 -0700
+	by smtp.kernel.org (Postfix) with ESMTPS id DC297C2BBFC
+	for <tools@kernel.org>; Thu, 27 Jun 2024 06:27:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org DC297C2BBFC
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a724598cfe3so648067066b.1
+        for <tools@kernel.org>; Wed, 26 Jun 2024 23:27:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1719469645; x=1720074445; darn=kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j3q2x4n6Nq5cofykj4hO7B7xm15RmPPmHcfmB5ToVCU=;
+        b=eJuNDCn4UPWnWloK8AXhfqDLelQCbKrUkEBWkbbqE2/953fouDX6jI4d/mKzVW8lOw
+         iy54Ku7IrUPtPxCGeEcy/cwVL4D3fzx/mE6KISugsQqzkUF4T5ZBZWJvvGIXjzPYgrZL
+         UU8ck47piFou6HGOBZ/HhhTnBSt0lO9Th/6wvnaN28cpzOMc3JIaKysZV0YgramdsojG
+         2WeilMgzsv2B36eEORngg9otXvenuclFfwEAPhRjqz6JeORJSeXGHH4RocmmoNwVVw0A
+         MisvMpVqjg6MMEuY9m2E47X8rSi0VMZfVF+moWEuDWM8kwLlyxJ1R8tEM5jWFbamC7os
+         pUhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719469645; x=1720074445;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j3q2x4n6Nq5cofykj4hO7B7xm15RmPPmHcfmB5ToVCU=;
+        b=tHXeKune31/UIZHWx3Fzx5e5fJn6qyyz1cQ1G+jwxmtqmW8raSdiz9lEBsugxVYHUv
+         u9orZBFhyuL57wHAs+rHdxLlw+RQlPlOCMxT61og+CTpyK+pxJ33fqLoE9BF+Gh1AiK7
+         EJat9qnOmNpz8xDszHQkCt/BkjhNejgjB1LJkXxMXf62RG+1zndsmUv9wJex73gUu2Ak
+         znU7gi2oJQgM3tJDuZEzSu0zd/8mm5hzGL0g7PYS9GwE+R41/u6LO+EFKq9j6HP2+hOU
+         Jqd3SQ8XNoxNDCnPc2S+CyRFkglVEkx1qfUzPhWRv0M6SG7ZtWC91YxrbLwBF4F5URpt
+         lvbw==
+X-Gm-Message-State: AOJu0Yy9k4MASh39wzzX+jNUwQUzr6pwcIKG9ZlT0vrj/kMUKg0yuJgj
+	4ogWeu4t+TISuh548WcUT2jBTNcqvCx0dfeA+vCWagBSLTSXmW4ge6qmc5d87ZdGB922fBWkUhq
+	Mv5Q=
+X-Google-Smtp-Source: AGHT+IEkx0BzWP38r4nVBobaWJ77/5reGKNUfhBIUo2Otud8Nnj8XKZIuFY1PdYFpKoKGBUfDpKf9g==
+X-Received: by 2002:a17:907:a4c8:b0:a72:5fd5:ea02 with SMTP id a640c23a62f3a-a725fd5ec00mr917874166b.10.1719469645146;
+        Wed, 26 Jun 2024 23:27:25 -0700 (PDT)
+Received: from localhost ([2a02:8071:b783:6940:36f3:9aff:fec2:7e46])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a729d7b525esm27660366b.158.2024.06.26.23.27.24
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jun 2024 23:27:24 -0700 (PDT)
+Date: Thu, 27 Jun 2024 08:27:23 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: tools@kernel.org
+Subject: b4 wish: differentiate between signature problems
+Message-ID: <wxyjcpushnvpdrv42dijurk76oh3qny3y4mihnopof6fnwhwik@jk4tnftk6cds>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: <tools@kernel.org>
-Content-Language: en-US
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-Subject: b4 prep --cleanup failure with cover-strategy: branch-description
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ja5QwtK-co5sjcxzZeJQRvrd76dxPMms
-X-Proofpoint-ORIG-GUID: ja5QwtK-co5sjcxzZeJQRvrd76dxPMms
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-26_17,2024-06-25_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=796 bulkscore=0
- phishscore=0 adultscore=0 mlxscore=0 suspectscore=0 malwarescore=0
- clxscore=1015 lowpriorityscore=0 spamscore=0 priorityscore=1501
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406270016
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qcyzwzpm5gw2jgze"
+Content-Disposition: inline
 
-Here is an edited capture of one failed cleanup attempt
 
-% git checkout b4/md-drivers-devfreq
-Switched to branch 'b4/md-drivers-devfreq'
-% b4 prep --show-info
-branch: b4/md-drivers-devfreq
-cover-subject: md-drivers-devfreq
-base-branch: linux-master
-base-commit: a693b9c95abd4947c2d06e05733de5d470ab6586
-start-commit: a693b9c95abd4947c2d06e05733de5d470ab6586
-end-commit: ec30a61ebb797c2b9763c495f7ddf1beac1ab0d6
-series-range:
-a693b9c95abd4947c2d06e05733de5d470ab6586..ec30a61ebb797c2b9763c495f7ddf1beac1ab0d6
-change-id: 20240605-md-drivers-devfreq-42b19b2594a1
-revision: 2
-cover-strategy: branch-description
-needs-editing: True
-needs-recipients: False
-has-prerequisites: False
-needs-auto-to-cc: True
-needs-checking: True
-needs-checking-deps: False
-preflight-checks-failing: True
-commit-ec30a61ebb79: PM/devfreq: governor: add missing MODULE_DESCRIPTION() macros
-series-v1: a693b9c95abd..c24a39e01a87
-20240605-md-drivers-devfreq-v1-1-d01ae91b907e@quicinc.com
-% git checkout linux-master
-Switched to branch 'linux-master'
-% b4 prep --cleanup b4/md-drivers-devfreq
-Traceback (most recent call last):
-  File "/usr2/jjohnson/.local/bin/b4", line 8, in <module>
-    sys.exit(cmd())
-  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/command.py", line
-417, in cmd
-    cmdargs.func(cmdargs)
-  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/command.py", line
-83, in cmd_prep
-    b4.ez.cmd_prep(cmdargs)
-  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/ez.py", line
-2766, in cmd_prep
-    return cleanup(cmdargs.cleanup)
-  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/ez.py", line
-2332, in cleanup
-    ts = tracking['series']
-KeyError: 'series'
-% b4 --version
-0.14.0
+--qcyzwzpm5gw2jgze
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hello,
+
+currently I experience:
+
+	$ b4 am -s -l -t -3 20240604-pwm-gpio-v7-0-6b67cf60db92@linaro.org
+	Grabbing thread from lore.kernel.org/all/20240604-pwm-gpio-v7-0-6b67cf60db=
+92@linaro.org/t.mbox.gz
+	Analyzing 5 messages in the thread
+	Analyzing 0 code-review messages
+	Checking attestation on all messages, may take a moment...
+	---
+	  =E2=9C=97 [PATCH v7 1/2] dt-bindings: pwm: Add pwm-gpio
+	    + Link: https://lore.kernel.org/r/20240604-pwm-gpio-v7-1-6b67cf60db92@=
+linaro.org
+	    + Signed-off-by: Uwe Kleine-K=C3=B6nig <ukleinek@kernel.org>
+	  =E2=9C=97 [PATCH v7 2/2] pwm: Add GPIO PWM driver
+	    + Reviewed-by: Dhruva Gole <d-gole@ti.com> (=E2=9C=93 DKIM/ti.com)
+	    + Link: https://lore.kernel.org/r/20240604-pwm-gpio-v7-2-6b67cf60db92@=
+linaro.org
+	    + Signed-off-by: Uwe Kleine-K=C3=B6nig <ukleinek@kernel.org>
+	  ---
+	  =E2=9C=97 BADSIG: DKIM/linaro.org
+	---
+	Total patches: 2
+	Preared a fake commit range for 3-way merge (326b8ce7eace..35520e7a5eb9)
+	---
+	Cover: ./v7_20240604_linus_walleij_pwm_add_gpio_pwm_driver.cover
+	 Link: https://lore.kernel.org/r/20240604-pwm-gpio-v7-0-6b67cf60db92@linar=
+o.org
+	 Base: base-commit cc97b8f37b097a1598410154ca472964a1d9b255 not known, ign=
+oring
+	 Base: not specified
+	       git am -3 ./v7_20240604_linus_walleij_pwm_add_gpio_pwm_driver.mbx
+
+After some debugging about "=E2=9C=97 BADSIG: DKIM/linaro.org" this is only
+because the signature is expired. (It's only valid for one week. And yes
+I know, I could fix that by picking up patches quicker :-)
+
+I tried to improve that to emit
+
+	=E2=8F=B0 EXPIREDSIG: DKIM/linaro.org
+
+instead, which would IMHO greatly improve my user experience. But that
+isn't easily determined using the dkim python module, so no patch here,
+just a wishlist report.
+
+Best regards
+Uwe
+
+--qcyzwzpm5gw2jgze
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmZ9BkgACgkQj4D7WH0S
+/k4JpQf+JbDrcYU5I4Vd0XVS+ht7aEotXLE998YZSLsxCTBiH0MkSvhhHWbnFFLm
+2qpZv6xnzjbn+RfLYSAfSRzB3qXppz6FYtXkYPxgURbUtgMaK5MdkLb3uujLzwMr
+IZNUKOMCRYieZbQGyXvrA13WJK7TXe+x4aC9H5SIHODl/2dIaOB+XWHVN1DK2CoQ
+ATtxyVYkhtQ4g/08yt8LlVc6dYbqyLagtbm7OvhV7G0szu4KS70hcU8SpTHIbboC
+5uUJk/BZqD4k8QWUAjMLkhkjpywio04fvOXLzYbEVtBKBGucCM7X6yX0SmJWSw6A
+sAwE6UDkk1ClY0qlI+ULt7pZM0M4/w==
+=H9Jl
+-----END PGP SIGNATURE-----
+
+--qcyzwzpm5gw2jgze--
