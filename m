@@ -1,36 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D977F15ECD1
-	for <tools@linux.kernel.org>; Thu, 27 Jun 2024 15:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B7E1C6A7
+	for <tools@linux.kernel.org>; Thu, 27 Jun 2024 17:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719500425; cv=none; b=gFlgN6j5ScdXXta24QGDjNmWmXfQ+xOOxxuq1SlGA+JpbuantYAwcJlUiIE0bfktkqQuPcHWt+Nve3ikYT0cCLXuJhGYVmLz6uiWPrR0kjtDiyeXK9nWrH3y9RDmChZWfzVjxVpAbRTMEjNUBrGG+zC8ePow964+PHFmTH7UUK0=
+	t=1719510200; cv=none; b=Dn0izs8Xhl3GdPRCAgKiMWT3WG9hQlNfaF3HDtMmplZUVaGOARb/Op5s+UHADESmlG3IsoBeSQThrz2SAHy8aJGLJjvPZaDvYZQ/BiI/u94g0i2YUQoc8fSmaB7Z3nf8tzH1OnCzY40c+SljQ3lu6/5QKwbY6b/7QoKtYWJTCNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719500425; c=relaxed/simple;
-	bh=kEJCcTwI20QjKapHRZbTPLcYoqldb5nw2OeqF8Wt/ms=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=ZcfuZHtQYBId8TY9a8B0q4HR0Xn4iu+9RfB+q5wHYE7/iRQopzKd7tGoc278tJo9Sgabi831sMLg8T3H+tWdAyORz/oboGntvADBLV2snZh9p2lA57ZgXlaKnU7r5D2RK75gcxMu7DEI/SnDojnwe3XZrsnDewVVtM6oJThl5cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oIFKwWSr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719510200; c=relaxed/simple;
+	bh=NHzJn8p/4YkpeW3OTAj5tgogw95Uib8FfUsLmZWxrj4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=X9k4tyOpMYMTp+L/MO/OGei+OjmZ3l6UMPrCSWtjk/9tRIbwiZ30KEkE8iS0pU5AUklUlithGu/NJMyLQWdoiFhoQaCJgqAYwRBfYPEseuFGv8i88xGoomfi8PinE9K0mJjqL0Ck1HC3jmqV+pVCjNMxJDXjeEugowzPAcuBLQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=collins.com header.i=@collins.com header.b=CLxdQ9fm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oIFKwWSr"
+	dkim=pass (2048-bit key) header.d=collins.com header.i=@collins.com header.b="CLxdQ9fm"
 Received: by smtp.kernel.org (Postfix)
-	id 9C940C32786; Thu, 27 Jun 2024 15:00:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7D08EC2BBFC;
-	Thu, 27 Jun 2024 15:00:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719500425;
-	bh=kEJCcTwI20QjKapHRZbTPLcYoqldb5nw2OeqF8Wt/ms=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=oIFKwWSrvuUyu2Wq5md07u09MZfTXZyEUSYkU2nEGk7W8A0SE+VwwENH5Jo1CUe6E
-	 bgxun40fCqisCAMTzB+yv7toK1U20BVIoSPRq0Qy3YVN+orp9XPxRV9Wl5g5xhmRSx
-	 lR6PszI4pYPENHRdG3vH0pd3S2KYXk3B5yoSLp/7Y28p6BjGdpW78ZtjAqbqyH3qc3
-	 rjgGtSwrN33BEFfhN6grl31m/JeFnwjguTX87eNkwjS/SB78ZG3dttwsdTVV4Jlwrn
-	 52krP9pBIuBkHFqiz2RGffMjo10qWiGt8YmdMg5GnnK8OOYMA05brUfQvUz3FZtimq
-	 0tBrkAwRACc6Q==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 6922BC433A2;
-	Thu, 27 Jun 2024 15:00:25 +0000 (UTC)
+	id A5FC2C4AF07; Thu, 27 Jun 2024 17:43:19 +0000 (UTC)
+Received: from mx0a-00105401.pphosted.com (mx0a-00105401.pphosted.com [67.231.144.184])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 8E6A4C2BBFC
+	for <tools@kernel.org>; Thu, 27 Jun 2024 17:43:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 8E6A4C2BBFC
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=collins.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=collins.com
+Received: from pps.filterd (m0346906.ppops.net [127.0.0.1])
+	by mx0a-00105401.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 45RFJMl5025867;
+	Thu, 27 Jun 2024 17:43:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=collins.com; h=cc :
+ content-transfer-encoding : content-type : date : from : message-id :
+ mime-version : subject : to; s=POD051818;
+ bh=9o3pqlKJKrFrMGzuILBgZEaHbbSKhaILOLepf3HbKe0=;
+ b=CLxdQ9fmiVL8e4lxH/+NPjXMlHUb1sDCdLXcvGnjqhkNAsKMSSSfe00bfD89eJ1OrZ+m
+ L3tl5BYe8IsDt+ScCEU1kk1M1w7hFasWHyrVnWL3hNklVmCsxcfEVQ3BAHQXHrgR9mIN
+ SL3i/DxJowx40vrIzRstwX40OLuCf7p2MknoC3m2iP06xt9lNdDc3+2uesphwCYucbNj
+ SuibT6LKgyZbWXCvUm7u2XR+kUIFwjdMyoTL6wDvvRl4m1dPrbv2jd51rz35gzXXL+D+
+ kwBYdhcbSnOF3zc5uAruoc59yaxXr5W8TEo/VwRSR8DeAEpJGAj09z3l6uCE+WiGqtHW xA== 
+Received: from xusxph008rp050.rtx.com (xusxph008rp050.rtx.com [128.13.124.147])
+	by mx0a-00105401.pphosted.com (PPS) with ESMTPS id 401amd9svs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 27 Jun 2024 17:43:11 +0000
+Received: from xusxph008rp020.corp.ray.com ([128.13.124.224])
+	by xusxph008rp050.rtx.com (8.17.1.19/8.17.1.19) with ESMTPS id 45RHgm6R004231
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 27 Jun 2024 17:42:48 GMT
+Received: from ciulimr02.rockwellcollins.com (snat-utc-mailhub.rockwellcollins.com [10.172.224.19])
+	by xusxph008rp020.corp.ray.com (8.17.1.19/8.17.1.19) with ESMTPS id 45RHgmhC001074
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Thu, 27 Jun 2024 17:42:48 GMT
+X-Received: from localhost (unknown [10.148.204.208])
+	by ciulimr02.rockwellcollins.com (Postfix) with ESMTP id 305981002686;
+	Thu, 27 Jun 2024 12:42:48 -0500 (CDT)
+From: Brandon Maier <brandon.maier@collins.com>
+Date: Thu, 27 Jun 2024 17:42:37 +0000
+Subject: [PATCH b4] docs/config: document how *-cmd is run
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,25 +61,111 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-From: "Kernel.org Bugbot" <bugbot@kernel.org>
-To: arnd@arndb.de, conor@kernel.org, tools@linux.kernel.org, 
- tools@kernel.org, konstantin@linuxfoundation.org
-Message-ID: <20240627-b218995-35ff9500a3ca@bugzilla.kernel.org>
-In-Reply-To: <20240627-unrest-rigid-c7bb9ac94bc7@spud>
-References: <20240627-unrest-rigid-c7bb9ac94bc7@spud>
-Subject: Re: patchwork & b4 failing to detect pull request
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: peebz 0.1
-Date: Thu, 27 Jun 2024 15:00:25 +0000 (UTC)
+Message-Id: <20240627-check-cmd-docs-v1-1-e548ff7ede5d@collins.com>
+X-B4-Tracking: v=1; b=H4sIAIykfWYC/x3MQQqAIBBA0avErBsoscSuEi1snGqINBQiiO6et
+ HyL/x/InIQzDNUDiS/JEkNBW1dAmwsro/hiUI3STa8M0sa0Ix0efaSMxtrWdM4urD2U6Ey8yP0
+ PR5g1TO/7AXczMopkAAAA
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Brandon Maier <brandon.maier@collins.com>
+X-Mailer: b4 0.14.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-27_13,2024-06-27_03,2024-05-17_01
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-27_13,2024-06-27_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 mlxscore=0 suspectscore=0
+ phishscore=0 bulkscore=0 adultscore=0 malwarescore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2406180000
+ definitions=main-2406270132
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 phishscore=0
+ malwarescore=0 spamscore=0 adultscore=0 bulkscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2406180000 definitions=main-2406270132
+X-Proofpoint-ORIG-GUID: u_tHPqQGSLmd9Rk-BpRHSjA9k88Vog5c
+X-Proofpoint-GUID: u_tHPqQGSLmd9Rk-BpRHSjA9k88Vog5c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-27_13,2024-06-27_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_default_notspam policy=outbound_default score=0 mlxscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0 adultscore=0
+ impostorscore=0 mlxlogscore=999 priorityscore=1501 phishscore=0
+ malwarescore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2406180000 definitions=main-2406270133
 
-Hello:
+For someone not familiar with checkpatch and get_maintainer's flags,
+it's not obvious how the commands are used. Document this to help users
+trying to add custom checkers.
 
-This conversation is now tracked by Kernel.org Bugzilla:
-https://bugzilla.kernel.org/show_bug.cgi?id=218995
+Signed-off-by: Brandon Maier <brandon.maier@collins.com>
+---
+ docs/config.rst | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-There is no need to do anything else, just keep talking.
+diff --git a/docs/config.rst b/docs/config.rst
+index c49f5d2..da58534 100644
+--- a/docs/config.rst
++++ b/docs/config.rst
+@@ -161,9 +161,11 @@ These settings control ``b4 am`` and ``b4 shazam`` behavior.
+   Default: ``None``
+ 
+ ``b4.am-perpatch-check-cmd`` (v0.14+)
+-  The command to use when running with ``--check``. If b4 finds
+-  ``scripts/checkpatch.pl`` at the top of your git tree, it uses the
+-  command shown below by default.
++  The command to use when running ``--check``. The command is run once for each
++  patch to check. The patch file to check is piped through stdin. If this
++  config is defined multiple times, all commands will be run. If this config is
++  not defined and b4 finds ``scripts/checkpatch.pl`` at the top of your git
++  tree, it uses the command shown below by default.
+ 
+   Default: ``./scripts/checkpatch.pl -q --terse --no-summary --mailback``
+ 
+@@ -379,14 +381,18 @@ Contributor-oriented settings
+   Default: ``no``
+ 
+ ``b4.send-auto-to-cmd``
+-  The command to use for obtaining the list of "To:" recipients. Has no effect
+-  if the specified script isn't present in the repository.
++  The command to use for obtaining the list of "To:" recipients. The command is
++  run once for each patch in the series. Each patch file is piped through
++  stdin. If b4 finds ``scripts/get_maintainer.pl`` at the top of your git tree,
++  it uses the command shown below by default.
+ 
+   Default: ``scripts/get_maintainer.pl --nogit --nogit-fallback --nogit-chief-penguins --norolestats --nol``
+ 
+ ``b4.send-auto-cc-cmd``
+-  The command to use for obtaining the list of Cc: recipients. Has no effect
+-  if the specified script isn't present in the repository.
++  The command to use for obtaining the list of "Cc:" recipients. The command is
++  run once for each patch in the series. Each patch file is piped through
++  stdin. If b4 finds ``scripts/get_maintainer.pl`` at the top of your git tree,
++  it uses the command shown below by default.
+ 
+   Default:: ``scripts/get_maintainer.pl --nogit --nogit-fallback --nogit-chief-penguins --norolestats --nom``
+ 
+@@ -426,9 +432,11 @@ Contributor-oriented settings
+   Default: ``None``
+ 
+ ``b4.prep-perpatch-check-cmd`` (v0.14+)
+-  The command to use when running ``--check``. If b4 finds
+-  ``scripts/checkpatch.pl`` at the top of your git tree, it uses the
+-  command shown below by default.
++  The command to use when running ``--check``. The command is run once for each
++  patch to check. The patch file to check is piped through stdin. If this
++  config is defined multiple times, all commands will be run. If this config is
++  not defined and b4 finds ``scripts/checkpatch.pl`` at the top of your git
++  tree, it uses the command shown below by default.
+ 
+   Default: ``./scripts/checkpatch.pl -q --terse --no-summary --mailback --showfile```
+ 
+
+---
+base-commit: 131835a44c63511e2def9d7adc680754b7ea502c
+change-id: 20240627-check-cmd-docs-799175a9fe4d
+
+Best regards,
 -- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (peebz 0.1)
+Brandon Maier <brandon.maier@collins.com>
 
