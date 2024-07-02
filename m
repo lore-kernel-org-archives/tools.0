@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A86626AE4
-	for <tools@linux.kernel.org>; Tue,  2 Jul 2024 15:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3641B5838
+	for <tools@linux.kernel.org>; Tue,  2 Jul 2024 16:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719935710; cv=none; b=Qv4b+7kA4IkBC5QwO/p+ByUnacOilhYORL4XrW+cnkOftbs4AI9fexoDFW4MbDeUKZasOi3UlrueouEJmQY+Ae53cW+UyF81bFE0sl4RZ8w9XluToQpVZYITHLzxwJlf/hdQ73rUbFF5cS2LfFfgXEmuw+6cLf7YhytJ7ZB4Er8=
+	t=1719936911; cv=none; b=kOxEdlSQMsl7fgmQth7X7oPBlH3w9fZ1jW6P3mJNinl/G2YyXdOFjXnzwRrAJfPboERyDpPMPgMCszZvPb7j08vuufd34pre2YS7hD7bDSMdH9y8w/CHGFgQ67ZXDhxJ3vJCvSaihsxUp2879kHHJkD8QDvqwx9NhdPGFBamWzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719935710; c=relaxed/simple;
-	bh=UWmPP1OEFb/AsNkYSK9+n8J18uVwgrEnYbvDm6I6asM=;
+	s=arc-20240116; t=1719936911; c=relaxed/simple;
+	bh=Ndo8e8VYjQS9kx4iLPfPeGmiOZRy7ewDMzK3LrZrCtU=;
 	h=Date:MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject; b=dhrm6DOrCPuuk2OFhojFFLBiETmHBQThN+zPEOTi7oGqRX0NtmYvTwNhYYuKWvqBTJ4kEu/4Mvs+STdGNH/kFv9Dyy8j8MEDAip1+ERKOLlUSYm/B2l6lWFawda1Kk4DVXCi/2PzKi9DCKHiMUJ+ogRLHn1arcCws6uteslVR7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m0R13wMA; arc=none smtp.client-ip=10.30.226.201
+	 References:Subject; b=k6qgyTp/04q2/Qu8czG0ZnIlcgOxyaxHG6JwvaxlpdV+VleBd8zBinbPxsscRn3P1KTSeROL3HQQ1XmMhkDTZzpf1n44CH/Ok2TqXjzbMnS79uujUTpH0xqYnykukmwrXURybsQuHrg3Xk9CdrF6NY4LzHJ5e4lB5R68khu7XM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M/+bhGln; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m0R13wMA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M/+bhGln"
 Received: by smtp.kernel.org (Postfix)
-	id 310D9C4AF07; Tue,  2 Jul 2024 15:55:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 19A99C116B1;
-	Tue,  2 Jul 2024 15:55:10 +0000 (UTC)
+	id 59EB4C4AF0E; Tue,  2 Jul 2024 16:15:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 43BBAC4AF07;
+	Tue,  2 Jul 2024 16:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719935710;
-	bh=UWmPP1OEFb/AsNkYSK9+n8J18uVwgrEnYbvDm6I6asM=;
+	s=k20201202; t=1719936911;
+	bh=Ndo8e8VYjQS9kx4iLPfPeGmiOZRy7ewDMzK3LrZrCtU=;
 	h=Date:From:To:In-Reply-To:References:Subject:From;
-	b=m0R13wMA2HIgeX/O/6Q3jvlJQEi6muStxggHseUpOGjblATIB9+9dAxG/9FtjU7uK
-	 YB9hZz3dG42nNBRweTmF4ZcI8i2zLAWVWyxlg0f80PxU3SA0EojGk7YiW1W6woU4tU
-	 AIY+lnRAGzIHdKiH5GacHDCr5QexxzqOAN9waQfEtjqWG6Z2KxjuY/AsbMl+p4nD/j
-	 DicBQuhAhs4LaY3A8VCcUAjdK/y3A5YDiZNsy+Ossxn7JwfKrP3T2tZzQSGmaTefcB
-	 WGXWeCSMmP5+Y3VJ4GkoPblPzmyVrEY93v7UUAuFdsHBGKOnHxxqOiKLbtkF6+SakF
-	 ufdnFS5T3MT+w==
+	b=M/+bhGlnTTTKRrPhL/k1u7m5d/TvNUVN4r2U/pqo03APTxrjSd4b8ieNsXXiWxRJ0
+	 sByK053yfLAQ+xxsjwYFfd/fPeCHJUHNahEPLZt6nAxNn2GUfr6xtdzt0y5WrX5mnS
+	 Peli89XgeVB0Gq2pSkV/DL0XSCTRDBMiYaTR3TXVEj4u89tYKvuCgwT0peeRhoCuNA
+	 96r2LNYqnqesRrmqBkToUS/VIAbfPTgntY5jYrTbLY+SiEGFlS7urQ7bx1pls7YBPp
+	 ryp7CE/i4iUiFc6O0VZQqsTb7FAKVlklwygFra/s782LZq1SqWNNWB1HZFe3oSBsS8
+	 c1WkYv/3c81Dg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id F3065C43331;
-	Tue,  2 Jul 2024 15:55:09 +0000 (UTC)
-Date: Tue, 02 Jul 2024 15:55:10 +0000
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 28A4CC43331;
+	Tue,  2 Jul 2024 16:15:11 +0000 (UTC)
+Date: Tue, 02 Jul 2024 16:15:11 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -41,9 +41,9 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 From: "Kernel.org Bugbot" <bugbot@kernel.org>
-To: tools@linux.kernel.org, quic_jjohnson@quicinc.com, tools@kernel.org, 
- konstantin@linuxfoundation.org
-Message-ID: <20240702-b218994c2-c31cdf784584@bugzilla.kernel.org>
+To: tools@linux.kernel.org, quic_jjohnson@quicinc.com, 
+ konstantin@linuxfoundation.org, tools@kernel.org
+Message-ID: <20240702-b218994c3-89bbe24956f5@bugzilla.kernel.org>
 In-Reply-To: <ca8f8cab-e62c-4784-bdf8-9c92b2c0202c@quicinc.com>
 References: <ca8f8cab-e62c-4784-bdf8-9c92b2c0202c@quicinc.com>
 Subject: Re: b4 prep --cleanup failure with cover-strategy:
@@ -54,35 +54,19 @@ X-Mailer: peebz 0.1
 
 quic_jjohnson writes via Kernel.org Bugzilla:
 
-Some additional information about my workflow that may have impacted this issue.
-I have one workspace called 'development' where I do most of my work, and it was in this workspace where I was performing tree-wide additions of missing MODULE_DESCRIPTION() macros using my standard x86_64 build configuration.
+There is another behavior which I'm also encountering where the b4 prep --cleanup command returns without any backtrace and without apparently doing anything:
 
-At one point I realized that I would not find issues with other ARCH settings with this configuration, so I then created a second workspace called 'arm64' which used the 'development' workspace as the remote. And as the name suggests, I originally updated the config in this workspace to build arm64 instead of x86_64, but that is probably not important. But what may be important is that when I encountered arm64 issues, I created b4 branches in the 'arm64' workspace.
-
-Only later did I realize that having tree-wide WIP in two separate workspace was going to complicate my record keeping, so I pushed my WIP from 'arm64' to 'development'.
-
-Today I tried to clean up one of the branches since the commit has landed in linux-next.
-
-In my development workspace I see:
-[jjohnson:development 9385] git checkout b4/md-arm64-drivers-edac
-Updating files: 100% (10338/10338), done.
-Switched to branch 'b4/md-arm64-drivers-edac'
-[jjohnson:development 9386] b4 prep --show-info
-CRITICAL: This is not a prep-managed branch.
-
-In my arm64 workspace I see:
-[jjohnson:arm64 1] git checkout b4/md-arm64-drivers-edac
-Switched to branch 'b4/md-arm64-drivers-edac'
-Your branch is up to date with 'development/b4/md-arm64-drivers-edac'.
-[jjohnson:arm64 2] b4 prep --show-info
-branch: b4/md-arm64-drivers-edac
-cover-subject: md-arm64-drivers-edac
+[jjohnson:development 1] git checkout b4/md-kvm
+Switched to branch 'b4/md-kvm'
+[jjohnson:development 2] b4 prep --show-info
+branch: b4/md-kvm
+cover-subject: md-kvm
 base-branch: linux-master
-base-commit: 83a7eefedc9b56fe7bfeff13b6c7356688ffa670
-start-commit: 83a7eefedc9b56fe7bfeff13b6c7356688ffa670
-end-commit: c4515adee140419f499b576d3db7f0a1ef797ec3
-series-range: 83a7eefedc9b56fe7bfeff13b6c7356688ffa670..c4515adee140419f499b576d3db7f0a1ef797ec3
-change-id: 20240613-md-arm64-drivers-edac-2fa423340d75
+base-commit: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b
+start-commit: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b
+end-commit: ef5bf7522b9c61da7f935d74246d19bd7e81c71d
+series-range: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b..ef5bf7522b9c61da7f935d74246d19bd7e81c71d
+change-id: 20240528-md-kvm-36f20bc4a5b0
 revision: 3
 cover-strategy: branch-description
 needs-editing: True
@@ -92,27 +76,39 @@ needs-auto-to-cc: False
 needs-checking: False
 needs-checking-deps: False
 preflight-checks-failing: True
-commit-c4515adee140: EDAC: add missing MODULE_DESCRIPTION() macros
-series-v2: 83a7eefedc9b..8c38b6b182e5 20240617-md-arm64-drivers-edac-v2-1-6d6c5dd1e5da@quicinc.com
-series-v1: 83a7eefedc9b..5127f12ffcdd 20240613-md-arm64-drivers-edac-v1-1-149a4f0f61bb@quicinc.com
-[jjohnson:arm64 3] git checkout linux-master
-Switched to branch 'linux-master'
-Your branch is up to date with 'linus/master'.
-[jjohnson:arm64 4] b4 prep --cleanup b4/md-arm64-drivers-edac
-Traceback (most recent call last):
-  File "/usr2/jjohnson/.local/bin/b4", line 8, in <module>
-    sys.exit(cmd())
-  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/command.py", line 417, in cmd
-    cmdargs.func(cmdargs)
-  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/command.py", line 83, in cmd_prep
-    b4.ez.cmd_prep(cmdargs)
-  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/ez.py", line 2766, in cmd_prep
-    return cleanup(cmdargs.cleanup)
-  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/ez.py", line 2332, in cleanup
-    ts = tracking['series']
-KeyError: 'series'
+commit-ef5bf7522b9c: KVM: x86: add missing MODULE_DESCRIPTION() macros
+series-v2: 2bfcfd584ff5..8e4a790087e7 20240622-md-kvm-v2-1-29a60f7c48b1@quicinc.com
+series-v1: 2bfcfd584ff5..5a3a35097cdd 20240528-md-kvm-v1-1-c1b86f0f5112@quicinc.com
+[jjohnson:development 3] git checkout md-linux-next-master
+Switched to branch 'md-linux-next-master'
+[jjohnson:development 4] b4 prep --cleanup b4/md-kvm
+[jjohnson:development 5] git branch|fgrep b4/md-kvm
+  b4/md-kvm
+[jjohnson:development 6] git checkout b4/md-kvm
+Switched to branch 'b4/md-kvm'
+[jjohnson:development 7] b4 prep --show-info
+branch: b4/md-kvm
+cover-subject: md-kvm
+base-branch: linux-master
+base-commit: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b
+start-commit: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b
+end-commit: ef5bf7522b9c61da7f935d74246d19bd7e81c71d
+series-range: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b..ef5bf7522b9c61da7f935d74246d19bd7e81c71d
+change-id: 20240528-md-kvm-36f20bc4a5b0
+revision: 3
+cover-strategy: branch-description
+needs-editing: True
+needs-recipients: False
+has-prerequisites: False
+needs-auto-to-cc: False
+needs-checking: False
+needs-checking-deps: False
+preflight-checks-failing: True
+commit-ef5bf7522b9c: KVM: x86: add missing MODULE_DESCRIPTION() macros
+series-v2: 2bfcfd584ff5..8e4a790087e7 20240622-md-kvm-v2-1-29a60f7c48b1@quicinc.com
+series-v1: 2bfcfd584ff5..5a3a35097cdd 20240528-md-kvm-v1-1-c1b86f0f5112@quicinc.com
 
-View: https://bugzilla.kernel.org/show_bug.cgi?id=218994#c2
+View: https://bugzilla.kernel.org/show_bug.cgi?id=218994#c3
 You can reply to this message to join the discussion.
 -- 
 Deet-doot-dot, I am a bot.
