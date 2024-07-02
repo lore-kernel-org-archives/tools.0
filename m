@@ -1,155 +1,120 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C781E878
-	for <tools@linux.kernel.org>; Fri, 28 Jun 2024 15:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A86626AE4
+	for <tools@linux.kernel.org>; Tue,  2 Jul 2024 15:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719586893; cv=none; b=ZZ+w5ouOVmh4/xI1Kl9soZJy5JvNxoxi6evQ38Jv0sWwR4Xe7V1535DC1ip7YwK4KpIs9727+d7TGT7q4h9MAGS3wLt5M/g9WGbO6yM7Y+aRfJTnIm4UnXPYP3nrOnNq14hnbuYvnfV2h3KFHoGRII7Zu3/jmBaJH8LGy2LOP5Q=
+	t=1719935710; cv=none; b=Qv4b+7kA4IkBC5QwO/p+ByUnacOilhYORL4XrW+cnkOftbs4AI9fexoDFW4MbDeUKZasOi3UlrueouEJmQY+Ae53cW+UyF81bFE0sl4RZ8w9XluToQpVZYITHLzxwJlf/hdQ73rUbFF5cS2LfFfgXEmuw+6cLf7YhytJ7ZB4Er8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719586893; c=relaxed/simple;
-	bh=3GV7uBRpgbmmnBBVu6kjRLfG5HZsRL4h/kzdE0EOnpw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i2SnrX14YiVmNpJnVS+uworCxT0VHyzhz+OOtWJ4yLTcXrBeIccVLIyGjoQys0Jlmpu1syJ00vy6MIXZ6+sKkPkWSJRKMqMvSQsRM2ZQYHhnIX5E19bs7ZqZ7GUSw5MAhsjuGTvTE6fBo4bFx4gNhQeKVogAu8rhjDJYdubyRzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=2glfnRXj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719935710; c=relaxed/simple;
+	bh=UWmPP1OEFb/AsNkYSK9+n8J18uVwgrEnYbvDm6I6asM=;
+	h=Date:MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject; b=dhrm6DOrCPuuk2OFhojFFLBiETmHBQThN+zPEOTi7oGqRX0NtmYvTwNhYYuKWvqBTJ4kEu/4Mvs+STdGNH/kFv9Dyy8j8MEDAip1+ERKOLlUSYm/B2l6lWFawda1Kk4DVXCi/2PzKi9DCKHiMUJ+ogRLHn1arcCws6uteslVR7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m0R13wMA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="2glfnRXj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m0R13wMA"
 Received: by smtp.kernel.org (Postfix)
-	id DEA66C32786; Fri, 28 Jun 2024 15:01:31 +0000 (UTC)
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 01EA1C116B1
-	for <tools@kernel.org>; Fri, 28 Jun 2024 15:01:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 01EA1C116B1
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a72604c8c5bso74536266b.2
-        for <tools@kernel.org>; Fri, 28 Jun 2024 08:01:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1719586888; x=1720191688; darn=kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pi1+F/4YOKHdO13Jd03d3hdRyou6wfscq72lsWyh8NY=;
-        b=2glfnRXjyrTZTG1jQnuNaig+fcX7I0tBIAvl0g4Uuf/WtmWkqABC7ns15MuxLUXtsE
-         v/PtRg+KzOEkefU09hHutz51hhXcNGzVFcC1voB7L82F4sUL9VteevG0HqSA3rL3R1uN
-         hzIRZ07yDOnjVJnevTMJyaOjqPb73rTjx8MxAH2g8mjJ9oJIsGl+VXaIVQMOSdYAKlvr
-         qOKWFy5KR77Xm2OU1XaBw7YdSBKT6JRhXNoQkDXaT6QGmDnGuyyj+6dZ/q2ZartrWq2o
-         Wab0CbVRfuNSc3hVtRuMIlDuG+IsGqgydQrzY6ZwgCLPSVcKnOacOkBpNUHq5ljJ8kd5
-         Lzcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719586888; x=1720191688;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Pi1+F/4YOKHdO13Jd03d3hdRyou6wfscq72lsWyh8NY=;
-        b=IJ6qF/ym3Toz+jPIrJtuZHhvTIBI7Ww6wU0HJof9WpASR+jibe+FxPNXoeNOuogAVL
-         /Fok0nqXGZEBD9knHAqp+E6G7AYqKjdNcAS/8UVJvymUk4CVhDO6y8BJEMhFpfeOTZ7w
-         dFOJpRpt028Ot1cq3SyDhLMJinhwzJm4l9d1OCyojcBJvcFqsSZtLY7QBqyKSaGjhZKZ
-         PrXNXuWW16E6GLFlT6QwTyvMfyB3hRK6HsvKNqShuhU8RuV+4hS9tMtT/gD5Kr7iIp0t
-         Cb39p69oCUOU70o2J/0t6V6acOuYyBKFSyYuih8WSyMsJoMxQ0zkYaCIwhHactzYneQD
-         sVpA==
-X-Gm-Message-State: AOJu0YzbOYwlUnahA6aaqK8/f0cykuBGlcasw6M7jFE9KZD9SfTHaFXq
-	nz9QvW6MAVkUvGJ28+D9p3+MDpnoPb0kHZG0fQl1rnZr+Ufm11OdtGOwslTwpPs=
-X-Google-Smtp-Source: AGHT+IFPcxeK2fufXlq2DXx/2ZJkmx8n1OJpMWxXdQE8nWmmd1Wju0arPq8RVdMyw+9GlEIGPiBuAw==
-X-Received: by 2002:a17:906:4c59:b0:a72:42b8:257c with SMTP id a640c23a62f3a-a7245b72dcbmr995553666b.35.1719586888199;
-        Fri, 28 Jun 2024 08:01:28 -0700 (PDT)
-Received: from localhost (p50915e7b.dip0.t-ipconnect.de. [80.145.94.123])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72ab08d0ccsm87747766b.177.2024.06.28.08.01.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jun 2024 08:01:27 -0700 (PDT)
-Date: Fri, 28 Jun 2024 17:01:26 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: Re: b4 wish: differentiate between signature problems
-Message-ID: <n47q7td2cyb5tedm64wpua2ehzy7h3dzuwihi2aplzmetyc7yc@wchthchnfoly>
-References: <wxyjcpushnvpdrv42dijurk76oh3qny3y4mihnopof6fnwhwik@jk4tnftk6cds>
- <20240627-miniature-hysterical-hoatzin-22461a@meerkat>
- <mw7wx2wpwefefml5g4lcfwwq3udfhok7o7iteb2vnmj56edw5w@exb6tviwiert>
- <20240628-portable-tentacled-bobcat-63dc7c@lemur>
+	id 310D9C4AF07; Tue,  2 Jul 2024 15:55:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 19A99C116B1;
+	Tue,  2 Jul 2024 15:55:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719935710;
+	bh=UWmPP1OEFb/AsNkYSK9+n8J18uVwgrEnYbvDm6I6asM=;
+	h=Date:From:To:In-Reply-To:References:Subject:From;
+	b=m0R13wMA2HIgeX/O/6Q3jvlJQEi6muStxggHseUpOGjblATIB9+9dAxG/9FtjU7uK
+	 YB9hZz3dG42nNBRweTmF4ZcI8i2zLAWVWyxlg0f80PxU3SA0EojGk7YiW1W6woU4tU
+	 AIY+lnRAGzIHdKiH5GacHDCr5QexxzqOAN9waQfEtjqWG6Z2KxjuY/AsbMl+p4nD/j
+	 DicBQuhAhs4LaY3A8VCcUAjdK/y3A5YDiZNsy+Ossxn7JwfKrP3T2tZzQSGmaTefcB
+	 WGXWeCSMmP5+Y3VJ4GkoPblPzmyVrEY93v7UUAuFdsHBGKOnHxxqOiKLbtkF6+SakF
+	 ufdnFS5T3MT+w==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id F3065C43331;
+	Tue,  2 Jul 2024 15:55:09 +0000 (UTC)
+Date: Tue, 02 Jul 2024 15:55:10 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hhwimyndxp7v7jq7"
-Content-Disposition: inline
-In-Reply-To: <20240628-portable-tentacled-bobcat-63dc7c@lemur>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: tools@linux.kernel.org, quic_jjohnson@quicinc.com, tools@kernel.org, 
+ konstantin@linuxfoundation.org
+Message-ID: <20240702-b218994c2-c31cdf784584@bugzilla.kernel.org>
+In-Reply-To: <ca8f8cab-e62c-4784-bdf8-9c92b2c0202c@quicinc.com>
+References: <ca8f8cab-e62c-4784-bdf8-9c92b2c0202c@quicinc.com>
+Subject: Re: b4 prep --cleanup failure with cover-strategy:
+ branch-description
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: peebz 0.1
 
+quic_jjohnson writes via Kernel.org Bugzilla:
 
---hhwimyndxp7v7jq7
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Some additional information about my workflow that may have impacted this issue.
+I have one workspace called 'development' where I do most of my work, and it was in this workspace where I was performing tree-wide additions of missing MODULE_DESCRIPTION() macros using my standard x86_64 build configuration.
 
-Hello Konstantin,
+At one point I realized that I would not find issues with other ARCH settings with this configuration, so I then created a second workspace called 'arm64' which used the 'development' workspace as the remote. And as the name suggests, I originally updated the config in this workspace to build arm64 instead of x86_64, but that is probably not important. But what may be important is that when I encountered arm64 issues, I created b4 branches in the 'arm64' workspace.
 
-On Fri, Jun 28, 2024 at 10:37:13AM -0400, Konstantin Ryabitsev wrote:
-> On Fri, Jun 28, 2024 at 12:50:17PM GMT, Uwe Kleine-K=F6nig wrote:
-> > > > instead, which would IMHO greatly improve my user experience. But t=
-hat
-> > > > isn't easily determined using the dkim python module, so no patch h=
-ere,
-> > > > just a wishlist report.
-> > >=20
-> > > Correct, this is impossible without the following being implemented f=
-irst:
-> > > https://bugs.launchpad.net/dkimpy/+bug/2047054
-> > >=20
-> > > Unfortunately, the comment on that bug is not very encouraging.
-> >=20
-> > I'd not want to skip expiration check. Just want this represented in the
-> > verification result. It's still an API change, but in the output, not
-> > the function's input.
->=20
-> With the way DKIM signatures work, there is no way to do it without the c=
-hange
-> I requested. The expiration is specified in the x=3D parameter of the sig=
-ned
-> content itself, so there is no way to check if the signature would verify=
- if
-> the x=3D parameter wasn't there or was set to the current timestamp. And =
-I don't
-> think anyone would welcome b4 adjusting your system date to the time in t=
-he
-> past just to verify a DKIM signature. ;)
+Only later did I realize that having tree-wide WIP in two separate workspace was going to complicate my record keeping, so I pushed my WIP from 'arm64' to 'development'.
 
-I thought you'd want to have the option to unconditionally ignore the x=3D
-parameter, e.g.  using
+Today I tried to clean up one of the branches since the commit has landed in linux-next.
 
-	dkim.verify(message, ignore_expiry=3DTrue)
+In my development workspace I see:
+[jjohnson:development 9385] git checkout b4/md-arm64-drivers-edac
+Updating files: 100% (10338/10338), done.
+Switched to branch 'b4/md-arm64-drivers-edac'
+[jjohnson:development 9386] b4 prep --show-info
+CRITICAL: This is not a prep-managed branch.
 
-I'd say it would be better to change the return type from bool to some
-enumeration such that you can distinguish between
+In my arm64 workspace I see:
+[jjohnson:arm64 1] git checkout b4/md-arm64-drivers-edac
+Switched to branch 'b4/md-arm64-drivers-edac'
+Your branch is up to date with 'development/b4/md-arm64-drivers-edac'.
+[jjohnson:arm64 2] b4 prep --show-info
+branch: b4/md-arm64-drivers-edac
+cover-subject: md-arm64-drivers-edac
+base-branch: linux-master
+base-commit: 83a7eefedc9b56fe7bfeff13b6c7356688ffa670
+start-commit: 83a7eefedc9b56fe7bfeff13b6c7356688ffa670
+end-commit: c4515adee140419f499b576d3db7f0a1ef797ec3
+series-range: 83a7eefedc9b56fe7bfeff13b6c7356688ffa670..c4515adee140419f499b576d3db7f0a1ef797ec3
+change-id: 20240613-md-arm64-drivers-edac-2fa423340d75
+revision: 3
+cover-strategy: branch-description
+needs-editing: True
+needs-recipients: False
+has-prerequisites: False
+needs-auto-to-cc: False
+needs-checking: False
+needs-checking-deps: False
+preflight-checks-failing: True
+commit-c4515adee140: EDAC: add missing MODULE_DESCRIPTION() macros
+series-v2: 83a7eefedc9b..8c38b6b182e5 20240617-md-arm64-drivers-edac-v2-1-6d6c5dd1e5da@quicinc.com
+series-v1: 83a7eefedc9b..5127f12ffcdd 20240613-md-arm64-drivers-edac-v1-1-149a4f0f61bb@quicinc.com
+[jjohnson:arm64 3] git checkout linux-master
+Switched to branch 'linux-master'
+Your branch is up to date with 'linus/master'.
+[jjohnson:arm64 4] b4 prep --cleanup b4/md-arm64-drivers-edac
+Traceback (most recent call last):
+  File "/usr2/jjohnson/.local/bin/b4", line 8, in <module>
+    sys.exit(cmd())
+  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/command.py", line 417, in cmd
+    cmdargs.func(cmdargs)
+  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/command.py", line 83, in cmd_prep
+    b4.ez.cmd_prep(cmdargs)
+  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/ez.py", line 2766, in cmd_prep
+    return cleanup(cmdargs.cleanup)
+  File "/usr2/jjohnson/.local/lib/python3.8/site-packages/b4/ez.py", line 2332, in cleanup
+    ts = tracking['series']
+KeyError: 'series'
 
-	good
-	key-not-found
-	expired
-	bad
+View: https://bugzilla.kernel.org/show_bug.cgi?id=218994#c2
+You can reply to this message to join the discussion.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (peebz 0.1)
 
-But after rereading your request I see I understood it wrong and you're
-indeed open about how to implement it. So full ack for your request.
-
-Best regards
-Uwe
-
---hhwimyndxp7v7jq7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmZ+0EQACgkQj4D7WH0S
-/k4HgAf/U5xBIRlZe37h0Y3ahLs0f+8tT1nwSJ1hJB27+TpW3/oKwv9xCB+rGV89
-iMhxb7pYp9nzazqU0EipfWOyiZS/1J4BGWKayWTGITrw7QG/lW+MQJ58LYJ4f928
-sFsaEYMrj+6tl/1jJfy2JRIWfIFLQMme14kFRGCNmJI2O4AU98M8zwl2GIl6Uctr
-sEmhNOZyw3zOVKXjNxrI/J5K6B2vSz2FxlPWbo4uD8uc0rn2I5Iw7dK95p3biv1P
-EVyiaI+ojbDOVHvTS3TPiHuX8R2PpX3QZTZo4H8GbVN/aSdpyQaFu49kB+P92NXm
-tmodf0gPoqO3+cZeE7kla3j94OpqSg==
-=PiHr
------END PGP SIGNATURE-----
-
---hhwimyndxp7v7jq7--
