@@ -1,116 +1,183 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3641B5838
-	for <tools@linux.kernel.org>; Tue,  2 Jul 2024 16:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D65433AB
+	for <tools@linux.kernel.org>; Sat,  6 Jul 2024 12:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719936911; cv=none; b=kOxEdlSQMsl7fgmQth7X7oPBlH3w9fZ1jW6P3mJNinl/G2YyXdOFjXnzwRrAJfPboERyDpPMPgMCszZvPb7j08vuufd34pre2YS7hD7bDSMdH9y8w/CHGFgQ67ZXDhxJ3vJCvSaihsxUp2879kHHJkD8QDvqwx9NhdPGFBamWzQ=
+	t=1720268158; cv=none; b=p7R7C5fM3KkaTjcLDEVNsm3hSdC+X5M/l2PfxZY9TP6VK4ClQ0ldFoVyunSaasrGzdFAas9uy71NwpKi9RTMOaECQJjgb0Urvz6aAgwqYwum/POYNbncGIIvyxeWslYQdXK6ICfoVxLHrk+wVyJVn+dct3kWg3kH6qeXMHNbC4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719936911; c=relaxed/simple;
-	bh=Ndo8e8VYjQS9kx4iLPfPeGmiOZRy7ewDMzK3LrZrCtU=;
-	h=Date:MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject; b=k6qgyTp/04q2/Qu8czG0ZnIlcgOxyaxHG6JwvaxlpdV+VleBd8zBinbPxsscRn3P1KTSeROL3HQQ1XmMhkDTZzpf1n44CH/Ok2TqXjzbMnS79uujUTpH0xqYnykukmwrXURybsQuHrg3Xk9CdrF6NY4LzHJ5e4lB5R68khu7XM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M/+bhGln; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1720268158; c=relaxed/simple;
+	bh=ewHfk6kp7DgjzAdnMopMg8nYiloA7F7Sv9n6J0f9y8M=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BhO8KNed7r44RXAgjd8pCJGBM3tQM5waZln3RzPKjuhwEm3xSrvYZh6qplenWT4F05NySrcghhZ2cLDMHYJbtlNEQIOrs2Fg3aZndbZmaz/tRnjt2Wd8xP2YqJBuLCF1OabN2E8lXPtV8OLFWcePqRffHbl7IoC519pSZbiY0pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NTNGvpul; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M/+bhGln"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NTNGvpul"
 Received: by smtp.kernel.org (Postfix)
-	id 59EB4C4AF0E; Tue,  2 Jul 2024 16:15:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 43BBAC4AF07;
-	Tue,  2 Jul 2024 16:15:11 +0000 (UTC)
+	id 0B6BFC4AF0C; Sat,  6 Jul 2024 12:15:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13754C2BD10;
+	Sat,  6 Jul 2024 12:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719936911;
-	bh=Ndo8e8VYjQS9kx4iLPfPeGmiOZRy7ewDMzK3LrZrCtU=;
-	h=Date:From:To:In-Reply-To:References:Subject:From;
-	b=M/+bhGlnTTTKRrPhL/k1u7m5d/TvNUVN4r2U/pqo03APTxrjSd4b8ieNsXXiWxRJ0
-	 sByK053yfLAQ+xxsjwYFfd/fPeCHJUHNahEPLZt6nAxNn2GUfr6xtdzt0y5WrX5mnS
-	 Peli89XgeVB0Gq2pSkV/DL0XSCTRDBMiYaTR3TXVEj4u89tYKvuCgwT0peeRhoCuNA
-	 96r2LNYqnqesRrmqBkToUS/VIAbfPTgntY5jYrTbLY+SiEGFlS7urQ7bx1pls7YBPp
-	 ryp7CE/i4iUiFc6O0VZQqsTb7FAKVlklwygFra/s782LZq1SqWNNWB1HZFe3oSBsS8
-	 c1WkYv/3c81Dg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 28A4CC43331;
-	Tue,  2 Jul 2024 16:15:11 +0000 (UTC)
-Date: Tue, 02 Jul 2024 16:15:11 +0000
+	s=k20201202; t=1720268157;
+	bh=ewHfk6kp7DgjzAdnMopMg8nYiloA7F7Sv9n6J0f9y8M=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=NTNGvpul4CFL8Ua3b+uNIcisnwGPlyKW+BLn9kE6R8yn/MWemz9lq3EWzAz5h9SVU
+	 FWxnZBhmfvHcWDkNBgqlwv9BtthYg4WwUTEePoY770I3ctXw16VPyTKLMgmUSjuaHi
+	 8cjErYdcZIc35qEuwesnutwYjtKhG57Pfg2TQlwyCpL90BvRGwqXtYGdzWWcnq6orC
+	 7BKBJC5Lh32ReUl4C1PceMPvsL/ZZWTBGd3iUoh2NB48nIdi9qSIv3bDoVQMwyTLUk
+	 0GRPu4bWm0MFEDmFRCF5/fL0YQZOjowV80XbE5AQrpSk4Nw+DQQ6FMGO0KKJQE3wzn
+	 olWNWrWD5ts3g==
+Date: Sat, 6 Jul 2024 13:15:49 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Guillaume Stols <gstols@baylibre.com>
+Cc: Lars-Peter Clausen <lars@metafoo.de>, Michael Hennerich
+ <Michael.Hennerich@analog.com>, Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-fbdev@vger.kernel.org, devicetree@vger.kernel.org, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, jstephan@baylibre.com,
+ dlechner@baylibre.com, Conor Dooley <conor.dooley@microchip.com>,
+ tools@kernel.org
+Subject: Re: [PATCH v3 0/8] iio: adc: ad7606: Improvements
+Message-ID: <20240706131549.1f94449c@jic23-huawei>
+In-Reply-To: <20240702-cleanup-ad7606-v3-0-57fd02a4e2aa@baylibre.com>
+References: <20240702-cleanup-ad7606-v3-0-57fd02a4e2aa@baylibre.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: "Kernel.org Bugbot" <bugbot@kernel.org>
-To: tools@linux.kernel.org, quic_jjohnson@quicinc.com, 
- konstantin@linuxfoundation.org, tools@kernel.org
-Message-ID: <20240702-b218994c3-89bbe24956f5@bugzilla.kernel.org>
-In-Reply-To: <ca8f8cab-e62c-4784-bdf8-9c92b2c0202c@quicinc.com>
-References: <ca8f8cab-e62c-4784-bdf8-9c92b2c0202c@quicinc.com>
-Subject: Re: b4 prep --cleanup failure with cover-strategy:
- branch-description
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: peebz 0.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-quic_jjohnson writes via Kernel.org Bugzilla:
+On Tue, 02 Jul 2024 17:34:04 +0000
+Guillaume Stols <gstols@baylibre.com> wrote:
 
-There is another behavior which I'm also encountering where the b4 prep --cleanup command returns without any backtrace and without apparently doing anything:
+> This series adds the following improvements over the current AD7606's
+> driver implementation:
+>=20
+> - Fix wrong usage of gpio array
+> - Fix standby that was documented as ACTIVE_LOW but handled in the
+>   driver as if it was ACTIVE_HIGH
+> - Improve dt-bindings documentation
+> - Switch mutex lock to scoped guard
+>=20
+> Signed-off-by: Guillaume Stols <gstols@baylibre.com>
+This series is blowing up with b4, in that it is finding tags that were
+not given and I can't work out why.
 
-[jjohnson:development 1] git checkout b4/md-kvm
-Switched to branch 'b4/md-kvm'
-[jjohnson:development 2] b4 prep --show-info
-branch: b4/md-kvm
-cover-subject: md-kvm
-base-branch: linux-master
-base-commit: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b
-start-commit: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b
-end-commit: ef5bf7522b9c61da7f935d74246d19bd7e81c71d
-series-range: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b..ef5bf7522b9c61da7f935d74246d19bd7e81c71d
-change-id: 20240528-md-kvm-36f20bc4a5b0
-revision: 3
-cover-strategy: branch-description
-needs-editing: True
-needs-recipients: False
-has-prerequisites: False
-needs-auto-to-cc: False
-needs-checking: False
-needs-checking-deps: False
-preflight-checks-failing: True
-commit-ef5bf7522b9c: KVM: x86: add missing MODULE_DESCRIPTION() macros
-series-v2: 2bfcfd584ff5..8e4a790087e7 20240622-md-kvm-v2-1-29a60f7c48b1@quicinc.com
-series-v1: 2bfcfd584ff5..5a3a35097cdd 20240528-md-kvm-v1-1-c1b86f0f5112@quicinc.com
-[jjohnson:development 3] git checkout md-linux-next-master
-Switched to branch 'md-linux-next-master'
-[jjohnson:development 4] b4 prep --cleanup b4/md-kvm
-[jjohnson:development 5] git branch|fgrep b4/md-kvm
-  b4/md-kvm
-[jjohnson:development 6] git checkout b4/md-kvm
-Switched to branch 'b4/md-kvm'
-[jjohnson:development 7] b4 prep --show-info
-branch: b4/md-kvm
-cover-subject: md-kvm
-base-branch: linux-master
-base-commit: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b
-start-commit: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b
-end-commit: ef5bf7522b9c61da7f935d74246d19bd7e81c71d
-series-range: 2bfcfd584ff5ccc8bb7acde19b42570414bf880b..ef5bf7522b9c61da7f935d74246d19bd7e81c71d
-change-id: 20240528-md-kvm-36f20bc4a5b0
-revision: 3
-cover-strategy: branch-description
-needs-editing: True
-needs-recipients: False
-has-prerequisites: False
-needs-auto-to-cc: False
-needs-checking: False
-needs-checking-deps: False
-preflight-checks-failing: True
-commit-ef5bf7522b9c: KVM: x86: add missing MODULE_DESCRIPTION() macros
-series-v2: 2bfcfd584ff5..8e4a790087e7 20240622-md-kvm-v2-1-29a60f7c48b1@quicinc.com
-series-v1: 2bfcfd584ff5..5a3a35097cdd 20240528-md-kvm-v1-1-c1b86f0f5112@quicinc.com
+Tried various options but even a simple b4 am -l 20240702-cleanup-ad7606-v3=
+-0-57fd02a4e2aa@baylibre.com
+Is merrily finding tags that I can find no record of.
+  =E2=9C=93 [PATCH v3 1/8] dt-bindings: iio: adc: adi,ad7606: normalize tex=
+twidth
+    + Reviewed-by: Conor Dooley <conor.dooley@microchip.com> (=E2=9C=93 DKI=
+M/kernel.org)
+    + Reviewed-by: Rob Herring (Arm) <robh@kernel.org> (=E2=9C=93 DKIM/kern=
+el.org)
+    + Link: https://patch.msgid.link/20240702-cleanup-ad7606-v3-1-57fd02a4e=
+2aa@baylibre.com
+  =E2=9C=93 [PATCH v3 2/8] dt-bindings: iio: adc: adi,ad7606: improve descr=
+iptions
+    + Link: https://patch.msgid.link/20240702-cleanup-ad7606-v3-2-57fd02a4e=
+2aa@baylibre.com
+  =E2=9C=93 [PATCH v3 3/8] dt-bindings: iio: adc: adi,ad7606: add supply pr=
+operties
+    + Link: https://patch.msgid.link/20240702-cleanup-ad7606-v3-3-57fd02a4e=
+2aa@baylibre.com
+  =E2=9C=93 [PATCH v3 4/8] dt-bindings: iio: adc: adi,ad7606: fix example
+    + Reviewed-by: Conor Dooley <conor.dooley@microchip.com> (=E2=9C=93 DKI=
+M/kernel.org)
+    + Acked-by: Rob Herring (Arm) <robh@kernel.org> (=E2=9C=93 DKIM/kernel.=
+org)
+    + Reviewed-by: Rob Herring (Arm) <robh@kernel.org> (=E2=9C=93 DKIM/kern=
+el.org)
+    + Link: https://patch.msgid.link/20240702-cleanup-ad7606-v3-4-57fd02a4e=
+2aa@baylibre.com
+  =E2=9C=93 [PATCH v3 5/8] dt-bindings: iio: adc: adi,ad7606: add conditions
+    + Acked-by: Rob Herring (Arm) <robh@kernel.org> (=E2=9C=93 DKIM/kernel.=
+org)
+    + Reviewed-by: Rob Herring (Arm) <robh@kernel.org> (=E2=9C=93 DKIM/kern=
+el.org)
+    + Link: https://patch.msgid.link/20240702-cleanup-ad7606-v3-5-57fd02a4e=
+2aa@baylibre.com
+  =E2=9C=93 [PATCH v3 6/8] iio: adc: ad7606: fix oversampling gpio array
+    + Reviewed-by: Conor Dooley <conor.dooley@microchip.com> (=E2=9C=93 DKI=
+M/kernel.org)
+    + Acked-by: Rob Herring (Arm) <robh@kernel.org> (=E2=9C=93 DKIM/kernel.=
+org)
+    + Reviewed-by: Rob Herring (Arm) <robh@kernel.org> (=E2=9C=93 DKIM/kern=
+el.org)
+    + Link: https://patch.msgid.link/20240702-cleanup-ad7606-v3-6-57fd02a4e=
+2aa@baylibre.com
+  =E2=9C=93 [PATCH v3 7/8] iio: adc: ad7606: fix standby gpio state to matc=
+h the documentation
+    + Reviewed-by: Conor Dooley <conor.dooley@microchip.com> (=E2=9C=93 DKI=
+M/kernel.org)
+    + Acked-by: Rob Herring (Arm) <robh@kernel.org> (=E2=9C=93 DKIM/kernel.=
+org)
+    + Reviewed-by: Rob Herring (Arm) <robh@kernel.org> (=E2=9C=93 DKIM/kern=
+el.org)
+    + Link: https://patch.msgid.link/20240702-cleanup-ad7606-v3-7-57fd02a4e=
+2aa@baylibre.com
+  =E2=9C=93 [PATCH v3 8/8] iio: adc: ad7606: switch mutexes to scoped_guard
+    + Link: https://patch.msgid.link/20240702-cleanup-ad7606-v3-8-57fd02a4e=
+2aa@baylibre.com
 
-View: https://bugzilla.kernel.org/show_bug.cgi?id=218994#c3
-You can reply to this message to join the discussion.
--- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (peebz 0.1)
+Take patch 7 for example, I can find no record or Rob or Conor replying to =
+that
+or giving tags on the cover letter.
+
+The only local parameter I have is to change the link path as you can see a=
+bove.
+
+Tried it with b4 0.14 and master as of today.
+
+
+> ---
+> Changes in v3:
+> - Remove the two first patches that were already picked up.
+> - Add styling corrections.
+> - [Patch 6/8] Improve commit message.
+> - [Patch 8/8] Replace every scoped_guard by simple guard.
+> - Link to v2: https://lore.kernel.org/r/20240628-cleanup-ad7606-v2-0-96e0=
+2f90256d@baylibre.com
+>=20
+> Changes in v2:
+> - Change scoped guard to guard(mutex)(&st->lock). This was tested with
+>   Rob's bot condition, and seems not to generate warning anymore.
+> - Reorder the commits for avoiding bisection issues and respect commit
+>   priority rules.
+> - Add vdrive-supply to required properties.
+> - Separate cosmetic changes from content ones in dt-binding
+>   descriptions.
+> - Move maxItems changes (and plural in descriptions) to the commit that
+>   adds conditions.
+> - Link to v1: https://lore.kernel.org/r/20240618-cleanup-ad7606-v1-0-f185=
+4d5c779d@baylibre.com
+>=20
+> ---
+> Guillaume Stols (8):
+>       dt-bindings: iio: adc: adi,ad7606: normalize textwidth
+>       dt-bindings: iio: adc: adi,ad7606: improve descriptions
+>       dt-bindings: iio: adc: adi,ad7606: add supply properties
+>       dt-bindings: iio: adc: adi,ad7606: fix example
+>       dt-bindings: iio: adc: adi,ad7606: add conditions
+>       iio: adc: ad7606: fix oversampling gpio array
+>       iio: adc: ad7606: fix standby gpio state to match the documentation
+>       iio: adc: ad7606: switch mutexes to scoped_guard
+>=20
+>  .../devicetree/bindings/iio/adc/adi,ad7606.yaml    | 123 +++++++++++++++=
++-----
+>  drivers/iio/adc/ad7606.c                           |  47 ++++----
+>  drivers/iio/adc/ad7606_spi.c                       |   5 +-
+>  3 files changed, 115 insertions(+), 60 deletions(-)
+> ---
+> base-commit: 340fa834ae229a952db04a57ed13fd5d35d75818
+> change-id: 20240416-cleanup-ad7606-161e2ed9818b
+>=20
+> Best regards,
 
