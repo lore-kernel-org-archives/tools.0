@@ -1,85 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01856186E29
-	for <tools@linux.kernel.org>; Mon, 29 Jul 2024 21:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC3B7D3F1
+	for <tools@linux.kernel.org>; Mon, 29 Jul 2024 21:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722287986; cv=none; b=OJVo0bA8F1MQsJ+WkgRbzsRjVeh/t84WAl8sgdoBAse88EWfuMiCV0TnAk1lN8FxFCC+rrKunKak6sMoYTNwf9r34NtIhJIyjeez5Kuy0UYIarEbnr33HKlTJAqb6woVVvoK2Kq8jXF7xSTRp7WC/am5fPK+6W2YP10r1f1z8hE=
+	t=1722288775; cv=none; b=iZNWgFlfCV5TzJOoY3b4WWwybAU4TUaPdUFn4qlSyPCx4cLe92W9RtZ92xziqsOoZio9q4tEuudaUM87bKNgNmpKhOpk6RNhryZO2a/jXWgFVyyjOjBUU6SwBNKPhWpbc+SDNLMlVHl47y/tk6asDg3KXMSUk/HbhhsskMc4/GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722287986; c=relaxed/simple;
-	bh=IiNDPhMWNVNF+7hNf3kVTDurOtrX7jrqCDbpB9PaAJ4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d/PRW4BtISKMu9uk5ps4Qe1MYw1FjhRF6nsJgQETBXxrhAd10XP20Fe1sA+avKD344qX51k/IRMG7yQdIwxB0SRmVTPdeA1aFWdjxfYvqVtgVPZgfZxSNvrhGEqda0uY/7CmK0s7IkSlg4oGyhQywt2xFyXQ7bLdgChVIcYhuRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTmssHHz; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTmssHHz"
+	s=arc-20240116; t=1722288775; c=relaxed/simple;
+	bh=8eHMVg6fVCfqTUq+vD+2+i8k4ymDzTz8YJWyhMLFAyQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FiKzjuGZoPI2m7DTG30fObYWfZEDTCeSZtv/H5qYyp3Q7CUPRlzTQQfOJJmHTbnlKVJ9nAHut3tnWemPzsNeJPtijlSP2ajB4+h7aZbXQ8uhTHDcT7+uW6KjP5aZs19KYLwOQc6fHxIISxlRUzsnmDlEeo2ygZB0D0SEcAIh+dM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 Received: by smtp.kernel.org (Postfix)
-	id 9066EC4AF09; Mon, 29 Jul 2024 21:19:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4823AC32786;
-	Mon, 29 Jul 2024 21:19:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722287985;
-	bh=IiNDPhMWNVNF+7hNf3kVTDurOtrX7jrqCDbpB9PaAJ4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gTmssHHzq0A6qnt+A7gkyG1TA+6bVG3/A7RmnhnNgVQV3WEUxqbK+FFxldcIBBW0Q
-	 YQMoo3tyuUDgv+qLZ4VTUpCeUlrst+qEW9DbCuGEhjVp1nxa9KaiAzmhFwe6hVPVbh
-	 w87/BcEVJdmeuQSBIJgmw1RDIJ445ihLXP0ElvhI=
-Date: Mon, 29 Jul 2024 17:19:44 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Duje =?utf-8?Q?Mihanovi=C4=87?= <duje.mihanovic@skole.hr>
+	id 32D39C4AF0E; Mon, 29 Jul 2024 21:32:55 +0000 (UTC)
+Received: from mx.skole.hr (mx1.hosting.skole.hr [161.53.165.185])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 0016AC32786
+	for <tools@kernel.org>; Mon, 29 Jul 2024 21:32:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0016AC32786
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=skole.hr
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=skole.hr
+Received: from mx1.hosting.skole.hr (localhost.localdomain [127.0.0.1])
+	by mx.skole.hr (mx.skole.hr) with ESMTP id D5E9C81ACC;
+	Mon, 29 Jul 2024 23:32:41 +0200 (CEST)
+From: Duje =?utf-8?B?TWloYW5vdmnEhw==?= <duje.mihanovic@skole.hr>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@kernel.org
 Subject: Re: Can't reauthorize with endpoint using new GPG key
-Message-ID: <20240729-macaque-of-inspiring-recreation-9e5c4b@lemur>
-References: <5827210.DvuYhMxLoT@radijator>
+Date: Mon, 29 Jul 2024 23:32:10 +0200
+Message-ID: <4608818.LvFx2qVVIh@radijator>
+In-Reply-To: <20240729-macaque-of-inspiring-recreation-9e5c4b@lemur>
+References:
+ <5827210.DvuYhMxLoT@radijator>
+ <20240729-macaque-of-inspiring-recreation-9e5c4b@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5827210.DvuYhMxLoT@radijator>
+Autocrypt: addr=duje.mihanovic@skole.hr;
+ keydata=
+ mDMEZokhzhYJKwYBBAHaRw8BAQdAWJZ0hsI/ytTqHGFV8x6tzd5sB596cTeeDB4CQsTf+wC0KER
+ 1amUgTWloYW5vdmnEhyA8ZHVqZUBkdWplbWloYW5vdmljLnh5ej6ImQQTFgoAQRYhBG3/QdYN8x
+ S1t2umMK0xk1JFj60DBQJmiSHOAhsDBQkJZgGABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAA
+ AoJEK0xk1JFj60D1GABAJVSorZdMOlrp/oQtCSH/G53NE56x/JHA8VX+ZQBd/H3AP4/EcUf6eef
+ DUxVMh2bdkmuQKsVZGgOGiXpMksrVntWBrQpRHVqZSBNaWhhbm92acSHIDxkdWplLm1paGFub3Z
+ pY0Bza29sZS5ocj6ImQQTFgoAQRYhBG3/QdYN8xS1t2umMK0xk1JFj60DBQJmiSH/AhsDBQkJZg
+ GABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAAAoJEK0xk1JFj60Dlw8A/i4lPOL7NaYoYePDq
+ l8MaJaR9qoUi+D+HtD3t0Koi7ztAQCdizXbuqP3AVNxy5Gpb1ozgp9Xqh2MRcNmJCHA1YhWAbg4
+ BGaJIc4SCisGAQQBl1UBBQEBB0DEc9JeA55OlZfWKgvmRgw6a/EpBQ8mDl6nQTBmnd1XHAMBCAe
+ IfgQYFgoAJhYhBG3/QdYN8xS1t2umMK0xk1JFj60DBQJmiSHOAhsMBQkJZgGAAAoJEK0xk1JFj6
+ 0DG5MA/iuo4l2GDEZ1Zf+XaS//8FwdXDO9nHkfbV2MHjF4NZXwAQDroMzBdMcqVvc8GABFlTTgG
+ j7KrRDz2HwWNyF8ZeprAQ==
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-On Mon, Jul 29, 2024 at 11:07:41PM GMT, Duje Mihanović wrote:
-> Hi,
-> 
-> After replacing my GPG key, I was unable to reflect a patch series with the 
-> following error:
-> 
-> Error from endpoint: No matching key, please complete web auth first.
-> 
-> When I run `b4 send --web-auth-new`, I get the following error:
-> 
-> 500 response from the endpoint: {"result": "error", "message": 
-> "i=duje.mihanovic@skole.hr;s=default is already authorized"}
-> 
-> After doing some short digging around b4 and korg documentation I couldn't 
-> find a way to revoke the old authorization and be able to use my new GPG key. 
-> Is there a way to do this?
+On Monday, July 29, 2024 11:19:44=E2=80=AFPM GMT+2 Konstantin Ryabitsev wro=
+te:
+> Your best bet is to define your new key as a different selector.
+> Add the following to your ~/.gitconfig:
+>=20
+>     [patatt]
+>     signingkey =3D openpgp:YOURNEWKEYID
+>     selector =3D 20240729
+>=20
+> For example, for me:
+>=20
+>     [patatt]
+>     signingkey =3D openpgp:E63EDCA9329DD07E
+>     selector =3D 20240729
+>=20
+> This should let you register your new key with the web endpoint. You can=
+=20
+make
+> selector anything else, including your keyid, it just needs to be defined=
+ so
+> it's not "default".
 
-Right, updating existing keys is currently not supported -- because I need to
-figure out how to do it sanely and securely. 
+Worked, thanks!
 
-Your best bet is to define your new key as a different selector.
-Add the following to your ~/.gitconfig:
+> Sorry for the lack of documentation on this.
 
-    [patatt]
-    signingkey = openpgp:YOURNEWKEYID
-    selector = 20240729
+I suppose I could send a patch to document this if I get around to writing=
+=20
+one?
 
-For example, for me:
+=2D-=20
+Duje
 
-    [patatt]
-    signingkey = openpgp:E63EDCA9329DD07E
-    selector = 20240729
 
-This should let you register your new key with the web endpoint. You can make
-selector anything else, including your keyid, it just needs to be defined so
-it's not "default".
 
-Sorry for the lack of documentation on this.
-
--K
