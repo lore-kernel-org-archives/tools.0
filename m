@@ -1,71 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CAA7153BE3
-	for <tools@linux.kernel.org>; Tue, 23 Jul 2024 14:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE5818D4AE
+	for <tools@linux.kernel.org>; Mon, 29 Jul 2024 21:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721746392; cv=none; b=RnPb+51TKRBJJ1Kwois+rUjDouUn/ifazb9cwgnQtYBZWA6/ZskC/Wiw5dHU7m3LMSA4OY9JNGDkatYTixCEOcbsF2OP4T3k+nhsjnPGitiYcuLa2GIYMkcz8sbHlsuj1KuJxi8bskG6YFAne4fOZCkDbXt59bllDi5wbADMhaY=
+	t=1722287297; cv=none; b=gF4iaH0wiqM+JAYy/spqe+j8C7HKLyYJRGupEAr5bQQzxTgxKm2UAOEGEv3BQQtA3ggmMu3r5VLeKK17sUNdoHdLRUmOzme698its/xga36kskcyxL88OcKhc3BWrxtapEMT2bMVTMBhygA0oRGUHy/GmPA9d1T/2WWFqHsg950=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721746392; c=relaxed/simple;
-	bh=iyaoYUJ8uAJO0wg5jDJpwoV2TjWEJyPc/yi5OmA9vsQ=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Y24E2ojm4dHl83PkwVk9dlAfYnZCk+qXHmcakMOIOIUXJwz4pfB994A5Or/94J1uYCQQnnchx3WEXQrTRjzUdoHx4kzv1DmD+MwLdr36gkdnWyW1bHJxU5u28LOZ1zd+deHNeZtPZcUfiqMFAu1no1r8jNtMeE6xGuCc+cJKaWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlGpeDXV; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlGpeDXV"
+	s=arc-20240116; t=1722287297; c=relaxed/simple;
+	bh=++Ic7VBhVgwqBCwcEq1IVlv6lsvHzE0wYH6l/9revfU=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lONDMo7MWS9fxQ/k6r9J60fEJj6AN5byi2z+ee1WTlhnWH/o/MalCGTCYBQWOR4auJVoVnr7M9YoiJG3xq1QMNOsiNYBD2+bhuQgu53VRw4RQLc4JVntN4V0gZJh7gEL2jr3AXjM6FhSlMks4nEXytQjPwHOw51x24JFqJBwg0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 Received: by smtp.kernel.org (Postfix)
-	id 1A30FC4AF0E; Tue, 23 Jul 2024 14:53:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56EBC4AF09;
-	Tue, 23 Jul 2024 14:53:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721746392;
-	bh=iyaoYUJ8uAJO0wg5jDJpwoV2TjWEJyPc/yi5OmA9vsQ=;
-	h=Date:From:To:Subject:From;
-	b=AlGpeDXVzbEKRRVXMaL3kHVyAvgHaOKOSyRQ7bwBUc7lxNLA8VfL06XwmfOdKOMFp
-	 kl0Q/GEqoSpe+GWO3bu+kcvBGzH1P4UZ/LAExS1UOgTGMRtHrUf29TXYh/KcuQQ9Mi
-	 PXygyKgPazHi4mBR3tnutvHV3zzgfzD7Ib2kZ2j0=
-Date: Tue, 23 Jul 2024 10:53:08 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@kernel.org, users@kernel.org
-Subject: b4 0.14.1 available
-Message-ID: <20240723-clever-dodo-of-finesse-04ba5a@lemur>
+	id D62EFC4AF09; Mon, 29 Jul 2024 21:08:16 +0000 (UTC)
+Received: from mx.skole.hr (mx2.hosting.skole.hr [161.53.165.186])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 5E084C32786
+	for <tools@kernel.org>; Mon, 29 Jul 2024 21:08:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 5E084C32786
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=skole.hr
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=skole.hr
+Received: from mx2.hosting.skole.hr (localhost.localdomain [127.0.0.1])
+	by mx.skole.hr (mx.skole.hr) with ESMTP id BFDF582D1F
+	for <tools@kernel.org>; Mon, 29 Jul 2024 23:08:02 +0200 (CEST)
+From: Duje =?utf-8?B?TWloYW5vdmnEhw==?= <duje.mihanovic@skole.hr>
+To: tools@kernel.org
+Subject: Can't reauthorize with endpoint using new GPG key
+Date: Mon, 29 Jul 2024 23:07:41 +0200
+Message-ID: <5827210.DvuYhMxLoT@radijator>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Autocrypt: addr=duje.mihanovic@skole.hr;
+ keydata=
+ mDMEZokhzhYJKwYBBAHaRw8BAQdAWJZ0hsI/ytTqHGFV8x6tzd5sB596cTeeDB4CQsTf+wC0KER
+ 1amUgTWloYW5vdmnEhyA8ZHVqZUBkdWplbWloYW5vdmljLnh5ej6ImQQTFgoAQRYhBG3/QdYN8x
+ S1t2umMK0xk1JFj60DBQJmiSHOAhsDBQkJZgGABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAA
+ AoJEK0xk1JFj60D1GABAJVSorZdMOlrp/oQtCSH/G53NE56x/JHA8VX+ZQBd/H3AP4/EcUf6eef
+ DUxVMh2bdkmuQKsVZGgOGiXpMksrVntWBrQpRHVqZSBNaWhhbm92acSHIDxkdWplLm1paGFub3Z
+ pY0Bza29sZS5ocj6ImQQTFgoAQRYhBG3/QdYN8xS1t2umMK0xk1JFj60DBQJmiSH/AhsDBQkJZg
+ GABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAAAoJEK0xk1JFj60Dlw8A/i4lPOL7NaYoYePDq
+ l8MaJaR9qoUi+D+HtD3t0Koi7ztAQCdizXbuqP3AVNxy5Gpb1ozgp9Xqh2MRcNmJCHA1YhWAbg4
+ BGaJIc4SCisGAQQBl1UBBQEBB0DEc9JeA55OlZfWKgvmRgw6a/EpBQ8mDl6nQTBmnd1XHAMBCAe
+ IfgQYFgoAJhYhBG3/QdYN8xS1t2umMK0xk1JFj60DBQJmiSHOAhsMBQkJZgGAAAoJEK0xk1JFj6
+ 0DG5MA/iuo4l2GDEZ1Zf+XaS//8FwdXDO9nHkfbV2MHjF4NZXwAQDroMzBdMcqVvc8GABFlTTgG
+ j7KrRDz2HwWNyF8ZeprAQ==
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-Hello:
+Hi,
 
-This is a minor bump release with a few fixes and minor feature improvements.
-The shortlog:
+After replacing my GPG key, I was unable to reflect a patch series with the 
+following error:
 
-	Joel Granados (1):
-		  Forward the smtpserveroption to the local command
+Error from endpoint: No matching key, please complete web auth first.
 
-	Junio C Hamano (1):
-		  Support "valueless truth" in configuration parsing
+When I run `b4 send --web-auth-new`, I get the following error:
 
-	Konstantin Ryabitsev (7):
-		  Exclude tests from dist files
-		  bump-version: fix path to the manpages
-		  shazam: force mboxrd mode for git-am
-		  Improve tests exclusion from the built packages
-		  When looking for the cover commit, restrict to current committer
-		  Up version to 0.14.1 and prepare release
-		  Fix version
+500 response from the endpoint: {"result": "error", "message": 
+"i=duje.mihanovic@skole.hr;s=default is already authorized"}
 
-My thanks to the following people who helped with this release, in reverse-log
-order:
+After doing some short digging around b4 and korg documentation I couldn't 
+find a way to revoke the old authorization and be able to use my new GPG key. 
+Is there a way to do this?
 
-- Joel Granados
-- Konrad Dybcio
-- Junio C Hamano
-- Niklas Cassel
-- Maxime Ripard
+Regards,
+-- 
+Duje
 
--K
+
+
