@@ -1,89 +1,126 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BFF60DCF
-	for <tools@linux.kernel.org>; Wed, 31 Jul 2024 19:47:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E5113C8F6
+	for <tools@linux.kernel.org>; Thu,  1 Aug 2024 07:38:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722455281; cv=none; b=bG7a7l+/th+RAY6KVWh8jEsYmt3Qeyup6kh69jT/u8FofNqGsvkzbdCyVNv7jEqn1viIZZR2qSS1l3n1bEA/4v22n/3t2bCaAsCXDHYEbP7I70gh9WJMxpuENL9aB+kp3aZXAwSkiYJP85SD2D8J8QKxtcSkoIigg18L/8+fLNI=
+	t=1722497910; cv=none; b=sntMZt8GaTUubJDoAZGpw60/UKKz7rBjruzDW+UKqBeOd9MujDg9XDBgExX0XRMaSPB5e1n875x9hbR76GUUs9UY1ESn2yPTA6Fneyt9ukkhCg9rt+r97z56LgdB358YCGJuzHq1khklz014PlrFH4k6qkqAoR7VMZ2g5q2+i0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722455281; c=relaxed/simple;
-	bh=SGnxCj03vrUmqW44QWHs8mkXNWnTGm4uZLAv/ZtTaHA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Gqgtp3JE/ETVbFRmmkXu4x9QhP0J1xCmfKtUMhP2DHP/8WSOqjc2Ddn8RM22vgXOuJi7Sz9Jr29QLxEQeeFcM64uPFg66X3jc6Fn+xpv09ofPM/aVPbdMAr8MwlMbobY5z8MD61pRLTSOW4tp3yStgqtkZCa0w8fZZ1Ri+qQsGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ffyWumok; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1722497910; c=relaxed/simple;
+	bh=02L+26pDm0WqHpoPiBaIQ+/HFcEsw1H36CbbepR/vjk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QbslOdjdRGGYlS3yC6JHzOb4J4+4KRQK1Iqv94ZzZ5bnnS/Xpl+nwn47htDTReSZrzpUtjf93Za47BjQdaN6lqmGCsX8qVuC8Q+t0p0Z0P3JS6JklLifMrqC0p1Elg6f6UE2VyYcANVkFVNeKhKGei3/Gdtr4TODg6jpECH6AEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RC6JwJ0o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ffyWumok"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-52efd855adbso9033220e87.2
-        for <tools@linux.kernel.org>; Wed, 31 Jul 2024 12:47:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722455278; x=1723060078; darn=linux.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T0ri+Ge08M+liIYYEgUFT09Fc/hYV0cT8Sde44AgiEw=;
-        b=ffyWumokITKw7qtuAb1IFTvEPg6plJaq/d7ydW6T7Ma59GGiqJiRcPQEr7fqX62Nft
-         aUz6wwvNNgRilZCUFHD3o0sta3qMN5tFYLUpLKQ3gAIfiinUlmm66/yL/JFDFuwRfrB2
-         FLk73weDY2JIqHOpMglyFf4ia052vocY+SfombAJJFT6376H5sof00EhXZeLIYu4N+CL
-         3Pe/ZwJI1llEsvcUi6+7+VaA/sjnTM6+DABysMRFFzongz66mDK0bSQoz6aDFuvZFHbj
-         9YPYdPrZUpfQwu4Ga03RtfJ8ouLBG8rGRQ08+9hFpba/X+WgVxjemV6ZXPSwEoNmrI6M
-         isXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722455278; x=1723060078;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T0ri+Ge08M+liIYYEgUFT09Fc/hYV0cT8Sde44AgiEw=;
-        b=Xpn84F4sSU61zbm/9XKxEYq38GVZ0VsvQa/nQxRj0thw2v/o9uGHHfM3qE8zrRt+2R
-         LHofljd6rAHvxGBoaQBbR+jXZsIcUt+a2J8fNTR/f8fd2tOM6vtIQx+7307REuA8fnWa
-         Ha7Pelx7Jhdmbu6vZUuFslyVZrh3Bg3bHjgSR6jsiP2DSgaYNOvzXInYRAxMIVw7xHIp
-         cI/wiDr5hwYeDdhauYL7SgOpeKUBmM0BTKDke75wqBVCekgJH6VDn9siXCPNMbgo8n0u
-         /eEtj/kVQHBnsyu7R8AwdIr87AyLwJ66YVAUuq0I7kCNOcC7BkzlQ+CmUVGNZR63IX0j
-         G/VA==
-X-Forwarded-Encrypted: i=1; AJvYcCXZCdGsbME3x6kBxZjpl8Tc6bBhOIFzXnffw/q2Dxm2LvNiNPwz9Pp7upZuUYsv+srvFt26+sUvuIRrk5E6BGbx3qVEfDxA
-X-Gm-Message-State: AOJu0YxLeBn/ctvmD7EQhChLLSr+cFPmXl64x0TbsQCaWXIX6CiHhqq9
-	2dr60R+zc7wg8G+V61RtkEySKB0OsaLHKuIMxpqMMmdiBIkE4rT2YrLO3Tch5WRRuhuYLtYyjQu
-	EdxTzk7s0mpXq4RcuhXC2CCOCSBA8K5158dpTgA==
-X-Google-Smtp-Source: AGHT+IGPWKUSorkkYrxo6rabt8pGcPpWNKfREiBvUmbYNXPalBZgHYjrYOlgzsI/J94nkz/aKPCHqgbdyQJ2gC0z+Io=
-X-Received: by 2002:ac2:5d52:0:b0:52c:dca7:c9bd with SMTP id
- 2adb3069b0e04-530b61b8b47mr41188e87.30.1722455278010; Wed, 31 Jul 2024
- 12:47:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RC6JwJ0o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54586C4AF09;
+	Thu,  1 Aug 2024 07:38:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722497910;
+	bh=02L+26pDm0WqHpoPiBaIQ+/HFcEsw1H36CbbepR/vjk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RC6JwJ0oEzEUINLi5rEerA/zxF1KlA4eaejB8T8bQ5LLkM15jpzKMJY8u1FRhwagZ
+	 9t2qYd97wUHGA1TWFYkX89zJmOdchtRcgGLIp3KTBQbxV9RxNokcWGA/4cnOrK6Jhp
+	 M/uvafQVhCxaGOxMYXifZxCEds6m+AbSFiTq55nDg5L2kBaMUefzY3pS4J5goKAEGi
+	 gJ6MDTiME/fr3Lm+GaVJImzw5xXjk1MDQGCzMh1+kForAFEpPWiaqQnGzJUsANKUKo
+	 WtvFaTd6itgTRn+d3oGwpxw1tJ0zsD9gCIokL8WPCCQjsIdedgf4Ihg73w1X/oETV0
+	 bHN8sU1fZI3lQ==
+Message-ID: <55069e1e-b2bb-491f-8a8c-16d3b19a2d89@kernel.org>
+Date: Thu, 1 Aug 2024 09:37:40 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <cover.1722439238.git.lukas@wunner.de> <70935696913de1e834ede287158a4ab03431b273.1722439238.git.lukas@wunner.de>
-In-Reply-To: <70935696913de1e834ede287158a4ab03431b273.1722439238.git.lukas@wunner.de>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 31 Jul 2024 21:47:46 +0200
-Message-ID: <CACRpkdZ-Zv8gFQc2L6UZo4Jw83Tv6YEwO+0ZW=pmwBSJ+VHdOQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird Beta
 Subject: Re: [PATCH ksmap 1/2] users: Clean up key ids and e-mail addresses
-To: Lukas Wunner <lukas@wunner.de>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, tools@linux.kernel.org, 
-	Ben Widawsky <bwidawsk@kernel.org>, "H. Peter Anvin" <hpa@zytor.com>, 
-	Matthieu Baerts <matttbe@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>, 
-	Maxime Ripard <mripard@kernel.org>, Paolo Abeni <pabeni@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-GB
+To: Lukas Wunner <lukas@wunner.de>,
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, Ben Widawsky <bwidawsk@kernel.org>,
+ "H. Peter Anvin" <hpa@zytor.com>, Linus Walleij <linus.walleij@linaro.org>,
+ Luis Chamberlain <mcgrof@kernel.org>, Maxime Ripard <mripard@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>
+References: <cover.1722439238.git.lukas@wunner.de>
+ <70935696913de1e834ede287158a4ab03431b273.1722439238.git.lukas@wunner.de>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <70935696913de1e834ede287158a4ab03431b273.1722439238.git.lukas@wunner.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 31, 2024 at 5:32=E2=80=AFPM Lukas Wunner <lukas@wunner.de> wrot=
-e:
+Hi Lukas,
 
+On 31/07/2024 17:31, Lukas Wunner wrote:
 > Several user entries contain outdated key ids or broken e-mail addresses
 > which make the map less useful than it could be:
+
 (...)
-> Linus Walleij's entry references key 746e7b29c50a0166, a 1024 bit DSA
-> key created in 2005.  The kernel keyring contains a 4096 bit RSA key
-> instead which was created in 2011.  Assume that the older key has been
-> abandoned and replace it with the newer one.
 
-That's correct, I think I "bumped" they old key but I don't know what
-the semantic effect of that really is, I guess it just creates a new key
-and signs it with the old key.
+> Matthieu Baerts' entry similarly references key 3eacee6acfd74ede, a 2048
+> bit RSA key created 2009, whereas the kernel keyring contains a 4096 bit
+> RSA key created 2015.  Replace with the newer one.
 
-Yours,
-Linus Walleij
+(...)
+
+> diff --git a/users/matttbe.yaml b/users/matttbe.yaml
+> index 5ccf4d9..3fb7385 100644
+> --- a/users/matttbe.yaml
+> +++ b/users/matttbe.yaml
+> @@ -1,6 +1,6 @@
+>  name: 'Matthieu Baerts'
+>  email: 'matttbe@kernel.org'
+> -key: 'CFD74EDE'
+> +key: 'F6B7824F4269A073'
+That's correct, thank you for the fix!
+
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
+
