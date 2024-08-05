@@ -1,126 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E5113C8F6
-	for <tools@linux.kernel.org>; Thu,  1 Aug 2024 07:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531A716C87B
+	for <tools@linux.kernel.org>; Mon,  5 Aug 2024 23:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722497910; cv=none; b=sntMZt8GaTUubJDoAZGpw60/UKKz7rBjruzDW+UKqBeOd9MujDg9XDBgExX0XRMaSPB5e1n875x9hbR76GUUs9UY1ESn2yPTA6Fneyt9ukkhCg9rt+r97z56LgdB358YCGJuzHq1khklz014PlrFH4k6qkqAoR7VMZ2g5q2+i0I=
+	t=1722902219; cv=none; b=cGFPB2IwwuYJ6LPKUJVmWT8/jBwvU6xhsoyxLc/NL8PW07m9MZWzfLRhtPean1NPGx6ug4trRYPO2bJEOhXMliY4WE4m4d2FgH1SV9pJkjWpT0SzdB0WEYSkWVzRa4KIyBCfL6oDid83klRSMWRGI4txH3l0MyjrvQ9giEQMqGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722497910; c=relaxed/simple;
-	bh=02L+26pDm0WqHpoPiBaIQ+/HFcEsw1H36CbbepR/vjk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QbslOdjdRGGYlS3yC6JHzOb4J4+4KRQK1Iqv94ZzZ5bnnS/Xpl+nwn47htDTReSZrzpUtjf93Za47BjQdaN6lqmGCsX8qVuC8Q+t0p0Z0P3JS6JklLifMrqC0p1Elg6f6UE2VyYcANVkFVNeKhKGei3/Gdtr4TODg6jpECH6AEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RC6JwJ0o; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1722902219; c=relaxed/simple;
+	bh=l95SJIVaPCY47tJFX8X6AsS4lqdnPXep8SsFZ7bHidk=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=tvvP8yOmkckmAzzCQSldJQF1Sze6eji8pMoPaqFlW/jAiF89ORCLUcR6xatj6XFg4fCyA5AUkvvv2b8TKT2A025KHqN6elBlEolc6Guz3yniseq0tJPJYwGxZ0JxIjpb9R3B4XDdw/d3CpEGlcRSlEvKUgZ9SeJGTfbhUDbA4ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=YcEKxJDt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RC6JwJ0o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54586C4AF09;
-	Thu,  1 Aug 2024 07:38:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722497910;
-	bh=02L+26pDm0WqHpoPiBaIQ+/HFcEsw1H36CbbepR/vjk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RC6JwJ0oEzEUINLi5rEerA/zxF1KlA4eaejB8T8bQ5LLkM15jpzKMJY8u1FRhwagZ
-	 9t2qYd97wUHGA1TWFYkX89zJmOdchtRcgGLIp3KTBQbxV9RxNokcWGA/4cnOrK6Jhp
-	 M/uvafQVhCxaGOxMYXifZxCEds6m+AbSFiTq55nDg5L2kBaMUefzY3pS4J5goKAEGi
-	 gJ6MDTiME/fr3Lm+GaVJImzw5xXjk1MDQGCzMh1+kForAFEpPWiaqQnGzJUsANKUKo
-	 WtvFaTd6itgTRn+d3oGwpxw1tJ0zsD9gCIokL8WPCCQjsIdedgf4Ihg73w1X/oETV0
-	 bHN8sU1fZI3lQ==
-Message-ID: <55069e1e-b2bb-491f-8a8c-16d3b19a2d89@kernel.org>
-Date: Thu, 1 Aug 2024 09:37:40 +0200
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="YcEKxJDt"
+Received: by smtp.kernel.org (Postfix)
+	id D6F9FC4AF0B; Mon,  5 Aug 2024 23:56:58 +0000 (UTC)
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 80A8EC32782
+	for <tools@kernel.org>; Mon,  5 Aug 2024 23:56:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 80A8EC32782
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1fd66cddd4dso2180535ad.2
+        for <tools@kernel.org>; Mon, 05 Aug 2024 16:56:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1722902215; x=1723507015; darn=kernel.org;
+        h=mime-version:message-id:date:subject:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nNMnCFaIUOjhChAiUv1sN3FrfoWTL1t3z1N7bZayuhM=;
+        b=YcEKxJDt3PIh2s4Whw1vhrRV8C+IEi4INuzSkcqS1Z0CMLL+5WuhtEvQghrbvKiyXj
+         Z3/t/qlncPDOm+gmshpk0SUOabhH4IBCjwLBqmGIB7P8UgBLbfQBzj39IVItKC7PU/cU
+         cgl5LbGUaVBBJgeoKCJGde/cu4HEM6f38WkzRHti4gq4wz2cm2BLv1Nj4czBGXxhYm+s
+         DYDqy+mEMdycUoR5Xb3pYnQD6gU0E/XfEhyF3U4k0//3gTHrVakqCTBYx93vTr0zJfz5
+         yYepExTuZh8StxyGYepMRKfr7QPgXq3Mc7S0Qxjp6UvPLgIkStVD05Gn+J4boWh5dDsi
+         iNwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722902215; x=1723507015;
+        h=mime-version:message-id:date:subject:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nNMnCFaIUOjhChAiUv1sN3FrfoWTL1t3z1N7bZayuhM=;
+        b=p+vkn1f2ZSSHnW+fWmLfqtaUHmE4g4oWL9/KypFflZeiNVDHDfoQgHrstGTwrxo26l
+         mxmDOcBlI+oJREOcEzZJU6wyY6OJUF/5GIN36LafMmSyx203lL2uTFRMp1kfJKzsg0I7
+         eON/+mS30Zo+0Wd/6ClALl+0o6MllhGyW/T0N1RNCy9xHESqve0hAv/BTjueRg6GNUJM
+         3O7RW0oeE1fskM2Ex4pmY3YuJ8znGjT6Pig8hyU0WKjsKPlPaFKU9mmRCH9Ppbff8zXn
+         c35ZjvDVSEQKShaUatBfw7oKdWgesldlZnThb0GxuKxl6aD2Yrcd+s0Uqkkc7WvkjbZX
+         sbqQ==
+X-Gm-Message-State: AOJu0Yy1xNbZWKDJ8V1wmg/miqfJGvY9SNhVRmWYPyJSBGDV16ZT8JEZ
+	HmTXq8Tt6Tl7PU2rn4wesSdwYQJ66OEpU3DdjskADKA8C9k9JyGeFdtSMuuQhJt8Hi/Qq53cOtl
+	FQBg=
+X-Google-Smtp-Source: AGHT+IF6UthK1dtEcQS7WnNoAcZme+YO+7QKYh/81nab7zQ60OOCvmTFZ20Aas8N8vq0q2VImMn0xg==
+X-Received: by 2002:a17:902:e743:b0:1ff:5150:911d with SMTP id d9443c01a7336-1ff574a2318mr181069275ad.60.1722902215415;
+        Mon, 05 Aug 2024 16:56:55 -0700 (PDT)
+Received: from localhost ([71.212.170.185])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff592b54bdsm74173425ad.293.2024.08.05.16.56.55
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Aug 2024 16:56:55 -0700 (PDT)
+From: Kevin Hilman <khilman@baylibre.com>
+To: tools@kernel.org
+Subject: b4: message-id from deps added to cc list?
+Date: Mon, 05 Aug 2024 16:56:54 -0700
+Message-ID: <7hh6by34mx.fsf@baylibre.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH ksmap 1/2] users: Clean up key ids and e-mail addresses
-Content-Language: en-GB
-To: Lukas Wunner <lukas@wunner.de>,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, Ben Widawsky <bwidawsk@kernel.org>,
- "H. Peter Anvin" <hpa@zytor.com>, Linus Walleij <linus.walleij@linaro.org>,
- Luis Chamberlain <mcgrof@kernel.org>, Maxime Ripard <mripard@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>
-References: <cover.1722439238.git.lukas@wunner.de>
- <70935696913de1e834ede287158a4ab03431b273.1722439238.git.lukas@wunner.de>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <70935696913de1e834ede287158a4ab03431b273.1722439238.git.lukas@wunner.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Lukas,
+Hello,
 
-On 31/07/2024 17:31, Lukas Wunner wrote:
-> Several user entries contain outdated key ids or broken e-mail addresses
-> which make the map less useful than it could be:
+I've been happily using b4 for awhile to collect and apply patches
+locally, but finally starting using it to manage & send patches.
 
-(...)
+First, thank you for all the work on b4.  It's a major improvment to my
+workflow!
 
-> Matthieu Baerts' entry similarly references key 3eacee6acfd74ede, a 2048
-> bit RSA key created 2009, whereas the kernel keyring contains a 4096 bit
-> RSA key created 2015.  Replace with the newer one.
+I'm using b4 from the stable-0.14.y branch, and I noticed one pecuilar
+thing on the series I just sent[1], and that is the message-id I put in
+the deps (using `b4 prep --edit-deps`) correctly showed up as
+prerequisite-message-id, but for some reason, it also ended up in the Cc
+list, leading to bounces for all mails in the thread.
 
-(...)
+I double-checked managed cover letter (using `b4 prep --edit-cover`) and
+it is definitely *not* listed as a Cc.
 
-> diff --git a/users/matttbe.yaml b/users/matttbe.yaml
-> index 5ccf4d9..3fb7385 100644
-> --- a/users/matttbe.yaml
-> +++ b/users/matttbe.yaml
-> @@ -1,6 +1,6 @@
->  name: 'Matthieu Baerts'
->  email: 'matttbe@kernel.org'
-> -key: 'CFD74EDE'
-> +key: 'F6B7824F4269A073'
-That's correct, thank you for the fix!
+Looking back, I do see it in the Cc list when I `b4 send --dry-run` but
+I didn't notice it before sending. :(
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
+How is that getting into the cc list?  Is it grabbing this part of the
+cover letter:
 
+> This series depends on the support for the new TI SCI APIs here:
+> https://lore.kernel.org/r/20240801195422.2296347-1-msp@baylibre.com
+
+and assuming that's an email address and automatically adding it to the
+cc list?
+
+Thanks,
+
+Kevin
+
+[1] https://lore.kernel.org/linux-pm/20240805-lpm-v6-10-constraints-pmdomain-v1-0-d186b68ded4c@baylibre.com
