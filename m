@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D401F20013E
-	for <tools@linux.kernel.org>; Wed,  7 Aug 2024 13:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA95F2A1BF
+	for <tools@linux.kernel.org>; Wed,  7 Aug 2024 14:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723038481; cv=none; b=XgIGDeZ3VvUV+CONshwXgTepnf4YQzhMxSF1kHzdLrRgrNGxNwvaDU3MS8fdokDb8n6rQEfe30s6fG1L37gYJ7lJmVkpkUNvgUh4Q4QUjXn6ABHYHhkMVKhUef4V+wHYIkkCrnFI8BvviGbfDughMTGDhCg1xxUuqJsk7mAQmF8=
+	t=1723040522; cv=none; b=mVTlDOC2C+GDrWceTo98NgEgqa95vaXIIrzd5wyItFz3EIoxEjrpylFa4+HlHU1+fqRudEyfYlY6V2Z327O2jq14RUwHAbNCQerPJSoC7T4Sh3VYHZDv2TuBPb51G22Rh5BW1ozl/tTJs2N3cQlzMDGrCOXFAMCV800rSNqiIAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723038481; c=relaxed/simple;
-	bh=FirciVTp/gV9Lkzc9o6mP/9AY2+7GvXcDXPTwlewtag=;
+	s=arc-20240116; t=1723040522; c=relaxed/simple;
+	bh=PUqB2tWTJZbYpVUFXvYClzksgW2SMT3bmQWhd9H34WQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bueyO+yaiHcS4gPWowjHT8hrADuL3NNfPgva+YnmOFbbiuWIk1JgxJmwXRXfy2yb7GML43oiR2Ysuj1/nSWSjoaflQNXJLBtIhak1bAxLqv3in5taIp/weVA+81tBw/Mvff0R5idIrQc4WwUQaHgiIojHy4CE62E11r3BNn8zTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDMAn0t9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=V3l86SYibUjodUcYk7WeMNn1MT1hupVUyfGsAkeLHDHyrtCAGZlA5rVKGzjH0napvzfyhx3f7ax7TK72G+fL8VRNpkY5IlEc+MK04hVs9haQfDD0omHEX6BpGBpIaO8QiisenqDToW3R46YXCYUSqmJRX4K6aceqj3ZwvxcOFQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vt5Pbf5v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDMAn0t9"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vt5Pbf5v"
 Received: by smtp.kernel.org (Postfix)
-	id 6F383C32782; Wed,  7 Aug 2024 13:48:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F56C4AF0B;
-	Wed,  7 Aug 2024 13:48:00 +0000 (UTC)
+	id 6AD13C4AF0D; Wed,  7 Aug 2024 14:22:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DBA6C32781;
+	Wed,  7 Aug 2024 14:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723038480;
-	bh=FirciVTp/gV9Lkzc9o6mP/9AY2+7GvXcDXPTwlewtag=;
+	s=korg; t=1723040522;
+	bh=PUqB2tWTJZbYpVUFXvYClzksgW2SMT3bmQWhd9H34WQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HDMAn0t9L4JO8ufzWBDKPYVLXp8l5vMCHD9FPMDa8H1mJz9VwCtEm0AK/XFej0Q/7
-	 QBp9WFylY6OayQ3TWCKyilkQI9cMuVIf1q56V/+cu/pSnMJFqavwbgxIfpw90NSUJ+
-	 CwZzsAdZC63b9XPgZq5L/AsDV0ynJTcrS4X2/DnA=
-Date: Wed, 7 Aug 2024 09:47:56 -0400
+	b=Vt5Pbf5vRvMLc9OtJWwWZAc9Ft0xXVqoi+uDzlkSX38c6xUF5oJ7JZ6JOgK1SWnQL
+	 i1HpSn1LJuh01pI15bRRAjQIsTzEFSa+vcWF9nGKD3KUD/r0FwvmLiAaNmRfVItu/q
+	 gxcUnRGN/KIDdSNvYO9AcKy/zdlbYyHwO7dhB2Jk=
+Date: Wed, 7 Aug 2024 10:22:01 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Jacob Keller <jacob.e.keller@intel.com>
+To: Kevin Hilman <khilman@baylibre.com>
 Cc: tools@kernel.org
-Subject: Re: b4 send support for email alias file
-Message-ID: <20240807-amorphous-vague-markhor-bb1a1d@lemur>
-References: <a6a4755d-85a6-4bc8-83f4-db374c4f3a03@intel.com>
+Subject: Re: b4: message-id from deps added to cc list?
+Message-ID: <20240807-voracious-jerboa-of-finesse-d7242f@lemur>
+References: <7hh6by34mx.fsf@baylibre.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,26 +40,13 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a6a4755d-85a6-4bc8-83f4-db374c4f3a03@intel.com>
+In-Reply-To: <7hh6by34mx.fsf@baylibre.com>
 
-On Tue, Aug 06, 2024 at 02:19:57PM GMT, Jacob Keller wrote:
-> I have recently been trying to switch to using b4 as my tool for sending
-> patch sets. I previously used git send-email. send-email has support for
-> an email alias file which allows specifying shorthand nicknames for
-> emails and automatically translating those aliases into the full name
-> and email address.
+On Mon, Aug 05, 2024 at 04:56:54PM GMT, Kevin Hilman wrote:
+> I'm using b4 from the stable-0.14.y branch, and I noticed one pecuilar
+> thing on the series I just sent[1], and that is the message-id I put in
+> the deps (using `b4 prep --edit-deps`) correctly showed up as
+> prerequisite-message-id, but for some reason, it also ended up in the Cc
+> list, leading to bounces for all mails in the thread.
 
-Right, this has come up several times in the past -- the TLDR is that it's not
-as straightforward as it seems at first:
-
-https://lore.kernel.org/tools/20231212-illustrious-lion-of-psychology-d85d9d@meerkat/
-
-> Would it be possible to have b4 either handle git's email alias file? Or
-> perhaps have its own file/config options?
-
-I have a counter-offer -- suggest on the git list that the --dump-aliases
-switch should also have a way to provide destinations, not just aliases
-themselves. Then we won't need to support 6 different alias file formats and
-can just rely on git doing the translation. :)
-
--K
+bugbot assign to me
