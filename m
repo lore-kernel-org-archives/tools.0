@@ -1,70 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407E61714D0
-	for <tools@linux.kernel.org>; Thu, 15 Aug 2024 13:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995AC1714D0
+	for <tools@linux.kernel.org>; Thu, 15 Aug 2024 13:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729007; cv=none; b=HAe+BBokLJDGdHQX/J1PXSx8lnpOeNzZyhhKJeEvzChprPq9kayqTMmqoCNTlP7DgELqyyWcd+e88eBaw+Ukr93Cab5e6hP6E88lJM6AQHzDplD0cxAXLnOjDcZRX649uO3k4fsOAqD2dcwTzbIOlQrEs0Hn5ZdVZ0BFFiyOgro=
+	t=1723729008; cv=none; b=hIzvyqeMxf6aGc6hvP8TySPuOaPgXs1eT6hPYmZ7Ym/cNYpWmbQ5b7JU+srroKYcaacKu3503BhjazpDw6q+aEbdQ+CteoniSKasMZIPUbK9TwPNYkARWO57ET3yiHJUOeTi8NEVwBAdzE+YcDJEOIgMEL690alZMmEE3nVVgEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729007; c=relaxed/simple;
-	bh=nzP8XDAbIq19Qs/GIeg1VyOp9lU05l3QAv0sLECtoZo=;
+	s=arc-20240116; t=1723729008; c=relaxed/simple;
+	bh=2GmDA/gpIrJ+c+E4keM+XwVSuB6I4bxLO+cBO3pELDg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XsJbNPgQonoNDRjicV8ryVMGNb8Dw2oqQgAEwZowSxChmRT+AW1cXbclYfEfR3qNFsEsCAU3nVhDDpc+Iy6O/rzZwYlSCl2U6zvm5JDEW9hWSqyoV5Cy/X+W/0g6VuxQMgwt5GlQHcgEcBz4UW3wFKHbxxuXS2voT1vZ8A3Zi9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fcu1a3T4; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=mfS/IvCjnFI5Uzk3AiiSLQpDdSa7tp7zSlMkkq6+TTqFjuuCquPTMhgM1tKxSeOurG73/To7fECOGLwECzL8+5EmquP3wDWEqPKdiv8YtFkfDi3BG/IdwMliYMDn4jmplRwRB4hYTHRj1WHxbhiJAHQ5+HbNmjGQHsxcVvehTdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HUc8T5NM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fcu1a3T4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HUc8T5NM"
 Received: by smtp.kernel.org (Postfix)
-	id 2EC4DC4AF0C; Thu, 15 Aug 2024 13:36:47 +0000 (UTC)
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	id 88519C4AF0A; Thu, 15 Aug 2024 13:36:48 +0000 (UTC)
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 1A50FC4AF0F
-	for <tools@kernel.org>; Thu, 15 Aug 2024 13:36:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 1A50FC4AF0F
+	by smtp.kernel.org (Postfix) with ESMTPS id 95861C4AF0D
+	for <tools@kernel.org>; Thu, 15 Aug 2024 13:36:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 95861C4AF0D
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a7ac469e4c4so160206466b.0
-        for <tools@kernel.org>; Thu, 15 Aug 2024 06:36:45 -0700 (PDT)
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5a1c49632deso1118769a12.2
+        for <tools@kernel.org>; Thu, 15 Aug 2024 06:36:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723729004; x=1724333804; darn=kernel.org;
+        d=linaro.org; s=google; t=1723729006; x=1724333806; darn=kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cLUaVSKinf1PflIJAUOBsd1X3XVX5UikXZUGhf7Ntkg=;
-        b=fcu1a3T4PHFulVePLt+vPKXzBtb6EMW16ErHs2P9FgN8rwWDL52/RXdCpwnL8uJYbS
-         2uriNTUtN1mvtvC0DnshSBws0jIIOQx4x5kn6li7Nm4/OLivnrYrtvdEFpZObL2IM5zF
-         MoFo5igujSCr61BST4VvG4DeM4zg4MikeSJmxahMKNLajC0a3RFfij9ZQhAX75eBYFE/
-         5eRCdz10bnGv6JNqmLpFCa3yOVLXU/FApSaO7ifxXFGVA+3be+Oc616uLKiOSKso3NZi
-         FU9daMchmakuaPdfgoNChlfuZb2NxjoCyCPf04s1lYtJRT4MwaFhuSfZLSeDS2SaOVGv
-         AlRw==
+        bh=HthjNwlDydQWPfCjmmNwaH4OPUWdga8QPZJGk2thjx4=;
+        b=HUc8T5NMK+2igbo1rGJeyfA+Gx0pK6xvze1yYNgzglCl1z2g0fY+wbbTjVTyvOv0yb
+         mwutTZPZwfS+FTQYgFQGH2Q/1Ltt250QmHd6mFRb5/AaEAO+MQwas4ZTGySEDVPhme2V
+         GPNvnY+BRev4UuyHCoExRgqhDWgffPo/yqRrPoGx1XbIQr+bY1gjSp9bgQyrm0zBN5FM
+         kVYqJC4wZmi8tu/bVYI7avZXYtwUCXztB0V7rcwu9vLsUPd1qU/uORzQp95jCLdYh84R
+         mHb3YAfGE1Fh7ithiTsrOjppZduf6/ko9v8t7uMF+6jQd7CAaCnjrQwxQBtPKdt1S9Ol
+         RnAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723729004; x=1724333804;
+        d=1e100.net; s=20230601; t=1723729006; x=1724333806;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cLUaVSKinf1PflIJAUOBsd1X3XVX5UikXZUGhf7Ntkg=;
-        b=QRUogHl15TNFoc6mB6EtKF/OiuCWtJOY1Z0g46QHoEl/vzbVs/ama7tiIw6HbplW2o
-         OpgPCIdGThjLzVdP54UXH6LOT1oy0GF6fhB1DrgNml8SZJcdhmGtHw2hsVEM42hv6ZV1
-         jxq5mUsn4MI9RcH7PZuwEIXBVbcZ/52hRj+rTXEZht55maUDf7k79JzPbioS9dCZssf0
-         U1F6eWcJjAJdj5ARRRqfZ7TLignaA7O7UUqN+Z2271cwoiFKJLhAXyhPKK8GcEj2suVg
-         PLTqV4UjdJ8Kwr2mh2mEqp48Le6wAfQahQi0+8OpP0sOmqcX4eiggExB/Y8Pjcf0X5gY
-         yb6A==
-X-Gm-Message-State: AOJu0Yzpybm1Kwa4JorrobVgHIeKvTj6gIXKsB7cind7NY4Vu3NAevhi
-	6zkO9QNvIsYoHyZfA/CcQM3/VSifQISS1X2Xqkaf9OIcjFCMHBjH4HKQAWIXry0abBrs4qMIuvU
-	7W/4=
-X-Google-Smtp-Source: AGHT+IHo4gKyALi8rUbZdBEUr1laqzfN5tVM6O9bDQ+V3dOD7cClidn5uw/5cu13hlqY2U95DaFEig==
-X-Received: by 2002:a17:907:3f9f:b0:a6f:996f:23ea with SMTP id a640c23a62f3a-a837cc95f01mr294274366b.15.1723729004414;
-        Thu, 15 Aug 2024 06:36:44 -0700 (PDT)
+        bh=HthjNwlDydQWPfCjmmNwaH4OPUWdga8QPZJGk2thjx4=;
+        b=UO2nyu3YBK3b4TFrgZZ6GAq4SGOXQMjtOgiFd9mwzI5JQB8c1dOyScrQGGmOg2TLeE
+         foP9bi4k7GZ7y1JwWD6mBnpG+L5IoMVnIviYqZ9ccjpyXTpDW8SPuFKLDsrVm433iMjC
+         OdW8/n0i8JosIAPQr3HCKgxCfgIrVFuGnBSk/GjNb1Rv3P4h4mrwvQPs2YygqDSIGjoJ
+         VhdmySmg0HBAqJql6sizZJBPqcuQ+4bJQroyRKQRdffxza40w2tEKlcP8fxP+oxOiIUe
+         N0oSH7sYxWpSJYL+HuChL70X+4KlvIxzm2niNsCuzzKhXzZCyNyp3oy1DOaGrNjRPt3Z
+         RYXw==
+X-Gm-Message-State: AOJu0YyuG/LOg43nChkHZWnVPba5rkbDDci0HXGe2eUTPLv/7WDp//Ep
+	vQKt2eKKla1FWpjjT6m2VyYguDMbAaLodDj7tAV7Hvahp4hb37HgjSy358lqHLOKvl75rNNINXu
+	mk1E=
+X-Google-Smtp-Source: AGHT+IEx65sjX98tjrDblKFIAULKiiKTBz7AI4UcIyaVkqhaZw0KFjnhKXochKMHi3UpVCaw+rXNAA==
+X-Received: by 2002:a17:906:6a1e:b0:a7a:bbbb:623d with SMTP id a640c23a62f3a-a83670c0032mr407353966b.66.1723729005631;
+        Thu, 15 Aug 2024 06:36:45 -0700 (PDT)
 Received: from [127.0.1.1] (adsl-122.37.6.3.tellas.gr. [37.6.3.122])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a838396d375sm102979966b.221.2024.08.15.06.36.43
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a838396d375sm102979966b.221.2024.08.15.06.36.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 06:36:44 -0700 (PDT)
+        Thu, 15 Aug 2024 06:36:45 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 15 Aug 2024 16:36:27 +0300
-Subject: [PATCH b4 1/3] ez: do not interpret 'prep-perpatch-check-cmd' str
- as list of chars
+Date: Thu, 15 Aug 2024 16:36:28 +0300
+Subject: [PATCH b4 2/3] ez: verify default checkpatch.pl args before
+ running them
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -73,96 +73,70 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240815-extend-checkpatch-v1-1-ab7f654be699@linaro.org>
+Message-Id: <20240815-extend-checkpatch-v1-2-ab7f654be699@linaro.org>
 References: <20240815-extend-checkpatch-v1-0-ab7f654be699@linaro.org>
 In-Reply-To: <20240815-extend-checkpatch-v1-0-ab7f654be699@linaro.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 X-Mailer: b4 0.15-dev-49d31
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1184;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1690;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=nzP8XDAbIq19Qs/GIeg1VyOp9lU05l3QAv0sLECtoZo=;
+ bh=2GmDA/gpIrJ+c+E4keM+XwVSuB6I4bxLO+cBO3pELDg=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm12Z1JxWmRHbWtzM3BEUkF4YXAvVkNzSjd2a1ZqClRwVHUrMVM2VnNkMDVQc0lF
- bGFKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnI0RWFnQUt
- DUkIzS2Nkd2YzNEowTkdwRUFDZDdYMmVadURlZERmdzQ1NXJGaFA4ZnY5aTNWZjhvdXR6czV1eA
- pNazVtd2RmY3k0bi9ud1A0OVROdFJtbXFTa0oxQVdoVUxQTXdneW5ocEs5dDFTZ2hVOHBHZ2NnY
- y96QWRCQ1FNCmlKRlk4S0Y1aXB6Nm1HRUZaN2xkUEdvVG4xN25pVGZkcDVRNHJxRDdVRlNqeDBC
- aENFMDJ4WENURzhqL3JlUlYKSUMwNVZWa0N6UTg5dVZCbEtSNmdmRmZYTXRMOVpuSEg4Y0dmMWF
- 6ckY2VEt6MzkwS01kMmtoNGNNREZYLzRhTApoS3VjWlFGMjlnT2RieDR2SS9vcUQwNmZ4ZTlsSW
- ZPM28xMlA5K1E2OVE3c3JpYWNmeVg0djU0UkFWMFNGd3RQCmV5b0VKTVRxUUZ0cDhzcnpKSjJLN
- UxIbm5maVBCTzJZVGYzQzNTWmpMM3lub0tIcUNuellLeVhydFFUK3IxcjkKa2ZCL3dwcmV5YkhK
- b0Q0bHdHU0lhU0NjZzZBQ0g1L2hqQVozdkIxWFJ0dlRCQmo4bm8yQ01Gc1kwRjZVWFlLOQpzTm1
- pS1JoUEhpQmd3aE5NYkVBUW9HNWp6QUxNaEM1Ny9GM3JHK3VrVVovd0Jzdk81L05lWk9aeVJLL0
- 0xOWdiClh1QmhyMmhVRUdQWkE1Qi82eGZwUTRLS1BMTU0wRzViV2wzbnk5dGZCME1YTE1XS3Nqd
- FUwVDgveGxzakRvbVUKRUVwNEoza1BLZnRPM0MxaVFpemp4bVE3bE1kSWV6SStjWTc3ZXhQdG1C
- b1B1K2Z3clNlSTlQdWdIbGdvTVJHaQpPYXRmZ3NFOTREcC9tNk53OVZQZUhVODhRVGR0UHdEQkJ
- TeVg4dkpoUGVmV1dpa0tSVDlTdkRSMTgrOUxoRFZWCjRIQW5xUT09Cj0yZkNWCi0tLS0tRU5EIF
+ 25RQWNzbVlnQm12Z1JxMHZkY1VWdmlubEtPREZvcHlWbWpaU0FECldkbk5ySXg4VjdIR28rbWtx
+ RkNKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnI0RWFnQUt
+ DUkIzS2Nkd2YzNEowSERNRC85ZHVnbGt6M2lpR2ViSDQ1TnkreWNBVkFubWJ0WHNRN3ZIUE1Ceg
+ pUdUVNd1ZVZ2MzU3JhZ0tIa2xYcitRQnM3OUpEaVpIUHRuR0N3SklSY21TbnNOSmZXODNzNS83c
+ zZ5Y1NQamVyCjhnY1dtdjNENjRIMVRyNzZSbmxQTHczZ2paWlo4K2FZMThsd0tid0tXc0hrRkRT
+ NkFYbDBLR1RnbmJtQ0JranQKdk9Hc1pGaTlDT2ZWbjVHZG9jNnBlQ0J0NkJZWTBnYXFjMWoxV3F
+ 4UklwK3dOV29WdHA4bVpZSXRWYmhqdm1sdwo4UEJiYnlTVEwzZ2RCT2MzaHh2SldsTVF5NEtLRl
+ dObWVRdnd1VjFMMTgremdxRUNaVjJXRzcrVU0zQ1BGWlVrCmlLL3hjVDNINTlleEJEcEt4T0VGe
+ TRDTUVHRmdrYTIrcmhzUkh3OFVrR3NZeFQ1a2MxeW5PclNTQUNJVjdpeTUKS1luSmgwSitHSHho
+ aHdvM0hsNE51UlljM1lVTlhKWHQzZnphQU43S1JWZEphaVpVa2JJUkpDTTFORTJveXllKwpaUHF
+ 1eCsvVjczS3RlK1daeWJYQjhMa1IzR2d5eVQ5aUlydU5UdzVZTmdmREZPMmQ4bDM5M0p3Mm5EZ0
+ 1zQ2dyCnBqUmtncTFVcTJCWklOVVFGMVlNTGVpMElhRTRHcGQvUlNSRjhGdlZwYldvSXZPSFRIb
+ kFuU0dpTzVuRVV5KzIKRjdCMHVuazdHVityak5ZNlI0b2FMTEZLb3pXVi9XS0FEb3c5UldYMG9P
+ UkxDL0xqWko5cG9qdFkyYW5pN0NEUApXN3hBblJ2NzB0cGRPSUlHUW9McUdHblB3NlJiYkFTMWJ
+ PQ1NMcWVCZm0xcmpnNWw0ZnJFV2IvVkhFaHc0UXJyCkxTRSsyUT09Cj1WNUVBCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
 
-config.get('prep-perpatch-check-cmd') returns a string, which in python
-is also a list of chars, which in python is also a list of str. This
-leads to a moderately funny failure where b4 tries to execute each
-character as a separate command:
-
-  $ b4 prep --check
-  Checking patches using:
-    s
-    c
-    r
-    i
-    p
-    t
-    s
-    /
-    c
-    h
-    e
-    c
-    k
-    p
-    a
-    t
-    c
-    h
-    .
-    p
-    l
-
-    -
-    q
-
-    -
-    -
-    t
-    e
-    r
-    s
-    e
-
-... and so on.
+For projects which use a scripts/checkpatch.pl workflow like the kernel
+but do not sync its source [ever/frequently], like QEMU, some arguments
+might not be available. This leads to checkpatch not working if it is
+automagically detected without the user's knowledge leading to hard to
+diagnose errors.
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- src/b4/ez.py | 2 ++
- 1 file changed, 2 insertions(+)
+ src/b4/ez.py | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/src/b4/ez.py b/src/b4/ez.py
-index 22a2cdf..20fbd76 100644
+index 20fbd76..013a63c 100644
 --- a/src/b4/ez.py
 +++ b/src/b4/ez.py
-@@ -1666,6 +1666,8 @@ def get_check_cmds() -> Tuple[List[str], List[str]]:
-     scmds = list()
-     if config.get('prep-perpatch-check-cmd'):
-         ppcmds = config.get('prep-perpatch-check-cmd')
-+        if isinstance(ppcmds, str):
-+            ppcmds = [ppcmds]
-     else:
-         # Use recommended checkpatch defaults if we find checkpatch
-         topdir = b4.git_get_toplevel()
+@@ -1674,7 +1674,17 @@ def get_check_cmds() -> Tuple[List[str], List[str]]:
+         if topdir:
+             checkpatch = os.path.join(topdir, 'scripts', 'checkpatch.pl')
+             if os.access(checkpatch, os.X_OK):
+-                ppcmds = [f'{checkpatch} -q --terse --no-summary --mailback --showfile']
++                ecode, help_out, err = b4._run_command([checkpatch, "-h"], stdin=None, rundir=topdir)
++                help_out = help_out.decode(errors='replace').strip() if help_out else ""
++                if ecode == 0:
++                    ppcmds = f'{checkpatch}'
++                    for arg in ["q", "-terse", "-no-summary", "-mailback", "-showfile"]:
++                        if ("-" + arg + " ") in help_out:
++                            ppcmds += " " + "-" + arg
++                    ppcmds += " -"
++                    ppcmds = [ppcmds]
++                else:
++                    ppcmds = [f'{checkpatch} -q --terse --no-summary --mailback --showfile -']
+ 
+     # TODO: support for a whole-series check command, (pytest, etc)
+     return ppcmds, scmds
 
 -- 
 2.44.0
