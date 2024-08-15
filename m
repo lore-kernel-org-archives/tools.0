@@ -1,35 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4174C63C
-	for <tools@linux.kernel.org>; Thu, 15 Aug 2024 14:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED6218CBE1
+	for <tools@linux.kernel.org>; Thu, 15 Aug 2024 14:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732072; cv=none; b=bTIbmR/KTi84DmUFH50o9F7UTde0ajgN8JBvzq0/CK7lddm59+CaDMmUnaxi4pDIkshVOognon+X3ed2jHF8giijQsHOprkkzyyfo/UFaQAhBQ0o4oVU0v/sotkCfeXFDvPXIWao49mmahzd3o2lP4hFJ32Dmzt6thznuQEoLNs=
+	t=1723732105; cv=none; b=oMwbvd3ABu2T5oAC5ZUi3NsBz+pmt3cNihT2u3ibHLYZjHDTJaLKm8/blnhtFua5webUXmfi08ktBEJP9eSFd57lH0MmFp174mvmDK/Z/jt+5aXvfm99M7Hofn+gwjisjSnhlIaR2oSKIQNyrPuUudbj0DXAS/kQgVTc5mUX/3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732072; c=relaxed/simple;
-	bh=lK7OOSgpFRsJxEuKQtITIhOuyYEAhBo7pgFkzXKwFVI=;
+	s=arc-20240116; t=1723732105; c=relaxed/simple;
+	bh=duWq9m81fNDK7rEEHaH5JGfDU2K8zruwxEn5fIlUJ58=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HiLsDPpHDX5vpSrtPulkFR5lhaL+iylHJF6YlomTHl4CCwQDz97CFH7s1kXOqwcD74PX4G+P5DB5x2Z8D4HsFrnMxjVvSpE5uERzMXfSauXks1FyXytU8M4JTREUJoSgpgTvaUollFYu2zP9kBjJemrenahw5rYd6cUljSI6UD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDfu1tYJ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=HwcunabVe0DG85pl9V6JxaPXacAnfX1MptB93Zd1OrU01nZ7A5UKMmBNbQiupsHHzPRQJDX9fogqeSRS8it7KHDfD6KaPIoSivgEPghUDA9BwKh/XESWV88Ls52t2nh67ojn2h4MXrqMIIkDgxS+uK6D42MXnbyECM8M14Ulpgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtNF1gVH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDfu1tYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D788C4AF0E;
-	Thu, 15 Aug 2024 14:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtNF1gVH"
+Received: by smtp.kernel.org (Postfix)
+	id 0399BC4AF0D; Thu, 15 Aug 2024 14:28:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05E5C32786;
+	Thu, 15 Aug 2024 14:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732072;
-	bh=lK7OOSgpFRsJxEuKQtITIhOuyYEAhBo7pgFkzXKwFVI=;
+	s=korg; t=1723732104;
+	bh=duWq9m81fNDK7rEEHaH5JGfDU2K8zruwxEn5fIlUJ58=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PDfu1tYJhPf7ThQQioc15Z16MBYKDkN2JEk3xQDUgv6xaTV40lP+YQKnxxmobW2Px
-	 YDBSGODTZQ8+HQRlgeu4gMU3IMjQgOCN/3SxWJHYupc0Wmle9yTjXGQ8Oc9MFQEO1A
-	 AeBjT56O894zhbcuspGYhgOY9yDPgCsDBHe67Gzs=
-Date: Thu, 15 Aug 2024 10:27:48 -0400
+	b=rtNF1gVHU8Z4daYUG4bxgTGlwuktTolD9TIS2B3i3N8fXS9OKnU8IYkGi5mc6IiUd
+	 xa652wFqDPZ9iU9trP5YR+wO6ts2nrvf5RQm7ZwPZuXN/he0JGjI1FtgE4ef6/OLby
+	 Pa56gI1MFre0eXkgLSKrvZW66T06DZaZzCgBGXIc=
+Date: Thu, 15 Aug 2024 10:28:23 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools <tools@linux.kernel.org>
-Subject: Re: b4 failing to pick up cover letter
-Message-ID: <20240815-caracal-of-stimulating-abracadabra-acd542@lemur>
-References: <0c57ec83-313f-45a5-b0a4-eeb7c9081241@sirena.org.uk>
+To: Kevin Hilman <khilman@baylibre.com>
+Cc: tools@kernel.org
+Subject: Re: b4: prerequisite patch-ids generated in wrong order
+Message-ID: <20240815-warping-watchful-dogfish-beace2@lemur>
+References: <7h4j7y32gk.fsf@baylibre.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -38,17 +40,13 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0c57ec83-313f-45a5-b0a4-eeb7c9081241@sirena.org.uk>
+In-Reply-To: <7h4j7y32gk.fsf@baylibre.com>
 
-On Wed, Aug 14, 2024 at 06:06:51PM GMT, Mark Brown wrote:
-> Hi,
+On Mon, Aug 05, 2024 at 05:43:55PM GMT, Kevin Hilman wrote:
+> Hello,
 > 
-> When I do:
+> In this[1] recently submitted series, I specificially listed:
 > 
-> 	b4 am -S -t -g -3 871q3bll5c.wl-kuninori.morimoto.gx@renesas.com
-> 
-> with current git b4 fetches the relevant patch series but does not seem
-> to fetch the cover letter even though it does find three messages in the
-> series and the message ID passed was for the cover letter.
+>   message-id: <20240801195422.2296347-1-msp@baylibre.com>
 
 bugbot assign to me
