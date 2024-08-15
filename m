@@ -1,52 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED6218CBE1
-	for <tools@linux.kernel.org>; Thu, 15 Aug 2024 14:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41AB63D5
+	for <tools@linux.kernel.org>; Thu, 15 Aug 2024 14:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732105; cv=none; b=oMwbvd3ABu2T5oAC5ZUi3NsBz+pmt3cNihT2u3ibHLYZjHDTJaLKm8/blnhtFua5webUXmfi08ktBEJP9eSFd57lH0MmFp174mvmDK/Z/jt+5aXvfm99M7Hofn+gwjisjSnhlIaR2oSKIQNyrPuUudbj0DXAS/kQgVTc5mUX/3I=
+	t=1723732222; cv=none; b=XE8Hs9/3UjUq23c0y8eF14pcDYa4Gz9gDRyQxgqIxa9/7OVmVIx15ns0++v1tBocoiSqtw2N5VKxgtw+e5gvZR1bxUcIJd/Kw4+ly3CGUXQiM5bGSE6MooZI1EyzaZD+g8w7lB8AYvDgv/inwrEQd4AA9jUpd9HMvkA0j6Pa3oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732105; c=relaxed/simple;
-	bh=duWq9m81fNDK7rEEHaH5JGfDU2K8zruwxEn5fIlUJ58=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HwcunabVe0DG85pl9V6JxaPXacAnfX1MptB93Zd1OrU01nZ7A5UKMmBNbQiupsHHzPRQJDX9fogqeSRS8it7KHDfD6KaPIoSivgEPghUDA9BwKh/XESWV88Ls52t2nh67ojn2h4MXrqMIIkDgxS+uK6D42MXnbyECM8M14Ulpgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtNF1gVH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1723732222; c=relaxed/simple;
+	bh=ZGLmvWsAa43xui0+R38MB4ndkDcO2bF+3VbVrcByWg0=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=seVHjae2XOTRsVdT/Y7oMgy2SaObv3ew3Q61b3D1u9FN2QUNxfB809T7t040GzOVirMTwMvfqpNECUpxNyM3Fx45z2kaeSo0ExXbV4g34cwma8KWMNVDussrghTImcL7YpAMXF/LJw20Vrt1Ot85BrdyjOAwYq78TqjVUpbmdp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ceet7TGY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtNF1gVH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ceet7TGY"
 Received: by smtp.kernel.org (Postfix)
-	id 0399BC4AF0D; Thu, 15 Aug 2024 14:28:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05E5C32786;
-	Thu, 15 Aug 2024 14:28:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732104;
-	bh=duWq9m81fNDK7rEEHaH5JGfDU2K8zruwxEn5fIlUJ58=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rtNF1gVHU8Z4daYUG4bxgTGlwuktTolD9TIS2B3i3N8fXS9OKnU8IYkGi5mc6IiUd
-	 xa652wFqDPZ9iU9trP5YR+wO6ts2nrvf5RQm7ZwPZuXN/he0JGjI1FtgE4ef6/OLby
-	 Pa56gI1MFre0eXkgLSKrvZW66T06DZaZzCgBGXIc=
-Date: Thu, 15 Aug 2024 10:28:23 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Kevin Hilman <khilman@baylibre.com>
-Cc: tools@kernel.org
-Subject: Re: b4: prerequisite patch-ids generated in wrong order
-Message-ID: <20240815-warping-watchful-dogfish-beace2@lemur>
-References: <7h4j7y32gk.fsf@baylibre.com>
+	id B71D8C4AF0D; Thu, 15 Aug 2024 14:30:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10BCC4AF0E;
+	Thu, 15 Aug 2024 14:30:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723732221;
+	bh=ZGLmvWsAa43xui0+R38MB4ndkDcO2bF+3VbVrcByWg0=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=Ceet7TGYxzxbrdOXECAMZSrIKHK5M2KQITvmUTkG8OsXyrVvBzV221EIbEtbdEFXA
+	 TXPI7CaKQgbqxz5GlkB/Iaa2qnm9yP5/pcB+aHghXL+5gaMiHGjkliVTcZYGAU/xnt
+	 1u4BfqEJxqnJtoHPMPjnTnOubvU7tnMjboEconRFAFaxhXIEXUuAl93gHGG2FfoG7X
+	 R+wBlIFHNsTJ7NM9251rH0t/vWAcuCZT3CO7FSen7mOyauW4RVMX15/1ENoDBkbXtr
+	 6+9kUJ8BUfaG1gcdDewp+yiL89BJLfyTHDcEsmlS3myrRoT15unjsc+b5UUVjbJxag
+	 jS59cKloEJB/A==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 01DDB382327A;
+	Thu, 15 Aug 2024 14:30:21 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: khilman@baylibre.com, tools@kernel.org
+Message-ID: <20240815-b219163-318cee448d09@bugzilla.kernel.org>
 In-Reply-To: <7h4j7y32gk.fsf@baylibre.com>
+References: <7h4j7y32gk.fsf@baylibre.com>
+Subject: Re: b4: prerequisite patch-ids generated in wrong order
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: bugspray 0.1-dev
+Date: Thu, 15 Aug 2024 14:30:21 +0000 (UTC)
 
-On Mon, Aug 05, 2024 at 05:43:55PM GMT, Kevin Hilman wrote:
-> Hello,
-> 
-> In this[1] recently submitted series, I specificially listed:
-> 
->   message-id: <20240801195422.2296347-1-msp@baylibre.com>
+Hello:
 
-bugbot assign to me
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=219163
+
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (bugspray 0.1-dev)
+
