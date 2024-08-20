@@ -1,145 +1,114 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67964149005
-	for <tools@linux.kernel.org>; Tue, 20 Aug 2024 07:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE4C18DF80
+	for <tools@linux.kernel.org>; Tue, 20 Aug 2024 11:11:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724139581; cv=none; b=L2TQ3enqfSr2QjVwzMhIrZ3yZvPBC7/AARMI0kB2Ci6Mb8sBL+pD1/8iReSuuFFhtuMzkAV+gFQkcJBZDcmM6+orf0ZbSTY2dgY9FvcTdXUgX+Ku2+MdvRO9y28ABrAkET0Q9E9CMvWv9NSIUNUr3+UWH0tfomLVvO93lX/y0qg=
+	t=1724152261; cv=none; b=rvdkrtxTm/OUPMRrR9D8l2/hj2ntds5wCwATAgNrpu2f0OYlTVuYsbw5l6h3vJ++lD/rfDYj0Zgsxjxgw7TpakQFl58aYIxuYblExEj6rp5IrayBDG6xwQraEFpuVOlyRPLnYlI3L+g+bEdgufevkbkFTYViiMRvAtS9L8UfjlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724139581; c=relaxed/simple;
-	bh=ejss5pkZTsYWwly1zIaOqQPK7F3ZP/tZeehMHG8+bEU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=V6SaeP41sgvCAbSQz+9PnldVKZ/yAswEEaa2DjE2SBUpBQs8m23y2T0PtFlf/hhUM5uJfNDP1v+DRLJB5EzNpAYe1k3maSRUznkTkYuKL9Sc4md0khFU+TSa9Af8xKzmx0vdX+pHHnNUyznKhxX5cc0uz9r9KL0S0E0SOuOUMp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=QUuy0m4D; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1724152261; c=relaxed/simple;
+	bh=yNltxphzsh8cz6DpPFasoDV0/HSS2yXwTquTqILMxoE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=RdmXKaeURjMuN4zkTbxu20xTV2/ZJgJkFN0ygyyFDUZnr4H1Oed+aDns6Jdh4NyMu2wzmNZHOg8v8cLIS/1i4RwTMAcow7imzoTz9sPYjUQ5bYBwOIpqcCUnIPKfZSrGTI4FF6pfXg5lop2KuqLgkp+UKw+an+bbj6WBHiRYEn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hKCeTnft; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="QUuy0m4D"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-371a9bea8d4so1560898f8f.2
-        for <tools@linux.kernel.org>; Tue, 20 Aug 2024 00:39:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1724139576; x=1724744376; darn=linux.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B9POGw+0dkCoo38oZMpvHEa3RpeTyI0hVTEIEfkm3nA=;
-        b=QUuy0m4DAz1e1bOl+zUYuNKZuX4vkoP90GuOOgXuK1ANyTv6AQfQBCDlmL670GfOYG
-         MPQ6gJIfzwL6GHMd6e0QtLq+zOZXqxl/VXJC4/fF5vtXlCUlrmufliR/ZKVYkr3sVUoZ
-         4SQYHE7vqwVSpVHZjt6iJ/QQAXm6Zajp674Gy/YzLXjxlPsB/dZ1fEz3p+E9gLxI3dza
-         eFlx3r5KP6QE3w/B/yJZ4LX7/M7GWP5aULRLoeu+/k+y7vU8exmQnDg7SoFBl3mFAIYR
-         ws3ryw5+bNitFZJzwdbY9HPdMCw6+7x94DdvUHdQ58+B5OBJv8vz4BpE5uIo/1yFNtN4
-         fXjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724139576; x=1724744376;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B9POGw+0dkCoo38oZMpvHEa3RpeTyI0hVTEIEfkm3nA=;
-        b=cn67kd5xlROVZOieWOgb/laNMB00N82oOR/coLHQ01U6hp2IIMOaxftyhunk1NEkmx
-         VWCHFjBQ1Ji3l4S60c+AhKHsyLYODjB3tXt7MFQnDSgaW1tyepINkUYgpZfUiCNIO5Iq
-         sjalvwiBAIvRcm+n9HVhTw+K8EM618MsZWJ9YQnQeeI7iF3C3UuXZMJ9g6WnSxStaBpw
-         dLNeQtixFgE1ugJEIKBs8GtK+KSpyjQOgiz3iCPLXD4gw5RvHZxMKhfB1oMfvu4Klnk7
-         U9qav46oZiDxuIxJ3OSR42Ix73VRyMQyc+iC5PtNOzw1KRlh9tuEdDCiQNcCUSuMaHTX
-         9KGg==
-X-Forwarded-Encrypted: i=1; AJvYcCUlgUz/80CEaSxB17lp5n59unh0EzyRluO13WzdTFIQPCFyzojLe0YJ/kjzV/DfPAr1oFAwdg==@linux.kernel.org
-X-Gm-Message-State: AOJu0YxfF7TAVaAtBwVwAl8Zx5DLV+U3q9cLYAyEfOmN9bQYG3a1TLyi
-	qK0fMnTMoArJY9JWhyBlZGXZCdEBHhUgl068o9dhbvJid5fs7T1Tev+XU2VgPzg=
-X-Google-Smtp-Source: AGHT+IGIue6x2TN8F22YpzS8vmSmD05X6SxRDI7LYETZ5omDHcbEvzZwNwPKWZ3Es1mCqvn5Qi0gow==
-X-Received: by 2002:a5d:5e0b:0:b0:371:9388:2cdd with SMTP id ffacd0b85a97d-371983d5f44mr6437368f8f.17.1724139575984;
-        Tue, 20 Aug 2024 00:39:35 -0700 (PDT)
-Received: from localhost ([2a01:cb19:95ba:5000:d6dd:417f:52ac:335b])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded364fesm185157655e9.27.2024.08.20.00.39.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Aug 2024 00:39:35 -0700 (PDT)
-From: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-To: Simon Glass <sjg@chromium.org>, Tom Rini <trini@konsulko.com>, Lukasz
- Majewski <lukma@denx.de>, Marek Vasut <marex@denx.de>, Zixun LI
- <admin@hifiphile.com>
-Cc: u-boot@lists.denx.de, tools@linux.kernel.org
-Subject: Re: [PATCH] cmd: bind: Use device sequence instead for driver
- bind/unbind
-In-Reply-To: <172413500327.69624.5444644456831665790.b4-ty@baylibre.com>
-References: <20240802092820.917450-1-admin@hifiphile.com>
- <20240802092820.917450-3-admin@hifiphile.com>
- <172413500327.69624.5444644456831665790.b4-ty@baylibre.com>
-Date: Tue, 20 Aug 2024 09:39:34 +0200
-Message-ID: <87wmkbve15.fsf@baylibre.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hKCeTnft"
+Received: by smtp.kernel.org (Postfix)
+	id 8C9C7C4AF0B; Tue, 20 Aug 2024 11:11:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C69C4AF09;
+	Tue, 20 Aug 2024 11:10:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724152260;
+	bh=yNltxphzsh8cz6DpPFasoDV0/HSS2yXwTquTqILMxoE=;
+	h=From:Date:Subject:To:Cc:From;
+	b=hKCeTnftX/b0ISGnPnytarK3DKZEX1sP6nhGtJqI0h7FFA5iksX2eTRlkpO4UeAhm
+	 vNPuISyFVKLuPGic/pIpP4GcxL60O9wyfRJVRNwiIzy8bc3CIML4oEhviMfrziQGy9
+	 +sRNdEcOpFmFwp8BUlUeuu73cI6d5GBtHVmwJ49fcEJtC7iqJr6IuqaS56t4FD5nqX
+	 GOW2k/medf37KpayNhZA5U9E0z+oM9QQ3kjoJ0LgCRYeXeoDvBO6AjsQlGdaX4DBnp
+	 Cy6epXa2G7ia+106JiytFb/4RmxqWsNMs5TVYx3df8g4DwDVP9qfExq8SY46MPs1Fx
+	 bJCH+JV9eSMXw==
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Date: Tue, 20 Aug 2024 13:10:50 +0200
+Subject: [PATCH b4] send: generate patches with --no-mailmap
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240820-send-mailmap-v1-1-7f35789be4b1@kernel.org>
+X-B4-Tracking: v=1; b=H4sIALl5xGYC/x3MQQqAIBBA0avIrBPMDKyrRAvNsQbSRCEC6e5Jy
+ 7f4v0LBTFhgZhUy3lToig19x2A7TNyRk2sGKaQSWgpeMDoeDJ3BJI5eWzNMWo3CQ0tSRk/Pv1v
+ AKljf9wMP5a+9YgAAAA==
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2336; i=matttbe@kernel.org;
+ h=from:subject:message-id; bh=yNltxphzsh8cz6DpPFasoDV0/HSS2yXwTquTqILMxoE=;
+ b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBmxHnD/RnjuSR+4QeFaVYxhPuP14+3QkzbylGPl
+ 59B8aNLkU2JAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZsR5wwAKCRD2t4JPQmmg
+ c9Q+D/40eGCrR/HnXJ8zOyguBKAsiqHA1icdxev2/fZlCvVjPYIWft8mozbJ7o1XF31KNB2q1tw
+ lh863d54NOs+Z3/ddQQxivKTc2qXa+kJ9Sm2MGYA/bt89KJY24F+dKRJwNWdUqui6/Lo68vEsue
+ VyCeoTAncU99gc+GaUSlnjs6xdChU2lmxKICkQLYGxNP9ceJGo7AvXcdtdTskZpD/st7HjYk2xG
+ rcFTe9wkTfyPOfUOABYDBKqVzIT0TupJBgei1ZJRoz1TWl15k/PdZvdcFua6etY0xzrdG7EjCSq
+ 1bVvlbc50ZoX5HeZj+8AjNjmj6evcmH7o7xdDN4/6bJTw9TIucRHkKIRhRTTW2j26vkS1u5vau+
+ MdFwElceP6m4WegaSfrn2qz9mbIVVoHFIv7dghU+POuAPEHrj3ohhjaFedeNr0jsGCkBAFWU8Wr
+ 1QHT2qTEuPjE5yB2so0mMRItSGCaXbQKbmbcu4gXydg2My6wiIwl4YV6O2Mv853b2PSxJrkTrwQ
+ ouUxvveGR2r/WPWB8I3DBBnmCnuiuOU/ZmtP8N5Kc4hKL400LMtshhNJEH/LLrcbIMGj1tKz8Dt
+ ldb/CE3t7wKXHCq3hvCV9tqibO0CBNc60PVuF6HEFkilOhNF9Y0Q1dg3L0BE38dm+Bdz0pUbERA
+ uei8D/7LyBWnu3g==
+X-Developer-Key: i=matttbe@kernel.org; a=openpgp;
+ fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
 
-On mar., ao=C3=BBt 20, 2024 at 08:23, Mattijs Korpershoek <mkorpershoek@bay=
-libre.com> wrote:
+b4 uses 'git show' to generate patches. By default, this command will
+use the mailmap file to convert author and committer names and email
+addresses if there is a match.
 
-> Hi,
->
-> On Fri, 02 Aug 2024 11:28:13 +0200, Zixun LI wrote:
->> Currently uclass index is used for bind/unbind which ignores alias
->> sequence numbering. Use device sequence number instead as it's
->> the number explicitly set in the DT.
->>=20
->> Also update documentation to use sequence number.
->>=20
->>=20
->> [...]
->
-> Thanks, Applied to https://source.denx.de/u-boot/custodians/u-boot-dfu (u=
--boot-dfu-next)
->
-> [1/1] cmd: bind: Use device sequence instead for driver bind/unbind
->       https://source.denx.de/u-boot/custodians/u-boot-dfu/-/commit/0c4850=
-7eee08b5e7d4e8484727efe47cfabff0ee
+That's good to display the last identity when looking at old commits in
+the history, but it doesn't sound like a good idea when sending patches.
+'git format-patch' doesn't use the mailmap file, it currently doesn't
+even support it, and it is not planned to support it apparently [1].
+Note that 'git send-email' might support a new '--mailmap' option, but
+it looks like this option will not be enabled by default [2].
 
-Somehow, b4 did the wrong thing here when running:
-$ b4 shazam -s -l --check 20240802092820.917450-1-admin@hifiphile.com
+In my case, I had to send some patches, including one from someone else
+who has to use the email address from his company, but has an entry in
+the mailmap file to his @kernel.org email address. When I sent his
+patch, b4 seamlessly converted his email address, and caused checkpatch
+to complain, because the From and the SoB entries were different.
 
-Grabbing thread from lore.kernel.org/all/20240802092820.917450-1-admin@hifi=
-phile.com/t.mbox.gz
-Checking for newer revisions
-Grabbing search results from lore.kernel.org
-Analyzing 12 messages in the thread
-Assuming new revision: v2 ([PATCH] dm: core: Show device sequence instead i=
-n dm_dump_tree())
-Assuming new revision: v3 ([PATCH] cmd: bind: Use device sequence instead f=
-or driver bind/unbind)
-Analyzing 0 code-review messages
-Will use the latest revision: v3
-You can pick other revisions using the -vN flag
-Checking attestation on all messages, may take a moment...
+Here, we ensure the conversion is not done, to avoid any surprise once
+the emails are sent.
+
+Link: https://lore.kernel.org/all/20240813-jk-support-mailmap-git-format-patch-v1-1-1aea690ea5dd@gmail.com/ [1]
+Link: https://lore.kernel.org/all/20240819-jk-send-email-mailmap-support-v2-0-d212c3f9e505@gmail.com/ [2]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 ---
-  =E2=9C=97 [PATCH] cmd: bind: Use device sequence instead for driver bind/=
-unbind
-    + Reviewed-by: Simon Glass <sjg@chromium.org> (=E2=9C=97 DKIM/chromium.=
-org)
-    + Link: https://lore.kernel.org/r/20240802092820.917450-3-admin@hifiphi=
-le.com
-    + Signed-off-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-    =E2=97=8F checkpatch.pl: passed all checks
-  ---
-  =E2=9C=97 BADSIG: DKIM/hifiphile-com.20230601.gappssmtp.com
+ src/b4/__init__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 2b1a058..283a5d5 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -3411,7 +3411,7 @@ def git_range_to_patches(gitdir: Optional[str], start: str, end: str,
+             logger.debug('Ignoring commit %s', commit)
+             continue
+         ecode, out = git_run_command(gitdir, ['show', '--format=email', '--patch-with-stat', '--encoding=utf-8',
+-                                              commit], decode=False)
++                                              '--no-mailmap', commit], decode=False)
+         if ecode > 0:
+             raise RuntimeError(f'Could not get a patch out of {commit}')
+         msg = email.message_from_bytes(out, policy=emlpolicy)
+
 ---
-Total patches: 1
----
-Applying: cmd: bind: Use device sequence instead for driver bind/unbind
+base-commit: 37811c93f50e70f325e45107a9a20ffc69f2f6dc
+change-id: 20240820-send-mailmap-ef8ba398450f
 
-It applied:
-https://patchwork.ozlabs.org/project/uboot/patch/20240802092820.917450-3-ad=
-min@hifiphile.com/
+Best regards,
+-- 
+Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-Instead of:
-https://patchwork.ozlabs.org/project/uboot/patch/20240802092820.917450-1-ad=
-min@hifiphile.com/
-
-I have fixed this up manually, see:
-https://source.denx.de/u-boot/custodians/u-boot-dfu/-/commit/73f5b54a589cb6=
-ff97aaca55e7c97d68b43997ee
-
->
-> --
-> Mattijs
