@@ -1,156 +1,143 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970C7364D6
-	for <tools@linux.kernel.org>; Wed, 21 Aug 2024 15:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869B055885
+	for <tools@linux.kernel.org>; Thu, 22 Aug 2024 18:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724255500; cv=none; b=FcF0A/sksqfoDPfSyeAF6tPnCIrO9hxOkGYY9/JTETezR3cRa/NjbEGeEhs7S2JCqu/sx4FP5ZeGrc7+TBIcxuOvUxb0bOUZ7RO4VDw00qVv83ZqMO40P+ILhRay4zYqSt7jKqCFrMYqKXZ2jVfH+QUhRMhNzaG3eltTQzkVuFI=
+	t=1724349747; cv=none; b=eHR4BovHuuCfBynVD5VMcaJpIKbjkQHiB34IGXGMuOamjVFTfxdX3ZE+ya9k8EXCr18tT9i9BPrhP0WuxQrA5B2iNun0gC3ycVyGENjGY3q2An/RtzK4SUaIoUBTwt/ebgbPVWi3/uDOuPC4ezO1fAvuVCL1HXNv+kMgAl501s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724255500; c=relaxed/simple;
-	bh=0ZuVf8UicJjGoOjrS1kaHlof54U+IFefI7QngOI+LzM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C8O6td8JeCnxAHX0iY+aIpO5/PjSJoeN2OWQdojMrKH7I0VVNfzxWd7IA1TRPljRB3+LOXH0LGGYxWrA0pCQy6Cea8nQgcfsjQwxejPFjWplQkbaBzjmeoher2GGjOjNO1g0BU/QMdAVTkPZMVRKsQ+TNEHRX1+QvgWdPcxUxnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EyXfk2tp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1724349747; c=relaxed/simple;
+	bh=ZV8W8xYjPHFY/QTZB5X+b6ZymdRouNNxj0rzAQ9+G8E=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nRZkSdYM2jh30cdisEjiBScmuwOLbtFUrvZD0QKEepPpbeEFqrhekn4QBwZ0Rd3m2FX80IvWvOWbF4qd2qKMdOJhh0OgqwCsFS7nsGCWG3tJ42SPGAmNtmRNya62dxKXlRfQ8YQqMLfjybj81e32kfQT5nMPuDpw2d9lFN7iwXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=misggsJA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EyXfk2tp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="misggsJA"
 Received: by smtp.kernel.org (Postfix)
-	id 1FEBDC32781; Wed, 21 Aug 2024 15:51:40 +0000 (UTC)
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	id 477D4C4AF0C; Thu, 22 Aug 2024 18:02:27 +0000 (UTC)
+Received: from mail-pl1-f193.google.com (mail-pl1-f193.google.com [209.85.214.193])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 1434FC4AF09
-	for <tools@kernel.org>; Wed, 21 Aug 2024 15:51:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 1434FC4AF09
+	by smtp.kernel.org (Postfix) with ESMTPS id 4C47BC32782
+	for <tools@kernel.org>; Thu, 22 Aug 2024 18:02:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 4C47BC32782
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-70d2c0ee69fso92245b3a.2
-        for <tools@kernel.org>; Wed, 21 Aug 2024 08:51:37 -0700 (PDT)
+Received: by mail-pl1-f193.google.com with SMTP id d9443c01a7336-20227ba378eso10209145ad.0
+        for <tools@kernel.org>; Thu, 22 Aug 2024 11:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724255497; x=1724860297; darn=kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rw35il3wqrPfk3+PB1QrxjqLPXeg68hQhN8XNlxHtpo=;
-        b=EyXfk2tpnwTSpIT2V31BICx2WdgRJJsLS6Q3l8L3Zu0U1YwvrZPM4o4Z2qNI8B2dxH
-         2um/A3GzrzISnF7+13Ik5VOwguOOqmwxzQmdtY8mRRauKbXBBcCqegx8d2Q9T8pylSAs
-         XzPplfy4MivmrujHOiHPocclBrx2VUAr+/Oq/TWuriTkWk07iR+YFi8J884D0qgeCeQ2
-         4FCYDx+d/jcNn1IYzxYBW/ejLTjdHwmp1oFdZYMCbKRvqaicOO1I7mWT9mi3ptE7EYAs
-         IXH+u5Rn39hSZ06pemwqRvox3lB+/iPWk5NXDP7rLQJ0+t5ro2UqhDkDZJxmU4lhIP0T
-         dskA==
+        d=gmail.com; s=20230601; t=1724349744; x=1724954544; darn=kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eonpXoFe62oWDdtfwe6CG6lJlecWGIa6cRKtMIl5eNo=;
+        b=misggsJAm9RNc+96PC1qWy5B2FYJM3SKsKBR0Ei8J+lQdoJzvH8a4qipx9U5AnCor7
+         GQq31R+2SSGNHzl/1pIiWemk9qe4EF5e2tCRGBd1fGxq4s7Faf3b039k4ClxnWh6UHzG
+         ECofCSAMHs+BNO+/lReuUGE5/ONRYsIN1tL3r0JdQUnuL4OmIh2JWtPLsSGirbAqARwD
+         /sxusZVHUBNlqTWm/Di2ftgaSprZ79gzkSytE3K2N6OBJTLSp2/C7yDr6KusdMTygiid
+         9OIiuPDAFDLj8qGOMDQIAb3S+wMLrdDcvmTfcYKHto2bQF+o9Uv8qve6sUcVOGzZdTUN
+         v8og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724255497; x=1724860297;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rw35il3wqrPfk3+PB1QrxjqLPXeg68hQhN8XNlxHtpo=;
-        b=QZdUjk0ohDn65bcZZ5hlO6l+VHQ5t2BUT/jZFNGguuKGNGxCmkw0ucsG9rmKHEMD+N
-         Xt5CQSWF4nCN7f/kh4s1zM0R8iJjnQJ2zKS+Mmc2ajCwueP+JVUCeYQohcdcbiFvoMZ4
-         83PqxSfG4630x5SMlE6FBui86r2xvZ+Qk8EVgZSydQ5IUj22zWFdh9z9M630zetmlSGu
-         h4/Y1qpEaqgEKNCd/oJGtF9qcGBwTo2pv+BkUBMjkdvQZho4pVkD6XMnw4ErW8BwqSyT
-         YN+/yyvhY6MigRYV95TWl446vdK3liDTwCJCIwE3ub5jMatskTeUGAo45+0qBGth26V1
-         D3EQ==
-X-Gm-Message-State: AOJu0YyaFIC7ALFc7KMcIgGBsKk3fd7DHWKl1LS7V6hMga12rmnbk6ai
-	jMnvkfkoTOnpCZS7YlJ304a2+Oi7qQZTzWaAap2iDsZqps3KqswTsM3LjHjU0OoFzlWAGEOB9lf
-	eLsix25v5sVW86d6+Cyj11Svj7EB32Q==
-X-Google-Smtp-Source: AGHT+IGLU5YP7vs8SdIOzp2tuMjp6q39S8UhXbC48tjmn+CjA2eDEyHx1nvBvQQcTJ73pMEr2Y7o5YQKfOpfYU6T5xI=
-X-Received: by 2002:a05:6a20:8403:b0:1c4:d267:76ca with SMTP id
- adf61e73a8af0-1cada1a4829mr1762253637.7.1724255497215; Wed, 21 Aug 2024
- 08:51:37 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1724349744; x=1724954544;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eonpXoFe62oWDdtfwe6CG6lJlecWGIa6cRKtMIl5eNo=;
+        b=e/q6nZFUAzhj0OfafSIF5jCkrOsAf629E7VtCuYnBUoSx8jCjBhSeFH+IlqOoD5PIx
+         lDPsl3oUer/KsJX/Tcao7pLewddUoIqn23hzScIY7FVHEnn7jP5C36BzrOp3is4BdVJI
+         G9l4bbg8iwPqPsPc5092k8VHoOvwyfoR54NArLZ9+PNWKqzFLDG0z8czxZK8JPEmwa8j
+         bRl/2dUgndFU/HJFdwT7dH59jDGgxjPs5v9WrNKrUmDS6EhW2Vlvr7GIQgLy10feCnDN
+         TkxdlzwYzZd8QjsB2wCKHEwwILeEP3Ad9Ur/hQOI36zd9tUABRMJr8INr4MTKwjtf+oH
+         79Jw==
+X-Gm-Message-State: AOJu0YwPdxf40JdxeffNKmM1f01/Vkmh6sTA5wpYO35T7UgLj0FbS4hO
+	Uhc72WP2DXaWFvYwRjETdZHgKYj9bBG+rgqVW4RinmZKSuFXsmDgxhNCk6TK4sc=
+X-Google-Smtp-Source: AGHT+IE5mk+3eZvioCuUmvOmHW122qlBqPX10iGI62gD5u/rEJiEdFzgD1v3BX/8gs58JyRXw4X1pQ==
+X-Received: by 2002:a17:902:e884:b0:202:359:9f66 with SMTP id d9443c01a7336-20388d04a84mr31327065ad.54.1724349744056;
+        Thu, 22 Aug 2024 11:02:24 -0700 (PDT)
+Received: from localhost ([103.156.242.194])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2038558137csm15462885ad.99.2024.08.22.11.02.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2024 11:02:23 -0700 (PDT)
+From: Celeste Liu <coelacanthushex@gmail.com>
+X-Google-Original-From: Celeste Liu <CoelacanthusHex@gmail.com>
+Date: Fri, 23 Aug 2024 02:02:15 +0800
+Subject: [PATCH b4] sendemail.smtpServerOption can be specified multiple
+ times
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CANiq72=y5OjbyDhh_W2FF_v_7mLGDkf3+TbpfYiSGMdWH=_KKw@mail.gmail.com>
- <20240821-colossal-amaranth-mule-2f314b@lemur>
-In-Reply-To: <20240821-colossal-amaranth-mule-2f314b@lemur>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 21 Aug 2024 17:51:24 +0200
-Message-ID: <CANiq72n73A0aUbrSHjtb+TB7+emEgjCezeUg3F=PJquyCtNg3g@mail.gmail.com>
-Subject: Re: Non-deterministic bug applies non-existent tags
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240823-fix-multiple-smtpserveroption-v1-1-0c4879fcb133@gmail.com>
+X-B4-Tracking: v=1; b=H4sIACZ9x2YC/x3MywqDMBBG4VeRWXdAk4ChryIuGvtrB7yEJA0F8
+ d0dujyL852UkQSZns1JCVWyHLtG92ho+rz2BSxvbTKtca03lmf58fZdi8QVnLcSFahIRyx6sre
+ 97RB8cOhJjZigw98fKDgar+sG9d96bXMAAAA=
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Joel Granados <j.granados@samsung.com>, 
+ Celeste Liu <CoelacanthusHex@gmail.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2196;
+ i=CoelacanthusHex@gmail.com; h=from:subject:message-id;
+ bh=ZV8W8xYjPHFY/QTZB5X+b6ZymdRouNNxj0rzAQ9+G8E=;
+ b=owJ4nJvAy8zAJfY4pvNJRPo6U8bTakkMacdrtRoqFQ1muhQ7nFk/x3qR6avtb9u8+sVYTjUbb
+ Rf8+vSkrXNHKQuDGBeDrJgii9jOp6+XlT76sIzXZAbMHFYmkCEMXJwCMBGjUkaGeXV3Vp+ZKbtv
+ u2LAud9xPE9NTy86vnimtZDrNraHVkKpBQz/a2boVW4PzWJ0Zb78/quHVef2HvMAu8+Fny1X6Rc
+ ary1nBgDctEsA
+X-Developer-Key: i=CoelacanthusHex@gmail.com; a=openpgp;
+ fpr=892EBC7DC392DFF9C9C03F1D15F4180E73787863
 
-On Wed, Aug 21, 2024 at 4:53=E2=80=AFPM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> This "fantom trailers" bug has been super frustrating, because I can neve=
-r
-> reproduce it no matter how hard I try. I've seen reports of this and I kn=
-ow
-> that this is happening to others, but I'm thus far unable to figure out t=
-he
-> cause or see it happen for myself.
->
-> In this particular case, the Reviewed-by tag from Gary Guo is valid, beca=
-use
-> it was given for this patch in v2 of the series:
->
-> https://lore.kernel.org/all/20240801133055.6d127fd1@eugeo/
->
-> We reuse it, since the patch did not change.
+In git-send-email(1):
 
-Ah, so that is where it is coming from -- thanks a lot!
+    The --smtp-server-option option must be repeated for each option you
+    want to pass to the server. Likewise, different lines in
+    the configuration files must be used for each option.
 
-Hmm... I am not sure that is expected, though. I guess it wouldn't
-hurt to at least say from which version the Reviewed-by came from, if
-it was not the given one (and ideally add the link to it). Something
-like:
+So this config option must be specified in multivars parameter of
+get_config_from_git() and be treated as a list.
 
-  =E2=9C=93 [PATCH v4 2/2] rust: init: add `write_[pin_]init` functions
-    + Reviewed-by: Boqun Feng <boqun.feng@gmail.com> (=E2=9C=93 DKIM/gmail.=
-com)
-    + Reviewed-by: Alice Ryhl <aliceryhl@google.com> (=E2=9C=93 DKIM/google=
-.com)
-    + Reviewed-by: Gary Guo <gary@garyguo.net> (=E2=9C=93 DKIM/garyguo.net)
-      ! Note: Tag added from v2 (identical patch) at https://...
-    + Link: https://lore.kernel.org/r/20240819112415.99810-2-benno.lossin@p=
-roton.me
-    + Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 37811c93f5 ("Forward the smtpserveroption to the local command")
+Cc: Joel Granados <j.granados@samsung.com>
+Signed-off-by: Celeste Liu <CoelacanthusHex@gmail.com>
+---
+ src/b4/__init__.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Even then, I guess a patch could not be OK anymore if previous patches
-changed something somewhere else. I think by default it is good to do
-so, but the note would really help spot why (and alert someone else in
-the very rare case it may matter).
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 2b1a058..1d0f520 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -3728,10 +3728,10 @@ def _setup_sendemail_config(cmdargs: argparse.Namespace) -> None:
+     # Get the default settings first
+     config = get_main_config()
+     identity = config.get('sendemail-identity')
+-    _basecfg = get_config_from_git(r'sendemail\.[^.]+$')
++    _basecfg = get_config_from_git(r'sendemail\.[^.]+$', multivals=['smtpserveroption'])
+     if identity:
+         # Use this identity to override what we got from the default one
+-        sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', defaults=_basecfg)
++        sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', multivals=['smtpserveroption'], defaults=_basecfg)
+         sectname = f'sendemail.{identity}'
+         if not len(sconfig):
+             raise smtplib.SMTPException('Unable to find %s settings in any applicable git config' % sectname)
+@@ -3785,7 +3785,7 @@ def get_smtp(dryrun: bool = False) -> Tuple[Union[smtplib.SMTP, smtplib.SMTP_SSL
+                 smtp += ['-f', envpair[1]]
+         server_option = sconfig.get('smtpserveroption', '')
+         if server_option:
+-            smtp += [server_option]
++            smtp += server_option
+         logger.debug('sendmail command: %s', ' '.join(smtp))
+         return smtp, fromaddr
+ 
 
-> Naturally, I'm unable to reproduce this. I assume this has something to d=
-o
-> with cache, but if you can still make this happen, could you please rerun=
- b4
-> with the debug flag and send me the output of the run where the trailer f=
-rom
-> Gary Guo is *not* inserted? E.g.:
->
->     b4 -d am [...] 2>/tmp/b4-debug.txt
+---
+base-commit: 37811c93f50e70f325e45107a9a20ffc69f2f6dc
+change-id: 20240823-fix-multiple-smtpserveroption-83731eb8b4e7
 
-I can! It switches from putting the tag or not quite often, e.g. it
-could be ~50% of the time.
+Best regards,
+-- 
+Celeste Liu <CoelacanthusHex@gmail.com>
 
-Sending to you both cases.
-
-> I am unable to reproduce this, of course. I get the following:
->
->       =E2=9C=93 [PATCH v5 1/10] rust: init: add `assert_pinned` macro
->       =E2=9C=93 [PATCH v5 2/10] rust: list: add ListArc
->       =E2=9C=93 [PATCH v5 3/10] rust: list: add tracking for ListArc
->       =E2=9C=93 [PATCH v5 4/10] rust: list: add struct with prev/next poi=
-nters
->       =E2=9C=93 [PATCH v5 5/10] rust: list: add macro for implementing Li=
-stItem
->       =E2=9C=93 [PATCH v5 6/10] rust: list: add List
->       =E2=9C=93 [PATCH v5 7/10] rust: list: add iterators
->       =E2=9C=93 [PATCH v5 8/10] rust: list: add cursor
->       =E2=9C=93 [PATCH v5 9/10] rust: list: support heterogeneous lists
->       =E2=9C=93 [PATCH v5 10/10] rust: list: add ListArcField
->
-> +CC the tools list for visibility and to make this a bug.
-
-Sending you this one too.
-
-Cheers,
-Miguel
