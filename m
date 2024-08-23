@@ -1,147 +1,121 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB3C78676
-	for <tools@linux.kernel.org>; Thu, 22 Aug 2024 18:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3C01BF3A
+	for <tools@linux.kernel.org>; Fri, 23 Aug 2024 10:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724351629; cv=none; b=bDA4xnt4wH1PUM6lObKvNGUpIcsl7FB39BdG8P9zE2ImwcXI7Oa17XFqDg9rt+82Hp9Vko/rSzwyf+QIajvKtpMfuKMIqBUzYseJY/trpK7dPDgbkngIoW9f41im0YoYZCQJ1aHFfSx+fJHqCrxk8KD5YDczBrSXOAlXq4qayeM=
+	t=1724407569; cv=none; b=QFz+8xWpGAX43mATm9zYxqb2WR/aVVueUM8eX2l4AtdKVKYQtdyScewI8cR0FUUBxBQZCZIsmq705ZiyllBD9WhnIyzGqW8r3ggLq1mmpOaWx4MQXoUjwtTAmvwr4ACtwTreTZZZ3QekvifBUWzpcFXCcAOVFv4wm2LZaYYeOyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724351629; c=relaxed/simple;
-	bh=iNtafBVK+jwjBp8Vu88y+CCODldJ/uFmWa/Kepz/et4=;
-	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=NGCsjdrhh4xtUmtR+9OCjFga502NdfNxWxLJ+KJdoj7kgkaOj48OmHrsjOz4TepReqbUK+N/RTJN4yEnIXO2F3oyQGM2cnSAbgdqR5WtMQTEyU0pCN6lNePszPJUwlFx3DVROHFjPkcOwzZuuceGHt28bf0foYL61dUvNHq44kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kzScbhAB; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1724407569; c=relaxed/simple;
+	bh=XWSOiAX8/Exz2mu+SvobfClMrO64wWUMJpcZlw7puIo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=HxtMh+UnSDNg8u7618hhMuTxHYBFLcBSpeeGf0+ePu/jn0iRzx746EqU2I9JFtiQh+nC9blpvihzuRmuj419e8RUl5s47HKqczNkY0kAoqjIPU79QtRTzyzwhjNhRd/jbphRcqmwA0j0kmGIuxzyIcY2NwmygQdDWCvXsoTfE5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k/YoPiow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kzScbhAB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k/YoPiow"
 Received: by smtp.kernel.org (Postfix)
-	id 13A5DC4AF0B; Thu, 22 Aug 2024 18:33:49 +0000 (UTC)
-Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com [209.85.210.195])
+	id 36505C4AF09; Fri, 23 Aug 2024 10:06:09 +0000 (UTC)
+Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 28C23C32782
-	for <tools@kernel.org>; Thu, 22 Aug 2024 18:33:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 28C23C32782
+	by smtp.kernel.org (Postfix) with ESMTPS id 32492C32786
+	for <tools@kernel.org>; Fri, 23 Aug 2024 10:06:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 32492C32786
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f195.google.com with SMTP id d2e1a72fcca58-7141b04e7b5so758159b3a.2
-        for <tools@kernel.org>; Thu, 22 Aug 2024 11:33:47 -0700 (PDT)
+Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-2d439583573so1310555a91.3
+        for <tools@kernel.org>; Fri, 23 Aug 2024 03:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724351627; x=1724956427; darn=kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=83QXs3MdzPLWZH1A6qvA72iBfhP0w0IG85IkLkurgYY=;
-        b=kzScbhABKeIOyFkki0H+PJMLZt08glHgw4C28JEHJMUzJyL7ORl/SoxFKr1QKyhn7M
-         /6GSif5N9Q/4xi2hGZudwnNrkRotYXZa2NtuBbs0sF/7lf7dVOF4wiXQo4G7zHDzBWd5
-         hASqpdnPr7AzLkYPl+KbmohA5IyCm0s++Ut0LxTCO5VjfDQvsxrB/bW6+k9ivx/5Feob
-         8jquWYXuLMkjZBdVqJSTVvZPP/LDyeBoEaZfPOPMxnTFQ+iMhyVK8NrQ/dM/MuUy+GsT
-         R9dBe4VkqaorXQwPMP1zy+ppx84cCulCShmi8GS24KJ+6p/L5M2SzCu8XYOhP5hq7Tg6
-         icuQ==
+        d=gmail.com; s=20230601; t=1724407567; x=1725012367; darn=kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=B3S2xMjYtX6zqEiHtaJIlne+uer2ECru6vnzpeHPzFE=;
+        b=k/YoPiowN9nnAaRfwXf+dIeJQ4C1Y3sykgyOxgUCipX9yk4asj38ufjlA6t6vrltSc
+         +jM6+lVhLphtiSUqDawRZDy4/jTLvJlYNht/nHvhZDRyjdR4DL0XR6SF+19MnJw9kFOy
+         92rjojuGA/Cz/d1++9x+20ehrBKaHv93OIG4akRye+LrzlbY7lzLyUls2lJge/8FPjJP
+         6HRkDIGWfmT355t/gSKjZMVLALLRMgLWqMic+9qqUVtDPDGlg7at2ZS0EQ6pVkM1v/uJ
+         EPohaZerGQ6ozNsqE7il44LOG6d+9JJHZp4uUlIGtR//ZgFq6E03++ZKqxOacd8DDEUw
+         T0QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724351627; x=1724956427;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=83QXs3MdzPLWZH1A6qvA72iBfhP0w0IG85IkLkurgYY=;
-        b=MiTK5Wsr2cgd8+yOren0QILlvTpo8HAAStygzpOD5tsAmNsSXe3UkMLEbHSP1iqm6U
-         giaInIi4VfEZaEFYdAUjhsp7usXnZaUfJov2HSt8xYnVIPi5Vv/EBSk9jlW05A2aKgQK
-         6UVHqgcX60X7JKFa/uckc/s97nnbbTjplOjAygpkxSWKaSLUUYKW/BldfDH9zqzI/wa1
-         WA7JYE1XeyDuHFACC/UgWFAnZjAA3WrXR9KNc1mPYKEG4fLXrB7wBT9+NgI7q7Em3YXp
-         64RLLkufsbORQuu9UPUQQkxkfYlk/OFcHmFQh+2OtQhPoFzaIMY+HjiBiBZYOeUzyRRn
-         NvdA==
-X-Gm-Message-State: AOJu0YyQqihsTb0rTkb8kRRTK/MSMT8kYxOhGd/vbqPGtAxZ3q+6wqex
-	tGeh7xWM0dbBy87kcgyt3JFNxLrJ9Jxl5ExDF286lOpEDEk5S945YPfnARv10DA=
-X-Google-Smtp-Source: AGHT+IHiUmEP5vV9qWOaPxhYE4nHb5OXnEK/PoUJGVIJcsF2pBRvGzwEtUlNQYVoHdY4bOZYewAgqQ==
-X-Received: by 2002:a05:6a21:9185:b0:1c4:d8ec:b59f with SMTP id adf61e73a8af0-1cad7fb1c6fmr7576471637.25.1724351626953;
-        Thu, 22 Aug 2024 11:33:46 -0700 (PDT)
-Received: from [127.0.0.1] ([103.156.242.194])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7143433b11asm1679709b3a.214.2024.08.22.11.33.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Aug 2024 11:33:46 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1724407567; x=1725012367;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B3S2xMjYtX6zqEiHtaJIlne+uer2ECru6vnzpeHPzFE=;
+        b=laAfpwMQ9A4ppXpyqylooev7aaYGrV+5et0Jw1Al5SsX8rxutQI314XJ5AUA/gsyEL
+         /U480H2rgH5t/Q///B7ZZdYYG3zSSpQuwCagLtLhyXXXmwKp0u1r/CGx6zPE28/tgq+v
+         8jRinDturdqunIUw8pVdS0JzrhIFV8OM01c5QKoFh78F4pUry6NDhtkjQv0Bat6hR955
+         nGX0l0CusU79U1rFssBeMd/qKiZNtuzoKuAS7zMw0rseanoirPrUkk+FQ/iaYI2QGm/b
+         uh3/5Y+3Nh39NopiwlM0I69EWe8rjOP2xEJqBIbEoYmwUwuJEppiOYaAwJttpB1/DsqM
+         MJwQ==
+X-Gm-Message-State: AOJu0Ywjz6vdn2gQauma7/Pr8du1+13QIE9XYHE0zmPbfV1Yc7sK6M6P
+	A4cfgJnx/sLqGfcqgSbsrUpOIAn+W9RBEO9K2o1WlSlrWUoEIZ2D
+X-Google-Smtp-Source: AGHT+IEOKm+CkU5fE8QuYa2lN+RUYs8whJxReX2gMXVtCtBZgjANfJinRbSBk2gCFNx37FJzeqvtmg==
+X-Received: by 2002:a17:90b:23cc:b0:2d3:b357:7857 with SMTP id 98e67ed59e1d1-2d646bce05fmr1719634a91.16.1724407567242;
+        Fri, 23 Aug 2024 03:06:07 -0700 (PDT)
+Received: from localhost ([103.156.242.194])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d613a60f24sm3592464a91.32.2024.08.23.03.06.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Aug 2024 03:06:06 -0700 (PDT)
 From: Celeste Liu <coelacanthushex@gmail.com>
 X-Google-Original-From: Celeste Liu <CoelacanthusHex@gmail.com>
-Message-ID: <1ff7ab17-f8ed-436c-a063-e44635c4c37b@gmail.com>
-Date: Fri, 23 Aug 2024 02:33:43 +0800
+Date: Fri, 23 Aug 2024 18:05:57 +0800
+Subject: [PATCH b4] Fallback to sendemail.identity when
+ b4.sendmail-identity is undefined
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH b4] sendemail.smtpServerOption can be specified multiple
- times
-Content-Language: en-GB-large
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- Joel Granados <j.granados@samsung.com>
-References: <20240823-fix-multiple-smtpserveroption-v1-1-0c4879fcb133@gmail.com>
- <41c9424a-62d3-4ae2-ba91-e2a05071d726@gmail.com>
-In-Reply-To: <41c9424a-62d3-4ae2-ba91-e2a05071d726@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240823-feat-use-sendemail-identity-v1-1-7b9f7d0e0ae3@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAARfyGYC/x3MQQqDMBBG4avIrB2wiS3Rq4iLqL/tQJtKJi2Ke
+ HeDyw8ebydFFCi1xU4Rf1H5hoxbWdD48uEJlimbTGXqyhnLM3zin4IVYcLHyzsXCEnSxo3zFnd
+ nm8c4UD4sEbOs172joab+OE4ZNdFOcQAAAA==
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Celeste Liu <CoelacanthusHex@gmail.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1047;
+ i=CoelacanthusHex@gmail.com; h=from:subject:message-id;
+ bh=XWSOiAX8/Exz2mu+SvobfClMrO64wWUMJpcZlw7puIo=;
+ b=owJ4nJvAy8zAJfY4pvNJRPo6U8bTakkMaSfiubne/9ZcqLDEtmTD9WcxuZO0b/RNK1n38Mxbo
+ a8rCiatWcvZUcrCIMbFICumyCK28+nrZaWPPizjNZkBM4eVCWQIAxenAEyE3Ybhr+yLGetlvYJM
+ X03WyuCdv8SN16rW/FXR9Hvc5xdPcZM75svwv/RP2ZYHmieEGiacd9LjFD8n0ZgyNaq7wW2qou/
+ OaRPfsQEArdpMDw==
+X-Developer-Key: i=CoelacanthusHex@gmail.com; a=openpgp;
+ fpr=892EBC7DC392DFF9C9C03F1D15F4180E73787863
 
+To match the behavior if git sendmail better.
 
-On 2024-08-23 02:24, Celeste Liu wrote:
-> 
-> On 2024-08-23 02:02, Celeste Liu wrote:
->> In git-send-email(1):
->>
->>     The --smtp-server-option option must be repeated for each option you
->>     want to pass to the server. Likewise, different lines in
->>     the configuration files must be used for each option.
->>
->> So this config option must be specified in multivars parameter of
->> get_config_from_git() and be treated as a list.
->>
->> Fixes: 37811c93f5 ("Forward the smtpserveroption to the local command")
->> Cc: Joel Granados <j.granados@samsung.com>
->> Signed-off-by: Celeste Liu <CoelacanthusHex@gmail.com>
->> ---
->>  src/b4/__init__.py | 6 +++---
->>  1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/src/b4/__init__.py b/src/b4/__init__.py
->> index 2b1a058..1d0f520 100644
->> --- a/src/b4/__init__.py
->> +++ b/src/b4/__init__.py
->> @@ -3728,10 +3728,10 @@ def _setup_sendemail_config(cmdargs: argparse.Namespace) -> None:
->>      # Get the default settings first
->>      config = get_main_config()
->>      identity = config.get('sendemail-identity')
->> -    _basecfg = get_config_from_git(r'sendemail\.[^.]+$')
->> +    _basecfg = get_config_from_git(r'sendemail\.[^.]+$', multivals=['smtpserveroption'])
->>      if identity:
->>          # Use this identity to override what we got from the default one
->> -        sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', defaults=_basecfg)
->> +        sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', multivals=['smtpserveroption'], defaults=_basecfg)
->>          sectname = f'sendemail.{identity}'
->>          if not len(sconfig):
->>              raise smtplib.SMTPException('Unable to find %s settings in any applicable git config' % sectname)
->> @@ -3785,7 +3785,7 @@ def get_smtp(dryrun: bool = False) -> Tuple[Union[smtplib.SMTP, smtplib.SMTP_SSL
->>                  smtp += ['-f', envpair[1]]
->>          server_option = sconfig.get('smtpserveroption', '')
-> 
-> Oh. This default value is completely useless: firstly, get() will return None when mismatched, and None is false in truth testing in Python[1]; secondly, if a multivars option is not in gitconfig, it will be set to empty list in sconfig, so default value is an unreachable code. I will send v2 later.
+Signed-off-by: Celeste Liu <CoelacanthusHex@gmail.com>
+---
+ src/b4/__init__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-v2 has been sent.
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 2b1a058..5908de8 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -3727,8 +3727,8 @@ def _setup_sendemail_config(cmdargs: argparse.Namespace) -> None:
+ 
+     # Get the default settings first
+     config = get_main_config()
+-    identity = config.get('sendemail-identity')
+     _basecfg = get_config_from_git(r'sendemail\.[^.]+$')
++    identity = config.get('sendemail-identity') or _basecfg.get('identity')
+     if identity:
+         # Use this identity to override what we got from the default one
+         sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', defaults=_basecfg)
 
-> 
-> [1]: https://docs.python.org/3/library/stdtypes.html#truth-value-testing
-> 
->>          if server_option:
->> -            smtp += [server_option]
->> +            smtp += server_option
->>          logger.debug('sendmail command: %s', ' '.join(smtp))
->>          return smtp, fromaddr
->>  
->>
->> ---
->> base-commit: 37811c93f50e70f325e45107a9a20ffc69f2f6dc
->> change-id: 20240823-fix-multiple-smtpserveroption-83731eb8b4e7
->>
->> Best regards,
-> 
+---
+base-commit: 37811c93f50e70f325e45107a9a20ffc69f2f6dc
+change-id: 20240823-feat-use-sendemail-identity-98a3e58396cb
+
+Best regards,
+-- 
+Celeste Liu <CoelacanthusHex@gmail.com>
 
