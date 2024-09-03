@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EDF18E030
-	for <tools@linux.kernel.org>; Tue,  3 Sep 2024 18:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AA31D5CD2
+	for <tools@linux.kernel.org>; Tue,  3 Sep 2024 22:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725389240; cv=none; b=OrxPngDf6oW8MPGfoB2sUy6Q86qyl+/leaOXH1vK25+yPNdhA9yOSy9bQ5V3clZw1wWkjtWafAEkc+rlo+EAoWDgdIhZP1eaf2uYUfEkLRHW6d2DQe0p3XFT3ewU3XHftWLeU331PBKBXIbcvpA+YIo3jy7+IwScnRSEu3nsU2g=
+	t=1725403345; cv=none; b=slQJkzBB6ZCeWpWsQfJ0aPYqosc9vNhrHWACfu+I6mK9aGwdjvSm0adZ9SW7+Jd2ZZTsPhG2g7MwM1uDZn/gbBmP0ozy8nVdub9Az7gNbOlW61xwEHulDnZFhzynaZHJt0eJYVZQjvarzLAJAoFmePdfUJUs76KNqo7XBqaxgp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725389240; c=relaxed/simple;
-	bh=N3ZDvNLTaAdvoD0I/5ZMzMMgWibUi6+QmXD52WtjPYc=;
+	s=arc-20240116; t=1725403345; c=relaxed/simple;
+	bh=o0yTVKOU1k9PMF5GPGOEtzpfzDlTqTfA8SneR95egEA=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=bH5CYkF6zqqbIVB5jV00E+Cwd/aOh0lH7+zl8tY+n0LylULxRRpOx9uFrCs+yAwaGeUwLVYyDSbEs153sZY7RHmPPOO5fEGvOpt8J1LfYy5SM9LTkWIu3XyCNSBcQU+AMy4aw0Fjo2vHymKsMQFg4ZEGLAFSpai4nE3Pw2q+CJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VCEsPgg7; arc=none smtp.client-ip=10.30.226.201
+	 Content-Disposition; b=Vlvjny3siGL++ZhgV9CSqJ+IvLoT5fx9T6SDFduBccL5dhCy6+0m1ZZFFXXnjg7v9lL2j0PJjkbU8Cg7kKgDLdwB2PmOsSL2gvRFE2GfqaYltgtBgW3QtJ5DA+dmLk6kOAUECvn6GOd5tf4b77TDVRWDa1y+8ld2/x59awaONxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o990X8Dd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VCEsPgg7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA17C4CEC9;
-	Tue,  3 Sep 2024 18:47:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o990X8Dd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CBAC4CEC5;
+	Tue,  3 Sep 2024 22:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725389240;
-	bh=N3ZDvNLTaAdvoD0I/5ZMzMMgWibUi6+QmXD52WtjPYc=;
+	s=k20201202; t=1725403345;
+	bh=o0yTVKOU1k9PMF5GPGOEtzpfzDlTqTfA8SneR95egEA=;
 	h=Date:From:To:Cc:Subject:From;
-	b=VCEsPgg7+3SH8+nJek647a8BPJzs1VFU9NPYMVohhmkJ0Wo7Q4YnugyEKdgL6xJDG
-	 6VGFlvffIYCePU/LojsJi0p0/YPmUTkswCV8EtM1KwiAGPtyjSOVmhX9szHTV4uD/J
-	 HtqtW9apNRXKupiuueA2qYtTxV/xVLPhxoPd+DKz9BavKGPgZ7oBKOdTFvKNkrSZ0S
-	 rRtreAB9i1MeS19Q6ZsGdMsQFT4r8+5xVhjs0wKB75qGLO2yAWgO6W0QelnexKe5RW
-	 cS+kcJwT1OHtNipjCetUXzDYjR+4DJDmqCuCW/Cw2NOdh/2UHsAP2h5Vv6o5eB4VJS
-	 R/UPUySkLXoMw==
-Date: Tue, 3 Sep 2024 19:47:16 +0100
+	b=o990X8Dd9rKzPDx7C5IeRfEpeb2fpEHFc4ZUVaSO19PnvAmp0Q+PDd99M/vuNxD+o
+	 sNFew1DK+Zod0lQc7tCV2sLE0Yj9O4g78yJmAvlLcByg/CDdVGwrqZrQDlPwzUQ7XK
+	 WphszP025tylUAycsXZm/yiLq0VLaMNv1LVSY6+cjS2vtvSUNqArvsivGYtGevwlPN
+	 XfKEWaY8K7UPz2C8YkKFuVUXcPwvGUGW8NBoFtSKBUS2lZaZJ7KyGbcInOj8/6osaL
+	 zNZqEhGrbKf2pYc2N7PMUFm+TkpTrMz302GZO7JAJHLNx3qj7/7h5q+GSvE8/7Lm9A
+	 tKyCRUtJ1hGuA==
+Date: Tue, 3 Sep 2024 23:42:21 +0100
 From: Mark Brown <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: b4 prep --check for signoffs
-Message-ID: <fc6eba60-6cde-4e8c-a075-61d564c33e26@sirena.org.uk>
+Cc: tools <tools@linux.kernel.org>
+Subject: b4 send falls over sending a series
+Message-ID: <9ae3668b-666f-47d9-9d25-be0fc57b6335@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,37 +39,64 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BupyfzboG/w+k8G1"
+	protocol="application/pgp-signature"; boundary="V3ixujmVLcpokHVI"
 Content-Disposition: inline
 X-Cookie: Words must be weighed, not counted.
 
 
---BupyfzboG/w+k8G1
+--V3ixujmVLcpokHVI
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-It might be helpful for submitters if the checks implemented by b4 prep
-included a check that there's signoffs from at least the author of the
-patch and the person doing the sending.
+When attempting to b4 send from the branch:
 
-Thanks,
-Mark
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/misc.git documen=
+tation-b4-advert=20
 
---BupyfzboG/w+k8G1
+with current git b4 the patch is sent but I get the output below and the
+repository is left with the base commit checked out as a detached HEAD:
+
+Sent 1 messages
+Error tagging the revision: Could not cherry-pick the cover-less range
+Recording series message-id in cover letter tracking
+The current repository is not tracking a branch. To use b4, please checkout=
+ a branch.
+Maybe a rebase is running?
+Traceback (most recent call last):
+  File "/home/broonie/git/b4/src/b4/command.py", line 435, in <module>
+    cmd()
+  File "/home/broonie/git/b4/src/b4/command.py", line 417, in cmd
+    cmdargs.func(cmdargs)
+  File "/home/broonie/git/b4/src/b4/command.py", line 93, in cmd_send
+    b4.ez.cmd_send(cmdargs)
+  File "/home/broonie/git/b4/src/b4/ez.py", line 2132, in cmd_send
+    reroll(mybranch, tag_msg, cl_msgid)
+  File "/home/broonie/git/b4/src/b4/ez.py", line 2217, in reroll
+    cover, tracking =3D load_cover(strip_comments=3DFalse)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/broonie/git/b4/src/b4/ez.py", line 599, in load_cover
+    cover_commit =3D find_cover_commit(usebranch=3Dusebranch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/broonie/git/b4/src/b4/ez.py", line 742, in find_cover_commit
+    raise RuntimeError("Not currently on a branch, please checkout a b4-tra=
+cked
+
+--V3ixujmVLcpokHVI
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmbXWbMACgkQJNaLcl1U
-h9CQtgf/RgoU6D20Jzx1KBMYGSN9G6E1YCFLsolKo6XXr61JfzvbvAaZV9sFywNs
-kilPtPy0QdX43PO9CGRjpTyQQKdnHxReMTy9bxckOZm516/753kI00rdP0N3BzgW
-Y/ip+WAQrsVWKnUJjKTDF8nFXvSqM3FxmEROGdWQmtTLVnJaSIc7aNYOM0uuAYeo
-Qva8es2jWADgzvJnsW2BSGQgIU72rRjTGvXrokbdOdPwmsuUSlLkecMuNryL9cSo
-oyC//KBBPm87nofiKTNT67pkJRPJ2b3qjws4QBDfaQ6B4zOuMNUmQYZb+GfWCeUu
-BrwhAYwfA2m2UiSJO7gkiu3BykP5/Q==
-=gdSI
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmbXkMwACgkQJNaLcl1U
+h9CxYAf/U/4V98BqZnBwuBikGx03Wb5Sa24sFSkhBcwlPSnd0VQQBGXVjj7GV/z+
+Ls8i4HU9xD/fV0fQZXAZJszt8GU9u+v959rNuyvXAvQaDp2edz3Vo70T9wn/9+Oz
+zUk9Jc4I/Gq+L6PxMgiXlXCxsk+tmRqw/bErWBqQ0w5u7X332rv2Vh73EGRvg6yi
+BnGo0YNZv5cg0Pg6NLVMM5P0CuLRsgUwgcr+XahO+6oy1yQyL2CDOSE57shkdH3M
+eQixv+mA+ZRxm239tdhFrdmM4fue35CiKn3qdxpLtmZTgrIdTo19ZeX7PzcVtK7m
+ePankxYRR/3vCiBIAt6XBSW7zDEtng==
+=JJVT
 -----END PGP SIGNATURE-----
 
---BupyfzboG/w+k8G1--
+--V3ixujmVLcpokHVI--
