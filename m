@@ -1,78 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9DC3211
-	for <tools@linux.kernel.org>; Wed,  4 Sep 2024 03:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FCF3612D
+	for <tools@linux.kernel.org>; Wed,  4 Sep 2024 03:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725420906; cv=none; b=Qz0fdrIFRuTctVOjx6lCiOkCsULhw8DlTGAZzyng7ruHMkVZnj5cQT7cjyScS/59MuOQUgH5aQfUNdqIDVjchxHO5lZgEpygmqpiCedAfBbIKyEOGxAihfg7R13b+VVFc/6c3M7MZOqPObhRmVDjHmKGMI0DzuDAWTHfVWOwNMY=
+	t=1725421218; cv=none; b=ZpVNvgEi85KqbxYHPG+hw2A2oxYka2wDkcujeFXZi8+oLsYqBJn0eMGyLI9K/vHSUMdtSGWhwbPQTQbRCom1Gt5U0+lBcBzth2y+2hgkiQF4qEDpCGgi3cktxT5519WQv0cPfjyPokhfyrZTEWrdfcEC/0pRE4I+XdJh/d7CB8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725420906; c=relaxed/simple;
-	bh=Ki7nY28N7TRJzoYv7MpYme9B2ByfUIXCFBklzwnXy6w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s9SBpVDDLQri+1uynwowpW85GSeJRaBpGiJyUS3ZQyMIRExX/2UHniMtUkgce5wavKQfhhWIiqaw+dlkbCFG7wpm7YkdpjEq3QRmIh7awNaDyj3C31FctrvvN/UMXXJyernPANqO4SgQnx7NBvDGD9JSRwNhd8HUPwev5ZOmIvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGH2DA+e; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725421218; c=relaxed/simple;
+	bh=CqarpocYmi7GkTI4rD9uvMjQ+AW2ZIJ7/q/CeMsOBkU=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=DOdU85AY/Gx704tig+szDXYVsAcWHGYD9XA5GZgdmwkU6BrDcScWZn2mYXdgXjSIR9Vbf5d35HoxLkZyKI0l+KsZgWsKSi6BDWubNOudDXCRHCnfV5Q7q4JoJk7f8ThFgC9uIkXIykn5dBqlADxuZ2lzSXLpBIf67i8jJxoHJv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X8Q3WaT/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGH2DA+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E24C4CEC2;
-	Wed,  4 Sep 2024 03:35:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725420905;
-	bh=Ki7nY28N7TRJzoYv7MpYme9B2ByfUIXCFBklzwnXy6w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hGH2DA+eZg2xYr6CqMPi+v2/Cqr6//WjSJfmbaLf1G5HP0fhYTjSa/sQZSdgnbQ5P
-	 eNwnOljHglxHjvaBO39QNNKFndwgA08YCwJBz8dEidzrWs/PkopSU/aJeQQ/FqCa8o
-	 0KRaBMNPMeRlJhke8ZPjqoQ2qoGIglUZZ1pjAGuA=
-Date: Tue, 3 Sep 2024 23:35:04 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools <tools@linux.kernel.org>
-Subject: Re: b4 send falls over sending a series
-Message-ID: <20240903-caped-graceful-ammonite-b0ed4f@lemur>
-References: <9ae3668b-666f-47d9-9d25-be0fc57b6335@sirena.org.uk>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X8Q3WaT/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F85C4CEC2;
+	Wed,  4 Sep 2024 03:40:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725421218;
+	bh=CqarpocYmi7GkTI4rD9uvMjQ+AW2ZIJ7/q/CeMsOBkU=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=X8Q3WaT/HX7tmXyXcKuW2nhaTCdviUnFqrYyfctz4qPK7yA10lhUn9vfHaEi8pZLX
+	 v9fjUm3KMHmOnDogZNYgoWgYc5jEDK8QooZq7iCar9sBMgenCMygDjW/6DpwY0SElu
+	 OXg4hH9wrdxEVllqJdAdc3UjGqwqcPDqmZ5dwnMEFBouhYdz+28T56/pA64ir4828L
+	 jFzdDtPAHNoYr/dlFC5tmpaLQPtsso+TFa7O6KTyCPHLcv7sd3CpB/VsZBpBT+i+s0
+	 vUolSbhrRIFDF9Cck2b6+v8uxIcdTb6rQDYkNkdl67PMEIXEPnqWhz86wAV9KOpL5b
+	 Je8BadrcteRFw==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 3A2663806651;
+	Wed,  4 Sep 2024 03:40:20 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: "Kernel.org Bugbot" <bugbot@kernel.org>
+To: broonie@kernel.org, tools@linux.kernel.org, tools@kernel.org, 
+ konstantin@linuxfoundation.org
+Message-ID: <20240904-b219230-ae8f62ed5510@bugzilla.kernel.org>
 In-Reply-To: <9ae3668b-666f-47d9-9d25-be0fc57b6335@sirena.org.uk>
+References: <9ae3668b-666f-47d9-9d25-be0fc57b6335@sirena.org.uk>
+Subject: Re: b4 send falls over sending a series
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: bugspray 0.1-dev
+Date: Wed,  4 Sep 2024 03:40:20 +0000 (UTC)
 
-On Tue, Sep 03, 2024 at 11:42:21PM GMT, Mark Brown wrote:
-> Hi,
-> 
-> When attempting to b4 send from the branch:
-> 
->    https://git.kernel.org/pub/scm/linux/kernel/git/broonie/misc.git documentation-b4-advert 
-> 
-> with current git b4 the patch is sent but I get the output below and the
-> repository is left with the base commit checked out as a detached HEAD:
-> 
-> Sent 1 messages
-> Error tagging the revision: Could not cherry-pick the cover-less range
-> Recording series message-id in cover letter tracking
-> The current repository is not tracking a branch. To use b4, please checkout a branch.
-> Maybe a rebase is running?
-> Traceback (most recent call last):
->   File "/home/broonie/git/b4/src/b4/command.py", line 435, in <module>
->     cmd()
->   File "/home/broonie/git/b4/src/b4/command.py", line 417, in cmd
->     cmdargs.func(cmdargs)
->   File "/home/broonie/git/b4/src/b4/command.py", line 93, in cmd_send
->     b4.ez.cmd_send(cmdargs)
->   File "/home/broonie/git/b4/src/b4/ez.py", line 2132, in cmd_send
->     reroll(mybranch, tag_msg, cl_msgid)
->   File "/home/broonie/git/b4/src/b4/ez.py", line 2217, in reroll
->     cover, tracking = load_cover(strip_comments=False)
->                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->   File "/home/broonie/git/b4/src/b4/ez.py", line 599, in load_cover
->     cover_commit = find_cover_commit(usebranch=usebranch)
->                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->   File "/home/broonie/git/b4/src/b4/ez.py", line 742, in find_cover_commit
->     raise RuntimeError("Not currently on a branch, please checkout a b4-tracked
+Hello:
 
-bugbot assign to me
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=219230
 
--K
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (bugspray 0.1-dev)
+
