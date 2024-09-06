@@ -1,124 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748A0165F0E
-	for <tools@linux.kernel.org>; Thu,  5 Sep 2024 22:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FB515530B
+	for <tools@linux.kernel.org>; Fri,  6 Sep 2024 09:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725574820; cv=none; b=lZ28mpQDHEYS+WHJu8sTMJ43NKMF6svUpU+UxthQIEWATofLIglV1W7GaWx4bK7nNtXY+KMcB9wYAhK2BNFffC8XrXxG1sULcW0tXb35DIZ0K1PjuJs6VDbzf8mFsvNO9ZHgpW9QOnsPU7Xc69gpICAHO0ILh8Vu0Sx0mS3UVzc=
+	t=1725616235; cv=none; b=IPNumDcS5AgflaR/V+L7nXuTM4qMdXToamNSNBjCkkCpJgr28e9p6j3L1OH56FDByrkLqlSg2EDslIYGqYdUvzXtcldZLitE7+z4oRQa3uRNBuCXMUK1ugBk815dhEJs1ZtWU5mhNLFVChpKSderMJFQO5ZnVweW+y7SYj2iubc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725574820; c=relaxed/simple;
-	bh=/7VSih5sp10Terce2PDEJeC3VQorXMv0BYj7Q61SYhY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ae1pYE8mHqQWkSFzmsffvWJP7fv+goKvkpdE1DrPSL8tTCEdG5VarScsF8xmab3YNALbzFlxB48SI+I5noOtDwAcMwgSyMNekqM6cPXegsWDFfMyYRu4d4soIjnyxuZIBMkKc7huknuaPco9wqkXdz7WzcCqpb6FRzBenkZh/18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=V1/Q2RHa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725616235; c=relaxed/simple;
+	bh=lZNI3royPZyPuTYch5KGerC6cJCHXxoKW2EHyBCqV6Y=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=KDRuWXahUyd9aWCzVKZhfUyv4kqzUHT/D24CqyuEGvB7t7EZNyXWhNUXTvlF/UZZovcFjcoPhL1fTQ3qCDlAkfZKl6msJOfNddYaezIezRcRC7IO/hCvGTH3+Y7mwy9T5WqOCdwVvffjvFMxAvdnINADcUojtJCiXXBmegSBAAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m+NZFaGv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="V1/Q2RHa"
-Received: by smtp.kernel.org (Postfix)
-	id 67A23C4CEC4; Thu,  5 Sep 2024 22:20:20 +0000 (UTC)
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 0E319C4CEC3
-	for <tools@kernel.org>; Thu,  5 Sep 2024 22:20:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0E319C4CEC3
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-20573eb852aso16571545ad.1
-        for <tools@kernel.org>; Thu, 05 Sep 2024 15:20:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1725574817; x=1726179617; darn=kernel.org;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7bvESgC7dJ7aV4djic0icYv9+o0ihZYaDQrHiXAUs0g=;
-        b=V1/Q2RHa+KQcV3ospYfgfx4MjyZAeCMGLxBc7SBz2ocg1mEDHDK1ckKO1TX+SrEv/X
-         MsDFmnksAfrOgqGph3rha017tkbImccZjrT+loBz/i0CchfuQzp6geSYTBnpS9R0eb6N
-         jDOPWywRsOFlLu8qYSuMp+ZpNpmqHoIDDS40vaw9AUkH2pHQAH4gYRb9dJZK//kR+NgP
-         IQ5lMNadvN68w9HeJnElir26LXbNZW3cBY9JWp/7TZl6ZQrZjEZAStNHKamp8fEu52UU
-         BB9S3V1ZJYmcg7cP7DLvQ8oEDTCdlZUIdU7CTL0/VH5d7LwUc6b5ar17iUpiTrF7C+N7
-         RVEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725574817; x=1726179617;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7bvESgC7dJ7aV4djic0icYv9+o0ihZYaDQrHiXAUs0g=;
-        b=ZjlPVOko6CE5MdvJ4UcISIIIh+YO+drP26jUN60lgiKrLtT31OSfkrc9AB23rqvPBI
-         +g3V+bjxp6Y1ViHMln6aDT251ScQDhQ7iW+YYDrWswnOvy5TbN21u8BKfeVzCSirtom+
-         kWrMgSw75NlU7aVcT3v25cPLBk44TtB2o+4KLZ+qvdnCcUpsUKlb3cJzMNOziwnxJFuu
-         8SBRzLockSo1wqeE27kGctPBiTE68hHoxMhIvjiIy7MOw7dp58RNvk1pk8N8A8wE0GZg
-         UFa6o5qZ1Jq+CIrBqVLaTag3BatI1CKe0RSzHfOoPXdvftPBasOIldi8B3Agjc8grJ4t
-         /ReQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVk6QftCRAmeUstYByq5eJSshoChl3P8iXz7xK1WseY3XYd4ibfs1571eegt3Zv2xyFp8TOog==@kernel.org
-X-Gm-Message-State: AOJu0YyyEWcQ8gG/PQMzqhMxe6WZi0Bbnuh9QXHgORsRqh1DJ3BZ38wY
-	rWQHIvvwYIZRxaRePfFnFfigYqJLgiqelZd8vji9nKywc0daJUCl/21I4vSAH0c=
-X-Google-Smtp-Source: AGHT+IGEC+5CVI46QZRV65hgVh9iODuUw3iJZk8RGxBX1h+dGtgaNXfmIA6WspOq2hGMLlMWT9P2Cw==
-X-Received: by 2002:a17:902:ec91:b0:206:9c9b:61bb with SMTP id d9443c01a7336-206b7ce742fmr103047425ad.6.1725574817217;
-        Thu, 05 Sep 2024 15:20:17 -0700 (PDT)
-Received: from localhost ([71.212.170.185])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-206aea533b8sm32743225ad.225.2024.09.05.15.20.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 15:20:16 -0700 (PDT)
-From: Kevin Hilman <khilman@baylibre.com>
-To: Louis Chauvet <louis.chauvet@bootlin.com>, "Kernel.org Tools"
- <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, Thomas Petazzoni
- <thomas.petazzoni@bootlin.com>, Louis Chauvet <louis.chauvet@bootlin.com>
-Subject: Re: [PATCH b4] Remove message-id from cc list
-In-Reply-To: <draft-7ho75avvwk.fsf@baylibre.com>
-References: <20240828-remove-invalid-cc-v1-1-b29dbb379b28@bootlin.com>
- <draft-7ho75avvwk.fsf@baylibre.com>
-Date: Thu, 05 Sep 2024 15:20:16 -0700
-Message-ID: <7hikv9agkf.fsf@baylibre.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m+NZFaGv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A83C4CEC4;
+	Fri,  6 Sep 2024 09:50:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725616234;
+	bh=lZNI3royPZyPuTYch5KGerC6cJCHXxoKW2EHyBCqV6Y=;
+	h=Date:To:Cc:From:Subject:From;
+	b=m+NZFaGvfyGJLUVlzszme7YXtFEG+24eb/Y/v8AvNtCRF5P9ejLTxH7KGrc1o9KDe
+	 u7uP5LM/SpCFzK1IEVdanSxHiMc4teCdPnHgATCXCg7M4cPW9vD3d/MuWmbN1+SIoF
+	 oEuVTvGByGvaG9XrqCuQ0MJJ5K4uBP7+W5oFJCYu6W42GHsTD/DHffutBg5snduhny
+	 F+gtFjjCJYVSCwPXLHy+L24/VsAerzTfZjJr8PM5i1uojGiini1WUIvy/5NKiA5bE5
+	 aYBtOaX2AM5mmffYUJ5lvIictidDL7ZgWQDjRW7sbf85X9jX6j4lrUiPblAjL/wibm
+	 tlfipMmTOuAbw==
+Message-ID: <38790e98-d814-4b15-9c1d-0e8bfc5fc654@kernel.org>
+Date: Fri, 6 Sep 2024 11:50:32 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird Beta
+Content-Language: en-GB
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+From: Matthieu Baerts <matttbe@kernel.org>
+Subject: b4 send: pre-flight checks: add reminder for "b4 trailers"
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Kevin Hilman <khilman@baylibre.com> writes:
+Hi Konstantin,
 
-> Louis Chauvet <louis.chauvet@bootlin.com> writes:
->
->> As the algorithm to detect mails to add in CC is very simple, it also
->> include the prerequisite-message-id to CC as they look like mails. In
->> order to avoid this kind of issue, filter out prerequisite-message-id
->> lines.
->>
->> Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
->> ---
->>  src/b4/__init__.py | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/src/b4/__init__.py b/src/b4/__init__.py
->> index ec230e7ace66..b0d91c0e4017 100644
->> --- a/src/b4/__init__.py
->> +++ b/src/b4/__init__.py
->> @@ -1990,7 +1990,7 @@ class LoreMessage:
->>  
->>      @staticmethod
->>      def find_trailers(body: str, followup: bool = False) -> Tuple[List[LoreTrailer], List[str]]:
->> -        ignores = {'phone', 'email'}
->> +        ignores = {'phone', 'email', 'prerequisite-message-id'}
->>          headers = {'subject', 'date', 'from'}
->>          links = {'link', 'buglink', 'closes'}
->>          nonperson = links | {'fixes', 'subject', 'date', 'obsoleted-by', 'change-id', 'base-commit'}
->>
->> ---
->> base-commit: 99b128995f27cd9aa6fa8adf7588f339919ac14d
->> change-id: 20240828-remove-invalid-cc-eecbd7d43b3d
->
-> I have not been able to test (yet), but I'm guessing this should fix this
-> bug[1] I reported a couple weeks ago.
+Thank you again for this great tool!
 
-I can now confirm that this patch fixes this bug[1].
+It is great to have 'b4 send' warning us when we forgot to edit the
+cover-letter, add people in to/cc, and do some various checks.
 
-Thanks Louis for the fix!
+Do you think 'b4 send' could also warn us when we need to execute 'b4
+trailers -u' when we send newer versions?
 
-Kevin
+When I need to send new versions, I don't often have to do fetch
+code-review trailers, but then when I should, I tend to forget :)
 
-P.S. is there some bugbot magic to connect this thread to an existing bug?
-
-[1] https://bugzilla.kernel.org/show_bug.cgi?id=219138
+Cheers,
+Matt
