@@ -1,69 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6882E322A
-	for <tools@linux.kernel.org>; Fri,  6 Sep 2024 16:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32175322A
+	for <tools@linux.kernel.org>; Fri,  6 Sep 2024 16:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725640517; cv=none; b=QgiRarFb+AMhRRiG/x0UhHF7qy9pgTFv1Pb+A8tlYGynIDqUGNe9ZXbycYvQTTkgzVAty3nr7zJpmhNH4VjYmVNJknUg0HiTYCrzxVFn7BtsU7LKZ+f7/dHOxKU5bBg/GQdPz7gZNKYE10KEIdnucCVlynFNCbzuoZmeO+vo18g=
+	t=1725640973; cv=none; b=h48lIhIhTrZk3qNHU1HQoYgebFIGFMPvgjRVrXOVtBv9ngYPKpGuBQ5qW/RjHFQjr4QUgaw2KU8XTYWzjN5jxmMmlhIPXIhvrbauq1UkpyT2pQVeupzwKSd+7Vc7Rq649W/M6tIjw+OOSu7D+5pZ5R1Quqn2KXtXhJ9tINxeXs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725640517; c=relaxed/simple;
-	bh=2O7Aec+aQ2uqbK/IdX6qlNDWpNwC2xR3rXlJV2xgSH4=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=uYaFGCnFUh0qZ68Iqxv+hLFjcH3kZAa4LHNR+dSyUFXxx3HXWaQsLOI9aiw+rFZF+MFzup45E6F1w/KeoCRacd2lXiLugg4utAfIoMpaa3RBxs9J1PHXbvQEsexPX9a2TMtIIqeZM+ik9Zj0l89DVBRYwzcRGv8gz6aoI8o9Gp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N+V+PKTZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725640973; c=relaxed/simple;
+	bh=uDviWqu4VUYWq7ugNcYpONlDtljtuYMSZ/KnZsKE9T0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=feK1Ot5BTNi1oPpm6qtuKeken7eGYVWq6nduDBt9G6a3EpKJVfQOVNEbIrNh8AENapPYwD6E/Xp9EkyuwRTUOPQdqXZTMtPjXw+Z+MheryaxdMPbXo0+k9U6D3vSNDUBUd6wPXmlr8jtopW9aF2f7/H8lup7jJPadCAt4lRTNX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2GrZhU/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N+V+PKTZ"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2GrZhU/"
 Received: by smtp.kernel.org (Postfix)
-	id 10BB1C4CEC6; Fri,  6 Sep 2024 16:35:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA94DC4CEC4;
-	Fri,  6 Sep 2024 16:35:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725640517;
-	bh=2O7Aec+aQ2uqbK/IdX6qlNDWpNwC2xR3rXlJV2xgSH4=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=N+V+PKTZTLneOQUNZqil6yV87JkDBVQ3fEN0W6ymkxaaxG6L1/2ET+EhhJuN4fI1V
-	 UfaCnU7cXO/5bhaFuHjlueaX3r2EGRcAw2RcCFH/VDWgXKomyIvLCpPkP+xQNTtCOn
-	 t1tsSg3WPB1Rdy6Jjbnl1pIH40WZgTo/OOqWLK6/E5Up8KL7ixaWm2MTScCoHI8HYA
-	 aaLJwRS0gQpt0TRUkRHP+YH6jkSRIPSxwL+Jh+PvaA2qlK6BI9JM9C9MuSgVVCSh85
-	 VrPUV3JeNur4YOY1qDsWkzJi6XJPdYFmiJYJHFak++gLxq/bZKT7yYfnGyjMTy7GHO
-	 Hb+TYOVxn79+A==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id F01E83806644;
-	Fri,  6 Sep 2024 16:35:18 +0000 (UTC)
+	id D89E9C4CEC7; Fri,  6 Sep 2024 16:42:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D53C4CEC4;
+	Fri,  6 Sep 2024 16:42:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725640972;
+	bh=uDviWqu4VUYWq7ugNcYpONlDtljtuYMSZ/KnZsKE9T0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q2GrZhU/Jucp3xzXpUMPHTc/EIbuHo/rbGReAob+pX1EOH/qhkK+BeW1AjTa2mZ2v
+	 tCWqe+RKrFybe0Qpe7CHc1uPIomlUET6irHHcCT1garotGFfqPo9q0lHGaBBm21qPh
+	 8tJ+FK7Zqa4dgXLOmxBi+D3LX871P4lPo8+ZYnXc=
+Date: Fri, 6 Sep 2024 12:42:49 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Kevin Hilman <khilman@baylibre.com>
+Cc: tools@kernel.org
+Subject: Re: b4: prerequisite patch-ids generated in wrong order
+Message-ID: <20240906-quizzical-mule-of-security-175bd7@lemur>
+References: <7h4j7y32gk.fsf@baylibre.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: "Kernel.org Bugbot" <bugbot@kernel.org>
-To: konstantin@linuxfoundation.org, tools@kernel.org, khilman@baylibre.com
-Message-ID: <20240906-b219163c2-9ae5886026d7@bugzilla.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 In-Reply-To: <7h4j7y32gk.fsf@baylibre.com>
-References: <7h4j7y32gk.fsf@baylibre.com>
-Subject: Re: b4: prerequisite patch-ids generated in wrong order
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: bugspray 0.1-dev
-Date: Fri,  6 Sep 2024 16:35:18 +0000 (UTC)
 
-Konstantin Ryabitsev writes in commit cb14d1fdbd054988773234624906ff39d8a6311e:
+On Mon, Aug 05, 2024 at 05:43:55PM GMT, Kevin Hilman wrote:
+> Also, a dumb Q: why isn't the prerequisite message-id enough?  Why does
+> it also try to generate all the prerequisite-patch-id fields?
 
-ez: fix prereq expanding for series specified by message-id
+This is because the only "official" mechanism of specifying prerequisites is
+via prerequisite-patch-id trailers (see git-format-patch(1)).
 
-When we retrieve a thread from lore, the messages in it can be in an
-arbitrary order. Make a LoreSeries() out of them first to make sure that
-we always output prerequisite-patch-ids in the correct sequence.
+I also expect this mechanism is much easier for CI systems, because looking up
+a dependency via the patch-id is the simplest and quickest way to retrieve a
+patch, which can then be safely cached locally without having to re-query lore
+again.
 
-Reported-by: Kevin Hilman <khilman@baylibre.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219163
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
-(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=cb14d1fdbd05)
--- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (bugspray 0.1-dev)
-
+-K
