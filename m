@@ -1,118 +1,118 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F2F19EEA1
-	for <tools@linux.kernel.org>; Mon, 23 Sep 2024 16:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF4C2AF1C
+	for <tools@linux.kernel.org>; Thu, 26 Sep 2024 14:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727107487; cv=none; b=kFSnR+QWx/U6uSk481fJcJECJgUMaRpnB08h6TLZSu4/eFh0tHwazpQaHMYJyShNw82TEffno8LEw+tRG3jE7ykpq9wTofyYD2EgxViBPu/GVtVa3iD3HwQju5LGP2R13naiKtA/wN8KOSQ3K00sPLvSLzKhl0f/RHkDlzVKZjw=
+	t=1727360508; cv=none; b=mYyw+TVW3g6TRGgrmd2CLIy7chHd+ORzPvoWrENCjPb27g+1ws8ffGeIFhaRAxxpRrAyequlo3tox8VSESgGQByp/OiQM+v5JMI4nXbl6Gg8VVOvP/XTQJha7p5vnGHOFQKrx4rJGlDffDQsO4Mb+NhO43y519sQakrr3yFCb8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727107487; c=relaxed/simple;
-	bh=C6ik0iWhjMhhkhkuS+v+rBsitvuhuX3ib9o54MxTn7c=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DE4f4T7uirfLvS4IhiG3iDS5e78C8xU3PstHnr81eaTQvCnBzx84jrmcEoFYu/iYspTxuxOj9XEFIHMGuYKIRevar1pipUWHI8nFG5L3i+V2Ylwz+9wUtgIcAdITs72u6su/UGyCaQcQyhAyU/Z7fFgzkprnAIw3udqut9/HLdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rGci2cBZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1727360508; c=relaxed/simple;
+	bh=cSo/Zr3F9T1gp3mEOm1/FgY1i7Y6oRUXtvwgjmdSr+c=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Z/zGSP5TS8ap0ngWjEUrm5cyQxA6gToqyNSqi4lkZJufcc6EZcXetdnvRPOxJT+33xxIz+5+noo4yv86LrINiPHZtF02qRYlTvY5udUk4ezK4P3R1iCOzKfMKKTU7fAehvCowe2yQjmmKJ0TvloiEweLI27DCGFKJJg3Q65otR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V5euGUfq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rGci2cBZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V5euGUfq"
 Received: by smtp.kernel.org (Postfix)
-	id 36F33C4CECD; Mon, 23 Sep 2024 16:04:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62117C4CEC4;
-	Mon, 23 Sep 2024 16:04:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727107486;
-	bh=C6ik0iWhjMhhkhkuS+v+rBsitvuhuX3ib9o54MxTn7c=;
-	h=From:Date:Subject:To:Cc:From;
-	b=rGci2cBZ3fUb5gPXmBhEje7nG7mpd6DLzb/yBf1fWsNbPPVLmYncP+bx1j8EE2JIt
-	 a3r+qNgpswhij/W3xHIGf3iMaqp0hxOyARemYCTNga0+Pwu1VGgPbVB9gxSxcxH556
-	 X9rmaUOfB7eUireTaHxcL9mMB+FoTVOqDlTRiUfwz/zjk1q3PX52PzJHdZkYaMxevA
-	 PtgysNSLDTH3B2o2mK2mbUG+BIjKAw2Wyu5n8RgosmUS3BQgPdPJBFxoM7SsRvbxiG
-	 Do/6fX4C5Uo1I4TiklIiBbeufrECK//0P2NOU2L+UnRI4w+YHysyt28wOA7oJsHqEX
-	 tT6s6xkDCqs7g==
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Date: Mon, 23 Sep 2024 18:04:31 +0200
-Subject: [PATCH b4 v2] send: generate patches with --no-mailmap
+	id 29FCDC4CEC5; Thu, 26 Sep 2024 14:21:48 +0000 (UTC)
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 472E1C4CECD
+	for <tools@kernel.org>; Thu, 26 Sep 2024 14:21:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 472E1C4CECD
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a93c1cc74fdso11810366b.3
+        for <tools@kernel.org>; Thu, 26 Sep 2024 07:21:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727360505; x=1727965305; darn=kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cSo/Zr3F9T1gp3mEOm1/FgY1i7Y6oRUXtvwgjmdSr+c=;
+        b=V5euGUfqZHfe/+no013URlA63ocLS0RxRTxxZyHTYGKO6RtI3Pwt+TNoiKBGw8vAiF
+         JMh/c6o5e6WB6Nm+/O1lVBlDyR5Myxg/a6TtdcChOu0zWVQxCvu+O2JiIIBhqujt6r4C
+         w8QEa47F7ixOtTC18GBOLaaPOdLdyY5if0dTS7WTNkidyNl7WiJItXKXkzVZ8DJaHIKO
+         pyGCYrz08kROzu9gF1q2C/Et+hv0eG4ka32RX0ZO0OuJALAUP04dXpi8P+mI6GULECxl
+         rYyQOWqYQpIcKjYUxnz2UoCELqqsBcVRxcrV6luefZedNF5oTSVlpyGlsStXg04smZkl
+         4lFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727360505; x=1727965305;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cSo/Zr3F9T1gp3mEOm1/FgY1i7Y6oRUXtvwgjmdSr+c=;
+        b=woHlVuFXWJ+5xowUjvYCec2jxQH2Gc0Msa2MEwOfMaOGAamKSa/ib20kHiiEyUR5oj
+         Di7i4G7XZ66859qQDnLEYo6r6akyVRY3n+HQXQZaOYdYsrim4uW2xDCU1Aq2TjOTpN58
+         LNCsS6aqMIN+06hgNJx9k10itiuMVlThW0hAD1sqxyLK5rqsykteWlvF2N+S7jdiKIDR
+         mG3nGKQEy+sHQGppXfLlbxmOoo9Fp7N+rna7TSaLZT1PsoPTe04OuLasYssvwNtOHciU
+         dd+NHQ8caVcQuGcAjap0+xypvFvRjDFxrH0NnOuZkM5mkZtQkxxtI1lQ7FP2z6y+ThoH
+         Xsng==
+X-Gm-Message-State: AOJu0YxzhGUmkg6WScv62seeA/P2HN4Ot4f0dxLR+eU1dsYL+LxoMuHZ
+	ejnFrVsIMiI++OkUVSV3Hwxagkh1/2OEvQBH9WpSOlzRpbM4qYUmFWpJ4Q==
+X-Google-Smtp-Source: AGHT+IHU+wMTfzulDctTFnt3D194/KAUX85h5rMhPdVex/FcmsYDesCB0HV/oyap6y2/CjXUUyyb6Q==
+X-Received: by 2002:a17:907:f199:b0:a90:348f:fad7 with SMTP id a640c23a62f3a-a93a03b45d1mr595368866b.38.1727360504957;
+        Thu, 26 Sep 2024 07:21:44 -0700 (PDT)
+Received: from orome (p200300e41f147300f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f14:7300:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c27c5af5sm3387966b.70.2024.09.26.07.21.44
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Sep 2024 07:21:44 -0700 (PDT)
+Date: Thu, 26 Sep 2024 16:21:43 +0200
+From: Thierry Reding <thierry.reding@gmail.com>
+To: tools@kernel.org
+Subject: b4 tracking lost during conflict resolution
+Message-ID: <nsewup2yha6322sharul7nlknvw24xk6urorp62v64plnoxjzj@zrkx77u4ztuv>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240923-send-mailmap-v2-1-e2c62f1de79b@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAI6R8WYC/22NQQ6DIBREr2L+ujSAGLGr3qNxAfWjP1Uw0Jg2h
- ruXsO7yzWTenJAwEia4NSdEPChR8AXkpYHnYvyMjKbCILlUXEvOEvqJbYbWzewMnbamHbTquIM
- y2SM6+lTdA6yCsWQLpXeI3/pwiNr8lx2CCda7tuv1YFFZcX9h9LheQ5xhzDn/AHnnV/2tAAAA
-X-Change-ID: 20240820-send-mailmap-ef8ba398450f
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2229; i=matttbe@kernel.org;
- h=from:subject:message-id; bh=C6ik0iWhjMhhkhkuS+v+rBsitvuhuX3ib9o54MxTn7c=;
- b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBm8ZGdFPjamkN/BZYS1NTH7subyDpUI8hcv1GH/
- dBa4JhxdLyJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZvGRnQAKCRD2t4JPQmmg
- czuCD/9ijjBtN4TrTxM+Kawl035wEu3f6qluaX+SuVlMwslpKgxSwb+VXPX4LamdacDPbn2pMTz
- Cih1nqKKxbwlKflZ2GNOEYEviAWerdkVv0ZXAmEhP8xOVebcG+fbiKxSoQPw+GWkhV+NUjDoPbd
- gtsFUvU3hZkdjIGE/IA5xYrSMmfdTDlMoBzmk79PIzK0tu3kG632QiTRt75/srnXjnYnRhwnyPF
- g0MO9CEkhUSYF+fA0ctJ0NnoiTpFuPlTSpFPyVSDDoa8v9FXCLdGA2BEuJQQdmuqvzG/VzlEpup
- JquhWYJiy1REFacoJGajU1P+0aMlIa6uP3b9V1bVfYlrMvMlj6Qj5w7YxIwFzS1qAzAmxCAKkqb
- zRjbAKeUzYOWhyRXSwW5YpXU/g/D4+bQZtvZHnLBkkKc1rLYc4yen8MD1YmHLhFWnmk6twzuMcP
- tuL1AYKTEIbHco+X1Oq/H5OG7KbC15+m251yU6IyDks7rY2uB0QTMqf36hGwHH/t4kzjmFiWR9R
- E3+npMp6i2GIYLRZgwAZ9gQZ7OwEo36716ueag4bHUlxb8CmcH4qfDweji/hKHL8//63JCNQMKV
- eZzZJPLMF19SnEK3kL3pGreDFaeoL9BxSfzTsdCVCsF+p1tPvHJ/JTzYr1w1j7TEGbUf9DqJK4E
- kkOQHzmjodiaDXA==
-X-Developer-Key: i=matttbe@kernel.org; a=openpgp;
- fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="joc46m4bkmv5groc"
+Content-Disposition: inline
 
-b4 uses 'git show' to generate patches. By default, this command will
-use the mailmap file to convert author and committer names and email
-addresses if there is a match.
 
-That's good to display the last identity when looking at old commits in
-the history, but it doesn't sound like a good idea when sending patches.
-'git format-patch' doesn't use the mailmap file, it currently doesn't
-even support it, and it is not planned to support it apparently [1].
-Note that 'git send-email' might support a new '--mailmap' option, but
-it looks like this option will not be enabled by default [2].
+--joc46m4bkmv5groc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-In my case, I had to send some patches, including one from someone else
-who has to use the email address from his company, but has an entry in
-the mailmap file to his @kernel.org email address. When I sent his
-patch, b4 seamlessly converted his email address, and caused checkpatch
-to complain, because the From and the SoB entries were different.
+Hi,
 
-Here, we ensure the conversion is not done, to avoid any surprise once
-the emails are sent.
+I often end up applying patches that end up with small conflicts. After
+resolving and continuing application of the series using regular git am
+--continue I see that b4 shazam looses context and no longer tracks the
+series, so after successfully applying the series I end up having to
+manually update patchwork and send out thank you emails.
 
-Link: https://lore.kernel.org/all/20240813-jk-support-mailmap-git-format-patch-v1-1-1aea690ea5dd@gmail.com/ [1]
-Link: https://lore.kernel.org/all/20240827-jk-send-email-mailmap-support-v3-0-bec5ba9be391@gmail.com/ [2]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
----
-Changes in v2:
-- Rebased and resolved conflicts.
-- Link to v1: https://patch.msgid.link/20240820-send-mailmap-v1-1-7f35789be4b1@kernel.org
----
- src/b4/__init__.py | 1 +
- 1 file changed, 1 insertion(+)
+It's not a huge deal, but I think it'd be a nice quality of life
+improvement if b4 learned how to deal with this. If b4 shazam needs to
+be run instead of git am for continuing after a conflict resolution,
+that's certainly something I can adapt to.
 
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index 811bbcaf028d78224242433eac9fdbeb03a306b3..a650d114bcc1d0fb534fda3735101458062a8386 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -3463,6 +3463,7 @@ def git_range_to_patches(gitdir: Optional[str], start: str, end: str,
-                 '--binary',
-                 '--patch-with-stat',
-                 '--encoding=utf-8',
-+                '--no-mailmap',
-                 commit,
-             ],
-             decode=False,
+Thanks,
+Thierry
 
----
-base-commit: dedf88cb947bab87c418b49d975df11f83621692
-change-id: 20240820-send-mailmap-ef8ba398450f
+--joc46m4bkmv5groc
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Best regards,
--- 
-Matthieu Baerts (NGI0) <matttbe@kernel.org>
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmb1bfMACgkQ3SOs138+
+s6GfSQ//cfCJchAyEh3Kanh26Fp7IA1e9MV69MkmVW/qU9DI/sq3/yyhp6ygwmNy
+5VYsqjjeuio/fhGh5dqgbAWF5Oh/4/x8J2Vwn1vrCxppCQaGs/h3yq+dq1LbipDd
+zHrrNQCSwhGIjUmdm8biowL2uP2wZQOJCRhm47ROdTTQR96qjb/bzmTdEqAnq/yQ
+sd7HmzPoi/6XWHncwYRFrmAyLyv6XQk98kIGpQmVoM6Gf4wmwa69ruAIN8gANLg4
+kO/9H3zc13OAxwzyDcaOsxeH1Tr3jwFM9dzszGu8BovrIlTSUpAsENBamRzfJBaR
+jFKduRnU+Dk2lbm/wA8n7EfhENJ6hSuvMvcxarZlXLeKAWCXU5eCcfaVnSIg6ZiZ
+B1RLAhOJ7H5UJIQ/6jglGDkO9cwelNSRKi5s3j7pBfZGiZmA4dWzPlNYezm5nrVe
+W761XoOwqjK48T8hEKVui6HivonT59IXFdBILwTne2iT9QZkYXdsaeZuvsnrBHzT
+yc/gr78Ni6Avgn1987C57WJqvnuTQDClMKBAjmFxXrvNWKS87peYZgYm8atkZtua
+cpSKrNd5K/tKYygoCseqgLyVatD7m3ZrL805wq1BIuVBMZEImh1ZIgEVtzUnYb8M
+yOZDUB4mKJX73ei/p8lraMylqs+jn8WX5GIdyRIgJiCJdzcIp30=
+=Vb06
+-----END PGP SIGNATURE-----
+
+--joc46m4bkmv5groc--
