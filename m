@@ -1,118 +1,177 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF4C2AF1C
-	for <tools@linux.kernel.org>; Thu, 26 Sep 2024 14:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610AB1607AC
+	for <tools@linux.kernel.org>; Thu, 26 Sep 2024 17:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727360508; cv=none; b=mYyw+TVW3g6TRGgrmd2CLIy7chHd+ORzPvoWrENCjPb27g+1ws8ffGeIFhaRAxxpRrAyequlo3tox8VSESgGQByp/OiQM+v5JMI4nXbl6Gg8VVOvP/XTQJha7p5vnGHOFQKrx4rJGlDffDQsO4Mb+NhO43y519sQakrr3yFCb8M=
+	t=1727371793; cv=none; b=rRZC25cpdXIJQ0NFx4ZIuFPrD+QDIG6BcjO+hiP9nuOMW1AhgSLp01HLMB5eidaEHYDItB6b+4qwDdM8saV1SQjDg5jkva5dqi+bUSRqA4unogqmqgAhZaeLbIw+2pxyFfqRrm1uld5UDrzsjB5nU3cXm1d8IQrRBYvR34fK1vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727360508; c=relaxed/simple;
-	bh=cSo/Zr3F9T1gp3mEOm1/FgY1i7Y6oRUXtvwgjmdSr+c=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Z/zGSP5TS8ap0ngWjEUrm5cyQxA6gToqyNSqi4lkZJufcc6EZcXetdnvRPOxJT+33xxIz+5+noo4yv86LrINiPHZtF02qRYlTvY5udUk4ezK4P3R1iCOzKfMKKTU7fAehvCowe2yQjmmKJ0TvloiEweLI27DCGFKJJg3Q65otR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V5euGUfq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1727371793; c=relaxed/simple;
+	bh=lkrzZFQsJryyepe9cl5TeveCqr68wQZnBvW7tPBgUEw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Vo/UaQnoI0OqHsIiyiUOOMsoLPjeD7bXszu1m+Z4y30yxSV9EtSEDBGPdc5qxvKgvKnMW1bcSJu/SOu4UtJWRJKU014E1E6g4VRKrw4Y+04YxEXmvFs227+QHJJ58ZYgL6n4oAqUXi1h311S4hOV0trxOG8Wxlu0U1LA/M3dgs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cUDaLbA9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V5euGUfq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cUDaLbA9"
 Received: by smtp.kernel.org (Postfix)
-	id 29FCDC4CEC5; Thu, 26 Sep 2024 14:21:48 +0000 (UTC)
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 472E1C4CECD
-	for <tools@kernel.org>; Thu, 26 Sep 2024 14:21:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 472E1C4CECD
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a93c1cc74fdso11810366b.3
-        for <tools@kernel.org>; Thu, 26 Sep 2024 07:21:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727360505; x=1727965305; darn=kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cSo/Zr3F9T1gp3mEOm1/FgY1i7Y6oRUXtvwgjmdSr+c=;
-        b=V5euGUfqZHfe/+no013URlA63ocLS0RxRTxxZyHTYGKO6RtI3Pwt+TNoiKBGw8vAiF
-         JMh/c6o5e6WB6Nm+/O1lVBlDyR5Myxg/a6TtdcChOu0zWVQxCvu+O2JiIIBhqujt6r4C
-         w8QEa47F7ixOtTC18GBOLaaPOdLdyY5if0dTS7WTNkidyNl7WiJItXKXkzVZ8DJaHIKO
-         pyGCYrz08kROzu9gF1q2C/Et+hv0eG4ka32RX0ZO0OuJALAUP04dXpi8P+mI6GULECxl
-         rYyQOWqYQpIcKjYUxnz2UoCELqqsBcVRxcrV6luefZedNF5oTSVlpyGlsStXg04smZkl
-         4lFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727360505; x=1727965305;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cSo/Zr3F9T1gp3mEOm1/FgY1i7Y6oRUXtvwgjmdSr+c=;
-        b=woHlVuFXWJ+5xowUjvYCec2jxQH2Gc0Msa2MEwOfMaOGAamKSa/ib20kHiiEyUR5oj
-         Di7i4G7XZ66859qQDnLEYo6r6akyVRY3n+HQXQZaOYdYsrim4uW2xDCU1Aq2TjOTpN58
-         LNCsS6aqMIN+06hgNJx9k10itiuMVlThW0hAD1sqxyLK5rqsykteWlvF2N+S7jdiKIDR
-         mG3nGKQEy+sHQGppXfLlbxmOoo9Fp7N+rna7TSaLZT1PsoPTe04OuLasYssvwNtOHciU
-         dd+NHQ8caVcQuGcAjap0+xypvFvRjDFxrH0NnOuZkM5mkZtQkxxtI1lQ7FP2z6y+ThoH
-         Xsng==
-X-Gm-Message-State: AOJu0YxzhGUmkg6WScv62seeA/P2HN4Ot4f0dxLR+eU1dsYL+LxoMuHZ
-	ejnFrVsIMiI++OkUVSV3Hwxagkh1/2OEvQBH9WpSOlzRpbM4qYUmFWpJ4Q==
-X-Google-Smtp-Source: AGHT+IHU+wMTfzulDctTFnt3D194/KAUX85h5rMhPdVex/FcmsYDesCB0HV/oyap6y2/CjXUUyyb6Q==
-X-Received: by 2002:a17:907:f199:b0:a90:348f:fad7 with SMTP id a640c23a62f3a-a93a03b45d1mr595368866b.38.1727360504957;
-        Thu, 26 Sep 2024 07:21:44 -0700 (PDT)
-Received: from orome (p200300e41f147300f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f14:7300:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c27c5af5sm3387966b.70.2024.09.26.07.21.44
-        for <tools@kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 07:21:44 -0700 (PDT)
-Date: Thu, 26 Sep 2024 16:21:43 +0200
-From: Thierry Reding <thierry.reding@gmail.com>
-To: tools@kernel.org
-Subject: b4 tracking lost during conflict resolution
-Message-ID: <nsewup2yha6322sharul7nlknvw24xk6urorp62v64plnoxjzj@zrkx77u4ztuv>
+	id F323CC4CECD; Thu, 26 Sep 2024 17:29:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29783C4CEC6;
+	Thu, 26 Sep 2024 17:29:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727371792;
+	bh=lkrzZFQsJryyepe9cl5TeveCqr68wQZnBvW7tPBgUEw=;
+	h=From:Date:Subject:To:Cc:From;
+	b=cUDaLbA9m7lUIP17C+vzl1t7MISUlhR+o9SU8jIk20dHykhyxumHOWBpOgDu3ONIc
+	 UeC2x0g9avJq9ayNKh2EiVfu3qo8HK9/a8gE0WD97j3vZalRz6BXkuq4adqkpc/xXs
+	 9PR2bj0wiIxDCHDguLMHZ4UqGZ6pDYvIy4TzDqHYch1jXSs3qpBCej4+8h5m3IGX8z
+	 Idd4T8LeSKnRcIR7Po6yQTfr8u6P+R3M/BJrGmvg/4PiDfpgW0A6vI4Wmsx5R1uy99
+	 YfMdWol2CzptGUF1ULg4Rxl2sIJp79TrJ58wncMEc6web873jTJ9ljNfQE+RcCwx7X
+	 CiQ99JoF9avPQ==
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Date: Thu, 26 Sep 2024 19:29:32 +0200
+Subject: [PATCH b4] config: fix multivals config from cmdline
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="joc46m4bkmv5groc"
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240926-cmdline-config-override-multivals-v1-1-80ec93afc5a1@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAPuZ9WYC/x3NQQrDIBBA0auEWXcgSpDaq5Quoo7pgNEyNhIIu
+ Xsky7f5/4BKwlThNRwg1LhyyR3qMYD/znkh5NANetTTaLVBv4bEmdCXHHnB0kiEA+G6pT+3OVU
+ kY51X9mliUNA7P6HI+/14g5vgc54X6XgQIHcAAAA=
+X-Change-ID: 20240926-cmdline-config-override-multivals-e69bc1986fd1
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+X-Mailer: b4 0.15-dev-f2b2e
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4302; i=matttbe@kernel.org;
+ h=from:subject:message-id; bh=lkrzZFQsJryyepe9cl5TeveCqr68wQZnBvW7tPBgUEw=;
+ b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBm9ZoPLl8UydMEULleH3W/b1x5og3fA39iuGiKT
+ Q4d6wocb46JAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZvWaDwAKCRD2t4JPQmmg
+ c5ZPEADu552xfUjWonwmCF9lAJrLgyQiHW0fTayFC7nlbUIizGGdgD3zAcaKsIceVu3J1ub5NAo
+ 7MUykbZylULkhbRxrs8rL/UK708p/0N0pz8fXHku8OFczuPBJidn6wuTHvukIP8LRieQQg9DDOf
+ ZWrj+8TgcHK1EUrMCO0s2pGZRNB5Slsn9sG7sF9KNcTJjulY+1eqHN85ClOF7x+xgYsKAS24Xhc
+ uT0D5xgFZMNvQBrlXomQL2r9u0HWfhY8GGDbLpD1imX8sz1T5YHBDJbRYEO04LIQWTUd4blzmjQ
+ dbC4J0PWl0IVJ8MAccUtkAwjOQuICvRbLqVsrT3K7d4KxROQnYDnREN1mgKZk0MrCfQYDcwDpOj
+ 0bk31Thlu6V3MZQPjqGU939mGfZmEUsz1rs2f2kr6H4uideMvEaa+ees/0JmY5uyRnsIPPGm2p0
+ jwqO934MuxIVcwXtSzgF6sQoVU/Ky0vV9I3FqpgOoIegJdMI/OQH1rauvvjqKI7kyorf7TD2Knh
+ 4oAuffBCQr9V5us8quQyEim/uON7kTIsodaoQ4sB1XWK1M/wc0JY6/CN6i4wTL809Nxi5LqtYY+
+ aGgjDrepOgQX81LBRlmF0GOP/xQNEMh5nZnZBhnm+JXPMfd2FNkkkTORl/51o2ZCptkNtFh4tQz
+ gTBZdAx6xwS8Yzw==
+X-Developer-Key: i=matttbe@kernel.org; a=openpgp;
+ fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
 
+Specifying prep-perpatch-check-cmd from the command line didn't work:
 
---joc46m4bkmv5groc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+  $ b4 -c "b4.prep-perpatch-check-cmd=true" prep --check
+  config prep-perpatch-check-cmd true ['keyringsrc', 'am-perpatch-check-cmd', 'prep-perpatch-check-cmd']
+  Checking patches using:
+    t
+    r
+    u
+    e
+  ---
+  Traceback (most recent call last):
+  (...)
+  FileNotFoundError: [Errno 2] No such file or directory: 't'
 
-Hi,
+The fix is similar to the one from commit d5f3956 ("Fix
+prep-perpatch-check-cmd in .b4-config"): 'prep-perpatch-check-cmd' is a
+special type, and the given string should not be considered as a list of
+characters.
 
-I often end up applying patches that end up with small conflicts. After
-resolving and continuing application of the series using regular git am
---continue I see that b4 shazam looses context and no longer tracks the
-series, so after successfully applying the series I end up having to
-manually update patchwork and send out thank you emails.
+Note that here, the arguments set via 'b4 -c' are overridden, existing
+lists are not appended.
 
-It's not a huge deal, but I think it'd be a nice quality of life
-improvement if b4 learned how to deal with this. If b4 shazam needs to
-be run instead of git am for continuing after a conflict resolution,
-that's certainly something I can adapt to.
+This commit treats all "multivals" types the same way, including
+"smtpserveroption" from the "sendemail" section.
 
-Thanks,
-Thierry
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+---
+ src/b4/__init__.py | 32 +++++++++++++++++++++-----------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
---joc46m4bkmv5groc
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 811bbcaf028d78224242433eac9fdbeb03a306b3..b9b4ea2fa1c0baa6a3def7935597da7dc72df8d7 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -2809,18 +2809,27 @@ def setup_config(cmdargs: argparse.Namespace):
+     _setup_sendemail_config(cmdargs)
+ 
+ 
+-def _cmdline_config_override(cmdargs: argparse.Namespace, config: dict, section: str):
++def _cmdline_config_override(cmdargs: argparse.Namespace, config: dict, section: str,
++                             multivals: Optional[list] = None):
+     """Use cmdline.config to set and override config values for section."""
+     if not cmdargs.config:
+         return
+ 
+-    section += '.'
++    if multivals is None:
++        multivals = list()
+ 
+-    config_override = {
+-        key[len(section):]: val
+-        for key, val in cmdargs.config.items()
+-        if key.startswith(section)
+-    }
++    section += '.'
++    config_override = {}
++
++    for key, val in cmdargs.config.items():
++        if key.startswith(section):
++            key = key[len(section):]
++            if key in multivals:
++                if key not in config_override:
++                    config_override[key] = list()
++                config_override[key].append(val)
++            else:
++                config_override[key] = val
+ 
+     config.update(config_override)
+ 
+@@ -2923,7 +2932,7 @@ def _setup_main_config(cmdargs: Optional[argparse.Namespace] = None) -> None:
+             pass
+ 
+     if cmdargs:
+-        _cmdline_config_override(cmdargs, config, 'b4')
++        _cmdline_config_override(cmdargs, config, 'b4', multivals=multivals)
+ 
+     MAIN_CONFIG = config
+ 
+@@ -3782,11 +3791,12 @@ def _setup_sendemail_config(cmdargs: argparse.Namespace) -> None:
+ 
+     # Get the default settings first
+     config = get_main_config()
+-    _basecfg = get_config_from_git(r'sendemail\.[^.]+$', multivals=['smtpserveroption'])
++    multivals = ['smtpserveroption']
++    _basecfg = get_config_from_git(r'sendemail\.[^.]+$', multivals=multivals)
+     identity = config.get('sendemail-identity') or _basecfg.get('identity')
+     if identity:
+         # Use this identity to override what we got from the default one
+-        sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', multivals=['smtpserveroption'], defaults=_basecfg)
++        sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', multivals=multivals, defaults=_basecfg)
+         sectname = f'sendemail.{identity}'
+         if not len(sconfig):
+             raise smtplib.SMTPException('Unable to find %s settings in any applicable git config' % sectname)
+@@ -3796,7 +3806,7 @@ def _setup_sendemail_config(cmdargs: argparse.Namespace) -> None:
+     logger.debug('Using values from %s', sectname)
+ 
+     # Note: This can't handle identity, need to use sendemail.key directly
+-    _cmdline_config_override(cmdargs, sconfig, 'sendemail')
++    _cmdline_config_override(cmdargs, sconfig, 'sendemail', multivals=multivals)
+ 
+     SENDEMAIL_CONFIG = sconfig
+ 
 
------BEGIN PGP SIGNATURE-----
+---
+base-commit: dedf88cb947bab87c418b49d975df11f83621692
+change-id: 20240926-cmdline-config-override-multivals-e69bc1986fd1
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmb1bfMACgkQ3SOs138+
-s6GfSQ//cfCJchAyEh3Kanh26Fp7IA1e9MV69MkmVW/qU9DI/sq3/yyhp6ygwmNy
-5VYsqjjeuio/fhGh5dqgbAWF5Oh/4/x8J2Vwn1vrCxppCQaGs/h3yq+dq1LbipDd
-zHrrNQCSwhGIjUmdm8biowL2uP2wZQOJCRhm47ROdTTQR96qjb/bzmTdEqAnq/yQ
-sd7HmzPoi/6XWHncwYRFrmAyLyv6XQk98kIGpQmVoM6Gf4wmwa69ruAIN8gANLg4
-kO/9H3zc13OAxwzyDcaOsxeH1Tr3jwFM9dzszGu8BovrIlTSUpAsENBamRzfJBaR
-jFKduRnU+Dk2lbm/wA8n7EfhENJ6hSuvMvcxarZlXLeKAWCXU5eCcfaVnSIg6ZiZ
-B1RLAhOJ7H5UJIQ/6jglGDkO9cwelNSRKi5s3j7pBfZGiZmA4dWzPlNYezm5nrVe
-W761XoOwqjK48T8hEKVui6HivonT59IXFdBILwTne2iT9QZkYXdsaeZuvsnrBHzT
-yc/gr78Ni6Avgn1987C57WJqvnuTQDClMKBAjmFxXrvNWKS87peYZgYm8atkZtua
-cpSKrNd5K/tKYygoCseqgLyVatD7m3ZrL805wq1BIuVBMZEImh1ZIgEVtzUnYb8M
-yOZDUB4mKJX73ei/p8lraMylqs+jn8WX5GIdyRIgJiCJdzcIp30=
-=Vb06
------END PGP SIGNATURE-----
+Best regards,
+-- 
+Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
---joc46m4bkmv5groc--
