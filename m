@@ -1,177 +1,282 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610AB1607AC
-	for <tools@linux.kernel.org>; Thu, 26 Sep 2024 17:29:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727371793; cv=none; b=rRZC25cpdXIJQ0NFx4ZIuFPrD+QDIG6BcjO+hiP9nuOMW1AhgSLp01HLMB5eidaEHYDItB6b+4qwDdM8saV1SQjDg5jkva5dqi+bUSRqA4unogqmqgAhZaeLbIw+2pxyFfqRrm1uld5UDrzsjB5nU3cXm1d8IQrRBYvR34fK1vI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727371793; c=relaxed/simple;
-	bh=lkrzZFQsJryyepe9cl5TeveCqr68wQZnBvW7tPBgUEw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Vo/UaQnoI0OqHsIiyiUOOMsoLPjeD7bXszu1m+Z4y30yxSV9EtSEDBGPdc5qxvKgvKnMW1bcSJu/SOu4UtJWRJKU014E1E6g4VRKrw4Y+04YxEXmvFs227+QHJJ58ZYgL6n4oAqUXi1h311S4hOV0trxOG8Wxlu0U1LA/M3dgs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cUDaLbA9; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8FE158DDF
+	for <tools@linux.kernel.org>; Fri, 27 Sep 2024 20:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=10.30.226.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1727470365; cv=fail; b=qGdKLn25yLoLjdhnRFuMb5g3QdzKcyOKYg5BIBIW5HWeSLkZ5JNQSsJRZ7Iw+SZNvnP9CVLoYQAiHtfwt/RDC+EluuXaKmR4JSw0HFO9wBk8AeUSaUgNkvX4418TAzN9dcY6YjYZB7/3+urH706VIXKlbBbSmdWnH4iGa+Xevno=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1727470365; c=relaxed/simple;
+	bh=5ywvQj7rH+aLzvOZl+v3MgF/YDKObjDHTR76jCvVEsw=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=TtgtEaeHNAV+Ae9hziUY0llnAbCSZ0gEiLApiVcz9LcbrhxiD5OKclRiPgoawaMTgVVc3+2kmG+JKS6TjBdYPjfepd0bBm9Rt1hoQ3D9GdrgkAAJ6tQ02KnKvX6HAejA9I/xLjYePtp08Ht6qp/3wEtCRJV+9uF4b4qfuAnjKks=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NLxf9OA5; arc=fail smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cUDaLbA9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NLxf9OA5"
 Received: by smtp.kernel.org (Postfix)
-	id F323CC4CECD; Thu, 26 Sep 2024 17:29:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29783C4CEC6;
-	Thu, 26 Sep 2024 17:29:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727371792;
-	bh=lkrzZFQsJryyepe9cl5TeveCqr68wQZnBvW7tPBgUEw=;
-	h=From:Date:Subject:To:Cc:From;
-	b=cUDaLbA9m7lUIP17C+vzl1t7MISUlhR+o9SU8jIk20dHykhyxumHOWBpOgDu3ONIc
-	 UeC2x0g9avJq9ayNKh2EiVfu3qo8HK9/a8gE0WD97j3vZalRz6BXkuq4adqkpc/xXs
-	 9PR2bj0wiIxDCHDguLMHZ4UqGZ6pDYvIy4TzDqHYch1jXSs3qpBCej4+8h5m3IGX8z
-	 Idd4T8LeSKnRcIR7Po6yQTfr8u6P+R3M/BJrGmvg/4PiDfpgW0A6vI4Wmsx5R1uy99
-	 YfMdWol2CzptGUF1ULg4Rxl2sIJp79TrJ58wncMEc6web873jTJ9ljNfQE+RcCwx7X
-	 CiQ99JoF9avPQ==
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Date: Thu, 26 Sep 2024 19:29:32 +0200
-Subject: [PATCH b4] config: fix multivals config from cmdline
+	id 916F3C4CED1; Fri, 27 Sep 2024 20:52:44 +0000 (UTC)
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 365EBC4CEC9
+	for <tools@kernel.org>; Fri, 27 Sep 2024 20:52:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 365EBC4CEC9
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1727470364; x=1759006364;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=5ywvQj7rH+aLzvOZl+v3MgF/YDKObjDHTR76jCvVEsw=;
+  b=NLxf9OA5Oigk+tQ+EAksf+1ef8Dh1lPOh+2PuzxQkvTrwfigw7GhNjQS
+   OM4KjN9MRjgu0tNOhHmfPOHgqYE9ACVpxPXMxNRdvzGQC9I0h2IgwreeY
+   Sbv/PrfA4brhItiJR3NPTcYvbr0O4nNfdfZSxmew4rqIEMN3TXsQ+uBVb
+   TWCdCwdVtJDuaP8dG0KyUiocjsnS/6kdXNLpHIdXtwQ1G5WUN+KQV+arb
+   cnA+Z56ssU7BVQ9s/yp/y/3dDATQKwiFjhpOCSa53J46TZ/VgVeUjtYkO
+   6JsOTmxtD9pq8PW98YAHH+TFC9vX4arzRpw2fbLht4aOtFjmXETU+cFWq
+   w==;
+X-CSE-ConnectionGUID: hYIVEhl+SHe7lEq4QfeMEw==
+X-CSE-MsgGUID: G9OWy1RFQzuxvBuEYdPzdQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11208"; a="26759886"
+X-IronPort-AV: E=Sophos;i="6.11,159,1725346800"; 
+   d="scan'208";a="26759886"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Sep 2024 13:52:43 -0700
+X-CSE-ConnectionGUID: MyaqfEtkRE+BExgNYngDJw==
+X-CSE-MsgGUID: /DAowAMkSD+ce8HvlBiW5w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,159,1725346800"; 
+   d="scan'208";a="72324653"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+  by fmviesa007.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 27 Sep 2024 13:52:43 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Fri, 27 Sep 2024 13:52:42 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Fri, 27 Sep 2024 13:52:41 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Fri, 27 Sep 2024 13:52:41 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.170)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 27 Sep 2024 13:52:41 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dX7RHhyCnLlbnhzZLNqeihYEcWypj08Jpao+9YIV3EEL/PiOnQVJLvOpQ/VrnG1UZJi9JD5unRRPrXjewxqymvy5G3T9NK/rC126yxO4SmEmo6t9+V80ixi8TZ6v5Sni85fDV+wLIRQwd/1neckVv0N32Ti/hDzmy9zSwK3H5zW/vH76AhyKDbDRrDyCnnh2yxWH3h+NFd5P9tRE2oL6DlPx6dcblJYei81PmcM5odE9BBeIxbKoqWIj5Fxx73PC8mflemdJnBxBnHaTo/fsmlniZ2x9spqhNugowV636BdDS0WoUmkwa3AM1MYWFmJoriUNTsoFzq0hMABt5umMqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=O9BskF0fyDWA1a14eyuKcaPYZN8AjfBlu6nqhlZ2+tI=;
+ b=ItXvKtIqGkfmt4GJlh1EV1YKc6/3s/ki+mL/Hut4/L+fNd6l6oUVkmjlzyAng9M1YvJOoJX82gBRUDgKub7cxkpT/m8K+MXR9q2hiQdMGw5D3pS1sib2SHXjApVxOHPcJ6dIU+qRU4h8Z9p192B43doZkAHlZS3dCrXVDxNB2FBI2RCSlEJN42uvPyctXe1a0GqoKjhfhCIij/Z7JHnHpSfSZRAynMRMEQEpSwkkPPhfrOhwCX9LoQKyMLW9oKHOljNX7plWM01gQEPHn6DOUyNjdfNyc5da6B4wkFMsuI4CuaHdDIE7y062pnG7n3ztkZFNf4a4pXTLRsnC7PwnnA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH8PR11MB8107.namprd11.prod.outlook.com (2603:10b6:510:256::6)
+ by LV2PR11MB6024.namprd11.prod.outlook.com (2603:10b6:408:17a::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7982.27; Fri, 27 Sep
+ 2024 20:52:39 +0000
+Received: from PH8PR11MB8107.namprd11.prod.outlook.com
+ ([fe80::6b05:74cf:a304:ecd8]) by PH8PR11MB8107.namprd11.prod.outlook.com
+ ([fe80::6b05:74cf:a304:ecd8%7]) with mapi id 15.20.7982.022; Fri, 27 Sep 2024
+ 20:52:39 +0000
+Date: Fri, 27 Sep 2024 13:52:36 -0700
+From: Dan Williams <dan.j.williams@intel.com>
+To: "Linux regression tracking (Thorsten Leemhuis)"
+	<regressions@leemhuis.info>, Dan Williams <dan.j.williams@intel.com>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, Linux regressions mailing list
+	<regressions@lists.linux.dev>
+CC: LKML <linux-kernel@vger.kernel.org>, "stable@vger.kernel.org"
+	<stable@vger.kernel.org>, <tools@kernel.org>
+Subject: Re: [regression] frozen usb mouse pointer at boot
+Message-ID: <66f71b1452d7a_964f22940@dwillia2-xfh.jf.intel.com.notmuch>
+References: <3724e8e8-ab71-4f64-8ba1-c5c9a617632f@leemhuis.info>
+ <2024091128-imperial-purchase-f5e7@gregkh>
+ <66ef853de5f16_10a0a2946e@dwillia2-mobl3.amr.corp.intel.com.notmuch>
+ <66f229fc4daa9_2a86294ec@dwillia2-xfh.jf.intel.com.notmuch>
+ <38620c47-62ea-40b6-a7b3-afee9a3238a3@leemhuis.info>
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <38620c47-62ea-40b6-a7b3-afee9a3238a3@leemhuis.info>
+X-ClientProxiedBy: MW2PR16CA0010.namprd16.prod.outlook.com (2603:10b6:907::23)
+ To PH8PR11MB8107.namprd11.prod.outlook.com (2603:10b6:510:256::6)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240926-cmdline-config-override-multivals-v1-1-80ec93afc5a1@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAPuZ9WYC/x3NQQrDIBBA0auEWXcgSpDaq5Quoo7pgNEyNhIIu
- Xsky7f5/4BKwlThNRwg1LhyyR3qMYD/znkh5NANetTTaLVBv4bEmdCXHHnB0kiEA+G6pT+3OVU
- kY51X9mliUNA7P6HI+/14g5vgc54X6XgQIHcAAAA=
-X-Change-ID: 20240926-cmdline-config-override-multivals-e69bc1986fd1
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-X-Mailer: b4 0.15-dev-f2b2e
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4302; i=matttbe@kernel.org;
- h=from:subject:message-id; bh=lkrzZFQsJryyepe9cl5TeveCqr68wQZnBvW7tPBgUEw=;
- b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBm9ZoPLl8UydMEULleH3W/b1x5og3fA39iuGiKT
- Q4d6wocb46JAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZvWaDwAKCRD2t4JPQmmg
- c5ZPEADu552xfUjWonwmCF9lAJrLgyQiHW0fTayFC7nlbUIizGGdgD3zAcaKsIceVu3J1ub5NAo
- 7MUykbZylULkhbRxrs8rL/UK708p/0N0pz8fXHku8OFczuPBJidn6wuTHvukIP8LRieQQg9DDOf
- ZWrj+8TgcHK1EUrMCO0s2pGZRNB5Slsn9sG7sF9KNcTJjulY+1eqHN85ClOF7x+xgYsKAS24Xhc
- uT0D5xgFZMNvQBrlXomQL2r9u0HWfhY8GGDbLpD1imX8sz1T5YHBDJbRYEO04LIQWTUd4blzmjQ
- dbC4J0PWl0IVJ8MAccUtkAwjOQuICvRbLqVsrT3K7d4KxROQnYDnREN1mgKZk0MrCfQYDcwDpOj
- 0bk31Thlu6V3MZQPjqGU939mGfZmEUsz1rs2f2kr6H4uideMvEaa+ees/0JmY5uyRnsIPPGm2p0
- jwqO934MuxIVcwXtSzgF6sQoVU/Ky0vV9I3FqpgOoIegJdMI/OQH1rauvvjqKI7kyorf7TD2Knh
- 4oAuffBCQr9V5us8quQyEim/uON7kTIsodaoQ4sB1XWK1M/wc0JY6/CN6i4wTL809Nxi5LqtYY+
- aGgjDrepOgQX81LBRlmF0GOP/xQNEMh5nZnZBhnm+JXPMfd2FNkkkTORl/51o2ZCptkNtFh4tQz
- gTBZdAx6xwS8Yzw==
-X-Developer-Key: i=matttbe@kernel.org; a=openpgp;
- fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR11MB8107:EE_|LV2PR11MB6024:EE_
+X-MS-Office365-Filtering-Correlation-Id: a9b610b3-4aa1-4969-22b9-08dcdf3652ae
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?bDJYVytla3daWGRVTk1iSmcwRVRkcG1NUGZEM3dxcmtIOHNjdWVwV2NyVGVk?=
+ =?utf-8?B?cFNSbzd3R1BoZ1E2Unhjbm5qRFZySzdXQStrSmY5d2IrWExmdFhvamhrMVJ3?=
+ =?utf-8?B?cTJZM2hrcm9CdlJkUVRCMlMxMys3NmE5dXlsdjVUYjFXTkFQRHdaL1k5cUlO?=
+ =?utf-8?B?d2FTbVBraGcxc3BlMk5nSDJ0Y0lHN3M4SUwzUFNyckV3UVJUcHdDaUl3ZEdl?=
+ =?utf-8?B?aHNKYWdnY21vUzc2Mks5OUFvVnBSSWI1dVNNaG82K0wzenZ2OVE1R00rdGQ4?=
+ =?utf-8?B?amRkQUg4Ry8ySWlYa0xvSjdCdEhUY0RnTHBTdm4zcGsvaEFPYlJxelFOUG9n?=
+ =?utf-8?B?Q1lSQTFFN2laYjladnJqT3hSUDlSYkpDK2pHSmhlWTFLbXYzSlRVWTY5elNn?=
+ =?utf-8?B?UEFOdGFqVGNGbnBYQi9FUTVBNlFwYUJpbmZQN3k4aFlyVk8zam1lVkE2SDVI?=
+ =?utf-8?B?S3pIUm1WUnJ2aHZHWGMxcEtsQnk0YXd3Nm1kaFp2RHdFTVVTcGN4Wm5HWWVo?=
+ =?utf-8?B?VHBqZlhYZWV3eUhWdzhidFFWL21BZ0JsODlGVDE1MzNPVm1SSFI3MlYzK0JZ?=
+ =?utf-8?B?cGxUZ2NvM0RQbzFiUFFKbU82dEZUazZmSjNBazlnTWxiR215VjZxMnBDNzhi?=
+ =?utf-8?B?NkJ4NVJCYnJiTWtnUDZkaC9uQ3JLWEI4U0lWa1hhamdsWWp6MCt4SFd0RHlo?=
+ =?utf-8?B?ZGxJTnlsZGU3SlQ2TUhhMnY0Z2QvalZFRGRJcmtpRWJNVURyNWdQb2pjQXpl?=
+ =?utf-8?B?YzZ2dWtKTGgrTXpxSXF5M05mdGZvVktGSk1UZ25GWERaeUJlc0Fwd3FoeUF6?=
+ =?utf-8?B?RDdWU044a3VaazE5MENtazdPOWRqemthQjBTQndySnVtTlFnd2t6aERFZU9P?=
+ =?utf-8?B?akNqY3FqNTM4L1NEcmFKLzV4aGRreHdTMVFmU0xkUjQ3MXNCZVh3U0EwSFRw?=
+ =?utf-8?B?WjNWQXJNYU1vUTI5aUdyeW9LZDMwZmRVdzRJSExjblZRdVB4Mld0MUdUYVoz?=
+ =?utf-8?B?cWZjamZCRzVOcjFmSVVaeGgrUGUyQ1Z1ckpBZFBrMWpCTTJHTXhON0I4cnBF?=
+ =?utf-8?B?bzhGYjBGWjBqT0xpR05CNjVzcW96NHIwVjdRdGd1Z3hTYWZGQ0ZRdWRrcStX?=
+ =?utf-8?B?VjdvdnNORWMxQXhHSmdDaG5uUlVmWkpaZ3l5Z3AwVER4UndSeTU0VWRRaHVC?=
+ =?utf-8?B?bFhzdlB3b3BjSE9QMGxieXYvcmg0MEV0MWhJbTNiMzJvVnF4S2V6V2NhODg0?=
+ =?utf-8?B?TnNYajZmWU9IQSt5OGdDcVoxbjltcm5KWmMzNXRTUHp4VFdOVkZWSXhtdVdJ?=
+ =?utf-8?B?Q2QzVW9uTm4zSVFSNGczTWdXcnNjU1hxNERxN3NnQWZNRUFrYXEzcFVjSncy?=
+ =?utf-8?B?dzJ1NlVBSlJNdHREczhaZ1hDL3g1eS9GNGw4Z09kR1EzSERmOXJKZ01wRHlr?=
+ =?utf-8?B?NnhodGVEakFHbGREd2ZhSzhGRUxLTVN4RnBzQ0hQNy85Tk5XKzMxZTJML25l?=
+ =?utf-8?B?YzEwK0xMenQ4RittZWMvWDczM2tTQ1RHWWFGSUkxWWZOOUsrbGY4aHgrZSta?=
+ =?utf-8?B?WDZ2dXdsa1Y4SjByNDJoL2NwYVMrVWJ6MDJnd0pyQ0pJT3dlWVhzaGtqSGNa?=
+ =?utf-8?B?TkpmUXluL1NkZlZyRFJlVXgyODhjb044SnFhalVkYnlOcURoV0IvQm5jeWFl?=
+ =?utf-8?B?ZFJYT1Z6TkQyYUtGdUVnUnBTYnhFSENiU0pWS1pOU2VvemdkR3lOaitnPT0=?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR11MB8107.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NHVldDRpVGVIb2hGalVRZDVXTGNzeVozYXQzY3BYTExJaEhMOFlydnc5YmJI?=
+ =?utf-8?B?NDh5YU5WYTF2SEZ5ME1QQURBUi9wWm1kWWZDYXFhRyt6aXk1QVV6NXdOeHNr?=
+ =?utf-8?B?R3VKTHh5NXp4K24yS1pnUVpvOHBVUVVEcXdsL0U4ZXBhbVZNNjFpYXpCT1Zy?=
+ =?utf-8?B?VlZTbHNVQ1NDTzlsb0F4QmpZeU03MG9GSXJxcVBRV0JWdVhzcHdoTWZQa0dl?=
+ =?utf-8?B?bG0wNkM0TlpsWWdPWFNkVGpJNzJKYmoydUc3djkxUHJHbW9VN0JvOURrcUNU?=
+ =?utf-8?B?YVVlRjlkSmtqU1FUSWZZOXc3V3laRythTFZrRVNLb1BEclF4YTh4dW5idUVW?=
+ =?utf-8?B?NnBCM0ZqZW1HOEFWVXRBNnFFdExGellPRTJSK2xZaHBaY2hXSFZKdGE0UzNU?=
+ =?utf-8?B?REJtNW90NnBBQ2hlT0xIT2t3U05sRXA3TzBzWjZ1UnlOdkJGUTJjcVNLWGw2?=
+ =?utf-8?B?b0hibkg0M29XTDdNLzNwcmlmOE9aNWdrSzIxdnRqeE1VSmlZbHZ0U2JjdTFY?=
+ =?utf-8?B?bjQ0N3hCYkFOUlJaNjc5SXZmNVRsdXdvaTU5eDhzUlg1ME1Wb0ZpNytYdzda?=
+ =?utf-8?B?Wm9HUk0wUndhWUw2cjZrOHhESjhiZmpYZTdyQUk1TFNDdWV1RjcrSlUrcUpu?=
+ =?utf-8?B?eDBYeXpnNnN2SWMxeFpLOGxTcEtIUUpmMnJJcjFVeWJnSWZUUmhhUlByYXJn?=
+ =?utf-8?B?Znh0blVlUTg5bjRrb29hZ2pWeXJNYU9TbnVjRFFieUJWbmZId2hWcHVOUm9r?=
+ =?utf-8?B?K3Mvd3dueVI5U0szeklaeGFlL0hqTnkwbVdhOTZtYXVJdmEzMmc0bnkrcGx1?=
+ =?utf-8?B?MUpTNGpaUzJlZkQ4Nmo3S2c0amZpVzQ4SU1wTW4ybi9pY1FPdHRjZmM0ayt3?=
+ =?utf-8?B?SXdIN0ZiTzZTcUtqMWIza2tyODdTNjVCRXlLbmhQR2FJdzhKZ3A0WDFxQUdZ?=
+ =?utf-8?B?YkJMa05HRURiSU9NdDFrdzc3WjdTYmhvdS9RN0ZkZVpwTElqVDhDc0hlNnJT?=
+ =?utf-8?B?MlVOZVl1bzJrRzVyQnJJUWlET0NxN2UxejJNTnZMU09ySC9JUWkzVnRCMEpO?=
+ =?utf-8?B?bUhlSElKY2ExY3pFM3FLNGZzYm9kZVFydnd3Z3R3WFhLZWNGYUp4SUFTaEZX?=
+ =?utf-8?B?MjJHZFBFVVFRcFMrdUllaVhJdmZRUFR1TUZVZFhuYlhvaHhxT0xrTjlkS1pD?=
+ =?utf-8?B?eVlIdzlMNmRTQmNaWm9GbXMwNTh3bEpQVVpCZklWQ3U5YUg0d0E0QmxtbDBG?=
+ =?utf-8?B?UUJnMHdPL200bWRTejdHVmZmK1N1TklnM0ZTR2ZxOExJM0drdkJIMzhZRXlu?=
+ =?utf-8?B?VW43aE5nTldhb3IrOTkvWUFVaE8yb2ZhOTEwbVkvd0lOdDJCcUJpZEk2Rm5s?=
+ =?utf-8?B?b2MzdU1KdjdNc1EyZlBhNHB4MHBqS0ZyTDRiOVVJeldSZnVDZ2FPU09sSUx5?=
+ =?utf-8?B?b08za2NCdi9xem1UREZQczV6NEc5R1poTE1vM0FhcVNmY3dKRWd5TUdMaytG?=
+ =?utf-8?B?ME54eFVvdjUzdXI3V0NkeGg4K2xRVlBEZHZ0aE1JYUpVUExISTVoUFFJZ09T?=
+ =?utf-8?B?dFF1bGFqNVdBTGhFMnpDUWhvT2Jic1NtNDlEVTBpZmYrTXFYcTI5NFlkZ0dH?=
+ =?utf-8?B?OUliWjA2ZTk5WlJCTm4wTGlrM3RFQnJOS0J6S1RaeERnQlJBdjgvQXc3cjhh?=
+ =?utf-8?B?Z2Foc2QyVlRhckE1VWEvVzhuTURpa1hRRHZXemJ0V1FjK0s3SkNnUE05bkc5?=
+ =?utf-8?B?KzBHZDFIY05xRCtJcjZoRjVCMUV3WFNlZ0xuRmpjMHJtUTQ0L0RhRTdubVU0?=
+ =?utf-8?B?ajhGdTMyOTBsMFlOYVRUMDR1cGx5QU9GY0lnNERDZmFPdWw1RDFxTUVETXFq?=
+ =?utf-8?B?MXJjbFhQeUIwWUhaMk9hNmwxdTNIWlBTa09hRzNrQXMyYU10UEdjZkw5U2tn?=
+ =?utf-8?B?QzM3ZVhqa09LUVVEYUJuME0wbk9nZEhzSXl6UTFSVlc4YUhPdGpxRU91TzJv?=
+ =?utf-8?B?Z1FQZmlySDNNZ0cwbDd6TEhqSEJtMUlOaTdtUU8vaGdESG5hQkdaZ3JVejRo?=
+ =?utf-8?B?cHJoYThOSGhGczJBNE5XSFYzdnpqTFU2UHRhendJVFVqUWxZZXVDR3g3cHMy?=
+ =?utf-8?B?U3lDRk9qd0hPWkZJYWc2U3ltSkVYOUxibDQ5NWQ3NTljSldMUVVLMzJkVHA1?=
+ =?utf-8?B?dGc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: a9b610b3-4aa1-4969-22b9-08dcdf3652ae
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB8107.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Sep 2024 20:52:38.9696
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: S3xrqBnjikZNVkV2C4y2SNoPGTli0XgIZBRMJFKjySEBFTMB62zuu12UIGCzWGLn2TQN/39pgBFb+QKEHGqXA7XoDmn3B3EVBCXpd/dL2jE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR11MB6024
+X-OriginatorOrg: intel.com
 
-Specifying prep-perpatch-check-cmd from the command line didn't work:
+[ add tools@kernel.org for bugzilla bridge mention ]
 
-  $ b4 -c "b4.prep-perpatch-check-cmd=true" prep --check
-  config prep-perpatch-check-cmd true ['keyringsrc', 'am-perpatch-check-cmd', 'prep-perpatch-check-cmd']
-  Checking patches using:
-    t
-    r
-    u
-    e
-  ---
-  Traceback (most recent call last):
-  (...)
-  FileNotFoundError: [Errno 2] No such file or directory: 't'
+Linux regression tracking (Thorsten Leemhuis) wrote:
+> On 24.09.24 04:54, Dan Williams wrote:
+> > Dan Williams wrote:
+> >> Greg Kroah-Hartman wrote:
+> >> [..]
+> >>>
+> >>> This is odd.
+> >>>
+> >>> Does the latest 6.10.y release also show this problem?
+> >>>
+> >>> I can't duplicate this here, and it's the first I've heard of it (given
+> >>> that USB mice are pretty popular, I would suspect others would have hit
+> >>> it as well...)
+> >>
+> >> Sorry for missing this earlier. One thought is that userspace has a
+> >> dependency on uevent_show() flushing device probing. In other words the
+> >> side effect of taking the device_lock() in uevent_show() is that udev
+> >> might enjoy some occasions where the reading the uevent flushes probing
+> >> before the udev rule runs. With this change, uevent_show() no longer
+> >> waits for any inflight probes to complete.
+> >>
+> >> One idea to fix this problem is to create a special case sysfs attribute
+> >> type that takes the device_lock() before kernfs_get_active() to avoid
+> >> the deadlock on attribute teardown.
+> >>
+> >> I'll take a look. Thanks for forwarding the report Thorsten!
+> > 
+> > Ok, the following boots and passes the CXL unit tests, would appreciate
+> > if the reporter can give this a try:
+> 
+> Somehow I apparently became a "bugzilla-man-in-the-middle interface" yet
+> again... But whatever! ¯\_(ツ)_/¯
 
-The fix is similar to the one from commit d5f3956 ("Fix
-prep-perpatch-check-cmd in .b4-config"): 'prep-perpatch-check-cmd' is a
-special type, and the given string should not be considered as a list of
-characters.
+Oh, sorry about that Thorsten, for some reason I thought we were living
+in this new world that Konstantin mentions where mailing-list to
+bugzilla communication is automated. Hopefully that arrives soon.
 
-Note that here, the arguments set via 'b4 -c' are overridden, existing
-lists are not appended.
+I very much appreciate the help here and thank you for the hard work
+you put into taking care of regressions!
 
-This commit treats all "multivals" types the same way, including
-"smtpserveroption" from the "sendemail" section.
+> 
+> To forward the latest comment from the ticket:
+> 
+> """
+> --- Comment #11 from brmails+k@disroot.org ---
+> Good news!
+> 
+> I think the proposed patch by Dan Williams fixes the issue.
+> 
+> I have tested it with v6.6.52 and v6.10.11. I haven't been able to
+> recreate the
+> issue with those modified kernels even once.
+> 
+> The patch can be applied to v6.11.0 and v6.10.11 out of the box. For
+> v6.6.52 I
+> had to slightly modify it as the line
+> 
+> #define SYSFS_GROUP_INVISIBLE   020000
+> 
+> doesn't exist in /include/linux/sysfs.h in v6.6.52 hence the patch
+> looking for
+> that line fails on that file.
+> But after adjusting the patch accordingly, the patch works fine on
+> v6.6.52 and
+> the issue is gone with the patched version of v6.6.52, just like 6.10.11.
+> 
+> So, I assume that the fix / patch proposed by Dan Williams works as intended
+> resolving the issue I had.
+> 
+> Thanks again for forwarding the bug report and for the quick fix!
+> """
 
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
----
- src/b4/__init__.py | 32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
-
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index 811bbcaf028d78224242433eac9fdbeb03a306b3..b9b4ea2fa1c0baa6a3def7935597da7dc72df8d7 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -2809,18 +2809,27 @@ def setup_config(cmdargs: argparse.Namespace):
-     _setup_sendemail_config(cmdargs)
- 
- 
--def _cmdline_config_override(cmdargs: argparse.Namespace, config: dict, section: str):
-+def _cmdline_config_override(cmdargs: argparse.Namespace, config: dict, section: str,
-+                             multivals: Optional[list] = None):
-     """Use cmdline.config to set and override config values for section."""
-     if not cmdargs.config:
-         return
- 
--    section += '.'
-+    if multivals is None:
-+        multivals = list()
- 
--    config_override = {
--        key[len(section):]: val
--        for key, val in cmdargs.config.items()
--        if key.startswith(section)
--    }
-+    section += '.'
-+    config_override = {}
-+
-+    for key, val in cmdargs.config.items():
-+        if key.startswith(section):
-+            key = key[len(section):]
-+            if key in multivals:
-+                if key not in config_override:
-+                    config_override[key] = list()
-+                config_override[key].append(val)
-+            else:
-+                config_override[key] = val
- 
-     config.update(config_override)
- 
-@@ -2923,7 +2932,7 @@ def _setup_main_config(cmdargs: Optional[argparse.Namespace] = None) -> None:
-             pass
- 
-     if cmdargs:
--        _cmdline_config_override(cmdargs, config, 'b4')
-+        _cmdline_config_override(cmdargs, config, 'b4', multivals=multivals)
- 
-     MAIN_CONFIG = config
- 
-@@ -3782,11 +3791,12 @@ def _setup_sendemail_config(cmdargs: argparse.Namespace) -> None:
- 
-     # Get the default settings first
-     config = get_main_config()
--    _basecfg = get_config_from_git(r'sendemail\.[^.]+$', multivals=['smtpserveroption'])
-+    multivals = ['smtpserveroption']
-+    _basecfg = get_config_from_git(r'sendemail\.[^.]+$', multivals=multivals)
-     identity = config.get('sendemail-identity') or _basecfg.get('identity')
-     if identity:
-         # Use this identity to override what we got from the default one
--        sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', multivals=['smtpserveroption'], defaults=_basecfg)
-+        sconfig = get_config_from_git(rf'sendemail\.{identity}\..*', multivals=multivals, defaults=_basecfg)
-         sectname = f'sendemail.{identity}'
-         if not len(sconfig):
-             raise smtplib.SMTPException('Unable to find %s settings in any applicable git config' % sectname)
-@@ -3796,7 +3806,7 @@ def _setup_sendemail_config(cmdargs: argparse.Namespace) -> None:
-     logger.debug('Using values from %s', sectname)
- 
-     # Note: This can't handle identity, need to use sendemail.key directly
--    _cmdline_config_override(cmdargs, sconfig, 'sendemail')
-+    _cmdline_config_override(cmdargs, sconfig, 'sendemail', multivals=multivals)
- 
-     SENDEMAIL_CONFIG = sconfig
- 
-
----
-base-commit: dedf88cb947bab87c418b49d975df11f83621692
-change-id: 20240926-cmdline-config-override-multivals-e69bc1986fd1
-
-Best regards,
--- 
-Matthieu Baerts (NGI0) <matttbe@kernel.org>
-
+Great news, I'll revise the patch a bit to add some clarifying
+documentation. Specifically, that the new DEVICE_ATTR_RW_LOCKED() is
+only for exceptional corner cases like uevent_show(), and that most
+usages of "dev->driver" in a sysfs attribute are best served by being
+declared as part of "drv_groups".
