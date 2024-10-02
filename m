@@ -1,103 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372B129CE7
-	for <tools@linux.kernel.org>; Wed,  2 Oct 2024 13:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9717E1D1E67
+	for <tools@linux.kernel.org>; Wed,  2 Oct 2024 14:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877126; cv=none; b=mm+/iNd2HSOB+3P8EJT+B7r8HwawKG67Ap0ztP0Ow3hdglm3BIH3G4NovNgi8Gc7E+QZtSbq/5zk3j3BKV0A/+4BfMhNL/e5/c85rZ5aKyTzWsFrengN0RymBZv7wVNNU1gaoeL7g3SdT5VuxKG8quVk45IR8rT+egYeIpFN7ho=
+	t=1727878479; cv=none; b=hW+AlUFL1DWPIG9y8+Oc4E1Srrc4fObRjQ3iVMj2ml3x47VdO2zSMLpVenorF9t2cbC/ZLoyC52o6hPNmBfUGa8pu/0T/t6KObQtvq2BwJkd2Yud3P4jzFTTf4VEK4B+gqaE/QfZCRtOkN1RcYoiZg0y4F8MzkRwshdOSDc2YMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877126; c=relaxed/simple;
-	bh=pmZWU3Ur8ESes4OYQ8aGjvjDue4bKLbMziZ3kBCSxGo=;
+	s=arc-20240116; t=1727878479; c=relaxed/simple;
+	bh=LAnpJ2bambxZwQmmsUDMys96KEnzboyAGsG9lUJYpbc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Iwbbob3Elr0zVK0OAi3CFPDeQn6GdSlA0XELWUhHWlkNbJr6/XTyaukqfLXeg2gE5q9aXAd4vNzcmeawOdh3ggsz9aqOcFJpQY/XrnVHy7NEEO6we4raA1vT24C9tQHVNw5AfAj84VcYyr+ITwK51kwvvhHS/359Tyuj6K5t81Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jswiAPVX; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=uNoiAO824erlL641usz0UvLI/zGxrambiO/+fRlxXSmL0CVsFAHyjrLfiC1twXEoXVMadOcpHATSDOtpEljW4bsommebqI32UD+VIkq3piQcPnIq+/yc76feymnoym4DlrPJ28sJvSYxKsc4mbTji2uwUg6FFYvDCI2iJW5STRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i44PgPnO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jswiAPVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4166EC4CEC2;
-	Wed,  2 Oct 2024 13:52:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727877126;
-	bh=pmZWU3Ur8ESes4OYQ8aGjvjDue4bKLbMziZ3kBCSxGo=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i44PgPnO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E711C4CEC2;
+	Wed,  2 Oct 2024 14:14:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1727878479;
+	bh=LAnpJ2bambxZwQmmsUDMys96KEnzboyAGsG9lUJYpbc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jswiAPVXfS2I+Q3/cWwYaXlmX6sfnlBQcaeO9HWYEvEDbhXvwpY3uGtS9QsInV9aT
-	 1NM6ah9fmEQXb43tX6alvaGPcZLp9i/stZTmpZKZwkzigC2GJaJGA9fvF4djWd0lS3
-	 411rqD7193PjeaaEJ1G+b1n6Z2aJpbGIOS4AmyOyBLgpTxThK99KtGSy2Oh4Fqi00v
-	 wTZlYdPZjcdxissRW7Yas1MbocVvr0WURaEZ8r2G0rQcDyKmFrs6Y4QUyN+5yn5HXa
-	 kjUY3MbrUXHCcCy9t1nAuCTFljbEUPS58VXoOZi7y6ae2nnofJWJ3namcKAMarzkGI
-	 Muz6/hOS994yQ==
-Date: Wed, 2 Oct 2024 14:52:02 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	b=i44PgPnOS+NEfUYJDB6FwIPyY0SaWjozuhj9Kk9FWNzQfooqIyM4WGw0h+xyWLI7B
+	 9QeTAUaxaz1R24LL/kTLBJZMGPHO4gNYG/sFEifw0tmhD3DyNp0BJzV3U3Boe4rxZr
+	 QDFZYU21+VSHkkDbUdSP4XxFuZfhYwGxHN10Ms7E=
+Date: Wed, 2 Oct 2024 10:14:38 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: tools <tools@linux.kernel.org>
 Subject: Re: b4 trailers --update picks up bogus trailers
-Message-ID: <e574a54b-c091-4b7b-a182-d285f54f2e46@sirena.org.uk>
+Message-ID: <20241002-sophisticated-fox-of-protection-c8051e@lemur>
 References: <98450a13-1339-41e1-87b4-3db7387906c7@sirena.org.uk>
  <20241002-quantum-guan-of-action-427cc4@lemur>
+ <e574a54b-c091-4b7b-a182-d285f54f2e46@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="W8sY6XRCGpFXU0Na"
-Content-Disposition: inline
-In-Reply-To: <20241002-quantum-guan-of-action-427cc4@lemur>
-X-Cookie: Know Thy User.
-
-
---W8sY6XRCGpFXU0Na
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e574a54b-c091-4b7b-a182-d285f54f2e46@sirena.org.uk>
 
-On Wed, Oct 02, 2024 at 09:34:20AM -0400, Konstantin Ryabitsev wrote:
+On Wed, Oct 02, 2024 at 02:52:02PM GMT, Mark Brown wrote:
+> > 	Finding code-review trailers for 41 commits...
+> > 	Checking change-id "20230303-arm64-gcs-e311ab0d8729"
+> > 	Grabbing search results from lore.kernel.org
+> > 	---
+> > 	  + Reviewed-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+> > 		https://lore.kernel.org/all/878r3f99o1.fsf@linaro.org
+> > 	  + Reviewed-by: Deepak Gupta <debug@rivosinc.com>
+> > 		https://lore.kernel.org/all/ZvyCC7tJT7QoKO%2BD@debug.ba.rivosinc.com
+> > 	  + Acked-by: Yury Khrustalev <yury.khrustalev@arm.com>
+> > 		https://lore.kernel.org/all/ZtbQPBSl6Ym7g4QE@arm.com
+> > 	  + Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+> > 		https://lore.kernel.org/all/ZschddrfehjVUMXw@arm.com
+> 
+> > Are these different from what you see?
+> 
+> That's what I see.  The biggest immediate problem is that the R-b from
+> Thiago was sent against v8 and then gets added to patch 2:
+> 
+>   mm: Define VM_HIGH_ARCH_6
+>     + Reviewed-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org> (✗ DKIM/linaro.org)
+> 
+> which was not present in that version so the tagging is clearly
+> inappropriate.
 
-> When I try it, I see the following updates that it wants to pull in:
+Yes, you're right -- there's a logic bug that causes trailers sent to previous
+revision cover letters to be applied to all patches in the newer revisions.
+I'll work on a fix so it respects patch-id's.
 
-> 	Finding code-review trailers for 41 commits...
-> 	Checking change-id "20230303-arm64-gcs-e311ab0d8729"
-> 	Grabbing search results from lore.kernel.org
-> 	---
-> 	  + Reviewed-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
-> 		https://lore.kernel.org/all/878r3f99o1.fsf@linaro.org
-> 	  + Reviewed-by: Deepak Gupta <debug@rivosinc.com>
-> 		https://lore.kernel.org/all/ZvyCC7tJT7QoKO%2BD@debug.ba.rivosinc.com
-> 	  + Acked-by: Yury Khrustalev <yury.khrustalev@arm.com>
-> 		https://lore.kernel.org/all/ZtbQPBSl6Ym7g4QE@arm.com
-> 	  + Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-> 		https://lore.kernel.org/all/ZschddrfehjVUMXw@arm.com
+bugspray tag me
 
-> Are these different from what you see?
-
-That's what I see.  The biggest immediate problem is that the R-b from
-Thiago was sent against v8 and then gets added to patch 2:
-
-  mm: Define VM_HIGH_ARCH_6
-    + Reviewed-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org> (=E2=
-=9C=97 DKIM/linaro.org)
-
-which was not present in that version so the tagging is clearly
-inappropriate.
-
-Other than Deepak's R-b the tags were all for old versions and one way
-or another were deliberately removed or are being applied to newly added
-patches.
-
---W8sY6XRCGpFXU0Na
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmb9UAEACgkQJNaLcl1U
-h9B9pwf+Kw8WojJyNWaB/gs+R2b/ICaVFJlcSdkHlZr20k2QlKt44tin4Jx26s1w
-PvhX+Rbzqncr4pVStzD4Qa1AhpA2o7lN1Y1aGOfQ441IUjSV+9TRzp+XOi26vZH7
-HqCBXlnS64kgHoVHn1lkzLeG+BjcJzfEQihV2XmiWi3yRPA51XwP6WPaH/7JmJzh
-pfeGDMJPscf1ku/9ZEfw+0AXaalZsJj5kyTnMx2qw9ll1V6401pLgkTcOfdCp38Q
-7mx85NS2ateBAhv/Cb4JdgTFMOTaHvo/xeog/r7GtmY6Ms1e8+lMOGO2u/Clj22b
-otv+PpjXbrhstwDpkQ8ztV27NDjDpw==
-=cpnL
------END PGP SIGNATURE-----
-
---W8sY6XRCGpFXU0Na--
+-K
