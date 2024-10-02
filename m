@@ -1,71 +1,79 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AC6C2E3
-	for <tools@linux.kernel.org>; Tue,  1 Oct 2024 13:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9372C16F84F
+	for <tools@linux.kernel.org>; Wed,  2 Oct 2024 11:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727789177; cv=none; b=XP5viMhRK5smYvChNfP42eeMpbqe2yK3yoVbR9P5eT8Y4Hv9FpniAu8PtaJvVQcHFBBfyakr0koQjlEh1HUGQGR8Bw/5KDdNvTJBdSHST7V0APurPxxFytDPzqNIyipkMOd3uuK6VPUOcRYcNjuGC4/+ZhKu0MA/H8pWj8V3V7o=
+	t=1727869914; cv=none; b=GXHd041+RWG5bxkd9KjuTJnxcBTTRZ3hCSzeqH0bX93pkUDPC/RRlJJdPWSCcvOMM6NYb/f66uSIyE8p4O3E5PC+TUFkf6hCY5kGrPtaQ96d8eIpc2j3a3e0Lqa0LXHJhWtWLq6rmxejbcW31k6NTS7a1os/9dK45xLbX01PhkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727789177; c=relaxed/simple;
-	bh=MgusM4RYsFRdrt0s31zuvz4JXR4CcVxc5ztsAPE1+Fs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VLWrG+rk1MeMjtrJ+YmjdoIX9jgDQFyXb8SYfgqJq3eL8xnt84kKmbC7QMdWTzKa4YMlUMUavCWiyqM8HdTkKGEMwdXLA2LB56dcoiUzaVKBynxz0mvnRzpK7a/C5slr9DupMqkyuZL6nmhSAk5qHxKnQOu/415QhFveyyuGyIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R37E5Pyn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1727869914; c=relaxed/simple;
+	bh=0hxLs7YdA2G2orQgzEKWKy1zPJ1FKtKmpagJWTR+Pj0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=UsT1AAnRBcFYMGdPUfkarIns5K+dn4JT3LTaPIscNVaTv6V+L+DSjvWjAFuVoTfZYFLkVCDn7934YuLS+XLL8NXtW5i6yCzsXaoT3BAZye8hS+GcOP7zJRXoE7Hq1ozWaUf1PmaCfQkcqD1FWCeIaY7Te0btBAikfNZ4QlGi1fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XYljqmN2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R37E5Pyn"
-Received: by smtp.kernel.org (Postfix)
-	id 61EE6C4CECE; Tue,  1 Oct 2024 13:26:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFB5C4CEC6;
-	Tue,  1 Oct 2024 13:26:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727789177;
-	bh=MgusM4RYsFRdrt0s31zuvz4JXR4CcVxc5ztsAPE1+Fs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R37E5Pynm/m8Fbxe5013oDsTiMaIH7ZoMDGM8ILDAkdASqwpXpPyjQX2+ZSnuaBK1
-	 +mkzQbRa3G0XORcYS9NCvevXt6dnUvtH5FfovLpahMILiw3nbPCmxNkXBAmWhijKoU
-	 dpGdB2wXsK0Jxxkt1G3NRKD+TP0iB3RK5Z4SYd9c=
-Date: Tue, 1 Oct 2024 09:26:16 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Daniel Gomez <da.gomez@samsung.com>, 
-	I915-ci-infra@lists.freedesktop.org, intel-xe@lists.freedesktop.org, tools@kernel.org, 
-	d+samsung@kruces.com
-Subject: Re: Incorrect response address when using B4
-Message-ID: <20241001-stalwart-mackerel-of-atheism-5eeef2@lemur>
-References: <CGME20240930133009eucas1p14b11ee712ae3ab1ca3aafc2833103bcb@eucas1p1.samsung.com>
- <20240930133007.u4vm5qj5urikpmvc@AALNPWDAGOMEZ1.aal.scsc.local>
- <20240930-sapphire-swift-of-reverence-168e2b@lemur>
- <20240930141839.3rjfom4c2tca655n@AALNPWDAGOMEZ1.aal.scsc.local>
- <20240930-rustling-auburn-jaguar-23d200@lemur>
- <20240930143309.pwl7dzv537b2q3wk@AALNPWDAGOMEZ1.aal.scsc.local>
- <87h69xw68b.fsf@intel.com>
- <20240930211519.tquvjw7davr7zlfz@AALNPWDAGOMEZ1.aal.scsc.local>
- <875xqcw7ob.fsf@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XYljqmN2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF22C4CEC5;
+	Wed,  2 Oct 2024 11:51:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727869914;
+	bh=0hxLs7YdA2G2orQgzEKWKy1zPJ1FKtKmpagJWTR+Pj0=;
+	h=Date:From:To:Cc:Subject:From;
+	b=XYljqmN2FiA9xFUopvBK0vLxfzE81sbO+JRdiNW+vDuhmBnBLHZhi+I4bHBLYFgC3
+	 kQ81shGto51gAxZUdlmIsJQTccP65yevDpTyyrU49lZYEZcrzYhPtVScJ8X6NRzLlX
+	 O1EaR6OqitwqWjJHrIL7wn4G+/uTIfVy1UjqvSapP7tdtbBKD5E9Z1O4K20ZS6kagN
+	 qnAMhRnNuLMUc3oaoahsMM2zzXt3rVTLhjqt2or1EQo4nqJ+0ov4mcKIOyn59xusgL
+	 tLOpyAa0BwBWAOOc3HMe/6ZnXVuYBDGQMOJAIPBMs4cIM4hdH4akHyROTGlam0y/Ss
+	 3UEWbmkj3P1JA==
+Date: Wed, 2 Oct 2024 12:51:50 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools <tools@linux.kernel.org>
+Subject: b4 trailers --update picks up bogus trailers
+Message-ID: <98450a13-1339-41e1-87b4-3db7387906c7@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6k6JYUOTDK3is5dB"
 Content-Disposition: inline
-In-Reply-To: <875xqcw7ob.fsf@intel.com>
+X-Cookie: Know Thy User.
 
-On Tue, Oct 01, 2024 at 11:26:12AM GMT, Jani Nikula wrote:
-> - In all cases, the "From:" field SHOULD NOT contain any mailbox that
->   does not belong to the author(s) of the message. [1]
 
-Well, the author of the message is not the original sender, but the relay
-service -- so this is still true.
+--6k6JYUOTDK3is5dB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> I assume b4 is not using your address in From: because it's very likely
-> to get the email classified as spam due to From: spoofing. Worse, it
-> might get kernel.org on spam sender lists.
+Hi,
 
-It's not just spam classification -- this is literally the only way to make
-DMARC work. We can only send messages from domains we control, so to relay
-patches coming from origins that we don't control we necessarily rewrite the
-From: address (and put it into the body of the message, as git expects).
+With current git b4 if I run b4 trailers --update on
 
--K
+   https://lore.kernel.org/linux-arm-kernel/20241001-arm64-gcs-v13-0-222b78d87eee@kernel.org/T/#t
+
+patch 2 picks up reviewed-by trailers which were sent in reply to the
+prior versions of the series even though that patch is new in this
+version so the update is clearly bogus.
+
+Thanks,
+Mark
+
+--6k6JYUOTDK3is5dB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmb9M9UACgkQJNaLcl1U
+h9CWigf/YoGziMIl3uHbD590AZ7bKIlmH/pq+C1sBvt+cx4UMWGyXg/klvmoFon1
+RWr7/hQcfIrTsPKS3ATQjO5a4nuiDJjtC1rnybeYxUwru+to0UOCpYAouMZr2b5f
+qU1ezSzyF6+vboMMFjrVaRzS7R3fjHvgOYxPY/TDSu5pJVVAnETkEFKXv42R/px1
+oSK4nwOcncguNzjSZjBnYEech69VI23WuZoL8H00eRcL69sG3IAJDrxtNC2CN3lV
+LhGcMNWBm3gY1Tl4xWEv4JvNY/EauIjQbG8NDroA1MkYzDpggXTmdpIz3aEbBKr8
+SX27/qCYy4nnEYY7V9VoaHlqecr8Jg==
+=jzrZ
+-----END PGP SIGNATURE-----
+
+--6k6JYUOTDK3is5dB--
