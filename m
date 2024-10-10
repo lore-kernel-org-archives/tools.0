@@ -1,106 +1,150 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293E01BFE0F
-	for <tools@linux.kernel.org>; Thu, 10 Oct 2024 11:22:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECC01C57B5
+	for <tools@linux.kernel.org>; Thu, 10 Oct 2024 12:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728559377; cv=none; b=OBIPxtieMiGawV/Pv0uhrzvtbs9AR+cgyHukSNv5h+AgifabkBtbiFEVAr1cruon3YZ/TSDEU8EZ0mh2IqX7vAt/OUh0hPWK9YKaqIVIT3EfVfWLXgQi08E90t+f4NyW1BoC/01FeL04Gy/y2gpRPf90hL2v15WKtxCjIzFI754=
+	t=1728564578; cv=none; b=bVhH5GROjRipkF83OPWN1dA029LqpNYoc0xyYDZYAK23AkBAvyUdmIPtdnP7P5AOksVFA0gcbcsbl9GKDXXfk04l6FHjKkcC5vKf5LO0p8nVVTZSlJQNYePOhIqhCvtpmmCnnF6b424d1Jbdi+fBjer9P96aAFY8rKw+KH5wulA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728559377; c=relaxed/simple;
-	bh=Aq38bSGKbXQlN5Gwzw9TIWiUO58UKzGiaHWdmAUhFWk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=XYIGZioltvyl8FmSGOtwVBZTsf4A0y+ZJvG0o8J+uNgjhHNa+QopPjD3B/OlupxSxOzqtpdDndg/1Cc5VmEYMK2GgbtkkxzKjj7PMmyb0VOlSzwnAAFbXVf8qRqLqTjVDXS4RkAsh/o8dNQX5otq8xCUoHcs1fhNnO+R2PnDM3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Lr2gNPWN; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1728564578; c=relaxed/simple;
+	bh=qNF65Qe5Q88GU9YwCTUJL9huSbqTC8RZe5lXyW7ew00=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=fDXRzsZxLrDmSouGepituSFgAXerFP/iYa/1Sh6U8BDhZXpQdhkcBy8IGK5YNTmMXHR/ZALQaysZbJBEIH+fkFIJxkUYUxolsyaI5kO3YBuz1oQ8e/DQwhKgDy0GiQJdwcBJxTkLw6n4fPLS4WZOYJltXRO8lvX0y930U0SDVAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=C9/gP2n0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Lr2gNPWN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1728559375;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=Aq38bSGKbXQlN5Gwzw9TIWiUO58UKzGiaHWdmAUhFWk=;
-	b=Lr2gNPWN7whJqtIkQfjFQftKtC51f9kAiOCWRQbufG442eyADRQ8heQEGEwYVppsXlqWUd
-	xDX81JVTLuqjJDCZHrfj2BN5ySS5JF0BqqqqsQVLQE4OkPpxEdnt6du0KHS+DGZ6fdeyEA
-	gLuCeFS/s5MVGHeyp/z4eIwcxyTcdBw=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-111-CXYbubMnMfCsa4ttoNffxQ-1; Thu, 10 Oct 2024 07:22:54 -0400
-X-MC-Unique: CXYbubMnMfCsa4ttoNffxQ-1
-Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-a994dbc405fso54646766b.2
-        for <tools@linux.kernel.org>; Thu, 10 Oct 2024 04:22:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728559373; x=1729164173;
-        h=mime-version:message-id:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Aq38bSGKbXQlN5Gwzw9TIWiUO58UKzGiaHWdmAUhFWk=;
-        b=oSzcp8qCq7IXyQBWB/ScNsHQcqPpAzpog3Bz5ukN8bWcEHA3PuRgJtWIteMl0YVdyl
-         jPAiZ3RD6FDX9G/ejhbVK/yw+U3n4zg6Ns/ZsSPQlSKZFwJbNnzrPooceXjoDf/kYUH2
-         NvmS0iVRa8JZUmsbOzyb8EdP5zuZHbV1JaSbM+DmnwkMxQXfUZOJpCVquxPUV8GO22vr
-         JyM6tA2ePl83sDC7yp0ZSpRVUxg0snjTWQnjiWXpqVy+Q3j57lxXG/0L3ZvruuvF4pzV
-         L1a9yFPrDlC46JrENfizzfunYMXM0OVif2OxRwrZC35kbdncH8PvKIQByBrlRB7H2d3J
-         D3Kw==
-X-Gm-Message-State: AOJu0YwjPsEWL9xRM91/ltl0iEY1IPCzaC8ns9LLUg8nZX7jTaALwrCv
-	BVetfVA8jU2yjf8oj2Lx5/DwZmpbdiNeLRJGYOrd6kUmjeUj5ojivTJP4dd29M/nd0uDoHL3m9Z
-	JzK3M9uKFLxEiWS/n53P0fUtd9e0KsCOw8OKd3SJiO70DolFqYx6vPNRnMZY+iT1aRWy2nVXXL3
-	vJQknsMQbSOD3yP2f62gz4zmJXB11//AmJ
-X-Received: by 2002:a17:907:7206:b0:a99:509b:f524 with SMTP id a640c23a62f3a-a998d3496d3mr494644966b.57.1728559372664;
-        Thu, 10 Oct 2024 04:22:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFeGexCIctrNK8hyfiufRHwLGxYxbbvw1IcuCk390AhyASTn3mv1OQpedEMEGEm7AZKuApieQ==
-X-Received: by 2002:a17:907:7206:b0:a99:509b:f524 with SMTP id a640c23a62f3a-a998d3496d3mr494642266b.57.1728559372214;
-        Thu, 10 Oct 2024 04:22:52 -0700 (PDT)
-Received: from alrua-x1.borgediget.toke.dk ([2a0c:4d80:42:443::2])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99a80cb013sm75063466b.131.2024.10.10.04.22.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2024 04:22:51 -0700 (PDT)
-Received: by alrua-x1.borgediget.toke.dk (Postfix, from userid 1000)
-	id 4772915F3E7D; Thu, 10 Oct 2024 13:22:50 +0200 (CEST)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, users@linux.kernel.org
-Subject: b4 feature request: run command before rewriting history
-X-Clacks-Overhead: GNU Terry Pratchett
-Date: Thu, 10 Oct 2024 13:22:50 +0200
-Message-ID: <87ttdkrylx.fsf@toke.dk>
+	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="C9/gP2n0"
+Received: by smtp.kernel.org (Postfix)
+	id A53F2C4CECC; Thu, 10 Oct 2024 12:49:37 +0000 (UTC)
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id B7E86C4CEC5
+	for <tools@kernel.org>; Thu, 10 Oct 2024 12:49:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org B7E86C4CEC5
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=heusel.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
+	s=s1-ionos; t=1728564566; x=1729169366; i=christian@heusel.eu;
+	bh=FM+YNPt6cZU5Ty44rWNhlmvYdZhmLT52acXX/d0zP5c=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:Message-ID:MIME-Version:
+	 Content-Type:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=C9/gP2n0sw86BnPqjZnKcLQg/Oo2jF8/A+76BLM2HPlm6PTRXYFf+k1RVzO/wuf7
+	 mzqxh7hnrJb82gYyzW2bOgakU73uuhS7hJPokYuP0AsDLp+pfSkFYavHi9r0Rk0kf
+	 AFHpEImQ3ubAdVYmReYjMz84uGipqiUEwiMoSk2rW4EMGvYI2MhtaQqBVZzMX79sJ
+	 rPDIwBS3e4V60ifuvDToPdarpRzmBy4f6+/RiuK3q8n5zQskCrE0A0bmM1JRf7IU6
+	 8PoiN2y0OLGa+3DIXlN4cZoKe/0InBvIfAp5Wi2iR4PW8pDGiUQzrHPEbNwzC9Rs+
+	 Mzls694x4XhMl31I+g==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from localhost ([141.70.80.5]) by mrelayeu.kundenserver.de (mreue011
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 1M1q8m-1t14Nh2bto-005O2v for
+ <tools@kernel.org>; Thu, 10 Oct 2024 14:44:13 +0200
+Date: Thu, 10 Oct 2024 14:44:11 +0200
+From: Christian Heusel <christian@heusel.eu>
+To: tools@kernel.org
+Subject: b4 crashes due to type error when signing with gpg key
+Message-ID: <9ebef39e-ec9d-403c-a0f2-9a3176d71c1a@heusel.eu>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="jervkqi3dajvg2hf"
+Content-Disposition: inline
+X-Provags-ID: V03:K1:E4SNtsq8M5ie2agK4uUZjaX0dnX7jNypC7Qkt3ULPR3rCF8phbj
+ B1XDoB0K++IXbl00OE7PeC1dgazG8wZNDqWJf3A48fW5nVmHjc4oufh0FNlwj1/XRb3n4H5
+ /YmzejbthW591VDORGh0bXi4Z5+j3hk/3HRG7uLey0AlAOokumaZXSI+XE7zeJ/czzpgQZQ
+ JRp+P3s8qn7l0cWOUTAvA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:LWpOpFsEgXs=;IBq1wIFAwKJ+uCaoHUasCFtVYdg
+ iPzCfh2eg6fRow6KiYeyXzJ4e6yMFGmC77BF+3AY+KVWM77HLZ/23Ma0J3mK1ap7nCiMSXBcT
+ zT8YSQCl4AeJ1/T4w6SZbyPJVRrKNUtyWD5tRsYWt3WNunF7mveXrNQ9FcVvApsIJsGXfKxrg
+ WNIhmQAqXpBkM3obexXAE2BsxMIiUJ4oVhehZDwPNDYVDJxteykO1z4PNHVuSRMfEKjvD8WXM
+ HKR4G5G2k/dxwoiQZrkTovWSJGgk3j0Jdv98zkD5l4Sm8zPsxnBMFO5z4Ah8clWhwZwqbXZ5C
+ UJ95xzqhsI6Yhk5l8BKNYi0Q6yffwpwKuGaZqE8XdYVjK44I2FPodC9+AReDujPf77GnA54VH
+ 8+tjJjjVhfPmyNLIWqOotDpv9UfIhFeQdkQ3kBbdj1r0zxWcfEKfb6WPvdsQgNTnsq3dX/e8b
+ T+7GIFfd2Y0xDP6hph+zbn7pahQmvLSe3Y8/uZ5PxR2mKqciHLfG+mR+Z6uH3hN1aDJy++faO
+ yCturPwvTd2wSe+GxU75a3NCMq2I9/OOkBO5G9O0LkDx5M10stPlY1HoYgHIAeZDL+Ysourc7
+ 2mizqtMbKOUQXs20Zh3Aw8IUiEnuvNExa0SypSNh5Nl6RGqKj7k7/TiF51mTMk0XMe6BfjQB+
+ t2M4IvKf2UDI7NjApGsLvvnUgLyB+RIPiUbYNIxGVFwIrHR5V8TBGIdJWe5JoSmYhV2zx/6UT
+ MSKbJ2M/L+KVtyGpDWmRCs5eVOGO25tiw==
 
-Hi Konstantin
 
-I recently started switching my workflow over to 'b4 prep' for preparing
-patches, and am loving the workflow. Thanks a lot for working on this!
+--jervkqi3dajvg2hf
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: b4 crashes due to type error when signing with gpg key
+MIME-Version: 1.0
 
-However, I ran into one little snag, that I'm hoping could be fixed with
-a new b4 feature: I am also a big fan of 'stacked git' (stgit)[0], and
-often use that instead of 'rebase -i' when preparing a series for
-submission.
+Hello everyone,
 
-So naturally, I want to combine 'b4 prep' with stgit. The problem here
-is that stgit maintains its own state for the branches it manages, and
-gets awfully confused if the git history is rewritten underneath it.
-It's still possible to use it with 'b4 prep', as long as I remember to
-do 'stg commit --all' before running any of the b4 commands. And, well,
-guess what I already forgot several times? :)
+today I wanted to check out b4 for sending patches again (I used git
+send-email so far) and noticed what I think might be a bug. After b4
+first complained that I had no signing method available I configured my
+gpg key via user.signingkey and then got the following error on dry-run:
 
-So, my feature request is this: add support to b4 for a hook command
-that is executed before any operation that will rewrite history - and
-abort the rewriting if the command fails. That way, I can make sure that
-I don't forget to clear the stgit state before running b4, saving me
-from the pain of dealing with a confused tool.
+    $ b4 send -o /tmp/presend
+    Converted the branch to 1 messages
+    Will write out messages into /tmp/presend
+    Traceback (most recent call last):
+      File "/sbin/b4", line 8, in <module>
+        sys.exit(cmd())
+                 ^^^^^
+      File "/usr/lib/python3.12/site-packages/b4/command.py", line 417, in cmd
+        cmdargs.func(cmdargs)
+      File "/usr/lib/python3.12/site-packages/b4/command.py", line 93, in cmd_send
+        b4.ez.cmd_send(cmdargs)
+      File "/usr/lib/python3.12/site-packages/b4/ez.py", line 2111, in cmd_send
+        sent = b4.send_mail(smtp, send_msgs, fromaddr=fromaddr, patatt_sign=sign,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/usr/lib/python3.12/site-packages/b4/__init__.py", line 3978, in send_mail
+        bdata = patatt.rfc2822_sign(bdata)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/usr/lib/python3.12/site-packages/patatt/__init__.py", line 1002, in rfc2822_sign
+        pm.sign(algo, keydata, identity=config.get('identity'), selector=config.get('selector'))
+      File "/usr/lib/python3.12/site-packages/patatt/__init__.py", line 580, in sign
+        idata.append(b'fpr=%s' % pkinfo)
+                     ~~~~~~~~~~^~~~~~~~
+    TypeError: %b requires a bytes-like object, or an object that implements __bytes__, not 'str'
 
-Do you think this would be feasible to implement?
+I can't really judge if this is an issue with patatt or b4, so I thought
+this list would be a good first contact.
 
-Many thanks!
+Further debugging information:
 
--Toke
+    - b4 version: 0.14.2
+    - patatt version: 0.6.3
+    - output of `git config user.signingkey`: christian@heusel.eu
+    - git version: 2.47.0
 
-[0] https://stacked-git.github.io/
+I have also quickly skimmed the commits for 0.14.2-post but didn't find
+anything that looks relevant at first glance.
 
+Cheers,
+Chris
+
+--jervkqi3dajvg2hf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmcHzBoACgkQwEfU8yi1
+JYWo/BAAzopJTZ1Kc7wGJFQug/4PllPHzxn8KmbCCnK3G+5zTVJhW+/wspDyAK4C
+22VcAYGMtSD02yDPySKF0nUm3lYn+vcdN2lujl9JIHpWPI+ULU6eqoijolrmcSAj
+NfkvQyyAyGl3gv3Vc/1pLQKaRfn42CEsUpGekN0+Vn10c1Is2ZYCd6Ql6CAf25f8
+CARPn6Xs44R7LxK3LF87yu7kcnnHCt81X5L9LQPqTCePch1dvQmWRxoXiv7innH6
+r0Gu/YipepaHQkPby13R4GDj2QmAfaq2CpY/bUwL8XGWfn7ZKvGrHB70HGtP3McC
+qEN28liPT7rQK7ijXj2+CBNHQjaN+LjmV2CqoHHjjgEGvk3odJKRf0os48k5AJAJ
+aiGIOD/62cHXi1RWIicZTKEYlehrkafFMW/2TdeNoVM/1593M/A4+rqmW4knsawV
+Y4rFTWCu1H7wQZ61AMf2dGnFcHmMu209+jZ3F8Ae07mON2l5YZdi7vRQtDeY4vlP
+/2idBLHtRyEq2SO+YS3wk0PWrAaHXEA18mVZz8VL+V38U3arngfC2Z9T5vzRpdnL
+xGKEsfd4pIM1NTsMRSTR8MRr1R5VD65j8Rixh8tUVmdSaMZdbt/W4w1DpfENR8GS
+xaTXEFhw7OVoK1UEF4+lhBu5NmJNcGfX5FI/rtxcIDcKsL81zOA=
+=OsoW
+-----END PGP SIGNATURE-----
+
+--jervkqi3dajvg2hf--
