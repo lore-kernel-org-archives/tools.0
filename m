@@ -1,81 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3243811E2
-	for <tools@linux.kernel.org>; Sun, 13 Oct 2024 09:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDA51DA32
+	for <tools@linux.kernel.org>; Sun, 13 Oct 2024 10:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728811750; cv=none; b=vC+30nydPQMhI8g1ygPGFiPy1fyowaaweyt5O9z7iNZqfNfIKp0sbTlV+2GbTkR3YDoXLPuz6e9tlPMBbo4ugrfBEH3I+Prbk6fnEhWDJ75zenh/nJYG8qi08Q5CecNKe0AMT9hsiTWU344Ekw8nof5kulcTbHLXBT8CR5o0/Rg=
+	t=1728815724; cv=none; b=AopT0Gc0ywWQgh0RMRX6+hO84GkSg9J/XnxthVAHeW+dJxf8LwexAVNTi3jVmrToWMalI0EDLtnPp1qbkw2ubYXWQG822NT+DZD0954nJJLqJ3HUyejCdwORGZkuoq5jbzDa2g0ypnh/1oVKFvWWzwkaHaHnC7IPhaOkE2x1vd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728811750; c=relaxed/simple;
-	bh=Yw4seZEekvQP/p/jHD5hvEqrfR2WtMc2dOGJDNAhoqY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=lggnNatUPJYrlNm7G1Y3O+Eu/jXCmzygQysQYN3fOjiKxVYgYr6HUx59wp1GqPty8MG4oNdwzG6CRI3UiJs7d9yYK1f93KFM1Fshy50ClZw1sI9j5JH49fcb2zJF1YLm2w+/eEyr3OwK1a2tdrseP1ae7CKSMREmjwUvAVPDKq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NyXUdJOa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728815724; c=relaxed/simple;
+	bh=tWczGqLkExiOVHt7YhItn4yj9/Cjr5zvvKOfoTZKCGQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W55AUPqovbvGyLTE32r2i3nksV0tHio/RkijGhBLTv3xwRlvIM1Qpt1O2Zhsd72M17G6XrZgcgUU1MGXlVEXH15WE9qcUuk3l1WwGTSLN0VPYY4NnY1OOgaB6qvKt2ArKAjkZVhFpxnbtFkgLz3trQT3yKUyTD5Poo2YlsKrp4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cDe80Grs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NyXUdJOa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cDe80Grs"
 Received: by smtp.kernel.org (Postfix)
-	id 7C458C4CECF; Sun, 13 Oct 2024 09:29:09 +0000 (UTC)
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id A84ADC4CEC5
-	for <tools@kernel.org>; Sun, 13 Oct 2024 09:29:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org A84ADC4CEC5
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6dbc5db8a31so22623277b3.1
-        for <tools@kernel.org>; Sun, 13 Oct 2024 02:29:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728811747; x=1729416547; darn=kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Yw4seZEekvQP/p/jHD5hvEqrfR2WtMc2dOGJDNAhoqY=;
-        b=NyXUdJOaiMQxTC5nrqXRRB4EbRr9OvIQ0iYfObj7p1avCJMwFYCKO+zJKuey1fqp6Y
-         24FC3B3mZ9qwk7c3WV5TwoOT/z2+CwUlXtn2ikYVCkcXFN0kqGBB6Oc8uS/0MDebHhvs
-         67NaSLgsiY3NPFpQ1IUZZRnAWzIOGI28okI/G9HZBm4Z2tSJFo8FRJvMKQy9kJ2S6QV3
-         msFZYzP0nN5N8USDpbL7xcdxCOsCDJ3AHbZJ8nhmaKNR0IPaC7ip8cMLmJ/2rP648wJn
-         Z01Cd1+s42GeH33rl5FU+06cBiiHHZamvbs6DOavANY8f7MnnPrh/bbtLd/WQ+nWriE2
-         H1Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728811747; x=1729416547;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Yw4seZEekvQP/p/jHD5hvEqrfR2WtMc2dOGJDNAhoqY=;
-        b=uM+dgNI0BRI3rVy6m23mtfCgyGTgXLF4o96EYbLiu6XdsiXnoCV/4834sSJ7kXvVY2
-         632fGLE742FAZSG1bcqnwYsYfY6ZqWbPOeHUG1MzZxxAqsbTNiRbyOuzfGDVfHtJZt4a
-         FuA86qVIcJSLfWRQYWxsMBzxNguEylM9pAv2oCQQOjuz1SjYbQati3+6BHWJbHx5wNDj
-         XLGHT7MUo/v8JX82zM39ktVbd5E8mWS7nJcbuapbBkudR806W+PeRnjPy5itrI6o+Ncy
-         ZkMlDo0Cx7rePyx1+lhTfpkEetjMmhZ98+TFZZlKWczgzvDhbW6NJ4xY3YYuw4zu06LV
-         LC+A==
-X-Gm-Message-State: AOJu0Yy6sChDUwPlbDU42UcsXRz0UoK1FlH4xwoWOj6biNm0fG6RHpOK
-	F8wTYzAD4Fyta+CNpgGI1EJeBE0aM8OPRCzmbY5LTQrY8HKcRktJK5MXI2zDvEWXaIcecr4KJZS
-	ygAkQ5Bv8jvz0sdI2GnKokY8EJydgbCDgwOM=
-X-Google-Smtp-Source: AGHT+IF2mtAT/zqubJzdWN5zKjIMcMkAwOsRskMdT3Sr1dPOE9uw49L/uGdqmKfJD8ON8F1QoogSvenr7sIjS8gP76M=
-X-Received: by 2002:a05:690c:668c:b0:6e2:a250:a1bc with SMTP id
- 00721157ae682-6e32f29e5b3mr80584767b3.22.1728811747646; Sun, 13 Oct 2024
- 02:29:07 -0700 (PDT)
+	id 2F514C4CECE; Sun, 13 Oct 2024 10:35:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B509EC4CEC5;
+	Sun, 13 Oct 2024 10:35:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728815724;
+	bh=tWczGqLkExiOVHt7YhItn4yj9/Cjr5zvvKOfoTZKCGQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cDe80GrsXuX6O0neBqH1+i39DyB60KnqqrmC/Ge5braKYU9geszMOKCLRaBpp4ooU
+	 ExpfCYfwPHixdy9h1ikKicFLK3QO6BQFCoogp1MQyTPCsW+IpzlB3R8KvNaEUki7+C
+	 7yaAoHlwBp/zWN1mBMqQXZyfpangx/kdMUxOSyBQ/Zf5yWYcAZtSLSeiIy9DHwRIiF
+	 s4fSLEGk3Qp3HTaYWgCrJYKL/rXXYTRy5y+H6lzZzDSUSSMbRDJYAZC8/KFbpcX7rN
+	 2NSh/aCBJLmelu+WyOSACocKCDMdhmO+m8q/ZBgecp1LA55EGTwffGpstebhav5pqG
+	 dIkR4pYV459ow==
+Date: Sun, 13 Oct 2024 11:35:20 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Jonas Gorski <jonas.gorski@gmail.com>
+Cc: tools@kernel.org
+Subject: Re: b4: adding/updating individual patch changelogs?
+Message-ID: <ZwuiaKj1pgjZ3-sR@finisterre.sirena.org.uk>
+References: <CAOiHx=nHXJLVM2ZfDGEi+VDYPhVuoZdpYhLTQwAGLgUiVmZvpw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-From: Jonas Gorski <jonas.gorski@gmail.com>
-Date: Sun, 13 Oct 2024 11:28:56 +0200
-Message-ID: <CAOiHx=nHXJLVM2ZfDGEi+VDYPhVuoZdpYhLTQwAGLgUiVmZvpw@mail.gmail.com>
-Subject: b4: adding/updating individual patch changelogs?
-To: tools@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="8+zyONQWydJtyhFX"
+Content-Disposition: inline
+In-Reply-To: <CAOiHx=nHXJLVM2ZfDGEi+VDYPhVuoZdpYhLTQwAGLgUiVmZvpw@mail.gmail.com>
+X-Cookie: Editing is a rewording activity.
 
-Hi,
 
-is there a way to add/update changelogs to each patch of a series?
-prep does it automatically for the cover letter, but I find no option
-for the individual commits themselves, or it even mentioned in the
-docs. Ideally something where b4 automatically updates the changelog
-(templates), but I'll take anything that does not require manually
-editing the generated patches themselves every time.
+--8+zyONQWydJtyhFX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Best regards,
-Jonas
+On Sun, Oct 13, 2024 at 11:28:56AM +0200, Jonas Gorski wrote:
+
+> is there a way to add/update changelogs to each patch of a series?
+> prep does it automatically for the cover letter, but I find no option
+> for the individual commits themselves, or it even mentioned in the
+> docs. Ideally something where b4 automatically updates the changelog
+> (templates), but I'll take anything that does not require manually
+> editing the generated patches themselves every time.
+
+If you add a --- and text at the bottom of your changelog in git then b4
+will (or did last time I needed this) just reproduce that in mail that
+it sends.
+
+--8+zyONQWydJtyhFX
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmcLol4ACgkQJNaLcl1U
+h9AJOAf/dC9yUrZm6nTHvgawQyoiXCPJaLn2M+k9CA+QByZhWgXgPgvyb8OHGGs/
+lwYTda2UrTtTVwVRLarDtEHhdYnQyzFOV+n1tZ+Sz1aLOe7AQRnGAFXhIW0psIHo
+5edxFRitkjP0qpPaTHd5WLsYW0gcOJQ18Taxmi4mV1kH+qwq31s48mzfr4hWttEB
+D/eYd8YWFyWEM1ezZwX9NwSy6WL4o2oqKfWax7bKoo2uoGlhfmBV4IrWcdozL0/5
+ePmRECuI4ea5Chrf9tE1ko4zm9qBr0leExc8WyIyZCFMyi8J+DI+KtWhVMuq90/S
+e832Hmhneq3hnGOUr7hf2bkEj7+hEQ==
+=PfNq
+-----END PGP SIGNATURE-----
+
+--8+zyONQWydJtyhFX--
