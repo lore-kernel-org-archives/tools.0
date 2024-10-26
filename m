@@ -1,60 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269FC20C31E
-	for <tools@linux.kernel.org>; Fri, 25 Oct 2024 20:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C8C538A
+	for <tools@linux.kernel.org>; Sat, 26 Oct 2024 16:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729889862; cv=none; b=dROgJtg2mo/2djzitlzZIefmExsVGolqFrro1NbWCGMVNCe15okVT8UIpMVfsc5vTEGElS5Osv4SWLLuv05l2qYE7EQo3PSDcsKIRWJzgQ+sAgYtktC4zyjWFVDbR+XLTIQ7RETGgp/DbCgqyvZHrJxqFOyxRvtZ0M2kleTRKPI=
+	t=1729960236; cv=none; b=dC8aTs5T2HbIxbHKS9vSRPjGW2WoKpyHp4OXKsuPBqWKtqK6MHC9S1NmSTSTZ1E/VHRySThRX0m8tkcnR3LDlyvLuxNIoQzTwqwEgY9nsBOw9fq9C+09Il2NX6+WAxmat25eTfbTz5WkaF7cFTAjc8T/taWPCgD4GgQS1xFdCZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729889862; c=relaxed/simple;
-	bh=92J1/l3fxtH5r/pWLmJ3Zk56XjBai612StveYYPKbGw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=cJOnLvJRa+MJLg5phsD+cwKKanXnK9PzmyEyjZcb3bBaP7jeiW6/Vp5WDUzJMMZ1oFKVpu8bXA8x+jkEPBUFB69vVrZa5bS9+5xF4ZAnIOsrZhfs0sAGa/f/BhzqRg9mfUAwu/0wxN7EczYn1SSqv+eMr9aOHZQRF3a46eOaebA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mKtkxIfQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1729960236; c=relaxed/simple;
+	bh=kkXlqGx5ZmKfN8+Tnnrn0wEMfSTDbbPI7b+BkriSiEw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XtncxeMdsMrifXRcbtf35PUyKa34d1iB99CPGFx+ISxV/AZKyY2Jg4wh8DILcNEPr3B2dQYy8ymcJkcst9bpUMkRGaOINJZfezdE/9QMmNhC3Izm2Nu2h/lX1QAh/kJkzbLDLCLlYU1QzmIfVSnZU7vNqZwb5p+wTvE7yyDj1QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=apUVck8x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mKtkxIfQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apUVck8x"
 Received: by smtp.kernel.org (Postfix)
-	id AEE9BC4CECC; Fri, 25 Oct 2024 20:57:40 +0000 (UTC)
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	id 3CDAFC4CECC; Sat, 26 Oct 2024 16:30:34 +0000 (UTC)
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id D1F50C4CEC3
-	for <tools@kernel.org>; Fri, 25 Oct 2024 20:57:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org D1F50C4CEC3
+	by smtp.kernel.org (Postfix) with ESMTPS id 62BDBC4CEC6
+	for <tools@kernel.org>; Sat, 26 Oct 2024 16:30:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 62BDBC4CEC6
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2fb584a8f81so24504761fa.3
-        for <tools@kernel.org>; Fri, 25 Oct 2024 13:57:39 -0700 (PDT)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fb518014b9so23989431fa.3
+        for <tools@kernel.org>; Sat, 26 Oct 2024 09:30:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729889858; x=1730494658; darn=kernel.org;
+        d=gmail.com; s=20230601; t=1729960231; x=1730565031; darn=kernel.org;
         h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=92J1/l3fxtH5r/pWLmJ3Zk56XjBai612StveYYPKbGw=;
-        b=mKtkxIfQP5L5DWJeMj9MEo1inBQ6vzGxMx47N6VdWF7UfVWQpNIUcJATz3Os9idAtC
-         pTb3EKLwwRDk5E5Lxyla2nVZ+o0nib4ttYf79m8dNOEzCPupa9JLSF9fnwtGGSIdEZBB
-         gsqxTm0sOUqF1rT23JNX67JsnTk0LkhXE4u/VGJd4DGnoD9GmPgG0g4ldbGdlG0G67DA
-         EgzCMWBFwzO1rOds0aLmJ+n4wXrtrvgNBGPOEcYbwl4R78QFUVFZmhOf1kBGyANAGIkB
-         s/+GOcLgFjB3cUz/bPRMkF2haP2WkLSuODdmdCc1zC17mxP+whysiGFW4MMeSEjW7/R+
-         tznA==
+        bh=kkXlqGx5ZmKfN8+Tnnrn0wEMfSTDbbPI7b+BkriSiEw=;
+        b=apUVck8xCFIq9f7gRHkjckuIaNA4hXTwxaVQdmvcwvjhP8GtBfcDMBONvBAFiPa/Ki
+         z+ViI9OxeNaaHZp0BE2mQ3nIFaIqCdy874jap2liKKkKYRuXasimggNkYkrTxGmFVnjx
+         po/E9Qi1ob+wrs3WyYxTWLidobfxZAM691Vx72wwFaqCl5MuwsH29FL0XUEZ72xqlQ3t
+         ye9DLWsNT9HcA7qhuQYxRxoMJO2HXyy7TvQpZZEomZda7vZQhDPdBT3dTH6uPAIANbMc
+         LSmQXIJ70zCuqYxGFIAiCcDtZe699ssSSuZOcZkf8VRMATOUAnYFgJmU4bh/81yRXXVO
+         Q8Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729889858; x=1730494658;
+        d=1e100.net; s=20230601; t=1729960231; x=1730565031;
         h=to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=92J1/l3fxtH5r/pWLmJ3Zk56XjBai612StveYYPKbGw=;
-        b=QFJ1ebNg9oeKk+hNWSHchP8Q+OJr4z9Gge21Lr/IVd5vM9XTCx0v8MquTPaalTJeV0
-         aIY65CBp6/C2QlczrR6O6FnPjrORyrVH3gixOiimdLx/R1u8XOQdq44MGypBXjgfD3w+
-         MwXwLxX+zewQceu3qJUO6eOAEAmjlrA+1klx+eWqtMcvdUgI25bdmzKBGkVA9nX+13IT
-         wmoz8F+d4jajRFNoci5I3fvps4gOny1We4EzfxMYVTpJKzMXIEuHYVXCVTria1WftSlj
-         TkZlV+6FN6Qd0bKwdYDaCOxBZrKOiZmlnpMTjxDlMq/O80vRbT0sf+F0JFDkDNYiq5Iy
-         2P+g==
-X-Gm-Message-State: AOJu0YwFgV3/buzMML2h5jLAF4guett+2YcylUI+2X3h0ocPWH4JML8g
-	iyvfbsfPJq5BSH/QcaRzJJ3UV/6bRv3wvLEdSfDPcz/7Zu39vb2FhGbBvuj3jWyghrYWXtUbOHS
-	Dn5zdkmZASOAjZ57QEgXO6ScZcoOC6/+S
-X-Google-Smtp-Source: AGHT+IEPfJP3qxp9pdLHpYQB2K/dbDynXmSCx8r5F5jWWdKh3QJcJoinc+DS9/yDoTP4HfFJ8mfvcv4Ukdwx3BgDems=
-X-Received: by 2002:a05:651c:1546:b0:2fa:c18c:faba with SMTP id
- 38308e7fff4ca-2fcbe07ac05mr2983951fa.30.1729889857424; Fri, 25 Oct 2024
- 13:57:37 -0700 (PDT)
+        bh=kkXlqGx5ZmKfN8+Tnnrn0wEMfSTDbbPI7b+BkriSiEw=;
+        b=DF1EERnE37c47ehmVhH6/TM8OUlXxSR+iEZ09VmLAGNzOjir/q2pdLPjht8r0ef7nY
+         rrLWByy8s/z7bRPSszBGMIA2dB/mXmKCi5FKG0glwwO+3eh5RvnIfWRhTlyKfNfSindo
+         bex5nIUswFk8fNI9Pyo1/5d6roJxjpyYHiVxqA3Ib+rH9jOTeX8YtBGCPPVBsS5vmrQ1
+         PPVvKlqPCElNWTndMbFULNwKY+OYurQF8wqtgTZKO4AminQYX9RwstHVrJC0XHFPaZ1F
+         JEUC77oEeNYDbG/smU7K+UOda7LjigwtTBIBX60/4mikUJC0b57UaJ5P/oYidT1+a6wl
+         DoQQ==
+X-Gm-Message-State: AOJu0YwJmA2o87y6pxFzjFlgfEEzbb9s3v3Q6RZiANv6Y2qeU1gs/3TT
+	b/4BOp29EYqRhd53+/WpdjLfgB7FJvbzOZSxL6esBcZJCIq1mZ2nQFaD7c8bpYAdGeln0lZalQI
+	kQQsYSlW7f+/3Gkekls0r9C48eFP47fqSKRU=
+X-Google-Smtp-Source: AGHT+IG5RSXuQo6zWZ6EN7h+BsORLfrQgsq3SueO5YMCbpA7Y/DVpzmq2s1RwISsPLUFtG7qcmcNNNuIZ24vfqPLsqo=
+X-Received: by 2002:a05:651c:1a0a:b0:2fb:55f0:2f7b with SMTP id
+ 38308e7fff4ca-2fcbe04f0d2mr11419711fa.35.1729960230988; Sat, 26 Oct 2024
+ 09:30:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -62,21 +62,28 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 From: Tamir Duberstein <tamird@gmail.com>
-Date: Fri, 25 Oct 2024 16:57:01 -0400
-Message-ID: <CAJ-ks9=ztzVopy2w1ggR+-xAyc_CigGWKn4vVDy1sWoMQUUaSg@mail.gmail.com>
-Subject: b4: b4 send --resend doesn't provide for updating stale email addresses
+Date: Sat, 26 Oct 2024 12:29:54 -0400
+Message-ID: <CAJ-ks9nCK9G7NKPKncZ_29sJZA-=8SNjxZBhY0VacF8PzX8pdw@mail.gmail.com>
+Subject: b4: cannot resend after creating branch from sent series
 To: "Kernel.org Tools" <tools@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-Hello, thanks for making b4!
+Hello,
 
-As far as I can tell, it isn't possible to replace an email address
-when resending patches - this is a problem because people change their
-email addresses. I ran into this problem recently[0] and had to use
-`-o` and manually edit the resulting eml file. Passing `--to` allows
-adding recipients, but not removing.
+I'm trying to resend a patch I originally sent manually by importing
+the sent series into b4[0], but this fails:
+```
+b4 send --resend
+CRITICAL: Failed to convert tag to patches: No such tag:
+sent/xarray-documentation-v4
+```
 
-Perhaps I am holding it wrong? Thanks in advance for your help.
+It seems that b4 uses tags to track sent messages but these tags are
+not created by `prep -F`.
+
+Is this intended behavior? Is there a manual workaround?
+
+Cheers.
 Tamir
 
-[0] https://lore.kernel.org/all/20241019-checkpatch-fixes-commit-v1-1-0d0cde18ce69@gmail.com/T/#u
+[0] https://b4.docs.kernel.org/en/latest/contributor/prep.html#creating-a-branch-from-a-sent-series
