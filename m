@@ -1,60 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C8C538A
-	for <tools@linux.kernel.org>; Sat, 26 Oct 2024 16:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5BF1D31B8
+	for <tools@linux.kernel.org>; Sat, 26 Oct 2024 16:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729960236; cv=none; b=dC8aTs5T2HbIxbHKS9vSRPjGW2WoKpyHp4OXKsuPBqWKtqK6MHC9S1NmSTSTZ1E/VHRySThRX0m8tkcnR3LDlyvLuxNIoQzTwqwEgY9nsBOw9fq9C+09Il2NX6+WAxmat25eTfbTz5WkaF7cFTAjc8T/taWPCgD4GgQS1xFdCZ4=
+	t=1729961898; cv=none; b=dumXS0/2UisC3/RoH6Q1U8yCALrrG3weexZsXlwqWi+75dHxjnfFhoiwWmy3nYoJbBFNBbs+LVzj2yZQtT0TFzSmrXHgp3bxJqFgud6SbFRKIwE5uN1A6Y1lYHcEnSQFdIJwcoTjw8hl5UUFZmtqkJlxSPkUGVAmJvFaNmUwRwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729960236; c=relaxed/simple;
-	bh=kkXlqGx5ZmKfN8+Tnnrn0wEMfSTDbbPI7b+BkriSiEw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XtncxeMdsMrifXRcbtf35PUyKa34d1iB99CPGFx+ISxV/AZKyY2Jg4wh8DILcNEPr3B2dQYy8ymcJkcst9bpUMkRGaOINJZfezdE/9QMmNhC3Izm2Nu2h/lX1QAh/kJkzbLDLCLlYU1QzmIfVSnZU7vNqZwb5p+wTvE7yyDj1QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=apUVck8x; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1729961898; c=relaxed/simple;
+	bh=yYNG0PejdE1t2BsHEjHG0pnEKFjfyBad7LM43ZyNk3k=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=pVnbXWH4sGmfyAv2YSyb7m3hSTy9fHGmO4MyLRDJe55xflTzdDsZLHD7g7+TkUx23EaofzoxTgX7J439az54DI8OYqq0LADeVaom/ANeDzxIEnTPP2FuyJy7qGFwvHZK3QYmNP0XrfpHZuvySNq4xeymlSUP2GYrKftjAZvNlQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HKMb0xZy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apUVck8x"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HKMb0xZy"
 Received: by smtp.kernel.org (Postfix)
-	id 3CDAFC4CECC; Sat, 26 Oct 2024 16:30:34 +0000 (UTC)
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	id F0DE0C4CECC; Sat, 26 Oct 2024 16:58:16 +0000 (UTC)
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 62BDBC4CEC6
-	for <tools@kernel.org>; Sat, 26 Oct 2024 16:30:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 62BDBC4CEC6
+	by smtp.kernel.org (Postfix) with ESMTPS id 02508C4CEC6
+	for <tools@kernel.org>; Sat, 26 Oct 2024 16:58:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 02508C4CEC6
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fb518014b9so23989431fa.3
-        for <tools@kernel.org>; Sat, 26 Oct 2024 09:30:33 -0700 (PDT)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2fb6110c8faso27999751fa.1
+        for <tools@kernel.org>; Sat, 26 Oct 2024 09:58:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729960231; x=1730565031; darn=kernel.org;
+        d=gmail.com; s=20230601; t=1729961893; x=1730566693; darn=kernel.org;
         h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=kkXlqGx5ZmKfN8+Tnnrn0wEMfSTDbbPI7b+BkriSiEw=;
-        b=apUVck8xCFIq9f7gRHkjckuIaNA4hXTwxaVQdmvcwvjhP8GtBfcDMBONvBAFiPa/Ki
-         z+ViI9OxeNaaHZp0BE2mQ3nIFaIqCdy874jap2liKKkKYRuXasimggNkYkrTxGmFVnjx
-         po/E9Qi1ob+wrs3WyYxTWLidobfxZAM691Vx72wwFaqCl5MuwsH29FL0XUEZ72xqlQ3t
-         ye9DLWsNT9HcA7qhuQYxRxoMJO2HXyy7TvQpZZEomZda7vZQhDPdBT3dTH6uPAIANbMc
-         LSmQXIJ70zCuqYxGFIAiCcDtZe699ssSSuZOcZkf8VRMATOUAnYFgJmU4bh/81yRXXVO
-         Q8Nw==
+        bh=yYNG0PejdE1t2BsHEjHG0pnEKFjfyBad7LM43ZyNk3k=;
+        b=HKMb0xZyfliY+9OYR3xT8PI+MyrjTe6m2ROCsAqlBEEpT/eTZEVzhff8nFYT+Oyl1g
+         VNBRW+ojR+ADkH+0befJ2vD2CQGzNhsu4/Yb1KHF0Fvz7FJ8IiJXzVeUjq57+ahvdhQW
+         PGJpVeCw4VZzUZATNkB4QTeDZxo9id/l2X8gPS8IAMb/S4lzno2SOAixQIrQqufWFGUJ
+         ErJcc7RjgjHcmhO8uwc67uEw3sozfY2Xj7NF6CSi11tukqhxtY7bAW9BoXBN5Sdd22jP
+         U1VAQAMgAiTdeugOLJC40Auo2JAdbEsDs2+163sqOk77J4KTiEi4L9A4y6PnCgQ3Kfoi
+         HZMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729960231; x=1730565031;
+        d=1e100.net; s=20230601; t=1729961893; x=1730566693;
         h=to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kkXlqGx5ZmKfN8+Tnnrn0wEMfSTDbbPI7b+BkriSiEw=;
-        b=DF1EERnE37c47ehmVhH6/TM8OUlXxSR+iEZ09VmLAGNzOjir/q2pdLPjht8r0ef7nY
-         rrLWByy8s/z7bRPSszBGMIA2dB/mXmKCi5FKG0glwwO+3eh5RvnIfWRhTlyKfNfSindo
-         bex5nIUswFk8fNI9Pyo1/5d6roJxjpyYHiVxqA3Ib+rH9jOTeX8YtBGCPPVBsS5vmrQ1
-         PPVvKlqPCElNWTndMbFULNwKY+OYurQF8wqtgTZKO4AminQYX9RwstHVrJC0XHFPaZ1F
-         JEUC77oEeNYDbG/smU7K+UOda7LjigwtTBIBX60/4mikUJC0b57UaJ5P/oYidT1+a6wl
-         DoQQ==
-X-Gm-Message-State: AOJu0YwJmA2o87y6pxFzjFlgfEEzbb9s3v3Q6RZiANv6Y2qeU1gs/3TT
-	b/4BOp29EYqRhd53+/WpdjLfgB7FJvbzOZSxL6esBcZJCIq1mZ2nQFaD7c8bpYAdGeln0lZalQI
-	kQQsYSlW7f+/3Gkekls0r9C48eFP47fqSKRU=
-X-Google-Smtp-Source: AGHT+IG5RSXuQo6zWZ6EN7h+BsORLfrQgsq3SueO5YMCbpA7Y/DVpzmq2s1RwISsPLUFtG7qcmcNNNuIZ24vfqPLsqo=
-X-Received: by 2002:a05:651c:1a0a:b0:2fb:55f0:2f7b with SMTP id
- 38308e7fff4ca-2fcbe04f0d2mr11419711fa.35.1729960230988; Sat, 26 Oct 2024
- 09:30:30 -0700 (PDT)
+        bh=yYNG0PejdE1t2BsHEjHG0pnEKFjfyBad7LM43ZyNk3k=;
+        b=Gk4XVwe68Z9fgiRZvsjGUT54F7ankcYAtmoDojztuZXz/pMp9ywUpAhG+HhCrg3TP4
+         sa+/IHVlc+u+dgZL94aHBn9HCGmZcXlwy5xXXzovIuBxOFIFxm3vMlLDYN2ibYzy/2au
+         ZpF87a8aoygBvbdHo8gy6zhC7fvVE87bA2oo1pPKP/84AYRwRuSgxOH2oHZRun1GFtxb
+         dG53TG89fozCd+TNT+azWl5U5kKNM8ZSdwyMQ9Fi2HlUMKqCBVjg/jm028asBme12Une
+         OXZED1igHy08lgj+N58+gTYyOA5K8QbLKqfHq6qH3FPm7YypoS6uABYEXLotKdsoRM5L
+         4Oug==
+X-Gm-Message-State: AOJu0YykDwPg8e+/9eLYnx9MnhuFvbRYQA4PboR3aE21zlFjgMP7bbTS
+	/DM1abarFZLBQ8vyP9NxtvDa9Nv1i4StOEV2GtJAEihpGLZR7ZKRXt4dzLMjT3nsCm9QL5VnmOc
+	ZvTFsKq0mXcYMKu6peSbT29iwPmBSHjrxlxs=
+X-Google-Smtp-Source: AGHT+IEtJcgG/wwil6ca++1yaDADyQ9lGLi/IMLABKIQjxPglq67WblqDm3s6dIhTc9hy/NYtduSa/rQ/rkwv8VZAy0=
+X-Received: by 2002:a05:651c:2209:b0:2fb:4c08:be08 with SMTP id
+ 38308e7fff4ca-2fcbdf6ff42mr9961531fa.11.1729961892858; Sat, 26 Oct 2024
+ 09:58:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -62,28 +62,31 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 From: Tamir Duberstein <tamird@gmail.com>
-Date: Sat, 26 Oct 2024 12:29:54 -0400
-Message-ID: <CAJ-ks9nCK9G7NKPKncZ_29sJZA-=8SNjxZBhY0VacF8PzX8pdw@mail.gmail.com>
-Subject: b4: cannot resend after creating branch from sent series
+Date: Sat, 26 Oct 2024 12:57:36 -0400
+Message-ID: <CAJ-ks9nbCtD3OEy=AoHGOr_C6Ai8TknQVHzKCsS5bthm2hw2eQ@mail.gmail.com>
+Subject: [BUG b4]: `send --resend` appends SSH signature block
 To: "Kernel.org Tools" <tools@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
 Hello,
 
-I'm trying to resend a patch I originally sent manually by importing
-the sent series into b4[0], but this fails:
-```
-b4 send --resend
-CRITICAL: Failed to convert tag to patches: No such tag:
-sent/xarray-documentation-v4
-```
+I sent this patch[0] and later resent it[1]; the latter contains an
+SSH signature block while the former does not; the commit is indeed
+signed with an SSH key. The result looks quite broken:
 
-It seems that b4 uses tags to track sent messages but these tags are
-not created by `prep -F`.
+> ---
+> base-commit: 6ce162a002657910104c7a07fb50017681bc476c
+> change-id: 20241016-b4-dylib-host-macos-16757c350b49
+>
+> Best regards,
+> -----BEGIN SSH SIGNATURE-----
+> U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7h
+> JgsMRt+XVZTrIzMVIAAAADZ2l0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5
+> AAAAQFg99wbgHLYJEpFzt5B+h6GLMb65HtsNoryxz5lkEldZ7z5BEXUUDiFLlDnDu8jlkv
+> SiANzyz5noKnp8NCgIxQk=
+> -----END SSH SIGNATURE-----
+> --
+> Tamir Duberstein <tamird@gmail.com>
 
-Is this intended behavior? Is there a manual workaround?
-
-Cheers.
-Tamir
-
-[0] https://b4.docs.kernel.org/en/latest/contributor/prep.html#creating-a-branch-from-a-sent-series
+[0] https://lore.kernel.org/all/20241016-b4-dylib-host-macos-v6-1-bbeab5029199@gmail.com/
+[1] https://lore.kernel.org/all/20241026-b4-dylib-host-macos-v6-1-d89682f88ab2@gmail.com/
