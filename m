@@ -1,105 +1,104 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803EA199231
-	for <tools@linux.kernel.org>; Thu, 31 Oct 2024 10:29:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497601A08A4
+	for <tools@linux.kernel.org>; Thu, 31 Oct 2024 14:07:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730370558; cv=none; b=Q8VLxC3jdnrOPG3LhdyOKD9nmpY+n4KwscJK4jRbXUiH2Lzl1hgqNT1yBzXJixwZVXV/UAB7ys8Yx1Q1n5IfrNizPY6vd/AsV28CAMTbNx9i6hRiC63rc9emdvvW5fSxLsvsbCIpcqYcz+IkngSsapahXZdZ1N4+pBZSP2ictMY=
+	t=1730383633; cv=none; b=O1yryadbOMl1vGINqnCZNXu7EORlwXS0v5JqerUgzsYstKdl4EsD06DNkkHeqtWvsC8uUf/IrDneaaVGb7Gh6ohUGgi9JAe7yyA1A8CZ2O0JilsiwvCOtgdd8USZdKR+bZYPMuTIQ9mEw+VdxXi2ZpPUINNCp5wH7BbfOL6b+Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730370558; c=relaxed/simple;
-	bh=wqdrH+cLnvxfFBEc1yxMqYKYVirHUpzdZ65lj7FjMr4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Jb5ZVgini8SrEK0o8c9IYaq7c3PdUKY1pLeTV37OneoFOECAbjGhqKlsQSnQHlToTXJhjOV2oRpTvIlYlPAj7ML/TriHLwrGFwk4i4Obgl/hc8Jf5+cIuU9G9s0Fx35JdenbkjEDhboFlrW1RynVkWPXkJZcdHWZZWCnwWIB0V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ONwAd+cS; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1730383633; c=relaxed/simple;
+	bh=evxeY27aB2zVbvRjZmwperkMln2qNLSnXM+pJjcqjGU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=CzItjZxCBbx+OvIMPprckxlFIecbVOwfc16fs2KBsr8N6EkDKPV+7LrJ3QzaWvAgI6pqux09Tul3LADsn1hRRd3+vKCQFgYBNK4Po27rPpViloIcXvbbP95pg3Pm/S2wf2rZ/fasJE9SyfhHDs4ieD7Y75cZjwS0tNKx3nkO2Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AVZK1ga6; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ONwAd+cS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1730370555;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wqdrH+cLnvxfFBEc1yxMqYKYVirHUpzdZ65lj7FjMr4=;
-	b=ONwAd+cSc27qW5CFsdlyyqRIp2QN6dkg+unYKQWZuheznjHrzH0W+mgZwGCgWdETZjX8+m
-	q/b+rEOdV0hVhdUGznIBL8QP0CXPflULoM56b5ElDRyELeeiufRj3MSm1/O6u5Oa+Wqb7Z
-	9BtWsMXXwO1hWzD1OMVHy0nzbezzh+E=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-56-_MXLa-n9NCmbifJDcKHCTA-1; Thu, 31 Oct 2024 06:29:14 -0400
-X-MC-Unique: _MXLa-n9NCmbifJDcKHCTA-1
-Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4315f48bd70so5788615e9.2
-        for <tools@linux.kernel.org>; Thu, 31 Oct 2024 03:29:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AVZK1ga6"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20c693b68f5so10384805ad.1
+        for <tools@linux.kernel.org>; Thu, 31 Oct 2024 07:07:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1730383630; x=1730988430; darn=linux.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=J8+XcrB1vMTR28xhlELyIAKaXEaWffRSHHtUFugeiHA=;
+        b=AVZK1ga61BlRfhOFyEJzKbOdK/WGWkXawlBYX8opUtxHyxIk4uLi3e7hOC2EVJOPh5
+         IPGawDXz00nsxTjNZi4ypTg/Zlrblc6BwqJ8SKt+o9L/aHbCblQmNf3HtjR4vKWeANcG
+         hJWOXWelj0zw39WrG2JoAUQZ8R//OrJFsWniTm6cNTEBduG9BrciSfZ6WyMJazSsJUnT
+         Z8E4Zjacnx7txTz1sr9VXLAinFFS8U30Ir5UdX8qtiC6bxTyNJWbujDT1YOoxZ7qKpGr
+         2i6PItNulNX5m3rlPS5sZxz9lA18qGyDsyTWafdkbzkFD+duuPQvdd7WM3YdAUUntSdr
+         YfyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730370552; x=1730975352;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wqdrH+cLnvxfFBEc1yxMqYKYVirHUpzdZ65lj7FjMr4=;
-        b=j8AembkP//HYYoJhVxludjYuSMHB5TctSMbp3TfDw9UKQctle9fF03BvDYN7bm/3sU
-         cfI16jm3xP1mBOFq0XJCZVDunS9Ctpt+Q0BA11g23Kuew0s9fTDuUl10kE6j+S52DQ1Q
-         GbnI3dVQZRjKix+W+7PMhhJdSVK2A4MRpKab8yW499fac3HCXWAghirz1bbUxSS6ny6a
-         Fbg+JOilb8hvC/L+tOBc4pN00mRdouzHLXcDdYXuk+5BoPI0JVcdEsc0yaZ2yfNpF0NK
-         Oo1BXexXU4QpXEK8+HE/VmPVdXPOFb2RiigYikuCGCJlQo//2hXGqmtk1lqpNm00s0sn
-         itYQ==
-X-Gm-Message-State: AOJu0YzranVjVl9lWNcpjdhXjC7KIKB7lywcG/Ev6uO1QXDeUhpaNBC7
-	ZQoI3TGneZBHqLIVZQlGPYEYpuJjhIX8uMEr0H+5Yelcv1L7vkcs21/sXRU2Vts2eMtCHE6yU76
-	/StWselqHQnvvr2/m94Y9fsF55u0FPFkg0FV1Be9QTcwslvMysouz/14Xc4NKuu4wNa3xbRHpbY
-	s12aDfjIqwAFHyO59aCkZlTYqkeClR2k/k
-X-Received: by 2002:a05:600c:3b14:b0:431:5c17:d575 with SMTP id 5b1f17b1804b1-4327b6f9521mr24763055e9.11.1730370552740;
-        Thu, 31 Oct 2024 03:29:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEn5GHQgZamPSuzYPzipCdA7nlCqEq3dguHvNKLs2u6XMSUnxZ106J/TvkpNQgZXsZ33ymjeg==
-X-Received: by 2002:a05:600c:3b14:b0:431:5c17:d575 with SMTP id 5b1f17b1804b1-4327b6f9521mr24762885e9.11.1730370552393;
-        Thu, 31 Oct 2024 03:29:12 -0700 (PDT)
-Received: from alrua-x1.borgediget.toke.dk ([2a0c:4d80:42:443::2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-431bd947a9fsm52128495e9.22.2024.10.31.03.29.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2024 03:29:11 -0700 (PDT)
-Received: by alrua-x1.borgediget.toke.dk (Postfix, from userid 1000)
-	id A88CD164B755; Thu, 31 Oct 2024 11:29:10 +0100 (CET)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, users@linux.kernel.org
-Subject: Re: b4 feature request: run command before rewriting history
-In-Reply-To: <20241030-perfect-hot-chipmunk-ffae87@lemur>
-References: <87ttdkrylx.fsf@toke.dk> <87ttctc2vk.fsf@toke.dk>
- <20241030-perfect-hot-chipmunk-ffae87@lemur>
-X-Clacks-Overhead: GNU Terry Pratchett
-Date: Thu, 31 Oct 2024 11:29:10 +0100
-Message-ID: <87ikt8bm6h.fsf@toke.dk>
+        d=1e100.net; s=20230601; t=1730383630; x=1730988430;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=J8+XcrB1vMTR28xhlELyIAKaXEaWffRSHHtUFugeiHA=;
+        b=MtQrmYdCb4PXA3NINesZWEi12j3Cbf9B0WI1DoBXx0nfKse/h3AAQKnzA5L01xUq3b
+         OTVCKYsvKDfXNSesGDmDmzipwJ18OXM2Tx7TgoMNxSbT3aKpkBo4+u5eRUggKgc3Cbtt
+         qunwdiUYfFRTpcHaF+zxVytkD9mdUg9IDSiGRSlqo5uXXd74SONWr+l+nDXhN2IEjsI2
+         e/Y5otx/HdDWleAM9NidrfAeiVPfqXmxXCM9ARPdAFGBFJ1unJiAxo8DLLOjgJKZYdb3
+         XTNqCPxv1U4nopDRT3ElWxeVv/KUxRnPl5PCAoR0xwcFB8H/OmnFzAi5HWqzfJ93HZd+
+         U6Kg==
+X-Gm-Message-State: AOJu0YziGm/6OQyLvV4dvEvJi876L5SvIbEiXxBZNnrswvZ0i4xGhxHx
+	tm4Ya30O18LWZJvOld7Ng+S8k1EUyXNYfjxWwoxZOK7GsMR2LH4M2Y8z5TgrsJW7h/ItrfnTwFt
+	ykn1bQAaeLjt8rzfAk2lRGdjoIYiCKRa/gTk9EjZyT3D10atSyl/6
+X-Google-Smtp-Source: AGHT+IG/rxeU1QX+2YbnvN3dz81NbBI+YtQU471fmv6Ry/9IxTqU8Cam9gNifcbc+oUX8QkyBOXfrD4Hb68MSIjr2bk=
+X-Received: by 2002:a17:902:da82:b0:20b:7ec0:ee21 with SMTP id
+ d9443c01a7336-21103ace09bmr38292515ad.19.1730383629769; Thu, 31 Oct 2024
+ 07:07:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+From: Ricardo Ribalda <ribalda@google.com>
+Date: Thu, 31 Oct 2024 15:06:56 +0100
+Message-ID: <CANiDSCvSAVkSsdWzfGFHK2YZXy_dOHVeJOA7V0pmyzHzSm6iEw@mail.gmail.com>
+Subject: Bug in b4 shazam?
+To: tools@linux.kernel.org
+Cc: Hans Verkuil <hverkuil@xs4all.nl>
+Content-Type: text/plain; charset="UTF-8"
 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
+Hi Konstantin
 
-> On Wed, Oct 30, 2024 at 11:16:15AM +0100, Toke H=C3=B8iland-J=C3=B8rgense=
-n wrote:
->> > Do you think this would be feasible to implement?
->>=20
->> Hi Konstantin
->>=20
->> Friendly ping on the above? :)
->
-> Yeah, I hope to be able to look into this in the near future. Unfortunate=
-ly,
-> I've been dealing with less-than-pleasant tasks such as ddos attacks and
-> trolls over the past couple of weeks, but at least it's finally on the wa=
-ne as
-> people move on.
+Our CI bot has encounter some issues with this series:
+93d078e5-deba-4060-a32e-94bce677453c@xs4all.nl
 
-Right, no worries, just wanted to make sure this didn't get lost
-entirely. Thanks for looking at it! :)
+it complains that the patch is corrupted:
+error: corrupt patch at line 27
 
--Toke
+But it looks like b4 generated the corruption.
 
+
+
+b4 mbox 93d078e5-deba-4060-a32e-94bce677453c@xs4all.nl' gives a valid
+patch as well.
+
+But 'b4 shazam' messes up the patch: it deletes the empty line before
+the '--' at the
+end of the patch:
+
+I.e., after running b4 shazam I run: 'git am
+--show-current-patch=diff' to see what the
+patch is it tries to apply, and that gives me:
+
+ .. _v4l2-alpha-component:
+--
+2.45.2
+
+instead of:
+
+ .. _v4l2-alpha-component:
+
+--
+2.45.2
+
+Is this a known bug?
+
+PS: kudos to Hans to debug the root cause
+
+-- 
+Ricardo Ribalda
+Software Engineer
+ribalda@google.com
