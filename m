@@ -1,22 +1,21 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968ED1BDA99
-	for <tools@linux.kernel.org>; Thu, 31 Oct 2024 16:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE2D1990AE
+	for <tools@linux.kernel.org>; Thu, 31 Oct 2024 17:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730393995; cv=none; b=ZYT6NAG6RgQ3Kz6LWTcpDNrANQv8iRYn1C1mwsxmB3lj/3BqfOz0LtMpTK7Fb1r1mn1CvVXUWqBBjyUeEicmL5pPW49mcxCIrlxdMV1Mu/TcrJEiKLRwR1BlsAPpZyzI9sl9yupXMeK+Lyk+6HrqEQyLoPnkHWrnIGN+6Aey0DM=
+	t=1730394201; cv=none; b=NigOdrehzg+EKqKXK/ac5PxGpUvnjT7MEv5wKYdgWFOBzcOJolVAB1Vo0fy/d5uTpAWFEIPONGrEhVbKmy2GzDWFCKjzaaYmfOiWMLMK3Cd2rQGc0qgjkId/06UFud23pJLqLRxabnk/CVgykqD7HsjOqDGjxZj0ZZJV8aH+i1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730393995; c=relaxed/simple;
-	bh=ziqazX7R1ALU97Qy/KZKy3rMXjURkx3GsLiIX3Vw8tM=;
-	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To; b=j8W0IANgHd1bXSMI2aIeT9FWlZMpcWtpjTKYI4l1dOWpPPwKtsRwkk7piR0cG7vmt2JaBECBOwSND6JHQmy/rZCkhhcY/8rkyNxKFGhxdNdMDEEAWdAO7r6YPhos+KU67/E47vy2hvDSosVi8QrvObcpAJIcPUoRAvly9yYtSL0=
+	s=arc-20240116; t=1730394201; c=relaxed/simple;
+	bh=qJQyu06fBcD08hQKMt3HqY5cCv26jOx18fpJ+7R3SO0=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Roosd4HIOktdUMr6xWc7uTXSqnZriMwnm5BStAIvDfhxyKYznG+PkxDx3THZ0+UDtPCW1X3l7bwcPhjLOQXarciNtRve9WAgUAPCyrUITG4Vo/oj9oFzQBBHC9m8J1/m/+VZdg+y570s9GJw4NOnLtT6tWjD+vX/q0Q6HLgX2QA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EE7C4AF63;
-	Thu, 31 Oct 2024 16:59:54 +0000 (UTC)
-Content-Type: multipart/mixed; boundary="------------MBI0sIJwIEG4lkk0T7lel4K5"
-Message-ID: <50a4abd8-eee7-400b-843b-24e0aca4a63e@xs4all.nl>
-Date: Thu, 31 Oct 2024 17:59:52 +0100
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8687C4CEC3;
+	Thu, 31 Oct 2024 17:03:19 +0000 (UTC)
+Message-ID: <71215e97-0e67-4bd4-b945-2be9cb80acfa@xs4all.nl>
+Date: Thu, 31 Oct 2024 18:03:18 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -25,13 +24,14 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: Bug in b4 shazam?
+From: Hans Verkuil <hverkuil@xs4all.nl>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
  Ricardo Ribalda <ribalda@google.com>
 Cc: tools@linux.kernel.org
 References: <CANiDSCvSAVkSsdWzfGFHK2YZXy_dOHVeJOA7V0pmyzHzSm6iEw@mail.gmail.com>
  <20241031-rich-caribou-of-superiority-61f832@lemur>
+ <50a4abd8-eee7-400b-843b-24e0aca4a63e@xs4all.nl>
 Content-Language: en-US, nl
-From: Hans Verkuil <hverkuil@xs4all.nl>
 Autocrypt: addr=hverkuil@xs4all.nl; keydata=
  xsFNBFQ84W0BEAC7EF1iL4s3tY8cRTVkJT/297h0Hz0ypA+ByVM4CdU9sN6ua/YoFlr9k0K4
  BFUlg7JzJoUuRbKxkYb8mmqOe722j7N3HO8+ofnio5cAP5W0WwDpM0kM84BeHU0aPSTsWiGR
@@ -75,103 +75,68 @@ Autocrypt: addr=hverkuil@xs4all.nl; keydata=
  e8tSeEXX8BZIen6y/y+U2CedzEsMKGjy5WNmufiPOzB3q2JwFQCw8AoNic7soPN9CVCEgd2r
  XS+OUZb8VvEDVRSK5Yf79RveqHvmhAdNOVh70f5CvwR/bfX/Ei2Szxz47KhZXpn1lxmcds6b
  LYjTAZF0anym44vsvOEuQg3rqxj/7Hiz4A3HIkrpTWclV6ru1tuGp/ZJ7aY8bdvztP2KTw==
-In-Reply-To: <20241031-rich-caribou-of-superiority-61f832@lemur>
-
-This is a multi-part message in MIME format.
---------------MBI0sIJwIEG4lkk0T7lel4K5
+In-Reply-To: <50a4abd8-eee7-400b-843b-24e0aca4a63e@xs4all.nl>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 31/10/2024 17:38, Konstantin Ryabitsev wrote:
-> On Thu, Oct 31, 2024 at 03:06:56PM +0100, Ricardo Ribalda wrote:
->> Hi Konstantin
+On 31/10/2024 17:59, Hans Verkuil wrote:
+> On 31/10/2024 17:38, Konstantin Ryabitsev wrote:
+>> On Thu, Oct 31, 2024 at 03:06:56PM +0100, Ricardo Ribalda wrote:
+>>> Hi Konstantin
+>>>
+>>> Our CI bot has encounter some issues with this series:
+>>> 93d078e5-deba-4060-a32e-94bce677453c@xs4all.nl
+>>>
+>>> it complains that the patch is corrupted:
+>>> error: corrupt patch at line 27
+>>>
+>>> But it looks like b4 generated the corruption.
 >>
->> Our CI bot has encounter some issues with this series:
->> 93d078e5-deba-4060-a32e-94bce677453c@xs4all.nl
+>> It's a bit more complicated. It looks like the patch was copy-pasted into
+>> Thunderbird, which is actually what introduced corruption. A well-formatted
+>> patch has no blank lines in it -- the line has to either start with "+", "-",
+>> or " ". If you view that commit with "git show --format=email", you will see
+>> that both lines between .. +v4l2-alpha-component: have a space character
+>> (replaced here with _ for clarity):
 >>
->> it complains that the patch is corrupted:
->> error: corrupt patch at line 27
+>>     +    necessary for hardware to work. This control is required for stateful
+>>     +    encoders.
+>>     _
+>>     _.. _v4l2-alpha-component:
+>>     _
 >>
->> But it looks like b4 generated the corruption.
+>> However, when that patch was copy-pasted into Thunderbird, these blank spaces
+>> were trimmed so, strictly speaking, this is no longer a well-formatted patch.
+>>
+>> That said, git deals with it correctly, so I'll see if we can recover from
+>> this corruption as well -- or at least not make it worse.
 > 
-> It's a bit more complicated. It looks like the patch was copy-pasted into
-> Thunderbird, which is actually what introduced corruption. A well-formatted
-> patch has no blank lines in it -- the line has to either start with "+", "-",
-> or " ". If you view that commit with "git show --format=email", you will see
-> that both lines between .. +v4l2-alpha-component: have a space character
-> (replaced here with _ for clarity):
+> It is true that the patch was copy-and-pasted in Thunderbird.
 > 
->     +    necessary for hardware to work. This control is required for stateful
->     +    encoders.
->     _
->     _.. _v4l2-alpha-component:
->     _
+> However, the patch itself as formatted by 'git format-patch' *also* has no spaces.
+> I've attached the git format-patch output to this email.
 > 
-> However, when that patch was copy-pasted into Thunderbird, these blank spaces
-> were trimmed so, strictly speaking, this is no longer a well-formatted patch.
+> So the patch as pasted in Thunderbird is consistent with what git format-patch
+> gave me.
 > 
-> That said, git deals with it correctly, so I'll see if we can recover from
-> this corruption as well -- or at least not make it worse.
+> I think completely empty lines are handled a bit differently by diff and do not need
+> a space at the beginning.
 
-It is true that the patch was copy-and-pasted in Thunderbird.
+Found it:
 
-However, the patch itself as formatted by 'git format-patch' *also* has no spaces.
-I've attached the git format-patch output to this email.
-
-So the patch as pasted in Thunderbird is consistent with what git format-patch
-gave me.
-
-I think completely empty lines are handled a bit differently by diff and do not need
-a space at the beginning.
+https://www.gnu.org/software/diffutils/manual/html_node/Trailing-Blanks.html
 
 Regards,
 
 	Hans
 
 > 
-> bugspray tag me
+> Regards,
 > 
-> -K
+> 	Hans
+> 
+>>
+>> bugspray tag me
+>>
+>> -K
 
---------------MBI0sIJwIEG4lkk0T7lel4K5
-Content-Type: text/x-patch; charset=UTF-8;
- name="0001-Documentation-media-improve-V4L2_CID_MIN_BUFFERS_FOR.patch"
-Content-Disposition: attachment;
- filename*0="0001-Documentation-media-improve-V4L2_CID_MIN_BUFFERS_FOR.pa";
- filename*1="tch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAzODk3YzllMzk5NzZjNGM0ZDRkMjdkOTkyOTE3OTY5YWVmMjExNjcwIE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpNZXNzYWdlLUlEOiA8Mzg5N2M5ZTM5OTc2YzRjNGQ0ZDI3ZDk5
-MjkxNzk2OWFlZjIxMTY3MC4xNzMwMzkzNjY5LmdpdC5odmVya3VpbEB4czRhbGwubmw+CkZy
-b206IEhhbnMgVmVya3VpbCA8aHZlcmt1aWxAeHM0YWxsLm5sPgpEYXRlOiBXZWQsIDMwIE9j
-dCAyMDI0IDExOjAzOjU4ICswMTAwClN1YmplY3Q6IFtQQVRDSCAxLzRdIERvY3VtZW50YXRp
-b246IG1lZGlhOiBpbXByb3ZlIFY0TDJfQ0lEX01JTl9CVUZGRVJTX0ZPUl8qCiBkb2MKCkNs
-ZWFybHkgc3RhdGUgdGhhdCB0aGUgVjRMMl9DSURfTUlOX0JVRkZFUlNfRk9SX09VVFBVVCBh
-bmQKVjRMMl9DSURfTUlOX0JVRkZFUlNfRk9SX0NBUFRVUkUgY29udHJvbHMgYXJlIGZvciBz
-dGF0ZWZ1bApjb2RlY3Mgb25seS4KClNpZ25lZC1vZmYtYnk6IEhhbnMgVmVya3VpbCA8aHZl
-cmt1aWxAeHM0YWxsLm5sPgotLS0KIERvY3VtZW50YXRpb24vdXNlcnNwYWNlLWFwaS9tZWRp
-YS92NGwvY29udHJvbC5yc3QgfCA2ICsrKystLQogMSBmaWxlIGNoYW5nZWQsIDQgaW5zZXJ0
-aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL3Vz
-ZXJzcGFjZS1hcGkvbWVkaWEvdjRsL2NvbnRyb2wucnN0IGIvRG9jdW1lbnRhdGlvbi91c2Vy
-c3BhY2UtYXBpL21lZGlhL3Y0bC9jb250cm9sLnJzdAppbmRleCA1Nzg5MzgxNGExZTUuLjky
-NTNjYzk0NmYwMiAxMDA2NDQKLS0tIGEvRG9jdW1lbnRhdGlvbi91c2Vyc3BhY2UtYXBpL21l
-ZGlhL3Y0bC9jb250cm9sLnJzdAorKysgYi9Eb2N1bWVudGF0aW9uL3VzZXJzcGFjZS1hcGkv
-bWVkaWEvdjRsL2NvbnRyb2wucnN0CkBAIC0yOTAsMTMgKzI5MCwxNSBAQCBDb250cm9sIElE
-cwogICAgIFRoaXMgaXMgYSByZWFkLW9ubHkgY29udHJvbCB0aGF0IGNhbiBiZSByZWFkIGJ5
-IHRoZSBhcHBsaWNhdGlvbiBhbmQKICAgICB1c2VkIGFzIGEgaGludCB0byBkZXRlcm1pbmUg
-dGhlIG51bWJlciBvZiBDQVBUVVJFIGJ1ZmZlcnMgdG8gcGFzcyB0bwogICAgIFJFUUJVRlMu
-IFRoZSB2YWx1ZSBpcyB0aGUgbWluaW11bSBudW1iZXIgb2YgQ0FQVFVSRSBidWZmZXJzIHRo
-YXQgaXMKLSAgICBuZWNlc3NhcnkgZm9yIGhhcmR3YXJlIHRvIHdvcmsuCisgICAgbmVjZXNz
-YXJ5IGZvciBoYXJkd2FyZSB0byB3b3JrLiBUaGlzIGNvbnRyb2wgaXMgcmVxdWlyZWQgZm9y
-IHN0YXRlZnVsCisgICAgZGVjb2RlcnMuCiAKIGBgVjRMMl9DSURfTUlOX0JVRkZFUlNfRk9S
-X09VVFBVVGBgIGBgKGludGVnZXIpYGAKICAgICBUaGlzIGlzIGEgcmVhZC1vbmx5IGNvbnRy
-b2wgdGhhdCBjYW4gYmUgcmVhZCBieSB0aGUgYXBwbGljYXRpb24gYW5kCiAgICAgdXNlZCBh
-cyBhIGhpbnQgdG8gZGV0ZXJtaW5lIHRoZSBudW1iZXIgb2YgT1VUUFVUIGJ1ZmZlcnMgdG8g
-cGFzcyB0bwogICAgIFJFUUJVRlMuIFRoZSB2YWx1ZSBpcyB0aGUgbWluaW11bSBudW1iZXIg
-b2YgT1VUUFVUIGJ1ZmZlcnMgdGhhdCBpcwotICAgIG5lY2Vzc2FyeSBmb3IgaGFyZHdhcmUg
-dG8gd29yay4KKyAgICBuZWNlc3NhcnkgZm9yIGhhcmR3YXJlIHRvIHdvcmsuIFRoaXMgY29u
-dHJvbCBpcyByZXF1aXJlZCBmb3Igc3RhdGVmdWwKKyAgICBlbmNvZGVycy4KIAogLi4gX3Y0
-bDItYWxwaGEtY29tcG9uZW50OgogCi0tIAoyLjQ1LjIKCg==
-
---------------MBI0sIJwIEG4lkk0T7lel4K5--
