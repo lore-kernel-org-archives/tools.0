@@ -1,53 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B731C2456
-	for <tools@linux.kernel.org>; Thu, 31 Oct 2024 18:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BD21EA90
+	for <tools@linux.kernel.org>; Thu, 31 Oct 2024 18:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730398312; cv=none; b=u7bzvPTlc3jJOf6YDBECOoNsiM14erZng0hM2lGbE4yRh10l1BK1j+PeXkTYsASBGPAjN3u08BefFsdX5U6JNIAr/wzDKBsm2kxOu73dCT1cA9fz1h/Bn9wmLob9Ugo819y/lpIn3DpGmPZEJ6pLkG1RWwSn+Na6Whwsqgkb4QA=
+	t=1730398534; cv=none; b=jRedSfvABSfaWR5oF/H+DgBlE3+DmTPvtvU2IbFgYUchlENUCY3rpnFJG0zgfyiv/vuiBU4YrdneOI/hLtqtHHur/6svWOh5QtPCHDlYff8ZjCdCjwmI7i9qmfL2E7C7uPt6XKRQ/jdKaS5xqFY8DQl8MP7G7zVa7lAvPlcOcrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730398312; c=relaxed/simple;
-	bh=Den2+w/sUMyzudaXVQsjBfxIyV+Zd2sncOfgTx4XWTk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k814DXfOU0R2rvtsbdpa1eps0HiRzl1s0oH0EJuXsgaxXX/lVw/SQu1LJCtGNj759QqsGzH+F2mFG1AtBAOQghGp+m53UV+8qTNAzCD/Sd3+u4rtxi+fsvHoPTM8NQfBVShPIzT5bO9YYvEeVbWhXk5s3cruslmA+cYQao/Urd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFPfgaYF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1730398534; c=relaxed/simple;
+	bh=acs00ImvG5N3oXJ8MZHSog/Jj8IUrZL995TOq3JHeCc=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=MnN3Eb8wY0rv72oR7uLVmaxDyS42FOKvyLjWvTtpwetjE4/IubDHGzAtUsOzxMQ4DIY96K0/2JLylQASEUGzn5GS7FepKd4mUXuSUP6t+6Py5sEJ4AAymi9SRKzaR6Y0k9ix+mgvo0/TbmOhqvIM+rs0jmtXo8EdQoSj3qAXiTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FEc4mVbT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFPfgaYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A246C4CEC3;
-	Thu, 31 Oct 2024 18:11:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730398311;
-	bh=Den2+w/sUMyzudaXVQsjBfxIyV+Zd2sncOfgTx4XWTk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TFPfgaYFQdUjP/vFOYKzHzrEe/C4BoKZY5zbWcCmeK3GGaqQTJDmVcNhx6Yhn3kyP
-	 XiPM3oKlL9LKYIByTlz9M9QyOwsgACmHghDvUiCPo/zoMlE5nqmoFuwqzvvXS9JFZ7
-	 N/Vzg7UJG9mqmYYymH2IpNYP1spFBcHPAyCP3clg=
-Date: Thu, 31 Oct 2024 14:11:47 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Hans Verkuil <hverkuil@xs4all.nl>
-Cc: Ricardo Ribalda <ribalda@google.com>, tools@linux.kernel.org
-Subject: Re: Bug in b4 shazam?
-Message-ID: <20241031-unselfish-hare-of-cookies-5bb18f@lemur>
-References: <CANiDSCvSAVkSsdWzfGFHK2YZXy_dOHVeJOA7V0pmyzHzSm6iEw@mail.gmail.com>
- <20241031-rich-caribou-of-superiority-61f832@lemur>
- <50a4abd8-eee7-400b-843b-24e0aca4a63e@xs4all.nl>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FEc4mVbT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEEBCC4CEC3;
+	Thu, 31 Oct 2024 18:15:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730398534;
+	bh=acs00ImvG5N3oXJ8MZHSog/Jj8IUrZL995TOq3JHeCc=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=FEc4mVbTF+BLypRiwYrj5F2PQMJM3sIUsXbRSxpRWB1Dia75M+E7Txy9cKJd2DJeV
+	 qaXoY6hlgJ9YnPeU5eGShUEVk+GTaqSTkwmRY8Y9dcQ5AiCXoI+PCF2zy8rSz14dDy
+	 ssQQdraFVWIqcIbEh5ckH0vSXVGtTAqV5tEaHcQjjZC37qiKarTeZoCI6lboP1w2/U
+	 MRg8mlummR5TCU3YNaT1I79MXalXbY6lJ7NiLJXyH2UNcAPgV42Cyh2Am7m+6oWpDN
+	 WxUMjZGH5RMMTBRjKUBcEkpzigVQo81njWgQcZOgFTtUERS0YG1sY3tiDqSIbAbeDS
+	 K85HsZ57H5oGA==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id F0D59380AC0A;
+	Thu, 31 Oct 2024 18:15:41 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <50a4abd8-eee7-400b-843b-24e0aca4a63e@xs4all.nl>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: Bugspray Bot <bugbot@kernel.org>
+To: tools@linux.kernel.org, hverkuil@xs4all.nl, tools@kernel.org, 
+ ribalda@google.com
+Message-ID: <20241031-b219449-dfd3ede5fa00@bugzilla.kernel.org>
+In-Reply-To: <CANiDSCvSAVkSsdWzfGFHK2YZXy_dOHVeJOA7V0pmyzHzSm6iEw@mail.gmail.com>
+References: <CANiDSCvSAVkSsdWzfGFHK2YZXy_dOHVeJOA7V0pmyzHzSm6iEw@mail.gmail.com>
+Subject: Re: Bug in b4 shazam?
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: bugspray 0.1-dev
+Date: Thu, 31 Oct 2024 18:15:41 +0000 (UTC)
 
-On Thu, Oct 31, 2024 at 05:59:52PM +0100, Hans Verkuil wrote:
-> However, the patch itself as formatted by 'git format-patch' *also* has no spaces.
-> I've attached the git format-patch output to this email.
+Hello:
 
-OK, I see -- using "git show --format=email" definitely shows me the spaces.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=219449
 
-bugspray track
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (bugspray 0.1-dev)
 
--K
