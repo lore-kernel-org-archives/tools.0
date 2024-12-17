@@ -1,179 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D60B2010EE
-	for <tools@linux.kernel.org>; Wed, 11 Dec 2024 18:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E801F03F0
+	for <tools@linux.kernel.org>; Tue, 17 Dec 2024 16:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733940413; cv=none; b=CAoP5935HKEMJTKagbRt1Uvud1JTGvQVI8Ru2IA0SQZWFp7FhpSdezlGKFlOalQbchM/0wl+qURqmVNGrZABnsR97Qe1BOq2MS60sXrNn/W8F0oIR6hUFBChQCBRZG9dfqg07o8HLEIE/D7YWtUxy/XdyDVhSUWXRBdj6NT7UcQ=
+	t=1734451908; cv=none; b=XzEsIYDZcDMldCQIOjA/gFNussp7nsrblp69dVW/wupBSq8juSQiNM1mbatnLyHrzJmwStNjTCm8p5rwF9dESKVSrT3EsuKCLG69YtTBzh0bXAaAsm1BVt571OIArpPB24er0EYT7f9FZeT3fYAZhgh1Slm5tbCa8SHY69X8veA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733940413; c=relaxed/simple;
-	bh=f384zU36UDPc4tcdIl+InfpLZWvSpnoTaga3TkOIJ/A=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=KmjRLy094YSZVLf4XFj3Y7bjP0MPPoch3iLlqy/GueVm2+zmirm1wp3ryMXOh4460ck2pMeGg5DRw19q4xL0IOdigMaAIzLDsxAK3QOHlIt2UduaQ8BEklXK+Su0jLcjC7625YUoBn9jeT6uwYzFmfzzCok4LanZX5MHr+0EvL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vLOwZQjl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734451908; c=relaxed/simple;
+	bh=cixTwTjFlxgw7iWNXLVtLIDoeoYXcjsICtkQH0K/rJE=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=AbyOiPKtfYHUnENFXBYR+vc1HVd3Axv0ziWNGCVCL6KKQFq1p1Ti1pBD4J8RMuKd0nmAqaQqjAMz/EfIAauxfsSEXnSI8xU+ODiUZMGCI9svosv0DIfdzmN7q/Azz2xlIwI0PzXmviCj80ttCj7k1n6n4H00UsGmYeOnAq1j8B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=khUfE+ie; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vLOwZQjl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="khUfE+ie"
 Received: by smtp.kernel.org (Postfix)
-	id B64D9C4CEE6; Wed, 11 Dec 2024 18:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB1CC4CEDD;
-	Wed, 11 Dec 2024 18:06:52 +0000 (UTC)
+	id 42A26C4CEDE; Tue, 17 Dec 2024 16:11:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC515C4CED3;
+	Tue, 17 Dec 2024 16:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733940412;
-	bh=f384zU36UDPc4tcdIl+InfpLZWvSpnoTaga3TkOIJ/A=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-	b=vLOwZQjlKfGFCS9kdXeoa5gqGRDl7AFV0xS/oxRMpqmMYMk2rwkRVXzsgMU6LCfO0
-	 3kex8yHaD0iCzL8elkGNRRJoGgyZNP8LRXEqGKQvElS0vJasQrEZJPcVhAG93PwEvh
-	 xj59T+6nLFPZBxWOTr8dH/vNg7vAAOApqr69F5VP6lbssjTPQ6o6GqNCy0HF9iQ79P
-	 4SlEqKGPItbaxvuKztqu/Z9OxoW0eH0K+pfZMR9K4UrV9QaRUcjuyJ2EUll4o7aAhp
-	 /ovZnVbn5GztCgSJsTQpCmNmNzxmwZ2U4cmzwbCbCYPXHoE5HSbsJ6xsgkVQjLU9qD
-	 w60rCVV7a5BKQ==
-Message-ID: <855e61050b56ff8da80bd78768d9ab577b21e595.camel@kernel.org>
-Subject: Re: small b4 feature request
-From: Jeff Layton <jlayton@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Date: Wed, 11 Dec 2024 13:06:51 -0500
-In-Reply-To: <vkmfuwodnsmnrjwhypewv2a43fu3erjsokr357srj2a2edn54a@xtzh62xmrn4p>
-References: <9244489135d7366f15ea687ff068ab1b20913fc5.camel@kernel.org>
-	 <vkmfuwodnsmnrjwhypewv2a43fu3erjsokr357srj2a2edn54a@xtzh62xmrn4p>
-Autocrypt: addr=jlayton@kernel.org; prefer-encrypt=mutual;
- keydata=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
- QZIQXVeAA+smfTT0tDrisj1U5x6ZB9b3nBg65kc=
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+	s=k20201202; t=1734451908;
+	bh=cixTwTjFlxgw7iWNXLVtLIDoeoYXcjsICtkQH0K/rJE=;
+	h=From:To:Subject:Date:From;
+	b=khUfE+ie4X4LTjDMzWlsFcWvqC4dZ07c1NY1pYXeKyJeNxmLHJXybTmYUZrUvKTme
+	 wCComJdLd6BHjAM/YfHpRd2mEK1NH60dpuQFH5bw2hU2oSv+0HEoOUHps7Sh9FKG5q
+	 0KR2FLUvsnQ1OAvVQiHvsOR+q9WVkrNd3PxjNEa3U6Mo8ZzntUVsZfjtHqbpUB/muI
+	 VAxk3obb4xb/rKkZzXx8VM4NJJN1Touo+r2TEDD6Frf0WwkIdbKEO52AC2YsHwOWjG
+	 X9T7Og7Vc+rycNfSkyjwCc11Ig9Fo1q7JU1Z8u57+xCAdSs3p0Q74tKt4inrKsPx7c
+	 icCnVt8ExBQmA==
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: tools@kernel.org
+Subject: [PATCH] Ensure patches show moves rather than add/delete
+Date: Tue, 17 Dec 2024 10:11:46 -0600
+Message-ID: <20241217161146.1943425-1-robh@kernel.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Tue, 2024-12-10 at 17:16 -0500, Konstantin Ryabitsev wrote:
-> On Mon, Dec 09, 2024 at 05:13:31PM -0500, Jeff Layton wrote:
-> > First, let me say that I love b4. It's great for managing a patch
-> > series over time.
->=20
-> Great to hear, thanks!
->=20
-> > I often carry around the b4 commit at the base of my patch pile and end
-> > up having to rebase on top of it. It would be great to have a way to
-> > specify the b4 tracking commit symbolically to git so I could do this
-> > without having to lookup the commit ID of the b4 head:
-> >=20
-> >     $ git rebase -i B4_HEAD
->=20
-> I'm having a hard time wrapping my head around this (pun not intended). I=
-s the
-> commit in question the tip of the b4 branch, or the base commit?
->=20
-> In either case there is already a way to obtain this information with b4,
-> e.g.:
->=20
->     b4 prep --show-info base-commit
->     b4 prep --show-info end-commit
->     b4 prep --show-info series-range
->=20
-> So, e.g. if you want to rebase one prep-managed branch on top of another,=
- you
-> could do [1]:
->=20
->     git rebase -i $(b4 prep --show-info b4/some-branch:end-commit)
->=20
-> Does this do what you need, or am I misunderstanding the situation?
->=20
-> [1]: apparently, show-info for a non-current branch was broken in master =
-and
-> 0.14.y, so you'll need the latest master or stable-0.14.y.
->=20
+Don't rely of users' gitconfig when generating patches with a move. The
+default now for gitconfig is this is enabled, but I'm pretty sure it used
+to be disabled by default. In any case, users mess with long time defaults
+like threading for no good reason.
 
-That does help.
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+---
+Maybe we want -C and -B too? Those don't happen too often compared to moves.
+---
+ src/b4/__init__.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-I was thinking that B4_HEAD to be the empty commit at the bottom of the
-series-range that b4 uses to track the series. IOW:
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index bb93656d8ad7..a63520792df5 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -3464,6 +3464,7 @@ def git_range_to_patches(gitdir: Optional[str], start: str, end: str,
+             gitdir,
+             [
+                 'show',
++                '-M',
+                 '--format=email',
+                 '--full-index',
+                 '--binary',
+-- 
+2.45.2
 
-    b4 prep --show-info series-range | cut -d'.' -f1
-
-...but now that I look at the b4 innards, I see that there are
-different cover-letter tracking strategies. Maybe just using "base-
-commit" would be simplest. So I guess I can do what I need with:
-
-    $ git rebase -i $(b4 prep --show-info base-commit)
-
-It has the empty tracking commit in my setup, but I can live with that.
-
-Thanks!
---=20
-Jeff Layton <jlayton@kernel.org>
