@@ -1,177 +1,132 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295A91A726B
-	for <tools@linux.kernel.org>; Fri, 20 Dec 2024 08:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C33207A1D
+	for <tools@linux.kernel.org>; Fri, 20 Dec 2024 15:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734685175; cv=none; b=ZZE/K07b/3T9mrZ206XlogNZ/U8y2BpnijN8f8+rVgIbQi0H/4gmPVjklhKk0KqsJ7Em3zYRxGwlLiFLNOC8y2EzwrHxnYkiKBVa2E7eQg7cnjQ8RgPjqQcxaT2Uec8iz4WLDfU00zjs59XrzsbCw9PayiE8mK/KDFA32nx11LA=
+	t=1734708875; cv=none; b=a9BjLX8kVNIknzlwqeIJGsELZzbIXBUWGEfSK0fGjo55gTshBFksxK01zIv1egJ2OD8nuZfkJHr0wju+FhVxYwnMNfAZIYocD/whtBYxODHNVaCT4Ks/7KC//+FIQfmm6iZ5QhR1GK2OzUxlPTwS0eNXTo8vMaIFbvHbSR85TVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734685175; c=relaxed/simple;
-	bh=Uwp4v/PtXDdknCQTc82R5l9HO2HNI2ZVfBWTORCu9mw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Qzy5ugLA4Z8A1fPvrArqskegXnKIhwm43gBpRcgxoKa+Pi8I+AKDFtoH4dObJKwSiNqg6lhgfkMqG2e5lTnH7lkTAkR2u5WTjz9rucH2CPqhdQy4qVifdz+e1usnR+8tewmA83IUECK5eRy9NdObRV0QxCCHj4rjP9KmPkzXQDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dyoW3NBd; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734708875; c=relaxed/simple;
+	bh=o6VUqpvLuBQB2PuOrdO017+0q0D/ZsP5aIFYsizM3og=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=qoKaHZAJBLeHs+Ur/lkA0jNi9e7xIjSUdBcKlbhaq602opAPcetSS/m8iwAi2b0MjDAFAytb5cAeTc83ay6MIcApo1n2DJc0L4NiBoB6Z9iMAWS0rz9flIrnqkB7HUk3F5QDbJi6y7inQTFvxAGpEldd73OM9RC+0I+eK/gqrhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=2QbGRctE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dyoW3NBd"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="2QbGRctE"
 Received: by smtp.kernel.org (Postfix)
-	id 08EC7C4AF09; Fri, 20 Dec 2024 08:59:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E93C4CECD;
-	Fri, 20 Dec 2024 08:59:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734685173;
-	bh=Uwp4v/PtXDdknCQTc82R5l9HO2HNI2ZVfBWTORCu9mw=;
-	h=From:Date:Subject:To:Cc:From;
-	b=dyoW3NBdzTMn7GEF0F2NQOtP7YdoyOfK0LcNUxVQUtD0b7S+AvbJKt1ALu2/ufv/F
-	 1tipViY6OsRlgJL0woso8xT8lTOOqcsIAngac+OXSsVB1mnni7iCvPLTo39padEOF5
-	 OCZNTnOS/oMFTTdULDu3gCWRJ4a7pBRFR+6cw2MtI83d3baRzunkW0i0D+gvDP9GP3
-	 5aUQgmDieFbVdUvU7JOYJJatUTxzgo6mnTK7RgcZkAWwbAWkz/I984H9jgQ0A+dXea
-	 gSO91j9yf9M6ZfCEZ5ccZ/276HaR49wnMfgDceXrD6BxSxKrTSBmuOLjgLJGHKlOS7
-	 zWhUMxKy6R6SQ==
-From: Andreas Hindborg <a.hindborg@kernel.org>
-Date: Fri, 20 Dec 2024 09:57:36 +0100
-Subject: [PATCH b4] ez: add subject prefix flag
+	id 479ACC4CED3; Fri, 20 Dec 2024 15:34:35 +0000 (UTC)
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 3C0F5C4CECD
+	for <tools@kernel.org>; Fri, 20 Dec 2024 15:34:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 3C0F5C4CECD
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-467abce2ef9so294071cf.0
+        for <tools@kernel.org>; Fri, 20 Dec 2024 07:34:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1734708872; x=1735313672; darn=kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=1lPXyjaf345uNsjzFYHc3gGML2pFWEIj5bTrh9lJWag=;
+        b=2QbGRctE0PZJdTvtoNkqM5+cmLKtFhhDiUiUpMJagQ5Ypy0KJ4jkwLo0QicQA0G0bP
+         pxYQ8mHe9hd9mwJmV/jMdL/aM1HGn7W8uBCFNzc3dnMsP5e2UiqED44OidiviPU/7Ikd
+         /jN6J3rkKpbIOM2M1XIZfHWLEmGZ6c+oE8kPPcB5oQzZRefn4ok28rKSdWUxnO1XbkqM
+         fzuIMvcR7xGF5NOunRglDfMzgGRq9oH8yMY8yBwLdsSri9YLEehD7WxCdbwD/tuTbA+T
+         w5kQvmqw8YuamzcgHn13f9aozu4uLu8zoP6y87ikuVHaRe7vZSeZ3Br4W6aIZ/pno6eh
+         uqew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734708872; x=1735313672;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1lPXyjaf345uNsjzFYHc3gGML2pFWEIj5bTrh9lJWag=;
+        b=jZm+/x6fPOg0Hwp59YbJTbY6eavQ1ClseW8/blNt9AkU2qNNt7EL8JCSOleJDgtEeK
+         V+NiO9pgDQVgMmLmrpxDcMDPXRy4YP71HNCP4wVTjqydfcF9GK2RNQUOsixqOzmUrMHD
+         6p2yI2HWQbxd7wFsU31V3juVvt66gYUHkckwQZpEBKEuqcxDwao8y6ZYhVJ1jTvWN8ir
+         v60l1u9SHWx9z/HUdS2uN+A02HtCEmWxdCLePH96vmjyuog4CgPQlvYOsTseOL3FDb09
+         s3TeqbqonittVv5KQfbzkaeD4By/L5AFGtvVqzVX+Q8F5E1CNY0vD30X6bRtV8vMCown
+         W3JA==
+X-Gm-Message-State: AOJu0YzskuoStiSO9rGNEqlBWrhVt8rCMenSnhS51nvkID7NTIc+3S7r
+	P0+fPH0L2qh58Ca2hWEr9G+isY2iLsD+LIDyWUTnq8VdrOPzo4FGITSqfgvaC6GW21nb85RJ4dl
+	RM6y7hbRyWuJQNBV0OBYFiN2Q7K03JBomLFHWHpG6aIqHR9KtbGCxKYem5A==
+X-Gm-Gg: ASbGncuTouv2PLE1sjksLGETiqiZG0xQa0EHIoRAupkOGwxSxbza5RnkMpF+cxrBoJs
+	GUIsGOV69hDA1zJxwdukCfX1rGV0+GNH5KPI=
+X-Google-Smtp-Source: AGHT+IGY47IRKgUpXUaC77/ypFfRBYTYDYhPZLvFZlI4frE0KOpRQpyaDy9Z5iTS8jubqmfTOFVkf95y2tyAlaaEOn8=
+X-Received: by 2002:a05:622a:130a:b0:466:975f:b219 with SMTP id
+ d75a77b69052e-46a4a8d36b5mr3754761cf.8.1734708872333; Fri, 20 Dec 2024
+ 07:34:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241220-prefix-v1-1-026a7be0b35a@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAH8xZWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxNDIyMD3YKi1LTMCl0L8xRDU3ND81STRBMloGKIMNigaKUkE6XY2loAzSU
- ZM1wAAAA=
-X-Change-ID: 20241220-prefix-87d15717e4a4
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Andreas Hindborg <a.hindborg@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6065; i=a.hindborg@kernel.org;
- h=from:subject:message-id; bh=Uwp4v/PtXDdknCQTc82R5l9HO2HNI2ZVfBWTORCu9mw=;
- b=owEBbQKS/ZANAwAIAeG4Gj55KGN3AcsmYgBnZTGc4urt3CggGwAhHxda+WA10NmgF61kDwGqT
- otBO1NV2vWJAjMEAAEIAB0WIQQSwflHVr98KhXWwBLhuBo+eShjdwUCZ2UxnAAKCRDhuBo+eShj
- d318D/92K6sJ3aPREG6/ncyD6zzxTkik5gXHZ5YA9M9fH2GKmOYLrioLbX/1PYXApQ2U7MFobur
- Pkd67g7nXCIk3WZ6Tv3L5w18uZSfGDUgxuNortg7+NO2pxZm/I5dOQVqhcjH/CIyQzpSUmJl5aO
- ckDzHNyO3bq+YriRe3wjyja8xUBjKk6VDRdcQY+q/Il3hF/Q3crchnonuCXz9eKPGS/SoK3vMqa
- UHhIHi24Wk3ZipKynVSVquOAvY/lBG7iIeYCMXoknQDVb2imWbsLnQvC40HXz4J1b+86tl4R3mk
- K/oVnf2jHH2NSzyrDXYcPeEkZM99RmNpYLUH7lBarC3lOYXY7L8vlYY3YQVf0O560Uipr2lCd60
- Yrd8CACYHbHyU70jFet4bOLqNVPypR+qDBY+52Nb6/YnMSZppY26xFKqb2PmAhCwXxT/iTdRkSW
- qoLuxZMNQej2C+dtU8JYjg6vXnpGJ1aD4CGeqXiF9lHACNZeOZj0nZTfOQPR5M07UDxcPWMOPOF
- QLVUsbqFvtABYNB0IH3k+0om7V9kJBIGwAzRNjdKHsbXt7qKSbwR/qr2z+60/VAZNrt4Gu3xMcs
- TxvZPj0KNO9uCNf/7tfYTmRvCWnY28k9M3NQdVSLqoLNiRiwV0ua3e9lmt3nc4hS8U62XVwbGNu
- 6UgGPVLcfXb+PzQ==
-X-Developer-Key: i=a.hindborg@kernel.org; a=openpgp;
- fpr=3108C10F46872E248D1FB221376EB100563EF7A7
+From: Brendan Jackman <jackmanb@google.com>
+Date: Fri, 20 Dec 2024 15:34:20 +0000
+X-Gm-Features: AbW1kvZ5BnI94Zj2bJc3lZDiYClQAjWOa3BpzTNRyVYL5ieYO57r9fJJIBfEUdY
+Message-ID: <CA+i-1C2V_wKeP9wUFLkFD7wTyZgBhPfNoVw_bwcfe_C6xs7Kjw@mail.gmail.com>
+Subject: assertion failing in git_filter_repo.py
+To: tools@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Add a flag `-p PREFIX`/`--add-subject-prefix=PREFIX` to `am` and `shazam`
-commands. This flag will add PREFIX to the subject line of each patch before
-applying the patch.
+Hi,
 
-One use case for this is when composing trees that consist of patches from many
-different sources. Adding a prefix to the subject of each series makes it easy
-to see the origin when scanning the commit log.
+Thanks for all the fantastic work with b4,very much appreciated.
 
-Another side effect is that git will not remove the `PREFIX: [PATCH vX x/y]`
-prefix from the patch when applying it. This might similarly be desirable in
-some situations.
+Got a bug report: when I run b4 commands that modify the cover-letter
+commit, I get this error:
 
-Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
----
- src/b4/__init__.py | 14 ++++++++------
- src/b4/command.py  |  2 ++
- src/b4/mbox.py     |  2 +-
- 3 files changed, 11 insertions(+), 7 deletions(-)
+(If GMail messes this up, see below for a link to a clean version).
 
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index bb93656d8ad7d50cbcda1f7d0d820be50725962f..da2c3734184a44a4c547f1c3daacfcdfbf8f4e0c 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -616,7 +616,7 @@ class LoreSeries:
- 
-     def get_am_ready(self, noaddtrailers: bool = False, addmysob: bool = False,
-                      addlink: bool = False, cherrypick: Optional[List[int]] = None, copyccs: bool = False,
--                     allowbadchars: bool = False, showchecks: bool = False) -> List[email.message.EmailMessage]:
-+                     allowbadchars: bool = False, showchecks: bool = False, addprefix: Optional[str] = None) -> List[email.message.EmailMessage]:
- 
-         usercfg = get_user_config()
-         config = get_main_config()
-@@ -750,7 +750,7 @@ class LoreSeries:
-                 if noaddtrailers:
-                     add_trailers = False
-                 msg = lmsg.get_am_message(add_trailers=add_trailers, extras=extras, copyccs=copyccs,
--                                          addmysob=addmysob, allowbadchars=allowbadchars)
-+                                          addmysob=addmysob, allowbadchars=allowbadchars, addprefix=addprefix)
-                 if local_check_cmds:
-                     lmsg.load_local_ci_status(local_check_cmds)
-                 if lmsg.local_ci_status or lmsg.pw_ci_status in {'success', 'fail', 'warning'}:
-@@ -2326,7 +2326,7 @@ class LoreMessage:
- 
-         self.body = LoreMessage.rebuild_message(bheaders, message, fixtrailers, basement, signature)
- 
--    def get_am_subject(self, indicate_reroll: bool = True, use_subject: Optional[str] = None) -> str:
-+    def get_am_subject(self, indicate_reroll: bool = True, use_subject: Optional[str] = None, prefix: Optional[str] = None) -> str:
-         # Return a clean patch subject
-         parts = ['PATCH']
-         if self.lsubject.rfc:
-@@ -2347,11 +2347,13 @@ class LoreMessage:
-         if not use_subject:
-             use_subject = self.lsubject.subject
- 
--        return '[%s] %s' % (' '.join(parts), use_subject)
-+        prefix = "" if prefix is None else prefix
-+
-+        return '%s: [%s] %s' % (prefix, ' '.join(parts), use_subject)
- 
-     def get_am_message(self, add_trailers: bool = True, addmysob: bool = False,
-                        extras: Optional[List['LoreTrailer']] = None, copyccs: bool = False,
--                       allowbadchars: bool = False) -> email.message.EmailMessage:
-+                       allowbadchars: bool = False, addprefix: Optional[str] = None) -> email.message.EmailMessage:
-         # Look through the body to make sure there aren't any suspicious unicode control flow chars
-         # First, encode into ascii and compare for a quick utf8 presence test
-         if not allowbadchars and self.body.encode('ascii', errors='replace') != self.body.encode():
-@@ -2396,7 +2398,7 @@ class LoreMessage:
- 
-         am_msg = email.message.EmailMessage()
-         hfrom = format_addrs([(i.get('Author', ''), i.get('Email'))])
--        am_msg.add_header('Subject', self.get_am_subject(indicate_reroll=False, use_subject=i.get('Subject')))
-+        am_msg.add_header('Subject', self.get_am_subject(indicate_reroll=False, use_subject=i.get('Subject'), prefix=addprefix))
-         am_msg.add_header('From', hfrom)
-         am_msg.add_header('Date', i.get('Date'))
-         am_msg.add_header('Message-Id', f'<{self.msgid}>')
-diff --git a/src/b4/command.py b/src/b4/command.py
-index 5d90b4f52b4f3bd84f8660c26fc005af98309c26..ad02765c7ef715f44eddc859b1577dae74c85292 100644
---- a/src/b4/command.py
-+++ b/src/b4/command.py
-@@ -61,6 +61,8 @@ def cmd_am_common_opts(sp):
-                     help='Break thread at the msgid specified and ignore any parent messages')
-     sp.add_argument('--allow-unicode-control-chars', dest='allowbadchars', action='store_true', default=False,
-                     help='Allow unicode control characters (very rarely legitimate)')
-+    sp.add_argument('-p', '--add-subject-prefix', dest='addprefix', default=None,
-+                      help='Add a PREFIX: to every patch subject line')
-     sa_g = sp.add_mutually_exclusive_group()
-     sa_g.add_argument('-l', '--add-link', dest='addlink', action='store_true', default=False,
-                       help='Add a Link: trailer with message-id lookup URL to every patch')
-diff --git a/src/b4/mbox.py b/src/b4/mbox.py
-index 7061d1493be3e0d116ec504c9a1638be34b65a9a..195f24d0e4d968e2e6e4997265cc7e318b2248ed 100644
---- a/src/b4/mbox.py
-+++ b/src/b4/mbox.py
-@@ -159,7 +159,7 @@ def make_am(msgs: List[email.message.EmailMessage], cmdargs: argparse.Namespace,
- 
-     am_msgs = lser.get_am_ready(noaddtrailers=cmdargs.noaddtrailers, addmysob=cmdargs.addmysob, addlink=cmdargs.addlink,
-                                 cherrypick=cherrypick, copyccs=cmdargs.copyccs, allowbadchars=cmdargs.allowbadchars,
--                                showchecks=cmdargs.check)
-+                                showchecks=cmdargs.check, addprefix=cmdargs.addprefix)
-     logger.info('---')
- 
-     if cherrypick is None:
+Traceback (most recent call last):
+  File "/usr/local/google/home/jackmanb/.local/bin/b4", line 8, in <module>
+    sys.exit(cmd())
+             ^^^^^
+  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/b4/command.py",
+line 417, in cmd
+    cmdargs.func(cmdargs)
+  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/b4/command.py",
+line 93, in cmd_send
+    b4.ez.cmd_send(cmdargs)
+  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/b4/ez.py",
+line 2133, in cmd_send
+    reroll(mybranch, tag_msg, cl_msgid)
+  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/b4/ez.py",
+line 2269, in reroll
+    store_cover(new_cover, tracking)
+  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/b4/ez.py",
+line 659, in store_cover
+    frf.run()
+  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/git_filter_repo.py",
+line 4936, in run
+    self._record_metadata(self.results_tmp_dir(), self._orig_refs)
+  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/git_filter_repo.py",
+line 4767, in _record_metadata
+    self._compute_metadata(metadata_dir, orig_refs)
+  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/git_filter_repo.py",
+line 4712, in _compute_metadata
+    assert(usoa == intermediate) # old wasn't pruned => usoa == intermediate
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError
 
----
-base-commit: 1b0d65dfcb498531da131511cab7f14e5845d969
-change-id: 20241220-prefix-87d15717e4a4
+I'm running on a Debian-testing-based system with git version
+2.47.1.613.gc27f4b7a9f-goog. AFAIK the Google modifications to Git are
+just adding security stuff, not changing Git's user-facing behaviour,
+I do not think that's likely to be the cause.
 
-Best regards,
--- 
-Andreas Hindborg <a.hindborg@kernel.org>
+I bisected the issue to commit 2e024fa130e5 ("send-receive: use our
+own emlpolicy when parsing messages"). My EDITOR is /usr/bin/vim.
+Maybe the bisection is bogus (e.g. nondeterminism) or maybe this
+points to something complicated happening, I'm not too sure.
 
+I dumped the package versions in my pipx virtualenv, plus the error
+message in case GMail makes a mess above, here:
 
+https://gist.github.com/bjackman/f2fdd13afaebf7a8ec4a6f14cdcebb89
+
+Any ideas?
+
+Thanks,
+Brendan
