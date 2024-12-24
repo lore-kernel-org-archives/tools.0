@@ -1,132 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C33207A1D
-	for <tools@linux.kernel.org>; Fri, 20 Dec 2024 15:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B331990CE
+	for <tools@linux.kernel.org>; Tue, 24 Dec 2024 13:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734708875; cv=none; b=a9BjLX8kVNIknzlwqeIJGsELZzbIXBUWGEfSK0fGjo55gTshBFksxK01zIv1egJ2OD8nuZfkJHr0wju+FhVxYwnMNfAZIYocD/whtBYxODHNVaCT4Ks/7KC//+FIQfmm6iZ5QhR1GK2OzUxlPTwS0eNXTo8vMaIFbvHbSR85TVg=
+	t=1735045610; cv=none; b=TAdNswNqWjpqIzEMfyzDzR3I8IKfltq+myTSnsXttJlcLLECowJKuz86gEwJYTCfYo1jvnzq1vF3dDLVbHv/hEJawXAFuqFpk3Tdcf/NS76z7fr4Zh1nXu+MvYHsWIV1Rs1Dv2AnJ5phpKKFHqwQCvlFrCK8n1CjuCVNrOQKRdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734708875; c=relaxed/simple;
-	bh=o6VUqpvLuBQB2PuOrdO017+0q0D/ZsP5aIFYsizM3og=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=qoKaHZAJBLeHs+Ur/lkA0jNi9e7xIjSUdBcKlbhaq602opAPcetSS/m8iwAi2b0MjDAFAytb5cAeTc83ay6MIcApo1n2DJc0L4NiBoB6Z9iMAWS0rz9flIrnqkB7HUk3F5QDbJi6y7inQTFvxAGpEldd73OM9RC+0I+eK/gqrhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=2QbGRctE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1735045610; c=relaxed/simple;
+	bh=F6/swV7hN7UjzlyrkF2lRhIAs3pKIdukOx4wjtZDmAM=;
+	h=MIME-Version:Date:From:To:Message-Id:Subject:Content-Type; b=na8dnGfxu69njbAch7F/s1YFoUqh6NTK34QAwJ7NB5LjKKUvNHj3zsYgtJJuY3OyoyFntYJW7udU/pQNLGxrRNqOZsZmhdscXCCnVEVv6+SkA6BexN4lE04iYcizN4AbvRdX/J3Zjwy8D7G3QNhpxNeS8rDu174fwON4PvFh1bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=flygoat.com header.i=@flygoat.com header.b=UNkjtMh0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JnqBXAcN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="2QbGRctE"
+	dkim=pass (2048-bit key) header.d=flygoat.com header.i=@flygoat.com header.b="UNkjtMh0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JnqBXAcN"
 Received: by smtp.kernel.org (Postfix)
-	id 479ACC4CED3; Fri, 20 Dec 2024 15:34:35 +0000 (UTC)
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	id A79D2C4CED4; Tue, 24 Dec 2024 13:06:49 +0000 (UTC)
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 3C0F5C4CECD
-	for <tools@kernel.org>; Fri, 20 Dec 2024 15:34:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 3C0F5C4CECD
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-467abce2ef9so294071cf.0
-        for <tools@kernel.org>; Fri, 20 Dec 2024 07:34:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1734708872; x=1735313672; darn=kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=1lPXyjaf345uNsjzFYHc3gGML2pFWEIj5bTrh9lJWag=;
-        b=2QbGRctE0PZJdTvtoNkqM5+cmLKtFhhDiUiUpMJagQ5Ypy0KJ4jkwLo0QicQA0G0bP
-         pxYQ8mHe9hd9mwJmV/jMdL/aM1HGn7W8uBCFNzc3dnMsP5e2UiqED44OidiviPU/7Ikd
-         /jN6J3rkKpbIOM2M1XIZfHWLEmGZ6c+oE8kPPcB5oQzZRefn4ok28rKSdWUxnO1XbkqM
-         fzuIMvcR7xGF5NOunRglDfMzgGRq9oH8yMY8yBwLdsSri9YLEehD7WxCdbwD/tuTbA+T
-         w5kQvmqw8YuamzcgHn13f9aozu4uLu8zoP6y87ikuVHaRe7vZSeZ3Br4W6aIZ/pno6eh
-         uqew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734708872; x=1735313672;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1lPXyjaf345uNsjzFYHc3gGML2pFWEIj5bTrh9lJWag=;
-        b=jZm+/x6fPOg0Hwp59YbJTbY6eavQ1ClseW8/blNt9AkU2qNNt7EL8JCSOleJDgtEeK
-         V+NiO9pgDQVgMmLmrpxDcMDPXRy4YP71HNCP4wVTjqydfcF9GK2RNQUOsixqOzmUrMHD
-         6p2yI2HWQbxd7wFsU31V3juVvt66gYUHkckwQZpEBKEuqcxDwao8y6ZYhVJ1jTvWN8ir
-         v60l1u9SHWx9z/HUdS2uN+A02HtCEmWxdCLePH96vmjyuog4CgPQlvYOsTseOL3FDb09
-         s3TeqbqonittVv5KQfbzkaeD4By/L5AFGtvVqzVX+Q8F5E1CNY0vD30X6bRtV8vMCown
-         W3JA==
-X-Gm-Message-State: AOJu0YzskuoStiSO9rGNEqlBWrhVt8rCMenSnhS51nvkID7NTIc+3S7r
-	P0+fPH0L2qh58Ca2hWEr9G+isY2iLsD+LIDyWUTnq8VdrOPzo4FGITSqfgvaC6GW21nb85RJ4dl
-	RM6y7hbRyWuJQNBV0OBYFiN2Q7K03JBomLFHWHpG6aIqHR9KtbGCxKYem5A==
-X-Gm-Gg: ASbGncuTouv2PLE1sjksLGETiqiZG0xQa0EHIoRAupkOGwxSxbza5RnkMpF+cxrBoJs
-	GUIsGOV69hDA1zJxwdukCfX1rGV0+GNH5KPI=
-X-Google-Smtp-Source: AGHT+IGY47IRKgUpXUaC77/ypFfRBYTYDYhPZLvFZlI4frE0KOpRQpyaDy9Z5iTS8jubqmfTOFVkf95y2tyAlaaEOn8=
-X-Received: by 2002:a05:622a:130a:b0:466:975f:b219 with SMTP id
- d75a77b69052e-46a4a8d36b5mr3754761cf.8.1734708872333; Fri, 20 Dec 2024
- 07:34:32 -0800 (PST)
+	by smtp.kernel.org (Postfix) with ESMTPS id DC91BC4CED0
+	for <tools@kernel.org>; Tue, 24 Dec 2024 13:06:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org DC91BC4CED0
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=flygoat.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=flygoat.com
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 05E8F1140120
+	for <tools@kernel.org>; Tue, 24 Dec 2024 08:06:46 -0500 (EST)
+Received: from phl-imap-12 ([10.202.2.86])
+  by phl-compute-09.internal (MEProxy); Tue, 24 Dec 2024 08:06:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1735045606; x=1735132006; bh=iTj/NZ4S/o
+	kikPuE1CfwRnzRAIvNFJTtQo7R0nu/yG8=; b=UNkjtMh0h2hrF/YEpwCOuw6j9E
+	vhl2RTtSORJfsgFZXeEWXh8OfQ4h/nXleV0vOLfqjkhGxbwxngo5ysLrVDZUJrp/
+	L4CKaTsN1TTE2SCuk4Xn6ZcbxJVGdTnP0Aj0DUbP9mHM5OzeJ7nZ9eavMi3pICDD
+	ANQoDNLlS5F142gvnPnnK5yeBzll8NkfX6zzEZMC2LDovEha/7c5x3ovT/JRq1sx
+	7nHeDEb8nZtFuAQvo/qLU9SJaEBrovn8yxydN0ebgYe/igDIV0FF5V7UT80DPBKF
+	pQrgi7xb4OhT8RKEX3nNOwRo9pEv3u8WO+LIAFR4GT91QWcZmkdXzkGRX/tg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1735045606; x=1735132006; bh=iTj/NZ4S/okikPuE1CfwRnzRAIvNFJTtQo7
+	R0nu/yG8=; b=JnqBXAcNEvVWCEABsoldHLFYRkwOwiM5HD4wYv6xkanIWboGfUb
+	AW7l+VdzMD48MGE5vjTysoIfh7S4HiSW4RrLWqAdVSv6XTsjLEDfUIfV6X1Hmb8W
+	IyGP15HyhkNL3U26QHkuLeYObqvHamxUAOhI6S7vo3+UIWv1KcT3lHXWdQ3G2Cbi
+	F6C2IP7g0qtNY3QfzhtFhLrptEik0OJYTBLplXfszzqo0aAD4bJEh6IMFZ4YR1IL
+	pXlWSblF46Ki3uVJU7TZF4ule2ryzQABh6NUfvgxAGQyLO3OWHG2Kyk4mwkAaSL6
+	lJY7X6g/Hjy7/NvBPYZvAuJmOJIINnuS8hg==
+X-ME-Sender: <xms:5rFqZ7e8Doo0e0lqolGpwrOj3hdhpKoxBqoitdAX0PdJhGMOx1c_3A>
+    <xme:5rFqZxPgfPh-XJmeQjp-06_M1wN3LThIrnaA3ioaSUt8Acg7nam8k5j5UfC_KRfca
+    FJ1SKGH9QPpLfZ94xM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugedggeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
+    fvkffutgfgsehtjeertdertddtnecuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceo
+    jhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnh
+    eptdegheehkeekvdetjeetheeigffhtefgtdejkeevjedvvddtgffhffdujedvgeffnecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgt
+    ohhmpdhnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    htohholhhssehkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:5rFqZ0jSYAFe5p5kPJcbR-j-nSadISzsExA0cp1mwp-oQeKteBJZcQ>
+    <xmx:5rFqZ8-kaSJgvGVV0uaJjPOb1xjPzbppjRUGFA_RErQu3e_OAbDI6w>
+    <xmx:5rFqZ3vqJD5uZvjM_DN1wYutIK8ILLvm-F9TYEHghT_7jPris6NfgA>
+    <xmx:5rFqZ7H0rPRzPkQ82Ei6iueODld7QyWVQ0G7Xis69mcJ0xIo6cjZRA>
+    <xmx:5rFqZ13wypR0TQTa_RIHZOFg63QsCuPGnuiIlBJMS5F30t42xRfiBFz3>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 9F2091C20066; Tue, 24 Dec 2024 08:06:46 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-From: Brendan Jackman <jackmanb@google.com>
-Date: Fri, 20 Dec 2024 15:34:20 +0000
-X-Gm-Features: AbW1kvZ5BnI94Zj2bJc3lZDiYClQAjWOa3BpzTNRyVYL5ieYO57r9fJJIBfEUdY
-Message-ID: <CA+i-1C2V_wKeP9wUFLkFD7wTyZgBhPfNoVw_bwcfe_C6xs7Kjw@mail.gmail.com>
-Subject: assertion failing in git_filter_repo.py
+Date: Tue, 24 Dec 2024 13:06:27 +0000
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
 To: tools@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <af457861-6d07-451a-a4a3-9f52062f95b4@app.fastmail.com>
+Subject: b4: Should send-series-to supress send-auto-to-cmd?
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Hi,
+Hi all,
 
-Thanks for all the fantastic work with b4,very much appreciated.
+This is a question (or possibly bug) raised from QEMU's .b4-config [1].
 
-Got a bug report: when I run b4 commands that modify the cover-letter
-commit, I get this error:
+In QEMU's workflow, we have a fixed To point to the main mailing list, while
+Cc is gathered from get_maintainers.pl.
 
-(If GMail messes this up, see below for a link to a clean version).
+However, at least in b4 0.14.2 specifying send-series-to won't suppress send-auto-to-cmd.
+In such .b4-config configuration:
 
-Traceback (most recent call last):
-  File "/usr/local/google/home/jackmanb/.local/bin/b4", line 8, in <module>
-    sys.exit(cmd())
-             ^^^^^
-  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/b4/command.py",
-line 417, in cmd
-    cmdargs.func(cmdargs)
-  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/b4/command.py",
-line 93, in cmd_send
-    b4.ez.cmd_send(cmdargs)
-  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/b4/ez.py",
-line 2133, in cmd_send
-    reroll(mybranch, tag_msg, cl_msgid)
-  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/b4/ez.py",
-line 2269, in reroll
-    store_cover(new_cover, tracking)
-  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/b4/ez.py",
-line 659, in store_cover
-    frf.run()
-  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/git_filter_repo.py",
-line 4936, in run
-    self._record_metadata(self.results_tmp_dir(), self._orig_refs)
-  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/git_filter_repo.py",
-line 4767, in _record_metadata
-    self._compute_metadata(metadata_dir, orig_refs)
-  File "/usr/local/google/home/jackmanb/.local/share/pipx/venvs/b4/lib/python3.11/site-packages/git_filter_repo.py",
-line 4712, in _compute_metadata
-    assert(usoa == intermediate) # old wasn't pruned => usoa == intermediate
-           ^^^^^^^^^^^^^^^^^^^^
-AssertionError
+```
+[b4]
+    send-series-to = qemu-devel@nongnu.org
+    send-auto-cc-cmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback
+```
 
-I'm running on a Debian-testing-based system with git version
-2.47.1.613.gc27f4b7a9f-goog. AFAIK the Google modifications to Git are
-just adding security stuff, not changing Git's user-facing behaviour,
-I do not think that's likely to be the cause.
+b4 prep -c will still cause default send-auto-to-cmd to run
+```
+$ b4 prep -c
+Will collect To: addresses using get_maintainer.pl
+Will collect Cc: addresses using get_maintainer.pl
+Collecting To/Cc addresses
+CRITICAL: Running /[...]/qemu/scripts/get_maintainer.pl --nogit --nogit-fallback --nogit-chief-penguins --norolestats --nol failed:
+Unknown option: nogit-chief-penguins
+/[...]/qemu/scripts/get_maintainer.pl: invalid argument - use --help if necessary
+```
 
-I bisected the issue to commit 2e024fa130e5 ("send-receive: use our
-own emlpolicy when parsing messages"). My EDITOR is /usr/bin/vim.
-Maybe the bisection is bogus (e.g. nondeterminism) or maybe this
-points to something complicated happening, I'm not too sure.
+My current workaround is to specify a dummy send-auto-to-cmd (i.e. echo).
 
-I dumped the package versions in my pipx virtualenv, plus the error
-message in case GMail makes a mess above, here:
+I wonder if it is an expected behaviour?
 
-https://gist.github.com/bjackman/f2fdd13afaebf7a8ec4a6f14cdcebb89
+Thanks
 
-Any ideas?
-
-Thanks,
-Brendan
+[1]: https://lore.kernel.org/qemu-devel/20241223-swift-of-splendid-protection-b5dcac@lemur/
+- Jiaxun
