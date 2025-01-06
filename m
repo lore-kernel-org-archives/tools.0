@@ -1,63 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE091E04A7
-	for <tools@linux.kernel.org>; Mon,  6 Jan 2025 21:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7361482F5
+	for <tools@linux.kernel.org>; Mon,  6 Jan 2025 22:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736200778; cv=none; b=AmIUxr9vu83ab0oNae+GynJBgYdyesl9Zejb8YCiLzH9oJCmYL8SweJUErAz1icB8bK//djx1z0riA6LW83bVyjIH6dGMcUJlgpDwJ/xvVpt9RruHWz3rpF+JTikKshMJg7GIdln8eawWnq9KHO7xUKGI33Xx5ijo/SwI3b2z2w=
+	t=1736201107; cv=none; b=o6V1FLRMKHHlTD3JwQsXGGI+G1fzdwM25b8db/Km3m7AYrxImjjxFNzzxeq36/UcmRRLhsMRSZ7QML//molfPNgOUGR9jBnH8X73HigKqeN0FIEwStkwj38DXfvIG+lFbD3052os5A7uB6bIxWdTbqW+uM/l++fAOz1JASRDLlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736200778; c=relaxed/simple;
-	bh=DZ3rzW8qc3hb1W4x1aMMFIJFs+NWjC3it9DJr2BYr34=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hov3gItqNbmSed76i3fFGyz6xH8yME1mvEbdiZT1E/R4qk6HCyYM9lRhgYzsX/mAINzmRPhJWnJxWqpy6XFvLaU1AKP7A/G9pEziQwDP5I+V17Cl2qK0golXYe2EhUwkZV4IjewpyKRvnJqc58bj82C1nLOiN9zrimnYFf9iORw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfYIrInS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1736201107; c=relaxed/simple;
+	bh=R+aXqEj9Ond3u7x/OTC+BITYVVsz9I8dV1nLuXMH0uo=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=UiJy0YmLWhtuiObNkZ0ORwVBa3Zm4feiwsYTCNFdvEFMwbJV9N8JtnRgE7H2T33O5rpSsRZNDffyoWYiQ62xNIoluCuZM+s+B0oe+ubV8IGGV/drjIaiSSLrWefU4zyFALy0MyRTVQcRNMO92hIiF/fphVYIYs4EPI7N5bhaxlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mTVCxU1j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfYIrInS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mTVCxU1j"
 Received: by smtp.kernel.org (Postfix)
-	id 5A176C4CEE5; Mon,  6 Jan 2025 21:59:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E648C4CEE3;
-	Mon,  6 Jan 2025 21:59:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736200777;
-	bh=DZ3rzW8qc3hb1W4x1aMMFIJFs+NWjC3it9DJr2BYr34=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EfYIrInSpTenS37zPRIh7hEWy+3cn8RcOuztt2fQXyV2lXX4urFHucr2X+vO+z188
-	 KsfYaG06mwuhqXFyc2V2lZrWRtTkZmt+v0h5DIkbHbdoz6rDS0I3x1t9J1jDnhgAiD
-	 xnTuCU3eX1SftaeaWToe2T5q83RvuAwfc10HCZyw=
-Date: Mon, 6 Jan 2025 16:59:36 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Cc: tools@kernel.org
-Subject: Re: "b4 send" only handles one instance of sendemail.smtpserveroption
-Message-ID: <20250106-fresh-ninja-hornet-94e6d7@lemur>
-References: <Z3vkoDal1ShoPpqG@probook>
+	id 973F8C4CEE0; Mon,  6 Jan 2025 22:05:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DE5C4CED2;
+	Mon,  6 Jan 2025 22:05:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736201106;
+	bh=R+aXqEj9Ond3u7x/OTC+BITYVVsz9I8dV1nLuXMH0uo=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=mTVCxU1jqXYX4pNFKQShznKXMKAKthAXISlYy6XZApdOSk8FRSbFYiU7vM0UGtkWq
+	 MCGoVelkJs3kRBYf+8UPSikrCOidsxGPn/+KWuIhYWObSPtNq97KDAiXUfcjij9zYP
+	 UuE8CWh2CBYbruSF8z3qsNabK8FZhynKnQJcNiDaYD45fHNTIiSQapsbOji6rNcaAf
+	 E/7/JnWdqhlh3iSEmVmAkHKLXkKZiLO9BZt+giSd1+RZDVKqhEtnHCU5trAoTHYMya
+	 UOa4xoePWboTiW9IkBueJJpWdwStTAgB1WJp3PNXxT9r4U0Gtgwq4JkuSKrfENehvm
+	 w7T0LTvxMK1sg==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B4496380A97E;
+	Mon,  6 Jan 2025 22:05:28 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: Bugspray Bot <bugbot@kernel.org>
+To: tools@kernel.org, j.neuschaefer@gmx.net
+Message-ID: <20250106-b219668-17bce0eeb0bd@bugzilla.kernel.org>
 In-Reply-To: <Z3vkoDal1ShoPpqG@probook>
+References: <Z3vkoDal1ShoPpqG@probook>
+Subject: Re: "b4 send" only handles one instance of
+ sendemail.smtpserveroption
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: bugspray 0.1-dev
+Date: Mon,  6 Jan 2025 22:05:28 +0000 (UTC)
 
-On Mon, Jan 06, 2025 at 03:11:44PM +0100, J. Neuschäfer wrote:
-> Hi,
-> 
-> (using b4 version 0.14.2)
-> 
-> first of all, thanks for implementing sendemail.smtpserveroption in b4 :)
-> 
-> Upon trying to use this option with b4, I noticed that the resulting
-> command line only contains the last instance of
-> sendemail.smtpserveroption specified in the git config.
-> 
-> I think it should be possible to specify multiple options:
+Hello:
 
-Yes, thank you for the report.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=219668
 
-bugspray tag me
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (bugspray 0.1-dev)
 
--K
