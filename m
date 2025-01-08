@@ -1,61 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD6C2046AA
-	for <tools@linux.kernel.org>; Wed,  8 Jan 2025 21:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D6C1E9B16
+	for <tools@linux.kernel.org>; Wed,  8 Jan 2025 23:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736370610; cv=none; b=HDSAq+GekOZqiDT50zGBE0v1xUS4DLe5PMYhhANJ0HtLYMpmoGHbOFYMYmgHTj9cbUPhdwQR2piiq7BOLZ+JYAN08sma4A8JHXjfFMkS0InTae8Ee049iso6+Pj1FJRyqlfPvvzdkN1famTbY37lX4lWdkB3pws0S4psQoWMHgk=
+	t=1736377924; cv=none; b=dgV6D1UVK+VKfevbZgomxDHDXXarCmSBS7bMRySfYa69jomO4770Kv20hmRAIhz7LSb+EAGRe7SH55NTq9TgIRBmV5aGsWDvNNI7Rs3W6xH65BAM7dgoUf6QMVRaC7RT31sQwPkqpzpa9bt+PcP2Gqj1hSzVcPQ4F22Jd3qrdRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736370610; c=relaxed/simple;
-	bh=8/yf1FDzYVgRR5ZHlRrw2v609u24zlJikcnycuxqNqs=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=Ujv4n9C4tvrj0gpi3GpIllDDsa0c6rm0wTAQnhoBI5ZEMHtXrFSqm60dTErq8tgtaXNEKiOXDcmj1zYG0nl4ifRYYPt243NJlFZR+LD/607kw4ai3EATMK6NZOcUvKvuKI80Rjf5ojLk4WLK0tZ6FrJ1Hb5eveUJrGlf3reSz3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rqi1p4EM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1736377924; c=relaxed/simple;
+	bh=NHFC+9BXLK7LTaWYwCNRiqt5Ydf/pUKtBXo30EFaJqE=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=g9+LkxllFpssU75mgzCcYFkUQLwQ7Z031PioTyZHzK63vlmBzyq/EcqnjWjUuKVfngSa/c57O98f6siaQ27HKXxXORtXPCs6IBxo5dUGlf44hc9O6igiE9aqglt9hM8bcKZPs7zhOxyO0Yg1WbcKtBSAvEGus2v7h8GAoq7dG5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oSWl/9Bo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rqi1p4EM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E34C4CED3;
-	Wed,  8 Jan 2025 21:10:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oSWl/9Bo"
+Received: by smtp.kernel.org (Postfix)
+	id 83118C4CED3; Wed,  8 Jan 2025 23:12:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427F9C4CEDF;
+	Wed,  8 Jan 2025 23:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736370609;
-	bh=8/yf1FDzYVgRR5ZHlRrw2v609u24zlJikcnycuxqNqs=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=rqi1p4EMWrt0PoOcGrikbfpJPTEnEuMuGYm0/F7rgGMwTS7E4zl/0TIKVFYn4IqC7
-	 ln5gFW6c6bGOrQ/8qYqW5mp7DvunEXEFHRG1S50R6VCobTGiqmdVmKM93FI4rzH+Jj
-	 7O/sAWjw/fmgMICTrr2sMA+009DJiJHpLRX4r+IApWPM/PIo6AE9I9ct8yigz4cdrd
-	 lfNF3wXJfQHFnGZo5i7xs4/7hGrevb2jQ8/81CzP0gow9OaJ1+yQjRj4aaFYmWvWoo
-	 BsRe6githr+OzvWmuSQV9aXUrlr2z088qMyaFVQF8Bdb+ktsH8qFH+/54V9GxdltqG
-	 G3eBfi84C0x2A==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 3A51B380A965;
-	Wed,  8 Jan 2025 21:10:32 +0000 (UTC)
+	s=k20201202; t=1736377924;
+	bh=NHFC+9BXLK7LTaWYwCNRiqt5Ydf/pUKtBXo30EFaJqE=;
+	h=From:To:Subject:Date:From;
+	b=oSWl/9Bo7LNzRknD4We6xpYUQRUvar3LhDoNwJz4huSb2CzHEi3VbF+57eiR8k9Wo
+	 QTTVFBobs8EjyZRvq/ColoUR7eW1njFvDzY5FDwQdhqgww6EuCO/dRasmXBAevqb4J
+	 HlS0qysqMFChYkwZAitjlpbU58sz6lV1HkgGkRtmY9XgTsiDb06XqEqDcuM6zrmU9c
+	 xJdKHZDRlCzfLXjBx5073aRa9Su6bbcenKIj5T1TMBP+vHa4g3gELo050aesKLOQnq
+	 K97t4MPxvxpw66MuaH8Tzk7wO0sp7q8K+q7H4Jz66T6z70KLxewyPncSrZu393/O9V
+	 PQvmS5ZkpLw/A==
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: tools@kernel.org
+Subject: [PATCH 1/2] Limit --guess-branch argument to 1 branch
+Date: Wed,  8 Jan 2025 17:12:02 -0600
+Message-ID: <20250108231203.1209721-1-robh@kernel.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: Bugspray Bot <bugbot@kernel.org>
-To: tools@kernel.org, konstantin@linuxfoundation.org, 
- tools@linux.kernel.org, robherring2@gmail.com
-Message-ID: <20250108-b219672-589ccafddb6b@bugzilla.kernel.org>
-In-Reply-To: <CAL_JsqLLOnpAHM38Bv05JdC1o0rS6eUG6WXgPHfnChs2n+AuWg@mail.gmail.com>
-References: <CAL_JsqLLOnpAHM38Bv05JdC1o0rS6eUG6WXgPHfnChs2n+AuWg@mail.gmail.com>
-Subject: Re: b4 shazam base-commit handling
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: bugspray 0.1-dev
-Date: Wed,  8 Jan 2025 21:10:32 +0000 (UTC)
+Content-Transfer-Encoding: 8bit
 
-Hello:
+More than 1 branch argument doesn't work correctly, so restrict it to 1
+arg. The help text already implies it is a single branch.
 
-This conversation is now tracked by Kernel.org Bugzilla:
-https://bugzilla.kernel.org/show_bug.cgi?id=219672
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+---
+ src/b4/command.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-There is no need to do anything else, just keep talking.
+diff --git a/src/b4/command.py b/src/b4/command.py
+index 5d90b4f52b4f..e31ee052c9cd 100644
+--- a/src/b4/command.py
++++ b/src/b4/command.py
+@@ -184,7 +184,7 @@ def setup_parser() -> argparse.ArgumentParser:
+                        help='Save patches in a quilt-ready folder')
+     sp_am.add_argument('-g', '--guess-base', dest='guessbase', action='store_true', default=False,
+                        help='Try to guess the base of the series (if not specified)')
+-    sp_am.add_argument('-b', '--guess-branch', dest='guessbranch', nargs='+', action='extend', type=str, default=None,
++    sp_am.add_argument('-b', '--guess-branch', dest='guessbranch', nargs=1, action='extend', type=str, default=None,
+                        help='When guessing base, restrict to this branch (use with -g)')
+     sp_am.add_argument('--guess-lookback', dest='guessdays', type=int, default=21,
+                        help='When guessing base, go back this many days from the patch date (default: 2 weeks)')
 -- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (bugspray 0.1-dev)
+2.45.2
 
