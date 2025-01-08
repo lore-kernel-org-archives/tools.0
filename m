@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D6C1E9B16
-	for <tools@linux.kernel.org>; Wed,  8 Jan 2025 23:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124E41E9B16
+	for <tools@linux.kernel.org>; Wed,  8 Jan 2025 23:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736377924; cv=none; b=dgV6D1UVK+VKfevbZgomxDHDXXarCmSBS7bMRySfYa69jomO4770Kv20hmRAIhz7LSb+EAGRe7SH55NTq9TgIRBmV5aGsWDvNNI7Rs3W6xH65BAM7dgoUf6QMVRaC7RT31sQwPkqpzpa9bt+PcP2Gqj1hSzVcPQ4F22Jd3qrdRA=
+	t=1736377926; cv=none; b=PxYztlGRTKTuJLjX7PK5GL2n9Iuzwzk31v4AnbKzXBWV0UGHuTeJUEsanVm/l6B25qY/S+Ez/YpUZ2eBRdXsEX1xVaEZS9cckJt1kEdtAcQrlqw8vH5fUvyQQ9YBgGJfrhWIQENCZWcEOaL3kEaLa/SJgQK85xUfDZ4elGa1cMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736377924; c=relaxed/simple;
-	bh=NHFC+9BXLK7LTaWYwCNRiqt5Ydf/pUKtBXo30EFaJqE=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=g9+LkxllFpssU75mgzCcYFkUQLwQ7Z031PioTyZHzK63vlmBzyq/EcqnjWjUuKVfngSa/c57O98f6siaQ27HKXxXORtXPCs6IBxo5dUGlf44hc9O6igiE9aqglt9hM8bcKZPs7zhOxyO0Yg1WbcKtBSAvEGus2v7h8GAoq7dG5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oSWl/9Bo; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1736377926; c=relaxed/simple;
+	bh=IniXrJMg5uJfDszXTCpBYNcJH0gOnEEWZG3AkC/RHXg=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HLr/8VySaRSGbZTFCX3J1MpjxnOekalUEXRZvMU1ae0yDdLOtJ8XK3uCXuSe5ZJ8JcMe2XYq8G6oBdNu6lRb1V8XhUKUJCKekji3BReQGZ+ADj+5rGpyIcTvtqjDbZC0VypAEnXVG3RdJxiqyJWba4rYKvHQmIZke4AlL+1mNsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sEdjrpMl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oSWl/9Bo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sEdjrpMl"
 Received: by smtp.kernel.org (Postfix)
-	id 83118C4CED3; Wed,  8 Jan 2025 23:12:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427F9C4CEDF;
-	Wed,  8 Jan 2025 23:12:04 +0000 (UTC)
+	id BD5FCC4CEE4; Wed,  8 Jan 2025 23:12:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859C2C4CED3;
+	Wed,  8 Jan 2025 23:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736377924;
-	bh=NHFC+9BXLK7LTaWYwCNRiqt5Ydf/pUKtBXo30EFaJqE=;
-	h=From:To:Subject:Date:From;
-	b=oSWl/9Bo7LNzRknD4We6xpYUQRUvar3LhDoNwJz4huSb2CzHEi3VbF+57eiR8k9Wo
-	 QTTVFBobs8EjyZRvq/ColoUR7eW1njFvDzY5FDwQdhqgww6EuCO/dRasmXBAevqb4J
-	 HlS0qysqMFChYkwZAitjlpbU58sz6lV1HkgGkRtmY9XgTsiDb06XqEqDcuM6zrmU9c
-	 xJdKHZDRlCzfLXjBx5073aRa9Su6bbcenKIj5T1TMBP+vHa4g3gELo050aesKLOQnq
-	 K97t4MPxvxpw66MuaH8Tzk7wO0sp7q8K+q7H4Jz66T6z70KLxewyPncSrZu393/O9V
-	 PQvmS5ZkpLw/A==
+	s=k20201202; t=1736377925;
+	bh=IniXrJMg5uJfDszXTCpBYNcJH0gOnEEWZG3AkC/RHXg=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=sEdjrpMl7TtdgmUgdLlvW3wJosSNZm0EdWVc1E2ShPcJr2A1D+3lCyjQeOu4NBLvD
+	 dOHl1vj+muvvJ4xQ/dHY4oAt0UW1UHeXdkCG1r8S4/vnPRI4j8BI71b1KU/ZqGgTlY
+	 8X2tMt/QsGkPOIX/H5RvEYJwCzy+wlA7X1k8qKhMegmeLIbd1Edsc7cXO7q0NoQ+6f
+	 vVna6IQSiQhwpvE2NVHEmvX4deDLGkiRZTQL2yuVcH7JbFZdFCaY642Ud1qOBDEe8g
+	 yKbEFc7hzoN6lXLB0+bFB8XfpXJ6SNkbyJiQGoIBei7zBZFJJJmUja49uptipYXEzo
+	 QTKIg1jdyFGCA==
 From: "Rob Herring (Arm)" <robh@kernel.org>
 To: tools@kernel.org
-Subject: [PATCH 1/2] Limit --guess-branch argument to 1 branch
-Date: Wed,  8 Jan 2025 17:12:02 -0600
-Message-ID: <20250108231203.1209721-1-robh@kernel.org>
+Subject: [PATCH 2/2] Allow --guess-branch argument with shazam -H/-M options
+Date: Wed,  8 Jan 2025 17:12:03 -0600
+Message-ID: <20250108231203.1209721-2-robh@kernel.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250108231203.1209721-1-robh@kernel.org>
+References: <20250108231203.1209721-1-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -41,27 +44,48 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-More than 1 branch argument doesn't work correctly, so restrict it to 1
-arg. The help text already implies it is a single branch.
+For the b4 shazam cases which create a FETCH_HEAD, it's useful to be able
+to specify the branch to use for guessing the base commit rather than just
+using HEAD.
 
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 ---
- src/b4/command.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ src/b4/command.py | 2 ++
+ src/b4/mbox.py    | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/src/b4/command.py b/src/b4/command.py
-index 5d90b4f52b4f..e31ee052c9cd 100644
+index e31ee052c9cd..99854e9932c0 100644
 --- a/src/b4/command.py
 +++ b/src/b4/command.py
-@@ -184,7 +184,7 @@ def setup_parser() -> argparse.ArgumentParser:
-                        help='Save patches in a quilt-ready folder')
-     sp_am.add_argument('-g', '--guess-base', dest='guessbase', action='store_true', default=False,
-                        help='Try to guess the base of the series (if not specified)')
--    sp_am.add_argument('-b', '--guess-branch', dest='guessbranch', nargs='+', action='extend', type=str, default=None,
-+    sp_am.add_argument('-b', '--guess-branch', dest='guessbranch', nargs=1, action='extend', type=str, default=None,
-                        help='When guessing base, restrict to this branch (use with -g)')
-     sp_am.add_argument('--guess-lookback', dest='guessdays', type=int, default=21,
-                        help='When guessing base, go back this many days from the patch date (default: 2 weeks)')
+@@ -206,6 +206,8 @@ def setup_parser() -> argparse.ArgumentParser:
+                       help='Attempt to treat series as a pull request and fetch it into FETCH_HEAD')
+     sh_g.add_argument('-M', '--merge', dest='merge', action='store_true', default=False,
+                       help='Attempt to merge series as if it were a pull request (execs git-merge)')
++    sp_sh.add_argument('-b', '--guess-branch', dest='guessbranch', nargs=1, action='extend', type=str, default=None,
++                       help='(use with -H or -M) When guessing base, restrict to this branch (use with -g)')
+     sp_sh.add_argument('--guess-lookback', dest='guessdays', type=int, default=21,
+                        help=('(use with -H or -M) When guessing base, go back this many days from the patch date '
+                              '(default: 3 weeks)'))
+diff --git a/src/b4/mbox.py b/src/b4/mbox.py
+index 7061d1493be3..768a896904ad 100644
+--- a/src/b4/mbox.py
++++ b/src/b4/mbox.py
+@@ -783,13 +783,13 @@ def main(cmdargs: argparse.Namespace) -> None:
+         cmdargs.threeway = False
+         cmdargs.nopartialreroll = False
+         cmdargs.outdir = '-'
+-        cmdargs.guessbranch = None
+         if cmdargs.merge:
+             cmdargs.makefetchhead = True
+         if cmdargs.makefetchhead:
+             cmdargs.guessbase = True
+         else:
+             cmdargs.guessbase = False
++            cmdargs.guessbranch = None
+     else:
+         cmdargs.mergebase = False
+ 
 -- 
 2.45.2
 
