@@ -1,152 +1,199 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28DD9443
-	for <tools@linux.kernel.org>; Fri, 17 Jan 2025 16:20:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737130818; cv=none; b=DPU9xgycMuMW52XE/Qf0Or8QrxV/fqI86t7ET1i3bmV2qkRlKbcAqezsbSEwSGwx3eswZI2pqrWk32SEnZiPDZWD0h9gd+Yg0w/oo+SfZmSoZOqDRBkCBYjFiswmduh8/2G1/voroRo4C+hT8vEgnEAcBXg/4fXmO+/uqDMfFfI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737130818; c=relaxed/simple;
-	bh=ntZ5mUKUgQh/jlP1L8pK2f6Odp/MBIYlMlQzPT0zd7c=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=FiQ4sSbQYg/Ukh/WBhS5H1z+R4ywwQcfgsKIZKjfk2lV4p8I0B1WnIqm9Xw0i/+R/lv4i88yvNvMjLsx3ypvQkStnJ6PqE913SBaYB9Qm70ysrterng488sDH9/E2Rk0ClcoYLkPz6wZcDCTseOAR5x5CXtr3Rj2/4XtMKNLHRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=boZnlxvY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I3182bfj; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7C0166F29
+	for <tools@linux.kernel.org>; Fri, 17 Jan 2025 16:21:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=10.30.226.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1737130913; cv=fail; b=opVMUY7lSaBl4VYnnRX7WwkZAyHu1FG/aBkseA0HD7gL4h0KTTn2pepgbDEY9C4RHX6taGB7gWgyqmb2AaDZ+IcCMMn+dHW0cJ8G4VleaGBuYX7kpRJIMq8k0NqgX9aYWOrvL5NNCAJbbLnqzkrDFcv10PnvCv8kMnowiNtDpDY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1737130913; c=relaxed/simple;
+	bh=Th0x1LIDJI8uBnSM4Ws3cQ4/oAkM674MUMbUdQHBDn0=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=fmzMfh7opTncv8nThtAB2Q25nygX1SZGjkcSybmx+9YkBgvVk+HHf/HcX4AT5BZf9U1d5NwyDZHEck0N/6XUXpnEZtOtfwatWVX7xKegdqI+mUh321iur/vUhxKNkhgVaPpLWiqXzrsUbS5yVcZHhYkyZg2LYf2QwcMyFpT0jw4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=cherry.de header.i=@cherry.de header.b=TJtvBmDp; arc=fail smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="boZnlxvY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I3182bfj"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F39191140161
-	for <tools@linux.kernel.org>; Fri, 17 Jan 2025 11:20:14 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 17 Jan 2025 11:20:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1737130814; x=1737217214; bh=wTRMGsQbFE
-	qBPZ6P/Q/BWlTC9QeAC+YKiTwWzKNQ89w=; b=boZnlxvYkIb2Ip6vkhTBrV24Nr
-	igryz8HWiWxgCHXCX3xKYit8l/QDWqFpYXdiUk0NeE/7Pc3ukzY8Mwsu1vXpj9XI
-	Y/POE7/ggMzW1sMvH/i5tnUEh5/xFcUjDg0COlCGEHNvNwkD2048Vnu3B4B4t+4/
-	NwiDT1vVe4BmfoLXQsAmtZkOMciB5Io3AK1WAtpDKI+gyTQtDfMTE8tOe7+bp3b0
-	GnFWrVKgCzB4YGUiIX/x6fvJx/kXdXOlE3hkd7mfMvY/BljTg1T4PsnDUDSroGs+
-	C8C2LjNLPKx/w5KlwkU241mhoNTO/8Tv9iWZyATBlrqw3bWNQvoTFduhxDZQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737130814; x=1737217214; bh=wTRMGsQbFEqBPZ6P/Q/BWlTC9QeAC+YKiTw
-	WzKNQ89w=; b=I3182bfjB7EgoNQ3TKogDBIN0/4JEr1gIPzsnsf8Mj+5DNsJYV0
-	WP+H4qErMBsSqZVmBPcBGnZO0J4N3Sij1b7TYZ4K3PXdGRpt2a0BoK2Lc8r/7BDo
-	rLkDDi9ueY4nf034DFPwhEx+LG75RMbA9uh0K830b8dX/9IoTCUP7RvHIJHL0Qvu
-	/R/ccgBNlkArECjQFb1pTl/nMJ9GcFKeOrGbXVbuezRwK9t4A/IVU+hY3rGIgKLd
-	/Ds5U9pqXapGywEbNMqQdvN1lVqY43+SUsKhBF/zvI3lNzRBjMj+3LM961LP8Hx1
-	nJMlNtn8J+6Kta17UnmB9J5NJLmQ55/S0Xw==
-X-ME-Sender: <xms:PoOKZ-kzSZJta33dtWuLuGGPChr_F4V5_MW3DeQcUCx4ZM-kIoIWqQ>
-    <xme:PoOKZ12MkD5YLqCEZMbOWbbeECa51BGHb06eHkyWwAHDNB9lohB5raH44V-UWsdbz
-    wjrPTPrtGdRY2XFBKg>
-X-ME-Received: <xmr:PoOKZ8qpw4T9uIvjwhzZi77s4f4_nfXYyx6QTPTwq4HBSC0yMjJ9LA-zFYiVvz-ss53ex94VIA8WftjpZwIuAXuLklDqiZwY1c0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgkeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefkffggfg
-    fvhffutgfgsehtjeertddtvdejnecuhfhrohhmpeftuhhsshgvlhhlucfjrghnnhgvkhgv
-    nhcuoehrhhgrnhhnvghkvghnsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    eluddtffffuddvueehfeeljedvveejveffgfduvddvuddvudejkedtteejgfevleenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehrhhgrnhhnvg
-    hkvghnsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedupdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehtohholhhssehlihhnuhigrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:PoOKZykz9kiSooTl6NWPfk2zzIxTWQMfqqQaR3ZY8pKyqcAsjWOJSw>
-    <xmx:PoOKZ81i2jYS_IuNTXj7RFhdWLidUB9Yfh29pY58GjteMylGNsUbkw>
-    <xmx:PoOKZ5vbouuXCDj5nfV996A1nc9TxezDTQpBAAQ0pVb0f-sbpW5FOA>
-    <xmx:PoOKZ4VUJvVUxFfTlEEcoWN2vB0v5jGOsQIqCFO9B4NtR3cmOLx_dQ>
-    <xmx:PoOKZ58ax0i7ATuPc7TISeisxvQv6HjvXfjjGmbq91RNkbbAVSU0TlMk>
-Feedback-ID: i0f414978:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <tools@linux.kernel.org>; Fri, 17 Jan 2025 11:20:14 -0500 (EST)
-Message-ID: <bfb0c080-da20-490a-8124-799f2e9a41d8@pobox.com>
-Date: Fri, 17 Jan 2025 11:20:14 -0500
+	dkim=pass (1024-bit key) header.d=cherry.de header.i=@cherry.de header.b="TJtvBmDp"
+Received: by smtp.kernel.org (Postfix)
+	id 7B669C4CEE0; Fri, 17 Jan 2025 16:21:53 +0000 (UTC)
+Received: from EUR02-VI1-obe.outbound.protection.outlook.com (mail-vi1eur02on2056.outbound.protection.outlook.com [40.107.241.56])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 13C78C4CEDD
+	for <tools@kernel.org>; Fri, 17 Jan 2025 16:21:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 13C78C4CEDD
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cherry.de
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=cherry.de
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MaVCPgJwLTGhmMdOhnBNfq3goJTJ3WWrp83RleGGCCV/U7/15fe7s4JMlk3G+N46bId/LAxLuXmIulLizCYkrgOBduwe9VGDnP2ZXiYH+mi4+eKZTBzes6pmmHjafHbaaauT9HTRNpS+XmUAMEDYRXxdTIPMvs1nioBstrMtygpmU6TPTCcThr7Lyo+y4/9zY5Ba5T0FUsG0iG+shSZZg+YmXhn1SEurmjlzC4B6MwVcN2bm0i0LWTgtel94mGb5yzL7ItTORnWMXTXk+6TfKlkzs3fltBS6EgN4KTNVSf/3E8R3GGmKWFL8topCuMinsYx267G9TUwO9OMrRcDn+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=u3JVADk6Y+bJIwgbJ7MNmAUkOa+o1o5H26MWDshx5mo=;
+ b=fNACxb+Sv31RQGiXq+g9QkO3xKADyrOHhvi6WYJSXSBPMEHlUYk5h9oUMRjBh54+43awmQrmiJOg8u24yO3EoobEMHyO/sQnGGdtGrYMl7Y/JonaC/W8IY1FJI2oYWTmaHcqZ9aomHTsTF8D8DHdVpzRKISqWuXfU4Ka4CwFn71Y3cmIzafieKDIc26faaP+0WYV+gfHu0v2qOZY2WuGGPXkPIPzqFwKqs81sS80h/ubJN7WCAQa3Yb8zrCbawCC8m62gGzR/Aa3p0wWPk69Wh/piAyT1bytlv5Gjca9B0/IjPZxQdCZRhyGa3iX5/QRSAGv+L4W/zl5NdCJxhBfIQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cherry.de; dmarc=pass action=none header.from=cherry.de;
+ dkim=pass header.d=cherry.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cherry.de;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=u3JVADk6Y+bJIwgbJ7MNmAUkOa+o1o5H26MWDshx5mo=;
+ b=TJtvBmDpKgahcGcBwNJIhiWH8B9bFu+yynEhfUmVkvI7ybCW5yutt2vbZaTr7U8XQc9yBuZU7YlJi2BMOl5/QrVUds/7/3Jfuw4jo7369j7CTZiQ8c5nNrmn1i4dhVS66ds+4a/o+NqWO2C1TANNOXAxcX/S2xUH9Rnnv+t/nwk=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=cherry.de;
+Received: from AS8PR04MB8897.eurprd04.prod.outlook.com (2603:10a6:20b:42c::20)
+ by PAXPR04MB8798.eurprd04.prod.outlook.com (2603:10a6:102:20d::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.16; Fri, 17 Jan
+ 2025 16:21:48 +0000
+Received: from AS8PR04MB8897.eurprd04.prod.outlook.com
+ ([fe80::35f6:bc7d:633:369a]) by AS8PR04MB8897.eurprd04.prod.outlook.com
+ ([fe80::35f6:bc7d:633:369a%3]) with mapi id 15.20.8335.015; Fri, 17 Jan 2025
+ 16:21:48 +0000
+Message-ID: <2a35c1d6-3e6f-44c9-8938-4fd77a3be7b5@cherry.de>
+Date: Fri, 17 Jan 2025 17:21:47 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [b4] prep-pre-flight-checks doesn't seem to work
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+References: <a8bc0958-6c46-4622-96ef-b1e55c15f30f@cherry.de>
+ <20250117-ambrosial-interesting-trogon-a67628@lemur>
+ <8f22b90c-3216-4eaa-abf5-85dc29625e4f@cherry.de>
+ <20250117-practical-avocet-of-novelty-9dff8b@lemur>
+Content-Language: en-US
+From: Quentin Schulz <quentin.schulz@cherry.de>
+In-Reply-To: <20250117-practical-avocet-of-novelty-9dff8b@lemur>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR0P281CA0037.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:48::19) To AS8PR04MB8897.eurprd04.prod.outlook.com
+ (2603:10a6:20b:42c::20)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: tools@linux.kernel.org
-Content-Language: en-US
-From: Russell Hanneken <rhanneken@pobox.com>
-Subject: patatt validate does not recognize patches sent with git send-email
-Autocrypt: addr=rhanneken@pobox.com;
- keydata= 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
- QTo=
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS8PR04MB8897:EE_|PAXPR04MB8798:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1b8f2de9-d2a2-4606-1e37-08dd37130aab
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?Q0h2bTNNN3JzcjE3ZzVpQzcvcUVnN2gxZUUyODl3cyt6aW44WTE4bVJoOTlT?=
+ =?utf-8?B?cUFBb0dzbXRjakpNZWxCZWQySUZ0VXY3SFJ3cUN0S0t4ZnJtWUJPTEdiaWRH?=
+ =?utf-8?B?THpwZE5qVGwwczREV0NCQURhTU9uV09iYnN6S015VlBCcDJpOVMyUTVDbDQ2?=
+ =?utf-8?B?NDJnYUF0TkZ3a29OSGMrL0Rlbjk0QnU5aWFxcmprb1hGMk9aV2ZZUHZZRmhT?=
+ =?utf-8?B?MFR5YVo3TXJzMnNYeE1EZ2JyN1BqMCtkbklhZVlDTDRZdzZUL3UvV2hZNm95?=
+ =?utf-8?B?NkVuSUdETnVlL3BiTzFQbnU2cms3VjFiVUJtQUhXWTR2bEtSSUFsTEpuNlV6?=
+ =?utf-8?B?VngzV3BodEpBZlZSM0NPMHBhWm1Ta3EzaCs3M0NaM2JoNWZvRk1wbk1aTzls?=
+ =?utf-8?B?Ly9wdml2R0t2WUtNeThLc2QvL081c0Yza0szOVAxVHVJSmJ4MzcxVGV4RFVj?=
+ =?utf-8?B?eUxRY01hc21pVjZSRXIwZVZqOEVteERJMHhoWFp0NnJEWVlDMHhlRnNkeDNI?=
+ =?utf-8?B?R1Fvc0Z4aEN2OHRYOHBxSnVJcnlOM0F3RHp5VW1SZVhKTC8zdncxUUV4TEIw?=
+ =?utf-8?B?RU1lbmRzR2xhS3FWRWVxTzRDQ3F2eUpvNWFRRU1nQytseWhoQ2w3am85Q2py?=
+ =?utf-8?B?UkdlTStLTGNlOUlkdGV0S3Z6R3VFazZxSS8xUW5ZWHo3SjlZbjVtTGJXV0oy?=
+ =?utf-8?B?YTZxbXhjT3QyYjlBdkNNTXp6NzgxZTlvcnpWaTRzejhaTG5lMkZkcU1YaUI1?=
+ =?utf-8?B?S0F5SGg4dzluc24yRkI4MTJtU3UzbVZnRXpzaUl6Rk5jWmVBcGVIK29XenVY?=
+ =?utf-8?B?TXVPUjdBc0dsMFNXUCtGeHpKZGY1cFNwOUxxTWpOZWNYNlN3MXpOV2Y5TGwx?=
+ =?utf-8?B?a3VVZmxHZDVZRStVVjl1clcvbmVOdW9yb3VoZ1JHU3BjVVJHLzFWS2RFZENS?=
+ =?utf-8?B?dTE4VDBRcVQ4SVNUTWVBQmwxY0NIdHJrTVNMTnkzN2VGZXhJekJ5V1JqOUpq?=
+ =?utf-8?B?NkFOSWpRRitUVjdTaWZjMW10blJWVWoyREo4d09IdWYrRWVuOUZqN3pabDBN?=
+ =?utf-8?B?elFLL0x0cnFwRlNXeldQczU1MFRkWS9BNVFPeGtTUFFySXJiU0gxVTdUZVY1?=
+ =?utf-8?B?WUhTanFDcFFNY0E1d3BydXlkVHJETnNteXE0M0ZOQ0ZtM1lBOENIS1NjZnlD?=
+ =?utf-8?B?YVo0RmtpbGpqZ0hTOFZmZzRHKzdIdzh4MG95eVIwZ1RtQ1h3TGJZRHdHRHV0?=
+ =?utf-8?B?Z0tLMFBlZ1BLcm5mczJ6eFBadFplOGNpZWdOUlVyT2lkQW9CRG9rSllXMW0z?=
+ =?utf-8?B?MjF6c3czbHpST3hEU3JkQ1ZLWXpXd05lWGw0MEV4SGYzWEtjR0FuWGxmMmpO?=
+ =?utf-8?B?WFlaN2NpVXFWVWJrYWFGbnNHS0hhbnp1UUR1RlJsSzRnY2ZuVXFkTXhadkor?=
+ =?utf-8?B?S3BDdFJJdlpXWndwcEFwemxvemhVUG1PcGFrTXF1SVIzSDFJUlNobStIc2ZD?=
+ =?utf-8?B?di9kbkZYSUd4UE1ZTkUySWY0cmF1RVcvNDdYdm5hNjg1QU1MaXVsZWw3ZG9z?=
+ =?utf-8?B?UmxySTJndTkrY21QZkFCc2gyZnY1S2VQeHlZTjFra0wxMWV5WXdzamd4RkZv?=
+ =?utf-8?B?RmV4S1N6dXJpNHhOQVNxZW94aTl3TjNBYkpBUE1aSStpakN3MTcwb0sreHph?=
+ =?utf-8?B?MHhlZTVPS1ZiYlpreWZjUjdpUHdZaXNEMHNWWXN5RnVNY3NHZkQ3RjFTano3?=
+ =?utf-8?B?U3FDVk9wcStOcXZOeGp5N0VXSnJGQS8vbnBCSWVselhrbjJtTUgyQVl1TjdD?=
+ =?utf-8?B?UmhGRklwckwvVEZ4STVlaXdBNytucm5qdy9iQjJPK050TVU5TEdpRjFHcFQ3?=
+ =?utf-8?Q?cSR6C6UEG2FSo?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8897.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?N2JUek9RSnVlZEl4L0dYZlVaMU5GODhPY3VUQTl3UHo0Q21kb2h5bkphYnBJ?=
+ =?utf-8?B?YVkrNmRybXFsR2pRT28xeWdrVnNZcENxNzNicW9rOVIwb0VQZE1mTmZlNXB2?=
+ =?utf-8?B?UzhGd0hRQmw3WW5VWWszSURiTVk2dWN0QjlBZzZ4WnlmMnZPNWpWSDBVZjcz?=
+ =?utf-8?B?R016amVMRVFYaXZ0dG9uaUtNdnh2ejdWVHhXNWVNNTVtYlR3SzVBdDRxVU5i?=
+ =?utf-8?B?OUJyOWU4Sm9uUDh0ZTJhZGV2V2ptUExkTGRKY0IrVUV5aExKTVF2ZUNyTmIr?=
+ =?utf-8?B?NVVXRWRSVXNqZGxxdXNJVGhEUEp5Vm9nVDF5SUdhOVpDRXUrajBlSVpVYVRP?=
+ =?utf-8?B?R0VNbW5OdXZvSlI3aVpZM2VxMWRGMjlDamJwdUVFa01mRHZ6bDVtK1lDRXYx?=
+ =?utf-8?B?UEZuRFhWazVTL3A5TS9LVDhBY3RiWC9zZm1PbVFweW91c0VQVXN1V0hUSVdr?=
+ =?utf-8?B?a2hxQ3k1R29Vc0VtUUdwcTFmUEp4YTJpWWl4bEJaSmd2NHBZb0JId2JvMTZl?=
+ =?utf-8?B?dFZyZHdTQXA2VjhjTjhMd1dxeThyd2FKRnNEdVpGTGxubmVib2Rzai94N2p2?=
+ =?utf-8?B?bjJ0WG51cnhzdUZQdnhXVFVCN1MwRW5xZ2hwV3R1aGFCMWxSQ29vbGtYMGw4?=
+ =?utf-8?B?ZDJUaWRsSlBNNCsvTjducks0UVBBa2NKN2wvSzJEK0tpK0c5Slp4YklRWGkx?=
+ =?utf-8?B?SElIcnJhcVM3Wk1sTnZzWmNNcGR1ekh0SDB4ZitoNm1iL0R0bVNKM0hnY1BE?=
+ =?utf-8?B?SkFFSjJsSXdTMkRDNTRkbEtCSWo2WE9od0hRajNQOUUzbEkxUWM5djVONW84?=
+ =?utf-8?B?SWp6ajU3SlMyUElxOWV6SFkrSEs3RjU0MWdCam01dm43bUo1RzM4K0NrWlBS?=
+ =?utf-8?B?KzN0QnlpTldXemVRMmVwQm1qY2RwZndWQXF3WDZjL0x2U2Vnalg2S0tzSHdk?=
+ =?utf-8?B?bEw2SUdKZmkwdlBDOExpL1VDZk9rYVY4RTVwNWE1dUs3aVlqQTJYaXZHZDEx?=
+ =?utf-8?B?SUNtMTVrZmlsMGhnRzlYbUZNTXpjWHRTemRrWDYxcEVwbXhIbnhwQTRqbGZ5?=
+ =?utf-8?B?aldtUnc3ZHJWcHR2R0FxWmRpK05KZ3RpVjhzTWd4Njh6b3FOMG4zb09hTnRu?=
+ =?utf-8?B?TlVIS0FRdFB5dk5kWk1OQ1NEU0RRQXRHTWIzTDFqQnAzZTBrNXRJa3YybjNu?=
+ =?utf-8?B?OWlFZFZucEVVdlRvTjVUeUpIUEV1ZFNXY3phK1ZXWnF3d0JCZ3pzbmxOTHdZ?=
+ =?utf-8?B?YjFMcnZPbWVLNEZqOVZVOGFzN3Yyby9XTHZIS2M1MTc4aDYzMGhqQXVjaXJi?=
+ =?utf-8?B?dlpyS1hjSzBDNzZ5UjJWZW5sS2Nick5zOVMrY0VEWnVBNWhXb2xRK213S2I1?=
+ =?utf-8?B?SEJFQzhnaUJjNFAyUU52QWtlWVAzYlBKSGxWQTV6MmdyRkVQaUFnaFlqeldv?=
+ =?utf-8?B?UFNaOUh6UmJiUC8rNUc5NnNhZHRYRjlUWWNGd2szMmNtVzVlVi9CMUk0a1lk?=
+ =?utf-8?B?dXFpcUlNejdibHNnRWw4dzR5MTlUdGwveDBUL2tCbFZ0b3QxS3BNSUZMTjhN?=
+ =?utf-8?B?Z3pLME5OdmdwNjEyTGErV2NBZ1J4cVFnVzAzYXE4bHE2MkM4WkVBaVBSdFNW?=
+ =?utf-8?B?eC9GSisxT2ZIZGl4RDZmR1VGVUtzNGExcVh3VVg5S1VGVmRzQnBSMDJPdmp3?=
+ =?utf-8?B?NVU0SFcxQXUraXlzSU9BemNPZjIxaG1jMXRaZDVKSGFJNUFXeWhsbklxMm5X?=
+ =?utf-8?B?TC9OclkvU1IyUlc2OVRINlhHMC93K2sremgrMUg3TlBJS2gzZEZ5OHBvNnZD?=
+ =?utf-8?B?UDVaUHdQaDhrckZ1eWZleWlMRlV3dlpqTHprV2Y2RHgzMXBhc3ZWYnEvR1Fz?=
+ =?utf-8?B?bHVwVFJqVmVscVdKTDRaZ0xuUXNwUk9nMWh2MWdrT0RjVmcwNDhQcm1YRHFN?=
+ =?utf-8?B?S2QyMmE4Zkh5cERnQk9pc005QzRNWFNkSWtWS1REclpSWUJHUTdnVFUrOTJF?=
+ =?utf-8?B?V1BqV2Yrczh6Ym9ESTkwOU04QnpBQ1FxT2pSdXUvRFFGQ2RCeW9BUlFaUE5s?=
+ =?utf-8?B?R2YxRnBMSVhWYzFWNnRRaklUNjQ4a3M3WlUrQUV3SnBBY1FDTml2dS9aMVdL?=
+ =?utf-8?B?TTFSV1VOZjBkbFg4TlRMYjl5cmhEZW1aWkZoVjZpdVRndmFhcHJOLzRQeDRV?=
+ =?utf-8?B?bnc9PQ==?=
+X-OriginatorOrg: cherry.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1b8f2de9-d2a2-4606-1e37-08dd37130aab
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB8897.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jan 2025 16:21:48.0498
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 5e0e1b52-21b5-4e7b-83bb-514ec460677e
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JUQ1edIGmqF5capFLyKqysnmTdJBMXMQcMu/vQ+IpPvqQ+oYefWYDoa+j6B91+ColydoJVvStV418OERZ94RQ4n4IJ2Izj1T1dj2DAy4Cqw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8798
 
-Files generated by git format-patch include a line like this:
+Hi Konstantin,
 
- From ee960a46b08040dd0fc154d2d0c4e2026ff817a9 Mon Sep 17 00:00:00 2001
+On 1/17/25 5:17 PM, Konstantin Ryabitsev wrote:
+> On Fri, Jan 17, 2025 at 04:49:36PM +0100, Quentin Schulz wrote:
+>>> What problems are you seeing that makes you want to disable pre-flight checks
+>>> for everyone?
+>>>
+>>
+>> We do not have checks nor auto-to-cc commands, so there's no point in
+>> telling the user to run b4 prep --auto-to-cc and b4 prep --check before
+>> sending the patches as they'll do nothing.
+> 
+> Okay, I'm more inclined to treat this as a bug, because we shouldn't be
+> invoking obviously irrelevant pre-flight checks. I don't advise turning it off
+> entirely, because some pre-flight checks (like the dependency checker) are
+> still valid in your case.
+> 
 
-The format-patch documentation describes this as "A brief metadata 
-header that begins with From <commit> with a fixed Mon Sep 17 00:00:00 
-2001 datestamp to help programs like "file(1)" to recognize that the 
-file is an output from this command."
+Indeed, I actually only disable needs-checking or needs-auto-to-cc 
+wherever appropriate. It's just that disable-all was shorter to write 
+and check if things were happening the way I expected them to :)
 
-However, git send-email seems to strip this header out when it sends a 
-patch by email.
+> I'll work to better recognize when certain pre-flight checks are irrelevant
+> and disable them automatically.
+> 
 
-When using patatt validate to validate a patch without that metadata 
-header, patatt exits silently with exit code 0. It seems not to 
-recognize the patch as a patch.
+Thanks!
 
-If I manually add the "From " header back in, patatt validate works as 
-expected.
-
-Is this a bug in patatt, or am I doing something wrong?
-
-Regards,
-
-Russell Hanneken
-rhanneken@pobox.com
-
+Cheers,
+Quentin
