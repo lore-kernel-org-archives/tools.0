@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302B5187553
-	for <tools@linux.kernel.org>; Wed, 22 Jan 2025 15:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0C74C9F
+	for <tools@linux.kernel.org>; Wed, 22 Jan 2025 15:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737560661; cv=none; b=JVHctILl5JP5sjnsHE56OxBKKOOVltmiY5lMwPAYvITUYaAL4TPepMEY8Qhywwbn0Jx9wcE1cCo/hrMPJR3L9KT5Kc8ZpMudYdyD96bPogkFWd/dzkuOhCPziAr0cL9n6oznNxpfL46cV+f0wV9YWwkkwwSis0tArU0lqRJ314M=
+	t=1737561034; cv=none; b=AuoJDwi59VUeMNVtU37btzQWyEkJKy4fOqqFDOpCtfkYwHkO1ld2FJf6pkwHskFKdSgKIfcvNqqrL/BaQ3t2I+k9mNwDeH4u3dtlLZAj7BLFEOThPfBY0+p2ui0qii+KWrnXS5FDDZ5c+AsPMScsZPaHuWc8t4pCfzFoO2Ks6MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737560661; c=relaxed/simple;
-	bh=8AIEQVG7T06/yU+ZYMPCA8auSDC5DFECLRYcPdD8Z54=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=k4gJ5aQMrLU/B1HBq8/cPhc3HFN65uIibsKH++1RSh6GbfM+ZNz3xgjFFIMwXoDZHBqkRa5U5p5MQfEMsf0hodsXoyqk4+1SPJRNay9cgNPiDjXTbDV65qxof7aOcx/NKNTd7xad/zKKH7rB3aO9cXSSZsqayJ8SqOxnuLrgy6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpFASxZa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1737561034; c=relaxed/simple;
+	bh=rYxLfv80f6uGiKFZmZ1DbPzN4ljKkXEY1hu5sO/vBog=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Oa2vCPQtHKIN1j8+PRzpLTJuS8taNPDou2fGGoVRAD4AMe2DGVtxxcwvi4oHCCClOHtutQwTr74tXyTml3lgWserwfkxhJdituHRvJkZ5Q56/YlD4cU/mfIBj82gsdDcwLSochCHj+sKvfY3xaTlhB9s+8hfDsmlLePbPQ9vS2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkYr0gfK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpFASxZa"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkYr0gfK"
 Received: by smtp.kernel.org (Postfix)
-	id A03B1C4CED6; Wed, 22 Jan 2025 15:44:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437EAC4CED2;
-	Wed, 22 Jan 2025 15:44:20 +0000 (UTC)
+	id B2C4AC4CED6; Wed, 22 Jan 2025 15:50:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616B1C4CED2;
+	Wed, 22 Jan 2025 15:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737560660;
-	bh=8AIEQVG7T06/yU+ZYMPCA8auSDC5DFECLRYcPdD8Z54=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=XpFASxZa3czrGVs7p/7UpllSVyXjn8hHm6cYU4XWPgyN8HzvCDNaraaTzHDCch0qg
-	 2OOfEr02SRNGAm21EkwgQa4AC9dEo8HvpKoWPZLdVIvmIgJB1o/W53JNKb7ol8M/dI
-	 fGXJnqedFA6qBa/eRthXgcgEYTTAIXZkXU0n/eAI=
+	s=korg; t=1737561033;
+	bh=rYxLfv80f6uGiKFZmZ1DbPzN4ljKkXEY1hu5sO/vBog=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=kkYr0gfK8eCzxjoHWW86NCoEaurGAhTHcHhDPQ4cp9v8Q14M39fwvAeEybqcRIrDY
+	 7rl1U22XFFyEHx0kdxW8BUpnuzCUdSP4y4UMcfgFDY2j/bTkbV4c+GEMGhyAsFCTqk
+	 C4rRHYfc8Mlz+YftgXnZNcJ3wj0OOEaUDgTIz7iA=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@kernel.org>, 
- Brandon Maier <brandon.maier@collins.com>
-Cc: Emil Velikov <emil.l.velikov@gmail.com>
-In-Reply-To: <20241009-pypi-completion-v1-1-94f50a157c56@collins.com>
-References: <20241009-pypi-completion-v1-1-94f50a157c56@collins.com>
-Subject: Re: [PATCH b4] b4: support optional shell completion
-Message-Id: <173756066014.465992.8045038696268828801.b4-ty@linuxfoundation.org>
-Date: Wed, 22 Jan 2025 10:44:20 -0500
+To: "Kernel.org Tools" <tools@kernel.org>, Patrick Steinhardt <ps@pks.im>
+In-Reply-To: <20241112-pks-shallow-threads-v1-1-79466a503075@pks.im>
+References: <20241112-pks-shallow-threads-v1-1-79466a503075@pks.im>
+Subject: Re: [PATCH b4] ez: support shallow threads in
+ "b4.send-same-thread"
+Message-Id: <173756103327.469642.7400908255233310503.b4-ty@linuxfoundation.org>
+Date: Wed, 22 Jan 2025 10:50:33 -0500
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -42,23 +41,27 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-32b7b
+X-Mailer: b4 0.15-dev-4edc8
 
 
-On Wed, 09 Oct 2024 19:38:58 +0000, Brandon Maier wrote:
-> Shell completion support was added in commit 333189c by using a shell
-> script to generate the completion files with python-shtab. This script
-> can be run by distribution packagers to include shell completion.
-> However this does not support the use case of installing b4 with pip
-> from PyPi[1], because PyPi doesn't support distributing shell completion
-> scripts.
+On Tue, 12 Nov 2024 11:20:28 +0100, Patrick Steinhardt wrote:
+> When setting "b4.send-same-thread" to a truish value, B4 will send
+> revised versions of a patch series in the same thread. This is done by
+> setting the "In-Reply-To" header to the message ID of the cover letter
+> of the preceding version. This leads to "deep" nesting, where the nth
+> version of a series will be nested n-1 levels below the first version.
+> 
+> But not all projects prefer deep nesting. The alternative that is used
+> in some projects is "shallow" nesting: instead of nesting the rerolled
+> version under the preceding version's cover letter, it gets nested under
+> the first version's cover letter.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] b4: support optional shell completion
-      commit: 13d5dc723d93d783c67932c61e12bbcd56598179
+[1/1] ez: support shallow threads in "b4.send-same-thread"
+      commit: 1da52b83b0af04676533e608e4bbc0aff1d6c3b0
 
 Best regards,
 -- 
