@@ -1,115 +1,159 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1850E1ADC9F
-	for <tools@linux.kernel.org>; Thu, 23 Jan 2025 20:29:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737664142; cv=none; b=bVnQ/zE6gkS7aZMAtjr8Wdm56iedHZgCrN34pKro3wRPGR7MuCx8u8FWKTWNn5EeViooGsHy+T4rR7KVNPWiKg83XoXEXlTKjezCe7CL9Wnm8nO4JlkD6WgOfztK0f8mwq4ZRlsP1FS+S2o4NImvaK0zUwYQZoXHYGgz68V9vrM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737664142; c=relaxed/simple;
-	bh=jzH4Glonyk7WZQzB5Noa4Jd0lejew+7RHe/5G6ZMVxg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mg/bYWDR/LzbDXzXndJFXQYCo6/YWfd+qULdm2niyrq+p2V/Uz05gJFZ9wtPcpsb8vge3V3Hm7uEwbN4kAWYYn4xYHih5pBHPXmEGRlHGz6D9IbE4BmQ0zmATMQhppd+LDJf0bjsmWeqy/NWtK06N8ulfYPhAw/ZWOzv4lfKkkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VRe5h61I; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706031F0E3E
+	for <tools@linux.kernel.org>; Thu, 30 Jan 2025 20:13:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=10.30.226.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1738268028; cv=fail; b=A8sEWR5JIPaVw8QX8zsm/ldeHxCBToGfVCZOAL/MscHFxKTLbjHjAeINtH6TG19zJ9qo5vxCcB2THAA0b1PTLp2ZyBO5tvMl1AXb2mhxPcPj+CL35P9J44PIPIzis3W6igUCNMFU2i5XmXAWu0Z5FT3Eul1jdQtay2+EBHFEBPo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1738268028; c=relaxed/simple;
+	bh=2DXkoZfqO1ycHo0hVZm/8U0xH2dX2itENQtep9D8coo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=L6aBbLJ8ddYIzfCmbM2BjWFaY2nIGKQLlcNJdoQjcaLLWJM94z1/pKSQ15nxg0cO8tWU7E4oPSRzKGx65poPbxkoba6U65nxKec3SWZgeQORUjOeVEjnFgZwbbMYV/fcWM055sFEm71qFJ1FWER+uKgKPChCi1BSUSVIvJNW84E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=BzRjAFYV; arc=fail smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VRe5h61I"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="BzRjAFYV"
 Received: by smtp.kernel.org (Postfix)
-	id F3C4CC4CEDF; Thu, 23 Jan 2025 20:29:01 +0000 (UTC)
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	id E61B0C4CED3; Thu, 30 Jan 2025 20:13:47 +0000 (UTC)
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2085.outbound.protection.outlook.com [40.107.93.85])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id F4004C4CED3
-	for <tools@kernel.org>; Thu, 23 Jan 2025 20:29:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org F4004C4CED3
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5401d3ea5a1so1291850e87.3
-        for <tools@kernel.org>; Thu, 23 Jan 2025 12:29:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737664139; x=1738268939; darn=kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jzH4Glonyk7WZQzB5Noa4Jd0lejew+7RHe/5G6ZMVxg=;
-        b=VRe5h61I3JbqOWeNIItQogx4N7D/h8Fh0EoINdYNsyowbA2kIl5M58XNIOEqsbZMHQ
-         DbwlD5YNtZNHZzENopsv3bCzdE+HTFoAm5KNEVl1jS5K9FzBPZkW0oknUngXZC3D2gq/
-         9MjHon0zHDb2/XBWXhkNkHHTvnBzTQh1+Kz6xx849G0qm+Jp6eckCRG4okzlDgaWdGNB
-         UGAQPP/b7ZVezFd0KTPYnnX2mTvVkUqv2dCS+Ty7RQofUMPbMz3S1mt1+dc8xiZxF/0h
-         R4l7/06mqvLiY5iUyF4r/qwUEyEzHH1rvUBbeXnScgq42+l5yrq/vdF+8AvVqDFJUW88
-         Nfxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737664139; x=1738268939;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jzH4Glonyk7WZQzB5Noa4Jd0lejew+7RHe/5G6ZMVxg=;
-        b=UVO6incojRdqutqqwuFkafE64BJd0a7dGiWN7CgtYVMiPw1X6KL1FuzpSXKYfjwOE9
-         WdC6+JCtCje6CzfCmsyPdO0PdceyOxIlfMiWHhjoKvoLO4wO+9cjT9BZZrp56MFlCOXz
-         KmX/bhiQrIZGVVo9KdYgfFTXjWgpZeYVyIrI/+pooNi56HlDuUDwIfoI2PkzChlG6SFc
-         uig1CsJAK2+ueSLwNq1zYytMD0i+c5URRXczkolj84imFodVuBTgbIXZkPVY2AtbLt0h
-         Tfv9Lty/CNGM0f1lGLsjjHvJu0gLQLVOLRcaCR5QRpF0QjTpQbxAQRVwSZnHy6i8X2UI
-         tyVQ==
-X-Gm-Message-State: AOJu0YzAPq2dgb+NLtfFsvN40NFHa7fsb2QKKM1Eb06mkVFNIZ1TUMdV
-	P8ldPIYMDyaxJCnWXztC53oOhHrkZYvvsJWRf5AcspSzUTNPYSz2zXa2vEQntMaEEi9AQl/ZLBl
-	4JpMTE90G0ZNHWWgDup9lW6m4AwRjKzJiSKQ=
-X-Gm-Gg: ASbGncsdhrltP4Bzl9sqe5QMYU48tV1U//xeQ+kQnP6Cd3Xt379yxoCf4lHBql8CoNf
-	PM4RNrU8bHjEUKVNBs+lZfB020NmZ6ZAntSxh7PEtn6NbDE+Sz1O+CKlJc5zu5VI=
-X-Google-Smtp-Source: AGHT+IEzqPKQu4fKskQmZ+UdM4R9KGhG2ZC00hZMST38cP7WnSnRwoC5X1cytstkJFmCyKCNvzozf0yp525jEfOgf0I=
-X-Received: by 2002:ac2:4e0c:0:b0:542:28b4:23ad with SMTP id
- 2adb3069b0e04-5439c241157mr11107458e87.16.1737664138540; Thu, 23 Jan 2025
- 12:28:58 -0800 (PST)
+	by smtp.kernel.org (Postfix) with ESMTPS id DACC3C4CED2
+	for <tools@kernel.org>; Thu, 30 Jan 2025 20:13:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org DACC3C4CED2
+Authentication-Results: smtp.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.kernel.org; spf=fail smtp.mailfrom=amd.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HERhAq57QIeYPxHAeEh76gSmVZaC8W5U3LzdITVeHHg8KDeeMyyNDIlKDPKObDmx/TUm5sXrH3sbmyki2VWf+hvQ1fJttE5NThjlc7LIoeVxS3SvIU/aSBunwaldTjhrDNF30UnWcPfBMuI91NZl9z+alkZEGwIxEFav47tFisPUhes3UJy6QngH5ja/yHi+80DD9ViA7Ax8+tDqdxgLpnu65r2zVHL+Hldrd/ybPWPQs0vQ1o7bJ3uGYZLd2SywqYk8CKJdHl3k4jUfDVT4j5LsKyggsQ1u3WHGTT6GejHFDRauSyE0J1bjFYeLiadcLzNyo9wGorvW8GV22MHsvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gfzDeC1qh6MXHGAFq12VtcBVwuLwrpgrcCAdnfRyPhQ=;
+ b=N1VECaoalnv8G6emYhxiBO4bDc2udycONIj9q4moQmPJJqVRMmsz0jG6zhg9trRW9dNYeadKV/KI8QERJQqpvUtkyAh5P+4KA0s+z3YtP2RmTZRm0dX2AgvvTqjO0V3jkrT0RpHp5T/b1xjj3vUfd2HStycb40CBgelJrEaigbMSM2na7QJB6nY+D6ZiveM/KroTwg0aMOIHB2UQymm7rcjWRYt4j5YmJS8liY1cYK6tPpmKweYlIaw9aPYfFqlEEBA6QBgeC1s31u9LbEuYAqlGEMSvOW2GQxr5NQgbgHsZU8g1nUC9qxmh+kY3S00cNgi6leIxeozDgQwgQzmApw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gfzDeC1qh6MXHGAFq12VtcBVwuLwrpgrcCAdnfRyPhQ=;
+ b=BzRjAFYVXpHF3WEQ8HkeXPgsLRWmwFNDCJZVtmKBaUznJYpycyLRxIHKB6FnalWAhd4tYhPd7iBB3EUtpSwvS1DIqovfqXoBc8kC/ZGrkR7jrXf4YrGKRWbEAMeF0XV9Okm8xjD/PBRcRDjLtvEkSxpKeBenT+BrjZhHme2VDRM=
+Received: from MW4PR04CA0191.namprd04.prod.outlook.com (2603:10b6:303:86::16)
+ by DM4PR12MB8473.namprd12.prod.outlook.com (2603:10b6:8:183::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.18; Thu, 30 Jan
+ 2025 20:13:42 +0000
+Received: from CO1PEPF000042AE.namprd03.prod.outlook.com
+ (2603:10b6:303:86:cafe::d1) by MW4PR04CA0191.outlook.office365.com
+ (2603:10b6:303:86::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.18 via Frontend Transport; Thu,
+ 30 Jan 2025 20:13:42 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CO1PEPF000042AE.mail.protection.outlook.com (10.167.243.43) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8398.14 via Frontend Transport; Thu, 30 Jan 2025 20:13:42 +0000
+Received: from purico-9eb2host.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 30 Jan
+ 2025 14:13:40 -0600
+From: Yazen Ghannam <yazen.ghannam@amd.com>
+To: <tools@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <konstantin@linuxfoundation.org>, "Yazen
+ Ghannam" <yazen.ghannam@amd.com>
+Subject: [PATCH] b4: Include git notes when generating patches
+Date: Thu, 30 Jan 2025 20:13:31 +0000
+Message-ID: <20250130201331.73584-1-yazen.ghannam@amd.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20241025-better-type-annotations-v1-0-9d7a00a8d754@gmail.com>
- <173755972553.457666.16721877756658243086.b4-ty@linuxfoundation.org> <20250122-flawless-logical-badger-d760cb@lemur>
-In-Reply-To: <20250122-flawless-logical-badger-d760cb@lemur>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Thu, 23 Jan 2025 22:28:21 +0200
-X-Gm-Features: AWEUYZkFj52haIa5BSu5En8NhRnUICMFe0Cgr-1O9EPZMv8tEmhiRt3wVhbOtYg
-Message-ID: <CAJ-ks9=D7vv=xq2hDeENGqzvujw+oye2=AUBBQtcu148szDoGA@mail.gmail.com>
-Subject: Re: [PATCH b4 0/5] Resolve some static typing errors
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000042AE:EE_|DM4PR12MB8473:EE_
+X-MS-Office365-Filtering-Correlation-Id: cfafc16f-533a-4793-0d11-08dd416a97a2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700013|82310400026|1800799024|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?4KhfFGsmsQagVc8K71BMJv7W9+j9UzVYm8K54Gow2rdLIX6LdGTeD2KNCwFW?=
+ =?us-ascii?Q?DxR+8CgPOaVBLn2sQm9F61yV4K0edzmuIw7sb6Xz/FrflwtxxVCtX3AM97k6?=
+ =?us-ascii?Q?A3sbUMvwPjgvKhnA+v8xhYTeEj95zpiNUBF8yZweNCp064H7V5Ko3Pd5WYCU?=
+ =?us-ascii?Q?+b7AQsFRU+1YSZbZ0QEITDBpik8uRFZtim8W9LSHACCEU3Wvw8HuKy9CflNQ?=
+ =?us-ascii?Q?F1nhsrF/LD+EVzjWDIsds6DKjykFjxQ8Mk5y/i5QjJSEKrLagbzuBUDm1U+S?=
+ =?us-ascii?Q?jC/DPPFNbGjUz9KdYglKoa3HapfywAO00xEisgZpSDC4m6f2isD9EY3hnb0n?=
+ =?us-ascii?Q?37UYv/p1WhAq/vSgyoKIG8nFC82cUpv+L+c2skSO0walh7qRex8ZdMLeqjvU?=
+ =?us-ascii?Q?O0tIGECJCk+Kf/PSi0bsfvyH/hkSE1VZQvpdwk8asEvgaqxlM/LnFqA/ksUw?=
+ =?us-ascii?Q?AQrzumB7HS5tpwQ5heZ1e0kB8hdukCDSyqbYMUsIJ93r8rT3H1ajJ4iFQqBV?=
+ =?us-ascii?Q?k0ccZ+FU1ZjsyX0R1Gwj3X4drySWE4RS/b8lEmEDJW7rBDaGRuNk/AfzNSDT?=
+ =?us-ascii?Q?M6J5MKuUuNHmdVT0Fvnvwe+qX5ch8EIYOX17sKxZgMPwdeSUTovePC8cnyMc?=
+ =?us-ascii?Q?iMRH7y0ezH6+SEDDgoPCqaNP+vlolIANNQ12TMfwLfbZFlzyF4g7bKYrwSUw?=
+ =?us-ascii?Q?d1JzmTkZ1y01iUK9zPLgvaOHESrX70HZ1oOyxYyMk+D7HUMVdMEi3R28XMPn?=
+ =?us-ascii?Q?dU6hhyQSXasKh3vntpnxUhA+lbqd1M9GQTXrBRZ5oA4kwPrEcw72EIPZ+Wq3?=
+ =?us-ascii?Q?RfKZ9NerncNAnteFLAzvg29LaLJ+x7C3vGGrEUVH/gny8Mh/SHD3e3VRR9gp?=
+ =?us-ascii?Q?72bapo8A9r5FYRE36rCVeLZocdeT1ESXtsyGmcCxBWcYyNyZ5WCO7BnRYsr+?=
+ =?us-ascii?Q?LNKqpHoW8jgTjO1XmCBJGXOz+NI8pviquasHRg8hqSVw847FF2g5Bs0r8aob?=
+ =?us-ascii?Q?uQbIx+fF7sCTI3Y/NwDefLWXMyy8QAgUkcE82yf1k7H0wgGPHuvHd6/+8l2z?=
+ =?us-ascii?Q?Gx0rsAB+QblTwvG8zxsbF+taNj7m2oaFM4bvPOx1ogq1xgJb+OUcAFYxu2Yh?=
+ =?us-ascii?Q?fxXFPLlj9Ee5wlJNMWuSQtWTh9wexF11uBvxTur/FZ0raVhboBYlx5B7G5UQ?=
+ =?us-ascii?Q?iWLX5mq3/q3eT3XvKiA8fSZVcEdgAKkTSIxz/ss1kvBsRI3AKh1Y0S3YFLDT?=
+ =?us-ascii?Q?2NNhz/g4OrbKh0XKobkaj0+KbkNNHwUep24/RUoeoOivwTA3/aGGANk2AHF/?=
+ =?us-ascii?Q?TrBuRgKCUbHIpuFm/tzyWdWzDBv5j/KqzrD2da9bMLkrpHObRHpq6QED7DwD?=
+ =?us-ascii?Q?J98RhxZWerw5Z/N2SrzWiJtoQlSsvZIShC7sn6u1jgzFAOKvifKCgsiqhuC+?=
+ =?us-ascii?Q?6gsDVRgeO31RNNPJ6ZrofMRFwPfQcOU+esMMm230d9/u/VsHWOMXdBz0jFaG?=
+ =?us-ascii?Q?necmpCNk/RkOYtU=3D?=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700013)(82310400026)(1800799024)(376014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2025 20:13:42.0297
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cfafc16f-533a-4793-0d11-08dd416a97a2
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1PEPF000042AE.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB8473
 
-On Wed, Jan 22, 2025 at 5:36=E2=80=AFPM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Wed, Jan 22, 2025 at 10:28:45AM -0500, Konstantin Ryabitsev wrote:
-> > > This series slightly improves the quality of type annotations in the
-> > > project. It also adds development dependencies so they can more easil=
-y
-> > > be installed.
-> > >
-> > > Unfortunately this is only a drop in the bucket; there are still 356
-> > > errors as reported by pyright. Without minimal tooling to ensure thes=
-e
-> > > don't gress, progress will be difficult.
-> > >
-> > > [...]
-> >
-> > Applied, thanks!
->
-> Note, that I had to do a follow-up fix for the missing Generator type imp=
-ort.
-> I should have caught that during review, but missed it.
->
-> -K
+By default, 'git show' will include git notes in its output. However,
+this is not the case if '--format', or related flags, are given.
 
-Cheers, thanks for that.
+Include the '--notes' flag to include git notes in the generated patch.
 
-Would you be interested in a Github Actions config that runs the
-static analyzer? As I mentioned in the cover letter I think we'll want
-a regression to stop so we can make steady progress. If you're open to
-it, I'll work it up.
+This should have no effect on non-users of git notes.
 
-Thanks again for creating b4!
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+---
+ src/b4/__init__.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-Tamir
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 4d234e01d993..23ee39bdabf9 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -3487,6 +3487,7 @@ def git_range_to_patches(gitdir: Optional[str], start: str, end: str,
+             gitdir,
+             [
+                 'show',
++                '--notes',
+                 '--format=email',
+                 '--binary',
+                 '--patch-with-stat',
+-- 
+2.43.0
+
