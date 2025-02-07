@@ -1,108 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8172343A5
-	for <tools@linux.kernel.org>; Fri,  7 Feb 2025 07:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE4B238D2E
+	for <tools@linux.kernel.org>; Fri,  7 Feb 2025 15:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738915109; cv=none; b=fOJqIWP0yoxz0ScLsxQlsB+xhfCdyoTbYl39hwZ3d2Kv+jgCoyk/ePZoh8E39dAX26T0HsYIf/pRx9tGXGKvviiCyqQUg+qkdi8hJAI2KDFBYwc7dzXqHFOHzDGQdv8dVMd/fkRuhLrpExHiep7XWCWa3dqsqDNK8R9ilFz90Jo=
+	t=1738940540; cv=none; b=mzB3Q/s5/TqkhP3RFadb/Eu58Bpsvo1Nya6FR1OapZRaoSv/bVeV2NhHv8XOUEfpsY/1nBoSU56DD5R2xe0Qcr9Zf/eB+mFjyNRm4CL+A2fo7nlD1MsLKbb8ibrFDzN4mU+okmhZaYgtIAMHgkmS7cTupLzzclfdBuWFa+Fp2bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738915109; c=relaxed/simple;
-	bh=lVyr1we9q+lwGYgxtMdgxOdeV0U6DCkHBzMqJtxZJp4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
-	 References:In-Reply-To; b=G0G+d4hUxs3Fa4fsBTFSr4J436aaiN10VidqxgJOx9rCUrNOzVIZMvrCSZwCZyi6ThXhtaNAj2QgLej9IP721KTLmf3uK3zL7ZxebgyTGuU8SRg3vxJGkXp7lo6LsPseVT9czBokkg36Ql6Gn+VuLmkwfhjHs/ojahkZpqp9tYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=H+WshEJt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1738940540; c=relaxed/simple;
+	bh=de/vaMcwn4034Gd+GJd81WQWSTWYAwLCld5RVPLy+8o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=W1HzIZN57Q+fuSKZ8mHZJkTGpjJRl/cQrnWw2DAGQtPLRqYsPTC9WGYFdivIYRPc1MgUrrSRuof/Tv9DD6l2HvuhIumRapz1Q6UkVc/SG8B0nPgR05VmQW4ziehQbp5+LtG/9YULl+a8/h6+UvVUHeq1UmgBalODyEkkKRkPQWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sSY7vl1b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="H+WshEJt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sSY7vl1b"
 Received: by smtp.kernel.org (Postfix)
-	id F2337C4CEE2; Fri,  7 Feb 2025 07:58:28 +0000 (UTC)
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id F168EC4CED6
-	for <tools@kernel.org>; Fri,  7 Feb 2025 07:58:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org F168EC4CED6
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 2038944180;
-	Fri,  7 Feb 2025 07:58:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1738915099;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ULnv9x6Nm/aSdFupTCcWyslzg53taKsIYZHiWmX2+bA=;
-	b=H+WshEJt4uvovMS5tHHvOb49nIrB6PDqqCYEVI3qpkSLlkATPJ8/OkxglQMTxmVw9588D4
-	VgmSoTOQAuYDG3Pb1Ubn7OmvRtPbmMvXfCVsSGy2Vc4edNsYCzuoLD35xMDuOsS20KTcge
-	e2YzkjgEo+fd29eFvWBnZ34fq7gmVmFZB/Jljs2HF+5xQkW9OR8TvnfDHxc2eqS7kUuQ56
-	sOPReWhpbAqgelFdwWd/8c2m6FTBOroHsaD7OZkFGlOhPW1PoETvAgtQQiYw5/+KUAgONb
-	UQTSgAA4Z6dgqe7gcgOjpF0AgtzfnUijIlnJfdEgJgKJcpIB2pZWVLUTuZUoXQ==
+	id 207F3C4CEDF; Fri,  7 Feb 2025 15:02:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599F4C4CED1;
+	Fri,  7 Feb 2025 15:02:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738940540;
+	bh=de/vaMcwn4034Gd+GJd81WQWSTWYAwLCld5RVPLy+8o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=sSY7vl1bgDSWQzyRDww4TgNboxaNA5/V34TmOQYaIpqW+Oh4H51LFNXvtU1VHlluC
+	 /XP/qXXqevLxIgMg1x5dWxxP/7aWePuQUNkDcYXlQMco7nHUIP8fVN87v6NdHGp6Hh
+	 BoAvdumIJc55z1r9aXHJZoIXbw61yTrOQkUXOhhpG0kHDfbV8WNI0PYqOaq3VAQUWp
+	 p7hgHSx/FrCG+ltBf9gDQ2t42dGeFYyJXZ/f7DdtKxUIUTC42OrIUY6Y40B5ZDWHTK
+	 LTA4f7iQKtVZnukTWc3mjzIBJv52rJKtUSornfRkAnconoLv1nw5Va3nwE1JFJPan5
+	 2RvkTbk944D5A==
+From: Andreas Hindborg <a.hindborg@kernel.org>
+To: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: Re: [PATCH b4 v2] ez: add subject prefix flag
+In-Reply-To: <20250206-bipedal-aromatic-lynx-10ef38@meerkat> (Konstantin
+	Ryabitsev's message of "Thu, 06 Feb 2025 12:50:11 -0500")
+References: <20250204-prefix-v2-1-468f166eb9d5@kernel.org>
+	<sJc_kTOdc_TO6xU4a5R-VeMSBS9dEaZU27NKWw2L0sJL5x4NrFfFtTU8MTu3JILevvjO9HE4hP6OIsV2HXB_cA==@protonmail.internalid>
+	<20250206-bipedal-aromatic-lynx-10ef38@meerkat>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Fri, 07 Feb 2025 16:02:08 +0100
+Message-ID: <87seopiyrz.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 07 Feb 2025 08:58:18 +0100
-Message-Id: <D7M1YG8MYLWO.K654XKU6IU0L@bootlin.com>
-Subject: Re: [PATCH b4 0/2] prep, diff: support overriding range-diff
- creation factor
-Cc: "Kernel.org Tools" <tools@kernel.org>, "Thomas Petazzoni"
- <thomas.petazzoni@bootlin.com>
-From: "Antonin Godard" <antonin.godard@bootlin.com>
-To: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a
-References: <20250204-creation-factor-v1-0-9988d594a018@bootlin.com>
- <20250206-dramatic-sparkling-millipede-a33bb0@meerkat>
-In-Reply-To: <20250206-dramatic-sparkling-millipede-a33bb0@meerkat>
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepggfgtgffkffuvefhvffofhgjsehtqhertdertdejnecuhfhrohhmpedftehnthhonhhinhcuifhouggrrhgufdcuoegrnhhtohhnihhnrdhgohgurghrugessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepvdehtdetteehfefgjeelieelvdeiveeludffjeegueefudejueeffeejfeevgedunecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtudemtggsudegmeehheeimeejrgdttdemjegthegtmeeirgguvgemjeelgeekmeegtdehleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemtggsudegmeehheeimeejrgdttdemjegthegtmeeirgguvgemjeelgeekmeegtdehledphhgvlhhopehlohgtrghlhhhoshhtpdhmrghilhhfrhhomheprghnthhonhhinhdrghhouggrrhgusegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefpdhrtghpthhtohepkhhonhhsthgrnhhtihhnsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohepthhoohhlsheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsr
- dhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhm
-X-GND-Sasl: antonin.godard@bootlin.com
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Hi Konstantin,
+"Konstantin Ryabitsev" <konstantin@linuxfoundation.org> writes:
 
-On Thu Feb 6, 2025 at 7:09 PM CET, Konstantin Ryabitsev wrote:
-> On Tue, Feb 04, 2025 at 05:44:15PM +0100, Antonin Godard wrote:
->> git range-diff allows to override the creation factor, which is
->> sometimes useful to adjust for seeing different diff outputs. This is
->> not possible with the current code, and is also not configurable from
->> git config.
->>=20
->> Add an option to diff and prep to override the default creation factor
->> value.
+> On Tue, Feb 04, 2025 at 04:30:45PM +0100, Andreas Hindborg wrote:
+>> Add a flag `-p PREFIX`/`--add-subject-prefix=PREFIX` to `am` and `shazam`
+>> commands. This flag will add PREFIX to the subject line of each patch before
+>> applying the patch.
+>>
+>> One use case for this is when composing trees that consist of patches from many
+>> different sources. Adding a prefix to the subject of each series makes it easy
+>> to see the origin when scanning the commit log.
 >
-> Does it make more sense to have a more generic way to provide arguments t=
-o
-> pass to git-range-diff instead of duplicating options?
+> I get the reason why you would want this, but I also kinda hate the idea,
+> because I'm almost 100% sure that this will make it into someone's -next tree
+> or something like that.
 >
-> E.g. something like:
->
->     b4 diff [...] --range-diff-opts=3D"--creation-factor=3D80 --left-only=
-"
->
-> We'd have to re-parse them with shlex to make sure they are safe, but it =
-seems
-> like a better approach, no?
+> Can we take a step back and try to look at it from a broader perspective? Do
+> you use this approach during code review, or for some other purpose?
 
-Right, did not think about it, but I like that approach too. It will avoid
-having to make b4's options expand too much over time.
+I use it when assembling trees for upstream work. For instance see [1].
+It is super valuable for me to know what commits are from list when
+scanning down the git log.
 
-For shlex, were you thinking of shlex.quote()? Do you have any example in b=
-4
-that uses shlex for the same purpose?
+For a series prepared with b4 it looks something like this:
 
-I will try to work on that when I have some time, thanks for the suggestion=
-!
+f3d69aaf6b6c1 * configfs MAINTAINERS: add entry for configfs Rust abstractions
+b813426cf1e74 * rust: configfs: introduce rust support for configfs
+d2a88d97552a9 * rust: sync: change `<Arc<T> as ForeignOwnable>::PointedTo` to `T`
+935d4487ff8d5 * rust: configfs abstractions
+0a2d72888abc3 * LIST: [PATCH v15 1/3] rust: types: add `ForeignOwnable::PointedTo`
+988bd1ba2ebb3 * LIST: [PATCH 3/3] kbuild: rust: support `W=e` for Rust
+3b39f5625406b * LIST: [PATCH 2/3] kbuild: rust: apply `CONFIG_WERROR` to all Rust targets
+89cfa7f9c1099 * LIST: [PATCH 1/3] kbuild: rust: move `-Dwarnings` handling to `Makefile.extrawarn`
+2014c95afecee * v6.14-rc1 torvalds/master local/torvalds/master Linux 6.14-rc1
 
-Antonin
+Here commit HEAD~3 is a b4 cover letter.
 
---=20
-Antonin Godard, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+I'm not married to this approach, it was just the only one I could
+think of. I really like that the patches I apply with `b4 shazam ..`
+appear with `LIST: [PATCH vX X/Y] ..`.
+
+
+Best regards,
+Andreas Hindborg
+
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/a.hindborg/linux.git/log/?h=rnull-v6.14-rc1
+
