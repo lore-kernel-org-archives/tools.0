@@ -1,97 +1,147 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE4B238D2E
-	for <tools@linux.kernel.org>; Fri,  7 Feb 2025 15:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DADB79CD
+	for <tools@linux.kernel.org>; Tue, 11 Feb 2025 15:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738940540; cv=none; b=mzB3Q/s5/TqkhP3RFadb/Eu58Bpsvo1Nya6FR1OapZRaoSv/bVeV2NhHv8XOUEfpsY/1nBoSU56DD5R2xe0Qcr9Zf/eB+mFjyNRm4CL+A2fo7nlD1MsLKbb8ibrFDzN4mU+okmhZaYgtIAMHgkmS7cTupLzzclfdBuWFa+Fp2bg=
+	t=1739287068; cv=none; b=DALzDWWrkw5xkvGJPifUmEey54DQsJosWzenzKaTnynFgQKZxfLnKy07tvZmeKPsPmU/jJwYI3hYONiJN+8ff6hYvTXXPZh0fJEvmIoi9/ztmDdPhy/ZPyGjl1HU4BVE7ia/oAa4kbkgX8HsUJea9DiMF5TI5/oheThpVrs0t0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738940540; c=relaxed/simple;
-	bh=de/vaMcwn4034Gd+GJd81WQWSTWYAwLCld5RVPLy+8o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=W1HzIZN57Q+fuSKZ8mHZJkTGpjJRl/cQrnWw2DAGQtPLRqYsPTC9WGYFdivIYRPc1MgUrrSRuof/Tv9DD6l2HvuhIumRapz1Q6UkVc/SG8B0nPgR05VmQW4ziehQbp5+LtG/9YULl+a8/h6+UvVUHeq1UmgBalODyEkkKRkPQWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sSY7vl1b; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1739287068; c=relaxed/simple;
+	bh=kWTtxQVrKConfwTAlQFCjUwbPtW/PdbSVcS+IchiLDw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hauwIU9lax7XN8xD3V+M2KO4SFC3+W1SDzc8b+Kp6I3o5XEh21OSxflxkaRck7tzv8DpMgx/PShgyR09V/2hXsTPkDypS0h3ETjBbDvUmV9YQ/JQGaCi/eByv4pkF9g/NtyS4drT3bVRm+hWh17UEvdF4JCKGfZtJlyz+vHzhjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b=K8n3ZcGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sSY7vl1b"
+	dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b="K8n3ZcGH"
 Received: by smtp.kernel.org (Postfix)
-	id 207F3C4CEDF; Fri,  7 Feb 2025 15:02:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599F4C4CED1;
-	Fri,  7 Feb 2025 15:02:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738940540;
-	bh=de/vaMcwn4034Gd+GJd81WQWSTWYAwLCld5RVPLy+8o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=sSY7vl1bgDSWQzyRDww4TgNboxaNA5/V34TmOQYaIpqW+Oh4H51LFNXvtU1VHlluC
-	 /XP/qXXqevLxIgMg1x5dWxxP/7aWePuQUNkDcYXlQMco7nHUIP8fVN87v6NdHGp6Hh
-	 BoAvdumIJc55z1r9aXHJZoIXbw61yTrOQkUXOhhpG0kHDfbV8WNI0PYqOaq3VAQUWp
-	 p7hgHSx/FrCG+ltBf9gDQ2t42dGeFYyJXZ/f7DdtKxUIUTC42OrIUY6Y40B5ZDWHTK
-	 LTA4f7iQKtVZnukTWc3mjzIBJv52rJKtUSornfRkAnconoLv1nw5Va3nwE1JFJPan5
-	 2RvkTbk944D5A==
-From: Andreas Hindborg <a.hindborg@kernel.org>
-To: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Subject: Re: [PATCH b4 v2] ez: add subject prefix flag
-In-Reply-To: <20250206-bipedal-aromatic-lynx-10ef38@meerkat> (Konstantin
-	Ryabitsev's message of "Thu, 06 Feb 2025 12:50:11 -0500")
-References: <20250204-prefix-v2-1-468f166eb9d5@kernel.org>
-	<sJc_kTOdc_TO6xU4a5R-VeMSBS9dEaZU27NKWw2L0sJL5x4NrFfFtTU8MTu3JILevvjO9HE4hP6OIsV2HXB_cA==@protonmail.internalid>
-	<20250206-bipedal-aromatic-lynx-10ef38@meerkat>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Fri, 07 Feb 2025 16:02:08 +0100
-Message-ID: <87seopiyrz.fsf@kernel.org>
+	id E6001C4CEEC; Tue, 11 Feb 2025 15:17:47 +0000 (UTC)
+Received: from smtp-42ac.mail.infomaniak.ch (smtp-42ac.mail.infomaniak.ch [84.16.66.172])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 6A103C4CEE6
+	for <tools@kernel.org>; Tue, 11 Feb 2025 15:17:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 6A103C4CEE6
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=digikod.net
+Received: from smtp-3-0000.mail.infomaniak.ch (smtp-3-0000.mail.infomaniak.ch [10.4.36.107])
+	by smtp-3-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4YslRw1dx3zRf8;
+	Tue, 11 Feb 2025 16:17:32 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
+	s=20191114; t=1739287052;
+	bh=p1zuxEihrnjNC82+T9NtIGxS+saUSJKm1xCyiLMo7yo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=K8n3ZcGHTLsbVnm/9ObmaLdoY0hoVTRfvtXySszJEAXG07pA/PcDdmv3xiYkpUuDg
+	 akTtkMOg6Zp2dVMAy0NJPZva0xqVpYbZX6cVYbIA81qakDeDa9BUauaEqaDjw/EDA1
+	 cJJENcKGIUOCHW+Z/OXVlhP1CYRE8iSxIfRHl3nk=
+Received: from unknown by smtp-3-0000.mail.infomaniak.ch (Postfix) with ESMTPA id 4YslRv5H2szBCt;
+	Tue, 11 Feb 2025 16:17:31 +0100 (CET)
+Date: Tue, 11 Feb 2025 16:17:30 +0100
+From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+To: =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>
+Cc: linux-security-module@vger.kernel.org, 
+	Tahera Fahimi <fahimitahera@gmail.com>, Tanya Agarwal <tanyaagarwal25699@gmail.com>, 
+	Daniel Burgener <dburgener@linux.microsoft.com>, tools@kernel.org, linux-doc@vger.kernel.org, 
+	Alejandro Colomar <alx@kernel.org>, linux-man@vger.kernel.org
+Subject: Re: [PATCH 1/2] landlock: Minor typo and grammar fixes in IPC
+ scoping documentation
+Message-ID: <20250211.Ree5bu6Eph2p@digikod.net>
+References: <20250124154445.162841-1-gnoack@google.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250124154445.162841-1-gnoack@google.com>
+X-Infomaniak-Routing: alpha
 
-"Konstantin Ryabitsev" <konstantin@linuxfoundation.org> writes:
+On Fri, Jan 24, 2025 at 03:44:44PM +0000, Günther Noack wrote:
+> * Fix some whitespace, punctuation and minor grammar
+> * Add a missing sentence about the minimum ABI version,
+>   to stay in line with the section next to it
+> 
+> Cc: Mickaël Salaün <mic@digikod.net>
+> Cc: Tahera Fahimi <fahimitahera@gmail.com>
+> Cc: Tanya Agarwal <tanyaagarwal25699@gmail.com>
+> Signed-off-by: Günther Noack <gnoack@google.com>
 
-> On Tue, Feb 04, 2025 at 04:30:45PM +0100, Andreas Hindborg wrote:
->> Add a flag `-p PREFIX`/`--add-subject-prefix=PREFIX` to `am` and `shazam`
->> commands. This flag will add PREFIX to the subject line of each patch before
->> applying the patch.
->>
->> One use case for this is when composing trees that consist of patches from many
->> different sources. Adding a prefix to the subject of each series makes it easy
->> to see the origin when scanning the commit log.
->
-> I get the reason why you would want this, but I also kinda hate the idea,
-> because I'm almost 100% sure that this will make it into someone's -next tree
-> or something like that.
->
-> Can we take a step back and try to look at it from a broader perspective? Do
-> you use this approach during code review, or for some other purpose?
+Looks good, thanks!
 
-I use it when assembling trees for upstream work. For instance see [1].
-It is super valuable for me to know what commits are from list when
-scanning down the git log.
+I'm going to take this patch in my tree with the changes explained
+below. You can send a v2 with the second patch according to the reviews.
 
-For a series prepared with b4 it looks something like this:
+As a side note, applying the patch series from this thread with b4
+doesn't work because they apply to different repositories.
 
-f3d69aaf6b6c1 * configfs MAINTAINERS: add entry for configfs Rust abstractions
-b813426cf1e74 * rust: configfs: introduce rust support for configfs
-d2a88d97552a9 * rust: sync: change `<Arc<T> as ForeignOwnable>::PointedTo` to `T`
-935d4487ff8d5 * rust: configfs abstractions
-0a2d72888abc3 * LIST: [PATCH v15 1/3] rust: types: add `ForeignOwnable::PointedTo`
-988bd1ba2ebb3 * LIST: [PATCH 3/3] kbuild: rust: support `W=e` for Rust
-3b39f5625406b * LIST: [PATCH 2/3] kbuild: rust: apply `CONFIG_WERROR` to all Rust targets
-89cfa7f9c1099 * LIST: [PATCH 1/3] kbuild: rust: move `-Dwarnings` handling to `Makefile.extrawarn`
-2014c95afecee * v6.14-rc1 torvalds/master local/torvalds/master Linux 6.14-rc1
+Dealing with duplicated doc in two repositories is not practical and
+adds work to everyone...  Could we move the non-libc syscall man pages
+to the kernel repository?
 
-Here commit HEAD~3 is a b4 cover letter.
+> ---
+>  Documentation/userspace-api/landlock.rst | 4 ++--
+>  include/uapi/linux/landlock.h            | 6 ++++--
+>  2 files changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/userspace-api/landlock.rst b/Documentation/userspace-api/landlock.rst
+> index d639c61cb472..ca8b325d53e5 100644
+> --- a/Documentation/userspace-api/landlock.rst
+> +++ b/Documentation/userspace-api/landlock.rst
+> @@ -329,11 +329,11 @@ non-sandboxed process, we can specify this restriction with
+>  A sandboxed process can connect to a non-sandboxed process when its domain is
+>  not scoped. If a process's domain is scoped, it can only connect to sockets
+>  created by processes in the same scope.
+> -Moreover, If a process is scoped to send signal to a non-scoped process, it can
+> +Moreover, if a process is scoped to send signal to a non-scoped process, it can
+>  only send signals to processes in the same scope.
+>  
+>  A connected datagram socket behaves like a stream socket when its domain is
+> -scoped, meaning if the domain is scoped after the socket is connected , it can
+> +scoped, meaning if the domain is scoped after the socket is connected, it can
+>  still :manpage:`send(2)` data just like a stream socket.  However, in the same
+>  scenario, a non-connected datagram socket cannot send data (with
+>  :manpage:`sendto(2)`) outside its scope.
+> diff --git a/include/uapi/linux/landlock.h b/include/uapi/linux/landlock.h
+> index 33745642f787..048a2c77c4eb 100644
+> --- a/include/uapi/linux/landlock.h
+> +++ b/include/uapi/linux/landlock.h
+> @@ -268,7 +268,7 @@ struct landlock_net_port_attr {
+>   * ~~~~~~~~~~~~~~~~
+>   *
+>   * These flags enable to restrict a sandboxed process to a set of network
+> - * actions. This is supported since the Landlock ABI version 4.
+> + * actions. This is supported since Landlock ABI version 4.
 
-I'm not married to this approach, it was just the only one I could
-think of. I really like that the patches I apply with `b4 shazam ..`
-appear with `LIST: [PATCH vX X/Y] ..`.
+If that's OK with you, I'll move this sentence to a standalone paragraph
+like the one you added below:
 
++ * actions.
++ *
++ * This is supported since Landlock ABI version 4.
 
-Best regards,
-Andreas Hindborg
-
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/a.hindborg/linux.git/log/?h=rnull-v6.14-rc1
-
+>   *
+>   * The following access rights apply to TCP port numbers:
+>   *
+> @@ -291,11 +291,13 @@ struct landlock_net_port_attr {
+>   * Setting a flag for a ruleset will isolate the Landlock domain to forbid
+>   * connections to resources outside the domain.
+>   *
+> + * This is supported since Landlock ABI version 6.
+> + *
+>   * Scopes:
+>   *
+>   * - %LANDLOCK_SCOPE_ABSTRACT_UNIX_SOCKET: Restrict a sandboxed process from
+>   *   connecting to an abstract UNIX socket created by a process outside the
+> - *   related Landlock domain (e.g. a parent domain or a non-sandboxed process).
+> + *   related Landlock domain (e.g., a parent domain or a non-sandboxed process).
+>   * - %LANDLOCK_SCOPE_SIGNAL: Restrict a sandboxed process from sending a signal
+>   *   to another process outside the domain.
+>   */
+> -- 
+> 2.48.1.262.g85cc9f2d1e-goog
+> 
+> 
