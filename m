@@ -1,147 +1,138 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DADB79CD
-	for <tools@linux.kernel.org>; Tue, 11 Feb 2025 15:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BB81F8AE2
+	for <tools@linux.kernel.org>; Tue, 11 Feb 2025 15:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739287068; cv=none; b=DALzDWWrkw5xkvGJPifUmEey54DQsJosWzenzKaTnynFgQKZxfLnKy07tvZmeKPsPmU/jJwYI3hYONiJN+8ff6hYvTXXPZh0fJEvmIoi9/ztmDdPhy/ZPyGjl1HU4BVE7ia/oAa4kbkgX8HsUJea9DiMF5TI5/oheThpVrs0t0M=
+	t=1739287588; cv=none; b=lMC4V4cL4z+ccUIlcupFcfpJUQv13qsd4Xn1YHImBtACK2bajmwA/Buw7PUYIhZzFhe+rFSowrOFc4XNxo2utEAkAu7Ps37eY7CSkFZC9HFLTvhpvygsFkKbImroE8RKvuyWXW6SgReGsL5aOF/RzY9Hx7k5Rg9oCR0tpk3QNBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739287068; c=relaxed/simple;
-	bh=kWTtxQVrKConfwTAlQFCjUwbPtW/PdbSVcS+IchiLDw=;
+	s=arc-20240116; t=1739287588; c=relaxed/simple;
+	bh=9dHIbEuiagw8VSBfnsLNcwG/ICtirlLJwV63HBgsg0U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hauwIU9lax7XN8xD3V+M2KO4SFC3+W1SDzc8b+Kp6I3o5XEh21OSxflxkaRck7tzv8DpMgx/PShgyR09V/2hXsTPkDypS0h3ETjBbDvUmV9YQ/JQGaCi/eByv4pkF9g/NtyS4drT3bVRm+hWh17UEvdF4JCKGfZtJlyz+vHzhjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b=K8n3ZcGH; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=LG8ebXYAiSP8CpuKsZXPSJTL0EKUSP6j+8QbGSjrCnuTTSKvCiy/gK1H1mtj/FRSJD3K1N/8JWvzoxAIH1dQoTvDK/CNGQC3wua02E8CDrlluGKi4Jd54YNs/w5Y8Du10wwNQasIocLi6+RNBJlI9kI8H1g5msfCoCP6q2OimIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UdwpHjB9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b="K8n3ZcGH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UdwpHjB9"
 Received: by smtp.kernel.org (Postfix)
-	id E6001C4CEEC; Tue, 11 Feb 2025 15:17:47 +0000 (UTC)
-Received: from smtp-42ac.mail.infomaniak.ch (smtp-42ac.mail.infomaniak.ch [84.16.66.172])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 6A103C4CEE6
-	for <tools@kernel.org>; Tue, 11 Feb 2025 15:17:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 6A103C4CEE6
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=digikod.net
-Received: from smtp-3-0000.mail.infomaniak.ch (smtp-3-0000.mail.infomaniak.ch [10.4.36.107])
-	by smtp-3-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4YslRw1dx3zRf8;
-	Tue, 11 Feb 2025 16:17:32 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
-	s=20191114; t=1739287052;
-	bh=p1zuxEihrnjNC82+T9NtIGxS+saUSJKm1xCyiLMo7yo=;
+	id 778BEC4CEE5; Tue, 11 Feb 2025 15:26:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87190C4CEDD;
+	Tue, 11 Feb 2025 15:26:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739287588;
+	bh=9dHIbEuiagw8VSBfnsLNcwG/ICtirlLJwV63HBgsg0U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=K8n3ZcGHTLsbVnm/9ObmaLdoY0hoVTRfvtXySszJEAXG07pA/PcDdmv3xiYkpUuDg
-	 akTtkMOg6Zp2dVMAy0NJPZva0xqVpYbZX6cVYbIA81qakDeDa9BUauaEqaDjw/EDA1
-	 cJJENcKGIUOCHW+Z/OXVlhP1CYRE8iSxIfRHl3nk=
-Received: from unknown by smtp-3-0000.mail.infomaniak.ch (Postfix) with ESMTPA id 4YslRv5H2szBCt;
-	Tue, 11 Feb 2025 16:17:31 +0100 (CET)
-Date: Tue, 11 Feb 2025 16:17:30 +0100
-From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
-To: =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>
-Cc: linux-security-module@vger.kernel.org, 
-	Tahera Fahimi <fahimitahera@gmail.com>, Tanya Agarwal <tanyaagarwal25699@gmail.com>, 
-	Daniel Burgener <dburgener@linux.microsoft.com>, tools@kernel.org, linux-doc@vger.kernel.org, 
-	Alejandro Colomar <alx@kernel.org>, linux-man@vger.kernel.org
+	b=UdwpHjB9JKtsOnzWt5qxUR+msgo6LJvf9TxN8XK6HnwUgaL5cjatFWgehJXarbzWB
+	 LJ5x0PZB7GCL8XcZabL+sjSFX3AvkIYVv/Hi5yjzX1w4V/2vdG04roq0f4BF1k2C3/
+	 jH4JQdTciOBbzBZPPz4blVquJmkrql+xG15x8knMH8E6N4mpyStKHAi5f85KvHXTGX
+	 6qyR+Ljq2huVE0LvR5YXTpQx4Kc1oxHR/VyWouskNy7js+f3Yxf351yUSRp/pM8o0+
+	 yX35OugXW6d8fBCYuVQpMoX49jl4CMgSocHwtqBEWaUjuShobLmm+n7wNsFNfDevXi
+	 v7HCICPz8yHxQ==
+Date: Tue, 11 Feb 2025 16:27:04 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+Cc: =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>, 
+	linux-security-module@vger.kernel.org, Tahera Fahimi <fahimitahera@gmail.com>, 
+	Tanya Agarwal <tanyaagarwal25699@gmail.com>, Daniel Burgener <dburgener@linux.microsoft.com>, 
+	tools@kernel.org, linux-doc@vger.kernel.org, linux-man@vger.kernel.org
 Subject: Re: [PATCH 1/2] landlock: Minor typo and grammar fixes in IPC
  scoping documentation
-Message-ID: <20250211.Ree5bu6Eph2p@digikod.net>
+Message-ID: <22olfm76rcgjfs4vrr3adtbznsnz47kaehlr3ljn6e5jkc6waq@ue7azstxlwfv>
 References: <20250124154445.162841-1-gnoack@google.com>
+ <20250211.Ree5bu6Eph2p@digikod.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ijlyahqt2r44jxfh"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250124154445.162841-1-gnoack@google.com>
-X-Infomaniak-Routing: alpha
+In-Reply-To: <20250211.Ree5bu6Eph2p@digikod.net>
 
-On Fri, Jan 24, 2025 at 03:44:44PM +0000, Günther Noack wrote:
-> * Fix some whitespace, punctuation and minor grammar
-> * Add a missing sentence about the minimum ABI version,
->   to stay in line with the section next to it
-> 
-> Cc: Mickaël Salaün <mic@digikod.net>
-> Cc: Tahera Fahimi <fahimitahera@gmail.com>
-> Cc: Tanya Agarwal <tanyaagarwal25699@gmail.com>
-> Signed-off-by: Günther Noack <gnoack@google.com>
 
-Looks good, thanks!
+--ijlyahqt2r44jxfh
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+Cc: =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>, 
+	linux-security-module@vger.kernel.org, Tahera Fahimi <fahimitahera@gmail.com>, 
+	Tanya Agarwal <tanyaagarwal25699@gmail.com>, Daniel Burgener <dburgener@linux.microsoft.com>, 
+	tools@kernel.org, linux-doc@vger.kernel.org, linux-man@vger.kernel.org
+Subject: Re: [PATCH 1/2] landlock: Minor typo and grammar fixes in IPC
+ scoping documentation
+References: <20250124154445.162841-1-gnoack@google.com>
+ <20250211.Ree5bu6Eph2p@digikod.net>
+MIME-Version: 1.0
+In-Reply-To: <20250211.Ree5bu6Eph2p@digikod.net>
 
-I'm going to take this patch in my tree with the changes explained
-below. You can send a v2 with the second patch according to the reviews.
+Hey Micka=C3=ABl!
 
-As a side note, applying the patch series from this thread with b4
-doesn't work because they apply to different repositories.
+On Tue, Feb 11, 2025 at 04:17:30PM +0100, Micka=C3=ABl Sala=C3=BCn wrote:
+> On Fri, Jan 24, 2025 at 03:44:44PM +0000, G=C3=BCnther Noack wrote:
+> > * Fix some whitespace, punctuation and minor grammar
+> > * Add a missing sentence about the minimum ABI version,
+> >   to stay in line with the section next to it
+> >=20
+> > Cc: Micka=C3=ABl Sala=C3=BCn <mic@digikod.net>
+> > Cc: Tahera Fahimi <fahimitahera@gmail.com>
+> > Cc: Tanya Agarwal <tanyaagarwal25699@gmail.com>
+> > Signed-off-by: G=C3=BCnther Noack <gnoack@google.com>
+>=20
+> Looks good, thanks!
+>=20
+> I'm going to take this patch in my tree with the changes explained
+> below. You can send a v2 with the second patch according to the reviews.
+>=20
+> As a side note, applying the patch series from this thread with b4
+> doesn't work because they apply to different repositories.
+>=20
+> Dealing with duplicated doc in two repositories is not practical and
+> adds work to everyone...  Could we move the non-libc syscall man pages
+> to the kernel repository?
 
-Dealing with duplicated doc in two repositories is not practical and
-adds work to everyone...  Could we move the non-libc syscall man pages
-to the kernel repository?
+Let me suggest the opposite: Could we move the kernel docs to manual
+pages in man9?  (As is the historic place for kernel docs.)
+(You could keep man9 in the kernel tree if you want, or could handle it
+ to the Linux man-pages project, if you want.)  That would help have a
+more clear separation between the two sets of documentation, and prevent
+duplication.
 
-> ---
->  Documentation/userspace-api/landlock.rst | 4 ++--
->  include/uapi/linux/landlock.h            | 6 ++++--
->  2 files changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/userspace-api/landlock.rst b/Documentation/userspace-api/landlock.rst
-> index d639c61cb472..ca8b325d53e5 100644
-> --- a/Documentation/userspace-api/landlock.rst
-> +++ b/Documentation/userspace-api/landlock.rst
-> @@ -329,11 +329,11 @@ non-sandboxed process, we can specify this restriction with
->  A sandboxed process can connect to a non-sandboxed process when its domain is
->  not scoped. If a process's domain is scoped, it can only connect to sockets
->  created by processes in the same scope.
-> -Moreover, If a process is scoped to send signal to a non-scoped process, it can
-> +Moreover, if a process is scoped to send signal to a non-scoped process, it can
->  only send signals to processes in the same scope.
->  
->  A connected datagram socket behaves like a stream socket when its domain is
-> -scoped, meaning if the domain is scoped after the socket is connected , it can
-> +scoped, meaning if the domain is scoped after the socket is connected, it can
->  still :manpage:`send(2)` data just like a stream socket.  However, in the same
->  scenario, a non-connected datagram socket cannot send data (with
->  :manpage:`sendto(2)`) outside its scope.
-> diff --git a/include/uapi/linux/landlock.h b/include/uapi/linux/landlock.h
-> index 33745642f787..048a2c77c4eb 100644
-> --- a/include/uapi/linux/landlock.h
-> +++ b/include/uapi/linux/landlock.h
-> @@ -268,7 +268,7 @@ struct landlock_net_port_attr {
->   * ~~~~~~~~~~~~~~~~
->   *
->   * These flags enable to restrict a sandboxed process to a set of network
-> - * actions. This is supported since the Landlock ABI version 4.
-> + * actions. This is supported since Landlock ABI version 4.
+I personally don't like the idea of having man2 in the kernel tree.
+Michael Kerrisk already mentioned several reasons for why it's a bad
+idea in the past.  On top of them, I'd add that the build system of the
+Linux man-pages project is quite more powerful than the kernel one, and
+it would be an important regression to have to adapt to the kernel
+Makefiles in the manual pages.
 
-If that's OK with you, I'll move this sentence to a standalone paragraph
-like the one you added below:
 
-+ * actions.
-+ *
-+ * This is supported since Landlock ABI version 4.
+Have a lovely day!
+Alex
 
->   *
->   * The following access rights apply to TCP port numbers:
->   *
-> @@ -291,11 +291,13 @@ struct landlock_net_port_attr {
->   * Setting a flag for a ruleset will isolate the Landlock domain to forbid
->   * connections to resources outside the domain.
->   *
-> + * This is supported since Landlock ABI version 6.
-> + *
->   * Scopes:
->   *
->   * - %LANDLOCK_SCOPE_ABSTRACT_UNIX_SOCKET: Restrict a sandboxed process from
->   *   connecting to an abstract UNIX socket created by a process outside the
-> - *   related Landlock domain (e.g. a parent domain or a non-sandboxed process).
-> + *   related Landlock domain (e.g., a parent domain or a non-sandboxed process).
->   * - %LANDLOCK_SCOPE_SIGNAL: Restrict a sandboxed process from sending a signal
->   *   to another process outside the domain.
->   */
-> -- 
-> 2.48.1.262.g85cc9f2d1e-goog
-> 
-> 
+--=20
+<https://www.alejandro-colomar.es/>
+
+--ijlyahqt2r44jxfh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmerbEEACgkQnowa+77/
+2zJ7Bw//YtFLrJQGLWoFihjiuAa2HR/151FlcQcVGXVJEKo9jRfn2oQ1I7hnc37c
+yxYxXZHit6+q7g8/G6d7CLAnutUshr/vDlzrNtlvf0m1BEseWj1phnScArItZta+
+2BplcVm0UhaibyY49QHhXaocPh17t5BaZM3QI3l9vCOCdvHLNle/RE8RtYHZ2rY+
+dhB4TNooiJ1vcJM0iUZIZbbpMfdzcLadYq+3GwK36na2S+YDuAsC7QwnvbJQPoSU
+F8ClifFzZ5niDUkYKH4aNeiJgXWj7OmbtPIyuT+JE8dfo2yiNkt1bLjeA3+Dg3qw
+XRgejeehM8qlIPlmQeIN8j0Rly5WMhmI11WqNOWQ89B+kBwB4yOTUeLiX+7ZFZzW
+7AOSSwEuTxdEKP3j0amv7SwnigOxFxs/BKXHkWa9zErHsq1h3xVDI0d0pWmqNE1l
+vyPIaGQHsCsb56A5Vpy3vcVVEU6ZX1BfIha9dISNpy7wpYD2BM2VNZM3WptYG4bx
+9kWdvKpDa1vNldlUJxbl5Bfe3nRhyaXaO+qs2yqulYThJtzCN6uT1GY/+S+ti8hO
+fqG/e0/pyPGGPUnJV7jH2hJD+YT73mXgsxrPkKeAP4MLlJw3gMNRzGbdqfnKQugh
+5ixXgQq4RvPhKDovHCT5zi7dBlv2799kFDUrwheUBPmA7pjKoDY=
+=A/za
+-----END PGP SIGNATURE-----
+
+--ijlyahqt2r44jxfh--
