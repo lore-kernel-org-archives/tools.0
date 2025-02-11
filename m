@@ -1,174 +1,117 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E70254AF4
-	for <tools@linux.kernel.org>; Tue, 11 Feb 2025 16:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E8C261571
+	for <tools@linux.kernel.org>; Tue, 11 Feb 2025 17:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739290366; cv=none; b=mdbRFvcrQ38hjTpr93cb6Y7CkEQkynkwI206bSBakUbNsGX1IsAQSAUyTLYrXu56ohr7RQ8krCUqudUmaPse3d9IijH6tL5ugapXOrdx7culIMsfdmdz8XQmHVjJFx4aSsM7Tox4rPzl2WO3fQ9ni8nWCd79T5B25EsdJbghDIY=
+	t=1739295646; cv=none; b=mkSYssLMSmt7Eez5hXRvYKY5cKbrFm3vjof47ipj7EwU4utR3X3rFOFZXhWNN9bfPCIvUnfI5cZVmv15zwsqXp5G9/ANIMNmZiYUP1DLSChfAKazuIL3B04uZ9mwSIxHV3+lT/4itfeMbfB5EjzeaSECHH44bamQkITxMEeYxTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739290366; c=relaxed/simple;
-	bh=ExX1hIFSL04lqowmKkcasm2jISXBQF19XqfdcbWI4mY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qY4DYj6IOkYb9Eudrw+zyM4tni5PBXj00mOQmGL38/Rv+waYmW7PDgM2G6L/85E5FvXKErT6Nt4RxlyZPTRcC+PderhM4wOHKkQVwm8tIHSmzs2edOh7scNrDk5YcpM12oGaHnqETrJ7Mb2kYD2S98hf3HVq2XOW8vllSz/Fh70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RM/Z9FKN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1739295646; c=relaxed/simple;
+	bh=Gl89qtb2MUsfe/8pKuOXnBbxD2G598AXAHnqxWboVm0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j8RqbqkggmvGwtueLJBA5+c9roQdjj7kBgamdG86FnnozSHboO6sF2MbUaAkyHhmkec+L+kmTOfHcs6enGF8OjlhOQgz442Jb4gpI9KKqSe7DaykhMcW/GcILKNakKc1hPXFuOXU57fG+VhVscRvxE73EAg6N6VB4JVLOZOdoEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=B/W6UsmG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RM/Z9FKN"
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="B/W6UsmG"
 Received: by smtp.kernel.org (Postfix)
-	id F2E9EC4CEE6; Tue, 11 Feb 2025 16:12:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B3EC4CEDD;
-	Tue, 11 Feb 2025 16:12:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739290365;
-	bh=ExX1hIFSL04lqowmKkcasm2jISXBQF19XqfdcbWI4mY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RM/Z9FKNwxm96IRvreaQzf6dieJeK70Dje5SgmY373o/dZMWmIxdVa2zkVupIH/9t
-	 +pRFI+p1g4SXe8E8WutuWhc95bQhToP3sa5DsAKqyQ9NIybkoCdBt7xMSGkbw2uMJ1
-	 XYLx61MH2N10cJcr6Q6SERDIeonUNdDlHbHFHEmDimMhLySAQVesoGdqxgWPlfwb8x
-	 nU0bzCiw2BIAV71qfjaFuzfAq5IAvpuw6r0p5dyRZKINQwO5DrHOw7NALMzRJkYNle
-	 WMAeQ8jcXFlSHZjGlTujXhrQrV17nebipxRLyYm2NUxqVPjdmF5r6dJ2lAEXt0TscD
-	 KdLksQnT4aPFw==
-Date: Tue, 11 Feb 2025 17:13:21 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
-Cc: =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>, 
-	linux-security-module@vger.kernel.org, Tahera Fahimi <fahimitahera@gmail.com>, 
-	Tanya Agarwal <tanyaagarwal25699@gmail.com>, Daniel Burgener <dburgener@linux.microsoft.com>, 
-	tools@kernel.org, linux-doc@vger.kernel.org, linux-man@vger.kernel.org
-Subject: Re: [PATCH 1/2] landlock: Minor typo and grammar fixes in IPC
- scoping documentation
-Message-ID: <3unkhxarmiddobfjvojx4sdpgitjld26udcagka2ocgrb6c2jc@dcg4w5yk5mut>
-References: <20250124154445.162841-1-gnoack@google.com>
- <20250211.Ree5bu6Eph2p@digikod.net>
- <22olfm76rcgjfs4vrr3adtbznsnz47kaehlr3ljn6e5jkc6waq@ue7azstxlwfv>
- <20250211.ieSoo7Phe5oh@digikod.net>
+	id EC657C4CEE5; Tue, 11 Feb 2025 17:40:45 +0000 (UTC)
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 93D0CC4CEDD
+	for <tools@kernel.org>; Tue, 11 Feb 2025 17:40:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 93D0CC4CEDD
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5de6e26db8eso5524832a12.2
+        for <tools@kernel.org>; Tue, 11 Feb 2025 09:40:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1739295642; x=1739900442; darn=kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sz+2zlib0S1+CTvsIUDnMSNs7707USycABHIy9UgNmQ=;
+        b=B/W6UsmGi6j0kI8F8jImfYlv+7LOukkgJDz9sas/9sbe1v2ARgpGdykPrXFQp5HmKX
+         rpAesXgR11SkBuCuNgdZ6Wow2i+cRUBzxcVl5JgAyGr5mAx2STicb0LHSqR5FoOJcVow
+         uoasgWZFLhNOb4fM8xIfCoBm1q/U0Dr7BfeyQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739295642; x=1739900442;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Sz+2zlib0S1+CTvsIUDnMSNs7707USycABHIy9UgNmQ=;
+        b=k68KrZbCyeMJ133P1xU9/XgqEFWggmASzpBEiSTwOqAi6d12f4hSchUglg0RbFJbj5
+         OO5hV6btmduN4MKPWrYrOfDaj7TOjnons13bhp5U8F4ZTwez8As5y1OC7Q+yzBpCif8O
+         xqUzoiIit6/bDfpWe1lOGE8UPkNTvivnil6VEgsswldU1drBFBrqlqcNjxbk+UBCNP7l
+         CPEgM3tU/gww0C/XjWzDbJEggsqDmKWgPxYf9jFhGIuzjat3u/muQGkq4GEFeflsEetg
+         1gHsWsrFHOwZPOKO3YrGys9aLYoGeaMB7cDGE+L9ElOCgn+CCmN1QHNZjUeLWaO39YRi
+         K69Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVKtWZ7bkM8Q/2O/7aN0ukISaLCUQ9f+noklSCO0tvlrSUA4yd3wCXTcp/qN/zruIwA4LeBWQ==@kernel.org
+X-Gm-Message-State: AOJu0YxO6eLmOpSF3UDQj/EEEONmzVkb/IwiyLcfvl9wCRyFt8gZUFNn
+	3RX97lVQJycWWQtDPhDpWcyWY5BWLSHJyNPvaKfTiLrbLclKEVx/vAkwbak6Sc+ermtxOiLtYaO
+	2/1o=
+X-Gm-Gg: ASbGnctK0AnzAPkBPt3+qYINF783nyPxTmxcZo3qB8W5D9AAvBhsrLWR6eiby6AjnKX
+	+8g0bkAdlY3eRhKWR6tiqqzu7Z/RDcu3So/0BXRllmCXWten1Yine256Sr3hyxuQHq+hIxvEtkX
+	iT25MnOo7T4Z11nnrogHaZFoGNVigtkc6n92CHlPkmlTRb3MwbvjdXryJmNglSJ31ZaBbIwYAWb
+	1kZURMPkrTK582uNJdHl0AS7S76AjYaHk1jocv9h7ANhXq5c4Es+0ZWP0XTPhXEKtyDHMpqzPNX
+	1qi0uyN6eMAOj+5ZM4oBqlKdooZZDalPFHUIFhI+Efhb1wYkN8bvWMUfh2bs1dt2/Q==
+X-Google-Smtp-Source: AGHT+IGSHRx7B2ZdCp3D3RIzS6TM9GHqMjFY3dheg2N/i+XpJ1H+gS1nGKkPcTxIukX1K7iAmHzfWQ==
+X-Received: by 2002:a05:6402:2106:b0:5dc:a452:4f7 with SMTP id 4fb4d7f45d1cf-5deade07f4dmr51656a12.28.1739295642611;
+        Tue, 11 Feb 2025 09:40:42 -0800 (PST)
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com. [209.85.208.46])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5de3b3dc390sm9062167a12.62.2025.02.11.09.40.41
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Feb 2025 09:40:42 -0800 (PST)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5de6ff9643fso5192071a12.3
+        for <tools@kernel.org>; Tue, 11 Feb 2025 09:40:41 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUdJ7j4TgzphJEME5KYmGrG1dWLLE+INWpqovXGIMZoykBlqy75lKzIvTCn90LFerNGnxzNmA==@kernel.org
+X-Received: by 2002:a05:6402:278d:b0:5de:44b1:478 with SMTP id
+ 4fb4d7f45d1cf-5deadd05019mr166853a12.0.1739295641520; Tue, 11 Feb 2025
+ 09:40:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qwbn4iyhdyh726ll"
-Content-Disposition: inline
-In-Reply-To: <20250211.ieSoo7Phe5oh@digikod.net>
+References: <Z6Ow+T/uSv128wdR@duo.ucw.cz> <20250211141109.GV1868108@google.com>
+ <CAHk-=whdcXj==9TkCpQYpmzLweCoDzd9_i8SrODjaQ3ysSe6dw@mail.gmail.com>
+ <20250211155614.GY1868108@google.com> <20250211160125.GA2274105@google.com>
+In-Reply-To: <20250211160125.GA2274105@google.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Tue, 11 Feb 2025 09:40:24 -0800
+X-Gmail-Original-Message-ID: <CAHk-=whFeiixFbNx8F8rVeCC-Zdco_sFyYynAbRyJH_NAx0Ukw@mail.gmail.com>
+X-Gm-Features: AWEUYZkX_fOqnnjmQb4I4Q6pfCSRa56tSaSWMI6CSJkYDffeNhXYzTzv3XAJhhs
+Message-ID: <CAHk-=whFeiixFbNx8F8rVeCC-Zdco_sFyYynAbRyJH_NAx0Ukw@mail.gmail.com>
+Subject: Re: MAINTAINERS: Move Pavel to kernel.org address
+To: Lee Jones <lee@kernel.org>, tools@kernel.org
+Cc: Pavel Machek <pavel@ucw.cz>, kernel list <linux-kernel@vger.kernel.org>, rafael@kernel.org, 
+	linux-leds@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+On Tue, 11 Feb 2025 at 08:07, Lee Jones <lee@kernel.org> wrote:
+>
+> > Out of interest, how did you apply it?  b4 was playing up for me.
 
---qwbn4iyhdyh726ll
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
-Cc: =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>, 
-	linux-security-module@vger.kernel.org, Tahera Fahimi <fahimitahera@gmail.com>, 
-	Tanya Agarwal <tanyaagarwal25699@gmail.com>, Daniel Burgener <dburgener@linux.microsoft.com>, 
-	tools@kernel.org, linux-doc@vger.kernel.org, linux-man@vger.kernel.org
-Subject: Re: [PATCH 1/2] landlock: Minor typo and grammar fixes in IPC
- scoping documentation
-References: <20250124154445.162841-1-gnoack@google.com>
- <20250211.Ree5bu6Eph2p@digikod.net>
- <22olfm76rcgjfs4vrr3adtbznsnz47kaehlr3ljn6e5jkc6waq@ue7azstxlwfv>
- <20250211.ieSoo7Phe5oh@digikod.net>
-MIME-Version: 1.0
-In-Reply-To: <20250211.ieSoo7Phe5oh@digikod.net>
+So I had no issues, but I don't actually use b4 to apply the patches,
+only to fetch them.
 
-Hi!
+>   Fetching patch(es)
+>   /home/lee/bin/apply-patch.sh: line 134: /tmp/<Z6Ow+T/uSv128wdR@duo.ucw.cz>.mbox: No such file or directory
+>
+> Where apply-patch.sh: line 134:
+>
+>   b4 am -3 -slt ${PATCHES} -o - ${id} > ${MBOX}
+>
+> My first guess would be the stray '/' in the Message-ID.
 
-On Tue, Feb 11, 2025 at 04:53:44PM +0100, Micka=C3=ABl Sala=C3=BCn wrote:
-> > Let me suggest the opposite: Could we move the kernel docs to manual
-> > pages in man9?  (As is the historic place for kernel docs.)
-> > (You could keep man9 in the kernel tree if you want, or could handle it
-> >  to the Linux man-pages project, if you want.)  That would help have a
-> > more clear separation between the two sets of documentation, and prevent
-> > duplication.
->=20
-> I didn't know about man9 but it's not clear to me what would be the
-> content.
+I don't know your apply-patch.sh script, so maybe the bug is there,
+and it's your MBOX thing that you create without quoting the message
+ID.
 
-The official name of man9 is "Kernel Developer's Manual".
-In-scope in man9 are internal kernel APIs, and in general anything that
-is of interest to kernel developers but not to user-space developers.
+But in case it's actually b4, let's just add tools@kernel.org to the
+participant list.
 
->  Because I want new kernel features to come with proper tests
-> and documentation, it would be much easier to apply all these patches to
-> the same repository, at the same time.  Using the same repository should
-> also help to synchronize documentation with code changes.
->=20
-> One remaining issue would be that some generated documentation come from
-> the kernel source files, especially the UAPI headers, which also helps
-> maintaining the documentation in sync with the code.  What would you
-> suggest to improve the current workflow?
-
-For generated documentation, I'd really avoid that.  Currently, in the
-man-pages we only have bpf-helpers(7), and I'd very much not follow that
-for other pages.
-
-For APIs that change often, that may make sense, but in general, APIs
-shouldn't change significantly enough to prefer generated docs.
-
-> > I personally don't like the idea of having man2 in the kernel tree.
-> > Michael Kerrisk already mentioned several reasons for why it's a bad
-> > idea in the past.  On top of them, I'd add that the build system of the
-> > Linux man-pages project is quite more powerful than the kernel one, and
-> > it would be an important regression to have to adapt to the kernel
-> > Makefiles in the manual pages.
->=20
-> For the Landlock syscalls case, could we move the syscall documentation
-> to man9?
-
-man9 is for internal kernel APIs.  Here's intro(9) in different systems,
-which documents what should go into man9, and what shouldn't:
-
-<https://man.netbsd.org/intro.9>
-<https://man.openbsd.org/intro.9>
-<https://man.freebsd.org/cgi/man.cgi?query=3Dintro&apropos=3D0&sektion=3D9&=
-manpath=3DFreeBSD+14.2-RELEASE+and+Ports&arch=3Ddefault&format=3Dhtml>
-
-Debian had a project which documented some Linux kernel internals in
-man9, but it was eventually dropped.  I don't know who maintained that,
-and what was the history about it.
-
-If Landlock has internal documentation that only matters to kernel
-developers, yes, that would be in-scope for man9.  The user-facing docs
-are more relevant in man2 and man7, though.
-
-I would be happy to take all the landlock docs in the form of man9 pages
-if you handle them to the Linux man-pages project.  I can do the work of
-transforming the .rst docs into man(7) pages; that's fine by me.
-
-If there's consensus in the kernel of moving to man9 docs, I'd be happy
-to help with that.  I fear that some maintainers may fear man(7) pages.
-If you need me to give any talks to explain how to write man(7) source
-code, and show that it's easier than it looks like, I could do that
-(G=C3=BCnther already suggested me to do so :).  Maybe I should give a talk
-at Plumbers.
-
-
-Cheers,
-Alex
-
---=20
-<https://www.alejandro-colomar.es/>
-
---qwbn4iyhdyh726ll
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmerdxsACgkQnowa+77/
-2zIHhw/+M+2zNJlER+uRIpHd8YeuvEju7kHxHXJRAcSnPLBFr4kRWqG/VeDuTbcP
-7XKy7KDksG8F1kvgsdXko9qi1YXTSY8RElnvUmAmnLkSYklZNONiBMtBhCSBVxi2
-pcRSvcW3sWV/6AruF9LSXoccETiZCPGipt0HI/M1NT9/2RTCW0O6j9s9wFFlQTXd
-MA9f/jEjY7BPARu0Zs2VuoUbZHvB7y3CkHkJVenu2FSAzQIuE0f4Tv17GqIT8uJW
-JwXtFWT/ERvB1WtP1275FkSb6DHQzSfQnOsnFmV5lT1ry5IDoo98SuhKvwRFIA41
-5Ei+DuKrjrnqBEyo8Xv+5KsboHyeRPDZtxL05oiggRoVWJnm7le+WGARyjLjzQEg
-t50Nkh1GNrPkrkEpYaofxZkwZ4RSICuprhkONzQPNlS00i6qKce3d38yEcMu/cex
-UNQQGGVV/bEiBXC8+pzJjEbK4vFvJsphgwyS7b680V6HrJMefezABsS4z5mOB6Bx
-rGxT8T6BN3KvEAmLGHPOt2GAuYeLJcwBXNZbhfmt/Z9pPVlxu7ptacg+la3Zj6K7
-q/SjVorjJpfej2hD7TVNDbbwJ2Ly4kKxTcxyNOHv4X2IFxm+ciuJPWsXaKv1O0HX
-rQsd+SuvLhsAn4K6vcX7W0evuPC5pYmhFiFZfIvInPUtIyAkkXg=
-=W7tw
------END PGP SIGNATURE-----
-
---qwbn4iyhdyh726ll--
+              Linus
