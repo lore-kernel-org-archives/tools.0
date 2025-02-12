@@ -1,156 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CAF211285
-	for <tools@linux.kernel.org>; Wed, 12 Feb 2025 15:24:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCA521149C
+	for <tools@linux.kernel.org>; Wed, 12 Feb 2025 15:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739373886; cv=none; b=egd+LWXB6Kv6+pSJG5KLNot6IiFawTSpGTrP2S38KeCYm4kS0XIv8cKczU3nDPicFzKD+vxNsDouaKQIYhhcYArwwiUNU0JmBTek2qbTvpLVmO6axSrXnlY35/f6RubhM6yoCc/axYC7xxfNnbXe4zdGBrLHURNmpveFYf2H2Wg=
+	t=1739374615; cv=none; b=oMPyRvs4eP8siJqQ3AVjfoMjKncyjmCVvnV+Fvt/e54FEAJ1dCf7kTAsElk/w0WgZLbjyfjcObuTwUQ49Z+YInSw3iEMRkeGMNrrVx0YthVqqYtMJUvMApzw7t7IE6uF+w3ObvPo99hoPxmcGYL6W1sRsyQw6W/mN5LgXKItSCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739373886; c=relaxed/simple;
-	bh=gmHMT/0/dBI+vjfcgEJnFBiOxxsGbpMWs+wEXGkQfPg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UwgUpQPPbEYLgArI/YU6cFRFJrdaw69m1pVCj0x0dsGUM/bc4LE2sa3V9Ix0PMMEGXxZ+EDbiDuuPgSsA/Fb4SRJO+1maORMiY1bPT9e6PQxtZDV4GTiF80hS9FjZWW+2pbecvprsgJfwI7G7fgKMrsuYP/TXFkUfMidELxyOVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Ak1QgLIZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1739374615; c=relaxed/simple;
+	bh=JgY8HjefzqjLToRQBhF7/uzSWl4NKTaWBdTfXLwI3Zo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JKK4dA5eSIsOOGdbPs6F+rnINzGqNHhTbtcgCJHgiwcyIu0RU+ir2r9zpcpcxRkoR7o8Oh/+wpCHnRflvwN2tfEjTBU2nb78h+196fw9x0Gp/efOsCLobMEnutL2P2Y+rieACfJcLpFr76gdn4SmRcTUGNeTBtHzkGYASPya/A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=T0GZYSw3; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Ak1QgLIZ"
-Received: by smtp.kernel.org (Postfix)
-	id 04B86C4CEE2; Wed, 12 Feb 2025 15:24:45 +0000 (UTC)
-Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 70446C4CEDF
-	for <tools@kernel.org>; Wed, 12 Feb 2025 15:24:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 70446C4CEDF
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 6375D443FD;
-	Wed, 12 Feb 2025 15:24:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1739373881;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="T0GZYSw3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1739374612;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=RVJesZ2ODmQgYeAUhUu9yJssmBr0DBEWFHcl1tQtKfE=;
-	b=Ak1QgLIZZj6GBuMdxhO0RI21Sdwywu7kR4DckmVue+GvpzFILjICwWRbFrZZSPaxeHKQj2
-	Nk55K22pkpWjiWEbafavCNlZNluiDo0SuW4Ied/q/4IUvhM2BaDaGKr/ESRAIhy97v98zf
-	fl3IelhERYA+yxnpHKPRL5TdeojQnl0JoKNW3+YC3YUBxdcMuHURpkOaGPBpYZXPHB6hfl
-	pFCc0UTpuHUZrr+FKAbNT+v9VR6GUL9zPxZAF/E8Ycw/ep77trcFG4lqv4HIlQooCeT0Su
-	uAG4qmenGDrROMugw/22QisRSQrdEm9vRMqx0J0U/KrHuxacZi+fi9+clCW00w==
-Message-ID: <4c302dba-8471-4689-a55a-623ea7355be2@bootlin.com>
-Date: Wed, 12 Feb 2025 16:24:40 +0100
+	 in-reply-to:in-reply-to:references:references;
+	bh=JgY8HjefzqjLToRQBhF7/uzSWl4NKTaWBdTfXLwI3Zo=;
+	b=T0GZYSw3PDgC/hH8bfMwFSME/I4SHf+OtX3uiVgRo9elolh29N2ObDXiMNbffwYH3mF/m5
+	KWS7X/aJodm5XGPk9hGaMhQO/BhvIdSewlpk093127kL4xi7Uw6bFF2QAzw0oRYNdL2VcJ
+	0XLSMZu/E4ENFmE5tOctZURdd57pw+8=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-374-3bQuaCIyO96mxj0hmWTPkw-1; Wed, 12 Feb 2025 10:36:49 -0500
+X-MC-Unique: 3bQuaCIyO96mxj0hmWTPkw-1
+X-Mimecast-MFC-AGG-ID: 3bQuaCIyO96mxj0hmWTPkw
+Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-ab7ee92898fso161925966b.0
+        for <tools@linux.kernel.org>; Wed, 12 Feb 2025 07:36:49 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739374608; x=1739979408;
+        h=content-transfer-encoding:mime-version:message-id:date:references
+         :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JgY8HjefzqjLToRQBhF7/uzSWl4NKTaWBdTfXLwI3Zo=;
+        b=hU4S3OJ30H5vibORLoIzAQKMPNw5q2E/r4HTbcjUmE7PXAP1jUm14UE4bN2Ty3KyDB
+         e1BYO8nvBheWOyVUlG59xGlrNop06E8rZQGq/TU4jHKRUnw8XZAzk/20QH8J7wvJ0UOE
+         SXiAyRVzvimMh6v89ys/5Xd8tPxO5kfVT0xPrbiDF1Q/kzfnf52Mb7KTBiJwSopLnpJG
+         lAeo357WzBJ6Gr0UxrRghUPDsm/9s+BbkxHCM2ifyOTjuz/0ljaZdv+nnF/AY1sUlUt2
+         720X8YTl5Y6zM7FUSt8kNnwiJsE68BqI4GP4g3qHmzJE9ex1X6jzy/6+MwTCvpuUGfMj
+         N5tQ==
+X-Gm-Message-State: AOJu0Yzj2ffw9lmsyGMo77rMZNq8suu1XRxfB+bvz/zzNc+2U95MqXiw
+	Iyee7WaWWrV02E+EwtQJtiOrSUXO8NRqyWCxFS+2Y7059gNTPNKJjMZtL709FBT6pILjDJkpp3Q
+	VAQHN5BYah8APwttRvppnSxrRdTR0QBsQVr5iW3jrga6ReappkYoOq4PW1yXI/nBC7QU2DJ8l0N
+	T933D6rAWCY44mgGJbpLhRoINnsOjMkeZj
+X-Gm-Gg: ASbGncvQuJQG9aecKZp5XzV3UWJCq0KcqyLGtzJCjdhGDZv63wOefdSC2JgoLlQ8rTB
+	/JXlk9HFmerqTp4TrynTELnvn9smfAIWJxumRDAZa+yMHrreFVqJalSLelwZgAfWpzmSaWE4h9a
+	VnkVe0FXYVXiKVbEsgpfNF2kkbx0skxT6/ygkqwE3t9JlqAUpBkWwxKpI0Su/ldIrULjIaR3jxK
+	MQT+cdIWGSTdQLusn+MSEowjK3e5e58eMW/bB9AtYF0ml/MeqjDTQct11A00Jk5qBgqeVGyqvlw
+	W79woNMtVew4XzG9RVrJDT8rppnIvA==
+X-Received: by 2002:a17:907:a08a:b0:ab7:ca44:feb8 with SMTP id a640c23a62f3a-ab7f34ab834mr352535666b.52.1739374608187;
+        Wed, 12 Feb 2025 07:36:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEZn0/ywmg9b7fW3lkqk2jDaRS6VN023ON02+UsCBOO7LkEgGA9avZOJvB+20M8Wsp5hy1jrQ==
+X-Received: by 2002:a17:907:a08a:b0:ab7:ca44:feb8 with SMTP id a640c23a62f3a-ab7f34ab834mr352532266b.52.1739374607851;
+        Wed, 12 Feb 2025 07:36:47 -0800 (PST)
+Received: from alrua-x1.borgediget.toke.dk ([45.145.92.2])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab7ba97704dsm700724866b.107.2025.02.12.07.36.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Feb 2025 07:36:47 -0800 (PST)
+Received: by alrua-x1.borgediget.toke.dk (Postfix, from userid 1000)
+	id 415D9184FE86; Wed, 12 Feb 2025 16:36:46 +0100 (CET)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org, users@linux.kernel.org
+Subject: Re: b4 feature request: run command before rewriting history
+In-Reply-To: <87ikt8bm6h.fsf@toke.dk>
+References: <87ttdkrylx.fsf@toke.dk> <87ttctc2vk.fsf@toke.dk>
+ <20241030-perfect-hot-chipmunk-ffae87@lemur> <87ikt8bm6h.fsf@toke.dk>
+X-Clacks-Overhead: GNU Terry Pratchett
+Date: Wed, 12 Feb 2025 16:36:46 +0100
+Message-ID: <87bjv7p435.fsf@toke.dk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Lore not indexing since few hours
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: users@linux.kernel.org, tools@kernel.org
-References: <1eb87226-4528-4fba-929a-6a63e6418689@bootlin.com>
- <20250212-kestrel-of-stereotyped-democracy-25ec1d@meerkat>
-Content-Language: en-US
-From: Louis Chauvet <louis.chauvet@bootlin.com>
-Autocrypt: addr=louis.chauvet@bootlin.com; keydata=
- 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
-In-Reply-To: <20250212-kestrel-of-stereotyped-democracy-25ec1d@meerkat>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeggedvfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvvehfhfgjtgfgsehtkeertddtvdejnecuhfhrohhmpefnohhuihhsucevhhgruhhvvghtuceolhhouhhishdrtghhrghuvhgvthessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepjeegjeeguddtkefhfffggeduuedttefgueevgeetfedttdefveeufffgvefgveeknecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpsghoohhtlhhinhdrtghomhenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghloheplgduledvrdduieekrddtrddvtdgnpdhmrghilhhfrhhomheplhhouhhishdrtghhrghuvhgvthessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfedprhgtphhtthhopehkohhnshhtrghnthhinheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehushgvrhhssehlihhnuhigrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohholhhssehkvghrnhgvlhdrohhrgh
-X-GND-Sasl: louis.chauvet@bootlin.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: szIMhQ7JJA6j0ROg0l5LgkY6svUz3CEB4rUE6DtKDLk_1739374608
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+Toke H=C3=B8iland-J=C3=B8rgensen <toke@redhat.com> writes:
 
-
-Le 12/02/2025 à 16:16, Konstantin Ryabitsev a écrit :
-> On Wed, Feb 12, 2025 at 02:55:29PM +0100, Louis Chauvet wrote:
->> Since 8:47 UTC, lore.kernel.org seems to be experiencing issues: no emails
->> are being indexed. This is problematic when using tools like b4, which
->> relies on lore.kernel.org to apply, review, and fetch patches.
-> 
-> Yes, the crawler bots have discovered the main system from which we replicate.
-> I've applied mitigations now and we should be replicating again.
-> 
-> We'll also tweak monitoring because the way it was failing was not picked up
-> by our "is this alive or not" checks.
-
-Thank you so much for your quick reaction! Lore seems to work now.
-
->> If this is a duplicate report, I apologize. I did not find any "status page"
->> for lore.kernel.org nor any emails on tools@kernel.org regarding this issue.
+> Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
+>
+>> On Wed, Oct 30, 2024 at 11:16:15AM +0100, Toke H=C3=B8iland-J=C3=B8rgens=
+en wrote:
+>>> > Do you think this would be feasible to implement?
+>>>=20
+>>> Hi Konstantin
+>>>=20
+>>> Friendly ping on the above? :)
 >>
->> For future reference, is there a specific mailing list to report
->> lore.kernel.org issues or to get the latest updates?
-> 
-> Infrastructure stuff should go to helpdesk@kernel.org.
+>> Yeah, I hope to be able to look into this in the near future. Unfortunat=
+ely,
+>> I've been dealing with less-than-pleasant tasks such as ddos attacks and
+>> trolls over the past couple of weeks, but at least it's finally on the w=
+ane as
+>> people move on.
+>
+> Right, no worries, just wanted to make sure this didn't get lost
+> entirely. Thanks for looking at it! :)
 
-Noted!
+Hi Konstantin
 
-Thanks,
-Louis Chauvet
+Another friendly ping on this? :)
 
-> -K
-> 
-
--- 
-Louis Chauvet, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+-Toke
 
