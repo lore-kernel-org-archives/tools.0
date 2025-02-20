@@ -1,116 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFD8263F46
-	for <tools@linux.kernel.org>; Fri, 14 Feb 2025 13:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43ACD33985
+	for <tools@linux.kernel.org>; Thu, 20 Feb 2025 14:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739538534; cv=none; b=uoTNDUb0BgGRZS3ElGXPa8e2iYH/fBNrv920tIlNqvytfZyc5w7YQ9sYk3k8e89OdVQA4WVnflSajgE1MGdXYGc1l6GfSw+53YWfsPiyLH73xYorlbhqSp3rgJNxUzmgIK6jCtmgOmWXPJHVPpKeAh3F+ovvLcUptPxwkE3ee3A=
+	t=1740061512; cv=none; b=NUWfgm/2w8ehGQzmVE0X0qOKm5pREZDwXjoKCNnfMBQuVRS8456BM1plovv4Os4J8dQMGRXRwJm4VybiUxKyEQiX8oHWPXP1m6y5kil/Tv5dCfqD8XFEMacNmNpEIfZLRI6PNsf6UtaT9C30bDg+jyh6xO6IPZtyh4L1hmP0WGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739538534; c=relaxed/simple;
-	bh=knhLyi8nAdDBiQ884J4ttYxg3tdtipK2pSM/96pWeRg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T8lqO2W3FlTDaKUeoK+CSVvHhZGGTo14CnEnzu4dghBZc6PM/SssBfbbevxYNzquAInoR68d8sUGEN7fFHVAhNTiyVOJfsls1UwQQesvrUO7Y9FUtyAPDiJkbtLADzwWBeP0Wcq9RCODF8v3hpPL4/9UCY9bNwdB/LwrBULFguU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=f8Np4lsb; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1740061512; c=relaxed/simple;
+	bh=pOKPp5BH7+/amUXBohvguXn9klO3x021aeUq3iIBOf0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=VRgeJ+/HPhlVuv0Vzewi2dUdAyqEU7lITNtywWppRZ6I3z4j2sv9j8nRhwXXXqSWWZBz0IsqaWuyq1zkmHJWYbKvGTp8pskGGKfByfeRaIYQDxkj3S9zg+JHF02o4QvRJdH4IJnoGHn5e50e473wQIq0Y2LwB6K/ExpVLMIHXUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=XVUHg9G+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="f8Np4lsb"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="XVUHg9G+"
 Received: by smtp.kernel.org (Postfix)
-	id B3BEAC4CEE6; Fri, 14 Feb 2025 13:08:53 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	id D92C7C4CEE3; Thu, 20 Feb 2025 14:25:11 +0000 (UTC)
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 30A18C4CED1
-	for <tools@kernel.org>; Fri, 14 Feb 2025 13:08:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 30A18C4CED1
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1739538531;
+	by smtp.kernel.org (Postfix) with ESMTPS id 437C6C4CEDD
+	for <tools@kernel.org>; Thu, 20 Feb 2025 14:25:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 437C6C4CEDD
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id F41674439A;
+	Thu, 20 Feb 2025 14:25:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1740061502;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=knhLyi8nAdDBiQ884J4ttYxg3tdtipK2pSM/96pWeRg=;
-	b=f8Np4lsbTA72Xud+LT55iXvCbQC2JU837B5K4EJ5QwuDHBuzRn6cczPsh0iyEmZLM3eeV0
-	uY1+5DmVhV0ySldXsf8PhserYaXi2nY5R5XYlrqsxPIwE/kHZlF/AxNlfOfyXOaEe4A0BU
-	l7tuopi4JPCda/sX/i0AZN2uwrIkzXA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-PgbMVrzmOQqUzw6OHoGyfQ-1; Fri,
- 14 Feb 2025 08:08:49 -0500
-X-MC-Unique: PgbMVrzmOQqUzw6OHoGyfQ-1
-X-Mimecast-MFC-AGG-ID: PgbMVrzmOQqUzw6OHoGyfQ_1739538528
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 5B00D1800982;
-	Fri, 14 Feb 2025 13:08:48 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.12])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id D18DE3000199;
-	Fri, 14 Feb 2025 13:08:47 +0000 (UTC)
-Date: Fri, 14 Feb 2025 08:08:46 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: Re: Way to list pull requests with b4 or lore?
-Message-ID: <20250214130846.GA743572@fedora>
-References: <20250213144722.GA522528@fedora>
- <20250213-independent-tireless-hyena-41f604@meerkat>
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=TqYQ8RIDz6xw2e617HBi4DAQwJtn5gzbza4p8c9qP6M=;
+	b=XVUHg9G+djzLUfQclu4AxdkyfN2m6Vz/1P9xG30+2xQjSLdWqYSxPAGgFMDPVv7CQs/vod
+	0DOULNKOLVHi8Gx+zJRBIWPK1P4Dmjn9BkyXBRzey61bT1GEX84sEsM9uE+HLO1PrX2NcG
+	sFhTgkSDR1Vuer281dF5BizYf8UyGAwT3Q1I1DSH2OXxUyxJkph5HmbW90zdqoBSyoq4DV
+	S4FAY4GhDxAs1kWyoPrBGCw1bMy001Yo2CHvNgRWpMFu5nsHoPb7jKtuXLgXw/psTMNXkH
+	MbKon0fOsa2H/i5xM/mpYRZ9Q4eFQwYoP0aZbicLyWcCDVpGrh8cyJ5mlzu6Jg==
+From: Antonin Godard <antonin.godard@bootlin.com>
+Subject: [PATCH b4 v2 0/3] prep, diff: support adding range-diff arguments
+Date: Thu, 20 Feb 2025 15:24:56 +0100
+Message-Id: <20250220-creation-factor-v2-0-7a0949a3a060@bootlin.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="4MCY2jbxOTm6VRAC"
-Content-Disposition: inline
-In-Reply-To: <20250213-independent-tireless-hyena-41f604@meerkat>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADg7t2cC/2WNTQ7CIBCFr9LMWsyAVMGV9zBdAJ3aSbQYaIim6
+ d0lbF2+v+9tkCkxZbh2GyQqnDkuVahDB2F2y4MEj1WDQtWjVBcRErm1lsTkwhqTCGTwbB16fwp
+ QV+9EE38a8Q5ew1C9mXOtfttJkS1pPIX6j1ekQGGtMWNvtUNpbj7G9cnLMcQXDPu+/wA7aE/wt
+ AAAAA==
+X-Change-ID: 20250127-creation-factor-ce8069a0bb3c
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
+ Antonin Godard <antonin.godard@bootlin.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1400;
+ i=antonin.godard@bootlin.com; h=from:subject:message-id;
+ bh=pOKPp5BH7+/amUXBohvguXn9klO3x021aeUq3iIBOf0=;
+ b=owEBbQKS/ZANAwAIAdGAQUApo6g2AcsmYgBntzs9Ou9FlzjXQVLDcYXcFLPPWAsuQOCswEcPl
+ dYd8AxW6V2JAjMEAAEIAB0WIQSGSHJRiN1AG7mg0//RgEFAKaOoNgUCZ7c7PQAKCRDRgEFAKaOo
+ Nud4D/9yFPkl6Y2f9AT0Xjbjp1pLEoL589LlmcVSIqTZhDE4TP/BbUmw78aIUqf5JfS/RssRTVD
+ 3gKGSa6XQuwXxZcL+vovUicM3nR9RBuhHsh20bX0vQPKGVbG0IivZlL94IIzYLQWfhLKA9SY0Q0
+ uqh1Hy2QHDC1yl7snkAHmZYJHOLYelpTOkgSyyPxF3oAh+0U14ZaW/n/mH1ZqAxVvJ9Mm6rIQIP
+ LMjSbwU4gdjwwoD2ewkh4A+gwkvnvLx9GP0j0bc5wC89VGcQy8fZA2sk7868LaPfCTWbOTs1+Zw
+ K7htLrcxYw9IQtPn9RNBCQspL2z/HJpgcduDj3wDOIf1QkTLxltoYiyWTPrFq3MTFzRGOlS4LQJ
+ RH826sq+RWNJyoBPDuvRASqZAFetVokfJH+sDybwAmNZL9V9coJj7IzPmNeer9uy+GuUy0PuRjl
+ Sa+I9GD2Rc91IBG0v4QIGP40ImdAUDK/NKJ5LvfAG1vvEm3j/Ly1IsaCFQI7sXJ8b8rlvLM08Qs
+ V4IAm6aH+DWFfu0MxHpwZdReV9tRuvcP5+tv9G0YsQpKjUikeClLi7ih1lHR1nse9pNLwWrxsL0
+ PeP6sK33hUtxx9IODRdztUTOQKNZB+h6chM9pdCkgIqTnIbg7R6Du8dBvZ/EvO/y86nnhbiJ3uY
+ efQwdw0CSYwAPuQ==
+X-Developer-Key: i=antonin.godard@bootlin.com; a=openpgp;
+ fpr=8648725188DD401BB9A0D3FFD180414029A3A836
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeijeefgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpeetnhhtohhnihhnucfiohgurghrugcuoegrnhhtohhnihhnrdhgohgurghrugessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgedtleeffefhvdeludefjedttdfhleeivdfgueevvdektdefhffgvdetjeduudfhnecuffhomhgrihhnpehmshhgihgurdhlihhnkhenucfkphepvdgrtddvmeekgedvkeemhehftgdumeeitgdtudemiedvkedtmeektdehtdemkeefvdgvmedvheekgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtvdemkeegvdekmeehfhgtudemiegttddumeeivdektdemkedthedtmeekfedvvgemvdehkeegpdhhvghloheplgduvdejrddtrddurddungdpmhgrihhlfhhrohhmpegrnhhtohhnihhnrdhgohgurghrugessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepgedprhgtphhtthhopehtohholhhssehkvghrnhgvlhdrohhrghdprhgtphhtthhopegrnhhtohhnihhnrdhgohgurghrugessghoohhtlhhinhdrtghomhdprhgtphhtthhopehthhhomhgrshdrphgvthgri
+ iiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopehkohhnshhtrghnthhinheslhhinhhugihfohhunhgurghtihhonhdrohhrgh
+X-GND-Sasl: antonin.godard@bootlin.com
 
+git range-diff allows to override the creation factor, which is
+sometimes useful to adjust for seeing different diff outputs. This is
+not possible with the current code, and is also not configurable from
+git config.
 
---4MCY2jbxOTm6VRAC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Add an option to diff and prep to override the git range-diff arguments,
+such as --creation-factor.
 
-On Thu, Feb 13, 2025 at 01:58:41PM -0500, Konstantin Ryabitsev wrote:
-> On Thu, Feb 13, 2025 at 09:47:22AM -0500, Stefan Hajnoczi wrote:
-> > Hi,
-> > I've been using b4 and lore.kernel.org more and more recently, they are
-> > awesome! Is there a way to list pull requests from b4 or lore?
->=20
-> Happy to hear you find it useful. Can you clarify what you mean by "list =
-pull
-> request" -- do you mean, "show me if there are any outstanding pull reque=
-sts
-> that I haven't yet processed?"
+Example:
 
-Exactly.
+  b4 --debug prep --compare-to v1 --range-diff-opts "--creation-factor=80 --no-dual-color"
 
-If it looks at the git repo and checks which pull requests have been
-merged that's ideal, but even just a list of pull requests (processed or
-not) on the mailing list is useful.
+Signed-off-by: Antonin Godard <antonin.godard@bootlin.com>
+---
+Changes in v2:
+- As suggested by Konstantin, change "--creation-factor" to
+  "--range-diff-opts" to be able to add git range-diff arguments more
+  generally.
+- Add a commit to document the option.
+- Link to v1: https://patch.msgid.link/20250204-creation-factor-v1-0-9988d594a018@bootlin.com
 
-Thanks,
-Stefan
+---
+Antonin Godard (3):
+      diff: add a creation factor argument
+      prep: add creation-factor argument
+      prep, diff: document the --range-diff-opts option
 
---4MCY2jbxOTm6VRAC
-Content-Type: application/pgp-signature; name="signature.asc"
+ docs/contributor/prep.rst |  6 ++++++
+ docs/maintainer/diff.rst  |  5 +++++
+ src/b4/command.py         |  4 ++++
+ src/b4/diff.py            | 10 +++++++++-
+ src/b4/ez.py              |  9 +++++++--
+ 5 files changed, 31 insertions(+), 3 deletions(-)
+---
+base-commit: d23a9a2d5684369710bd2e416e41159193df3756
+change-id: 20250127-creation-factor-ce8069a0bb3c
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmevQF4ACgkQnKSrs4Gr
-c8jXMQf/YuF21YxTf+OIiZyi2NISrDo8a3DSsnjPXt0d+SgN7jB/+hCSy6Q/13OL
-BayRepbp/m2AyU3t9cs/0S7YAnTvPo6BdfoTx+P+anqw8FApnlmgok1W9mwrWLMY
-0hIAJBksJO2ThVBfevseUMi3K5NPv/izfi2/msdaZOS2KyDBZDc53+9+Ldv5CtpW
-8txoWP6jMuY1+VMnnqrfVQA9/tx2B0OBLjMbjntbFvXKDjOF7B0hHTPf8N6Xw1/A
-j1LbCPF1+4Uiv0aUyLBACRH2Eg0an7swf+ZQ2cBlj8ULui6QwjCAyqfRTRHsoKPW
-nlD6pZVyZntVfJbUi65y5kCcAgtRWg==
-=zPtJ
------END PGP SIGNATURE-----
-
---4MCY2jbxOTm6VRAC--
+Best regards,
+-- 
+Antonin Godard <antonin.godard@bootlin.com>
 
