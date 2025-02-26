@@ -1,126 +1,150 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF25A25A65F
-	for <tools@linux.kernel.org>; Wed, 26 Feb 2025 21:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435B925B665
+	for <tools@linux.kernel.org>; Wed, 26 Feb 2025 21:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740605889; cv=none; b=D5V70Gxoa+7trSts99YOROiV51ZXWx4cIel35tSzIUxgIbYWB0tPL3MZWcjvVhx2tI6/2vb05aX6eM4uZ3y55AcMID1LZcnu5yq+UsyKnfnKgjVfWo9Gf/AHib3lUxL7J8I5SkIKkRgmax+0JpUUDG2V61+v0m1Eg03TXO0gE7w=
+	t=1740606690; cv=none; b=SHnefT25KopmAtE2Yf/ha2M/VssUTjsFuSmSXWfUMeHWPrUiR11n28efeEsJkQLlgF31z2gZ/JmcM4rPcWwokT70Zbsh6//BVPXtk3awd5IEjCN1iGKSvyO6dUIZ9BLhOVFFYkzec71FcwDJFytXc3opQW9AhNOx5QnIl58Cnr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740605889; c=relaxed/simple;
-	bh=ZqBestMUPFwTqZdVmhC1VxizcqbeFwZ7xmoJVpNXomU=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=QirKRtSpbGUqkxBDX6J0ETMUiW6u8yvBT7BcYLsZcbSkO9AIBMrIOP43ZC7vP2bc+p4dElHimw4ut6QFst+ZzkTPH9A/6NX6lPgNilOCzedoWtmS2kfzCP4GvXkxH1uMSeZXmfJtlRFMOvvKFuVZNJUSz4L4bQF6uza0ek/QsfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SF3BVP7y; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1740606690; c=relaxed/simple;
+	bh=6K67pLBrn/YSsRyl9yF6Ujvkl7wj/4gfRckCg/PzINw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n63xabZfS5KFyvONP+WX4+Xl45AobRhCcxS0Y2PlCEc3DLewYRpU0SKLNQ3h90GfWEVbuY9GA6VHtGcGv1ctjU/zx8y9lJyBvpaFRYGWejT6QXDMY2LaS9JPgkXoG4yc8NGpplNseotMomGnznbcctB3O5aiqHocTHwutuwxwqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TVFB/wb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SF3BVP7y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TVFB/wb7"
 Received: by smtp.kernel.org (Postfix)
-	id C5378C4CEE9; Wed, 26 Feb 2025 21:38:09 +0000 (UTC)
-Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com [209.85.208.73])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id D9369C4CED6
-	for <tools@kernel.org>; Wed, 26 Feb 2025 21:38:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org D9369C4CED6
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=flex--gnoack.bounces.google.com
-Received: by mail-ed1-f73.google.com with SMTP id 4fb4d7f45d1cf-5e4b6eba254so133789a12.3
-        for <tools@kernel.org>; Wed, 26 Feb 2025 13:38:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1740605887; x=1741210687; darn=kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mGqPzZNS1V+n4kBOnix0o1ofeCkSUT4nSjjh84WDIMU=;
-        b=SF3BVP7ywyrx6xXsakoQftgyKw1YpHYNWghXH4eZpBUPaIzk36ZZnCoAJHJCsyf3mp
-         YLayI58sqxmiI+TwoUSMEy16S8FWJ1PMQqsG5/iAKG+F79QzKp3DLzRNC+etehO9k0MN
-         w6+p3eRJvHArVvfBUpNLjCyfUFeZgqBLBoUEgZn2k+/V6H+OhALN4pdDggw90wQI4Iwf
-         YI0n1T3k33Yo2MooYROLMSLeOGp4iFlvXPpXYLtK7geoq6kCs9lFrPEfTvbrfp1+7jS1
-         er9m5FiXDzvnL+OFoJ6gAuAowuS7wBM8S+611TjOHqOevhPQGi1xwxY+5a4Vw5U64F8J
-         /Gsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740605887; x=1741210687;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mGqPzZNS1V+n4kBOnix0o1ofeCkSUT4nSjjh84WDIMU=;
-        b=wEDZqPG6owcgZqY83limNEpNpn2f+kvXqWE3WJlSczWRJ7h5dV75BlQl0l3+WvRgvc
-         fuDr7l5WU9AOyAONQzKO6NsSw8V3dWBRjlfJF/RxtuxPRSYN5GWM4+QE6Hi3lwQxFKyg
-         XyB8EYhsrQlwgBHmlTIymiqxJINr2FWf4UPJg085yJ826NyZeBocThLxerK7FPmbpBSQ
-         lpiWFiGqx6Hr5ErIt4JyEsGjhiB3usBsDbk0J9wkYbrwSoRY7imcJOr7o9EwuZ26Pif2
-         zJtWADkw8KQ4xVDS1bOpirtZWgmaF/NsDxGFSXA1GLCig3baBDZphRAGPtRcbMOxF+yh
-         d5qA==
-X-Forwarded-Encrypted: i=1; AJvYcCUKx3L7hXpEz4KVc/Yui0x1JNXj7HyEEZn1v+PrgJBvppD9+hl2TJtIGr/+yUMYRQQ2+SmZ5A==@kernel.org
-X-Gm-Message-State: AOJu0YwQriotJSJjLSumJQOtufilnv1VbAbuPKLB0P/Ik2nlKK2cRN0F
-	OQdamUj7Im6tzw46HQewHwp5dkjgrauKob/zYh+I0AqUb38mf6Ul7o6is0oYWz8a0GktmZAx4tK
-	kFg==
-X-Google-Smtp-Source: AGHT+IHLcGqlDtLI8Hl2GI2lBKNlphlk5lHlGNFGlyXSH6D0Fyvmh2EVwHw6XlBi6AYMqakwrDecEE1k1u8=
-X-Received: from edat28.prod.google.com ([2002:a05:6402:241c:b0:5e0:9ff2:9ffd])
- (user=gnoack job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6402:2347:b0:5e0:8064:b42e
- with SMTP id 4fb4d7f45d1cf-5e0b7223106mr23870685a12.25.1740605887315; Wed, 26
- Feb 2025 13:38:07 -0800 (PST)
-Date: Wed, 26 Feb 2025 22:38:05 +0100
-In-Reply-To: <5xijgm2hkedx2tu6fjt67ozf2rmvjz6z4zvvcvokymc3hlc6of@xqpnvf23ia2s>
+	id D73EEC4CEE7; Wed, 26 Feb 2025 21:51:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F06F8C4CED6;
+	Wed, 26 Feb 2025 21:51:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740606689;
+	bh=6K67pLBrn/YSsRyl9yF6Ujvkl7wj/4gfRckCg/PzINw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TVFB/wb7jb8FtK4eqJjE337jIPwfp2/UVz/Urx3Wrydd4eAjA2CFe2J4Si5btpUbk
+	 vgp9DdL1UoqCW6SJfOBTj3qVpDq5O5FRi2g0kxekuZHRKqBmSLkI4rE2Cz0I/yB4gp
+	 /cZvsqQPusOOb9kOjAhPs88uRO5gYY8vZipho7DZFzecYE8QFehsYS+VHFHlTW0PFu
+	 2i4vlnETsrQYCj4d9M+4hY4lnT5gbcIgGfK836tcv8lD0ca8JKpquOFfzolYT2fqRX
+	 8UBMe4gUMfppH44Fik0n6Dk8zByGZGJrjIL9xlz44S4yf9Tu1Yru3TdQpXHl7bcE61
+	 RiN64xQSr5A7Q==
+Date: Wed, 26 Feb 2025 22:51:24 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>
+Cc: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>, 
+	linux-security-module@vger.kernel.org, Tahera Fahimi <fahimitahera@gmail.com>, 
+	Tanya Agarwal <tanyaagarwal25699@gmail.com>, Daniel Burgener <dburgener@linux.microsoft.com>, 
+	tools@kernel.org, linux-doc@vger.kernel.org, linux-man@vger.kernel.org
+Subject: Re: [PATCH 1/2] landlock: Minor typo and grammar fixes in IPC
+ scoping documentation
+Message-ID: <7ce2w6p5smgreajaosq7cv23oovzzzrlb3csmkdpo2vbbngnif@du7paargkerx>
+References: <20250124154445.162841-1-gnoack@google.com>
+ <20250211.Ree5bu6Eph2p@digikod.net>
+ <22olfm76rcgjfs4vrr3adtbznsnz47kaehlr3ljn6e5jkc6waq@ue7azstxlwfv>
+ <20250211.ieSoo7Phe5oh@digikod.net>
+ <3unkhxarmiddobfjvojx4sdpgitjld26udcagka2ocgrb6c2jc@dcg4w5yk5mut>
+ <20250211.oavooPhap9OX@digikod.net>
+ <7vl6uylhzgkokl42bz36d5g3krcusqf7mdy4bd7tblcjckatrw@ullu2kblovji>
+ <Z794dm_xmViQ_lFF@google.com>
+ <5xijgm2hkedx2tu6fjt67ozf2rmvjz6z4zvvcvokymc3hlc6of@xqpnvf23ia2s>
+ <Z7-JvY4DP-CswCyF@google.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-Mime-Version: 1.0
-References: <20250124154445.162841-1-gnoack@google.com> <20250211.Ree5bu6Eph2p@digikod.net>
- <22olfm76rcgjfs4vrr3adtbznsnz47kaehlr3ljn6e5jkc6waq@ue7azstxlwfv>
- <20250211.ieSoo7Phe5oh@digikod.net> <3unkhxarmiddobfjvojx4sdpgitjld26udcagka2ocgrb6c2jc@dcg4w5yk5mut>
- <20250211.oavooPhap9OX@digikod.net> <7vl6uylhzgkokl42bz36d5g3krcusqf7mdy4bd7tblcjckatrw@ullu2kblovji>
- <Z794dm_xmViQ_lFF@google.com> <5xijgm2hkedx2tu6fjt67ozf2rmvjz6z4zvvcvokymc3hlc6of@xqpnvf23ia2s>
-Message-ID: <Z7-JvY4DP-CswCyF@google.com>
-Subject: Re: [PATCH 1/2] landlock: Minor typo and grammar fixes in IPC scoping documentation
-From: "=?utf-8?Q?G=C3=BCnther?= Noack" <gnoack@google.com>
-To: Alejandro Colomar <alx@kernel.org>
-Cc: "=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?=" <mic@digikod.net>, linux-security-module@vger.kernel.org, 
-	Tahera Fahimi <fahimitahera@gmail.com>, Tanya Agarwal <tanyaagarwal25699@gmail.com>, 
-	Daniel Burgener <dburgener@linux.microsoft.com>, tools@kernel.org, linux-doc@vger.kernel.org, 
-	linux-man@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="lhn2yxdv4o5zdxcp"
+Content-Disposition: inline
+In-Reply-To: <Z7-JvY4DP-CswCyF@google.com>
+
+
+--lhn2yxdv4o5zdxcp
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>
+Cc: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>, 
+	linux-security-module@vger.kernel.org, Tahera Fahimi <fahimitahera@gmail.com>, 
+	Tanya Agarwal <tanyaagarwal25699@gmail.com>, Daniel Burgener <dburgener@linux.microsoft.com>, 
+	tools@kernel.org, linux-doc@vger.kernel.org, linux-man@vger.kernel.org
+Subject: Re: [PATCH 1/2] landlock: Minor typo and grammar fixes in IPC
+ scoping documentation
+References: <20250124154445.162841-1-gnoack@google.com>
+ <20250211.Ree5bu6Eph2p@digikod.net>
+ <22olfm76rcgjfs4vrr3adtbznsnz47kaehlr3ljn6e5jkc6waq@ue7azstxlwfv>
+ <20250211.ieSoo7Phe5oh@digikod.net>
+ <3unkhxarmiddobfjvojx4sdpgitjld26udcagka2ocgrb6c2jc@dcg4w5yk5mut>
+ <20250211.oavooPhap9OX@digikod.net>
+ <7vl6uylhzgkokl42bz36d5g3krcusqf7mdy4bd7tblcjckatrw@ullu2kblovji>
+ <Z794dm_xmViQ_lFF@google.com>
+ <5xijgm2hkedx2tu6fjt67ozf2rmvjz6z4zvvcvokymc3hlc6of@xqpnvf23ia2s>
+ <Z7-JvY4DP-CswCyF@google.com>
+MIME-Version: 1.0
+In-Reply-To: <Z7-JvY4DP-CswCyF@google.com>
 
 Hello!
 
-On Wed, Feb 26, 2025 at 09:57:58PM +0100, Alejandro Colomar wrote:
-> On Wed, Feb 26, 2025 at 08:24:22PM +0000, G=C3=BCnther Noack wrote:
-> > On Wed, Feb 12, 2025 at 04:06:06PM +0100, Alejandro Colomar wrote:
-> > > So you could really use man9 for internal Landlock stuff.  Even if I
-> > > think generated documentation isn't ideal, it's better than nothing.
-> > > Being able to use man(1) for reading kernel documentation would still=
- be
-> > > a nice feature.
-> > >=20
-> > > And while I can't run all the linters that I run on hand-written docs=
- on
-> > > generated pages (because generated source necessarily triggers many
-> > > false positives), I could still run some, which would trigger some
-> > > accidents in the docs, and would also detect bugs in the software
-> > > translating the docs from one language to another.
-> > >=20
-> > > So, I'd still recommend you considering man9.
-> >=20
-> > This is different to the BPF helpers; Landlock's existing man pages doc=
-ument
-> > user space APIs, and the largest part of the kernel-side .rst documenta=
-tion for
-> > Landlock also covers only user space.
+On Wed, Feb 26, 2025 at 10:38:05PM +0100, G=C3=BCnther Noack wrote:
+> That duplication is *precisely* the problem we have in Landlock. :)
 >=20
-> Huh!  Why does the kernel duplicate what's already in the manual pages?
+> (If you look at the patch series I've been sending with both the patches =
+sent to
+> linux-security-modules@ and linux-man@, you'll see the duplication,
+> e.g. https://lore.kernel.org/all/20250226211814.31420-2-gnoack@google.com=
+/)
 
-That duplication is *precisely* the problem we have in Landlock. :)
+Yeah, I've been looking at those that you've CCd me.  I just thought
+that the user-space part of the documentation was minoritary, and that
+it was part of a much larger documentation that would include many
+internals.  But if most .rst docs are UAPI, then I think it should all
+be burnt down to flames.  :-)
 
-(If you look at the patch series I've been sending with both the patches se=
-nt to
-linux-security-modules@ and linux-man@, you'll see the duplication,
-e.g. https://lore.kernel.org/all/20250226211814.31420-2-gnoack@google.com/)
+> Documentation of user space APIs is not unusual in the kernel documentati=
+on,
+> there is the entire subdirectory Documentation/userspace-api for it.
 
-Documentation of user space APIs is not unusual in the kernel documentation=
-,
-there is the entire subdirectory Documentation/userspace-api for it.
+Huh!  You're indeed right.  A great percentage of Documentation/ is the
+UAPI.
 
-=E2=80=94G=C3=BCnther
+	alx@debian:~/.../Documentation$ find * -type f \
+					| xargs wc | tail -n1;
+	 110625  453670 3990219 total
+	alx@debian:~/.../Documentation$ find userspace-api/ -type f \
+					| xargs wc | tail -n1;
+	  96501  368382 3411766 total
+
+
+If anyone wants to burn that and send the parts that are missing form
+the manual pages, you're invited.  :-)
+
+
+Have a lovely night!
+Alex
+
+--=20
+<https://www.alejandro-colomar.es/>
+
+--lhn2yxdv4o5zdxcp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAme/jNUACgkQ64mZXMKQ
+wqlkYQ//VsBlsNKCIsKe5bTf4U3A9mbEm5xQSqJxA7illvfj3konXqRYruxh2nOL
+o+dDzfquukNBkB1R2domugVJY2gQsmnSIMJfdo7KrMMnOpI4ysCH5fVlqWEZ0HPy
+dC5Sd0F25VO5820RojtuOs1DB7714N15bekz78uHD7MIk2CJYhPTQsmD7ElPzLly
++NTAGMB6CXtIEw5HoKGvWK1xLmJYKlejD5fAtUSHMbSYCoHxdJx6NPtKwVAztTtG
+CPawpYGJ/JVJkTHyXIKHdKrepxA2yi6nL3mjRoM8mhA8wR+g/mPIenUTOOpzvjCj
+BpYQIWyEBWv9+05LM9nn9Mayb20UtpNYa3j3zqKVF0X2GLSDxrX+IKPbBWVFI9z1
+TdWGS/SaevxslWnd0FAgqSVDv5yPTdP0nus1v6aG1rKZgpIXyjIy6ENwkNPpoJ9e
+ulyVOSy/0c1ctmBHZukSfWzhBvAcaC5STYSIIixcyia7gUdpakl2iJwoWwSendL3
+p085uqp2fRr8ZtwPKKrhVU7HunALTvvHWAovp2xJzIgHtVxYpOYLvJ/VYPwvwW4Y
+et7BHgcdyXXYzL2SI3hJTuFW5udGEnWhjXIdOeE30OJY1da2s2PZjMG41qEz14rt
+8I+VhcG8zBzGP2y35Zlnf51HELfvgxTypnb2IWKzscGXb8nDljA=
+=wf07
+-----END PGP SIGNATURE-----
+
+--lhn2yxdv4o5zdxcp--
