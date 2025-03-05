@@ -1,70 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F43F18DF73
-	for <tools@linux.kernel.org>; Wed,  5 Mar 2025 20:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552AD25DD11
+	for <tools@linux.kernel.org>; Wed,  5 Mar 2025 21:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741207596; cv=none; b=jY1nPFJS2cOZrS6rzmuq4ji5jQ0UcyUlf2M8FYWTPwtbvW/mXdas8JKYp8MZckiTOrgt6THvFjy+JDg65e9W4iGdhdue/V53g+tszQhqSX6kVkszqjQGbJuMN8Z3nq8OVCyPy5isoTdgDtqVDzx91vAAm1yckifIDCwUS6B5r44=
+	t=1741211611; cv=none; b=FnvVJHSxpPKWhoPDiXDtVLStrZ1Bp459gm7tp13POGlNgt7PJnSIkiM0yJPkVGi/a7N4iAt6rZQeV+SkfgoRnbgm2wR/S0X0UWdTs0h8Yt3eDceWbb85LjyX9+8ZGNB7XiVY7yDUweUQnD5HesSQ/oT/h++aXHNB7aVrksViqiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741207596; c=relaxed/simple;
-	bh=EioxzY2xmKG6rDrsMYo5loadjLnBTOFnXcUM2pr75HE=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=LfQYv12/q0qGWm/N5a1A11nzXekz+MNGxBnIFFkdSozdOvmo4V1t93mKE2S8+8/rq5p7fwnfePxxydl7Oei+MSYk2hq91rwjw+DHanioeZYuXlyCkEyQf1ZtMN8Xlx6cTn8zD0f2+5qUtvigJ9ZAyJO72ENWwE8DioikQL/LExw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCKPIDaB; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741211611; c=relaxed/simple;
+	bh=1Uy23ICV6nXSbiAqe0N5ZhwRRV6M5KqDaOcHA7HRdKQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uRDv/VH6XFfHSxBO49qse8nMyByeO8pi7i+xNsTB/lPWobKuId3Xmwg3BhHX42eaFrBRQJgd8HuNEUo69XqW5O6eUEZu4uTOEsM9O4mBGjYgnd81zYHgLm4+V+5qH2TDfGLyQ4PjYbunfMVFywAY92WVTpOGryn3++QXuyX8mzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4oPNX0m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCKPIDaB"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4oPNX0m"
 Received: by smtp.kernel.org (Postfix)
-	id C66FFC4CEE0; Wed,  5 Mar 2025 20:46:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676F4C4CED1;
-	Wed,  5 Mar 2025 20:46:35 +0000 (UTC)
+	id D81E7C4CEE0; Wed,  5 Mar 2025 21:53:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C0FC4CED1;
+	Wed,  5 Mar 2025 21:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741207595;
-	bh=EioxzY2xmKG6rDrsMYo5loadjLnBTOFnXcUM2pr75HE=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=DCKPIDaBtoDWBitTdB998TJC2Hv4X8YOwgBbfI+gHIJmxhtu22aLyHabuxSh+BzTP
-	 vBcpyCfG+PEMKN61ek1rbTPJZOS8sI2b9WT7JRxAch8RxPfsUfWpNwlpbhq5lybemp
-	 l4HiYLMT66t9NgaUVz1cJ6ZjDKosz5g4NaTk30fQ=
+	s=korg; t=1741211610;
+	bh=1Uy23ICV6nXSbiAqe0N5ZhwRRV6M5KqDaOcHA7HRdKQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=F4oPNX0mCjqPt8Yumtdt57/0Jv7BZvNeQO17wRQCz0NohXGUwGMOoaIcbKmygsKnI
+	 q+4T6odFTvQxa8NkP788zjUCqsMLqreVkB9vQBKEPQ/KCHJlHii4nv57vPlRAx2oDe
+	 YV90fxKGlvjuogzzN7/yAwfnVqdDQoiqI3YTKqTw=
+Date: Wed, 5 Mar 2025 16:53:29 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@kernel.org>, 
- Antonin Godard <antonin.godard@bootlin.com>
-Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
-In-Reply-To: <20250304-creation-factor-v3-0-d6515180b7e5@bootlin.com>
-References: <20250304-creation-factor-v3-0-d6515180b7e5@bootlin.com>
-Subject: Re: [PATCH b4 v3 0/2] prep, diff: support passing arguments to
- range-diff
-Message-Id: <174120759530.1890477.278195489824587234.b4-ty@linuxfoundation.org>
-Date: Wed, 05 Mar 2025 15:46:35 -0500
+To: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: tools@kernel.org
+Subject: Re: b4 and series with a retroactive 0.5/4 patch
+Message-ID: <20250305-savvy-fiery-lobster-9fdddc@lemur>
+References: <8334309d-32ac-4900-9847-6622bae33bba@citrix.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-c25d1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8334309d-32ac-4900-9847-6622bae33bba@citrix.com>
 
-
-On Tue, 04 Mar 2025 14:00:28 +0100, Antonin Godard wrote:
-> Add --range-diff-opts to diff and prep to pass additional options to
-> the git range-diff command. It can be useful when the output of git
-> range-diff needs adjustments, such as modifying the creation factor.
+On Sat, Feb 22, 2025 at 01:38:08AM +0000, Andrew Cooper wrote:
+> Hello,
 > 
-> Examples:
->   b4 --debug prep --compare-to v1 --range-diff-opts "--creation-factor=80 --no-dual-color"
->   b4 diff --range-diff-opts "--creation-factor=80" 20250220-creation-factor-v2-0-7a0949a3a060@bootlin.com
+> With current tip of master:
 > 
-> [...]
+> > $ b4 shazam cover.1740071755.git.oleksii.kurochko@gmail.com
 
-Applied, thanks!
+This is a similar problem as with [1]. Unfortunately, the real solution in
+this case is "please don't try to be clever with patch series. Simple is
+always best -- just post a new revision instead of naming something 0.5/4." :)
 
-[1/2] diff: support passing arguments to git range-diff
-      commit: 3c7fbc395fc6599c83cb6c8cfc796c9ee9ab43f0
-[2/2] prep: support passing arguments to git range-diff
-      commit: eb4a66b12bc424854f453493dc627436952b3573
-
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
+[1] https://lore.kernel.org/tools/5972f5de-931a-4186-ab0d-cd226f19cde6@gaisler.com/
