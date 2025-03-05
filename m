@@ -1,138 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF6127F4EB
-	for <tools@linux.kernel.org>; Tue,  4 Mar 2025 15:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240B924EAB6
+	for <tools@linux.kernel.org>; Wed,  5 Mar 2025 14:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741102967; cv=none; b=Jnhsh8Eb0vnRlVpb4+SKze5FcypliwGPlIvoVAToz4N1jzYTsdDwT5jyEKbnQbvFPOulI6W0beb7O4/udeftwm5fHxYp0Iu46vcKkuFBXlKxCW/VbzgE7sTFWmstpbipaUzLFC4hY5fBS1iF7kZLhsQOhpwZ0nAe9tIPb9nW6Mo=
+	t=1741186287; cv=none; b=nT79P1sbabn9KmB3Q8u3mfDwR1ojqjau+8g9exgihszXSfod1NTpck2lQHvAJHUZDKYd6WDXruP4z7uRb1ZdP2NpuUtwBXoiIs2hxX/htKnGrPv1oPGVg8S0CJ4u/0p47e8SoEpbfrOiANBHgj7VJOfYfGcsmQaiRYNkNUxzgZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741102967; c=relaxed/simple;
-	bh=Hgyvrd2M8ovlu8rruF/YzeJzHS2Nj7Xn7CKSBBTd1PA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=XfGQrj38AjTdNVj2s2h8wddMrrtfSSf//chQwSIrCY0ywRytkVxXA/zNKdBBeZz+4AOb4rgirOW3MKs0bXLNUt3umjuLa6wEL4DsMwUU8CXASeH0QyujtsOf847ePGFNEjdvvnQw3gNEHL1hb8B2nUFa95obWVD/fHl3a0xujZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=gaisler.com header.i=@gaisler.com header.b=Q7uHTMMl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741186287; c=relaxed/simple;
+	bh=qFKMIT0pN7Ui+EKX4WIVbKeHsBCqgAfwAqVO15ZVq4Q=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=CH3sE8ArX5Gv9SBNsgMZM0+gd3eb/j+dwBTnhc6LyTSiYYryMQBmtOQZVfEQHnp7wAKWNOT8Nf1MaOrd9Ag6IEovhdU07/w0KBvwYDurtOyd7J7Cy+lI+7MKgeLIWWneFD28Jgq8EbFc/Iu/R7bSK2q8YLY20uLV6F18Pi1/7+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=konsulko.com header.i=@konsulko.com header.b=eDFYEiSj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gaisler.com header.i=@gaisler.com header.b="Q7uHTMMl"
+	dkim=pass (1024-bit key) header.d=konsulko.com header.i=@konsulko.com header.b="eDFYEiSj"
 Received: by smtp.kernel.org (Postfix)
-	id 1DAA8C4CEE7; Tue,  4 Mar 2025 15:42:47 +0000 (UTC)
-Received: from smtp-out3.simply.com (smtp-out3.simply.com [94.231.106.210])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id B7382C4CEE5
-	for <tools@kernel.org>; Tue,  4 Mar 2025 15:42:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org B7382C4CEE5
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gaisler.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gaisler.com
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.simply.com (Simply.com) with ESMTP id 4Z6g156p8hz1Fb37;
-	Tue,  4 Mar 2025 16:42:33 +0100 (CET)
-Received: from [10.10.15.10] (h-98-128-223-123.NA.cust.bahnhof.se [98.128.223.123])
+	id A85FAC4CED1; Wed,  5 Mar 2025 14:51:26 +0000 (UTC)
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by smtp.simply.com (Simply.com) with ESMTPSA id 4Z6g155HTmz1DHYN;
-	Tue,  4 Mar 2025 16:42:33 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gaisler.com;
-	s=unoeuro; t=1741102953;
-	bh=inWFwMm3bo0oVzPWJFrD/Ye+qVZB0v6kllKaPUZXHBc=;
-	h=Date:From:Subject:To;
-	b=Q7uHTMMlMmyKoRcAZ4pht9OeVjTquM9EUymJGqnNrwm8AmXF5aI4uGL0ZT0FhfVkp
-	 cV7bjs10DzmdU9C6Ox30EDg9mB1q9uHhaqnFW4CGrMIWlWFgBW+bILHcfbE23X5T1U
-	 UPF3EIMcg0BxbUejeCVIRBugPykkUGkTawr89JbU=
-Message-ID: <5972f5de-931a-4186-ab0d-cd226f19cde6@gaisler.com>
-Date: Tue, 4 Mar 2025 16:42:33 +0100
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id BBF32C4CEE0
+	for <tools@kernel.org>; Wed,  5 Mar 2025 14:51:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org BBF32C4CEE0
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=konsulko.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=konsulko.com
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6f666c94285so62518147b3.3
+        for <tools@kernel.org>; Wed, 05 Mar 2025 06:51:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=konsulko.com; s=google; t=1741186284; x=1741791084; darn=kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0a/iEGkyIbeFqkdsKgL+346QTtXk5bDFsIaRYygUdi8=;
+        b=eDFYEiSjsGXJqtNvQ8xqWFDlKwjsJQp/cbNyxaojo6V2Ph/B0XndU0cFGXMCCwcUeG
+         qns0bBwyUlJck5xMl0DBuP+JbGQSJlmDLa4cpz8iMMNOJ4msdzkxidPbQq3WKLTviWz1
+         JaBVrctCRi+hoWTzzldpywZAwTa6wE/0c4ykM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741186284; x=1741791084;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0a/iEGkyIbeFqkdsKgL+346QTtXk5bDFsIaRYygUdi8=;
+        b=PFi2PQNPH7N+JBsEEckEFFBbIcVl3Vk98hVfZxhIVo6mNbAVGp//kQsCANWk9d4e7c
+         sVcEus+ss/P109NITqtHyyRaBP8Z9YrV4K8fRsySkG68gfeAAHUZoO2GVIJO1Y+a1IQg
+         MREQ41M84++WtTUCxdYo8YVxsk1aJ1cB8NGwi6e757SRDNW7UuC6PUEqp3jI5WRDG/ZW
+         Y+kPyQ2UBe/nLP4usnmS6KWiKXPjqjiXUJtQJK+3uKmJXYohpR6wZXPqZTadL1bJvaTn
+         HgQYlinFnVY62rv9jtoo1ZtjxCv4ie5fjeee6EDo5LGavM5fRxMse3v/Bv82AmQoXAqu
+         5cLw==
+X-Gm-Message-State: AOJu0YzABA3F1e6xia0ZC4pl9VzCXacPlUc70uBRue/UX4Nrw1RxBH86
+	Qp7+R0uMoyulnLwaZfZ45QNEYV+WD1IOhtJ1CBcxDDfpEgkNA0F+wqHsDGYEl8am2F0aVjbbg1H
+	YHDk=
+X-Gm-Gg: ASbGncvSVF/BZ8/uS5z2LdgMHZy6yokhn66B6GdJKq+/Zsg2Gojy8tHKjxaxFcIhqC0
+	0bJXc6e7Vq+FCm5sJbWb8nISIlB0D30cRE1PtxmyCmNntyh/OeEBMP60d7ohMCv35oQ7unSdxd6
+	riE6k1bVvwD2anrmmdD2lrjpFBPptE/2GFbVhtrrlfeip4gayIvFlTo2729MKK8Zm0GbTamUu12
+	cCjTCP+JoX4FbtBIAWoejp6vbfBZkF7DBGjuPNnerninT6JalzdTeLX/Iq6bSvCZdXgVCGu5ZG/
+	IH5RBqYfP5lz/q1uFC9SJ/1pAhajUEfMmytqj0w7tzt8sQ==
+X-Google-Smtp-Source: AGHT+IHl1p7crES9rdBe/3GgHLZXdy6ae04kGySoFzZ76Wv4wtjJNfadDLERzYqej7NA+hwWP2uKOQ==
+X-Received: by 2002:a05:690c:48c2:b0:6ef:993a:29b4 with SMTP id 00721157ae682-6fda2dce8b1mr51324157b3.0.1741186284617;
+        Wed, 05 Mar 2025 06:51:24 -0800 (PST)
+Received: from bill-the-cat ([187.192.142.234])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6fd3ca633d6sm29337767b3.54.2025.03.05.06.51.23
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Mar 2025 06:51:24 -0800 (PST)
+Date: Wed, 5 Mar 2025 08:51:21 -0600
+From: Tom Rini <trini@konsulko.com>
+To: tools@kernel.org
+Subject: b4 feature request
+Message-ID: <20250305145121.GM2640854@bill-the-cat>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Andreas Larsson <andreas@gaisler.com>
-Subject: b4 am getting extra patches and missing patches
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- "Kernel.org Tools" <tools@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Clacks-Overhead: GNU Terry Pratchett
 
-Hi,
+Hey,
 
-First of all, thank you for the wonderful tool that b4 is!
+So I used "b4 shazam -P 1-2" to apply part of a series, and then "b4 ty"
+to thank for it, and then the contributor asked if there was some way to
+note what parts were applied. Could something like that be added?
+Thanks!
 
+Link: https://lore.kernel.org/u-boot/20250221203243.672465-1-sjg@chromium.org/T/#mf9bf52e665a76f86f4afa0dd77e6a278da195f16
 
-I am trying this with b4 version 0.14.2 (as well as using current
-master), getting this strange result:
-
-----%<----
-$ b4 am https://lore.kernel.org/all/20250218-jag-mv_ctltables-v1-0-cd3698ab8d29@kernel.org/T/#m6e83d4c31cffc76f16d830bbb79c9e3efd1e4d89 
-Analyzing 17 messages in the thread
-WARNING: duplicate messages found at index 1
-   Subject 1: perf/core: Move perf_event sysctls into kernel/events
-   Subject 2: panic: Move panic ctl tables into panic.c
-  2 is not a reply... assume additional patch
-WARNING: duplicate messages found at index 1
-   Subject 1: x86: Move sysctls into arch/x86
-   Subject 2: perf/core: Move perf_event sysctls into kernel/events
-  2 is not a reply... assume additional patch
-Analyzing 0 code-review messages
-Checking attestation on all messages, may take a moment...
----
-  ✓ [PATCH] x86: Move sysctls into arch/x86
-    ✓ Signed: DKIM/linutronix.de
-  ✓ [PATCH] perf/core: Move perf_event sysctls into kernel/events
-    ✓ Signed: DKIM/linutronix.de
-  ✗ [PATCH 3/8] ftrace: Move trace sysctls into trace.c
-    ✗ BADSIG: openpgp/joel.granados@kernel.org
-    ✓ Signed: DKIM/kernel.org
-    + Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-  ✗ [PATCH 4/8] stack_tracer: move sysctl registration to kernel/trace/trace.c
-    ✗ BADSIG: openpgp/joel.granados@kernel.org
-    ✓ Signed: DKIM/kernel.org
-  ✗ [PATCH 5/8] events: Move perf_event sysctls into kernel/events
-    ✗ BADSIG: openpgp/joel.granados@kernel.org
-    ✓ Signed: DKIM/kernel.org
-    + Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org> (✓ DKIM/infradead.org)
-  ✗ [PATCH 6/8] sparc: mv sparc sysctls into their own file under arch/sparc/kernel
-    ✗ BADSIG: openpgp/joel.granados@kernel.org
-    ✓ Signed: DKIM/kernel.org
-  ✗ [PATCH 7/8] s390: mv s390 sysctls into their own file under arch/s390 dir
-    ✗ BADSIG: openpgp/joel.granados@kernel.org
-    ✓ Signed: DKIM/kernel.org
-  ✗ [PATCH 8/8] x86: Move sysctls into arch/x86
-    ✗ BADSIG: openpgp/joel.granados@kernel.org
-    ✓ Signed: DKIM/kernel.org
-  ERROR: missing [9/8]!
-  ERROR: missing [10/8]!
----
-Total patches: 8
----
-WARNING: Thread incomplete!
-Cover: ./20250218_joel_granados_sysctl_move_sysctls_from_kern_table_into_their_respective_subsystems.cover
- Link: https://lore.kernel.org/r/20250218-jag-mv_ctltables-v1-0-cd3698ab8d29@kernel.org
- Base: using specified base-commit 0ad2507d5d93f39619fc42372c347d6006b64319
-       git checkout -b 20250218_joel_granados_kernel_org 0ad2507d5d93f39619fc42372c347d6006b64319
-       git am ./20250218_joel_granados_sysctl_move_sysctls_from_kern_table_into_their_respective_subsystems.mbx
-----%<----
-
-
-The two first patches are not actually from the email thread, but
-replaces the first two patches that are in the email thread.
-
-
-Using --single-message on the first patch of the thread does not work
-either:
-
-----%<----
-$ b4 am --single-message https://lore.kernel.org/all/20250218-jag-mv_ctltables-v1-0-cd3698ab8d29@kernel.org/T/#m76f58f40fe66b018d8f86485b46e07bdf1bec99e
-Single-message mode, ignoring any follow-ups
-Analyzing 1 messages in the thread
-No patches found.
-----%<----
-
-
-I am not sure what to make of this.
-
-Cheers,
-Andreas
+-- 
+Tom
