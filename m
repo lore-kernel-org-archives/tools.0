@@ -1,62 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B5D254859
-	for <tools@linux.kernel.org>; Wed,  5 Mar 2025 20:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EA42459FC
+	for <tools@linux.kernel.org>; Wed,  5 Mar 2025 20:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741204802; cv=none; b=kczyTjHayJBjCaOuM1B6UYB8kxrwMKh38LmWgztxPyJxRlytlftVlo7Olw/5kHFnUDgkARuF0Pg+orNoEDRF+8LqbeR49uowxSIBOrnFqjNEYmK45af4z9/bqIKUDXy0vHxPM+tXQKRM3C01fapCru2FVUsvM9BCB6bS+/AdEms=
+	t=1741206048; cv=none; b=EqDFCOYvQ4m9UUWUZ4APDrdoQID0WUzHhCzGPmlzJftZAyBRDCaa+kb2ydcdskbbQSCn5Q1+PNtMxZFOYFfZji+AkQQ5+b5xrSLtz28HDogUrsDAWRI+HMoSFZTD89D3t9dveMwz3TlLWSahYHyMo8GFNZjJQt+AlSdDOUShW5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741204802; c=relaxed/simple;
-	bh=8HEWa2CWt6qCNwEH+sSsP8zrzzQDuRZcoHZlYl023AM=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=kefcBAMwvL6UWwkfOhRH3FV/5K4yD3UU3NDJLj3xRaeryzwUi30wbz2SIQ50aCQQmtAeqb2dCzNaI81Bevx6IMfRNl/0dCOouhoDShEoLhXtPefWeI4jck9ThpvQ2i0A5Fbf88QFE0apeyMVEvbG4HV10QJJw5NIAZJtVKaiQK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=elQr75Sh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741206048; c=relaxed/simple;
+	bh=Gtin/H8pNTwDlipmG6AQ3zheu6pTOgAiG/1WXN0KW2o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wodah0SePtcHV/ofT30e/gb+pGUenYQhT8XGtWYBXq6TlNyCNNL4NTtZONhvJqm8SLgOLPjJrvjDU43SOmvt6ukWsQR1jiyxB6k7iF+6v33wZeo8MEuOa9AY7wp6DWQ+YkItmeqe36HLPJ4tmsg52f04zS6gt7IUs9gazkltdog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYBu1ksY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="elQr75Sh"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYBu1ksY"
 Received: by smtp.kernel.org (Postfix)
-	id A8EB6C4CEE8; Wed,  5 Mar 2025 20:00:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D40DC4CEE0;
-	Wed,  5 Mar 2025 20:00:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741204802;
-	bh=8HEWa2CWt6qCNwEH+sSsP8zrzzQDuRZcoHZlYl023AM=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=elQr75Shj6Wr8mzLtHok0KMQUI8la5ooljIIbOg9Mfq22U81dmWWf4EAuEtwaoPQz
-	 PBRzg0ZUhE19VfI6VWwdhIYWxUac9qlzQEj+h9E75jN6TK1B5wzdjIBp9cNVJ46mY7
-	 8u02keVW8Ccw5AK8uI9v1SBfMsC4r+VuZzdN1iX6C7k6JE96ENTTqpMJkuJ2e3PHF4
-	 ESugxiVjivqchhPKA621HeFFrhoRLDkUEOCOnct2JSJwBkfzNBMzP+kFjMJAoPkDRG
-	 pFUlmZYm6tGZtJ65MScDLV1tW0emXlFmPZ/Amb4wQxHclp0igwM13yfMxfK4WjPf4R
-	 cwctX6TEWvNwQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B5E04380CEDD;
-	Wed,  5 Mar 2025 20:00:36 +0000 (UTC)
+	id EDAA8C4CEE0; Wed,  5 Mar 2025 20:20:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DDAC4CED1;
+	Wed,  5 Mar 2025 20:20:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1741206047;
+	bh=Gtin/H8pNTwDlipmG6AQ3zheu6pTOgAiG/1WXN0KW2o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lYBu1ksYaxk97Rv/ZlYrz2fbfhwo0ATGN3dGUx7bxiIz2nKG4fasCn0jF3wcyyT3T
+	 bWyIZwuwoytBuRzTjIzH/3LzfWQZGGqLFtJHuXsGDnlshJAxtGH/5CRL92hXgX0Oj4
+	 oV/AwmvmUN+KdbvDMNpFLshI9WVrjuTcpx76shCc=
+Date: Wed, 5 Mar 2025 15:20:46 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: tools@kernel.org
+Subject: Re: b4 to accept https://patch.msgid.link/
+Message-ID: <20250305-benevolent-aspiring-civet-142c60@lemur>
+References: <Z8cMdUMZQhGtVTWx@smile.fi.intel.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: Bugspray Bot <bugbot@kernel.org>
-To: konstantin@linuxfoundation.org, andreas@gaisler.com, tools@kernel.org
-Message-ID: <20250305-b219843-87002393b5b8@bugzilla.kernel.org>
-In-Reply-To: <5972f5de-931a-4186-ab0d-cd226f19cde6@gaisler.com>
-References: <5972f5de-931a-4186-ab0d-cd226f19cde6@gaisler.com>
-Subject: Re: b4 am getting extra patches and missing patches
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: bugspray 0.1-dev
-Date: Wed,  5 Mar 2025 20:00:36 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z8cMdUMZQhGtVTWx@smile.fi.intel.com>
 
-Hello:
+On Tue, Mar 04, 2025 at 04:21:41PM +0200, Andy Shevchenko wrote:
+> 
+> Hi!
+> 
+> Some of the maintainers are using https://patch.msgid.link/ format of URLs
+> in the Link tags of the applied patches in their tree (and then it becomes in
+> upstream in most cases). It would be nice if `b4` can recognize this URLs
+> in the command line for `b4 mbox https://patch.msgid.link/...`
 
-This conversation is now tracked by Kernel.org Bugzilla:
-https://bugzilla.kernel.org/show_bug.cgi?id=219843
+Makes sense. It almost does that already, but we need to make a more generic
+case.
 
-There is no need to do anything else, just keep talking.
--- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (bugspray 0.1-dev)
-
+bugspray tag me
