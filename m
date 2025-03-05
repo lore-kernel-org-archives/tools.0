@@ -1,57 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EA42459FC
-	for <tools@linux.kernel.org>; Wed,  5 Mar 2025 20:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D107517B50B
+	for <tools@linux.kernel.org>; Wed,  5 Mar 2025 20:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741206048; cv=none; b=EqDFCOYvQ4m9UUWUZ4APDrdoQID0WUzHhCzGPmlzJftZAyBRDCaa+kb2ydcdskbbQSCn5Q1+PNtMxZFOYFfZji+AkQQ5+b5xrSLtz28HDogUrsDAWRI+HMoSFZTD89D3t9dveMwz3TlLWSahYHyMo8GFNZjJQt+AlSdDOUShW5s=
+	t=1741206297; cv=none; b=n+VhsFe55109Yl8P64RDo8UmL7/RmirUAloDeOBB9or3UUDXdDLYIfO6mfWnQ4hwLZXvKw78mdQN8eMvTWrYsPj7RwwFxsBAguwj1667WBhwhFm84JhMhvRgjntlpc8m9L9TTBd9OakutqmR5W+Y+WT1dvTUR1e0do8ugi9R2LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741206048; c=relaxed/simple;
-	bh=Gtin/H8pNTwDlipmG6AQ3zheu6pTOgAiG/1WXN0KW2o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wodah0SePtcHV/ofT30e/gb+pGUenYQhT8XGtWYBXq6TlNyCNNL4NTtZONhvJqm8SLgOLPjJrvjDU43SOmvt6ukWsQR1jiyxB6k7iF+6v33wZeo8MEuOa9AY7wp6DWQ+YkItmeqe36HLPJ4tmsg52f04zS6gt7IUs9gazkltdog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYBu1ksY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741206297; c=relaxed/simple;
+	bh=FdlzH9Ck+oQZ+0l6SUqDtpIGYn5/NSqCQ1yxUOOT5Hk=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=DWVEx3XNTp4mHxSKiANr9bYxIZdVvZzigz2u8T09qPVGdMOai5o8gqMioDHCUVmwsjVA2uYwOfLsw8FZo3rmxWimzS5dN31e9GSpKGQYd/RU1iBgiGXidEtGXH3n/iIfjGloqBS85e+J+nuxN81D0Whz9H3tr9tkBBTt8qZ/tqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uzlShbNh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYBu1ksY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uzlShbNh"
 Received: by smtp.kernel.org (Postfix)
-	id EDAA8C4CEE0; Wed,  5 Mar 2025 20:20:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DDAC4CED1;
-	Wed,  5 Mar 2025 20:20:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741206047;
-	bh=Gtin/H8pNTwDlipmG6AQ3zheu6pTOgAiG/1WXN0KW2o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lYBu1ksYaxk97Rv/ZlYrz2fbfhwo0ATGN3dGUx7bxiIz2nKG4fasCn0jF3wcyyT3T
-	 bWyIZwuwoytBuRzTjIzH/3LzfWQZGGqLFtJHuXsGDnlshJAxtGH/5CRL92hXgX0Oj4
-	 oV/AwmvmUN+KdbvDMNpFLshI9WVrjuTcpx76shCc=
-Date: Wed, 5 Mar 2025 15:20:46 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: tools@kernel.org
-Subject: Re: b4 to accept https://patch.msgid.link/
-Message-ID: <20250305-benevolent-aspiring-civet-142c60@lemur>
-References: <Z8cMdUMZQhGtVTWx@smile.fi.intel.com>
+	id 5D610C4CEE7; Wed,  5 Mar 2025 20:24:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F29CC4CED1;
+	Wed,  5 Mar 2025 20:24:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741206297;
+	bh=FdlzH9Ck+oQZ+0l6SUqDtpIGYn5/NSqCQ1yxUOOT5Hk=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=uzlShbNhPT3P3rvCZdxNMqztRQxfeKOFHnPe14rVMvRdqgMGo6WP+escmRkKabwQE
+	 7rJXPGAjlYPVVQnIeKmeVSQdM6ezHmPfg9vDjH+JYF81JqiVpjmSe8KlrY1XndVfJy
+	 bPrvhrWTbzMcrX+s8ZW9Sbb8Pv2nY6Chlw8PpMB95pbL05q55Dbmvg75jcaa8wWwLj
+	 BTh4IYzmvPr/98HcqiME+TlVxi/JXJ90++S5TRxzmadmtD7SCCkyLVcZRYgy+9Odl0
+	 KxGPgFm7DiGqnYo0zA2ghmTG6EBjyy1k0i0X5GvliFBarLBGxXkLScZMpbVtD36tvB
+	 ymiX6To1gt//Q==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 75121380CEDD;
+	Wed,  5 Mar 2025 20:25:31 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: Bugspray Bot <bugbot@kernel.org>
+To: andriy.shevchenko@intel.com, tools@kernel.org
+Message-ID: <20250305-b219844-187f590d64c8@bugzilla.kernel.org>
 In-Reply-To: <Z8cMdUMZQhGtVTWx@smile.fi.intel.com>
+References: <Z8cMdUMZQhGtVTWx@smile.fi.intel.com>
+Subject: Re: b4 to accept https://patch.msgid.link/
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: bugspray 0.1-dev
+Date: Wed,  5 Mar 2025 20:25:31 +0000 (UTC)
 
-On Tue, Mar 04, 2025 at 04:21:41PM +0200, Andy Shevchenko wrote:
-> 
-> Hi!
-> 
-> Some of the maintainers are using https://patch.msgid.link/ format of URLs
-> in the Link tags of the applied patches in their tree (and then it becomes in
-> upstream in most cases). It would be nice if `b4` can recognize this URLs
-> in the command line for `b4 mbox https://patch.msgid.link/...`
+Hello:
 
-Makes sense. It almost does that already, but we need to make a more generic
-case.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=219844
 
-bugspray tag me
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (bugspray 0.1-dev)
+
