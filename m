@@ -1,177 +1,146 @@
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E561FBEB5
-	for <tools@linux.kernel.org>; Thu,  6 Mar 2025 08:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7024626BDB5
+	for <tools@linux.kernel.org>; Thu,  6 Mar 2025 19:11:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741248847; cv=none; b=YEOa/a4w/K5NkaJFmrmkfnNLQR8IAaXt2KoEOPFd4B8sC9O5XwzdXF+rFX+FP90sOBE8FrhrArkbx0SSCur+oiKMMGh0w9qVFkGL57TjG930YziKbPdnc86FNUf1pcxN1mt59L7ZbvoBKAVSYpVIaYzKLpwi+7iKYk9JMpfU6DQ=
+	t=1741288293; cv=none; b=PX/+X/iFzojCkwpmzkTrsfPsMZaa8wBJocB+ALtFdvS1aQR2W0fsTkIaAY6OxwAV24hUN9XCXgsuzr5qF/DmfjzmwvFB6FWWfB/DshxVG2kGIimLGJXNRPVsHa81d+SfaXuyH5Ryyo1cFPRpyWf1vGoeDRQ14VyzlAqS1+KMyfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741248847; c=relaxed/simple;
-	bh=PJnzse8o4iybC7oAf5fv9vExf7AyhrbOZkSMnILPM2M=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=KM8ndrb1Z40U46W+cFSKpuFgCbu3MkAd3M/Pd+01yuIKY36XyQR53dadyNf8ec5WxgCA/Wr4Hjev+mUCl737uIiFWb2sj/lf910sKScLYXLjvEykBGnjvX9e5uekbAPFq2sSwpuDrwKALNOnxH08NCf3qB0Ko+n5tn0AN6u1YwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=fsIDoLuh; arc=none smtp.client-ip=203.254.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	s=arc-20240116; t=1741288293; c=relaxed/simple;
+	bh=7APf/GmSAv/vM8+O8hKJB5G65MkpPcm7sA8I/0kT6W4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pZjkti9sWW5ejvm8H4I8/LF9Q3BRsmQiPYPwjodCyAb+CwDAnafq9dZiPDcBbXpMzyPJVXsfAUFWKA8JerL/xbQbychkGKB1+3fKoMzOJUVgy/7Yt1nOM5Mpa66qTiqte3y1G2uDjGdT3ZDnp+9b3l63rfA2FvyMVjqwCe3abw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X9Q3KiFZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="fsIDoLuh"
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250306081403epoutp0496e98eac2c6d72b3e9adaaa9b40bd34b~qKJkXDeEC0785607856epoutp04I
-	for <tools@linux.kernel.org>; Thu,  6 Mar 2025 08:14:03 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250306081403epoutp0496e98eac2c6d72b3e9adaaa9b40bd34b~qKJkXDeEC0785607856epoutp04I
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1741248843;
-	bh=KECuehhvu0FH3iTK1TaavUX6adMlIsZ1ueFUr/zvens=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=fsIDoLuhULC/xQzcC7snKQMiPcGEpb2NmBTZRcLYvc88X/IMTTgg4BFavdlv8oQw8
-	 huD5RoK4PPGYLDJQLu3FTerg1IO6ZPcGjWuJ/mWj+O1wYlMLofBmbz063sXX+zPjrC
-	 xVbz6Wn+08XWpdMRr9RojkB+IEMFko7gZg8I+n6s=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTP id
-	20250306081403epcas5p4bd3f9c079f1ca24762c19728e468c6d5~qKJjwUkQi2477724777epcas5p4R;
-	Thu,  6 Mar 2025 08:14:03 +0000 (GMT)
-Received: from epsmges5p1new.samsung.com (unknown [182.195.38.182]) by
-	epsnrtp2.localdomain (Postfix) with ESMTP id 4Z7hyc6Jcgz4x9Px; Thu,  6 Mar
-	2025 08:14:00 +0000 (GMT)
-Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
-	epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	12.51.20052.84959C76; Thu,  6 Mar 2025 17:14:00 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-	20250306074556epcas5p1f4f9128afb3d2d912d3679dde2a4ae21~qJxBHOgwj2664726647epcas5p1K;
-	Thu,  6 Mar 2025 07:45:56 +0000 (GMT)
-Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
-	epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-	20250306074556epsmtrp1301b03234c11231d681ef785ab7d7ad2~qJxBGEdEd3125731257epsmtrp1F;
-	Thu,  6 Mar 2025 07:45:56 +0000 (GMT)
-X-AuditID: b6c32a49-3fffd70000004e54-c2-67c95948db40
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-	epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	4A.51.18949.4B259C76; Thu,  6 Mar 2025 16:45:56 +0900 (KST)
-Received: from FDSFTE596 (unknown [107.122.82.131]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20250306074553epsmtip2fcf11e3f790316369b21a1e5eb8c2f52~qJw_JvO7Q2300823008epsmtip2M;
-	Thu,  6 Mar 2025 07:45:53 +0000 (GMT)
-From: "Swathi K S" <swathi.ks@samsung.com>
-To: "'Krzysztof Kozlowski'" <krzk@kernel.org>, <krzk+dt@kernel.org>,
-	<andrew+netdev@lunn.ch>, <davem@davemloft.net>, <edumazet@google.com>,
-	<kuba@kernel.org>, <pabeni@redhat.com>, <robh@kernel.org>,
-	<conor+dt@kernel.org>, <richardcochran@gmail.com>,
-	<mcoquelin.stm32@gmail.com>, <alexandre.torgue@foss.st.com>
-Cc: <rmk+kernel@armlinux.org.uk>, <netdev@vger.kernel.org>,
-	<devicetree@vger.kernel.org>, <linux-stm32@st-md-mailman.stormreply.com>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-	<pankaj.dubey@samsung.com>, <ravi.patel@samsung.com>,
-	<gost.dev@samsung.com>, <tools@linux.kernel.org>
-In-Reply-To: <041d55fd-99f0-4b55-92e5-fa46f37096c1@kernel.org>
-Subject: RE: [PATCH v8 0/2] net: stmmac: dwc-qos: Add FSD EQoS support
-Date: Thu, 6 Mar 2025 13:15:45 +0530
-Message-ID: <012801db8e6b$cb835bb0$628a1310$@samsung.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X9Q3KiFZ"
+Received: by smtp.kernel.org (Postfix)
+	id 66885C4CEE9; Thu,  6 Mar 2025 19:11:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7E0C4CEE8;
+	Thu,  6 Mar 2025 19:11:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741288293;
+	bh=7APf/GmSAv/vM8+O8hKJB5G65MkpPcm7sA8I/0kT6W4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=X9Q3KiFZjEsloW92yy8TmeDYhYAntzwtnOgSDoWyVUue9UhsH5smvko04DC9kOfBj
+	 ZXWA3IbVNNZ1Ll1qlJbmqDMzaCZppHfShHVocAdWPadCI8UnRnDbCX5y0tUQtyOm2s
+	 zTWhEJjTG69b+RR7wNWOSVJTF+jpa0+4UVcW3+NAdKvANgzMUMS49UhS+9hxtusVxD
+	 ERiJM3uuEvamGtfZrQumZI7poAmaGxbBdjzKv2fdsqnF/JjD5XG88YJfbbkJOFJzCm
+	 dOosm6sqnvX7VGY26WLZV68iAmS+NdT0gaDQsuOv0cA4I9Ht9qYI20UjXkU2ifpyXD
+	 OwtUb+mf9Iw1A==
+Date: Thu, 6 Mar 2025 20:11:30 +0100
+From: Daniel Gomez <da.gomez@kernel.org>
+To: Luis Chamberlain <mcgrof@kernel.org>, tools@kernel.org
+Cc: Chuck Lever <chuck.lever@oracle.com>, 
+	Joel Granados <joel.granados@kernel.org>, kdevops@lists.linux.dev, Daniel Gomez <da.gomez@samsung.com>, 
+	s.prabhu@samsung.com
+Subject: Re: [PATCH v2 0/2] guestfs: bringup: fix networking issue for debian
+ hosts
+Message-ID: <wvivcnffxy26z7epqezuwvpwu2j35y7a2ykpybialbcjk7usug@as26osrx4amn>
+References: <20250306-fix-bringup-network-v2-0-85298d7a0ba5@samsung.com>
+ <Z8nV7bBKx988TE0E@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-in
-Thread-Index: AQMyDtpN5Ye5e5YD1uDKr3q9BdsruAHcwqSBAgrqhY6wmXxL0A==
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Ta0xTZxj2O+f0nLZadixMPpqo7LgQIQNaLfVAABdFc3QXcQubbj9KQ09a
-	Qmm7XvCyLNPodOu4DBNcbCoysgEiyB1abjLGIDhWRCiRLYAb4IBhRJ3lYpBRDm78e773e973
-	eZ7vy8tHxRcJCT9Vb2FNepWOwoVY/U+hO8OZ490a6ReXZPTC1GVAF9938uiyFjdCO3rPY/S1
-	DjePnuj8k6CH2lwIPWUfwene3kqCvlOfzaOrxwZ5dH+jA6dtg+M8On+pnEd3Fmyhvb/MALqw
-	7h+C/mO2maA7eiZR+m5OLkIvNzsJ+lv3GO/NLUz/YB/K1F4fQpiJnDqCcdmHCaag2spUl36F
-	M50DX+JMzfefMy7nU4R51OrBmezaUsD82CpjnlZvSxR9lBarZVVq1hTM6lMM6lS9Jo56633l
-	fmWUQioLl0XTe6hgvSqdjaMS3k4MP5iqW0lNBWeodNaVUqLKbKYi42NNBquFDdYazJY4ijWq
-	dUa5McKsSjdb9ZoIPWuJkUmlu6JWiMlp2tahMdxY5XeyruvUGWDbZAMCPiTlsN9+FbEBIV9M
-	NgH4rHYE5Q5PAMyZLkJ8LDHpBXAgK/Blx+NMF8HVWwCc9BzlGiYB7OrIQ30XOBkGC7NbV0kB
-	ZAsCH5xN9GGUbEagbVHmwwIyHi433lnl+JMHoed6D24DfD5Gvg5HnKtaIjIaTvY9BhzeDLuv
-	jGPcmO2w4aED5fwEw4WJIh5XD4Q/L2SinOw+eG/eg/m8QbJJAOf6+hCuIQHOXS7COewPp7tq
-	CQ5L4FTOhTWshDeyPRiHtXB4MXeNvxe2DTgwn0+UDIUVjZFceSvMu30T4Tz4wazn42tSIujM
-	f4l3wKW/B9dGBsH6Hx4R3wDKvi6afV00+7o49v/VCgBWCoJYozldw5qjjDI9e+K/304xpFeD
-	1Y0IO+QEw/dnI9oBwgftAPJRKkDU9263RixSq06dZk0GpcmqY83tIGrluXNRyasphpWV0luU
-	Mnm0VK5QKOTRuxUyKlB0znVeIyY1KgubxrJG1vSyD+ELJGeQq8qEm08c88ujLzDtbYlGoQX2
-	JOvMph3e03suhP9W4u+uvPGJKXlj4CsDwjFYZdwQdqjsg9GkisOx3md+Z0VbR8u3ZQgYxdyH
-	ez/2u9sUK1gOL294bZ+QHP0rCSvpVWaPTF+xH9ssK8KPnBQJS5rFOSGGB5OpFfMAqB+WxOw8
-	kGj0Kyv0D5HzZg1pv4cUJ6Qc+HT7sY06NlKIq3vieSZtWPdSxpH9AyHjzVWdU4MbMnc7kMZk
-	qZu4JsoK8D938Q3d8Xz583n7SF4DP+idEzOLn7nhuNZrLvDcijr8XqjE+92vSOjR1MoXu75u
-	u3VPhS835lvyrTUxWK+hpjjDVZdLYWatShaGmsyqfwEg8MdImgQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsWy7bCSvO6WoJPpBvPmq1r8fDmN0WL5gx2s
-	Fmv2nmOymHO+hcVi/pFzrBZPjz1it7h5YCeTxctZ99gszp/fwG5xYVsfq8Wmx9dYLS7vmsNm
-	0XXtCavFvL9rWS2OLRCz+Hb6DaPFoq1f2C0eftjDbnHkzAtmi0v9E5ks/u/ZwW4x/dxjVgcx
-	j8vXLjJ7bFl5k8njaf9Wdo+ds+6yeyzYVOqxaVUnm8exKx1sHpuX1Hvs3PGZyeP9vqtsHn1b
-	VjF6HNxn6PF5k1wAbxSXTUpqTmZZapG+XQJXxr6bj9kKNvJVbD1e2cDYxdPFyMkhIWAi8bFn
-	JzuILSSwm1Hi9ilbiLikxKfmqawQtrDEyn/PgWq4gGqeMUpc236GGSTBJqAlsahvH1hCROA0
-	k8SP9n9gk5gFjjFJ7DvPCdGxn1Hi3aeNTCAJTgE7if+7LoAVCQu4SVxdeYati5GDg0VAReLe
-	DnGQMK+ApcSLix8ZIWxBiZMzn7BAzNSW6H3Yyghhy0tsfzuHGeI6BYmfT5exQsTFJY7+7AGL
-	iwg4Sdz4cZVlAqPwLCSjZiEZNQvJqFlI2hcwsqxilEwtKM5Nzy02LDDKSy3XK07MLS7NS9dL
-	zs/dxAhOFVpaOxj3rPqgd4iRiYPxEKMEB7OSCO9Fv5PpQrwpiZVVqUX58UWlOanFhxilOViU
-	xHm/ve5NERJITyxJzU5NLUgtgskycXBKNTBVWAp3GQcffyCWIxyxc8ext5ISD2xz5e8tyoj7
-	fW7C686G2TdLH2+2mvaOSZY5uFc4srFm80Ir35m/q+xmZi/h0hV946HdeS/Yt3zCbJXAnruL
-	5M4+7JlZ3lyya297pcrdFd8bu1b+EUsrnscyi5fJkbvL/3XwnCPym25duMSzVVnptuJf/gkx
-	F9dIbHuxsHJq1+5rX+pYEjKz3qf2fjZ9nOL4cgnb1r0zih95r9Ta+LJY209FxXl9vsSBFd92
-	6j+yPn6oYfFdvqun/H9q2XDWn9C+qvNs74cPlx9wVPDu2P1GQ9H9YOkKg7xM8doTi5WCThVt
-	mfm6+VvXUg0NDhPfMishKf7616JzFjs2vIhVYinOSDTUYi4qTgQAfyO6KoQDAAA=
-X-CMS-MailID: 20250306074556epcas5p1f4f9128afb3d2d912d3679dde2a4ae21
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250305091845epcas5p1689eda3ba03572377997897271636cfd
-References: <CGME20250305091845epcas5p1689eda3ba03572377997897271636cfd@epcas5p1.samsung.com>
-	<20250305091246.106626-1-swathi.ks@samsung.com>
-	<041d55fd-99f0-4b55-92e5-fa46f37096c1@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z8nV7bBKx988TE0E@bombadil.infradead.org>
 
-
-
-> -----Original Message-----
-> From: Krzysztof Kozlowski <krzk@kernel.org>
-> Sent: 06 March 2025 12:40
-> To: Swathi K S <swathi.ks@samsung.com>; krzk+dt@kernel.org;
-> andrew+netdev@lunn.ch; davem@davemloft.net; edumazet@google.com;
-> kuba@kernel.org; pabeni@redhat.com; robh@kernel.org;
-> conor+dt@kernel.org; richardcochran@gmail.com;
-> mcoquelin.stm32@gmail.com; alexandre.torgue@foss.st.com
-> Cc: rmk+kernel@armlinux.org.uk; netdev@vger.kernel.org;
-> devicetree@vger.kernel.org; linux-stm32@st-md-mailman.stormreply.com;
-> linux-arm-kernel@lists.infradead.org; linux-kernel@vger.kernel.org;
-> pankaj.dubey@samsung.com; ravi.patel@samsung.com;
-> gost.dev@samsung.com; tools@linux.kernel.org
-> Subject: Re: [PATCH v8 0/2] net: stmmac: dwc-qos: Add FSD EQoS support
+On Thu, Mar 06, 2025 at 09:05:49AM +0100, Luis Chamberlain wrote:
+> On Thu, Mar 06, 2025 at 12:38:42PM +0000, Daniel Gomez wrote:
+> > Add isc-dhcp-client as runtime guestfs dependency to fix the networking
+> > issue when bring up images with virt-builder.
+> > 
+> > Include Joel's patch 03 [3] from his cleanup as dependency.
+> > [3]
+> > https://lore.kernel.org/all/ux4jlutnenwfc6dfj3om3tnq6jwxxvxumexznvegeq2l
+> > l3obu6@ttujm2rtvtfv/
+> > 
+> > Finally, libguestfs was added as part of bringup_guestfs rather than
+> > having it's own playbook. Other than the explicit runtime dependency
+> > package list, libguestsfs is supported by normal distro package
+> > manager installations and so, does not seem necessary to create another
+> > playbook/role for this.
+> > 
+> > Note that when libguestfs was introduced in kdevops [1], no install-deps
+> > like playbook/role, etc was added and my best guess is that new kdevops
+> > installations/users are currently installing libguestfs manually
+> > (vagrant playbook currently installs libguestfs-tools [2] for
+> > RedHat/Fedora). So while fixing this for Debian, also add libguestfs
+> > package support for Suse and RedHat/Fedora distros.
+> > 
+> > [1] 03b6eb1d34c16aa654f44e5668f0af9e075367d4 ("guestfs: add a new local
+> > guest management variant")
+> > 
+> > [2] 99b78db71edbb01048f375030ff464e7f8faa024 ("install_vagrant: enhance
+> > the redhat install")
+> > 
+> > Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 > 
-> On 05/03/2025 10:12, Swathi K S wrote:
-> > FSD platform has two instances of EQoS IP, one is in FSYS0 block and
-> > another one is in PERIC block. This patch series add required DT
-> > binding and platform driver specific changes for the same.
-> >
-> > Changes since v1:
-> > 1. Updated dwc_eqos_setup_rxclock() function as per the review
-> > comments given by Andrew.
-> >
-> Please stop referencing some other threads in your email headers via
-> "References". This is neither necessary nor helping our tools. I can never
-> compare your patches because this makes b4 busy 100%:
+> SOBs are not required on patch cover letters. Other than that:
 
-Will take care in future
+SOBs are automatically added in cover letters by b4.
 
-- Swathi
+Adding b4 mailing list to the thread.
+
+Konstantin, following Luis and Greg suggestion in this other thread [2] on not
+including Signed-off-by in cover letters, can we remove it from b4 cover letters
+or default to not include it, and perhaps add an option for cases when it's
+needed (if any)?
+
+I propose doing something like this:
+
+[2] https://lore.kernel.org/all/2025020847-boxcar-bovine-47e4@gregkh/
+
+diff --git a/src/b4/command.py b/src/b4/command.py
+index 5d90b4f..ff26bf9 100644
+--- a/src/b4/command.py
++++ b/src/b4/command.py
+@@ -307,6 +307,8 @@ def setup_parser() -> argparse.ArgumentParser:
+                        help='Output prep-tracked commits as patches')
+     spp_g.add_argument('--edit-cover', action='store_true', default=False,
+                        help='Edit the cover letter in your defined $EDITOR (or core.editor)')
++    spp_g.add_argument('--add-sob-cover', action='store_true', default=False,
++                       help='Add SOB to the cover letter when created')
+     spp_g.add_argument('--edit-deps', action='store_true', default=False,
+                        help='Edit the series dependencies in your defined $EDITOR (or core.editor)')
+     spp_g.add_argument('--check-deps', action='store_true', default=False,
+diff --git a/src/b4/ez.py b/src/b4/ez.py
+index de3fa42..ed20fe8 100644
+--- a/src/b4/ez.py
++++ b/src/b4/ez.py
+@@ -506,6 +506,9 @@ def start_new_series(cmdargs: argparse.Namespace) -> None:
+     b4.git_set_config(None, f'branch.{branchname}.b4-prep-cover-strategy', strategy)
+
+     if not cover:
++        sob_cover = ''
++        if cmdargs.add_sob_cover:
++            sob_cover = 'Signed-off-by: %s <%s>' % (usercfg.get('name', ''), usercfg.get('email', ''))
+         # create a default cover letter and store it where the strategy indicates
+         cover = ('EDITME: cover title for %s' % seriesname,
+                  '',
+@@ -527,7 +530,7 @@ def start_new_series(cmdargs: argparse.Namespace) -> None:
+                  '# auto-populate the To: and Cc: trailers based on the code being',
+                  '# modified.',
+                  '',
+-                 'Signed-off-by: %s <%s>' % (usercfg.get('name', ''), usercfg.get('email', '')),
++                 sob_cover,
+                  '',
+                  '',
+                  )
+
+If this makes sense to you, I can send a patch.
 
 > 
-> b4 diff -C '<20250305091246.106626-2-swathi.ks@samsung.com>'
-> Grabbing thread from
-> lore.kernel.org/all/20250305091246.106626-2-
-> swathi.ks@samsung.com/t.mbox.gz
-> Checking for older revisions
->   Added from v7: 3 patches
-> ---
-> Analyzing 86 messages in the thread
-> Preparing fake-am for v7: dt-bindings: net: Add FSD EQoS device tree
-> bindings <never ends, 100% CPU>
-> 
-> Best regards,
-> Krzysztof
+> Thanks! So if isc-dhcp-client is already installed on the host, then
+> this should not be an issue for new bringups right?
 
+Correct.
+
+> 
+> Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+> 
+>   Luis
