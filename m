@@ -1,97 +1,125 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC16A16CD1D
-	for <tools@linux.kernel.org>; Wed,  5 Mar 2025 23:29:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246101AB6D4;
+	Thu,  6 Mar 2025 07:09:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741217385; cv=none; b=DT6oiQengcvQLtC/PK28cnkptci3PWVNbaySODEtUWHEynrs9AfYmZz00ffwCd0PS4FKc0XoHqr6J6wQMJEqQGNfHFDkSGKcKviG+bN3xBbQuyWRSkt5WyqIrE7v5voVYRtHO/U0U5HfHkSujgyYvGAkLZ/bmpW2DoXKVAX8Blc=
+	t=1741244992; cv=none; b=dzv3atduTfFhn89wOovWuNYQoOND/U2Z2to5TGezADDerhB7Su7KjVF5SpT1cRnYuoBdCJV1emb0kMGAYjnhiAxptXbuuQhTJC4xGOVXRtkqgR34ZOjeL/snV7VZduslSXTWTU8a3vRZ4mes5TUKpixh/Rmsn8cqGNbYGyHrU6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741217385; c=relaxed/simple;
-	bh=ANDpuTkdQZw9uon2+dDnOt4k4aTa/nFR7xibMcxgBgY=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=Qf/ch9N5qyO+d3bkAuGgLl/F5YBAcUKCrBIOcuTU9Nki5DLX6N54Bs3571Bm+wZTadAaQeGvzsrrUi38f9zsAb3+WmwA4FIEz0nVDCdrn80KcODZ5V8QX+NVuKBLie57EHFGkkk7K5CZJMmz7NkP4nKzmqvZ4A7WUnOTEcQ/0s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=G/P48WvD; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1741244992; c=relaxed/simple;
+	bh=EP/2OzblPB5fEA8S496jYOnDzsVwjUYkXmbBY2uXZQU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sDHinfvvZJh4UGPmzhDTd/15CwSujkFyXDbtNyH/vswKUiECXOw/7Nb2+eeJInohDgwYqEgFGlolPM7tU7/M3c02O+7rACgs3UMNp/0gTibe1vjC5j9mFpbwkJFb09SLYXKAZCP9SCTDLaY4x2uQicxLdHItzEQS9dWQ7Yg320k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PCipHMVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="G/P48WvD"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43bcf9612f4so16313045e9.3
-        for <tools@linux.kernel.org>; Wed, 05 Mar 2025 15:29:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1741217380; x=1741822180; darn=linux.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GHTXOttKWe+LX92ovHRmbeDa/owPrjhIed0YWRQH3v0=;
-        b=G/P48WvDE+PlKfhNp9e1vH9D+xVaywlV/gHkEh3/4fQUWRwURcMPlqX+2++2vD2Bhv
-         HgK/Y7tV39d/37dMVx4c88EnwdX22BODcMe2+PI+Zh1Brepq7phYty1TDCpxnraeGz0C
-         dYBV3QQUOpuhP+UgGA2Q0umMJFuS1to2d08wp7IHzMXarayVkubzS3fFa8dTDoKNUqU0
-         66lJ2zGMm08KxATcjtCzl2T8YFalgcuZkIIyBIJ88eatlwnCcaUzD7jaM1ZELSnkDJdk
-         34+SRbMGvLA533bq/liCpz86CWdQxLA7NMUO7XA3x05tRMpEc/1B3JXxQbuzNI2W24tb
-         /L3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741217380; x=1741822180;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GHTXOttKWe+LX92ovHRmbeDa/owPrjhIed0YWRQH3v0=;
-        b=fP8Z6t6YKr0oRfRJSclE25RRTwRQ+4Uo7S57Rq5c8MXe8TJdih+ZqG0nB1TcpDpid6
-         W3oUpJCyVi9Sm6X+zWrJSeSDHCjSb6aF6I/4GzRAKrC3bO68Un3sgd2TdOlYRmdXaPug
-         pVaPgYg+PsoKlA1vUFJcQsokv7RTSBXTb9lB5pxk7LhU5NgBKhc3SdsbCcB8IqA8BQJu
-         iDFI36UBYRF9E9L7s6sQjAUPeEr0/inyA/mF+D/ko9LsEI+uMlI9esr3c4d8OA9wwOxL
-         6Ow2U5DWe1VhliQtXS9q+49e2uN4F8o5UduHvkLyXUp+mdvIMSrt4LV5PK0135OV1XC6
-         cvsQ==
-X-Gm-Message-State: AOJu0YxRUg6DJ9mPDMTx95SW9+Xkaw08btv8cqaugEcjYqHsS68dHUu5
-	lYwkp6UJT2suAhHulXRSSLlvvCjoy5nmlUzx+BvYw+p6OWDqGBA1KO9DvqNNzPgHS+11xZeVHvD
-	V9do=
-X-Gm-Gg: ASbGncvydlyS/IVa81juZHQhDEW/yZ1ymOEn+YJt1DMTn3ueqGjA6fsn7E5waYL3JEa
-	56VKsXVx8M5OY9+FhCYSRzFvRMpYqfoC353R/hWJdKKYovBMgiRMdPiyRyI5PQm8lYNHEsDPUF8
-	iRBtu1pmNjgZxO2Mgu6UJZBxwstnszsTLrTlc7l5U4m/emWU0k6KnU+HKwUAgmjKyKy78h7ocg5
-	W+iVePkPN6hRB63QEEdbdUHs9wC/heDDsjQFyYcBWF25wCzWELVVeN+HtR5jnXEaIv47qCtoUjD
-	GNhwepq/H5bwc9RpPjJ/hSO0ZXaWjb5B0KnaHgOZangD1+fez6t7vf0Mm/WeU5PnSKlwc8bkWT9
-	MwKvXJUamjMHRQd0=
-X-Google-Smtp-Source: AGHT+IGGd5+nQXWskwHWlC+mEPtireAaqMarlJjI7qg2l6nn57+mYEab/DHp5EbwNkkEAMQ61RyPfA==
-X-Received: by 2002:a05:600c:1d01:b0:439:9f97:7d6c with SMTP id 5b1f17b1804b1-43bd2aec224mr37784875e9.29.1741217379713;
-        Wed, 05 Mar 2025 15:29:39 -0800 (PST)
-Received: from localhost (lfbn-nic-1-357-249.w90-116.abo.wanadoo.fr. [90.116.189.249])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bdd9470e2sm1270235e9.33.2025.03.05.15.29.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Mar 2025 15:29:39 -0800 (PST)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: tools@linux.kernel.org
-Subject: [PATCH wotmate] Make the nodes representing a key a link to their respective graph
-Date: Thu,  6 Mar 2025 00:29:24 +0100
-Message-ID: <20250305232923.2902664-2-u.kleine-koenig@baylibre.com>
-X-Mailer: git-send-email 2.47.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PCipHMVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46444C4CEE4;
+	Thu,  6 Mar 2025 07:09:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741244990;
+	bh=EP/2OzblPB5fEA8S496jYOnDzsVwjUYkXmbBY2uXZQU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=PCipHMVs2wDZAx5qquTkBOjLYgWz00kvpXPyIsybNOpVGDhDuqxtIagPpo59lbZY/
+	 +Uo3BFyy/+ucaSG5q597z9Oh5y9hxZ2sytozQiP4gE96PNdkytAxCtMQNN5rwza7Gk
+	 0krjuDiXfI0/SfZj+KBidbi+jgVeoIfzytD3OmAN/NzEhQGhRXB8jN+AHilmiXn5uw
+	 R1MRSGvkcC4gna8Jn33tVgupvmg4BjFAO80SX+KOjbAxHUh7LDjcaBRhe7eYO+d95u
+	 4UvuxL4dpn5h+mW+7dMnYGaeB2gyIsWxpCjefdPsJhb/m264z6D/Uqn5MQ+tBV+mCp
+	 bWYASCeptYutg==
+Message-ID: <041d55fd-99f0-4b55-92e5-fa46f37096c1@kernel.org>
+Date: Thu, 6 Mar 2025 08:09:40 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=729; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=ANDpuTkdQZw9uon2+dDnOt4k4aTa/nFR7xibMcxgBgY=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBnyN5UPNBcJKyWWvlyBEgKVkQeHb2uwGgRtH/Lv 7vFxdEAVWmJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZ8jeVAAKCRCPgPtYfRL+ TpalB/4zGCbhHqvEhdCqe1jry2iI/pPhIXmq2dDE31kQEP1fbXWeMCQWzrMgGQyqLgUYykQk+Fh JiQAtwx8YV8t2svzFSpoIf4Dz6dZgFEw+Sp+K1rwjIzX0pajSGPtnVcjDGHortKGMqN9MHpGTVy 2U/+5EgHpLGFiB0upJmoSb5cmBHWW8xkTIggpov4YhIfgFTQH0/GLgCV2T6eyDf7OhIoZ0iwGsg kcQ3D4zOGZDO20/wEmfYYnQWvedzH/1VvgPmWnPY3fOq6HLdpKmDrBRSUDsEyMVz24UaW/o2Os/ Gfhg4M+Y7aksBUnBYApgxeyh/wyXf57+/LzE1Al+YzcjM7pu
-X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 0/2] net: stmmac: dwc-qos: Add FSD EQoS support
+To: Swathi K S <swathi.ks@samsung.com>, krzk+dt@kernel.org,
+ andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, robh@kernel.org, conor+dt@kernel.org,
+ richardcochran@gmail.com, mcoquelin.stm32@gmail.com,
+ alexandre.torgue@foss.st.com
+Cc: rmk+kernel@armlinux.org.uk, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ pankaj.dubey@samsung.com, ravi.patel@samsung.com, gost.dev@samsung.com,
+ tools@linux.kernel.org
+References: <CGME20250305091845epcas5p1689eda3ba03572377997897271636cfd@epcas5p1.samsung.com>
+ <20250305091246.106626-1-swathi.ks@samsung.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <20250305091246.106626-1-swathi.ks@samsung.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-With the URL property set, the nodes (in some renderers) become links to
-the graphs of the key represented by the node.
+On 05/03/2025 10:12, Swathi K S wrote:
+> FSD platform has two instances of EQoS IP, one is in FSYS0 block and
+> another one is in PERIC block. This patch series add required DT binding
+> and platform driver specific changes for the same.
+> 
+> Changes since v1:
+> 1. Updated dwc_eqos_setup_rxclock() function as per the review comments
+> given by Andrew.
+> 
+Please stop referencing some other threads in your email headers via
+"References". This is neither necessary nor helping our tools. I can
+never compare your patches because this makes b4 busy 100%:
 
+b4 diff -C '<20250305091246.106626-2-swathi.ks@samsung.com>'
+Grabbing thread from
+lore.kernel.org/all/20250305091246.106626-2-swathi.ks@samsung.com/t.mbox.gz
+Checking for older revisions
+  Added from v7: 3 patches
 ---
- wotmate/__init__.py | 1 +
- 1 file changed, 1 insertion(+)
+Analyzing 86 messages in the thread
+Preparing fake-am for v7: dt-bindings: net: Add FSD EQoS device tree
+bindings
+<never ends, 100% CPU>
 
-diff --git a/wotmate/__init__.py b/wotmate/__init__.py
-index 128a183f2c9a..32f91cf2a75b 100644
---- a/wotmate/__init__.py
-+++ b/wotmate/__init__.py
-@@ -224,6 +224,7 @@ def make_graph_node(c, p_rowid, show_trust=False):
-         anode.set('label', '{{%s\n%s|{val: %s|tru: %s}}|%s}' % (name, show, val, trust, keyline))
-     else:
-         anode.set('label', '{%s\n%s|%s}' % (name, show, keyline))
-+    anode.set('URL', '%s.svg' % kid)
-     return anode
- 
- 
-
-base-commit: 93e1fbb1bab72162c75ba3311513daa6f8abd231
--- 
-2.47.1
-
+Best regards,
+Krzysztof
