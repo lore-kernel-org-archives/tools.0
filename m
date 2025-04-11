@@ -1,198 +1,123 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690FA27D79A
-	for <tools@linux.kernel.org>; Fri, 11 Apr 2025 05:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD84627D764
+	for <tools@linux.kernel.org>; Fri, 11 Apr 2025 06:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744350670; cv=none; b=kqEwuXpgAp5/yAtURHnYusJ6NyX7UGfQnPaYC61ZCDC4lYX3m/7rofOC8FtXbVD9tAD/K/Dy7RePqkU996m2bcv5efODILHqB5A8QbWKGJeLq/yAM+XHwW5uIA/wwoM4/ASt5g8d5XPJ3oNooGQc5rFs/a1n83bs/eVmlwpCwKE=
+	t=1744353767; cv=none; b=g55g5mqSUjVtaJx5PUOARmEtKnxWeiKqWGvMdbG9GlFo9cN4Ti/wC6QtaIk+hdXTveQHrWlYHuL+S+zgF8UbBTUT1I5DIUuZkAs9Xl6zvHWpMGtkOhIJ09UZCp5blJ+FAnAlCLLFu/yyqcM2VnVCbISe1s1sWhZ4cfOtVOf2KTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744350670; c=relaxed/simple;
-	bh=O0RX9xaJZ9yYoJ3cm11CBd6j1FVwcjj/YsDcx5d9JNU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LdOnRsd0IAyVPbdN2CqYzusm4rKc0S6X/2Dn785J/I3xz4ysSDR+4Bt5fNIeLV4vjT8lG6bU2xfhiblMtNx7inDmh9R1nXxL3geO66eL6gOwScWeNosrTYxou6l6q5MJWwuEYtrVdZeagPf4abcaF6kdZxoufyiN2yBnIuS3eAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=TBRFWFUj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1744353767; c=relaxed/simple;
+	bh=1mZltoX4b2aNzqS9j9qCRaFP72g4j0sbzFZMDS3WV4c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Qoejoyj6weR+pZXH7EVST0/v7jSYLVBaLbEetTlgsNCZn57/1qfYByCzmvAMjcXn9JI/wMT4wv3qr12WE3a9OQ/XebDh7N7BJjUTHCnq02kx6Z/ir8CELSxgBzbz9naoy0Rqng0rO6USy9g6vCKfQCCaNr1KdgDwmdWHLd5RtZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=Qs3iaObV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="TBRFWFUj"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="Qs3iaObV"
 Received: by smtp.kernel.org (Postfix)
-	id EA98FC4CEEA; Fri, 11 Apr 2025 05:51:09 +0000 (UTC)
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	id 27DE9C4CEE9; Fri, 11 Apr 2025 06:42:47 +0000 (UTC)
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 825A3C4CEE9
-	for <tools@kernel.org>; Fri, 11 Apr 2025 05:51:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 825A3C4CEE9
+	by smtp.kernel.org (Postfix) with ESMTPS id 00BBDC4CEE5
+	for <tools@kernel.org>; Fri, 11 Apr 2025 06:42:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 00BBDC4CEE5
 Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e5e8274a74so2483269a12.1
-        for <tools@kernel.org>; Thu, 10 Apr 2025 22:51:05 -0700 (PDT)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ac3b12e8518so270986466b.0
+        for <tools@kernel.org>; Thu, 10 Apr 2025 23:42:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1744350663; x=1744955463; darn=kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xsh8cVBchecMZXYyL3KMl3sdhZg97r84lgFgoIdgHYQ=;
-        b=TBRFWFUjl4SROJ8hWfmDDFBH3WwYjwduV5+BP8ZIRwNHEUFqqrVtBQbB8qBKJFijnH
-         iMEv6aSvVRh+L5gF8ontvdAIWmsilL67oZHqhanMOlYQKH1DLGvJytd+xLUwNqJy1htE
-         YiFzULcSFkeJcuAsuSENfqDjCjrC2Db05Bmv9h7q97MseG/sEO3BFEOCY0MzVllbuYUC
-         +qVU0bGaK0SWl7I48jMydOskYjm0BIijg9SzJR60rBIcx4wtxTtA98rsB+OVH5JElIgN
-         JHCq0H5eHykzxu/mukvvshw8mhN970VZX9wtbgmxJhc99FWsE7sO+P0F4hmU87570F1y
-         DQrg==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1744353762; x=1744958562; darn=kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FmjnXWGJrktk8pCFQFp3RkH+oDPKoer0iqFwMkYSDwQ=;
+        b=Qs3iaObVy2EBTx4RmVDYcoAdsWfBg3z2nEQv4oJ0tLgk0M0T8g6UBedgSNwBpvkUrA
+         t+OxcE3mXewwlvTC0qiRn9Yop+S2ww0XfdzXrqswSTHaYh/+PpAeQY+ea3xr1jyhyJxX
+         tdI70wP+c4SZt9JjnBFR0uRT2JoWCdgNe5JMJvUbqCIIKqov56cW0NskZcAbytCPBSdK
+         wp3zp1H/A0LiA2DTjxjWTP+AYVpvZkOKlIylbpuQvG4MTZdjxsQMg9hzXIIJCt+CntnM
+         c79OxtJpkDTdUAuiolBXaA1eyyWh6o0/wZeGr/nDZbaxDnXAMmS9xPrOtVrAl5/nsFuJ
+         EwXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744350663; x=1744955463;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xsh8cVBchecMZXYyL3KMl3sdhZg97r84lgFgoIdgHYQ=;
-        b=js7TaStYioR2uYiRfrynScs2aXqzAqNcuEa78cXzzyj6ni9XUnInzLgSXqGW+m2eqx
-         XkvnRaP0Xz4hqNvrkGG9pl1cX6mAKCmSWyr8Ugr2f6xT1jBSrrk37szXxLwiT9utvA9T
-         WS6nbw03u1MZAsLRiEzX/iBQCQmyEMAZiJ8Q3JCs+GjRPSNj6qZN39mp7yRkQBu9otI3
-         IsNtoov8APnZqh5Qk90SI6P0zWHH6549G+vvpW2Kna4AJBW96zz/jqRM4DvhJkQjvS27
-         diiZQvaAlxl/ULcinpC/zPcX/qUU8bi9ygb/ltajBl9pwue7aFWyxsgaYhOuboNhyfW8
-         B2oQ==
-X-Gm-Message-State: AOJu0Yz6mRMcYJAV6Ld7UdBOZpV7507BwzlZsR3q5zFOMMJY3lGqQb2k
-	paFpibk/yWuohWrizVP7yxS38kUbSt7oDrnx8JEWOZeBV/I5Nd5C/eLCRlcjlWE=
-X-Gm-Gg: ASbGncto3F7olQZnAIV8po+jfAMTzNExbCT9bwOqz5lM0UPGub+3SiiPm0SjrnfdATq
-	ENC8wxJBHx90ogD3StJhSIBZCnxr86GO6c7IxesoiBsCH4bOL+VwYIW8NtprfmBvBMO2PXCZ237
-	wxepQUMy1yEkYjxBP/ZE34Y3STp3kpZvsiql9FDs9P2ToYwRa7mCQ97FUUI/lh1x/1/NzR/rY/b
-	qmDbxAdSoGhOiHJDbCVZTZlBOTTuecg9N0eRSr99GZieJETljE1NRkV5lR0glHZG4a0is5RZ4BB
-	BhjzdmS08ovzBu3LvatLI8EPF28xfLuD0HbSAnNbp06g0Q==
-X-Google-Smtp-Source: AGHT+IFf9iOiniTfYog581IWGWhVvkM2qn9gScI9G7gFQfYJrt5kdtIDKexsMZFj/q4lDxfVzSqJyg==
-X-Received: by 2002:a17:907:25cb:b0:ac4:3d8:2e90 with SMTP id a640c23a62f3a-acad3489538mr113398766b.13.1744350663524;
-        Thu, 10 Apr 2025 22:51:03 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744353762; x=1744958562;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FmjnXWGJrktk8pCFQFp3RkH+oDPKoer0iqFwMkYSDwQ=;
+        b=efCVPMQdy+hxZj58ohXUzrI+uQSxNaIehAPwoL/uRgPf3NCBXQasNiO+wTMHr9yAK1
+         L6CVXO2Ri7uKTp44nqgCHALQybvKZnivQIvf9UPQskj/U+KRkJ7gfDH5MRTsgBS5aBT+
+         C+ca54kxDVJwlna4p+hk92CxOw4xNzFH57oxjZZ60aIBVQWd1/urebVue2xFe9BPLykN
+         mT6nPcfaxTQdhi+ojtVeMSZP+2JBZeCkm9KR8BW1eu0+k0hHlD2/Lw748QE4GxrPQZD3
+         DJiy1Zx8HMk9MU2ZOmYx3YxVXbhacMM08qHefxox9loYgj5PLUL9Wf9ZTmUbeBQ3d1Lo
+         ocFg==
+X-Gm-Message-State: AOJu0Yzk/O097PiJsFQBTHhfeDc5RkcJCaz2oN1BkMJip/Ek8XEFSE0v
+	uD+zt9DysidOwueVmu8vMmKf4cYbiYu6zIc0bfuGjQ5kNVpTFzyyRVDYsnylTYdr1YhgxQZg0J8
+	T
+X-Gm-Gg: ASbGnctysuch03s4jmNG5E0blwO6pp4RjgPS6sYYncz26TYCJox5tT6l+dms3QgX8Sb
+	C/ebZOWlQLXAbWPwCAxTvHdh7AYZ1lDpQJcd6+J1kvmLlLpvoG9GxvHVisdcjdUgSwsy7v3XnG5
+	KER+ibtOBGQeX3kMbFSsk1YLKXKJTKfhPaqbdc+x/zRXadhYP+72V8Sk40h1ixxyUHtbQG9kbS1
+	N0lf2fW8EorpN8r/rilrkTTX+G4lTcZN0XL3hkQa9KS7oWaetUk9zKWSjxhX/iiTO03R7c9cvF5
+	xXirl8XIND1M5S9mWHiROARmkY8BKJt7zSGV42Lg74rfSw==
+X-Google-Smtp-Source: AGHT+IHV1ZuUPzg4yEgyHYWzQY+6OROM0y9zG96BAjLGKaQnISxGLcncU89A5Wm/gHJoyXA2Bhx1tQ==
+X-Received: by 2002:a17:907:25cb:b0:ac6:b8de:1a74 with SMTP id a640c23a62f3a-acad3488bbfmr140912166b.15.1744353761891;
+        Thu, 10 Apr 2025 23:42:41 -0700 (PDT)
 Received: from localhost ([2a02:8071:b783:6940:36f3:9aff:fec2:7e46])
-        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-acaa1ce7068sm392776166b.179.2025.04.10.22.51.02
+        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-acaa1ccc363sm400440466b.146.2025.04.10.23.42.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Apr 2025 22:51:02 -0700 (PDT)
-Date: Fri, 11 Apr 2025 07:51:00 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+        Thu, 10 Apr 2025 23:42:41 -0700 (PDT)
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@kernel.org
-Subject: Re: [PATCH wotmate v2] Write the text graph into a separate file in
- graphs/
-Message-ID: <6sa3iqt64w2vxne3h2w7oxuna7wae5o3ko664vvrd5aqffk6zg@v6iioe56nnma>
-References: <20250410-trust-paths-improvements-v2-1-adfd17e41b3c@linuxfoundation.org>
+Subject: [PATCH wotmate] get_key_paths: Fix keypath for top key
+Date: Fri, 11 Apr 2025 08:42:27 +0200
+Message-ID: <20250411064226.1461929-2-u.kleine-koenig@baylibre.com>
+X-Mailer: git-send-email 2.47.2
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xp7zspajvnco5k6d"
-Content-Disposition: inline
-In-Reply-To: <20250410-trust-paths-improvements-v2-1-adfd17e41b3c@linuxfoundation.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1154; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=1mZltoX4b2aNzqS9j9qCRaFP72g4j0sbzFZMDS3WV4c=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBn+LnTQENg6DxGJjTDO+Oj02KUkzjeFDrH2p/W4 xbE9zDiw6uJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZ/i50wAKCRCPgPtYfRL+ Tr1+B/kBGjWnCyE2m9Ig6ljUE0i3tJyL80kp7VyNlA+7Dnjd4Zuf9we02QebIcjRZb4cahMHiV+ HjRGWwwJJ18iwhST8ebMrh6+pSyDlPq8Bw55IeRkf6SufDsFksW3XdmDcd8hU8KrOYh0NfVwqaT IpMh9/FO0eSqWFMkPFVYpVOWWOtEvaTOm5fFQEy7kTThg2lUzup9xLXKkkOpj6QHAZbXWePBV0i RWem3IwPsEBTsokbCjTH03SYb6iJ4vF6mgFqqfuKc4KV9tgiSDBBxdX1MlYqQPlRp6uZJZjQPf2 PqlZ4YJ35t/jF/MbTdjWLrHaAQ0vsX5sDi7QilrQqJ00aUF1
+X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
 
+The root key is trusted implicitly and not because it is self signed. So
+it's trust path set is [[$rootkey]] and not [[$rootkey, $rootkey]].
+---
+Hello,
 
---xp7zspajvnco5k6d
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH wotmate v2] Write the text graph into a separate file in
- graphs/
-MIME-Version: 1.0
+this fixes the issue with Linus' trust graph that I found in
+https://lore.kernel.org/tools/6sa3iqt64w2vxne3h2w7oxuna7wae5o3ko664vvrd5aqffk6zg@v6iioe56nnma/.
 
-Hello Konstantin,
+With that the text representation of Linus' trust path is:
 
-On Thu, Apr 10, 2025 at 04:51:36PM -0400, Konstantin Ryabitsev wrote:
-> Write the text graph representation of the trust relationships into a
-> separate file in graphs/, with the following formatting changes:
->=20
-> - Show the depth of the signature
-> - Don't use '.' to represent the target (I'm the one who suggested it,
->   but it doesn't make sense with these formatting changes)
->=20
-> Co-developed-by: Uwe Kleine-K=F6nig <u.kleine-koenig@baylibre.com>
-> Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-> ---
-> Changes in v2:
-> - Based on mailing list discussions, write the graph out into a separate
->   file under graphs/, which still gives us what we want and makes it
->   cleaner than writing it inside the key file itself.
-> - Link to v1: https://lore.kernel.org/r/20250326-trust-paths-improvements=
--v1-1-21c6db48a29f@linuxfoundation.org
-> ---
->  export-keyring.py | 123 ++++++++++++++++++++++++++++++++++--------------=
-------
->  1 file changed, 78 insertions(+), 45 deletions(-)
->=20
-> diff --git a/export-keyring.py b/export-keyring.py
-> index 3e455f9..318a125 100755
-> --- a/export-keyring.py
-> +++ b/export-keyring.py
-> @@ -110,59 +110,86 @@ if __name__ =3D=3D '__main__':
->              logger.debug('Skipping %s due to invalid WoT', kid)
->              continue
-> =20
-> -        key_paths_repr =3D '\n'.join('\n `-> '.join(wotmate.get_uiddata_=
-by_pubrow(c, rowid) if rowid !=3D to_rowid else "." for rowid in kp) for kp=
- in key_paths).encode('utf-8')
-> -
-> -        # Do we already have a file in place?
-> +        kpblock =3D ''
-> +        for kp in key_paths:
-> +            for lvl, rowid in enumerate(kp):
-> +                kpuid =3D wotmate.get_uiddata_by_pubrow(c, rowid)
-> +                kpblock +=3D f'   {lvl}  {kpuid}' if lvl > 0 else f'from=
-  {kpuid}'
-
-kpblock +=3D f'   {lvl}' if lvl > 0 else 'from' + f' {kid} {kpuid}'
-
-?
-
-> +                kpblock +=3D '\n'
-> +            kpblock +=3D '\n'
-> +        key_paths_repr =3D kpblock.encode()
-
-I wonder about:
-
-	$ cat graphs/79BE3E4300411886.txt
 	from  Linus Torvalds <torvalds@kernel.org>
-	   1  Linus Torvalds <torvalds@kernel.org>
 
-but I think that is unrelated to this patch. IMHO Linus' trust path
-should be
-
-	[[Linus]]
-
-and not
-
-	[[Linus, Linus]]
-
-=2E
-
-> @@ -176,6 +203,12 @@ if __name__ =3D=3D '__main__':
->          graphout =3D os.path.join(graphdir, '%s.%s' % (kid, cmdargs.grap=
-h_out_format))
->          graph.write(graphout, format=3Dcmdargs.graph_out_format)
->          logger.info('Wrote %s', graphout)
-> +
-> +        logger.debug('Writing out the text graph')
-> +        with open(txtgraphout, 'wb') as fout:
-> +            fout.write(key_paths_repr)
-> +            logger.info('Wrote %s', txtgraphout)
-> +
-
-That part can be skipped if not trust_changed.
-
-Otherwise I like it, and yes, please squash the two patches.
+which is better than before, but still a bit ugly.
 
 Best regards
 Uwe
 
---xp7zspajvnco5k6d
-Content-Type: application/pgp-signature; name="signature.asc"
+ wotmate/__init__.py | 4 ++++
+ 1 file changed, 4 insertions(+)
 
------BEGIN PGP SIGNATURE-----
+diff --git a/wotmate/__init__.py b/wotmate/__init__.py
+index 32f91cf2a75b..20e7a9a588b2 100644
+--- a/wotmate/__init__.py
++++ b/wotmate/__init__.py
+@@ -348,6 +348,10 @@ def get_pubrow_id(c, whatnot):
+ 
+ 
+ def get_key_paths(c, t_p_rowid, b_p_rowid, maxdepth=5, maxpaths=5):
++    if t_p_rowid == b_p_rowid:
++        logger.debug('Bottom key is top key')
++        return [[t_p_rowid]]
++
+     # Next, get rowids of all keys signed by top key
+     sigs = get_all_signed_by(c, t_p_rowid)
+     if not sigs:
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmf4rcEACgkQj4D7WH0S
-/k67Fgf+KgNFr92d+EplQ4kSAbShE0Wl50SvAt0CEKFxMc4pm5G80NJl1Xp041zG
-pWrIXFnlBKi315W/hFvkhDRo+t12NLpxaYjXPcTIO7hySYyoI/dpxxKD4JNHUKSh
-gy1+GOGSDAkpLGVu3tt6O5w0kYtE9/rVqzhM3ZtiUQvkuES45hxcRwIXGbtgYYjD
-vQWVQH1XQbgzV+prihootR7JoXftZvlMzM2F6WLhtXFKNivcoGO0x0P/caKTREcc
-dK2zX8HAoA2hLTvAXODp5akG+KogN1f4OFAUkKXyusdQGWVO+zAY7Ausc/32PB+L
-IupSN3PfbqT68pzxyHewDK9m3mOAvg==
-=nBGY
------END PGP SIGNATURE-----
+base-commit: f146a1815ad93b2f318e0a5fa857b11814a78b8b
+-- 
+2.47.2
 
---xp7zspajvnco5k6d--
