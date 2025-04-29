@@ -1,92 +1,100 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB9113D893
-	for <tools@linux.kernel.org>; Mon, 28 Apr 2025 21:29:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DA2274FC6;
+	Tue, 29 Apr 2025 06:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745875787; cv=none; b=iDqZU/0JI3KePOdoKXMTqN6x7GJ3oL8Xf9GFrOp+2EhWJOH3R9VLJu1n7cX0AopB2EOjoYkqNWFAmUrJ3OE9bLRWFfa+Wbh44ilkvTzEek/rxk7/c0e3KY83P0GN6lohDPGReG0RKjbvPU7lvXwcHAjnfl6rBNclfeIlFYkot0U=
+	t=1745908566; cv=none; b=CaCLHGs6aZdQSWVDTedgv41Q5WX0l8I1xSYvDLrSI8b7d71r/+PxInExaxCxSEKPftG0Av1rhuV2t7xcJrzRXceo4agK5ueSBZS1Q7X5xpqaxRn100XAIqVeLF/2MBdnyvhxfOWowT4RuhWRwnHNIyEfv52ZUGyfpyYEgqJNHRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745875787; c=relaxed/simple;
-	bh=4NHI2d1ylTaPSgGc4cKb+mUyFxxuSgNBosGZxqC8CCA=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=hxkGS4QQOiu8L8lDWXiGesVe7Hg5JeYRhpywjmqkhu6eD+suYVjsuq5WOhitwzfwFinUdHZHWNf2h78eeFXCszTC4vC9Xc2nkiz7zSxG2uy+3pFqLq0FRXNtKeFuAToyaGOu6Rr9YVUuOQCRWCUuqH4FdATZ8QJK7z4hoZzGn80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RPV1gnSK; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RPV1gnSK"
-Received: by smtp.kernel.org (Postfix)
-	id 85216C4CEE9; Mon, 28 Apr 2025 21:29:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A60CC4CEE4;
-	Mon, 28 Apr 2025 21:29:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745875786;
-	bh=4NHI2d1ylTaPSgGc4cKb+mUyFxxuSgNBosGZxqC8CCA=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=RPV1gnSKgU8j1QokLdIZXjNH4upYRv2QOck1lgpEGXYzla79/3lSTpfW9nS3QtVzr
-	 3nx5L9IU7K/7lHigyntj0uy/p5WMS+Jz/jVL3cWzbUTdWVwxzAmc/P1wM17Fm9LjTn
-	 /lMmdnqfOcvXxjANRoFQe0iVfM9pI64BhgSw2CVRWbQ1em18q/3foQ/jENGsFEe/dl
-	 3OMRmMJUs/Rilv/fPsi0mZgbRWL0GFxDus21whhJUxtbcLHA+tgokaxlhz6YdFPEo4
-	 oVXpf9Iu5U2bRnEdZ7qhj+5dHbVxVyfhr5i4YN3zAiHFKLyb6uTr67sMzIqniH9cuM
-	 n/WxrxrN44ifw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 748CD3822D43;
-	Mon, 28 Apr 2025 21:30:26 +0000 (UTC)
+	s=arc-20240116; t=1745908566; c=relaxed/simple;
+	bh=s4IaOxAHIyjjLJcbgVK7QaadGlX9/UHfNvN1SYKx5Vw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QKhf6owAY/wEOO42rcy0gcCsYcj0B1KYXYoESwubVpAUqgcAKTmYB0NdusSwIPdOZ+dxeNHRRtqaw38sImgFKrMfaXumQ+ZBUEY4I1MIirpDUKcs8OYDw3TX5NIRlEnUTccXFvbFMtzUEX6kSmWTvMpiXwrWNNqF7k44uyA925g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-524125f6cadso5156878e0c.2;
+        Mon, 28 Apr 2025 23:36:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745908562; x=1746513362;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KaZbmP7Q1UljIc/1dz7DyUnhBSi9CjGiNTaatKT+jFU=;
+        b=BphjhROrJ+Rm4xyrEPDY4w4WJEygBwwqIvUbf0CjWm1p4lpoSW1xwuIoILAjxFoaO0
+         msF8NYhG9MI/ryF/KDm99LLBhyRDbLHfDZ9DxdE6HlTsIQO/kgWTOXwrNOKWgothULRb
+         GmJJxMtoY+pNiG9O+UWRL4iQlzqSRnw7pimBYtIGUZLYkSkt4Diq/YTPSQgj2buwwHEi
+         XqhxwrNT3yrLliTw5Fu/FnCUIlLm334SXhVQQsL9LiyBXn9Z3S5eWT0iPO96oOrim6nm
+         3vezul8MJ94x5c5QMpTz8ZYqz11XS47sVDtg/M41OJLGdlgxJNjsq0lFJS1l5EzEdoEw
+         8N8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVhydDcW1Cck8ZMtbd6KQU+lt4r1nO3Pd+Cz1I62hDhgwOIKlhuTZ+CbDfCWhG9HJZW56YHow==@linux.kernel.org
+X-Gm-Message-State: AOJu0Yz8Fj4AnSEsipt9h+ryuWcEThR30mizVs5qQ1ddo13gZDUN6YhB
+	1sZ1p49e4IS3cA2P3UdnKxFApZIrnSPhEYKJ3rvSgCmPMjqDpN6dObeWwp9h
+X-Gm-Gg: ASbGncsNDaoLCewRLpuPs8lQD6NGWfJMcKrLH9SG6ftEijQWKvTh0kaLwdzIKsl0NNb
+	svvGUHKqSGYtWXIATmervU0ltE4j0zGhX9E1Dhf8+2TEstTHy76QxIlU5ywGK3GXIRlTyLaIGXW
+	qMj3ifJkxNyWVRsxF1T3Wk1JvtX47Yga6OZD51HtOI9uvI4noO2OAynpWL0DRMG/Td36nxyHrEC
+	jVZMcIlqRknjWdiwqJ82BTADkqSt+54wQqHF2ALvGWNJrip4eOfAKpsa8FDonTRCSBseyuDazBh
+	EULZyWtkNey9dB858r+Ol3NrRg1PpisLzsXWghtrqiRAFxnBjWchLSHpkqE2ER4dmFdXOwMCwTg
+	S/no=
+X-Google-Smtp-Source: AGHT+IEC0atljricZqxhSopm134yeKmwT358+8MjsZ0oRAlZBnG72GSPe6XPSFpTHtJJe3bqbX4oXw==
+X-Received: by 2002:a05:6122:1804:b0:520:6773:e5ba with SMTP id 71dfb90a1353d-52abf010b25mr1560016e0c.2.1745908561923;
+        Mon, 28 Apr 2025 23:36:01 -0700 (PDT)
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com. [209.85.222.46])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-52a99279c2dsm1249847e0c.27.2025.04.28.23.36.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Apr 2025 23:36:01 -0700 (PDT)
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-86d3ac0fec0so5604525241.1;
+        Mon, 28 Apr 2025 23:36:01 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXILWZMd4d7iVIO/VVTbLhUZyj7Gukte/rE9TEvhodZhqR3Ok0J8AUhfBqw+clrB6ZOkRuIiw==@linux.kernel.org
+X-Received: by 2002:a05:6102:3f41:b0:4bb:cdc0:5dd9 with SMTP id
+ ada2fe7eead31-4da7fb18016mr1755218137.12.1745908561538; Mon, 28 Apr 2025
+ 23:36:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: Bugspray Bot <bugbot@kernel.org>
-To: andrew.cooper3@citrix.com, anthony.perard@vates.tech, tools@kernel.org, 
- konstantin@linuxfoundation.org, marmarek@invisiblethingslab.com
-Message-ID: <20250428-b219993c2-49c69b8f53c5@bugzilla.kernel.org>
-In-Reply-To: <b19f33bc-df96-4365-bef4-7f1393fc7ce3@citrix.com>
-References: <b19f33bc-df96-4365-bef4-7f1393fc7ce3@citrix.com>
-Subject: Re: b4 inserts Reviewed-by tag from unrelated thread/patch
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: bugspray 0.1-dev
-Date: Mon, 28 Apr 2025 21:30:26 +0000 (UTC)
+References: <CAMuHMdXSLeOcPxSg2yCeW4K+2dhmoDvmzP9_GdT1aFP0ZBkUZA@mail.gmail.com>
+ <20250428-convivial-jaguarundi-of-revolution-7b2cef@lemur> <20250428-vegan-marvellous-bee-4c572d@lemur>
+In-Reply-To: <20250428-vegan-marvellous-bee-4c572d@lemur>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Tue, 29 Apr 2025 08:35:49 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdUoxzUBwT+9ok7FAQ1c7T0yz0hAG93Lq_mqX3p1iL=DnA@mail.gmail.com>
+X-Gm-Features: ATxdqUHQYPM4wnsbdVAG6tn3q5GLOnMKZiZoWZC5VQagJ1CsCVykvppJ5alxYDA
+Message-ID: <CAMuHMdUoxzUBwT+9ok7FAQ1c7T0yz0hAG93Lq_mqX3p1iL=DnA@mail.gmail.com>
+Subject: Re: b4 adding bogus tags
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users <users@linux.kernel.org>, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Konstantin Ryabitsev writes in commit 048adc880245925f7a62639fc0cc58c9e086b3f1:
+Hi Konstantin,
 
-Fix trailer attribution bug due to incorrect thread traversing
+On Mon, 28 Apr 2025 at 23:16, Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+> On Mon, Apr 28, 2025 at 04:25:51PM -0400, Konstantin Ryabitsev wrote:
+> > Looks like it's the same bug as this:
+> > https://lore.kernel.org/tools/20250408-b219993-d3df209dae6d@bugzilla.kernel.org/T/#t
+> >
+> > It's the same scenario -- there are shared patches between these two series,
+> > but somehow one of the replies on the older series gets misapplied to the
+> > cover letter instead of just the individual patch.
+> >
+> > Having two series to work with really helps -- I should be able to find where
+> > things are going haywire now.
+>
+> Fixed it in the latest commit in master, thank you for the report.
 
-When we were walking the thread looking for where the trailer belongs,
-we were incorrectly attributing trailers sent to a single patch as if it
-were sent to the cover letter. This only happened in the following
-situation
+Thank you, fix confirmed.
 
- [PATCH 0/X] Cover Letter
- |
- |---> [PATCH Y/X] Patch Y
- |     (patch being reviewed)
- |
- |-----> Re: [PATCH Y/X] Patch Y
- |       (follow-up that *doesn't* contain a trailer)
- |
- |-------> Re: [PATCH Y/X] Patch Y
- |         (follow-up that *does* contains a trailer)
+Gr{oetje,eeting}s,
 
-In this case we had a bug in traversing the references where we first
-looked at the immediate parent, and then straight at the top of the
-thread, becaues the references were not reversed when we had parsed
-them.
+                        Geert
 
-This patch fixes both the incorrect order of references AND it doesn't
-trust them to be in the correct order -- it will now always rely on the
-in-reply-to header to figure out what the parent of the message is.
-
-Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Fixes: https://bugzilla.kernel.org/show_bug.cgi?id=219993
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
-(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=048adc880245)
 -- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (bugspray 0.1-dev)
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
