@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D93022A7E5
-	for <tools@linux.kernel.org>; Fri,  2 May 2025 08:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151931E9917
+	for <tools@linux.kernel.org>; Fri,  2 May 2025 19:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746173925; cv=none; b=ZBtb6C1bHYjMAVyFT5XdCDxOAaPw/39xq8MbSAwxYYZTESwWGbZNcYnJOEnogOh1cHfDcQ+dIEXd1t7/EYCDs+QTi+pTTetfMXL8fXAcvlTE8B0JYoHnaN6ypDEGJASHcsR9bSr8INRiNsdFN8XdrgVn6E5Rdb8MMn6/aQAmLwk=
+	t=1746215751; cv=none; b=Wmimeq7qmXTtyFASfG1M8TuBUeFKaL+U6V9YvPIDArHQ9ND/3UeLI0sqqhR+bLvXh2j5X4kkhenaaa0oXLa7LpaNaLE4877r7uUdieHqbJUYKRRV9vgHxKzTcmHuEJMb8fmtRVqHXhAldHeRWuFKHokEXh6yfE9l8vsmi+tsuqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746173925; c=relaxed/simple;
-	bh=xYssf4LOgq0VNhC5INmCIVgWeSTMotc+cQY5inXoXj8=;
+	s=arc-20240116; t=1746215751; c=relaxed/simple;
+	bh=ckae0oaQieNSpCFqm0YyyTo+t8lHBcoj1SCY5qRDrtU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JMesyu831NkBVrHL3rrR2WTfjhskYf6zhJSQ+gJxkOvehGxZq/7vvU5Jg41XXzR+IHGY5aI8lABeW2frfNp11KiMJPlNADu0JHcA5ARYtDZ11vL5g1Dqhnt2XfZ42ubsRaJHEB67l8YFzj3JKiAqP8nqqXl0rPwihQa4xKpdFtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L9LHyXNO; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=QW2440AfBeG5F7FO4Y0RVc+NM7yuxzHujlSsZxW6a+8ov8dNmhiuGY/jJi4/rjKp6/BWzEqT3tJhbvAkRVvOOiaaAQabQmWE8Gbz70ymTy2VyyHGG6DnCM3ehHYGAnLWcHpoahcglAPgaJzyJpHA82XCEwJUUgclbTG1kzyee7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vj+/oMD0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L9LHyXNO"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vj+/oMD0"
 Received: by smtp.kernel.org (Postfix)
-	id 8570FC4CEEE; Fri,  2 May 2025 08:18:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5ABBC4CEE9;
-	Fri,  2 May 2025 08:18:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746173924;
-	bh=xYssf4LOgq0VNhC5INmCIVgWeSTMotc+cQY5inXoXj8=;
+	id A81DAC4CEE9; Fri,  2 May 2025 19:55:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE52C4CEE4;
+	Fri,  2 May 2025 19:55:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1746215750;
+	bh=ckae0oaQieNSpCFqm0YyyTo+t8lHBcoj1SCY5qRDrtU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=L9LHyXNOECKuTFUxrufswLzQgOSOKGErjXGQMIzBh86pMxxedZ79yhoMwPIbivJ3m
-	 GEIFckpCwZ75yjXdsdah17LktffqNG/IN7E8CATQrkw1OimmAxw8iDdTIhJfWOyCvq
-	 9+9FVC0z74DWL5IKkGPDEmm37eoJ60cYPsGJie+GsvptuNLjPgc65N2O7HVqTfg75+
-	 OJd28eNSOYsZUFSP1mh4Ux6qwKLj9KNrblsSs+ya9YLL2oZ/qvP/VgqVbZaqYHUhup
-	 G+POtO9RcH09XNJsqWpiLsC0nWN/+Iop+4/pii8fKFg7ptOHIMBCWYpcDh0s+aH0Nq
-	 WUVN2nEVCZXeA==
-Date: Fri, 2 May 2025 09:18:41 +0100
-From: Lee Jones <lee@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: Re: [PATCH v2 1/1] ty: Allow users to specify whether thank-yous are
- sent to themselves
-Message-ID: <20250502081841.GE3865826@google.com>
-References: <20250501091502.3663038-1-lee@kernel.org>
- <20250501-cooperative-enthusiastic-squirrel-7dfc3c@lemur>
+	b=vj+/oMD0j0ENHRl/TLrHOnb0kno3E3aceBY7laTITunRTNayYb23b5iXep4bEvYei
+	 hBBUUFjvinHTOm4EwcrpMYTLaS2xEBZpPj2iWB/k3oZkUwRuFrDODOPg4SOYMcUYUU
+	 5fnP7V9Ogql0XJzhGWIJ7C3CuPDfHnqrxM/AWOVs=
+Date: Fri, 2 May 2025 15:55:46 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Chen-Yu Tsai <wens@csie.org>
+Cc: Andre Przywara <andre.przywara@arm.com>, 
+	"open list:ARM/Allwinner sunXi SoC support" <linux-sunxi@lists.linux.dev>, tools@kernel.org
+Subject: Re: b4 thank-you letter shows incorrect repo URL
+Message-ID: <20250502-small-caped-oxpecker-92f9bb@lemur>
+References: <20250430095325.477311-1-andre.przywara@arm.com>
+ <174610166405.2974716.1586244113913047340.b4-ty@csie.org>
+ <20250501132211.0310ae49@donnerap.manchester.arm.com>
+ <CAGb2v66UnWo4zL6giQYC+Kmo5SSkNAH1_nODM=r6jyQPoi-JNA@mail.gmail.com>
+ <20250501-wakeful-kiwi-of-poetry-59d4bb@lemur>
+ <CAGb2v64g2KJVCpMGapCZUx_f4ny20Q4rGVk4JHnf3D09Q8PKgA@mail.gmail.com>
+ <CAGb2v66RkWixx4NB+a5L9_V=bs3wOSWqaSv9QeWb9-aYy2YxaQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -45,25 +47,57 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250501-cooperative-enthusiastic-squirrel-7dfc3c@lemur>
+In-Reply-To: <CAGb2v66RkWixx4NB+a5L9_V=bs3wOSWqaSv9QeWb9-aYy2YxaQ@mail.gmail.com>
 
-On Thu, 01 May 2025, Konstantin Ryabitsev wrote:
-
-> On Thu, May 01, 2025 at 10:15:02AM +0100, Lee Jones wrote:
-> > The motivation behind this change was that thanks-yous weren't showing
-> > up in my inbox.  This is a problem because I use the presence of these
-> > mails to indicate that particular sets or individual patches have been
-> > applied or not.
-> > 
-> > Provide command line option '--send-to-self' to override the default
-> > behaviour.  If this is not specified, there are no functional changes.
+On Thu, May 01, 2025 at 11:49:38PM +0800, Chen-Yu Tsai wrote:
+> > > This is coming from your custom template, not from b4 itself. By default, b4
+> > > just says "Applied to ${branch}".
+> >
+> > My template is: "Applied to ${branch} in ${treename}, thanks!"
+> >
+> > My .git/config is as follows:
+> >
+> > [remote "sunxi"]
+> >         url = git@github.com:linux-sunxi/linux-sunxi.git
+> >         tagopt = --no-tags
+> >         fetch = +refs/heads/*:refs/remotes/sunxi-github/*
+> > [remote "sunxi-korg"]
+> >         url = https://git.kernel.org/pub/scm/linux/kernel/git/sunxi/linux.git
+> >         pushURL = git@gitolite.kernel.org:pub/scm/linux/kernel/git/sunxi/linux
+> >         fetch = +refs/heads/*:refs/remotes/sunxi-korg/*
+> >         tagopt = --no-tags
+> >         b4-commit-url-mask = https://git.kernel.org/sunxi/linux/c/%.12s
+> >
+> > Also, the branch I applied it to is named "sunxi/clk-fixes-for-6.15",
+> > both locally and in the kernel.org repo, not "clk-fixes-for-6.15" as
+> > shown in the original thank-you email.
+> >
+> > I think there is a parsing error somewhere. Maybe b4 isn't dealing with
+> > nested branch names correctly and somehow thinks the "sunxi/" part is
+> > actually the remote name.
+> >
+> > If I rename the "sunxi" remote to "sunxi-github", `b4 ty` now generates:
+> >
+> >     Applied to sunxi/clk-fixes-for-6.15 in local tree, thanks!
+> >
+> > Again this seems to point to accidentally treating part of the branch name
+> > as the remote name.
 > 
-> Can we call it --me-too, to match the --not-me-too option for b4 prep?
+> Also, I found a thank-you letter that is correct that is from Jan. 2025:
+> 
+>     https://lore.kernel.org/linux-sunxi/173617837421.3282465.589306007023383641.b4-ty@csie.org/
+> 
+> The next one that I found was incorrect. This one is from Feb. 2025:
+> 
+>     https://lore.kernel.org/linux-sunxi/173909140135.1184685.5784910677727356231.b4-ty@csie.org/
+> 
+> Though it could be I upgraded something on my workstation some time
+> in between.
 
-Thanks for your review.
+Yes, I think there's a substring/partial match that causes this.
 
-Yes, of course.  I'll respin next week.
+I'll take a look.
 
--- 
-Lee Jones [李琼斯]
+bugspray tag me
+
+-K
