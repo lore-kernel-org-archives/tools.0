@@ -1,148 +1,305 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88241F416C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413B61E5215
 	for <tools@linux.kernel.org>; Thu,  8 May 2025 09:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746697514; cv=none; b=BnL0CtxCrq+qKu3xWKS5gh7p9EPaOW6Y0zaicoVwEE1Oscp/wtCsi5ox/shSqWEfXAafanXi1edJ0g5aglzO2aX8Jm2XQtgW+YlTRYKjgwG5bfnSRXcJIlmeSxCxue/br9GNMiOwE2KSlmbcL0dk+HoUmELgJllGfJ/ECWjdw9A=
+	t=1746697515; cv=none; b=l9JmiWCqyMg/YvXm9SgptugAPgZXqsmZXsUBi9y2IeAawfxuRkAPAVIhFgWLEsN6y0uGJOX+7bgh8Mynq6ELBUKIVlldVnXZs5xmWyzH793//+HiVRvE0xDeL5Flb8I2r8tOEmKOVqCUBXTdmT1DAVGpAB33nL8FW1AsL+nRRIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746697514; c=relaxed/simple;
-	bh=JQ+wbTE6TlgCDh+3v40VzHurx+JXvtbmQjHqoayF9LE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HbkuDEWIpES+fJ8+uKJtZGRfbvGOxMxk83ZvC3LslM0qJb/QTIohveKw1YZbkeoc8FLr2aa4fp4QwIA2kkBh4hggUngyabRAuI4MVRXkVMBvYefb0KedSTPnoXg1O7LgN++GUYlXSFF/VI8j5uV0YoZVAmlcXE4+N5+lvbJV8WE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=wmmU3Nyr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746697515; c=relaxed/simple;
+	bh=NxADkbr1BNNiUBEhJnXyXFBVCVTLRV7pY6QZad23msM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=o1iuUW9Tr19fb7As7RDP87p2pXJYTWFgk4nd+VZgWHaGsskHo2ZIN1olvgUx9vuQEd0xJ5/xmpiD6r40vyojVaCo9K2jGCVonexyjE4/V6jTnovOABvVjUDbPVnyrHBSy5A3v5asqXfqbe4XR4G5f40po0/YLOY1S17ba/E43+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=Qghj6Eiy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="wmmU3Nyr"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="Qghj6Eiy"
 Received: by smtp.kernel.org (Postfix)
-	id 70F52C4CEF0; Thu,  8 May 2025 09:45:13 +0000 (UTC)
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	id C5723C4CEEF; Thu,  8 May 2025 09:45:13 +0000 (UTC)
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 8F934C4CEE7
-	for <tools@kernel.org>; Thu,  8 May 2025 09:45:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 8F934C4CEE7
+	by smtp.kernel.org (Postfix) with ESMTPS id EB65CC4CEED
+	for <tools@kernel.org>; Thu,  8 May 2025 09:45:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org EB65CC4CEED
 Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a0ac853894so648370f8f.3
-        for <tools@kernel.org>; Thu, 08 May 2025 02:45:10 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a0b9af89f2so431814f8f.3
+        for <tools@kernel.org>; Thu, 08 May 2025 02:45:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1746697509; x=1747302309; darn=kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YQD3N6rpJTyLfEEg5CmanAF0BGjB5N3/hhON68EMqKc=;
-        b=wmmU3Nyr2i4ziVVGllkc+KxdqDnHUq0cmTj7UKGAdAO5sz1u8UyWlYr7RSZoVkp9i5
-         Dw71gqqlY4Oygau/JZESpWNKaf2aV3AB++7HzE0U0msRPoCgoYFTjpt7KAmnOexN6ILE
-         v1jZfxFboDhSfbAxDiIiuOKfjyaulp0gz1xIaPJ0zyCUjZB3tjqvVvTMUPPrzMGU41WS
-         9/7g6boXAaVR+5LFPWjbOD/OPB+aHJoQqQ2ht3DDXfuE2Oxb0vXwxXEgH9wDOlEJvvUO
-         iC6hxSZg4gSi3g3gIanwXQP1FJzLlvEs+bTgyd8PhpEAfdnb6CkT6fGlLkqz/1k9xrub
-         llog==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1746697510; x=1747302310; darn=kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qUg1a93OGAwFYM27WkVfHIf/m4PMRp9Ecsnr+eKI47M=;
+        b=Qghj6EiylZVpdizrkewpvVXiYdB+LxsNfpFgRnd9NTpynWSMiESrNkU0Bi6iRJSNOw
+         WW6YhVPws6x3+gzETY2MiZKOItTA/VLwpc9aH4wmMWHY3inIfit3bXbxLK1yvd+wkenB
+         lbl9EysUQQFJOCMfL6As3dpQm/BnOx09PvdMESqcMYzVt3q5vCidIAtnwWA/++m/oRgn
+         jfi1k3IXDpEDVZ5gH8UxvaKNJAJK3DwoWtBNF5Nk862FJBgNl40UjZ2YV/jZ7cKfhbGw
+         Jp8ww7Ud5OOt50nGGxTLpFJwpUoIdm1ebH1FaUzkLFKhONFFDT8c5jObfYvuL3TnGCWd
+         z20Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746697509; x=1747302309;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YQD3N6rpJTyLfEEg5CmanAF0BGjB5N3/hhON68EMqKc=;
-        b=gEynZOlL79kTDFSYMxC1kjfck76n6P397QhJWMqYt/JnFxneC62zP5uaQF5fS836h4
-         dDVknlJMejGlMOYg9Ou+EBwGu3tAw5pCJj2fVAmee/+TXwF2KjVkLK/9t76XoRySjq2E
-         7rrmeCzgwen1HwMBAxFYriXZlEadNg5UyFQHlOjdjIcpOPIbAosSa3EiJMfbM/BHOuBh
-         Pe3VomuaPicyecz+eysBsxLHMKvhPn1dQ6djhoJzSlcWWvv0Pjhb4A+r1aRgCchXKgMt
-         IpjfXDMBWROqPpyH86spvApG4NoDjXaFDokbad67S4Y9RvCHhjIcq6mBMAE8k7eXd0wD
-         QjXw==
-X-Gm-Message-State: AOJu0YxKXq1xv/Iwxvegk6/YWF4HFy+ehX+P9Pw89dbEd2SqnjspTTS6
-	4gyR2Jg86cHrMwB1tDIW6EqHK8kCwZEl4yrG4Mg/UIVSYakjFuMlvMLZQZWsH34=
-X-Gm-Gg: ASbGnctdWAAg+90tmJ0nRDbJ5fjcMl8mBedBNxKm4ZV301emx6KSeTXnnNJzBbJbkvA
-	SUJ6u1ssYUxFnZb0AjhAstG97uT+1jw9OMEk2OrXK4XAcvKj1/ylmM3CBoFtBY+wJeZKAWXV6kk
-	Y+f7CNHI0f/Mgk1On9UCPMQJ3gUcLYUta4NL06MbPB2zL5WiYTyuUM2pFjNGGccO6QPvxccUakR
-	suSQWDwCdr9d6ZxOInQgwANa7xNzoPKOakFcKFCzgkZb2z4AsFg+JT0AMQvOSAHTeGmUKtR9V+Y
-	Kc3/4bQHdps82C46mw1UDl+f3nIFNuutGdzUf92J8FBs16d7tnekVGW1FU9mWfcZJCHMt3bdw0D
-	JK47eeus/LDuLe+vnvA==
-X-Google-Smtp-Source: AGHT+IGBALdrqTcRPyF+M3oVRBfScvvf0ZaK/sCDcK6HCJuesZow4uYCz3xi0fDqEhxAkRupbY9eeQ==
-X-Received: by 2002:a05:6000:200d:b0:3a0:99e9:bc90 with SMTP id ffacd0b85a97d-3a0ba0955a2mr1772999f8f.10.1746697508808;
-        Thu, 08 May 2025 02:45:08 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1746697510; x=1747302310;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qUg1a93OGAwFYM27WkVfHIf/m4PMRp9Ecsnr+eKI47M=;
+        b=rRZOACt01Nv8D4iKX43heN+cNW//iDKrkq8fKrWV35JyPXWXlqy7hNz4/Nlgm9dhSG
+         TawX29onGLRmLDD9EXIUWvcdfqcUaV87RJ5JFr0RAqC3mvSIjqyQoCQlrSXSXapRId9V
+         zjAKo+J6HjZNrtZCaarazX+cLU4lP+ESE+jmL9DIho9eXIUDqda4JIQjrhdWJ1kRRYIT
+         WnIVnsCY8d1o7bvIQxySVH2rHSYBSxPuBg97S5YMCVpnghE3ED/b27d/C/0fPUBpg/fg
+         pkqd78CqEwp4kCu8pKlT8yf9CUmbJ/Yzi2IKjtbqFNW9tTyMLODt6Hk9NGBxoncglpfP
+         Q2Tg==
+X-Gm-Message-State: AOJu0Ywc941GVzYUOEdUhvhspo05OXAQlukbFr8M5Wj5h4zt8C1r6wlX
+	2YPsiznsrIxkt7x1pkH0tcd4nJydGAXInrbL0ySjXuObACGOfYZbuMZjd4G06RE=
+X-Gm-Gg: ASbGncsKN+U4fPVNQkCtLvXU2QK52WPyio7G/qDpglXUuGTkeucSMnyfEDL4xZVyidM
+	0DkSubU1JOTezbMxIkacKtBxnX69n+JHwLLMD4nRiasF/p3EYWTHBv+gNFmBe9xfUTrfzKypHay
+	s8M2YDQmgm5B6epcDLZFFG1nQ+43gF/UaCliWkNhR8tu5FGEfa3U3U57ed7PyeJGsJ/Mbh0yH1l
+	FqnO7QMP4YbbmdqrzKVSrXL/9Ho9T7fejjyKSffsUt3SAAb1m1M6OF5glyvUo6+pxRz2LqUbP+K
+	Sl3kGKKIjVrXzvTHUzDlP1gmB57gvD0L+kycDhsnHUMmOZNCSGp7Q/OnwO852ItkW3VeZzyCnfX
+	Ecc/5nlY=
+X-Google-Smtp-Source: AGHT+IHAaEYefRLWcufr6Ciu4/4l907s6xImGm5bqahwdIdfIa3mqClbqRK0dRpud1FZQ3xbBysBNw==
+X-Received: by 2002:a05:6000:18a9:b0:3a0:b84d:60cc with SMTP id ffacd0b85a97d-3a0b84d613amr2777150f8f.2.1746697510115;
+        Thu, 08 May 2025 02:45:10 -0700 (PDT)
 Received: from localhost (p200300f65f00780800000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f00:7808::1b9])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3a0b9ec411csm2241663f8f.16.2025.05.08.02.45.08
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-442cd351315sm31047425e9.19.2025.05.08.02.45.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 May 2025 02:45:08 -0700 (PDT)
+        Thu, 08 May 2025 02:45:09 -0700 (PDT)
 From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@kernel.org
-Subject: [PATCH wotmate 0/3] Updates to wotmate, partly due to changed behaviour in gpg
-Date: Thu,  8 May 2025 11:44:52 +0200
-Message-ID: <20250508094451.762484-5-u.kleine-koenig@baylibre.com>
+Subject: [PATCH wotmate 1/3] Put a representation of the trust path in a txt file
+Date: Thu,  8 May 2025 11:44:53 +0200
+Message-ID: <20250508094451.762484-6-u.kleine-koenig@baylibre.com>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250508094451.762484-5-u.kleine-koenig@baylibre.com>
+References: <20250508094451.762484-5-u.kleine-koenig@baylibre.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2917; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=JQ+wbTE6TlgCDh+3v40VzHurx+JXvtbmQjHqoayF9LE=; b=owGbwMvMwMXY3/A7olbonx/jabUkhgyZWuHjy9nVOeu3e3wTumuplzhv7448xpKX023ipQLns C5mM7jRyWjMwsDIxSArpshi37gm06pKLrJz7b/LMINYmUCmMHBxCsBEzqaz/7M/dOzdW0lFD172 HrdW/66jXbtWrLINDjmY1c23Yv7WgBm1X+pqN7YbHP5zQJs5tHippW/sEsHeM/13LvQ8EW9kWG9 r99Iq4niI+nc/4Y8b6yIrl3zIzMrp3l/IV7+qhWeJTNfF6+FfuPZzlmxIumubpD9PcO40u+3L1q Y+z2Fzedv7e+cp804Rx7UbDm9Qm7ku/zzzkvlz/vO0Ch7+GiFV5iFz0XuC9+SwadK8lWrmwbv1D zEfVl1+kL/OQ7zB69KciN5fa99w6gooer3POC9g/WzFq9szYzmz+HydWpl+G84x26J9hitpjq70 nin9dbVh+8R1ahXsRf6+e32ivGfJrhT+HPVYYZ5b3WW9AA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9925; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=NxADkbr1BNNiUBEhJnXyXFBVCVTLRV7pY6QZad23msM=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBoHH0WTUUjvq/B9bmkg/+JbdaJ2b/nkKHZN6d/W 57g3Y+c0JeJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaBx9FgAKCRCPgPtYfRL+ Tn1WB/4zBCqn5pBVidoKPppEqquxHCuJq3OzRZMR34lMuwe8gV1XLmr15EtIznnFMi0RYMxSaWv T/mXe8oufPbtHKlPtSDFzBIdU/dSBZKPZVXhE56FnCVI4Z9fl5RIZvswgqGBc92ZZPqaZJugQ/A 0LH29EZfqucrTnv9n7oULK5QI27++BJNpGnj5BXTJlNeF8rmEoT2uBoe8qowULST28FSqmDrUQo esQtsDsjdputAmo+4a9pdwCsYmfL2/97avwOPmc0rLkfgf3pxBsZ6jsM51Skx19iOk4h98+yKbV Bb/IpApaFEo5bbWLKFNjbG42sOiEn82pz26mfhhRLVScrv77
 X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Up to now changes to the trust paths are hardly reviewable when looking
+at the git history because they only have an effect on the generated
+.svg. However these also change when the installed graphviz changes and
+the diffs are hardly understandable.
 
-the first patch results in a text representation of the trust paths to
-be written alongside the svg file. This has the upside that it is much
-better reviewable compared to the svg file changes (that also depend on
-the version of Image Magic actually installed). It's not a precondition
-for the other patches in this series but it's still nice to have at the
-start to make the effects of these other patches on the kernel-pgpkeys
-repo more easily reviewable. This patch is a combination of changes by
-Konstantin and me.
+For that reason put a text representation of the graph into the key
+files.
 
-Looking in more detail at the last update from the keyservers commit in
-the kernel-pgpkeys repo (commit 671a0c921fe0) gpg seems to have changed
-how keys are exported as this commits adds quite a few old
-self-signatures (or maybe that's a change on the keyservers that started
-sending these? I didn't check.). These are not useful for the purpose of
-the keyring, so in patch #3 export-keyring's default is changed to
-"clean" keys which drops these duplicated self-signatures (and a few
-more uninteresting things like duplicated subkey bindings).
+A nice side effect of this change is that for a trust path
 
-Another change is that gpg stopped considering 3rd party signatures
-based on SHA1.
-So currently (as of 671a0c921fe0) there are 94 signatures by Linus
-Torvalds tracked in the kernel-pgpkeys repo. 86 of them are based on
-SHA1. That results in many keys loosing their trust path from Linus and
-only two people are left who are trusted directly (i.e.
+	Linus -> A -> B -> C
 
-	17212997986C5765 Benson Leung <bleung@chromium.org>
-	2DB3C3321B6DDF86 H. Peter Anvin (signature key) <hpa@zytor.com>
+the graph for C is regenerated if B's trust path was shortend to
 
-). Currently only keys with a valid trust path from Linus are considered
-for addition and update. That is fine for public keys that should be
-added to the keyring, but for keys that already passed the WoT check in
-the past but lost all their trust paths, it's still sensible to be
-updated. So patch #2 here weakens the WoT check to affect only new keys.
+	Linus -> B
 
-This patch series bases on current master +
-https://lore.kernel.org/tools/20250411064226.1461929-2-u.kleine-koenig@baylibre.com/
-
-<advertising>
-For the upcoming Embedded Recipes https://embedded-recipes.org/2025/ I
-will organize a PGP keysigning event together with Ahmad Fatoum. If you
-go there, consider participating to strengthen the WoT again.
-
-See https://embedded-recipes.org/2025/attend/#OpenPGP-keysigning for the
-details.
-</advertising>
-
-Best regards
-Uwe
-
-Uwe Kleine-König (3):
-  Put a representation of the trust path in a txt file
-  export-keyring: Continue updating keys that lost all their trust paths
-  export-keyring: Default to export "clean" public keys
-
- export-keyring.py | 156 +++++++++++++++++++++++++++++-----------------
+Co-developed-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+---
+ export-keyring.py | 155 +++++++++++++++++++++++++++++-----------------
  make-sqlitedb.py  |   5 ++
- 2 files changed, 105 insertions(+), 56 deletions(-)
+ 2 files changed, 102 insertions(+), 58 deletions(-)
 
-base-commit: f146a1815ad93b2f318e0a5fa857b11814a78b8b
-prerequisite-patch-id: 4b7e0866c7adc0d84eef602013fbe0fcab86b9e6
+diff --git a/export-keyring.py b/export-keyring.py
+index 6cf95f99738d..5531b096a6aa 100755
+--- a/export-keyring.py
++++ b/export-keyring.py
+@@ -104,75 +104,114 @@ if __name__ == '__main__':
+         args = ['-a', '--export', '--export-options', cmdargs.key_export_options, kid]
+         keydata = wotmate.gpg_run_command(args, with_colons=False)
+         keyout = os.path.join(keydir, '%s.asc' % kid)
+-        # Do we already have a file in place?
+-        if os.path.exists(keyout):
+-            # Load it up and see if it's different
+-            with open(keyout, 'rb') as fin:
+-                old_keyexport = fin.read()
+-                if old_keyexport.find(keydata) > 0:
+-                    logger.debug('No changes for %s', kid)
+-                    continue
+-
+-        # Now, export the header
+-        args = ['--list-options', 'show-notations', '--list-options',
+-                'no-show-uid-validity', '--with-subkey-fingerprints', '--list-key', kid]
+-        header = wotmate.gpg_run_command(args, with_colons=False)
+-        keyexport = header + b'\n\n' + keydata + b'\n'
+-
+-        if not wotmate.lint(keydata):
+-            logger.debug('Skipping %s due to bad linter results', kid)
+-            continue
+ 
+         key_paths = wotmate.get_key_paths(c, from_rowid, to_rowid, cmdargs.maxdepth, cmdargs.maxpaths)
+         if not len(key_paths):
+             logger.debug('Skipping %s due to invalid WoT', kid)
+             continue
+ 
+-        with open(keyout, 'wb') as fout:
+-            fout.write(keyexport)
+-            logger.info('Wrote %s', keyout)
++        kpblock = ''
++        for kp in key_paths:
++            for lvl, rowid in enumerate(kp):
++                kpuid = wotmate.get_uiddata_by_pubrow(c, rowid)
++                kpblock += f'   {lvl}  {kpuid}' if lvl > 0 else f'from  {kpuid}'
++                kpblock += '\n'
++            kpblock += '\n'
++        key_paths_repr = kpblock.encode()
+ 
+-        if cmdargs.gen_b4_keyring:
+-            # Grab all uid lines from the header
+-            for line in header.split(b'\n'):
+-                if not line.startswith(b'uid'):
+-                    continue
+-                line = line[3:].decode('utf-8', 'ignore').strip()
+-                if line:
+-                    parts = parseaddr(line)
+-                    if not len(parts[1]) or parts[1].count('@') != 1:
++        # Is there already a key file in place?
++        key_changed = False
++        if os.path.exists(keyout):
++            # Load it up and see if it's different
++            with open(keyout, 'rb') as fin:
++                old_keyexport = fin.read()
++                if keydata not in old_keyexport:
++                    key_changed = True
++                    logger.debug('Key changes detected for %s', kid)
++        else:
++            key_changed = True
++
++        txtgraphout = os.path.join(graphdir, "%s.txt" % kid)
++        trust_changed = key_changed
++        if not os.path.exists(txtgraphout):
++            logger.debug('Forcing generation of the text graph for %s', kid)
++            trust_changed = True
++        elif not key_changed:
++            # Load it up and see if trust relationships changed
++            with open(txtgraphout, 'rb') as fin:
++                old_key_paths_repr = fin.read()
++                if key_paths_repr not in old_key_paths_repr:
++                    trust_changed = True
++                    logger.debug('Trust changes detected for %s', kid)
++
++        if not (key_changed or trust_changed):
++            logger.debug('No changes detected for %s', kid)
++            continue
++
++        if key_changed:
++            # Now, export the header
++            args = ['--list-options', 'show-notations', '--list-options',
++                    'no-show-uid-validity', '--with-subkey-fingerprints', '--list-key', kid]
++            header = wotmate.gpg_run_command(args, with_colons=False)
++            keyexport = header + b"\n\n" + keydata + b"\n"
++
++            if not wotmate.lint(keydata):
++                logger.debug('Skipping %s due to bad linter results', kid)
++                continue
++
++            with open(keyout, 'wb') as fout:
++                fout.write(keyexport)
++                logger.info('Wrote %s', keyout)
++
++            if cmdargs.gen_b4_keyring:
++                # Grab all uid lines from the header
++                for line in header.split(b'\n'):
++                    if not line.startswith(b'uid'):
+                         continue
+-                    local, domain = parts[1].split('@', 1)
+-                    kpath = os.path.join(cmdargs.outdir, '.keyring', 'openpgp', quote_plus(domain), quote_plus(local))
+-                    pathlib.Path(kpath).mkdir(parents=True, exist_ok=True)
+-                    spath = os.path.join(kpath, 'default')
+-                    tpath = os.path.relpath(keyout, kpath)
+-                    if os.path.islink(spath):
+-                        if os.readlink(spath) == tpath:
++                    line = line[3:].decode('utf-8', 'ignore').strip()
++                    if line:
++                        parts = parseaddr(line)
++                        if not len(parts[1]) or parts[1].count('@') != 1:
+                             continue
+-                        if spath in my_symlinks:
+-                            # There's multiple keys with the same identity. First one wins, for the lack of a
+-                            # better solution that is also sane.
+-                            logger.info('Notice: multiple keys with the same UID %s', parts[1])
+-                            continue
+-                        os.unlink(spath)
+-                        logger.info('Notice: fixing symlink for %s', parts[1])
+-                    os.symlink(tpath, spath)
+-                    my_symlinks.add(spath)
+-                    logger.info('Symlinked %s to %s', kid, spath)
++                        local, domain = parts[1].split('@', 1)
++                        kpath = os.path.join(cmdargs.outdir, '.keyring', 'openpgp', quote_plus(domain),
++                                             quote_plus(local))
++                        pathlib.Path(kpath).mkdir(parents=True, exist_ok=True)
++                        spath = os.path.join(kpath, 'default')
++                        tpath = os.path.relpath(keyout, kpath)
++                        if os.path.islink(spath):
++                            if os.readlink(spath) == tpath:
++                                continue
++                            if spath in my_symlinks:
++                                # There's multiple keys with the same identity. First one wins, for the lack of a
++                                # better solution that is also sane.
++                                logger.info('Notice: multiple keys with the same UID %s', parts[1])
++                                continue
++                            os.unlink(spath)
++                            logger.info('Notice: fixing symlink for %s', parts[1])
++                        os.symlink(tpath, spath)
++                        my_symlinks.add(spath)
++                        logger.info('Symlinked %s to %s', kid, spath)
+ 
+-        graph = pd.Dot(
+-            graph_type='digraph',
+-        )
+-        graph.set_node_defaults(
+-            fontname=cmdargs.font,
+-            fontsize=cmdargs.fontsize,
+-        )
++        if trust_changed:
++            graph = pd.Dot(
++                graph_type='digraph',
++            )
++            graph.set_node_defaults(
++                fontname=cmdargs.font,
++                fontsize=cmdargs.fontsize,
++            )
++
++            wotmate.draw_key_paths(c, key_paths, graph, cmdargs.show_trust)
++            graphout = os.path.join(graphdir, '%s.%s' % (kid, cmdargs.graph_out_format))
++            graph.write(graphout, format=cmdargs.graph_out_format)
++            logger.info('Wrote %s', graphout)
++
++            logger.debug('Writing out the text graph')
++            with open(txtgraphout, 'wb') as fout:
++                fout.write(key_paths_repr)
++                logger.info('Wrote %s', txtgraphout)
+ 
+-        wotmate.draw_key_paths(c, key_paths, graph, cmdargs.show_trust)
+-        graphout = os.path.join(graphdir, '%s.%s' % (kid, cmdargs.graph_out_format))
+-        graph.write(graphout, format=cmdargs.graph_out_format)
+-        logger.info('Wrote %s', graphout)
+         wcount += 1
+ 
+     logger.info('Processed %s keys, made %s changes', kcount, wcount)
+diff --git a/make-sqlitedb.py b/make-sqlitedb.py
+index fec199def51d..e8c5969f4d50 100755
+--- a/make-sqlitedb.py
++++ b/make-sqlitedb.py
+@@ -163,6 +163,11 @@ def keyring_load_sig_data(c, pub_keyid_rowid_map, uid_hash_rowid_map):
+                 ignored_sigs += 1
+                 continue
+ 
++            # skip SHA-1 based signatures
++            if fields[15] == "2":
++                ignored_sigs += 1
++                continue
++
+             # do we have the key that signed it?
+             if sigkeyid in pub_keyid_rowid_map.keys():
+                 uidsigs[sigkeyid] = (
 -- 
 2.47.2
+
