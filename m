@@ -1,121 +1,152 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AC6272E6A
-	for <tools@linux.kernel.org>; Fri,  9 May 2025 08:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F50F26D4C4
+	for <tools@linux.kernel.org>; Fri,  9 May 2025 09:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746778294; cv=none; b=IRcPdCaPLDQO3U2QWi0Fm08pFG91xTgG/emlxoeF2ySLay13Xrtut4bvcNpaTW1pZAZeBwfL1VJnyLBGO9lkfYRnHtYR/1Mf2V0tOgM98tTVtMQMsCLurFjlDYUEepQ/aopXy2hCZLDc6n5mzQjfX4SBhf1WTF2bgxqNXCXDyzs=
+	t=1746781408; cv=none; b=eeD1nCZwSq+tANtG35n2PtHPHo/Uk8n/dUTR74oanjcLbHoVJitOR5QViniizqPHXaTMxn/5pXsCT905bd59R9jVLRk9tPjKQE3QOgIbbIgg/n+7uIQEYme3MujSeBjUbAaCLdOoqkqPysTch1hPPI3mVxmTNnDbUd3miusPxNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746778294; c=relaxed/simple;
-	bh=fo86l2DBKndu6L8fae8KDrox2SBMqJqTAjcf+OpGl0A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZ/jIDwylJ3jRAgzkNwoyBNAhrg32Ll9BsiWt9yAWPI7MQgzL5quA/xP9SCXzoZrEXymLg5FJMnoWb8CuWOT6NH1rAZJ88LiQ05vY3m0YZu4Y/DFhtw6VP5hq8bN1ytmfECbrUf/Q8/uiySrKR9/voiW4QZ2M4E18rF2aTWD0mU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=rAnlRPh5; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746781408; c=relaxed/simple;
+	bh=hdNYC7zl/DqwHul5fSectk2iL7A7x0/BeAfXAgKCOlQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mhqq/xJX79dyx41kxwYNmlugHHINRGy44DkWKpWYBmx/9GloumotSuP9OsEOObeZ6faauDqcTubTqcPeYDfgBiEAfZq2+ltcpfboM+Mm9Uvux5XWO9VMJ4PY0QmjUrzJ1BO6wU2jnmOMey1HAoj+iOyWbrJKU3pjI29DcRSr36I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t9FVsCy1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="rAnlRPh5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t9FVsCy1"
 Received: by smtp.kernel.org (Postfix)
-	id BEDADC4CEF5; Fri,  9 May 2025 08:11:33 +0000 (UTC)
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 64067C4CEE9
-	for <tools@kernel.org>; Fri,  9 May 2025 08:11:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 64067C4CEE9
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43cf05f0c3eso11238375e9.0
-        for <tools@kernel.org>; Fri, 09 May 2025 01:11:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1746778289; x=1747383089; darn=kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HSMBXBhwDUb1i1AYuqCZlmp154Hgrx4SYfLbvJ3rQKU=;
-        b=rAnlRPh5WCvsNIEodPjBGEjXmUHbFN0WWExh0W2RU8yjUYmgMVt+noLIxFSqFq+/ba
-         pT4da+oWBXQo1nU1RQ7N2P00orVHbp/5xX/L4wf+tUTgVcDazhX/s9fKovVjHKZlzSSg
-         IbJP/Q3LJk0XJUTyZ2dTBP+HLvucrfVfiLuA0resdAfMUM6uoU9wODFXTrt2GiVypfEg
-         GsfT+vaVmhgRmtMPB5tD7ca+gfATuNEQSRYujIzESn7rGowTdfwDkerPrg4g3DlpmIGo
-         HfixVHdHh1oWOmT8PFqyXtcIGn6WPFwwcd2wQdecGrPdlysIWKEYOx/Q6E48W0dd4NNt
-         rfbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746778289; x=1747383089;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HSMBXBhwDUb1i1AYuqCZlmp154Hgrx4SYfLbvJ3rQKU=;
-        b=IOkphl6jBtrwI+V16WdhJjPttaHeWlIQGxx2poaJLrkeeMENdRSE1DCeq9UxMuGYhF
-         ksq8TYGw/8/VFM+GqeQZW4o68xImU3XhW2FzPjSUiLBgamJdI6Aq5bxPhS3Z/zoMorOO
-         NGcsHM/MkEgnZwwLUVPzormlzU+x5TEXhDH8r7zIHlESC6oZMYGRuh710U9vUWcW2K3W
-         hE4RX28rOWlX1h2slgIvLZxZQZ2sK1yQq+jQCkcLbM5I0LbMb5MjPtAn4DvZxCXnNELf
-         LjR/DFuPxWxEdHZTnhx6qJ16c9EvWXnK7ss1s1Kq9TCBzSTCKXjVq+aei2lsqAAotgXp
-         BANA==
-X-Gm-Message-State: AOJu0YwvxWZMWk3lu2q82kkXKCJNFeDxk8kfGZg4o7XsFS52I0iQEvdx
-	5WcA5q+RY4XAXUYfXa4+DXMOnmNTssUO/kDmpljz2gnl6vlwmIbgnC9Zv7cMON8=
-X-Gm-Gg: ASbGncsPxSI5soIECB1WXkiZ69MoIx/fdGd+YmqjiMGn0ul3OVy8F0SAm3b67WSB59m
-	YGl83Lpq4aQp1+N/JT++or5FBf7ZcBj8iNiSAUb1TAqF83KPgZC5DCVhCuOmsZBY8pueYwXHuqY
-	Xg01bvcEfaWD66vNUCpiJNG/cEk3p+K8lHMnaKSA2UARdx1e5dtUETZD/ZGwGgbH9laeaEXct5v
-	2eBIHKxslQv3Gr7XC3rF9fnZnbnm59buVvKOfeiUbpgCpwsdXhwxXVJu4J/4BHw2tozviqK0M2h
-	ffkat1pm+ij13+MEnFPItKYNov0TIxMEjnUGaaYyGYdni5LfQ1jTf8isJGm+jU7Vw25idK1ioVu
-	zLne8S+o=
-X-Google-Smtp-Source: AGHT+IEzn9M5N/JWih1ig8XdHDxTFOmDW/Qr4hHUGKA4eKNbEGro+oX3r33TkiNgGjRDctR5TIrMog==
-X-Received: by 2002:a05:600c:a44:b0:440:68db:9fef with SMTP id 5b1f17b1804b1-442d6dc56a9mr14366575e9.20.1746778289580;
-        Fri, 09 May 2025 01:11:29 -0700 (PDT)
-Received: from localhost (p200300f65f00780800000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f00:7808::1b9])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-442cd3285f9sm64112325e9.8.2025.05.09.01.11.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 May 2025 01:11:29 -0700 (PDT)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	id 01DB9C4CEEF; Fri,  9 May 2025 09:03:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BCCC4CEE4;
+	Fri,  9 May 2025 09:03:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746781407;
+	bh=hdNYC7zl/DqwHul5fSectk2iL7A7x0/BeAfXAgKCOlQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=t9FVsCy1lDvAr0U4Jz3/CEVQnThvZYGGXCeY2oVroMWxWehdFRtpdJ5gVSpOjcWpe
+	 Pa0PCzdPRz/aJX2dbTqFfwofd64IloOhidQFezVLQ4LNEW75lBkWRuraj9oq3ajtaG
+	 J6iTPcoFqOo6ia7WIW1E9kmh6yNjjP8MeBTn1ygHggwlZcBWjwDqpDaDrNJfiymqMS
+	 6QFCr/xv97fUK7Pm0OjMcz/zln8kY8nLFaFaTXqF3EEev5K8KWJMJ0YvMJrzJEzLnE
+	 Fd99we/RtBaJjw+0uXtVPEbJAHFC269dXXumBQkzn4AHQmHVsqpgNFLx2ifIFCEi2X
+	 g2u3gHB9mLOFg==
+From: Lee Jones <lee@kernel.org>
+To: lee@kernel.org,
+	konstantin@linuxfoundation.org
 Cc: tools@kernel.org
-Subject: [PATCH wotmate v2 3/4] export-keyring: Default to store "clean" public keys
-Date: Fri,  9 May 2025 10:11:01 +0200
-Message-ID:  <20981e4678e8aac26eeb645ad4256c679a3c382a.1746774817.git.u.kleine-koenig@baylibre.com>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <cover.1746774817.git.u.kleine-koenig@baylibre.com>
-References: <cover.1746774817.git.u.kleine-koenig@baylibre.com>
+Subject: [PATCH v3 1/1] ty: Allow users to specify whether thank-yous are sent to themselves
+Date: Fri,  9 May 2025 10:03:24 +0100
+Message-ID: <20250509090324.2731374-1-lee@kernel.org>
+X-Mailer: git-send-email 2.49.0.1045.g170613ef41-goog
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1604; i=u.kleine-koenig@baylibre.com; h=from:subject:message-id; bh=fo86l2DBKndu6L8fae8KDrox2SBMqJqTAjcf+OpGl0A=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBoHbicwtnLNQfUeNA4AbeGIjwSdBOOyaANVPRuS 1iOQJ2MD72JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaB24nAAKCRCPgPtYfRL+ TvLFCACAzrBqlhmTOX5pd2pLte2/9GQqn3KZHd0Ske4wP2NJSyijsREEa38yadBSrNvR2T+e16y Hyc5zBNqh//W+Puf+ltY0R7sYFXVyYCui821l4VPTCczn8vCrE2LSM0wLw3DhhRfhyKb+eBzrlK kW7Y55OT3aB4CGn8L3eOyUePrHUO2v5XvOODvJAIHQ6YNZt3oRLXzYI5tvH0sdnwOYqY8DBKKNH bYxvncWQEJ+fJMveIj5SYsfHbaKOsKFlYzWPKJQhhicxu8Yyc+Q6sgmk3/lHo/CUNmhsYThy0UX iXWMN3bv6rPnCCxaOg8owxLVin98Y8lzTEYasMUm7X9lSgOp
-X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 
-There is no need to keep duplicated self signatures and signatures by keys
-not in the keyring. The default behavior of gpg seems to have changed
-regarding the first type of signatures as commit 671a0c921fe0 ("Periodic
-update from keyservers") in the korg-pgpkeys repo introduced quite some of
-these.
+The motivation behind this change was that thank-yous weren't showing up
+in maintainer's inboxes.  This is a problem because some of us the
+presence of these mails to indicate that particular sets or individual
+patches have been applied or not.
 
-New key material is also only added cleaned, so it's consequent to also
-let export-keyring clean the keys. A side effect is that signatures made by
-deleted keys are dropped, too, but I consider that an upside.
+Provide command line option '--me-too' to override the default
+behaviour.  If this is not specified, there are no functional changes.
 
-A downside of this change however is that not only duplicated data is
-dropped, but also 3rd-party signatures over SHA-1 hashes. While this is
-good in general, this will considerably damage the Web of Trust in the
-kernel keyring, disconnecting 483 keys from Linus POV.
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217672
+Signed-off-by: Lee Jones <lee@kernel.org>
 ---
- export-keyring.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ src/b4/command.py |  2 ++
+ src/b4/ty.py      | 19 ++++++++++---------
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/export-keyring.py b/export-keyring.py
-index fc12624a42f6..fa35d7a381ae 100755
---- a/export-keyring.py
-+++ b/export-keyring.py
-@@ -51,7 +51,7 @@ if __name__ == '__main__':
-     ap.add_argument('--graph-out-format', dest='graph_out_format', default='svg',
-                     help='Export graphs in this format')
-     ap.add_argument('--key-export-options', dest='key_export_options',
--                    default='export-attributes',
-+                    default='export-attributes,export-clean',
-                     help='The value to pass to gpg --export-options')
-     ap.add_argument('--gen-b4-keyring', action='store_true', dest='gen_b4_keyring',
-                     default=False,
+diff --git a/src/b4/command.py b/src/b4/command.py
+index 476fc13565a1..f41b6ed86c74 100644
+--- a/src/b4/command.py
++++ b/src/b4/command.py
+@@ -266,6 +266,8 @@ def setup_parser() -> argparse.ArgumentParser:
+                        help='Print out emails instead of sending them')
+     sp_ty.add_argument('--pw-set-state', default=None,
+                        help='Set this patchwork state instead of default (use with -a, -t or -d)')
++    sp_ty.add_argument('--me-too', action='store_true', dest='metoo', default=False,
++                       help='Send a copy of the thanks mail to yourself - ensures a copy lands in your inbox')
+     sp_ty.set_defaults(func=cmd_ty)
+ 
+     # b4 diff
+diff --git a/src/b4/ty.py b/src/b4/ty.py
+index 021588ff9e55..0805914044f4 100644
+--- a/src/b4/ty.py
++++ b/src/b4/ty.py
+@@ -78,14 +78,15 @@ def git_get_commit_message(gitdir: Optional[str], rev: str) -> Tuple[int, Union[
+     return b4.git_run_command(gitdir, args)
+ 
+ 
+-def make_reply(reply_template: str, jsondata: dict, gitdir: Optional[str]) -> email.message.EmailMessage:
++def make_reply(reply_template: str, jsondata: dict, gitdir: Optional[str], cmdargs: argparse.Namespace) -> email.message.EmailMessage:
+     msg = email.message.EmailMessage()
+     msg['From'] = '%s <%s>' % (jsondata['myname'], jsondata['myemail'])
+     excludes = b4.get_excluded_addrs()
+     newto = b4.cleanup_email_addrs([(jsondata['fromname'], jsondata['fromemail'])], excludes, gitdir)
+ 
+     # Exclude ourselves and original sender from allto or allcc
+-    excludes.add(jsondata['myemail'])
++    if not cmdargs.metoo:
++        excludes.add(jsondata['myemail'])
+     excludes.add(jsondata['fromemail'])
+     allto = b4.cleanup_email_addrs(utils.getaddresses([jsondata['to']]), excludes, gitdir)
+     allcc = b4.cleanup_email_addrs(utils.getaddresses([jsondata['cc']]), excludes, gitdir)
+@@ -270,7 +271,7 @@ def set_branch_details(gitdir: Optional[str], branch: str, jsondata: dict, confi
+     return jsondata, config
+ 
+ 
+-def generate_pr_thanks(gitdir: Optional[str], jsondata: dict, branch: str) -> email.message.EmailMessage:
++def generate_pr_thanks(gitdir: Optional[str], jsondata: dict, branch: str, cmdargs: argparse.Namespace) -> email.message.EmailMessage:
+     config = b4.get_main_config()
+     jsondata, config = set_branch_details(gitdir, branch, jsondata, config)
+     thanks_template = DEFAULT_PR_TEMPLATE
+@@ -295,11 +296,11 @@ def generate_pr_thanks(gitdir: Optional[str], jsondata: dict, branch: str) -> em
+     if not cidmask:
+         cidmask = 'merge commit: %s'
+     jsondata['summary'] = cidmask % jsondata['merge_commit_id']
+-    msg = make_reply(thanks_template, jsondata, gitdir)
++    msg = make_reply(thanks_template, jsondata, gitdir, cmdargs)
+     return msg
+ 
+ 
+-def generate_am_thanks(gitdir: Optional[str], jsondata: dict, branch: str, since: str) -> email.message.EmailMessage:
++def generate_am_thanks(gitdir: Optional[str], jsondata: dict, branch: str, cmdargs: argparse.Namespace) -> email.message.EmailMessage:
+     config = b4.get_main_config()
+     jsondata, config = set_branch_details(gitdir, branch, jsondata, config)
+     thanks_template = DEFAULT_AM_TEMPLATE
+@@ -312,7 +313,7 @@ def generate_am_thanks(gitdir: Optional[str], jsondata: dict, branch: str, since
+                             config['thanks-am-template'])
+             sys.exit(2)
+     if 'commits' not in jsondata:
+-        commits = auto_locate_series(gitdir, jsondata, branch, since)
++        commits = auto_locate_series(gitdir, jsondata, branch, cmdargs.since)
+     else:
+         commits = jsondata['commits']
+ 
+@@ -343,7 +344,7 @@ def generate_am_thanks(gitdir: Optional[str], jsondata: dict, branch: str, since
+                         nomatch, len(commits), jsondata['subject'])
+         logger.critical('           Please review the resulting message')
+ 
+-    msg = make_reply(thanks_template, jsondata, gitdir)
++    msg = make_reply(thanks_template, jsondata, gitdir, cmdargs)
+     return msg
+ 
+ 
+@@ -425,10 +426,10 @@ def send_messages(listing: List[Dict], branch: str, cmdargs: argparse.Namespace)
+         jsondata['signature'] = signature
+         if 'pr_commit_id' in jsondata:
+             # This is a pull request
+-            msg = generate_pr_thanks(gitdir, jsondata, branch)
++            msg = generate_pr_thanks(gitdir, jsondata, branch, cmdargs)
+         else:
+             # This is a patch series
+-            msg = generate_am_thanks(gitdir, jsondata, branch, cmdargs.since)
++            msg = generate_am_thanks(gitdir, jsondata, branch, cmdargs)
+ 
+         if msg is None:
+             continue
 -- 
-2.47.2
+2.49.0.1045.g170613ef41-goog
 
