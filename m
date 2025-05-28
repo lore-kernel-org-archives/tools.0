@@ -1,62 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52831C683
-	for <tools@linux.kernel.org>; Wed, 28 May 2025 15:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741B320E011
+	for <tools@linux.kernel.org>; Wed, 28 May 2025 15:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748445577; cv=none; b=KTVap/jQuCCGi+ddkXX8xuyr3jJHHhSZrQYdsmyAVj9jiPPd/PVRms3rFYyD1/QvRaHcmBK7EZRvSjX/4Jo9hZ3ZmMqp/8vcQgE+OB+GdcWNp5oX//QRHMMpr5M7q9yEjqZ58xCH6+QRur1zqdAMi07fcJrVQ1OzLLUJ0cjuOAo=
+	t=1748446341; cv=none; b=CPBem+YFL5EFMtnguzeIwl6EmCyRJRAww985T3F+7RMvTXqYcq2RVCA1J/SqtQQvYP0Am0Pg3ZCVB1Bzrib5Gz68PIHqA/BQC6Gp11d+Z1lX+hkJ8l+KWXnBYbm5EpcxAjbT0VgWGfZmeLtK4QLxcGEbiQkZ9N/467gww5i8UVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748445577; c=relaxed/simple;
-	bh=sB18gQo7ozkmuMlWhJ+qsOh0LriAAxiaRB/jtuqfqE0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=QihtcJ5xlejq5DfRqG3iGpQcMAIu2NAHTZ86YloUvOCCW6r+i0BplT/gj6rHgeS3AprnFgkkgLsh5kDOa6cHZvYgnwOyCvyZpM1RxfZvR/niEDPnmWZtEbToNCFkgUibjYFSOs9fb6IfIUS6vmTPWtqp7wtEB53v2HsKXZtL3wI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NYoGmGDa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748446341; c=relaxed/simple;
+	bh=hx5o/w/Z8SUib+dmFPV6jNL2y2XCRUSONx0/DT2XjUY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=n0IfWRhyfp4oM+0MQua7ARo5LTOOQFU16fJgKOmmiCuYmf1oTC6nqWPAp/6wWWK4akGzJ++eK19ntuZhMmlGQLpl0D7og+4TIf4Ifh4U23yP8E62CKn60343ZWyJadEYL18+TirZT1R/+lRkkJzNwhlutRvQAjQZ/WlntWJC7wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Vlrb6zO9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NYoGmGDa"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Vlrb6zO9"
 Received: by smtp.kernel.org (Postfix)
-	id 773F2C4CEED; Wed, 28 May 2025 15:19:36 +0000 (UTC)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	id EFF0BC4CEF0; Wed, 28 May 2025 15:32:20 +0000 (UTC)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 78EF1C4CEE3
-	for <tools@kernel.org>; Wed, 28 May 2025 15:19:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 78EF1C4CEE3
+	by smtp.kernel.org (Postfix) with ESMTPS id F37BBC4CEED
+	for <tools@kernel.org>; Wed, 28 May 2025 15:32:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org F37BBC4CEED
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1748445575; x=1779981575;
+  t=1748446340; x=1779982340;
   h=from:to:cc:subject:date:message-id:mime-version:
    content-transfer-encoding;
-  bh=sB18gQo7ozkmuMlWhJ+qsOh0LriAAxiaRB/jtuqfqE0=;
-  b=NYoGmGDalb/XzlLnO+B++6gEvosbmmv0HEL7nTT+/Ycv3iJ8tCeXw61D
-   n/qVbcTlM61a8dN993pFPF9xqu1/w7wezFea5WV0h2tSdQsBg0y4pgI5g
-   vyI0JNSv//5OXTpWet+sz0lmhjoaRx/O4+qHZcVI6oGOGWnJngZKAnM5M
-   Q0qXQ8N1Oy9mcTOHNLlF0Y0ZPsDiNtlf+PuifpLpBLZ+Etk0iFu6xZckH
-   sU9/9PGDN2vIxXrJFfk8vrReFZPgwi8YVM0e90c6VsG6fZXXKMQOv60+B
-   yNCKnAvpt/2wRyIUvjd4DGtJO4QmIr7Xl17rLO9w48V/KbeNzq58lCrN/
-   w==;
-X-CSE-ConnectionGUID: g5mWPrIjQPmGm5AK2Q2SRA==
-X-CSE-MsgGUID: v8/4r8nLQ+u7eZIpr/aJQQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="61108702"
+  bh=hx5o/w/Z8SUib+dmFPV6jNL2y2XCRUSONx0/DT2XjUY=;
+  b=Vlrb6zO9LHs+sgSnb1OMExgIVB5x0UvEoVipTIrCx8PtEjdW+VHCrM23
+   1ypm+xmswAqf/pV2+UWgsHelGR+cw7dwYie1C9nfC/TFdL/dgInyg5lVR
+   zlYsIB2RQVmFdirfo11TkNDeqNDAhdnEuYGGwhDlDeLALd2g7GMLGhmhF
+   P5VfqG6YetbIec+whnPEVEXaP0610p8u9OG7Qcggh6C2AaZAlBXxP27x8
+   MR/Mge7sgy223WsF0jm2/7eEQiDo9PDo7rNbl6uQ8t5HAF97m40aEHNYe
+   hHk61wXPIMkgvDjgnH6gRTFCfkFSgVQolJwK8bZJKA/f3QVd80DT9jQKL
+   Q==;
+X-CSE-ConnectionGUID: ryfbnjZnROKonWe4qfQb6w==
+X-CSE-MsgGUID: SiTwrTi+TImKJ4Nv1MwRYA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="50405014"
 X-IronPort-AV: E=Sophos;i="6.15,321,1739865600"; 
-   d="scan'208";a="61108702"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 08:19:34 -0700
-X-CSE-ConnectionGUID: v/etaKKuRJKIejvIrbYLwA==
-X-CSE-MsgGUID: 7BZTF4mGTuqSmMeOHeIHxg==
+   d="scan'208";a="50405014"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 08:32:11 -0700
+X-CSE-ConnectionGUID: SqiExiSyRRSofzLmONw9Sg==
+X-CSE-MsgGUID: lGACIQVcQfKtsZ8a8SkzVA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,321,1739865600"; 
-   d="scan'208";a="143251187"
+   d="scan'208";a="148570728"
 Received: from lucas-s2600cw.jf.intel.com ([10.165.21.196])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 08:19:34 -0700
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 08:32:09 -0700
 From: Lucas De Marchi <lucas.demarchi@intel.com>
 To: tools@kernel.org
 Cc: Lucas De Marchi <lucas.demarchi@intel.com>,
 	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: [PATCH b4] Output entire path in dry-run send_mail
-Date: Wed, 28 May 2025 08:19:09 -0700
-Message-ID: <20250528-full-path-v1-1-ab454229d394@intel.com>
+Subject: [PATCH b4 0/2] Allow to override output directory
+Date: Wed, 28 May 2025 08:31:06 -0700
+Message-ID: <20250528-override-output-v1-0-8e348ba28081@intel.com>
 X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
@@ -65,33 +65,34 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-X-Change-ID: 20250528-full-path-3a2e026b2837
-X-Mailer: b4 0.15-dev-6fd62
+X-Change-ID: 20250528-override-output-df3138bbe6c2
+X-Mailer: b4 0.15-dev-d9694
 Content-Transfer-Encoding: 8bit
 
-This makes it copy-and-paste-friendly. Even if the directory is output
-before the patches, allowing to double click the terminal do select the
-file helps when we are going to inspect/edit the patch.
+One mistake I sometimes do is to share an output directory. I've found
+that for me it works better if `b4 send -o /tmp/out` would refuse to
+send patches if the output directory is not empty. That's because if I
+forget that and later do a `git send-email /tmp/p` it will send things
+that were not intended to be sent.
+
+On the other hand, it's useful to just have an option to always drop
+whatever was in the output directory and fill it with a new set of
+patches. It works for me, but I realize it's dangerous if people don't
+use a "dedicated staging area for patches". So here I'm adding it as a
+separate option.
 
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 ---
- src/b4/__init__.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Lucas De Marchi (2):
+      ez: Allow to override dir before sending
+      ez: Do not output to non-empty dir
 
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index a9d5906..3980bc6 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -4084,8 +4084,8 @@ def send_mail(smtp: Union[smtplib.SMTP, smtplib.SMTP_SSL, None], msgs: Sequence[
-         if dryrun:
-             if output_dir:
-                 filen = '%s.eml' % ls.get_slug(sep='-')
--                logger.info('  %s', filen)
-                 write_to = os.path.join(output_dir, filen)
-+                logger.info(f'  %s', write_to)
-                 with open(write_to, 'wb') as fh:
-                     fh.write(bdata)
-                 continue
+ src/b4/command.py |  2 ++
+ src/b4/ez.py      | 13 ++++++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
+base-commit: 6f78e874e96b0b3bac1767a1743b20af20cb0e2f
+change-id: 20250528-override-output-df3138bbe6c2
 
+Lucas De Marchi
 
