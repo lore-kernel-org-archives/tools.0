@@ -1,66 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B495C1E5215
-	for <tools@linux.kernel.org>; Wed, 28 May 2025 18:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FC61EB5FA
+	for <tools@linux.kernel.org>; Wed, 28 May 2025 18:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748456836; cv=none; b=WTdscrCAPAwGwT91pwX7sVeNDXgilh3/swDTlSlDBfdiQc4sy1+klIyNHhatT0QANd1z7IZ9JboKyyJf8B5BVbkqmatIT4nUpKToI3H7fvDvBcCJB7Wr9b1eX6QORAVpD0/1uDIKlwdFfirbAai1dDJv3iC2xoyUmu2AHpKYYL4=
+	t=1748456988; cv=none; b=coWXL6AhfYy5/792swBGhVaGMIEg46ItIIsXNrd1N2LpSX7VQSTCs8xMB0JMT07jm+sW3XqvI5RoC7OiIkwuUmSb/DbleMisAmRkdzFPwy3lYkOnGGQtH9YSMLZ1DEouQSbgOp9lvaNUX3jVyfLwf/AxHm6Wp9mtqaCmmG11B3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748456836; c=relaxed/simple;
-	bh=evhSBDP4fSvkN6NamYbwI+ysjWsHvWEtA1XSgpeScfU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bguuBuzX0o8ZQoqsDkm8R2TijnpLMEwZVqPFNinZkWXGEHco4kQsADkjdwjUVJin+tgaLLAhwZUfR4pwSAgQ5ckOeiNkLQT2dSVFwlp54kPZkusCL4uuLcFcJromQ7w6wpStdj45blRj1Um8M5z5Ad0DLJ8Y6vNFkj1YYOvpQp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGj3IPH/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748456988; c=relaxed/simple;
+	bh=dkqx/ryrSO60aXtQ+/p6DzlGWsu+fstaC17qLyIaKzI=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=mJLMk4kIRl2eeiXVcMZgg8px8pcyxP40K9+lz/QYP5vHxN9aOiik4YTIKhwZh9Ko1NF1xmD2snn2yQBC+y2eU3zDJTwqCnUZr4CilX75tF3Ym8a3s9Iq2vTvcXtzcqVSO30TEypnBvAzYuakw8zKXPvl5XzsHvvB0eS951c1VLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FC7D+Z/q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGj3IPH/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FC7D+Z/q"
 Received: by smtp.kernel.org (Postfix)
-	id 3A3A7C4CEED; Wed, 28 May 2025 18:27:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0250FC4CEE3;
-	Wed, 28 May 2025 18:27:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748456836;
-	bh=evhSBDP4fSvkN6NamYbwI+ysjWsHvWEtA1XSgpeScfU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uGj3IPH/z+vTlcdDLA38WBSwStBEhjSCns42PqrlV8vzlzOYPywXVtM1po1eHcCA0
-	 T65Iqon2XIz+C1uWe2irTTNJ5V9fQubriGwgNH6IkrY54APx4ei2ht+WZEa5K/47Pd
-	 d6WnBKgtosYy+ga5+NdTM+7oMz1rpRvR3IcGecnA=
-Date: Wed, 28 May 2025 14:27:14 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Tal Zussman <tz2294@columbia.edu>
-Cc: tools@kernel.org
-Subject: Re: b4 broken with git older than 2.41
-Message-ID: <20250528-active-pumpkin-tapir-3e912d@lemur>
-References: <CAKha_sri+u=R9x1h9tg7N4cuTFckLmbe22=Sw2P2jpw_fm2Jcg@mail.gmail.com>
+	id 45A3BC4CEED; Wed, 28 May 2025 18:29:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2630BC4CEE3;
+	Wed, 28 May 2025 18:29:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748456988;
+	bh=dkqx/ryrSO60aXtQ+/p6DzlGWsu+fstaC17qLyIaKzI=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=FC7D+Z/q3oK9CTXwGgwcBxk9/UYWc8GPtGBtoAXaIQiFrSyQp/LhRAhaTx3HSSVnr
+	 ivgE9Y759/RX604a+7DFCwuTFBTsHhLw52aDoj3+gjM7+QiYD21553kxMnAIMcwTzI
+	 bP9QEnqZ68LQ0hIsfDRDPD3P5Wcje/ZGa+mmZDLwQAUhTYk853EyusweL1tTtdgQo0
+	 fymvk3wC4gL8oddcDUKcJ0RloxL6U/96RkBXNXPAJWfSc2mhzf4YNuEUm4sc2UrPl0
+	 MtBbOMJ02r/q9ge7WOkLpHLaRa9VD18+vNFzEQgQS8C79Sn+oSb0qGeZGq9gxKtjmO
+	 kUAffMSP7sfFA==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 390B63822D1A;
+	Wed, 28 May 2025 18:30:23 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: Bugspray Bot <bugbot@kernel.org>
+To: tz2294@columbia.edu, tools@kernel.org
+Message-ID: <20250528-b220171-fb1a8804de22@bugzilla.kernel.org>
 In-Reply-To: <CAKha_sri+u=R9x1h9tg7N4cuTFckLmbe22=Sw2P2jpw_fm2Jcg@mail.gmail.com>
+References: <CAKha_sri+u=R9x1h9tg7N4cuTFckLmbe22=Sw2P2jpw_fm2Jcg@mail.gmail.com>
+Subject: Re: b4 broken with git older than 2.41
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: bugspray 0.1-dev
+Date: Wed, 28 May 2025 18:30:23 +0000 (UTC)
 
-On Wed, May 28, 2025 at 02:15:16AM -0400, Tal Zussman wrote:
-> Hi,
-> 
-> I am using b4 (both master and 0.14.y) on Debian 12 with git 2.39.5
-> (the latest available).
-> Unfortunately, it is failing with errors such as:
-> "CRITICAL: Failed to convert range to patches: Could not get a patch
-> out of bfd12f86c8a48927959a7d88c84296823e15a8f9."
-> 
-> I narrowed this down to the use of the '--default-prefix' option in
-> git_range_to_patches(), which seems to have been added in git v2.41.
-> Once I commented that out, everything worked fine.
-> Is there a minimum supported git version listed somewhere?
+Hello:
 
-Hm... we should make things work with that version of git. I wasn't aware of
-this limitation.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=220171
 
-Thanks for the report.
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (bugspray 0.1-dev)
 
-bugspray tag me
-
--K
