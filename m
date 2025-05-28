@@ -1,103 +1,66 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CD920E011
-	for <tools@linux.kernel.org>; Wed, 28 May 2025 15:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B495C1E5215
+	for <tools@linux.kernel.org>; Wed, 28 May 2025 18:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748446343; cv=none; b=dhAWW8+pl/UcpSkoA5KwbkLXxLEB9FeUtwg0j78mm/AAQMuHm1QQM/thMVn7m3niYIhYrCt5zkASgQpH3L+Gqm4tBnk7EovVdvEALkhiOZI0LngE/zvTJ9NHu5r32orG57R39LJcTGL3gY0IDpru9YhGUKdxBP5Sn4Y4u7hurnc=
+	t=1748456836; cv=none; b=WTdscrCAPAwGwT91pwX7sVeNDXgilh3/swDTlSlDBfdiQc4sy1+klIyNHhatT0QANd1z7IZ9JboKyyJf8B5BVbkqmatIT4nUpKToI3H7fvDvBcCJB7Wr9b1eX6QORAVpD0/1uDIKlwdFfirbAai1dDJv3iC2xoyUmu2AHpKYYL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748446343; c=relaxed/simple;
-	bh=O5fjme+zhU0oUf7Sgz0ubTkbvfwxQm8gO7N+ivFvUUU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ScZUSQ9uk6amVGpuN62LJmphmibOZfoRFWdE6j6qMudOOBjZbgH6VcgjfivIt99VNUH8hSNp2v296LhwmL8ZC17dJwjbvzZSedmxB9Hz5Kx8JJ0yUyrEacQII6dCjBGA1BoKdrDh0RkKIQAkIIZ9BDT29rwx4ZDfkHkWW9WHkfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JuaxcwWe; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748456836; c=relaxed/simple;
+	bh=evhSBDP4fSvkN6NamYbwI+ysjWsHvWEtA1XSgpeScfU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bguuBuzX0o8ZQoqsDkm8R2TijnpLMEwZVqPFNinZkWXGEHco4kQsADkjdwjUVJin+tgaLLAhwZUfR4pwSAgQ5ckOeiNkLQT2dSVFwlp54kPZkusCL4uuLcFcJromQ7w6wpStdj45blRj1Um8M5z5Ad0DLJ8Y6vNFkj1YYOvpQp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGj3IPH/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JuaxcwWe"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGj3IPH/"
 Received: by smtp.kernel.org (Postfix)
-	id 6EE31C4CEF0; Wed, 28 May 2025 15:32:22 +0000 (UTC)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 0BD23C4CEED
-	for <tools@kernel.org>; Wed, 28 May 2025 15:32:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0BD23C4CEED
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1748446341; x=1779982341;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=O5fjme+zhU0oUf7Sgz0ubTkbvfwxQm8gO7N+ivFvUUU=;
-  b=JuaxcwWekVyFdX7vgWpDCyKJP+N+lk2+ptJ52UnuxhsvUdwoEybkzw5V
-   kXPxBcZToud53pdab1cOs9uQe/sAa5LdzJ57lp46Uhef2cixox+dZkJLe
-   RL+ibovNJCq1eW3uh1rJhn7jabx8GJTlQuVWpFNFoMyx/6Y4pyohlrRGG
-   SzxdR0MFpJEjxc4r2VJLCpYAF95UlQQx7yaSMjtE4TKWaOcvxQw+0Q2nz
-   0XvxXURmRHr4i7WmtthOd5UtRXHz9p/RE8bfDzTjZTxspUEX8btBC0L0f
-   tqE1A4FmGmGKXpnD7HkHMLQ8SOOTODc1ZGO5xiFf2ydSY01rhgScEwX9S
-   g==;
-X-CSE-ConnectionGUID: eXnE79Q4QACgz1rkOONfDQ==
-X-CSE-MsgGUID: Bj8PvVwXSkO7mtifVbA78Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="50405018"
-X-IronPort-AV: E=Sophos;i="6.15,321,1739865600"; 
-   d="scan'208";a="50405018"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 08:32:11 -0700
-X-CSE-ConnectionGUID: YzHYZrhnTmWh9O9Cc5aTCQ==
-X-CSE-MsgGUID: Eo6tncsYQoy1k7UMpiBZkA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,321,1739865600"; 
-   d="scan'208";a="148570734"
-Received: from lucas-s2600cw.jf.intel.com ([10.165.21.196])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 08:32:10 -0700
-From: Lucas De Marchi <lucas.demarchi@intel.com>
-To: tools@kernel.org
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: [PATCH b4 2/2] ez: Do not output to non-empty dir
-Date: Wed, 28 May 2025 08:31:08 -0700
-Message-ID: <20250528-override-output-v1-2-8e348ba28081@intel.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250528-override-output-v1-0-8e348ba28081@intel.com>
-References: <20250528-override-output-v1-0-8e348ba28081@intel.com>
+	id 3A3A7C4CEED; Wed, 28 May 2025 18:27:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0250FC4CEE3;
+	Wed, 28 May 2025 18:27:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1748456836;
+	bh=evhSBDP4fSvkN6NamYbwI+ysjWsHvWEtA1XSgpeScfU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uGj3IPH/z+vTlcdDLA38WBSwStBEhjSCns42PqrlV8vzlzOYPywXVtM1po1eHcCA0
+	 T65Iqon2XIz+C1uWe2irTTNJ5V9fQubriGwgNH6IkrY54APx4ei2ht+WZEa5K/47Pd
+	 d6WnBKgtosYy+ga5+NdTM+7oMz1rpRvR3IcGecnA=
+Date: Wed, 28 May 2025 14:27:14 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Tal Zussman <tz2294@columbia.edu>
+Cc: tools@kernel.org
+Subject: Re: b4 broken with git older than 2.41
+Message-ID: <20250528-active-pumpkin-tapir-3e912d@lemur>
+References: <CAKha_sri+u=R9x1h9tg7N4cuTFckLmbe22=Sw2P2jpw_fm2Jcg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.15-dev-d9694
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAKha_sri+u=R9x1h9tg7N4cuTFckLmbe22=Sw2P2jpw_fm2Jcg@mail.gmail.com>
 
-Recommend --output-dir-override if user is trying to output to non-empty
-directory.
+On Wed, May 28, 2025 at 02:15:16AM -0400, Tal Zussman wrote:
+> Hi,
+> 
+> I am using b4 (both master and 0.14.y) on Debian 12 with git 2.39.5
+> (the latest available).
+> Unfortunately, it is failing with errors such as:
+> "CRITICAL: Failed to convert range to patches: Could not get a patch
+> out of bfd12f86c8a48927959a7d88c84296823e15a8f9."
+> 
+> I narrowed this down to the use of the '--default-prefix' option in
+> git_range_to_patches(), which seems to have been added in git v2.41.
+> Once I commented that out, everything worked fine.
+> Is there a minimum supported git version listed somewhere?
 
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
----
- src/b4/ez.py | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Hm... we should make things work with that version of git. I wasn't aware of
+this limitation.
 
-diff --git a/src/b4/ez.py b/src/b4/ez.py
-index 0f75e7e..2ec075d 100644
---- a/src/b4/ez.py
-+++ b/src/b4/ez.py
-@@ -1897,8 +1897,12 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
- 
-     if cmdargs.output_dir:
-         cmdargs.dryrun = True
-+        d = pathlib.Path(cmdargs.output_dir)
-+        d.mkdir(parents=True, exist_ok=True)
-+        if any(d.iterdir()):
-+            logger.critical(f'CRITICAL: directory {cmdargs.output_dir} is not empty. Consider using --output-dir-override to override content')
-+            sys.exit(1)
-         logger.info('Will write out messages into %s', cmdargs.output_dir)
--        pathlib.Path(cmdargs.output_dir).mkdir(parents=True, exist_ok=True)
- 
-     sconfig = b4.get_sendemail_config()
-     endpoint = None
+Thanks for the report.
 
--- 
-2.49.0
+bugspray tag me
 
+-K
