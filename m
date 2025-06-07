@@ -1,85 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from dcvr.yhbt.net (public-inbox.org [173.255.242.215])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661251A9B3D
-	for <tools@linux.kernel.org>; Fri,  6 Jun 2025 21:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E08360
+	for <tools@linux.kernel.org>; Sat,  7 Jun 2025 00:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749245978; cv=none; b=ed15cpRtComebKGR+Dnx4RF4uBDFGsYiOxzaopk6kkoSH9GvAeaMfN4SrCDAo/M7Rr67K29spehFQk82wIybIUVHSWKo7YRjJujTFs6kvxLmV77+ezjJzMHa87Rob/9FNWT1cOPd07NnT3qmNsrjakInddxtEPJ8syHNcfAVsKI=
+	t=1749254700; cv=none; b=k8SmvPYWf946QJNi9NDwRGo1i0u1X3l1KFX+couhh9e8RhGEKUDK7FlKU87phmelaxgqWl47va0Pga1Cvg6VnigZoiSQDy5muOQAoy33VmLKbd+v7hLEoRSqUCOetTCicbfgtrb4L0B7KysocIFVE++5fhMVgLU8Fhd4oPBxb3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749245978; c=relaxed/simple;
-	bh=mst7f5ejAFGpRpgeyhXxEohCDqCx5WeXVybNOClDijk=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=e99Nzffp2xrS1QfUfTu8qTdLyVvm5plFoxLLSn40PTnidUR+d73QFuKnh5LPxcX37auQEH/2SodwfOuJS9+WQrn6a40hn92xpJPrWjM54rnqnpQwsekY6g8Ist7qc0U/ckoIWl0U1ODHE+WGiCq8lfHGe21JVRGbkYnYLc5rrrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKYYl1bc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749254700; c=relaxed/simple;
+	bh=Nzk3dyqPUDrvvKp5S+MpRnZN9OljUQ9HhyLX70dYP78=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BuqcovN86FM/SQ+pnPHBblGdiaFBqeGpD2kT3amLflIqP6oE7QSdxBjLqYbDZTeybCkqDg1DMiHQMorUks6qPTmPJbeZDEvmHjnuX2uTGRoSPA1QJ1GoyhSPRDql0s/80g6pusiCypzP20LSGhqCRGEN97G8jJVWOpur76CvmTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=2J1fNmWe; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKYYl1bc"
-Received: by smtp.kernel.org (Postfix)
-	id 0BFF2C4CEEF; Fri,  6 Jun 2025 21:39:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D35EC4CEEB;
-	Fri,  6 Jun 2025 21:39:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749245977;
-	bh=mst7f5ejAFGpRpgeyhXxEohCDqCx5WeXVybNOClDijk=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=nKYYl1bcdkh8AYJuSk4CKD9F1Iq2bOrF0ywjOvAWRW5Lq3TFYbGTHQJl5Ft1MMARC
-	 6tfLmaEB/ImJo0GXGAQ6GszwawtNWcPOyShnAt7J7exFj2On7tz0ctc8bj5jk6d3Z9
-	 96MRdD3AZVeWKo0wloAX/3L9PRgMJGydRYY99YnI=
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@kernel.org>, 
- Tamir Duberstein <tamird@gmail.com>
-In-Reply-To: <20250606-uv-compat-v1-0-c76c1c8d6eeb@gmail.com>
-References: <20250606-uv-compat-v1-0-c76c1c8d6eeb@gmail.com>
-Subject: Re: [PATCH b4 00/10] uv compatibility, typing improvements
-Message-Id: <174924597751.3680961.6763307976769829303.b4-ty@linuxfoundation.org>
-Date: Fri, 06 Jun 2025 17:39:37 -0400
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="2J1fNmWe"
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id E64F41F4E6;
+	Sat,  7 Jun 2025 00:04:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1749254698;
+	bh=Nzk3dyqPUDrvvKp5S+MpRnZN9OljUQ9HhyLX70dYP78=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=2J1fNmWel3iB0qE0X02a5MypEa1boNrxdWuUX4SBl9X1VTrh/S6V0jL+78wDn/24c
+	 O4hMIt2Gpb2+YXhqKSusD/6H0fz3oq/UYp4BeLceHQkFqj008cUAjhFqGwaKiJNUEr
+	 0znMdMxSRVxAjdG9YOnoNydlcgKiQT7VZs8nre+o=
+Date: Sat, 7 Jun 2025 00:04:57 +0000
+From: Eric Wong <e@80x24.org>
+To: James Bottomley <James.Bottomley@hansenpartnership.com>
+Cc: tools@linux.kernel.org, users@kernel.org, meta@public-inbox.org
+Subject: Re: Does anyone have any tips for efficient lei and dovecot
+ integration?
+Message-ID: <20250607000457.M642647@dcvr>
+References: <0bb9762f3bcee7b185f1eabc6c88859c0bf6f4ac.camel@HansenPartnership.com>
+ <20250606180218.M374829@dcvr>
+ <014a1fdf240ef70f00dd8dd2bfcde7b234b41e31.camel@HansenPartnership.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-bf5fc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <014a1fdf240ef70f00dd8dd2bfcde7b234b41e31.camel@HansenPartnership.com>
 
+James Bottomley <James.Bottomley@HansenPartnership.com> wrote:
+> Thanks.  --no-import-before seems to have stopped store growing ... is
+> there any way I can shrink it?
 
-On Fri, 06 Jun 2025 15:51:11 -0400, Tamir Duberstein wrote:
-> uv[0] is an extremely fast Python package and project manager; allowing
-> b4 to be developed with it makes life more pleasant for all
-> contributors.
+Not easily in a fine-grained way.  I *think*
+`rm -rf ~/.local/share/lei/store' (but keeping
+~/.local/share/lei/saved-searches) should be OK but I haven't
+tested.  Theoretically we could add support for purging
+individual messages from it (like public-inbox-purge).
+
+You can also use normal git-gc || SQLite VACUUM ||
+xapian-compact to reduce space losslessly.  We can probably add
+`lei compact' to wrap xapian-compact similar to what
+public-inbox-compact does; and probably add SQLite VACUUM
+support to both of those xapian-compact wrappers.
+
+> On Fri, 2025-06-06 at 18:02 +0000, Eric Wong wrote:
+> > AFAIK, dovecot uses inotify||kevent to detect changes to its
+> > Maildirs.  I never needed to run `doveadm force-resync' after
+> > writing with 3rd-party tools (e.g. lei, mutt) to Maildirs used
+> > by dovecot.
 > 
-> This series makes the b4 project compatible with `uv` and fixes various
-> typing problems. Please see also https://github.com/mricon/b4/issues/61
-> for the likely cause of many of these typing issues having previously
-> gone unnoticed.
-> 
-> [...]
+> Well, it can, yes, but my setup is a fraction of a terrabyte of imap
+> running all my subscriptions, which is pretty huge and fanotify can be
+> a bit unscalable in something that big, so I have it turned off and I
+> simply used dovecot-lda for local delivery via procmail to make sure
+> everything got noticed immediately.
 
-Applied, thanks!
+Ouch, yeah.
 
-[01/10] Use PEP-735 dependency groups
-        commit: 9a3a30061bb4a2027442d0f1567c157dbbcf63d8
-[02/10] Specify optional dependencies in pyproject.toml
-        commit: e63bd80b7f866f1da136581f79cfd81c11302575
-[03/10] Specify dependencies in pyproject.toml
-        commit: f4185d6bc8ea0ac6b8a9ae8df7aaf334b8a983d1
-[04/10] Add ruff, remove all noqa comments
-        commit: e8ead16ba4ad5f04de4d4b17420bb425f4d38ef9
-[05/10] Remove `noinspection` comments
-        commit: 0be2cb4e31b36d531287a0e0fd6d81bfd4304d6d
-[06/10] Add mypy
-        commit: ec65df28096a90b0a3057052b59229d87b4db1b5
-[07/10] Add missing LoreTrailer.lmsg annotation
-        commit: e4b094a3bfbd040aad4a4018e264916b341406e1
-[08/10] Check variables for None rather than exprs
-        commit: 8633c7e830a5a75b6e34593cda98d0b6c0b1bb05
-[09/10] Make LoreSeries.indexes never None
-        commit: ca13d4787e403627f7ca7c70e7339ce399402166
-[10/10] Add missing type annotations
-        commit: 7027afc6e0f0f2cc67a5e71df65f4025d9a89e3c
+I actually have an idea to flip things by exposing lei/store
+data as Maildirs via FUSE3 so there'd be no need for Maildirs
+on regular FSes at all.
 
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+I'm not sure if the performance of the mainline perl
+implementation + FUSE3 shim will be fast enough to handle
+lots of small files even w/ readdirplus.  Or just bypass Perl
+and just use FUSE3+SQLite+git but there's still syscall
+amplification from all those layers.
 
+
+sidenote: I completely forgot fanotify exists since the
+early versions required CAP_SYS_ADMIN :x
