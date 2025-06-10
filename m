@@ -1,92 +1,69 @@
-Received: from dcvr.yhbt.net (public-inbox.org [173.255.242.215])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E08360
-	for <tools@linux.kernel.org>; Sat,  7 Jun 2025 00:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41547263F4E
+	for <tools@linux.kernel.org>; Tue, 10 Jun 2025 19:46:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749254700; cv=none; b=k8SmvPYWf946QJNi9NDwRGo1i0u1X3l1KFX+couhh9e8RhGEKUDK7FlKU87phmelaxgqWl47va0Pga1Cvg6VnigZoiSQDy5muOQAoy33VmLKbd+v7hLEoRSqUCOetTCicbfgtrb4L0B7KysocIFVE++5fhMVgLU8Fhd4oPBxb3I=
+	t=1749584788; cv=none; b=cBCitgBhHxOQn1zA/UZoKj/PjtY23AC4UubtPW056/BDJas76L+Ogi6pxfeM1KZCgdWxhhEbHz6dJmFPuXWLknc75OZw/eB40vgBs2tGzgq36iKB2trRF2PCoLSWf6OQJ91AaY9eAceUzWuYsV2nYQHoWhSqcz2z1jX0x+o+lEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749254700; c=relaxed/simple;
-	bh=Nzk3dyqPUDrvvKp5S+MpRnZN9OljUQ9HhyLX70dYP78=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BuqcovN86FM/SQ+pnPHBblGdiaFBqeGpD2kT3amLflIqP6oE7QSdxBjLqYbDZTeybCkqDg1DMiHQMorUks6qPTmPJbeZDEvmHjnuX2uTGRoSPA1QJ1GoyhSPRDql0s/80g6pusiCypzP20LSGhqCRGEN97G8jJVWOpur76CvmTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=2J1fNmWe; arc=none smtp.client-ip=173.255.242.215
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
+	s=arc-20240116; t=1749584788; c=relaxed/simple;
+	bh=QkKeOajLITS/kHnLG5GkH3w5wnnJTOHCxyKjO5aJcCY=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=tNvOoPE/i+ziOGhOcbNY2Rw36sbE56TYAtmaMLQNUDwRUDS1TnZy+nucbgxM4hKxDZZwrwwl+3uAnaACH8M93pJAubkzUjINzAsVUXIx8jGWGiTcx6hQbM1lFfHIcjc/g2ojHOrxWjJDwEyheQ/H4AmIE2oqaF71oi+5rpgZhc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ePRTAq0u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="2J1fNmWe"
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E64F41F4E6;
-	Sat,  7 Jun 2025 00:04:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-	s=selector1; t=1749254698;
-	bh=Nzk3dyqPUDrvvKp5S+MpRnZN9OljUQ9HhyLX70dYP78=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=2J1fNmWel3iB0qE0X02a5MypEa1boNrxdWuUX4SBl9X1VTrh/S6V0jL+78wDn/24c
-	 O4hMIt2Gpb2+YXhqKSusD/6H0fz3oq/UYp4BeLceHQkFqj008cUAjhFqGwaKiJNUEr
-	 0znMdMxSRVxAjdG9YOnoNydlcgKiQT7VZs8nre+o=
-Date: Sat, 7 Jun 2025 00:04:57 +0000
-From: Eric Wong <e@80x24.org>
-To: James Bottomley <James.Bottomley@hansenpartnership.com>
-Cc: tools@linux.kernel.org, users@kernel.org, meta@public-inbox.org
-Subject: Re: Does anyone have any tips for efficient lei and dovecot
- integration?
-Message-ID: <20250607000457.M642647@dcvr>
-References: <0bb9762f3bcee7b185f1eabc6c88859c0bf6f4ac.camel@HansenPartnership.com>
- <20250606180218.M374829@dcvr>
- <014a1fdf240ef70f00dd8dd2bfcde7b234b41e31.camel@HansenPartnership.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ePRTAq0u"
+Received: by smtp.kernel.org (Postfix)
+	id E3ADBC4CEF2; Tue, 10 Jun 2025 19:46:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581ACC4CEED
+	for <tools@kernel.org>; Tue, 10 Jun 2025 19:46:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749584787;
+	bh=QkKeOajLITS/kHnLG5GkH3w5wnnJTOHCxyKjO5aJcCY=;
+	h=Date:From:To:Subject:From;
+	b=ePRTAq0uXcAuzMXE3PpONQMgbcD6u+4Ok9ygfmSJChCWwUHt8cEVoSz1mqBouwsnV
+	 Lp68DVmdOwCSzyEjRUfmUb30tTynMongTtk9hwBQzsXpsmLPXwOH27ViVkrKH9ZYfI
+	 jtEwO+ee7zjlo+MOU8BU5TSqc5JrhyiXQaoCS4LqFmBbDpWvu9iCPrjm9FhPRFBSq3
+	 yz99GV679lMs3llMAzwxylREeloVI2syCEI7uuGwSTZJjMIQwYkrETnDZ/bEx+28xI
+	 cdVZKKJQBpNQCq643a57gLIB3WVqxUXlhmLXGeu1Xe8wY5bjFQSwhsGw4E7XQ3xe5A
+	 ZSdXSeDNRblpA==
+Date: Tue, 10 Jun 2025 12:46:24 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: tools@kernel.org
+Subject: [b4] CRITICAL: prep-pre-flight-checks must be a list, got str
+Message-ID: <20250610194624.GA1933519@ax162>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <014a1fdf240ef70f00dd8dd2bfcde7b234b41e31.camel@HansenPartnership.com>
 
-James Bottomley <James.Bottomley@HansenPartnership.com> wrote:
-> Thanks.  --no-import-before seems to have stopped store growing ... is
-> there any way I can shrink it?
+After commit 8cae108 ("Further mypy typing enhancements"), I am seeing
+an error when running 'b4 send':
 
-Not easily in a fine-grained way.  I *think*
-`rm -rf ~/.local/share/lei/store' (but keeping
-~/.local/share/lei/saved-searches) should be OK but I haven't
-tested.  Theoretically we could add support for purging
-individual messages from it (like public-inbox-purge).
+  $ b4 send
+  Converted the branch to 1 messages
+  CRITICAL: prep-pre-flight-checks must be a list, got str
 
-You can also use normal git-gc || SQLite VACUUM ||
-xapian-compact to reduce space losslessly.  We can probably add
-`lei compact' to wrap xapian-compact similar to what
-public-inbox-compact does; and probably add SQLite VACUUM
-support to both of those xapian-compact wrappers.
+The following diff appears to resolve it for me.
 
-> On Fri, 2025-06-06 at 18:02 +0000, Eric Wong wrote:
-> > AFAIK, dovecot uses inotify||kevent to detect changes to its
-> > Maildirs.  I never needed to run `doveadm force-resync' after
-> > writing with 3rd-party tools (e.g. lei, mutt) to Maildirs used
-> > by dovecot.
-> 
-> Well, it can, yes, but my setup is a fraction of a terrabyte of imap
-> running all my subscriptions, which is pretty huge and fanotify can be
-> a bit unscalable in something that big, so I have it turned off and I
-> simply used dovecot-lda for local delivery via procmail to make sure
-> everything got noticed immediately.
+Cheers,
+Nathan
 
-Ouch, yeah.
-
-I actually have an idea to flip things by exposing lei/store
-data as Maildirs via FUSE3 so there'd be no need for Maildirs
-on regular FSes at all.
-
-I'm not sure if the performance of the mainline perl
-implementation + FUSE3 shim will be fast enough to handle
-lots of small files even w/ readdirplus.  Or just bypass Perl
-and just use FUSE3+SQLite+git but there's still syscall
-amplification from all those layers.
-
-
-sidenote: I completely forgot fanotify exists since the
-early versions required CAP_SYS_ADMIN :x
+diff --git a/src/b4/ez.py b/src/b4/ez.py
+index 0b24d50..df248bf 100644
+--- a/src/b4/ez.py
++++ b/src/b4/ez.py
+@@ -2005,7 +2005,7 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
+                         'needs-checking-deps': True,
+                         'needs-auto-to-cc': True,
+                         }
+-            cfg_checks = config.get('prep-pre-flight-checks', 'enable-all')
++            cfg_checks = config.get('prep-pre-flight-checks', ['enable-all'])
+             if not isinstance(cfg_checks, list):
+                 logger.critical('CRITICAL: prep-pre-flight-checks must be a list, got %s', type(cfg_checks).__name__)
+                 sys.exit(1)
