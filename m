@@ -1,73 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BB54C85
-	for <tools@linux.kernel.org>; Thu, 12 Jun 2025 16:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3F0299A9C
+	for <tools@linux.kernel.org>; Thu, 12 Jun 2025 16:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749745510; cv=none; b=MClsrC4mAVMThsPGnIa45gHw8WvHTpCgTeHeg3BgpHEY9EU7FfRSIyZH1uVupLblzssxjs3e7fBOmAgfxY8J120NKUJwAOB6zzvLbn1/lVQH/xcgG2L1mMgHydmmfMK1ToPQAVyNdBSaajrcNfjZQVq7ePJdVdPpp4uqJpjJghU=
+	t=1749745512; cv=none; b=agrXUd4oPCECow0vtkBzAYxGhDIjbv/0DVlkykDY2vLyVwr91KHMBzgj40czcB3Yw/PQEuB0ZSu2dpBlRHYhBicwzsRz9/W7uURtM5UO9ZddHN/UuekS7U2xzxsA4Bz7BPuQziFWxWtTD4ekTJ6F3XdFMSYgBP+v/+dqB5uZu6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749745510; c=relaxed/simple;
-	bh=eSHVxsZbpAaDPJinFw1hn3BWydnK2GH9bcKg7VSLsyc=;
+	s=arc-20240116; t=1749745512; c=relaxed/simple;
+	bh=smEjYZBv3sYNvg3yKowCRf5XhjNLBzKjCll96UkNscE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pZutXeF534BQkm/prclchnuN1GLYNDqsvgpy4c0/FK3QDvOOipTr+7BmxbVnvQIcsIjR7HHhcuFoV0pkm47gVTVyiFS621YHSlVsWDG7clNcbI7tTgVqS2WRx47qliVs7clHsCoy7jViP8DqfujUZ2OkRFXQPjTbZQYFKS6n2Xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SN9CXbYA; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=DtP4knlUwHH01K3Wwsjy8tszI/yfYv0Rj1EF9yEOdcADU2YFjD7aYSbPZjNSG28biyylMlmEROueR//+T5vK0PvVfBz/8Uxp88mQSZukEqEn2yx823Ym88H3MFQQBRuHgYphWz88HjPag+VVrbQ5JJunFX4uVHfs9sjw4DagQdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hn+NRmLI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SN9CXbYA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hn+NRmLI"
 Received: by smtp.kernel.org (Postfix)
-	id 99310C4CEEA; Thu, 12 Jun 2025 16:25:09 +0000 (UTC)
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+	id D4B0AC4CEEA; Thu, 12 Jun 2025 16:25:10 +0000 (UTC)
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id B1E24C4CEF7
-	for <tools@kernel.org>; Thu, 12 Jun 2025 16:25:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org B1E24C4CEF7
+	by smtp.kernel.org (Postfix) with ESMTPS id EF922C4CEF1
+	for <tools@kernel.org>; Thu, 12 Jun 2025 16:25:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org EF922C4CEF1
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7d09f11657cso119100685a.0
-        for <tools@kernel.org>; Thu, 12 Jun 2025 09:25:08 -0700 (PDT)
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4a6f0bcdf45so13807621cf.0
+        for <tools@kernel.org>; Thu, 12 Jun 2025 09:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749745508; x=1750350308; darn=kernel.org;
+        d=gmail.com; s=20230601; t=1749745509; x=1750350309; darn=kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KcrauDTgCR7Al/8FGSIBYKujeMp2EIGE7Dwwai/CuqQ=;
-        b=SN9CXbYAAJg2atYWWtgR3XAy34QGGARVvg66mj7zhVr8lJkEaJ0A9WIZzkDy0rP84u
-         Jc18HyDcg18EEkQCw6hfoRKBoAooL5GVTpp4gkpjVAjj8YnI6EC8Jh6pW4eOLT7ZfOej
-         e1Pe0Oid5jC/3523lX+YcO2Xu2zSQ6X6mwsB/nn69k1XeXt6Y4qEnYxXCtDiiKgdS0j9
-         sB+X5C3M73jYR1G5nsBFyZ6Bht77d2B1wUBrMoBgYPUJx2WlIq1+KueTZXaTrSlgmq1E
-         ovd/HuuKtyudTOUmWViPU3OqwYob5n1EZl2c9SgJ/FNUxlT73fcKE2/F8dUJxek1Yesb
-         6yDQ==
+        bh=UXgsuVFJvtRtzRqZTqGIp1XpGcYpO0gLi9x23UkWf10=;
+        b=Hn+NRmLIrVl7UZpNMq909dw86dbqYL5BdPMEapwG6Wdr9b33kt1p9dlJ97wTI9cLS/
+         x8oEEUiakIq161ZAg/RyHQbSUlGsfo9bvfsAxzGasPkMsXwAxTR6QpPYZH8wM1KGt+IE
+         cS3ChinGHXULVb1cmEMr6blPilL5Zpj3Y4UQBi/7lcra+Aj09c2iNivnbACuFgZbrAK4
+         ilXVfw4hyrCNHWreWMv4UJ3/KOoLpyHPs3gxHRl3oBSBh5nXPTOwYV5iXCIbKtaCRqTX
+         aMqyJocNv5ebNnAWUyL0jhLId8x6o1WcQlnoVcwtjfIPUWed7A1qcHuI0tm+qZWPMA2P
+         tAbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749745508; x=1750350308;
+        d=1e100.net; s=20230601; t=1749745509; x=1750350309;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KcrauDTgCR7Al/8FGSIBYKujeMp2EIGE7Dwwai/CuqQ=;
-        b=and0LdWf0l9agqMOBFuEK3U+OEADC2anBhpHnan/BSSQPcXphUw0KJJ4AHRkm5d/Jr
-         mq6JbxNFqoy91cn8hS9HfqJhJheqIz5l1brvdADUCOpMFZ0y383n/ue6HwN1nT+Gt8BD
-         /1ApBuKyeobfLU9oWizf+AhcmBpGgWtb1Q5/lnEg7ufYNOTlXsER4M2faU6WNQwRosyC
-         Q+ejVnnwDvIwi5iEZktSbvPeXz7fOmQZlLbRU1IUHiVqq3QZm/yxG/3PcSNnBnU0EFk0
-         iF5EFqpDhmozisdTdlzgs44g8d0wYvOUMsHi/jICrB6WL8uCFQNfMGyPH7IfhbwKkVH8
-         BmjA==
-X-Gm-Message-State: AOJu0Yz2zIZqlSwxfOc5NHuaP3gtTn92pMhrUyrvvBp1kHZvfT0MZy5g
-	S4F01y6Yep3e+be1HCqo9Gp9frgPTLwP/ZwjK455x2XedufsghVcmER9
-X-Gm-Gg: ASbGncsZnfReud5iEDJ7rruaBZWG0hbGB9MSIxP/dhvGFJmDQczDpvEy5MAKUwVcW+T
-	sjOTmpLvBqKoJxRdy7lZY273wg0KjwHj2PLFCU8LKnp1rKJgwWNgcJ5GBPYMDbsTNth8mj3W/Bl
-	NYNgIELim/yC5fielX+YlODKwBN6VN9kMTtEySKHbNdQaeHCzmOra9M78tZdagE/78UTncoSCO0
-	gc0U9+/gqRdrKVVdGCVYHQPSjgOnZLe4laFEDWY9SjUojiIGKZabvPF1PkHyTcj/tYruPWQcx6Q
-	ME9XtzXjIRd2ELhNc9cxwTuh2C3HfvSCYg/xwfLOtEm+RSOw/Ubo/JZnRmplqaNvsfQ=
-X-Google-Smtp-Source: AGHT+IFmqnNBw4b84BLp4mueHDgtHzNI/tmM0nog5h24GMaqwU7o2y8UATCmDGbt7GtoO2wPSITyEA==
-X-Received: by 2002:a05:6214:262b:b0:6fa:f94e:6e79 with SMTP id 6a1803df08f44-6fb2c31b398mr116101846d6.9.1749745507599;
-        Thu, 12 Jun 2025 09:25:07 -0700 (PDT)
+        bh=UXgsuVFJvtRtzRqZTqGIp1XpGcYpO0gLi9x23UkWf10=;
+        b=gYiYGZe4w5+iK/mEdBDoiy22tBLHPUeC2aX5LvFAXLnEdLQ85yVPIlyy7uScoJkqOz
+         vfCylyPhziYBzNAE3rCvoobkaZZc+opYyhP+MwmI7vDmkSL0dIDpNYqi7UnU1KVXgVj6
+         xkGko3iCYbxfVy5yz12O9/TOC9ozt06xUjz5z4WjLAvasLdO17TfpOOh0MocVGNoMYyb
+         IaS57Pt3jih4YARXShmBWUWwJYnc725GjMVWZYijymH5LQ9rUfN8TEdElRMmU6h3qdXn
+         w37ISO95AJ3Ckr8XXH9uDCxGn6iA3q7m5YUkYJB4ShHQ8WRlxF0OwqWDiRUR4vZH9Tkt
+         GzlQ==
+X-Gm-Message-State: AOJu0Yw25C+OOSdUSssVGi7onXS2y4DfBtOQyxtlw4UePeB5lRLvfeiz
+	8KLKli1bk/IzOmU5DysqoIsXz88UgDW2g0nLnUIGwJEUm9OLLRK5RFKS
+X-Gm-Gg: ASbGncsb9RhWO2NKAWQuGIdgZj54bZx5Kp6pWzKNSRhon+hR//FJrPtyXFwhIK+liHD
+	0MkIMuwNLLSTFi9wjyO4PxVTAqQaQ8m5AvN4CoYfzJAoY4rrp4HdeckSjWEsjOp+DxXjaJT5pxy
+	j0uBIBNAfU17wDUZOEzYYU4BKM50O/dSG7azLgL/dMZZu5UwQZhroOAQWuKxUgK2dxyC8tev3JQ
+	cC23vFVYbAP5i9LhVAXvqqpHVPp13HjZpPxQa8uqPjXg/EvzJzB2xiXEnr/0bIl5A94eVEwS/Vb
+	zzuG0Vu16oTTQQ2QycRiwcCE2agXqG+wk7jQFTPKXP04jmwH0SmYC0Y9jVdqHY9pNvE=
+X-Google-Smtp-Source: AGHT+IGRAB73e9R0MiRH6HNedO2dHqEiVMIIkPa2JSxz7X96oL4+FMxDRqKZZcWiBn4ACRbarV5dEQ==
+X-Received: by 2002:a05:6214:124d:b0:6fa:c5be:dad6 with SMTP id 6a1803df08f44-6fb34602ecamr51642916d6.6.1749745508534;
+        Thu, 12 Jun 2025 09:25:08 -0700 (PDT)
 Received: from 1.0.0.127.in-addr.arpa ([204.93.149.233])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fb35b20f72sm11996486d6.23.2025.06.12.09.25.06
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fb35b20f72sm11996486d6.23.2025.06.12.09.25.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jun 2025 09:25:07 -0700 (PDT)
+        Thu, 12 Jun 2025 09:25:08 -0700 (PDT)
 From: Tamir Duberstein <tamird@gmail.com>
-Date: Thu, 12 Jun 2025 12:25:03 -0400
-Subject: [PATCH 3/4] Avoid spuriously reading gitconfig
+Date: Thu, 12 Jun 2025 12:25:04 -0400
+Subject: [PATCH 4/4] Remove impossible assertions
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -76,7 +76,7 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250612-better-errors-v1-3-3aa1523f6d8e@gmail.com>
+Message-Id: <20250612-better-errors-v1-4-3aa1523f6d8e@gmail.com>
 References: <20250612-better-errors-v1-0-3aa1523f6d8e@gmail.com>
 In-Reply-To: <20250612-better-errors-v1-0-3aa1523f6d8e@gmail.com>
 To: "Kernel.org Tools" <tools@kernel.org>
@@ -84,46 +84,58 @@ Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
  Tamir Duberstein <tamird@gmail.com>
 X-Mailer: b4 0.15-dev
 
-Rather than always reading gitconfig twice in the first call to
-`set_bin_paths`, do it only if necessary.
+Return gpg, sshk commands from set_bin_paths and use mypy to enforce
+that they are never `None`.
 
 Signed-off-by: Tamir Duberstein <tamird@gmail.com>
 ---
- src/patatt/__init__.py | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ src/patatt/__init__.py | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
 diff --git a/src/patatt/__init__.py b/src/patatt/__init__.py
-index 12bf06a..b50003f 100644
+index b50003f..e9d8746 100644
 --- a/src/patatt/__init__.py
 +++ b/src/patatt/__init__.py
-@@ -1010,25 +1010,21 @@ def sign_message(msgdata: bytes,
- def set_bin_paths(config: Optional[GitConfigType]) -> None:
+@@ -861,18 +861,14 @@ def get_config_from_git(regexp: str,
+ 
+ 
+ def gpg_run_command(cmdargs: List[str], stdin: Optional[bytes] = None) -> Tuple[int, bytes, bytes]:
+-    set_bin_paths(None)
+-    if GPGBIN is None:
+-        raise RuntimeError('GPG binary not set, cannot run gpg commands')
+-    cmdargs = [GPGBIN, '--batch', '--no-auto-key-retrieve', '--no-auto-check-trustdb'] + cmdargs
++    gpgbin, _ = set_bin_paths(None)
++    cmdargs = [gpgbin, '--batch', '--no-auto-key-retrieve', '--no-auto-check-trustdb'] + cmdargs
+     return _run_command(cmdargs, stdin)
+ 
+ 
+ def sshk_run_command(cmdargs: List[str], stdin: Optional[bytes] = None) -> Tuple[int, bytes, bytes]:
+-    set_bin_paths(None)
+-    if SSHKBIN is None:
+-        raise RuntimeError('SSH keygen binary not set, cannot run ssh-keygen commands')
+-    cmdargs = [SSHKBIN] + cmdargs
++    _, sshkbin = set_bin_paths(None)
++    cmdargs = [sshkbin] + cmdargs
+     return _run_command(cmdargs, stdin)
+ 
+ 
+@@ -1007,7 +1003,7 @@ def sign_message(msgdata: bytes,
+     return pm.as_bytes()
+ 
+ 
+-def set_bin_paths(config: Optional[GitConfigType]) -> None:
++def set_bin_paths(config: Optional[GitConfigType]) -> Tuple[str, str]:
      global GPGBIN, SSHKBIN
      if GPGBIN is None:
--        gpgcfg = get_config_from_git(r'gpg\..*')
          if config and config.get('gpg-bin'):
-             _gpgbin = config.get('gpg-bin')
-             assert isinstance(GPGBIN, str), 'gpg-bin must be a string'
-             GPGBIN = _gpgbin
--        elif gpgcfg.get('program'):
--            _gpgbin = gpgcfg.get('program')
-+        elif (_gpgbin := get_config_from_git(r'gpg\..*').get('program')) is not None:
-             assert isinstance(_gpgbin, str), 'gpg program must be a string'
-             GPGBIN = _gpgbin
-         else:
-             GPGBIN = 'gpg'
-     if SSHKBIN is None:
--        sshcfg = get_config_from_git(r'gpg\..*', section='ssh')
-         if config and config.get('ssh-keygen-bin'):
-             _sshkbin = config.get('ssh-keygen-bin')
-             assert isinstance(_sshkbin, str), 'ssh-keygen-bin must be a string'
-             SSHKBIN = _sshkbin
--        elif sshcfg.get('program'):
--            _sshkbin = sshcfg.get('program')
-+        elif (_sshkbin := get_config_from_git(r'gpg\..*', section='ssh').get('program')) is not None:
-             assert isinstance(_sshkbin, str), 'program must be a string'
+@@ -1029,6 +1025,7 @@ def set_bin_paths(config: Optional[GitConfigType]) -> None:
              SSHKBIN = _sshkbin
          else:
+             SSHKBIN = 'ssh-keygen'
++    return GPGBIN, SSHKBIN
+ 
+ 
+ def get_algo_keydata(config: GitConfigType) -> Tuple[str, str]:
 
 -- 
 2.49.0
