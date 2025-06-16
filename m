@@ -1,35 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E63874420
-	for <tools@linux.kernel.org>; Mon, 16 Jun 2025 12:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8E62E427E
+	for <tools@linux.kernel.org>; Mon, 16 Jun 2025 13:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750077948; cv=none; b=qEPprp95A3VnaqniLeweUda9DP4tMmFQYnZZpOjxB7IEtvq16NdUCGdfi3avDV7N12TJNKQKqSL66ODx03i35adLEeT+EWKi3l2NT92hVFwFjBPAPjPAoj7qUy5GCzDiCXoz/eX3+j6vixI0+jFM1Ppen3otd6fVDCBtY3s932I=
+	t=1750079120; cv=none; b=UrkGCzRDwPP5mW9Af3Lgo/GlEXii2P6BWQSoHVkgvm1JAs8aZBouqaY7+V9eLyy35m03F/koXiGxoO+V/cFXlYnmuk0ZI5SjMAnBV5vL2JoBYwJ2LgK1v/Vus5mboxood69UfucTsk7yg2fhKIQC9JLwnReM6OmhoRzpwxO9b74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750077948; c=relaxed/simple;
-	bh=vIaf46IeJfmrfexYI0WihDitIN7jM4KhJs7ZZyc1wFM=;
+	s=arc-20240116; t=1750079120; c=relaxed/simple;
+	bh=Koxt41mGxBh8kaTEqSLXSxzfjKll1ARvXHhdo24fZDI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LscU5zZIJ+Eoem7trvFNAf+AkCQIJACEvJrOiXORrohXbwYEQ7c6mLOW2l2sY2uBnaEU2cjLcxPgvX4NOphblswrs1qf2dmru4dFQCc0radEGdjnBu25VLqK5/9NjaGcWyMQVOLh921GFh/JzWOmze0PzC5zcJ09epTlvDmKnJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stWZMBg7; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=ONlHcugOeDCG7lIz6OEIEcfh5WlZWqOu2Pl0TqSjRWAcJjIZeisrZMexcTptU4fOJQ4u+Ti5BwA+307Ry/yszrlSqPXQq7CA95XGfjIOfARYn5WPNpB5QkGONnXuSPFIRm7ys6jMQVcAWbTibFj30wEfkvJbJmG0eRATLjalEv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHVGy7Ey; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stWZMBg7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD22C4CEEA;
-	Mon, 16 Jun 2025 12:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHVGy7Ey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA05C4CEEA;
+	Mon, 16 Jun 2025 13:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750077947;
-	bh=vIaf46IeJfmrfexYI0WihDitIN7jM4KhJs7ZZyc1wFM=;
+	s=korg; t=1750079120;
+	bh=Koxt41mGxBh8kaTEqSLXSxzfjKll1ARvXHhdo24fZDI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=stWZMBg7y0/tL1+gcNDAVRIc4YtM7iDXeuWScAF4M9GktU8hyZlrykhJ91OsyUL10
-	 nZt5kwjZaw6WylrKSqBKSBHp8BKy34bzg7eQP0u3ig0xR6jRDXQG90nA1JP80l72Qp
-	 /8k8UwEQEVcNv0kc6ib8SspVgC3C88bY5oDcr21Y=
-Date: Mon, 16 Jun 2025 08:45:46 -0400
+	b=tHVGy7EyQZTly/EEWVrjyebLqwcjRGyeVw23YgekKT/zxr2FZlVCmssnFjr+QCAta
+	 UEjgco2xwp+rwzmSeKP9ouvgJRLRVX1dgI0y5l3pO4uyFRe3vA9AC1eBwOt1va4/Lz
+	 m9cA0QhdpQ9JLk4aPyl8Q/qKx6pHxql2gErsIeE0=
+Date: Mon, 16 Jun 2025 09:05:18 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: Mark Brown <broonie@kernel.org>
 Cc: tools <tools@linux.kernel.org>
 Subject: Re: Python backtrace running current master
-Message-ID: <20250616-prompt-bulky-kangaroo-eb07e0@lemur>
+Message-ID: <20250616-eggplant-vulture-of-proficiency-7d6efd@lemur>
 References: <78832c81-9b84-491b-bb1e-5f67ecddd34b@sirena.org.uk>
+ <20250616-prompt-bulky-kangaroo-eb07e0@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -38,23 +39,21 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <78832c81-9b84-491b-bb1e-5f67ecddd34b@sirena.org.uk>
+In-Reply-To: <20250616-prompt-bulky-kangaroo-eb07e0@lemur>
 
-On Mon, Jun 16, 2025 at 01:41:24PM +0100, Mark Brown wrote:
-> Hi,
+On Mon, Jun 16, 2025 at 08:45:46AM -0400, Konstantin Ryabitsev wrote:
+> > Traceback (most recent call last):
+> >   File "/home/broonie/git/b4/src/b4/command.py", line 10, in <module>
+> >     import b4
+> >   File "/home/broonie/git/b4/src/b4/__init__.py", line 41
+> >     type ConfigDictT = Dict[str, Union[str, List[str]], None]
+> >          ^^^^^^^^^^^
+> > SyntaxError: invalid syntax
 > 
-> With current master (80e1a7f) on Debian stable I'm getting a backtrace
-> trying to run b4 with no arguments:
-> 
-> Traceback (most recent call last):
->   File "/home/broonie/git/b4/src/b4/command.py", line 10, in <module>
->     import b4
->   File "/home/broonie/git/b4/src/b4/__init__.py", line 41
->     type ConfigDictT = Dict[str, Union[str, List[str]], None]
->          ^^^^^^^^^^^
-> SyntaxError: invalid syntax
+> Argh, I guess Debian Stable has Python 3.7? It's EOL since 2023. I'll see if
+> there is a workaround...
 
-Argh, I guess Debian Stable has Python 3.7? It's EOL since 2023. I'll see if
-there is a workaround...
+Ah, never mind the actual "type" declaration is new in 3.12, but this is an
+easy fix...
 
 -K
