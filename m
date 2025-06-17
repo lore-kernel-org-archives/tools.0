@@ -1,91 +1,107 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7392D22DF80
-	for <tools@linux.kernel.org>; Mon, 16 Jun 2025 21:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FD41A317D
+	for <tools@linux.kernel.org>; Tue, 17 Jun 2025 01:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750109983; cv=none; b=k+vvNIGDHT5MP0DB3vqh7LH2EE5clGKS+i9JZWh/arSKriBTjIfc1l/wZ2PwXWQvy2OXfpwN7keNmaxbqPqUqM7YYiVxkFBeMjvuFJU3rHUZCV2rhI/bG/glVeBalFskD/07uEqgYA9rLwzSKlRgMTgJNoUMYxFcGS7gv1y9UAw=
+	t=1750125089; cv=none; b=oH8kaz/h5LLr9XjXfUKO/K2KPoZKJPyqN3p9h38vGvlHPcAfO0+/F8CpqkBQbd/Hjs7jECxVViijzaV2v4j6DI74p4H596TEYtImDtNfFpUNYHEzXfKN3Ga+xDRe18qiTcwk+KPogbxrzha790y+3Y7bzZg0H/JW4hm2oplY68w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750109983; c=relaxed/simple;
-	bh=QzEAQtt+aGVKhfuj29JZWjtEC6tULjxy17FvlP6qNUE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ft0bZxEQq3g2GmtkwCtJLkxnGoRciU/o5bkAocxaQFGTOuHsXOqzSnz7evsnAfY5ABjs8ScVWxnOFTn/Yvj+IwW4B+4Ik7/bpzEJ70/eZLwpv1SIwXtbVVxZpXOVlXOWbgJ45jtaGZyPAo4N2pdGeDbF8O+UP5/TR+zMypePUao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZZCBSAHU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750125089; c=relaxed/simple;
+	bh=5KYYBXG/nAkJ1xi/D5yrAC4wQOZScmN/0NZd5CV4BJk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UU9tiWORbmVduef5VW5Vjee42uXI+eo8ynND7AoZNZ5Fv4A4eSY152Im5eTgFmlod0Kxiitbw6/Gkt6eg7aOpBNwYHhDV+zHSnFYrBpPKQ9oGLgyrm5IYAK4gFDw4AIhcPeXUeFL+cDS9npQN+0xjOhyymqqV2eXvWlNe9c50SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nlkEQ6EJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZZCBSAHU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nlkEQ6EJ"
 Received: by smtp.kernel.org (Postfix)
-	id 077FFC4CEEF; Mon, 16 Jun 2025 21:39:43 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id DC706C4CEEE
-	for <tools@kernel.org>; Mon, 16 Jun 2025 21:39:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org DC706C4CEEE
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1750109980;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=85/1d0wMBmqSkLyQ+YALVO6DwSoPhRMSYMFI4xK3lME=;
-	b=ZZCBSAHUPzUUlfDHiu3J6xclHtrNwoLbq4eMdQhqLhSLD/H+5peyD2CWiqNa8SUtC2TS10
-	Cw0OSmLJB/a+a1GQCNQYrWGgHKpOJQAFaZ9UMcKYcSJyRBt/TD6w2be7WtjYaq2ZjtfyvI
-	toxjw5PKBivpQrq8W2OidB/1dOZpAHc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-375-pNs-wQ-kNM-C4ozlsqgRlA-1; Mon,
- 16 Jun 2025 17:39:37 -0400
-X-MC-Unique: pNs-wQ-kNM-C4ozlsqgRlA-1
-X-Mimecast-MFC-AGG-ID: pNs-wQ-kNM-C4ozlsqgRlA_1750109976
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 4B9E51956089;
-	Mon, 16 Jun 2025 21:39:36 +0000 (UTC)
-Received: from oldenburg.str.redhat.com (unknown [10.45.224.8])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 24E5C30001B1;
-	Mon, 16 Jun 2025 21:39:33 +0000 (UTC)
-From: Florian Weimer <fweimer@redhat.com>
-To: Sasha Levin <sashal@kernel.org>
-Cc: linux-kernel@vger.kernel.org,  linux-api@vger.kernel.org,
-  workflows@vger.kernel.org,  tools@kernel.org
+	id 86301C4CEF0; Tue, 17 Jun 2025 01:51:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32779C4CEEA;
+	Tue, 17 Jun 2025 01:51:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750125088;
+	bh=5KYYBXG/nAkJ1xi/D5yrAC4wQOZScmN/0NZd5CV4BJk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nlkEQ6EJ/iP5Crl9HFErvsLjbTi0TTQPr7lu5SeDJysqLRBK/PTUnDKu5hRPjE3Pg
+	 mCjVkFiUlYIbkutcMVN5Qe8LOMD1Pi/U1AzYaoLyGTkMGvjoMbw8S/a46kdt6Z7UBz
+	 gE8ZK7gbNO1rX17Q8frrAiU8taLZmpnZvWxaByDUjG57QakM+tJP2PpAqVt90mXf7/
+	 85pt+bpseYf9BA7y6RYgy5GvE0r3m7cb+MHSzB0BZi92Tj52HRXlUE7iCCecgDFCYj
+	 VWQvdPIzc9LENAi4ZCZRdbM0BO5v91xti+pRysCLP4vqtRUpJQXc+smFNY0xX9DPo7
+	 UEmcubYcDFJnw==
+Date: Mon, 16 Jun 2025 21:51:26 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Florian Weimer <fweimer@redhat.com>
+Cc: linux-kernel@vger.kernel.org, linux-api@vger.kernel.org,
+	workflows@vger.kernel.org, tools@kernel.org
 Subject: Re: [RFC 08/19] exec: add API specification for execve
-In-Reply-To: <20250614134858.790460-9-sashal@kernel.org> (Sasha Levin's
-	message of "Sat, 14 Jun 2025 09:48:47 -0400")
+Message-ID: <aFDKHhaqB75Qi212@lappy>
 References: <20250614134858.790460-1-sashal@kernel.org>
-	<20250614134858.790460-9-sashal@kernel.org>
-Date: Mon, 16 Jun 2025 23:39:31 +0200
-Message-ID: <87ikkvv018.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250614134858.790460-9-sashal@kernel.org>
+ <87ikkvv018.fsf@oldenburg.str.redhat.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <87ikkvv018.fsf@oldenburg.str.redhat.com>
 
-* Sasha Levin:
+On Mon, Jun 16, 2025 at 11:39:31PM +0200, Florian Weimer wrote:
+>* Sasha Levin:
+>
+>> +	KAPI_RETURN("long", "Does not return on success; returns -1 on error")
+>> +		.type = KAPI_TYPE_INT,
+>> +		.check_type = KAPI_RETURN_ERROR_CHECK,
+>> +	KAPI_RETURN_END
+>
+>Is the -1 part correct?
 
-> +	KAPI_RETURN("long", "Does not return on success; returns -1 on error")
-> +		.type = KAPI_TYPE_INT,
-> +		.check_type = KAPI_RETURN_ERROR_CHECK,
-> +	KAPI_RETURN_END
+Maybe :) That's one of the things I wasn't sure about: we're documenting
+the execve syscall rather than the function itself. A user calling
+execve() will end up with -1 on failure, and errno set with the error
+code.
 
-Is the -1 part correct?
+You could argue that it's libc that sets errno and we're trying to spec
+the kernel here, not the userspace interface to it.
 
-Many later errors during execve are not recoverable and result in execve
-succeeding (nominally) and a fatal signal being delivered to the process
-instead.  Not sure if the description covers that.
+At the end I managed to lawyer myself into a decision that I liked: I
+figured that since klibc is really a kernel library that is merely
+packaged seperately from the kernel, it is really a kernel interface,
+and so I followed the libc convention.
 
-What about the effect of unblocking a parent thread that has vfork'ed?
+Open for suggestions...
 
+>Many later errors during execve are not recoverable and result in execve
+>succeeding (nominally) and a fatal signal being delivered to the process
+>instead.  Not sure if the description covers that.
+
+I was afraid of the "signals" rabit hole: from what I recall, you can
+have fatal signals pending past the point of no return but before
+execve() completes from both execve() failures as well as external
+sources.
+
+There's definitely room for a longer explanation of how all of this
+works together.
+
+I'd suggest that we tackle signal specs in the near future, and see how
+we can tie those into the rest of the API specs. Right now I'm pretty
+unhappy with the vague KAPI_SIGNAL().
+
+>What about the effect of unblocking a parent thread that has vfork'ed?
+
+In my mind it's vfork() that is waiting for the execve to complete (via
+wait_for_vfork_done()) rather than execve() actively waking up the
+vfork() parent.
+
+We can list it as a side effect of execve()? I suppose that its similar
+to something like read() in one process waking up a different process
+from epoll_wait(), so we should probably be documenting those as well...
+
+
+Thanks for the comments!
+
+-- 
 Thanks,
-Florian
-
+Sasha
