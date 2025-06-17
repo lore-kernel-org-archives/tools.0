@@ -1,114 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCC628C845
-	for <tools@linux.kernel.org>; Tue, 17 Jun 2025 07:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54202E2F14
+	for <tools@linux.kernel.org>; Tue, 17 Jun 2025 12:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750144439; cv=none; b=IVxLpb2jXF8MBWdntwJHjJam9xy/395JgR28fQ61WXRxWcJnw+cy3IvblfkcENidB1BHJkjiYd7VsrYmAdyPdeH80iKr9rAm7K33ACIpaCrX8p/BEMh4CWjKa7KHjeeCX6B0iefaJe7mDYb3hAW2RxQvTI28pNlFyMlpVBzEnPM=
+	t=1750162134; cv=none; b=dfnb0YiC69r6/iLcZ8xrgWDh+R7Ob/w2sQzY37puv43Cuq3qmUbpEzN4irS59zKTMRIx+mDRG4OWEZ8wjxX29dM7fFStw6EoZdeHFTtQr9UOhj/3cLzZ6LfL7JQp2SB4UgvKeYbQ36jmhslaCZkDyRPzBK3DHP05WonRZWCIhJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750144439; c=relaxed/simple;
-	bh=qJY8bj9CtbYWcniHkdEgxnX7+YzcTn7+I2xj0uZMQIg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uADMqQCL8i9mTkAmazNRXVckoB5hbrRI3sIAMaZBOTCWqI8p/xVUa5w//2x31bX0JvAnC+7YX8DPtXvpwkZVIvNrr18t9fmN7+0R8QmiHl1IosInGh/3BONRQCcBcTA3VCOs96M5AM5dG+xoJJyVJbjXbfI75bXGEY2eZ2OasC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=c1DApwzL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750162134; c=relaxed/simple;
+	bh=hol8Y4KAFEPlWLZf5l4HrmnpL7xNmLx4AE9JLBSvKLo=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=lzam8dtKmlDW7Fj7jh61BD8YNH/b6lf1jed6d5pZ8plCAaB3+NWGmcgLNshfY2BkWzHG4AAQKsQh3qGm3kCm4d5c9nSWlB0ZU5ntiDoidRgo1T2Hi2CVkEk15q9veXtQqYjDfSgSDsRGBal8RJJUfVoaHKd8mT8/8g6U0rDIa+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nDOlCnUB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="c1DApwzL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nDOlCnUB"
 Received: by smtp.kernel.org (Postfix)
-	id 553B8C4CEF0; Tue, 17 Jun 2025 07:13:59 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 208CBC4CEE3
-	for <tools@kernel.org>; Tue, 17 Jun 2025 07:13:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 208CBC4CEE3
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1750144437;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OPf5/BotB2xeNpXMqUEi097upqbb8LBKJ2dT9gWuPvU=;
-	b=c1DApwzLvdOkU5LrCDDkdl7R3MSG36ykk03+/gncAcWl7ld6aWLLkvDj5CRC+lfwoIQMP1
-	XKtbVZz1F4XAn9fWgqpDRtZD+H1/LsjrKdekH5aQdESTBfb7qUxyRREmplkYgjILdA2Udc
-	9q9P5t88QqZR32HyxYpYXj36s1v+pQQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-179-5rCRh91LPYOqx456wpzUNA-1; Tue,
- 17 Jun 2025 03:13:51 -0400
-X-MC-Unique: 5rCRh91LPYOqx456wpzUNA-1
-X-Mimecast-MFC-AGG-ID: 5rCRh91LPYOqx456wpzUNA_1750144430
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	id 70C0BC4CEED; Tue, 17 Jun 2025 12:08:54 +0000 (UTC)
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 609A71809C80;
-	Tue, 17 Jun 2025 07:13:50 +0000 (UTC)
-Received: from oldenburg.str.redhat.com (unknown [10.45.224.8])
-	by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 604C01956094;
-	Tue, 17 Jun 2025 07:13:48 +0000 (UTC)
-From: Florian Weimer <fweimer@redhat.com>
+	by smtp.kernel.org (Postfix) with ESMTPS id A5005C4CEE3;
+	Tue, 17 Jun 2025 12:08:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org A5005C4CEE3
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-450dd065828so45394985e9.2;
+        Tue, 17 Jun 2025 05:08:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750162132; x=1750766932; darn=kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yr8tf490dLZcrTR7ZRtUOPxPJ+C3QiVC034zaGj7oxY=;
+        b=nDOlCnUBzKZPnhbCYIibkdZuQ9QsPyElxQkBAYcE7Ig6OlfbilBi1iWxd3+RieBIx+
+         s/TTOiD8L6FbKzWnorF7A+XQICb2UJckSpj7ZQ9EZcZPa3yVWGnHUJfGDZ72tO7DmDSS
+         WAnF32YVHloC4mbg73ZHfSj9iYxxH0XQS5iPlhF8JRqN+DAju3DGmsMYnjaSwa7fA9mo
+         f6Nx9xnBD9fHqTot+bkJnbR9hlFZSLsQVRagIZvT96MEO85OwowG4UMqXLrAPKDM3oxx
+         JcSpBVpLAhfyb1Pwgq/XgGBeUlOrVQrzza/Z9CHcYrbsAj4bpKdpFTzukHVf9nr2+71+
+         4qfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750162132; x=1750766932;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yr8tf490dLZcrTR7ZRtUOPxPJ+C3QiVC034zaGj7oxY=;
+        b=FKXBbyMn5G1mFrSP3Bc1HJHE5Poao3lSiBOrwNJt/ViOVf32P3ODcLsrfbc4QZUsOq
+         R9EHNm7mq/35VbZfJCUF6PlBANO4M1F/u7TRc3BwjtdoUNaVTDm+O7lJ8uIQth4qsqOG
+         WzYqI9OlLex3Chztt/cjHvMo03U8A0giSBnej2F0ROSI2f1WTpoiyvxWAhpVvl18o7WS
+         4vtRoTC1MxeYsQwH/UrmhMPhLKyVmkR/OqheqQDHNbtALC8acj+wa9Bk5cbQ5NKMeLTY
+         OVsUUoGmaABM7D0gxnfp57lS31sHhYUB/IkpbWZmOguXXfB6Encln23Aq9r8UEH4/6NJ
+         +a2g==
+X-Forwarded-Encrypted: i=1; AJvYcCWlDi0Ph2QyxdROgcGfzshryEzJL5u2LMGPvrvf1r0PAq3+ssqxXgzaJ0yXUcY/dNJeqzrD9w==@kernel.org
+X-Gm-Message-State: AOJu0YyTn1WvHQ9SnGhCs0+AWBogz3kyFfActO+I4KSkfdBuf9FlO0CV
+	3cIDtTt9hbGk4a8PQhA0C89cCnJifX7KIhzeM2v7takyH4sL3YydbY4o/bo7mw==
+X-Gm-Gg: ASbGncv7OTuEQzJiAENLAhBR1XPU4cz5KSNS/ppJyRudWZMZGxcQ3DUoddVlCV26NYD
+	rP+9HJesivKE2LPjbpPTWStnT4LnbVs4F4tPxgUaurF0I9sg2eDA0apA/fQFgQiWzzbZdhLMuPZ
+	WBrBkSSAN67ahOdi90kYah0DPNCyd0fIfESkhHq3itWzUGYSMsi/lemEDNGws7MvUcIsJ8BNm2s
+	/odIyDMi/q1+783ssY/KzayNv4ZCKe7/gUjGRsd/fyFTkf5LxfUWUlsZ4BiXOmJp1I6TQOTYvrn
+	JWjxFhOpkw8bm7b9g8EuaLHaG9pqnmvytj02CTWO22CDqKYp1flHYCGjf2e+Giqu6TjZvs2gPCd
+	SHaru2HlS7CMgvQFTF4HJfmo7
+X-Google-Smtp-Source: AGHT+IEIOX1GzSo473MBZ+UaEARhaHXuzm5oUIXccFwfpiU+QMAiIUkNa3q26+k+e/fOeO+ip3BxCA==
+X-Received: by 2002:a05:600c:630f:b0:440:9b1a:cd78 with SMTP id 5b1f17b1804b1-4533ca8b32fmr156454475e9.10.1750162131655;
+        Tue, 17 Jun 2025 05:08:51 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e22460bsm183509415e9.6.2025.06.17.05.08.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jun 2025 05:08:51 -0700 (PDT)
+Date: Tue, 17 Jun 2025 13:08:50 +0100
+From: David Laight <david.laight.linux@gmail.com>
 To: Sasha Levin <sashal@kernel.org>
-Cc: linux-kernel@vger.kernel.org,  linux-api@vger.kernel.org,
-  workflows@vger.kernel.org,  tools@kernel.org
-Subject: Re: [RFC 08/19] exec: add API specification for execve
-In-Reply-To: <aFDKHhaqB75Qi212@lappy> (Sasha Levin's message of "Mon, 16 Jun
-	2025 21:51:26 -0400")
+Cc: linux-kernel@vger.kernel.org, linux-api@vger.kernel.org,
+ workflows@vger.kernel.org, tools@kernel.org
+Subject: Re: [RFC 00/19] Kernel API Specification Framework
+Message-ID: <20250617130850.4f558701@pumpkin>
+In-Reply-To: <20250614134858.790460-1-sashal@kernel.org>
 References: <20250614134858.790460-1-sashal@kernel.org>
-	<20250614134858.790460-9-sashal@kernel.org>
-	<87ikkvv018.fsf@oldenburg.str.redhat.com> <aFDKHhaqB75Qi212@lappy>
-Date: Tue, 17 Jun 2025 09:13:44 +0200
-Message-ID: <87y0tqu9g7.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-* Sasha Levin:
+On Sat, 14 Jun 2025 09:48:39 -0400
+Sasha Levin <sashal@kernel.org> wrote:
 
-> On Mon, Jun 16, 2025 at 11:39:31PM +0200, Florian Weimer wrote:
->>* Sasha Levin:
->>
->>> +	KAPI_RETURN("long", "Does not return on success; returns -1 on error")
->>> +		.type = KAPI_TYPE_INT,
->>> +		.check_type = KAPI_RETURN_ERROR_CHECK,
->>> +	KAPI_RETURN_END
->>
->>Is the -1 part correct?
->
-> Maybe :) That's one of the things I wasn't sure about: we're documenting
-> the execve syscall rather than the function itself. A user calling
-> execve() will end up with -1 on failure, and errno set with the error
-> code.
+> This patch series introduces a framework for formally specifying kernel
+> APIs, addressing the long-standing challenge of maintaining stable
+> interfaces between the kernel and user-space programs. As outlined in
+> previous discussions about kernel ABI stability, the lack of
+> machine-readable API specifications has led to inadvertent breakages and
+> inconsistent validation across system calls and IOCTLs.
 
-Well, it doesn't say execve, it says sys_execve.
+Ugg, looks horrid.
+Going to be worse than things like doxygen for getting out of step with
+the actual code and grep searches are going to hit the comment blocks.
 
-> You could argue that it's libc that sets errno and we're trying to spec
-> the kernel here, not the userspace interface to it.
-
-And I think this would be appropriate.
-
-Note that in the future, the glibc version of execve will not be a
-straightforward system call wrapper because we need to obtain a
-consistent snapshot of the environment array.  That is actually pretty
-hard because we cannot atomically replace the process image, unblock
-signals, and unmap a copy of the environment.
-
-So I think it's best for the kernel to stick with the system call
-interface and not try to document what libcs are doing.
-
-An even more thorny example are the setuid family of system calls, where
-the kernel is extremely far away from what POSIX requires, and we have
-to fix it in userspace.
-
-Thanks,
-Florian
-
+	David
