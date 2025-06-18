@@ -1,129 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732822F5310
-	for <tools@linux.kernel.org>; Tue, 17 Jun 2025 22:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC9D2E7186
+	for <tools@linux.kernel.org>; Wed, 18 Jun 2025 13:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750201114; cv=none; b=K9WgMtvLdn8pnNw9NRjCAgim1GOuLqFmZRMymBuCEbLWoWdOa1QyuFGFZmZ6PzWqVrJ9ISy/iF7RCEdTfAY/88tMqB6kX8eN0EbTp2oPnZrYg1aG/p1gkzlloWCWDD15KF7bWPqQJXrgPQMQFCdMW3JzNilXHC8344eeG9kccNU=
+	t=1750254842; cv=none; b=hKrQrL/z7BowtwCGgJm2RnHQBd0qh1ydl7jWkinNlyejzBi0krtNPNR38zXLLLPWyq7VDNZGjytTdF0m75bzDkdzAxYESfz0/f9xswGjWeLTtiQLaburUNTLUIqP/Qxtz99wI9dICis8sAgfeQUn3zlBnYhXWk0Tmmx00K5h2L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750201114; c=relaxed/simple;
-	bh=BdwoZeNM5/0Ep9Pp4VW6C4HoCuzrt5Y/V9ouutt5P94=;
+	s=arc-20240116; t=1750254842; c=relaxed/simple;
+	bh=7zqQZgi3YsHwYRA8zYnDp8Pi5+w4QE0E1YfTC4nXDsc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RJCehXunarD6LlPiLA5cETRwG47FaEU+9OVyyDOh/8exjQcvi/sSy8GgtuxyqjGBAxAz3k2uXuQdIu2yG/oUF9OFlhouf5dOYs9kcj7CmAdxgGs8Ls8mJKtahYNHWJeWd3SFxJQF5cCvoxQQIRzLepdS+JJfM61jnaGBxvJA4uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mBkrJwz9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=H4ZOQJHCpcr5xnk2l+OuZRob4o7AhDwpdakOAu08wRoqbNGd7Ovi4WzLj6hg60LlESZVng0ie7JzPlUrFXWsXJ0GSBmBl+ZwjEHQfyzjTnuGVdT+ONz8FHCPr/huWcRvABAQ0Bv/LhwvIp+QRp4rqAogGS8/RbkM8HKSMMDN3CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0PYEFe+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mBkrJwz9"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0PYEFe+"
 Received: by smtp.kernel.org (Postfix)
-	id 30769C4CEED; Tue, 17 Jun 2025 22:58:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B6DC4CEE3;
-	Tue, 17 Jun 2025 22:58:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750201114;
-	bh=BdwoZeNM5/0Ep9Pp4VW6C4HoCuzrt5Y/V9ouutt5P94=;
+	id 2EBACC4CEF0; Wed, 18 Jun 2025 13:54:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA331C4CEE7;
+	Wed, 18 Jun 2025 13:54:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1750254842;
+	bh=7zqQZgi3YsHwYRA8zYnDp8Pi5+w4QE0E1YfTC4nXDsc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mBkrJwz9hXYFjh2NDc3FKTXk24TTZXmrUGleW3w75JH2Qr4XxotNWoPo0gdOUk4J3
-	 zvM2xe1JtKF5j8glSdx6uCstHtjJHhmi9CnF7yFKILpb6J2k2z+Muy5B2gUOytjgwF
-	 3ciCKG6iQ5Hsp8R82WGd3kygik5Px5FjgV9SlgcdFuoeG2pDJBYGtbMJMg+1k+jDxf
-	 fElbEUgGVM2q7tseIuIs35KgO5tw+VxCNK2Nz9bSrKAL8QC9b0/6MfWYxdMr0OHBWX
-	 nWm4SRSq7sSJbT0MkNILVc8PKsDrqFaruFrb9Ykz8m4fry0LzbcuPc0a6Z5pIJztrw
-	 VgYNcZsCSyW5A==
-Date: Tue, 17 Jun 2025 18:58:32 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Florian Weimer <fweimer@redhat.com>
-Cc: linux-kernel@vger.kernel.org, linux-api@vger.kernel.org,
-	workflows@vger.kernel.org, tools@kernel.org
-Subject: Re: [RFC 08/19] exec: add API specification for execve
-Message-ID: <aFHzGBsf5RAQtttc@lappy>
-References: <20250614134858.790460-1-sashal@kernel.org>
- <20250614134858.790460-9-sashal@kernel.org>
- <87ikkvv018.fsf@oldenburg.str.redhat.com>
- <aFDKHhaqB75Qi212@lappy>
- <87y0tqu9g7.fsf@oldenburg.str.redhat.com>
+	b=O0PYEFe+GO5F6hb3FwmViFoYJSvE5lmI8+RV6CQXCudZlGxO1bdPTDF5O0kqN6R03
+	 wFi2T529CC3pvQ5K2ULFCQV8slBaI1jCOr4Yyx2Y3zzZ42LNfyntAAOcZuggDuoxIA
+	 YA7jfQwkkZBmnaviXEW6GMppqNwspFE4S7ekrVas=
+Date: Wed, 18 Jun 2025 09:54:00 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Dave Marquardt <davemarq@linux.ibm.com>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: Re: [PATCH b4] Create temporary directory in current working
+ directory
+Message-ID: <20250618-bipedal-saluki-of-expression-04cde5@lemur>
+References: <20250613-fix-magit-edit-v1-1-7c85ecc6333a@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87y0tqu9g7.fsf@oldenburg.str.redhat.com>
+In-Reply-To: <20250613-fix-magit-edit-v1-1-7c85ecc6333a@linux.ibm.com>
 
-On Tue, Jun 17, 2025 at 09:13:44AM +0200, Florian Weimer wrote:
->* Sasha Levin:
->
->> On Mon, Jun 16, 2025 at 11:39:31PM +0200, Florian Weimer wrote:
->>>* Sasha Levin:
->>>
->>>> +	KAPI_RETURN("long", "Does not return on success; returns -1 on error")
->>>> +		.type = KAPI_TYPE_INT,
->>>> +		.check_type = KAPI_RETURN_ERROR_CHECK,
->>>> +	KAPI_RETURN_END
->>>
->>>Is the -1 part correct?
->>
->> Maybe :) That's one of the things I wasn't sure about: we're documenting
->> the execve syscall rather than the function itself. A user calling
->> execve() will end up with -1 on failure, and errno set with the error
->> code.
->
->Well, it doesn't say execve, it says sys_execve.
->
->> You could argue that it's libc that sets errno and we're trying to spec
->> the kernel here, not the userspace interface to it.
->
->And I think this would be appropriate.
->
->Note that in the future, the glibc version of execve will not be a
->straightforward system call wrapper because we need to obtain a
->consistent snapshot of the environment array.  That is actually pretty
->hard because we cannot atomically replace the process image, unblock
->signals, and unmap a copy of the environment.
->
->So I think it's best for the kernel to stick with the system call
->interface and not try to document what libcs are doing.
+On Fri, Jun 13, 2025 at 02:04:05PM -0500, Dave Marquardt wrote:
+> 
+> 
+> ---
+> In edit_with_editor, create temporary directory in current working
+> directory. This avoids issues with Emacs and Magit, which insists
+> COMMIT_EDITMSG must be in the repo's directory tree.
 
-I hear you - it sounds like the "right" solution technically.
+I'm curious how you ended up with the --- at the start of this. Seems like a
+bug that needs fixing.
 
+> diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+> index 0a7daec..79d695a 100644
+> --- a/src/b4/__init__.py
+> +++ b/src/b4/__init__.py
+> @@ -4423,7 +4423,7 @@ def edit_in_editor(bdata: bytes, filehint: str = 'COMMIT_EDITMSG') -> bytes:
+>      editor = corecfg.get('editor')
+>      logger.debug('editor=%s', editor)
+>      # Use filehint name in hopes that editors autoload necessary highlight rules
+> -    with tempfile.TemporaryDirectory(prefix='b4-editor') as temp_dir:
+> +    with tempfile.TemporaryDirectory(prefix='b4-editor', dir=Path.cwd()) as temp_dir:
+>          temp_fpath = os.path.join(temp_dir, filehint)
+>          with open(temp_fpath, 'xb') as edit_file:
+>              edit_file.write(bdata)
 
-Switching back to signals, how does something like the below look as far
-as expanding the execve() spec:
+I think we can do better than that. We can call call git_get_toplevel() and,
+if that is not None, specify dir as toplevel/.git/b4, otherwise default to dir
+as being None to let it use whatever Python thinks should be the default. Can
+you test if using .git/b4/COMMIT_EDITMSG will do the right thing for you?
 
-+       /* SIGSEGV sent on point of no return failure */
-+       KAPI_SIGNAL(9, SIGSEGV, "SIGSEGV", KAPI_SIGNAL_SEND, KAPI_SIGNAL_ACTION_COREDUMP)
-+               KAPI_SIGNAL_TARGET("Current process")
-+               KAPI_SIGNAL_CONDITION("Exec fails after point of no return")
-+               KAPI_SIGNAL_DESC("If exec fails after the point of no return (when the old "
-+                                "process image has been destroyed), force_fatal_sig(SIGSEGV) "
-+                                "is called to terminate the process since it cannot continue.")
-+               KAPI_SIGNAL_TIMING(KAPI_SIGNAL_TIME_EXIT)
-+               KAPI_SIGNAL_PRIORITY(0)
-+               KAPI_SIGNAL_STATE_FORBID(KAPI_SIGNAL_STATE_ZOMBIE | KAPI_SIGNAL_STATE_DEAD)
-+       KAPI_SIGNAL_END
-+
-+       /* Signal mask preserved */
-+       KAPI_SIGNAL(10, 0, "SIGNAL_MASK", KAPI_SIGNAL_HANDLE, KAPI_SIGNAL_ACTION_CUSTOM)
-+               KAPI_SIGNAL_CONDITION("Process has blocked signals")
-+               KAPI_SIGNAL_DESC("The signal mask (blocked signals) is preserved across exec. "
-+                                "This allows processes to block signals before exec and have "
-+                                "them remain blocked in the new program.")
-+               KAPI_SIGNAL_TIMING(KAPI_SIGNAL_TIME_DURING)
-+       KAPI_SIGNAL_END
-+
-+       /* Realtime signal queues cleared */
-+       KAPI_SIGNAL(11, 0, "REALTIME_SIGNALS", KAPI_SIGNAL_HANDLE, KAPI_SIGNAL_ACTION_DISCARD)
-+               KAPI_SIGNAL_CONDITION("Realtime signals queued")
-+               KAPI_SIGNAL_DESC("All queued realtime signals (SIGRTMIN to SIGRTMAX) are "
-+                                "discarded during exec. The realtime signal queue is cleared.")
-+               KAPI_SIGNAL_TIMING(KAPI_SIGNAL_TIME_DURING)
-+               KAPI_SIGNAL_QUEUE(KAPI_SIGNAL_QUEUE_REALTIME)
-+       KAPI_SIGNAL_END
+We shouldn't use cwd(), because this can litter your git tree with junk. I
+know Python is supposed to always clean it up, but this can still have bad
+consequences if you run the editor in b4, forget that it's open in another
+terminal window, and then try to do some git operations.
 
-What's missing for me is that while we now go into more detail, we
-should also check this during runtime, but I'm still trying to come up
-with something that is not ugly.
-
--- 
-Thanks,
-Sasha
+-K
