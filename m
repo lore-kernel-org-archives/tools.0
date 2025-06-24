@@ -1,58 +1,203 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672E227738
-	for <tools@linux.kernel.org>; Tue, 24 Jun 2025 14:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36E32D23A3
+	for <tools@linux.kernel.org>; Tue, 24 Jun 2025 14:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750773663; cv=none; b=ipebRQR7ss7RNgrccO9NVdoC8IdFBB65WKcH+szxF4jyXWm9fVB+b9QHBOK+tbKKut56tZFIWSYiMHbVDoSwuu+XEu/6QmhNgZ2ic/rz5telurmYxC4HjFVyyc8qafK1esN9k30Oh8FkQCfrdtGyCAxmiT9w5HSRfOWMVK9sSno=
+	t=1750773957; cv=none; b=E2t+1wBwUTZNbrTcQ59tvLjwvE/nx0U9EWEKpTcoMLDzQM+ffmFTe0Cwbw8kVvnb1k/XRMbC9TLzs8M0BSk4ltq4gAICP9zd6M3kzS7CQ1hQtEe2OCdsLO8cEeMgvVsb8pysGlRPTxwx3mEa69xYabThIJD6+HAVoJ2vfRyUYeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750773663; c=relaxed/simple;
-	bh=N1l6yMywOVVBvHIguBgRQra32tL/S372OThWJjJFcyQ=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=id8axTKut/i7urEg/Q0eLKDpqCfSa+RWwd/Huqy7vpuGwWcsKrWmwlQDzakj/wsURX/QKEKZyiTXoT0HPbBWWxlG+n8szWuAxSpKwfHET4XrY5nfahpJ8jSSJjOaDei8DxEVOAOi6VrqKy7NY5bDmxA7Ul4TWs0NDAcPGITpdgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp7EAqiP; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750773957; c=relaxed/simple;
+	bh=b82Sl48i4HaD9mfydXB7+D4f/xFkM7JWCjfJ/FznMvI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mM2iI6xvzCLGRIi0SlIJEiVxTzmVS1AU/Hhuqcvh9suJyYBNHJaLmO7ZZfEqkevpMxe3B3CGhC4whJ72wvIVVAYs2zOiH2JSedsvTsFd4F8TX1InTJq5B3Qxl2fmpyJF1WFcs2/5Zjd/CNninTSMjZPb/sSJCaK6xqezYQ9rkXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=lNrOrHnV; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=QAr11eEI; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=lNrOrHnV; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=QAr11eEI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp7EAqiP"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="lNrOrHnV";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="QAr11eEI";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="lNrOrHnV";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="QAr11eEI"
 Received: by smtp.kernel.org (Postfix)
-	id 157D6C4CEF0; Tue, 24 Jun 2025 14:01:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA966C4CEE3;
-	Tue, 24 Jun 2025 14:01:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750773663;
-	bh=N1l6yMywOVVBvHIguBgRQra32tL/S372OThWJjJFcyQ=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=xp7EAqiP0bN7Xh8KCeqyRvKMjE2wpAcyhU3XUtpk8cM5WMD5nac3LETNf/3XoWvqD
-	 FOkqeAg4PXM0PJ58mGpuXhY64hENZtuxu1i6C8CEH5N9PnrPb+oT7fiaKesBcr148b
-	 cgKtCuAISovfQu1+xYO2mfpQhhEDAqpgRs/WJ77Q=
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@kernel.org, Lucas da Vila <dev@ldv.ar>
-In-Reply-To: <20250621160732.1066586-1-dev@ldv.ar>
-References: <20250621160732.1066586-1-dev@ldv.ar>
-Subject: Re: [PATCH b4] docs: Corrects minimal typo
-Message-Id: <175077366258.658294.16971666525760696328.b4-ty@linuxfoundation.org>
-Date: Tue, 24 Jun 2025 10:01:02 -0400
+	id 71B52C4CEF4; Tue, 24 Jun 2025 14:05:56 +0000 (UTC)
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 25C64C4CEE3
+	for <tools@kernel.org>; Tue, 24 Jun 2025 14:05:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 25C64C4CEE3
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 483FC1F444;
+	Tue, 24 Jun 2025 14:05:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1750773952; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IFQH2JgdAPVFzEwVQ4z26a3AfD97xOT2djRZ/ji3+L4=;
+	b=lNrOrHnVnIa7wAHKfjbC7taRu2dDmbTchDvDF6lTwdNMe3+MJNigzqZoiLN53OoIrXIQZw
+	a88u2h2HVrWAYJO6tcWutQA+UKZxIBC6cEVPrp5PJUWb6ipcpgHWwNRcMgNLnmCp6Q1/Cw
+	Y351ixvev2IUmP3CI14cKBXeeopJ8l4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1750773952;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IFQH2JgdAPVFzEwVQ4z26a3AfD97xOT2djRZ/ji3+L4=;
+	b=QAr11eEIQwDDlZeah0/BKey83ySm9x395yNpy7eoXQo/VfVD8wxFNsM2fmuGrU1/zYm1vC
+	d8oRQNJ7152rz1Dw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1750773952; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IFQH2JgdAPVFzEwVQ4z26a3AfD97xOT2djRZ/ji3+L4=;
+	b=lNrOrHnVnIa7wAHKfjbC7taRu2dDmbTchDvDF6lTwdNMe3+MJNigzqZoiLN53OoIrXIQZw
+	a88u2h2HVrWAYJO6tcWutQA+UKZxIBC6cEVPrp5PJUWb6ipcpgHWwNRcMgNLnmCp6Q1/Cw
+	Y351ixvev2IUmP3CI14cKBXeeopJ8l4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1750773952;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IFQH2JgdAPVFzEwVQ4z26a3AfD97xOT2djRZ/ji3+L4=;
+	b=QAr11eEIQwDDlZeah0/BKey83ySm9x395yNpy7eoXQo/VfVD8wxFNsM2fmuGrU1/zYm1vC
+	d8oRQNJ7152rz1Dw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3637A13751;
+	Tue, 24 Jun 2025 14:05:52 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id vFrEC8CwWmgedgAAD6G6ig
+	(envelope-from <chrubis@suse.cz>); Tue, 24 Jun 2025 14:05:52 +0000
+Date: Tue, 24 Jun 2025 16:06:31 +0200
+From: Cyril Hrubis <chrubis@suse.cz>
+To: Dmitry Vyukov <dvyukov@google.com>
+Cc: sashal@kernel.org, kees@kernel.org, elver@google.com,
+	linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
+	tools@kernel.org, workflows@vger.kernel.org
+Subject: Re: [RFC 00/19] Kernel API Specification Framework
+Message-ID: <aFqw5-PO4MjsEdYU@yuki.lan>
+References: <aFNYQkbEctT6N0Hb@lappy>
+ <20250623132803.26760-1-dvyukov@google.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-07fe9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250623132803.26760-1-dvyukov@google.com>
+X-Spam-Flag: NO
+X-Spam-Score: -4.30
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	ARC_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+X-Spam-Level: 
 
+Hi!
+> 6. What's the goal of validation of the input arguments?
+> Kernel code must do this validation anyway, right.
+> Any non-trivial validation is hard, e.g. even for open the validation function
+> for file name would need to have access to flags and check file precense for
+> some flags combinations. That may add significant amount of non-trivial code
+> that duplicates main syscall logic, and that logic may also have bugs and
+> memory leaks.
 
-On Sat, 21 Jun 2025 13:07:32 -0300, Lucas da Vila wrote:
+I was looking at that part and thinking that we could generate (at least
+some) automated conformance tests based on this information. We could
+make sure that invalid parameters are properly rejected. For open(),
+some combinations would be difficuilt to model though, e.g. for
+O_DIRECTORY the pathname is supposed to be a path to a directory and
+also the file descriptor returned has different properties. Also O_CREAT
+requires third parameter and changes which kinds of filepaths are
+invalid. Demultiplexing syscalls like this is going to be difficult to
+get right.
+
+As for testing purposes, most of the time it would be enough just to say
+something as "this parameter is an existing file". If we have this
+information in a machine parseable format we can generate automatic
+tests for various error conditions e.g. ELOOP, EACESS, ENAMETOOLONG,
+ENOENT, ...
+
+For paths we could have something as:
+
+file:existing
+file:notexisting
+file:replaced|nonexisting
+file:nonexisting|existing
+dir:existing
+dir:nonexisting
+
+Then for open() syscall we can do:
+
+flags=O_DIRECTORY path=dir:existing
+flags=O_CREAT path=file:nonexisting|existing
+flags=O_CREAT|O_EXCL path=file:nonexisting
+...
+
+You may wonder if such kind of tests are useful at all, since quite a
+few of these errors are checked for and generated from a common
+functions. There are at least two cases I can think of. First of all it
+makes sure that errors are stable when particular function/subsystem is
+rewritten. And it can also make sure that errors are consistent across
+different implementation of the same functionality e.g. filesystems. I
+remember that some of the less used FUSE filesystems returned puzzling
+errors in certain corner cases.
+
+Maybe it would be more useful to steer this towards a system that
+annotates better the types for the syscall parameters and return values.
+Something that would be an extension to a C types with a description on
+how particular string or integer is interpreted.
+
+> Side-effects specification potentially can be used to detect logical kernel bugs,
+> e.g. if a syscall does not claim to change fs state, but it does, it's a bug.
+> Though, a more useful check should be failure/concurrency atomicity.
+> Namely, if a syscall claims to not alter state on failure, it shouldn't do so.
+> Concurrency atomicity means linearizability of concurrent syscalls
+> (side-effects match one of 2 possible orders of syscalls).
+> But for these we would need to add additional flags to the descriptions
+> that say that a syscall supports failure/concurrency atomicity.
 > 
+> 8. It would be useful to have a mapping of file_operations to actual files in fs.
+> Otherwise the exposed info is not very actionable, since there is no way to understand
+> what actual file/fd the ioctl's can be applied to.
 
++1 There are many different kinds of file descriptors and they differ
+wildy in what operations they support.
 
-Applied, thanks!
+Maybe we would need a subclass for a file descriptor, something as:
 
-[1/1] docs: Corrects minimal typo
-      commit: 07fe9d1ae9d43a48587c103e2c1db8ca35b84bcb
+fd:file
+fd:timerfd
+fd:pidfs
+...
 
-Best regards,
 -- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
+Cyril Hrubis
+chrubis@suse.cz
