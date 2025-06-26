@@ -1,51 +1,64 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9639528FFEE
-	for <tools@linux.kernel.org>; Thu, 26 Jun 2025 17:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA2128FFEE
+	for <tools@linux.kernel.org>; Thu, 26 Jun 2025 17:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750958513; cv=none; b=mep3YARG77vFrZmRInyMm9qaYTpU6qEKCBeSXYqmqzoVddhnmX2CXtUk8OM+CfUQ4XmZuVAKXyiFTD8swK72ti63Meps2XqpQKBjiCff1fih/MQWS3imfdfU3VLkwqVcdzh5agdSx73IDm905Gp9Bs6HzPvke806HGfajdiYM88=
+	t=1750958696; cv=none; b=FQr5oxt+Y5y2FKLX+x5+sfwhul6RBVGorEoNMnfiOPVUSd5/P/Zd/Wa6UwABvsNjv4kzMNIviSTUK1eTWRuJAnIRhWPbLTkh1Q8F+TaEA8yS9sKhG3EXIbf2ZG0wXtgK90UrDPFoK/cMj1n6t4JpJfHRRQq5Ndc5NHZa/ELfJ64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750958513; c=relaxed/simple;
-	bh=A+3j6yVkC3cE2MP21ceWSTfa72ACJi9WVZ/YvQ6+Eoo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gUGymEDUZrCown8l4uYIh9KrA/ivUcj8pSFbtOrAE6pW4NzmQV9BeHncPHFV5AtZG3Q3sCIXgwW9jvuYT7au4h+VGsK5WotTVGCwKGxnwt7kdK7/OYgN+QIAVhnxAoCUilUwA+bCXyHYG1NBmbXNqGaDhjSH6dXI06rTjX0vJqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QjibRwxP; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750958696; c=relaxed/simple;
+	bh=v8UmoxJDl38kFxauy2FQ3SHa3JGxyG7OPtiyEFn0L7w=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=kCkhXOymkVZREpxsI7RFFJpzcWujoF7qThCZ2q3YxU62gOklRGlkWfJI3pKsuAWqM4d6auq7BSNdGvnoOfyJJi6ziDOE28eDh16zAxTLljoi2aMKWAzkwLB1WyKuF18lT7FhxiCaYjPzkyVQXNWZvaW2vhSU1r8nuMmxSWwknho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rHU+3iEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QjibRwxP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rHU+3iEb"
 Received: by smtp.kernel.org (Postfix)
-	id 2D3BFC4CEED; Thu, 26 Jun 2025 17:21:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9A3C4CEEB;
-	Thu, 26 Jun 2025 17:21:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750958513;
-	bh=A+3j6yVkC3cE2MP21ceWSTfa72ACJi9WVZ/YvQ6+Eoo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QjibRwxP7exTUBH6WanWIVwxHUpNPfzGNfvUZm8R0xSHn4kiqwUDwiXZ9HVi/dgSY
-	 QopK8A5fTmXY49EkSnlgLFoe1fbE2AqBeY0Y0rTKBgkkQgkt4IZd8dcYg/F7aOCcmK
-	 POhfowhXdLWaBG2KgJh+qaz2a5ER6852VeQCrUYI=
-Date: Thu, 26 Jun 2025 13:21:51 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Dave Marquardt <davemarq@linux.ibm.com>
-Cc: tools@kernel.org
-Subject: Re: b4 send --resend broken by
- 8cae1088cf605a12ed3207e7743fadcfa95c252a
-Message-ID: <20250626-rough-jerboa-from-eldorado-0339d5@lemur>
-References: <87sejmk0j7.fsf@linux.ibm.com>
+	id A4902C4CEEE; Thu, 26 Jun 2025 17:24:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC5FC4CEEB;
+	Thu, 26 Jun 2025 17:24:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750958695;
+	bh=v8UmoxJDl38kFxauy2FQ3SHa3JGxyG7OPtiyEFn0L7w=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=rHU+3iEbBJLMzOhT6KnaoANhymxlF5ipdu72ceeXUUfDcnLeJACanBXZZcvEvprLt
+	 7CEAODIRCyNSDff3CBxNHJEE6sV0JBeD1ZTFpMByFwi4cXC0gs4VY2Y0J+IYb6ywLq
+	 s8fuyYzLQGOiE5HUrd6Knb82Yh3oQ6ZiIdIQfC9PYbdZ6WxppSVZtiqPcNIsW2ZvBj
+	 UKZ96dEOA8lGY7r/mMre8Ym/tA/K7IuySI08nWYogf97MmnUp/a/LmqUAbsbrjKmL9
+	 yEmk22b14z2Tr7760UvlP6ZtiJdXCwhuEv4Qvv2kjW+imOlZiOC1aXiGQxg+RLwMiB
+	 FLrIBFPfvLYVA==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EE6E33A40FCB;
+	Thu, 26 Jun 2025 17:25:22 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: Bugspray Bot <bugbot@kernel.org>
+To: davemarq@linux.ibm.com, konstantin@linuxfoundation.org, 
+ tools@kernel.org
+Message-ID: <20250626-b220276-1cd47cf09855@bugzilla.kernel.org>
 In-Reply-To: <87sejmk0j7.fsf@linux.ibm.com>
+References: <87sejmk0j7.fsf@linux.ibm.com>
+Subject: Re: b4 send --resend broken by
+ 8cae1088cf605a12ed3207e7743fadcfa95c252a
+X-Bugzilla-Product: Tools
+X-Bugzilla-Component: Infra
+X-Mailer: bugspray 0.1-dev
+Date: Thu, 26 Jun 2025 17:25:22 +0000 (UTC)
 
-On Thu, Jun 26, 2025 at 10:03:40AM -0500, Dave Marquardt wrote:
-> tag_msg isn't set in the resend path, so resend now fails.
+Hello:
 
-Thank you for the report.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=220276
 
-bugspray tag me
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (bugspray 0.1-dev)
+
