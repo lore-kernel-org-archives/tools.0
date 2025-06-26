@@ -1,133 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7006D2949E5
-	for <tools@linux.kernel.org>; Thu, 26 Jun 2025 08:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673622EACFB
+	for <tools@linux.kernel.org>; Thu, 26 Jun 2025 14:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750927068; cv=none; b=lgn75zAUH93cB/vUWa0wlWzV2Gp8jgJ/VX8RTMGROU4nrIsOTIBmukWlJxXj9UgjrMzRA5VmyYDAErw0H+4oV3FDzKcvdXIk9d9sg8luKmWKlieL1oWVSiWgZVAeObJp7cqvU4TmHeDIvY52MfwBaDg/rSPh9niW82tsQSnlrr8=
+	t=1750948664; cv=none; b=PQbtFqrxJftUrZL7jJ0jbX0mo1zIsPltlF8JL6esujo6IeYdYl7uEQbSusP29ReqP7sUavLg8RGqzp3eJatA5zeSxvHqe3kcYovxms4I/seiXk/SMBDPtPvztBw0JW5qFGbtrFNuyLbdEN8nzBdYPh2fzvzuRVIm811Q/e7dU/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750927068; c=relaxed/simple;
-	bh=61NR3+cv2s+s8non1oheMAZjlDoX1CX3MknyPY6bDPQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ply6+H/T4avedmmaWPM1S7h9iPnRmQDpzzdoOrSyHtyvUwdOs3/kV84BNyv/WXmts9RiOH7N3tbIgdTDJUwo26KIjxFhxT+uGCHhvfAa+W2HKp+k8TB3umzwuLb0HnjvyHbj1DBNkM/+9AAwKXMjkdP83K6nnPEUJ7OXm9ykcNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CNJLuMGV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750948664; c=relaxed/simple;
+	bh=2qyBxyYfox7UB1SwgkItJVfJgtWZwttY9uqS72wOK8s=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=VIwKnqa4Dx4Az1qcXxV1IV4aciuv1JJFFCMYFsCVqQQrwh1sUMRgO8MG3cI4G0yPDAKTx3mmrguiR36Av40nSR1cV6S4kHz0wNPi+y1PmJneY9KfcepW6FFc23UNXfl5FITJqg9UgzFXU9K8eetNu5ZaVc+8PQs7j2oI4uC0Q+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dID+Z+eg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CNJLuMGV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dID+Z+eg"
 Received: by smtp.kernel.org (Postfix)
-	id 02E80C4CEF1; Thu, 26 Jun 2025 08:37:48 +0000 (UTC)
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	id F14EEC4CEED; Thu, 26 Jun 2025 14:37:43 +0000 (UTC)
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 0564EC4CEEB
-	for <tools@kernel.org>; Thu, 26 Jun 2025 08:37:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0564EC4CEEB
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-32b7fd20f99so8204461fa.0
-        for <tools@kernel.org>; Thu, 26 Jun 2025 01:37:46 -0700 (PDT)
+	by smtp.kernel.org (Postfix) with ESMTPS id 437B3C4CEEB
+	for <tools@kernel.org>; Thu, 26 Jun 2025 14:37:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 437B3C4CEEB
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-adb2e9fd208so215978266b.3
+        for <tools@kernel.org>; Thu, 26 Jun 2025 07:37:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1750927065; x=1751531865; darn=kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LOVSm2lxlfvHzHWNA6nGxFDSpaI7yd4pLz8A6iME9uA=;
-        b=CNJLuMGVcxiaViTQl6Eg8aBnCu1YrHiwSpCDJ7s7lw3E/0O1EQ4b1v7LdnPvRTObA+
-         FxZR9K4pWsL25ORO55EPWeD6oj3Ml0dZ1WLldSSpAJBMz4IdQ9/oVANjl9QCdsfYSu2i
-         wNwDAK7Vm3ZZQN4ikrb9Vnx1dyr6bfwHMkGacur9OhwtK2h4WKkn6K69Wwqj5rWg540O
-         ob0LtG9V5Mmc7bkiI8Sh0WxHC+DBHvqPiXaIlkG/u1InLbDnjAXwQ/s3PkCaGn+aq1fz
-         17f3aq1ZAdt+1mlXEUa0ulpQVQ/l1v8ceOCv8CBWHK/EOWonEot96dTW/YJ/lmN5VPBX
-         p0dA==
+        d=gmail.com; s=20230601; t=1750948661; x=1751553461; darn=kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2qyBxyYfox7UB1SwgkItJVfJgtWZwttY9uqS72wOK8s=;
+        b=dID+Z+egV+Lo7dl3fwfu5111K7KCof+ReV5NMLoctDyZJ3EvZtfaCdRLpU8ZNw0gCx
+         69OgyrZgR3KKhCD8QgV9kcOCX7Hc6XFuaKy57FMroEkgc474l+HCqdRaJY3wgTc0SSDU
+         RczQ34g5Q1coh4mNAp2sEAY4DhYtkCPE2TW+lrcvh6w5CDCLyI2aOXOksGw6GurqftsB
+         OzvtBspQo6YB3moc+txCaF7/ReymiBl0JlT8TCxtIjqP7e5Ne3hx1mYgITBoN7dpy8yd
+         FQnN1MD2gg59e0JWtkGd2Y4MxGurVL18F4949EaAIFjcxxXy3uBsEJHgfJbQESNMeKw6
+         GHIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750927065; x=1751531865;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LOVSm2lxlfvHzHWNA6nGxFDSpaI7yd4pLz8A6iME9uA=;
-        b=hcYhraO8ZAS8uOG2RBhZ2U5KcxCYXkTen9iecHsWz6uKXeLIhn7jZQklNRv5AnjPmF
-         G6HICx1tzny7BkIeCMqR0hSt2KjgYzbuI0xpDz2aGomKuZAutnSnajMx4mycSz1cp1nh
-         80h2yh1rLDN4T+Y9weYt/TqqbrLPE+/DK/XbMjXtuF5KUkafV7h/Zlt/6Yz9HH4ZK6+9
-         HlSN6kGWW/jYxHLfVN2eDrGZdBNNu9XAHC3ZcsLME7+BMRj07jYwudRRIM5hkl4YicsU
-         3vDHvBqTBZu+OO9x91FFJdQ9DX9LCqFG5oCFShmxnarzR4LrcoiAcqT8U7+AhRmFAKXm
-         yjeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXq3krxq4DCCe+RmtIbdf+6WOlSUodoSlNKp8hH9AiIiG8TGJhkFGk103vRleSYSIr4p670BA==@kernel.org
-X-Gm-Message-State: AOJu0YzoaJnnnegMrDzwRKxkfquPDeG+GQU6/jEqx9HDcMum8gzoviu0
-	CkB127qcL8CeMy1Qdsjnm5GUKGTnhOgF+N6eIcBO9D4pxsqclYoyN/WKLpBJ/lJBoTQQuTshrEx
-	6FaUrm4AZAkXwDMwkDqfQ8r01dyCv/2DCjY/ojh0N
-X-Gm-Gg: ASbGncsCgpFevV/6GYLn2Ez1HbCZdofOMZiEOiWpm58QirORb99ITcAMz6seGWb14jI
-	Quap/FRJ40g1LP18g0HP/Kan3tKjtYWq1Ieeow7Y+9XQG7C/YFh6/yqNCEuHNtwJv0KBZBWellq
-	T8KA+RM9D6trznWx5wPkw5LHymVLX9F3O1JE2q1ZL4oxwtKYCNdrz8k0kD70ETVJB1Kxup7jknC
-	jV4oCyA3UxTsqo=
-X-Google-Smtp-Source: AGHT+IFoce4glEmRfpaGq1cEJXdDdpQIuRzef09xN/mVCcmD+KVlQpUFkduHrAryLe+sJhQ5P60PGjtSCXUKZH3ivEQ=
-X-Received: by 2002:a05:651c:4088:b0:32b:871e:9862 with SMTP id
- 38308e7fff4ca-32cd0261797mr6223281fa.20.1750927064914; Thu, 26 Jun 2025
- 01:37:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1750948661; x=1751553461;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2qyBxyYfox7UB1SwgkItJVfJgtWZwttY9uqS72wOK8s=;
+        b=iNOpqn5F+yFDz8v7COeZWTrBYZ9jdsq+9LJSPTeihN87u5blh03zm+QHCBjzKtML59
+         616+hmKrwrgwS8BbxRPfJNZMBP2UYmoiL2BmlFUMMmD+jlnvh7i/d8gLVR6Q3YnxyQVI
+         1aBTKwsmBsMPfD+hi+jDbpHt8irE7uzZUaHW/LEK41Tqflisy9MTu5ylZCVAgz9dJG/K
+         ima/IQLzjihvxM2lnurUtbeAz7g9rhq1kLoeL39SCp/Uxq29LZS5twblRHO2BMRKJsv7
+         UEeoqH8T0UIhF2Y59EgzqGewgC1T9lLhUGzktBb79Zn548/3YJJkvrzH7vMPR9j3nwlH
+         cnAA==
+X-Gm-Message-State: AOJu0YwWTxjUG2h24Fwy1fDQ0XlUWxvCX2vLhJFrMKH58LeRwDd1rEiS
+	RlLE9un5/dW83UFvbktAAZec72RU8aa3UaFPd1/+Vc0HgOvAZ5fGzLyeeMHuFzmL5jUtfyrXQEn
+	hRlDPeUhrLKsj+icF8c9DDcKOUVn+qtvjsw==
+X-Gm-Gg: ASbGnctk/07YEzSRHcOw7FVPaa47maIOOQkc5tkn1WtvQXYUD77zxmMjPzx1ROLaaHp
+	p1rC9HeJVB06wnlgi49FMz8xsdTGfcF2IMpFa0YqsKmnsIWFyuWNCOuwJ1ejtPcVUM1acllnG+e
+	ftzBlXbmQ6++4N8HWGgPAawPFeNwCaXwiSPa5wfKwZG5Y=
+X-Google-Smtp-Source: AGHT+IFI1FWe1VP12vwR2K4mRnjRcmqInJOu0PIDM8ugi4cFrJtKylTCWc6ZzgeNYDDKKKux/HnpYNkgi0X2W6Agy4E=
+X-Received: by 2002:a17:907:7fa5:b0:ad5:74cd:1824 with SMTP id
+ a640c23a62f3a-ae0d0cd594fmr433533166b.38.1750948661193; Thu, 26 Jun 2025
+ 07:37:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <aFNYQkbEctT6N0Hb@lappy> <20250623132803.26760-1-dvyukov@google.com>
- <aFsE0ogdbKupvt7o@lappy> <CACT4Y+Y04JC359J3DnLzLzhMRPNLem11oj+u04GoEazhpmzWTw@mail.gmail.com>
- <aFwb_3EE2VMEV_tf@lappy> <CACT4Y+b9u6_wx9BU0hH0L6ogGKN_+R5T7OsgJVFAWm8yeD0E7Q@mail.gmail.com>
-In-Reply-To: <CACT4Y+b9u6_wx9BU0hH0L6ogGKN_+R5T7OsgJVFAWm8yeD0E7Q@mail.gmail.com>
-From: Dmitry Vyukov <dvyukov@google.com>
-Date: Thu, 26 Jun 2025 10:37:33 +0200
-X-Gm-Features: Ac12FXzg-OSj1zle3ASePCxnUdh4OCWuOBwquUmVr7PDJNx1ZtzdOjfrL6XnuBI
-Message-ID: <CACT4Y+b1Sou9bzhsuJ_LAjwCtynWN1iNRnaUkkTecNWxLUfMUw@mail.gmail.com>
-Subject: Re: [RFC 00/19] Kernel API Specification Framework
-To: Sasha Levin <sashal@kernel.org>
-Cc: kees@kernel.org, elver@google.com, linux-api@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, tools@kernel.org, workflows@vger.kernel.org
+From: Juri Lelli <juri.lelli@gmail.com>
+Date: Thu, 26 Jun 2025 16:37:30 +0200
+X-Gm-Features: Ac12FXxVFsdUTUA_0fap_MLbYAn-wi-0_2gDyCTH_a_u8No6q2YhQmLD_4_j2KE
+Message-ID: <CAE-h8tF9rp1B22YhC6PPUFntst9BEZzcCiyy-Mzjq2pQwEnAgg@mail.gmail.com>
+Subject: b4: Fail to send series with smtpAuth none
+To: tools@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 26 Jun 2025 at 10:32, Dmitry Vyukov <dvyukov@google.com> wrote:
->
-> On Wed, 25 Jun 2025 at 17:55, Sasha Levin <sashal@kernel.org> wrote:
-> >
-> > On Wed, Jun 25, 2025 at 10:52:46AM +0200, Dmitry Vyukov wrote:
-> > >On Tue, 24 Jun 2025 at 22:04, Sasha Levin <sashal@kernel.org> wrote:
-> > >
-> > >> >6. What's the goal of validation of the input arguments?
-> > >> >Kernel code must do this validation anyway, right.
-> > >> >Any non-trivial validation is hard, e.g. even for open the validation function
-> > >> >for file name would need to have access to flags and check file precense for
-> > >> >some flags combinations. That may add significant amount of non-trivial code
-> > >> >that duplicates main syscall logic, and that logic may also have bugs and
-> > >> >memory leaks.
-> > >>
-> > >> Mostly to catch divergence from the spec: think of a scenario where
-> > >> someone added a new param/flag/etc but forgot to update the spec - this
-> > >> will help catch it.
-> > >
-> > >How exactly is this supposed to work?
-> > >Even if we run with a unit test suite, a test suite may include some
-> > >incorrect inputs to check for error conditions. The framework will
-> > >report violations on these incorrect inputs. These are not bugs in the
-> > >API specifications, nor in the test suite (read false positives).
-> >
-> > Right now it would be something along the lines of the test checking for
-> > an expected failure message in dmesg, something along the lines of:
-> >
-> >         https://github.com/linux-test-project/ltp/blob/0c99c7915f029d32de893b15b0a213ff3de210af/testcases/commands/sysctl/sysctl02.sh#L67
-> >
-> > I'm not opposed to coming up with a better story...
+Hello,
 
-If the goal of validation is just indirectly validating correctness of
-the specification itself, then I would look for other ways of
-validating correctness of the spec.
-Either removing duplication between specification and actual code
-(i.e. generating it from SYSCALL_DEFINE, or the other way around) ,
-then spec is correct by construction. Or, cross-validating it with
-info automatically extracted from the source (using
-clang/dwarf/pahole).
-This would be more scalable (O(1) work, rather than thousands more
-manually written tests).
+My SMTP server doesn't seem to require authentication for sending
+patches, git send-emails works well with 'smtpAuth = none' in
+.gitconfig. b4, however, seems to ignore that configuration and keeps
+asking for a password (and then fails to send).
 
-> Oh, you mean special tests for this framework (rather than existing tests).
-> I don't think this is going to work in practice. Besides writing all
-> these specifications, we will also need to write dozens of tests per
-> each specification (e.g. for each fd arg one needs at least 3 tests:
-> -1, valid fd, inclid fd; an enum may need 5 various inputs of
-> something; let alone netlink specifications).
+Is this a known issue? How can I fix/workaround it?
+
+Thanks!
+Juri
