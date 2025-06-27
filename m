@@ -1,145 +1,114 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991941E0B91
-	for <tools@linux.kernel.org>; Fri, 27 Jun 2025 18:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF4B35957
+	for <tools@linux.kernel.org>; Fri, 27 Jun 2025 18:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751048400; cv=none; b=VA4FwaWxPs0UKm5z1/mHYu6vttnwMkEMzogMMyEWkKECWT3NwaQ9mwj1zOrR4ay0R9cAYD2fO/o+gcxqxbYf9c3GtylrVYARlE1pPU2jCy8LYvvsUB4MA/VGZxdmBhmw6t+gp05CIdOl8OgLQvDwxwJ7THmhYpFW9tEcJPGSbEo=
+	t=1751048628; cv=none; b=BLIdkJQUd9ad/iYKv1bGe7hV8O6sDWAMksPRjWdbCT2vkcTHnyOBn39xhWjr+jB0mvCbb+Dw9dBYt0twb7iyNbDxhHP5nGDGgplTErsxrJt9jfTG+Py2yqhpJB/QP7OJ7TYetFSxOx2noMaftMcRDXIumYYyeONXNZw7fLMzTMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751048400; c=relaxed/simple;
-	bh=VRidjT4UGgLOFfxMmBKgXzwycXJOId3rCop5JU+4770=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=FW8rY8YhfquQxBZljHpueZTCOyb4MbKW8eXfFGdhr2uom0UZU/l3LPkHagK8LxoOAR2EZy9T9vUl0vx+zNJrVaaUZygSmhgbsUOes10U9f2F06z99JW2Ir3ZmmYrMcTjdW9VVNS61ha3L7Y0H6gWPbBsggAKooRdrr3sDYjQbsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gskOI32u; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751048628; c=relaxed/simple;
+	bh=Hz7nY3D8owo7MVKLBWo3S+nTtDDZblzHMrlI7fizyU0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BqJ5DteYswdtwP/P8Vtfj7mgB1GIWGSRKgSESyl8IUJ8juYPxHheZoIg51dASOl/3pxHPplioiW0NtNTIpWNghYwV21UM7/VxB49kFMQqxIrKuZTLAgWqxX/nOXRx1uPBBweXQzi/ZdPyM1hmD70LNy70sRn0Kx+Pvu+Kaf7RKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=l3BIom2T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gskOI32u"
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="l3BIom2T"
 Received: by smtp.kernel.org (Postfix)
-	id 4431AC4CEED; Fri, 27 Jun 2025 18:20:00 +0000 (UTC)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+	id 878A8C4CEED; Fri, 27 Jun 2025 18:23:48 +0000 (UTC)
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 387A0C4CEE3
-	for <tools@kernel.org>; Fri, 27 Jun 2025 18:19:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 387A0C4CEE3
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751048399; x=1782584399;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:to:cc;
-  bh=VRidjT4UGgLOFfxMmBKgXzwycXJOId3rCop5JU+4770=;
-  b=gskOI32uCAgkaBYiuu4+GegjRlSJlyP2vgtgbqoJgrzC+0nM/Upiuu8b
-   pS1ebdqfUiywaBnaxb2HUz/YKODmlZPVvLyij1mtqhKzlldpfANe4UUgr
-   s+R3o06NEh3BSW6p6h2nT/quSPda69KGNb2S6F+Q8mbCPJ9oirogmkaZ9
-   mjTj4BL8iqeZ+DMm+mSC6SpqqtlydNxS4K3WUswSLoW4cPWs9+v9X4ane
-   e+pAqScCsO8FyIe54ADC0ItUSUDsPmY0pjwq60N73HvefSYYuXS7Cqh1p
-   Vsu+6/EpEdLePh2szEYgywg6YF7ncOCEH/xpEo7h1vae5jekAGYzro1kB
-   A==;
-X-CSE-ConnectionGUID: Rkqn38XhRAujkUB+Lx5Eew==
-X-CSE-MsgGUID: Y5SC8zxzTdq1Ff5U0GZqgg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11477"; a="64811674"
-X-IronPort-AV: E=Sophos;i="6.16,271,1744095600"; 
-   d="scan'208";a="64811674"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2025 11:18:13 -0700
-X-CSE-ConnectionGUID: SCQPf+SBS5SYRtpbxwoBWA==
-X-CSE-MsgGUID: lhwMp6mLSsOfPE43qmOPBA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,271,1744095600"; 
-   d="scan'208";a="153358685"
-Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2025 11:18:13 -0700
-From: Jacob Keller <jacob.e.keller@intel.com>
-Date: Fri, 27 Jun 2025 11:17:56 -0700
-Subject: [PATCH RFC] b4: support send-email aliases
+	by smtp.kernel.org (Postfix) with ESMTPS id A647BC4CEE3
+	for <tools@kernel.org>; Fri, 27 Jun 2025 18:23:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org A647BC4CEE3
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RAkT5A031577
+	for <tools@kernel.org>; Fri, 27 Jun 2025 18:23:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=Hz7nY3D8owo7MVKLBWo3S+nTtDDZbl
+	zHMrlI7fizyU0=; b=l3BIom2Ta6xzSFauCDgi+l4uWJHcFzaF6hYiIAB5WJgL/C
+	qnszxfKIL2Al5zIM8MF01mVPBlDBrWDDQhdtW2j1zCnMTLr6yibgiWbgMFFY6/Rp
+	Tp2UuTCCE1ygIYkTtb7IJjfpQkoeYSMosIAeRO+X7PptuIvCio9hxpH/hmjTiAUj
+	yfUJUrS6HYC+fcA7cZU3wkTJzMKz6/fLtJSZ8tMjwVV3bJRxQmo2LF6+lOpaC2kn
+	+jLZ1W7ZgEOgUjobUC0iZ+jLITqrWUEozaubY2YkFtUrUx4PDxrh2l/4C0aR72Lx
+	KzeRFJiYBAiVxOiftoBK41YvhudpVak1/kt0E6cA==
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dj5uf3cj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <tools@kernel.org>; Fri, 27 Jun 2025 18:23:45 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+	by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 55RILwmt010788
+	for <tools@kernel.org>; Fri, 27 Jun 2025 18:23:45 GMT
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dj5uf3cg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Jun 2025 18:23:45 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55RGLMYj006329;
+	Fri, 27 Jun 2025 18:23:44 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47e82pnfa9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Jun 2025 18:23:44 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
+	by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 55RINica26542794
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 27 Jun 2025 18:23:44 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 01A0B58054;
+	Fri, 27 Jun 2025 18:23:44 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C217B5803F;
+	Fri, 27 Jun 2025 18:23:43 +0000 (GMT)
+Received: from d.ibm.com (unknown [9.61.173.233])
+	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri, 27 Jun 2025 18:23:43 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: Juri Lelli <juri.lelli@gmail.com>
+Cc: tools@kernel.org
+Subject: Re: b4: Fail to send series with smtpAuth none
+In-Reply-To: <CAE-h8tF9rp1B22YhC6PPUFntst9BEZzcCiyy-Mzjq2pQwEnAgg@mail.gmail.com>
+	(Juri Lelli's message of "Thu, 26 Jun 2025 16:37:30 +0200")
+References: <CAE-h8tF9rp1B22YhC6PPUFntst9BEZzcCiyy-Mzjq2pQwEnAgg@mail.gmail.com>
+Date: Fri, 27 Jun 2025 13:23:43 -0500
+Message-ID: <87v7oh3uxc.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250627-jk-email-alias-support-v1-1-b79aa627cd71@intel.com>
-X-B4-Tracking: v=1; b=H4sIAFTgXmgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDMyNz3axs3dTcxMwc3cSczMRi3eLSgoL8ohLdFDOzJCMzw+Qk0xRLJaD
- mgqLUtMwKsMHRSkFuzkqxtbUAtRHhL20AAAA=
-X-Change-ID: 20250627-jk-email-alias-support-d66b261cb5d9
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Jacob Keller <jacob.e.keller@intel.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2925;
- i=jacob.e.keller@intel.com; h=from:subject:message-id;
- bh=VRidjT4UGgLOFfxMmBKgXzwycXJOId3rCop5JU+4770=;
- b=owGbwMvMwCWWNS3WLp9f4wXjabUkhoy4Bwn7651y3c/97v9XXhIXsqW7Y+ZEj7zCwxMreVWbv
- ffazFDsKGVhEONikBVTZFFwCFl53XhCmNYbZzmYOaxMIEMYuDgFYCKH9zEy/Ijb1/xkctQf45rO
- ujBNBcV33oyL5yyMypQJzfDJX/HgLCPDs95Uf5cAibfq+de33f75krW2u/Ok6rEjoal+X2X+SMs
- yAQA=
-X-Developer-Key: i=jacob.e.keller@intel.com; a=openpgp;
- fpr=204054A9D73390562AEC431E6A965D3E6F0F28E8
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: nZ95DpEzBFLxavofdWvr2Z08TRt1T0Wu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDE0OCBTYWx0ZWRfX7h4a8kQtGWwz eP6/UHvBleuE7F+SG82p/CQpEd8z7+2hNB5FXdeDdRlhAXlj9VmaxOtmhIVh1EA1L0s5q16H9Ex bSVKjdATKssuYNCx9RZQDT7DSt+fCxRIxp6fj0ML6tt/Gw09ofjRG7wSrOEizd82+oQlnDW3l+L
+ uEDD9XourBxO0ivzjpuSGqw72fOUZlDyTNqA/AjLci3JZW6JJZY73EBQjrTQhVdBJMSz3LM4zR0 Uo1JCG9iIvEOp61HX6n0F4N3YYa0R5DLxkYLB5fNgW6DWGtKDzPxWMT+pmb+il/zhkdP9fRcMLW ueAZt+fFt8792c6vF7BbLplWM/L+2GjJjGscIGz3W41svWFpCjt/UK0HmfCH1esTVDrYz/wqIgQ
+ VfBRvBo7abLwCPuG6ef47Hc5qJBCWvs3cpzLZTn8VWkDxWbvuiZAx91xWy2MWELkMibnrCOu
+X-Authority-Analysis: v=2.4 cv=MshS63ae c=1 sm=1 tr=0 ts=685ee1b1 cx=c_pps a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17 a=6IFa9wvqVegA:10 a=pGLkceISAAAA:8 a=v13aIAGV2Valhk8LlR4A:9
+X-Proofpoint-GUID: nDqrpNSXsQU_y8v9ussWqkp2p8ditXjx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-27_05,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=619 impostorscore=0
+ clxscore=1015 phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506270148
 
-git send-email has supported the --translate-aliases option since v2.47, as
-commit c038a6f1d748 ("send-email: teach git send-email option to translate
-aliases", 2024-08-17)
+Juri Lelli <juri.lelli@gmail.com> writes:
 
-The --translate-aliases option allows asking git send-email to convert an
-alias into its real address according to an alias file in varying formats.
-One complexity is that the mode returns the original input for each line
-which is not an alias.
+> My SMTP server doesn't seem to require authentication for sending
+> patches, git send-emails works well with 'smtpAuth = none' in
+> .gitconfig. b4, however, seems to ignore that configuration and keeps
+> asking for a password (and then fails to send).
 
-Use this in cleanup_email_addrs to convert provided aliases into their real
-addresses. For simplicity this just iterates over addresses and passes them
-to git send-email one at a time. I tried to integrate this into the
-existing loop, but that was difficult to get correct behavior. In theory, a
-single git send-email process could be used with each email being sent as
-its own line, ideally without needing to iterate the address list twice.
-Getting that to work properly and integrate with the loop logic seems to
-require a significant amount of refactoring.
+Oh, someone else is seeing this too! I was thinking about how to debug
+this. Thanks for reporting it!
 
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
----
-I'm sending this as an RFC because it likely still needs additional work.
-For one thing, this depends on the --translate-aliases option which has
-been available for some time but not forever. We could add a config option
-to enable this only as an opt-in maybe?
----
- src/b4/__init__.py | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index 80858d41df7e08e47e28d6bdd116024fd0c3f2e7..d2e0e92fd0aa2fc4a3ef42516607bdc375a945e4 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -4240,6 +4240,21 @@ def get_excluded_addrs() -> Set[str]:
- def cleanup_email_addrs(addresses: List[Tuple[str, str]], excludes: Set[str],
-                         gitdir: Optional[str]) -> List[Tuple[str, str]]:
-     global MAILMAP_INFO
-+
-+    # Translate aliases first
-+    for entry in list(addresses):
-+        logger.debug('entry: %s', entry)
-+        args = ['send-email', '--translate-aliases']
-+        ecode, out = git_run_command(gitdir, args, stdin=entry[1].encode('utf-8'))
-+        logger.debug('translate-aliases-out: %s', out.strip())
-+        if ecode == 0:
-+            se_data: List[Tuple[str, str]] = email.utils.getaddresses([out.strip()])
-+            if len(se_data) == 1 and entry[1] != se_data[0][1]:
-+                replacement = se_data[0]
-+                logger.debug('Replaced email alias %s with translated address %s', entry[1], se_data[0][1])
-+                addresses.remove(entry)
-+                addresses.append(replacement)
-+
-     for entry in list(addresses):
-         # Only qualified addresses, please
-         if not len(entry[1].strip()) or '@' not in entry[1]:
-
----
-base-commit: 07fe9d1ae9d43a48587c103e2c1db8ca35b84bcb
-change-id: 20250627-jk-email-alias-support-d66b261cb5d9
-
-Best regards,
--- 
-Jacob Keller <jacob.e.keller@intel.com>
-
+-Dave
