@@ -1,70 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256C3EEDE
-	for <tools@linux.kernel.org>; Fri, 27 Jun 2025 16:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D6815D1
+	for <tools@linux.kernel.org>; Fri, 27 Jun 2025 17:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751043597; cv=none; b=HhIkrl0EUmyu7oRUxZXRfYUanVQ+CD0GuR0OmFAL0m6y5bqJ0xEp4oxyma6xvje9fGg6Q0rFpDr7dXnuDHsZYq3xnFLLaPkZ9ukw94iTHmc4So8R4NTOzdHNjItTKMDT+EOX0n+04CWJCDcyD9fhZb6nDy9tQF1gfzfom9QF90c=
+	t=1751043658; cv=none; b=kz8XVCPtmarT494uClnXZCVhHlZPeZFtve/a6IxU53MywxPuCeJ3hU3DZuBG0kzgmL+0xhV7bAKFR3A6uruoPcqGhfBzm82qSKBUTo2malH8SbaPZjgOHBuujhHcuCxjVEl9UHF0MNYCfggOByJdb0vNIg2xcLz97Ck2tu5zKd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751043597; c=relaxed/simple;
-	bh=bZ7zoIs/LQM8BrMEfv7vPHI2P3G9ItQeWQLgVNK/xsI=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=UM9IqHPkyAG6yWvFlLpxssR+Wj/jNVbeWYBl0H2N84FMbJIw0P5nefIKA17RFV/jFc6YJN7vYeP0IqGwx0WueRZsx2lv7S69z5VLMR2cQivUR1z6zGxifsJi0zWSwCTAC1WCSvQZXbOAOy1HzHMAMTi72Owdu/KvXpgiXzjRta8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kGfPYJAJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751043658; c=relaxed/simple;
+	bh=6IBcgp8c9iNnYty7jyiM98ULbfTgUkV+C6tqG/352oY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Bp+/nXbNRuNtBbXX7BYJOyEsyWVEwVTOC+wTikxHOu9oY9YgwAwy9ud14xW3M+TXkrMqP6wWHZUmBir7dYoeeD1HKazVeUitbZiWd9KUfMtRPIxwLHiwcX0hztY0+Npf82IpixIPOEtoSkdVuVdV/o9Vu3FRrRONv5d9lQdU5kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FBOCHWpO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kGfPYJAJ"
-Received: by smtp.kernel.org (Postfix)
-	id 10D2CC4CEEF; Fri, 27 Jun 2025 16:59:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEBC8C4CEE3;
-	Fri, 27 Jun 2025 16:59:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FBOCHWpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F5DC4CEE3;
+	Fri, 27 Jun 2025 17:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751043597;
-	bh=bZ7zoIs/LQM8BrMEfv7vPHI2P3G9ItQeWQLgVNK/xsI=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=kGfPYJAJE+EAeqOf2MFLjd383MPxLlpbCuNXnJxEoUcdA//ITOhQImI3P6Iiuilho
-	 FbbhcdUxznBL5KpKn0KO7F1XpX+k2z0rf31irIFAOJHFWd8EXwyY2zw5nhjn4r3irI
-	 LhDfCN6Gd2U180CmhrPoPb4UUbTVoBFm0lTSHjIxz4WSlfyqVxGKWxrz7dMfcE0717
-	 7eW6V7dLcYlfK/XgC4fLZVCDYDrqEblp15aRnYQLUp8Ge/7ul4l+EFVNT409G1nF2n
-	 NxHKaeCtmhu8YBRiELKWybROXg1DNY283HnNhiv/joG6ootVeypzRgSSPU4DydcILo
-	 R3REpbwyBEjGg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 34279380DBEE;
-	Fri, 27 Jun 2025 17:00:24 +0000 (UTC)
+	s=k20201202; t=1751043658;
+	bh=6IBcgp8c9iNnYty7jyiM98ULbfTgUkV+C6tqG/352oY=;
+	h=Date:From:To:Cc:Subject:From;
+	b=FBOCHWpO8H7vVr62LxvqAVnDvt94wXLdgQ4CIQv6RQXP/rwL2I9Eu3i2qetrfoyyp
+	 dF0AL8agsSFGCjMASOkEgnjwUU8W0KniUuoNAjhhcZ9H6IyUZ+jfV3AvmcxQyyytOQ
+	 t1HRkkpg4dEJiiZBSYIWo/ZURUwt49dcUNF1QfE2JjarEMJuacPE5+/9cGAe6svdPg
+	 zkDFRQ8NpGbmnSTTs4/22QzA0SanQxwXEiq2oeVShxtpNIwsGO+mcSTTjBufHgkmQO
+	 DQXGeUt+iCenM4dYML9P9KwvMqeqvq0ApMf7QWXx3kEM6U7WihuucGCO6XAKKt9rhV
+	 DvZiU9BcjjwMA==
+Date: Fri, 27 Jun 2025 18:00:54 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 trailers doesn't work with imported series
+Message-ID: <2491bc09-da6c-43dd-b8ce-e5c137294f68@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: Bugspray Bot <bugbot@kernel.org>
-To: konstantin@linuxfoundation.org, tools@kernel.org, 
- davemarq@linux.ibm.com
-Message-ID: <20250627-b220276c2-d88a27626bd6@bugzilla.kernel.org>
-In-Reply-To: <87sejmk0j7.fsf@linux.ibm.com>
-References: <87sejmk0j7.fsf@linux.ibm.com>
-Subject: Re: b4 send --resend broken by
- 8cae1088cf605a12ed3207e7743fadcfa95c252a
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: bugspray 0.1-dev
-Date: Fri, 27 Jun 2025 17:00:24 +0000 (UTC)
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/uVp/nAYOpOWAH6p"
+Content-Disposition: inline
+X-Cookie: Avoid contact with eyes.
 
-Konstantin Ryabitsev writes in commit cff911a15f240d09032f90a85a000723e0baadd3:
 
-ez: fix --resend
+--/uVp/nAYOpOWAH6p
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-The tag_msg would only be defined if we're not doing resend, so move the
-None check to where it makes sense.
+Hi,
 
-Reported-by: Dave Marquardt <davemarq@linux.ibm.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220276
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+With current git I'm seeing an error trying to shazam one particular
+"series" (a single patch with a cover letter, which does normally work):
 
-(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=cff911a15f24)
--- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (bugspray 0.1-dev)
+$ b4 shazam 20250627164348.3982628-2-mathias.nyman@linux.intel.com
+Grabbing thread from lore.kernel.org/all/20250627164348.3982628-2-mathias.nyman@linux.intel.com/t.mbox.gz
+Checking for newer revisions
+Grabbing search results from lore.kernel.org
+Analyzing 9 messages in the thread
+Analyzing 0 code-review messages
+Traceback (most recent call last):
+  File "/home/broonie/git/b4/src/b4/command.py", line 450, in <module>
+    cmd()
+  File "/home/broonie/git/b4/src/b4/command.py", line 433, in cmd
+    cmdargs.func(cmdargs)
+  File "/home/broonie/git/b4/src/b4/command.py", line 105, in cmd_shazam
+    b4.mbox.main(cmdargs)
+  File "/home/broonie/git/b4/src/b4/mbox.py", line 842, in main
+    make_am(msgs, cmdargs, msgid)
+  File "/home/broonie/git/b4/src/b4/mbox.py", line 113, in make_am
+    lser = lmbx.get_series(revision=wantver, sloppytrailers=cmdargs.sloppytrailers, reroll=reroll,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/broonie/git/b4/src/b4/__init__.py", line 362, in get_series
+    pmsg = self.msgid_map[fmsg.in_reply_to]
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: '20250627142044.3872229-2-mathias.nyman@linux.intel.com'
 
+Thanks,
+Mark
+
+--/uVp/nAYOpOWAH6p
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmhezkYACgkQJNaLcl1U
+h9C9twf/UNQslGhqCxslgpTcHgmjyfm/r5AlOvf+tt6B1vVi4xGKnIvaQfoZKRBb
+pz7PepGBabydLnn6Fvfj2tRfoUtfuhs+9S+n8Sf8LBZ21bfqgseZEWLnf8q6abS4
+efYYobZdpvW73FD6I/XGiUCxCg5aQZT6bTJbLpl4z0WGOC6Y+a16e2dRgGpW78Ee
+kZXqvBrvKxOLkN8WTKiBHtN1OwrWYpPQMzvSqDCw+Ry8qMlM1ljlA04bvmYZhyUU
+1uHG2OvzIT+d2ewaQ+XL5CY8RW3vyAEj+vCyXNYKHm3I2yqLKiqjt60InAkE+RNV
+1GA0pVjkIj7hgDc/4YVaB9kf+XB07g==
+=bvMB
+-----END PGP SIGNATURE-----
+
+--/uVp/nAYOpOWAH6p--
