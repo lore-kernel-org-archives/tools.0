@@ -1,70 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A552D9EDE
-	for <tools@linux.kernel.org>; Fri, 27 Jun 2025 17:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04DA38DF9
+	for <tools@linux.kernel.org>; Fri, 27 Jun 2025 17:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751045997; cv=none; b=bEej7BMbGigr2BYYyAmVfkWWTCcV9fSf15E9jnKjxp91vnWw/nIlKrfYE9A5lqJOsyAgBAov/GsgAaReSQrmeL93sy7TttNztJVBCS7rpgArYrj/UPD/khqzN0Vx0l/HIw0vEmhn2m08v0seXxuogQtwuWjsVmq5s0wHxVWn6HQ=
+	t=1751046409; cv=none; b=aG0bC1Vf57tVm1ZUmCqctMfuVCgOPg+lOSHQfFb0vcXcLKqXbpo9FB0CHNAsR/lImwTFaBrwHHtP8rKY6WP15TESv7qi6qxJe2Go/y0d1Lp2oE5L1uJqQi7i6JXpnpM42veKsK1Yq2IKw7PDCcbjz6pM8wc92N93L/hGEBwZKgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751045997; c=relaxed/simple;
-	bh=CXomFUlzB+uYyOWtEaFHgBDbtkIXz17nlZBWz+8lWu4=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=d3nTJkFD0M3ogzGWpaPMik+6fqxVH1A5JdiCvriB5ddHIwThBYj/Z5fqJIhWvD4JV5qCn0WKQeY0eGz1iLVMIMjijIPlWXineoEJeFlGwWJ3ZFdy/Q2IpyxFOa0amo8Vct+20vvEfbrmdO4BJkbzkimIUEuWvNwf6WsSPW7xncY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QK70Uefq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751046409; c=relaxed/simple;
+	bh=LGIEAqSGQJ8P9IWIPMt2JWcl0vcj95GdOlJtYUWZaq8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cdd0yW99eGkJpJsTCVYi+HDwomJOeF5gOaYLviWfgUwdZFsbKhRzE5VaJmJuWYZkg0XaIgHpYMyUe7c/o7Yzv5UyG8ChqGa5G496AGf43Sg66a8RpAXUR3/w8FKxRrWrTCU/5EJ5f/EqnpJYkCuRXE1zPMU1obJhyMwxiaBSlAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z64NXt9b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QK70Uefq"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z64NXt9b"
 Received: by smtp.kernel.org (Postfix)
-	id 3C7E1C4CEEF; Fri, 27 Jun 2025 17:39:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24735C4CEE3;
-	Fri, 27 Jun 2025 17:39:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751045997;
-	bh=CXomFUlzB+uYyOWtEaFHgBDbtkIXz17nlZBWz+8lWu4=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=QK70UefqTzVlbGzxOATo+QNJuYp3Y/NMK0zYcJlYD3J9QZ5DxPaEtskQu4X83Wl62
-	 hkrGOsv5qpDMG9vBPMsVwX6mnopZeZXnd1xjozegt54rpf1NVod83HSVEt8R3LDuny
-	 syQ1B/DeEBAQudMlCW3Iy9isnoZppAOGi4Xg1EkTuqYVg7DDaB0eK6+vxqyVwSyARx
-	 MsmHgADQyVO2i3IbfgXApLt5LlCEdzLwmxFXz5w9DiOBY3jP2S9OCNNCAIX7nVVpza
-	 wv3dllkxeB2bpU0c4fMVshRHaSxeJVhPMBL4d/vXHHrGoas99kSwEUqo/U/aTYfSUX
-	 TgKnRpScDHF5Q==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 385A9380DBEE;
-	Fri, 27 Jun 2025 17:40:24 +0000 (UTC)
+	id 4F0B8C4CEEF; Fri, 27 Jun 2025 17:46:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07584C4CEE3;
+	Fri, 27 Jun 2025 17:46:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1751046409;
+	bh=LGIEAqSGQJ8P9IWIPMt2JWcl0vcj95GdOlJtYUWZaq8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Z64NXt9bVKj/Zp0rzqb8B3voF54kb6dU/DA3IF66CTC7JR7UNRVrxXODQ0s+S2suJ
+	 jFnEesvb7ncFbmaK6SCRqaQAevWsIWUmQ9bZARptys0hDwYbfIIUXduK9/J3KsLXbb
+	 J1SQmg8eedrIOOlqGDjySpH5hiJVHrLjPpZaDSSs=
+Date: Fri, 27 Jun 2025 13:46:47 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Juri Lelli <juri.lelli@gmail.com>
+Cc: tools@kernel.org
+Subject: Re: b4: Fail to send series with smtpAuth none
+Message-ID: <20250627-rousing-pumpkin-rattlesnake-5d1cfe@lemur>
+References: <CAE-h8tF9rp1B22YhC6PPUFntst9BEZzcCiyy-Mzjq2pQwEnAgg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: Bugspray Bot <bugbot@kernel.org>
-To: broonie@kernel.org, tools@linux.kernel.org, 
- konstantin@linuxfoundation.org, tools@kernel.org
-Message-ID: <20250627-b220283c2-70fc7bd48619@bugzilla.kernel.org>
-In-Reply-To: <2491bc09-da6c-43dd-b8ce-e5c137294f68@sirena.org.uk>
-References: <2491bc09-da6c-43dd-b8ce-e5c137294f68@sirena.org.uk>
-Subject: Re: b4 trailers doesn't work with imported series
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: bugspray 0.1-dev
-Date: Fri, 27 Jun 2025 17:40:24 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE-h8tF9rp1B22YhC6PPUFntst9BEZzcCiyy-Mzjq2pQwEnAgg@mail.gmail.com>
 
-Konstantin Ryabitsev writes in commit 0c7bd8a7ec090ab34b3406a46742004bd94fc30b:
+On Thu, Jun 26, 2025 at 04:37:30PM +0200, Juri Lelli wrote:
+> My SMTP server doesn't seem to require authentication for sending
+> patches, git send-emails works well with 'smtpAuth = none' in
+> .gitconfig. b4, however, seems to ignore that configuration and keeps
+> asking for a password (and then fails to send).
+> 
+> Is this a known issue? How can I fix/workaround it?
 
-mbox: fix backtrace when we can't find the in-reply-to message
+It is known now. :)
 
-In certain situation we may not have a parent message when processing
-follow-ups, because they were sent to a previous revision and the
-patch-id no longer matches.
-
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220283
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
-(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=0c7bd8a7ec09)
--- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (bugspray 0.1-dev)
-
+bugspray tag me
