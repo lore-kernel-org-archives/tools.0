@@ -1,111 +1,160 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DA0FC1D
-	for <tools@linux.kernel.org>; Mon, 30 Jun 2025 09:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4631728C5B0
+	for <tools@linux.kernel.org>; Mon, 30 Jun 2025 14:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751276378; cv=none; b=MPhY56O4CTDl0aRMnUxMG2KVKAimPcjilYwwqZa32QjhvrGwFUJIazMc68SeyMUfMYHKg0ZkepdwEhR/76ZJBUkeo2pZgdLiZ4yq/kp2ie7o129AViPKbzdDBVb9s0AnmGvNYNPGgAg1EKZ8mfdA1o5rHoPyY+/3MIz29Vsy0rE=
+	t=1751293651; cv=none; b=ILHfKizQrc4OGISZ8NM6juw48og8ZMhkjTnsGNA7bYMF1F1hSDpz3nCQiVF+7o1XqgO6xbI/e+s3+62pdkzrmn6aR4fjVsZhi8NqHjCvVwqgIajM2pPNCjcuEZm16xU2bX9auttwQAAIGCOwGhCeN3UvgkbFps4TR7ybKWWd5ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751276378; c=relaxed/simple;
-	bh=5LMQu7tbreO/twRfx5Jmd3eEf4zNjxbyePRBgcogo64=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZR3EKWeHpbNXy3uy4PvFLcWVMWEVRUdVRQcix0LOde0iWogJyV6SLWvHyrumENflHuU+VJUNJ9bVPfEoQqqq9MEw4veYaHczIdo/UR6no1cztvMEAIEAcnzzKrxfYFPFblbyIem6hCor3XDAQ7/Mxm9a2SXflIv+n+MwvVuJL6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l6NCNap6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751293651; c=relaxed/simple;
+	bh=LuPF47WhT0AJn95Uf0PtKKadOSwppv1z8iDklhuyFAg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X+55LO2pBrOBF2OX60XEu+uI//SGA3bIdvYujvv+OLynFG+E3G/Nwu5LOCmUGMtbdWF1beAaj5c8zvR3ue43Pco69HVn7x7jxvwBTSUc4nuOnzpDPVxJkYFwKrsgZGd3xLZGqJQVitsWBUmYsitFR88tu5Yfvnbqv0C3p7sUDZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fq7I9ZSy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l6NCNap6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fq7I9ZSy"
 Received: by smtp.kernel.org (Postfix)
-	id 50FC4C4CEEB; Mon, 30 Jun 2025 09:39:35 +0000 (UTC)
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 8854CC4CEE3;
-	Mon, 30 Jun 2025 09:39:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 8854CC4CEE3
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ade5a0442dfso811311066b.1;
-        Mon, 30 Jun 2025 02:39:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751276373; x=1751881173; darn=kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5LMQu7tbreO/twRfx5Jmd3eEf4zNjxbyePRBgcogo64=;
-        b=l6NCNap64J+TeR69Xsj0TLIXOVjAGfe57mwJoa7LcrFIF0bbCRkgp3cKQQNgtNXzM7
-         R6BLBdujYETIbm691utHwhvx2hv2icK9q9kqTgf/1H4EAODh4X/3p6CD8qKXotEiwXbw
-         Q4QykS1J4xHrtYhBixdxm6f0zELQS6t+KNjzV2oPsTNxq+u3o7wy/Y9gW4CN2Gl2mW0A
-         b5PI0HjOloYIxp3gSSRDaIEpYiAQK6lZjynaU+B6HaLto8uuEg/iMbqCPcsYTK/K6h5A
-         20AmvVW1p58tls+EayIhOs0TaGvwQMMYuSIJNaALZWqrFx/lYZ5UntgwkIgRrTi0p0Yn
-         rA/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751276373; x=1751881173;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5LMQu7tbreO/twRfx5Jmd3eEf4zNjxbyePRBgcogo64=;
-        b=iAc7ZHy6FqlaHF9BTiaouThRe63CCHDnANijq/KnmDd2CLdUe6LrBJEb7U+dp/hJdf
-         xxE05S2Ys1p8PVcDaIjG7eELIUmnzCPcqS1rk2WCU6C6If7NssOZ2L7e39lnb+g5xIyQ
-         wFSu6jtfWpdUVfJYka7cg4Nlaw4WKStb8iBonsswjgyuBNLBHYeJ3tJSDz2MFNaCLAwM
-         msQRWGTqkVNWGoeckuAjQea/IXEY4cdueBrcs9VbC0x2TDBoVHn2tgo88b7awyiohy/P
-         XNrZHaZYHi5KnPB9mQWhhLJgEYgPjS6ZurXpsRYB3MszQ8dSf/ISCmloNMwFRlrnOBkr
-         nNPw==
-X-Forwarded-Encrypted: i=1; AJvYcCX9M5kLOYwyoVy25pHd2XQzQuJ+zeZU5r+x8+q7XTBUpUkYJE4ZwDCPBySeeptyNstszF81qw==@kernel.org
-X-Gm-Message-State: AOJu0YyO13I5mATfvYo/SNrucamSa9REmR8QzAKiktVYDmnPfiBMu9Px
-	G2/6o2gRKwEhZDBXOkEKA98ncwVmHhvY033CKISwqNSXqh7SOw127cnBFp2TN/HgkUWEjTp7Uod
-	gN8OUWG0wn9jQzGL4phPK5Fb406bxhE528Ukx
-X-Gm-Gg: ASbGncuZRsutK0+fGYsvcIT/U9SDkzQcz3zRI3PDLsnSZ0mZiqg76mvVfvcDHXg6bAp
-	OVb61DU0IK6rxqBbPvibqY2kxrzIFqCVyaFC52cOG/auHjbC/uGJ7xViA3NTafMx3gTHdKxMcg7
-	F4YBaKb/3/lE0A7UfEZVRtXtAa8eEmESlsR+OK7+hp/w==
-X-Google-Smtp-Source: AGHT+IE+UMThiHJtZL0lOP2YWNO/1j0kaeNXGaIauA3oPlhiTM0flvXcli0CWbyn53HbSAaAoKgUmPp6AccfRBPYTpo=
-X-Received: by 2002:a17:907:608d:b0:ae0:bf55:5c47 with SMTP id
- a640c23a62f3a-ae3500f1f0fmr1087942266b.33.1751276372446; Mon, 30 Jun 2025
- 02:39:32 -0700 (PDT)
+	id 05252C4CEF0; Mon, 30 Jun 2025 14:27:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E76C4CEE3;
+	Mon, 30 Jun 2025 14:27:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751293650;
+	bh=LuPF47WhT0AJn95Uf0PtKKadOSwppv1z8iDklhuyFAg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fq7I9ZSyMC+55NSAgzCN3tL69hpCl4CwhmC3n0tv56trL2dGP/WsHr3pQd/eMPTjP
+	 mwGosZhofwYUcC8yQsEXlpIVigwGwF9btxbySx5AXDea0Z2n2CBdjS7G0RUA5XLt8O
+	 ficf0iHlU7yoYS1iuOjIlhyEenc7LwyE2XPJrmIAHrEGsNZiP5U8bcUW4QvUKBXxWP
+	 5GYJc0qw63wdQRbIbMvcx1SoXVHK2VT/LUaARMYt5r9eLeficss+9DyiRPBb+XWbon
+	 04fy1717BVMq7lkyJ8myidWHmnDHC0b/geDP99HfmUCAG6FICwHQdNjBrkp7ZSQX0Z
+	 PCru1U+uhJWWA==
+Date: Mon, 30 Jun 2025 10:27:29 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Dmitry Vyukov <dvyukov@google.com>
+Cc: kees@kernel.org, elver@google.com, linux-api@vger.kernel.org,
+	linux-kernel@vger.kernel.org, tools@kernel.org,
+	workflows@vger.kernel.org
+Subject: Re: [RFC 00/19] Kernel API Specification Framework
+Message-ID: <aGKe0bcv1mzBnnQr@lappy>
+References: <aFNYQkbEctT6N0Hb@lappy>
+ <20250623132803.26760-1-dvyukov@google.com>
+ <aFsE0ogdbKupvt7o@lappy>
+ <CACT4Y+Y04JC359J3DnLzLzhMRPNLem11oj+u04GoEazhpmzWTw@mail.gmail.com>
+ <aFwb_3EE2VMEV_tf@lappy>
+ <CACT4Y+b9u6_wx9BU0hH0L6ogGKN_+R5T7OsgJVFAWm8yeD0E7Q@mail.gmail.com>
+ <CACT4Y+b1Sou9bzhsuJ_LAjwCtynWN1iNRnaUkkTecNWxLUfMUw@mail.gmail.com>
+ <aF10Cu0GI092Sjr3@lappy>
+ <CACT4Y+ZB45ovD0hX3xX_yTUVSRDc1UCXnVDB57jxyWPPc7k=MA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CAE-h8tF9rp1B22YhC6PPUFntst9BEZzcCiyy-Mzjq2pQwEnAgg@mail.gmail.com>
- <20250627-b220285c2-29e8ccff3223@bugzilla.kernel.org>
-In-Reply-To: <20250627-b220285c2-29e8ccff3223@bugzilla.kernel.org>
-From: Juri Lelli <juri.lelli@gmail.com>
-Date: Mon, 30 Jun 2025 10:39:21 +0100
-X-Gm-Features: Ac12FXzWtjmTxvsJ9c0Imtjdymo4JejFGGawMxCO-bNmQlrYFlYYs_xgND9JjWE
-Message-ID: <CAE-h8tGpn0fG6PyXSaq__ekGMhPnJWKO1dHz5mH5LaUEq-ybQA@mail.gmail.com>
-Subject: Re: b4: Fail to send series with smtpAuth none
-To: Bugspray Bot <bugbot@kernel.org>
-Cc: konstantin@linuxfoundation.org, tools@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CACT4Y+ZB45ovD0hX3xX_yTUVSRDc1UCXnVDB57jxyWPPc7k=MA@mail.gmail.com>
 
-Hello!
+On Fri, Jun 27, 2025 at 08:23:41AM +0200, Dmitry Vyukov wrote:
+>On Thu, 26 Jun 2025 at 18:23, Sasha Levin <sashal@kernel.org> wrote:
+>>
+>> On Thu, Jun 26, 2025 at 10:37:33AM +0200, Dmitry Vyukov wrote:
+>> >On Thu, 26 Jun 2025 at 10:32, Dmitry Vyukov <dvyukov@google.com> wrote:
+>> >>
+>> >> On Wed, 25 Jun 2025 at 17:55, Sasha Levin <sashal@kernel.org> wrote:
+>> >> >
+>> >> > On Wed, Jun 25, 2025 at 10:52:46AM +0200, Dmitry Vyukov wrote:
+>> >> > >On Tue, 24 Jun 2025 at 22:04, Sasha Levin <sashal@kernel.org> wrote:
+>> >> > >
+>> >> > >> >6. What's the goal of validation of the input arguments?
+>> >> > >> >Kernel code must do this validation anyway, right.
+>> >> > >> >Any non-trivial validation is hard, e.g. even for open the validation function
+>> >> > >> >for file name would need to have access to flags and check file precense for
+>> >> > >> >some flags combinations. That may add significant amount of non-trivial code
+>> >> > >> >that duplicates main syscall logic, and that logic may also have bugs and
+>> >> > >> >memory leaks.
+>> >> > >>
+>> >> > >> Mostly to catch divergence from the spec: think of a scenario where
+>> >> > >> someone added a new param/flag/etc but forgot to update the spec - this
+>> >> > >> will help catch it.
+>> >> > >
+>> >> > >How exactly is this supposed to work?
+>> >> > >Even if we run with a unit test suite, a test suite may include some
+>> >> > >incorrect inputs to check for error conditions. The framework will
+>> >> > >report violations on these incorrect inputs. These are not bugs in the
+>> >> > >API specifications, nor in the test suite (read false positives).
+>> >> >
+>> >> > Right now it would be something along the lines of the test checking for
+>> >> > an expected failure message in dmesg, something along the lines of:
+>> >> >
+>> >> >         https://github.com/linux-test-project/ltp/blob/0c99c7915f029d32de893b15b0a213ff3de210af/testcases/commands/sysctl/sysctl02.sh#L67
+>> >> >
+>> >> > I'm not opposed to coming up with a better story...
+>> >
+>> >If the goal of validation is just indirectly validating correctness of
+>> >the specification itself, then I would look for other ways of
+>> >validating correctness of the spec.
+>> >Either removing duplication between specification and actual code
+>> >(i.e. generating it from SYSCALL_DEFINE, or the other way around) ,
+>> >then spec is correct by construction. Or, cross-validating it with
+>> >info automatically extracted from the source (using
+>> >clang/dwarf/pahole).
+>> >This would be more scalable (O(1) work, rather than thousands more
+>> >manually written tests).
+>> >
+>> >> Oh, you mean special tests for this framework (rather than existing tests).
+>> >> I don't think this is going to work in practice. Besides writing all
+>> >> these specifications, we will also need to write dozens of tests per
+>> >> each specification (e.g. for each fd arg one needs at least 3 tests:
+>> >> -1, valid fd, inclid fd; an enum may need 5 various inputs of
+>> >> something; let alone netlink specifications).
+>>
+>> I didn't mean just for the framework: being able to specify the APIs in
+>> machine readable format will enable us to automatically generate
+>> exhaustive tests for each such API.
+>>
+>> I've been playing with the kapi tool (see last patch) which already
+>> supports different formatters. Right now it outputs human readable
+>> output, but I have proof-of-concept code that outputs testcases for
+>> specced APIs.
+>>
+>> The dream here is to be able to automatically generate
+>> hundreds/thousands of tests for each API in an automated fashion, and
+>> verify the results with:
+>>
+>> 1. Simply checking expected return value.
+>>
+>> 2. Checking that the actual action happened (i.e. we called close(fd),
+>> verify that `fd` is really closed).
+>>
+>> 3. Check for side effects (i.e. close(fd) isn't supposed to allocate
+>> memory - verify that it didn't allocate memory).
+>>
+>> 4. Code coverage: our tests are supposed to cover 100% of the code in
+>> that APIs call chain, do we have code that didn't run (missing/incorrect
+>> specs).
+>
+>
+>This is all good. I was asking the argument verification part of the
+>framework. Is it required for any of this? How?
 
-On Fri, Jun 27, 2025 at 7:09=E2=80=AFPM Bugspray Bot <bugbot@kernel.org> wr=
-ote:
->
-> Konstantin Ryabitsev writes in commit a9b2aba54be85ea2933c43b8a6d71c16112=
-30b59:
->
-> Support smtpauth=3Dnone in sendemail configs
->
-> We still don't support the entire range of all possible [sendemail]
-> section configurations, but it's easy to suppor the special
-> smtpauth=3Dnone setting to not require username/password.
->
-> Suggested-by: Juri Lelli <juri.lelli@gmail.com>
-> Closees: https://bugzilla.kernel.org/show_bug.cgi?id=3D220285
-> Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
->
-> (via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=3Da9b2aba5=
-4be8)
-> --
+Specifications without enforcement are just documentation :)
 
-This works like a charm. Thanks a lot for the super quick response!
+In my mind, there are a few reasons we want this:
 
-Tested-by: Juri Lelli <juri.lelli@gmail.com>
+1. For folks coding against the kernel, it's a way for them to know that
+the code they're writing fits within the spec of the kernel's API.
 
-Best,
-Juri
+2. Enforcement around kernel changes: think of a scenario where a flag
+is added to a syscall - the author of that change will have to also
+update the spec because otherwise the verification layer will complain
+about the new flag. This helps prevent divergence between the code and
+the spec.
+
+3. Extra layer of security: we can choose to enable this as an
+additional layer to protect us from missing checks in our userspace
+facing API.
+
+-- 
+Thanks,
+Sasha
