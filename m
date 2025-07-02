@@ -1,206 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D80A262FC4
-	for <tools@linux.kernel.org>; Tue,  1 Jul 2025 22:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E2D238177
+	for <tools@linux.kernel.org>; Wed,  2 Jul 2025 13:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751408175; cv=none; b=Tt7mT979GvrTZhdKQcHD44swHzfzeT9FUMCqA3gBHojaDYtZWunoojvwNmtlcTePdkSEanK2bpE5PHi78p94tyj2LOiDbgVKdNf914IK2Y009YVYbICFSEQh3p7VaOZ0//JTV3OD2jM2+CZStdgPtzFA17Y2jqRicZsX0R68heA=
+	t=1751461678; cv=none; b=OiMXw9pRcj0mgLn5H5KtKI0CPemCDqFjGB+CEj4r/7SyjXe/EJ0ditI9q/vzubW/SU+KrwBjlNifL2bGaXLGzigI2FlunguYP7D5+wYP/oIr7KhGSQaQyVA4EIJYWKXr3QhMPkFGzr0JisgaccBN2AnXzCBubzlAzOzK0TY8cjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751408175; c=relaxed/simple;
-	bh=KfnSrmI/dKnhXkqIVKSpgD5rdZOaahBffr0vrf9OsTw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qr86S6L0cBw4tHBykvT153xZ23nGnmFwSPKDqhkVODnxDBkHuFT3nmQkeJIDAvHSW1JshBrniKUmBRxk0ZYywDj74oCkAJlGWFNj9Ajr9Z1FKP7qfeQgILe9i0exGO+4DWg+biRpsydm1Xme0MpxGjYFSDiMyy4Rb23XP30KvXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WeIjGmx/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751461678; c=relaxed/simple;
+	bh=y83jVdWSFBe9U69PrG2wBa8+gGW5RFArp5QF18O8/i4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AuPrHIsgCDoWw7ORt1P1HEP915JoG+fVUUtszeQ8SwcZJM2zA7CRJwXveXjsgJf/wz1BNi3Jftp4IXkup/9UFmzadxkAJNscJMurmftcK4cfHW+T9mCNMhoCopPisEUtkq3drw32txOPuQ0/zfUsbmDm9ZacduFUq91AN4KZhrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=ySAPnb49; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WeIjGmx/"
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="ySAPnb49"
 Received: by smtp.kernel.org (Postfix)
-	id 64328C4CEF1; Tue,  1 Jul 2025 22:16:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B732C4CEEB;
-	Tue,  1 Jul 2025 22:16:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751408175;
-	bh=KfnSrmI/dKnhXkqIVKSpgD5rdZOaahBffr0vrf9OsTw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WeIjGmx/v3dLOkhNfqcvO1zi1iuwS6SVGjzNcldz3vvgCd1NXrpcGzuwQmyPQn1P9
-	 NVEAJBbmQkvLL3HCtUdU7u0uFJCR+VfrEHlzCoDwgJWcOqreKOPuQuambJSGQN47my
-	 fN9QkvqrRcnZlWLLGK5nDFQWHDO0Rrmocdgl2HvSqjSFVTdULFWzyQc3TdEfPunaQG
-	 N7iuwFBMJen2k5TcIC/ThYBOR03tCuPMJPjCtiPj3yIyRaFA7zUYyDrFlLju+Xv0On
-	 kZy+jNH6NBcjZc5/ywV9nMCzzGGA3YQMTTQBZSXORD74afTEhgNUx4iNUGWfVR4CgN
-	 7blk7uOX0B6oA==
-Date: Tue, 1 Jul 2025 18:16:13 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Jonathan Corbet <corbet@lwn.net>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-api@vger.kernel.org, workflows@vger.kernel.org,
-	tools@kernel.org, Kate Stewart <kstewart@linuxfoundation.org>,
-	Gabriele Paoloni <gpaoloni@redhat.com>,
-	Chuck Wolber <chuckwolber@gmail.com>
-Subject: Re: [RFC v2 01/22] kernel/api: introduce kernel API specification
- framework
-Message-ID: <aGReLaCleEjzu-nt@lappy>
-References: <20250624180742.5795-1-sashal@kernel.org>
- <20250624180742.5795-2-sashal@kernel.org>
- <874ivxuht8.fsf@trenco.lwn.net>
- <20250701002058.1cae5a7e@foz.lan>
- <aGPvR-Mj6aR4Y8B5@lappy>
- <8734bfspko.fsf@trenco.lwn.net>
- <aGRKIuR6hgW0YLc_@lappy>
- <87v7obpoxn.fsf@trenco.lwn.net>
+	id A8EE9C4CEF1; Wed,  2 Jul 2025 13:07:57 +0000 (UTC)
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 7E4ABC4CEED
+	for <tools@kernel.org>; Wed,  2 Jul 2025 13:07:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 7E4ABC4CEED
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562CmuGv002441;
+	Wed, 2 Jul 2025 15:07:49 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=selector1; bh=L/rckNM+SL6ZGV8yGt6uwk
+	cP1pbNK0PhD70+kQMETRg=; b=ySAPnb494r1vbh2ZD5yP3gzKhS2FiZ8QYL7q83
+	+H01FyYeTQo6WQ89VjgcWn3GYJ7C2P5NgtOmkYO7otMq3IZ4psbupL1ESmrTpY6h
+	XlmiQ7GqlvVmDjXVvozQlQF1nGedcgZOUQviZ+FD4b9oWRWa7lFSINe/WjDuP2B2
+	HdBPWw/Um4XFIfYQshpBcs63+EzrP+v37u7Df1WVtmyAaRvzYTGN2tKk4JnVcl/a
+	+kuKn3zPI8aQfJaulRIKwr0bmwpGDMIix0b2d2AluD1yQRnUs2H5R2QrZviFWS3Q
+	OjPy01ApR74FC/KaSsVbS6q2N5tf5P7Jo9msc+pnv5owd6Dw==
+Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 47j5h9297x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Jul 2025 15:07:49 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 0568040056;
+	Wed,  2 Jul 2025 15:07:02 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id ACC4FBBC609;
+	Wed,  2 Jul 2025 15:05:40 +0200 (CEST)
+Received: from localhost (10.48.86.185) by SHFDAG1NODE2.st.com (10.75.129.70)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 2 Jul
+ 2025 15:05:40 +0200
+From: =?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>
+To: <tools@kernel.org>
+CC: <clement.legoffic@foss.st.com>, <konstantin@linuxfoundation.org>
+Subject: [PATCH] Fix fromaddr test in get_smtp
+Date: Wed, 2 Jul 2025 15:05:27 +0200
+Message-ID: <20250702130527.1250258-1-clement.legoffic@foss.st.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <87v7obpoxn.fsf@trenco.lwn.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SHFCAS1NODE1.st.com (10.75.129.72) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-02_01,2025-07-02_01,2025-03-28_01
 
-On Tue, Jul 01, 2025 at 03:43:32PM -0600, Jonathan Corbet wrote:
->Sasha Levin <sashal@kernel.org> writes:
->
->> So I have a proof of concept which during the build process creates
->> .apispec.h which are generated from kerneldoc and contain macros
->> identical to the ones in my RFC.
->>
->> Here's an example of sys_mlock() spec:
->
->So I'm getting ahead of the game, but I have to ask some questions...
->
->> /**
->>   * sys_mlock - Lock pages in memory
->>   * @start: Starting address of memory range to lock
->>   * @len: Length of memory range to lock in bytes
->>   *
->>   * Locks pages in the specified address range into RAM, preventing them from
->>   * being paged to swap. Requires CAP_IPC_LOCK capability or RLIMIT_MEMLOCK
->>   * resource limit.
->>   *
->>   * long-desc: Locks pages in the specified address range into RAM, preventing
->>   *   them from being paged to swap. Requires CAP_IPC_LOCK capability
->>   *   or RLIMIT_MEMLOCK resource limit.
->
->Why duplicate the long description?
+If fromaddr returned by sconfig.get('from') is None was converted as a
+sring and the test on fromaddr was failing.
+Fix this issue by converting fromaddr as a string after the test on it.
 
-Will fix.
+Signed-off-by: Clément Le Goffic <clement.legoffic@foss.st.com>
+---
+ src/b4/__init__.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
->>   * context-flags: KAPI_CTX_PROCESS | KAPI_CTX_SLEEPABLE
->>   * param-type: start, KAPI_TYPE_UINT
->
->This is something I wondered before; rather than a bunch of lengthy
->KAPI_* symbols, why not just say __u64 (or some other familiar type)
->here?
-
-I think it gets tricky when we got to more complex types. For example,
-how do we represent a FD or a (struct sockaddr *)?
-
-With macros, KAPI_TYPE_FD or KAPI_TYPE_SOCKADDR make sense, but
-__sockaddr will be a bit confusing (I think).
-
->>   * param-flags: start, KAPI_PARAM_IN
->>   * param-constraint-type: start, KAPI_CONSTRAINT_NONE
->>   * param-constraint: start, Rounded down to page boundary
->>   * param-type: len, KAPI_TYPE_UINT
->>   * param-flags: len, KAPI_PARAM_IN
->>   * param-constraint-type: len, KAPI_CONSTRAINT_RANGE
->>   * param-range: len, 0, LONG_MAX
->>   * param-constraint: len, Rounded up to page boundary
->>   * return-type: KAPI_TYPE_INT
->>   * return-check-type: KAPI_RETURN_ERROR_CHECK
->>   * return-success: 0
->>   * error-code: -ENOMEM, ENOMEM, Address range issue,
->>   *   Some of the specified range is not mapped, has unmapped gaps,
->>   *   or the lock would cause the number of mapped regions to exceed the limit.
->>   * error-code: -EPERM, EPERM, Insufficient privileges,
->>   *   The caller is not privileged (no CAP_IPC_LOCK) and RLIMIT_MEMLOCK is 0.
->>   * error-code: -EINVAL, EINVAL, Address overflow,
->>   *   The result of the addition start+len was less than start (arithmetic overflow).
->>   * error-code: -EAGAIN, EAGAIN, Some or all memory could not be locked,
->>   *   Some or all of the specified address range could not be locked.
->>   * error-code: -EINTR, EINTR, Interrupted by signal,
->>   *   The operation was interrupted by a fatal signal before completion.
->>   * error-code: -EFAULT, EFAULT, Bad address,
->>   *   The specified address range contains invalid addresses that cannot be accessed.
->>   * since-version: 2.0
->>   * lock: mmap_lock, KAPI_LOCK_RWLOCK
->>   * lock-acquired: true
->>   * lock-released: true
->>   * lock-desc: Process memory map write lock
->>   * signal: FATAL
->>   * signal-direction: KAPI_SIGNAL_RECEIVE
->>   * signal-action: KAPI_SIGNAL_ACTION_RETURN
->>   * signal-condition: Fatal signal pending
->>   * signal-desc: Fatal signals (SIGKILL) can interrupt the operation at two points:
->>   *   when acquiring mmap_write_lock_killable() and during page population
->>   *   in __mm_populate(). Returns -EINTR. Non-fatal signals do NOT interrupt
->>   *   mlock - the operation continues even if SIGINT/SIGTERM are received.
->>   * signal-error: -EINTR
->>   * signal-timing: KAPI_SIGNAL_TIME_DURING
->>   * signal-priority: 0
->>   * signal-interruptible: yes
->>   * signal-state-req: KAPI_SIGNAL_STATE_RUNNING
->>   * examples: mlock(addr, 4096);  // Lock one page
->>   *   mlock(addr, len);   // Lock range of pages
->>   * notes: Memory locks do not stack - multiple calls on the same range can be
->>   *   undone by a single munlock. Locks are not inherited by child processes.
->>   *   Pages are locked on whole page boundaries. Commonly used by real-time
->>   *   applications to prevent page faults during time-critical operations.
->>   *   Also used for security to prevent sensitive data (e.g., cryptographic keys)
->>   *   from being written to swap. Note: locked pages may still be saved to
->>   *   swap during system suspend/hibernate.
->>   *
->>   *   Tagged addresses are automatically handled via untagged_addr(). The operation
->>   *   occurs in two phases: first VMAs are marked with VM_LOCKED, then pages are
->>   *   populated into memory. When checking RLIMIT_MEMLOCK, the kernel optimizes
->>   *   by recounting locked memory to avoid double-counting overlapping regions.
->>   * side-effect: KAPI_EFFECT_MODIFY_STATE | KAPI_EFFECT_ALLOC_MEMORY, process memory, Locks pages into physical memory, preventing swapping, reversible=yes
->
->I hope the really long lines starting here aren't the intended way to go...:)
-
-I guess that we have two options around more complex blocks like these.
-
-One, the longer lines you've pointed out. They are indeed long and
-difficult to read, but they present a relatively static and "not too
-interesting" information which users are likely to gloss over.
-
-The other one would look something like:
-
-side-effect: KAPI_EFFECT_MODIFY_STATE
-side-effect-type: KAPI_EFFECT_MODIFY_STATE
-side-effect-target: mm->locked_vm
-side-effect-description: Increases process locked memory counter
-side-effect-reversible: yes
-
-Which isn't as long, but it occupies a bunch of vertical real estate
-while not being too interesting for most of the readers.
-
->>   * side-effect: KAPI_EFFECT_MODIFY_STATE, mm->locked_vm, Increases process locked memory counter, reversible=yes
->>   * side-effect: KAPI_EFFECT_ALLOC_MEMORY, physical pages, May allocate and populate page table entries, condition=Pages not already present, reversible=yes
->>   * side-effect: KAPI_EFFECT_MODIFY_STATE | KAPI_EFFECT_ALLOC_MEMORY, page faults, Triggers page faults to bring pages into memory, condition=Pages not already resident
->>   * side-effect: KAPI_EFFECT_MODIFY_STATE, VMA splitting, May split existing VMAs at lock boundaries, condition=Lock range partially overlaps existing VMA
->>   * state-trans: memory pages, swappable, locked in RAM, Pages become non-swappable and pinned in physical memory
->>   * state-trans: VMA flags, unlocked, VM_LOCKED set, Virtual memory area marked as locked
->>   * capability: CAP_IPC_LOCK, KAPI_CAP_BYPASS_CHECK, CAP_IPC_LOCK capability
->>   * capability-allows: Lock unlimited amount of memory (no RLIMIT_MEMLOCK enforcement)
->>   * capability-without: Must respect RLIMIT_MEMLOCK resource limit
->>   * capability-condition: Checked when RLIMIT_MEMLOCK is 0 or locking would exceed limit
->>   * capability-priority: 0
->>   * constraint: RLIMIT_MEMLOCK Resource Limit, The RLIMIT_MEMLOCK soft resource limit specifies the maximum bytes of memory that may be locked into RAM. Unprivileged processes are restricted to this limit. CAP_IPC_LOCK capability allows bypassing this limit entirely. The limit is enforced per-process, not per-user.
->>   * constraint-expr: RLIMIT_MEMLOCK Resource Limit, locked_memory + request_size <= RLIMIT_MEMLOCK || CAP_IPC_LOCK
->>   * constraint: Memory Pressure and OOM, Locking large amounts of memory can cause system-wide memory pressure and potentially trigger the OOM killer. The kernel does not prevent locking memory that would destabilize the system.
->>   * constraint: Special Memory Areas, Some memory types cannot be locked or are silently skipped: VM_IO/VM_PFNMAP areas (device mappings) are skipped; Hugetlb pages are inherently pinned and skipped; DAX mappings are always present in memory and skipped; Secret memory (memfd_secret) mappings are skipped; VM_DROPPABLE memory cannot be locked and is skipped; Gate VMA (kernel entry point) is skipped; VM_LOCKED areas are already locked. These special areas are silently excluded without error.
->>   *
->>   * Context: Process context. May sleep. Takes mmap_lock for write.
->>   *
->>   * Return: 0 on success, negative error code on failure
->
->Both of these, of course, are much less informative versions of the data
->you have put up above; it would be nice to unify them somehow.
-
-Ack
-
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index ff6075e3a95e..4309745ebbc3 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -3949,11 +3949,12 @@ def get_sendemail_config() -> Dict[str, Optional[Union[str, List[str]]]]:
+ def get_smtp(dryrun: bool = False) -> Tuple[Union[smtplib.SMTP, smtplib.SMTP_SSL, List[str], None], str]:
+     sconfig = get_sendemail_config()
+     # Limited support for smtp settings to begin with, but should cover the vast majority of cases
+-    fromaddr = str(sconfig.get('from'))
++    fromaddr = sconfig.get('from')
+     if not fromaddr:
+         # We fall back to user.email
+         usercfg = get_user_config()
+         fromaddr = str(usercfg['email'])
++    fromaddr = str(fromaddr)
+ 
+     server = str(sconfig.get('smtpserver', 'localhost'))
+     try:
 -- 
-Thanks,
-Sasha
+2.43.0
+
