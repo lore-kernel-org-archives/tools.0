@@ -1,85 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261122C15AB
-	for <tools@linux.kernel.org>; Fri,  4 Jul 2025 12:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0D91E571B
+	for <tools@linux.kernel.org>; Sat,  5 Jul 2025 15:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751630954; cv=none; b=Gd7Quw/mQo0t5AKrAt0gv34ZrmWDsIRqXC5mblUl5gT9DLPVjWzdteBy/NFxJ8ucjHPIRm4vvyxIUs3F0AbwL5HAX1rc0ZvPNe4h5faaqSQeYPRhAHTlSZHU3Jli4ja1OXuti69jxZh3Hck+tAoxv65o68LSjW6eupFz6mUXbRg=
+	t=1751730780; cv=none; b=W8wNIEXT40PoL/yewaS7Qr4Jmip3PtmoAhLF3P4aZwmnErS87/CJ8mDyoBZ0DgKdBkurQrTOBfr17YD6qET4WLYHbphiTt7tMEG4gXseben3aREmYGjRWyg2Nej2mpcqUOVRJwR6bcIZlZhYG6kjskjPYCqL5UdO+5A20lPBPtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751630954; c=relaxed/simple;
-	bh=IcGGQ7gDU+vTAquC/Y6rGG8U5+aLANMPQJ56GZys+dM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=TuDU2S3X9bIU1uBuArorONbIfIQdKAbAjHA3gvOpTLz+xE4Deq67p/8DZOStNuvEHfoPdb6Egx7mECt40wbEsa8XpxXsRgz5xeUWHnppdFDwm2zoNNl5V5/gQ9lSwc1wQpFiS0IJtsPwivjNML5nxxH2OQI+FbvUFuKTqw8U7rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pbXisXh8; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751730780; c=relaxed/simple;
+	bh=QPTrwyCR5WChLqTuHuCOTSvJVJNkN1+5jrW9ajJJixc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ONmNXhQFF4jh2pj3xbXsvGd4OAuyI/UjVVhIQ7Ua3iRmkD0FH+QxGBM2T2oWntB5aM85Eos06cs/Vj/qrBg2IGjj9A47Fmbg9kitBcIACg/yz0N9dfjxUXbqz0GNoM07E3nm6cgqZf1riPyUESipFQqsFplH0arlkPYVPpN3+rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BiRxlxrg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pbXisXh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCE9C4CEE3;
-	Fri,  4 Jul 2025 12:09:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BiRxlxrg"
+Received: by smtp.kernel.org (Postfix)
+	id 53F29C4CEEE; Sat,  5 Jul 2025 15:53:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3D00FC4CEE7;
+	Sat,  5 Jul 2025 15:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751630953;
-	bh=IcGGQ7gDU+vTAquC/Y6rGG8U5+aLANMPQJ56GZys+dM=;
-	h=Date:From:To:Cc:Subject:From;
-	b=pbXisXh8ydFanGg7UEblzPVszQokyqZGyFp81gdtFXV0+Z5un/tQnbXj5aPrzT4QR
-	 0/gDQqZE75uLkhOm1kZUI/DC0BAgRATAcQrELRIv5M9MUJwozjngMsWnKwTjsDjjP1
-	 ZftPtgxJJy41n7AYqQ0Z6MLq7dcxXMWs7p3Kp3VSakDiHhMdb+SAmgb9bdwQQIZT3j
-	 TBG1dfM6UBzFB9Y86S/xszz5S+KLV0cvkKFae9+e6QQ0hYRIm38RobVlhR0gmGmHEk
-	 ErbqDC5hy0C2A05rr8EYkbgIdWVC0pdmvPlzI4fsfCVi4oBcentuf+VLgRW67gwhJS
-	 DZstqyX8Iuwbg==
-Date: Fri, 4 Jul 2025 13:09:09 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org, Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: Incorrect cover letter trimming
-Message-ID: <e593a858-4d78-4aaf-baea-71d85c08f488@sirena.org.uk>
+	s=k20201202; t=1751730780;
+	bh=QPTrwyCR5WChLqTuHuCOTSvJVJNkN1+5jrW9ajJJixc=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=BiRxlxrgP3eB/WNVxphyuTR3byz2JpCcMa/uCRuchmN8g0RyRVhEMN9L6ZAFD0M7C
+	 ZjoYFivJluGOTJ8bRkfub0WfHUGEDG1VxqY0z5E+IZyPhWpz/5Wl+td5+cdhYCglIR
+	 3YWIkwHgI+9ZMsOu18pnmu8WQI4i+LiK3tDszhXI3lH8ZDi+36DW9oHhUuIuC5WQQP
+	 jhJut3aFjQhFipF7Dp6/f4atrb4dt+eQnQhxGEFJ22S2rGnJoRdthbY66cDKO88Gof
+	 cexaD97Vo4hBUDtGYScYiL2Z04RkIPzRkd2YGhmBgscFbOj9lNRj5sjLTNaW/nlo97
+	 C0bOKaZWlVEHw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC2B4C83030;
+	Sat,  5 Jul 2025 15:52:59 +0000 (UTC)
+From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
+Date: Sat, 05 Jul 2025 17:52:50 +0200
+Subject: [PATCH b4] git_range_to_patches: add git options to better
+ represent renames and copies
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KDmw3K59E14pvUdR"
-Content-Disposition: inline
-X-Cookie: VMS must die!
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250705-format-harder-v1-1-55c5342be55c@oldschoolsolutions.biz>
+X-B4-Tracking: v=1; b=H4sIAFFKaWgC/x3MQQqAIBBA0avErBNUtKCrRAu1KWeRxhgRSHdPW
+ r7F/xUKMmGBqavAeFOhnBpU30GILu0oaG0GLbWVo7Riy3y4S0THK7LAAb13VhsfFLTmZNzo+X8
+ zeAPL+37mxBT6YwAAAA==
+X-Change-ID: 20250705-format-harder-e6ebba524bc1
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1751730778; l=1370;
+ i=jens.glathe@oldschoolsolutions.biz; s=20240919;
+ h=from:subject:message-id;
+ bh=gAdssHnCF0Xwb2viD/hFmFPVBFIzEo1trVnupy4j+qs=;
+ b=CGk1Kn4svxaYySSCryr5OC+kOkZ91Ox1QtsYvoxvqMEqKv3n2W0zj09G5qYAsoDXYaY4okVuJ
+ FswehaJQhZkAOiDauxz+noj2BPWjcFBicl1n8YOUSocNjRsAbLW1TIu
+X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
+ pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
+X-Endpoint-Received: by B4 Relay for
+ jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
+X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reply-To: jens.glathe@oldschoolsolutions.biz
+
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+As remarked in [1] and [2], add the necessary options to get better and more
+terse output.
+
+[1]: https://lore.kernel.org/all/7tejkof2kec7ugpz6xugkjrcpzab27lsjpnkphj3vd3xoc4ly7@x3otjziiehju/
+[2]: https://lore.kernel.org/all/369fc807-f05e-4837-b623-b718e47fd840@kernel.org/
+
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+---
+This is an attempt at mitigating the real-world issue of file renames
+in patches due to code restructuring. I have a few of these, and would 
+like to keep using b4 for patch management.
+---
+ src/b4/__init__.py | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index ff6075e3a95e0df5f8ba3f717b12ae2bbce03432..93cf016bd705584ace4d61c4968be365a25f2502 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -3594,6 +3594,10 @@ def git_range_to_patches(gitdir: Optional[str], start: str, end: str,
+             '--encoding=utf-8',
+             '--default-prefix',
+             '--find-renames',
++			'-M',
++			'-B',
++			'-C',
++			'--find-copies-harder',
+         ]
+         smcfg = get_sendemail_config()
+         if not get_git_bool(str(smcfg.get('mailmap', 'false'))):
+
+---
+base-commit: a9b2aba54be85ea2933c43b8a6d71c1611230b59
+change-id: 20250705-format-harder-e6ebba524bc1
+
+Best regards,
+-- 
+Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
 
---KDmw3K59E14pvUdR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hi,
-
-When I fetch the series 20250704075225.3212486-1-sakari.ailus@linux.intel.com
-with b4 am the cover letter only has the content starting from:
-
-| Sakari Ailus (80):
-|   accel/ivpu: Remove redundant pm_runtime_mark_last_busy() calls
-|   accel/amdxdna: Remove redundant pm_runtime_mark_last_busy() calls
-
-it looks like the cut lines:
-
-| -----------8<-----------------------------
-
-confused things, I wouldn't expect any attention to be paid to them in a
-cover letter.
-
-Thanks,
-Mark
-
---KDmw3K59E14pvUdR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmhnxGQACgkQJNaLcl1U
-h9CrPgf/QSMmLDneszHi25oBgbLA4MxYYihOUgLEcqJTQngsuunZApzRrFjst8+K
-EcHjpsb5So0fjrYTviueRM9KP5Tc76x0raRbwOB3zqF9kfn8TlWqgV/PaqzfIn03
-dgqETYxQ3DCcu8mnD258EWB/LTgSC9jK1lL1vVgLxboYtMZiQAW2h947+YGSWdjW
-gVbg5i6gNiG+bnm0jEM5Ty45Xyrl5yp1hfZTj9Fo7yFAwQaXk9iDgNaEF/l1zYYv
-Uc0yQut/IouuuF3e5uTs+wcW0CBeiFZH3FWYETsKbGo4LcxjKr7k+9L3k1ESBLqm
-qtR8aqql9ayAG+kFIypdZxrL/OyAIA==
-=5XN3
------END PGP SIGNATURE-----
-
---KDmw3K59E14pvUdR--
