@@ -1,39 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0D91E571B
-	for <tools@linux.kernel.org>; Sat,  5 Jul 2025 15:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D28123B63F
+	for <tools@linux.kernel.org>; Wed,  9 Jul 2025 22:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751730780; cv=none; b=W8wNIEXT40PoL/yewaS7Qr4Jmip3PtmoAhLF3P4aZwmnErS87/CJ8mDyoBZ0DgKdBkurQrTOBfr17YD6qET4WLYHbphiTt7tMEG4gXseben3aREmYGjRWyg2Nej2mpcqUOVRJwR6bcIZlZhYG6kjskjPYCqL5UdO+5A20lPBPtI=
+	t=1752099765; cv=none; b=A3g/OlKQUT6j4z8gyGsiJ0rdWxu8ZCx5ro+Yv18ucx3rT2hF4UULznCw+3xtvkAFMWxR03ZKtB6gtuSZQr0D4T3ZQ5OgZ6S6V0LbHXe+nKLi89xOBvxXJCEDscmgXfLnMJLQKMD8WN1a3qYNKUAx6PiyCwPqDp6T8yCxCtvpJjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751730780; c=relaxed/simple;
-	bh=QPTrwyCR5WChLqTuHuCOTSvJVJNkN1+5jrW9ajJJixc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ONmNXhQFF4jh2pj3xbXsvGd4OAuyI/UjVVhIQ7Ua3iRmkD0FH+QxGBM2T2oWntB5aM85Eos06cs/Vj/qrBg2IGjj9A47Fmbg9kitBcIACg/yz0N9dfjxUXbqz0GNoM07E3nm6cgqZf1riPyUESipFQqsFplH0arlkPYVPpN3+rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BiRxlxrg; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752099765; c=relaxed/simple;
+	bh=UyjL7EbL6Jsia/FfaU9QV6bW8mX7heocdO0yDPM3S5w=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=cgG466ok/o0sut0PCO1T/vNmIgApqkOCmySqoF7ganugQei7E5He+e6E+XbgzzX4Js/8PYZbkvGKqavg4ZoLb4FQr/k91j9tDXpf4kxDeDYFLBlW9nfjF46FhDyYGoG9v9d+ew8IwfDeePTENi+sdepjUOaihl+bSSOhMqxIk58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=R/jdlLiY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BiRxlxrg"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="R/jdlLiY"
 Received: by smtp.kernel.org (Postfix)
-	id 53F29C4CEEE; Sat,  5 Jul 2025 15:53:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3D00FC4CEE7;
-	Sat,  5 Jul 2025 15:53:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751730780;
-	bh=QPTrwyCR5WChLqTuHuCOTSvJVJNkN1+5jrW9ajJJixc=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=BiRxlxrgP3eB/WNVxphyuTR3byz2JpCcMa/uCRuchmN8g0RyRVhEMN9L6ZAFD0M7C
-	 ZjoYFivJluGOTJ8bRkfub0WfHUGEDG1VxqY0z5E+IZyPhWpz/5Wl+td5+cdhYCglIR
-	 3YWIkwHgI+9ZMsOu18pnmu8WQI4i+LiK3tDszhXI3lH8ZDi+36DW9oHhUuIuC5WQQP
-	 jhJut3aFjQhFipF7Dp6/f4atrb4dt+eQnQhxGEFJ22S2rGnJoRdthbY66cDKO88Gof
-	 cexaD97Vo4hBUDtGYScYiL2Z04RkIPzRkd2YGhmBgscFbOj9lNRj5sjLTNaW/nlo97
-	 C0bOKaZWlVEHw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC2B4C83030;
-	Sat,  5 Jul 2025 15:52:59 +0000 (UTC)
-From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Sat, 05 Jul 2025 17:52:50 +0200
-Subject: [PATCH b4] git_range_to_patches: add git options to better
- represent renames and copies
+	id B0EFAC4CEF6; Wed,  9 Jul 2025 22:22:44 +0000 (UTC)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id AFE0CC4CEF1
+	for <tools@kernel.org>; Wed,  9 Jul 2025 22:22:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org AFE0CC4CEF1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752099764; x=1783635764;
+  h=from:date:subject:mime-version:content-transfer-encoding:
+   message-id:to:cc;
+  bh=UyjL7EbL6Jsia/FfaU9QV6bW8mX7heocdO0yDPM3S5w=;
+  b=R/jdlLiYcUG5g3Hv4I2JCLiOAcPuT+5jPGW1fE3kGBprxknu7xCLeCIg
+   kQVpGW6lHcMoukAT35lTohGNxtKpkiGHNyMCCSpVrnoV/IlvWcBiJKLTv
+   OPu/LUHbVwl4zWDcbhTSvZJSupeGzwOobgt2jEUzSV2Q4KBHZA8kQLwQu
+   EA5veYjq6Q5CdF0ViW4J/nIIbpvl5J2/obHMEeDBU8LPV8Jk96fjxHrXw
+   OrvKiB9ZpcFDRG8Xr26oJl73jI22kVOkDvhFQ/2eI1imtvZBI0XnNR+tR
+   ZQW8xgHHpvIlSifnToQjXpPlm8bfykVmTKU0JP1VBHP6S2C+VoFVwZMOO
+   w==;
+X-CSE-ConnectionGUID: 3AE9argZQriv7N8IYnMY7w==
+X-CSE-MsgGUID: LsUQRuhpSd2brktn1CAEgQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11489"; a="54518633"
+X-IronPort-AV: E=Sophos;i="6.16,299,1744095600"; 
+   d="scan'208";a="54518633"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2025 15:22:42 -0700
+X-CSE-ConnectionGUID: cM6k2hFKSROZ2bmLGH5e+A==
+X-CSE-MsgGUID: 1KGPZOD+QIGGUyk9SrACkQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,299,1744095600"; 
+   d="scan'208";a="179595916"
+Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2025 15:22:42 -0700
+From: Jacob Keller <jacob.e.keller@intel.com>
+Date: Wed, 09 Jul 2025 15:22:29 -0700
+Subject: [PATCH v2] b4: support send-email aliases
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -42,67 +61,127 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250705-format-harder-v1-1-55c5342be55c@oldschoolsolutions.biz>
-X-B4-Tracking: v=1; b=H4sIAFFKaWgC/x3MQQqAIBBA0avErBNUtKCrRAu1KWeRxhgRSHdPW
- r7F/xUKMmGBqavAeFOhnBpU30GILu0oaG0GLbWVo7Riy3y4S0THK7LAAb13VhsfFLTmZNzo+X8
- zeAPL+37mxBT6YwAAAA==
-X-Change-ID: 20250705-format-harder-e6ebba524bc1
+Message-Id: <20250709-jk-email-alias-support-v2-1-b0339905964e@intel.com>
+X-B4-Tracking: v=1; b=H4sIAKXrbmgC/4WNQQ6CMBBFr0Jm7RjahDa48h6GRWlHGS20aYFoC
+ He3cgGX7+f/9zfIlJgyXKoNEq2cOUwF5KkCO5jpQciuMMhaNrWSGp8vpNGwR+PZZMxLjCHN6JT
+ qpRK2b1wLZRwT3fl9iG9d4YHzHNLn+FnFL/2rXAUK7HVrTClZp8WVp5n82YYRun3fvxMkn9y8A
+ AAA
+X-Change-ID: 20250627-jk-email-alias-support-d66b261cb5d9
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751730778; l=1370;
- i=jens.glathe@oldschoolsolutions.biz; s=20240919;
- h=from:subject:message-id;
- bh=gAdssHnCF0Xwb2viD/hFmFPVBFIzEo1trVnupy4j+qs=;
- b=CGk1Kn4svxaYySSCryr5OC+kOkZ91Ox1QtsYvoxvqMEqKv3n2W0zj09G5qYAsoDXYaY4okVuJ
- FswehaJQhZkAOiDauxz+noj2BPWjcFBicl1n8YOUSocNjRsAbLW1TIu
-X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
- pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
-X-Endpoint-Received: by B4 Relay for
- jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
-X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Reply-To: jens.glathe@oldschoolsolutions.biz
+ Jacob Keller <jacob.e.keller@intel.com>
+X-Mailer: b4 0.15-dev-bd4f2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4351;
+ i=jacob.e.keller@intel.com; h=from:subject:message-id;
+ bh=UyjL7EbL6Jsia/FfaU9QV6bW8mX7heocdO0yDPM3S5w=;
+ b=owGbwMvMwCWWNS3WLp9f4wXjabUkhoy815sclru6+MRxsHdM/3hkR6BxbsAdpX/3t7JoMx0Ii
+ NhzeUNhRykLgxgXg6yYIouCQ8jK68YTwrTeOMvBzGFlAhnCwMUpABMxfcbwk9HQqu5OaZLyBqNH
+ 8lU6sXsbgz7s6V4nkcIgd/pTRUotK8P/qs8ux68EzX9qtl7BNPXBTKaQIjOVd4eFBZYlPH80PVC
+ IAQA=
+X-Developer-Key: i=jacob.e.keller@intel.com; a=openpgp;
+ fpr=204054A9D73390562AEC431E6A965D3E6F0F28E8
 
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+git send-email has supported the --translate-aliases option since v2.47, as
+commit c038a6f1d748 ("send-email: teach git send-email option to translate
+aliases", 2024-08-17)
 
-As remarked in [1] and [2], add the necessary options to get better and more
-terse output.
+The --translate-aliases option allows asking git send-email to convert an
+alias into its real address according to an alias file in varying formats.
+One complexity is that the mode returns the original input for each line
+which is not an alias.
 
-[1]: https://lore.kernel.org/all/7tejkof2kec7ugpz6xugkjrcpzab27lsjpnkphj3vd3xoc4ly7@x3otjziiehju/
-[2]: https://lore.kernel.org/all/369fc807-f05e-4837-b623-b718e47fd840@kernel.org/
+Use this in cleanup_email_addrs to convert provided aliases into their real
+addresses. For simplicity this just iterates over addresses and passes them
+to git send-email one at a time. I tried to integrate this into the
+existing loop, but that was difficult to get correct behavior. In theory, a
+single git send-email process could be used with each email being sent as
+its own line, ideally without needing to iterate the address list twice.
+Getting that to work properly and integrate with the loop logic seems to
+require a significant amount of refactoring.
 
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+To avoid breaking any users running older versions of git, the translation
+is enabled via a new b4.send-translate-aliases config option. This requires
+opt-in, so users must set this configuration. This does require users to
+opt-in even if they run a newer version of git. This may reduce awareness,
+but also minimizes surprise and behavioral change. Alternatively, we could
+instead try to check if git supports the feature either via its help output
+or its version number.
+
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
 ---
-This is an attempt at mitigating the real-world issue of file renames
-in patches due to code restructuring. I have a few of these, and would 
-like to keep using b4 for patch management.
+This version adds a configuration option, b4.send-translate-aliases to only
+enable the translation as an opt-in. This will avoid breaking existing
+users who are still running an old version of git or who simply do not want
+translation.
 ---
- src/b4/__init__.py | 4 ++++
- 1 file changed, 4 insertions(+)
+Changes in v2:
+- Add b4.send-translate-aliases config option
+- Link to v1: https://patch.msgid.link/20250627-jk-email-alias-support-v1-1-b79aa627cd71@intel.com
+---
+ docs/config.rst    | 14 ++++++++++++++
+ src/b4/__init__.py | 18 ++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
+diff --git a/docs/config.rst b/docs/config.rst
+index 0f30d4e7e98f..e34aa79eceef 100644
+--- a/docs/config.rst
++++ b/docs/config.rst
+@@ -137,6 +137,20 @@ These options control many of the core features of b4.
+ 
+   Default: ``10``
+ 
++.. _send_settings:
++
++``send`` settings
++~~~~~~~~~~~~~~~~~
++
++These settings control ``b4 send`` behavior.
++
++``b4.send-translate-aliases``
++  Translate shorthand aliases passed to ``--to``, ``--cc``, etc. into real
++  addresses according to your ``sendemail.aliasesFile`` configuration.
++  Requires git v2.47 or later.
++
++  Default: ``no``
++
+ .. _shazam_settings:
+ 
+ ``am`` and ``shazam`` settings
 diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index ff6075e3a95e0df5f8ba3f717b12ae2bbce03432..93cf016bd705584ace4d61c4968be365a25f2502 100644
+index ff6075e3a95e..76ccfe3051eb 100644
 --- a/src/b4/__init__.py
 +++ b/src/b4/__init__.py
-@@ -3594,6 +3594,10 @@ def git_range_to_patches(gitdir: Optional[str], start: str, end: str,
-             '--encoding=utf-8',
-             '--default-prefix',
-             '--find-renames',
-+			'-M',
-+			'-B',
-+			'-C',
-+			'--find-copies-harder',
-         ]
-         smcfg = get_sendemail_config()
-         if not get_git_bool(str(smcfg.get('mailmap', 'false'))):
+@@ -4244,6 +4244,24 @@ def get_excluded_addrs() -> Set[str]:
+ def cleanup_email_addrs(addresses: List[Tuple[str, str]], excludes: Set[str],
+                         gitdir: Optional[str]) -> List[Tuple[str, str]]:
+     global MAILMAP_INFO
++
++    config = get_main_config()
++
++    # Translate aliases first
++    if get_git_bool(str(config.get('send-translate-aliases', 'no'))):
++        for entry in list(addresses):
++            logger.debug('entry: %s', entry)
++            args = ['send-email', '--translate-aliases']
++            ecode, out = git_run_command(gitdir, args, stdin=entry[1].encode('utf-8'))
++            logger.debug('translate-aliases-out: %s', out.strip())
++            if ecode == 0:
++                se_data: List[Tuple[str, str]] = email.utils.getaddresses([out.strip()])
++                if len(se_data) == 1 and entry[1] != se_data[0][1]:
++                    replacement = se_data[0]
++                    logger.debug('Replaced email alias %s with translated address %s', entry[1], se_data[0][1])
++                    addresses.remove(entry)
++                    addresses.append(replacement)
++
+     for entry in list(addresses):
+         # Only qualified addresses, please
+         if not len(entry[1].strip()) or '@' not in entry[1]:
 
 ---
 base-commit: a9b2aba54be85ea2933c43b8a6d71c1611230b59
-change-id: 20250705-format-harder-e6ebba524bc1
+change-id: 20250627-jk-email-alias-support-d66b261cb5d9
 
 Best regards,
--- 
-Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-
+--  
+Jacob Keller <jacob.e.keller@intel.com>
 
