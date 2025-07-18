@@ -1,40 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A2B21B9D9
-	for <tools@linux.kernel.org>; Wed, 16 Jul 2025 14:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1132BEC24
+	for <tools@linux.kernel.org>; Fri, 18 Jul 2025 12:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752674651; cv=none; b=e6/IfCbOJSkbrW8qZXm0gjSyYs1N+RPcj8LthDOo+B/UffQviZD10/ja2MAK+POZIt+7uCqjRy/nqTvWWAjitF2jNrOCwBPn8Svi2DZ0N//6r7UCM1T8aHaiNCP482NPQqRm9hBWpbz4OoXxzB/FHsB4j7cn84+dn7Iu6IYIpTY=
+	t=1752840261; cv=none; b=Ffo3IWCjaVnYs9CZK56/ZvrlycB8aTFvXvS/RauaRd6ZbO1QRbCvEh7Nvbd7pMnmLDU/l3+DGszOmhRV03PpCntQLGmhWBDjeIZ5+VdLkIVyXJxvPePHtAKPAJPCNGimNw4yr5SSA7XV/CEBpyvD1IEwhKV+IXtZMaxDXjpVoSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752674651; c=relaxed/simple;
-	bh=ILEGjcyd+kF4O5nnAJmp2Ep0HbYcC/upkEuRQKVbjDE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=V99vlzSmTHbIhmTvOSVvDdbeC9RFB5SX0sO2wpFMhXJf4rvQEnuMpIXU5fBqV6yBXDM0/2blac/5PU2brPjvqfiMR+FfbEeJG66O2BeV9Eo33TkkNajM7NV/tkYo7CU87TrfUXVuiaV/GHb9U423ML7qaLFgcry1GKoqXaJgVZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H24mIU5Z; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H24mIU5Z"
+	s=arc-20240116; t=1752840261; c=relaxed/simple;
+	bh=HfvKEaDgcm+0p1WhgfrhZP7gDf+//5bUJXOKqvgdWtw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=j4NOvtdtohzqsTRNEiGnKVGmT6Q/U0k2LQkfYbrmzEDZrdoVlo/Z30IgiGaP+x0UzMwkTYby9tXxvM4nFejjVViNkyI2LyzNEYTALBXqjC1ufQBrlxXz/U7yizyQf7NQY4ronj4qbUO+BCok88OLofChbfJAr1XU7LvjTAAXtvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 Received: by smtp.kernel.org (Postfix)
-	id 6C4E1C4CEF7; Wed, 16 Jul 2025 14:04:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 562BEC4CEF6;
-	Wed, 16 Jul 2025 14:04:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752674651;
-	bh=ILEGjcyd+kF4O5nnAJmp2Ep0HbYcC/upkEuRQKVbjDE=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=H24mIU5Zsvqw7fSUdtkStXFpAja+MFMpgrckpmY+v7gm7hER670kXvM3lO5JFq7Vl
-	 VKEDkSLcEgWuQ4/StnMkl5SJUgbLAnbPU+lKLZqysUgkEBWmX3BTUfZYenxhVKPixK
-	 yK1RORYdefdPY/Oa8/4zRPbAG/GzRtU1987e7KyYLFoYjU1TWo+EFHM+AYx+1DNCEH
-	 djUou9TD03az4lh3o8UuEf2G31gxurHlL1bcusVJkcr9ubkAIWitvuOY0QoZaikMXm
-	 Ve2qHVEjIdf95no6wNWgDXu3bCsW8FPtQFcpCgqB6rmPYFXnKsYPnCbPRoRGBN1K0d
-	 g9SNFHbYhjzdw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41F00C83F34;
-	Wed, 16 Jul 2025 14:04:11 +0000 (UTC)
-From: Louis Rannou via B4 Relay <devnull+louis.rannou.non.se.com@kernel.org>
-Date: Wed, 16 Jul 2025 16:04:10 +0200
-Subject: [PATCH RFC 2/2] send-receive: accept bracket-prefix before
- '[PATCH'
+	id C99C3C4CEF4; Fri, 18 Jul 2025 12:04:19 +0000 (UTC)
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 044A6C4CEEB
+	for <tools@kernel.org>; Fri, 18 Jul 2025 12:04:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 044A6C4CEEB
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from dude04.red.stw.pengutronix.de ([2a0a:edc0:0:1101:1d::ac])
+	by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
+	(envelope-from <jre@pengutronix.de>)
+	id 1ucjp0-00055j-SJ; Fri, 18 Jul 2025 14:04:14 +0200
+From: Jonas Rebmann <jre@pengutronix.de>
+Date: Fri, 18 Jul 2025 14:04:04 +0200
+Subject: [PATCH b4] Fix broken fallback to user.email
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -43,59 +37,64 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250716-prefixes-v1-2-b8652d4de0a6@non.se.com>
-References: <20250716-prefixes-v1-0-b8652d4de0a6@non.se.com>
-In-Reply-To: <20250716-prefixes-v1-0-b8652d4de0a6@non.se.com>
+Message-Id: <20250718-fromaddr-v1-1-8bc274dce855@pengutronix.de>
+X-B4-Tracking: v=1; b=H4sIADM4emgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDc0ML3bSi/NzElJQiXQuDVHPjpCSztBSjFCWg8oKi1LTMCrBR0UpJJkq
+ xtbUAKbm9kV4AAAA=
+X-Change-ID: 20250718-fromaddr-80e73bb6fd2d
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Louis Rannou <louis.rannou@non.se.com>, pascal.eberhard@se.com
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752674650; l=1336;
- i=louis.rannou@non.se.com; s=20250630; h=from:subject:message-id;
- bh=kAkV02g7Gz/O8wHv7cuyXl69EEnMYrXcM4k+aRHsAxI=;
- b=WAbopOdLb4pcZRpM+vLVrPXVp5jspBJfnRRj1/prtbwBIlNbsPrVpEnTJf0FotS8aS6aH+djR
- 5HfwirhbAjJDBnqePz9N/aAa+MS601w8uLknpA5oZTv1dZvUioh+9z7
-X-Developer-Key: i=louis.rannou@non.se.com; a=ed25519;
- pk=WWYN5/DFKqyCKdv6oTYNuq0gROqwZVfNfw2OMI3tUlc=
-X-Endpoint-Received: by B4 Relay for louis.rannou@non.se.com/20250630 with
- auth_id=446
-X-Original-From: Louis Rannou <louis.rannou@non.se.com>
-Reply-To: louis.rannou@non.se.com
+ kernel@pengutronix.de, Jonas Rebmann <jre@pengutronix.de>
+X-Mailer: b4 0.15-dev-16fbf
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1457; i=jre@pengutronix.de;
+ h=from:subject:message-id; bh=HfvKEaDgcm+0p1WhgfrhZP7gDf+//5bUJXOKqvgdWtw=;
+ b=owGbwMvMwCF2ZcYT3onnbjcwnlZLYsiosrDjdzsZlVg2fe3n41Uv6/bWKs0Rs/zx6Mf2N5b39
+ wfW7OTq6yhlYRDjYJAVU2SJVZNTEDL2v25WaRcLM4eVCWQIAxenAEzE4AnD/wTJrJx1L65Ki+6W
+ mG9TnPSdn92BMV5Vr1pu+/EzbluaNjL8zzpxe3LC9zyDh266azqDrM6kfJzYurW/NCxs/cm2uU6
+ NrAA=
+X-Developer-Key: i=jre@pengutronix.de; a=openpgp;
+ fpr=0B7B750D5D3CD21B3B130DE8B61515E135CD49B5
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:1101:1d::ac
+X-SA-Exim-Mail-From: jre@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: tools@kernel.org
 
-From: Louis Rannou <louis.rannou@non.se.com>
+After conversion to string, fromaddr becomes "None" as a string literal,
+so the user.email fallback would never be reached if sendemail.from is
+unset, eventually leading to `smtplib.SMTPSenderRefused` (<None>: sender
+address must contain a domain').
 
-Change how send-receive checks the subject is well-formatted by accepting
-bracket prefixes before [PATCH.
+Convert to string after the check.
 
-All opened bracket must be closed and text is only accepted in brackets.
-
-Signed-off-by: Louis Rannou <louis.rannou@non.se.com>
+Fixes: 742e017c1b ("Cleanup: initial round addressing typing issues reported by mypy")
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
 ---
- misc/send-receive.py | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ src/b4/__init__.py | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/misc/send-receive.py b/misc/send-receive.py
-index bb65aaa..d574054 100644
---- a/misc/send-receive.py
-+++ b/misc/send-receive.py
-@@ -433,12 +433,13 @@ class SendReceiveListener(object):
-             msg = email.message_from_bytes(bdata, policy=emlpolicy)
-             logger.debug('Checking sanity on message: %s', msg.get('Subject'))
-             # Some quick sanity checking:
--            # - Subject has to start with [PATCH
-+            # - Subject has to start with [PATCH or has only bracket-prefixes
-+            #   such as [prefix][PATCH
-             # - Content-type may ONLY be text/plain
-             # - Has to include a diff or a diffstat
-             passes = True
-             subject = self.clean_header(msg.get('Subject', ''))
--            if not subject.startswith('[PATCH'):
-+            if not re.match(r'(\[.*\])*[PATCH.*', subject):
-                 passes = False
-             if passes:
-                 cte = msg.get_content_type()
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index ff6075e..c116344 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -3949,8 +3949,10 @@ def get_sendemail_config() -> Dict[str, Optional[Union[str, List[str]]]]:
+ def get_smtp(dryrun: bool = False) -> Tuple[Union[smtplib.SMTP, smtplib.SMTP_SSL, List[str], None], str]:
+     sconfig = get_sendemail_config()
+     # Limited support for smtp settings to begin with, but should cover the vast majority of cases
+-    fromaddr = str(sconfig.get('from'))
+-    if not fromaddr:
++    fromaddr = sconfig.get('from')
++    if fromaddr:
++        fromaddr = str(fromaddr)
++    else:
+         # We fall back to user.email
+         usercfg = get_user_config()
+         fromaddr = str(usercfg['email'])
 
--- 
-2.43.0
+---
+base-commit: a9b2aba54be85ea2933c43b8a6d71c1611230b59
+change-id: 20250718-fromaddr-80e73bb6fd2d
 
+Best regards,
+--  
+Jonas Rebmann <jre@pengutronix.de>
 
