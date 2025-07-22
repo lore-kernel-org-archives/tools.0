@@ -1,81 +1,146 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856D628E17
-	for <tools@linux.kernel.org>; Mon, 21 Jul 2025 03:17:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AD82E03E6
+	for <tools@linux.kernel.org>; Tue, 22 Jul 2025 10:11:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753067870; cv=none; b=FqrgCJ8HcdPl4+PNfxuUduWKDb4+pXdNdmdI+f1lw0O+D02PNwQsFi+C9pqSTCJukieoJ1BP3Rk7t4WZYUajsdXzb3bmY9ljV94cPalC1bCXCgYXpsVsYmOh3oLNxiTbLATWRBFChNjZX3ogUC3PhnsD34tYlXRO5JBhEi9ot7Q=
+	t=1753179099; cv=none; b=nsVROJhUzM/UZknmBzdKFcaO4NsdFusZ0NcNu/MRR2yIOyS0NE2GbTywwNi6AuQZitUCXcNpT+rTK1kuPwpGD464Cdw14hiHGSc3EuYlIfU3Z9ZEn52qtuESw0OjHYo6aJvdu1nCiJrfqHWHUdnJPE85QdvgvGg8RwLX8BJvWH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753067870; c=relaxed/simple;
-	bh=wpAdoRWYOK8RLceMDgpibClmIJceDZvfzE56j2kutEk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fHo3emXrA7f9Z7GLBEs2FTnf5/kcV73ENz1kTC3MYEzvkB/gAw2evxHgrOhV3+GwIOzU2hMPaG0qoBeZaLqLksYMKFoWukQ/JLoux4bfVkTT0XZQEnccYZ5zyuR51vt9fRCrYXKV/Jz5qcA2yhOagrVYFNhnnQtO5BWD6gkB9Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=gPO30vjv; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="gPO30vjv"
-Received: by smtp.kernel.org (Postfix)
-	id 301D6C4CEF1; Mon, 21 Jul 2025 03:17:50 +0000 (UTC)
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	s=arc-20240116; t=1753179099; c=relaxed/simple;
+	bh=ijR4oheRXhcbHH8psaotqGgiBWFLeO3EJVBpN6FhRKA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=a8pAuyKSpqdtMhdDCug2trfDtBA45tN3nP7FVuIvUmT85CszaJ8oz5Ui2W9dyNPv74flyIZaEqZjWP0lRWZ1nIgDFKLfVCLwCg4d6H0YnFyXr+AY8uocEAnoDUp4X7hT7pk71zyq9tJVQuHnMWTwenFUJCiHePBvQ2FkFgPzed4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1ue9y9-0001UZ-VU; Tue, 22 Jul 2025 12:11:33 +0200
+Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1ue9y9-009hse-1Y;
+	Tue, 22 Jul 2025 12:11:33 +0200
+Received: from pengutronix.de (p5b1645f7.dip0.t-ipconnect.de [91.22.69.247])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 41463C4CEE7;
-	Mon, 21 Jul 2025 03:17:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 41463C4CEE7
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=YUQtc+jeUFA1Sjc8QeVJ2qxxTnEDp9lcdumo1CrlvHY=; b=gPO30vjvhAnDRdKnYIGKdso8Ag
-	LMDXwPee2moTibXtgQ5dIWMlV3ixOkcv+WNH6KmuuiFMsdr0SV5oL5hAIKfOOZ5uDmdkjZtubhp5T
-	TG1IZXKBFwHhcnOjIbHtnUC2hv5K3gYuNdTBYUSzAUDAmlIH6MKJPrfJ655B6tPr2Cu9aj0ALCoSz
-	W/0zMOGz18Q2gfV8uiOHF0/vdaiHpT5+JsOFq6GscupHiU6wWLK/B7IUWfAXm4wSlc6EfeXD4Ckmu
-	wopr0JtcpHoBQSwg7Qe0hDrZ0XVfOsiATbzm/HObFoJYClHtilXNQmeFCumcMntSUCACN6rMpDBvn
-	2VleO7Fg==;
-Received: from [50.53.25.54] (helo=[192.168.254.17])
-	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1udh2C-0000000G4rQ-319a;
-	Mon, 21 Jul 2025 03:17:48 +0000
-Message-ID: <4cb78517-6d24-4239-9a6c-2b58439e199e@infradead.org>
-Date: Sun, 20 Jul 2025 20:17:48 -0700
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	(Authenticated sender: mkl-all@blackshift.org)
+	by smtp.blackshift.org (Postfix) with ESMTPSA id 257A144635D;
+	Tue, 22 Jul 2025 10:11:33 +0000 (UTC)
+Date: Tue, 22 Jul 2025 12:11:32 +0200
+From: Marc Kleine-Budde <mkl@pengutronix.de>
+To: users@linux.kernel.org, tools@linux.kernel.org
+Cc: pisa@fel.cvut.cz, mailhol.vincent@wanadoo.fr
+Subject: b4: feature idea: plausibility check for trailers
+Message-ID: <20250722-utopian-thankful-warthog-104007-mkl@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 2/4] kernel/api: enable kerneldoc-based API
- specifications
-To: Sasha Levin <sashal@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-api@vger.kernel.org, tools@kernel.org
-References: <20250711114248.2288591-1-sashal@kernel.org>
- <20250711114248.2288591-3-sashal@kernel.org>
- <4777f4d7-f1c6-4345-92b2-0ba5d6563ee2@infradead.org> <aH2r55bjqqtKxOEQ@lappy>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <aH2r55bjqqtKxOEQ@lappy>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="dqmgvzlnpbknpsho"
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: mkl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: tools@linux.kernel.org
 
 
+--dqmgvzlnpbknpsho
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: b4: feature idea: plausibility check for trailers
+MIME-Version: 1.0
 
-On 7/20/25 7:54 PM, Sasha Levin wrote:
->> 2. It looks like it only checks .c files, omitting header files. (?)
->> Some APIs are only present in header files (e.g., all of <linux/list.h> is
->> either macros or inline functions).
-> 
-> I was trying to focus on the userspace side of things, so I didn't think
-> we'll have anything in header files, but I also don't have an objection
-> to extending it to scan headers too.
+Hello,
 
-That's probably sufficient, at least for now.
+without malicious intent, but due to human error, lack of coffee and/or
+haste, it happened that a reviewer copied/pasted/edited an incorrect
+Reviewed-by trailer into an email [1]. They changed the username and
+domain, but not the display name.
 
-Thanks.
--- 
-~Randy
+[1] https://lore.kernel.org/all/202507220837.23333.pisa@fel.cvut.cz
 
+This error was noticed by another reviewer, but b4 did not notice it. Is
+it possible to check whether the display name of a trailer matches the
+display name of the sender?
+
+| b4 shazam -l -H 20250722035352.21807-1-luis.hernandez093@gmail.com
+| Grabbing thread from lore.kernel.org/all/20250722035352.21807-1-luis.hern=
+andez093@gmail.com/t.mbox.gz
+| Checking for newer revisions
+| Grabbing search results from lore.kernel.org
+| Analyzing 6 messages in the thread
+| Analyzing 0 code-review messages
+| Checking attestation on all messages, may take a moment...
+| ---
+|   =E2=9C=93 [PATCH v3] docs: Fix kernel-doc error in CAN driver
+|     + Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr> (=E2=9C=
+=93 DKIM/wanadoo.fr)
+
+correct trailer
+
+|     + Reviewed-by: Vincent Mailhol <pisa@fel.cvut.cz> (=E2=9C=93 DKIM/fel=
+=2Ecvut.cz)
+
+This is the incorrect trailer from [1] that b4 picks up.
+
+|     + Reviewed-by: Pavel Pisa <pisa@fel.cvut.cz> (=E2=9C=93 DKIM/fel.cvut=
+=2Ecz)
+
+fixed trailer from a follow up mail
+
+|     + e-mail: pisa@cmp.felk.cvut.cz (=E2=9C=93 DKIM/fel.cvut.cz)
+
+different issue: b4 picks this up from the signature of one
+reviewer....
+
+|     + Link: https://patch.msgid.link/20250722035352.21807-1-luis.hernande=
+z093@gmail.com
+|   ---
+|   =E2=9C=93 Signed: DKIM/gmail.com
+| ---
+| Total patches: 1
+| ---
+| NOTE: some trailers ignored due to from/email mismatches:
+|     ! Trailer: e-mail: pisa@cmp.felk.cvut.cz
+|      Msg From: Pavel Pisa <pisa@fel.cvut.cz>
+
+=2E.. but ignores it, as it doesn't match the sender's mail.
+
+| NOTE: Rerun with -S to apply them anyway
+| ---
+
+regards,
+Marc
+
+--=20
+Pengutronix e.K.                 | Marc Kleine-Budde          |
+Embedded Linux                   | https://www.pengutronix.de |
+Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
+Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
+
+--dqmgvzlnpbknpsho
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEn/sM2K9nqF/8FWzzDHRl3/mQkZwFAmh/Y9EACgkQDHRl3/mQ
+kZyS6AgAjL5/1B66bqkcT+sh9YfCqOGAwIRv8So/mFEobPTrRaV8Z2OVbp7Glon+
+f6xpxgDn9aFPWRYe4/+CVsk65yk747aQgAnll1hauEQUSGo+1++zepx1umznPSJQ
+IJPu91SR1mI+NdzAgqJTuMFF6+oenYeLgwYUebjJm6MYGBMdGkK9iNSjfhlTffXQ
+2qFaXlplTB+CxgO3ni9F/5AJ9xkThBF+7SBle7YlW/OF18PSO9iMKMxDFJHGFmI3
+37vpcZtypcASLOj1wS+icfwQ5WuFOR8l8mMuXKJWSXdUvM+YXbpxdTOO0C24yped
+0YlSGlhP9G/3UiT87npgc6t97XMwaQ==
+=+YsI
+-----END PGP SIGNATURE-----
+
+--dqmgvzlnpbknpsho--
