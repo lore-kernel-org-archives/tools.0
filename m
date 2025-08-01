@@ -1,63 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DDC26E175
-	for <tools@linux.kernel.org>; Mon, 28 Jul 2025 14:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A4A256C83
+	for <tools@linux.kernel.org>; Fri,  1 Aug 2025 13:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753712106; cv=none; b=Grv2/P7Q2jDr3fflAGBNYjgaJmAlaYQsVfZqFdSBKphtFgqypXtWykkpTPWRRSIJhGvzs7iIv1gTgmul4pgQoVeXxQ5SUY/479cGV48UzdC5jF1aQ9f5CLP6Yj8SLXtFuBlJO8CboaoWehnDpXlm/nRvVcO4FtJ3e1lfNzuhRJ8=
+	t=1754056422; cv=none; b=Wcl+l8wEdUksTH8I4ru+SMhnR6wq2iqPbCK+zsO4OFf6NfCb5rAGys0KPKBJS6iM2nDaFRF3zUKOkNMmhgD2712Kust5EBUJgl/xIYzsOlO2CZb+t3JsyGSIa8Kgla0m0vAXn1TInxIvVl4R+jduXQ7+Q6dihiNg5MsRVGVkUBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753712106; c=relaxed/simple;
-	bh=VmIUd4X8ZnZ/gdwXio1PsQfCMAi0k5z9RJkuDQrK3eA=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=eT3ShJ6JnErAIoi4hubkmIfV7XkgubKBFfzq5Hx9RJnjDcV72ahvfi6JHC2H0uzs4HMFgKB3Oqpsfo7LiU6gBcrBZmHhqxr2xyIW+agtZnhS3XDYuYnvzqCKK+mfAnsR9ZptjGqCKA7G43bdw6O/yt9xs0xKf/tacHu/CMPXLI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VLLasUMc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754056422; c=relaxed/simple;
+	bh=b7ygX6fWwlwQdIKjpdQKH7R9GKsbUErT1h3IkhEGH4g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m1U7+cdmdsDTTosltUgxULPmvf/zw4nIgXJ/GDQMsOwOtotW6IrtKxBrz385CUJdrJMLzOWHvd4L+z20g9zQczDyfWOgT/pynDUXpdR9OaECwIGnRDuhd0AEhvDkzmowtqYDr2BV/nOABOO8rNJDIyy/6dlbiBmFx59/B5XBDUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RxD1unUZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VLLasUMc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RxD1unUZ"
 Received: by smtp.kernel.org (Postfix)
-	id 5B77FC4CEF7; Mon, 28 Jul 2025 14:15:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EA7C4CEE7;
-	Mon, 28 Jul 2025 14:15:06 +0000 (UTC)
+	id BC715C4CEF8; Fri,  1 Aug 2025 13:53:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6719FC4CEE7;
+	Fri,  1 Aug 2025 13:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753712106;
-	bh=VmIUd4X8ZnZ/gdwXio1PsQfCMAi0k5z9RJkuDQrK3eA=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=VLLasUMclq3D9FFxNXPlGdr+mgLoYrYLo8uDUxdwGKXP4ZY5ji6ccuOuEOZklghKc
-	 gpPKPDGNib0u5lJJHH+V54/KBN3bFP5uYJCVvjUYivCvL0ZQTPOIGdniPex2+0CLOI
-	 XGMry4+Nbg+z7Ya6I2wMmuexgYbAU0nLYYR3VzZ2GUqC4r9jjbDZW0XXh7VmkAxVS3
-	 khKl/l9rq3Cu8AD69r/hrD/APKp4x7hZRdBYRGy6BXrYH2VG3fSMXU3xWaU5LWhhHS
-	 RXB4IFN2CNqIIBUunV15JJbDgZegt0j5G6v2/lP+Evg8ctwpgazcZTYbfODUsOTQyc
-	 2gifi4ornskXw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id E885D383BF5F;
-	Mon, 28 Jul 2025 14:15:23 +0000 (UTC)
+	s=k20201202; t=1754056421;
+	bh=b7ygX6fWwlwQdIKjpdQKH7R9GKsbUErT1h3IkhEGH4g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RxD1unUZAB8LYpWdEQisRXcII9uw2jI35fEvNsBhKs9M4PQ4VOyWS3Z+1ZWXdFvkN
+	 tjdKtYXjM/P/rKwwyW1sU+3kGZlcT6oIvKi+IE+jH5L4Sv354OwBDOATYU+KnPmPuc
+	 zaWTvf0AM9E+t1Kh6STn7bXeAaHkxQEJOWtMQSuW2brUOhGOCzqpQU4mZoUhDBXWvn
+	 S34V+pKiAPQamq+adn20HlFFGBd9FSyMsB2nkCdqiuyd0B0QLjZbeyFzeaosT56zz5
+	 sijeZwsjrCpY1E+yWowv0xXWauUi6ekgHQ9CUmdslXjWrxcoQQ+rypbKS5kiWx+L+8
+	 pEw2GxUcuj38A==
+Date: Fri, 1 Aug 2025 09:53:39 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Askar Safin <safinaskar@zohomail.com>
+Cc: linux-api@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, tools@kernel.org
+Subject: Re: [RFC v3 1/4] kernel/api: introduce kernel API specification
+ framework
+Message-ID: <aIzG427WYt0_wonN@lappy>
+References: <20250711114248.2288591-2-sashal@kernel.org>
+ <20250716072141.12-1-safinaskar@zohomail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: Bugspray Bot <bugbot@kernel.org>
-To: manos.pitsidianakis@linaro.org, tools@kernel.org
-Message-ID: <20250728-b220380-b43c410aaca8@bugzilla.kernel.org>
-In-Reply-To: <CAAjaMXYtY62_KeEbshWA4vjhtUzNgTO0wffcZXNy95EqvL+Ovg@mail.gmail.com>
-References: <CAAjaMXYtY62_KeEbshWA4vjhtUzNgTO0wffcZXNy95EqvL+Ovg@mail.gmail.com>
-Subject: Re: b4 bug: "Error tagging the revision" in project with git
- submodules
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: bugspray 0.1-dev
-Date: Mon, 28 Jul 2025 14:15:23 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20250716072141.12-1-safinaskar@zohomail.com>
 
-Hello:
+On Wed, Jul 16, 2025 at 10:21:41AM +0300, Askar Safin wrote:
+>> +   KAPI_PARAM_IN       = (1 << 0),
+>> +   KAPI_PARAM_OUT      = (1 << 1),
+>> +   KAPI_PARAM_INOUT    = (1 << 2),
+>
+>There is no need for KAPI_PARAM_INOUT. It could be replaced by KAPI_PARAM_IN | KAPI_PARAM_OUT
 
-This conversation is now tracked by Kernel.org Bugzilla:
-https://bugzilla.kernel.org/show_bug.cgi?id=220380
+It could, but it's easier to write _INOUT :)
 
-There is no need to do anything else, just keep talking.
 -- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (bugspray 0.1-dev)
-
+Thanks,
+Sasha
