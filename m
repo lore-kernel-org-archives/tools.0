@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C888F2376E4
-	for <tools@linux.kernel.org>; Mon,  4 Aug 2025 20:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6422FE570
+	for <tools@linux.kernel.org>; Tue, 12 Aug 2025 17:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754338507; cv=none; b=kgx5oO9hGvqU7R9DyV+js4CoqAdubPnusFfx3ypNiu+ZCmXBSyKoWZYKplN8phMRzINBJ0hFKhO98C6wLaK7EhhGPzRzXQ8Bsx7XYYUuin3q/TDYwhGJt3Qk0/+FlT0BhZ6jtT1NE4Be+pr7Xhv/+CeI5EwBF7mv9zjHXkQPQ78=
+	t=1755021561; cv=none; b=g0u2nYiBNQEYvTx6B3defaIMXoxLLV4kYLl8dLGq+DkKBvfRex5GBCAymnw4xWdM/nWdLYpYy0hPsMKPmOxRndb/X+zKdM4Dn/vTehpe40dMHY8O08aj9tiMctWvku6JuEBE4O4IhFc1nYtJHNviohgrsmeNjs8J5TVrlaWxb8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754338507; c=relaxed/simple;
-	bh=3h1Cgx7NmGKCvq53NTQjsw3LVbV7RSXF/pZ+yHzmKAw=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=UZtq54YVuFpmJ+w2dFDQSVDcf8HR7edEOnYMPdOPRnC9zGBafGq2k+nPnsTv4YsdnGusv8lvfy8vFy0/vi8JhTOhAUtdbsAoYZuqWiREaQ0lSbCqCIVyoCBYo9Pka5httHEAZwy9ZvHEqf9OS88c8YIGAJ6bH3Hc9oYbPdhwGew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T3JHOBqD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755021561; c=relaxed/simple;
+	bh=unt1X+NDeAo/fYUcPd2CNEPtW4ICRqUCQ6GUuhkQIHs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=nWs/pAvHcWTfLeYL6xScx1TF3fwXWqmdjZSrJSWHJDwxMEnnYmh0KlCMqEEF2Q+qtv/eb8UhjBjbGSCDJBhN8TERn884/DVGn33xyQpLeh88W2RKqya8hUgNM1qrP53kSBDoCn+OIasuUh+05a5wL8TUA5X4pv8K+rD5f5QdDzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TSg3CPQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T3JHOBqD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TSg3CPQL"
 Received: by smtp.kernel.org (Postfix)
-	id 621F9C4CEF7; Mon,  4 Aug 2025 20:15:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FDCC4CEE7;
-	Mon,  4 Aug 2025 20:15:07 +0000 (UTC)
+	id 47DB0C4CEFC; Tue, 12 Aug 2025 17:59:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1F9F1C4CEF0;
+	Tue, 12 Aug 2025 17:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754338507;
-	bh=3h1Cgx7NmGKCvq53NTQjsw3LVbV7RSXF/pZ+yHzmKAw=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=T3JHOBqDuos9rgoKmgHtMVkKRewkwsKItiEG2izdSJ0TFiHJnwg/ewXqrVdCy+ptH
-	 0QIuXDHhPSGb2OA1UAIWob2a55poiMSid/AGzEuKGN7fcJsOZMKB3S5Jt+6XaHsD5R
-	 krJLrVzJHNRhMci4UG4xOR45hOSMPeSBF+gMZqSybbXl9hoxe4yJ0cHzXXa3IkMzgd
-	 niX8VE5nmfCpvNb1ZMqo9KW8fketgPpVu3aKKJgsQQjpxwsfd6ohopBGRzwWWy7gTg
-	 2Krxu67CobC3yHz5EbBg6c4tIeg4WhVIWYHXn1h1LeuSdqceUsfmPjUAPYAMkeojMq
-	 3pyGBnWnCjW8Q==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B1F2F383BF56;
-	Mon,  4 Aug 2025 20:15:22 +0000 (UTC)
+	s=k20201202; t=1755021561;
+	bh=unt1X+NDeAo/fYUcPd2CNEPtW4ICRqUCQ6GUuhkQIHs=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=TSg3CPQLZNZ5vJezNkzhIhbU0q0za2N3m/zx4zI37+qeTZoowlwFF3kqYSmHlfumo
+	 +sEqotlYsAj1LLRLxYf6w78EIomKYoP4WWeHN1BUT+8g3q17qepv5maXBinkxxWdZq
+	 FNBNOGJW3kXaKB/pRhq2DBSO/3yhfQB+idORe2tjYHYDm8ptUIFiZto+XgTlWGUBnC
+	 cIBZcfqubWKBuOTx4A6M+uUmkcM6bOaYkT8QLBUkDmwcHbGx4WZRjzgdlk4nNahcue
+	 eVAMgm9I5cu/mhLMKZjqvItYXuNRS+4HZLDzee5wzd9CA3P6w+iY2cZCsfDnWAtGKD
+	 NK20/sNqJQhEA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00C42CA0EDF;
+	Tue, 12 Aug 2025 17:59:21 +0000 (UTC)
+From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
+Date: Tue, 12 Aug 2025 19:59:14 +0200
+Subject: [PATCH b4 v2 1/2] git_range_to_patches: add git options to better
+ represent renames and copies
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,24 +43,56 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-From: Bugspray Bot <bugbot@kernel.org>
-To: tools@kernel.org, jannh@google.com
-Message-ID: <20250804-b220411-377bf7a05164@bugzilla.kernel.org>
-In-Reply-To: <CAG48ez2OSJd4ZSfan3Xn+=qM38Dbm8jhUBby8n1aRtYaTLQ26Q@mail.gmail.com>
-References: <CAG48ez2OSJd4ZSfan3Xn+=qM38Dbm8jhUBby8n1aRtYaTLQ26Q@mail.gmail.com>
-Subject: Re: b4 feature suggestion: rolestats in --auto-to-cc
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: bugspray 0.1-dev
-Date: Mon,  4 Aug 2025 20:15:22 +0000 (UTC)
+Message-Id: <20250812-format-harder-v2-1-53f74982079a@oldschoolsolutions.biz>
+References: <20250812-format-harder-v2-0-53f74982079a@oldschoolsolutions.biz>
+In-Reply-To: <20250812-format-harder-v2-0-53f74982079a@oldschoolsolutions.biz>
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1755021559; l=1009;
+ i=jens.glathe@oldschoolsolutions.biz; s=20240919;
+ h=from:subject:message-id;
+ bh=bSyncenwTXyl6hnBeb7URh7Kurn8icGV3x9qoXbSXIo=;
+ b=MXevnUyDFOBcVOHS7voxgn+6bl714QOjt0LMfmmXiLxuwwWFZYnsGIYWOBBAJPoAROyjRdvzb
+ Jqz6VLXzWeKDIF0L6lO6q8ASYK6UMb9gSpYbqa5WQe/fv+W2AEPx+52
+X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
+ pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
+X-Endpoint-Received: by B4 Relay for
+ jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
+X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reply-To: jens.glathe@oldschoolsolutions.biz
 
-Hello:
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-This conversation is now tracked by Kernel.org Bugzilla:
-https://bugzilla.kernel.org/show_bug.cgi?id=220411
+As remarked in [1] and [2], add the necessary options to get better and more
+terse output.
 
-There is no need to do anything else, just keep talking.
+[1]: https://lore.kernel.org/all/7tejkof2kec7ugpz6xugkjrcpzab27lsjpnkphj3vd3xoc4ly7@x3otjziiehju/
+[2]: https://lore.kernel.org/all/369fc807-f05e-4837-b623-b718e47fd840@kernel.org/
+
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+---
+ src/b4/__init__.py | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index ff6075e3a95e0df5f8ba3f717b12ae2bbce03432..93cf016bd705584ace4d61c4968be365a25f2502 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -3594,6 +3594,10 @@ def git_range_to_patches(gitdir: Optional[str], start: str, end: str,
+             '--encoding=utf-8',
+             '--default-prefix',
+             '--find-renames',
++			'-M',
++			'-B',
++			'-C',
++			'--find-copies-harder',
+         ]
+         smcfg = get_sendemail_config()
+         if not get_git_bool(str(smcfg.get('mailmap', 'false'))):
+
 -- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (bugspray 0.1-dev)
+2.48.1
+
 
