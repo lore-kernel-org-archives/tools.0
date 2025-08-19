@@ -1,159 +1,210 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75EC1863E
-	for <tools@linux.kernel.org>; Tue, 19 Aug 2025 06:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2B023D7D3
+	for <tools@linux.kernel.org>; Tue, 19 Aug 2025 06:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755583283; cv=none; b=MkpQQkqXPtH7XmN33+CHnEI4UsmlBhNM7bV+Ui74yIZdfFhJakORQhqrGAUziSTxcNR//3ZBS6d3AH5YBnHL72ceCnFb7htBY9dCQuWRwCbroq3JAGmQwbx0VfEtp0W02RjRz9QE1tWyQSd1UkKqspbbq+TMMAGl/Gcl4IvZrvw=
+	t=1755584588; cv=none; b=u6xG24jznIgcb1BsR21dB14+Vy3Hp38gkLMXVuw/rr5B533Hntf50FDLoFf/00GMrZvkDBWGp1XYjriKHMVtA6L1+Ko0NLzH9RepPaKXa48kDOv3ISzl9Ty7fKeTQRCcqz6T6EL8TOvEfAhFBE4XwNjtNglzsArFgCHnJcgTobg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755583283; c=relaxed/simple;
-	bh=KFo4fdn/j6IwNGx8X6vtPiUWSjwxVtDXCj8HoeiW6mc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pR7puen6tpowqH35dAZO0k7e32bSNAOPoRiDGwqnFbeib42FX4ZLkeTjLVWVM+6LQJPQjsCT3eoERgFI3p6rAkfExRCecrNnSkWoyI9gHx1gAwa23DVowm9g1kF++HKQDmeJbZIpZYi5VMHQlDbO/AWAlgynpJ9raGpDZRLKmvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=flwUW0Ai; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755584588; c=relaxed/simple;
+	bh=n0tAbxj9DDUB4k1QZr8fUz+BAoSmu41JF9dHNZTDuIk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=SANY+yJMFfAG0z8eb55fyJ4yTgxzEg9Kvd17+da0oavgNOvAl0sqlA2FhoxRF43CWIR1Pf8+6RYCMc5VyEjOYGamsIjEVW+F2FBR+xre+nrvkH6/7zVFpz0BRfQ5r+99UUDzaqDbX47z2QrOBaVyupBQpic4SPJHWkBgo+RwIgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HgIRB5UP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="flwUW0Ai"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HgIRB5UP"
 Received: by smtp.kernel.org (Postfix)
-	id 80F1CC113CF; Tue, 19 Aug 2025 06:01:23 +0000 (UTC)
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	id EE784C4CEF4; Tue, 19 Aug 2025 06:23:07 +0000 (UTC)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 9818BC4CEF4
-	for <tools@kernel.org>; Tue, 19 Aug 2025 06:01:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 9818BC4CEF4
+	by smtp.kernel.org (Postfix) with ESMTPS id BBB1AC113CF
+	for <tools@kernel.org>; Tue, 19 Aug 2025 06:22:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org BBB1AC113CF
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57J3CPHW017560
-	for <tools@kernel.org>; Tue, 19 Aug 2025 06:01:20 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57J1GLuM011948
+	for <tools@kernel.org>; Tue, 19 Aug 2025 06:22:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AAREMGR3T0eOVEpVRn+vMXAHH8myGgSLzUmNR3APCPE=; b=flwUW0AilbLSU1KH
-	AXkcYAziZIF1wIeC2VHc8ptzQUwCVIaCknqXPqg5JBaBaQjGl+62kffTwZ7HGWnX
-	E25gTWhFNwNdJFB+Y1E51eXQkr0QNH6KZnHaMZxkkjig6bl6bFcGhrzC/h5V2MX3
-	xl4r1r6Td2KnX/9lf7lQYliXT37Argt6vxhYiAeKrbFGq//ommpDuJv+07MKhdOr
-	F/MRiGvx01GYlZpP+20Xqvyu4XKZmONCjXdg9XrhGcr8XnQ+DbRTYV3Gi5TqruL9
-	gHEPeq/tSlzKoRAt1F5ZqQ4l7QrTm3C74hD3t4dmHE7DA1xwpnp4Jz0CQW+thkY8
-	1Vx+nA==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jh077d9g-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=DekbxML8ILdnVGcElyllMg
+	cFCiCObg7cMrh7mrdaiWU=; b=HgIRB5UP6NAnXaAYqPUssdxyLoQx7RhtlzbTD/
+	I7LA9cj4WUwf/vkZfFtaWq4JCmuY8QkDV6TMu5Fx3ZXrM8bugvqFWF6XSNjbZCn2
+	SMqEUoGTerNnM39BbSAo0ItcSvDv6eOYW3EneoG/QZ7JghxkauUuwaZOv0uzhHdz
+	vKi2DnU/cb6Ada363WbPaa+VBk5nHOhn2G+jxCRjHtu5TInhpL1gEMR69YekpaH0
+	yeGgIOSu8i39gXPyFgfoM98q3Prm9ssXslvm46jiDkS9e6svrzTp56vr5Mrevc8l
+	+8cRQRAc4KTZxztwL6nd8ZdtXPr/AESoFsj95qXfw0dMxjVg==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jk99qc8x-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <tools@kernel.org>; Tue, 19 Aug 2025 06:01:20 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-32326e017efso5067675a91.3
-        for <tools@kernel.org>; Mon, 18 Aug 2025 23:01:20 -0700 (PDT)
+	for <tools@kernel.org>; Tue, 19 Aug 2025 06:22:48 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b47173afd90so9090799a12.1
+        for <tools@kernel.org>; Mon, 18 Aug 2025 23:22:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755583279; x=1756188079;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AAREMGR3T0eOVEpVRn+vMXAHH8myGgSLzUmNR3APCPE=;
-        b=HpkyUKBJBgr18Yy1hzMCVGHbDlVTHwpftIANykHzT1I6azjiXBqe2Ac4ZRMA2xfkT6
-         Cenn60Vh1fYaOCfIq/tlj93d60+v2yfUy8tzDaz7f/KEL5aO/b+EkXUX6Dhp/olvrIV2
-         whZmBBr+DCAHhDIvWY9b2GUiKWWtn36/pWuyhnxNlSSYAn6H/pQQp276LnXyRNAvdxY7
-         ehBpm6uR1UYSEvkWDkwrCIfVYrh8DlFN0N+bJ2dLx7zW9z7hw+SOVY+OyNfz+jhxwlx6
-         tOMLFfyMxqQJptq1b6lmSaAOhf4HmEZQs7+wQiKbPCL72pDGo9F4acuTPCGwL1XhP9lq
-         lGBw==
-X-Gm-Message-State: AOJu0YxLTcDIuyqmpXVfZA9lyAv/+ajnIs4/QPIhsMFIGxed8/dNNjsk
-	Lj5drb+m/XNp96E1de8h0frk4kyz5NFWh1xyTHH1T0lwVedMWLqktCeyT7OV0a14j1iD2xniJz3
-	gjL10T9AUiBhhpKpsdZlNrbzUcYXbUED5oJvbELCMhr8HqH/YoQ7TihIbha/sQw==
-X-Gm-Gg: ASbGncu2fCJOp+X1bg1CtBsBZrkpWg6WI0n0uS1kgglmUycAKHfErmA6NcDnGZWbzQg
-	g6KQQD78kOziMpQVY+bMpQe1WOB04GMs4ZnFaHzqwS2rLorqfRIDeDCqX2MTlvtzsKvwRLf5D00
-	Vin+xLS8+f6r7YfunUHmOY2anUKV+pHFRx6nWKRTAcUi800Yl0hU2PNAwDkHM1arbpGdgf9b+H0
-	xp61p+e1mpHnf7B9R7CpMN0/Wupwf7GXJFRfrp+TomkPL0hxkUW8PkRLpMlcIasDcQHraQCHb0W
-	zYjME3anIclM/odwffDMM0IJzcAQyXiAjDzmRoko1Ij+SRBoAri4Ag8e94fxm4Y1jSumGLrtMVQ
-	ByeJf2tkGPD1ufJopO3fcs3JFOr29uX95
-X-Received: by 2002:a17:90b:3f0e:b0:31e:cee1:c5e1 with SMTP id 98e67ed59e1d1-324970ffa6amr2083153a91.30.1755583278786;
-        Mon, 18 Aug 2025 23:01:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6S+WzgEWpD07ree+sjOi4LabpXEucSPf64T7wdmdGcRtOkny8emIq6siUjpeUokrSWNIpUQ==
-X-Received: by 2002:a17:90b:3f0e:b0:31e:cee1:c5e1 with SMTP id 98e67ed59e1d1-324970ffa6amr2083109a91.30.1755583278293;
-        Mon, 18 Aug 2025 23:01:18 -0700 (PDT)
-Received: from [10.133.33.88] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3237e3da70esm1700262a91.10.2025.08.18.23.01.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Aug 2025 23:01:17 -0700 (PDT)
-Message-ID: <056886f8-70f4-417e-8ddd-6257ac36f172@oss.qualcomm.com>
-Date: Tue, 19 Aug 2025 14:01:14 +0800
+        d=1e100.net; s=20230601; t=1755584567; x=1756189367;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DekbxML8ILdnVGcElyllMgcFCiCObg7cMrh7mrdaiWU=;
+        b=rZm1/qdKAUbQvx/zQFD8E5nf8m/QgLyVwa5WAKZLb8Lc1VEkopUZzyc92+jh478yfa
+         3N3nUDBMJUq0/iM7r4DV4egIJT3WHRBBMxl3OHJ/+kG1NAR/qS4GoncVMGIWyXvoMBR0
+         C42IobRHHTSk4eWsgYPVx935XevVtIXMovgZLmEaDtAod1/QD4+HWKg5NycI1G/nKd9j
+         vBpwtdcMs82nDGi0Spx8K374OPzTb1q4PUFKPKhTTXVXioBlQt8LDRbscIhFdrd5ArSD
+         TsUrtG08NIEYRo0hqTO1YDAGXPquln01NX8iIQS5A/tpIjLlJHHwYOyLm1li+3JersPp
+         F40A==
+X-Gm-Message-State: AOJu0YyQk2Ri/xG/wzpnQofPu3L+FSwRmz7EOg7SFwhkHbr0e6BTXhGT
+	SdvpPDWJ4QpRmMZeLLFPYSfQpNpJMYPxFO/xVpvNIblqCMKFzqMmto0lErMEh5KS5irmzfl7hI/
+	Q24e3IPUfYPHuaw8Tqp/9WHII6OrG8RZWtGadSltQt65wqMrFsHQ=
+X-Gm-Gg: ASbGncuYfweF14MFEj7w5XbGxyqLLIi8EQ3x3c6nuXpSPtIBos4W/dAP3hJHDxPcKvz
+	YiSXS3SVzq9MpbJfEEOOqUHWEOguWQQLcapWO65V/zMGzbLBQNFiEvC41A2A+D3uo1gPs/dzbyN
+	7oZ+qxUUxhuZctnStX+5sJ43116dJ1CQpauCqKI6q2EO2kny0gy6COD3TUo5I7wB42bu9sMkY9C
+	zUOTcyPWBTGsSO6OVDiLeCwgXGIZq0Q135iP8eO60FIEcSbEnmfsG2zXM4PgoAgZlar1E9S2iFN
+	nUqdoZSjXC0Gc5dJX+bCpMzv7GvqA4Ot7ynBdoeCObtD5bcMlFVBnI8IzrL4DEDpxh5926+PWlW
+	9eVlqm90OVbUCq8Ye2mw2qvgK/1NVkiSZng==
+X-Received: by 2002:a05:6a20:12c1:b0:240:160b:81bf with SMTP id adf61e73a8af0-2430d395662mr2015451637.19.1755584567542;
+        Mon, 18 Aug 2025 23:22:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IET0GBP/VOWByopf4t1kmMel1GAatA2ScprDO/xr9eiuL0yui1nFiMt/NIKZ3jNZtQT2qxe8w==
+X-Received: by 2002:a05:6a20:12c1:b0:240:160b:81bf with SMTP id adf61e73a8af0-2430d395662mr2015429637.19.1755584567112;
+        Mon, 18 Aug 2025 23:22:47 -0700 (PDT)
+Received: from yijiyang-gv.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e7d544de1sm1394174b3a.94.2025.08.18.23.22.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Aug 2025 23:22:46 -0700 (PDT)
+From: Yijie Yang <yijie.yang@oss.qualcomm.com>
+Date: Tue, 19 Aug 2025 14:22:24 +0800
+Subject: [PATCH b4 v3] Add Git version check to prevent crash with
+ '--default-prefix' parameter
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH b4 v2] Add Git version check to prevent crash with
- '--default-prefix' parameter
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-References: <20250819-ver_check-v2-1-46faa2d6c934@oss.qualcomm.com>
- <20250818-cyan-pogona-of-promise-6a4bc3@lemur>
-Content-Language: en-US
-From: Yijie Yang <yijie.yang@oss.qualcomm.com>
-In-Reply-To: <20250818-cyan-pogona-of-promise-6a4bc3@lemur>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: oDlxZp4I_6pirYHJrzd7ocP79l9WLSeR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAyMCBTYWx0ZWRfX+vBEMD77ae7b
- lL5zwKojfx2hzP3jWgTyrV+Ashff6ZTybExBDCq4rKh1MZ7e8ssZLS6M7kI8Ofpvf3/dlKbO0Uv
- RN55KWSLSLwTyB44CllJEYbVMPwJPDSTulqIetKg/SrXIZ90Bj/WayGwZBSTKZJ8NH+5t5nnaTs
- wvmR0YvVZHtcslUXxUYldyH3SEwpOQ/1+8gR7oi5g6DmoEfbCplPubIug+/KUIU7v6DMt4RQgqi
- RGW/irv3elDk2q+eyoNp1YdgTzT6othPSkPthu9OPesqoJMGWWhnAjWEZ6wQPbpt/EsBzd4mIYl
- RamDOMjwuMmYqf0nhKA2of8rvLrsejTM0LvJvi1ObUMxEYR1LbukuTl32QqH5lMPlgodhsuQ5kJ
- rRGr3evy
-X-Authority-Analysis: v=2.4 cv=a+Mw9VSF c=1 sm=1 tr=0 ts=68a41330 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=zo6fIjJfBq1QBSPtc2cA:9
- a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-GUID: oDlxZp4I_6pirYHJrzd7ocP79l9WLSeR
+Message-Id: <20250819-ver_check-v3-1-9877d033bb7d@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIACAYpGgC/23PQW7DIBAF0KtYrEtkBkJMVr1HVVUwDDVqbTfgo
+ FaR716MWimLbJAGfd4fbixTipTZubuxRCXmuMx1kE8dw9HO78SjrzODHo79II68UHrDkfCDD2i
+ 96Q1JJYnV/FeiEL+b9cKcYq/1ztlM3CU747grk80rpb9wosu19q3/L/YoLtMU13NHSjk3nOBE4
+ JTxTmsEFAQBgYwDcBIGoS21kjHmdUk/7Q9FNOzBukVwwU3waAL0wll8XnI+XK72cy891KNhBe4
+ Bcw9ABZQO1oLXaKR6AGzb9gsRAnMWUwEAAA==
+X-Change-ID: 20250815-ver_check-8cad909e343e
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Yijie Yang <yijie.yang@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-5bbf5
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1755584565; l=3226;
+ i=yijie.yang@oss.qualcomm.com; s=20240408; h=from:subject:message-id;
+ bh=n0tAbxj9DDUB4k1QZr8fUz+BAoSmu41JF9dHNZTDuIk=;
+ b=Yg/be/ZZM+u1bmMJmUAaRxboMMTZdD+AshNTwmhXeG+racwsqNXG8+hayELgKFLGbeFKKcIqH
+ hinN8W9N2CNDx1kujMAdNe7B6cWrXWCfW75Q+u/9x+5f4nnL/vgKtju
+X-Developer-Key: i=yijie.yang@oss.qualcomm.com; a=ed25519;
+ pk=XvMv0rxjrXLYFdBXoFjTdOdAwDT5SPbQ5uAKGESDihk=
+X-Proofpoint-ORIG-GUID: GKXoWpDkIik60I42GPjmuJ6TeGT0BHyw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDA0NSBTYWx0ZWRfX6fjLgIQ/tMGj
+ 0DPxj7kOqqnpAHw36velksyJCxTer9fft9FirDCAVlEKZOQxp5AFa7OeCNcbXl9STjjui89kXet
+ M7tKNzIxbo0HmO/qrHDNrGL+oEvaCnzYVCgjkta55qX8YCkO95lG8owI2n/G/1xGBR8mkGGCceA
+ PwgSFlp1VZgrPCZnAw4vmbRmuACys2MQCk+Oo26lESr5A/Oxooh600+d4Y34FOVse7eqU8zn4JU
+ w+o7Fg+T2kTIAOJjBngfj2padecn3Yr9rqGHzzDJ4vZVYzlNbOPP8UdY0Zi65NNvXM0h28LfF8A
+ zrtPNJX4uxy/q8OVh260U0UYMQKjBlZgY2j268HhECUGt/MdMp/V8Ww0j9Vabz3bbyv0ZXWohwT
+ VskjgXY9
+X-Authority-Analysis: v=2.4 cv=IIMCChvG c=1 sm=1 tr=0 ts=68a41838 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8
+ a=N2eS-pEXUFdVCCrYCnMA:9 a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
+ a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-GUID: GKXoWpDkIik60I42GPjmuJ6TeGT0BHyw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-19_01,2025-08-14_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 suspectscore=0 impostorscore=0 phishscore=0
- adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160020
+ priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0 phishscore=0
+ adultscore=0 malwarescore=0 bulkscore=0 suspectscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508160045
 
+The '--default-prefix' parameter was introduced in Git 2.40. Environments
+running older versions may crash with errors like:
 
+CRITICAL: Failed to convert range to patches: Could not get a patch out
+of 5f8e8d5b2c840f8fc5185c2f90d6d275535a6aea
 
-On 2025-08-19 11:33, Konstantin Ryabitsev wrote:
-> On Tue, Aug 19, 2025 at 11:02:26AM +0800, Yijie Yang wrote:
->> The '--default-prefix' parameter was introduced in Git 2.40. Environments
->> running older versions may crash with errors like:
-> 
-> Pretty good, just a few minor improvements:
-> 
->> +def git_check_minimal_version(min_version: str) -> bool:
->> +    ecode, out = git_run_command("./", ["version"])
->> +    current_version = out.split()[2]
-> 
-> It is better to use:
-> 
->      git_run_command(None, ['version'])
-> 
-> "None" is because this command doesn't care which repo we are currently in,
-> and is more consistent than using './' here.
+This change adds a version check to ensure compatibility and prevent such
+failures.
 
-Will do.
+Fixes: 71916ed ("Create patches with --default-prefix")
+Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
+---
+Changes in v3:
+- Optimize return style of git_check_minimal_version.
+- Set gitdir to None to indicate that the operation is independent of any specific directory.
+- Remove unintended changes to quotation marks.
+- Link to v2: https://patch.msgid.link/20250819-ver_check-v2-1-46faa2d6c934@oss.qualcomm.com
 
-> 
->> +    if version.parse(current_version) >= version.parse(min_version):
->> +        return True
->> +    else:
->> +        return False
-> 
-> This can then be simplified into a more pythonic version:
-> 
->      return version.parse(lines[0]) >= version.parse(min_version)
+Changes in v2:
+- Encapsulate the Git version check in a function named git_check_minimal_version.
+- Link to v1: https://patch.msgid.link/20250815-ver_check-v1-1-9fdc9f201bac@oss.qualcomm.com
+---
+ requirements.txt   |  1 +
+ src/b4/__init__.py | 12 +++++++++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-Sure.
+diff --git a/requirements.txt b/requirements.txt
+index 3781f49..ed9b832 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -210,3 +210,4 @@ urllib3==2.4.0 \
+     --hash=sha256:414bc6535b787febd7567804cc015fee39daab8ad86268f1310a9250697de466 \
+     --hash=sha256:4e16665048960a0900c702d4a66415956a584919c03361cac9f1df5c5dd7e813
+     # via requests
++packaging
+\ No newline at end of file
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index dd5eaf9..f425fd6 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -43,6 +43,7 @@ ConfigDictT = Dict[str, Union[str, List[str], None]]
+ from email.message import EmailMessage
+ 
+ from email import charset
++from packaging import version
+ 
+ charset.add_charset('utf-8', None)
+ # Policy we use for saving mail locally
+@@ -2838,6 +2839,12 @@ def git_run_command(gitdir: Optional[Union[str, Path]], args: List[str], stdin:
+     return _handle(out, err)
+ 
+ 
++def git_check_minimal_version(min_version: str) -> bool:
++    ecode, out = git_run_command(None, ["version"])
++    current_version = out.split()[2]
++    return version.parse(current_version) >= version.parse(min_version)
++
++
+ def git_credential_fill(gitdir: Optional[str], protocol: str, host: str, username: str) -> Optional[str]:
+     stdin = f'protocol={protocol}\nhost={host}\nusername={username}\n'.encode()
+     ecode, out = git_run_command(gitdir, args=['credential', 'fill'], stdin=stdin)
+@@ -3601,9 +3608,12 @@ def git_range_to_patches(gitdir: Optional[str], start: str, end: str,
+             '--binary',
+             '--patch-with-stat',
+             '--encoding=utf-8',
+-            '--default-prefix',
+             '--find-renames',
+         ]
++
++        if git_check_minimal_version("2.40"):
++            showargs.append("--default-prefix")
++
+         smcfg = get_sendemail_config()
+         if not get_git_bool(str(smcfg.get('mailmap', 'false'))):
+             showargs.append('--no-mailmap')
 
-> 
-> Best wishes,
-> -K
+---
+base-commit: e44bb8727e2b49db66c2c1e2fc2e9b22b32816ae
+change-id: 20250815-ver_check-8cad909e343e
 
--- 
-Best Regards,
-Yijie
+Best regards,
+--  
+Yijie Yang <yijie.yang@oss.qualcomm.com>
 
