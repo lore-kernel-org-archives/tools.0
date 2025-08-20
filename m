@@ -1,163 +1,101 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CFF320CBA
-	for <tools@linux.kernel.org>; Wed, 20 Aug 2025 14:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019563451A8
+	for <tools@linux.kernel.org>; Wed, 20 Aug 2025 14:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755701719; cv=none; b=X0qW7FW8OwtGAooZhKEDCg9Cqye9s2L8dK1cdwjZJ1C2WD3qAcF96x6iG/pPuGWcycSpclfV9jFx749vDCgLugL/2ydDnd6JL8dWEUZPjvOK9W/TdlwsG7xLSCHsMXsG47fuS2p3Oxn/UioNehDvxSw1BaXZMlCT0ptNhANIm1g=
+	t=1755701959; cv=none; b=KCjX3+6CNERQs8bNH880Fr7uV9resx2SXD6wyqrKYxoPrsE3YTZJAE8ARMFJu/FH75z1vixaPxkracllXTYVpHTXEaj5vOO6dQ8iWfatMS7dLbeSA42sNyM31oYW7QO8XLfI4DB9n3UQZKX9JnlGSmnmyidj+vFcorpY5VzqdOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755701719; c=relaxed/simple;
-	bh=XkFoMEFev3Z2MyjyHgzWfc0mIlwNn6MTvv6E+uCrlQ8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dZky/JxoHb8UuRQWUD6UIoe5i4tIcdANvF92zMz9v1COIwEzmjT1QXQIpgyCiC+wnxeRu9bcR7xL5uid8N/FkxftLp1NGwxcCwkmqSiwkD921PqQwgWyjiu3FbKVefCT6EJf4dPb00KMK64UxRDUhOFl+gFffu6jB6hOeLfxN9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G9oRD3ls; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755701959; c=relaxed/simple;
+	bh=nSjL547IQQQEU54ydHjvxbeK5RWiqc6aQZ/eqZkTdmg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pwtxa5tpYjC445/ah0ttYhK3uE+K1YBUltx4HoLxXZBJLwKGRWHAZ3k67jBM41mgWAb6nRUou32fgVCyZ1sXTLedjYTHHaNah2rfwOKjNM5+gwxQ693ywnSkhUT8RIuo9rrLX8EzMBFB5u9H91tvRlkTdMJt1wNl3sDEl0Ncdd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ofnytu9c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G9oRD3ls"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ofnytu9c"
 Received: by smtp.kernel.org (Postfix)
-	id 8CECDC4CEE7; Wed, 20 Aug 2025 14:55:17 +0000 (UTC)
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	id AC1D6C116C6; Wed, 20 Aug 2025 14:59:17 +0000 (UTC)
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 99485C116C6
-	for <tools@kernel.org>; Wed, 20 Aug 2025 14:55:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 99485C116C6
+	by smtp.kernel.org (Postfix) with ESMTPS id 28CEAC4CEE7
+	for <tools@kernel.org>; Wed, 20 Aug 2025 14:59:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 28CEAC4CEE7
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-afcb7acfde3so954137166b.3
-        for <tools@kernel.org>; Wed, 20 Aug 2025 07:55:15 -0700 (PDT)
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-61a2a5b0689so6850480a12.1
+        for <tools@kernel.org>; Wed, 20 Aug 2025 07:59:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755701714; x=1756306514; darn=kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=goCm9hKxSWFSUPZQNPWLBt44GcwikM878BdTmM9u7Lo=;
-        b=G9oRD3lsFUHoup4lUP0mBWY4T/pAvA0I8YsyMqdyrIPNDJFjDWz/vao9nqqSA07DgX
-         1YTe3/+x9DOd9Qh7Zz7VuqQ8td+PQgOGq7zuTJGTh3CAEHUm6w/8SOfLjy1dmgMM+jiR
-         Qt/9PYtV4H7yV8dFOfDDPAuRXPNQo2mCI63vwBbweCF0evG5G7cXUQiWls8XQCAQu3aQ
-         lIev4MCrm0aPo3Dt2No023dEOAVLbox0p7CFmF89UC+YvBHK/b3gGWgLBKxcv2I3w85b
-         kK+OsOV8rqM6uPgXod6haRYmGssz/DdvdgnrREa0nRcL2KQiJzx9hMOB9seAgJuL1Krw
-         BsRA==
+        d=linaro.org; s=google; t=1755701954; x=1756306754; darn=kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nSjL547IQQQEU54ydHjvxbeK5RWiqc6aQZ/eqZkTdmg=;
+        b=Ofnytu9c5Gw1juNaSg5ohXOGvxeWHISnHgLa44xnT9QkJH8+dGpKmSQCk5i0ysAcm0
+         VmHAv60bFgR1BmyZ1NpVhxA1bnV/c8HiJOaUXgmv25nEIKzkT28+4utbW1slA4eVKL2A
+         gGLS0/FALS3gEpoOPUM3ZNsXblsMoNyBc7/j31hJ8tWJQ3dljiEEIv9Odb32x0kT6Jl8
+         gPOsmLql50a7ycXdO2hwvi8rHJ59mN0OxR7DB6+CEqmbpMCFsy+xCYnjvjRjc6c/xYQz
+         +GbHe0Mj93rXfCW6pl+dOdK5/KQU+5+/gbeGZewGvdp47tQHCJv5fCNdzie86E6ff8TI
+         TmIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755701714; x=1756306514;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=goCm9hKxSWFSUPZQNPWLBt44GcwikM878BdTmM9u7Lo=;
-        b=uKknr4CG3UySJPjOOO1lCXzq8pLXdWFeLzn+dBEoP2EXFBZhBC13ksBCz8EBS2qjo2
-         8p+3y97aYkMmjBer/a16De3TGy7Z2xQweuNDsFHTW1VKivymehnFc5GESWNSye6bACMP
-         NE7YQCaxIEGM46hOpEVgqhOwLJFzshIyi0v3VDio195lg9R3ac5q7WL6ajnGTLUkeV0V
-         Qkk4CiTWYt/pXHnS5DTsMjoX/HGs5bGm58fvbg0tZKh0NeXRNGZcLgRUxwG/uH/lAIzW
-         M/EJ26+dABVUVCpMO7vz4VanKFKEv5oOLiRWj/P5D0qq7ZKJxGwo6BKkfJOm9GkZH3A/
-         eCCw==
-X-Gm-Message-State: AOJu0YwxlkY2IMvGuKFadO2OHstvrL+tHUFUEHUDtXmC/b1QcVlhpEtv
-	nKPqh8epneyyeWpaLHhRVqVtgkeY5G5e6d2WDtj5D55V2IKPQvIXvgXGe+9Fup4q8wa113t3x5c
-	1s5is7iA=
-X-Gm-Gg: ASbGncsLM73zt+ZAlgev+BljnegKvW717JgDA8ZTaUSJR0QhcrxwVqJGysyO8/JQ0Cs
-	F9Hx5rgVVBVr5gPZGiQ8YAvajhkB0IKWo7GiPcNpdSDNZKM/nDSlu6L6e5YNEnk38kclE6WZo8E
-	bqPkFLjni1iNkSnNH4prh6TnDx/RhyWRu4IFrsbTOgcWhKr7ybPF10ybl5Ux0nRdGirFY14ny50
-	Ly3k85dwNsGmZsfJkaKNuWncs7JockxtMxL3XD9zqiREQWZL2BuxQPMI42kmDJhBOV/E6AQwd8n
-	h76gXItPuqMheZ6N+sF5mPK9axmHR8hK7/11Yu18DxjR70bqdb7Db7m/2+mLRtJqZN0aAfCNozp
-	BlpoBuKjedbfolhbTP4Dr2kmq+mNRNG3i7W+fRN3J7L17CVuZ5Q26DwTKONpThd1h98XU
-X-Google-Smtp-Source: AGHT+IGpTa6ROfhUGBeHPqjuHa6iNvdFj2kpd9iL9G+TW+D4pIa9NeEYYfAJqpaN6Qpuy6eCXenP8A==
-X-Received: by 2002:a17:907:7286:b0:af9:a53a:6b38 with SMTP id a640c23a62f3a-afdf00a0e0bmr307018766b.20.1755701713775;
-        Wed, 20 Aug 2025 07:55:13 -0700 (PDT)
-Received: from [127.0.1.1] (athedsl-4441256.home.otenet.gr. [79.129.180.152])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afded3070dbsm187606866b.46.2025.08.20.07.55.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 07:55:13 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 20 Aug 2025 17:55:05 +0300
-Subject: [PATCH b4 3/3] docs: add auto-list-unreviewed documentation
+        d=1e100.net; s=20230601; t=1755701954; x=1756306754;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nSjL547IQQQEU54ydHjvxbeK5RWiqc6aQZ/eqZkTdmg=;
+        b=nA++CLe3GDZJ7CdRRLKYK0iTC5yqGBLPuBZGUH2lcTE0th3ws1jvEJx09KrsOJjGPj
+         JfiF4x0QCDtUCwyOzqq1MNJxWYXlrKwLHRkJK+GmYR6D/9LsOiK8WS4uI5pw1JKMX+B8
+         theovFMbE1ro2QzhYSz4ysnEBcOscPRzCCJmMV7nBrKbUVezkL5VGcgwNsviabwcfJxy
+         JpK6S/sEs4w9r/qBBP5wPvPQxrvH7v3sYWrFFD7+5WNA9MAFdRDtlo7ubvpcCwCfydqF
+         iEZYJcrhCi+iEs1w6dzllKWSOVBd+qZGcquXpaa6BuwCf0GZOmCrP/V7vO0Scaz+4XMM
+         g0tQ==
+X-Gm-Message-State: AOJu0Yw6lqn1mm1nIhuqGYkZA1o6ymrwZOTNZ2/CJ7o7ZDwYHj4nTTk5
+	CqbPGHV6WUcYINrSQCzN/paFribkxAir/dBIjij+//GV43B2pWSW8xqeVIpY9fEdz5xuG1ZfEAd
+	jJnvqEAe0Jd8XNgs/caJ8zXvTOKysI0RHRbOWeDh7w671ywurHXF9XMCy2g==
+X-Gm-Gg: ASbGnctCNqKzMD6nGc6zn2S1bMuR3+DGU0uuVrsb+rEOLmSe6JGZn3MUH4NhA23AJ6F
+	7DiTZIMC38doNkK5QLBWkpOA+1SM5r+OYEpJq1Qg+IJq+SG8MtXF1xfs9QESN5WYI/2trV6A+sf
+	9vT2OxOHL4mQNA6mP/+iQqthZPeLo+sXOSbdgO3jICMM/7JIkZbUx6I5+AGgCKCjvd4l0xbM6Uj
+	HxIDQjE
+X-Google-Smtp-Source: AGHT+IF4LVt+pZc3AYJVcg/ZLaShATunSuDLUvIcBNObI08YSi0Ifu7Lagy9We5xHiAWAPULxGR8RFzffC0kNKQ95lA=
+X-Received: by 2002:a05:6402:52c2:b0:617:b6fe:b6a5 with SMTP id
+ 4fb4d7f45d1cf-61a9781652fmr2950616a12.27.1755701954350; Wed, 20 Aug 2025
+ 07:59:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250820-auto-unreviewed-v1-3-b0af9cac4b4d@linaro.org>
-References: <20250820-auto-unreviewed-v1-0-b0af9cac4b4d@linaro.org>
-In-Reply-To: <20250820-auto-unreviewed-v1-0-b0af9cac4b4d@linaro.org>
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-X-Mailer: b4 0.15-dev-b423f
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2040;
- i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=XkFoMEFev3Z2MyjyHgzWfc0mIlwNn6MTvv6E+uCrlQ8=;
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm9wZUhOWlhOV0dwMzYxcEVJVU1aZUFxWExzSDRtCk0xMUF6ODd4WDhXYjQ2cllQ
- L1NKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUtYaHpRQUt
- DUkIzS2Nkd2YzNEowTGNURC85cVpWYldydEgrTU9Kait3d3M2c212NVlVb1BjLzdPNHUyQ0xuOA
- pkMS82SFdFVVp5R0hianBmQmIyR002ZG1wS204Q0hZNWJTVWgwN3BxZG1pU1ZLNVYvMXo4eWt2T
- mJ2Y00wUlZQCk12ZU1SejdDdjMrZ3BzMXkyUzlMZW9JenFjOGZ3VU4xcFkwQzY5cnFKcmRXMHk5
- UGtEbEdSTG5XajdQYVl3aTEKR2pZZG5hSXRTVDI4b2N6cXJsVXlNU2g1N3U3elNTTU9sZGI3emF
- 5WEp3dTVPOWNUaDBmNXRjblVCY1JkNWJrQwpnckhybXpabllnWnJmWUMrUDRJelhFWTN2ZjRFOH
- JCSkMycG9GZEc1aGp1QzJNSXQrT1M2cGhxME5ZRFpVaWpBCnFLYWoweld4K1RIWm9oR2I3SWhEN
- Ug5NklEelZ0NTJDRmwxK0NDWk02NStxN1lQN3JlcjRubUg3NmhkaDh0a1MKZ1ZrcmhYRy81Z2JH
- U2Iyd3dkV2VsZlMwK09TRzJLTnhidXN5T3NXL3h1QTlqRzdBTEo3ZFZTL3Zha1dXSGo4egpNR2J
- OWHBjYkZ2OUNGWG1sN2IyN1M2bFd5K1hiajFzenNkRHA4SjBsNG11bXJxS0hRVVllaXc4d0NFSn
- BQSHRFCjFmdjRBZFQ0OHI3K2RUNXZxSGR4b3NwTU9SNHJCT0VNQ1laM3pVU3NSNEk5YzFNYjRsc
- lp1b0hFTjZLNld4K20KT0VENDliMjNOUTRHc2xzZ2t0YS9ZVzh6Tnk0bER1ZnB5UUZyU3V3ZFBG
- OFd4NUJGNFB0Z0g5ckNUV2xTTDVnSApEVXpXMFlWSFV6U2JLUWVCUGt5d3ZBVk00REkvcm91U1Z
- uWUZpTTZjaUNFQURYM0NnVk92VUhIRmJNU0Izb1dMClp6b1VCQT09Cj1rMWN0Ci0tLS0tRU5EIF
- BHUCBNRVNTQUdFLS0tLS0K
-X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
- fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+References: <CAAjaMXYtY62_KeEbshWA4vjhtUzNgTO0wffcZXNy95EqvL+Ovg@mail.gmail.com>
+ <20250728-b220380-b43c410aaca8@bugzilla.kernel.org>
+In-Reply-To: <20250728-b220380-b43c410aaca8@bugzilla.kernel.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Wed, 20 Aug 2025 17:58:47 +0300
+X-Gm-Features: Ac12FXwZUkd3kgHiKCb26dt_AQsluau43Y4DlaiEZwWevo4JDJkdz9Y9JSDoRLk
+Message-ID: <CAAjaMXbH9k36tDiwc-RVLVOrE6HBnEfSkNxemmXKjzpRfmngtA@mail.gmail.com>
+Subject: Re: b4 bug: "Error tagging the revision" in project with git submodules
+To: Bugspray Bot <bugbot@kernel.org>
+Cc: tools@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Add documentation for the ``b4.auto-list-unreviewed`` config value as well
-as the ``b4 prep --auto-list-unreviewed`` command.
+Ah, happens to b4 git repo as well because of patatt:
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+$ b4.sh send
+Converted the branch to 4 messages
 ---
- docs/config.rst     | 10 ++++++++++
- src/b4/man/b4.1.rst |  8 ++++++++
- 2 files changed, 18 insertions(+)
+To: "Kernel.org Tools" <tools@kernel.org>
+<-- trim -->
 
-diff --git a/docs/config.rst b/docs/config.rst
-index 0f30d4e..e9898cd 100644
---- a/docs/config.rst
-+++ b/docs/config.rst
-@@ -459,6 +459,16 @@ Contributor-oriented settings
-       [b4]
-       prep-pre-flight-checks = disable-needs-auto-to-cc, needs-checking
- 
-+``b4.auto-list-unreviewed`` (v0.15+)
-+  Automatically populate cover letter with list of patches missing review tags,
-+  which might be useful for large series that only miss a few reviews.
-+  This can be explicitly overridden for a series with the
-+  ``b4 prep --auto-list-unreviewed`` and ``b4 prep --no-auto-list-unreviewed`` commands.
-+  Note that b4 will never generate an unreviewed list for the first revision of
-+  a series.
-+
-+  Default: ``no``
-+
- 
- To document
- -----------
-diff --git a/src/b4/man/b4.1.rst b/src/b4/man/b4.1.rst
-index 5adae9e..aa31219 100644
---- a/src/b4/man/b4.1.rst
-+++ b/src/b4/man/b4.1.rst
-@@ -261,6 +261,14 @@ For options, see the output of ``b4 prep --help``, ``b4 trailers
-   Find all addresses that need to receive a copy of the patch series
-   submission and add them to the cover letter.
- 
-+``b4 prep --auto-list-unreviewed``
-+  Automatically populate cover letter with list of patches missing review tags,
-+  which might be useful for large series that only miss a few reviews. Use
-+  ``--no-auto-list-unreviewed`` to disable this.
-+  This will override the default ``b4.auto-list-unreviewed`` configuration option.
-+  Note that b4 will never generate an unreviewed list for the first revision of
-+  a series.
-+
- ``b4 prep --check``
-   Run the configured checks on your series to identify any potential
-   problems. For Linux kernel, this runs ``checkpatch.pl`` with the
+Error running checkout into sparse workdir
+fatal: not a git repository:
+../../../path/to/b4/.git/worktrees/tmpgg1xbvwu/modules/patatt
+fatal: could not reset submodule index
 
--- 
-2.47.2
-
+Error tagging the revision:
+Recording series message-id in cover letter tracking
+Created new revision v2
+Updating cover letter with templated changelog entries.
+Invoking git-filter-repo to update the cover letter.
+New history written in 0.02 seconds...
+Completely finished after 0.05 seconds.
