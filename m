@@ -1,90 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED5B338F20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DA034572E
 	for <tools@linux.kernel.org>; Fri, 29 Aug 2025 20:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756500003; cv=none; b=oRGOZW9G/+ocuZgUtS4UYsetbQSgROkSbnsiACf0oDHPFySw0uUjyJj/TIzrF189/aWP1fqPSYF2+iyfTg8zUTRlPaCq6dYzTfkSNd8GkBPjWB4suNW1r/XMsCGT+urJ2LkypWi13dAwYgAGXDb5NG431dZWJoN6539bwJf6CRk=
+	t=1756500004; cv=none; b=J+YOYBnAa9SOTRGHVs90HcBDYx2McPb4I2/gknPmy2lqICzrM+1I2fK1Q9kUlUNJQy+7RZ7BZTxrGBYmiro4JfOwuk5y7lMXi4KhHupUHaXjh7zLerNLHS4MPDv4zFLVfV/DW+JfcxSr2c9C+bosmTmkKCxBwJf0lLsp6txcf74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756500003; c=relaxed/simple;
-	bh=2vw2ehCrckm0fNr3J93x/t6oEyAAAGqe+TOdI32V17Y=;
+	s=arc-20240116; t=1756500004; c=relaxed/simple;
+	bh=p3mEMl47t0BVq7+F44069lczbhPD3VfRCV1SsE/YKOM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pGfdTX2al+5rXBzh+p4sHx3GRln+8YJhhRv60zCjAr1IC0+9wLUj8kdhLa+GMgsB1q5uKLZQpKE2mUVgFuMVVHaAzaAaTRhKKQD684LucqaHjVKqGCdGwc8BSZjAFuzWFqQNb2XxM41RG3TjRexGoVAeAfcXX4PM+fFyZvbejfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=inamo.no header.i=@inamo.no header.b=raI3Dhut; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EP+Pe5z/; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=NAWKmBb3Afjq+KgTAh7b7N0PLI2bQBDU8SxRy68JlVs66QE/bZpM3Me6ps5ry4t9GA05RGoSkKv8t/HCbLuzbjGsY+fk0mlJshxN6+ppxmGQwYpG9s+H33t9ciJ11YuSLsxcVHtY5jN4NlYHfeMSimB39Rd/vK09yRHdQcIB6zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=inamo.no header.i=@inamo.no header.b=Zv9QVmDL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Os7NRyrS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=inamo.no header.i=@inamo.no header.b="raI3Dhut";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EP+Pe5z/"
+	dkim=pass (2048-bit key) header.d=inamo.no header.i=@inamo.no header.b="Zv9QVmDL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Os7NRyrS"
 Received: by smtp.kernel.org (Postfix)
-	id 0405AC4CEF7; Fri, 29 Aug 2025 20:40:03 +0000 (UTC)
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	id D9B29C4CEF6; Fri, 29 Aug 2025 20:40:03 +0000 (UTC)
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 75F81C4CEF0
-	for <tools@kernel.org>; Fri, 29 Aug 2025 20:40:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 75F81C4CEF0
+	by smtp.kernel.org (Postfix) with ESMTPS id D26F5C4CEF1
+	for <tools@kernel.org>; Fri, 29 Aug 2025 20:40:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org D26F5C4CEF1
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=inamo.no
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=inamo.no
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 72325EC03D3;
-	Fri, 29 Aug 2025 16:40:00 -0400 (EDT)
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C65451400070;
+	Fri, 29 Aug 2025 16:40:01 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Fri, 29 Aug 2025 16:40:00 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 29 Aug 2025 16:40:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inamo.no; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1756500000;
-	 x=1756586400; bh=vQqdoAQlQe5V7U+SMveXptcZB5eSu896lUgAI9fC41Y=; b=
-	raI3DhutO2nGO/BVsGrEqxXok/VuaX3MzqObSVV3mZaTgR8GGujOIN68VTkJULJk
-	W9R5vdMoAGOlnB+dh2AbCIj/lWzhGAd7L2oO/+LGJvYH+hu6l9wU2Bup50saQMcp
-	T938Zaa1aiebdNv77CiJ46lhkxU6y/GUHRy4xCP2jYL6hKUzkpoT5epd6fZ2Kvyl
-	B9+M6P3U7gEfjlpmoxfvFJaPeNOC/FU075rDUni7Fm6rlEE/51LsbZPEqHwk8osS
-	TBNPND3jaAbB0Qie1WsCWa7UYjCvVAMer9pO+YNL4VHH6IgvtxVah52zdlFOBg7F
-	duQICv+awoUk5KRR1bcJnw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1756500001;
+	 x=1756586401; bh=PMyPkE5UxTE64zN3ZnLyu7yUr+uxC+RRxUSzeit7ufI=; b=
+	Zv9QVmDLaZcPOPpijSihVMiTGkhu93g4VMYwyJE1t+GdyfwxXkqi/iyfzOYHura5
+	OEwZtJDVUyyPen0MBwbntBTMCEizaRvzoQlpx1Vm30ltvCuG+587+PAd/EE+kKFn
+	OEuW2PxB7vYqShFxlaInwYl1Psd4fMjV2Ryq2/CC24WIX9158Idbq5xE4KKa9YGf
+	ZV6pjVmsM+eCvFnA+rZtid7k8wroGtvQgsGd6yZXuBq4NUNw+pjZWkcba4F4zve5
+	b3iWBQY0xTc/QyO8ClMgXpl++ZAikVknF2FfAkYhxJmmFjLcs1P07POnHzlLucAp
+	bVRxBdrSmTbuNGhZuqF27Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756500000; x=
-	1756586400; bh=vQqdoAQlQe5V7U+SMveXptcZB5eSu896lUgAI9fC41Y=; b=E
-	P+Pe5z/HdmSsfMn6i40Rjm80J23vusNL8HhwM8RuHU9QmlhYHq6zxBIHj99X9aPg
-	nt4aGKAUzOMvboDCXgmN97FL/9hKg1rgm4nKyOgEmKDerwk6iJ6b1nLk1s7fQ/U2
-	b1muG9v5icrUT96gLw3P8vwWt6iatnILk5k4cCBRoqEA8mFGzhryAsX8kAdDr1jW
-	rP2fzgjjUhJlv2h1JMsTABEso9yu3YmfOASqCCZ71Rg/0TE0sCnbhThLXRCJH+iR
-	s2HKO+i3nhaO2Z2Eiag8J1QV35GcO+5hel9O2pW4y3Uz0C5KTe9JjyX9ia+heK3p
-	2eZAwmytT9lbDkJ160ptw==
-X-ME-Sender: <xms:IBCyaETIQIvlKTUf8wa7hDSDfXB5BolXYejnUgiBDRBLb-fjPV90fw>
-    <xme:IBCyaLYPx_AkQWtwT91BawDU4RSXx3CQ2ToV0LucdoCfRZU8SME7RAmgKqab1mNxf
-    qwqzHWq1Rtod_PUE5s>
-X-ME-Received: <xmr:IBCyaB0seV5FcdXc-q4Yfm7NRptIxUyU6gJX7sj3Vbj2ROQbMzPhe2858cLGPun11niFotW5vItPh-978Yu-h1VZWsDAP6nt9g>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756500001; x=
+	1756586401; bh=PMyPkE5UxTE64zN3ZnLyu7yUr+uxC+RRxUSzeit7ufI=; b=O
+	s7NRyrSipbQjxTlYwtJqoWnpuZ9393tJnGf724AkIPWnLVpiX7CGNpjlGvcrhtTi
+	HZTK1rUosm+0zTsNieu+1P9OGj4qTLYNmHVT7bJ46yiDfCodERR9eKdJPZ8PVyxb
+	cx0+S7YEL4exRX+RGHThlz4TAlF9uIm3r3p1WJkvKfEoVyqKQ6IY+8NVn3A9XWOX
+	9wAaS0qiX03zcbiHOJLa20I9cMwogWNlaFG30xj3sKBRMs71FCc2RHJ4JP4xVtIm
+	z1ANrOenn76Q/AukgfQ+26w4CflMl11zxp/f6aKS2BQ8mZyFnB6+CU7flmUYK30/
+	gK7MPbJxgXxK1Z4kJScwA==
+X-ME-Sender: <xms:IRCyaMRV5yLwnDCt47yKF9iD0FlXpeeRtB-mr_-1PvQsBs5cF4Nxew>
+    <xme:IRCyaDZP0pcs7Ca-_4MaLC0sJq-kEfqj4Wdml7fs9ab6Qg1FNCdOUP6rm0ZbohmMC
+    hv6S3vtMjZ0UEbJ4NI>
+X-ME-Received: <xmr:IRCyaJ01UCNPVGaZwq_YJws46J8eTx55g70OiYwGGZ59ERA8nRoSK5dmXDLM210W2K6BXl3LW_77voNu4oDQXeNAagux83wE9A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeeggeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefvrhihghhv
     vgcunfgruhhgshhtpphluceothhrhihgvhhishesihhnrghmohdrnhhoqeenucggtffrrg
-    htthgvrhhnpeethfegkedtffefhffgffelgfevhfekieevheeiledtfeevvdfhuedthfei
-    ieevhfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    htrhihghhvihhssehinhgrmhhordhnohdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhrhihgvhhishesihhnrghmohdrnhhopdhrtghpth
-    htohepkhhonhhsthgrnhhtihhnsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhr
-    tghpthhtohepthhoohhlsheskhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:IBCyaLXecxzC4un4Wnmhj2FUcQraylluFMHMgpaOpjxppkGY--H18A>
-    <xmx:IBCyaLX0EmXyqVrCSVh3a5W-C1udgICfVWR71kSNcazo-sSktfo3NQ>
-    <xmx:IBCyaKdKKggTbrrwmEJu7CqFENIYmxf4PPNtWvPI_mC9Uo4WMXtkEQ>
-    <xmx:IBCyaEVUmSczlWfVsO9DhKo_Jl4XPEHcdqBmb2yM1cezEcCTn72bqw>
-    <xmx:IBCyaA4O7p34nuXvubdn4hZslUdxKWcnkTiYj74FWaGoa6O2uHgoVEPU>
+    htthgvrhhnpeeftdejfeeivddttdehkeeiffekleehgfffvedtieevledvteduvdekueek
+    ieejheenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepthhrhihgvhhishesihhnrghmohdrnhho
+    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtrh
+    ihghhvihhssehinhgrmhhordhnohdprhgtphhtthhopehkohhnshhtrghnthhinheslhhi
+    nhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehtohholhhssehkvghrnh
+    gvlhdrohhrgh
+X-ME-Proxy: <xmx:IRCyaDXqi-BKsUqArL0hmtlC5MOxycmcOj8o_bxcGTWCKbMAtqe2Kw>
+    <xmx:IRCyaDXapBdYC9ZXbIlKNlFJdSHYim4E0cTyw5I0DdaZ8hhbX_ojRQ>
+    <xmx:IRCyaCcCerZfWK3JaIR5ahzXc2JgBZwYVKpmn2sV0pM_F41sBgOvdg>
+    <xmx:IRCyaMV1Zyh8W2t_UqbTzsYYrVYxzR2WxMxYLRw2UccIJobZu7n3KQ>
+    <xmx:IRCyaGNP4Q_FDKhF-qA67aU6xC4BDeE02xJRyBpEet2u4PEyNI007mFc>
 Feedback-ID: i6cf1495c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 29 Aug 2025 16:39:59 -0400 (EDT)
+ 29 Aug 2025 16:40:00 -0400 (EDT)
 gpg: Signature made fr. 29. aug. 2025 kl. 22.17 +0200 CEST
 gpg: using RSA key AF62044EB71DC79B92AFCF661C234B29C91A68CD
 gpg: =?utf-8?q?Good_signature_from_=22Trygve_Laugst=C3=B8l_=3Ctrygvis=40i?=
  =?utf-8?q?namo=2Eno=3E=22_=5Bultimate=5D?=
 From: =?utf-8?q?Trygve_Laugst=C3=B8l?= <trygvis@inamo.no>
-Date: Fri, 29 Aug 2025 22:19:43 +0200
-Subject: [PATCH RFC b4 2/3] Use decompress on compressed data only.
+Date: Fri, 29 Aug 2025 22:19:44 +0200
+Subject: [PATCH RFC b4 3/3] More flexible HTTP client
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -93,71 +94,77 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250829-sourcehut-v1-2-8e259603352e@inamo.no>
+Message-Id: <20250829-sourcehut-v1-3-8e259603352e@inamo.no>
 References: <20250829-sourcehut-v1-0-8e259603352e@inamo.no>
 In-Reply-To: <20250829-sourcehut-v1-0-8e259603352e@inamo.no>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  =?utf-8?q?Trygve_Laugst=C3=B8l?= <trygvis@inamo.no>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1569; i=trygvis@inamo.no;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2013; i=trygvis@inamo.no;
  h=from:subject:message-id;
- bh=2vw2ehCrckm0fNr3J93x/t6oEyAAAGqe+TOdI32V17Y=;
- b=owEBbQKS/ZANAwAKARwjSynJGmjNAcsmYgBoshAbTRQanfFqFK0MWjzFEDaCJqZsOJKw7lm46
- JhwN+ljPeOJAjMEAAEKAB0WIQSvYgROtx3Hm5Kvz2YcI0spyRpozQUCaLIQGwAKCRAcI0spyRpo
- zfLQEACAjYCJ1Qdf3yoV6xLIv+c5Lg0lEX25+WeFLdw0mZBpNNqLV7woHqHCn0G8+BkXsCGNMon
- TStOQPRaSbgmFc93KBaW3tyL9Zp5qxZvAe8l9MbA2oxY/6l/oQe54n1d9nVoEgL3aDvOH35JwMk
- vq+p6lKDHrYh4CtifwFL0CgGcmc8Qp1Yl+28ZqRq0PcdjTB/vg6wy1HUfRhj/g0syJj8rKCiF38
- t9d/OvZA60qtF5sIFRS/afxt8CNchwG71hkQaoWU+OvUBOoQsPVuqCANBbJiCVMdDzDC6fbHBRp
- dh3RAmSsVubyuu44ARqtBrKXcP+HvBCAbx9DNxb1WNttCq7rBuaMTmxzl1QfvhVYx8SB4ogLY8p
- +eOtCr/yII76TOaRpPsJbRqS08ZqDicX1zzLdU2kbg4uX/jqpMRnmks5uk/A9Isvlgz6CeOUnNL
- LvuFikJ+uicliLvH1fl+mDN/E1Ig5GuO/0Miuk2Fbp9N3OwAlZ5JzKsrDU9byIz2pwfSUnZ55P8
- DCEAZRQImdgi1QJNzwC0BUKXAe5gi5Q2WpPNf+xQi7ja2ZHq33aFaldvZPG3aRF3ociUTH6EsvP
- hugFsV6jjnLSSBdDfuHVrd4Yga04rpxcjxts8ySynrrWKaxykKCf1KJUYz6qyYWmOdHCRsg/Ezo
- J0qjDw7gmosINRA==
+ bh=p3mEMl47t0BVq7+F44069lczbhPD3VfRCV1SsE/YKOM=;
+ b=owEBbQKS/ZANAwAKARwjSynJGmjNAcsmYgBoshAcpl1cijBf2B+I2Gq4nW2GjC317gw4Eox3F
+ Caj7PR1VbuJAjMEAAEKAB0WIQSvYgROtx3Hm5Kvz2YcI0spyRpozQUCaLIQHAAKCRAcI0spyRpo
+ zScQEACirjMP+O5iCoFLKgdxkwAXdzdTwLWInFzSIPFEOZraq0hBnFnStRHu5cE1opJW3wFFw51
+ TqsBgi6SWvR8YENkXDppwAA5lYbsjZ8Sk8s0q+NKl4OZ36nbKjLVtBcCancRO27vRzM7y7FiMjj
+ Nj18csD/Xh7ezJnWfC2snK/bms1gHTABHu7WbF8qSV3KmyvOp+NThVPFRqOL+npM77iAaWSF7ol
+ GEy0qlGv7P/uthhXTqqD7Hg0GCXnyN9rckQLw0SNHdy9+Jmtbif4/epdI8HQcPNeKHnICknSmsg
+ PFgZWu9OCc0J2pXkleDu1wkI7sN1fV7ImyX9bFRQl1BhhJ1uk8+gQWsLr4c0UCyNc1s82IzF7m4
+ a7v8Mlg7mMkw28Mh+AEm2S0KOlS5e98MfufUWGYBXm3svXpgws8ObWL95GPjUeVCTmzokRSB5gQ
+ gGsM79/tZBTn+ZgsFq9HhavpkGuGeoBaUsut0fmGPDaOnqRP9wKsxVL5m+RxRMYuPWZkCCnY6+A
+ y0e17ZY/nrNv5clm8nJINC/IEMy1+4g/pihJxJKnP2v3G9LCADknBhf5Mfx7Tj/O0OeXxURsUeP
+ FOww+uAIFOQBw1fUfS9N7E85bjtA6c9Z5TlZZsryWOLojeQ9IpYhLn+gExosoSyT2X+VH45Ul3C
+ /L0nkdGQ/E05I5g==
 X-Developer-Key: i=trygvis@inamo.no; a=openpgp;
  fpr=AF62044EB71DC79B92AFCF661C234B29C91A68CD
 
-The mboxes from Source hut are not compressed.
+Allow 200 OK responsed for the midmask and use the URL as-is. This allows
+support for Sourcehut for b4.
 
 Signed-off-by: Trygve Laugstøl <trygvis@inamo.no>
 ---
- src/b4/__init__.py | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ src/b4/__init__.py | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index 33aee1f..02f4f73 100644
+index 02f4f73..495e83c 100644
 --- a/src/b4/__init__.py
 +++ b/src/b4/__init__.py
-@@ -3413,7 +3413,7 @@ def get_pi_search_results(query: str, nocache: bool = False, message: Optional[s
-     if resp.status_code != 200:
-         logger.info('Server returned an error: %s', resp.status_code)
-         return None
--    t_mbox = gzip.decompress(resp.content)
-+    t_mbox = maybe_decompress(resp.content)
-     resp.close()
-     if not len(t_mbox):
-         logger.info('No messages found for that query')
-@@ -3515,7 +3515,7 @@ def get_pi_thread_by_url(t_mbx_url: str, nocache: bool = False) -> Optional[List
-     if resp.status_code != 200:
-         logger.critical('Server returned an error: %s', resp.status_code)
-         return None
--    t_mbox = gzip.decompress(resp.content)
-+    t_mbox = maybe_decompress(resp.content)
-     resp.close()
-     if not len(t_mbox):
-         logger.critical('No messages found for that query')
-@@ -4626,3 +4626,10 @@ def is_maildir(dest: str) -> bool:
-             and os.path.isdir(os.path.join(dest, 'tmp'))):
-         return True
-     return False
+@@ -3539,6 +3539,7 @@ def get_pi_thread_by_msgid(msgid: str, nocache: bool = False,
+     # In fact, /all/ naming is arbitrary, but for now we are going to
+     # hardcode it to lore.kernel.org settings and maybe make it configurable
+     # in the future, if necessary.
++    t_mbx_url = None
+     if loc.path.startswith('/all/'):
+         projurl = '%s://%s/all' % (loc.scheme, loc.netloc)
+     else:
+@@ -3547,14 +3548,19 @@ def get_pi_thread_by_msgid(msgid: str, nocache: bool = False,
+         logger.info('Looking up %s', midmask)
+         session = get_requests_session()
+         resp = session.head(midmask)
+-        if resp.status_code < 300 or resp.status_code > 400:
++        if resp.status_code != 200 and (resp.status_code < 300 or resp.status_code > 400):
+             logger.critical('That message-id is not known.')
+             return None
+-        # Pop msgid from the end of the redirect
+-        chunks = resp.headers['Location'].rstrip('/').split('/')
+-        projurl = '/'.join(chunks[:-1])
+-        resp.close()
+-    t_mbx_url = '%s/%s/t.mbox.gz' % (projurl, qmsgid)
 +
-+def maybe_decompress(content):
-+    # Decode bytes if they seem gzipped
-+    if content.startswith(b'\x1f\x8b'):
-+        return gzip.decompress(content)
-+    else:
-+        return content
++        if resp.status_code == 200:
++            t_mbx_url = midmask
++        else:
++            # Pop msgid from the end of the redirect
++            chunks = resp.headers['Location'].rstrip('/').split('/')
++            projurl = '/'.join(chunks[:-1])
++            resp.close()
++    if t_mbx_url is None:
++        t_mbx_url = '%s/%s/t.mbox.gz' % (projurl, qmsgid)
+     logger.debug('t_mbx_url=%s', t_mbx_url)
+ 
+     msgs = get_pi_thread_by_url(t_mbx_url, nocache=nocache)
 
 -- 
 2.51.0
