@@ -1,100 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216A3283FEF
-	for <tools@linux.kernel.org>; Wed, 24 Sep 2025 08:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD7C3043CF
+	for <tools@linux.kernel.org>; Wed, 24 Sep 2025 13:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758702758; cv=none; b=LpGs9Oue84uhunN8bV54WJGNTfJoEME/Nr3fHzmJqw2R83QPaUsn+6ADIjlgIr/QnhnmoM75K4jpmaxvxd8PD/TVx9HD1sAkbt+MzBSEv+cuC96x/+HtNopQ/ARgjihuqcf3T2JmvTU6OsI16jG/GT47pZYSmRd2jMI7020nXQo=
+	t=1758720721; cv=none; b=mZBqQtuhYmcWKAKhjdlpgZOthj9nTXAaBrw/NDGYA5LGO1wwozl7Z6wg/wnm0AgKmn1E/2DGS3lVXxwQkweh/e/ANI5eDXDPGY8xUgSw2XIKwHzdToAt6kMP2/J47tZMehY1eWCPoBpFXEJfh6Qsd30eKu9ae3c6N/sbWXDrhHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758702758; c=relaxed/simple;
-	bh=J1Qi29gBiQ1KMEt7/4mW6m4UCGn9pd0e+eT2+hlf424=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XIPFvwhRQcOCCTfYY8RcGiDGEy/2cHhsiqLbxPkevoB6S0HqGN85W2s0nqngcpdRGdPOUkPICGFGKJDVA4d1cfPMQsaKAep5yyelp3zfWSidPSswCSKMQovuAXrnDJfpgeLQFoQD3Jq1zsfOOstSfEURPmGfHPSl6grJ3xap7yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r4buuJXg; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1758720721; c=relaxed/simple;
+	bh=1cA5D0W7clNNoGLVo6eUuwyp7mScRcQ2dxW1T2EYfYM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UA0vDFJ7tSB/PLVwpC+c8D+gBQzp8zWXrbQtEggEb+Ww8K2u28Yfw0UoT3tK8/hGzIv03rsZkBiqHBHicUwlulymHQ3p+dQiIDTfNRsF5NdHvJlm7+1k9Yo9OJBgszsdM7jaQoZIqDW8t7uJrHj2RSuWWeVeqfBBECNL16UuIH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvOu7ePb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r4buuJXg"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvOu7ePb"
 Received: by smtp.kernel.org (Postfix)
-	id C64F7C116C6; Wed, 24 Sep 2025 08:32:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59297C4CEE7;
-	Wed, 24 Sep 2025 08:32:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758702757;
-	bh=J1Qi29gBiQ1KMEt7/4mW6m4UCGn9pd0e+eT2+hlf424=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=r4buuJXg/dy1J4IQv1P94NDSSLmqV+dLk/TakHFZPthogl4wA0iGG3unOq1dfGzvx
-	 npW71NuS+30BkKh9hIZUm5CqS1yU6cLKaChE2HAqgbEZ7cqDDDE/z4nvueaZgmXOd6
-	 Hb+MR6ww9ybEEy1YTPdJ980J9iLrnI4MmjIl7UHbjyU1CbU5D/B5OKt03kYcAAQFhg
-	 gdfrsZgcNY5oUlSWWH8GX6bLOnDIpg1mQlNFW5+c63MljPDl+aBMxClFjbb9LTJMvA
-	 cjjixKj6sv/nDariUyAMNQM+kuujF+rIp76NW7174ZEPlrknCSXsq4HD74Lx7dwi7q
-	 vS/kLHjgFjssQ==
-Message-ID: <765d72bd-395f-462c-9c04-d2dd98244845@kernel.org>
-Date: Wed, 24 Sep 2025 17:32:35 +0900
+	id 150FDC4CEF7; Wed, 24 Sep 2025 13:32:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D232BC116B1;
+	Wed, 24 Sep 2025 13:32:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1758720721;
+	bh=1cA5D0W7clNNoGLVo6eUuwyp7mScRcQ2dxW1T2EYfYM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TvOu7ePbm99zZoz4IXgg0oaSm4tAFjWYUbe9B3PJDLZtK6ts0nOQknPFrwnvinafz
+	 NKcUAuGnu0SO9jYLM4RTV3WeYSLIcgpe8sr6a4nlVULwPcs09jjEw0V4+PmTsTAomU
+	 zCcoX4lfGMHvnduVpQKvF+SRvz6fx6Vd5fJNuxoM=
+Date: Wed, 24 Sep 2025 09:31:59 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Vincent Mailhol <mailhol@kernel.org>
+Cc: tools@kernel.org
+Subject: Re: [PATCH v3 00/20] can: netlink: preparation before introduction
+ of CAN XL step 3/3
+Message-ID: <20250924-thundering-fluorescent-okapi-84a2ee@lemur>
+References: <20250923-canxl-netlink-prep-v3-0-87a7684333f3@kernel.org>
+ <13f98eed-b535-4360-a545-0a11dbc8aa12@kernel.org>
+ <20250923-rose-shellfish-of-wealth-c8dee7@lemur>
+ <715c6b6d-5672-4ba4-99d1-04fcd1dbb81b@kernel.org>
+ <20250923-impossible-splendid-rabbit-ba01ba@lemur>
+ <765d72bd-395f-462c-9c04-d2dd98244845@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/20] can: netlink: preparation before introduction of
- CAN XL step 3/3
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-References: <20250923-canxl-netlink-prep-v3-0-87a7684333f3@kernel.org>
- <13f98eed-b535-4360-a545-0a11dbc8aa12@kernel.org>
- <20250923-rose-shellfish-of-wealth-c8dee7@lemur>
- <715c6b6d-5672-4ba4-99d1-04fcd1dbb81b@kernel.org>
- <20250923-impossible-splendid-rabbit-ba01ba@lemur>
-Content-Language: en-US
-From: Vincent Mailhol <mailhol@kernel.org>
-Autocrypt: addr=mailhol@kernel.org; keydata=
- xjMEZluomRYJKwYBBAHaRw8BAQdAf+/PnQvy9LCWNSJLbhc+AOUsR2cNVonvxhDk/KcW7FvN
- JFZpbmNlbnQgTWFpbGhvbCA8bWFpbGhvbEBrZXJuZWwub3JnPsKZBBMWCgBBFiEE7Y9wBXTm
- fyDldOjiq1/riG27mcIFAmdfB/kCGwMFCQp/CJcFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcC
- F4AACgkQq1/riG27mcKBHgEAygbvORJOfMHGlq5lQhZkDnaUXbpZhxirxkAHwTypHr4A/joI
- 2wLjgTCm5I2Z3zB8hqJu+OeFPXZFWGTuk0e2wT4JzjgEZx4y8xIKKwYBBAGXVQEFAQEHQJrb
- YZzu0JG5w8gxE6EtQe6LmxKMqP6EyR33sA+BR9pLAwEIB8J+BBgWCgAmFiEE7Y9wBXTmfyDl
- dOjiq1/riG27mcIFAmceMvMCGwwFCQPCZwAACgkQq1/riG27mcJU7QEA+LmpFhfQ1aij/L8V
- zsZwr/S44HCzcz5+jkxnVVQ5LZ4BANOCpYEY+CYrld5XZvM8h2EntNnzxHHuhjfDOQ3MAkEK
-In-Reply-To: <20250923-impossible-splendid-rabbit-ba01ba@lemur>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <765d72bd-395f-462c-9c04-d2dd98244845@kernel.org>
 
-On 24/09/2025 at 04:50, Konstantin Ryabitsev wrote:
-> On Wed, Sep 24, 2025 at 02:54:36AM +0900, Vincent Mailhol wrote:
->>> No, I think something else went wrong here. You did list
->>> prerequisite-change-id, but it's only a 4-patch series. I'm not sure where the
->>> other ones came from. Can you push your b4 branch somewhere where I can take a
->>> look at it?
->>
->> Thanks for jumping in this thread and volunteering to investigate. This is kind!
->>
->> I pushed the v3 in my tree under the branch:
->>
->>   b4/misterious-prerequisite-patch-id
->>
->> https://git.kernel.org/pub/scm/linux/kernel/git/mailhol/linux.git/log/?h=b4/misterious-prerequisite-patch-id
->>
->> I did a 'b4 send --reflect' to double-checked that it still has the issue.
+On Wed, Sep 24, 2025 at 05:32:35PM +0900, Vincent Mailhol wrote:
+> > Dropping others for now, and just adding the tools list.
+> > 
+> > What is your net-next/main pointing at right now?
+> > 
+> >     git rev-parse net-next/main
 > 
-> Dropping others for now, and just adding the tools list.
-> 
-> What is your net-next/main pointing at right now?
-> 
->     git rev-parse net-next/main
+>   $ git rev-parse net-next/main
+>   df1526752e0cd8db11b1fd4c1be3bd47409fd3ac
 
-  $ git rev-parse net-next/main
-  df1526752e0cd8db11b1fd4c1be3bd47409fd3ac
+Grumble-grumble... I can't make it happen for me. I only get the expected 4
+patch-ids:
 
-Also, just in case:
+      base-commit: df1526752e0cd8db11b1fd4c1be3bd47409fd3ac
+      change-id: 20250831-canxl-netlink-prep-9dbf8498fd9d
+      prerequisite-change-id: 20250915-can-fix-mtu-050a94b563a0:v2
+      prerequisite-patch-id: 64b7803b5453bdd2ada5f2918901ad092e4ea1cf
+      prerequisite-patch-id: 6aecc3f1db1cd342e3b204310464179ca66b52ba
+      prerequisite-patch-id: 10e3a79796f2966733349c4cfcc1a61a49bc20af
+      prerequisite-patch-id: 5ddc3c20a99f60bddb62d58eb192facf0eb25b75
 
-  $ b4 --version
-  0.14.2
+Could you run it with debug:
 
-(which is my distro's latest version).
+    b4 -d send --dry-run --no-sign > /tmp/debug 2>&1
 
+Then send me the debug file off-list?
 
-Yours sincerely,
-Vincent Mailhol
-
+-K
