@@ -1,118 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864C7224AF0
-	for <tools@linux.kernel.org>; Tue, 30 Sep 2025 13:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFD91F428F
+	for <tools@linux.kernel.org>; Tue, 30 Sep 2025 13:26:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759238674; cv=none; b=M0tCMigHhYm0Egq2hI79wfc20FsfzJLR1ZsBUSG3RLsLSE+jW01NnxY9B7tTsRpev9Jk5NEoHOLJGpAu4adABVMvJ+ZfDNwzcQmatUMryR2XsOPEZEW3+TEnSMuysm9DMGTL5scjkg9IWKCYH/9ieJVngoYLNXbrlSFntD6qOK4=
+	t=1759238800; cv=none; b=m3rSEdnqdriSJvwx8JoIdJJ7wh04wBMajLmOxd/dwucz139KAMHPQ6ZwgaoiuloY0gEfz2Dltc7zT3BdLBskC6Gp8jXIrJKs9cFYunfLYOfU7L3jF0N+5IX+FNJ3nBZt+KKEntR9xhxtOlRcqPmzLGste11xFrB2Ms0UyUcaEII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759238674; c=relaxed/simple;
-	bh=M/0DphZB8Whv6k7L1Dd5Cz/WTUV+/3C1540nHTE9R3A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L3YP7lpROlpzGppwKplw9B3X8PuNBw+uzBkMiw9ZtAO4yBeX1ELWiLCT7HPKW2dkDdHledYkcHTY7YFy3x0aGg0UWSzwU+n5CZbMudDH+J3nTMvQah1t/iC7GLSPDBUWumRXW5b8G9S7fxEQ1NZpZw40r3ib8RNzt67dZ8SH3lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix)
-	id 16E59C113D0; Tue, 30 Sep 2025 13:24:34 +0000 (UTC)
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 0A31FC113CF
-	for <tools@kernel.org>; Tue, 30 Sep 2025 13:24:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0A31FC113CF
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1v3aLE-0002hF-Sd; Tue, 30 Sep 2025 15:24:28 +0200
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1v3aLE-001FtV-1s;
-	Tue, 30 Sep 2025 15:24:28 +0200
-Received: from pengutronix.de (p54b152ce.dip0.t-ipconnect.de [84.177.82.206])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id 489E647D35D;
-	Tue, 30 Sep 2025 13:24:28 +0000 (UTC)
-Date: Tue, 30 Sep 2025 15:24:28 +0200
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Bugspray Bot <bugbot@kernel.org>
-Cc: tools@linux.kernel.org, konstantin@linuxfoundation.org, 
-	tools@kernel.org, users@linux.kernel.org, kernel@pengutronix.de
-Subject: Re: b4: shazam: UnboundLocalError
-Message-ID: <20250930-terrestrial-fast-chimpanzee-871459-mkl@pengutronix.de>
-References: <20250930-groovy-soft-octopus-bd626a-mkl@pengutronix.de>
- <20250930-b220612c2-ecfedf4c305c@bugzilla.kernel.org>
+	s=arc-20240116; t=1759238800; c=relaxed/simple;
+	bh=TifNcpUcUgeCa71erYKkCQWwmqlblKi7mytsBdbEPJc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PmNhz3GiozXUFvUNPpWOx11/9+bAVAMvWI/xdcp0RcAu3t7FjavpQoOkb3V8G1UIA02VJ2qM12lc/lYSD2GxJj9pAw2x3maqpq+O8qwV6Gc/JF3Wz5RdlSTKoj0qPmxV1SxyrxnAkV/+d9i6chvyWv3eXBc79dl+BcjyJ2ADOyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pCWSKOgx; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pCWSKOgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63122C116D0
+	for <tools@linux.kernel.org>; Tue, 30 Sep 2025 13:26:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759238800;
+	bh=TifNcpUcUgeCa71erYKkCQWwmqlblKi7mytsBdbEPJc=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=pCWSKOgxTgWvx8zFBLMk77iENkvb4KfaRdfZg7zZAjUquqGw8sVbA8M9GWuc2JxkR
+	 ATokvBtvbuhHhvROf7Wevc5eNgOthUVjASAvzq6u+Dk5gkCsWNik1ScKR8FpKquTLs
+	 miz+tBMRvYAOHAkYYQMdzXo6jazBlKh18tNlXWndRByZzmgcjK0ELCmbAiphrbwWaE
+	 fcip2WUYxRQBV5k3MufBtq8qqKrjax8tobrn6K4epYRGmtwxX+YRNoQoGnq2GhD0Bx
+	 SmFIOhjjBIWYldYqhTSBzDUtgv5uczFQev9QOb7CFqpXUykjLjamTBe2qrO93kIwyk
+	 4uhVH66lSPKSA==
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-634cef434beso6205807a12.1
+        for <tools@linux.kernel.org>; Tue, 30 Sep 2025 06:26:40 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUrdJBYaRK294q8ZXQ4Kk4V7G4ApH0lnC6+9W5zWKfkXCv8S04EBhnETgkzWt+oHkwojlUv4Q==@linux.kernel.org
+X-Gm-Message-State: AOJu0YxseVNIfWt17Lp2bl2FYTKaZR1XGgQMRCVnQgrLm1+Td5vbYcqx
+	1M0uewRobbFM0N3YoS4fsXxPdKYAncGkuFIkGt3SX5qtgic3EJwtVYttYaIeB1/mGDmpyi7OWmX
+	IbsQT1Fz2Y2iIFpVSL9vEdG4Y+Up0Pg==
+X-Google-Smtp-Source: AGHT+IH0OxJCGzhUKR+l/E++L2AGnfsL8g9h/g0TYKs6DjTwZwmYZ/5WjfYJ4yITxrkJCU8bpuWc7AiJ1F8BBcD6P/U=
+X-Received: by 2002:a17:906:7304:b0:b2e:7614:d92d with SMTP id
+ a640c23a62f3a-b412f35c3bdmr543512066b.0.1759238798996; Tue, 30 Sep 2025
+ 06:26:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4ubtrqm6f7yuqrf6"
-Content-Disposition: inline
-In-Reply-To: <20250930-b220612c2-ecfedf4c305c@bugzilla.kernel.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: mkl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: tools@kernel.org
-
-
---4ubtrqm6f7yuqrf6
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+References: <20250930-groovy-soft-octopus-bd626a-mkl@pengutronix.de>
+In-Reply-To: <20250930-groovy-soft-octopus-bd626a-mkl@pengutronix.de>
+From: Rob Herring <robh@kernel.org>
+Date: Tue, 30 Sep 2025 08:26:25 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJW5r+5eXqcbdHgwt5dsv9eRYOXO9azOzkMco_LxoMH5g@mail.gmail.com>
+X-Gm-Features: AS18NWDmZuy3DWVhqdfdnCvYLP3WMLS_l41BNKRBBBOtxbz6NY8t0FTBfN4IHcE
+Message-ID: <CAL_JsqJW5r+5eXqcbdHgwt5dsv9eRYOXO9azOzkMco_LxoMH5g@mail.gmail.com>
 Subject: Re: b4: shazam: UnboundLocalError
-MIME-Version: 1.0
+To: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@linux.kernel.org, 
+	tools@linux.kernel.org, kernel@pengutronix.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 30.09.2025 13:10:24, Bugspray Bot wrote:
-> Konstantin Ryabitsev writes in commit 2354af10a8e8db91806377f8ef6ea3770e4=
-3b0dc:
->=20
-> fix: ensure pmsg is defined before the check
->=20
-> Ensure that pmsg is set as None before we check for it to avoid a crash.
->=20
-> Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
-> Closes: https://bugzilla.kernel.org/show_bug.cgi?id=3D220612
-> Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
->=20
-> (via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=3D2354af10=
-a8e8)
+On Tue, Sep 30, 2025 at 7:18=E2=80=AFAM Marc Kleine-Budde <mkl@pengutronix.=
+de> wrote:
+>
+> Hello,
+>
+> current b4 master crashes like this during shazam ("am" works though):
+>
+> | $ b4 shazam 20250930-gs-usb-max-if-v5-1-863330bf6666@coelacanthus.name
+> | Grabbing thread from lore.kernel.org/all/20250930-gs-usb-max-if-v5-1-86=
+3330bf6666@coelacanthus.name/t.mbox.gz
+> | Checking for newer revisions
+> | Grabbing search results from lore.kernel.org
+> | Analyzing 8 messages in the thread
+> | Analyzing 1 code-review messages
+> | Traceback (most recent call last):
+> |   File "/home/frogger/local/git/b4/src/b4/command.py", line 450, in <mo=
+dule>
+> |     cmd()
+> |     ~~~^^
+> |   File "/home/frogger/local/git/b4/src/b4/command.py", line 433, in cmd
+> |     cmdargs.func(cmdargs)
+> |     ~~~~~~~~~~~~^^^^^^^^^
+> |   File "/home/frogger/local/git/b4/src/b4/command.py", line 105, in cmd=
+_shazam
+> |     b4.mbox.main(cmdargs)
+> |     ~~~~~~~~~~~~^^^^^^^^^
+> |   File "/home/frogger/local/git/b4/src/b4/mbox.py", line 854, in main
+> |     make_am(msgs, cmdargs, msgid)
+> |     ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+> |   File "/home/frogger/local/git/b4/src/b4/mbox.py", line 113, in make_a=
+m
+> |     lser =3D lmbx.get_series(revision=3Dwantver, sloppytrailers=3Dcmdar=
+gs.sloppytrailers, reroll=3Dreroll,
+> |                            codereview_trailers=3Dload_codereview)
+> |   File "/home/frogger/local/git/b4/src/b4/__init__.py", line 362, in ge=
+t_series
+> |     if pmsg is None:
+> |        ^^^^
+> | UnboundLocalError: cannot access local variable 'pmsg' where it is not =
+associated with a value
 
-Work for me!
+I sent a fix for this 2.5 months ago:  "mbox: Fix splat in get_series()"
 
-Tested-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Is sending to tools@kernel.org not sufficient?
 
-regards,
-Marc
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
-
---4ubtrqm6f7yuqrf6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEn/sM2K9nqF/8FWzzDHRl3/mQkZwFAmjb2gkACgkQDHRl3/mQ
-kZzhkggAqPTwSon6EzLIzTmmeqM4nAx0W4Zn0YjCDzdmz0I+oq6H8DbOthqwLLB8
-ov55PYLUkRTukXFF3tl4hdkzLdvvquIUfAWujjidA8R7jydtkVHvaHlZoXuoIxu9
-No7uWJGg3FgLFWv1Ywq7MofPnZ2KrjUgwmoibhHXPoH8nmBW8mJ8q6g+jkKMx+O8
-dXrOtI+lA0Mlqofwge2gssNZ7WdsfwJ7uPb3khypKS5Ltpr3I/llJnbe87rwk/1m
-ud53adrYMg3DKEh6poqH21dePH+LTAPHW+F1uBhJv6H6uDSPFyzV+FGDQ5pXJZkQ
-A270G0pjdByJFyhEdiL1XFKgS7SmIg==
-=/9WJ
------END PGP SIGNATURE-----
-
---4ubtrqm6f7yuqrf6--
+Rob
