@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B9B27F732
-	for <tools@linux.kernel.org>; Thu,  9 Oct 2025 21:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C694A1A9FAE
+	for <tools@linux.kernel.org>; Thu,  9 Oct 2025 22:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760043985; cv=none; b=aVhmkIgx1UHzR0n/LTiX6LBgTkRFoSlwPprx2yZe9xYfrlrCwwPsjC9gQtm4jH3T07iZUE2yWjUxbGNYzJzmZJtYs6WOfdDxwPg/CaDcFJJJjJIERICEQpJk1OK2KzOx/av5xIqR3lPPQ8au5ECa3V6mh8gTTq2ZA6kL24Q78hk=
+	t=1760047765; cv=none; b=ic2GWtc3LXO5a9mHVaddf0PrIkNS0TLn+iMC1olAXQw7CbrD98RjLUDzT6i2MpX/fPrfVr8b6ZvGQ+X2bxnsnerdU7pROvSYhg2iG9sZHvNzcmI+kcTti29EDvtlRZGHhGdTxoR85VvrqEP9JWFjqc6YmyntEfb7P1TNTmY+w54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760043985; c=relaxed/simple;
-	bh=yb1hsTHb5Mx4Bmi85UJD7k95O6dTo8jbV1078+9qibU=;
+	s=arc-20240116; t=1760047765; c=relaxed/simple;
+	bh=Ao9ySNVQ24sjHTo5tmHnRR/eu67JauOsF+9a8ED1kwk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JAVEr0c62mYakqouUaQ4JWNoC+UEK6KrkK1uoU0YzEcc0uGfPiCcBjAeAvqFE9xTJ+3bK+Cbn8HZ0R8/s03KXr0a30c/umiPk18sRZaaWKKc4p/Ars5RmbQ7mp8ahle8ppAUEU27QLWCSrGS73AWr3Rn9IYF/pdH4qsh4dYKr0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vWDuqtw; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=aabrI3SaqzF7BRg5pNPVS6VffLCGxyPv0F78OvC6ayLllIBSRlfgiG3/xLdgYXaMlu4+mv/JDbEMpPunG7D4hfW+Dgdazz99URUuLmK9okQT7dez3bawXjFRoIHKcszFeJDQkDbmFfeD1g4Q2G8mf4qtwFLg2LDIfEatrL9kBvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1rWtYR1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vWDuqtw"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1rWtYR1"
 Received: by smtp.kernel.org (Postfix)
-	id 0D1E6C4CEF8; Thu,  9 Oct 2025 21:06:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6ACC4CEE7;
-	Thu,  9 Oct 2025 21:06:24 +0000 (UTC)
+	id 56652C4CEF5; Thu,  9 Oct 2025 22:09:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272E4C4CEE7;
+	Thu,  9 Oct 2025 22:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760043985;
-	bh=yb1hsTHb5Mx4Bmi85UJD7k95O6dTo8jbV1078+9qibU=;
+	s=korg; t=1760047765;
+	bh=Ao9ySNVQ24sjHTo5tmHnRR/eu67JauOsF+9a8ED1kwk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=2vWDuqtw6OzFEtTQkNQ3T2LBf/ggwNShONztfjUiOHmAjARIMnPWzd+hj7EXWk7iA
-	 QLRMw6tXMg3FdWkqa6SY79hGhWaMXDCJ/mHfGveyiQG04CKW1RyLjzgl+IIMGNJ1M7
-	 ZFRS6SGTdBdj1z5xzh1yguL6JoY3SnRccRc6WrMA=
-Date: Thu, 9 Oct 2025 17:06:23 -0400
+	b=S1rWtYR1nVOxP9vA8BFhYekYVpp7lz6hVmJjDkeeQFXZmCaohRD72RkHUpUEvGOIO
+	 afnvDt1kOfnVeIlbIaa6NZUL+eVvA4/yqqcTqvfhBQQTqL8X0sxkiD37i0hQfCr+1I
+	 kaEG/MzJwrczxZjec6BtvCt2Ofke3s3nneZebWZw=
+Date: Thu, 9 Oct 2025 18:09:24 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Subject: Re: [PATCH v4] b4: support send-email aliases
-Message-ID: <20251009-voracious-calculating-gecko-adfe48@lemur>
-References: <20251009-jk-email-alias-support-v4-1-16f458de996e@intel.com>
+To: Lee Jones <lee@kernel.org>
+Cc: tools@kernel.org
+Subject: Re: b4: ty: User-flow regression
+Message-ID: <20251009-remarkable-charming-pogona-fd7a8f@lemur>
+References: <20251009151349.GB2890766@google.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,46 +40,21 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251009-jk-email-alias-support-v4-1-16f458de996e@intel.com>
+In-Reply-To: <20251009151349.GB2890766@google.com>
 
-On Thu, Oct 09, 2025 at 01:19:13PM -0700, Jacob Keller wrote:
-> - Use a dictionary for unqual_addrs to handle duplicates while preserving
->   order.
+On Thu, Oct 09, 2025 at 04:13:49PM +0100, Lee Jones wrote:
+> The that I'm highlighting occurs when changes have to be made to the
+> commit message.  My assumption is that the hash no longer matches and we
+> get:
+> 
+>  Auto-thankanating commits in for-mfd-next
+>  Found 5 of your commits since 1.day
+>  Calculating patch hashes, may take a moment...
+>  Nothing to do
+> 
+> Doh!  There should be something to do.
 
-This seems hacky. :) I still like set, but perhaps we can do:
-
-    unqual_addrs: Set[str] = set()
-    ...
-    if unqual_addrs:
-        tocheck = list(unqual_addrs)
-        ecode, out = git_run_command(gitdir,
-                                     ['send-email', '--translate-aliases'],
-                                     stdin='\n'.join(tocheck).encode())
-        ...
-            ...
-            for alias, entry in zip(tocheck, translated_addrs):
-                ...
-
-This seems more pythonic and you're not continuously running .keys() on the
-dict.
-
-> +def replace_aliases(entry: Tuple[str, str]) -> Tuple[str, str]:
-
-I would make it an underscore function inside the cleanup_email_addrs function
-itself (yay python!).
-
-    def cleanup_email_addrs(...):
-        global ALIAS_INFO
-        ...
-
-        def _replace_aliases(...):
-            # No need to global ALIAS_INFO, as it's still in scope
-            if entry[1] in ALIAS_INFO:
-                ...
-
-        addresses = list(map(_replace_aliases, addresses))
-
-This seems cleaner, as this function only makes sense within the context of
-cleanup_email_addrs() and not in the larger b4 scope.
+Curious, have you set your diff.algorithm anywhere in your git config to
+something like "patience" or "histogram"?
 
 -K
