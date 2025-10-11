@@ -1,115 +1,118 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E211DE2D8
-	for <tools@linux.kernel.org>; Sat, 11 Oct 2025 06:33:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76611221D9E
+	for <tools@linux.kernel.org>; Sat, 11 Oct 2025 06:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760164438; cv=none; b=ec3MJDnfxW2CyPc/RC03sDhdVTIMIBQJnC2RYBARffdtpycOnteMr+Ow0LneWNJ0ukQft7pMMRNXMcUzDwbIhI8byZkknDaM4F1D59v3aTNwFeVg6dIx2G34J17Ln2YEOc7gCMlxjkeBr5/xOtvOorypAwCM4FHmax2+W2udBw0=
+	t=1760164761; cv=none; b=i6e25vc7/5tkldaKM69eVdiZAeccqzrOi7a23YgBXoU0Yo5I+VeuZg8aIf3DXhkA3JHeb4JwrUQSaQQeHvZ1X+rI7KCHG9OYSgLg4D36gz3mfy7x80/flSpbv5IBSftA6eIzrFEp6eRiUl2ri+r73WY8OYPX77N2F8RgQ7xiPD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760164438; c=relaxed/simple;
-	bh=dPoW0RbVZdZp72dqq2CElOPyzrmr9dcdtAz3enxXbXE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ge7J3ETmT7tp7OVKGLGy653bMAjd6kXv3kk58ES4rZIMwANedGHiKbjwCXTVl7LvjbFBKOHsF4Udmk4HgBBlC4I0ECmaif+m0zADDFsohob149Igo2exhDsISWZ0SMsby7zGoobXWc7XrctsIDXtMnOXG6my8SKLOTfuNgPw7gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=QOZWqg/f; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1760164761; c=relaxed/simple;
+	bh=9zZsan5O5hjtAjdKur9cRJo60lKyyn58IvNnFX8sSKg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oLJ0L/SeyZeE50g/C6X40GzsxJAafSj7tAQrOL6AAfiA3a/MQRdUnMnh4NwGuiMKo8pR1fLApAnn70efPJMKlbOzgdMxxtfsIhGQdGt5V98ujrQexxJy8v0uUDQcCjqEgimU/VZu4+wLJ0kKmvmWbHyKX2cEnSeu6xmwt/4bmNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FIUAnYky; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="QOZWqg/f"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1760164435;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YIYKLLPvcsDuKULYUL3h5zIyFH0TQ7wGDt8RxF6xQUk=;
-	b=QOZWqg/f6FRhlXxv/a3CwCEal5DhiY4mOtbegrHtRLdzqO+U1MaP9lsCF06Phg4jGQfrQl
-	lwGN9fheLkDhdlDEUQrUb63c7RFJ9sKl7SZVZrJExhAPzqe7Zf05OOwAFgf2wwNuiXuhLO
-	EQOt9CCf4EhbQZ7Zfw8NHNZ68f7Jh4M=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507-wjZ8YRO0M0yT6jLG6KNPeQ-1; Sat, 11 Oct 2025 02:33:54 -0400
-X-MC-Unique: wjZ8YRO0M0yT6jLG6KNPeQ-1
-X-Mimecast-MFC-AGG-ID: wjZ8YRO0M0yT6jLG6KNPeQ_1760164433
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-3f924ae2a89so3283444f8f.3
-        for <tools@linux.kernel.org>; Fri, 10 Oct 2025 23:33:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760164433; x=1760769233;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YIYKLLPvcsDuKULYUL3h5zIyFH0TQ7wGDt8RxF6xQUk=;
-        b=sAId+UFDrR1+cX50R+BMPWR1by2GdVgk/aoHjUqzT5t8KrYPpOgvC/9cJImpTX613N
-         3/qMkdmdOfdJcDHDWLJBZfONRtM0aWHnS9aR5HCcGDvGwCyCeK/aQ07qdpGiErIoEY1r
-         S6H2W/IgKXHqrXJfWxcVrQC2NUsPHYIL29JG5X9xg9i2ZnzKFva3NlIio6zLisGl5P9R
-         cmSkW3khh79Djw+XFHAZW+EvKvojkfx5pw0DKt0yH9riYz/TmQk8O8WkrXgdwSP2L5Fr
-         9vlTo7Is04ItRl8njLa2j6T8gN+bqgsDD4J8I37IIOSMSW6YG9JVx8DFV3fUDDbVxl8d
-         H2jQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVsYafUrixDGN8LJLUWwE1LgHBo9A/tUOrfWWBZGLix69Wv9iwS01kpLtcACU4ZICS/E2j3sQ==@linux.kernel.org
-X-Gm-Message-State: AOJu0Yw1pAWtt9sxhbAjnlew2Ozr9ilDOglWR2CrHyCkW1eVq0QmgsSJ
-	8CFNWAa4t1TC0sQawG987+Ewy5wTDgU3oCxeF7p8YA8VcbP+utAZY9i8i47EwqwgQCWHLvxIH90
-	6f6gXRDkQ8FMvhWkH+mBpPKUH5+7eX0JYIMvIr3dAfsUyGk9/9c+mFVCWdOWyn14TeZNTdw5Lxa
-	UbRWePcWySmRga3duCsu286OQTeYVoReAh
-X-Gm-Gg: ASbGncsJieYY93au/VniIsW3suMQh5BY/XoIcYO/vCC+vjHyjN/4JbrD9QboFtXFV24
-	osO5egWu/JBSkuBMdx4i9PUUriD6n+tJDgxEyXTZ+c3RArjLbYKCoOAGNEmAuw7/sUt/YXQ7swU
-	pNXHLjtzwIpkEgsPlx2WkGKpw3KTmA5jgBgRu9vYuTcQVUK0eR7783OUjvIYNdw5WlCVmBnHyYY
-	ntOCihrDmsNCxHYJ/Kq3Ns6cg==
-X-Received: by 2002:a5d:588a:0:b0:3ec:4e41:fd86 with SMTP id ffacd0b85a97d-4267260e213mr8507388f8f.50.1760164433183;
-        Fri, 10 Oct 2025 23:33:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHEpLO6OYXUE1/ArR9vy36CZE48E1R37f+11NGgWeETWW42Df2ABAL4IQjgp34ldNMf/7HIoQS6sm4JgDZIopo=
-X-Received: by 2002:a5d:588a:0:b0:3ec:4e41:fd86 with SMTP id
- ffacd0b85a97d-4267260e213mr8507377f8f.50.1760164432812; Fri, 10 Oct 2025
- 23:33:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FIUAnYky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F303BC4CEF4;
+	Sat, 11 Oct 2025 06:39:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760164761;
+	bh=9zZsan5O5hjtAjdKur9cRJo60lKyyn58IvNnFX8sSKg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=FIUAnYkyLQwo5YT80w0a3IfquKERQwmjXN1vOESSSE2aUesn9rNsTDdXN26x8Z6AI
+	 vF90VZrUKNR3qDgvXP8GyLuscI0UvmYxXHG9AKUJ5K4J0uOPMkUl3sdLmtvN1uUO5R
+	 p7d5R9FFkX70BbFKC4VCJpygBaLZbaWHAsIEj2hAykNZ81x71CsNjjeTvB28KtM6eN
+	 Mci2VJWqdRjzwLvplRzwNLaHPJuKaBWoN7wighNqOD+4YVqLA9FM3HdCGe9QloLYDi
+	 E/Ea4l6Q8oGL7QkUjqN7WW/W00Mhe9cvXGdhQDAR1kx4Ni6PJLosLktZxg/tr4+M28
+	 3+8j1ksCs5jEQ==
+Message-ID: <66bddf30-88a1-4756-b11e-bd741cc97b3c@kernel.org>
+Date: Sat, 11 Oct 2025 08:39:18 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
- <20251011061351.GB23024@1wt.eu>
-In-Reply-To: <20251011061351.GB23024@1wt.eu>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sat, 11 Oct 2025 08:33:41 +0200
-X-Gm-Features: AS18NWDsAc3i-nSNvVaeet-T2NsIH4l2mfD1guzxsrfi1JKYIBDdXLmn3IaYZFc
-Message-ID: <CABgObfbCLK9aEVg=y_fG8EfN3Q_f=LnGMjCPz+yWU-FS5-6V4Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
  Link: trailers)
-To: Willy Tarreau <w@1wt.eu>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org, 
-	tools@linux.kernel.org
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: EftUTdK2ISWWTC8z7FMTrXKElThj4yfe92i7J3iBvfY_1760164433
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: Willy Tarreau <w@1wt.eu>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org,
+ tools@linux.kernel.org
+References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
+ <20251011061351.GB23024@1wt.eu>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20251011061351.GB23024@1wt.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Oct 11, 2025 at 8:20=E2=80=AFAM Willy Tarreau <w@1wt.eu> wrote:
->
+On 11. 10. 25, 8:13, Willy Tarreau wrote:
 > On Sat, Oct 11, 2025 at 07:59:32AM +0200, Paolo Bonzini wrote:
-> > [1] "git am" adding Message-Id predates Link as far as I know. It's
-> > less handy than a clickable link, but again the known format used by
-> > git send-email comes to help. I have configured my terminal so that
-> > "email addresses" starting with "20" open in lore rather than as
-> > mailto URLs. :))
->
-> Maybe what would be needed would be a "Lore" (or "Series" or "Discussion"=
-)
+>> [1] "git am" adding Message-Id predates Link as far as I know. It's
+>> less handy than a clickable link, but again the known format used by
+>> git send-email comes to help. I have configured my terminal so that
+>> "email addresses" starting with "20" open in lore rather than as
+>> mailto URLs. :))
+> 
+> Maybe what would be needed would be a "Lore" (or "Series" or "Discussion")
 > trailer that automatically makes a lore link from the message-id, and
 > which would explicitly indicate that there's nothing else there but the
 > actual patch submission, contrary to Link that's for any extra info ?
 > It would be added by "git am" when passed a specific option.
 
-And if no one has a problem with s/Link/Lore/, who am I to complain!
-With -m (or the am.messageid config) I have in the applypatch-msg hook
+Perhaps continue here :):
+<CAHk-=wju1GO-AdGHag2v94mXdmg2uaFez5R8YE2js7ngn+hJyg@mail.gmail.com>
 
-sed -i \
-  -e 's,^Message-I[Dd]: <\(.*\)>$,Link: https://lore.kernel.org/r/\1,' \
-  "$1"
+I have not got to reply yet (vacation and post-vacation stuff), but I 
+will. tl;dr I won't report bugs unless a commit has a Link or something 
+which yields me the right link in a second (with all due respect, b4 dig 
+is apparently not that (yet?)). I am not going to burn my time digging 
+where the actual submission is...
 
-and it's an easy replacement to change the name of the trailer.
-Likewise b4 could do it.
-
-Paolo
-
+-- 
+js
+suse labs
