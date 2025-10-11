@@ -1,85 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8712025B302
-	for <tools@linux.kernel.org>; Sat, 11 Oct 2025 10:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32833257835
+	for <tools@linux.kernel.org>; Sat, 11 Oct 2025 10:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760178825; cv=none; b=UxTZ5SYG4wv8OUZ2Cc2U4jojVFFNVmtTRsrr6AD/Nq6xhv19KNQtnxh74jovRm5GceB3AwNHTV8waABNGSYAD85yX48GLRokTIdPa0RQ8KiBrsLFyz7IXNl/yxEJBReDahEJOmxLn5/v9/cMM6pNYapO4mfFeNW5h5StKvgVmFw=
+	t=1760178871; cv=none; b=UO+47gLl8DEpdHSpePw8tICaR5+Cpa2KRiu7j85gJkU+xuFXTam0xVcE+6pS3V98baSCHbbRGhzOJSbUAd45RdRhsO9MGcSdBQgt29ZXNahqNEoXnx0B1Y5XgpoHHgBuJTko8ZADJC7Ao0/S2B0uK5WhXpQOkXVajHcVr70tO8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760178825; c=relaxed/simple;
-	bh=gYnL5wg71pKPZeN0kzXOz6KaOoET4ebgurmRXhOPSRg=;
+	s=arc-20240116; t=1760178871; c=relaxed/simple;
+	bh=G8y5rOU05/09Kg4N/I/76nl4CQhXWvFTbR1z4cPJvl0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=igKDEV1raU46bbtMIL+c7v2ZN+bolIM1te0fwcEQQ27Q2lW6LXH28MGuCtfIVwPBlWNMKKkwHttiOGE5Swx47bZC5voCC3LLXxcF8qyn0Ua9NXEVPs+WaW6BYl2X4+cucHEaJXHmmqoVxlvY8TnQoN3GzMmra/M5QrkHwpPHr/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hYBSe+0l; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=FBDq0nMsxA3UyNQjKR1+CN81gh01OAKpaTwSG6kFFWNQ7t5OttZOF5FwAaL5atcGk8UeP1e2d1wl89EHSUtf26LkfzBEEqgfaGITOGFkbRnGBp9nZjwbMdf38EEvCoECOMa/OmAZ70wChdlXUwGlWVIY07mZdFKCs0B+v2d5MXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBcsiXvA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hYBSe+0l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A70EC4CEF4;
-	Sat, 11 Oct 2025 10:33:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760178825;
-	bh=gYnL5wg71pKPZeN0kzXOz6KaOoET4ebgurmRXhOPSRg=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBcsiXvA"
+Received: by smtp.kernel.org (Postfix)
+	id DF448C116B1; Sat, 11 Oct 2025 10:34:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C5CC4CEF4;
+	Sat, 11 Oct 2025 10:34:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1760178870;
+	bh=G8y5rOU05/09Kg4N/I/76nl4CQhXWvFTbR1z4cPJvl0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hYBSe+0lgbMUzWwbdL9NPi8xySqnAwVSHFckOhyu2TvHijUZ7gVA6KlWoDuRfS+Xt
-	 NPiyLSZXIpYqX2zCdBBWXCwNImFl9yLYIpJ0JMXogemyWEQ4b3XDhVOKABZWKlbTGe
-	 u7uuZuLR9mf41fWmAPzIjTWFYA/9DnYqYLfXUzR1LgMvyk1yA5fb6bxdEz5RLgb2P+
-	 TdNKww3yXgf1jro4y1H7vqDYx5cFwfxgp7GxY/R3Sg/Zq59V25Z8cuTfx93K3BR4/t
-	 gk6sEZ65Hhc9FWALcFQ1XoVybQEgSQffYjQj3u/cQAPIZgQRcCjibO+RuLmjyroKcS
-	 2pUnY4wRdfQnw==
-Date: Sat, 11 Oct 2025 11:33:41 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Willy Tarreau <w@1wt.eu>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@kernel.org, tools@linux.kernel.org
-Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
- Link: trailers)
-Message-ID: <aOoyhUzNDgwiyl5s@finisterre.sirena.org.uk>
-References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
- <20251011061351.GB23024@1wt.eu>
+	b=zBcsiXvAw0m/h8ulmsO7/BW8TlwvbZi3HBH1W2e6KGpJRu1frRnBqwnL/1P3dOq6o
+	 ONSu81gGiKtRaYNVhBSdaE+/vZD8AcYHqiIaiHAS7ZVm/bZi3Yymeej2Pi0rfo7eiX
+	 bUtFCtgG0sY8eF00hKmLvfsJbeUgYJCrGPSs6LNE=
+Date: Sat, 11 Oct 2025 12:34:26 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Lee Jones <lee@kernel.org>, tools@kernel.org
+Subject: Re: b4: ty: User-flow regression
+Message-ID: <2025101155-coauthor-backboned-e90b@gregkh>
+References: <20251009151349.GB2890766@google.com>
+ <20251009-remarkable-charming-pogona-fd7a8f@lemur>
+ <20251010080324.GC2988639@google.com>
+ <20251010-mauve-dolphin-of-apotheosis-a1cbdf@lemur>
+ <20251010143452.GH2988639@google.com>
+ <20251010-feathered-pastoral-woodpecker-de863d@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dNImBTMqFnXpCv4K"
-Content-Disposition: inline
-In-Reply-To: <20251011061351.GB23024@1wt.eu>
-X-Cookie: If in doubt, mumble.
-
-
---dNImBTMqFnXpCv4K
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20251010-feathered-pastoral-woodpecker-de863d@lemur>
 
-On Sat, Oct 11, 2025 at 08:13:51AM +0200, Willy Tarreau wrote:
+On Fri, Oct 10, 2025 at 10:37:22AM -0400, Konstantin Ryabitsev wrote:
+> On Fri, Oct 10, 2025 at 03:34:52PM +0100, Lee Jones wrote:
+> > > Next question is -- have you recently stopped adding Link: tags to your
+> > > commits? :)
+> > 
+> > Oooo, yes!  Yes, I have!
+> > 
+> > Why would that make a difference?
+> 
+> When patches have been altered by the maintainer, we can no longer match them
+> by git-patch-id.
 
-> Maybe what would be needed would be a "Lore" (or "Series" or "Discussion")
-> trailer that automatically makes a lore link from the message-id, and
-> which would explicitly indicate that there's nothing else there but the
-> actual patch submission, contrary to Link that's for any extra info ?
-> It would be added by "git am" when passed a specific option.
+Which is the primary reason to keep the Link: stuff.  Many maintainers
+manually change patches to fix up minor things all the time, and without
+the Link: it's a major pain to find (the LF sponsored a whole project
+just to do the backwards mapping for many years, but no one used it...)
 
-There was an attempt to do that with the https://patch.msgid.link
-domain, that's basically the same idea just done with a domain instead
-of the name of the tag.  Linus wasn't any happier with that idea
-unfortunately.
+> In the past, when we found a Link: trailer, we could still
+> match their provenance by message-id, but if that is gone, we can no longer
+> fall back to that. I am working on making the "ty" mechanism being less
+> dependent on that -- hopefully the master branch should become more useful to
+> you again in the near future.
 
---dNImBTMqFnXpCv4K
-Content-Type: application/pgp-signature; name="signature.asc"
+message-id is important to track somehow, we need that link.
 
------BEGIN PGP SIGNATURE-----
+thanks,
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjqMoUACgkQJNaLcl1U
-h9COFwf8DMTEZiZYNHWDoI1wcWGBP66V6LOGa8SyvbWt+Gdm12/2athL7dT9v/Xo
-KGix/bQ8qnLimBOSKrbEwjWbr1CJ0XAUzLp6XZkD2YstMWatpoEDV+/cmyVCDfrV
-ZywsDGocUDnErhF9H/b1E6sCR9cbeMIBTIo2S8IilZjrFIlvftkx5C6jZmtqMFId
-p0BR7FLjGCQLi9Kx3CIb+X4PTbxSM4B8/FWSgUXFGND0Nbq/65jSptthJnq7Lw7R
-cPY+vm7TJdZjapzc9YqtjiGHUhEby4Iz2mF8BdCptdKFgSqmvaIannvJ/HGG7kdK
-EGHMcVqUnZS+raf4DhMNjVc8EfxlEg==
-=gD3Z
------END PGP SIGNATURE-----
-
---dNImBTMqFnXpCv4K--
+greg k-h
