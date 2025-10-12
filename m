@@ -1,40 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33E52A1C7
-	for <tools@linux.kernel.org>; Sun, 12 Oct 2025 00:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAACF26656F
+	for <tools@linux.kernel.org>; Sun, 12 Oct 2025 23:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760229581; cv=none; b=jDwiOMdubaTb1KcBqQWAxy1KqKkNBpo7RAT6EYE2sdszj46RvIh9d1QlUXeUv8iiQkdwWjLe89NUeJZ8nxwDJd4+kega1O4Z4ZWB9+/y4Ag9T2axPCiYZ+XvXSDluHVlGlBjd4HSrHJzs2cF/mg4AbZBojUnkQZWI2hRdY5Zcg4=
+	t=1760311046; cv=none; b=DL5L/kNZ6eXlvp9275UMqOn5OAySDksL7C3yy0NYeFP3XlxbwuVsFWGovwSRPwX1HB386Kh1XdlstM906PS3HsTkabztyicZ/uHPUMP7/XiidbCMPU4lbmm8/UTIxIsKLYYGkYrQcfWKgOxBu1rooliffBO6ZMD82LlLgzBiaJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760229581; c=relaxed/simple;
-	bh=JCQ09QRVzSSnqIurPExggaihxoSjupqwbIweDPYQjOc=;
+	s=arc-20240116; t=1760311046; c=relaxed/simple;
+	bh=7BI+b9ZVbb4arRlarVfTNMcX0rPmrLvCNIS2yu6CyvM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FnrNxFsidXQkGc1lCLPA1COBJQxXis3iK12OVCay3tKZ4ByXsD5FF2DeZ7t+kC/rodVMCzRhhC4Srv4/Q5RIi55Z35HqBeVOLG/JsC0hn2jqvO5ZDZKIGzawSZNtz7gK/h2xZBWhBXIVFXoXcrgf+z1ju44S5foTYseO9W2SeYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JydRu3ri; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=oBUo+adq4Qs29BuC7H5VMbyS57xLsqWYbN1/Fz8PIP/zoJET3m6MII8a+198+iwz0QF8Pm228rCulu3cTCS7k4w2yxWiVgU/YWoYm1syxc5qXD8P36bA3Z2dC3DAUS5+4Idu6R8kgqOHWKbTytH3/pUGz2VQKDn/q71Ei3Aikpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=ThuyM31s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JydRu3ri"
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="ThuyM31s"
 Received: by smtp.kernel.org (Postfix)
-	id 4F42DC4CEF9; Sun, 12 Oct 2025 00:39:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E93C4CEF4;
-	Sun, 12 Oct 2025 00:39:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760229581;
-	bh=JCQ09QRVzSSnqIurPExggaihxoSjupqwbIweDPYQjOc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JydRu3riCYPH6Gxatz+OsPoLKspdmvtJe8ZIQI5qwfFaJh7cJo3zQTXD/CXzxJdRw
-	 TMgvDk3Qu9NRsXMgw1OQYsugyQbdVmmTuRTO11yNmtEY+QfmFAhv4WxTnYRL8688E6
-	 dhPD20edcnRvtuoP48GqIpFFOlqVviNUNPLHMelyXy3LQ/aIJ8NpbGcvvAv7QNjcvy
-	 oU90cRDvFl8KYPJG5x4rRmaC4wgVj2gGa0qFzsO4dtS4nd49SRMOJEy9l7MnW8gZrw
-	 MPAOTbzTByniTgu+x0+7Smr00BFWq061TRXb2Zkx6toeRTdBMmF2kpERQpvcopXDhG
-	 2aZc/ZKwQGP7w==
-Date: Sat, 11 Oct 2025 20:39:39 -0400
-From: Sasha Levin <sashal@kernel.org>
+	id 71605C4CEE7; Sun, 12 Oct 2025 23:17:26 +0000 (UTC)
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 0F8C9C4CEFE
+	for <tools@kernel.org>; Sun, 12 Oct 2025 23:17:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0F8C9C4CEFE
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-856cbf74c4aso680866385a.2
+        for <tools@kernel.org>; Sun, 12 Oct 2025 16:17:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ziepe.ca; s=google; t=1760311043; x=1760915843; darn=kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=X/91eppdZKO8OVQu5xpvXife4xudzqh2RIpAhvdRDM4=;
+        b=ThuyM31sO+Dk+JR35px+HlJOkDL3bV2hbQzn55r5xiLWmelREppp+LESF9JTB0Zp35
+         dGdTGW/0vrnNZiO6ugfk7ttQjNrRjcfLb5M1p8lzs13L2wsBodImpszVcjFZCg3dKwxS
+         plJjoKHc0AUgJ/kKZtDIV2L5G64JHq01iahTYJ6VH/W8ZStndDyucW2/IASeEE2nOrlR
+         lIGeTAb33Ye+iT6W5s8JfWxRBdp7tJCQ+gd58ALvlZYhZgeir20WgSqfAQAAv3zTwMz5
+         OISxUSzPC+kr83yHpJdt5bnULMslKg5CKGmb2yxET+yNzQo3Vv/S7ut6/+CRAEX9szNJ
+         c/OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760311043; x=1760915843;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=X/91eppdZKO8OVQu5xpvXife4xudzqh2RIpAhvdRDM4=;
+        b=OpjokMVQmQanbVxNRKnoVMZdIX1UAIDZpKnemfnz8LhhJCMN4DOxDzjNVJxlAz8Sjh
+         LYdo7383iYXacSGQztBk0UZQ7fNU4qptiR3bDtyFYU5IR4yBtdma9us8h2XCauHYzK2z
+         Rq4MUg/1/1U9AHVjaLeoKMaNYBYKSU1icARmt6qX+BiypZLVJnkA0EKWX9OLwN7XZ/T1
+         Cc0zgPT5eOJwkjhjGz8yDtHYgJTspwK9TBjJPE35rX8n10f1lRAlqdBMrP7JHsVihpzv
+         4Z4Qtqe82nlhDrSnWunvbfhqdT1L9iPXqWnQq4RAHqY9qiY6y5JPybX7l0X/jdN2HFe9
+         sfdw==
+X-Forwarded-Encrypted: i=1; AJvYcCXd6BjeE2ugW4YHeWBb5tfgJvRSxW/m5kT0ub8ijnYrrnQfv/cYE6m2srMrEotZTrFrBi9k7w==@kernel.org
+X-Gm-Message-State: AOJu0Yzxc6GiDzoibqL+QT0VW4y1Q6ADARqA/we3dUB3O4Ccbl6U7HMq
+	VSFziu6sZGGr/OFRF75A3QHIfSMDjFvIBBgys/M3LPt1cMJXiDT2Fk6j9Urpkx7mYbQ=
+X-Gm-Gg: ASbGncuZYyhCE0UcacgoILoEuWoRTlDDGx2Qky7hqQ9WEre3LS9tuVFsBjj8v0aQMxu
+	8qHlseEir0WsEugRzkzILWMNLWLw3ntP6pooXp4v4eUGRv+21LMOEIPRSvxP2zEhJmJaUdxDyt0
+	Bqf9X2RoTEk8Tvk+MtcCB0Mg8g2/p2FBJ7OsdyEu0uVc9WlwbqRCfgp1wRDliDzKBUIAcFDIaZ9
+	xePER1jn+liM9+uCTpzyEyFKO9KOIEuk36BhJSeZtuyVZFu44tb314rJiwqObWt3A6isBA1fWEQ
+	7M1zhsGWfU9AhogFLSSI5UqXwqprUdbqFr8k/erPEjejGm5cZ7QpCKV1allwfbLvwcykTAnfUWs
+	aL3AWEP9g9/kOhSXX6hu2Q/g4BCI8F4uIRYwu2u/T0QxAKKITZM2hCLwa4/eUsHTR0ZGuhMvt/r
+	7s7IjBz+WE5g4=
+X-Google-Smtp-Source: AGHT+IHGcocV5d4ypFSurdNv0uEOmeO+rEBPKHizNXqIvXAOVZZt5ze2u6kbiLKKbxQ8iHt38g5M8g==
+X-Received: by 2002:ac8:5710:0:b0:4e6:eb5b:bea4 with SMTP id d75a77b69052e-4e713d9d85amr106648581cf.16.1760311042784;
+        Sun, 12 Oct 2025 16:17:22 -0700 (PDT)
+Received: from ziepe.ca (hlfxns017vw-47-55-120-4.dhcp-dynamic.fibreop.ns.bellaliant.net. [47.55.120.4])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4e706bd52c6sm66209451cf.11.2025.10.12.16.17.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Oct 2025 16:17:21 -0700 (PDT)
+Received: from jgg by wakko with local (Exim 4.97)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1v85JY-0000000GsqP-3A3r;
+	Sun, 12 Oct 2025 20:17:20 -0300
+Date: Sun, 12 Oct 2025 20:17:20 -0300
+From: Jason Gunthorpe <jgg@ziepe.ca>
 To: Linus Torvalds <torvalds@linuxfoundation.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org,
-	tools@kernel.org
+Cc: Sasha Levin <sashal@kernel.org>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	users@kernel.org, tools@kernel.org
 Subject: Re: [b4] initial "b4 dig" to supplant Link: trailers
-Message-ID: <aOr4y6-BYHlWFVEB@laps>
+Message-ID: <20251012231720.GB3938986@ziepe.ca>
 References: <20251010-muscular-camel-of-acumen-00eeaf@lemur>
  <CAHk-=wgNNVkgDco67tVceM87B7kkVZK=Oz8RZti1v6N2_+S+2w@mail.gmail.com>
  <aOrqZsBZemu6MkAd@laps>
@@ -45,65 +89,23 @@ List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <CAHk-=wismGKUUxSRmUr2x8_fXF+L4G1POSs=w+Duu6PVZz4R=w@mail.gmail.com>
 
 On Sat, Oct 11, 2025 at 04:44:00PM -0700, Linus Torvalds wrote:
->On Sat, 11 Oct 2025 at 16:38, Sasha Levin <sashal@kernel.org> wrote:
->>
->> We have plenty of headers in stable-related mails that you can filter by to
->> avoid that noise. Something like the attached patch?
->
->I was reacting to Konstantin not feeling like making it
->kernel-specific, and I kind of agree. It's a generally usable feature
->for any project that uses lore or something lore-like.
+> On Sat, 11 Oct 2025 at 16:38, Sasha Levin <sashal@kernel.org> wrote:
+> >
+> > We have plenty of headers in stable-related mails that you can filter by to
+> > avoid that noise. Something like the attached patch?
+> 
+> I was reacting to Konstantin not feeling like making it
+> kernel-specific, and I kind of agree. It's a generally usable feature
+> for any project that uses lore or something lore-like.
 
-Ah, I understand.
+It is pretty common for backports (in any project) to have 'upstream
+commit XXXX' or very similar language in the email and commit message,
+so if you dig commit XXX and find emails that contain the string XXX
+they can probably be excluded.
 
->And the commit date seems like the obvious cut-off if you actually
->want a "what led up to this commit?"
->
->But it's not like having special cases for avoiding stable back-ports
->is *wrong*, I just feel like "hey, you have the commit, you're asking
->b4 to dig for the source of it, then the commit date should be your
->*first* filter".
-
-I ran a quick test to see how many commits do the (obviously) wrong thing w.r.t
-commit date, and we only have a few of those in the past year:
-
-$ git log --since="1 year" --pretty=format:"%H %at %ct" | awk '$3 < $2' | while read hash author_ts commit_ts rest; do echo "$hash Author: $(date -d @$author_ts) Commit: $(date -d @$commit_ts)"; done
-
-82ab67d762e922bb5df1cbb442e8d4f12c26a7ae Author: Fri Sep  5 05:20:44 AM EDT 2025 Commit: Sat Aug 30 04:38:55 AM EDT 2025
-11f74f48c14c1f4fe16541900ea5944c42e30ccf Author: Wed Jul 30 08:49:06 AM EDT 2025 Commit: Wed Jul 30 08:48:43 AM EDT 2025
-ca652cf0c2612add5d3c9283bbc742dabc704a77 Author: Tue Jul 22 11:18:41 AM EDT 2025 Commit: Tue Jul 22 07:41:12 AM EDT 2025
-a099b09a3342a0b28ea330e405501b5b4d0424b4 Author: Fri Jun 13 11:18:38 AM EDT 2025 Commit: Fri Jun 13 05:38:25 AM EDT 2025
-f1a3fac4095c7bc0b30e2aa9921c232af8faeae0 Author: Thu May 15 10:53:59 AM EDT 2025 Commit: Thu May 15 10:19:22 AM EDT 2025
-856366dc924a9561dae39f252b45dfd6cc6895ce Author: Mon Feb  3 09:10:51 AM EST 2025 Commit: Mon Feb  3 09:05:02 AM EST 2025
-4343af66b8e1df1d3a2e6f1f8612506cb45b2afd Author: Mon Feb  3 09:10:50 AM EST 2025 Commit: Mon Feb  3 09:05:01 AM EST 2025
-320155a61f7fc810a915644e9e2a451bdcea90b1 Author: Mon Feb  3 09:10:49 AM EST 2025 Commit: Mon Feb  3 09:05:00 AM EST 2025
-f0173cbe7fa79eafbdf32eed32337209f84ddacd Author: Mon Feb  3 09:10:48 AM EST 2025 Commit: Mon Feb  3 09:04:59 AM EST 2025
-cbe37a4d2b3c25d2e2a94097e09b6d87461b8833 Author: Mon Feb  3 09:10:47 AM EST 2025 Commit: Mon Feb  3 09:04:58 AM EST 2025
-e995c51903384be1c7aead246dc30cb5244179ac Author: Mon Feb  3 09:10:46 AM EST 2025 Commit: Mon Feb  3 09:04:57 AM EST 2025
-b9fb91692af881736f8fa1741fa0dbadf07d99ee Author: Mon Feb  3 09:10:45 AM EST 2025 Commit: Mon Feb  3 09:04:56 AM EST 2025
-79ebb596201c86712fe38b0ef73d25d07b932664 Author: Mon Feb  3 09:10:44 AM EST 2025 Commit: Mon Feb  3 09:04:55 AM EST 2025
-7d92a38d67e5d937b64b20aa4fd14451ee1772f3 Author: Mon Feb  3 09:10:43 AM EST 2025 Commit: Mon Feb  3 09:04:54 AM EST 2025
-e92f042642aed6f6206caace892d9df2d0166841 Author: Mon Feb  3 09:10:42 AM EST 2025 Commit: Mon Feb  3 09:04:53 AM EST 2025
-dc561ab16d8be9cbe8f07a49a7b2f5428fbcfeea Author: Mon Feb  3 09:10:41 AM EST 2025 Commit: Mon Feb  3 09:04:52 AM EST 2025
-0b12850ddfb0032376ef1be10b5b46be00bba4d4 Author: Thu Jan  9 07:22:16 AM EST 2025 Commit: Thu Jan  9 07:14:28 AM EST 2025
-ef724707788325a53ffa4cf58fceb94654e4793a Author: Thu Jan  9 07:22:15 AM EST 2025 Commit: Thu Jan  9 07:14:27 AM EST 2025
-3eede0fc99c684df6f3f35866761036dabf89d05 Author: Thu Jan  9 07:22:14 AM EST 2025 Commit: Thu Jan  9 07:14:26 AM EST 2025
-aea305d28551bc213aab3a41a0f59412247ae2b4 Author: Thu Jan  9 07:22:13 AM EST 2025 Commit: Thu Jan  9 07:14:25 AM EST 2025
-480d9bb9cfb7b774b22cf82ff21903eb50d64cb9 Author: Thu Jan  9 07:22:12 AM EST 2025 Commit: Thu Jan  9 07:14:24 AM EST 2025
-0ca529926c5d9d0a3c0b1609fb7034ab870e4770 Author: Thu Jan  9 07:22:11 AM EST 2025 Commit: Thu Jan  9 07:14:23 AM EST 2025
-94aa347d34e079859a5378272c9452c728e4183a Author: Thu Jan  9 07:22:10 AM EST 2025 Commit: Thu Jan  9 07:14:22 AM EST 2025
-33228036ff655ebed1bc4bde9c9b6329b569b27b Author: Thu Jan  9 07:22:09 AM EST 2025 Commit: Thu Jan  9 07:14:21 AM EST 2025
-e3146775f05d18c667a2e26082da3ac105f87d9f Author: Thu Jan  9 07:22:08 AM EST 2025 Commit: Thu Jan  9 07:14:20 AM EST 2025
-e9ca3db9f01a7ce91ceab35cd5fa52f0c5aca174 Author: Thu Jan  9 07:22:07 AM EST 2025 Commit: Thu Jan  9 07:14:19 AM EST 2025
-cf4d74256fe103ece7b2647550e6c063048e5682 Author: Thu Jan  9 07:22:06 AM EST 2025 Commit: Thu Jan  9 07:14:18 AM EST 2025
-dbda5c35b88794f6e5efe1b5b20044b0b3a340d4 Author: Thu Jan  9 07:22:05 AM EST 2025 Commit: Thu Jan  9 07:14:18 AM EST 2025
-bca0fa5f6b5e96c03daac1ed62b1e5c5057a2048 Author: Thu Jan  9 07:22:04 AM EST 2025 Commit: Thu Jan  9 07:14:17 AM EST 2025
-
--- 
-Thanks,
-Sasha
+Jason
