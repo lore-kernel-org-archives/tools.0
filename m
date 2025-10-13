@@ -1,138 +1,121 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C349E2D7DEA
-	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 18:53:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8452DCF58
+	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 20:12:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760381614; cv=none; b=kn4XIKMbLz68PYAs/usFvTFc9yVUbjI4fs26OdNjZ8d9oJhot+8NZ7Qx5KbVYxeMe0NKzbtUWLj/8wFe5AdJk3F+xli2Fk05TrsJ4Wz2h+XwtxI1I0Oql6cZYsP4ueRpMTlp8xGFqh+jca0FkY3+nPDLeYAbsYpHYuuKCTkhF6g=
+	t=1760386325; cv=none; b=YATZ62t6G1H168tJ57xFvbHQ5KD7T/LOPHEtfBXNcckdRVYNGWDALH3ej/qaAQrAxLaM4ZTHihte3tuJzQosZ5wae7zl+nZ05pch+xApUyVzOUGarC/QvVQpMRDN5PXtPRA12drAfLVbDlJnKS8akWGSM1Za2kJ4zUptVpEMTrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760381614; c=relaxed/simple;
-	bh=a9RJKQ1IRoazNDBlIba3FgGPVeDo3Ah00SJNwvAk9w0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Uvfs9GP3scxxeu7spehAPFgcah4s9tF8eM3xZa6xhz02Yo0GZsvIhiZjacDZi+WIaqXc4j09+GE9RjQtyipk/oPTZym4f4KuDo9yvnSd+GF5uW0VW1Ub8ZFH5NKx/xBJciooAoDTgu9SE7giJGOPI1i2/5cmPld3hoopb+ZWOsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6CoSPq2; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1760386325; c=relaxed/simple;
+	bh=VYZOVhOLli4jp3JdMIGnuWjxhh+4xT0Bpv//yjJrl+w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GVl0xagvOnDtv3pa0xsv9EIkyIydw0jbW4x1dWzwjBYqretKLxumfcIqcUSHBLenQLmnUP/CUfFam/JuvbCchipjw7jH9EsIPAR4bmPKr1t12IoKGz6YV0fVE/+j7SJ76Ps4JSLb5UqVjYyXLAcHJETyz52WV+y/bfHxYMESA6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Eke8RHyF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=huEVE5MQ; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6CoSPq2"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-63163a6556bso8969111a12.1
-        for <tools@linux.kernel.org>; Mon, 13 Oct 2025 11:53:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1760381609; x=1760986409; darn=linux.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HcmoTcEPpRpN4vo7TyIl1DUlC6LqteTEfqmzamj4Fzw=;
-        b=h6CoSPq2sfidbqQFcuq3eHWMgCfscR9L/njCW3obSKUSTGCEt8KicHexhcd8rKoajg
-         SuPSuatDiWI7uE7vhXbYibFRiLrs0LXq4CbJJfzgaBlGLK6Ck5jGEMsn6pC3ZSIpW4JZ
-         8k8l2Xjf5WSRQjaJPecBlH6OyD8Ts/1zQQ+hU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760381609; x=1760986409;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HcmoTcEPpRpN4vo7TyIl1DUlC6LqteTEfqmzamj4Fzw=;
-        b=kXGZBIB73iNppMjNeAf0SV/iR3VVEQ/rsyULJ+LapJP5w1SlUlYCzGqiOl/2su3Rq8
-         O01F0xmV6lZM6PIQQfpE4wXAY2TuCSFI9yz5s53SHHC2zLuDbbmcGJ//5iBkL6tF13SG
-         Ahr5eMPVMmyu236OfFmQVFfnczOliBgBjCyPQa6NuaIuZEoeKOWFoMBNV6X/1prhCWXd
-         n95WAoBZjpLheUUMC30Weifk/pKIc01cTI6VzwwP4EE6PL8yw0E3QeUVkGOjtfUxfqae
-         L8X+01xSbuQoZheOrzZwkIwhChofVM2UhtZ/wEZDXYybknzPok4xnnksF1/eexoEYVIU
-         IF1g==
-X-Forwarded-Encrypted: i=1; AJvYcCViHCN+WX1BL5C+xw3d5EX2RTAUfdOmvoLqmS2QNNEe5HHRnLnbWY409NxIVLBrMKuLlVrAgA==@linux.kernel.org
-X-Gm-Message-State: AOJu0YytU6Tr3eUHqNj9+u+1mJuADNjWtWOrzxkVgpLrlrQoen1v4oc1
-	BjHbiuFJacIfT4pBguAbI8EVHyKJ+Z4XMP2A48oMmX6Js70jQGjhZwdoCv3newIw2vKc2mbpEE6
-	y/+rIeZM=
-X-Gm-Gg: ASbGncvfllekjQjbvtVj56PEjFublnTAdLWbBwUvRH5bw6EO85cioaaSopSHi7A6n8m
-	ec0Hr1D4NcVvYWYQT84VK6+Vl0Usq3nNhn3AlilUuuS7rQcdHzhO8KyOP75VGx9tWGLAE758AWm
-	NKFAhsN30DbZUdWh5T7+beGbEUgMqGb//KAfuQ1EuOUO9eyZMkR6lgNJ8vTa7KygR86Kflun0Ac
-	a/iemMUkh5umWAOgUDg5ZqLGOzs00ChSCZ1u6fRG3+X/b4ah8YO0U9hR1ZslfxaomEHhJLvQHR1
-	Bf+RSsie8u4FlXf2IN0N+QRtdYoi1/Ag2E1j/NJsGPw927wT402glMIW98O3ne66nZCogBoGbSB
-	leP8JnigC+1vDLPdzYiBZVafWJjN3cfd3xL/K8gbZGPrnKUBKP7kI6u8IB1r5LUZthzkA4AcwJ4
-	EP08GGlC9ePZ9vFQ==
-X-Google-Smtp-Source: AGHT+IE2kVm81JyqCibx/wwctjo+aNjwKNeqO44D/1qWEgIOx4xOJ0uKBxRZ3JbyCB2c/U7++3AQZQ==
-X-Received: by 2002:a05:6402:d09:b0:62f:3721:fc8c with SMTP id 4fb4d7f45d1cf-639d5c7019fmr18258821a12.37.1760381609384;
-        Mon, 13 Oct 2025 11:53:29 -0700 (PDT)
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com. [209.85.208.54])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a52b0f3aasm9213306a12.13.2025.10.13.11.53.28
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Oct 2025 11:53:28 -0700 (PDT)
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-639df8d869fso8536365a12.0
-        for <tools@linux.kernel.org>; Mon, 13 Oct 2025 11:53:28 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVKQL8TxiCYJD6lOpRTiJ+toKVHUQSM5UMHFKfN2o4NEcpNE1s9vTcXZjguLJl/OEOopipKWA==@linux.kernel.org
-X-Received: by 2002:a05:6402:50d1:b0:631:b058:bef0 with SMTP id
- 4fb4d7f45d1cf-639d5c52eddmr20148404a12.32.1760381608154; Mon, 13 Oct 2025
- 11:53:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Eke8RHyF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="huEVE5MQ"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5F93F1D0006D;
+	Mon, 13 Oct 2025 16:12:02 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 13 Oct 2025 16:12:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760386322; x=1760472722; bh=DQ85jLAMrP
+	PD5jfCLHc23nSMy6flG0JQ1zYEAPKnkIQ=; b=Eke8RHyFrWqUl2uiDq0kxld0qA
+	VgKMJuDzayG+AHPct6tcc3XOJPqFUx5is13reGEPtQrj1Wii/2PjJEQdCbNwl+Nt
+	XDGYbXD+QEuGUCMv4i+/KQIVk5U0t82R++qb/NaqDAfFrMuwmi440GjjN3jxbRqq
+	fGUdlJqxRJSbnb+bT+EJIgWXoHPqMUWW1VinRMLB1bmDkO8dZuoE8IpgRsAvBTI8
+	/2rtUGypZ7bWmEn+PQHlyllTI2BitgztCmiV3S1qi87rIY6zkQqy5ud4a5hVmLRD
+	bXk846xg3g5FQm3vVzMM+SF/8VUAypi+ElTtorGVTE5QfV+uJ23DAfVIfL+g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760386322; x=1760472722; bh=DQ85jLAMrPPD5jfCLHc23nSMy6flG0JQ1zY
+	EAPKnkIQ=; b=huEVE5MQdEVQCJOX7QZCjr6zPxkacPZYCa53uojP6Su6bZKGdsR
+	waCvGpDgoBhTeIw5JrpMIXGbr0A8W94pgBEUxvj9uxpuw6/Igu8uQ3GxbHMyiar3
+	0djpPHmE4wnbbvfEn5oLORK/ypRBcNbuzql0/cQB6sF8M4BPtzczVr9OiAFqhVBi
+	iWMbnssYqtuMFa8COrSJBX0HSIBTdSb4be3XW//vsQt4vJYLdvqpbqcA1eABZfAi
+	SR6INKWhQ/WX3R3z88Xyo9KE/WSm+xJ0SaQQNQIo5hSLAT1cyli67sN5JP7UZsp5
+	cnRS95bhZ8vxjsizwg5tg7w06atyyV48Hmw==
+X-ME-Sender: <xms:EV3taGYcCz-crku2w367qfifxM3GwENDPNA-qo6Aof8Pv8GsBWGvMA>
+    <xme:EV3taLq_FHTwv7J2dUSgfVayaTN8Sk_HeHukJFuolFYiI09Mk8NN1g8xdWMmo9FJ7
+    3sLN8k0X_SFCCWHkHmIATxXhetOaYDR-WzAfFlegypK3hNKMX9ylw>
+X-ME-Received: <xmr:EV3taDOa0geLxWK2yaTQHuDE_9idgdBCsxZUGpwVZqFzzYkQTcplJA4ZbChqcbfWVFc29X-7d62yKSbLh-9VHN_7hwFXIQKq26iP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudekheekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceojhhunhhiohesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepgfejheejkeehvddvgfethfduvddttdefleeiffekleeiteeiffffueeljedukedt
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepthhorhhvrghlughssehlihhnuhigfhhouhhnuggrthhioh
+    hnrdhorhhgpdhrtghpthhtohepphgsohhniihinhhisehrvgguhhgrthdrtghomhdprhgt
+    phhtthhopehmshhtsehrvgguhhgrthdrtghomhdprhgtphhtthhopehkohhnshhtrghnth
+    hinheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehushgvrhhs
+    sehkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohholhhssehlihhnuhigrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehjuhhnihhosehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:EV3taOrn6HpBnmfT47lngQF30fMUVjio6RTbmV03WdLVTq1PkoKelA>
+    <xmx:EV3taAfP85RlzY4TykO4U-QJbu9OPHS6qkmGspf2haj3Fvcqx3rYIg>
+    <xmx:EV3taMTPkLZbiq-mGB1Zh-wzOeX2S3BFjKLcl1d7hYiqNOmE4wzFLw>
+    <xmx:EV3taBbq3MqW3jAVQGFC6WBgyjaIo7yReN84_36iZYaHOm5hbh_E6Q>
+    <xmx:El3taDmnEfbdSvMEuYeVrifDYXUXb5bpjWcZ6NkrUtyQJIFefyh4kMHw>
+Feedback-ID: i1ffb436d:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Oct 2025 16:12:01 -0400 (EDT)
+From: Junio C Hamano <junio@pobox.com>
+To: Linus Torvalds <torvalds@linuxfoundation.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+  users@kernel.org,  tools@linux.kernel.org
+Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
+ Link: trailers)
+In-Reply-To: <CAHk-=wg4WfbXs-kMOAM7FmQ0w8q3KO9DC8CWLg1WPnoaZW-Wiw@mail.gmail.com>
+	(Linus Torvalds's message of "Mon, 13 Oct 2025 11:53:11 -0700")
+References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
+	<20251013081536-mutt-send-email-mst@kernel.org>
+	<CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
+	<CABgObfZS--70UTOpSXo=JOZViN1jm4O6M92pu-6Qunif3v1Y8A@mail.gmail.com>
+	<CAHk-=wg4WfbXs-kMOAM7FmQ0w8q3KO9DC8CWLg1WPnoaZW-Wiw@mail.gmail.com>
+Date: Mon, 13 Oct 2025 13:12:00 -0700
+Message-ID: <xmqqy0pezhm7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
- <20251013081536-mutt-send-email-mst@kernel.org> <CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
- <CABgObfZS--70UTOpSXo=JOZViN1jm4O6M92pu-6Qunif3v1Y8A@mail.gmail.com>
-In-Reply-To: <CABgObfZS--70UTOpSXo=JOZViN1jm4O6M92pu-6Qunif3v1Y8A@mail.gmail.com>
-From: Linus Torvalds <torvalds@linuxfoundation.org>
-Date: Mon, 13 Oct 2025 11:53:11 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wg4WfbXs-kMOAM7FmQ0w8q3KO9DC8CWLg1WPnoaZW-Wiw@mail.gmail.com>
-X-Gm-Features: AS18NWDhqvGd4BTpbBIzJXzuDpnW--xf6PPTeROTk4D-jY8dLPFOexZ52K9st90
-Message-ID: <CAHk-=wg4WfbXs-kMOAM7FmQ0w8q3KO9DC8CWLg1WPnoaZW-Wiw@mail.gmail.com>
-Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
- Link: trailers)
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org, 
-	tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Mon, 13 Oct 2025 at 11:14, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> Yes, it's automated and mindless, but it's there *so that no one has
-> to think about it later*. Other information may be sufficient but the
-> point is that you don't have to "find" anything, and a click takes you
-> from git to lore, which for me are two views of the same world. Even
-> with "b4 dig" there are *many* extra steps compared to a click.
+Linus Torvalds <torvalds@linuxfoundation.org> writes:
 
-So the main argument is literally the "click" vs "command line"?
+> I do wish more people used merges for series and put the series cover
+> letter in the merge message. Now *that* would be a real improvement
+> for bigger series.
 
-Because this argument is clearly garbage:
+Perhaps something like
 
-> and to reference or review them after the fact, and the message id is
-> *guaranteed correct*.
+ #1 "git am" learns an option to apply patches [1/47], [2/47],
+    [3/47], ..., [47/47] in order, and then [0/47] as an empty
+    commit to record the cover letter on top of that series;
 
-No. The message id is one random message among potentially multiple versions.
+ #2 "git merge topic" notices such a topic capped with an empty
+    commit that records the cover letter, and merges "topic~1" and
+    throws the log message of "topic~0" in the log message for the
+    merge commit;
 
-There is no "guaranteed correct" about it. It may be *unique*, but if
-there are multiple copies of that same patch floating about, that does
-not make one of them more "correct", and not seeing that there were
-other versions might well be just hiding other relevant information.
+ #3 "git format-patch" learns an option to take a topic branch that
+    is shaped what "git am" would have produced in #1 (i.e. you fork
+    a topic, build commits [1/47], [2/47], ..., [47/47], and capped
+    with an empty commit with the cover letter material, and does
+    the obvious inverse of #1.
 
-I see the same patch series several times, and I see people add
-reviews etc on one version, and then those tags are (hopefully) taken
-into account in the next version, but generally when that next version
-is pasted, the thread on the first one is *not* part of the next
-version that is posted.
-
-So your "guaranteed correct" link is really just "guaranteed unique".
-And not in a particularly good way.
-
-> On top of this, the message id indirectly serves as an annotation for
-> series boundaries, since everybody is using "git send-email" which has
-> a constant format.
-
-Ok, that's just strange. That's not how any of this should work.
-
-I do wish more people used merges for series and put the series cover
-letter in the merge message. Now *that* would be a real improvement
-for bigger series.
-
-Arguing for parsing the message ID as some kind of series thing is just sick.
-
-Anyway, I can see the "click vs command line", although the only tool
-I personally use where that would make a difference is "gitk".
-
-But I assume you use some terminal or IDE that auto-converts text to
-links for you? I just cut-and-paste regardless, so I don't see that
-issue.
-
-                 Linus
+would make the world slightly a better place?
