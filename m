@@ -1,172 +1,159 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E297E2BE041
-	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 17:00:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704412C0F96
+	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 17:12:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760374824; cv=none; b=YR6zccFS17bouOEFABMPxdj1Y+Uh/FDpRfvLtSry5Am8agV4Z1dGOI+iiwjyiRFwCvquE0O8NXi8BPCa41O9VQwvqDnFPKvmtb8JTZneURz2y6BkdWjq3x9lA89i4wYdHLip6PLWy4Cwz7eUYZ3o5FdMB6mtvw1UZ8kb+ug+Vsw=
+	t=1760375566; cv=none; b=R4ISnAbKOGw07pal5riW5J1PaVDmAuHfpbhlSVg/N2GxuPYlDirPUqex0PGygXWLtVbAOxFircZyCft1Ud4XxUWpJ0P4JWkD2xjA7Gm8ne/+k4bPxwtOJx/2fzkEW/kjQ2g1Mrd7xi4dCZtCMLw+NFbIGAqm6qVBDogHJ5eLM7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760374824; c=relaxed/simple;
-	bh=7I6+OCValPT48YHQuZjUvUURDP29F251zlggRo6RuiI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rmUqqaur1qs94NPKU90MjbQjXLxmcaylEPVBogMUtuaRXwjgsG3IKMAQ00zDImptvzKcWVrRnmr+G/3+tqxET/BJ2CO0QL3wAWwHaSqdZzBm/qxxMEqc61SZZJ86XEhIZ5yhQB9aXKXTgsrBVH/IBjWsCJprQWSu8Sxdrnz5+Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSDiPbas; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1760375566; c=relaxed/simple;
+	bh=3wecBq08kDLay+g4FmNi2hgesk+eSmRw/IRyBe0uak0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bTuP4vR9X/QU8FNhGVnKPSKAVQl5dGH/koiWQi3Q0C2TEi5WuseW0ypea77ZpXWd+18Y8TefZ1SoTd9aIlCr9hWy/2bbHmXBDPuhr2BWPWv+p0M2DNZVYnebfyQS9Mp1ZH8iyhY78UfUIuLSC6bW48WrcgdIl5lw8uBwCoKA5r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NOWBgq9f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSDiPbas"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b41870fef44so190489566b.3
-        for <tools@linux.kernel.org>; Mon, 13 Oct 2025 10:00:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1760374820; x=1760979620; darn=linux.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+J8uLNFfvNlC2lQT/giMNL3x3isExocTaQO6iImqM/o=;
-        b=BSDiPbas2HfW+IFI0J/ndYXzIPYe1wKWCZlDVon5pyOTb+OYAcv8BMpSM+4gF0BWUE
-         yqyu4rzvtChKcP1K7REAHL9HXUewh6TBXXqPqDgVjtbzoG75XLRSDmtQFOdmgSypEwLl
-         qvB/alfnMzcsCBL+ZLKKLZJJ2LUGyy+ZgocpY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760374820; x=1760979620;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+J8uLNFfvNlC2lQT/giMNL3x3isExocTaQO6iImqM/o=;
-        b=caPRW+x/LeMDkifoeiRrNjddaRGfQAbZgTFUbmB2OBf7NB9aVhqr8Xh171gcncKvcJ
-         6YpXJp4Xpt/YJTmbsduuqziWOoUMq2Zw8D6VevD2TeG3fuuVe2SSldXbxN8wJBTF4Dlb
-         bfx/2JJ2ErRrTpNzkV9BIob9CzIL65EV5OG1zb+humdEyUgRdBucDEbvka3WQemcs2n0
-         qHkt3bIXGW8ssY6Lr6EAOr8FQn62bviWVAFQtorr2c5bxUyO2cGBXxG+/rVyv4vszRu5
-         T3rN2dgVGs1XbVbnfd8DuGNF/QghSWGoa9Amdq1bIClazmY5Eu6SOJsUIzFev7AsunJZ
-         G2kg==
-X-Forwarded-Encrypted: i=1; AJvYcCWscctpr1krj9z153AApg3p5AabdzjD0wy9UxYkFOZ4klGhg5P82FvAwnCvxqMqD0AghnFpKA==@linux.kernel.org
-X-Gm-Message-State: AOJu0YyYSCY5Mj1RTqBKObHx/o6XoF4VdWusEDQZJ4HCRh3FX6A28lEq
-	8LKgnwloAGFujQKixcyd0Vi453H9PeJF3/yPCUVqFZ68QOwfYx9LBHbKmGuy1wQ75QmevbAj/zP
-	4zvcgsbM=
-X-Gm-Gg: ASbGncuxjHCnKz1qmAYJX+tCY8N2XUcG2rdRgmCaCGcFylSR6f6UG2VtdtGUHk2VkpE
-	4zWvIX7kBFLZ8ov3gelkokUWjnJk8hrcnvT/Bdo5UdJwMFX0zHQ9JhqqObxED7iCF00R2taTv5z
-	m2GRBfhyQcGpemicHuR+u19EryVNUkuRMUpWVt/uNHONPi3MnRkrlpXie87HId5JuyYcNgtr30Y
-	LHh2r43OZTkrB1CDWYR/CD8933/a9+mseLe2cmYyGbc0Y7ZeXu3SMZiWRPuj4nxhhXuf4uI5ZbG
-	4m20XqY7bKOVRgTQHMWEi7gzZhDIlTn4ZACHDYjL91uZGVgbOIKT1g2RV7p4hiNjDBwBh1JTqda
-	fKSlCQloe1no3qpRQ7UP2GYLL5R4DLa+Es4f275gacGkW69PV01jnaZ3ZZooE3K57koiuIl/YH8
-	iBYG5vDAzBFyQLsoye/nqckwcc
-X-Google-Smtp-Source: AGHT+IETd53JOx6UmwmRE7p7Sh4N9IboLwxYg5o6CpIdv5749pmx8hoibFjbxwoKBJPVdyqjd9qirw==
-X-Received: by 2002:a17:906:80c6:b0:b55:e023:5e79 with SMTP id a640c23a62f3a-b55e0235ef5mr1138308066b.51.1760374819784;
-        Mon, 13 Oct 2025 10:00:19 -0700 (PDT)
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com. [209.85.208.52])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b55d8c12ce1sm956890166b.57.2025.10.13.10.00.19
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Oct 2025 10:00:19 -0700 (PDT)
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-63963066fb0so9226672a12.3
-        for <tools@linux.kernel.org>; Mon, 13 Oct 2025 10:00:19 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXz2nWFtgujpIwAXsx8y+FC/CmEEXiFJNMxkgoji8XZvozeTnEjqmUovXWvttdULp7OEYdBmg==@linux.kernel.org
-X-Received: by 2002:a05:6402:27cd:b0:63a:35c:6ec4 with SMTP id
- 4fb4d7f45d1cf-63a035c73cemr14537622a12.21.1760374818684; Mon, 13 Oct 2025
- 10:00:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NOWBgq9f"
+Received: by smtp.kernel.org (Postfix)
+	id 17866C116C6; Mon, 13 Oct 2025 17:12:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27344C4CEE7;
+	Mon, 13 Oct 2025 17:12:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760375566;
+	bh=3wecBq08kDLay+g4FmNi2hgesk+eSmRw/IRyBe0uak0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NOWBgq9fuAK/8s6gMkPhastg/x5Bx54nV1Hhf2zo7gp9asV5E4KB04apXZYEOZ24k
+	 6RBWzB9waXOee3GQnizn2og+W8w9/m50meEYBCcDpTWePm/JG/LJer/BTO9FN4X8qb
+	 ZOxgoY0MsJUGGaEqc8RtsMrCUK203xNgpI+pZMou2ohVWiFhxRZpgJakoTaNDvDgJI
+	 oaprpzsVEfr+oAIXOH1wUi/6wCk1EK3jkHyjf6lF/1PT2I1uIYwR7iUTKdm6E51WAy
+	 eN3ezZ9KhkGuMLLxSYtC9LPDP/mhsLOgy8I8slmn2ZkvvYEx68xiMUIUk4koZGtk/k
+	 B01FREQO3pVOA==
+Date: Mon, 13 Oct 2025 18:12:42 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: users@kernel.org, tools@kernel.org
+Subject: Re: [b4] initial "b4 dig" to supplant Link: trailers
+Message-ID: <59e87e88-356d-4913-979a-cdcd80882517@sirena.org.uk>
+References: <20251010-muscular-camel-of-acumen-00eeaf@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
- <20251013081536-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20251013081536-mutt-send-email-mst@kernel.org>
-From: Linus Torvalds <torvalds@linuxfoundation.org>
-Date: Mon, 13 Oct 2025 10:00:01 -0700
-X-Gmail-Original-Message-ID: <CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
-X-Gm-Features: AS18NWCOf2KTMXQ7ZoszmK7edYlXXhBLSOmoVU1-KAveIdupSMxaMnaTeqNC15Q
-Message-ID: <CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
-Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
- Link: trailers)
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org, tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vDQT02s7s5s89r03"
+Content-Disposition: inline
+In-Reply-To: <20251010-muscular-camel-of-acumen-00eeaf@lemur>
+X-Cookie: Ahead warp factor one, Mr. Sulu.
 
-[ Jumping in randomly in the middle ]
 
-On Mon, 13 Oct 2025 at 05:21, Michael S. Tsirkin <mst@redhat.com> wrote:
->
-> On Sat, Oct 11, 2025 at 07:59:32AM +0200, Paolo Bonzini wrote:
-> > Linus complained about Message-Id too in the past, but if Linus does
-> > not like Link or Message-Id then fine, but can we please take into
-> > account that he is quite obviously unique among kernel developers? ;)
->
-> I missed where he complained about Message-Id btw.
+--vDQT02s7s5s89r03
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-My fundamental complaint is actually about the "mindless" part. And
-that' entirely unrelated to whether you call it "Link", "Message-ID",
-or anything else.
+On Fri, Oct 10, 2025 at 04:47:27PM -0400, Konstantin Ryabitsev wrote:
 
-I object *strongly* to any random noise that doesn't add explicit
-value. For example, the argument that "I want to see which of the
-identical 17 submissions was used" I find completely pointless.
+> I just committed the initial implementation of "b4 dig" that will hopeful=
+ly
+> make it easier for maintainers to figure out where a commit came from now=
+ that
+> we're actively trying to phase out Link: trailers. For now, it only does
+> "b4 dig -c [commitish]", e.g. taking some random commits from today:
 
-If you can already look things up by patch ID - and you can - then why
-is it AT ALL relevant "which of the six identical patch submissions
-was taken". They were the same patch.
+If I specify:
 
-I understand entirely that people tried out Konstantin's first "b4
-dig" and then complained about "I didn't actually want to see the
-stable re-submissions".
+   b4 dig -c regulator-v6.18
 
-That's entirely understandable, but that was not some kind of argument
-against that model, it was just a "oh, 'b4 dig' just didn't take that
-into account".
+b4 complains:
 
-But if that is fixed - and we literally had three different ways of
-trivially fixing that issue - and you then get three versions of the
-exact same patch because it was submitted three times, you
+   Digging into commit b320fce86c04862ff5548ebdd84740e36e79e6ac
+   Merge commit detected, please specify a single-parent commit.
 
- (a) actually have *MORE* information, and potentially see what the
-objections were in previous series
+but that's not a merge commit, it's a signed tag on a regular commit.
 
- (b) if you really just want one, add a "latest submission" kind of
-flag to limit it to just the newest one (again, with the filtering out
-of patches *newer* than the commit to avoid the stable backports)
+It does also feel odd to have to specify -c, I'd have expected this to
+work more like b4 mbox and just assume that an unknown parameter was a
+commitish.  Not the end of the world though.
 
-And that's really my objection here. The thing I really really hate
-about how people used "Link:" patches was that it was both mindless
-and pointless.
+>=20
+> Matching the exact patch-id:
+>=20
+> 	$ b4 dig -c ce740955b238761ec1d8cf0590d7e6802d3a813a
+> 	Digging into commit ce740955b238761ec1d8cf0590d7e6802d3a813a
+> 	Attempting to match by exact patch-id...
+> 	Trying to find matching series by patch-id 469ebf2cf560b32106f206e389752=
+deb5f741b6d
+> 	Grabbing search results from lore.kernel.org
+> 	Found matching series by patch-id
+> 	---
+> 	This patch is present in the following series:
+> 	---
+> 	  v3: [PATCH v3] dt-bindings: bus: renesas-bsc: allow additional propert=
+ies
+> 		  https://lore.kernel.org/r/20251009183630.5451-2-wsa+renesas@sang-engi=
+neering.com
+>=20
+> No match looking up by exact patch-id (and trying myers, then histogram, =
+then
+> patience algorithms with no success):
+>=20
+> 	$ b4 dig -c a29ad21b988652dc60aa99c6d3b1e3d52dc69c30
+> 	Digging into commit a29ad21b988652dc60aa99c6d3b1e3d52dc69c30
+> 	Attempting to match by exact patch-id...
+> 	Trying to find matching series by patch-id abc964d5d53674450f7e553bbe031=
+edc61ac3308
+> 	Grabbing search results from lore.kernel.org
+> 	Nothing matching that query.
+> 	Trying to find matching series by patch-id adf0918395a1a601a8d54d7d26446=
+aadfb6101c2
+> 	Grabbing search results from lore.kernel.org
+> 	Nothing matching that query.
+> 	Attempting to match by author and subject...
+> 	Grabbing search results from lore.kernel.org
+> 	Found 22 matching messages
+> 	---
+> 	This patch is present in the following series:
+> 	---
+> 	  v3: [PATCH v3] tpm: Prevent local DOS via tpm/tpm0/ppi/*operations
+> 		  https://lore.kernel.org/r/20250829175152.9704-2-daleksan@redhat.com
+> 	  v4: [PATCH v4] tpm: Prevent local DOS via tpm/tpm0/ppi/*operations
+> 		  https://lore.kernel.org/r/20250902142429.14041-2-daleksan@redhat.com
+> 	  v5: [PATCH v5] tpm: Prevent local DOS via tpm/tpm0/ppi/*operations
+> 		  https://lore.kernel.org/r/20250915210829.6661-1-daleksan@redhat.com
+>=20
+> There are known annoyances:
+>=20
+> 1. We don't currently weed out AUTOSEL/stable backports, so older commits=
+ may
+>    end up in lots of false positives for now. I've not yet figured out ho=
+w to
+>    avoid this without hardcoding it to be kernel-specific.
+> 2. Patches that were sent as part of one series and then as part of anoth=
+er
+>    series (by the same author) don't currently do the right thing.
+>=20
+> I'll work on getting that fixed, but for now if you're missing the presen=
+ce of
+> Link: trailers, please test it out.
+>=20
+> -K
+>=20
 
-I have no objections to *mindful* use of Link patches.
+--vDQT02s7s5s89r03
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The workflow that Steven Rostedt explains with multiple versions that
-are explicitly linked together is fine: if you have real mindful use
-of a "Link", then go on using it, IF YOU THINK ABOUT IT, and didn't
-just mindlessly automate it.
+-----BEGIN PGP SIGNATURE-----
 
-So the thing you link to had better have some real extra information in it.
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjtMwkACgkQJNaLcl1U
+h9AeUwf9HE1mtTPaiNGppW4P9OTRcw6t9GReJNFBULdJT7QNqiyRfAN18bArSzvv
+cmoYkZI5TJAN0J8a6g3rqLgdBA4M31ay9Fmt0v+/czEQtNEtH1JJjeCn74lCMNar
+IX9pVDku/5Lu40dgsF2DEqd4on6ZKlPI+1ltvwMlqrsB/GL672EimwBwcKoIsDdD
+tMSCvej6V8Syl0l9bo6XTLP33C/ybqu31SYc1zhSVh04Ti+1aRkjFNuEo6FZbMD9
+u7CeZXdCkLUZVPE47B3httLR5pPmn9qW17WN1/qfdopnPcd9QXpiW3ODq8h82K+W
+mBSAR+1K5GnahAM9+wihs4cDWsG52A==
+=D1/x
+-----END PGP SIGNATURE-----
 
-But if it's automated and mindless and you're not thinking about it,
-it damn well remains wrong whether the "Link" part is renamed or not.
-
-Because we *HAVE* automated information that is already sufficient.
-Every single commit already fundamentally has sufficient information
-to find the submission if it was to a lore-tracked mailing list:
-
- - patch ID
-
- - commit date
-
- - subject line and patch date (note: maybe from the email, maybe in
-the body of the email)
-
- - author name and email (note again: might be the email 'from', but
-might well be the 'body of the email' From: line)
-
-and all of those are important information that any valid git workflow
-*already* saves off because they are important and relevant
-information ON THEIR OWN.
-
-And they are more than sufficient to find the original patch
-submissions, in ways that "Link" does not improve on.
-
-I argue that "Link" makes everything worse. It does not add
-information. It adds redundant data (explicit difference between
-"information" and "data"), and not in a good way.
-
-What's the real argument against "b4 dig"?
-
-               Linus
+--vDQT02s7s5s89r03--
