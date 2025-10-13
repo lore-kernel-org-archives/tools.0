@@ -1,112 +1,89 @@
-Received: from lamorak.hansenpartnership.com (lamorak.hansenpartnership.com [198.37.111.173])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8C41514DC
-	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 11:49:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.37.111.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFA72566D2
+	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 12:15:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760356169; cv=none; b=W+suhyxvpG4wEgtZx1xsNfUqEtIN53Nnqr63kHwPDPUwcPzBHpAT60tZgwvd6Z2poS+a6UvoMguwvKWDErqS2gogmoLBDzQlCgJE49uU/xPwigJlcFZGtSAGXWqYn4aolJVJXKeIi4bQwnJ8P3Gn1xgK0EX8M6j4j72Jb9nWR9g=
+	t=1760357717; cv=none; b=KkPmxtMV/I6101+XE9FJ8C24mwqc/bywEnQSgBlTm8Gxx55Z+ORB25+OZOnU5wOZKdJ6GIPD99HpJv1cXA1EwxhXy7I0x1UnzfeAsSWnQWBK9I/1Rl+6bPwlkaWJVg5FStSFemQtTglotXwk+c1x7N71Xbz18sJQWkm77WPYyhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760356169; c=relaxed/simple;
-	bh=RK7CCxJNsklfXshUB1J8UvJ+c0vu7SMXNYmPZNurveo=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=TXK0FIGGvR+gM7mquH9bhGBbsXBAFyJt3sx7lyr0j0VkPHyuKJkEIiGr9Nx1CZjMOoZOznWNC8vUK2hTAj7WtS1rrAeNqg7g9vN0agBUVwlOaHZae4TGnhP3PKScgfy786KOhPJUVXLsQjnJVHr2pYhmOnEUkidRcpiIhXKEJh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com; spf=pass smtp.mailfrom=HansenPartnership.com; dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b=BJlOXUlK; arc=none smtp.client-ip=198.37.111.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=HansenPartnership.com
+	s=arc-20240116; t=1760357717; c=relaxed/simple;
+	bh=aRiLAsnPe21BuCaAFmWfoucJOHSvrTEfEKStYYdy710=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mK/8LJeS02PXvIPDfc//CrIMKjyHvcXhI1tPVimBYmZ7Z5rFEO3JIbYitY5HcwwdUOESilEH5cDkUwfudxrN8URW3f41a05IZGpaJGNe5rpnfD1eoSdBzX+jqu5TDZKbR2JjHB3udWzfdy+ZUxZHfpLpPc+V0IaDI+qqfIuIr5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLLdGhBM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b="BJlOXUlK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1760356165;
-	bh=RK7CCxJNsklfXshUB1J8UvJ+c0vu7SMXNYmPZNurveo=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=BJlOXUlKH4bk4GBoFpDuA5MfPKAlU52o5Clj7eVdD3sgYNV9KEGWKnccv0KQ6GNrw
-	 Rrj61iB+tQE8ncV+yZrbZuJ45YhQ62RW1Cd8+A/LueXrpEF27+OOXPSUiMg2gjWaNV
-	 hDVP+s97iyFA+PHJ84dKGahzhX94TyNy28oJEFLY=
-Received: from lingrow.int.hansenpartnership.com (unknown [IPv6:2601:5c4:4302:c21::a774])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lamorak.hansenpartnership.com (Postfix) with ESMTPSA id 0F1B31C04A4;
-	Mon, 13 Oct 2025 07:49:25 -0400 (EDT)
-Message-ID: <4f9d75f4d024bf9340f5d6936a2a2dd73c6eb1f3.camel@HansenPartnership.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLLdGhBM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA883C4CEE7;
+	Mon, 13 Oct 2025 12:15:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760357717;
+	bh=aRiLAsnPe21BuCaAFmWfoucJOHSvrTEfEKStYYdy710=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RLLdGhBMAgEFkRYpwmD5TustUvnAdcYbElMOz4HHeOzjEaxfQNrx4vibahvJqUe9o
+	 gxHSlhccXtgctZZcTnRZszj0n1DLMV7qNDKWtXApZtAAlB+xuIzLLLTrttCM/a+GxF
+	 S9QhBKQaPvxNM174HPbRTLyV+oP4XJ+VHFcGUt6U3UYXF8djlXAsPShGxIDxxHdGCA
+	 iQHpLyEPpWdmB810lDkTP3NNZ+vunWwIR5DSywXGEImPVliyZW1Z1XIzFsgO9WR3d2
+	 +c3sJrjR6raN+JI8V94AUyHZYxKETPMSHreZGOfUF639w1htve2Ex8UP/kXALGsZC0
+	 /oMiyzpmixpNg==
+Date: Mon, 13 Oct 2025 13:15:11 +0100
+From: Mark Brown <broonie@kernel.org>
+To: James Bottomley <James.Bottomley@hansenpartnership.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>, Willy Tarreau <w@1wt.eu>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	users@kernel.org, tools@linux.kernel.org
 Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
  Link: trailers)
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Mark Brown <broonie@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>, Jason Gunthorpe
- <jgg@ziepe.ca>,  Willy Tarreau <w@1wt.eu>, Konstantin Ryabitsev
- <konstantin@linuxfoundation.org>,  users@kernel.org, tools@linux.kernel.org
-Date: Mon, 13 Oct 2025 07:49:23 -0400
-In-Reply-To: <19d8800c-c48d-4b98-ae4c-f52053b97ac5@sirena.org.uk>
-References: 
-	<CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
-	 <20251011061351.GB23024@1wt.eu> <aOoyhUzNDgwiyl5s@finisterre.sirena.org.uk>
-	 <20251012232725.GC3938986@ziepe.ca>
-	 <d884ec6d-856c-4dce-b8bf-cb6116c87bcb@kernel.org>
-	 <CABgObfaL1Pki1QCgO_vb1Ex_1=RgVwzOmD8Z+q_KnPw3jHwBpQ@mail.gmail.com>
-	 <19d8800c-c48d-4b98-ae4c-f52053b97ac5@sirena.org.uk>
-Autocrypt: addr=James.Bottomley@HansenPartnership.com;
- prefer-encrypt=mutual;
- keydata=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
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-cvNxT4r5AYmnvv9G+vS+"
-User-Agent: Evolution 3.50.3 
+Message-ID: <76c43b1f-9f4c-4dc2-84a0-993a752ce48a@sirena.org.uk>
+References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
+ <20251011061351.GB23024@1wt.eu>
+ <aOoyhUzNDgwiyl5s@finisterre.sirena.org.uk>
+ <20251012232725.GC3938986@ziepe.ca>
+ <d884ec6d-856c-4dce-b8bf-cb6116c87bcb@kernel.org>
+ <CABgObfaL1Pki1QCgO_vb1Ex_1=RgVwzOmD8Z+q_KnPw3jHwBpQ@mail.gmail.com>
+ <19d8800c-c48d-4b98-ae4c-f52053b97ac5@sirena.org.uk>
+ <4f9d75f4d024bf9340f5d6936a2a2dd73c6eb1f3.camel@HansenPartnership.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="9wn9cr3HL8uow5e7"
+Content-Disposition: inline
+In-Reply-To: <4f9d75f4d024bf9340f5d6936a2a2dd73c6eb1f3.camel@HansenPartnership.com>
+X-Cookie: Ahead warp factor one, Mr. Sulu.
 
 
---=-cvNxT4r5AYmnvv9G+vS+
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--9wn9cr3HL8uow5e7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Mon, 2025-10-13 at 12:03 +0100, Mark Brown wrote:
-> On Mon, Oct 13, 2025 at 10:27:09AM +0200, Paolo Bonzini wrote:
->=20
-> > My problem isn't with dropping Link, it's with not having a
-> > replacement and messing up the workflow of >1 people. I'm not
-> > calling for civil disobedience or anything :) but it's not like
-> > Linus hasn't ever been wrong.
->=20
-> Me too FWIW, it's a noticable speedbump in reporting test failures.=C2=A0
-> If the b4 stuff that Kontstantin is working on works well enough
-> that'd work but it's very new still.
+On Mon, Oct 13, 2025 at 07:49:23AM -0400, James Bottomley wrote:
 
-Well it's not like he isn't reading this list ... but since this is a
-process issue, the forum for discussing it (or rather forcing the
-issue) would be the Maintainer Summit.  I can propose it, but there'll
-also need to be a certain amount of bravery in the room.
+> Can I also take it that if a face saving compromise is needed then
+> everone's tooling can work with a message-id trailer?
 
-Can I also take it that if a face saving compromise is needed then
-everone's tooling can work with a message-id trailer?
+That's certainly the case for me, what I'm actually doing is pulling the
+message ID out of the link and using that to grab the mailbox with b4
+mbox.
 
-Regards,
-
-James
-
-
---=-cvNxT4r5AYmnvv9G+vS+
+--9wn9cr3HL8uow5e7
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iJEEABMIADkWIQTnYEDbdso9F2cI+arnQslM7pishQUCaOznQxsUgAAAAAAEAA5t
-YW51MiwyLjUrMS4xMSwyLDIACgkQ50LJTO6YrIVdUAEA9A84I48gV8JEgbl9qyvt
-ecK8cshqTS25j0Rge+IfkR0A/julbIiGWloo1gfctMLDXftDQTq/iCF+Om9z/q3c
-QYwl
-=Qf5s
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjs7U8ACgkQJNaLcl1U
+h9CUfQf7BrR6zHhOlwJ2eQ6BP2th5MwzNipxQdtaxPKylvR6/a5IUMhtu6AX2jMq
+V7iW/ifYtuOvJy2xIvblIpjtmI89gcB0XOv2jAwc9Uqkn1uSSDe9z9R6D9e0dJV9
+hPXV8FZZhozoZzi0XkKbvfB5FJDeR2UF7GJPyMsgLUudyb9JIZqZ99DmtMRxhtwi
+fM/JQ/9HjO15xRj8oR1WBoQRUf42+SLJflJcIg7wT37I3HFiAvu+PEPlEmagot2i
+r5fj5CCrI60EKki2KewRDWXS2W8RFJkqeGxiKRhOlKNKD9gYfjdfWUlbu1FQiDK9
+BE9Hcv5BptrdkBQV3cKW6SlZsvpy8Q==
+=dWcc
 -----END PGP SIGNATURE-----
 
---=-cvNxT4r5AYmnvv9G+vS+--
+--9wn9cr3HL8uow5e7--
