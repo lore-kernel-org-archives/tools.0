@@ -1,88 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A6826B762
-	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 11:03:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEAF24DD15
+	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 11:22:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760353406; cv=none; b=Nzyf7j1ty2jShz+2cb7b9K698XQog+PylA6IFjWrqZDZAW3I/0PG66rLTNW97qDBaaznRlC4GHJBRdGMKghqLHTUl/giNV/29QbAzVs8sZbWMqLP1vG3dP3I8e3Nyct2noaB1DYPm/Fb+lvtIje7BScq5OPb0lcevpaCa9Hw60M=
+	t=1760354537; cv=none; b=IPe9AkqKaA9l2KUY5DHTy3NFXnxtQG+p8HpLMZPQYJavdVEidh8Eo3IQiGqvrGVdaIH/cUPeGptlDV6+cIQa3IYekaNmEqvby5zCBFKbu4ag8uD5VBZXpmCrcoTFXOLuxfPSg6aVtJ6FkZkSTYQxsuFfSdOmO5ZlVuMuVT07MF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760353406; c=relaxed/simple;
-	bh=W4WLVGnfzrp3kb277elfnfFoM2cWVihdzdvrR3egaEM=;
+	s=arc-20240116; t=1760354537; c=relaxed/simple;
+	bh=o+nQ/M51ADG2lYNftUBdt1pyL24HkkMkP7SFLLeFubg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M2r2/wRngcroGgqC3Exb34TfEObspqoND5rdmupQLzWnog1rHxMQx1vI2Vp4L0oUwHLrIq32adUDYdXeCLp+n9QM28aHsfs4NfdMQoZscLWKbjyxA235WtMj9huS2IpmB8Stg/zTP8bywCyxP1tnCEwMOGVRlFBwi8Vii1aOojI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KhUFZJcK; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=fvak8GZ0lOIzwAKDlkC0rV2uSMN7o/6zlwpqa0uMd/TClwlOYdi2zSzkFaJAmketY4GzF4Ec9XH5iE2CN5fMDhkvwa4VNZb2HuE9wRP1yRitbFYjXXPLNrnmOgdXPwBFFd0rzFCVNmDYkBeiq3vVyrmUaYUicbcDelvi99zTrKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=lWRYh2Ch; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KhUFZJcK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19796C4CEE7;
-	Mon, 13 Oct 2025 11:03:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760353405;
-	bh=W4WLVGnfzrp3kb277elfnfFoM2cWVihdzdvrR3egaEM=;
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="lWRYh2Ch"
+Received: from pendragon.ideasonboard.com (82-203-166-19.bb.dnainternet.fi [82.203.166.19])
+	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 14C2B169;
+	Mon, 13 Oct 2025 13:20:27 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1760354428;
+	bh=o+nQ/M51ADG2lYNftUBdt1pyL24HkkMkP7SFLLeFubg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KhUFZJcKy7x2yNfHCpo6KYZCQbGRZNh5IHFi7AqzNK8ZCCpZU3vmPw0wnGzT7D1lJ
-	 cKG83pHTl3Pz3MfaMrR4hqJ+4Wa/C1vdI78P3PK7r8/F2UAUCzWzFY5L6SLmyoSJs9
-	 LQU2irYYKMFfYldlh3iT/trCGI5hVOD3czh8C7IQ4qZrG6NQq7BTR/pIScSY9mzUQ/
-	 jwgOegO9EmyOBiNvbLlA83FNSXf1pUVzjoJnumnxgLJBeGXEaV+R0yZTvEP9GaRLFc
-	 Fykz14W7lZNotyx/wRgAgB4wrQ7xneVTnexhgKXkBl5En1vFR8mObvxxIwl6gWqi1S
-	 ATr9gnyznLWMA==
-Date: Mon, 13 Oct 2025 12:03:21 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>, Willy Tarreau <w@1wt.eu>,
+	b=lWRYh2ChthIoJPd7GVuDi3juS4BRL7RkwYbV0f4FJxK20iN5Q+c+3/HlMDlXIZKYP
+	 X2r4l62YEiyhLbftBfPQJ/Rea7uNr9/HJMyQE8US6yFyP+YLDgCS8EZeny1bHMw1Le
+	 6dAm6HPvS33ayHsRkeDgKMRxhcFs/xn39Ae0kRmU=
+Date: Mon, 13 Oct 2025 14:21:59 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Willy Tarreau <w@1wt.eu>
+Cc: Jiri Slaby <jirislaby@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>, Mark Brown <broonie@kernel.org>,
 	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
 	users@kernel.org, tools@linux.kernel.org
 Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
  Link: trailers)
-Message-ID: <19d8800c-c48d-4b98-ae4c-f52053b97ac5@sirena.org.uk>
+Message-ID: <20251013112159.GJ29493@pendragon.ideasonboard.com>
 References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
  <20251011061351.GB23024@1wt.eu>
  <aOoyhUzNDgwiyl5s@finisterre.sirena.org.uk>
  <20251012232725.GC3938986@ziepe.ca>
  <d884ec6d-856c-4dce-b8bf-cb6116c87bcb@kernel.org>
  <CABgObfaL1Pki1QCgO_vb1Ex_1=RgVwzOmD8Z+q_KnPw3jHwBpQ@mail.gmail.com>
+ <20251013084211.GH616@1wt.eu>
+ <d4f8e576-ee8c-4b74-a260-78289a26ec07@kernel.org>
+ <20251013085629.GK616@1wt.eu>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="UAjXP92FMGR1JOor"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABgObfaL1Pki1QCgO_vb1Ex_1=RgVwzOmD8Z+q_KnPw3jHwBpQ@mail.gmail.com>
-X-Cookie: Ahead warp factor one, Mr. Sulu.
+In-Reply-To: <20251013085629.GK616@1wt.eu>
 
+On Mon, Oct 13, 2025 at 10:56:29AM +0200, Willy Tarreau wrote:
+> On Mon, Oct 13, 2025 at 10:48:40AM +0200, Jiri Slaby wrote:
+> > > Note that my understanding was that Linus wasn't against the use of
+> > > Link but against its use to point to the series while he hoped to find
+> > > extra information there, making it sort of a misleading use. That's
+> > > why I think that placing another tag for those who value it makes
+> > > sense and should not disturb him.
+> > 
+> > Let me cite from the thread :):
+> > > We're not adding garbage that I'm "supposed to ignore".
+> 
+> Yeah but he was already angry and pissed off when saying this, that
+> doesn't count. After all this time we all know how it is, and it's
+> human to overreact from time to time when having multiple people in
+> front of you asking for the same thing. Linus is a reasonable person
+> who values efficiency, and if something that costs him nothing can
+> improve his contributors' efficiency and quality, I don't think he
+> would reject it once he's convinced it really has a positive effect
+> overall. The point clearly is not to mix what he wants to visit
+> (e.g. a paper explaining the background for some work) and the link
+> to the submitted series.
 
---UAjXP92FMGR1JOor
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I may be missing something obvious, but why do we need a trailer for
+this kind of usage ? We've added links to commit messages for ages,
+either embedded in the text, or with "footnotes" (i.e. [1]). One of the
+advantages of standardizing trailers is that they can be parsed by
+scripts. I see few use cases for automating retrieval of a paper
+explaining the background. Footnote links would seem better suited for
+links that support the commit message, as they can then be referenced
+from a specific place in the commit message. That would free usage of a
+Link: trailer for other purposes.
 
-On Mon, Oct 13, 2025 at 10:27:09AM +0200, Paolo Bonzini wrote:
+[1] This would be a foot note link
 
-> My problem isn't with dropping Link, it's with not having a
-> replacement and messing up the workflow of >1 people. I'm not calling
-> for civil disobedience or anything :) but it's not like Linus hasn't
-> ever been wrong.
+-- 
+Regards,
 
-Me too FWIW, it's a noticable speedbump in reporting test failures.  If
-the b4 stuff that Kontstantin is working on works well enough that'd
-work but it's very new still.
-
---UAjXP92FMGR1JOor
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjs3HgACgkQJNaLcl1U
-h9BPcgf/VWCzJjLXMsBm//Dz4x3bY3tpztkW2Zj7+TkPakbVAIPL7vEpGFmTKjPn
-uJWwV0iqvO7pWPPIf5+7yfliMofTQvvxrX/DzHDoJRA3LQ0P++1o4cCZW+GlXqiw
-oJk+LXzVH0ESDgtdnAoOXKLB3PbUbLdI/+bmQHZ2gQ1YJus3V1BIgxttnDuX8GgX
-maphYg51aYRNITDdmC2zWZ439TQkG80uXck5hoPU7fJ1gYWNqpbZ2Xkku3T5nQsj
-nDHF493plCCAn/EuaQMo80R8YhlG/YC7LNSQTXQH6hp1SMk920tmg+yGArafYL9e
-vBPxWLY/sqB6OXCPh53MMQ/WXEzSDQ==
-=2bOp
------END PGP SIGNATURE-----
-
---UAjXP92FMGR1JOor--
+Laurent Pinchart
