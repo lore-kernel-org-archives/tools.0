@@ -1,288 +1,171 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724BD4C9D
-	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 13:02:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916951E9B0D
+	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 14:40:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760360549; cv=none; b=toHZ752vO4hKCvCQ0NQVy63XODtlnc3RCYhSSzVo+YwRdwhK9R49f6dtIRy3DXYdJzC8xraYFtBPypvCb2tysPFeQq/OZvZBdYQiHW+J0paQcxZVZ3ENDqBMVufcxmmpkXrHuhj6nycAKJlEtuv0hwNLQQp1qIMCKuysIwkVHvU=
+	t=1760366411; cv=none; b=BKLovw87CQsLgDhXoX6iBaIaCBKZQTqdhi5nFBVpZH7NmQ8K0eiJu7u9M3vjssgRbLjBfad8PtLmwUZjxLW91XRwqvKpFXeJ1Axv8lT7jE4ZIjhiGl+p5S9G9ixYfqo63O8+UlLrC+6Aq8qKwu8+WShWnctc9PTDndNohhUZJi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760360549; c=relaxed/simple;
-	bh=JWq+JiXGjLaIMYYqSGIV8yBtDQBH0j9zBzfyld0ldVs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RBvQXcBGfuIynkXDsFf/10ZnOoTH/iMTFg15a5YIGw4lAhsJa7PlfiI12Qyf4xdZHs1FK6vUcwi9Ex0QMgRwSjfiCoI/Kt60U3wcgZGdu9+vxuBNE3YSab3fvlnmCbsvlaOyAKblcTPCyUWQpl0ta8Db0mdSdKqGS9hzbI7l4k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=Cm897aWN; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1760366411; c=relaxed/simple;
+	bh=9KsJeR9Vpuvxv4Mn+yizTHxuTZonwS9HQUzbvAN/WUc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D7YtKHoQ9WpbvvtNkTNgIw0pUHHb5BsPhDkyLRhHeMyvuqIxU8zdjOKQGGFBdYEWYLQKYMRYzgQfim6FCS7mTDz264e3AJ5Zl0CM/VJC0cd9+4fP34poRtMV0oVlTaCHHxIhH2fBowhktbf6hp6k5tei4LRkybXNlx3r5wDUDeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=Y/PTtmw2; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="Cm897aWN"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-639fb035066so6541420a12.0
-        for <tools@linux.kernel.org>; Mon, 13 Oct 2025 06:02:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1760360545; x=1760965345; darn=linux.kernel.org;
-        h=in-reply-to:autocrypt:from:content-language:references:cc:to
-         :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=JWq+JiXGjLaIMYYqSGIV8yBtDQBH0j9zBzfyld0ldVs=;
-        b=Cm897aWN8a0w7rBJnkVIeXpj08cA6vCPhrRZdOU87NUuoqCQ2zhnulAoxGPfAYTyIw
-         0JRF+K3+PJKXfD1EKUAtIr2okh8x67QJ7Y865JsvWcKuAjQ/5BeI8Pf9Q2sHAK0C9vYm
-         dUBbDBMCBkKpdJtpMuLbeh8Da/8BTxqrwkf38bo2IApQqI0Gu4cMKRPP6DNPs2WbT63D
-         IqTS7sHGQCefZ0MYs9fFqsMRyYZHW+yMrek4JjfJFBbwopNpiXstNmXOnr3z8zSwsiNn
-         EA2vOFUsGKCbEFEEoqueJwVcd/97ZVeHxFSseBFetEyo/J1j3FrqmObJH4za60bL+NiH
-         DqBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760360545; x=1760965345;
-        h=in-reply-to:autocrypt:from:content-language:references:cc:to
-         :subject:user-agent:mime-version:date:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JWq+JiXGjLaIMYYqSGIV8yBtDQBH0j9zBzfyld0ldVs=;
-        b=UsZh9v1DrCD2CeOkWG6U1Lo86YtJXAJOi+7EoY5OabE5sYYIaEYGZIqqnseNJ2PJ0A
-         oQqoCa0Rp39z6U2h6bHdrqicTXZaxCFzU8kLwTgNZON1eSAGHencJSoBQaMs+na3Tjxv
-         qWpYjYcapleH4b8V4u9SnzDh2zk9KpGN6Cr0LvJ0xtlgNIJceCor2MhTB1GIHSCIlNcw
-         6eBJultSL79jSCgM5cT4VbZ6k7xeeS0LZU9TmmiRk+ZuLFkDEj9RGvdu5ueWGScIpi0z
-         W+0oaXeEcfNRF7oImB8fjl0joh8Lc6zoYDWcU7CM2BGQtMgLkQlUUgAKeWJoH4DxexpE
-         AEkA==
-X-Forwarded-Encrypted: i=1; AJvYcCVwNy0uFTPtriFCXTaOTOqVjRZ7clVPO2+zFANUtMsTmZczZQk/PkiAIWP/HfqrM31wX2H7+A==@linux.kernel.org
-X-Gm-Message-State: AOJu0YxxQs/l+WEAGMcsird607iwrw0ngOAaN7DrNmrAEpEbyJBXAPM8
-	O/vBPPJZxlQ2z0pYE5WWq1Et5SbC3QJ2ma4zaFoPM8MkBVglreiNPGuD5CW1oJst81I=
-X-Gm-Gg: ASbGncs9Mhs0lDATHaISr8U/aBSDxr6GACvTkq1rRr5+0T7jkMU/qzgBd0/vpaJNOl1
-	774pQ1szAZpryFUpdwyEOBrrvGhq2sjVyUhN39GQabDgQCKibfbCeqAQX5GXz+g4D1q0fdKcyt7
-	MHOR9LM9wWVHjm6WsIsGYxib0bbi8lpWXbqthIZkTqrD5Qqe4vEw+9CFxZy68H48OwpCo29DxtD
-	n4tGWFJ+Khemtv29HY0ubUVhEUUldyxa13uNgbaMBFTJfDPp2h5VfT9D+Kz6DUcAPHTEg/iBu4j
-	KrPuS0iAix47YYCM3CUHbbhsulavU/sNVZEmJrZuKltNDJQ5Q262cm7w5rVZETPH58E+wilROhF
-	vLKuWUkRg3+xr0rwII1TfPwT5SVQu11bMIeS2U9MPjlIM2qtUOZnYOxtikVGE+WgxmYTVYtGisi
-	ux9dZjGDYdPDZPjmILNgJ0FOnWh6g7vA6jxRLvcFSRsJP+HXmEX+4rmQX3IgLwVzI=
-X-Google-Smtp-Source: AGHT+IEljHsIGPJQU+z6iDS9tfGf/lNpjz1xbJLHypuZvm2RAbS3GMwoeFigyhw4izfiOvJBP9PA1Q==
-X-Received: by 2002:a17:906:ef05:b0:b4e:d6e3:1670 with SMTP id a640c23a62f3a-b50aa48ca83mr2282385066b.11.1760360544588;
-        Mon, 13 Oct 2025 06:02:24 -0700 (PDT)
-Received: from ?IPV6:2003:e5:873f:400:7b4f:e512:a417:5a86? (p200300e5873f04007b4fe512a4175a86.dip0.t-ipconnect.de. [2003:e5:873f:400:7b4f:e512:a417:5a86])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b55d67c7483sm929078366b.31.2025.10.13.06.02.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Oct 2025 06:02:24 -0700 (PDT)
-Message-ID: <7a56fc6e-a85e-4b93-9cf0-5376e12d93f3@suse.com>
-Date: Mon, 13 Oct 2025 15:02:23 +0200
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="Y/PTtmw2"
+Received: from pendragon.ideasonboard.com (82-203-166-19.bb.dnainternet.fi [82.203.166.19])
+	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id C60FA557;
+	Mon, 13 Oct 2025 16:38:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1760366309;
+	bh=9KsJeR9Vpuvxv4Mn+yizTHxuTZonwS9HQUzbvAN/WUc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Y/PTtmw232JG1Lzu5RTYsB91dacMyodwlLtPXaS+AZHh37L9QHvUruTMgefOC81cT
+	 MW8cQRL++8TcPhISqGuAkPAiujg6zNfYOYw47/tZimAjmxGXtEwD2oyFVBpM9qCawS
+	 9FnbP/+ntmjNi3BLIuvay7+GWazAzC+DXZUVkf0k=
+Date: Mon, 13 Oct 2025 17:39:59 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: Willy Tarreau <w@1wt.eu>, Jiri Slaby <jirislaby@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>, Mark Brown <broonie@kernel.org>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	users@kernel.org, tools@linux.kernel.org
+Subject: Re: [workflows]Re: In defense of Link (was Re: [b4] initial "b4 dig"
+ to supplant Link: trailers)
+Message-ID: <20251013143959.GA1168@pendragon.ideasonboard.com>
+References: <20251011061351.GB23024@1wt.eu>
+ <aOoyhUzNDgwiyl5s@finisterre.sirena.org.uk>
+ <20251012232725.GC3938986@ziepe.ca>
+ <d884ec6d-856c-4dce-b8bf-cb6116c87bcb@kernel.org>
+ <CABgObfaL1Pki1QCgO_vb1Ex_1=RgVwzOmD8Z+q_KnPw3jHwBpQ@mail.gmail.com>
+ <20251013084211.GH616@1wt.eu>
+ <d4f8e576-ee8c-4b74-a260-78289a26ec07@kernel.org>
+ <20251013085629.GK616@1wt.eu>
+ <20251013112159.GJ29493@pendragon.ideasonboard.com>
+ <20251013102628.2f9e0057@gandalf.local.home>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
- Link: trailers)
-To: James Bottomley <James.Bottomley@HansenPartnership.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Mark Brown <broonie@kernel.org>,
- "Vlastimil Babka (SUSE)" <vbabka@kernel.org>, Jason Gunthorpe
- <jgg@ziepe.ca>, Willy Tarreau <w@1wt.eu>,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org,
- tools@linux.kernel.org
-References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
- <20251011061351.GB23024@1wt.eu> <aOoyhUzNDgwiyl5s@finisterre.sirena.org.uk>
- <20251012232725.GC3938986@ziepe.ca>
- <d884ec6d-856c-4dce-b8bf-cb6116c87bcb@kernel.org>
- <CABgObfaL1Pki1QCgO_vb1Ex_1=RgVwzOmD8Z+q_KnPw3jHwBpQ@mail.gmail.com>
- <19d8800c-c48d-4b98-ae4c-f52053b97ac5@sirena.org.uk>
- <4f9d75f4d024bf9340f5d6936a2a2dd73c6eb1f3.camel@HansenPartnership.com>
- <CABgObfboX1k8FxERevPc-BkNegEJuQVd0E1OjznCkk1BqxQQfQ@mail.gmail.com>
- <fe3500f401a6cd2666c908a73a3db93ef6982e7f.camel@HansenPartnership.com>
-Content-Language: en-US
-From: =?UTF-8?B?SsO8cmdlbiBHcm/Dnw==?= <jgross@suse.com>
-Autocrypt: addr=jgross@suse.com; keydata=
- xsBNBFOMcBYBCACgGjqjoGvbEouQZw/ToiBg9W98AlM2QHV+iNHsEs7kxWhKMjrioyspZKOB
- ycWxw3ie3j9uvg9EOB3aN4xiTv4qbnGiTr3oJhkB1gsb6ToJQZ8uxGq2kaV2KL9650I1SJve
- dYm8Of8Zd621lSmoKOwlNClALZNew72NjJLEzTalU1OdT7/i1TXkH09XSSI8mEQ/ouNcMvIJ
- NwQpd369y9bfIhWUiVXEK7MlRgUG6MvIj6Y3Am/BBLUVbDa4+gmzDC9ezlZkTZG2t14zWPvx
- XP3FAp2pkW0xqG7/377qptDmrk42GlSKN4z76ELnLxussxc7I2hx18NUcbP8+uty4bMxABEB
- AAHNH0p1ZXJnZW4gR3Jvc3MgPGpncm9zc0BzdXNlLmNvbT7CwHkEEwECACMFAlOMcK8CGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRCw3p3WKL8TL8eZB/9G0juS/kDY9LhEXseh
- mE9U+iA1VsLhgDqVbsOtZ/S14LRFHczNd/Lqkn7souCSoyWsBs3/wO+OjPvxf7m+Ef+sMtr0
- G5lCWEWa9wa0IXx5HRPW/ScL+e4AVUbL7rurYMfwCzco+7TfjhMEOkC+va5gzi1KrErgNRHH
- kg3PhlnRY0Udyqx++UYkAsN4TQuEhNN32MvN0Np3WlBJOgKcuXpIElmMM5f1BBzJSKBkW0Jc
- Wy3h2Wy912vHKpPV/Xv7ZwVJ27v7KcuZcErtptDevAljxJtE7aJG6WiBzm+v9EswyWxwMCIO
- RoVBYuiocc51872tRGywc03xaQydB+9R7BHPzsBNBFOMcBYBCADLMfoA44MwGOB9YT1V4KCy
- vAfd7E0BTfaAurbG+Olacciz3yd09QOmejFZC6AnoykydyvTFLAWYcSCdISMr88COmmCbJzn
- sHAogjexXiif6ANUUlHpjxlHCCcELmZUzomNDnEOTxZFeWMTFF9Rf2k2F0Tl4E5kmsNGgtSa
- aMO0rNZoOEiD/7UfPP3dfh8JCQ1VtUUsQtT1sxos8Eb/HmriJhnaTZ7Hp3jtgTVkV0ybpgFg
- w6WMaRkrBh17mV0z2ajjmabB7SJxcouSkR0hcpNl4oM74d2/VqoW4BxxxOD1FcNCObCELfIS
- auZx+XT6s+CE7Qi/c44ibBMR7hyjdzWbABEBAAHCwF8EGAECAAkFAlOMcBYCGwwACgkQsN6d
- 1ii/Ey9D+Af/WFr3q+bg/8v5tCknCtn92d5lyYTBNt7xgWzDZX8G6/pngzKyWfedArllp0Pn
- fgIXtMNV+3t8Li1Tg843EXkP7+2+CQ98MB8XvvPLYAfW8nNDV85TyVgWlldNcgdv7nn1Sq8g
- HwB2BHdIAkYce3hEoDQXt/mKlgEGsLpzJcnLKimtPXQQy9TxUaLBe9PInPd+Ohix0XOlY+Uk
- QFEx50Ki3rSDl2Zt2tnkNYKUCvTJq7jvOlaPd6d/W0tZqpyy7KVay+K4aMobDsodB3dvEAs6
- ScCnh03dDAFgIq5nsB11j3KPKdVoPlfucX2c7kGNH+LUMbzqV6beIENfNexkOfxHfw==
-In-Reply-To: <fe3500f401a6cd2666c908a73a3db93ef6982e7f.camel@HansenPartnership.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------oJypLEUJW67GzBx7ZnftmppW"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251013102628.2f9e0057@gandalf.local.home>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------oJypLEUJW67GzBx7ZnftmppW
-Content-Type: multipart/mixed; boundary="------------D83byjYmTjO9pvh0YTUnixgl";
- protected-headers="v1"
-From: =?UTF-8?B?SsO8cmdlbiBHcm/Dnw==?= <jgross@suse.com>
-To: James Bottomley <James.Bottomley@HansenPartnership.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Mark Brown <broonie@kernel.org>,
- "Vlastimil Babka (SUSE)" <vbabka@kernel.org>, Jason Gunthorpe
- <jgg@ziepe.ca>, Willy Tarreau <w@1wt.eu>,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org,
- tools@linux.kernel.org
-Message-ID: <7a56fc6e-a85e-4b93-9cf0-5376e12d93f3@suse.com>
-Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
- Link: trailers)
-References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
- <20251011061351.GB23024@1wt.eu> <aOoyhUzNDgwiyl5s@finisterre.sirena.org.uk>
- <20251012232725.GC3938986@ziepe.ca>
- <d884ec6d-856c-4dce-b8bf-cb6116c87bcb@kernel.org>
- <CABgObfaL1Pki1QCgO_vb1Ex_1=RgVwzOmD8Z+q_KnPw3jHwBpQ@mail.gmail.com>
- <19d8800c-c48d-4b98-ae4c-f52053b97ac5@sirena.org.uk>
- <4f9d75f4d024bf9340f5d6936a2a2dd73c6eb1f3.camel@HansenPartnership.com>
- <CABgObfboX1k8FxERevPc-BkNegEJuQVd0E1OjznCkk1BqxQQfQ@mail.gmail.com>
- <fe3500f401a6cd2666c908a73a3db93ef6982e7f.camel@HansenPartnership.com>
-In-Reply-To: <fe3500f401a6cd2666c908a73a3db93ef6982e7f.camel@HansenPartnership.com>
+On Mon, Oct 13, 2025 at 10:26:28AM -0400, Steven Rostedt wrote:
+> On Mon, 13 Oct 2025 14:21:59 +0300 Laurent Pinchart wrote:
+> 
+> > I may be missing something obvious, but why do we need a trailer for
+> > this kind of usage ? We've added links to commit messages for ages,
+> > either embedded in the text, or with "footnotes" (i.e. [1]). One of the
+> > advantages of standardizing trailers is that they can be parsed by
+> > scripts. I see few use cases for automating retrieval of a paper
+> > explaining the background. Footnote links would seem better suited for
+> > links that support the commit message, as they can then be referenced
+> > from a specific place in the commit message. That would free usage of a
+> > Link: trailer for other purposes.
+> > 
+> > [1] This would be a foot note link
+> 
+> I do something pretty much like this. Like others here, my scripts
+> automatically add the submission link to the tag section. But if there's
+> ever a conversation outside the patch submission that lead to the patch
+> itself, I place the link tag separate from the rest. As to me, the tags
+> section is for automation, but everything above it is for humans to read.
+> Hence, you'll see commits like this one:
+> 
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4d6d0a6263babf7c43faa55de4fa3c6637dec624
+> 
+> Where it has:
+> 
+>     [..]
+> 
+>     Remove the HAVE_FTRACE_MCOUNT config and use DYNAMIC_FTRACE directly where
+>     applicable.
+>     
+>     Link: https://lore.kernel.org/all/20250703154916.48e3ada7@gandalf.local.home/
+>     
 
---------------D83byjYmTjO9pvh0YTUnixgl
-Content-Type: multipart/mixed; boundary="------------SV19m1RO7iyVb3Rtupx9UEzg"
+Using Link: for this will not work well as soon as you need multiple
+links. Compare the following (edited with made up information) commit
+message with
 
---------------SV19m1RO7iyVb3Rtupx9UEzg
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+    Remove the HAVE_FTRACE_MCOUNT config and use DYNAMIC_FTRACE directly where
+    applicable. This has shown a 50% improvement in CPU usage.
+    
+    Link: https://lore.kernel.org/all/20250703154916.48e3ada7@gandalf.local.home/
+    Link: https://lore.kernel.org/all/20250703140000.deadbeef@gandalf.local.home/
 
-T24gMTMuMTAuMjUgMTQ6NDcsIEphbWVzIEJvdHRvbWxleSB3cm90ZToNCj4gT24gTW9uLCAy
-MDI1LTEwLTEzIGF0IDE0OjI5ICswMjAwLCBQYW9sbyBCb256aW5pIHdyb3RlOg0KPj4gT24g
-TW9uLCBPY3QgMTMsIDIwMjUgYXQgMTo1NeKAr1BNIEphbWVzIEJvdHRvbWxleQ0KPj4gPEph
-bWVzLkJvdHRvbWxleUBoYW5zZW5wYXJ0bmVyc2hpcC5jb20+IHdyb3RlOg0KPj4+IFdlbGwg
-aXQncyBub3QgbGlrZSBoZSBpc24ndCByZWFkaW5nIHRoaXMgbGlzdCAuLi4gYnV0IHNpbmNl
-IHRoaXMgaXMNCj4+PiBhIHByb2Nlc3MgaXNzdWUsIHRoZSBmb3J1bSBmb3IgZGlzY3Vzc2lu
-ZyBpdCAob3IgcmF0aGVyIGZvcmNpbmcgdGhlDQo+Pj4gaXNzdWUpIHdvdWxkIGJlIHRoZSBN
-YWludGFpbmVyIFN1bW1pdC7CoCBJIGNhbiBwcm9wb3NlIGl0LCBidXQNCj4+PiB0aGVyZSds
-bCBhbHNvIG5lZWQgdG8gYmUgYSBjZXJ0YWluIGFtb3VudCBvZiBicmF2ZXJ5IGluIHRoZSBy
-b29tLg0KPj4NCj4+IEknbSBhbiBvcHRpbWlzdCwgYnV0IG1heWJlIG5vdD8gTGludXMgaGFz
-IGhpcyBvd24gd2F5IG9mIHJlYWRpbmcgdGhlDQo+PiByb29tIChjdWUgdGhlIFJ1c3QgaXNz
-dWUgb2YgYSBmZXcgbW9udGhzIGFnby4uLikgYW5kIGlzIGRlZmluaXRlbHkNCj4+IG5vdCBh
-IHJlcGx5IGd1eS4NCj4gDQo+IFN1cmUsIEknbSBob3BpbmcgYSByZXNvbHV0aW9uIGlzIGFy
-b3VuZCB0aGUgY29ybmVyIGFzIHdlbGwNCj4gDQo+PiBUaGVyZSBhcmUgZW5vdWdoIHBlb3Bs
-ZSBmcm9tIGEgdmFyaWV0eSBvZiBiYWNrZ3JvdW5kcyBleHBsYWluaW5nIHdoeQ0KPj4gaXQn
-cyBpbXBvcnRhbnQgZm9yIHRoZW0gdG8gcHJlc2VydmUgdGhlIG1lc3NhZ2UtaWQgbWV0YWRh
-dGEgKCpub3QqDQo+PiB0aGUgTGluayB0cmFpbGVyIC0gdGhlIG1ldGFkYXRhIGlzIHRoZSBp
-bXBvcnRhbnQgcGFydCkuICpEaXNjdXNzaW5nKg0KPj4gaXQsIGFzIG9wcG9zZWQgdG8gbWFr
-aW5nIGl0IGEgZmxhZyBkYXkgd2hlcmUgYSBzdGFuZGFyZCBpcyBzZXQgZm9yDQo+PiBhbGwg
-bWFpbnRhaW5lcnMsIHNlZW1zIGxpa2UgYSB3YXN0ZSBvZiBwcmVjaW91cyBNYWludGFpbmVy
-IFN1bW1pdA0KPj4gdGltZS4NCj4gDQo+IFdlbGwgdGhhdCBkZXBlbmRzLiAgSWYgaXQncyBh
-bGwgcmVzb2x2ZWQgc29vbiwgYWJzb2x1dGVseSBubyBuZWVkIGZvcg0KPiBmdXJ0aGVyIGRp
-c2N1c3Npb24uICBJZiBpdCdzIHN0aWxsIG5vdCByZXNvbHZlZCBieSBEZWNlbWJlciB0aGVu
-DQo+IGRpc2N1c3Npb24gd291bGQgc2VlbSB0byBiZSB3YXJyYW50ZWQuICBFaXRoZXIgd2F5
-IHBsYWNpbmcgdGhlIG1hcmtlcg0KPiBub3cgaGVscHMuDQo+IA0KPj4+IENhbiBJIGFsc28g
-dGFrZSBpdCB0aGF0IGlmIGEgZmFjZSBzYXZpbmcgY29tcHJvbWlzZSBpcyBuZWVkZWQgdGhl
-bg0KPj4+IGV2ZXJvbmUncyB0b29saW5nIGNhbiB3b3JrIHdpdGggYSBtZXNzYWdlLWlkIHRy
-YWlsZXI/DQo+Pg0KPj4gU3VyZSwgdGhhdCdzIHRyaXZpYWwgYnV0IExpbnVzIHByb2JhYmx5
-IGhhdGVzIHRoZW0gbW9yZSB0aGFuIExpbmtbMV0sDQo+PiBhbmQgb25seSBsYXN0IHllYXIg
-aGUgYWR2b2NhdGVkIHVzaW5nIExpbmsgYW5kICJiNCBhbSAtbCJbMl0uIDopDQo+IA0KPiBJ
-IGdldCBpdDogaGUgd2FzIHRoZSBvbmUgYWR2b2NhdGluZyBhIGNsaWNrYWJsZSBsaW5rIGlu
-c3RlYWQgb2YNCj4gc29tZXRoaW5nIHlvdSBoYWQgdG8gY3V0IGFuZCBwYXN0ZS4NCj4gDQo+
-IFBlcmhhcHMgd2hhdCBLb25zdGFudGluIHNob3VsZCBiZSB3b3JraW5nIG9uIGlzIGEgc2Vy
-dmVyIHNpZGUgdmVyc2lvbg0KPiBvZiBiNCBkaWcgdGhhdCB0cmllcyB0byBwdWxsIHVwIHRo
-ZSBlbnRpcmUgcGF0Y2ggaGlzdG9yeSAocGVyaGFwcyB3aXRoDQo+IGFuIEFJIHN1bW1hcnkg
-b2YgdGhlIGRpc2N1c3Npb25zKSBhbmQgdGhlbiB3ZSBlbWJlZCB0aGF0IGFzIGhlIGxpbmsN
-Cj4gc3RpbGwgd2l0aCBhIG1lc3NhZ2UtaWQgbGFzdCBjb21wb25lbnQuDQoNCkFmdGVyIGFs
-bCBpdCBpcyBhYm91dCBtZXRhZGF0YSBvZiBhIHBhdGNoLg0KDQpUaGVyZSBpcyBvbmUgc29s
-dXRpb24gd2hpY2ggY2FuIHByb3ZpZGUgdGhpcyBkYXRhIHdpdGhvdXQgTGludXMgKGFuZCBv
-dGhlcnMpDQpiZWluZyBkaXN0cmFjdGVkIGJ5IGl0LiBUaGUgb25seSBkb3duc2lkZSBpcyB0
-aGF0IGl0IHdpbGwgbmVlZCBzb21lIHRpbWUgdG8NCmhpdCBjdXJyZW50IGRldmVsb3BtZW50
-Og0KDQpBZGQgYSBuZXcga2V5d29yZCB0byB0aGUgZ2l0IGNvbW1pdCBkYXRhIChlLmcuICJN
-ZXNzYWdlLUlkIikuIEl0IGNvdWxkIGJlDQpmaWxsZWQgaW4gYXV0b21hdGljYWxseSBieSBn
-aXQgd2hlbiBhdmFpbGFibGUgKGkuZS4gImdpdCBhbSIpLCBidXQgaXQgd291bGRuJ3QNCnNo
-b3cgdXAgaW4gYSBub3JtYWwgImdpdCBzaG93Ii4gSW4gImdpdCBjYXQtZmlsZSBjb21taXQg
-PGhhc2g+IiBpdCB3b3VsZCBiZQ0KdmlzaWJsZSwgdGhvdWdoLg0KDQpPYnZpb3VzbHkgdGhp
-cyB3b3VsZCBoZWxwIG9ubHkgaWYgYSBuZXcgZW5vdWdoIGdpdCBpcyBiZWluZyB1c2VkLCBi
-dXQgaW4gdGhlDQpsb25nIHJ1biBpdCBtaWdodCBiZSBhIGdvb2QgaWRlYS4NCg0KDQpKdWVy
-Z2VuDQo=
---------------SV19m1RO7iyVb3Rtupx9UEzg
-Content-Type: application/pgp-keys; name="OpenPGP_0xB0DE9DD628BF132F.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xB0DE9DD628BF132F.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+with
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+    The HAVE_FTRACE_MCOUNT config was reported as being reduntant ([1]).
+    Remove it and use DYNAMIC_FTRACE directly where applicable. This has
+    shown a 50% improvement in CPU usage ([2]).
+    
+    [1] https://lore.kernel.org/all/20250703154916.48e3ada7@gandalf.local.home/
+    [2] https://lore.kernel.org/all/20250703140000.deadbeef@gandalf.local.home/
 
-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
-kt+z4drzFUyEjLM1vVvIMjkUoJs=3D
-=3DeeAB
------END PGP PUBLIC KEY BLOCK-----
+And yes in this specific case maybe more information about the CPU usage
+improvement should be included in the commit message itself, but that's
+not the point.
 
---------------SV19m1RO7iyVb3Rtupx9UEzg--
+>     Cc: Masami Hiramatsu <mhiramat@kernel.org>
+>     Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+>     Cc: Mark Rutland <mark.rutland@arm.com>
+>     Cc: Linus Torvalds <torvalds@linux-foundation.org>
+>     Link: https://lore.kernel.org/20250704104838.27a18690@gandalf.local.home
+>     Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+> 
+> The first Link outside the text section was the motivation for the patch,
+> and the Link in the tag section is for the patch.
+> 
+> Now that second Link is also useful, because if any of my patches have
+> versions, I always have a link to the previous version in the last version.
+> For example:
+> 
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=71753c6ed2bf2aee5be26c1bc06a94c9e3713ade
+> 
+> Which has the committing link:
+> 
+>   https://lore.kernel.org/all/20250729182404.975790139@kernel.org/
+> 
+> Which has:
+> 
+>   Changes since v15: https://lore.kernel.org/20250725185739.233988371@kernel.org
+> 
+> So it allows you to not only find the cover letter of a series, but also
+> daisy chains all the links to previous versions so you can see how the
+> patch was developed, and all the comments to the older versions.
+> 
+> Now my workflow incorporates these link tags. When I need to create a new
+> version of the patch, I save the old git branch with its version:
+> 
+>   git branch topic-v1
+>   git reset --hard <base-commit>
+> 
+> Then I download the old version from patchwork, run my scripts to pull it
+> in (which adds the links to the emails of those commits). And when I make the
+> next version, I record the changes by replacing the:
+> 
+>   Link: https://lore.kernel.org/...
+> 
+> With
+> 
+>   Changes since v1: https://lore.kernel.org/...
+> 
+> And before sending my emails, I move that text below the '---'.
+> 
+> And this makes it very easy to incorporate the daisy chain. If I have to
+> use any external tooling to search for it, I'm not going to bother, and
+> this workflow will just stop happening.
 
---------------D83byjYmTjO9pvh0YTUnixgl--
+-- 
+Regards,
 
---------------oJypLEUJW67GzBx7ZnftmppW
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wsB5BAABCAAjFiEEhRJncuj2BJSl0Jf3sN6d1ii/Ey8FAmjs+F8FAwAAAAAACgkQsN6d1ii/Ey/C
-pgf9FGDkgS5fUDNMEv5IQhWJD7VJq/o/NOEZEtxIrLBIL92VULTbycyCc94UrPZvsqdJumqec2r7
-FxOOPy1qm8jM1+7LMnRzoWUUFlgkMBv2Tjf8CK37Z+IgxhOeIXThsr3dCgF8urvAC+2Wrbluuln8
-BPasGPic/mIilqkBihQ5872Kd6kSNJl9LS1t6N9oMOeAYIWCbxKgFa8w7SHLBs30d7svx1/pKm94
-SDXb2eUMfGXenCySc7u9JVWawMklcZ/VmkFHybkk0Cralm5Ymuq/svNSfhFPLRdWrh7q/XkEBbuj
-Opf5DpB7Vo3qVvBNxClOg5NnFR5sdMSrBAK8Xdjn/Q==
-=+UE3
------END PGP SIGNATURE-----
-
---------------oJypLEUJW67GzBx7ZnftmppW--
+Laurent Pinchart
