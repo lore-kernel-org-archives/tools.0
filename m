@@ -1,89 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFA72566D2
-	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 12:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0DB248F4F
+	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 12:21:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760357717; cv=none; b=KkPmxtMV/I6101+XE9FJ8C24mwqc/bywEnQSgBlTm8Gxx55Z+ORB25+OZOnU5wOZKdJ6GIPD99HpJv1cXA1EwxhXy7I0x1UnzfeAsSWnQWBK9I/1Rl+6bPwlkaWJVg5FStSFemQtTglotXwk+c1x7N71Xbz18sJQWkm77WPYyhQ=
+	t=1760358113; cv=none; b=MwpUHhVpxkTyvAbVKeebLc2HXh/jm6ipQDr1vgBgKFm+OYxnCya8mxtmbGuzwNTGKriHlYq2qfxKWcf9dOgDtvdhEH6UI+stt+HQZIl/K8jmsm9NqojFFuzocZgnFt30P/qLEgr1eoXT09hWpFs1NMyCL95dKIWLufTfbwXOcY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760357717; c=relaxed/simple;
-	bh=aRiLAsnPe21BuCaAFmWfoucJOHSvrTEfEKStYYdy710=;
+	s=arc-20240116; t=1760358113; c=relaxed/simple;
+	bh=8FZYwzDBNqrjavLtD/2FOC6qR5wA2qfLhuttbbcwywY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mK/8LJeS02PXvIPDfc//CrIMKjyHvcXhI1tPVimBYmZ7Z5rFEO3JIbYitY5HcwwdUOESilEH5cDkUwfudxrN8URW3f41a05IZGpaJGNe5rpnfD1eoSdBzX+jqu5TDZKbR2JjHB3udWzfdy+ZUxZHfpLpPc+V0IaDI+qqfIuIr5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLLdGhBM; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type:Content-Disposition; b=LI1Q/dmJuCg+0bDZSv86UeQKrMbaua8dVJAeCdzUDZqFM/iPiMcaOxtFfujNtNCDmTcs23XS/Xkk1aAxEW7gw5Aa22fxcgC7uOFkx+znwuawBB4ojt29Is8cGVRTDxrK41zW6z7IW6rZVjtXpFzlPTAfWqtjuNZ18o5OoqF5Uvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=hBBnH9aq; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLLdGhBM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA883C4CEE7;
-	Mon, 13 Oct 2025 12:15:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760357717;
-	bh=aRiLAsnPe21BuCaAFmWfoucJOHSvrTEfEKStYYdy710=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RLLdGhBMAgEFkRYpwmD5TustUvnAdcYbElMOz4HHeOzjEaxfQNrx4vibahvJqUe9o
-	 gxHSlhccXtgctZZcTnRZszj0n1DLMV7qNDKWtXApZtAAlB+xuIzLLLTrttCM/a+GxF
-	 S9QhBKQaPvxNM174HPbRTLyV+oP4XJ+VHFcGUt6U3UYXF8djlXAsPShGxIDxxHdGCA
-	 iQHpLyEPpWdmB810lDkTP3NNZ+vunWwIR5DSywXGEImPVliyZW1Z1XIzFsgO9WR3d2
-	 +c3sJrjR6raN+JI8V94AUyHZYxKETPMSHreZGOfUF639w1htve2Ex8UP/kXALGsZC0
-	 /oMiyzpmixpNg==
-Date: Mon, 13 Oct 2025 13:15:11 +0100
-From: Mark Brown <broonie@kernel.org>
-To: James Bottomley <James.Bottomley@hansenpartnership.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>, Willy Tarreau <w@1wt.eu>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@kernel.org, tools@linux.kernel.org
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="hBBnH9aq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1760358110;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=nrwE2CHGZjawt/LUao3wUg6uCzVjgO+00OFxqr5kFGI=;
+	b=hBBnH9aqs2PYvBrN379TnC/hflkKHbqqDJArEPoImb3iJQI2xQepr2Nj7RfCDTn/bnYFrr
+	1yfnqvoN/xD9tQHGkiKhEfUA3A3n7iPT38TN6qi5W6q5IunJQeytTnhDbJlji4OqllOiO2
+	tYqoAjwLMq2/MWz7SI53CN+CkPtwMrU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-286-PsLP-YyjPTO0eOTNChO5Vw-1; Mon, 13 Oct 2025 08:21:49 -0400
+X-MC-Unique: PsLP-YyjPTO0eOTNChO5Vw-1
+X-Mimecast-MFC-AGG-ID: PsLP-YyjPTO0eOTNChO5Vw_1760358108
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-46b303f6c9cso34118505e9.2
+        for <tools@linux.kernel.org>; Mon, 13 Oct 2025 05:21:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760358108; x=1760962908;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nrwE2CHGZjawt/LUao3wUg6uCzVjgO+00OFxqr5kFGI=;
+        b=jFCDePSDMYEdCsE+joQpcT43P7fvAvNxj7/DPBmnlMNNLEZTq4MBPSG6+2yQ/xLt/b
+         ETygk2a0Op07CgFXUyCyXI2YCGSjf7rNRjr20aNqWWCP42Kj45T17R1koO7E/ooXaptq
+         zWtMPyRLgIDbg2lNMfOzyqTqMwIGx1y0Jnqcu3rStJ+0mMIGWGmPwW5/ctViAn2SEx1f
+         vEN32LQAtMXmpMAIkav87xe6HuujSg9tMO/EJnfCn4rD6OgC22fDv9vULtGaiBPFKXIB
+         mxxOS4d37b8uLQsBEVURUDwggZ2tQdcjaULAJm67/Y7GOkNHF0pb2/0LEBV7r8ub3Bql
+         1bww==
+X-Forwarded-Encrypted: i=1; AJvYcCXLa5lpbw1Og8AocojrW4+ohOMjajty2wyy4d+xnHuRRRjfVGDCfWIIeDqo7GZvIAn0f+2iQg==@linux.kernel.org
+X-Gm-Message-State: AOJu0Yxq4IdJk70AlCosyUIGT1tOJ1VIfLbMY+4ht+TRYaePO1/Xo+42
+	1A85arOF5QrmwPz5Y5Ad29JzwYquogeCszIY4LC5X5Lc36S3X54d1F3l5CFBx+gI4JbR19Pc94k
+	06yRmPgg6mNPpYeKzeWq1KOh4IBYIR5ewHWihg10aKLHxuKpu14tbClAHxQ==
+X-Gm-Gg: ASbGncsfYBLxzwgVFx076NoFq7OauwIGw0Lny2X6Xs9RHLi9LOMJPgS/FLMXw4qaEYg
+	0cbl0lAvCBMRjASF4kO6dWlOsH7TqXxQQlv8rzb2UaE4Tj8/xFTwaDeDB36fd2yZREUmTm3uV/K
+	lG3bnh5jaCNLFWa4J9oHAzc2C2paGiDTZsGJr9ajQG3xlNUIfuk2cTc1Ej8nlJ1a8FUp3fQYJ4B
+	hVXIo1zfSp+CKH5cOl6eMsQEkbpUii7EGBjVVC8byy5HOUVF3gvczf0XSxLWPXIxEEML32KUzg0
+	sACyIRftGvDdL4CRP7DariQd7n4cpfBmkQ==
+X-Received: by 2002:a05:600c:608d:b0:46e:6d5f:f59 with SMTP id 5b1f17b1804b1-46fa9a8b2aemr140866635e9.4.1760358107995;
+        Mon, 13 Oct 2025 05:21:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGsa8GcTh1kV8gnzPiOnOujLzDw7XMHBVi25+me8dz4tedKg6BS0NOy6O7U/+M1mCsicK0+7A==
+X-Received: by 2002:a05:600c:608d:b0:46e:6d5f:f59 with SMTP id 5b1f17b1804b1-46fa9a8b2aemr140866485e9.4.1760358107514;
+        Mon, 13 Oct 2025 05:21:47 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:152d:b200:2a90:8f13:7c1e:f479])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fb49c4027sm180919885e9.17.2025.10.13.05.21.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Oct 2025 05:21:47 -0700 (PDT)
+Date: Mon, 13 Oct 2025 08:21:44 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org,
+	tools@linux.kernel.org
 Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
  Link: trailers)
-Message-ID: <76c43b1f-9f4c-4dc2-84a0-993a752ce48a@sirena.org.uk>
+Message-ID: <20251013081536-mutt-send-email-mst@kernel.org>
 References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
- <20251011061351.GB23024@1wt.eu>
- <aOoyhUzNDgwiyl5s@finisterre.sirena.org.uk>
- <20251012232725.GC3938986@ziepe.ca>
- <d884ec6d-856c-4dce-b8bf-cb6116c87bcb@kernel.org>
- <CABgObfaL1Pki1QCgO_vb1Ex_1=RgVwzOmD8Z+q_KnPw3jHwBpQ@mail.gmail.com>
- <19d8800c-c48d-4b98-ae4c-f52053b97ac5@sirena.org.uk>
- <4f9d75f4d024bf9340f5d6936a2a2dd73c6eb1f3.camel@HansenPartnership.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9wn9cr3HL8uow5e7"
-Content-Disposition: inline
-In-Reply-To: <4f9d75f4d024bf9340f5d6936a2a2dd73c6eb1f3.camel@HansenPartnership.com>
-X-Cookie: Ahead warp factor one, Mr. Sulu.
-
-
---9wn9cr3HL8uow5e7
+In-Reply-To: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: VbwsaRv4cJ2jzCNO9wvHRgnL7jxkilet-O0Ngb1MCTI_1760358108
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Mon, Oct 13, 2025 at 07:49:23AM -0400, James Bottomley wrote:
+On Sat, Oct 11, 2025 at 07:59:32AM +0200, Paolo Bonzini wrote:
+> Linus complained about Message-Id too in the past, but if Linus does
+> not like Link or Message-Id then fine, but can we please take into
+> account that he is quite obviously unique among kernel developers? ;)
 
-> Can I also take it that if a face saving compromise is needed then
-> everone's tooling can work with a message-id trailer?
+I missed where he complained about Message-Id btw. 
 
-That's certainly the case for me, what I'm actually doing is pulling the
-message ID out of the link and using that to grab the mailbox with b4
-mbox.
+-- 
+MST
 
---9wn9cr3HL8uow5e7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjs7U8ACgkQJNaLcl1U
-h9CUfQf7BrR6zHhOlwJ2eQ6BP2th5MwzNipxQdtaxPKylvR6/a5IUMhtu6AX2jMq
-V7iW/ifYtuOvJy2xIvblIpjtmI89gcB0XOv2jAwc9Uqkn1uSSDe9z9R6D9e0dJV9
-hPXV8FZZhozoZzi0XkKbvfB5FJDeR2UF7GJPyMsgLUudyb9JIZqZ99DmtMRxhtwi
-fM/JQ/9HjO15xRj8oR1WBoQRUf42+SLJflJcIg7wT37I3HFiAvu+PEPlEmagot2i
-r5fj5CCrI60EKki2KewRDWXS2W8RFJkqeGxiKRhOlKNKD9gYfjdfWUlbu1FQiDK9
-BE9Hcv5BptrdkBQV3cKW6SlZsvpy8Q==
-=dWcc
------END PGP SIGNATURE-----
-
---9wn9cr3HL8uow5e7--
