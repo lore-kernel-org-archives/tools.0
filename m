@@ -1,138 +1,97 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61BD2F7468
-	for <tools@linux.kernel.org>; Tue, 14 Oct 2025 10:38:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BC41DD0D4
+	for <tools@linux.kernel.org>; Tue, 14 Oct 2025 16:04:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760438294; cv=none; b=dwCuCe9e1AwEw4Sbz8cD4fv4lRsvEwA8S+GCdJjJwQKa11Q03uMICm2V8dUDcftDxoQjL10CmEHyprr9uZdItEuLFGF9A/CQCW6zL2aPFhefsG2wv9LWKx+m8adbGosER0WFbuhyjNHGIfWLmqEy/X3iqRVsAA0kCDnX/jlnbes=
+	t=1760457855; cv=none; b=laB+msIG7KdUootVH1kmYJYLk6BHt8QQm5bbZBYd7mfU3VbYEaEYf07+Vm4i2KdUiLOYs7ZaeJnezD9iYFO6eZY8Lh1dwCuqjYkHkCpbY7XmgA9i31sJOtZaJJsUlaNhgW7Lnl80Sn3e9E7T58XWkrwKHF9Cyi6GMn3Xo+6eHII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760438294; c=relaxed/simple;
-	bh=4Z1or6ouCSLl95/8STrTvSzUlDfJXqi/iy4D6GqTuto=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=Oi8ZKMm79iEC55TY/xl3Oudf0HhbUOgwMNMYwsJECIi3ZX0qH5wkZey+rk3EEcu50imWbKAAom7FF6yE1AlNmnODuRIXXSazfY7ree+De6xmfeaZDGRXJ7vszrBYJN28pm6wnL1rbXMNLDPRDHpdelYIAkEWFvbkehf+OGrZvpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=glropEn6; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="glropEn6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1760438291;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wiZQR8plt/XcnFRJtdBORUBRfxg0kfjT2mLI3OWCsvM=;
-	b=glropEn6fKULKZqBtPUhI/ssEhVQ3A3TLyUI9bHTdCkBSVEbWejKIJ7q3Y7htKm1zzFbzN
-	0zm+KbEi85fSV/UH5+4e1Brtk5DzJKZXJnYQOFlxGiBczsP5DsDY8yG2BJSNI1snJvjuiQ
-	rU4Prxm7Qe4TWXpiyXHDb8GVn3o/G0g=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-AsIj4c4TOsig4qg8FTC8CA-1; Tue, 14 Oct 2025 06:38:10 -0400
-X-MC-Unique: AsIj4c4TOsig4qg8FTC8CA-1
-X-Mimecast-MFC-AGG-ID: AsIj4c4TOsig4qg8FTC8CA_1760438289
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-426d314d0deso2179056f8f.1
-        for <tools@linux.kernel.org>; Tue, 14 Oct 2025 03:38:09 -0700 (PDT)
+	s=arc-20240116; t=1760457855; c=relaxed/simple;
+	bh=7/JxSJYSrM1GT81Ns9biRLuEpOzlSawt0F+j/EMILrc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=NB3gDv1YJLq0G5kUYdMx99XTCLWV4F50SgZSSCwDp37sT2vohJvKeraPiz5+RQG++xy9uq1nmkzLUKSQd5UzaNqftykLAHP8mJ39gwLBkog4MJCBXrXdAS6ZDVrCEC2vKTroIKC4vZcOUUOoTuX04KAS9VlxCwo7CDILhUqM6rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix)
+	id EC846C116D0; Tue, 14 Oct 2025 16:04:14 +0000 (UTC)
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 8DEBFC4CEF9
+	for <tools@kernel.org>; Tue, 14 Oct 2025 16:04:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 8DEBFC4CEF9
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-63bc1aeb427so5652439d50.3
+        for <tools@kernel.org>; Tue, 14 Oct 2025 09:04:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760438289; x=1761043089;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wiZQR8plt/XcnFRJtdBORUBRfxg0kfjT2mLI3OWCsvM=;
-        b=fhEMExXPz1OLFx1iVC2ShIeXtXupcKNuCgOFnBeXlQwH9/rE9tLkyw4V5pdRCTcNXs
-         QBRA19pBQwszm/CF34XahXFEPQ+VpsF25vmlw8lHiRPCuLt18Fj/YsYKKeKF62zuVXr3
-         MAZFXK5PSFV5flj8Sj1prFmj8bvsJeTXFllDrnYEz3lN4HIfoMQKySJ/iOmSKFTKSlG3
-         qmfGodd4g2yML2vGUjbeOpCSVY5uihUuUpE+sJJCHryzm6BTJMpQxOuoidzWrjZ6RNBB
-         EzW9yF8MRmR9liDPgDGEWUmLYqP7kGjSvvLL4I9H3oKeLFUbbB4s00j/2lp5eWvcAdbk
-         618w==
-X-Forwarded-Encrypted: i=1; AJvYcCXHw9ulrfhCjGlN+gu3oEdD8GuAoHR07/Vri9g2F4FzWmqtTvGhOmtT5Pu/niDv7/dehUW8Gw==@linux.kernel.org
-X-Gm-Message-State: AOJu0YxliOxEfcCX9YLXcBm2pMM1DW4K/Vz+7JCrX+Akjp3w7VAVFdM+
-	QZ4kE7aV19tKRwhXrlTgZ8veXaxdPpKXryAEgfhRid+UnVPAM6FhJ0cfqETdaND9Z4eabijKyJi
-	F6KUQJvb4cqLFRpUdYbNRxoE+OnFUj15hYFK4QWE3epN8+K8OC/ScG2f8Rw==
-X-Gm-Gg: ASbGnctQu8Id8iDUDdLm+o3t90lL8PPlw2HgUKlnobFvGh6Ygv0NLi3WS9kYZ5kr/yJ
-	4r1st0UtiEHbu2WnSSjryhhF3pcWeM09YDGKKgGJdHCA3gkrkf9p65S3/jF4K87MMf6zPpiHJbB
-	QP+LE2YlZeTlo2zcdISUB9XhpwsmGPW4ojpNUJnsVSl4HWpymOBfW/4LaPnRn5mQHZK5xE0a/bD
-	OCjXldOPCNwcn1E+G7Y2W8szYNo2JIJqVD8QaqufPR4UOLZ3dhuUN53fiE4uJD/Cm4wAVTmUaOi
-	qnKTiQKrim5BgLJmOlOMk+t7DulJfSBhTw==
-X-Received: by 2002:a05:6000:2c0c:b0:405:3028:1bf0 with SMTP id ffacd0b85a97d-42666ac2d6dmr15247681f8f.10.1760438288646;
-        Tue, 14 Oct 2025 03:38:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGf8ljoojBAATEGFno+HeMwiZ+vzYW6J079KOhpKMG13LOcF5bNSeNYq272S4zhV22RZw12vA==
-X-Received: by 2002:a05:6000:2c0c:b0:405:3028:1bf0 with SMTP id ffacd0b85a97d-42666ac2d6dmr15247661f8f.10.1760438288140;
-        Tue, 14 Oct 2025 03:38:08 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:152d:b200:2a90:8f13:7c1e:f479])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce5e13b6sm22998529f8f.44.2025.10.14.03.38.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Oct 2025 03:38:07 -0700 (PDT)
-Date: Tue, 14 Oct 2025 06:38:05 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Linus Torvalds <torvalds@linuxfoundation.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@kernel.org, tools@linux.kernel.org
-Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
- Link: trailers)
-Message-ID: <20251014062426-mutt-send-email-mst@kernel.org>
-References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
- <20251013081536-mutt-send-email-mst@kernel.org>
- <CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
- <20251013190418-mutt-send-email-mst@kernel.org>
- <CAHk-=wjioLpTroP=5cUQsVmDb3BtKnn5QToBX9Qy2dv_VYTZ0w@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1760457852; x=1761062652;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qampm0WW5kUQbKh22t0hL+ig5C1/r4TdrH/pkn0BYxM=;
+        b=iykDl6jzPjg9j4Ft1rnnzVCFljYRtmCdqDPgs3u1OF+kHeoYZioLbVT6qrvv9ZTfIv
+         BMDdfsSYE9tEFyfGXk18MdQ/FgdJihrEm0NgsVvemxQAUnuTIFo1lYXwYghIBQXXbuFr
+         9IwuO4d6wXn8JtrwdVTqD6Qx2WRHLWFqbbuXjy9ye8kvKZL5c85xYp2iOewW7nfDxEMb
+         vmafNEWsXyPEJJnlZpXDCNthjJPsnBVMFI6yzzq2CG1wSuv7VzlRtJjKKmTlp4EFEvo7
+         kK9Zylip20vCNuPU9jk16nFp5ZFuWtHEwPcK++xxVCSMaYWDwMps8aG7ewwfk3e+HT8P
+         aT+w==
+X-Gm-Message-State: AOJu0Yy85fHCa16rW0jZS0AbPD22egcJGTZ5rbCul75/epUNFKqUY1RI
+	8QfrXaXmYU5o4wbDk2sM590PhtgLnHxFGbVYuqFWmbq500zTaqRW/onE36Asns5K
+X-Gm-Gg: ASbGncvuGRosRUOcgGKjo3UDlE5dpNfL1NSn2fh+flbtoGh/RSRX5JOWNLX5NQDG5Pw
+	zcozoxNZ/e9lVuago15pAJw0xWj7kGrxGRrcwkyAAJtVTJuJhiZ2hNe2k8b9w0hUklgScnQvNuo
+	pnfEpyU27Odq/yQnCxPowVowZeF6sE1MtCYf50NBI/tx9WKqVCqRlMom3MoH+XI8MBGSGXHIAYx
+	MEroiA1KY+b8TDRmW4kxnK41/g3xHoAlOTvCWZr8LQbohd3LqmxC7sLxHyz1XoEXnn4VzSM9Ow3
+	qinQHxo8/9QxGmayH8Y9TATq7ljFpGHJF66dC6jfjfjSfTrB+02Vus72GdIqlV2PUgWQMBTnggb
+	WpDftZYpVgCw9J3Zp1kIOO9lDchMWZ2FtOwBHrCI8IuJpKrKmOW7Lx1EqH+47iuhaNV5M5Zc+Tl
+	TE9/cSrfPvX2c=
+X-Google-Smtp-Source: AGHT+IF+kBtOkksj+myQIgqme6pGNbxYcioPWj0KRfsqoSphZseymkhoJoiQ89SnQZJy9bwXK07w1w==
+X-Received: by 2002:a53:ec89:0:b0:629:9c6b:b3ab with SMTP id 956f58d0204a3-63ccb825baamr16389252d50.1.1760457852073;
+        Tue, 14 Oct 2025 09:04:12 -0700 (PDT)
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com. [209.85.128.178])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63cd95f3131sm4809999d50.26.2025.10.14.09.04.10
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Oct 2025 09:04:11 -0700 (PDT)
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7815092cd22so9212487b3.2
+        for <tools@kernel.org>; Tue, 14 Oct 2025 09:04:10 -0700 (PDT)
+X-Received: by 2002:a05:690c:b94:b0:71e:76e8:2457 with SMTP id
+ 00721157ae682-780e14593cbmr271537457b3.22.1760457850218; Tue, 14 Oct 2025
+ 09:04:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <CAHk-=wjioLpTroP=5cUQsVmDb3BtKnn5QToBX9Qy2dv_VYTZ0w@mail.gmail.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 4vNlsd3M0Eqx1v874w65TqQ6QKEYKXAbOwUVvt3P01A_1760438289
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Tue, 14 Oct 2025 18:03:58 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdX40JoouK0yjm_-ggj5dQ9MtE2vrYhUOQ9dDpCN-0+tXg@mail.gmail.com>
+X-Gm-Features: AS18NWADf7EvLTTEl-eHrrFUKL8oS1tL_1_Mvf6_UwBZqhMxqWJwIbJZYa5JTrs
+Message-ID: <CAMuHMdX40JoouK0yjm_-ggj5dQ9MtE2vrYhUOQ9dDpCN-0+tXg@mail.gmail.com>
+Subject: b4 am no longer prints file name
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org, users@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 13, 2025 at 06:23:49PM -0700, Linus Torvalds wrote:
-> On Mon, 13 Oct 2025 at 16:09, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > Well I for one would often ask the contributor to repost
-> > modifying just the commit message.
-> >
-> > The only thing distinguishing posts then is the date?
-> > Doesn't it seem somewhat fragile, to rely on date?
-> 
-> I wouldn't rely on date. That's the point. None of those emails are
-> any special. Not the one that was applied, for one. Because if there
-> are multipel; versions, the commentary on the *earlier* ones are
-> likely as relevant - or *more* relevant - than the one that was
-> applied.
-> 
-> The primary thing is the patch ID.
+Hi Konstantin,
 
-Hmm. Sorry that I'm being dense. But nowdays, e.g. the Fixes tag carries
-*a lot* of weight, given how automation trusts it to know
-where to backport the patch. And the description is critical because
-stable maintainers trust it to make decisions on whether to backport
-in the 1st place.
+Thanks for your hard work on b4!
+I wanted to try "b4 dig", so I upgraded.  After that, I noticed that
+"b4 am <Message-Id>" no longer prints the actual filename where it saved
+the mbox.  Hence I now have to do a manual look-up.  Apparently this
+was dropped in commit 8c0f498752924b3d ("mbox: refactor how we treat
+base_commit for am and shazam").
 
-So let's say I have v2 applied and v1 had a different commit log but
-same patch ID.  A contributor (or myself, if I forgot!) is wondering
-whether I applied v2 or v1 with respect to v4 having the correct
-commit log and v2 having a wrong one.
+Perhaps this printing can be reinstated?
+Thanks!
 
-What do you suggest then, if not reading all of commit log
-and also not looking at the date?
+Gr{oetje,eeting}s,
 
-> And if you change the patch as you apply it, at that point *you*
-> should point that out. And at that point, by all means say "original
-> at XYZ, I changed it to do ABC".
->
-> See? It's not that "Link" lines are bad. What is bad is *pointless*
-> link lines that had no thought, were added by automation, and don't
-> add any actual information.
-> 
->             Linus
-
-That part's clear.
+                        Geert
 
 -- 
-MST
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
