@@ -1,141 +1,112 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916EE2C08C4
-	for <tools@linux.kernel.org>; Mon, 13 Oct 2025 23:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4C445009
+	for <tools@linux.kernel.org>; Tue, 14 Oct 2025 01:24:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760397731; cv=none; b=s53horgJhLtrcj/6fpEwD5aL1656Xky+6mgCfImSPGKpHCVORCFWiJH79ftIg8YJ32+DWuWEz/aB/SngAW1XZ4QL0uiNu0LVodXchLCt+TASSuIPFLINUaGP2XaSc5UZSFBNPbbuSHGSkKU770n2vNm9LiFL73cKfB91Jq0YM3Y=
+	t=1760405051; cv=none; b=E1o9CSkDYCiJASbl4gupBXkcV3j7IfHBSjvrPmjh6JyEyNb8ipWFrsHf/ddmJhW0h2MnrEXSGTyhH7jKNHreAaha7ILdEIfEw2H/Q1T1gPdh1Zacxz1QyteJbtjr9LqxJS06p3dcMjl4hLlSLThlZGY+UVfaNswCFxl1iwLGPRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760397731; c=relaxed/simple;
-	bh=PAZtsNBmu8TrSaw7T3Mqe2Hw9j/gBnFLaOhoeDUqfLg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EC4nqABun1MaDzUzP9VDU5EAJrpPcvuWnuCvgEPi3bIpMFlmbtZEaiL9r8w5FHwJkweiWDrt4OUmMm1E0/syqi4oaBGp9WcyTSl7UpqQ1CdNU4BvOWu4WEDOgHHtrrju1XI9u8ZaLgyFs1ghDt7tgtz3baWk+K4IpTJ8rmmubAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sevauWKM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760405051; c=relaxed/simple;
+	bh=Rm3WnqP9i/45vTFH0+F0yFjK3i+H2IHw97e8q6e8GaY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PjPRW73JMAHjxyPCn3hlrooX5xnrCIW9ltTgnLCtgP2OkRyCmPe+Qlc+k3wPpsrKgyZ/Y7aoksqdBwcpQHBuV0gtU0jET2sXjw+uQsXCUch7IMALPEmcYnxPOJe0VDEpE5Ss8TufWUVMchP9froAY619DeEjqjuU5EPb2uD04M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjlRL2zm; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sevauWKM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DB7C4CEE7;
-	Mon, 13 Oct 2025 23:22:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760397731;
-	bh=PAZtsNBmu8TrSaw7T3Mqe2Hw9j/gBnFLaOhoeDUqfLg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sevauWKMIGGSpX+1XiPKnaG14j5CcgBfaPQaxhb75+dwL9SkxiFH6csnQY3zCmFku
-	 2WBC9GlEvHkWhz54rFYwUZ1/L3cHjFnViCQiOLlmzxzQGYD0ah+T4FNbYyHhP/FoRW
-	 JgpXjwsciMgqTNMZBY6MfaInOnFbSFPA1FqdYoecZjYtjKNdDRDMMAWC+IMBpMV2YS
-	 ySGraHoZTV3ynzdRLVf1oL6dWVfdZ2J9q2JY4Hvw0GjV5RzRboGbAU0zTJ6u2jvtNQ
-	 caJADUTb2BYncjc+wQjoCNtEXE/cca3pG731k2fsHB/KGwJFxmNwLFKb5FHnHwsb/j
-	 iupnZZr88mq1A==
-Date: Mon, 13 Oct 2025 19:22:09 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Linus Torvalds <torvalds@linuxfoundation.org>
-Cc: Junio C Hamano <junio@pobox.com>, Paolo Bonzini <pbonzini@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@kernel.org, tools@linux.kernel.org
-Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
- Link: trailers)
-Message-ID: <aO2JoWLd0Mxc4oUV@laps>
-References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
- <20251013081536-mutt-send-email-mst@kernel.org>
- <CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
- <CABgObfZS--70UTOpSXo=JOZViN1jm4O6M92pu-6Qunif3v1Y8A@mail.gmail.com>
- <CAHk-=wg4WfbXs-kMOAM7FmQ0w8q3KO9DC8CWLg1WPnoaZW-Wiw@mail.gmail.com>
- <xmqqy0pezhm7.fsf@gitster.g>
- <CAHk-=wh--VXgwQ3s8DLeag6cegsD9cPcvkmbVft0Gesy2aGPsA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjlRL2zm"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b3e7cc84b82so891656866b.0
+        for <tools@linux.kernel.org>; Mon, 13 Oct 2025 18:24:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1760405047; x=1761009847; darn=linux.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jrn4kv2+NwcG9qidn6pYk1f6aX+PLv3GE4FNXdPuQcs=;
+        b=AjlRL2zmKDCIJzpRIryx4AaighsUDmD7lbF52xtmDujRBFmw4jnF7eoFIpalwxfcrX
+         Hf6Vb2i7nGoQobdff8IVvzzlqGOs4wTHJ3ZE8AMDQHNWxIw9wzKsQYq2tgIeAS0UHZbr
+         r7BXWnBG36oa0JLNa39YFDUbAkOFwErkXmv6Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760405047; x=1761009847;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jrn4kv2+NwcG9qidn6pYk1f6aX+PLv3GE4FNXdPuQcs=;
+        b=OU/cpJloID88gALGSK3KQ7k11BYcqriVNdWpUj3QqMocq9j7kgc6z69j8UgcV0D9eA
+         wEtSehM8pm435TK+bn18iYl+USEzMq7XOoDS4qQg+BLThiIpDYkrpWNtZvgwU+0WpMKL
+         ZrvG6BQn4Dd9nx2dT8DCFTVI68by62BUu1qxqqwBDLNRlStiFnPP8BqiVbPX1dQz1XWp
+         MVC1QqnCc/4Jlp9T8lds3DEk6Z72Ngsmwv1rRD2OJUw7dWOOC5PqKatQfKBon+lprCj4
+         3AD/j/q2fu8T8Wq1aXbWFeFwKdA9C5RsDL6LgcKnUFGLAse+m4QFUdH9b7g8ohkAk5ZU
+         0eJw==
+X-Forwarded-Encrypted: i=1; AJvYcCVcdWG59UCbVWdGiaTiIRsdojgeGu6IJMZgaMY4MY5dBANtw9Fpg+8zD/9NsoyKPACtOor8nw==@linux.kernel.org
+X-Gm-Message-State: AOJu0YwAyTONRquAiA715YCVtYG1Z98qscDsQ6S7N8gC7B9dSfTiUBoY
+	0jxd1onSYgWWUwsCdgN2eMezc5yQU5CMDzfDxulrOye59fPIUul/3Yu9fuVtrkjNO/htfZwA7sP
+	QJ7mqSQM=
+X-Gm-Gg: ASbGncsvc2yhQ6EWKSFU2PWu6RXJzEJLdKnucYH0E8kdeHNQnp/NZqOQ94TqGAM1P1A
+	shXiLwNodnJDzqCTV8+M6LxOxN28fD8pGRd+U+UbTcQQGqs3kMc8hCaTM1oyhV9f5/fnGQBkgok
+	5r7teuGcw4JgR88K+zDSSmHMFeoC/UMGthxTbKTjxYRPyq3dJLZYDBPZgaGNkaELb9WFkIL5DXl
+	LSl2KTq9zM4jEClle0gDdp9PesvkBkgkiVUJnyrpoqVDUyHhGRzwGJNMqgIzQ87BHazfFhdCarf
+	BR0QWdjqSlaOERS1Ct5H03GnSLhrlf3kneb6uidhOasa3dpXMGUCAL67bqO0TiBsGIvcJla2n3F
+	FNo6fYra9k1kn7MGhPkloVd9PuHjaRl+96537d+hZCChWJJjfn+H+O/4okUWu6pdhjy1iRNhT3S
+	8zVcu6cmaZ0jZc/A==
+X-Google-Smtp-Source: AGHT+IGR5Lh0ks7erEDGRheDrsSFetRZ5Jbe+P2A4hzPGAjfWt5v5PRBJ+ZEqxsOA0EXDA0H2Th2yQ==
+X-Received: by 2002:a17:907:da2:b0:b30:ea06:af06 with SMTP id a640c23a62f3a-b50aa8a92d5mr2449549066b.24.1760405047056;
+        Mon, 13 Oct 2025 18:24:07 -0700 (PDT)
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com. [209.85.218.42])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b55d5cad8adsm1061597266b.7.2025.10.13.18.24.05
+        for <tools@linux.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Oct 2025 18:24:06 -0700 (PDT)
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b3e7cc84b82so891651866b.0
+        for <tools@linux.kernel.org>; Mon, 13 Oct 2025 18:24:05 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUUcIXOXwKxOsf8XcPp81UAfK36bg51Ev5y/4dGti6k75VlLkRo7jkP6TxG19FUZYCQ36Or8A==@linux.kernel.org
+X-Received: by 2002:a17:907:9492:b0:b45:8370:ef08 with SMTP id
+ a640c23a62f3a-b50aa8a92famr2586723166b.17.1760405045576; Mon, 13 Oct 2025
+ 18:24:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wh--VXgwQ3s8DLeag6cegsD9cPcvkmbVft0Gesy2aGPsA@mail.gmail.com>
+References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
+ <20251013081536-mutt-send-email-mst@kernel.org> <CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
+ <20251013190418-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20251013190418-mutt-send-email-mst@kernel.org>
+From: Linus Torvalds <torvalds@linuxfoundation.org>
+Date: Mon, 13 Oct 2025 18:23:49 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wjioLpTroP=5cUQsVmDb3BtKnn5QToBX9Qy2dv_VYTZ0w@mail.gmail.com>
+X-Gm-Features: AS18NWBo6S3oUdFZuCt1fOF4W9xK9DdYqrey34mQ_3qVAUrCcPkaRpmjdaIb_Y8
+Message-ID: <CAHk-=wjioLpTroP=5cUQsVmDb3BtKnn5QToBX9Qy2dv_VYTZ0w@mail.gmail.com>
+Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
+ Link: trailers)
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org, tools@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 13, 2025 at 02:44:28PM -0700, Linus Torvalds wrote:
->For example, while I think that a "git rebase --keep-merges" workflow
->is a bit scary and opens you up to lots of possible things going
->wrong, having some way for "git rebase -i" to *add* merges
->interactively might be a nice option.
+On Mon, 13 Oct 2025 at 16:09, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
->I've personally had the situation where I created some series of
->patches and wanted to group them later. What I would do is then create
->a different branch, rebase the patches I wanted to keep in one series
->in that branch, and then go back, and rebase the original branch with
->the remaining commits.
+> Well I for one would often ask the contributor to repost
+> modifying just the commit message.
+>
+> The only thing distinguishing posts then is the date?
+> Doesn't it seem somewhat fragile, to rely on date?
 
-[...]
+I wouldn't rely on date. That's the point. None of those emails are
+any special. Not the one that was applied, for one. Because if there
+are multipel; versions, the commentary on the *earlier* ones are
+likely as relevant - or *more* relevant - than the one that was
+applied.
 
->Having a linear series of patches delimited by merges to group them
->and document them would probably work really well, but it would need
->to fit in with all the other tools, and as mentioned, many tools
->really do just do "patch series".
+The primary thing is the patch ID.
 
-[...]
+And if you change the patch as you apply it, at that point *you*
+should point that out. And at that point, by all means say "original
+at XYZ, I changed it to do ABC".
 
->So rather than doing a separate branch, rebasing things there, and
->going back and rebasing away the things in my original branch, doing
->just 'git rebase -i" in the original branch and having some way to say
->"this is the start of this series", and a "this is the end of the
->series", and having git rebase create a set of linear series with
->merges that delineate them might be quite convenient.
+See? It's not that "Link" lines are bad. What is bad is *pointless*
+link lines that had no thought, were added by automation, and don't
+add any actual information.
 
-I'm using such workflow for my backporting work: I often want to group the
-patch I'm backporting along with it's dependencies into a single "atomic" unit
-to make it easier to review those changes later.
-
-It currently uses hackery like the one you've described. Something like this:
-
-   N=$1
-   saved=$(git rev-parse HEAD)
-   temp="tmp-triangle-$(date +%s)"
-
-   git branch $temp $saved
-   git reset --hard HEAD~$N
-   git merge --no-ff -m "${2:-Merge triangle of last $N commits}" $temp
-   git branch -D $temp
-
-
-Which creates a structure such as:
-
-   $ git log -5 --oneline --graph 11faed99eb
-   *   11faed99eb030 FAILED: 64e0d839c589 ("mfd: intel_soc_pmic_chtdc_ti: Set use_single_read regmap_config flag")
-   |\  
-   | * 3bc90aaf9933e mfd: intel_soc_pmic_chtdc_ti: Set use_single_read regmap_config flag
-   | * 08b4fd511c7f9 mfd: intel_soc_pmic_chtdc_ti: Drop unneeded assignment for cache_type
-   | * f6d0ec2c9ccb4 mfd: intel_soc_pmic_chtdc_ti: Fix invalid regmap-config max_register value
-   |/  
-   * 2b2cbdcede387 (tag: v6.12.52, stable/linux-6.12.y) Linux 6.12.52
-
-
-If you want to use it as part of your git-rebase workflow, just call the script during rebase:
-
-   pick c3c4268124d22 # kbuild: Use '--strip-unneeded-symbol' for removing module device table symbols
-   pick 4ee16af35eb65 # tracing: Fix tracing_mark_raw_write() to use buf and not ubuf
-   pick 88d5c7c180dfc # tracing: Stop fortify-string from warning in tracing_mark_raw_write()
-   x stable-make-triangle 2
-   pick ed5afe51ba32e # irqchip/aspeed-scu-ic: Fix an IS_ERR() vs NULL check
-   pick 89d38b0392fa4 # irqchip/sifive-plic: Avoid interrupt ID 0 handling during suspend/resume
-   pick 3897851fae349 # Revert "i2c: boardinfo: Annotate code used in init phase only"
-   pick 49a451202c681 # Linux 6.18-rc1
-
-
-Which results in something like what you were looking for?
-
-   $ git log --oneline --graph -10
-   * 53cb9bf28b1b7 (HEAD) Linux 6.18-rc1
-   * d6f9a71712aff Revert "i2c: boardinfo: Annotate code used in init phase only"
-   * 8943a4934a860 irqchip/sifive-plic: Avoid interrupt ID 0 handling during suspend/resume
-   * 12257b8fccebf irqchip/aspeed-scu-ic: Fix an IS_ERR() vs NULL check
-   *   decf0198935a6 Merge triangle of last 2 commits
-   |\  
-   | * 88d5c7c180dfc tracing: Stop fortify-string from warning in tracing_mark_raw_write()
-   | * 4ee16af35eb65 tracing: Fix tracing_mark_raw_write() to use buf and not ubuf
-   |/  
-   * c3c4268124d22 kbuild: Use '--strip-unneeded-symbol' for removing module device table symbols
-   * 0f43fbd0b759c s390/vmlinux.lds.S: Move .vmlinux.info to end of allocatable sections
-
--- 
-Thanks,
-Sasha
+            Linus
