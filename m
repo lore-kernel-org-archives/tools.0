@@ -1,97 +1,128 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BC41DD0D4
-	for <tools@linux.kernel.org>; Tue, 14 Oct 2025 16:04:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46E3296BD4
+	for <tools@linux.kernel.org>; Tue, 14 Oct 2025 16:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760457855; cv=none; b=laB+msIG7KdUootVH1kmYJYLk6BHt8QQm5bbZBYd7mfU3VbYEaEYf07+Vm4i2KdUiLOYs7ZaeJnezD9iYFO6eZY8Lh1dwCuqjYkHkCpbY7XmgA9i31sJOtZaJJsUlaNhgW7Lnl80Sn3e9E7T58XWkrwKHF9Cyi6GMn3Xo+6eHII=
+	t=1760460985; cv=none; b=X1VcFHBEDGQpmoSEcPr68zw2jN83/ZXIoJwUfej3+EOzF4tS6cWxwrQgWLHH7oI23CfLSa719+luFQVnCsKA1Q9f+BmfUmQpiYa4byIDVNxry3pAezAZBdu3AWcgtUo9CQXsAE7n21eCwMS94YPlqXFa1GGQ08BUZ4c8A8N4VP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760457855; c=relaxed/simple;
-	bh=7/JxSJYSrM1GT81Ns9biRLuEpOzlSawt0F+j/EMILrc=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=NB3gDv1YJLq0G5kUYdMx99XTCLWV4F50SgZSSCwDp37sT2vohJvKeraPiz5+RQG++xy9uq1nmkzLUKSQd5UzaNqftykLAHP8mJ39gwLBkog4MJCBXrXdAS6ZDVrCEC2vKTroIKC4vZcOUUOoTuX04KAS9VlxCwo7CDILhUqM6rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix)
-	id EC846C116D0; Tue, 14 Oct 2025 16:04:14 +0000 (UTC)
-Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 8DEBFC4CEF9
-	for <tools@kernel.org>; Tue, 14 Oct 2025 16:04:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 8DEBFC4CEF9
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-63bc1aeb427so5652439d50.3
-        for <tools@kernel.org>; Tue, 14 Oct 2025 09:04:13 -0700 (PDT)
+	s=arc-20240116; t=1760460985; c=relaxed/simple;
+	bh=hyoWY5mkM5hvRF1uIrvIKtl0nrbQ7keCnLp+7IS5z1M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=U5tgnTtMTGpU5+4BDx/ptUj0YnAGHzrQuYlwDzB4RFBKnVRKGkM2PDVOg8VmOk52KaXLMN3LVSPuasDldA+wjNaTl5LoUkxaYeablP0fDKUsLgqyFVe1GpJozIsfTkzcdUW4VjJDviwenjr2g5l3WmQ2WmiDhs5jE08nAroYuWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBliR7TQ; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBliR7TQ"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6399706fd3cso8290272a12.2
+        for <tools@linux.kernel.org>; Tue, 14 Oct 2025 09:56:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1760460981; x=1761065781; darn=linux.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mUf5FfTp80t6xGh5RLtQtRly30ToPfNI+mSGFvZvfiw=;
+        b=QBliR7TQKL1WsX+eK3NWovtqL42IISZTbXBrPCOoEoDWF7iEv+aA/SwxithP2/SWuS
+         QmhEATKyIhX0ASypE1IYp21eDorR4NyT0aoIbRQXWpjfHJG3lHMCeCv3ec2zQfNmRj1y
+         HZrEP96g/KA1NoiMQoc3PmX0xcOj2WDkbmkKI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760457852; x=1761062652;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qampm0WW5kUQbKh22t0hL+ig5C1/r4TdrH/pkn0BYxM=;
-        b=iykDl6jzPjg9j4Ft1rnnzVCFljYRtmCdqDPgs3u1OF+kHeoYZioLbVT6qrvv9ZTfIv
-         BMDdfsSYE9tEFyfGXk18MdQ/FgdJihrEm0NgsVvemxQAUnuTIFo1lYXwYghIBQXXbuFr
-         9IwuO4d6wXn8JtrwdVTqD6Qx2WRHLWFqbbuXjy9ye8kvKZL5c85xYp2iOewW7nfDxEMb
-         vmafNEWsXyPEJJnlZpXDCNthjJPsnBVMFI6yzzq2CG1wSuv7VzlRtJjKKmTlp4EFEvo7
-         kK9Zylip20vCNuPU9jk16nFp5ZFuWtHEwPcK++xxVCSMaYWDwMps8aG7ewwfk3e+HT8P
-         aT+w==
-X-Gm-Message-State: AOJu0Yy85fHCa16rW0jZS0AbPD22egcJGTZ5rbCul75/epUNFKqUY1RI
-	8QfrXaXmYU5o4wbDk2sM590PhtgLnHxFGbVYuqFWmbq500zTaqRW/onE36Asns5K
-X-Gm-Gg: ASbGncvuGRosRUOcgGKjo3UDlE5dpNfL1NSn2fh+flbtoGh/RSRX5JOWNLX5NQDG5Pw
-	zcozoxNZ/e9lVuago15pAJw0xWj7kGrxGRrcwkyAAJtVTJuJhiZ2hNe2k8b9w0hUklgScnQvNuo
-	pnfEpyU27Odq/yQnCxPowVowZeF6sE1MtCYf50NBI/tx9WKqVCqRlMom3MoH+XI8MBGSGXHIAYx
-	MEroiA1KY+b8TDRmW4kxnK41/g3xHoAlOTvCWZr8LQbohd3LqmxC7sLxHyz1XoEXnn4VzSM9Ow3
-	qinQHxo8/9QxGmayH8Y9TATq7ljFpGHJF66dC6jfjfjSfTrB+02Vus72GdIqlV2PUgWQMBTnggb
-	WpDftZYpVgCw9J3Zp1kIOO9lDchMWZ2FtOwBHrCI8IuJpKrKmOW7Lx1EqH+47iuhaNV5M5Zc+Tl
-	TE9/cSrfPvX2c=
-X-Google-Smtp-Source: AGHT+IF+kBtOkksj+myQIgqme6pGNbxYcioPWj0KRfsqoSphZseymkhoJoiQ89SnQZJy9bwXK07w1w==
-X-Received: by 2002:a53:ec89:0:b0:629:9c6b:b3ab with SMTP id 956f58d0204a3-63ccb825baamr16389252d50.1.1760457852073;
-        Tue, 14 Oct 2025 09:04:12 -0700 (PDT)
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com. [209.85.128.178])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63cd95f3131sm4809999d50.26.2025.10.14.09.04.10
-        for <tools@kernel.org>
+        d=1e100.net; s=20230601; t=1760460981; x=1761065781;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mUf5FfTp80t6xGh5RLtQtRly30ToPfNI+mSGFvZvfiw=;
+        b=T9ZV4WrN6nii0IPVeCkWQzd6xT5DHhtas+BCwMGHNrUtKKOz/awXeQexI13mDIF9l4
+         hQ+sCMG2D6bprqYcLIvXcrHVoO/sBdh21GvAs+hRX//xRsNJlGzbVXmhijYZootpLTD4
+         V3MWp1yY0sp8riQnOg7YzO5E05BHFgUacQ60wVgDV628MpmpknwPfVsrBOyjUlVt17FZ
+         9mTZ44as8DtDIOZskYVcFBkl7Vz+ewWkARz4G9KOaGulk5GAiou67x5wPOmtfVR7ThhL
+         u7LklkU1gG3IeXR3BkN6Xp1PjmEfHXU4RtQDBF2IeHlnrXBB8RT5/OXYhsCbeKxp/C93
+         hKJg==
+X-Forwarded-Encrypted: i=1; AJvYcCUZDY/HOyj2I/EnF4mQhe/ZQ24kVj7iY7E9ukGt3oTGsfo9wqWszdo4dP900VNwFjAxi+iapg==@linux.kernel.org
+X-Gm-Message-State: AOJu0YzQIsB0yXoiS7OUMYrJlnO3WTwwj7dVugKpNs0oLHpI/9Spz2uK
+	zRyBkPqHrTI00J7HWNETeCWx+JRI7MAc0AbFGq4rkhxJre45ArAfwBKbz7l5Kh+5nOOkOc+lLXZ
+	R3XAw5K8=
+X-Gm-Gg: ASbGnctONPXQru2CB9Db2UgwEQ0S4Km8auXL7qgvyRb7TFg5lYb7ZCze5VH1SSHlMc5
+	jVbZeabMe9uNlhd7AcRRP+UkU5c9o/mijxniFKnNVqybt/TF62Ixa9JPmCYYKyDwUFwdZCiyPUX
+	hWxy+RXF2ur/QnZzVLn8OtYOvHxBACSCRqeeJl7QqNfcqmz4CrEmJRaSjNImfTMmUOABw4Iu8m6
+	hDhriesnlyZvW/4tmDbf84GVmzKwDQMAusHU5r/GtMJ3ICEne02u8+gftfqBNuq0gglpHonBxjq
+	HBSD6XVaK9OuL3NUtD5NIDZG3sJZa4P3qU2hHINTRxhwV5sJWJME8LcSi09IOYyZmiXJaNqov0e
+	y5WsrMylwVMmtN87k5u7IPclKsi9UTPkz/sAysFh0+01Y1VxIFw6f3JOHHLtXKg/WhCJYWVOeE7
+	O8dv/GpNwt8XK+0w==
+X-Google-Smtp-Source: AGHT+IFM1FOmXKBdpM6qpOwT/miT6Z62Onuz06F77KJeAswg0RTXGqtuyxZzvoHHPg4cIIcKQXHNmQ==
+X-Received: by 2002:a05:6402:34d0:b0:638:74dc:cf78 with SMTP id 4fb4d7f45d1cf-639d5c75d9dmr22984371a12.34.1760460980792;
+        Tue, 14 Oct 2025 09:56:20 -0700 (PDT)
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com. [209.85.218.43])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a52b0f358sm11431819a12.10.2025.10.14.09.56.19
+        for <tools@linux.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Oct 2025 09:04:11 -0700 (PDT)
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7815092cd22so9212487b3.2
-        for <tools@kernel.org>; Tue, 14 Oct 2025 09:04:10 -0700 (PDT)
-X-Received: by 2002:a05:690c:b94:b0:71e:76e8:2457 with SMTP id
- 00721157ae682-780e14593cbmr271537457b3.22.1760457850218; Tue, 14 Oct 2025
- 09:04:10 -0700 (PDT)
+        Tue, 14 Oct 2025 09:56:19 -0700 (PDT)
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b3b27b50090so1037541366b.0
+        for <tools@linux.kernel.org>; Tue, 14 Oct 2025 09:56:19 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVuDz+KXD4gCFqX5bAnMxU1P7jTmJwR85i7SzGC47/N18UHjUw2J6ZGdY/eZBeXR+BMCBfGvA==@linux.kernel.org
+X-Received: by 2002:a17:907:6ea4:b0:b57:78fa:db61 with SMTP id
+ a640c23a62f3a-b5778fae293mr1245424566b.52.1760460979513; Tue, 14 Oct 2025
+ 09:56:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 14 Oct 2025 18:03:58 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdX40JoouK0yjm_-ggj5dQ9MtE2vrYhUOQ9dDpCN-0+tXg@mail.gmail.com>
-X-Gm-Features: AS18NWADf7EvLTTEl-eHrrFUKL8oS1tL_1_Mvf6_UwBZqhMxqWJwIbJZYa5JTrs
-Message-ID: <CAMuHMdX40JoouK0yjm_-ggj5dQ9MtE2vrYhUOQ9dDpCN-0+tXg@mail.gmail.com>
-Subject: b4 am no longer prints file name
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org, users@kernel.org
+References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
+ <20251013081536-mutt-send-email-mst@kernel.org> <CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
+ <20251013190418-mutt-send-email-mst@kernel.org> <CAHk-=wjioLpTroP=5cUQsVmDb3BtKnn5QToBX9Qy2dv_VYTZ0w@mail.gmail.com>
+ <20251014062426-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20251014062426-mutt-send-email-mst@kernel.org>
+From: Linus Torvalds <torvalds@linuxfoundation.org>
+Date: Tue, 14 Oct 2025 09:56:02 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wj1rRqLm0upJVx-EPR_rN8W37kKTgzUSONUbm74mJhwig@mail.gmail.com>
+X-Gm-Features: AS18NWAyYFIecVVbB8SBJ6OERAfto-890V2LrTy0ZTYvhxRNMAjFj1FmQ1-bVqg
+Message-ID: <CAHk-=wj1rRqLm0upJVx-EPR_rN8W37kKTgzUSONUbm74mJhwig@mail.gmail.com>
+Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
+ Link: trailers)
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org, tools@linux.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Hi Konstantin,
+On Tue, 14 Oct 2025 at 03:38, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> What do you suggest then, if not reading all of commit log
+> and also not looking at the date?
 
-Thanks for your hard work on b4!
-I wanted to try "b4 dig", so I upgraded.  After that, I noticed that
-"b4 am <Message-Id>" no longer prints the actual filename where it saved
-the mbox.  Hence I now have to do a manual look-up.  Apparently this
-was dropped in commit 8c0f498752924b3d ("mbox: refactor how we treat
-base_commit for am and shazam").
+I think we're talking past each other.
 
-Perhaps this printing can be reinstated?
-Thanks!
+I'm not saying that you shouldn't look at other things. I'm saying
+that the patch being identical is the *primary* thing, and that
+earlier submissions of the same patch are very much relevant.
 
-Gr{oetje,eeting}s,
+So if you start filtering by the author date of a commit - even if
+that does find you an exact match - I think you're filtering way too
+much (at least by default).
 
-                        Geert
+Now, using some kind of fairly simple scoring algorithm that gives
+higher relevance for things that match might be the best of all
+worlds: show other matches for the patch, but maybe rank it higher
+when it matches "better" (which would include things like the author
+date matching the date of the email - always with the caveat that the
+"Date:" might be either the one from the email headers, or from the
+top of the body of the email).
 
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+But people who use non-git patch maintenance systems will often mess
+up the author date completely, which is why I'd not want to make it
+very important. Maybe that's non-git use is getting to be uncommon
+these days (or maybe other patch management systems have just gotten
+better at tracking dates).
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+The one date I think is worth actually special is the commit date -
+and not as an exact match, but as a cut-off.
+
+Not because that date is inherently very important, but simply because
+assuming clocks aren't too much out of phase (and assuming people
+don't play games), the commit date can be used as a cut-off for
+causality. Emails that happened after that date are obviously not the
+*cause* of the commit, and are more likely to be the effect (with
+back-ports being one big case).
+
+                Linus
