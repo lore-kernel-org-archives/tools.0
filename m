@@ -1,112 +1,117 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498992FFFBB
-	for <tools@linux.kernel.org>; Wed, 15 Oct 2025 18:40:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B39E277CA5
+	for <tools@linux.kernel.org>; Wed, 15 Oct 2025 21:07:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760553656; cv=none; b=VPmSI5SMplmW50BomO8kknmZlORYWhApHWjGTTJmiViJzGY2QezxLJK4BPzeT4wM1TkGZMBX/tIzXISWUpCXAH1bjYpajYO6pcsgn5rw8tV9piq6plb7zwnHw6fhpoVho/X/SCI7XKYW6bL7HgmVKcfQmGkNCKvdm2i8hTRUmSM=
+	t=1760562436; cv=none; b=sWU6uZJvzW8M5XQji4WKKB2IipzqHWNUTwa/83HspHn8mLPoa1j0keiSE3wfiGjhobRuMQejZymvy+tMYj600knxAz2uYKjtMtTusi3tikqdEWDbDzokzYcs+cUQ8jor5BpgnjBIUX+9UvPBeHgyH2sZPb2OnJqrKmex6dEXnGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760553656; c=relaxed/simple;
-	bh=Bvrdz9envEP/F5rXltdu+InX+EZ01NYTcUCxwSbRpQM=;
+	s=arc-20240116; t=1760562436; c=relaxed/simple;
+	bh=XySoW7bczOHFTu1LInw2WkTkodbpYSWdrWyuGS1r5eA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DucXEZJ+/soUhgC8D18y2ZTJGCxFVw1/ddQdqO12cOxZApCN+P0ldvSp77w+gThSYPLdk7lTKwQDxlM+2TkF6IAS5WW+PN1UVvZUrLwA5Xq6idrHr3yIxYVuhVqUvpC4OXAxgClFY1GJ+BuPGnox4P8e9TY/cNNOwuIZUzAFYps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=JLnlaCpD; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+	 In-Reply-To:Content-Type:Content-Disposition; b=fYk+NezRcBWPxpchcxgAjdxAiSl7+boxmJTT/+U9j80IVHT7ZhypX+ah3tDTTALPeZU7g3FbhFi3J+72Z92P7RfW8ipJEnCPmqZi4T0tLA4XdoRtmtffT6aLpKzH71bqwpfRB+xY0bKgn0zjAiA4Pqqv/L05kqMTVcTBtLzaYyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=AsSPLnT8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="JLnlaCpD"
-Received: from pendragon.ideasonboard.com (87-94-110-32.bb.dnainternet.fi [87.94.110.32])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 6B455E92;
-	Wed, 15 Oct 2025 20:39:12 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1760553552;
-	bh=Bvrdz9envEP/F5rXltdu+InX+EZ01NYTcUCxwSbRpQM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JLnlaCpD4Qx5z9awfh2wLwLAS8FQqK2AjjEk0CgXfJc2m2tl9d8iseWPtEXtmgGRI
-	 tGClRqgqrOaxMx9k9HlEb/KuC5leMR+Rxg4H+zvoloH6JKfbDf6jCDtWf0YFVito2F
-	 O4+7jr9IJYW4WhDjyHlYFbbYJ65XVFhTwmMjNpss=
-Date: Wed, 15 Oct 2025 21:40:43 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Mark Brown <broonie@kernel.org>,
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	users@kernel.org, tools@linux.kernel.org
-Subject: Re: [workflows]Re: In defense of Link (was Re: [b4] initial "b4 dig"
- to supplant Link: trailers)
-Message-ID: <20251015184043.GB30747@pendragon.ideasonboard.com>
-References: <CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
- <CAMuHMdWxMhM1J3zHC8OkN_fd8XsJPFA6jM_3JFU=ySKhnX6ESw@mail.gmail.com>
- <CANiq72ka1y0YXysRQtuqnzc0i5FSbrGjKwprrXQpozwDOV3khA@mail.gmail.com>
- <aadb0515-4024-40c0-8024-fcdd029a3029@sirena.org.uk>
- <2991ae006906913c10715a9673ac53a4ea557728.camel@HansenPartnership.com>
- <20251015151447.GD3168635@noisy.programming.kicks-ass.net>
- <20251015111816.728bfda7@gandalf.local.home>
- <20251015155346.GA3287345@noisy.programming.kicks-ass.net>
- <20251015115917.5e031880@gandalf.local.home>
- <20251015160622.GB3287345@noisy.programming.kicks-ass.net>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="AsSPLnT8"
+Received: by smtp.kernel.org (Postfix)
+	id 1BD30C4CEFB; Wed, 15 Oct 2025 21:07:16 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 06180C4CEF8
+	for <tools@kernel.org>; Wed, 15 Oct 2025 21:07:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 06180C4CEF8
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1760562433;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4QrxRH109bSYMfRZq1IRD84YKV/+KP3PXwFjWP2GgaI=;
+	b=AsSPLnT8+0JnuTHcprZnN9xV8f7m3HtG+l5gb3+/dTc50Jj0RKvIrYeqWXFN62aTjUZANU
+	tFTFSPxvxQrO0uR6CnwHJ9iobQwxK3ehl/AccMIGfOYv/3sbKiToHvX/R+4aSxIoTObbSO
+	/+u9IxFwuAv8pDlIfGV6ttJNzVUxR/M=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-155-vRlz2tisPzi6dVKp0U9AXw-1; Wed, 15 Oct 2025 17:07:12 -0400
+X-MC-Unique: vRlz2tisPzi6dVKp0U9AXw-1
+X-Mimecast-MFC-AGG-ID: vRlz2tisPzi6dVKp0U9AXw_1760562431
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-3ece0fd841cso23179f8f.0
+        for <tools@kernel.org>; Wed, 15 Oct 2025 14:07:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760562431; x=1761167231;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4QrxRH109bSYMfRZq1IRD84YKV/+KP3PXwFjWP2GgaI=;
+        b=CfMKLDBPn+ntRYXow/NItQo73jhTmHgWuK5hr6fkJzeUK4SKXVGGgpBmugH/7jJY2B
+         +XVQpcrHSRR/aQCw7uEuIAFAnkgqW1e3Yvzqb4kWnFV4tWJAmRFgIz816nyGI7y2OSHB
+         2HZQZkkd4cDyNtngAkgJRDlkIUXxOVZi6axNgavG1sle7KH3YYWHIjXNrVKqWyr6U4Uu
+         oyzzWWwXzNMQ8UY0dvQdXlvd47M9jC923xFzAkOHaTwPEFir/+/vPMbMLk4ILPYNVij2
+         VCuce2YyvzJMcNhaKXcfRnvV78l/vWONwcHhVlCVmhjXrrCjoY26AF9qG2H/o/tItvqo
+         KESg==
+X-Gm-Message-State: AOJu0YxaUyosk0EGRicQNBm/9Zav1jgsCcxkz5u7R8uQyOTBrAQcNKya
+	03cggjCvSQfJxHhKk8RN+Gbv/XOtWq/Rqq9AMaJmC6p3Dv4W4cTGeO3oJzEYQuEXvc93t/p1qHJ
+	4gLK3zzlBRCVyCK34TIxzJH/8R1gY04G6UnhaZT4YSvC1z3KwPHqtet8GvHeAH05q8XEYUwhH4s
+	Rj0824zTxTQokhhe766R3shGb4emw=
+X-Gm-Gg: ASbGncvh/6WSGkpnHWgZ1cGCgDNlDhaoM0iyckFmUnYqX0FjmlmuhDG838v3CbaFj8w
+	MRA9ivVPnz0chB3t80rtrp9oVW6iFi80EsFxT36WBwxn8hkhvsOnQHuh44havFQabwviVopVAp6
+	ceLsi2EK7aIsi8sNvrlmOHY6V1kLzkE+BZ550NCxU6c5YsQcQgKAFNuHFvgNU+RB0OSatDmmNxa
+	GFvG21tvsSKPzczY95unRZsmfF9qQ+UNd0TGOuFHizzszf2crF2HbeFHXDD8jBsxY4b8JKtPafL
+	4Xo+Z5rErGmzFeCoFuD6OJcgoLyneDXWQL54N8k6QpCiIdF9vPg6s+HcExVvf2fnQ+tF
+X-Received: by 2002:a05:6000:1845:b0:3e7:6104:35a8 with SMTP id ffacd0b85a97d-4266e7dffccmr19504285f8f.35.1760562431024;
+        Wed, 15 Oct 2025 14:07:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGaOyRIJvWq39K1ivk9M3roahATSbhNjo/3xk4/pxFMbWZPPOvXxZN7WF1s1NVYyiam4R1LEQ==
+X-Received: by 2002:a05:6000:1845:b0:3e7:6104:35a8 with SMTP id ffacd0b85a97d-4266e7dffccmr19504266f8f.35.1760562430468;
+        Wed, 15 Oct 2025 14:07:10 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:152d:b200:2a90:8f13:7c1e:f479])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce57cc0esm31108587f8f.6.2025.10.15.14.07.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Oct 2025 14:07:09 -0700 (PDT)
+Date: Wed, 15 Oct 2025 17:07:07 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: tools@kernel.org
+Cc: konstantin@linuxfoundation.org
+Subject: Re: [PATCH 0/2] b4: sparse-checkout related fixes
+Message-ID: <20251015170619-mutt-send-email-mst@kernel.org>
+References: <cover.1760393880.git.mst@redhat.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <cover.1760393880.git.mst@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 5y9fB6WZNzePXlzBz09e_rgE4F8sCEXzpYCStnZMhg0_1760562431
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251015160622.GB3287345@noisy.programming.kicks-ass.net>
 
-On Wed, Oct 15, 2025 at 06:06:22PM +0200, Peter Zijlstra wrote:
-> On Wed, Oct 15, 2025 at 11:59:17AM -0400, Steven Rostedt wrote:
-> > On Wed, 15 Oct 2025 17:53:46 +0200 Peter Zijlstra wrote:
-> > 
-> > > I have sufficient pending email such that any extra effort just means I
-> > > won't bother.
-> > 
-> > I'm curious. Why do you need to see the entire series? Would a cover letter
-> > and the patches that affect your code be enough?
-> > 
-> > Because seriously, I've skipped several series because I look at one or two
-> > patches and say to myself "why am I Cc'd on this?" and skip it. Only later
-> > to find out that patch 18 affected by code.
-> > 
-> > It's much easier to find the entire series from a single patch than it is
-> > to find "what touches my code" from a large series.
+On Mon, Oct 13, 2025 at 06:20:06PM -0400, Michael S. Tsirkin wrote:
+> I encountered shazam test failures, diagnozing them I realized
+> b4 misuses the sparse-checkout command.
+> This patchset cleans this up.
+> Pls review, thanks!
+
+Hi Konstantin,
+Just making sure sending this to tools@kernel.org is
+the right thing. And do you want to be CC'd? Thanks!
+
+
+> Michael S. Tsirkin (2):
+>   test_shazam: clean worktree before git am
+>   ez: cleanup sparse-checkout usage
 > 
-> Because when I see a single patch, I end up wondering WTF does it do
-> this, and then I have to go find the others, which I don't have, I get
-> grumpy and either NAK or just yell. And no, the cover letter rarely
-> answers the questions I have.
+>  src/b4/__init__.py | 6 +++---
+>  src/b4/ez.py       | 6 +++---
+>  2 files changed, 6 insertions(+), 6 deletions(-)
 > 
-> Finding where or which patch is directly affecting 'your' code is mostly
-> trivially done by scanning the diffstats.
+> -- 
+> MST
+> 
 
-I've been similarly annoyed at partial series in the past, but that was
-because I wasn't CC'ed on some important patches, not because I didn't
-receive the whole series.
-
-When doing tree-wide or subsystem-wide refactoring, it's typical for the
-first patches to rework/improve/extend some APIs, and then for the
-remaining of the series to address drivers one at a time. The cover
-letter should explain the rationale. I've been CC'ed multiple times just
-on a patch that touches a driver I maintain, without being CC'ed on the
-first patches in the series that show what's going on. That's annoying,
-even if I'm CC'ed on the cover letter. On the other hand, being CC'ed on
-50 patches touching lots of drivers in very similar way causes lots of
-noise.
-
-In such cases I try to adopt a middle ground, CC'ing everybody on the
-cover letter and the core patches, and CC'ing only relevant people to
-the driver patches. Is this something you would find annoying, would you
-prefer always being CC'ed on a full 50+ patch series ?
-
--- 
-Regards,
-
-Laurent Pinchart
