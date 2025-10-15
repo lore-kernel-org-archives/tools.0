@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF2623770A
-	for <tools@linux.kernel.org>; Wed, 15 Oct 2025 13:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D953E23A99E
+	for <tools@linux.kernel.org>; Wed, 15 Oct 2025 13:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760535782; cv=none; b=NyYgKTqubrkPs82TkhuukKhYv2R0eaO+UInBsycYKPkFxhAirwhvyYKGvQcEqDZ5cKqtTUsdx2pXHT7LsrtOdcYyue25q1H3soiwJBUlvmJ+eMi2ZAbSYQFE5eoNCvmVxLFwfCuUfhdBguUGX0OC2+lRtk+lDbzclzqxYOyJ/hw=
+	t=1760535898; cv=none; b=sRNl+Eelw2PHDhJDiBtKZf9V4XXTP8UGoaGtH4HNPRUbyeIFtWvVm/NvXMmFeJoJM1YxMGolHP0xa87dRgzl9vad25Cuu1FEPL9zrCSi8zhCaW1ovYrxbuZClunLs6EqPbjaMQ9amX4o5MCMYomBfx18hg6mULGCZhtAPZNdCFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760535782; c=relaxed/simple;
-	bh=lRm0Ni/r3M2AxTlMP8QotJyvpeEJccGwCPhtfbjfuAw=;
+	s=arc-20240116; t=1760535898; c=relaxed/simple;
+	bh=iNO715mSXwbpgNUIjWewiwpDfge5LJ6lbLs1D7zxx98=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dH52ajTOKNxykL2+Z7JaIXq2qVyq+5ofrES4JW7I/QDRhDLcqZerEcGeoedhry/QxPvnPA572nar3ZmRSpE9Yfty7LATB97dL2B5+irLMwDo0kOxOqGw6ijWFro23vmF9v7IQRozgZGIbH8v8p4UMNG4Jl3npNllMHK9701WkUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCE1SjW2; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=dzlN+xocfsaUolUHmuTyI0ztv9ZM1+a3MQMLgfuOsHd9Tm6ud8MM8l/ObpkfmUwdhkXQWAZB3xBhYZy9k+VTjoLOa8wSMCu4Pu1VzIWRZsYTy8s5lTtar7gCGvDsPcHt8idBFJ0mHiDtcUme25TFxa/Ydc0ZVUcWPCmx2j+6IoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJZpXVQS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCE1SjW2"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJZpXVQS"
 Received: by smtp.kernel.org (Postfix)
-	id 0A86BC4CEFE; Wed, 15 Oct 2025 13:43:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49DCC4CEF8;
-	Wed, 15 Oct 2025 13:43:01 +0000 (UTC)
+	id 9FF9DC4CEFE; Wed, 15 Oct 2025 13:44:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE8CC4CEF8;
+	Wed, 15 Oct 2025 13:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1760535781;
-	bh=lRm0Ni/r3M2AxTlMP8QotJyvpeEJccGwCPhtfbjfuAw=;
+	s=korg; t=1760535898;
+	bh=iNO715mSXwbpgNUIjWewiwpDfge5LJ6lbLs1D7zxx98=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rCE1SjW2lOHLJQKY9ke/sdBNcpHvxJSStvDP3OA0jvHZ+o64R/PFEE8bU0JoHdS3+
-	 tRBQYF15aOX/2eTHms8EkS4L2nY8HhzfFtjZtxCNYTnMyfQVVCyS125pp+KcDYu6Yv
-	 wxObkMPernaaF8kjjpGMpQzY/Chk0KWlbyB7eYPc=
-Date: Wed, 15 Oct 2025 09:43:00 -0400
+	b=RJZpXVQSGY1Cq7/hLKz9U1d7rI6adhrw86ls1mOKCcAZExpqeejlPgdDRbFk74H5L
+	 lq0K9c6Wf+3qjg42MrHfiTAPxlvtOnIKRmG211mJ2z39pgPJxyzsE6inOALwxXQmXT
+	 NQXkZYZ1hYA3kMRGmCLLcNQA1CeffdMHlIBCecN8=
+Date: Wed, 15 Oct 2025 09:44:57 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Martin K. Petersen" <martin.petersen@oracle.com>
+To: Mark Brown <broonie@kernel.org>
 Cc: users@kernel.org, tools@kernel.org
 Subject: Re: [b4] initial "b4 dig" to supplant Link: trailers
-Message-ID: <20251015-screeching-porcelain-chupacabra-4d8c0a@lemur>
+Message-ID: <20251015-arcane-lyrebird-of-ampleness-aec27c@lemur>
 References: <20251010-muscular-camel-of-acumen-00eeaf@lemur>
  <20251014-gorgeous-cougar-of-endeavor-0c5baa@lemur>
- <yq1347kc3bu.fsf@ca-mkp.ca.oracle.com>
+ <741ab86b-753d-40ec-91b5-e1b8bb4a3de1@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -42,36 +42,27 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <yq1347kc3bu.fsf@ca-mkp.ca.oracle.com>
+In-Reply-To: <741ab86b-753d-40ec-91b5-e1b8bb4a3de1@sirena.org.uk>
 
-On Tue, Oct 14, 2025 at 10:52:42PM -0400, Martin K. Petersen wrote:
-> There is some funky stuff going on with the date range limit. b4 dig
-> currently misses some messages for which the patch-id can be queried on
-> lore:
+On Tue, Oct 14, 2025 at 11:13:00PM +0100, Mark Brown wrote:
+> On Tue, Oct 14, 2025 at 05:17:43PM -0400, Konstantin Ryabitsev wrote:
 > 
->     ecode, out = b4.git_run_command(
->         topdir, ['show', '--no-patch', '--format=%as %ae %s', commit],
->     )
+> > "b4 dig -c [commitish]" will now output a single link to stdout (all other
+> > output going to stderr), so that it can be piped to other commands. It should
+> > be the latest matching patch received by lore prior and including the "author
+> > date" of the commit. This weeds out all ensuing backports and cherry-picking
+> > efforts.
 > 
-> The resulting %as cdate will be in the format "2025-10-07". However,
-> specifying a query date limit of "rt:..2025-10-07" means the patch mail
-> will be missed:
-> 
->     Full query: patchid:3c67a3033590c511bc96819aa2fdc6376c2799e1 AND rt:..2025-10-07 (nocache=False)
->     Grabbing search results from lore.kernel.org
->     Nothing matching that query.
-> 
-> Whereas my own script finds it:
-> 
->     $ check-lore 3c67a3033590c511bc96819aa2fdc6376c2799e1
->     Found 3c67a3033590c511bc96819aa2fdc6376c2799e1 on lore.kernel.org
-> 
-> Bumping the cdate to 2025-10-08 makes b4 dig find the message.
-> 
-> I don't know anything about Xapian and how it indexes. But I assume
-> there might be some fun with time zones and DST lurking here...
+> It would be really handy to have a --mbox (or something) option that
+> will download the mailbox like b4 mbox would, my main use for this (and
+> for the existing link tags) is to pull the message ID out of the link
+> and feed that into b4 mbox to get a mailbox which is what I'll actually
+> look at and work with.  Obviously that can be scripted locally but it
+> seems like it might be a common enough need to automate directly,
+> especially given that the scripting will be going right back into b4.
 
-Yes, this is probably what's going on. I tweaked the filtering to add 24 hours
-to the author date just so we don't bump into timezone shenanigans.
+I just added a --save-mbox option to use with -c. It is currently exclusive
+with --all-series, but I can also make it be non-exclusive, so that someone
+can save all revisions.
 
 -K
