@@ -1,98 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E246171C9
-	for <tools@linux.kernel.org>; Wed, 15 Oct 2025 16:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AFC25B1FC
+	for <tools@linux.kernel.org>; Wed, 15 Oct 2025 16:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760546450; cv=none; b=LpKP/4A2UAZI0+XY4nj5PuZOIv4f067mDaK9mJKsYHcOTzwCdS3JhRmqQgfb6X09Mc27e9w4kch0s718uWLAPWnsUUzB2o5PPQTvJDXyGViF8Io4XFiSTljtg6dSHDhGo61JR0wJ/zsBqgT3PXjzPwKCMSXi/fFTmszFDgOrRP8=
+	t=1760546593; cv=none; b=NdAdeqDpN/RA7j8Xm2rVC9nf3OdCvIpCOim3ddy2tX96EEJjhFCsawxPSy1ZwwUt23sh9C8q6u9+bwNxfvR19ldRaHwgC+JlkXiR1AZ6w41fn/rXhb2f69BPQxRd3thczmTbPfxUYdtHW0m9rUqt3OL7R1pWZsRDZeFM2Ug+v6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760546450; c=relaxed/simple;
-	bh=GQJKeE42pFls+fjtcwV/VVt9hPe8dtZotKIMAkEeP7Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N4RLY8bcfM/7gWrgFlrWv/ALBoNo7+iE68wEkXIRGy33sPPJ1xYpjyGgKIEhZZLYxxJSdn2ftNsuaiAJX7E1NDKSPMu1dj/KKJobIrnN9ArtZvGrYZnfnp7NdHCJAtARB9Pij/twRBuAuZwMZkjPmqvFwE3SJXUGCeqWVBG5dgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C0iNTdVS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760546593; c=relaxed/simple;
+	bh=sX7wrNE379AzMv+151glriaOmW/7dXOvJgW3MZdfnDE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Do0NkPiXgb4+cLWdyYQRt+wAEVzyzPABePPmM1+C052f1BJ8bSpytkRfUEYgtNrVAD7817pkzkw+vJl4tGvZZ/DyCH6H1l2dPylRWjOLuqVydd8gie+z5K53yuTcaDsOrARV4e33wzHrDvy+wiyP8fOBgK3SPgBFHM+Um3QBHI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QETGEL3O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C0iNTdVS"
-Received: by smtp.kernel.org (Postfix)
-	id 32A74C4CEFB; Wed, 15 Oct 2025 16:40:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D021C4CEF8
-	for <tools@kernel.org>; Wed, 15 Oct 2025 16:40:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QETGEL3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E2DC4CEF8;
+	Wed, 15 Oct 2025 16:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760546450;
-	bh=GQJKeE42pFls+fjtcwV/VVt9hPe8dtZotKIMAkEeP7Q=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=C0iNTdVS9PFeEiBl6uk4Q2kmY/IJ1HdiGgUZkb68fxzhsJBTV9aP4CZWZ5yP1qO4J
-	 VAL1df59xLdbod7MI/fu7ZaZKQidynwjXZab6YK1xlxi3qgOZ7FlC+tO8O78CCeURD
-	 V1PpJtPLi6QnA+aH1Ml60cLJPlDZtkjvGlA4knqL57o2NgzpGWvz2nHLxoNaGwJSl2
-	 Nf1W1r+VUNdA7vX5JHkyBGkP6RhtrvsAIS7VfXUkNGnjPG8o3UpuBKR4VW/olSsraw
-	 opBQrvgFctDiSw9iaHsLHnT/YZF5/YRqZP9X67MBMxRAtFpJo0RtJKNkqboSRH2xcj
-	 myG1TmuTcCTow==
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b4539dddd99so471782666b.1
-        for <tools@kernel.org>; Wed, 15 Oct 2025 09:40:50 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVvKYsUjQt6NlY5n2aBsj9r1QashyfWOgXqYM4GiFVyLcGQ0VqL6Z9J48mi5osSQg/x6MItvg==@kernel.org
-X-Gm-Message-State: AOJu0YxfTTvwHsmdHsOt5PJS+NidR9uOqNFp8Hs8XnmjKQ+wR7EKnStJ
-	YuBpv5RxjakVM9e9J9FOLLE6AxEIxsgu7TBUW5SN6Rr6+ykBcEkX+MUL0JlZTBMZy32l8mpL8uF
-	jnwNWptOiXYiJhxz6YJUPM9i30+gGTw==
-X-Google-Smtp-Source: AGHT+IH6icgWzH3Zilt3SGfQHRgQizZgQm0DqknYe/1FaqAA6P4ga8RWrV1CerAS7TMx+FeNQ4d4MBjcsTFawETrIZI=
-X-Received: by 2002:a17:907:e8e:b0:b45:eea7:e97c with SMTP id
- a640c23a62f3a-b50abfd5effmr2869734766b.47.1760546448682; Wed, 15 Oct 2025
- 09:40:48 -0700 (PDT)
+	s=k20201202; t=1760546593;
+	bh=sX7wrNE379AzMv+151glriaOmW/7dXOvJgW3MZdfnDE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QETGEL3ONdFYDaNtZnXR9eUnVMfAyzAAX8j+FKiPRirH1NckB3RvY34HMFuJULTHN
+	 LtLzo9Fgc+GYhA8qD0Fz/2DsPn3auLy9IVGM2ueS2T5f7MUVKRIWc0yCXwjFXtFhtk
+	 mAonYv8qJ0H5ZAA61Lbv99hkFKD314ZGUPXgem/pHzjhGoWfZQM2KsLRRHJyep48Y6
+	 EmNV7WFhEIhHx6tm9GXUe0aqEy8nmO6ajVd4yqaxZX6aLMs95y4gl+hjnrVeRczc/Q
+	 50ILGC9xe0A8nT/PZZUnUrPlcgDhpYgBcfrFcOJ/VlZ0ObNfpazgRWB3RttQk0jYlB
+	 mYMUujPzgXJkg==
+Date: Wed, 15 Oct 2025 17:43:08 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: Peter Zijlstra <peterz@infradead.org>,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	users@kernel.org, tools@linux.kernel.org
+Subject: Re: [workflows]Re: In defense of Link (was Re: [b4] initial "b4 dig"
+ to supplant Link: trailers)
+Message-ID: <7bbf0c95-d254-4bf0-96c5-893f6349ed4c@sirena.org.uk>
+References: <CAMuHMdWxMhM1J3zHC8OkN_fd8XsJPFA6jM_3JFU=ySKhnX6ESw@mail.gmail.com>
+ <CANiq72ka1y0YXysRQtuqnzc0i5FSbrGjKwprrXQpozwDOV3khA@mail.gmail.com>
+ <aadb0515-4024-40c0-8024-fcdd029a3029@sirena.org.uk>
+ <2991ae006906913c10715a9673ac53a4ea557728.camel@HansenPartnership.com>
+ <20251015151447.GD3168635@noisy.programming.kicks-ass.net>
+ <20251015111816.728bfda7@gandalf.local.home>
+ <20251015155346.GA3287345@noisy.programming.kicks-ass.net>
+ <20251015115917.5e031880@gandalf.local.home>
+ <20251015160622.GB3287345@noisy.programming.kicks-ass.net>
+ <20251015121502.7430d067@gandalf.local.home>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20251010-muscular-camel-of-acumen-00eeaf@lemur>
- <20251014-gorgeous-cougar-of-endeavor-0c5baa@lemur> <741ab86b-753d-40ec-91b5-e1b8bb4a3de1@sirena.org.uk>
- <20251015-arcane-lyrebird-of-ampleness-aec27c@lemur>
-In-Reply-To: <20251015-arcane-lyrebird-of-ampleness-aec27c@lemur>
-From: Rob Herring <robh@kernel.org>
-Date: Wed, 15 Oct 2025 11:40:37 -0500
-X-Gmail-Original-Message-ID: <CAL_Jsq+Y-hwAgsCd632YDwb78Z3nJ7xZ3tp44qHcUsJnuAUF+Q@mail.gmail.com>
-X-Gm-Features: AS18NWAONdhY0kXfQ0iQSAMnzL4Kb4OHkRUOvTUzQLW6monZlvVCAAYY6xc8Xc4
-Message-ID: <CAL_Jsq+Y-hwAgsCd632YDwb78Z3nJ7xZ3tp44qHcUsJnuAUF+Q@mail.gmail.com>
-Subject: Re: [b4] initial "b4 dig" to supplant Link: trailers
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Mark Brown <broonie@kernel.org>, users@kernel.org, tools@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="s/Zc12CvT+NUgcnt"
+Content-Disposition: inline
+In-Reply-To: <20251015121502.7430d067@gandalf.local.home>
+X-Cookie: Long life is in store for you.
 
-On Wed, Oct 15, 2025 at 8:45=E2=80=AFAM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Tue, Oct 14, 2025 at 11:13:00PM +0100, Mark Brown wrote:
-> > On Tue, Oct 14, 2025 at 05:17:43PM -0400, Konstantin Ryabitsev wrote:
-> >
-> > > "b4 dig -c [commitish]" will now output a single link to stdout (all =
-other
-> > > output going to stderr), so that it can be piped to other commands. I=
-t should
-> > > be the latest matching patch received by lore prior and including the=
- "author
-> > > date" of the commit. This weeds out all ensuing backports and cherry-=
-picking
-> > > efforts.
-> >
-> > It would be really handy to have a --mbox (or something) option that
-> > will download the mailbox like b4 mbox would, my main use for this (and
-> > for the existing link tags) is to pull the message ID out of the link
-> > and feed that into b4 mbox to get a mailbox which is what I'll actually
-> > look at and work with.  Obviously that can be scripted locally but it
-> > seems like it might be a common enough need to automate directly,
-> > especially given that the scripting will be going right back into b4.
->
-> I just added a --save-mbox option to use with -c. It is currently exclusi=
-ve
-> with --all-series, but I can also make it be non-exclusive, so that someo=
-ne
-> can save all revisions.
 
-I would find that useful, and not just for 'b4 dig', but for 'b4
-mbox'. My workflow is essentially get a msgid from patchwork and then
-fetch the thread to read with 'b4 mbox'. A current shortcoming with
-that is I don't see the prior versions. Best case is there's a link in
-the cover, but often not and that's a switch from mutt to my browser.
+--s/Zc12CvT+NUgcnt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Rob
+On Wed, Oct 15, 2025 at 12:15:02PM -0400, Steven Rostedt wrote:
+> Peter Zijlstra <peterz@infradead.org> wrote:
+
+> > Finding where or which patch is directly affecting 'your' code is mostly
+> > trivially done by scanning the diffstats.
+
+> I don't have the time to scan 20 different diffstats that are at the end of
+> every change log. Especially when it's not in the immediate view, and
+> requires scrolling. It takes much more time than a simple lore lookup.
+
+> And sometimes, the files don't actually tell me if I should look at a patch
+> or not. If there's a patch I need to look at, just Cc me on that patch. I
+> usually don't care about the rest.
+
+The trick is often that without at least the cover letter it can be hard
+to tell if the series needs to go in together, if each subsystem should
+pick the patches relevant to them or whatever.  Some context does help
+with triage, though at least for me often just the cover letter and any
+shared patches are fine.
+
+--s/Zc12CvT+NUgcnt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjvzxsACgkQJNaLcl1U
+h9DBeQf+MR1jDU1ryV1lPRUGVSqPM/1MASH2Q2BWdOTSls6upT/dlgbkyEasiCwg
+j0+uHXNtgtFCmXPH0SfN09ApudEac0M2up1bga1vKD15TGqe98x8GrQpK2vbnHTR
+gWYOuKCw3ENa2+nt6MYHVLwgKWMtiz4bQxsQTPAbQ2Zrp9nKI3+Xr0ro4klYTmwu
+5h7haJCUZE2+9IIeH07XdFz4mjxnLl+or3gX3wcxkn/h91L9//FS2kHVck3nZ2BY
+2P1EdqmA0D4TqRAOjpvrmJ9jDjl14iukwxUwDu0H0YaZ+ErjNuk9qpcKRgGBSg7Z
+pUD9n9NERnVV5s9KD4NTQEj92Dddvg==
+=Qeaz
+-----END PGP SIGNATURE-----
+
+--s/Zc12CvT+NUgcnt--
