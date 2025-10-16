@@ -1,132 +1,114 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E6C3431FE
-	for <tools@linux.kernel.org>; Thu, 16 Oct 2025 14:52:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB323054C4
+	for <tools@linux.kernel.org>; Thu, 16 Oct 2025 15:08:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760626368; cv=none; b=pIEftoCdU/cRnA1h7VllgsVIAcBH6LBJPL0o/oAw4aB7TUohztKQJUJimNM/Bmaxk8Pq5tHWmijwAxSkWVAhkhwqh4bGuj1gEsdTOpsipm5l3I+s5115iL59VOtD3G4co8M52d/mkniFeRVZuo7s/+QxE3I0QUdC/pqdnRAtwV4=
+	t=1760627294; cv=none; b=ohr9t/SiMYxJv1HXrSRhwTZ2yUYlBZ/858MU6zJ/K1OhfSs9fbrK9NGwdQ+vu/bVVB1v2gyWQLZpTXwN0h4nG9ylrqebK1Oj2qZEW3GrGPRNC1Om7cUgYzRDEXKVaOB4EWcmmconKJGuYDGXDi0Jqjrqa19KOqXU/O0c1LPW3ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760626368; c=relaxed/simple;
-	bh=6ccb/gRGb/KJgnVLssaQxscpot3LOvQRPI74sLTo474=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GoklFTpA6Z/vY9y9S0RDouheg4Zz1b5u/YT0dvWUqBHyBT3vIAK5Hh3EpdyK/Z3A4zLXNLZj80ATIdNtdwREcyvH0MmSAgPhVnjx43I6eWSfROpRkkwy7RA28NPbcEzqOD3OIrJ1NQvb9H6UOP6LB0MvaSppIsXiO2IDkQiMtq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-5a3511312d6so379941137.3
-        for <tools@linux.kernel.org>; Thu, 16 Oct 2025 07:52:46 -0700 (PDT)
+	s=arc-20240116; t=1760627294; c=relaxed/simple;
+	bh=0cPKNjlLps/HOp/pNQwa9jOkbnMYtta2arv+bbFaykE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lEOay3kvo0vWhhUs+X8VEqjNOvIU3g1CnGZaxCCO6PuANYFmD6IXg/x8AzyuECy8tIcC1NhydAUmbF6q+qWnJ9iit8z99F4LUPanMowNoDWeU4N8iPo6QAe1KUL4IThiSZ68/+3CMhoSP6ThIoy/yBidmmKZ73QSsIRVK+azvd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=H8njXtUc; arc=none smtp.client-ip=209.85.160.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="H8njXtUc"
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-3c8f257b7e1so1269067fac.1
+        for <tools@linux.kernel.org>; Thu, 16 Oct 2025 08:08:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ziepe.ca; s=google; t=1760627291; x=1761232091; darn=linux.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VO+4NAMNLm3+ETnXnMHmbHusbEkgXiBzT3Hnja9ypMg=;
+        b=H8njXtUcNB6XMHe7EhoYZ+vFoj4VjEmJzdfwQ3MVetfapMsSUX6W6ew3agYLcPsHq/
+         u5uGj4Jk10jZXhGxLzuoletsxHY0CRcarLFsna4wFGj04PsuTVxabKBfnjmo2Vz9Rr9o
+         5RPFbQFrIqLKtKebcKU4wjk9+k3AHVnj9dsiYcABKX00pwFUvpDzpF0M0rrDp2qplSr0
+         NX+arxOWn6dxmFSWud+OBLdBZXCTW5hxYK5JJ6A9PPCGehKJfMbOfrjGe99w296DdBU6
+         jGexO6xrUvyitUL2A2aoINBfS5fexzbMFQUR2G0AAEl32PRe/VjZOhFGYKRSn3wE4Llu
+         Kp3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760626365; x=1761231165;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=u3dpVRYtpBdAD5EkvZzf/MRnzttl1OFDj2601ym5h5Y=;
-        b=o4Ihv6dW6UyHt9+vg7c2M186WLs6rXFhumsVrIcmapPPjOJftTJnWJrDWTCPNxA0Lg
-         KQLT2K6uzTdAOMxj2F1SrhyolaJeNZl4YplJslw+WFDyAROpop3gj/2dWCKGSrRfU9a4
-         StMTux+Iojc4yLxemmh/mhHxJ6D65DxGgAFb3Ia5zOQW4/U0pSLwwm5Yb7YwH27w7odP
-         OE8CTWeG1mzESKzPUr/2sMsz6zLISGCtqscrxezAD2wN/mIkbM/+dFV80Z/CxpEgUrDq
-         Zjny6L2ugr3ANh9CwLoH9oZfy5QMAZbjjb1e2Nw836ZuTlUUX7iiNVhqsXzYzvFwar5S
-         JMeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV9GJEJag4eH7k13ajHSumPmEQcvls66AaVJ4FIpZ/HO/04BRcLtZe4NRg427xF7NtIZGrEOw==@linux.kernel.org
-X-Gm-Message-State: AOJu0YzpOUq+sYFOmQBnMIPr9BDwcLzJ5DixEcS1TQNKHCWM2Y37mBMD
-	wER1z7BHcY76URpISozlCHKyBP7tRc1qVMtxH8wjyazoERe2mPu7xLUaM3pYYgYf
-X-Gm-Gg: ASbGncvSlaZQhp8sXxIkPB8LLwX0gV9pAWHO9EpIZsG3s2Vuso/sU7/9kBqCMz3r/HA
-	smw7rk3tCGeBY9JaHDlo+gmtyHg1YtB03CRm+xSkc594RC3wGXHc7jAxIKxtP+iv+hENM+Aeg4r
-	Br3sMRRjwxs0w7hdVf7vAfP8C/22FUskOFEFb3rrLaD5204tbNz7ZtdVbkh6E80N9s0erPhak0H
-	VtVi+03rPfQwH6pozAU9IgVd8OxgPFBA4ut2athsKAIKFjQGoRDxJt6le4oJNMSnKLSkL48W2HU
-	Zb79X8pcOTyexLAahP5bqqunGFXWuVdIqZbuyHAGge+skcGxA62GpKQC/PbpZAZ2jkCNZwPY306
-	6pbOqyyGpYzX8CfJERBZz/2Y8SHjlYpMT3QVt2BFZXczvWA8rOO8tBDDyB0yTiDXC16B2qQDpt0
-	5HcCU7fj0qsHQ+cUOQbowGMp+NbhNa50MMNFioLQ==
-X-Google-Smtp-Source: AGHT+IHlx6mw490E7XkAOJ8OE//c5no1Nyuv35Tm0YK+Xq+SRlEqIDomMMqUjE3DmuFHbo0HWqScDQ==
-X-Received: by 2002:a05:6102:26cc:b0:5d6:36b8:769f with SMTP id ada2fe7eead31-5d7dd554d82mr229048137.8.1760626364572;
-        Thu, 16 Oct 2025 07:52:44 -0700 (PDT)
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com. [209.85.222.53])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-930bf56def7sm5525428241.0.2025.10.16.07.52.44
-        for <tools@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Oct 2025 07:52:44 -0700 (PDT)
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-9310a7b2668so133846241.3
-        for <tools@linux.kernel.org>; Thu, 16 Oct 2025 07:52:44 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUYO/9tr2cuulZ6oFK/wWIV46wOSaNiX2YE9ILfksiUM7+J9Tfrexwbf/7qhI0V968IOpNWJw==@linux.kernel.org
-X-Received: by 2002:a05:6102:611b:20b0:5d7:de89:b7e3 with SMTP id
- ada2fe7eead31-5d7de89bc79mr113070137.9.1760626363798; Thu, 16 Oct 2025
- 07:52:43 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1760627291; x=1761232091;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VO+4NAMNLm3+ETnXnMHmbHusbEkgXiBzT3Hnja9ypMg=;
+        b=q7MdF9t9mvc1Fwjz1e7okHQPFIJggln0WBkbwoF5/ia5mx6t/xd/Xg/yPAu54TnQKa
+         bU45GVZO1N8Vu+b7CnS+oR+v9MRGPyeMOrJrMy5HCTSWkNy9Jrn/jw23lGBDtHTCGzZ2
+         o62icIrKRsMBAmkhMfMbPqsg19Z0lVIdCHHuTTsUwoIGzqlj0Sd61Q21OD3OWLgtl511
+         RE5CCTByTcw2kxtTTB8X508Y5pJCbVX3IhCU4lwSSG8sD6jEZG5yKln7btFJmvNuf74v
+         HUJaT/uDRXAWUhdbUOPKWiJUP56FjvIlclSkSF2MORFYIyUttPQkIuV+nd3yly52PTsf
+         hKRA==
+X-Forwarded-Encrypted: i=1; AJvYcCU/+Ghaus5P4c6puRbYSt9Mef37tTuFYPnu9W9/i4pWghGO7qndmXhay9QK+BI1WEoBn+1Tog==@linux.kernel.org
+X-Gm-Message-State: AOJu0YxL+B1KoJcGfy1U4nWHzdZPmbKrCkHeQFpGQKCDsl9q+sEo4R8Y
+	z+VOadenUuKAjXvZyPWM4qVsvTTqzUTY3o2oYr35zpMM1PmOhGgEH3Lqkn0BOoddotvA77Nperq
+	58QsA
+X-Gm-Gg: ASbGncvy8CVBZhXq1StNraZsfc+K0z3+6ny//OmCjfISXl/0M0K9TXgZatWkVVGmFQf
+	wHRP/codyH/jFS2dmS+DmNS4xfL1975h/WbLr68vVLGLcECIHvU3Y+HXTHJQ/LGWo3pKp8BhFAj
+	ETledO9W23QKSKk8/twaCTnazFqXbCRJHhx5E1LHQcFJIEMVl0/runE+TRBNCqdUJvecA8mxpFd
+	t6CI39BDQQ4K9Tf3dYyYPl9kAiXbSWh6qBa0iFlfo0mwccPRE8RNquGFBxUCZnvMu8tgrsYIlnr
+	266Cbn7+1HoXOzEhlwg/DWndMxskP1pPGQ+g7SWPoMVO1cwz4RbFNTuFoxgnzRNBpFU+O120bHi
+	YK7SGHmvSJ/1FutilxZFZkif/5s8E30LOfAJAuC11Iat7xgGFYw==
+X-Google-Smtp-Source: AGHT+IGZv/o1cy/lqJ7jFPh/n/eaq+lQBB/XZ/gC/7/6dbxrG3+jZTIhzG0ps7XvjjvD2W3pQ493Qg==
+X-Received: by 2002:a05:6870:7193:b0:30b:7b4e:36e8 with SMTP id 586e51a60fabf-3c968b2d9d2mr2038357fac.14.1760627291302;
+        Thu, 16 Oct 2025 08:08:11 -0700 (PDT)
+Received: from ziepe.ca ([130.41.10.202])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3c8c8adcdfesm6439496fac.1.2025.10.16.08.08.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Oct 2025 08:08:10 -0700 (PDT)
+Received: from jgg by wakko with local (Exim 4.97)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1v9PaK-00000000UHr-4Boj;
+	Thu, 16 Oct 2025 12:08:09 -0300
+Date: Thu, 16 Oct 2025 12:08:08 -0300
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Willy Tarreau <w@1wt.eu>, Linus Torvalds <torvalds@linuxfoundation.org>,
+	Junio C Hamano <junio@pobox.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	users@kernel.org, tools@linux.kernel.org
+Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
+ Link: trailers)
+Message-ID: <20251016150808.GL3938986@ziepe.ca>
+References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
+ <20251013081536-mutt-send-email-mst@kernel.org>
+ <CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
+ <CABgObfZS--70UTOpSXo=JOZViN1jm4O6M92pu-6Qunif3v1Y8A@mail.gmail.com>
+ <CAHk-=wg4WfbXs-kMOAM7FmQ0w8q3KO9DC8CWLg1WPnoaZW-Wiw@mail.gmail.com>
+ <xmqqy0pezhm7.fsf@gitster.g>
+ <CAHk-=wh--VXgwQ3s8DLeag6cegsD9cPcvkmbVft0Gesy2aGPsA@mail.gmail.com>
+ <20251014033900.GA3126@1wt.eu>
+ <CAMuHMdW8R0Smx_CKGL3b0tLiyEB63z5uxvXG2ZG5_sRy13+UQQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CABgObfY5agTRsB-bCqCYbA0erFn5cVbujtTNBiCti8g_68nCWg@mail.gmail.com>
- <20251013081536-mutt-send-email-mst@kernel.org> <CAHk-=whSShtPG1_+02Cc4yDuEJxVqX=G8tAx0gW7UjA7cuBp-w@mail.gmail.com>
- <CABgObfZS--70UTOpSXo=JOZViN1jm4O6M92pu-6Qunif3v1Y8A@mail.gmail.com>
- <CAHk-=wg4WfbXs-kMOAM7FmQ0w8q3KO9DC8CWLg1WPnoaZW-Wiw@mail.gmail.com>
- <xmqqy0pezhm7.fsf@gitster.g> <CAHk-=wh--VXgwQ3s8DLeag6cegsD9cPcvkmbVft0Gesy2aGPsA@mail.gmail.com>
- <20251014033900.GA3126@1wt.eu>
-In-Reply-To: <20251014033900.GA3126@1wt.eu>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 16 Oct 2025 16:52:31 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdW8R0Smx_CKGL3b0tLiyEB63z5uxvXG2ZG5_sRy13+UQQ@mail.gmail.com>
-X-Gm-Features: AS18NWBY-mm32ZI-dKjqMJEd2ZNiFX9kEGA4LbVU5EM4QAdnELBsmh-u7jm8b8Y
-Message-ID: <CAMuHMdW8R0Smx_CKGL3b0tLiyEB63z5uxvXG2ZG5_sRy13+UQQ@mail.gmail.com>
-Subject: Re: In defense of Link (was Re: [b4] initial "b4 dig" to supplant
- Link: trailers)
-To: Willy Tarreau <w@1wt.eu>
-Cc: Linus Torvalds <torvalds@linuxfoundation.org>, Junio C Hamano <junio@pobox.com>, 
-	Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org, tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMuHMdW8R0Smx_CKGL3b0tLiyEB63z5uxvXG2ZG5_sRy13+UQQ@mail.gmail.com>
 
-Hi Willy,
+On Thu, Oct 16, 2025 at 04:52:31PM +0200, Geert Uytterhoeven wrote:
 
-On Thu, 16 Oct 2025 at 16:37, Willy Tarreau <w@1wt.eu> wrote:
-> On Mon, Oct 13, 2025 at 02:44:28PM -0700, Linus Torvalds wrote:
-> > So rather than doing a separate branch, rebasing things there, and
-> > going back and rebasing away the things in my original branch, doing
-> > just 'git rebase -i" in the original branch and having some way to say
-> > "this is the start of this series", and a "this is the end of the
-> > series", and having git rebase create a set of linear series with
-> > merges that delineate them might be quite convenient.
->
-> FWIW I'm using "git rebase -i" a lot, that's probably the command that
-> really makes git magical from the developer's perspective. While I know
-> it's possible to keep empty commits, it"s usually not welcome because
-> the purpose of rebases is to be able to rework a series by moving things
-> around and eliminate those that have been nicely integrated.
+> As the audience may not know: you can keep empty commits while rebasing
+> using --keep-empty.  But it is indeed tedious.  So I wrote a script
+> called git-add-separator, which creates an empty file .separators/L<N>
+> (N increasing automatically) and commits it, thus creating a non-empty
+> commit that doesn't interfere much with the rest of my tree.
 
-As the audience may not know: you can keep empty commits while rebasing
-using --keep-empty.  But it is indeed tedious.  So I wrote a script
-called git-add-separator, which creates an empty file .separators/L<N>
-(N increasing automatically) and commits it, thus creating a non-empty
-commit that doesn't interfere much with the rest of my tree.
+I use empty separator commits all the time, and git rebase -i
+alot. Never had a problem, never needed --keep-empty..
 
-> Thus I think that what would really be nice (and that I've been missing
-> many times) is a type of commit that git recognizes as a delimiter, i.e.
-> it doesn't contain data, but *something* (maybe a dummy diff on /dev/null
-> vs itself?) allows git rebase and git am to say "OK that's not the regular
-> empty commit, it's one I have to keep anyway". Then one specific option
-> of git am or git rebase could be used to turn that commit into a merge
-> one.
+Don't see any 'empty' related config in my 'git config -l'
 
-Can be done. Let's try manually:
+It seems like rebase doesn't remove commits that started out empty, it
+removes commits that become empty
 
-    # Pointing to the "empty" commit with series description
-    top=$(git show | head -1 | cut -d " ")
-    # Find previous empty commit
-    old=...
-    git reset --hard $old
-    git merge --no-ff $top~1 -m "$(git show $top | ...)"
+?
 
-OK ;-)
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Jason
