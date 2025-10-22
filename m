@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A07C2F5A3B
-	for <tools@linux.kernel.org>; Wed, 22 Oct 2025 19:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA00155389
+	for <tools@linux.kernel.org>; Wed, 22 Oct 2025 19:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761162939; cv=none; b=p1OlQ1waGWe3dNp0rzhVhGOeImAQCFC+8EENOaBorH05T9kSPQqmQwz8YLj2a8PzrjdGMRfrAE4TjHjiL23EhaYsn4rNmUHeJDMbjuMakZmblmQq4NnRzs9aoONGcYUuM45v0b+EdvlmT3/7Q5JzpI/rrL+corD58D5gX4cuYL4=
+	t=1761163064; cv=none; b=m6Ir43hegx8SM5gSa6Mud98qNviQT8VBOQAe+Jpj/aZ91JnN7uA+DwtXacEAcuK9yZRQgcoDAuE2GLQLewE3GgCZ4ZCqyAW9PCmRDxfaUAmQJQrFL9vwyYfNyWKRA+YPl0uT9ToyvUrLtXSDPrEa19HjlMUMsn+3lA2WLPK1jvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761162939; c=relaxed/simple;
-	bh=zwMcIS2mAhJPxLzV5seCyJdoOoZeWo+vXPa91L/9hZA=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=GFtIybYm2Gh42APRCrv08LaVO6ieiHyfXxUWY1BLhvIK1lm+unJbM+16x9Xy13ghHM9AWDB5dX4EywwdJN/NPGfkF9Jxg4U/Iyo3G9dYeX6idydwqFOsv+o6SIKcmPvQpLEnZP9EdMWCKF9PxgWNa1Ny/000DhjGbVXz39ko/a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QROE7dcX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761163064; c=relaxed/simple;
+	bh=kkkU/KavhBUNNcerT6LGGOGYhW+DZxd9059VOt6UOU0=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=upNWw9tggCioJMEYzQnWGNSlp8RlepvCfZf7NTd5ut7UeXAxH1ZUxT0KDUA9bXmDC8/49/6FT0FfvVcNQQlyIhL+YkVAw2+rL/hE1HnI8GXlMg/UzGwG1tnOvjGhWji466D1RbA9N2YL9Tm1kpg7z+qVbPtzwH/LiUHoZgm8H14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiFrVy6N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QROE7dcX"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiFrVy6N"
 Received: by smtp.kernel.org (Postfix)
-	id 53080C4CEE7; Wed, 22 Oct 2025 19:55:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF32C4CEF7;
-	Wed, 22 Oct 2025 19:55:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761162939;
-	bh=zwMcIS2mAhJPxLzV5seCyJdoOoZeWo+vXPa91L/9hZA=;
+	id BA47BC4CEFD; Wed, 22 Oct 2025 19:57:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71948C4CEE7;
+	Wed, 22 Oct 2025 19:57:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1761163063;
+	bh=kkkU/KavhBUNNcerT6LGGOGYhW+DZxd9059VOt6UOU0=;
 	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=QROE7dcXJADG9S+SUFsibgHYTG7+CMHNFWQp4wtCmY1sIwbStxqUBuXqE/G1IeHWQ
-	 vtk6Ht5LWFguNv0oCrdFOo/V4KqRgApfhyow91uxJnSmpMqDZUb3DbtNmtexK4PF+y
-	 7fHBCyaMrmkSaj9d/CEVmndyRVpfF/gCu2mnMbvBq6qIja+W57vhyoxm6PhEC5iqRZ
-	 aOXSS0rwM3PBmidmQcGxLsuiTa+xeg5WaS5X+V6BbH8Og4dFipSOWRfFLoAJuWTO4d
-	 hEgig4Acf8zz+jYQpjpzBQNmEldGMdZmXIirZamgeNLPSOpmmPjIJOe3UwpddUr6ST
-	 ySSjig8FCY9ow==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 380863A78ACC;
-	Wed, 22 Oct 2025 19:55:21 +0000 (UTC)
+	b=xiFrVy6NxkzvDvXjHQwbQoGShMNCG1yjGk4xhBd/ANEa4k+W1mINQHne3KZRySN8k
+	 K2FoHYNZC3IIOVSTbW3tWHZ5qtVBsHoVookH6tcFnPmvLtTYhZEwsZqjK6kUMQmwBn
+	 P1WfNu4d4KfWBg5xH5VhAoRXsAAGBXMjCNMP9KB8=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: tools@kernel.org, "Michael S. Tsirkin" <mst@redhat.com>
+In-Reply-To: <cover.1760393880.git.mst@redhat.com>
+References: <cover.1760393880.git.mst@redhat.com>
+Subject: Re: [PATCH 0/2] b4: sparse-checkout related fixes
+Message-Id: <176116306333.334203.14010402834008405699.b4-ty@linuxfoundation.org>
+Date: Wed, 22 Oct 2025 15:57:43 -0400
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,32 +40,29 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-From: Bugspray Bot <bugbot@kernel.org>
-To: tools@kernel.org, konstantin@linuxfoundation.org, users@kernel.org, 
- geert@linux-m68k.org
-Message-ID: <20251022-b220661c2-de130d3d7a44@bugzilla.kernel.org>
-In-Reply-To: <CAMuHMdX40JoouK0yjm_-ggj5dQ9MtE2vrYhUOQ9dDpCN-0+tXg@mail.gmail.com>
-References: <CAMuHMdX40JoouK0yjm_-ggj5dQ9MtE2vrYhUOQ9dDpCN-0+tXg@mail.gmail.com>
-Subject: Re: b4 am no longer prints file name
-X-Bugzilla-Product: Tools
-X-Bugzilla-Component: Infra
-X-Mailer: bugspray 0.1-dev
-Date: Wed, 22 Oct 2025 19:55:21 +0000 (UTC)
+X-Mailer: b4 0.15-dev-88d78
 
-Konstantin Ryabitsev writes in commit bd7332f9094cb0c113c228f996991f2a42e641dd:
 
-mbox: restore printing out of filename to git am
+On Mon, 13 Oct 2025 18:20:04 -0400, Michael S. Tsirkin wrote:
+> I encountered shazam test failures, diagnozing them I realized
+> b4 misuses the sparse-checkout command.
+> This patchset cleans this up.
+> Pls review, thanks!
+> 
+> Michael S. Tsirkin (2):
+>   test_shazam: clean worktree before git am
+>   ez: cleanup sparse-checkout usage
+> 
+> [...]
 
-Looks like due to either inattention or bad auto-indenting, the part
-that printed out the name to git am ended up buried inside the if
-statement that is almost never called.
+Applied, thanks!
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220661
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+[1/2] test_shazam: clean worktree before git am
+      commit: 72af5e2f16d67610a018c08d264cd9c160cce8bf
+[2/2] ez: cleanup sparse-checkout usage
+      commit: 9e52ea82688a8ca37e6f59a86a723768c6044547
 
-(via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=bd7332f9094c)
+Best regards,
 -- 
-Deet-doot-dot, I am a bot.
-Kernel.org Bugzilla (bugspray 0.1-dev)
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
