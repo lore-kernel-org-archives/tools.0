@@ -1,109 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2DC279DC9
-	for <tools@linux.kernel.org>; Thu, 23 Oct 2025 06:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98979292918
+	for <tools@linux.kernel.org>; Thu, 23 Oct 2025 08:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761202791; cv=none; b=I2fQIaEe6rXd8eZWGh8HscHJx/12DUDx3x2NJaXqxG6kvCJ60njzDh6OkTUw0K824LYt2P0zpZwF1s4sQleAAtg/vF1Oq1oWbsHFG14tQd0sfe8Yv7bYhYh0JnbASgu1lh4hPpc9OUknpKWPXgwJcEasL5pIGNgnJ50EO1MKhV0=
+	t=1761207138; cv=none; b=LE4BjWToaq8lSdbgofbi4FUaGOFbGAp7O+zmpqHkF9FKmNHzIuDCOG1E0eYXFiVHze0C1jJKwpKFHlZxzRkFfgd8mWvhP4iRP/ygV8xx6fCDbokgpISHWtXZcc5lMalmEuqb8qhygVXltKHS99ooO13v/1QM0aIlTsVFdC3LqFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761202791; c=relaxed/simple;
-	bh=7BW7mJi7dpub2e9rGUMqs91IUO117Tl3e0LbM9uWduQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gFbNgL1nXAMXMuQo4egyyItoviCPJh19GEynNcoH00AzB0Q2uFanMOgae6qloVBZKao5jP+5B9I0aOo5xkV1OplDZcmQQe9Jc5a/77b0S8eQ9v+BjvbcXGoyUvNCN51k3A5qMWmivEoZ3e5z9FFryIufPr76TZRyXWLv1IixeHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix)
-	id E72EFC4CEFD; Thu, 23 Oct 2025 06:59:49 +0000 (UTC)
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 9B8BFC113D0
-	for <tools@kernel.org>; Thu, 23 Oct 2025 06:59:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 9B8BFC113D0
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-5d967b67003so560494137.2
-        for <tools@kernel.org>; Wed, 22 Oct 2025 23:59:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761202786; x=1761807586;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eLuxKLHN9Gk58PMh6QZAgbamwn4QZRZUwpOLFCctrI0=;
-        b=CXbKXMAWv8xA+ViJeVz3xJl/8c9PxH+DDbbhmMP9/22xCkZIrPH/Mvit3W694gEbdu
-         9q87WUJqS+E9hsQnjGdLDWS7poMgvDhYcYNOuZr+9lPjPDiBeP15HUWgWpb2XiHFBHsi
-         XacsKyry8uaKe47LAhbiVz1mVZRZtqi4YPAvbRkj1/Z7gSS49tJKLxi2Fn4GN2bEZt40
-         bkGHAGNixQ4Up970ZKyJ0dHTfUlTVkBztn5AznVD2LjvHMJCqI+h99/4XJkg8VrZwtND
-         +5kE9DEUtMXwH1ChOAi7Pjzgd4AZNG3Wr+C+loKQY5yqQbrtuM9zjk726eE08O3mBt9b
-         2XAQ==
-X-Gm-Message-State: AOJu0YwngrxnrHqG2d//3WbiLJaa6AgmAPCkrdVL74I/NWcU6LJLmzjt
-	U2OrC5Rrvr7MH9wW4bW8r9dW8jk2/7hitSdWVg9E/Q1f1Pa44W667brCm6QXfKZ0
-X-Gm-Gg: ASbGncuTEk6TNHZpgC9pqfjEAxc+E94WlYIQuANpyHY95t2Lyx9UDNplTn4/1bF9bv5
-	f9z2qXVWm4J7BJqc80vwHJZC5/bY7PFIye7wMj1Iz9cT9dwsiT4t7CT/VcgYWxZ4u/iwyIh2hOA
-	L/ab+PGR4sXnqD1uq24iydRbWs/DrbQNMYW0Xgr1J8JLGznjuFfkAsZiqm5tyI46r74P8v9i9ZS
-	iSiqvUioiB4Rbglsg5anks27+BNBKwQBpnD4yg49/eApefyGchRcLGrw+mGipZr3FrKVqV8Jw8S
-	Wqzmr2STQ3z6y9Ocn6tOipST9I5ODlrEagNConNpMkZzUSAEDD3DbER9fVEXMlKCIrNdndBzo7v
-	d8+iPs9eL4DGUVr2+DuHQW/m+OEGYA21qwNSXjDqPkpVYYP4cEFg13CyPffcxGUo0IevFgPzQLR
-	IOpdRjmFYxmu9jMgtFVwhF8EM32q+uuQN1nhJVy70CS5fqTsGA
-X-Google-Smtp-Source: AGHT+IFsIBruqDoYQMW8PVcxXKIE4hKm+V8bZtBUpPocumfKxTfrTygcKn3cH3hOTl/2bceXutOGuQ==
-X-Received: by 2002:a05:6102:e0a:b0:5db:32dc:f05b with SMTP id ada2fe7eead31-5db32dcf9a7mr159595137.42.1761202786027;
-        Wed, 22 Oct 2025 23:59:46 -0700 (PDT)
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5db2c77c69bsm567521137.2.2025.10.22.23.59.45
-        for <tools@kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Oct 2025 23:59:45 -0700 (PDT)
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-580144a31b0so242891137.0
-        for <tools@kernel.org>; Wed, 22 Oct 2025 23:59:45 -0700 (PDT)
-X-Received: by 2002:a05:6102:41a9:b0:51a:4916:c5f0 with SMTP id
- ada2fe7eead31-5d7dd6d63e7mr8381840137.32.1761202785377; Wed, 22 Oct 2025
- 23:59:45 -0700 (PDT)
+	s=arc-20240116; t=1761207138; c=relaxed/simple;
+	bh=zqS5HPhNQsaJuv1h0i0ANiyAq+EBlCSMkv0QvduKzcI=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=ZQhs1frYHymWXIOYDKeJVMM2F3iRGsqfCluftNS07AnMQy1KvDoobfMwv8cRTB8GYmMPQuG0n+CmEoLouEvMtUCRT/G7ffdNTkbTF8lyw96h7JvUFaWDpNNnPkwMTdU6L8tD0f/OTjHWpjbXTRHLLeLemvIGA1PxW2xahmKxshc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FuDZr9gc; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FuDZr9gc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C29C4CEE7;
+	Thu, 23 Oct 2025 08:12:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761207138;
+	bh=zqS5HPhNQsaJuv1h0i0ANiyAq+EBlCSMkv0QvduKzcI=;
+	h=Date:From:To:Subject:From;
+	b=FuDZr9gcdOyfTPpBtV1le6aGq238dj/xRKmQFZ1U5bHERz8DDtZObI5DeMFeYLS5p
+	 PlD13jdzuajFK4VtryN/bflHX7vhqmlR6G0p6/NVrScOI3slQ6iEVCcZVqYn0L2Sx5
+	 5RgaPr9YTKAk+qfIRHIFWQMuKu06VcFF2gqxvWLxYA3/pX0Oz9Zir8Ouv0e/1s/Vpw
+	 +oJcovxSKKu8/zYLQ+7M/nE1mnaMtxBdjurKvScvnqe0juVzuXX8DHtwxRtb1+PlU7
+	 Xu/pZ1ZCr/U+4VOBAwk/+fCpahL7oOwIaKW5ByImro+bYIdM+8GEPKkbV30kZFoZ7e
+	 d9nsQEDcAQmxw==
+Message-ID: <ee6bab51-84cf-42c4-8ace-dd895f7d9318@kernel.org>
+Date: Thu, 23 Oct 2025 10:12:15 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <CAMuHMdX40JoouK0yjm_-ggj5dQ9MtE2vrYhUOQ9dDpCN-0+tXg@mail.gmail.com>
- <20251022-b220661c2-de130d3d7a44@bugzilla.kernel.org>
-In-Reply-To: <20251022-b220661c2-de130d3d7a44@bugzilla.kernel.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 23 Oct 2025 08:59:34 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdUEgMCpHCSXESf4vT+DthDXg12Nq87ZaJ11J9tVV3+5Mg@mail.gmail.com>
-X-Gm-Features: AWmQ_bkI3sztNYNOzxG-IkFz0fAl3QqZWq5aueaXk8kYNbFPBxcwgb5P76fbS_0
-Message-ID: <CAMuHMdUEgMCpHCSXESf4vT+DthDXg12Nq87ZaJ11J9tVV3+5Mg@mail.gmail.com>
-Subject: Re: b4 am no longer prints file name
-To: Bugspray Bot <bugbot@kernel.org>
-Cc: tools@kernel.org, konstantin@linuxfoundation.org, users@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+To: tools@linux.kernel.org
+Subject: b4 prep (via pipx) does not recognize branch on >=0.14.1
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Konstantin,
+Hi,
 
-On Wed, 22 Oct 2025 at 21:55, Bugspray Bot <bugbot@kernel.org> wrote:
-> Konstantin Ryabitsev writes in commit bd7332f9094cb0c113c228f996991f2a42e641dd:
->
-> mbox: restore printing out of filename to git am
->
-> Looks like due to either inattention or bad auto-indenting, the part
-> that printed out the name to git am ended up buried inside the if
-> statement that is almost never called.
->
-> Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-> Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220661
-> Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
->
-> (via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=bd7332f9094c)
+I updated my b4 to 0.14.2 and noticed errors - b4 prep did not want to
+work on prep-ed branch:
+------------
+git co next-20251023
+b4 prep -n asoc-regmap-irq-chip
+(I see commit "EDITME: cover title for asoc-regmap-irq-chip")
+b4 prep --edit-cover
+CRITICAL: This is not a prep-managed branch.
+------------
 
-Thank you, confirmed fixed.
+Adding commits after starting `b4 prep -n` did not improve.
 
-Gr{oetje,eeting}s,
+Reproducible always on b4 0.14.1, 0.14.2 and 0.14.3.
+Works fine on b4 0.14.0.
 
-                        Geert
+b4 0.14.1+ also refuses to work with branches created on 0.14.0 (so with
+all branches)
 
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+It's same machine as I always use, nothing changed. b4 installed via pipx.
+Ubuntu 25.04, arm64
+Python 3.13.3
+pipx 1.7.1
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Linux kernel repo without submodules but with other worktrees.
+
+Best regards,
+Krzysztof
+
