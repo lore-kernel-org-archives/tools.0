@@ -1,177 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89EE2D739C
-	for <tools@linux.kernel.org>; Wed, 22 Oct 2025 22:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2DC279DC9
+	for <tools@linux.kernel.org>; Thu, 23 Oct 2025 06:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761171923; cv=none; b=DCxGmttqkVoeEb3Ao33S+QR+RoL7mfPG2VJfXMXSKdtiXa3NGCZsQLUiSuM4qqmo0PA5FFOo8QkMFoaeB7x6V/oChJgC2DViUlt2fttlUbcfgY2BVk6DniJv1mY+5qSi1UkxSGmsPsKvGK/dKHfc3HbQUTU2C9/VUlOYStEJdsc=
+	t=1761202791; cv=none; b=I2fQIaEe6rXd8eZWGh8HscHJx/12DUDx3x2NJaXqxG6kvCJ60njzDh6OkTUw0K824LYt2P0zpZwF1s4sQleAAtg/vF1Oq1oWbsHFG14tQd0sfe8Yv7bYhYh0JnbASgu1lh4hPpc9OUknpKWPXgwJcEasL5pIGNgnJ50EO1MKhV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761171923; c=relaxed/simple;
-	bh=5Y/KvnAoosdq3AEZCr8EFQdKQ0sC7avNbUpxZj65scA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Z/fiKXU5iOvl5WtEuCeRL+YxbwA05VeEIjes7wSHADCqOqFhXoz9JTXr4GoZqWLov9Cks03uASD7681L5Jo5piwewDaND7dZXQQJ8/n5On5eltVAZDeFSPOKc8AWB4YS1W9Pt/vnclAH0MdyWB7uxphGs9eFkVumjfCwrjeyXyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hRvmAbuB; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hRvmAbuB"
+	s=arc-20240116; t=1761202791; c=relaxed/simple;
+	bh=7BW7mJi7dpub2e9rGUMqs91IUO117Tl3e0LbM9uWduQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gFbNgL1nXAMXMuQo4egyyItoviCPJh19GEynNcoH00AzB0Q2uFanMOgae6qloVBZKao5jP+5B9I0aOo5xkV1OplDZcmQQe9Jc5a/77b0S8eQ9v+BjvbcXGoyUvNCN51k3A5qMWmivEoZ3e5z9FFryIufPr76TZRyXWLv1IixeHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 Received: by smtp.kernel.org (Postfix)
-	id D7FE9C4CEF5; Wed, 22 Oct 2025 22:25:22 +0000 (UTC)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id E72EFC4CEFD; Thu, 23 Oct 2025 06:59:49 +0000 (UTC)
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id A2F4EC4CEFF
-	for <tools@kernel.org>; Wed, 22 Oct 2025 22:25:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org A2F4EC4CEFF
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761171922; x=1792707922;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:to:cc;
-  bh=5Y/KvnAoosdq3AEZCr8EFQdKQ0sC7avNbUpxZj65scA=;
-  b=hRvmAbuBQEL/gW5eqaAhqsxnsditeX12+94SFpW3o5WQ37KMAzM+Pm1r
-   kQtD6RBJmN/eSPspVPGKkbeLKaj0C9GKVmISgDmt5DcbjVrIP7T85Ewc6
-   08vBPxXUjUF/M1XXodymqAYaWcsHilwB0WfJlfncs1T+XUB7du/5Pwr4j
-   LxCk2VGKIgTm9eF5GdJP2kWyUV6WnHDJNJp97Y6y360UOiuYdx3PhbRHY
-   dDDy2Mxl44vbny7+++nMq7KNAEcPP0nzPjri2B6fEns7VugJXWhPIM4Or
-   0JcYyN8lqVUkHD0D+upjBY4to/FPvVjlSIlSMp5l+jcJbT+8HaDUuPKU+
-   g==;
-X-CSE-ConnectionGUID: ZxW6Td/MR1KzxSty/RYCXQ==
-X-CSE-MsgGUID: E4/zuoo9SOSiMOtNYIo0LQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63035432"
-X-IronPort-AV: E=Sophos;i="6.19,248,1754982000"; 
-   d="scan'208";a="63035432"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 15:25:21 -0700
-X-CSE-ConnectionGUID: A7jBGZDwRviNhyVkP9QwFw==
-X-CSE-MsgGUID: jpbnxuNKQ1SZ/DqTbnpKQQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,248,1754982000"; 
-   d="scan'208";a="214644566"
-Received: from orcnseosdtjek.jf.intel.com (HELO [10.166.28.70]) ([10.166.28.70])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 15:25:22 -0700
-From: Jacob Keller <jacob.e.keller@intel.com>
-Date: Wed, 22 Oct 2025 15:24:56 -0700
-Subject: [PATCH b4] b4: allow multiple b4.email-exclude config entries
+	by smtp.kernel.org (Postfix) with ESMTPS id 9B8BFC113D0
+	for <tools@kernel.org>; Thu, 23 Oct 2025 06:59:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 9B8BFC113D0
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-5d967b67003so560494137.2
+        for <tools@kernel.org>; Wed, 22 Oct 2025 23:59:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761202786; x=1761807586;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eLuxKLHN9Gk58PMh6QZAgbamwn4QZRZUwpOLFCctrI0=;
+        b=CXbKXMAWv8xA+ViJeVz3xJl/8c9PxH+DDbbhmMP9/22xCkZIrPH/Mvit3W694gEbdu
+         9q87WUJqS+E9hsQnjGdLDWS7poMgvDhYcYNOuZr+9lPjPDiBeP15HUWgWpb2XiHFBHsi
+         XacsKyry8uaKe47LAhbiVz1mVZRZtqi4YPAvbRkj1/Z7gSS49tJKLxi2Fn4GN2bEZt40
+         bkGHAGNixQ4Up970ZKyJ0dHTfUlTVkBztn5AznVD2LjvHMJCqI+h99/4XJkg8VrZwtND
+         +5kE9DEUtMXwH1ChOAi7Pjzgd4AZNG3Wr+C+loKQY5yqQbrtuM9zjk726eE08O3mBt9b
+         2XAQ==
+X-Gm-Message-State: AOJu0YwngrxnrHqG2d//3WbiLJaa6AgmAPCkrdVL74I/NWcU6LJLmzjt
+	U2OrC5Rrvr7MH9wW4bW8r9dW8jk2/7hitSdWVg9E/Q1f1Pa44W667brCm6QXfKZ0
+X-Gm-Gg: ASbGncuTEk6TNHZpgC9pqfjEAxc+E94WlYIQuANpyHY95t2Lyx9UDNplTn4/1bF9bv5
+	f9z2qXVWm4J7BJqc80vwHJZC5/bY7PFIye7wMj1Iz9cT9dwsiT4t7CT/VcgYWxZ4u/iwyIh2hOA
+	L/ab+PGR4sXnqD1uq24iydRbWs/DrbQNMYW0Xgr1J8JLGznjuFfkAsZiqm5tyI46r74P8v9i9ZS
+	iSiqvUioiB4Rbglsg5anks27+BNBKwQBpnD4yg49/eApefyGchRcLGrw+mGipZr3FrKVqV8Jw8S
+	Wqzmr2STQ3z6y9Ocn6tOipST9I5ODlrEagNConNpMkZzUSAEDD3DbER9fVEXMlKCIrNdndBzo7v
+	d8+iPs9eL4DGUVr2+DuHQW/m+OEGYA21qwNSXjDqPkpVYYP4cEFg13CyPffcxGUo0IevFgPzQLR
+	IOpdRjmFYxmu9jMgtFVwhF8EM32q+uuQN1nhJVy70CS5fqTsGA
+X-Google-Smtp-Source: AGHT+IFsIBruqDoYQMW8PVcxXKIE4hKm+V8bZtBUpPocumfKxTfrTygcKn3cH3hOTl/2bceXutOGuQ==
+X-Received: by 2002:a05:6102:e0a:b0:5db:32dc:f05b with SMTP id ada2fe7eead31-5db32dcf9a7mr159595137.42.1761202786027;
+        Wed, 22 Oct 2025 23:59:46 -0700 (PDT)
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5db2c77c69bsm567521137.2.2025.10.22.23.59.45
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Oct 2025 23:59:45 -0700 (PDT)
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-580144a31b0so242891137.0
+        for <tools@kernel.org>; Wed, 22 Oct 2025 23:59:45 -0700 (PDT)
+X-Received: by 2002:a05:6102:41a9:b0:51a:4916:c5f0 with SMTP id
+ ada2fe7eead31-5d7dd6d63e7mr8381840137.32.1761202785377; Wed, 22 Oct 2025
+ 23:59:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251022-jk-multiple-email-exclude-entries-v1-1-79f4b936f612@intel.com>
-X-B4-Tracking: v=1; b=H4sIALhZ+WgC/x3NwQ5EMBCA4VeROZukGrXhVcSharo7q0paRCLeX
- Tl+l/8/IVJgitBkJwTaOfLsE4o8A/PT/kvIQzJIIVUhpMT/iNPmVl4cIU2aHdJh3DYk+fVJ4cd
- W2ijV10ZYSJ0lkOXjfbTQl9Bd1w2ZhAd7dwAAAA==
-X-Change-ID: 20251022-jk-multiple-email-exclude-entries-7f6ac55b9c0f
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Jacob Keller <jacob.e.keller@intel.com>
-X-Mailer: b4 0.15-dev-48339
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3891;
- i=jacob.e.keller@intel.com; h=from:subject:message-id;
- bh=5Y/KvnAoosdq3AEZCr8EFQdKQ0sC7avNbUpxZj65scA=;
- b=owGbwMvMwCWWNS3WLp9f4wXjabUkhoyfkWeP//oZwGRya/qPR376Egdu3ZsSPbfob/bs/UvMv
- 07XLJSf1lHKwiDGxSArpsii4BCy8rrxhDCtN85yMHNYmUCGMHBxCsBEbrYxMly3i+bO5Dg2jfH/
- jVtsvU2Fcr/8ldaxOguq9PXqrhOouszIMO0Cs8Ttp29TTz8rrt7cZ5/J2btm0lKn114eovP/Gu/
- YzwgA
-X-Developer-Key: i=jacob.e.keller@intel.com; a=openpgp;
- fpr=204054A9D73390562AEC431E6A965D3E6F0F28E8
+References: <CAMuHMdX40JoouK0yjm_-ggj5dQ9MtE2vrYhUOQ9dDpCN-0+tXg@mail.gmail.com>
+ <20251022-b220661c2-de130d3d7a44@bugzilla.kernel.org>
+In-Reply-To: <20251022-b220661c2-de130d3d7a44@bugzilla.kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Thu, 23 Oct 2025 08:59:34 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdUEgMCpHCSXESf4vT+DthDXg12Nq87ZaJ11J9tVV3+5Mg@mail.gmail.com>
+X-Gm-Features: AWmQ_bkI3sztNYNOzxG-IkFz0fAl3QqZWq5aueaXk8kYNbFPBxcwgb5P76fbS_0
+Message-ID: <CAMuHMdUEgMCpHCSXESf4vT+DthDXg12Nq87ZaJ11J9tVV3+5Mg@mail.gmail.com>
+Subject: Re: b4 am no longer prints file name
+To: Bugspray Bot <bugbot@kernel.org>
+Cc: tools@kernel.org, konstantin@linuxfoundation.org, users@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-The b4.email-exclude configuration option allows users to provide a list of
-globs that define email addresses to never send to. The configuration
-option is interpreted as a comma separated list of exclusions. If the
-number of excluded entries gets long, this can get somewhat annoying to
-manage in a configuration file.
+Hi Konstantin,
 
-Allow user to specify email-exclude multiple times. Combine all
-configuration entries into a single list during _setup_main_config(). This
-allows users to list excluded addresses or patterns over multiple lines in
-a configuration file rather than by creating a single long line.
+On Wed, 22 Oct 2025 at 21:55, Bugspray Bot <bugbot@kernel.org> wrote:
+> Konstantin Ryabitsev writes in commit bd7332f9094cb0c113c228f996991f2a42e641dd:
+>
+> mbox: restore printing out of filename to git am
+>
+> Looks like due to either inattention or bad auto-indenting, the part
+> that printed out the name to git am ended up buried inside the if
+> statement that is almost never called.
+>
+> Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+> Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220661
+> Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+>
+> (via https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=bd7332f9094c)
 
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
----
-I maintain my configuration files as a git tree to help track changes.
-b4.email-exclude requiring a single line is somewhat annoying as it makes
-the difference between versions when adding a new entry difficult to read.
+Thank you, confirmed fixed.
 
-In addition, users may want multiple b4.email-exclude entries using
-includeif or in per-repository configuration. Allow this by converting
-email-exclude to a multi-value configuration.
+Gr{oetje,eeting}s,
 
-This may need to be done as a breaking change if there is risk that users
-currently override the setting in separate configs. I'm not sure how that
-would best be handled.
----
- docs/config.rst    |  5 +++++
- src/b4/__init__.py | 16 +++++++---------
- 2 files changed, 12 insertions(+), 9 deletions(-)
+                        Geert
 
-diff --git a/docs/config.rst b/docs/config.rst
-index 0f30d4e7e98f..8936161b86c8 100644
---- a/docs/config.rst
-+++ b/docs/config.rst
-@@ -283,6 +283,11 @@ Attestation settings
- 
-       email-exclude = *@codeaurora.org, *@obsolete.example.com
- 
-+  Multiple entries in the configuration will be combined. E.g.::
-+
-+      email-exclude = someone-gone@example.com
-+      email-exclude = *@obselete.example.com
-+
-   Default: ``None``
- 
- ``b4.sendemail-identity``
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index e5f551e4d623..18251c477346 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -3063,7 +3063,7 @@ def _setup_main_config(cmdargs: Optional[argparse.Namespace] = None) -> None:
-     # so load them up and use as defaults
-     topdir = git_get_toplevel()
-     wtglobs = ['prep-*-check-cmd', 'send-*', '*mask', '*template*', 'trailer*', 'pw-*']
--    multivals = ['keyringsrc', 'am-perpatch-check-cmd', 'prep-perpatch-check-cmd']
-+    multivals = ['keyringsrc', 'am-perpatch-check-cmd', 'prep-perpatch-check-cmd', 'email-exclude']
-     if topdir:
-         wtcfg = os.path.join(topdir, '.b4-config')
-         if os.access(wtcfg, os.R_OK):
-@@ -3088,6 +3088,11 @@ def _setup_main_config(cmdargs: Optional[argparse.Namespace] = None) -> None:
-         gpgcfg = get_config_from_git(r'gpg\..*', {'program': 'gpg'})
-         config['gpgbin'] = gpgcfg['program']
- 
-+    excludes: List[str] = []
-+    for item in config['email-exclude']:
-+        excludes.extend(item.split(','))
-+    config['email.exclude'] = excludes
-+
-     # If we specify DNS resolvers, configure them now
-     if config['attestation-dns-resolvers'] is not None:
-         try:
-@@ -4323,14 +4328,7 @@ def git_get_current_branch(gitdir: Optional[str] = None, short: bool = True) ->
- 
- def get_excluded_addrs() -> Set[str]:
-     config = get_main_config()
--    excludes = set()
--    c_excludes = str(config.get('email-exclude', ''))
--    if c_excludes:
--        for entry in c_excludes.split(','):
--            excludes.add(entry.strip())
--
--    return excludes
--
-+    return set(config.get('email-exclude', ''))
- 
- def cleanup_email_addrs(addresses: List[Tuple[str, str]], excludes: Set[str],
-                         gitdir: Optional[str]) -> List[Tuple[str, str]]:
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
----
-base-commit: 52d380965c71ce955c0a534dd4a35dea562fcaee
-change-id: 20251022-jk-multiple-email-exclude-entries-7f6ac55b9c0f
-
-Best regards,
---  
-Jacob Keller <jacob.e.keller@intel.com>
-
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
