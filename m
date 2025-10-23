@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2681434B697
-	for <tools@linux.kernel.org>; Thu, 23 Oct 2025 19:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0A0350A0F
+	for <tools@linux.kernel.org>; Thu, 23 Oct 2025 19:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761248709; cv=none; b=WNymwfZOrnQFr6/ByXjAL64KXXHKYkDDdAKewqJ7tny00IXWHyzVB8ES/QXKrUyH1XAlM7yRvXD6mlGr43SxPpv+P6BcHNQLZTsoHJt1lj8dHWZLm7x93sAdFz1u8ZEFg2ISlNKav6GntHdzQdSXxM4VWA9mvYa7LE9k5YSnYLs=
+	t=1761249411; cv=none; b=DSIdFBw7DYZtHpMJj1blZxnOS5vuEEqSR6utOQX9qcK1uc23kX6ImVuJJcYdKwsxqO1uxzb/oiayaggW2GjA7sERfx43vFhGLCAuaizEP5ieJOMGcAEpgro8kAxb8oXqJV9sYenVGS6II5e99GNDl3Tao2+ebdqwuWiQ2+GsDzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761248709; c=relaxed/simple;
-	bh=B+9dvBGHgqXQg1A8h2Yw9NgqwCSMpiK4J7Emt9UH25c=;
+	s=arc-20240116; t=1761249411; c=relaxed/simple;
+	bh=sxta4uaTtI49jpx+MDAWB5GlEdQLqgfsIWhojO3bDLU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nBbGdZhJtSGb/tFolYGRjXkppGhYrRPsfs4ZLajDLncb9ipARUO7qo5RTadXTcr7ddTv6BXx9TQQYQuu726ysighyR5Skc2XASysQ87kO2G2dqP0N4eqm+kCxiFmRoV0+RPi6ti3nbJJPk/jZfiOmJOnQtfOEuuHBdQimZDEeQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLP7TZR2; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=WDp7N5WOJ7iFxr4nHDJ3DRGe8v9IG18gxwQq4z4P9WrhqfWMN4wiDi9TbLMKPx2HJOOEVFH3RiFbJIJez4KW020t4UIIOBCJHuw3d8x+mBkDncLr9yzL03xAFN+peu8sE8DscGZm/MIWwcChmCJ8zMGeo3bQ29aH0WjDM434JYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvP1w28C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLP7TZR2"
-Received: by smtp.kernel.org (Postfix)
-	id 9A192C4CEFD; Thu, 23 Oct 2025 19:45:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6123DC4CEE7;
-	Thu, 23 Oct 2025 19:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvP1w28C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF19C4CEFD;
+	Thu, 23 Oct 2025 19:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761248707;
-	bh=B+9dvBGHgqXQg1A8h2Yw9NgqwCSMpiK4J7Emt9UH25c=;
+	s=korg; t=1761249410;
+	bh=sxta4uaTtI49jpx+MDAWB5GlEdQLqgfsIWhojO3bDLU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LLP7TZR27GTf3c5jcF+U+xESEkl1wjplQGHDzTvcYj52OhcHmvk2hdLmPrY7Vnl9y
-	 8N8BKU30RNUaxa51bt/QFDDvwgwrj/nGPA+lgOeMSy/lBHpbCLpSH5Xz9u2WgFo1G2
-	 ChFAAdv0IHTwb7hWtSK1e6OgmUgYVaFbj+YptyeM=
-Date: Thu, 23 Oct 2025 15:45:06 -0400
+	b=jvP1w28CAl829CRqcMo2fx/NS55LTu0/wvewt2OQ9Ue3idzfmB0+jj+hY7Etaxit3
+	 ZKZFjERH2Sg3+AI0a5uRsgitGOEG64XV6ZsUYQhL77klUhzMNIoID6nXz6wzU66RFz
+	 0jD2DZa/aCMkPapaRr41caS3Iu5X5uJ0JSYbMafo=
+Date: Thu, 23 Oct 2025 15:56:49 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Subject: Re: [PATCH b4] b4: allow multiple b4.email-exclude config entries
-Message-ID: <20251023-merciful-angelic-squid-0a97ff@lemur>
-References: <20251022-jk-multiple-email-exclude-entries-v1-1-79f4b936f612@intel.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: tools@linux.kernel.org
+Subject: Re: b4 prep (via pipx) does not recognize branch on >=0.14.1
+Message-ID: <20251023-crouching-tangible-jacamar-e4f01f@lemur>
+References: <ee6bab51-84cf-42c4-8ace-dd895f7d9318@kernel.org>
+ <5bbab620-b942-4fd6-b15d-42b39736b01c@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,25 +39,19 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251022-jk-multiple-email-exclude-entries-v1-1-79f4b936f612@intel.com>
+In-Reply-To: <5bbab620-b942-4fd6-b15d-42b39736b01c@kernel.org>
 
-On Wed, Oct 22, 2025 at 03:24:56PM -0700, Jacob Keller wrote:
-> The b4.email-exclude configuration option allows users to provide a list of
-> globs that define email addresses to never send to. The configuration
-> option is interpreted as a comma separated list of exclusions. If the
-> number of excluded entries gets long, this can get somewhat annoying to
-> manage in a configuration file.
+On Thu, Oct 23, 2025 at 10:52:27AM +0200, Krzysztof Kozlowski wrote:
+> I know what happened - it is .mailmap which confuses b4. linux-next has
+> now .mailmap entry for my address which I still use in this repo, so
+> after `git revert 0dac0b74c32a1cc55f508dd95478637b15f4fdb3` the b4
+> 0.14.3 works fine.
 
-For long entries like that, I was kinda envisioning it looking like this:
+Hmm... I'm confused how it works. Could you give me more info:
 
-    [b4]
-        email-exclude = \
-            foo@example.com, \
-            bar@example.com, \
-            baz@example.com
-
-I am not opposed to making this a multivals entry, because then it could
-combine multiple entries from several levels of gitconfig, but I'm curious if
-you've tried doing it that way.
+- what is the mailmap entry that was added?
+- what is your user.email set to in that repo (git config --get user.email)
+- who is the committer on the cover letter commit
+  (git log --format=%ce [that-commit])
 
 -K
