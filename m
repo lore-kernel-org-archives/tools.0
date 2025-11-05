@@ -1,113 +1,93 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4793C34CFBA
-	for <tools@linux.kernel.org>; Wed,  5 Nov 2025 21:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFE723D7DA
+	for <tools@linux.kernel.org>; Wed,  5 Nov 2025 23:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762376970; cv=none; b=NfoxiwNh58/zR3IXd3XCz9K23JVrSkXz+ba+tA5yDWRgZ7oMT0wKW+ePDzRS3iaI7va6ogh/EUIXbVnfxvOvN5nYg4TtzZO7w5EqrT3eNHI5obPQXLyKqSxjK8qGGptXVPQXqQ2Ym8n4/OvDJhKhpq7WcCW3MsbfmgMSY/+kQFc=
+	t=1762385008; cv=none; b=WcHXKxapwearMt0DFutE8BDWocV71AZR3uBcr3X63QZQcdS+Liwzm1QxCQsQPUdMo3y5iircyoz95p5pHLEeavU3sGtmWsiLcZ/znKD8prHXRWjvZxrtpAuEya7efPurWLgKbYiWO/rd2zGbtjTwUQmSfcBJ0k8z5g92nLNK2TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762376970; c=relaxed/simple;
-	bh=+zET1aYsbBKju6NSBG/qKByZxrhwTtq0PhB9udBw88E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e399SSM7gqPDXhNQeB7QjrroQ7F2czS7HYKqmBftbVbBkTPISbyiI5cqLwOCI618f6KK9GKgp/YUrNU/4ISkLgnfVKrE5xOwy7q7JBO9Q1gATyGlgCZ1Wt0cP4YEUz1/YqEeELLGlr/kycwmnqUipciRvhKrrpM7e0EeJSuaITI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b=E+D4zXKW; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762385008; c=relaxed/simple;
+	bh=Y9YhJpJHAMelcdDKoaIHxQ5nA0fFMiBCcwvl2Pk4LfI=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=skuHB1aq4WjaYwLd1OpPycmJWXrfdVILbmyOoPolPM1xg3uqdcKEbkU50ARLD3oBifZKp2Pt2pwwUbyL6j/m8lvDblBMg+wBoH8h+b9sR5z/JUIfFRvgK3lBy91amnp4GWvPmGxW7ITWNafac+mdBPnE/qn0/WeUvXr/u0UIMyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=esB/+two; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b="E+D4zXKW"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="esB/+two"
 Received: by smtp.kernel.org (Postfix)
-	id EE249C116D0; Wed,  5 Nov 2025 21:09:29 +0000 (UTC)
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	id 03373C4CEFB; Wed,  5 Nov 2025 23:23:28 +0000 (UTC)
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 1A36CC116C6
-	for <tools@kernel.org>; Wed,  5 Nov 2025 21:09:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 1A36CC116C6
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=paul-moore.com
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-294df925292so2874025ad.1
-        for <tools@kernel.org>; Wed, 05 Nov 2025 13:09:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paul-moore.com; s=google; t=1762376968; x=1762981768; darn=kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5CKxnYp5TMaquWGxm3yQxrQga4QUHJi9cYW2e+kP9QU=;
-        b=E+D4zXKWSsO0hOvlivklDn6xMHm4I85L9DWYrwBCp2gTFEoAuJhQ2SpAVowp+5xO+5
-         Ji4z1zfyXrbT4qAqg/qkBz+mVptfbxHIux3fvRLkOJ33u5bPSVrNSbrTFZWNl/tu420R
-         /zc3b9VrUV2kZ0IY/9oLUqWL4u8qJePajO5nf15okUa8NJA8ESDSEmK/Buzf1aHuhJI7
-         bYdpoLIxGhykS5eo3i8o2cOR98bSReUzNRKFrMp2BWsfjw1BJ00oFvUCXPqn6EbKRzw4
-         +vHF/zWGZsI8bbqDP/PWibdXnnqyDV4BuGJClxQqr6e5s0QsAO+c+/CAOVknM7eb6rPJ
-         8/+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762376968; x=1762981768;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5CKxnYp5TMaquWGxm3yQxrQga4QUHJi9cYW2e+kP9QU=;
-        b=OdKFGQiOOSYhYRIQ8c85/8cVNupmSmfTVrJUjo7yKqM9oxT6PF911dH131YovmXbX6
-         nqCjDA6n0N//FCF7yTl39mv3ePaTDvl9A61UVRMTUTAGRbSgZSMgW7AwuouSpo7xSnIS
-         6sHqI9GFr6dLwlYihImqJNAjkE1BmYvvp96wTGjNUr3enD/IVE5nUBxvzKiZpq/K8ksI
-         nUovBDZUoopbWRjjb1df9Xd1XW4A/xkyusg93PvEolC7EGdrBwrMw2/paU0zpLYFmXVJ
-         wZ9u0NHdEnl8nN4cP1HAjDrpXjH+5jCtEBsPvw9FiFVjUkkEuu2sIfTUpTaRgFRYG+v0
-         H5WA==
-X-Forwarded-Encrypted: i=1; AJvYcCUM4WVLeVXYEyB2hAtzsVZrxJIEDRXJ1MDD24jpcKm5Z89l6akBwpDJMuvlxUBpnDA8qGFekg==@kernel.org
-X-Gm-Message-State: AOJu0Yw8lBpH6/KrW2Ain0DY9NDKdm9xjVP0rbfe2VZn1m6sUbEpCf2e
-	+cIj8HQ0ncmi98PYbzaQy+bSHx29sLSt9TomeBLR7ZTpiWpimlNeWAJe9dH3BIUaBzGEFcXZeVJ
-	gL5ONFfaQbj526PSi6Jgl6xLwvpFpm2SFclcLQUP6
-X-Gm-Gg: ASbGncuc0DfC5rYwMeJswWgjFRWHkdho2kMEn0sTXNv0weMgm49nmpy4W4kQsiZ2z6K
-	d3yfuTFNwonYN1wM0D8K6wX9dYlZSP+oc9jj/gokPU4cBnAQoiWTyCwh31GY9DlbEn+/kY+nTzf
-	tHizKPTcXMCNbuJ3+OC+JBNS4durrzXXueoxBWa/Y3y9GkTPiine9SJgs6n/ISaZ2Q/yhoUEEgs
-	QlQwbZuPBv9xM608bt5AchEilJV3ryv3fOKwHuzhsemUKr2tvJ1XHabGzRg
-X-Google-Smtp-Source: AGHT+IHXpL9+dADjSCYbV8B+cgKcxk0iwPj/2iZJF4Ql0PGrTNuIupZeoCBtHqD1FERBX1glpsaV3LJy7kKhrt1nsoU=
-X-Received: by 2002:a17:902:da88:b0:295:fc0:5a32 with SMTP id
- d9443c01a7336-2962ad0c13amr71859615ad.3.1762376968223; Wed, 05 Nov 2025
- 13:09:28 -0800 (PST)
+	by smtp.kernel.org (Postfix) with ESMTPS id 6D10EC116D0
+	for <tools@kernel.org>; Wed,  5 Nov 2025 23:23:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 6D10EC116D0
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1762385007; x=1793921007;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=Y9YhJpJHAMelcdDKoaIHxQ5nA0fFMiBCcwvl2Pk4LfI=;
+  b=esB/+twomWOByOGgEDrtTeeHedD+XAasA9Y3ADYRY4wPFeIp5jDPmmW/
+   d4wfbdd6KizejnQ1DuFqkCfZ41hJjKLzVd/o1XpUqeZzEdz+9d2W5yX76
+   Km5uxG+pgOXZlzDORYs3Yabafrt9EhsQNiAukEPLqS2U2eG/QG5lwB7Tk
+   xlshuQyK+PI75Ma2x5dab/AWd5fRxaSxJPsCRuRGHm6LUazORS6XD/Lqr
+   EW3npzbgbxRq3seyY8bETvOXXZrrak6dGfVK7ekh+wLbpARERccl22rux
+   MP9tKCs2XwJzJdQD89Qi3NcrnIQoU//R7T3T+ANSBETFOr6iBhhcHq7ws
+   w==;
+X-CSE-ConnectionGUID: Yshf48f4QKqmYJmYvJXfHA==
+X-CSE-MsgGUID: wsuDhFyoSeWHrvIsF5JyqA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11604"; a="87141868"
+X-IronPort-AV: E=Sophos;i="6.19,283,1754982000"; 
+   d="scan'208";a="87141868"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2025 15:23:26 -0800
+X-CSE-ConnectionGUID: A5iABfxqT+aOKo9cUSQYhg==
+X-CSE-MsgGUID: iJnGKUsmQtiksOt4T5zmcw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,283,1754982000"; 
+   d="scan'208";a="218360637"
+Received: from c02x38vbjhd2mac.jf.intel.com ([10.88.27.157])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2025 15:23:25 -0800
+From: Marc Herbert <marc.herbert@linux.intel.com>
+To: tools@kernel.org
+Subject: Single patch and cover letter: inconsistent Subject line behavior
+Date: Wed, 05 Nov 2025 15:23:20 -0800
+Message-ID: <m21pmcvzbr.fsf@C02X38VBJHD2mac.jf.intel.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20251105-mottled-bizarre-marmoset-b055ae@lemur>
- <CAHC9VhSkUP4P-2Q8AaZZ8VtY27tHEGaxvDwAzSx_4wwLFrqM9Q@mail.gmail.com> <20251105-fancy-frog-of-pluck-f4e7bc@lemur>
-In-Reply-To: <20251105-fancy-frog-of-pluck-f4e7bc@lemur>
-From: Paul Moore <paul@paul-moore.com>
-Date: Wed, 5 Nov 2025 16:09:16 -0500
-X-Gm-Features: AWmQ_bkYPA2Jk5brsng95ApEIzRkTtL2_N9XwH0OLgOnx0pVmHBgCZ1sa8MfT1g
-Message-ID: <CAHC9VhT_YSjXc0uz6ZAD9DZB=gvmx1-8eEUtm=hZ_zDzL4zzDw@mail.gmail.com>
-Subject: Re: korgalore: a tool to put lore/lei messages directly into gmail
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: users@kernel.org, tools@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Nov 5, 2025 at 3:54=E2=80=AFPM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
-> On Wed, Nov 05, 2025 at 02:12:44PM -0500, Paul Moore wrote:
-> > Thanks for this, if gmail throttling continues to worsen it's good to
-> > know there is an alternative.
-> >
-> > I just did a quick scan of the docs and while I didn't see it in the
-> > Quickstart or the Usage section, I wanted to check and see if there is
-> > support (planned or otherwise) for pulling/importing specific messages
-> > instead of an entire list?
->
-> Yeah, okay, here you go:
-> https://korgalore.docs.kernel.org/en/latest/quickstart.html#one-off-messa=
-ge-import-yank
 
-Excellent, thank you.  I'll give it a shot this week and let you know
-how it goes.
+The current documentation and cover-letter template state this:
 
-> Note, that this won't (yet) follow any updates in the thread. I may add t=
-his
-> in the future, though, something like "yank and follow until there are no
-> updates for a week."
+> When you only have a single patch, b4 should "mix-in" the contents of
+> the cover letter into the "under-the-cut" portion of the patch itself,
+> where it serves as a source of additional information for the reviewers,
+> but never makes it into the actual commit.
 
-For my selfish use case this isn't likely a big deal, if I need to
-pull/import a follow-up that I wasn't CC'd on I can always "yank" that
-message.
+I noticed that the "under-the-cut" portion omits the _subject line_ of
+the cover letter. That does not seem documented. So I wrote a
+documentation patch and I was about to send it. But after testing a bit
+more I noticed that the first and second lines of the cover letter _are_
+included in the "under-the-cut" portion when the second line of the
+cover letter file is not empty. Is that the intended behavior? Or maybe
+more "accidental" and caused by whatever library parses the cover letter
+file? Either way there is at least some documentation gap.
 
---=20
-paul-moore.com
+
+Correct subject line followed by empty line: OMITTED
+   < empty line >
+Body or not, included if any
+Body or not, included if any
+
+
+"Malformed subject" 1st line NOT followed by empty line: INCLUDED
+   NOT empty 2nd line, INCLUDED
+Body or not, included if any
+Body or not, included if any
