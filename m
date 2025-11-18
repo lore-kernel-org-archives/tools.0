@@ -1,144 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E9328371
-	for <tools@linux.kernel.org>; Tue, 18 Nov 2025 19:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215722EA482
+	for <tools@linux.kernel.org>; Tue, 18 Nov 2025 19:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763495700; cv=none; b=E1IqZxKaI1zztMPdImGwqYW2jUZgWVKcqEgF+2g1Mb7QmF7D5u71eg12JXL26a+/58xep3UOA2vHf0/ASbvF8CQu0P15otQitRhr9LRcwCEwc9wmUyLCOST6aCRYc1dVwiJYOJSkfgBzgFsWbVxxVtSyeicldOxTXeiIMNsfm9A=
+	t=1763495770; cv=none; b=GyzyeX/KVMY26LYyT67Fae+M0Vq5ckM52Nnt+BVCyhmuplHUcvT+9Js8a7DtVS5QqCwbMyleGlF8xG3uLp5fWIFSv7GyHxo65v9GHPdYfkX+9dNOqlddSuP1Skz8i2iup8PDFM75dgTWOsMnba1mk+jlRPNNy2cQb+7i3kwiP8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763495700; c=relaxed/simple;
-	bh=EAZB3eTvAEbaD7elPm7uSlcqaR86xtbYSb1JzanMNMc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Fl0VKhBDmz6fLgoDYCUtsvvlIgPfAxSrZSozLShY0Coy9GOpRrg5OfSneF5M+2nlmb0NhMrr6Tc4jvtFhnWSOpS9jKgsfcnUgo6L5slScSx9upn6hSnenlKdBBpP9uNVPt9GrFZOwKhP+tMfaOOt9jhOf7vUDVHk4se6murqAac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SPqW/GIe; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763495770; c=relaxed/simple;
+	bh=baP3f/PzZc4d0Zoi2WNsY7vJBjsROZ4rEh3NiorIli8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XeLmd44x2KEE1k5d2N8Qr8M+DlpK/oNLwukW1CVFl1Pa+tvey2+d/NApktX3MlftiFJXjEnVwMjNZ+uSR1VJNmkB7AMJVf4eN5SO6rPcyhWrUjNjxpCWDHq+Q9Ojc+MBE3Ez4OHg0SZ9GzvLCQS9Z3WFmN65zxWnEXCNPXWKIyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j3ext8yG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SPqW/GIe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j3ext8yG"
 Received: by smtp.kernel.org (Postfix)
-	id 1358DC2BCB0; Tue, 18 Nov 2025 19:54:59 +0000 (UTC)
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+	id A0647C2BCB3; Tue, 18 Nov 2025 19:56:09 +0000 (UTC)
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 0F37EC2BC87
-	for <tools@kernel.org>; Tue, 18 Nov 2025 19:54:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0F37EC2BC87
+	by smtp.kernel.org (Postfix) with ESMTPS id 75C6EC4AF0B
+	for <tools@kernel.org>; Tue, 18 Nov 2025 19:56:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 75C6EC4AF0B
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8b1bfd4b3deso462731585a.2
-        for <tools@kernel.org>; Tue, 18 Nov 2025 11:54:51 -0800 (PST)
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-37a2dced861so1633011fa.1
+        for <tools@kernel.org>; Tue, 18 Nov 2025 11:56:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763495690; x=1764100490; darn=kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HfnrnTZfyda6swwpLg6j3x8VtX7hHfO6QHdTOC95Aos=;
-        b=SPqW/GIe9mMgehZxSWdxv/h+WlzRRALMEVTSDtE+ajamzmAQ1BycxmWbSuLhng0oLx
-         4X+od2oQgZtIABLiYm0ErZPMZPwG4efXFTr7sThZMx0pjwfUr7J5OrVKUmfwfL+EKHA0
-         fUiOoRLH9xoK8+mTa8UZiiQg9/tkS8RKPKX8DEypHyuQ7JXwZwxwACubIM1gvAdpb8kY
-         7PY6rys3br2t4o1XSv0g6W75weYGN/3O1T5jHAzHJOxu4YoTS5Ez7GdnpVaQG8A0lUC+
-         hkDu6LzLyhNt9Tb/Pk+ajm4du24A5HF8Sq6fgqrZNhMkUPHWXP02w6vZkNf+PjMNuL/I
-         SQGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763495690; x=1764100490;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1763495760; x=1764100560; darn=kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HfnrnTZfyda6swwpLg6j3x8VtX7hHfO6QHdTOC95Aos=;
-        b=BrYyCuQc7JxOGQ5/BD4cGIqQl6LA/H33T04GxWtsov8vVlTbendfVX71xjHtbWuLjD
-         +YPEU6wm6z1lLC+giXeTESRawAtixgNjprcG47MwE+GjpPuf2ubzCS+azlhV4+84utzE
-         ciardhbYD+NRw29uvCobX2zocrFrvhecIX5S4ZOaLKVVLSH4nmBEhhjEz3Uivehscpev
-         jJuSIIw4iujgMOT/dqz6LdcEtiCwe0E018t7BnmZI5MbtM/sPNAcR/rgZnf4JPVRxmoe
-         TDAlcW2yTLvK6KNGzwgOshgH+il85w/6GAWR45P9d9wkg6MXKMHf6mLBRqgPFKhkMfu6
-         bHpg==
-X-Gm-Message-State: AOJu0YxtW26r5Oj/gv4nWCc97vY26TN3ij9oRAjhc84MTB/nPuQUbSw0
-	wkhc46aqUH0y0Pzi0Li7wuA5lrby9a5o2HLmJ2kc25FfaImDGh0C/AZ8
-X-Gm-Gg: ASbGncv3H9iZTGLpOO7d6oDTSbC/jL1TiNpWtJQW5VLf+nmov2vb5fYH8ChY32HuVzE
-	Uxlo/N/tgr0coG78cmRIKDAJxOVTmPtFGiIj8BibWvdyDeGLx5qS7/amQgNJso/72IfJiKvLHO2
-	6MZ0FPeHn0WvSZLF2A1Tiwv4qI0b1Awvr1g+nrX/BPRWHrRpvlHcpCPCXa2rBZFUuzBdcA2znv/
-	RgA8SByI4lVFIHOWcTLBbnvloJViMphQPQui/PpNgd8SDJmyUD6SgIapaKuMNdfTnj97vL0XO6/
-	HHlfHa3n5ksOe/onj/RLcjZ/ucAxr6RRZblfuWy7ZgWt2gO4e8F17dDkIc9BEK1FtLcLjJE1Ndu
-	r9WdkpAmDftgO4iXg5KbZpcLbXZo0tzT84Dso5AiqowdkucUrcFc1RIx8og8xVc2iSz1LycrIwY
-	aTVV55YWeiyVLg5CIlJeW259JoYDZRYqMlOJVPEqVvO8bYb2pFJ7Lk3J/8mXIG3ZvchP3cOoHzI
-	jAjMJor4CSlWMjWbljNnq5+NLSDa07m2c2+lfD7UgqF5hgpeu6l1/wFBkfC4Fr/IYS62n3k6WGy
-	Ou+dbWu2qHjFIqlb6MB2jKrf8BYcFnENiJQNMPu2N1Ijwx84
-X-Google-Smtp-Source: AGHT+IHGoaxODUSUM4u1kapP8WiwwEb0nwZfmIhIwwJp5OT+wknnjA+LBHvyMr7Mb2sCvKWVRwwJ5g==
-X-Received: by 2002:a05:620a:29d5:b0:8b2:f182:6945 with SMTP id af79cd13be357-8b2f1826beemr816299685a.58.1763495690082;
-        Tue, 18 Nov 2025 11:54:50 -0800 (PST)
-Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([148.76.185.195])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b2af062acasm1255316185a.53.2025.11.18.11.54.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Nov 2025 11:54:49 -0800 (PST)
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Tue, 18 Nov 2025 14:54:45 -0500
-Subject: [PATCH b4 v2] Update shtab requirement to >=1.8
+        bh=baP3f/PzZc4d0Zoi2WNsY7vJBjsROZ4rEh3NiorIli8=;
+        b=j3ext8yGvJBHFulVuH97SYfkswnNyB6emo7vMWUqxU3IoqJ0voMPGKKHelU8VYFtaG
+         sMHWdsIaUQ/dkI6g+6DquEDTH1jcwG+NDjqyc5sknyaIlhRTnHrynHFMUcvIMPtYGRpe
+         qcxdOYrMiFz96ZyYT2bGTeieWsNqmTwRWh1BBxSdVvqicQ82dM8d0wHRs4C53SmCAwcP
+         P+QNv3lxwvKhDqypqeK4Y7WIbHaVo9Yct/Ujt91P5x83AaAM8w9MYikqah8WvN+NdXiA
+         9xtTlWkiYjXRs0uTGY0dpeeOU/09O+BTwUO+mM2Cq4lvfx2Ei0au7QDajREujCG+PIKC
+         NyeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763495760; x=1764100560;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=baP3f/PzZc4d0Zoi2WNsY7vJBjsROZ4rEh3NiorIli8=;
+        b=GZjuGXLoEujl7q5rmw3iMGgmgEJORaPO1OGU1Crdos4E0IkWFM8U0btfuO2WkMPJgJ
+         1WqYqkwlScqbECghdeIDoKvChsCnLQzZ1FmW6vBDtBqeTn9Fed16ztAK9TNcYpYlOSqa
+         FGvnNq15VoYNAXDYIklnrVzgLCau+NUMvJ7I5CAYkTM6f3B0cYESO+KNfJAy/C3VodH/
+         JlwbRKZe3gMoVLffGfda36Us6zWkyLJXJC7tiO5bwMcEqG0dIaVLyvFZOXP95YwuMLeu
+         l5ssKfOb+elC6mmAHuKjPupoGDCYCy47ONlOLoFOcZBnV4zQTTMN2RTt0HtgXiRxzRlh
+         EUkQ==
+X-Gm-Message-State: AOJu0Yzil6fH9z59rGgMx0dDRxhzjf+JVjqbZ83yjTnPN07IvjSibJM6
+	PXzMgZMtBm84GClxCNhjAyF80mNshVEY74G95z1ShDeBODsBPMig/GZmvU4+11qPRsw93S0U6If
+	Nh9inz9gxuoG4tv/owWRUjPx3+Uy78ajxLjuo
+X-Gm-Gg: ASbGncvo37/hy8kxBOzGyUhWvxih93jC+qGpZTxc11VZDHwzcCk/GYqJoG9mQ5Q6NqM
+	6NZtBAI+jCUHAGGEJVilTCGe/Ezl9+aMYr0STYTjmtNNDfjKQut0Y7G3e73qrEIg1ikcjeDQ64g
+	5rTKrMGg4dXMtQKjEZaIqYEit4jFH6dqW//jjlBVgWMNGZ5ss8w4KieTSGOe18OjC+NGXSjI2Yg
+	QzeWFoql3wjuPItX1yZyNLY4R/k8mrMrmOardqfD3wbhIyDJBDGgYzE+YOkOa3tns9zCpI8Rycl
+	ZIjX02N7u2HrD0W/Ik1IS6ZarWjv37thrO76ZVEZigsoqlkY/NfH2KT77p0V14EH03xvlIWH+/u
+	sl7IZljN0ZAdQNgCH
+X-Google-Smtp-Source: AGHT+IF5W8n9aZ4+r5lhr8iSyg0tlWZ6p+1jtfeLg95CoZHM4GXorpgJX02Vx724IyxSoaOka5kflUuhJXVGTL5gUNo=
+X-Received: by 2002:a2e:a549:0:b0:37a:3910:6c77 with SMTP id
+ 38308e7fff4ca-37c29117fe8mr422991fa.5.1763495760136; Tue, 18 Nov 2025
+ 11:56:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251118-bump-shtab-v2-1-6bb1e2f11d8a@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAATPHGkC/22Myw6CMBBFf4XM2jFOGYy64j8MixYGmEQeabHRk
- P67DWuX596cs0MQrxLgUezgJWrQZc5gTgW0o50HQe0yg7mYiohu6N7TimHcrMOSuarI9WVn75C
- F1UuvnyP2BMfQ5G3UsC3+e/QjHc+/VCQkZDLXtqeOhLkeJquvc7tM0KSUftOSP2yoAAAA
-X-Change-ID: 20251118-bump-shtab-344551bf3da9
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Tamir Duberstein <tamird@gmail.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1763495689; l=1289;
- i=tamird@gmail.com; h=from:subject:message-id;
- bh=EAZB3eTvAEbaD7elPm7uSlcqaR86xtbYSb1JzanMNMc=;
- b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
- MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QJiSdqQBqJk2rCKDpD0LLhoQEl+QgobDfrIlQ86flc79IGjF56h7qopbz/f7dKqmyJ0Lyvb/wkb
- 6cNh0d7U91gc=
-X-Developer-Key: i=tamird@gmail.com; a=openssh;
- fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
+References: <20251118-bump-shtab-v1-1-4126cf1d1e44@gmail.com> <20251118-enchanted-daffodil-cormorant-baed67@meerkat>
+In-Reply-To: <20251118-enchanted-daffodil-cormorant-baed67@meerkat>
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Tue, 18 Nov 2025 14:55:22 -0500
+X-Gm-Features: AWmQ_blNboVhyaztmeJ5XSxFsVIBW3kShnFEJ3ivOKUvktS__RzQtgxsclJL-BM
+Message-ID: <CAJ-ks9kaJZdAk0g-XxQ1_5Dk=Dz1qV-uWyuvcA3yF9L+9RXYVw@mail.gmail.com>
+Subject: Re: [PATCH b4] Update shtab requirement to >=1.8
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This release fixes tab completion in zsh. Bump requires-python to >=3.9
-to avoid warnings caused by shtab requiring >=3.9.
+On Tue, Nov 18, 2025 at 2:11=E2=80=AFPM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Tue, Nov 18, 2025 at 10:23:34AM -0500, Tamir Duberstein wrote:
+> > This release fixes tab completion in zsh. Bump requires-python to >=3D3=
+.9
+> > to avoid warnings caused by shtab requiring >=3D3.9.
+>
+> I'm okay with this, since 3.8 is out of support. However, I cannot take a
+> patch that updates hashes in requirements.txt -- for security considerati=
+ons.
+> Can you send just the pyproject.toml patch and I will then regenerate
+> requirements.txt on my end.
+>
+> -K
 
-Link: https://github.com/iterative/shtab/issues/183
-Link: https://github.com/iterative/shtab/commit/ad3d4ced44167362fe5031156b7c5fdca59cd02b
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
----
-Changes in v2:
-- Reverted requirements.txt.
-- Link to v1: https://patch.msgid.link/20251118-bump-shtab-v1-1-4126cf1d1e44@gmail.com
----
- pyproject.toml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Sure, sent v2.
 
-diff --git a/pyproject.toml b/pyproject.toml
-index 7b2c6e2..de7f41e 100644
---- a/pyproject.toml
-+++ b/pyproject.toml
-@@ -12,7 +12,7 @@ license = {file = "COPYING"}
- authors = [
-     {name = "Konstantin Ryabitsev", email="konstantin@linuxfoundation.org"},
- ]
--requires-python = ">=3.8"
-+requires-python = ">=3.9"
- classifiers = [
-     "Environment :: Console",
-     "Operating System :: POSIX :: Linux",
-@@ -40,7 +40,7 @@ dev = [
- 
- [project.optional-dependencies]
- completion = [
--    "shtab>=1.7",
-+    "shtab>=1.8",
- ]
- 
- [tool.setuptools.packages.find]
-
----
-base-commit: 509f56ff5c24e2ad48cd2621e54c67910ea19fc1
-change-id: 20251118-bump-shtab-344551bf3da9
-
-Best regards,
---  
-Tamir Duberstein <tamird@gmail.com>
-
+https://lore.kernel.org/all/20251118-bump-shtab-v2-1-6bb1e2f11d8a@gmail.com=
+/
