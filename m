@@ -1,66 +1,97 @@
-Received: from mail.tilde.green (mail.tilde.green [162.19.47.91])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD62C32C943
-	for <tools@linux.kernel.org>; Tue, 16 Dec 2025 17:15:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.19.47.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C087933B6C8
+	for <tools@linux.kernel.org>; Wed, 17 Dec 2025 15:21:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765905355; cv=none; b=YQYyzEaOGDtSorgG7AKqYohX+9D3WihHLrwK1+LWqqcZ5TJMWt7GQ5Vm+gFioUufODfgFsHdyFFOGBEj9/EYvTyrSZ6aCl5nSAcSiOTjbELpFfvp2HqRMGH6y24ktQiS6wP3vHrr7a9YQN/n5SfrUW8zP4d4vWEdhCAv7gFQLzk=
+	t=1765984889; cv=none; b=uEJP+ywjAk/XQnDyP5UTGsw0KFegBCT/nmPIvgCk/P4IUCBs0awB5rQu31pTaJjXiyg5STRWi52p1xFJCGAqx6DdA7crS1z84B8PRjP8QkvleIUBDq95yYMUbkQIQIT32g5hyYBNMsL4it4g/Fk4nmClvPKu7ZpD1ajaIOKBmA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765905355; c=relaxed/simple;
-	bh=amw54YMFGJ5NGg22TiE9NwiSGYvVt5VmTY4bpHL+vrc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eJcxCQV5NXEJcCXfchWVLOl2AtDW9GYaSnwwz0HQOgRnq+nbSd/XTPouCziP1irBRhZPSCtRzTLl2uNlAhm5TqVbrUb7SoUDihjKM8ndsJ0GLjvw5QpuyxZ5xWW+621O1E01HugtD5WTAAq7vG0/8DCVjeV/1iBaTug0cGkWg1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iwnp.org; spf=pass smtp.mailfrom=iwnp.org; dkim=pass (2048-bit key) header.d=iwnp.org header.i=@iwnp.org header.b=V/VFkMN2; arc=none smtp.client-ip=162.19.47.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iwnp.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iwnp.org
+	s=arc-20240116; t=1765984889; c=relaxed/simple;
+	bh=6DEoNJyIFqZUFwIa/I7XMxtFEAL3+7yethDcOJS3v0M=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=LyGqHDQIwbgB9yFms5tAdLb36JvyXv07/VoCxacuVROlfegHM3gXv511uPiC3/6ZFEO7SnrPkgDK9a2ef8Jpr6PRmz+F2nyo+wWGYAD8S9VqhVj17f2TcrhIZF1kZRKHCjNGqQRRI8YYaLuba3dUIWgIfuL6MaKBW/q4txcLzVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQvwNlnb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iwnp.org header.i=@iwnp.org header.b="V/VFkMN2"
-Received: from localhost (177.red-81-35-81.dynamicip.rima-tde.net [81.35.81.177])
-	by mail.tilde.green (Postfix) with ESMTPSA id 35FB3B40537;
-	Tue, 16 Dec 2025 17:06:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iwnp.org; s=2024081101;
-	t=1765904768;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=FzIk/xVtvuUqoNTXfwGpq0LGTupwxhcQ0lNqFN4JoS8=;
-	b=V/VFkMN2wYrEmYkQ4w9M5XplfeNPYg66d5fZNdGln2z1slezZnXGQZxnwpDgf93qoTSi8y
-	Nz4gtA9mn8tF8FDZyWkhtqZVyRdhua3oSeKui5WaO4wLO5EyXzxmZM6R5qtr7/6b6qbhOY
-	hhoFhKETo5CtLpGcQLOLZ9LIshjgZZXZN8z+WDKv8dFOzFbXtKGFzQ1AZeJ00TSUUhi+mH
-	ce4E580GDHhnwf6iaJdP445CEjOB0zXXamdyD8Jx+ku3ynVYUWlnzJVUGDveaBolAPvBB5
-	7WHUhAXm3pxpJ14YWyl/g0IYVFfTNFhdTGta4kgu9iYJ6bilU+yYhw6KfgijAQ==
-From: klea <klea@iwnp.org>
-To: tools@linux.kernel.org
-Cc: klea <klea@iwnp.org>
-Subject: [PATCH] software: link rot, fix url
-Date: Tue, 16 Dec 2025 17:05:47 +0000
-Message-ID: <20251216170553.1629989-1-klea@iwnp.org>
-X-Mailer: git-send-email 2.51.2
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQvwNlnb"
+Received: by smtp.kernel.org (Postfix)
+	id 60756C116C6; Wed, 17 Dec 2025 15:21:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C09DC4CEF5;
+	Wed, 17 Dec 2025 15:21:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1765984889;
+	bh=6DEoNJyIFqZUFwIa/I7XMxtFEAL3+7yethDcOJS3v0M=;
+	h=Date:From:To:Subject:From;
+	b=aQvwNlnbdBCK7pmFJI2GOX2Boj8FcmhHRhKLKsNygwvg6CU5l4pr4PEo8gFGhF0k6
+	 nIQ+OjIXoo41dKSoFYopE3pjYlvXkfg5k3IxhvzXIC+IQMPzf5wwbJLTcKmyLg9za0
+	 mwg72vrlN5j21ul05hKopF4XaydYtHPyh++BtlqY=
+Date: Wed, 17 Dec 2025 10:21:27 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: tools@kernel.org, users@kernel.org
+Subject: korgalore v0.2 released with JMAP, IMAP, Maildir support
+Message-ID: <20251217-attractive-stalwart-seahorse-de4e3e@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
----
- software.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hello:
 
-diff --git a/software.rst b/software.rst
-index 209ab0e..285311b 100644
---- a/software.rst
-+++ b/software.rst
-@@ -14,7 +14,7 @@ repository for the reference.
- .. _postfix: https://www.postfix.org/
- .. _mlmmj: https://codeberg.org/mlmmj/mlmmj
- .. _public-inbox: https://public-inbox.org/
--.. _README.postfix: https://codeberg.org/mlmmj/mlmmj/src/branch/master/README.postfix
-+.. _README.postfix: https://codeberg.org/mlmmj/mlmmj/src/branch/master/README.postfix.md
- 
- 
- Configuring public-inbox with mlmmj
--- 
-2.51.2
+TL;DR: korgalore 0.2 adds support for multiple delivery targets beyond Gmail:
+JMAP (Fastmail), generic IMAP, and local maildir.
 
+Docs are here:
+https://korgalore.docs.kernel.org/en/v0.2/
+
+What's new in 0.2
+-----------------
+
+New delivery targets:
+
+- JMAP support: works with Fastmail and, potentially, other JMAP-compatible
+  providers. Uses bearer token authentication, so no OAuth dance required --
+  just generate an API token in your provider's settings.
+- Generic IMAP: works with any IMAP server over SSL. Simple password or
+  password_file authentication.
+- Local maildir: for those who prefer local mail storage.
+
+Configuration improvements:
+
+- Named feed definitions: define feeds once, reuse across multiple deliveries.
+- Per-delivery state tracking: each delivery now maintains its own state,
+  allowing multiple targets to follow the same feed independently.
+- Hopefully, clearer naming for targets, feeds, and deliveries.
+
+Reliability improvements:
+
+- Automatic retry mechanism for failed deliveries, with 5-day grace period
+  before marking as permanently failed.
+- Atomic writes for state files to prevent corruption on interrupted writes.
+- Better feedback during initialization of new feeds and deliveries.
+
+Not just GMail
+--------------
+
+If Gmail's OAuth complexity was keeping you away, you now have simpler options:
+
+- Fastmail users just need to generate an API token -- no developer console, no
+  OAuth consent screens, no clicking through 10 confirmation dialogs.
+- IMAP works with any provider that supports IMAP over SSL.
+- Maildir requires no authentication at all.
+
+The architecture has been cleaned up to clearly separate "feeds" (email
+sources like lore and lei) from "targets" (delivery destinations), making
+it easier to add new target types in the future.
+
+Upgrading from 0.1
+------------------
+
+State files are automatically migrated to the new per-delivery format on first
+run. Your existing configuration will continue to work, though "sources" has
+been renamed to "deliveries" (legacy configs are handled automatically).
+
+-K
