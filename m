@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032BD2E091C
-	for <tools@linux.kernel.org>; Thu, 18 Dec 2025 20:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE99E2E6CA5
+	for <tools@linux.kernel.org>; Thu, 18 Dec 2025 20:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766090569; cv=none; b=jD4i7vNWCz8m80HNhW7oEyyEG7eouRratkSc/qif4B4URZ7bOedPUZelmJ8EcO7PH2I+R1TAA/caGxtdZVC3W6o5ZZ3T5pf2LeYq6cqMcFeiY/++Zc50uBTE4xLANukaZjS9cHAKmjX9598i5xn5yk2J9fpsXNPJ5J0Pd3+i+cM=
+	t=1766090570; cv=none; b=md8aWhBNqPIyIKWl4r0elAqPqYHEldExhiYg50hT9Q1RnLgpZsl41AAvTlHdsUa8K3igNRELnXLarmDFXKBXFjboHhEVhqbxCIGDRSOgqWtuxe4fbiM7eiOMTIeE1iji1x1T0HAvwFBzEJN5cl/BdTdPE9V68yRzsDvtuZDoJbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766090569; c=relaxed/simple;
-	bh=4njXAcsXQgxzf4FI+Pl/TwMQWMtJkYo+TBa/CAdD/RQ=;
+	s=arc-20240116; t=1766090570; c=relaxed/simple;
+	bh=201PmRgYE1b+3daKnu5U4am8WX5QK9hEVu07e1v1kmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZALtr1RWIYB8bx4u9YEL++SdIu1yiPn8/tOmPFjwi8Yu7b0piYjAMDUvAQXiPq1KqLOO9ymxRiCXAaf0Pj4uiHbb1C4ZqVdpx7cdwdGTcH4VvqMNonhYPGBiIqArTKXk95mAFSYQPfj+z3fMmFiCDIz8DX7WDbEkIXhswG3Uc64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ogzR9M+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tJKTHfS242MZi+H4UMLMK11FI3cMKmwdH+6GNPnugD3FgaetP0cbkGbNYCDHnF7u81/1sWop04mfZzjypNMm6KuiwzTkMsjCkeIakWK7KCoZEt0ChIHbc5kH0XrD6XmZzw1YReiLL+PwDbHrhlXu/1mIX2zMyMmmN2WUYFZvoR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j5IIw4FP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ogzR9M+Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j5IIw4FP"
 Received: by smtp.kernel.org (Postfix)
-	id F0AF7C113D0; Thu, 18 Dec 2025 20:42:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD3EC16AAE;
-	Thu, 18 Dec 2025 20:42:48 +0000 (UTC)
+	id D62BBC4CEFB; Thu, 18 Dec 2025 20:42:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24998C113D0;
+	Thu, 18 Dec 2025 20:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766090568;
-	bh=4njXAcsXQgxzf4FI+Pl/TwMQWMtJkYo+TBa/CAdD/RQ=;
+	s=k20201202; t=1766090570;
+	bh=201PmRgYE1b+3daKnu5U4am8WX5QK9hEVu07e1v1kmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogzR9M+Y/t6RFbp3aBNkqojGdsWkWS4Hio91QkeoAErCWQXy6ZO38CuHD+oL7ssBo
-	 HwN74EuIoVBpI1ty7xBqke1c+xlWTVTOJLsL91g/EEXe7XND5c1UWY04LsE9E4u54M
-	 7XXgw+F2aBHwmEkMGzaCWx0S4Mo2Wjbl8Su1LiiOdMsmveKkNZbZuZXXhI+x7qsHyt
-	 xBeKwIsEu1IEO8DrwLftJ+/XktfDI+zbu5CsiB+OrF+qXWnC8sxx0e9ebA0NRAEHYN
-	 xPn+h3oq+q9PbNGIcXZ5d4lg2uS6kYqW02yweYkP1chr+59OV1MJlciHikqodiev/d
-	 lamxhscxAzxVQ==
+	b=j5IIw4FPtkgCPI1cSTQmj9p+iSdliZmfR/xE2E1Ky0X3S46Uq8fzzwFSrrAd0dvvv
+	 JZwydI5K9hjV42sQ2tRohvaKMNS25d3SH5JA8cFxwFxrYGXMgQwxkvz6BqWrg6dgZW
+	 Ho1YUGSFgN5U0iDrSxapM7l2awMnaOtDYIsF3mmYPmMN1JrvhjWflW53w9Y5vt4+sb
+	 rtqlUlecHoHMDw+AqBBrA3Gkr3fWPP19a/D2USVx++wO5YjscNDcX5tNZytIW4NRoK
+	 MA3QKtCQWwtAKpzWIyM+omIXlTh6e8lWrbWPTkVJE5qL6Iboj2JHGBuBqfDaenC10e
+	 vaYdebaL1YfGQ==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-api@vger.kernel.org
 Cc: linux-doc@vger.kernel.org,
@@ -35,9 +35,9 @@ Cc: linux-doc@vger.kernel.org,
 	tools@kernel.org,
 	gpaoloni@redhat.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [RFC PATCH v5 03/15] kernel/api: add debugfs interface for kernel API specifications
-Date: Thu, 18 Dec 2025 15:42:25 -0500
-Message-ID: <20251218204239.4159453-4-sashal@kernel.org>
+Subject: [RFC PATCH v5 05/15] kernel/api: add API specification for io_setup
+Date: Thu, 18 Dec 2025 15:42:27 -0500
+Message-ID: <20251218204239.4159453-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251218204239.4159453-1-sashal@kernel.org>
 References: <20251218204239.4159453-1-sashal@kernel.org>
@@ -49,442 +49,250 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a debugfs interface to expose kernel API specifications at runtime.
-This allows tools and users to query the complete API specifications
-through the debugfs filesystem.
-
-The interface provides:
-- /sys/kernel/debug/kapi/list - lists all available API specifications
-- /sys/kernel/debug/kapi/specs/<name> - detailed info for each API
-
-Each specification file includes:
-- Function name, version, and descriptions
-- Execution context requirements and flags
-- Parameter details with types, flags, and constraints
-- Return value specifications and success conditions
-- Error codes with descriptions and conditions
-- Locking requirements and constraints
-- Signal handling specifications
-- Examples, notes, and deprecation status
-
-This enables runtime introspection of kernel APIs for documentation
-tools, static analyzers, and debugging purposes.
-
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/api/Kconfig        |  20 +++
- kernel/api/Makefile       |   3 +
- kernel/api/kapi_debugfs.c | 358 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 381 insertions(+)
- create mode 100644 kernel/api/kapi_debugfs.c
+ fs/aio.c | 228 ++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 216 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/api/Kconfig b/kernel/api/Kconfig
-index fde25ec70e134..d2754b21acc43 100644
---- a/kernel/api/Kconfig
-+++ b/kernel/api/Kconfig
-@@ -33,3 +33,23 @@ config KAPI_RUNTIME_CHECKS
- 	  development. The checks use WARN_ONCE to report violations.
+diff --git a/fs/aio.c b/fs/aio.c
+index 0a23a8c0717ff..36556e7a8e2c0 100644
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -1366,18 +1366,222 @@ static long read_events(struct kioctx *ctx, long min_nr, long nr,
+ 	return ret;
+ }
  
- 	  If unsure, say N.
-+
-+config KAPI_SPEC_DEBUGFS
-+	bool "Export kernel API specifications via debugfs"
-+	depends on KAPI_SPEC
-+	depends on DEBUG_FS
-+	help
-+	  This option enables exporting kernel API specifications through
-+	  the debugfs filesystem. When enabled, specifications can be
-+	  accessed at /sys/kernel/debug/kapi/.
-+
-+	  The debugfs interface provides:
-+	  - A list of all available API specifications
-+	  - Detailed information for each API including parameters,
-+	    return values, errors, locking requirements, and constraints
-+	  - Complete machine-readable representation of the specs
-+
-+	  This is useful for documentation tools, static analyzers, and
-+	  runtime introspection of kernel APIs.
-+
-+	  If unsure, say N.
-diff --git a/kernel/api/Makefile b/kernel/api/Makefile
-index acab17c78afa3..716f128eea71d 100644
---- a/kernel/api/Makefile
-+++ b/kernel/api/Makefile
-@@ -10,6 +10,9 @@ obj-$(CONFIG_KAPI_SPEC)		+= kernel_api_spec.o
- ifeq ($(CONFIG_KAPI_SPEC),y)
- obj-$(CONFIG_KAPI_SPEC)		+= generated_api_specs.o
- 
-+# Debugfs interface for kernel API specs
-+obj-$(CONFIG_KAPI_SPEC_DEBUGFS) += kapi_debugfs.o
-+
- # Find all potential apispec files (this is evaluated at make time)
- apispec-files := $(shell find $(objtree) -name "*.apispec.h" -type f 2>/dev/null)
- 
-diff --git a/kernel/api/kapi_debugfs.c b/kernel/api/kapi_debugfs.c
-new file mode 100644
-index 0000000000000..84d5446d93916
---- /dev/null
-+++ b/kernel/api/kapi_debugfs.c
-@@ -0,0 +1,358 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Kernel API specification debugfs interface
+-/* sys_io_setup:
+- *	Create an aio_context capable of receiving at least nr_events.
+- *	ctxp must not point to an aio_context that already exists, and
+- *	must be initialized to 0 prior to the call.  On successful
+- *	creation of the aio_context, *ctxp is filled in with the resulting 
+- *	handle.  May fail with -EINVAL if *ctxp is not initialized,
+- *	if the specified nr_events exceeds internal limits.  May fail 
+- *	with -EAGAIN if the specified nr_events exceeds the user's limit 
+- *	of available events.  May fail with -ENOMEM if insufficient kernel
+- *	resources are available.  May fail with -EFAULT if an invalid
+- *	pointer is passed for ctxp.  Will fail with -ENOSYS if not
+- *	implemented.
++/**
++ * sys_io_setup - Create an asynchronous I/O context
++ * @nr_events: Minimum number of concurrent AIO operations the context should support
++ * @ctxp: Pointer to aio_context_t variable to receive the context handle
 + *
-+ * This provides a debugfs interface to expose kernel API specifications
-+ * at runtime, allowing tools and users to query the complete API specs.
-+ */
-+
-+#include <linux/debugfs.h>
-+#include <linux/kernel.h>
-+#include <linux/init.h>
-+#include <linux/seq_file.h>
-+#include <linux/kernel_api_spec.h>
-+#include <linux/slab.h>
-+#include <linux/string.h>
-+
-+/* External symbols for kernel API spec section */
-+extern struct kernel_api_spec __start_kapi_specs[];
-+extern struct kernel_api_spec __stop_kapi_specs[];
-+
-+static struct dentry *kapi_debugfs_root;
-+
-+/* Helper function to print parameter type as string */
-+static const char *param_type_str(enum kapi_param_type type)
-+{
-+	switch (type) {
-+	case KAPI_TYPE_INT: return "int";
-+	case KAPI_TYPE_UINT: return "uint";
-+	case KAPI_TYPE_PTR: return "ptr";
-+	case KAPI_TYPE_STRUCT: return "struct";
-+	case KAPI_TYPE_UNION: return "union";
-+	case KAPI_TYPE_ARRAY: return "array";
-+	case KAPI_TYPE_FD: return "fd";
-+	case KAPI_TYPE_ENUM: return "enum";
-+	case KAPI_TYPE_USER_PTR: return "user_ptr";
-+	case KAPI_TYPE_PATH: return "path";
-+	case KAPI_TYPE_FUNC_PTR: return "func_ptr";
-+	case KAPI_TYPE_CUSTOM: return "custom";
-+	default: return "unknown";
-+	}
-+}
-+
-+/* Helper to print parameter flags */
-+static void print_param_flags(struct seq_file *m, u32 flags)
-+{
-+	seq_printf(m, "    flags: ");
-+	if (flags & KAPI_PARAM_IN) seq_printf(m, "IN ");
-+	if (flags & KAPI_PARAM_OUT) seq_printf(m, "OUT ");
-+	if (flags & KAPI_PARAM_INOUT) seq_printf(m, "INOUT ");
-+	if (flags & KAPI_PARAM_OPTIONAL) seq_printf(m, "OPTIONAL ");
-+	if (flags & KAPI_PARAM_CONST) seq_printf(m, "CONST ");
-+	if (flags & KAPI_PARAM_USER) seq_printf(m, "USER ");
-+	if (flags & KAPI_PARAM_VOLATILE) seq_printf(m, "VOLATILE ");
-+	if (flags & KAPI_PARAM_DMA) seq_printf(m, "DMA ");
-+	if (flags & KAPI_PARAM_ALIGNED) seq_printf(m, "ALIGNED ");
-+	seq_printf(m, "\n");
-+}
-+
-+/* Helper to print context flags */
-+static void print_context_flags(struct seq_file *m, u32 flags)
-+{
-+	seq_printf(m, "Context flags: ");
-+	if (flags & KAPI_CTX_PROCESS) seq_printf(m, "PROCESS ");
-+	if (flags & KAPI_CTX_HARDIRQ) seq_printf(m, "HARDIRQ ");
-+	if (flags & KAPI_CTX_SOFTIRQ) seq_printf(m, "SOFTIRQ ");
-+	if (flags & KAPI_CTX_NMI) seq_printf(m, "NMI ");
-+	if (flags & KAPI_CTX_SLEEPABLE) seq_printf(m, "SLEEPABLE ");
-+	if (flags & KAPI_CTX_ATOMIC) seq_printf(m, "ATOMIC ");
-+	if (flags & KAPI_CTX_PREEMPT_DISABLED) seq_printf(m, "PREEMPT_DISABLED ");
-+	if (flags & KAPI_CTX_IRQ_DISABLED) seq_printf(m, "IRQ_DISABLED ");
-+	seq_printf(m, "\n");
-+}
-+
-+/* Show function for individual API spec */
-+static int kapi_spec_show(struct seq_file *m, void *v)
-+{
-+	struct kernel_api_spec *spec = m->private;
-+	int i;
-+
-+	seq_printf(m, "Kernel API Specification\n");
-+	seq_printf(m, "========================\n\n");
-+
-+	/* Basic info */
-+	seq_printf(m, "Name: %s\n", spec->name);
-+	seq_printf(m, "Version: %u\n", spec->version);
-+	seq_printf(m, "Description: %s\n", spec->description);
-+	if (strlen(spec->long_description) > 0)
-+		seq_printf(m, "Long description: %s\n", spec->long_description);
-+
-+	/* Context */
-+	print_context_flags(m, spec->context_flags);
-+	seq_printf(m, "\n");
-+
-+	/* Parameters */
-+	if (spec->param_count > 0) {
-+		seq_printf(m, "Parameters (%u):\n", spec->param_count);
-+		for (i = 0; i < spec->param_count; i++) {
-+			struct kapi_param_spec *param = &spec->params[i];
-+			seq_printf(m, "  [%d] %s:\n", i, param->name);
-+			seq_printf(m, "    type: %s (%s)\n",
-+				   param_type_str(param->type), param->type_name);
-+			print_param_flags(m, param->flags);
-+			if (strlen(param->description) > 0)
-+				seq_printf(m, "    description: %s\n", param->description);
-+			if (param->size > 0)
-+				seq_printf(m, "    size: %zu\n", param->size);
-+			if (param->alignment > 0)
-+				seq_printf(m, "    alignment: %zu\n", param->alignment);
-+
-+			/* Print constraints if any */
-+			if (param->constraint_type != KAPI_CONSTRAINT_NONE) {
-+				seq_printf(m, "    constraints:\n");
-+				switch (param->constraint_type) {
-+				case KAPI_CONSTRAINT_RANGE:
-+					seq_printf(m, "      type: range\n");
-+					seq_printf(m, "      min: %lld\n", param->min_value);
-+					seq_printf(m, "      max: %lld\n", param->max_value);
-+					break;
-+				case KAPI_CONSTRAINT_MASK:
-+					seq_printf(m, "      type: mask\n");
-+					seq_printf(m, "      valid_bits: 0x%llx\n", param->valid_mask);
-+					break;
-+				case KAPI_CONSTRAINT_ENUM:
-+					seq_printf(m, "      type: enum\n");
-+					seq_printf(m, "      count: %u\n", param->enum_count);
-+					break;
-+				case KAPI_CONSTRAINT_USER_STRING:
-+					seq_printf(m, "      type: user_string\n");
-+					seq_printf(m, "      min_len: %lld\n", param->min_value);
-+					seq_printf(m, "      max_len: %lld\n", param->max_value);
-+					break;
-+				case KAPI_CONSTRAINT_USER_PATH:
-+					seq_printf(m, "      type: user_path\n");
-+					seq_printf(m, "      max_len: PATH_MAX (4096)\n");
-+					break;
-+				case KAPI_CONSTRAINT_USER_PTR:
-+					seq_printf(m, "      type: user_ptr\n");
-+					seq_printf(m, "      size: %zu bytes\n", param->size);
-+					break;
-+				case KAPI_CONSTRAINT_CUSTOM:
-+					seq_printf(m, "      type: custom\n");
-+					if (strlen(param->constraints) > 0)
-+						seq_printf(m, "      description: %s\n",
-+							   param->constraints);
-+					break;
-+				default:
-+					break;
-+				}
-+			}
-+			seq_printf(m, "\n");
-+		}
-+	}
-+
-+	/* Return value */
-+	seq_printf(m, "Return value:\n");
-+	seq_printf(m, "  type: %s\n", spec->return_spec.type_name);
-+	if (strlen(spec->return_spec.description) > 0)
-+		seq_printf(m, "  description: %s\n", spec->return_spec.description);
-+
-+	switch (spec->return_spec.check_type) {
-+	case KAPI_RETURN_EXACT:
-+		seq_printf(m, "  success: == %lld\n", spec->return_spec.success_value);
-+		break;
-+	case KAPI_RETURN_RANGE:
-+		seq_printf(m, "  success: [%lld, %lld]\n",
-+			   spec->return_spec.success_min,
-+			   spec->return_spec.success_max);
-+		break;
-+	case KAPI_RETURN_FD:
-+		seq_printf(m, "  success: valid file descriptor (>= 0)\n");
-+		break;
-+	case KAPI_RETURN_ERROR_CHECK:
-+		seq_printf(m, "  success: error check\n");
-+		break;
-+	case KAPI_RETURN_CUSTOM:
-+		seq_printf(m, "  success: custom check\n");
-+		break;
-+	default:
-+		break;
-+	}
-+	seq_printf(m, "\n");
-+
-+	/* Errors */
-+	if (spec->error_count > 0) {
-+		seq_printf(m, "Errors (%u):\n", spec->error_count);
-+		for (i = 0; i < spec->error_count; i++) {
-+			struct kapi_error_spec *err = &spec->errors[i];
-+			seq_printf(m, "  %s (%d): %s\n",
-+				   err->name, err->error_code, err->description);
-+			if (strlen(err->condition) > 0)
-+				seq_printf(m, "    condition: %s\n", err->condition);
-+		}
-+		seq_printf(m, "\n");
-+	}
-+
-+	/* Locks */
-+	if (spec->lock_count > 0) {
-+		seq_printf(m, "Locks (%u):\n", spec->lock_count);
-+		for (i = 0; i < spec->lock_count; i++) {
-+			struct kapi_lock_spec *lock = &spec->locks[i];
-+			const char *type_str, *scope_str;
-+			switch (lock->lock_type) {
-+			case KAPI_LOCK_MUTEX: type_str = "mutex"; break;
-+			case KAPI_LOCK_SPINLOCK: type_str = "spinlock"; break;
-+			case KAPI_LOCK_RWLOCK: type_str = "rwlock"; break;
-+			case KAPI_LOCK_SEMAPHORE: type_str = "semaphore"; break;
-+			case KAPI_LOCK_RCU: type_str = "rcu"; break;
-+			case KAPI_LOCK_SEQLOCK: type_str = "seqlock"; break;
-+			default: type_str = "unknown"; break;
-+			}
-+			switch (lock->scope) {
-+			case KAPI_LOCK_INTERNAL: scope_str = "acquired and released"; break;
-+			case KAPI_LOCK_ACQUIRES: scope_str = "acquired (not released)"; break;
-+			case KAPI_LOCK_RELEASES: scope_str = "released (held on entry)"; break;
-+			case KAPI_LOCK_CALLER_HELD: scope_str = "held by caller"; break;
-+			default: scope_str = "unknown"; break;
-+			}
-+			seq_printf(m, "  %s (%s): %s\n",
-+				   lock->lock_name, type_str, lock->description);
-+			seq_printf(m, "    scope: %s\n", scope_str);
-+		}
-+		seq_printf(m, "\n");
-+	}
-+
-+	/* Constraints */
-+	if (spec->constraint_count > 0) {
-+		seq_printf(m, "Additional constraints (%u):\n", spec->constraint_count);
-+		for (i = 0; i < spec->constraint_count; i++) {
-+			struct kapi_constraint_spec *cons = &spec->constraints[i];
-+
-+			seq_printf(m, "  - %s", cons->name);
-+			if (cons->description[0])
-+				seq_printf(m, ": %s", cons->description);
-+			seq_printf(m, "\n");
-+			if (cons->expression[0])
-+				seq_printf(m, "    expression: %s\n", cons->expression);
-+		}
-+		seq_printf(m, "\n");
-+	}
-+
-+	/* Signals */
-+	if (spec->signal_count > 0) {
-+		seq_printf(m, "Signal handling (%u):\n", spec->signal_count);
-+		for (i = 0; i < spec->signal_count; i++) {
-+			struct kapi_signal_spec *sig = &spec->signals[i];
-+			seq_printf(m, "  %s (%d):\n", sig->signal_name, sig->signal_num);
-+			seq_printf(m, "    direction: ");
-+			if (sig->direction & KAPI_SIGNAL_SEND) seq_printf(m, "send ");
-+			if (sig->direction & KAPI_SIGNAL_RECEIVE) seq_printf(m, "receive ");
-+			if (sig->direction & KAPI_SIGNAL_HANDLE) seq_printf(m, "handle ");
-+			if (sig->direction & KAPI_SIGNAL_BLOCK) seq_printf(m, "block ");
-+			if (sig->direction & KAPI_SIGNAL_IGNORE) seq_printf(m, "ignore ");
-+			seq_printf(m, "\n");
-+			seq_printf(m, "    action: ");
-+			switch (sig->action) {
-+			case KAPI_SIGNAL_ACTION_DEFAULT: seq_printf(m, "default"); break;
-+			case KAPI_SIGNAL_ACTION_TERMINATE: seq_printf(m, "terminate"); break;
-+			case KAPI_SIGNAL_ACTION_COREDUMP: seq_printf(m, "coredump"); break;
-+			case KAPI_SIGNAL_ACTION_STOP: seq_printf(m, "stop"); break;
-+			case KAPI_SIGNAL_ACTION_CONTINUE: seq_printf(m, "continue"); break;
-+			case KAPI_SIGNAL_ACTION_CUSTOM: seq_printf(m, "custom"); break;
-+			case KAPI_SIGNAL_ACTION_RETURN: seq_printf(m, "return"); break;
-+			case KAPI_SIGNAL_ACTION_RESTART: seq_printf(m, "restart"); break;
-+			default: seq_printf(m, "unknown"); break;
-+			}
-+			seq_printf(m, "\n");
-+			if (strlen(sig->description) > 0)
-+				seq_printf(m, "    description: %s\n", sig->description);
-+		}
-+		seq_printf(m, "\n");
-+	}
-+
-+	/* Additional info */
-+	if (strlen(spec->examples) > 0) {
-+		seq_printf(m, "Examples:\n%s\n\n", spec->examples);
-+	}
-+	if (strlen(spec->notes) > 0) {
-+		seq_printf(m, "Notes:\n%s\n\n", spec->notes);
-+	}
-+	if (strlen(spec->since_version) > 0) {
-+		seq_printf(m, "Since: %s\n", spec->since_version);
-+	}
-+
-+	return 0;
-+}
-+
-+static int kapi_spec_open(struct inode *inode, struct file *file)
-+{
-+	return single_open(file, kapi_spec_show, inode->i_private);
-+}
-+
-+static const struct file_operations kapi_spec_fops = {
-+	.open = kapi_spec_open,
-+	.read = seq_read,
-+	.llseek = seq_lseek,
-+	.release = single_release,
-+};
-+
-+/* Show all available API specs */
-+static int kapi_list_show(struct seq_file *m, void *v)
-+{
-+	struct kernel_api_spec *spec;
-+	int count = 0;
-+
-+	seq_printf(m, "Available Kernel API Specifications\n");
-+	seq_printf(m, "===================================\n\n");
-+
-+	for (spec = __start_kapi_specs; spec < __stop_kapi_specs; spec++) {
-+		seq_printf(m, "%s - %s\n", spec->name, spec->description);
-+		count++;
-+	}
-+
-+	seq_printf(m, "\nTotal: %d specifications\n", count);
-+	return 0;
-+}
-+
-+static int kapi_list_open(struct inode *inode, struct file *file)
-+{
-+	return single_open(file, kapi_list_show, NULL);
-+}
-+
-+static const struct file_operations kapi_list_fops = {
-+	.open = kapi_list_open,
-+	.read = seq_read,
-+	.llseek = seq_lseek,
-+	.release = single_release,
-+};
-+
-+static int __init kapi_debugfs_init(void)
-+{
-+	struct kernel_api_spec *spec;
-+	struct dentry *spec_dir;
-+
-+	/* Create main directory */
-+	kapi_debugfs_root = debugfs_create_dir("kapi", NULL);
-+
-+	/* Create list file */
-+	debugfs_create_file("list", 0444, kapi_debugfs_root, NULL, &kapi_list_fops);
-+
-+	/* Create specs subdirectory */
-+	spec_dir = debugfs_create_dir("specs", kapi_debugfs_root);
-+
-+	/* Create a file for each API spec */
-+	for (spec = __start_kapi_specs; spec < __stop_kapi_specs; spec++) {
-+		debugfs_create_file(spec->name, 0444, spec_dir, spec, &kapi_spec_fops);
-+	}
-+
-+	pr_info("Kernel API debugfs interface initialized\n");
-+	return 0;
-+}
-+
-+static void __exit kapi_debugfs_exit(void)
-+{
-+	debugfs_remove_recursive(kapi_debugfs_root);
-+}
-+
-+/* Initialize as part of kernel, not as a module */
-+fs_initcall(kapi_debugfs_init);
-\ No newline at end of file
++ * long-desc: Creates an asynchronous I/O context capable of receiving at least
++ *   nr_events concurrent operations. The context handle is returned via ctxp,
++ *   which must be initialized to 0 prior to the call. The returned context
++ *   handle is used with subsequent AIO operations (io_submit, io_getevents,
++ *   io_cancel, io_destroy).
++ *
++ *   The AIO context consists of a memory-mapped ring buffer shared between
++ *   kernel and userspace for efficient completion notification. The kernel
++ *   internally allocates more capacity than requested to account for percpu
++ *   batching (approximately nr_events * 2, but at least num_cpus * 8).
++ *
++ *   The context is bound to the calling process and cannot be shared across
++ *   processes. Each process can have multiple AIO contexts, limited only by
++ *   the system-wide aio-max-nr sysctl.
++ *
++ * context-flags: KAPI_CTX_PROCESS | KAPI_CTX_SLEEPABLE
++ *
++ * param: nr_events
++ *   type: KAPI_TYPE_UINT
++ *   flags: KAPI_PARAM_IN
++ *   constraint-type: KAPI_CONSTRAINT_RANGE
++ *   range: 1, 8388608
++ *   constraint: Must be greater than 0. Internal limit of approximately 8M events
++ *     prevents overflow when calculating ring buffer size (0x10000000 / 32 bytes
++ *     per io_event). The kernel may allocate more capacity than requested to
++ *     optimize for percpu batching.
++ *
++ * param: ctxp
++ *   type: KAPI_TYPE_USER_PTR
++ *   flags: KAPI_PARAM_INOUT | KAPI_PARAM_USER
++ *   size: sizeof(aio_context_t)
++ *   constraint-type: KAPI_CONSTRAINT_USER_PTR
++ *   constraint: Must be a valid userspace pointer to an aio_context_t variable.
++ *     The memory pointed to MUST be initialized to 0 before the call. On success,
++ *     receives the context handle (actually the mmap address of the ring buffer).
++ *     The context handle is opaque and should not be interpreted by userspace
++ *     except to pass to other io_* syscalls.
++ *
++ * return:
++ *   type: KAPI_TYPE_INT
++ *   check-type: KAPI_RETURN_ERROR_CHECK
++ *   success: 0
++ *   desc: Returns 0 on success. On success, *ctxp contains the new context handle.
++ *
++ * error: EFAULT, Invalid pointer
++ *   desc: The ctxp pointer is invalid, not accessible, or points to memory that
++ *     cannot be read or written. Returned from get_user() when reading the
++ *     initial value or from put_user() when storing the context handle.
++ *
++ * error: EINVAL, Invalid parameter
++ *   desc: Either *ctxp is not initialized to 0 (indicating an existing context or
++ *     uninitialized memory), or nr_events is 0, or nr_events is too large causing
++ *     internal overflow when calculating ring buffer size. The internal limit is
++ *     approximately 0x10000000 / sizeof(struct io_event) events.
++ *
++ * error: EAGAIN, Resource limit exceeded
++ *   desc: The system-wide limit on AIO contexts would be exceeded. The limit is
++ *     controlled by /proc/sys/fs/aio-max-nr (default 65536). Each context counts
++ *     as nr_events toward this limit. Also returned if nr_events exceeds the
++ *     current aio-max-nr value. Unlike ENOMEM, this error indicates a policy
++ *     limit rather than physical resource exhaustion.
++ *
++ * error: ENOMEM, Insufficient memory
++ *   desc: Kernel could not allocate required memory for the AIO context. This
++ *     includes the kioctx structure, percpu data, ring buffer pages, or the
++ *     anonymous file backing the ring buffer. Also returned if the kernel could
++ *     not establish the memory mapping for the ring buffer, or if ioctx_table
++ *     expansion failed.
++ *
++ * error: EINTR, Interrupted by signal
++ *   desc: A fatal signal was received while attempting to acquire the mmap_lock
++ *     for the ring buffer memory mapping. The operation was aborted before any
++ *     state was modified. Only fatal signals (SIGKILL) can cause this error;
++ *     normal signals like SIGINT do not interrupt the operation.
++ *
++ * lock: aio_nr_lock
++ *   type: KAPI_LOCK_SPINLOCK
++ *   desc: Global spinlock protecting the system-wide aio_nr counter. Held briefly
++ *     to check and update the system-wide AIO context count.
++ *
++ * lock: mm->ioctx_lock
++ *   type: KAPI_LOCK_SPINLOCK
++ *   desc: Per-mm spinlock protecting the ioctx_table. Held while adding the new
++ *     context to the process's AIO context table.
++ *
++ * lock: ctx->ring_lock
++ *   type: KAPI_LOCK_MUTEX
++ *   desc: Per-context mutex protecting ring buffer setup. Held throughout context
++ *     initialization to prevent page migration during setup, then released once
++ *     the context is fully initialized.
++ *
++ * lock: mmap_lock
++ *   type: KAPI_LOCK_RWLOCK
++ *   desc: Process memory map write lock. Acquired via mmap_write_lock_killable()
++ *     during ring buffer mmap operation. This is where EINTR can occur.
++ *
++ * signal: SIGKILL
++ *   direction: KAPI_SIGNAL_RECEIVE
++ *   action: KAPI_SIGNAL_ACTION_RETURN
++ *   condition: Fatal signal pending during mmap_write_lock_killable
++ *   desc: Fatal signals can interrupt the context creation during the mmap phase.
++ *     The mmap_write_lock_killable() function checks for fatal signals and returns
++ *     -EINTR if one is pending. Non-fatal signals do not interrupt this syscall.
++ *   error: -EINTR
++ *   timing: KAPI_SIGNAL_TIME_DURING
++ *   priority: 0
++ *   restartable: no
++ *
++ * side-effect: KAPI_EFFECT_ALLOC_MEMORY
++ *   target: kioctx structure
++ *   desc: Allocates the main AIO context structure from kioctx_cachep slab cache.
++ *     Contains ring buffer metadata, locks, and request tracking.
++ *   reversible: yes
++ *
++ * side-effect: KAPI_EFFECT_ALLOC_MEMORY
++ *   target: percpu kioctx_cpu structures
++ *   desc: Allocates per-CPU structures for request batching via alloc_percpu().
++ *     Used to reduce contention on the global request counter.
++ *   reversible: yes
++ *
++ * side-effect: KAPI_EFFECT_ALLOC_MEMORY
++ *   target: ring buffer pages
++ *   desc: Allocates pages for the completion event ring buffer. The ring is backed
++ *     by an anonymous file on the internal "aio" filesystem and memory-mapped into
++ *     the process address space.
++ *   reversible: yes
++ *
++ * side-effect: KAPI_EFFECT_RESOURCE_CREATE
++ *   target: anonymous inode and file
++ *   desc: Creates an anonymous inode and file on the internal aio filesystem to
++ *     back the ring buffer mapping. This enables proper page migration support.
++ *   reversible: yes
++ *
++ * side-effect: KAPI_EFFECT_MODIFY_STATE
++ *   target: process virtual memory
++ *   desc: Creates a new memory mapping (VMA) for the ring buffer in the process
++ *     address space. The mapping is marked VM_DONTEXPAND and uses aio_ring_vm_ops.
++ *   reversible: yes
++ *
++ * side-effect: KAPI_EFFECT_MODIFY_STATE
++ *   target: mm->ioctx_table
++ *   desc: Adds the new context to the process's AIO context table. The table is
++ *     dynamically expanded if needed (grows by 4x each time).
++ *   reversible: yes
++ *
++ * side-effect: KAPI_EFFECT_MODIFY_STATE
++ *   target: aio_nr (global counter)
++ *   desc: Increments the system-wide AIO context counter by nr_events. This counter
++ *     is visible via /proc/sys/fs/aio-nr and counts toward the aio-max-nr limit.
++ *   reversible: yes
++ *
++ * state-trans: process AIO state
++ *   from: no AIO context (or fewer contexts)
++ *   to: has AIO context
++ *   condition: successful io_setup
++ *   desc: Process gains an AIO context that can be used for asynchronous I/O
++ *     operations. The context remains until explicitly destroyed via io_destroy
++ *     or process exit.
++ *
++ * state-trans: system AIO resources
++ *   from: aio_nr = N
++ *   to: aio_nr = N + nr_events
++ *   condition: successful io_setup
++ *   desc: System-wide AIO resource counter increases. The counter tracks total
++ *     requested AIO capacity across all processes.
++ *
++ * constraint: System-wide AIO limit (aio-max-nr)
++ *   desc: The /proc/sys/fs/aio-max-nr sysctl (default 65536) limits the total
++ *     number of AIO events system-wide. Each io_setup call adds nr_events to
++ *     the aio_nr counter. If aio_nr + nr_events would exceed aio_max_nr, the
++ *     call fails with EAGAIN. Administrators can increase aio-max-nr if needed.
++ *   expr: aio_nr + nr_events <= aio_max_nr
++ *
++ * constraint: Per-process context limit
++ *   desc: Each process can have multiple AIO contexts, limited only by the
++ *     system-wide aio-max-nr limit and available memory. The ioctx_table grows
++ *     dynamically to accommodate new contexts.
++ *
++ * constraint: CONFIG_AIO required
++ *   desc: The kernel must be compiled with CONFIG_AIO=y for this syscall to be
++ *     available. If not configured, the syscall returns -ENOSYS. This is typically
++ *     enabled by default but may be disabled on embedded systems.
++ *
++ * constraint: Memory for ring buffer
++ *   desc: The kernel must be able to allocate sufficient contiguous pages for the
++ *     ring buffer and establish the memory mapping. Large nr_events values require
++ *     more memory and may fail with ENOMEM on memory-constrained systems.
++ *
++ * examples: aio_context_t ctx = 0; io_setup(128, &ctx);  // Create context for 128 events
++ *   aio_context_t ctx = 0; io_setup(1024, &ctx);  // Create context for 1024 events
++ *
++ * notes: The returned context handle is actually the virtual address of the ring
++ *   buffer mapping in the process address space. This allows userspace libraries
++ *   to directly access completion events without syscall overhead in some cases.
++ *
++ *   The kernel internally doubles nr_events and ensures a minimum of num_cpus * 8
++ *   events for percpu batching efficiency. This means the actual ring capacity may
++ *   be significantly larger than requested.
++ *
++ *   Historical note: A race condition between io_setup and io_destroy was fixed
++ *   in commit 86b62a2cb4fc ("aio: fix io_setup/io_destroy race"). Earlier kernels
++ *   could have the context freed while io_setup was still completing.
++ *
++ *   io_uring (since Linux 5.1) is a more modern alternative that provides better
++ *   performance and more features. Consider using io_uring for new applications.
++ *
++ *   There is no glibc wrapper for this syscall. Use syscall(SYS_io_setup, ...) or
++ *   the libaio library wrapper (note: libaio has slightly different error semantics,
++ *   returning negative error numbers directly instead of -1 with errno).
++ *
++ * since-version: 2.5
+  */
+ SYSCALL_DEFINE2(io_setup, unsigned, nr_events, aio_context_t __user *, ctxp)
+ {
 -- 
 2.51.0
 
