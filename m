@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B8036CDED
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E397736C5A5
 	for <tools@linux.kernel.org>; Fri, 19 Dec 2025 18:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766168197; cv=none; b=TmMFd18gqnYQIS7bLsOYSNz9V4tBDWXy3SUupTsQhV4wEMJQV3ikCXm5mA3kZRkbOwPu4uH5kfXTGZXfjTSgFOZ2L0hDLwWfvF6ocHF9vWOQH84cjX3LgWL+dzV33Hn/QcLSDMwqpGWzzbElAyKZ/2SOYzp7Yn94KWTtIX9FmEg=
+	t=1766168198; cv=none; b=SXkJTx+BKIZqIZuSSiN6L0VPryFBKwGjxaB09Vt7VN4ZBFwwN34o9dJV+nL0V1qV37P2sjLK7WnlfHnJ0u9MD9dt3aCdIytC5bphTSPKpC8fKQ41OI6Uw/LcdVgnkhs6JsJRx3YzpTgofCGwKFuXh0ffUzAD/C1PhmFlEDsiMTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766168197; c=relaxed/simple;
-	bh=8vIjXpgHXtFeRSOqKVMov/hg6meC/DF83ahsMfwvsY0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lEek19Ju1dIZkQcgm8lRiu/UmPP673v6XikH05do3LO2JttsyPIomEfWpVqLt21yOZGL4NGbRRH0jmxXNv421iBUTNuRu1TWjS320VXzz2y85vKo98i+j6Dig+VoXSVRLcrMmFIC2Z7f02r8KCwIqp+Tb1PUMsYUg6sQYCaSnjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CmkFSU6x; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1766168198; c=relaxed/simple;
+	bh=gt2tED3ycuCsnRgfcF6HtCI1KxSxn6L+l6tv6FCGDCA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qjluVvUeI6ECBPp23iBzmcCT0eec7iswig+ZbRdAkKveRDhwGagKev0mHJZYiMyg054tavyz1Kn/Eqw+oFL/+wqmG0plqaglpwkDpOQDURGnYQIOPEl4k99SW/mGiQkJqq9cRHK25oqJ0H1ApRiQ6zbnhf+8kHV6JGgowmB9Sqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DUtUoiD/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CmkFSU6x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DUtUoiD/"
 Received: by smtp.kernel.org (Postfix)
-	id EA087C4AF0C; Fri, 19 Dec 2025 18:16:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480BAC4CEF1;
-	Fri, 19 Dec 2025 18:16:36 +0000 (UTC)
+	id C045DC4CEF1; Fri, 19 Dec 2025 18:16:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECDEC116B1;
+	Fri, 19 Dec 2025 18:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766168196;
-	bh=8vIjXpgHXtFeRSOqKVMov/hg6meC/DF83ahsMfwvsY0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=CmkFSU6xveRvd5PZ+6XKFMBagTYvDhenJwoXwmElCyMSSuZh7VLq+2qjR0lBbhnzQ
-	 pLmTo8GnvmR4sGV0pzG36rSIIajyhFvOLEVBJl1qUYbA5SzXQqFL0XRKzD0B2jjJD4
-	 QPGeX+mzKUAj1V2zVis0Sj094o7jRQLJmfLAC6t8nus4I7yClr7nR/N52n98uWTHhW
-	 2HupSOUm7BwJE5MDyCp1YkzhIYPsLSXT034RW/KUCgU9nlRiCCiL6WK6I8NQJ2Ff0W
-	 mXGIiBj5P8tbd+QcKimZIq+MgCUk5Hq+DToqG4Z9WtJZLP3atfzlqs+kLLUimAM9cM
-	 50KygDmpSSagw==
+	s=k20201202; t=1766168197;
+	bh=gt2tED3ycuCsnRgfcF6HtCI1KxSxn6L+l6tv6FCGDCA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=DUtUoiD/0Q2kwUtiSfDL4oY7OxL1zmh/hqhY1zX/Y3F/kQ8qnnJ41BDHBVRfRn0Go
+	 xtIinMUeJRYXo1bzS+WNYkMBGXwHx9UVAGNkOpm6UXW0lhgrAE9xVumV1eCe5jn5qF
+	 WEORwjyvQftOcE7qKZsLMdqIXT4beIhx9/fycJqvSOfSKpYYrAOXVn1afOMD5RzCKZ
+	 cjqgr4yqx31F9AXCuYdFeoYU7o/MWHQmt1+zkNHINktJXna57cBpf4sSf01xPZ3lEi
+	 1gR9agsgOarL8fV59HClqRs2O/77eGSPvlXKcPRYh0yIH4Cv5roGv38pjTXbk8SxjR
+	 WGIxLvp8X1q4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: tools@kernel.org
 Cc: linux-kernel@vger.kernel.org,
 	torvalds@linux-foundation.org,
 	broonie@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [RFC 0/5] LLMinus: LLM-Assisted Merge Conflict Resolution
-Date: Fri, 19 Dec 2025 13:16:24 -0500
-Message-ID: <20251219181629.1123823-1-sashal@kernel.org>
+Subject: [RFC 1/5] LLMinus: Add skeleton project with learn command
+Date: Fri, 19 Dec 2025 13:16:25 -0500
+Message-ID: <20251219181629.1123823-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251219181629.1123823-1-sashal@kernel.org>
+References: <20251219181629.1123823-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -45,225 +48,767 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-At the 2025 Maintainer's Summit, there was discussion around the various hats
-Linus wears in the community. One of them being the hat of the one who merges
-commits into master and resolves conflicts.
+Introduce LLMinus, an LLM-powered git conflict resolution tool for the Linux
+kernel. This initial version provides:
 
-Linus made an interesting observation: he enjoys doing merges in C and has
-become exceptionally good at it through decades of experience - he can "do them
-in his sleep". But he also observed that merges in Rust are more difficult as
-he's not familiar enough with the language. He tries to resolve them himself,
-then refers back to linux-next's resolution. When his resolution doesn't match,
-he uses it as a teaching moment.
+- CLI structure using clap with derive macros
+- Data structures for storing conflict resolutions:
+  - DiffHunk: Individual diff hunks with line information
+  - FileResolution: Per-file conflict resolution data
+  - MergeResolution: Per-commit resolution with metadata
+  - ResolutionStore: JSON-based persistence
 
-This observation points to something fundamental about merge conflict
-resolution: it is the epitome of understanding code. To resolve a conflict, one
-must understand why the divergence occurred, what the developers on each side
-were trying to accomplish, and then unify the divergence in a way that makes
-the final code equal to or better than the sum of both parts.
+- The 'learn' command that:
+  - Walks merge commit history (optionally filtered by range)
+  - Identifies files modified in both parent branches
+  - Extracts actual conflict resolutions (not trivial merges)
+  - Stores the ours/theirs/resolution diffs for each file
+  - Tracks commits to avoid duplicate processing
 
-LLMinus is a tool designed to support a maintainer's decision making around
-merge conflict resolution by learning from past merges as well as investigating
-into the different branches, trying to understand the underlying reason behind
-a conflict.
+The tool is designed to build a database of historical conflict
+resolutions that can later be used for RAG-based similarity search
+to assist with future merge conflicts.
 
-LLMinus learns from the kernel's git history, extracting cases where manual
-conflict resolution was required. For each historical merge, it captures what
-each branch changed and how the conflict was resolved.  These resolutions are
-converted into semantic embeddings, creating a searchable knowledge base of
-past merge patterns.
-
-When a maintainer encounters a conflict, LLMinus finds semantically similar
-historical resolutions and constructs a prompt for an LLM that includes the
-current conflict, similar past resolutions, and guides the LLM to investigate
-thoroughly before attempting resolution.
-
-The "LLMinus pull" command integrates directly with lore.kernel.org:
-
-    LLMinus pull <message-id>
-
-This fetches the pull request email, executes the pull, and - if conflicts
-arise - invokes the LLM with full context including any conflict resolution
-instructions the submitting maintainer provided.
-
-In the immediate term, I'm hoping to turn LLMinus into a tool that is useful
-for Linus Torvalds, Mark Brown, and other maintainers who pull from sub-trees
-to help understand and review conflicts and support their decision making.
-
-To support the effort of improving the tool, I plan to use LLMinus in my
-linus-next work, auditing every conflict resolution it suggests against what
-Linus actually does.  This serves two purposes: using Linus's resolutions to
-continuously improve the tooling, and potentially spotting issues in merges
-that warrant a second look. I will track divergences and build statistics on
-how well the tool performs, ideally reaching parity with Linus in the future.
-
-Another point raised at the summit was the value of linux-next's "fs-next"
-branch - filesystem maintainers benefit from having their own integration
-branch focused on fs/ issues. Currently, creating similar branches for other
-subsystems would overwhelm the linux-next maintainer with additional merge
-work. LLMinus could change this equation, enabling more subsystem-specific
-integration branches without proportionally increasing human effort.
-
-Here is "LLMinus pull 98b74397-05bc-dbee-cab4-3f40d643eaac@kernel.org" on top
-of v6.19-rc1:
-
-    === Fetching Pull Request ===
-
-    Fetching: https://lore.kernel.org/all/98b74397-05bc-dbee-cab4-3f40d643eaac@kernel.org/raw
-    Subject: [GIT PULL] RISC-V updates for the v6.19 merge window (part two)
-    From: Paul Walmsley <pjw@kernel.org>
-    Date: Thu, 11 Dec 2025 19:36:25 -0700 (MST)
-    Git URL: git://git.kernel.org/pub/scm/linux/kernel/git/riscv/linux tags/riscv-for-linus-6.19-mw2
-
-    === Executing Git Pull ===
-
-    Executing: git pull git://git.kernel.org/pub/scm/linux/kernel/git/riscv/linux tags/riscv-for-linus-6.19-mw2
-    Auto-merging Documentation/admin-guide/kernel-parameters.txt
-    Auto-merging Documentation/devicetree/bindings/riscv/extensions.yaml
-    Auto-merging arch/riscv/Kconfig
-    Auto-merging arch/riscv/include/asm/hwcap.h
-    CONFLICT (content): Merge conflict in arch/riscv/include/asm/hwcap.h
-    Auto-merging arch/riscv/include/asm/pgtable.h
-    Auto-merging arch/riscv/kernel/cpufeature.c
-    Auto-merging include/linux/mm.h
-    CONFLICT (content): Merge conflict in include/linux/mm.h
-    Auto-merging tools/testing/selftests/riscv/hwprobe/which-cpus.c
-    Automatic merge failed; fix conflicts and then commit the result.
-
-    === Merge Conflicts Detected ===
-
-    Found 2 conflict region(s) to resolve
-    Looking for similar historical conflicts...
-    Found 3 similar historical resolutions
-
-
-And the resulting merge commit (where one part matches the resolution
-instructions, and one part differs):
-
-    Merge tags/riscv-for-linus-6.19-mw2 RISC-V updates for the v6.19 merge window (part two)
-
-    Second set of RISC-V updates for v6.19-rc1
-
-    - Add support for control flow integrity for userspace processes.
-      This is based on the standard RISC-V ISA extensions Zicfiss and
-      Zicfilp
-
-    - Add probing and userspace reporting support for the standard RISC-V
-      ISA extensions Zilsd and Zclsd, which implement load/store dual
-      instructions on RV32
-
-    - Abstract the register saving code in setup_sigcontext() so it can be
-      used for stateful RISC-V ISA extensions beyond the vector extension
-
-    - Add the SBI extension ID and some initial data structure definitions
-      for the RISC-V standard SBI debug trigger extension
-
-    - Clean up some code slightly: change some page table functions to
-      avoid atomic operations oinn !SMP and to avoid unnecessary casts to
-      atomic_long_t; and use the existing RISCV_FULL_BARRIER macro in
-      place of some open-coded "fence rw,rw" instructions
-
-    Merge conflict resolution:
-
-    # Merge Conflict Resolution: riscv-for-linus-6.19-mw2
-
-    ## Summary
-
-    This merge integrates RISC-V CFI (Control Flow Integrity) support for userspace
-    processes along with additional ISA extension probing support. The resolution
-    followed the maintainer's guidance from Paul Walmsley's pull request email.
-
-    ## Conflicts Resolved
-
-    ### 1. arch/riscv/include/asm/hwcap.h - ISA Extension ID Renumbering
-
-    **Conflict:** Both branches added new RISC-V ISA extensions with overlapping IDs.
-    - HEAD added SVRSW60T59B at 100 and ZALASR at 101
-    - MERGE_HEAD added ZALASR at 100, plus ZILSD, ZCLSD, ZICFILP, ZICFISS for CFI
-
-    **Resolution:** Kept all extensions with renumbered IDs to avoid duplicates:
-    - SVRSW60T59B: 100 (from HEAD)
-    - ZALASR: 101 (bumped from 100)
-    - ZILSD: 102 (bumped from 101)
-    - ZCLSD: 103 (bumped from 102)
-    - ZICFILP: 104 (bumped from 103)
-    - ZICFISS: 105 (bumped from 104)
-
-    As the maintainer noted, the exact numbers are not important - they just need
-    to be unique and below RISCV_ISA_EXT_MAX (128).
-
-    ### 2. include/linux/mm.h - VM_SHADOW_STACK for RISC-V CFI
-
-    **Conflict:** The VMA flags code was significantly refactored by commit
-    9ea35a25d51b ("mm: introduce VMA flags bitmap type"). The incoming RISC-V
-    CFI changes used the old-style #define syntax which conflicted with the
-    new enum-based DECLARE_VMA_BIT_ALIAS approach.
-
-    **Resolution:** Following the maintainer's guidance:
-
-    a) In the enum section (line 362), added RISC-V CFI to the x86 shadow stack
-       condition to share the same bit alias:
-       ```c
-       #if defined(CONFIG_X86_USER_SHADOW_STACK) || defined(CONFIG_RISCV_USER_CFI)
-       ```
-
-    b) In the VM_SHADOW_STACK macro definition (line 463-464), added RISC-V CFI
-       to enable the flag:
-       ```c
-       #if defined(CONFIG_X86_USER_SHADOW_STACK) || defined(CONFIG_ARM64_GCS) || \
-           defined(CONFIG_RISCV_USER_CFI)
-       ```
-
-    This follows the same pattern used for x86 and ARM64 shadow stacks, where
-    x86 and RISC-V share HIGH_ARCH_5 (bit 37) and ARM64 GCS uses HIGH_ARCH_6.
-
-    ## Rationale
-
-    The resolution is cleaner than the maintainer's suggested diff because it:
-    1. Properly integrates with the new VMA flags enum system
-    2. Maintains consistency with how x86 and ARM64 shadow stacks are handled
-    3. Doesn't leave any remnants of the old-style macros
-
-    ## Testing Considerations
-
-    - RISC-V CFI requires the Zicfiss and Zicfilp ISA extensions
-    - The Kconfig prevents enabling CFI on no-MMU systems for bisectability
-    - Full testing should include both hardware emulation and QEMU
-
-    Link: https://lore.kernel.org/all/98b74397-05bc-dbee-cab4-3f40d643eaac@kernel.org/
-
-The tool is available in tools/LLMinus and can be built with:
-
-    cd tools/llminus && cargo build --release
-
-Few notes:
-
- - My Rust knowledge is questionable, and a lot of the code was written with
-   the help of an LLM. It's best if we don't dig too deep into actual code
-   review at this point and focus on the concept itself.
-
- - The tool will work with any LLM that can take a prompt via stdin, but will
-   work even better with tools that allow the LLM to run other tools as part of
-   it's investigative work.
-
- - There's no GPU support just yet, so creating the embeddings for the entire
-   history takes quite a while...
-
-Sasha Levin (5):
-  LLMinus: Add skeleton project with learn command
-  LLMinus: Add vectorize command with fastembed
-  LLMinus: Add find command for similarity search
-  LLMinus: Add resolve command for LLM-assisted conflict resolution
-  LLMinus: Add pull command for LLM-assisted kernel pull request merging
-
- tools/llminus/.gitignore  |    1 +
- tools/llminus/Cargo.toml  |   20 +
- tools/llminus/src/main.rs | 2289 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 2310 insertions(+)
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ tools/llminus/.gitignore  |   1 +
+ tools/llminus/Cargo.toml  |  18 +
+ tools/llminus/src/main.rs | 693 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 712 insertions(+)
  create mode 100644 tools/llminus/.gitignore
  create mode 100644 tools/llminus/Cargo.toml
  create mode 100644 tools/llminus/src/main.rs
 
+diff --git a/tools/llminus/.gitignore b/tools/llminus/.gitignore
+new file mode 100644
+index 0000000000000..b83d22266ac8a
+--- /dev/null
++++ b/tools/llminus/.gitignore
+@@ -0,0 +1 @@
++/target/
+diff --git a/tools/llminus/Cargo.toml b/tools/llminus/Cargo.toml
+new file mode 100644
+index 0000000000000..bdb42561a0565
+--- /dev/null
++++ b/tools/llminus/Cargo.toml
+@@ -0,0 +1,18 @@
++[package]
++name = "llminus"
++version = "0.1.0"
++edition = "2024"
++authors = ["Sasha Levin <sashal@kernel.org>"]
++description = "LLM-powered git conflict resolution tool for the Linux kernel"
++license = "GPL-2.0"
++repository = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
++
++[dependencies]
++anyhow = "1"
++clap = { version = "4", features = ["derive"] }
++rayon = "1"
++serde = { version = "1", features = ["derive"] }
++serde_json = "1"
++
++[dev-dependencies]
++tempfile = "3"
+diff --git a/tools/llminus/src/main.rs b/tools/llminus/src/main.rs
+new file mode 100644
+index 0000000000000..1c61836cc93f7
+--- /dev/null
++++ b/tools/llminus/src/main.rs
+@@ -0,0 +1,693 @@
++//! llminus - LLM-powered git conflict resolution tool
++
++use anyhow::{bail, Context, Result};
++use clap::{Parser, Subcommand};
++use rayon::prelude::*;
++use serde::{Deserialize, Serialize};
++use std::collections::HashSet;
++use std::path::Path;
++use std::process::Command;
++use std::sync::atomic::{AtomicUsize, Ordering};
++
++const STORE_PATH: &str = ".llminus-resolutions.json";
++
++#[derive(Parser)]
++#[command(name = "llminus")]
++#[command(about = "LLM-powered git conflict resolution tool")]
++struct Cli {
++    #[command(subcommand)]
++    command: Commands,
++}
++
++#[derive(Subcommand)]
++enum Commands {
++    /// Learn from historical merge conflict resolutions
++    Learn {
++        /// Git revision range (e.g., "v6.0..v6.1"). If not specified, learns from entire history.
++        range: Option<String>,
++    },
++}
++
++/// A single diff hunk representing a change region
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct DiffHunk {
++    /// Starting line in the original file
++    pub start_line: u32,
++    /// Number of lines in original
++    pub original_count: u32,
++    /// Number of lines in new version
++    pub new_count: u32,
++    /// The actual diff content (unified diff format lines)
++    pub content: String,
++}
++
++/// A single file's conflict resolution within a merge
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct FileResolution {
++    pub file_path: String,
++    pub file_type: String,      // Extension: "c", "h", "rs", etc.
++    pub subsystem: String,      // Extracted from path: "drivers/gpu" -> "gpu"
++
++    /// Changes from base to ours (what our branch did)
++    pub ours_diff: Vec<DiffHunk>,
++    /// Changes from base to theirs (what their branch did)
++    pub theirs_diff: Vec<DiffHunk>,
++    /// The final resolution diff (base to merge result)
++    pub resolution_diff: Vec<DiffHunk>,
++}
++
++/// Format a section of diff hunks with a title header
++fn format_hunk_section(title: &str, hunks: &[DiffHunk]) -> String {
++    if hunks.is_empty() {
++        return String::new();
++    }
++    let mut text = format!("=== {} ===\n", title);
++    for h in hunks {
++        text.push_str(&h.content);
++        text.push('\n');
++    }
++    text.push('\n');
++    text
++}
++
++impl FileResolution {
++    /// Generate embedding text for this file's resolution
++    pub fn to_embedding_text(&self) -> String {
++        format!(
++            "File: {}\n\n{}{}{}",
++            self.file_path,
++            format_hunk_section("OURS", &self.ours_diff),
++            format_hunk_section("THEIRS", &self.theirs_diff),
++            format_hunk_section("RESOLUTION", &self.resolution_diff),
++        )
++    }
++}
++
++/// A merge commit's conflict resolution (may contain multiple files)
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct MergeResolution {
++    pub commit_hash: String,
++    pub commit_summary: String,
++    pub commit_date: String,     // ISO format
++    pub author: String,
++
++    /// All files that required manual conflict resolution in this merge
++    pub files: Vec<FileResolution>,
++
++    /// 384-dimensional embedding vector (BGE-small model) for the entire merge
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub embedding: Option<Vec<f32>>,
++}
++
++impl MergeResolution {
++    /// Generate embedding text from all file resolutions
++    pub fn to_embedding_text(&self) -> String {
++        let mut text = format!("Merge: {}\n{}\n\n", self.commit_hash, self.commit_summary);
++        for file in &self.files {
++            text.push_str(&file.to_embedding_text());
++            text.push_str("\n---\n\n");
++        }
++        text
++    }
++}
++
++/// Collection of all learned resolutions
++#[derive(Debug, Default, Serialize, Deserialize)]
++pub struct ResolutionStore {
++    pub version: u32,
++    pub resolutions: Vec<MergeResolution>,
++}
++
++impl ResolutionStore {
++    pub fn load(path: &Path) -> Result<Self> {
++        if path.exists() {
++            let content = std::fs::read_to_string(path)?;
++            Ok(serde_json::from_str(&content)?)
++        } else {
++            Ok(Self { version: 2, resolutions: Vec::new() })
++        }
++    }
++
++    pub fn save(&self, path: &Path) -> Result<()> {
++        // Use compact JSON for faster serialization (use jq to pretty-print if needed)
++        let content = serde_json::to_string(self)?;
++        std::fs::write(path, content)?;
++        Ok(())
++    }
++}
++
++/// Run a git command and return stdout
++fn git(args: &[&str]) -> Result<String> {
++    let output = Command::new("git")
++        .args(args)
++        .output()
++        .context("Failed to run git")?;
++
++    if !output.status.success() {
++        let stderr = String::from_utf8_lossy(&output.stderr);
++        bail!("git {} failed: {}", args.join(" "), stderr);
++    }
++
++    Ok(String::from_utf8_lossy(&output.stdout).to_string())
++}
++
++/// Run a git command, return stdout, allow failure
++fn git_allow_fail(args: &[&str]) -> Option<String> {
++    Command::new("git")
++        .args(args)
++        .output()
++        .ok()
++        .filter(|o| o.status.success())
++        .map(|o| String::from_utf8_lossy(&o.stdout).to_string())
++}
++
++/// Check we're in a git repository
++fn check_repo() -> Result<()> {
++    git(&["rev-parse", "--git-dir"])?;
++    Ok(())
++}
++
++/// Get merge commits in range (or all history)
++fn get_merge_commits(range: Option<&str>) -> Result<Vec<String>> {
++    let args: Vec<&str> = match range {
++        Some(r) => vec!["log", "--merges", "--format=%H", r],
++        None => vec!["log", "--merges", "--format=%H"],
++    };
++
++    let output = git(&args)?;
++    Ok(output.lines().map(|s| s.to_string()).collect())
++}
++
++/// Metadata extracted from a git commit
++struct CommitMetadata {
++    summary: String,
++    date: String,
++    author: String,
++}
++
++/// Get commit metadata
++fn get_commit_metadata(hash: &str) -> CommitMetadata {
++    let format = git_allow_fail(&["log", "-1", "--format=%s%n%aI%n%an <%ae>", hash])
++        .unwrap_or_default();
++    let mut lines = format.lines();
++    CommitMetadata {
++        summary: lines.next().unwrap_or_default().to_string(),
++        date: lines.next().unwrap_or_default().to_string(),
++        author: lines.next().unwrap_or_default().to_string(),
++    }
++}
++
++/// Get parent commits of a merge
++fn get_parents(hash: &str) -> Result<Vec<String>> {
++    let output = git(&["log", "-1", "--format=%P", hash])?;
++    Ok(output.split_whitespace().map(|s| s.to_string()).collect())
++}
++
++/// Get merge base between two commits
++fn get_merge_base(commit1: &str, commit2: &str) -> Option<String> {
++    git_allow_fail(&["merge-base", commit1, commit2])
++        .map(|s| s.trim().to_string())
++}
++
++/// Extract file type from path
++fn get_file_type(path: &str) -> String {
++    Path::new(path)
++        .extension()
++        .and_then(|e| e.to_str())
++        .unwrap_or("")
++        .to_string()
++}
++
++/// Extract subsystem from path (first or second directory component)
++fn get_subsystem(path: &str) -> String {
++    let parts: Vec<&str> = path.split('/').collect();
++    match parts.first() {
++        Some(&"drivers") | Some(&"fs") | Some(&"net") | Some(&"arch") | Some(&"sound") => {
++            parts.get(1).unwrap_or(&"").to_string()
++        }
++        Some(first) => first.to_string(),
++        None => String::new(),
++    }
++}
++
++/// Get unified diff between two commits for a specific file
++fn get_diff(from: &str, to: &str, file: &str) -> Option<String> {
++    git_allow_fail(&["diff", "-U3", from, to, "--", file])
++}
++
++/// Get file content at a specific commit
++fn get_file_at_commit(commit: &str, path: &str) -> Option<String> {
++    git_allow_fail(&["show", &format!("{}:{}", commit, path)])
++}
++
++/// Parse unified diff into hunks
++fn parse_diff_hunks(diff: &str) -> Vec<DiffHunk> {
++    let mut hunks = Vec::new();
++    let mut current_hunk: Option<(u32, u32, u32, Vec<String>)> = None;
++
++    for line in diff.lines() {
++        if line.starts_with("@@") {
++            // Save previous hunk
++            if let Some((start, orig_count, new_count, lines)) = current_hunk.take() {
++                hunks.push(DiffHunk {
++                    start_line: start,
++                    original_count: orig_count,
++                    new_count: new_count,
++                    content: lines.join("\n"),
++                });
++            }
++
++            // Parse hunk header: @@ -start,count +start,count @@
++            if let Some(header) = parse_hunk_header(line) {
++                current_hunk = Some((header.0, header.1, header.2, vec![line.to_string()]));
++            }
++        } else if current_hunk.is_some() && (line.starts_with('+') || line.starts_with('-') || line.starts_with(' ')) {
++            if let Some((_, _, _, ref mut lines)) = current_hunk {
++                lines.push(line.to_string());
++            }
++        }
++    }
++
++    // Save last hunk
++    if let Some((start, orig_count, new_count, lines)) = current_hunk {
++        hunks.push(DiffHunk {
++            start_line: start,
++            original_count: orig_count,
++            new_count: new_count,
++            content: lines.join("\n"),
++        });
++    }
++
++    hunks
++}
++
++/// Parse a hunk header like "@@ -10,5 +10,7 @@" -> (start, orig_count, new_count)
++fn parse_hunk_header(line: &str) -> Option<(u32, u32, u32)> {
++    let line = line.trim_start_matches("@@ ");
++    let parts: Vec<&str> = line.split(' ').collect();
++    if parts.len() < 2 {
++        return None;
++    }
++
++    let parse_range = |s: &str| -> (u32, u32) {
++        let s = s.trim_start_matches(['-', '+']);
++        if let Some((start, count)) = s.split_once(',') {
++            (start.parse().unwrap_or(1), count.parse().unwrap_or(1))
++        } else {
++            (s.parse().unwrap_or(1), 1)
++        }
++    };
++
++    let (orig_start, orig_count) = parse_range(parts[0]);
++    let (_, new_count) = parse_range(parts[1]);
++
++    Some((orig_start, orig_count, new_count))
++}
++
++/// Find files modified in both branches
++fn find_modified_in_both(parent1: &str, parent2: &str, base: &str) -> Result<Vec<String>> {
++    let changed1 = git_allow_fail(&["diff", "--name-only", base, parent1])
++        .unwrap_or_default();
++    let changed2 = git_allow_fail(&["diff", "--name-only", base, parent2])
++        .unwrap_or_default();
++
++    let files1: HashSet<_> = changed1.lines().collect();
++    let files2: HashSet<_> = changed2.lines().collect();
++
++    Ok(files1.intersection(&files2).map(|s| s.to_string()).collect())
++}
++
++/// Extract conflict resolutions from a merge commit
++/// Returns None if no manual conflict resolution was needed
++fn extract_resolution(hash: &str) -> Result<Option<MergeResolution>> {
++    let parents = get_parents(hash)?;
++    if parents.len() < 2 {
++        return Ok(None);
++    }
++
++    let parent1 = &parents[0];
++    let parent2 = &parents[1];
++
++    let base = match get_merge_base(parent1, parent2) {
++        Some(b) => b,
++        None => return Ok(None),
++    };
++
++    let meta = get_commit_metadata(hash);
++    let modified = find_modified_in_both(parent1, parent2, &base)?;
++
++    let mut files = Vec::new();
++
++    for file_path in modified {
++        // Get diffs: base->ours, base->theirs, base->resolution
++        let ours_diff_raw = get_diff(&base, parent1, &file_path);
++        let theirs_diff_raw = get_diff(&base, parent2, &file_path);
++        let resolution_diff_raw = get_diff(&base, hash, &file_path);
++
++        // Parse into hunks
++        let ours_hunks = ours_diff_raw.as_ref().map(|d| parse_diff_hunks(d)).unwrap_or_default();
++        let theirs_hunks = theirs_diff_raw.as_ref().map(|d| parse_diff_hunks(d)).unwrap_or_default();
++        let resolution_hunks = resolution_diff_raw.as_ref().map(|d| parse_diff_hunks(d)).unwrap_or_default();
++
++        // Skip if no actual changes
++        if ours_hunks.is_empty() && theirs_hunks.is_empty() {
++            continue;
++        }
++
++        // Skip if ours == theirs (no real conflict)
++        if ours_diff_raw == theirs_diff_raw {
++            continue;
++        }
++
++        // Only keep if resolution differs from BOTH parents (manual merge required)
++        let ours_content = get_file_at_commit(parent1, &file_path);
++        let theirs_content = get_file_at_commit(parent2, &file_path);
++        let resolution_content = get_file_at_commit(hash, &file_path);
++
++        if resolution_content == ours_content || resolution_content == theirs_content {
++            continue; // Trivial resolution, no manual merge needed
++        }
++
++        files.push(FileResolution {
++            file_path: file_path.clone(),
++            file_type: get_file_type(&file_path),
++            subsystem: get_subsystem(&file_path),
++            ours_diff: ours_hunks,
++            theirs_diff: theirs_hunks,
++            resolution_diff: resolution_hunks,
++        });
++    }
++
++    // Only return if there were actual conflicts
++    if files.is_empty() {
++        return Ok(None);
++    }
++
++    Ok(Some(MergeResolution {
++        commit_hash: hash.to_string(),
++        commit_summary: meta.summary,
++        commit_date: meta.date,
++        author: meta.author,
++        files,
++        embedding: None,
++    }))
++}
++
++fn learn(range: Option<&str>) -> Result<()> {
++    check_repo()?;
++
++    let store_path = Path::new(STORE_PATH);
++    let mut store = ResolutionStore::load(store_path)?;
++    store.version = 3;  // Upgrade version (grouped by commit)
++
++    // Track existing commits to avoid duplicates
++    let existing: HashSet<_> = store.resolutions.iter()
++        .map(|r| r.commit_hash.clone())
++        .collect();
++
++    let merge_commits = get_merge_commits(range)?;
++    let total_commits = merge_commits.len();
++
++    // Filter to only new commits
++    let new_commits: Vec<_> = merge_commits
++        .into_iter()
++        .filter(|h| !existing.contains(h))
++        .collect();
++
++    println!("Found {} merge commits ({} new to analyze)", total_commits, new_commits.len());
++
++    if new_commits.is_empty() {
++        println!("No new commits to process.");
++        return Ok(());
++    }
++
++    // Configure thread pool for I/O bound work (git subprocesses)
++    // Use 2x threads since we're mostly waiting on git
++    let num_threads = std::thread::available_parallelism()
++        .map(|n| n.get() * 2)
++        .unwrap_or(16);
++
++    let pool = rayon::ThreadPoolBuilder::new()
++        .num_threads(num_threads)
++        .build()
++        .context("Failed to build thread pool")?;
++
++    println!("Using {} threads", num_threads);
++
++    // Progress counter
++    let processed = AtomicUsize::new(0);
++    let total_new = new_commits.len();
++
++    // Process commits in parallel
++    let resolutions: Vec<MergeResolution> = pool.install(|| {
++        new_commits
++            .par_iter()
++            .filter_map(|hash| {
++                let count = processed.fetch_add(1, Ordering::Relaxed) + 1;
++                if count % 100 == 0 || count == total_new {
++                    eprintln!("  Progress: {}/{}", count, total_new);
++                }
++
++                match extract_resolution(hash) {
++                    Ok(Some(resolution)) => Some(resolution),
++                    Ok(None) => None,
++                    Err(e) => {
++                        eprintln!("Warning: Failed to analyze {}: {}", &hash[..12], e);
++                        None
++                    }
++                }
++            })
++            .collect()
++    });
++
++    // Aggregate results
++    let commits_with_conflicts = resolutions.len();
++    let total_files: usize = resolutions.iter().map(|r| r.files.len()).sum();
++
++    store.resolutions.extend(resolutions);
++    store.save(store_path)?;
++
++    // Calculate approximate size
++    let json_size = std::fs::metadata(store_path).map(|m| m.len()).unwrap_or(0);
++    let total_stored_files: usize = store.resolutions.iter().map(|r| r.files.len()).sum();
++
++    println!("\nResults:");
++    println!("  Merge commits analyzed: {}", total_commits);
++    println!("  Commits with conflicts: {}", commits_with_conflicts);
++    println!("  Files resolved: {}", total_files);
++    println!("  New commits stored: {}", commits_with_conflicts);
++    println!("  Total in store: {} commits, {} files", store.resolutions.len(), total_stored_files);
++    println!("  Output size: {:.2} MB", json_size as f64 / 1024.0 / 1024.0);
++    println!("\nResolutions saved to: {}", store_path.display());
++
++    Ok(())
++}
++
++fn main() -> Result<()> {
++    let cli = Cli::parse();
++
++    match cli.command {
++        Commands::Learn { range } => learn(range.as_deref()),
++    }
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++    use clap::CommandFactory;
++    use std::fs;
++    use tempfile::TempDir;
++
++    #[test]
++    fn verify_cli() {
++        Cli::command().debug_assert();
++    }
++
++    #[test]
++    fn test_learn_command_parses() {
++        let cli = Cli::try_parse_from(["llminus", "learn"]).unwrap();
++        match cli.command {
++            Commands::Learn { range } => assert!(range.is_none()),
++        }
++    }
++
++    #[test]
++    fn test_learn_command_with_range() {
++        let cli = Cli::try_parse_from(["llminus", "learn", "v6.0..v6.1"]).unwrap();
++        match cli.command {
++            Commands::Learn { range } => assert_eq!(range, Some("v6.0..v6.1".to_string())),
++        }
++    }
++
++    #[test]
++    fn test_get_file_type() {
++        assert_eq!(get_file_type("foo/bar.c"), "c");
++        assert_eq!(get_file_type("foo/bar.rs"), "rs");
++        assert_eq!(get_file_type("Makefile"), "");
++        assert_eq!(get_file_type("include/linux/module.h"), "h");
++    }
++
++    #[test]
++    fn test_get_subsystem() {
++        assert_eq!(get_subsystem("drivers/gpu/drm/foo.c"), "gpu");
++        assert_eq!(get_subsystem("fs/ext4/inode.c"), "ext4");
++        assert_eq!(get_subsystem("kernel/sched/core.c"), "kernel");
++        assert_eq!(get_subsystem("net/ipv4/tcp.c"), "ipv4");
++        assert_eq!(get_subsystem("mm/memory.c"), "mm");
++    }
++
++    #[test]
++    fn test_parse_hunk_header() {
++        assert_eq!(parse_hunk_header("@@ -10,5 +10,7 @@"), Some((10, 5, 7)));
++        assert_eq!(parse_hunk_header("@@ -1 +1,2 @@"), Some((1, 1, 2)));
++        assert_eq!(parse_hunk_header("@@ -100,20 +105,25 @@ func"), Some((100, 20, 25)));
++    }
++
++    #[test]
++    fn test_parse_diff_hunks() {
++        let diff = r#"diff --git a/file.c b/file.c
++index 123..456 789
++--- a/file.c
+++++ b/file.c
++@@ -10,3 +10,4 @@ context
++ unchanged
++-removed
+++added
+++another
++"#;
++        let hunks = parse_diff_hunks(diff);
++        assert_eq!(hunks.len(), 1);
++        assert_eq!(hunks[0].start_line, 10);
++        assert!(hunks[0].content.contains("-removed"));
++        assert!(hunks[0].content.contains("+added"));
++    }
++
++    fn init_test_repo() -> TempDir {
++        let dir = TempDir::new().unwrap();
++        Command::new("git")
++            .args(["init"])
++            .current_dir(dir.path())
++            .output()
++            .unwrap();
++        Command::new("git")
++            .args(["config", "user.email", "test@test.com"])
++            .current_dir(dir.path())
++            .output()
++            .unwrap();
++        Command::new("git")
++            .args(["config", "user.name", "Test"])
++            .current_dir(dir.path())
++            .output()
++            .unwrap();
++        dir
++    }
++
++    fn create_commit(dir: &TempDir, filename: &str, content: &str, msg: &str) {
++        fs::write(dir.path().join(filename), content).unwrap();
++        Command::new("git")
++            .args(["add", filename])
++            .current_dir(dir.path())
++            .output()
++            .unwrap();
++        Command::new("git")
++            .args(["commit", "-m", msg])
++            .current_dir(dir.path())
++            .output()
++            .unwrap();
++    }
++
++    fn create_branch(dir: &TempDir, name: &str) {
++        Command::new("git")
++            .args(["checkout", "-b", name])
++            .current_dir(dir.path())
++            .output()
++            .unwrap();
++    }
++
++    fn checkout(dir: &TempDir, name: &str) {
++        Command::new("git")
++            .args(["checkout", name])
++            .current_dir(dir.path())
++            .output()
++            .unwrap();
++    }
++
++    fn merge(dir: &TempDir, branch: &str, msg: &str) {
++        Command::new("git")
++            .args(["merge", "--no-ff", "-m", msg, branch])
++            .current_dir(dir.path())
++            .output()
++            .unwrap();
++    }
++
++    #[test]
++    fn test_resolution_store_roundtrip() {
++        let dir = TempDir::new().unwrap();
++        let store_path = dir.path().join("resolutions.json");
++
++        let mut store = ResolutionStore { version: 3, resolutions: Vec::new() };
++        store.resolutions.push(MergeResolution {
++            commit_hash: "abc123".to_string(),
++            commit_summary: "Test merge".to_string(),
++            commit_date: "2024-01-15T10:00:00Z".to_string(),
++            author: "Test <test@test.com>".to_string(),
++            files: vec![FileResolution {
++                file_path: "test.c".to_string(),
++                file_type: "c".to_string(),
++                subsystem: "test".to_string(),
++                ours_diff: vec![DiffHunk {
++                    start_line: 10,
++                    original_count: 3,
++                    new_count: 4,
++                    content: "@@ -10,3 +10,4 @@\n-old\n+new".to_string(),
++                }],
++                theirs_diff: vec![],
++                resolution_diff: vec![],
++            }],
++            embedding: None,
++        });
++
++        store.save(&store_path).unwrap();
++        let loaded = ResolutionStore::load(&store_path).unwrap();
++
++        assert_eq!(loaded.version, 3);
++        assert_eq!(loaded.resolutions.len(), 1);
++        assert_eq!(loaded.resolutions[0].commit_hash, "abc123");
++        assert_eq!(loaded.resolutions[0].files.len(), 1);
++        assert_eq!(loaded.resolutions[0].files[0].file_path, "test.c");
++        assert_eq!(loaded.resolutions[0].files[0].file_type, "c");
++
++        // Test embedding text generation for merge
++        let embedding = loaded.resolutions[0].to_embedding_text();
++        assert!(embedding.contains("Merge: abc123"));
++        assert!(embedding.contains("File: test.c"));
++        assert!(embedding.contains("=== OURS ==="));
++        assert!(embedding.contains("-old"));
++        assert!(embedding.contains("+new"));
++    }
++
++    #[test]
++    fn test_git_in_repo() {
++        let dir = init_test_repo();
++        std::env::set_current_dir(dir.path()).unwrap();
++        create_commit(&dir, "file.txt", "initial", "initial commit");
++        let result = check_repo();
++        assert!(result.is_ok());
++    }
++
++    #[test]
++    fn test_get_merge_commits() {
++        let dir = init_test_repo();
++        std::env::set_current_dir(dir.path()).unwrap();
++
++        create_commit(&dir, "file.txt", "initial", "initial commit");
++        create_branch(&dir, "feature");
++        create_commit(&dir, "feature.txt", "feature", "feature commit");
++        checkout(&dir, "master");
++        create_commit(&dir, "main.txt", "main", "main commit");
++        merge(&dir, "feature", "Merge feature");
++
++        let merges = get_merge_commits(None).unwrap();
++        assert_eq!(merges.len(), 1);
++    }
++}
 -- 
 2.51.0
 
