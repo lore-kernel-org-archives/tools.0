@@ -1,73 +1,107 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102C027E1C5
-	for <tools@linux.kernel.org>; Mon, 22 Dec 2025 14:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F42C3321B1
+	for <tools@linux.kernel.org>; Mon, 22 Dec 2025 14:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766412134; cv=none; b=bolloHNe0UlTKj7nIQA2v4Am2GeZZ4n2UjC16QtWSLV1AXTydLSKXCuPFdTU7Cjh4UMKUBXYp+Fw2E/kglpaZRiNCauoXJm0HhJHWpOMxAk8o9W70hD+QNOMkSgt6/QHf94QUAszbFQa6cRzhkwHmh8Q2PfqMvnRbC+hsOcdi5s=
+	t=1766415060; cv=none; b=TJxL2TtOh1MthMkgBL7iwSjKUcWsncQdpaPu/pXZUwlA0pE+y1j8dpu4eOFkgrRXsNVSvpvIgZJ70GK8GNZ9UgqLQ8rfFTGafbLAbvXW9OE+7WyvRoVINHEYX/IeHGoAytxoA+cNNv836CCQ2H1EavFMv2KzWdokLcPnqZ3i6DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766412134; c=relaxed/simple;
-	bh=9PqyhGQDX93j8liY4bX98jGC3i5h063WUJZlFE9s6Ck=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ju0bYkMfKbv87v8N+k0c5YKwAHKNbv5CBNG5YK9IGXiOJgl8ZewzOXftI5l0Uk86tHcdPGWok8SlBoIWagFPHNVu5TYubWcm80B3wjAo3ujt4A8ndsLfI39YkYE9eKfPDcZq1U77S8B8xeW5Djt3nK/dfeS18xU55iSln1K7vLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CBmu0eep; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1766415060; c=relaxed/simple;
+	bh=M60F57Z5KSbJIn+7wkr+6wlCUO3n7KZksqsvlG44z1U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xtd4KvAGvZRAoKHHsCIDhUdDMkWQZ/BbYXTr/OQJzMxiOz2XN57aJ7ynUSP6ySgTFXnSIzvXcSH1Ig3+cSmJGJsJQxqxtBryT8ANYoKqCxIhS6CBazJyndh4JNt6PbjFntuzdbvfICot3uzdOokashaSy3qFEXM7I4mfvjM7Op4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TTPhjhGk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CBmu0eep"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TTPhjhGk"
 Received: by smtp.kernel.org (Postfix)
-	id B7792C116C6; Mon, 22 Dec 2025 14:02:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27D8C116D0
-	for <tools@kernel.org>; Mon, 22 Dec 2025 14:02:13 +0000 (UTC)
+	id 1F610C116D0; Mon, 22 Dec 2025 14:50:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA486C4CEF1;
+	Mon, 22 Dec 2025 14:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766412133;
-	bh=9PqyhGQDX93j8liY4bX98jGC3i5h063WUJZlFE9s6Ck=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=CBmu0eepFo2n9MeBVTcGZIDDbTTltzsKoRC44Y8Id200bchH6wHP/w/fX3vRQHSLn
-	 9LCJFYP90sEd3PRHChvKkr1gjkWPS8/dh8Psd87Q5cqhPIvUwRZapt9AiXendasT6y
-	 CBVRcSfRnNlKH3kscHfbdnma0yv8nCL+mZ9plXmKo6nfZ7PT1hoOkzQMcXAYHi52eA
-	 mal5nE1afo1o4j12MCQ5hFJddjw+brKCkvehHHb+CQKE5KeuvVysE7G9yuHzHppi2U
-	 jWkiePujn9g8KyNL/Q+Auew4vl3VicJa32msA+jCHEBIqjw9pGTSWQaAYYFd1WSyVK
-	 uOHypKbNQJZdA==
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-6447743ce90so3541760d50.2
-        for <tools@kernel.org>; Mon, 22 Dec 2025 06:02:13 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU1lQ1bF5VkUx7QtYsh6Liu8sv4zTVXLa61FTqpWluf5rxhVg5oTWUH+nB6U6YRz8Chp6k2Lg==@kernel.org
-X-Gm-Message-State: AOJu0Yytq3hirnIG1vwUzv5ZvEMBqKkos+pqwZfv5YjZa49vQ/MCQ0Ro
-	gMcMTrTS9MslTp4KPRsx3zT6L8OTdliLBx/ItSrTmTE+nXZ0YzLKmyCwnk75L0Mtckby7xYaH2M
-	srP1RtzXw/qs41LMK1L41IGT2MaeJsQE=
-X-Google-Smtp-Source: AGHT+IH9CodjmfcoGB7IeFju1GOOB9K/O/PbQHSGnrTx7yDjdAeH2G4rLurRm9YnF7+zpq53NgJKDlR8AAbfFGYQ4l0=
-X-Received: by 2002:a53:da86:0:b0:63f:9c11:cfed with SMTP id
- 956f58d0204a3-6466a842daamr6974603d50.32.1766412132985; Mon, 22 Dec 2025
- 06:02:12 -0800 (PST)
+	s=k20201202; t=1766415059;
+	bh=M60F57Z5KSbJIn+7wkr+6wlCUO3n7KZksqsvlG44z1U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TTPhjhGkhkw5T2ohC4WVvkQ6kyU1JpLAqWRfnPBEY7MRD/ILMa0HRAOTvSuKSHLIe
+	 McxFyr4zZQux1gru0EFQFMw9/uA3aiGH5xcsxJYoQj3xqxtQjvMgPoySF6bAFYZ3pC
+	 uhYnOSFN1GBMuRlQRZ0RrIDLH26rSjC5qWs6S7TczHMeJ4ObPg3QyF7+uYqxxTvsZo
+	 +fdkpzibBA+NfAzifMIX38GzN20/1tdrYMxHRaZaWgH16FPF/APZWdBE9xqfzBv5V0
+	 jvN5bV2TdQ9iN082YjpQCEWt4xOA/4ULQCbbXtrIMHVOiW5IjeXx2wZnHhDqhuphCq
+	 9DCIapEOP6ygA==
+Date: Mon, 22 Dec 2025 14:50:55 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: tools@kernel.org, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, sfr@canb.auug.org.au
+Subject: Re: [RFC 0/5] LLMinus: LLM-Assisted Merge Conflict Resolution
+Message-ID: <565b28fc-6561-4992-88fa-35808ba1fa07@sirena.org.uk>
+References: <20251219181629.1123823-1-sashal@kernel.org>
+ <aUgb4wCNaSxpIhPp@laps>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20251217-attractive-stalwart-seahorse-de4e3e@lemur>
- <CAD++jLmGuPxWLEcUaVMU9jCmEfrzUbgzMrFbd9uX+62avv9jmA@mail.gmail.com>
- <20251217-yellow-cormorant-of-debate-b55a75@lemur> <CAPKp9uY-BYKXAoWg8zPLhQjEHs4qqsW+qjYne7Qv1LKwL6BQUA@mail.gmail.com>
- <20251218-dove-of-fantastic-upgrade-c491ea@lemur> <CAD++jLk6=56izoMzfs_PVFvX3j9N+J6O1FGxrEg3wE78rOww4g@mail.gmail.com>
- <20251218-merry-azure-chicken-4d3724@lemur>
-In-Reply-To: <20251218-merry-azure-chicken-4d3724@lemur>
-From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 22 Dec 2025 15:02:02 +0100
-X-Gmail-Original-Message-ID: <CAD++jLn=QckMx4QD=4fwQVcLYACJCgG0Hw6Bo6Wek4S4Ywn7VA@mail.gmail.com>
-X-Gm-Features: AQt7F2qSwa7mU6ioE9g9Bl_guJJK8lTOonpwZKwZB6Bk7opfGD46Xea7K1d7rPE
-Message-ID: <CAD++jLn=QckMx4QD=4fwQVcLYACJCgG0Hw6Bo6Wek4S4Ywn7VA@mail.gmail.com>
-Subject: Re: korgalore v0.2 released with JMAP, IMAP, Maildir support
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Sudeep Holla <sudeep.holla@kernel.org>, tools@kernel.org, users@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="doq7ibFjCFHWBYQ8"
+Content-Disposition: inline
+In-Reply-To: <aUgb4wCNaSxpIhPp@laps>
+X-Cookie: Be different: conform.
 
-I don't know if I'm doing something wrong but all imported
-mails appear as "read" (non-bold).
 
-In the code there is:
-DEFAULT_LABELS: List[str] = ['INBOX', 'UNREAD']
+--doq7ibFjCFHWBYQ8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-so it appears the "UNREAD" labels was intended to be applied,
-but it appears this isn't used?
+On Sun, Dec 21, 2025 at 11:10:11AM -0500, Sasha Levin wrote:
 
-Yours,
-Linus Walleij
+> I assigned categories to the various trees used by -next (see
+> https://gist.github.com/sashalevin/163df4ae1163e0e22a97edc40e14b7f5) and built
+> a simple wrapper script to generate per-category integration branches, letting
+> LLMinus resolve conflicts whenever we hit one.
+
+Those categories appear to be a bit randomly assigned FWIW.  I'm not
+clear who would want the various intermediate merges either, I suppose
+that having some of the trees pulled into multiple places might help
+shake out some of the issues due to things getting sent to Linus in a
+different order but OTOH it will increase the total number of merges
+done and tested which is itself a cost.  We could also shake out
+ordering issues by doing something like randomise the ordering.  I think
+I'd want some demand or use case for doing more intermediate merges
+rather than just doing a bunch of them for the sake of it.
+
+This seems like a very separate experiment to your LLM merge thing.
+
+> The resulting branches were pushed to
+> https://git.kernel.org/pub/scm/linux/kernel/git/sashal/linux-next.git/refs/ .
+> Each category has a %s-next branch, and a larger all-next branch which merges
+> all of them together and is the equivalent of linux-next.
+
+> Please let me know what you think!
+
+It might be easier to tell what it's done if you ran this with the same
+inputs as the last -next (it's on Christmas break at the minute),
+there's quite large differences in the end result but most if not all of
+that is that the input trees you're using are fresher than the last
+-next.  Though I think even with the same base there'd be a bit of a
+needle in a haystack thing finding interesting cases, probably it'd be
+more useful to find and highlight specific cases where it does something
+interesting.
+
+--doq7ibFjCFHWBYQ8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmlJWs4ACgkQJNaLcl1U
+h9CevAf+P6NI5DX7yiXA2tIgjW6xk7EXe/QP+KATgws3W7BYbD2QpiNqVG0znQIq
+EjYw/jN6K+yCP6inJ1jfzHRvaUdlvPLGNPIkQm/dGXg6iJ8MOCJytzef0qLlf0VT
+pyaiUcO7C1/SOsXwo7H6cilj548Qa0Z6cmuVYGnaYiyg1iNfICVK8LrHjbdLbBDC
+kaT60+W63nMYwPDgOpZEJQ7hHVrl6+eI5TLO6wCg/P05HPIxPgh2d0AeLlq25mFq
+CBVOL2dKqFNXyu3hHHxkw2dnz/qdr782UkX4S/V6qlNBzqC3rODyx6ehP9cQbAjO
+vgTsXTiulDvhC3eLaEcZGURJFBoi7w==
+=xduP
+-----END PGP SIGNATURE-----
+
+--doq7ibFjCFHWBYQ8--
