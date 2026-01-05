@@ -1,76 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1C531AAB8
-	for <tools@linux.kernel.org>; Mon,  5 Jan 2026 16:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45CF230D1E
+	for <tools@linux.kernel.org>; Mon,  5 Jan 2026 16:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767631217; cv=none; b=oGnOrU0q7RQDifoDCNQK3dwihN+P38D2KXw89gUDqrALhZDMTR+dS7A7/QCf82uGWpCR16kHyiH7u/0Z65F9W51Yueld5NL8lwN7pbLmoYImSjI0iM1/ySLCrZl0yZM6WQhYJoAxfSQYTwQ3ixAWGUSd/yGF7Ua0/xhtxIFuEkY=
+	t=1767631874; cv=none; b=rFcY1RW9n4Phx6whiS6D+S1IF6jc4xNm21PjzkpaDqTW2lpK/jfQeyU7MhRVtYa29ucsgHbY9xXlE932ruj21iYlD1iQXe485b9iIBIYBbdjRXlmysEgPOgqfbNyJwa3rzWEyxHuuKdmafJX+3Q7j3qC/BvpOiV30FAzOdaIzIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767631217; c=relaxed/simple;
-	bh=QY125lqZWTpEZTLmRwgUICrdhmdMdNzW1RQLYas0Kd8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Lw/1ZEgPhO+rlDc32yaYwnOH+4JyvskDgDvS4ofo+y+LVLKAxO5eakYaIyuGRrXM4GMOMJ+FxdQsMq1T+Ei0aoIq9Ibm/fCkO7u/IyC3rk56Ta54wIhkJtY5Ozw/7nU65mGKcT1Cj5hfLbQKcQk/43UH6g6VCcoByW0Gs8kzsTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767631874; c=relaxed/simple;
+	bh=OSU0Ws5ia37rufZhWf2OOvCKZdnMqcw56dUqdm1hMQM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hjoZ0IC2+lEmYCFRFLGSWk225WiyseDgfBpJXKF3baBoVRJJFIrmadlmdIlARQ7XY/76DhgmK5iRbvySejRlUspQ48/QqlWAw7mhooBw5k33a0FxaZ1Gr4clo9CeSIk+0O49CMrKVM6bX0IZ/klnSernAn91fllwaha/w07+lOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvOxszka; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvOxszka"
 Received: by smtp.kernel.org (Postfix)
-	id 76E2EC19421; Mon,  5 Jan 2026 16:40:16 +0000 (UTC)
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id AED39C116D0
-	for <tools@kernel.org>; Mon,  5 Jan 2026 16:40:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org AED39C116D0
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [192.168.1.154] (pool-96-240-17-61.nwrknj.fios.verizon.net [96.240.17.61])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: mpagano)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 924D5340FD3;
-	Mon, 05 Jan 2026 16:40:14 +0000 (UTC)
-Message-ID: <fc0cacbf-d8d1-48d2-8817-d69e6eb3e049@gentoo.org>
-Date: Mon, 5 Jan 2026 11:40:12 -0500
+	id 68D94C19424; Mon,  5 Jan 2026 16:51:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E8DC116D0;
+	Mon,  5 Jan 2026 16:51:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1767631874;
+	bh=OSU0Ws5ia37rufZhWf2OOvCKZdnMqcw56dUqdm1hMQM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PvOxszkaffTIxgj/z6kBv9xQPLs1g8eivHC4zz+GlL/3jHOcS721ip4vuTYFEXccV
+	 V9ln13mKLUGTjT0bQx+oW16JaCHos3R5aVjZsa8zexdvpuiHWud0ALwsmYjRKU1mv6
+	 gw3yJd4IhBW9cwnArmqvioe415UF+Kx4uQUCEgcI=
+Date: Mon, 5 Jan 2026 11:51:09 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mike Pagano <mpagano@gentoo.org>
+Cc: tools@kernel.org
+Subject: Re: patatt - tests source request
+Message-ID: <20260105-ruby-aardwolf-of-glamour-342acc@lemur>
+References: <f0fb89e1-a37b-4871-bf0d-23f84ef450ff@gentoo.org>
+ <20260105-curious-russet-goshawk-d97fd8@lemur>
+ <fc0cacbf-d8d1-48d2-8817-d69e6eb3e049@gentoo.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: patatt - tests source request
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-References: <f0fb89e1-a37b-4871-bf0d-23f84ef450ff@gentoo.org>
- <20260105-curious-russet-goshawk-d97fd8@lemur>
-Content-Language: en-US
-From: Mike Pagano <mpagano@gentoo.org>
-In-Reply-To: <20260105-curious-russet-goshawk-d97fd8@lemur>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fc0cacbf-d8d1-48d2-8817-d69e6eb3e049@gentoo.org>
 
-On 1/5/26 11:25 AM, Konstantin Ryabitsev wrote:
-> On Mon, Jan 05, 2026 at 09:53:59AM -0500, Mike Pagano wrote:
->> Hello,
->>
->> Would it be possible to include the entire "tests" directory in the release
->> tarballs [1]?
+On Mon, Jan 05, 2026 at 11:40:12AM -0500, Mike Pagano wrote:
+> When I untar the 0.7.0 tarball (for instance), it does not have everything
+> in the git repo in the tests directory.
 > 
-> Could you please clarify your request? The official release tarballs are built
-> directly from the git tag, so they should already include everything.
-> 
-> -K
+> 0.7.0 has only test_validation.py in the tests directory.
+> If you look in the repo, there is much more in the tests directory.
 
+I'm not sure we're looking at the same tarballs:
 
-Absolutely,
+    $ tar -tf patatt-0.7.0.tar.gz | grep '/tests/'
+    patatt-0.7.0/tests/
+    patatt-0.7.0/tests/__init__.py
+    patatt-0.7.0/tests/conftest.py
+    patatt-0.7.0/tests/test_validation.py
+    patatt-0.7.0/tests/unit/
+    patatt-0.7.0/tests/unit/__init__.py
+    patatt-0.7.0/tests/unit/test_byhash.py
+    patatt-0.7.0/tests/unit/test_devsig_header.py
+    patatt-0.7.0/tests/unit/test_patatt_message.py
 
-When I untar the 0.7.0 tarball (for instance), it does not have 
-everything in the git repo in the tests directory.
+Did you download yours from here?
+https://www.kernel.org/pub/software/devel/patatt/
 
-
-0.7.0 has only test_validation.py in the tests directory.
-If you look in the repo, there is much more in the tests directory.
-
-Does that help?
-
+-K
