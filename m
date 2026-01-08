@@ -1,112 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664A32DC774
-	for <tools@linux.kernel.org>; Thu,  8 Jan 2026 16:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945E62C21C4
+	for <tools@linux.kernel.org>; Thu,  8 Jan 2026 18:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767891128; cv=none; b=MkQOxi3WUf0UZNEarn3rrLDFgsQokIDTSZ9yPor0vzRvqCW93XLR4KhfPacWZnbhl3dbD2H611kalI+JNOiYW0d5CivcBA3QeLVwZZj9iYRSsuiWgsWQlgW5cMG76TLdUSi41CoWHlR1T4JjgY4WN62/TWJQoMVbZl+t4e9til4=
+	t=1767896446; cv=none; b=iPU5b5+lF5dO0/yJd8zf5+pS/GMPiJshtyo+GT/G2dOdQj27xxBCaal6AwERT5ulqBxHn743d6N4CWbbtMzHa2/BxGuuiBKeE+iokstqAS8kribxWqBdvChUuK1ZA4te1CuLpzf0OfSKhetlnMfgL/R1Xg9KD3iCqfgDqN5nuLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767891128; c=relaxed/simple;
-	bh=WcwB+GS/bRtZ6XdaZAdcMU5KDLV9WDDIDs8nzw3zj2w=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m3rIDvN/mabkae5DQr2ETNC5zdFO+pJSFti4tYdekG5Ya4xNhPBJjrfCzd4ZuvoIyt1n3TQzz5C8w5zCK1obPtoU734vKtuHbXud17y9SRxxXIZZy/+x4+GVXi1PkKYvgx3WdN5frAh3V671HFmD84lN6/GJ45K16tf0YIAJr7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y5Y3POv2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767896446; c=relaxed/simple;
+	bh=GYhQjfwjNvpv2cYTwr9/e9Xo2FSVcB2D9pMrfBJEc0c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ISgnp7M1ETtq+u/S4XeVSUoLvVGUq4VOrgtrLkLstJeeKQxJzNCE4K/LhpQakg3ZiJ7WVhhQE6SdP16ErUwVZPrGCmq2VSiRP9hr1pcNyFIQC7WWMMyIjR/6jctMBNB0eTausZDJvrWVW3O5or+yF3Zl3zri1ndyGtDsBQn06/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lo2KJB6J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y5Y3POv2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lo2KJB6J"
 Received: by smtp.kernel.org (Postfix)
-	id 0BA7BC16AAE; Thu,  8 Jan 2026 16:52:08 +0000 (UTC)
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	id 31210C116D0; Thu,  8 Jan 2026 18:20:46 +0000 (UTC)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 55D25C116C6
-	for <tools@kernel.org>; Thu,  8 Jan 2026 16:52:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 55D25C116C6
+	by smtp.kernel.org (Postfix) with ESMTPS id 79B1FC116C6
+	for <tools@kernel.org>; Thu,  8 Jan 2026 18:20:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 79B1FC116C6
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b727f452fffso330096966b.1
-        for <tools@kernel.org>; Thu, 08 Jan 2026 08:52:07 -0800 (PST)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-432d28870ddso512672f8f.3
+        for <tools@kernel.org>; Thu, 08 Jan 2026 10:20:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767891126; x=1768495926; darn=kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Owldt8+JqAX9u6pNxU4XIZvYcUs9xiJo3puRMMlxxQU=;
-        b=Y5Y3POv2JDACGJXrraudrDxG04E/sE4IzC5csowkH4dOdN6/LyDk3MKjPQOezY4NBo
-         i89sdbQ/++DYjlUUfOK8oEnlGgm+BKcl5i+f7sjZjD16VD2ewQUNehfMpudEsgbeW6jH
-         zxi2HQz6loHlct7iqqZIP7VY4oKgDmoEAOW0oSVTo0LwEFaXxksGBxjvpbxsA2YKMiyW
-         vKdSMmOSdP2cqNMptwOT5MGhko3L6baY5jnBjmksPThCUv2s9pLtenOJUDkd28ctPKAW
-         y6fT8KhgYS6+noOvpc8ycIgmmeovINZbZzzn8Sa8XcjYVXqOcAPCxiZYs+i5MmQoCwiK
-         Hqfw==
+        d=gmail.com; s=20230601; t=1767896444; x=1768501244; darn=kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Gxnre8wBA0aKZPMlNNM4Suq1Jef0tNIw97tBb1fyKzo=;
+        b=Lo2KJB6J0EZcY9fhdeNID0h1Cb2uCGU9JealiaKlurmJCVnQn5M2YmWHW1DRTsZ9iY
+         jpcxwtyq0pdSsNLGJcGA7x98DKQmby3qir6G7pFepljyO50RoTMJcHWgVnqbMCYIEg0m
+         wpTD3z87vtj1u9k9uWofbckHpRXilRDhbW2o1EKNBoLeD11wObUVH46Ogyvx3VB+VgxC
+         4OJHCHzd9iWe20vIqWQv6Ev0n09vXVF22EcQ4R2xQunIMA3mk48t4zQx6GlR7kmHoHbJ
+         KbBUMfcEvPR5WmWz9X2lIcj9ZGo67v5YNiIWPzpSiQuvulU8xuq9/uvoQiDnDSDPFOlp
+         DRfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767891126; x=1768495926;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Owldt8+JqAX9u6pNxU4XIZvYcUs9xiJo3puRMMlxxQU=;
-        b=mRuuknv9LUBICFb1GP277q5fQ7PCDQFa1fdjCDHbujowMikpMIVOYdFWCw9eAeJPQt
-         06i/L4llYtp/EgK/x5KDRiRfgZIGje8UE7+hRXuIbMN6Z+Jpp2lu72FJAsuAoGGZiSd5
-         1LNzf0gS3O49xP14yo/mCYXYQEZtMykbV3fGkgk21AUMrVvD/prA6xwtQs7LTJXdmQyY
-         pT29khHzPO4YTPa8nhCsEN+J1oNapBPx/iGzXMKS/feSM8KevAYw+O9xmMKyS9btuR8i
-         LQgzS3x6Vs4YLWAiNLRfWVH+kma0f1dmgxxBsy9pM/uKfyznzf/BbPAdG0KUrnFnICZe
-         92yA==
-X-Gm-Message-State: AOJu0YwKMSlJ44vDsQfP5sKf1KMxetVaJGIC5C3I/4zuvh019EqfJ7mW
-	mETfE0fMr5fOYu/eRNSSXAcPlVRTdc+S/U4jSCyq3FHuJz+lOZntqoOsDNSBew==
-X-Gm-Gg: AY/fxX4jeSiELjQUOyLuTzMUOws2PeX+mHlBvDjqRnPMTcPKwCxVHtIwzrrKq+Cu6M3
-	30BmY3/sCoVXLo2J4VdacJVxjdvlbj7EnX7BCYNkh7WYparxXSb5UvLIraR9q1Bo4PQQxAxOSQl
-	0pvPxw2+hOP9ug8RonWYIKwisb78XF6+uGiINNTzRjIS1Z5RqJPl2z1V6T6L3gUVIiapLl1tL/z
-	SBHW4NaycCKRbNr9KOiVxVgcF/AJdoIUdmgP14YVhr8gpJJ5nSVIE8jBMPRRIhi0N39hJV6mdxF
-	vlzzi7+FB8yD7k+j7wcum7VzbvhXj85HzN/YCsVHiCfJQFTGCLovp7xVvYa/aF/GkDw0u4p+6er
-	+jqJ/mas6KFRwme7HorCpKpBaPBR/t68owo7iXFVscMSRSGuq8SFGoLWckeRlqR4wprJxsH3eVU
-	O5iap6kTFmKrrMoKGKWAQnN5KKWIuyi94K
-X-Google-Smtp-Source: AGHT+IECFIsUiR/Ls281o5aITD+2ql/n9sIxiV1bZusW4OMMWVM1d5kwo7RSWdx/vJDZEnMXbNXB2w==
-X-Received: by 2002:a17:907:6e9e:b0:b46:57fd:8443 with SMTP id a640c23a62f3a-b8444f8ef0emr701023466b.24.1767891125349;
-        Thu, 08 Jan 2026 08:52:05 -0800 (PST)
-Received: from tablet.my.domain ([150.254.44.155])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a27cc6bsm863857066b.23.2026.01.08.08.52.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 08:52:04 -0800 (PST)
-From: Artur Weber <aweber.kernel@gmail.com>
-To: tools@kernel.org
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	Artur Weber <aweber.kernel@gmail.com>
-Subject: [PATCH] Use pre-Python 3.13 Generator type syntax in conftest.py
-Date: Thu,  8 Jan 2026 17:52:00 +0100
-Message-ID: <20260108165200.11313-1-aweber.kernel@gmail.com>
-X-Mailer: git-send-email 2.52.0
+        d=1e100.net; s=20230601; t=1767896444; x=1768501244;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gxnre8wBA0aKZPMlNNM4Suq1Jef0tNIw97tBb1fyKzo=;
+        b=Y7QQNq1wnSQ/yJMuZsK02K9RFT9ygVgHlCZClKDVYB4yf6+zIqMdwjyyUmo+qNERHh
+         7RxoXzOesZkQUIeRuQjjwYiw1QDknNMuv2YpqFMOTl4DUW0NZ41ykDv45YfioMQv8zyO
+         6AnOm0JKb40DkaV+Zt3Jm7Liuq5hrZhWvE1E6BGZZ0gTqPmSdoK9nVjH5sJWFOokhnJP
+         2dEUrsHZ7Z6nJw9NWK4aM1pdD4EAEkCpkjjapat/zjOqbQAUfXDEcftin30z8oROlvU/
+         yYny9lxIQYkUuMNV8aXXlPipo4cweAtcjNIcYQoW/IBNkuv74tZz0k1OpfS6JIH8rhxL
+         +7KQ==
+X-Gm-Message-State: AOJu0YwHp9yIxf7V6FEdxRf2s82kWfheuaGWovWy1uTjX15vo7wru0QW
+	iLodMzsmQDWLd47kVhJmoHBfqo3oR7U8FONDbAKE8+YkENrWqRf4EJTVqCYxuA==
+X-Gm-Gg: AY/fxX480VCsIvhQ83U9JhkCNY4MaeeS3m0tisJTkw41W9dORqpOJ8o0FzHQ82dYZ5N
+	+wFKVe+bOVtbOcDoCRCd/RlJCQ3LDCnGfGdLSCGhzXeHJBvY3bBjs/mB254NPoTPzjr3l+Po94L
+	trby4ZyxlzuJcyOYjrsI8IGtw2J/QVK6ghAVC5QeW3hpvPutMU5V42X3slo82P6uLsFfsbPBAUv
+	K5bKAVmsHfrktCNwhDpR6snw0wKmfh9WaQ3hh9qrje7C3QdNY4S77YhRvHup3PObDa4xfPUNkQS
+	nA4LTytlp+yP0gylHhxaKXhU2FVCXiH5guuD9Y975aE8GmkvmowYBAFwPLwInsuST+Qsto5BKYN
+	C69WEcoL2Z01fgfbOdgsheNzaMhBpP58VlGNIEPYpynLJpTpWF6bwHVztchESJcRiFmcL3uFZ6t
+	yc/pgIEDsdDWPLv9AoHa1EJ+RbvHErdJB+7f586hKjGMIf3Vke37FKmTfTTLHW0B+3TZu3/z5Fx
+	BsBk8ZOxDnfi7MpY9Q7LomjwIVUBs7cBgubYW3yAfHyDmuc1H2EeFyWdCu5a5OKuy787P8lpP8=
+X-Google-Smtp-Source: AGHT+IHi/RVaPQmvCE0En6NS7DZHMATORl8hP0fJOc+LLV5j4w1atqZ+6heFllwAPBzlLbk8tpaAKw==
+X-Received: by 2002:a05:6000:22c1:b0:431:74:cca with SMTP id ffacd0b85a97d-432c3760fa1mr8698531f8f.44.1767896443568;
+        Thu, 08 Jan 2026 10:20:43 -0800 (PST)
+Received: from ?IPV6:2a01:114f:470e:6200:3b12:322d:3b6d:c5a1? (2a01-114f-470e-6200-3b12-322d-3b6d-c5a1.ea.ipv6.supernova.orange.pl. [2a01:114f:470e:6200:3b12:322d:3b6d:c5a1])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd5edd51sm17733119f8f.29.2026.01.08.10.20.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Jan 2026 10:20:43 -0800 (PST)
+Message-ID: <e0229ecf-5ce4-45b3-af3b-7008afed94fd@gmail.com>
+Date: Thu, 8 Jan 2026 19:20:41 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Use pre-Python 3.13 Generator type syntax in conftest.py
+To: tools@kernel.org
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+References: <20260108165200.11313-1-aweber.kernel@gmail.com>
+Content-Language: en-US
+From: Artur Weber <aweber.kernel@gmail.com>
+In-Reply-To: <20260108165200.11313-1-aweber.kernel@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Python 3.13 defaults to None for the other fields of the Generator type,
-but the version of Generator in older versions does not support such syntax.
-Explicitly add the missing fields to allow the tests to run on older Python
-versions.
+On 8.01.2026 17:52, Artur Weber wrote:
+> Python 3.13 defaults to None for the other fields of the Generator type,
+> but the version of Generator in older versions does not support such syntax.
+> Explicitly add the missing fields to allow the tests to run on older Python
+> versions.
+> 
+> (An alternative solution would be to use typing-extensions for older
+> versions, though that would require adding another dependency.)
+> 
+> Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
 
-(An alternative solution would be to use typing-extensions for older
-versions, though that would require adding another dependency.)
+It just occurred to me that I didn't mention what this patch is for 
+anywhere in this mail.
 
-Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
----
- tests/conftest.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This is a patch for patatt :)
 
-diff --git a/tests/conftest.py b/tests/conftest.py
-index c5ced78..a9c9157 100644
---- a/tests/conftest.py
-+++ b/tests/conftest.py
-@@ -20,7 +20,7 @@ This is a test email body.
- """
- 
- @pytest.fixture
--def temp_data_dir() -> Generator[str]:
-+def temp_data_dir() -> Generator[str, None, None]:
-     """Create a temporary data directory structure for patatt."""
-     with tempfile.TemporaryDirectory() as tmpdirname:
-         # Create directory structure similar to patatt's data dir
--- 
-2.52.0
-
+Best regards
+Artur
