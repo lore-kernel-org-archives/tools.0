@@ -1,151 +1,112 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7696010FD
-	for <tools@linux.kernel.org>; Mon,  5 Jan 2026 19:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664A32DC774
+	for <tools@linux.kernel.org>; Thu,  8 Jan 2026 16:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767642938; cv=none; b=LqWavZVv9utdySVvWoV+12Zp0+a9XJzGR7HRHQdL2PEFXD6xfSKCluhl5plxF385fqxbARi5MepZA7A98K/BiHu/2Tw4wTOfaU6nMpy1D6g0reEVHBPTV8YKmwmY0hRRe8SB+DB9oKiLwFEcIjdyCQ7Ueiz7RvZ1MKjoiY70z48=
+	t=1767891128; cv=none; b=MkQOxi3WUf0UZNEarn3rrLDFgsQokIDTSZ9yPor0vzRvqCW93XLR4KhfPacWZnbhl3dbD2H611kalI+JNOiYW0d5CivcBA3QeLVwZZj9iYRSsuiWgsWQlgW5cMG76TLdUSi41CoWHlR1T4JjgY4WN62/TWJQoMVbZl+t4e9til4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767642938; c=relaxed/simple;
-	bh=Z7wIl0ztwHklPKkKL1Td2RZDdm59FRigP8kVYMYb8Zs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RLMxBZC95O8IhLGkYVtXjfmSzlF/UtRLmzQRS5l4ppx+ve5S+SNk5PSXTQe8qY/D/dEoXMSOIp60ii+X6OibsiAeFPkwXNlTxF1NjIl4oSKvNdDEld/Ke379foo9XFKzbPKLndfI5rwFbzzoq4dKHaUyUST0UHnsmy5c2o6bC9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=aG+KXRKw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767891128; c=relaxed/simple;
+	bh=WcwB+GS/bRtZ6XdaZAdcMU5KDLV9WDDIDs8nzw3zj2w=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m3rIDvN/mabkae5DQr2ETNC5zdFO+pJSFti4tYdekG5Ya4xNhPBJjrfCzd4ZuvoIyt1n3TQzz5C8w5zCK1obPtoU734vKtuHbXud17y9SRxxXIZZy/+x4+GVXi1PkKYvgx3WdN5frAh3V671HFmD84lN6/GJ45K16tf0YIAJr7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y5Y3POv2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="aG+KXRKw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y5Y3POv2"
 Received: by smtp.kernel.org (Postfix)
-	id 14D1CC19422; Mon,  5 Jan 2026 19:55:38 +0000 (UTC)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	id 0BA7BC16AAE; Thu,  8 Jan 2026 16:52:08 +0000 (UTC)
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 4B975C116D0
-	for <tools@kernel.org>; Mon,  5 Jan 2026 19:55:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 4B975C116D0
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=heusel.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
-	s=s1-ionos; t=1767642934; x=1768247734; i=christian@heusel.eu;
-	bh=Z7wIl0ztwHklPKkKL1Td2RZDdm59FRigP8kVYMYb8Zs=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=aG+KXRKwkJ+NDhDJV658JsQo1EWwXg2gdrf+hKg9ztLVRyGyoW0qDSXxhwQT+eiL
-	 JqmKoNs5bL7Omn538awCKmjWki1iTfLOMQRoS0DAaFCp3R8rWNdGXtXpNgDRd5f00
-	 4HyH8NNP5HK7PJgVasFHWOAcHHvtLUhauvGRgP14hFSQ5alZq/1N4aW8QyT97CxW5
-	 TBhGn+yWBWDfkuL3B64mRnN6A/uULpKR9Wt8mYlittKGKYjI1jQPopQWnJVHN1vX2
-	 mU/YhKHVvWwN3M/Mbfgd2qhOrfpjvOAodasBF6hEpKBizEDKWdaM427/pXr7Q3oRs
-	 0bUW+HPYKrpf9zITKw==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from localhost ([94.31.75.239]) by mrelayeu.kundenserver.de
- (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MY6TD-1vMijH2ab7-00YM0N; Mon, 05 Jan 2026 20:12:26 +0100
-Date: Mon, 5 Jan 2026 20:12:25 +0100
-From: Christian Heusel <christian@heusel.eu>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Mike Pagano <mpagano@gentoo.org>, tools@kernel.org
-Subject: Re: patatt - tests source request
-Message-ID: <868a94b1-16bb-446c-a238-8901feb968ec@heusel.eu>
-References: <f0fb89e1-a37b-4871-bf0d-23f84ef450ff@gentoo.org>
- <20260105-curious-russet-goshawk-d97fd8@lemur>
- <fc0cacbf-d8d1-48d2-8817-d69e6eb3e049@gentoo.org>
- <20260105-ruby-aardwolf-of-glamour-342acc@lemur>
- <b81c15a5-0030-4ba9-a7b2-cbbdb19d4222@gentoo.org>
- <20260105-sticky-goshawk-of-happiness-d1d9c8@lemur>
+	by smtp.kernel.org (Postfix) with ESMTPS id 55D25C116C6
+	for <tools@kernel.org>; Thu,  8 Jan 2026 16:52:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 55D25C116C6
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b727f452fffso330096966b.1
+        for <tools@kernel.org>; Thu, 08 Jan 2026 08:52:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767891126; x=1768495926; darn=kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Owldt8+JqAX9u6pNxU4XIZvYcUs9xiJo3puRMMlxxQU=;
+        b=Y5Y3POv2JDACGJXrraudrDxG04E/sE4IzC5csowkH4dOdN6/LyDk3MKjPQOezY4NBo
+         i89sdbQ/++DYjlUUfOK8oEnlGgm+BKcl5i+f7sjZjD16VD2ewQUNehfMpudEsgbeW6jH
+         zxi2HQz6loHlct7iqqZIP7VY4oKgDmoEAOW0oSVTo0LwEFaXxksGBxjvpbxsA2YKMiyW
+         vKdSMmOSdP2cqNMptwOT5MGhko3L6baY5jnBjmksPThCUv2s9pLtenOJUDkd28ctPKAW
+         y6fT8KhgYS6+noOvpc8ycIgmmeovINZbZzzn8Sa8XcjYVXqOcAPCxiZYs+i5MmQoCwiK
+         Hqfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767891126; x=1768495926;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Owldt8+JqAX9u6pNxU4XIZvYcUs9xiJo3puRMMlxxQU=;
+        b=mRuuknv9LUBICFb1GP277q5fQ7PCDQFa1fdjCDHbujowMikpMIVOYdFWCw9eAeJPQt
+         06i/L4llYtp/EgK/x5KDRiRfgZIGje8UE7+hRXuIbMN6Z+Jpp2lu72FJAsuAoGGZiSd5
+         1LNzf0gS3O49xP14yo/mCYXYQEZtMykbV3fGkgk21AUMrVvD/prA6xwtQs7LTJXdmQyY
+         pT29khHzPO4YTPa8nhCsEN+J1oNapBPx/iGzXMKS/feSM8KevAYw+O9xmMKyS9btuR8i
+         LQgzS3x6Vs4YLWAiNLRfWVH+kma0f1dmgxxBsy9pM/uKfyznzf/BbPAdG0KUrnFnICZe
+         92yA==
+X-Gm-Message-State: AOJu0YwKMSlJ44vDsQfP5sKf1KMxetVaJGIC5C3I/4zuvh019EqfJ7mW
+	mETfE0fMr5fOYu/eRNSSXAcPlVRTdc+S/U4jSCyq3FHuJz+lOZntqoOsDNSBew==
+X-Gm-Gg: AY/fxX4jeSiELjQUOyLuTzMUOws2PeX+mHlBvDjqRnPMTcPKwCxVHtIwzrrKq+Cu6M3
+	30BmY3/sCoVXLo2J4VdacJVxjdvlbj7EnX7BCYNkh7WYparxXSb5UvLIraR9q1Bo4PQQxAxOSQl
+	0pvPxw2+hOP9ug8RonWYIKwisb78XF6+uGiINNTzRjIS1Z5RqJPl2z1V6T6L3gUVIiapLl1tL/z
+	SBHW4NaycCKRbNr9KOiVxVgcF/AJdoIUdmgP14YVhr8gpJJ5nSVIE8jBMPRRIhi0N39hJV6mdxF
+	vlzzi7+FB8yD7k+j7wcum7VzbvhXj85HzN/YCsVHiCfJQFTGCLovp7xVvYa/aF/GkDw0u4p+6er
+	+jqJ/mas6KFRwme7HorCpKpBaPBR/t68owo7iXFVscMSRSGuq8SFGoLWckeRlqR4wprJxsH3eVU
+	O5iap6kTFmKrrMoKGKWAQnN5KKWIuyi94K
+X-Google-Smtp-Source: AGHT+IECFIsUiR/Ls281o5aITD+2ql/n9sIxiV1bZusW4OMMWVM1d5kwo7RSWdx/vJDZEnMXbNXB2w==
+X-Received: by 2002:a17:907:6e9e:b0:b46:57fd:8443 with SMTP id a640c23a62f3a-b8444f8ef0emr701023466b.24.1767891125349;
+        Thu, 08 Jan 2026 08:52:05 -0800 (PST)
+Received: from tablet.my.domain ([150.254.44.155])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a27cc6bsm863857066b.23.2026.01.08.08.52.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jan 2026 08:52:04 -0800 (PST)
+From: Artur Weber <aweber.kernel@gmail.com>
+To: tools@kernel.org
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	Artur Weber <aweber.kernel@gmail.com>
+Subject: [PATCH] Use pre-Python 3.13 Generator type syntax in conftest.py
+Date: Thu,  8 Jan 2026 17:52:00 +0100
+Message-ID: <20260108165200.11313-1-aweber.kernel@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wbwlnke3t3ngbq6c"
-Content-Disposition: inline
-In-Reply-To: <20260105-sticky-goshawk-of-happiness-d1d9c8@lemur>
-X-Provags-ID: V03:K1:AyV2w9+Js4/CB5hzB+2dF9cm5X8bCGqBH5nYxRWcc7BcAaemkHd
- VZAQYO4F+ZKxbSIV3BLNiKxl2QCDnPqzJKlsEk8Kf+9TsE77ywby93CxMeKDjloYNjW+Fs6
- 8X4EEh/kJcYrAvSzV5x6F5usy+L6tq3keB72wjquHEp+I7aNee8iutZ52mrquWWvf7tnUCU
- dyjkZg1h5rP2bzHo8JWHQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:t9YL+q+EujU=;OJ18YM5A0h35YgzJztZAX6LjRr+
- VXHl1onsYlilNHdcESS2giBNhucEWL+cC//Y4UzyCbGJtJE0+xL06pUSDjegRc3lvYOVLLVCx
- qlTYsZmp5eKDx0Knz0xJZnWbE79IkKa5/a7evmyr8pN4VP/KteJPVAVFU+pUid7pssD/oHPbP
- wirM3jdodi6Xfr7JmzH8nnLi/go9IZoo6YF6sqM694G6AL1FDcmJiLiFk0B/cg6djTDzXWhHs
- lfOWR99XvDPHwaHSzf8GwZdvHRRAAYjCe3QSQk++KwrtxbpyXQAbGMld4otaPjxb9weV7gbrD
- 5PeEVFi1XoyBHZh+aWlLEeguYIR16/5ezmFTx8l1sOoW/9Q7mcQrEBLMsKhilonwSupdFX2tj
- WkhCi0A+re09f3s0KQnJ4bHbTPmDLel6Iep5Kyczl71zq9sorYOA0Hk4XlU9Hgxo7WJAxdP2q
- 9featR9r5mZHddEmEUADPtalbqs9Dq9CkAEzuWc14A3nsyyi0OEvJGtgT0bgiIkGJkhtO/pns
- pYFzfHGzCoUQrv80VtuiK2NK+X7zOTgU132gyvIlbl3Vq8oOwARYrW+IN/7EH25mXIN4sBdFk
- crf4mPtcjkDfZ+sEU4ga8nkQnniDxlCkSgtnR7dBAalXfp2gMQ6WNZJKYqWkuvKymTW3SpXj7
- 3phTnYnyas7lOuSfu8h55FLtIqefuwoF6L2guOvFeeRFNXBVOf8ro7QzVo+LGDkt3LTVasI61
- 7ZqMWh2xYgrn9IXJOsVHqoxSebGay3hbKFrr3xTHktlrLwJYISiYcuT99caCBChTRY1ke/s3T
- EWUpm2ThMHVvjHlFVrh0OiWRgOzKPpw3UKqGi51jCVAlZZjN5+3eb43+I58fYcAwcBYNq5w15
- nnyJzTIcDr3ekx2bssNjGLNT1PFqd/eOfD48EbC/lOjzTEX8MSl+j7irOurJidwuDqQtHNo3I
- Gze2kS3uZTY7SR710Gltk8Td5FhyMy4tltzcLudhnPRbjNujWbry1/v4x9HV0ECe5jCkeRcLb
- z38zQ2f/wv+XbfnlrFFkISTCRR/oYLhwqUcueVCx+RNMTS7GZyPX+kpQjd6ZI8r3c7KJr+Zb3
- YN43xLeQhWYK9B2CPSlRB4vUKVFyFGgUWEM/U362z07lGJ17Ai40Js0965zPplmZIQ8XKakXs
- FNqvTmVunjBXWvOd6NPCJV3e1s4twJsptk0wyyyRmaKF+jelJsHHTMxhQA5YTbd3GPR7au1el
- 5YgmOBfLQ2PmVZxxI4hMxqznlk9JulJdSNSgCXE3oGXVT74Yp3Bfkbex9c33RxZS+4Iqz2hKf
- 8ad78vumJ7nkKgXlYSvF5WALt+rDcBjnKAePrjmE+2c9+LvyC4yVBLwTTUovGjJFH0YtD0Lvt
- 6ekeMEa5fiBzULFzUQiX5dnXA+3fiaV0sjYjJmchDkrU3KZTWY2c8VNAs+j/XEPeZrnPG8MPY
- x77Cd5CXsfzkr3XOUeloc9BBxY+GxdiYGoZFHoHPy+MI+OcbAdOqseqnJRssD+O0A8mkYVkg9
- uefbT2svlmr8Dt4PQuhmBhcQ0LFE6KBkAhjsIwxo+4Ir6cQKubHmwglWTURJKURLQiHmCvKbz
- Ul1w7kxUPeFaQMwc9R1nO4N1eGnY1V8BdnKGsJi+XjNisblwJNnZyklj8z+07o17NWLEy7TQD
- yXaNIcJTBsVBw4YQ6hk0mrPiXGWjQ9AAhytzJeyCQZWP0V6uHgPSVnph/Vt56AHELyMT9BPX7
- UM85AGFiFRIjlaJgwpvtWobarEM4aDnGUlg==
+Content-Transfer-Encoding: 8bit
 
+Python 3.13 defaults to None for the other fields of the Generator type,
+but the version of Generator in older versions does not support such syntax.
+Explicitly add the missing fields to allow the tests to run on older Python
+versions.
 
---wbwlnke3t3ngbq6c
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: patatt - tests source request
-MIME-Version: 1.0
+(An alternative solution would be to use typing-extensions for older
+versions, though that would require adding another dependency.)
 
-On 26/01/05 12:20PM, Konstantin Ryabitsev wrote:
-> On Mon, Jan 05, 2026 at 12:02:04PM -0500, Mike Pagano wrote:
-> > > Did you download yours from here?
-> > > https://www.kernel.org/pub/software/devel/patatt/
-> > >=20
-> > No, we are downloading from:
-> > https://pypi.org/project/patatt/#files
-> >=20
-> > I will update our URLs to download from this URL.
->=20
-> Hm... I'll check why pypi's files are different, but yes, please use the
-> official tarballs (that are signed, anyway).
->=20
-> -K
+Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+---
+ tests/conftest.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The sdist tarballs hosted on pypi are apparently often times different
-=66rom the "regular" tarballs, which is why we default to not using them
-on Arch Linux:
+diff --git a/tests/conftest.py b/tests/conftest.py
+index c5ced78..a9c9157 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -20,7 +20,7 @@ This is a test email body.
+ """
+ 
+ @pytest.fixture
+-def temp_data_dir() -> Generator[str]:
++def temp_data_dir() -> Generator[str, None, None]:
+     """Create a temporary data directory structure for patatt."""
+     with tempfile.TemporaryDirectory() as tmpdirname:
+         # Create directory structure similar to patatt's data dir
+-- 
+2.52.0
 
-https://rfc.archlinux.page/0020-sources-for-python-packaging/
-
-Cheers,
-Chris
-
---wbwlnke3t3ngbq6c
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmlcDRkACgkQwEfU8yi1
-JYUWeg//Ykha+Q+eVPxj7JSfN9nqR3pIJ+v4SaS8O8zpZLeI63IWR/89za5VTroU
-uZY4tV6kn+Ez8AeUbiij66Zt3eYvG96lOou5ViOGRECTPOxqUSkxvwWBTkgJFZmC
-ScvrgtmYXESYVPUlNmQQyBpT8WLRbbiRqah50bJ1SPfWdfeJmNuthKfzZr/9MhN7
-VmI3pAtFcbXWRbMUxevQiQv543yliDEAbygJssCn4iOwGCse5wTBPXkeN+DERu4+
-ZLFypnvmM8tPfQ8VFNJzrdKeoklILr4qv3fdgT6JiKiqCg3jBe3UAgbg9df2Puwl
-06G4xc5WJoxz+v+QSJnVgr5zhbNFlpvTxw+1iWxeiXpvQvDcqh1nRagBOK9+KCkb
-ULQTGbzv4PMCxV49fzKJ468SpuC+WmxLjQdI/xk10jzw6Dx13XvkgI/BNpNIHk7E
-nuat5jGolwg+E0xtk+ivTPD+0M4T5lOcu+VFGr0Trkb26nObuDs5tb+MdwgrqTDH
-RXTMMFUkJJWWBcUKUUsztvFI2oKQbNQ4YXvowdz9XDcvzRdjsVQm7c3+1f8hpbAz
-K2xpfqesE9+4pJxzssV4pHr/Lh/jBnH+taQM3xvEwLZTAOwNvXT1FRnIMd9hS3hG
-TZ9y4VnFl/YhqsRWYmTMI90rmYqMhXQ+XdM6Pe10F9EPoaixi3o=
-=Mbf4
------END PGP SIGNATURE-----
-
---wbwlnke3t3ngbq6c--
