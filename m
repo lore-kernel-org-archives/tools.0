@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A7028B4FE
-	for <tools@linux.kernel.org>; Sun, 11 Jan 2026 21:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AE228C2DD
+	for <tools@linux.kernel.org>; Sun, 11 Jan 2026 21:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768166962; cv=none; b=GSkHr51Khsk6+D1mUDO6GO8gaNLOtjkuwoYu8QgSCygHXlZPkJMg9RS/23HctVk0pQ/AjzcT8D1QmB0S7UJpXBLhYcvr00hr/aO7GkAWzRc9InecrtHh3dMCnrcEyLyrvWYezI/QUk+Qky6Y72Dzp+q2tZ6ifXtP6JSB9qQCmNc=
+	t=1768166962; cv=none; b=um9XRTyNI4SksKDCsbHcHz4u1KgBVtCzzszoBzRXDEOsSu7L9JMe8fHt8Z/goVaXDPmX4VR4m+3mkM4ljuxLvobhJPy+bSOhWob0+vANa831QU5c2uzTxLFoxyiKyauM5z+L7HhVgxlu0hGUk5KOpd/dzuQ42EXVqDAE33MM5/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768166962; c=relaxed/simple;
-	bh=AsfelDmn7x1VH+bQd85aXGTCvHa6ix78xjw+eaWqLoc=;
+	bh=cK916ghopKjLqFP5q+UhcVu38pQERQ3V5bXbzpniRlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dBVYY8xOXSZRADYHbP+jKc/stJQNjexppEDxKnElRWoeURXmGojxILrc+L1d4FHghjqVmNkOmR/peFQI/gjGiFxlhnYIGC7pAdpMDpQKC8/wubkp8WBtrxwA5Htpl4uN8gLxy/jI4jqmiQBP5Io2JFyY0PDMxjEN8i11FxrIg0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eku6zbIz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G8U7Fi58rp14h0nHULC4Jq4p/iYSphhQD0X6sWJx8PEHOqZf/40jSTOM/lABkz0Rk6NdupYhx5XpoyMTLqNVy6TxdTuryGg8lz08b+1BVpevpwvpu6MYnX8s2ecF4uNG16aiZrUPBGiPKqPj9VrmsXv5VPAHyG9Ber6qgRt++8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DwH62qu9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eku6zbIz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DwH62qu9"
 Received: by smtp.kernel.org (Postfix)
-	id AC1F2C19423; Sun, 11 Jan 2026 21:29:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6B0C4AF09;
-	Sun, 11 Jan 2026 21:29:20 +0000 (UTC)
+	id 98EFDC19424; Sun, 11 Jan 2026 21:29:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63F0C4CEF7;
+	Sun, 11 Jan 2026 21:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768166961;
-	bh=AsfelDmn7x1VH+bQd85aXGTCvHa6ix78xjw+eaWqLoc=;
+	s=k20201202; t=1768166962;
+	bh=cK916ghopKjLqFP5q+UhcVu38pQERQ3V5bXbzpniRlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eku6zbIzpCNmLRmtDcqnl7walvN5CAH6Fi75CjgSecMSQyIbXUEXv30nW1YqxVtIB
-	 RCXYUGnz439Nv6Et7e+ncbS+wW7AGp1wJOzpm6JWbhPBRwdDnY8KjxMW6uT+oqu0PP
-	 jeB6hHqNj0Z19WniI84C42XrE7xYeOix5xjWo7v7YwSjK244LhHFjOTqGnByHdRDf5
-	 beSf5XZQ4A4hzLxh+IDSPAZUJf/GyLiz2DGSPBjF3Cd2zDrzlYG2iBMDIlMQ0eEMO3
-	 YCNyReuzrf1KfILJh1YoqDt+xh2DX/6ZYU2QQYKKExuy4jaqov5tvDhYrqa2artS6U
-	 VSdlUTkSN21OQ==
+	b=DwH62qu90JpoUKYDfJL+8jy0zMrUt+k8bUq7msw95lonMb+YMO4bYlGJh2bK3KU7d
+	 Dk0jOkiYOI/Qnj8XHtA2K3wau6PeunmxPPRYRY34EzPJyHzncTLEo81fGSS+MYs4Du
+	 YUOx9wIVH87mJKKgV9YuxcN/tiim0pmhHUQuWzfwP/030Kxl9W6OHvGfeANoybIMqo
+	 nHcmbIhbtJ2ObKETEB2tIu+qsYxC+MI9uNDvRaqh1uPYEgklEIpyhbZ1jTjj8CzAB+
+	 LC0/x6n/VeW7O4NxcyZvwc8F7cOzVsuqBVFP5QlwFJLsgsQBFsL4HyaldxBwhdcBBi
+	 4SNxNytMf7WQw==
 From: Sasha Levin <sashal@kernel.org>
 To: tools@kernel.org
 Cc: linux-kernel@vger.kernel.org,
 	torvalds@linux-foundation.org,
 	broonie@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [RFC v2 4/7] LLMinus: Add resolve command for LLM-assisted conflict resolution
-Date: Sun, 11 Jan 2026 16:29:12 -0500
-Message-ID: <20260111212915.195056-5-sashal@kernel.org>
+Subject: [RFC v2 5/7] LLMinus: Add pull command for LLM-assisted kernel pull request merging
+Date: Sun, 11 Jan 2026 16:29:13 -0500
+Message-ID: <20260111212915.195056-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260111212915.195056-1-sashal@kernel.org>
 References: <20251219181629.1123823-1-sashal@kernel.org>
@@ -49,453 +49,566 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the resolve command that invokes an external LLM to assist with
-merge conflicts. It parses .git/MERGE_MSG for merge context, gathers
-conflict information from all files with markers, and finds similar
-historical resolutions from the database when available.
+Add the pull command that automates merging kernel pull requests from
+lore.kernel.org with LLM-assisted conflict resolution. It fetches the
+pull request email, parses it to extract the repository URL and ref,
+then executes git pull.
 
-The generated prompt includes current conflict content, similar historical
-resolutions with diffs, and instructions emphasizing understanding before
-acting. The LLM is directed to search lore.kernel.org for maintainer
-guidance, trace git history to understand both sides, and flag uncertainty
-rather than guessing. Output streams directly to the terminal.
+If conflicts occur, the LLM receives the complete pull request email,
+current conflict markers, and similar historical resolutions. The LLM
+resolves conflicts and writes reasoning to .git/LLMINUS_RESOLUTION.
+The prompt instructs the LLM to critically evaluate maintainer suggestions
+and look for opportunities to produce cleaner code. Adds ureq for HTTP
+fetching.
 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/llminus/src/main.rs | 476 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 476 insertions(+)
+ tools/llminus/Cargo.toml  |   1 +
+ tools/llminus/src/main.rs | 660 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 647 insertions(+), 14 deletions(-)
 
+diff --git a/tools/llminus/Cargo.toml b/tools/llminus/Cargo.toml
+index 86740174de59..66c6eddd0f64 100644
+--- a/tools/llminus/Cargo.toml
++++ b/tools/llminus/Cargo.toml
+@@ -14,6 +14,7 @@ fastembed = "5"
+ rayon = "1"
+ serde = { version = "1", features = ["derive"] }
+ serde_json = "1"
++ureq = "3"
+ 
+ [dev-dependencies]
+ tempfile = "3"
 diff --git a/tools/llminus/src/main.rs b/tools/llminus/src/main.rs
-index df7262bd6a91..0388a881e413 100644
+index 0388a881e413..ff668244688f 100644
 --- a/tools/llminus/src/main.rs
 +++ b/tools/llminus/src/main.rs
-@@ -41,6 +41,11 @@ enum Commands {
-         #[arg(default_value = "1")]
-         n: usize,
+@@ -46,6 +46,14 @@ enum Commands {
+         /// Command to invoke. The prompt will be passed via stdin.
+         command: String,
      },
-+    /// Resolve current conflicts using an LLM
-+    Resolve {
-+        /// Command to invoke. The prompt will be passed via stdin.
++    /// Pull a kernel patch/pull request from lore.kernel.org and merge it
++    Pull {
++        /// Message ID from lore.kernel.org (e.g., "98b74397-05bc-dbee-cab4-3f40d643eaac@kernel.org")
++        message_id: String,
++        /// Command to invoke for LLM assistance
++        #[arg(short, long, default_value = "llm")]
 +        command: String,
 +    },
  }
  
  /// A single diff hunk representing a change region
-@@ -938,6 +943,422 @@ fn find(n: usize) -> Result<()> {
-     Ok(())
+@@ -1034,6 +1042,299 @@ fn parse_merge_source(line: &str) -> Option<String> {
+     None
  }
  
-+/// Context about the current merge operation
++/// Information parsed from a lore.kernel.org pull request email
 +#[derive(Debug, Default)]
-+struct MergeContext {
-+    /// The branch/tag/ref being merged (from MERGE_HEAD or MERGE_MSG)
-+    merge_source: Option<String>,
-+    /// The target branch (HEAD)
-+    head_branch: Option<String>,
-+    /// The merge message (from .git/MERGE_MSG)
-+    merge_message: Option<String>,
++#[allow(dead_code)]
++struct PullRequest {
++    /// Message ID
++    message_id: String,
++    /// Subject line of the email
++    subject: String,
++    /// Author name and email
++    from: String,
++    /// Date of the email
++    date: String,
++    /// Git repository URL to pull from
++    git_url: String,
++    /// Git ref (tag or branch) to pull
++    git_ref: String,
++    /// The full raw email body (LLM extracts summary and conflict instructions from this)
++    body: String,
 +}
 +
-+/// Extract context about the current merge operation
-+fn get_merge_context() -> MergeContext {
-+    let mut ctx = MergeContext {
-+        head_branch: git_allow_fail(&["rev-parse", "--abbrev-ref", "HEAD"])
-+            .map(|s| s.trim().to_string())
-+            .filter(|s| !s.is_empty() && s != "HEAD"),
-+        ..Default::default()
-+    };
++/// Fetch raw email from lore.kernel.org
++fn fetch_lore_email(message_id: &str) -> Result<String> {
++    // Clean up message ID (remove < > if present)
++    let clean_id = message_id
++        .trim_start_matches('<')
++        .trim_end_matches('>')
++        .trim();
 +
-+    // Try to read MERGE_MSG for merge context
-+    if let Ok(merge_msg) = std::fs::read_to_string(".git/MERGE_MSG") {
-+        ctx.merge_message = Some(merge_msg.clone());
++    let url = format!("https://lore.kernel.org/all/{}/raw", clean_id);
++    println!("Fetching: {}", url);
 +
-+        // Parse merge source from MERGE_MSG
-+        // Common formats:
-+        // "Merge branch 'feature-branch'"
-+        // "Merge tag 'v6.1'"
-+        // "Merge remote-tracking branch 'origin/main'"
-+        // "Merge commit 'abc123'"
-+        let first_line = merge_msg.lines().next().unwrap_or("");
-+        if let Some(source) = parse_merge_source(first_line) {
-+            ctx.merge_source = Some(source);
-+        }
-+    }
++    let mut response = ureq::get(&url)
++        .call()
++        .with_context(|| format!("Failed to fetch {}", url))?;
 +
-+    // If no merge source found from MERGE_MSG, try to describe MERGE_HEAD
-+    if ctx.merge_source.is_none() {
-+        // Try to get a tag name for MERGE_HEAD
-+        if let Some(tag) = git_allow_fail(&["describe", "--tags", "--exact-match", "MERGE_HEAD"]) {
-+            ctx.merge_source = Some(tag.trim().to_string());
-+        } else if let Some(branch) = git_allow_fail(&["name-rev", "--name-only", "MERGE_HEAD"]) {
-+            let branch = branch.trim();
-+            if !branch.is_empty() && branch != "undefined" {
-+                ctx.merge_source = Some(branch.to_string());
++    response.body_mut()
++        .read_to_string()
++        .context("Failed to read response body")
++}
++
++/// Parse email headers from raw email text
++fn parse_email_headers(raw: &str) -> (String, String, String, String, &str) {
++    let mut from = String::new();
++    let mut subject = String::new();
++    let mut date = String::new();
++    let mut message_id = String::new();
++
++    // Find the blank line separating headers from body
++    let (headers_section, body) = raw.split_once("\n\n")
++        .unwrap_or((raw, ""));
++
++    // Parse headers (handle multi-line headers)
++    let mut current_header = String::new();
++    let mut current_value = String::new();
++
++    for line in headers_section.lines() {
++        if line.starts_with(' ') || line.starts_with('\t') {
++            // Continuation of previous header
++            current_value.push(' ');
++            current_value.push_str(line.trim());
++        } else if let Some((name, value)) = line.split_once(':') {
++            // New header - save previous if any
++            if !current_header.is_empty() {
++                match current_header.to_lowercase().as_str() {
++                    "from" => from = current_value.clone(),
++                    "subject" => subject = current_value.clone(),
++                    "date" => date = current_value.clone(),
++                    "message-id" => message_id = current_value.clone(),
++                    _ => {}
++                }
 +            }
++            current_header = name.to_string();
++            current_value = value.trim().to_string();
 +        }
 +    }
 +
-+    ctx
++    // Don't forget last header
++    if !current_header.is_empty() {
++        match current_header.to_lowercase().as_str() {
++            "from" => from = current_value,
++            "subject" => subject = current_value,
++            "date" => date = current_value,
++            "message-id" => message_id = current_value,
++            _ => {}
++        }
++    }
++
++    (from, subject, date, message_id, body)
 +}
 +
-+/// Parse merge source from a merge message first line
-+fn parse_merge_source(line: &str) -> Option<String> {
-+    // "Merge branch 'feature'" -> "feature"
-+    // "Merge tag 'v6.1'" -> "v6.1"
-+    // "Merge remote-tracking branch 'origin/main'" -> "origin/main"
-+    // "Merge commit 'abc123'" -> "abc123"
++/// Extract git pull URL and ref from email body
++fn extract_git_info(body: &str) -> Option<(String, String)> {
++    // Look for patterns like:
++    // "git://git.kernel.org/pub/scm/linux/kernel/git/riscv/linux tags/riscv-for-linus-6.19-mw2"
++    // "https://git.kernel.org/pub/scm/linux/kernel/git/foo/bar.git branch-name"
 +
-+    let line = line.trim();
++    for line in body.lines() {
++        let line = line.trim();
 +
-+    // Look for quoted source
-+    if let Some(start) = line.find('\'') {
-+        if let Some(end) = line[start + 1..].find('\'') {
-+            return Some(line[start + 1..start + 1 + end].to_string());
++        // Skip empty lines and common non-URL prefixes
++        if line.is_empty() {
++            continue;
 +        }
-+    }
 +
-+    // Look for "Merge X into Y" pattern without quotes
-+    if let Some(rest) = line.strip_prefix("Merge ") {
-+        // Skip "branch ", "tag ", "commit ", "remote-tracking branch "
-+        let rest = rest
-+            .strip_prefix("remote-tracking branch ")
-+            .or_else(|| rest.strip_prefix("branch "))
-+            .or_else(|| rest.strip_prefix("tag "))
-+            .or_else(|| rest.strip_prefix("commit "))
-+            .unwrap_or(rest);
++        // Check for git:// or https:// URLs
++        let url_start = if let Some(pos) = line.find("git://") {
++            pos
++        } else if let Some(pos) = line.find("https://git.") {
++            pos
++        } else {
++            continue;
++        };
 +
-+        // Take until " into " or end of line
-+        if let Some(into_pos) = rest.find(" into ") {
-+            return Some(rest[..into_pos].trim().to_string());
-+        }
-+        let word = rest.split_whitespace().next()?;
-+        if !word.is_empty() {
-+            return Some(word.to_string());
++        let url_part = &line[url_start..];
++
++        // Split into URL and ref
++        let parts: Vec<&str> = url_part.split_whitespace().collect();
++        if parts.len() >= 2 {
++            let url = parts[0].to_string();
++            let git_ref = parts[1].to_string();
++
++            // Validate it looks like a kernel git URL
++            if url.contains("kernel.org") || url.contains("git.") {
++                return Some((url, git_ref));
++            }
 +        }
 +    }
 +
 +    None
 +}
 +
-+/// Get current conflicts from the working directory
-+fn get_current_conflicts() -> Result<Vec<ConflictFile>> {
-+    check_repo()?;
-+
-+    // Find current conflicts
-+    let conflict_paths = get_conflicted_files()?;
-+    if conflict_paths.is_empty() {
-+        bail!("No conflicts detected. Run this command when you have active merge conflicts.");
-+    }
-+
-+    // Parse all conflict regions
-+    let mut all_conflicts = Vec::new();
-+    for path in &conflict_paths {
-+        if let Ok(conflicts) = parse_conflict_file(path) {
-+            all_conflicts.extend(conflicts);
-+        }
-+    }
-+
-+    if all_conflicts.is_empty() {
-+        bail!("Could not parse any conflict markers from the conflicted files.");
-+    }
-+
-+    Ok(all_conflicts)
-+}
-+
-+/// Try to find similar resolutions, returns empty vec if no database or embeddings
-+fn try_find_similar_resolutions(n: usize, conflicts: &[ConflictFile]) -> Vec<SimilarResolution> {
-+    let store_path = Path::new(STORE_PATH);
-+    if !store_path.exists() {
-+        return Vec::new();
-+    }
-+
-+    let store = match ResolutionStore::load(store_path) {
-+        Ok(s) => s,
-+        Err(_) => return Vec::new(),
-+    };
-+
-+    let with_embeddings: Vec<_> = store.resolutions.iter()
-+        .filter(|r| r.embedding.is_some())
-+        .collect();
-+
-+    if with_embeddings.is_empty() {
-+        return Vec::new();
-+    }
-+
-+    // Initialize embedding model
-+    let mut model = match init_embedding_model() {
-+        Ok(m) => m,
-+        Err(_) => return Vec::new(),
-+    };
-+
-+    // Generate embedding for current conflicts
-+    let conflict_text: String = conflicts.iter()
-+        .map(|c| c.to_embedding_text())
-+        .collect::<Vec<_>>()
-+        .join("\n---\n\n");
-+
-+    let query_embeddings = match model.embed(vec![conflict_text], None) {
-+        Ok(e) => e,
-+        Err(_) => return Vec::new(),
-+    };
-+    let query_embedding = &query_embeddings[0];
-+
-+    // Compute similarities and take top N
-+    let mut similarities: Vec<_> = with_embeddings.iter()
-+        .map(|r| {
-+            let sim = cosine_similarity(query_embedding, r.embedding.as_ref().unwrap());
-+            (r, sim)
-+        })
-+        .collect();
-+
-+    similarities.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap_or(std::cmp::Ordering::Equal));
-+
-+    similarities.into_iter()
-+        .take(n)
-+        .map(|(r, sim)| SimilarResolution {
-+            resolution: (*r).clone(),
-+            similarity: sim,
-+        })
-+        .collect()
-+}
-+
-+/// Build the LLM prompt for conflict resolution
-+fn build_resolve_prompt(
-+    conflicts: &[ConflictFile],
-+    similar: &[SimilarResolution],
-+    merge_ctx: &MergeContext,
-+) -> String {
-+    let mut prompt = String::new();
-+
-+    // Header with high-stakes framing
-+    prompt.push_str("# Linux Kernel Merge Conflict Resolution\n\n");
-+    prompt.push_str("You are acting as an experienced kernel maintainer resolving a merge conflict.\n\n");
-+    prompt.push_str("**Important:** Incorrect merge resolutions have historically introduced subtle bugs ");
-+    prompt.push_str("that affected millions of users and took months to diagnose. A resolution that ");
-+    prompt.push_str("compiles but has semantic errors is worse than no resolution at all.\n\n");
-+    prompt.push_str("Take the time to fully understand both sides of the conflict before attempting ");
-+    prompt.push_str("any resolution. If after investigation you're not confident, say so - it's ");
-+    prompt.push_str("better to escalate to a human than to introduce a subtle bug.\n\n");
-+
-+    // Merge context
-+    prompt.push_str("## Merge Context\n\n");
-+    if let Some(ref source) = merge_ctx.merge_source {
-+        prompt.push_str(&format!("**Merging:** `{}`\n", source));
-+    }
-+    if let Some(ref head) = merge_ctx.head_branch {
-+        prompt.push_str(&format!("**Into:** `{}`\n", head));
-+    }
-+    if let Some(ref msg) = merge_ctx.merge_message {
-+        let first_line = msg.lines().next().unwrap_or("");
-+        prompt.push_str(&format!("**Merge message:** {}\n", first_line));
-+    }
-+    prompt.push('\n');
-+
-+    // Current conflicts
-+    prompt.push_str("## Current Conflicts\n\n");
-+
-+    for conflict in conflicts {
-+        prompt.push_str(&format!("### File: {}\n\n", conflict.path));
-+        prompt.push_str("**Our version (HEAD):**\n```\n");
-+        prompt.push_str(&conflict.ours_content);
-+        prompt.push_str("\n```\n\n");
-+        prompt.push_str("**Their version (being merged):**\n```\n");
-+        prompt.push_str(&conflict.theirs_content);
-+        prompt.push_str("\n```\n\n");
-+        if let Some(ref base) = conflict.base_content {
-+            prompt.push_str("**Base version (common ancestor):**\n```\n");
-+            prompt.push_str(base);
-+            prompt.push_str("\n```\n\n");
-+        }
-+    }
-+
-+    // Similar historical resolutions (only if available)
-+    if !similar.is_empty() {
-+        prompt.push_str("## Similar Historical Resolutions\n\n");
-+        prompt.push_str("These conflicts were previously resolved in the Linux kernel. Use `git show <hash>` ");
-+        prompt.push_str("to examine the full commit message and context - maintainers often explain ");
-+        prompt.push_str("their resolution rationale there.\n\n");
-+
-+        for (i, result) in similar.iter().enumerate() {
-+            let r = &result.resolution;
-+            prompt.push_str(&format!("### Historical Resolution {} (similarity: {:.1}%)\n\n", i + 1, result.similarity * 100.0));
-+            prompt.push_str(&format!("- **Commit:** `{}`\n", r.commit_hash));
-+            prompt.push_str(&format!("- **Summary:** {}\n", r.commit_summary));
-+            prompt.push_str(&format!("- **Author:** {}\n", r.author));
-+            prompt.push_str(&format!("- **Date:** {}\n", r.commit_date));
-+            prompt.push_str(&format!("- **Files:** {}\n\n", r.files.iter().map(|f| f.file_path.as_str()).collect::<Vec<_>>().join(", ")));
-+
-+            for file in &r.files {
-+                prompt.push_str(&format!("#### {}\n\n", file.file_path));
-+
-+                if !file.ours_diff.is_empty() {
-+                    prompt.push_str("**Ours changed:**\n```diff\n");
-+                    for hunk in &file.ours_diff {
-+                        prompt.push_str(&hunk.content);
-+                        prompt.push('\n');
-+                    }
-+                    prompt.push_str("```\n\n");
-+                }
-+
-+                if !file.theirs_diff.is_empty() {
-+                    prompt.push_str("**Theirs changed:**\n```diff\n");
-+                    for hunk in &file.theirs_diff {
-+                        prompt.push_str(&hunk.content);
-+                        prompt.push('\n');
-+                    }
-+                    prompt.push_str("```\n\n");
-+                }
-+
-+                if !file.resolution_diff.is_empty() {
-+                    prompt.push_str("**Final resolution:**\n```diff\n");
-+                    for hunk in &file.resolution_diff {
-+                        prompt.push_str(&hunk.content);
-+                        prompt.push('\n');
-+                    }
-+                    prompt.push_str("```\n\n");
-+                }
-+            }
-+        }
-+    }
-+
-+    // Investigation requirement
-+    prompt.push_str("## Investigation Required\n\n");
-+    prompt.push_str("Before attempting any resolution, you must conduct thorough research. ");
-+    prompt.push_str("Rushing to resolve without understanding is how subtle bugs get introduced. ");
-+    prompt.push_str("Work through each phase below IN ORDER and document your findings.\n\n");
-+
-+    // Phase 1: Search lore.kernel.org
-+    prompt.push_str("### Phase 1: Search lore.kernel.org for Maintainer Guidance (DO THIS FIRST)\n\n");
-+    prompt.push_str("**CRITICAL:** Before doing ANY other research, search lore.kernel.org for existing guidance.\n");
-+    prompt.push_str("Maintainers often post merge resolution instructions when they know conflicts will occur.\n\n");
-+
-+    if let Some(ref source) = merge_ctx.merge_source {
-+        prompt.push_str(&format!("1. **Search for the merge itself:** `{}`\n", source));
-+        prompt.push_str(&format!("   - URL: `https://lore.kernel.org/all/?q={}`\n", source.replace('/', "%2F")));
-+    }
-+    prompt.push_str("2. **Search for conflict discussions:**\n");
-+    prompt.push_str("   - `\"merge conflict\"` + subsystem name\n");
-+    prompt.push_str("   - `\"conflicts with\"` + branch/tag name\n\n");
-+
-+    // Phase 2: Context
-+    prompt.push_str("### Phase 2: Understand the Context\n\n");
-+    prompt.push_str("- **What subsystem is this?** Read the file and nearby files to understand its purpose.\n");
-+    prompt.push_str("- **Who maintains it?** Check `git log --oneline -20` for recent authors.\n");
-+    prompt.push_str("- **What's the file's role?** Is it a driver, core subsystem, header, config?\n\n");
-+
-+    // Phase 3: Trace history
-+    prompt.push_str("### Phase 3: Trace Each Side's History\n\n");
-+    prompt.push_str("**For 'ours' (HEAD):**\n");
-+    prompt.push_str("- Run `git log --oneline HEAD -- <file>` to see recent changes\n");
-+    prompt.push_str("- Find the commit that introduced our version of the conflicted code\n");
-+    prompt.push_str("- Run `git show <commit>` to read the full commit message\n\n");
-+    prompt.push_str("**For 'theirs' (MERGE_HEAD):**\n");
-+    prompt.push_str("- Run `git log --oneline MERGE_HEAD -- <file>` to see their changes\n");
-+    prompt.push_str("- Find the commit that introduced their version\n");
-+    prompt.push_str("- Run `git show <commit>` to read the full commit message\n\n");
-+
-+    // Resolution
-+    prompt.push_str("## Resolution\n\n");
-+    prompt.push_str("Once you understand the conflict:\n\n");
-+    prompt.push_str("1. Edit the conflicted files to produce the correct merged result\n");
-+    prompt.push_str("2. Remove all conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`)\n");
-+    prompt.push_str("3. Stage the resolved files with `git add`\n");
-+    prompt.push_str("4. Commit with a detailed message explaining your analysis and resolution\n\n");
-+
-+    // If uncertain
-+    prompt.push_str("## If Uncertain\n\n");
-+    prompt.push_str("If after investigation you're still uncertain about the correct resolution:\n\n");
-+    prompt.push_str("- Explain what you've learned and what remains unclear\n");
-+    prompt.push_str("- Describe the possible resolutions you see and their tradeoffs\n");
-+    prompt.push_str("- Recommend whether a human maintainer should review\n\n");
-+    prompt.push_str("It's better to flag uncertainty than to silently introduce a bug.\n\n");
-+
-+    // Tools available
-+    prompt.push_str("## Tools Available\n\n");
-+    prompt.push_str("You can use these to investigate:\n\n");
-+    prompt.push_str("```bash\n");
-+    if !similar.is_empty() {
-+        prompt.push_str("# Examine historical resolution commits\n");
-+        for result in similar {
-+            prompt.push_str(&format!("git show {}\n", result.resolution.commit_hash));
-+        }
-+        prompt.push('\n');
-+    }
-+    prompt.push_str("# Understand merge parents\n");
-+    prompt.push_str("git show <hash>^1  # ours\n");
-+    prompt.push_str("git show <hash>^2  # theirs\n");
-+    prompt.push_str("```\n");
-+
-+    prompt
-+}
-+
-+fn resolve(command: &str) -> Result<()> {
++/// Use LLM to extract the maintainer's summary from the email body
++/// Returns None if extraction fails (caller can fall back to other methods)
++fn extract_summary_with_llm(body: &str, command: &str) -> Option<String> {
 +    use std::io::Write;
 +    use std::process::Stdio;
 +
-+    // Get merge context (what branch/tag is being merged)
++    let prompt = format!(r#"Extract ONLY the technical summary from this kernel pull request email.
++The summary describes what changes are included (usually as bullet points).
++Do NOT include:
++- Personal messages to Linus
++- Git URLs or repository information
++- Merge/conflict resolution instructions
++- Diffstat or file change listings
++- Sign-offs or signatures
++
++Output ONLY the summary text, nothing else. No preamble, no explanation.
++
++Email body:
++{}
++"#, body);
++
++    let parts: Vec<&str> = command.split_whitespace().collect();
++    if parts.is_empty() {
++        return None;
++    }
++
++    println!("Extracting summary from pull request...");
++
++    let mut child = match Command::new(parts[0])
++        .args(&parts[1..])
++        .stdin(Stdio::piped())
++        .stdout(Stdio::piped())
++        .stderr(Stdio::piped())
++        .spawn() {
++            Ok(c) => c,
++            Err(_) => return None,
++        };
++
++    if let Some(mut stdin) = child.stdin.take() {
++        if stdin.write_all(prompt.as_bytes()).is_err() {
++            return None;
++        }
++    }
++
++    let output = match child.wait_with_output() {
++        Ok(o) => o,
++        Err(_) => return None,
++    };
++
++    if !output.status.success() {
++        return None;
++    }
++
++    let summary = String::from_utf8_lossy(&output.stdout).trim().to_string();
++    if summary.is_empty() {
++        None
++    } else {
++        Some(summary)
++    }
++}
++
++/// Parse a pull request email from lore.kernel.org
++fn parse_pull_request(message_id: &str, raw: &str) -> Result<PullRequest> {
++    let (from, subject, date, parsed_id, body) = parse_email_headers(raw);
++
++    let (git_url, git_ref) = extract_git_info(body)
++        .ok_or_else(|| anyhow::anyhow!("Could not find git repository URL in email"))?;
++
++    Ok(PullRequest {
++        message_id: if parsed_id.is_empty() { message_id.to_string() } else { parsed_id },
++        subject,
++        from,
++        date,
++        git_url,
++        git_ref,
++        body: body.to_string(),
++    })
++}
++
++/// Execute git pull and return whether there are conflicts
++fn git_pull(url: &str, git_ref: &str) -> Result<bool> {
++    println!("Executing: git pull {} {}", url, git_ref);
++
++    let output = Command::new("git")
++        .args(["pull", url, git_ref])
++        .output()
++        .context("Failed to run git pull")?;
++
++    let stdout = String::from_utf8_lossy(&output.stdout);
++    let stderr = String::from_utf8_lossy(&output.stderr);
++
++    if !stdout.is_empty() {
++        println!("{}", stdout);
++    }
++    if !stderr.is_empty() {
++        eprintln!("{}", stderr);
++    }
++
++    // Check if there are conflicts
++    if output.status.success() {
++        return Ok(false); // No conflicts
++    }
++
++    // Check for merge conflicts specifically
++    let conflict_markers = ["CONFLICT", "Automatic merge failed", "fix conflicts"];
++    let output_text = format!("{}{}", stdout, stderr);
++
++    for marker in conflict_markers {
++        if output_text.contains(marker) {
++            return Ok(true); // Has conflicts
++        }
++    }
++
++    // Some other error
++    bail!("git pull failed: {}", stderr);
++}
++
++/// Check if there are unmerged files (active merge conflicts)
++fn has_merge_conflicts() -> bool {
++    get_conflicted_files()
++        .map(|files| !files.is_empty())
++        .unwrap_or(false)
++}
++
++/// Build a merge commit message using the pull request information, summary, and resolution
++fn build_merge_commit_message(pull_req: &PullRequest, summary: &str, resolution: &str) -> String {
++    let mut msg = String::new();
++
++    // Use the subject line as the merge message header
++    if !pull_req.subject.is_empty() {
++        // Clean up subject - remove [GIT PULL] prefix if present
++        let subject = pull_req.subject
++            .replace("[GIT PULL]", "")
++            .replace("[git pull]", "")
++            .trim()
++            .to_string();
++        msg.push_str(&format!("Merge {} {}\n", pull_req.git_ref, &subject));
++    } else {
++        msg.push_str(&format!("Merge {}\n", pull_req.git_ref));
++    }
++    msg.push('\n');
++
++    // Add maintainer's summary (extracted by LLM)
++    if !summary.is_empty() {
++        msg.push_str(summary);
++        msg.push_str("\n\n");
++    }
++
++    // Add resolution explanation (written by LLM during conflict resolution)
++    if !resolution.is_empty() {
++        msg.push_str("Merge conflict resolution:\n\n");
++        msg.push_str(resolution);
++        msg.push_str("\n\n");
++    }
++
++    // Add link to lore
++    msg.push_str(&format!("Link: https://lore.kernel.org/all/{}/\n",
++        pull_req.message_id.trim_start_matches('<').trim_end_matches('>')));
++
++    msg
++}
++
+ /// Get current conflicts from the working directory
+ fn get_current_conflicts() -> Result<Vec<ConflictFile>> {
+     check_repo()?;
+@@ -1121,18 +1422,53 @@ fn build_resolve_prompt(
+     conflicts: &[ConflictFile],
+     similar: &[SimilarResolution],
+     merge_ctx: &MergeContext,
++    pull_req: Option<&PullRequest>,
+ ) -> String {
+     let mut prompt = String::new();
+ 
+     // Header with high-stakes framing
+-    prompt.push_str("# Linux Kernel Merge Conflict Resolution\n\n");
+-    prompt.push_str("You are acting as an experienced kernel maintainer resolving a merge conflict.\n\n");
++    if pull_req.is_some() {
++        prompt.push_str("# Linux Kernel Pull Request Merge with Conflict Resolution\n\n");
++        prompt.push_str("You are acting as an experienced kernel maintainer resolving conflicts ");
++        prompt.push_str("from a pull request submission on lore.kernel.org.\n\n");
++    } else {
++        prompt.push_str("# Linux Kernel Merge Conflict Resolution\n\n");
++        prompt.push_str("You are acting as an experienced kernel maintainer resolving a merge conflict.\n\n");
++    }
+     prompt.push_str("**Important:** Incorrect merge resolutions have historically introduced subtle bugs ");
+     prompt.push_str("that affected millions of users and took months to diagnose. A resolution that ");
+     prompt.push_str("compiles but has semantic errors is worse than no resolution at all.\n\n");
+-    prompt.push_str("Take the time to fully understand both sides of the conflict before attempting ");
+-    prompt.push_str("any resolution. If after investigation you're not confident, say so - it's ");
+-    prompt.push_str("better to escalate to a human than to introduce a subtle bug.\n\n");
++
++    // Pull request specific: critical evaluation note
++    if pull_req.is_some() {
++        prompt.push_str("**CRITICAL:** You have access to the pull request email which may contain ");
++        prompt.push_str("conflict resolution instructions from the maintainer. Use these as guidance, ");
++        prompt.push_str("but ALWAYS evaluate them critically - there may be better, cleaner, or more ");
++        prompt.push_str("efficient solutions than what was suggested.\n\n");
++    } else {
++        prompt.push_str("Take the time to fully understand both sides of the conflict before attempting ");
++        prompt.push_str("any resolution. If after investigation you're not confident, say so - it's ");
++        prompt.push_str("better to escalate to a human than to introduce a subtle bug.\n\n");
++    }
++
++    // Pull request information (if present)
++    if let Some(pr) = pull_req {
++        prompt.push_str("## Pull Request Information\n\n");
++        prompt.push_str(&format!("- **Subject:** {}\n", pr.subject));
++        prompt.push_str(&format!("- **From:** {}\n", pr.from));
++        prompt.push_str(&format!("- **Date:** {}\n", pr.date));
++        prompt.push_str(&format!("- **Git URL:** {} {}\n", pr.git_url, pr.git_ref));
++        prompt.push_str(&format!("- **Message ID:** {}\n\n", pr.message_id));
++
++        // Full email body - LLM will understand summary and conflict instructions from this
++        prompt.push_str("### Pull Request Email\n\n");
++        prompt.push_str("Read this email carefully. It contains the maintainer's description of the changes ");
++        prompt.push_str("and may include conflict resolution instructions. Evaluate any suggested ");
++        prompt.push_str("resolutions critically - there may be cleaner or more efficient solutions.\n\n");
++        prompt.push_str("```\n");
++        prompt.push_str(&pr.body);
++        prompt.push_str("\n```\n\n");
++    }
+ 
+     // Merge context
+     prompt.push_str("## Merge Context\n\n");
+@@ -1257,7 +1593,17 @@ fn build_resolve_prompt(
+     prompt.push_str("1. Edit the conflicted files to produce the correct merged result\n");
+     prompt.push_str("2. Remove all conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`)\n");
+     prompt.push_str("3. Stage the resolved files with `git add`\n");
+-    prompt.push_str("4. Commit with a detailed message explaining your analysis and resolution\n\n");
++    if pull_req.is_some() {
++        prompt.push_str("4. **Do NOT commit** - The tool will handle the commit\n");
++        prompt.push_str("5. **IMPORTANT:** Write a detailed explanation of your resolution to `.git/LLMINUS_RESOLUTION`\n");
++        prompt.push_str("   This file should contain:\n");
++        prompt.push_str("   - A summary of each conflict and how you resolved it\n");
++        prompt.push_str("   - The reasoning behind your choices\n");
++        prompt.push_str("   - Any improvements you made over suggested resolutions\n");
++        prompt.push_str("   This will be included in the merge commit message.\n\n");
++    } else {
++        prompt.push_str("4. Commit with a detailed message explaining your analysis and resolution\n\n");
++    }
+ 
+     // If uncertain
+     prompt.push_str("## If Uncertain\n\n");
+@@ -1287,9 +1633,6 @@ fn build_resolve_prompt(
+ }
+ 
+ fn resolve(command: &str) -> Result<()> {
+-    use std::io::Write;
+-    use std::process::Stdio;
+-
+     // Get merge context (what branch/tag is being merged)
+     let merge_ctx = get_merge_context();
+     if let Some(ref source) = merge_ctx.merge_source {
+@@ -1315,12 +1658,17 @@ fn resolve(command: &str) -> Result<()> {
+         println!("Found {} similar historical resolutions", similar.len());
+     }
+ 
+-    // Build the prompt
+-    println!("Building resolution prompt...");
+-    let prompt = build_resolve_prompt(&conflicts, &similar, &merge_ctx);
++    // Build the prompt and invoke LLM
++    let prompt = build_resolve_prompt(&conflicts, &similar, &merge_ctx, None);
++    invoke_llm(command, &prompt)
++}
++
++/// Invoke an LLM command with a prompt via stdin
++fn invoke_llm(command: &str, prompt: &str) -> Result<()> {
++    use std::io::Write;
++    use std::process::Stdio;
+ 
+-    println!("Prompt size: {} bytes", prompt.len());
+-    println!("\nInvoking: {}", command);
++    println!("Invoking: {} (prompt: {} bytes)", command, prompt.len());
+     println!("{}", "=".repeat(80));
+ 
+     // Parse command (handle arguments)
+@@ -1359,6 +1707,107 @@ fn resolve(command: &str) -> Result<()> {
+     Ok(())
+ }
+ 
++/// Pull a kernel pull request from lore.kernel.org
++fn pull(message_id: &str, command: &str) -> Result<()> {
++    check_repo()?;
++
++    // Step 1: Fetch and parse the pull request email
++    println!("=== Fetching Pull Request ===\n");
++    let raw_email = fetch_lore_email(message_id)?;
++    let pull_req = parse_pull_request(message_id, &raw_email)?;
++
++    println!("Subject: {}", pull_req.subject);
++    println!("From: {}", pull_req.from);
++    println!("Date: {}", pull_req.date);
++    println!("Git URL: {} {}", pull_req.git_url, pull_req.git_ref);
++
++    // Step 2: Execute git pull
++    println!("\n=== Executing Git Pull ===\n");
++    let has_conflicts = git_pull(&pull_req.git_url, &pull_req.git_ref)?;
++
++    if !has_conflicts {
++        // No conflicts - merge succeeded automatically
++        println!("\n=== Merge Completed Successfully ===");
++        println!("No conflicts detected. The merge was completed automatically.");
++        return Ok(());
++    }
++
++    // Step 3: Handle conflicts
++    println!("\n=== Merge Conflicts Detected ===\n");
++
++    // Get merge context
 +    let merge_ctx = get_merge_context();
-+    if let Some(ref source) = merge_ctx.merge_source {
-+        println!("Merging: {}", source);
-+    }
-+    if let Some(ref head) = merge_ctx.head_branch {
-+        println!("Into: {}", head);
-+    }
 +
-+    // Get current conflicts first
++    // Parse the conflicts
 +    let conflicts = get_current_conflicts()?;
++    println!("Found {} conflict region(s) to resolve", conflicts.len());
 +
-+    println!("Found {} conflict(s)", conflicts.len());
-+
-+    // Try to find similar historical resolutions (gracefully handles missing database)
++    // Try to find similar historical resolutions
 +    println!("Looking for similar historical conflicts...");
 +    let similar = try_find_similar_resolutions(3, &conflicts);
 +
 +    if similar.is_empty() {
-+        println!("No historical resolution database found (run 'llminus learn' and 'llminus vectorize' to build one)");
-+        println!("Proceeding without historical examples...");
++        println!("No historical resolution database found (this is optional)");
 +    } else {
 +        println!("Found {} similar historical resolutions", similar.len());
 +    }
 +
-+    // Build the prompt
-+    println!("Building resolution prompt...");
-+    let prompt = build_resolve_prompt(&conflicts, &similar, &merge_ctx);
++    // Build the prompt with pull request context and invoke LLM
++    let prompt = build_resolve_prompt(&conflicts, &similar, &merge_ctx, Some(&pull_req));
++    println!("\n=== Invoking LLM for Conflict Resolution ===");
++    invoke_llm(command, &prompt)?;
 +
-+    println!("Prompt size: {} bytes", prompt.len());
-+    println!("\nInvoking: {}", command);
-+    println!("{}", "=".repeat(80));
-+
-+    // Parse command (handle arguments)
-+    let parts: Vec<&str> = command.split_whitespace().collect();
-+    if parts.is_empty() {
-+        bail!("Empty command specified");
++    // Step 5: Check if conflicts are resolved
++    if has_merge_conflicts() {
++        println!("\nWarning: Conflicts still remain in the working directory.");
++        println!("Please resolve any remaining conflicts manually and commit.");
++        return Ok(());
 +    }
 +
-+    let cmd = parts[0];
-+    let args = &parts[1..];
++    // Step 6: Commit the merge with pull request information
++    println!("\n=== Committing Merge ===\n");
 +
-+    // Spawn the command
-+    let mut child = Command::new(cmd)
-+        .args(args)
-+        .stdin(Stdio::piped())
-+        .spawn()
-+        .with_context(|| format!("Failed to spawn command: {}", command))?;
++    // Extract summary using LLM (falls back to empty if it fails)
++    let summary = extract_summary_with_llm(&pull_req.body, command)
++        .unwrap_or_else(|| {
++            println!("Note: Could not extract summary automatically");
++            String::new()
++        });
 +
-+    // Write prompt to stdin
-+    if let Some(mut stdin) = child.stdin.take() {
-+        stdin.write_all(prompt.as_bytes())
-+            .context("Failed to write prompt to command stdin")?;
-+    }
++    // Read resolution explanation written by LLM
++    let resolution = std::fs::read_to_string(".git/LLMINUS_RESOLUTION")
++        .unwrap_or_else(|_| {
++            println!("Note: No resolution explanation found in .git/LLMINUS_RESOLUTION");
++            String::new()
++        });
 +
-+    // Wait for completion
-+    let status = child.wait().context("Failed to wait for command")?;
++    // Clean up the resolution file
++    let _ = std::fs::remove_file(".git/LLMINUS_RESOLUTION");
 +
-+    println!("{}", "=".repeat(80));
++    let commit_msg = build_merge_commit_message(&pull_req, &summary, &resolution);
++    println!("Commit message:\n{}", commit_msg);
 +
-+    if status.success() {
-+        println!("\nCommand completed successfully.");
++    // Create a temporary file for the commit message (to handle multi-line)
++    let commit_result = Command::new("git")
++        .args(["commit", "-m", &commit_msg])
++        .output()
++        .context("Failed to run git commit")?;
++
++    if commit_result.status.success() {
++        println!("\n=== Merge Committed Successfully ===");
++        let stdout = String::from_utf8_lossy(&commit_result.stdout);
++        if !stdout.is_empty() {
++            println!("{}", stdout);
++        }
 +    } else {
-+        eprintln!("\nCommand exited with status: {}", status);
++        let stderr = String::from_utf8_lossy(&commit_result.stderr);
++        eprintln!("Commit failed: {}", stderr);
++        bail!("Failed to commit merge");
 +    }
 +
 +    Ok(())
@@ -504,75 +617,201 @@ index df7262bd6a91..0388a881e413 100644
  fn main() -> Result<()> {
      let cli = Cli::parse();
  
-@@ -945,6 +1366,7 @@ fn main() -> Result<()> {
-         Commands::Learn { range } => learn(range.as_deref()),
+@@ -1367,6 +1816,7 @@ fn main() -> Result<()> {
          Commands::Vectorize { batch_size } => vectorize(batch_size),
          Commands::Find { n } => find(n),
-+        Commands::Resolve { command } => resolve(&command),
+         Commands::Resolve { command } => resolve(&command),
++        Commands::Pull { message_id, command } => pull(&message_id, &command),
      }
  }
  
-@@ -1014,6 +1436,60 @@ fn test_find_command_with_n() {
-         }
+@@ -1755,4 +2205,186 @@ fn test_parse_multiple_conflicts() {
+         assert!(conflicts[0].ours_content.contains("first ours"));
+         assert!(conflicts[1].ours_content.contains("second ours"));
      }
- 
++
 +    #[test]
-+    fn test_resolve_command_parses() {
-+        let cli = Cli::try_parse_from(["llminus", "resolve", "my-llm"]).unwrap();
++    fn test_pull_command_parses() {
++        let cli = Cli::try_parse_from(["llminus", "pull", "test@kernel.org"]).unwrap();
 +        match cli.command {
-+            Commands::Resolve { command } => assert_eq!(command, "my-llm"),
-+            _ => panic!("Expected Resolve command"),
++            Commands::Pull { message_id, command } => {
++                assert_eq!(message_id, "test@kernel.org");
++                assert_eq!(command, "llm"); // default
++            }
++            _ => panic!("Expected Pull command"),
 +        }
 +    }
 +
 +    #[test]
-+    fn test_resolve_command_with_args() {
-+        let cli = Cli::try_parse_from(["llminus", "resolve", "my-llm --model fancy"]).unwrap();
++    fn test_pull_command_with_custom_command() {
++        let cli = Cli::try_parse_from([
++            "llminus", "pull", "test@kernel.org", "-c", "my-llm --model fancy"
++        ]).unwrap();
 +        match cli.command {
-+            Commands::Resolve { command } => assert_eq!(command, "my-llm --model fancy"),
-+            _ => panic!("Expected Resolve command"),
++            Commands::Pull { message_id, command } => {
++                assert_eq!(message_id, "test@kernel.org");
++                assert_eq!(command, "my-llm --model fancy");
++            }
++            _ => panic!("Expected Pull command"),
 +        }
 +    }
 +
 +    #[test]
-+    fn test_parse_merge_source() {
-+        // Standard branch merge
-+        assert_eq!(
-+            parse_merge_source("Merge branch 'feature-branch'"),
-+            Some("feature-branch".to_string())
-+        );
++    fn test_parse_email_headers() {
++        let raw = r#"From: Paul Walmsley <paul@kernel.org>
++Subject: [GIT PULL] RISC-V updates for v6.19
++Date: Thu, 11 Dec 2025 19:36:00 -0700
++Message-ID: <test123@kernel.org>
 +
-+        // Tag merge
-+        assert_eq!(
-+            parse_merge_source("Merge tag 'v6.1'"),
-+            Some("v6.1".to_string())
-+        );
-+
-+        // Remote tracking branch
-+        assert_eq!(
-+            parse_merge_source("Merge remote-tracking branch 'origin/main'"),
-+            Some("origin/main".to_string())
-+        );
-+
-+        // Commit merge
-+        assert_eq!(
-+            parse_merge_source("Merge commit 'abc123def'"),
-+            Some("abc123def".to_string())
-+        );
-+
-+        // Branch with "into" target
-+        assert_eq!(
-+            parse_merge_source("Merge branch 'feature' into master"),
-+            Some("feature".to_string())
-+        );
-+
-+        // Non-merge line
-+        assert_eq!(parse_merge_source("Fix bug in foo"), None);
++This is the body of the email.
++"#;
++        let (from, subject, date, msg_id, body) = parse_email_headers(raw);
++        assert_eq!(from, "Paul Walmsley <paul@kernel.org>");
++        assert_eq!(subject, "[GIT PULL] RISC-V updates for v6.19");
++        assert_eq!(date, "Thu, 11 Dec 2025 19:36:00 -0700");
++        assert_eq!(msg_id, "<test123@kernel.org>");
++        assert!(body.contains("This is the body"));
 +    }
 +
-     #[test]
-     fn test_cosine_similarity() {
-         // Identical vectors should have similarity 1.0
++    #[test]
++    fn test_parse_email_headers_multiline() {
++        let raw = r#"From: Paul Walmsley <paul@kernel.org>
++Subject: [GIT PULL] RISC-V updates
++ for v6.19 merge window
++Date: Thu, 11 Dec 2025 19:36:00 -0700
++
++Body here.
++"#;
++        let (_, subject, _, _, _) = parse_email_headers(raw);
++        assert!(subject.contains("RISC-V updates"));
++        assert!(subject.contains("for v6.19 merge window"));
++    }
++
++    #[test]
++    fn test_extract_git_info() {
++        let body = r#"Please pull this set of changes.
++
++The following changes are available in the Git repository at:
++
++  git://git.kernel.org/pub/scm/linux/kernel/git/riscv/linux tags/riscv-for-linus-6.19
++
++for you to fetch changes up to abc123.
++"#;
++        let result = extract_git_info(body);
++        assert!(result.is_some());
++        let (url, git_ref) = result.unwrap();
++        assert_eq!(url, "git://git.kernel.org/pub/scm/linux/kernel/git/riscv/linux");
++        assert_eq!(git_ref, "tags/riscv-for-linus-6.19");
++    }
++
++    #[test]
++    fn test_extract_git_info_https() {
++        let body = r#"Available at:
++
++  https://git.kernel.org/pub/scm/linux/kernel/git/foo/bar.git feature-branch
++
++Thanks!
++"#;
++        let result = extract_git_info(body);
++        assert!(result.is_some());
++        let (url, git_ref) = result.unwrap();
++        assert!(url.starts_with("https://git.kernel.org"));
++        assert_eq!(git_ref, "feature-branch");
++    }
++
++    #[test]
++    fn test_extract_git_info_none() {
++        let body = "This email has no git URL in it.";
++        let result = extract_git_info(body);
++        assert!(result.is_none());
++    }
++
++    #[test]
++    fn test_build_merge_commit_message() {
++        let pull_req = PullRequest {
++            message_id: "test123@kernel.org".to_string(),
++            subject: "[GIT PULL] Important updates for v6.19".to_string(),
++            from: "Maintainer <maintainer@kernel.org>".to_string(),
++            date: "2025-12-11".to_string(),
++            git_url: "git://git.kernel.org/pub/scm/foo".to_string(),
++            git_ref: "tags/foo-for-v6.19".to_string(),
++            body: String::new(),
++        };
++
++        let summary = "This is the maintainer's summary of changes.";
++        let resolution = "Resolved by keeping both changes.";
++        let msg = build_merge_commit_message(&pull_req, summary, resolution);
++        assert!(msg.contains("Merge tags/foo-for-v6.19"));
++        assert!(msg.contains("Important updates")); // subject without [GIT PULL]
++        assert!(msg.contains("maintainer's summary"));
++        assert!(msg.contains("conflict resolution"));
++        assert!(msg.contains("keeping both changes"));
++        assert!(msg.contains("https://lore.kernel.org/all/test123@kernel.org/"));
++    }
++
++    #[test]
++    fn test_build_resolve_prompt_with_pull_request() {
++        let conflicts = vec![ConflictFile {
++            path: "test.c".to_string(),
++            ours_content: "int ours;".to_string(),
++            theirs_content: "int theirs;".to_string(),
++            base_content: Some("int base;".to_string()),
++        }];
++
++        let pull_req = PullRequest {
++            message_id: "test@kernel.org".to_string(),
++            subject: "Test PR".to_string(),
++            from: "Author <author@kernel.org>".to_string(),
++            date: "2025-12-11".to_string(),
++            git_url: "git://test".to_string(),
++            git_ref: "tags/test".to_string(),
++            body: "Test summary\n\nResolve by keeping both.".to_string(),
++        };
++
++        let merge_ctx = MergeContext {
++            merge_source: Some("tags/test".to_string()),
++            head_branch: Some("master".to_string()),
++            merge_message: Some("Merge tags/test".to_string()),
++        };
++
++        let prompt = build_resolve_prompt(&conflicts, &[], &merge_ctx, Some(&pull_req));
++
++        // Check that key sections are present
++        assert!(prompt.contains("Pull Request Information"));
++        assert!(prompt.contains("Test PR")); // subject
++        assert!(prompt.contains("Test summary")); // body includes summary
++        assert!(prompt.contains("Resolve by keeping both")); // body includes this
++        assert!(prompt.contains("test.c")); // conflict file
++        assert!(prompt.contains("int ours;")); // ours content
++        assert!(prompt.contains("int theirs;")); // theirs content
++        assert!(prompt.contains("Do NOT commit")); // pull request specific
++    }
++
++    #[test]
++    fn test_build_resolve_prompt_without_pull_request() {
++        let conflicts = vec![ConflictFile {
++            path: "test.c".to_string(),
++            ours_content: "int ours;".to_string(),
++            theirs_content: "int theirs;".to_string(),
++            base_content: None,
++        }];
++
++        let merge_ctx = MergeContext {
++            merge_source: Some("feature-branch".to_string()),
++            head_branch: Some("master".to_string()),
++            merge_message: None,
++        };
++
++        let prompt = build_resolve_prompt(&conflicts, &[], &merge_ctx, None);
++
++        // Check standard resolve sections
++        assert!(prompt.contains("Linux Kernel Merge Conflict Resolution"));
++        assert!(!prompt.contains("Pull Request Information"));
++        assert!(prompt.contains("test.c"));
++        assert!(prompt.contains("int ours;"));
++        assert!(prompt.contains("Commit with a detailed message")); // not "Do NOT commit"
++    }
+ }
 -- 
 2.51.0
 
