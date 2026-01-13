@@ -1,75 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B767534E74F
-	for <tools@linux.kernel.org>; Tue, 13 Jan 2026 16:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB28B34CFCC
+	for <tools@linux.kernel.org>; Tue, 13 Jan 2026 16:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768323062; cv=none; b=LkMSMFrCZwsXauWwJ+nnAeGX1cRAtlsnAi8Ll5mqomZN6dH8Zqil9s/5QnzKSHGi4Th6QtPpaRidl+gxSMKAG+EkjP8d1D5PlmJhEuXaGop5fMoh3xtDkmEMwK//TUvnY2cX3YdjML7bNcuXtupMBaoSVxOtBqC+HeUWnyKVpkk=
+	t=1768323225; cv=none; b=MVtJbsw3O83jew+QynZZSmgZrEaN9umwgHmBp5LRB3rFhCvhbVc0+iNAfv/axwRe3V+3h80NM1UNMVnZCUFWXqkqBhZ8thgR08AJD/YUlxn1xEkK3ImbPWLttFjo0/dS/LIXpP6SD1Xo1i5AuqARrMIdqn9ii5PJAC2YJHqAW8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768323062; c=relaxed/simple;
-	bh=0NOuCIQlyai94jHZSqeIx93iectU8Gt6b2SYEHSOMEg=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=unHUIv2WWhThP6mUc3DGpjwvf7CMr0S0TTrsz+IHIfLTNxP1xL8wYfSwypmWn4cMjJlgKecW2MFrGThZmkTiQPwwUZp1cqUtxTNbM1b4biiORb+IRu4lBJn8JZIJXunpzD03Ew7LprTwuh76s3aNNIXYlcR55b4FoH8B9/TPObs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbuPEf5p; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768323225; c=relaxed/simple;
+	bh=uwpaHHnFuQ1HYZce1syUMmJwpZFmnzoaZv8Cc6cFewM=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=HIRfHTKOiPAoG/bDjyNQ0LYCs9snljLvIis/Ql4vCVAtk/RNCWLmoFFWdjEdsx+nAkhErbF2J19wROIFqp3eCPS6p2HcPMLgc4Od42CVBgiMpFh2klg4Rf++mhQl+SPh5bmjH2PflyVjBeGtu+0UND4pAOJuLeJKaNwYJaJZvaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kG1norwn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbuPEf5p"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kG1norwn"
 Received: by smtp.kernel.org (Postfix)
-	id 9D728C19425; Tue, 13 Jan 2026 16:51:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69AA1C116C6;
-	Tue, 13 Jan 2026 16:51:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768323062;
-	bh=0NOuCIQlyai94jHZSqeIx93iectU8Gt6b2SYEHSOMEg=;
-	h=Date:From:To:Subject:From;
-	b=qbuPEf5pcFEjOoRhMUS40YwJ4xDhhcDTntBtyFbeFseXKfCWoJ8X1Va4j68Hrckmm
-	 68ajEuwSsjK2VLNWeS99CeXdYg5lpRroS+Jy73ReluwMOqPri7m4SrVw7UhRMAIDSK
-	 5LHfE0t86NXJEWNCRhQCfacq++tcoahERSDBWY9g=
-Date: Tue, 13 Jan 2026 11:50:58 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@kernel.org, users@kernel.org
-Subject: korgalore: small taskbar app ui
-Message-ID: <20260113-valiant-dragon-of-dignity-d98cea@lemur>
+	id 92736C19423; Tue, 13 Jan 2026 16:53:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0C7C116C6;
+	Tue, 13 Jan 2026 16:53:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768323225;
+	bh=uwpaHHnFuQ1HYZce1syUMmJwpZFmnzoaZv8Cc6cFewM=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=kG1norwngxD78rlqEe5D9dzrsMf+cDhQUtTH+2IMVzaPbcfCIwbMw0Nnr8RbAqpgT
+	 VKKnuuh8yLlvV+oyNCntusHubZakoPP8fqctyipHwFZUfnbFEpV1MJtkPMaPZYenLB
+	 Fv2KfhSgBNtvZpu43MAnXCJPYWa+jjqLvHbymgdbQeVjTx1LRxold/h4Mw75MLoAXo
+	 O/27VZV3ZDtHNGxxuEZ0X3Mr9yCSxihhb7uO3a/MxlCs7ZyeJyPorlxATTk1BMavSj
+	 QQ2PoOmrqDv+45cjcbYPz3hvClx+rNNBuaqvtpucWzi7SPcf7/xYAoTaz933UP4pD1
+	 le8+pxckL06vg==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EB6403808200;
+	Tue, 13 Jan 2026 16:50:19 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: Bugspray Bot <bugbot@kernel.org>
+To: konstantin@linuxfoundation.org, tools@kernel.org, users@kernel.org, 
+ bugs@lists.linux.dev
+Message-ID: <20260113-b220974-0422b80f5be2@bugzilla.kernel.org>
+In-Reply-To: <20260113-valiant-dragon-of-dignity-d98cea@lemur>
+References: <20260113-valiant-dragon-of-dignity-d98cea@lemur>
+Subject: Re: korgalore: small taskbar app ui
+X-Bugzilla-Product: Linux
+X-Bugzilla-Component: Kernel
+X-Mailer: bugspray 0.1-dev
+Date: Tue, 13 Jan 2026 16:50:19 +0000 (UTC)
 
-Hi:
+Hello:
 
-With the help of opus[*], I added a small taskbar miniapp to run background
-korgalore syncs. It needs a lot of testing, so if you're a korgalore user,
-please try it out. It should, in theory, work in most desktop environments but
-I only tested it under gnome.
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=220974
 
-Here's what it can do:
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (bugspray 0.1-dev)
 
-  - System tray indicator with status icons (idle/syncing/error)
-  - Automatic background sync at configurable intervals (default: 5 minutes)
-  - Manual "Sync Now" option from the menu
-  - Gmail re-authentication via browser when tokens expire (no terminal needed)
-  - Edit configuration file directly from the menu with automatic TOML validation
-
-It's not yet released, so you'll need to get korgalore master and run from
-checkout.
-
-You can run the taskbar app from terminal as `kgl gui`, or you can install the
-.desktop file in ~/.local/share/applications/ and run it straight from the app
-menu.
-
-The goal is not to make this an entirely GUI app -- initial setup is still
-done in the terminal. However, the idea is that once you have `kgl pull`
-running smoothly, you can then move the regular sync runs into the taskbar
-app and receive notifications in your desktop environment when something goes
-wrong.
-
-Please try it out.
-
--K
-
-[*] yes, I know, but this feature would have never existed without opus,
-    because I can't be arsed to write GUIs most of the time.
