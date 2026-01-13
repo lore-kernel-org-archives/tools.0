@@ -1,90 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5432586C2
-	for <tools@linux.kernel.org>; Tue, 13 Jan 2026 15:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5B331A564
+	for <tools@linux.kernel.org>; Tue, 13 Jan 2026 15:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768317394; cv=none; b=Bh4DofCdLprHY9RGOixOtCTm1wZoDkEK2e/STbvRmwcZVEzZ1XJ8HIup3kHzk08mpyu3VcKFgOf3a3BEEySO++mQuuRhoUCtcNweMSuT0ayW4zBJIDmjD40D34yPNx2xIKkJ1fAOy1xMkjpX6Pia20200++YmcPbrqeB3bFP2EA=
+	t=1768317525; cv=none; b=WRPQdcgezJYpVpvDjqkiihorOJB2AkuoTo3An6xW5L/CHZyyH+ETmgSIkAtrYBCpbaP2KRWaa/6TXqj9/9SEw780GqLVAsMxFRjq6o/832+aJB2ZnEkAB+sJNSjy+9aeNf1NvWMrIlaQUakayTllyUQA4LlfxFHVTWBtH1hLBNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768317394; c=relaxed/simple;
-	bh=cbbBq/yzqgNcPHy+OtVOCUYPbX3teb51P2WRhTQ85Vw=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=uNhSm+m+TaBbTe78EHIsAkiBiMmcH/aKiIstsIWEm2/CzGdKg6WjkP8TCDWDAh/hXEXdwFHr8Iy9kKr5hv0LEgKwSJ7Pj01kTccItqdpH1KmGDzX+ls/wAcsS8FHGO+NphCHUiHQKIghR9U4uVVp4vVwY0ELEeffvRzaCcpngo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S63+VrbL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768317525; c=relaxed/simple;
+	bh=foIDC4zAcSAdsTp2b+cv8DgMFKjbL8s0V18vaTP8OI0=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=MlYpxRzKPxV4/ZhqgEeoBVSJX0KobNV4DqDGI0F2K1s40DdO6mU6Pmd2mFU4nlP12m0Len5T5Tsb26zrfqBnqoebQYYdyIvolw7kmJaD8IvmQ+hnvi/CaG4Z62BTCiD10Fb4quk5TppMEPp4vfaTHXDCH/UbnCMyWqPdK2+q9Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=brgC92LP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S63+VrbL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="brgC92LP"
 Received: by smtp.kernel.org (Postfix)
-	id 6D510C19422; Tue, 13 Jan 2026 15:16:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98C9C116C6;
-	Tue, 13 Jan 2026 15:16:33 +0000 (UTC)
+	id 539FBC19421; Tue, 13 Jan 2026 15:18:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5FEC116C6;
+	Tue, 13 Jan 2026 15:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768317394;
-	bh=cbbBq/yzqgNcPHy+OtVOCUYPbX3teb51P2WRhTQ85Vw=;
-	h=Date:From:To:Cc:Subject:From;
-	b=S63+VrbLBNvHRrbmS2trTWgKfhUuRoI1mjxq4pK4hlzEAS09UGDcsDIl8NiGzMbi+
-	 pNPq0OzzlK4nvIhj6nxz4xNhJmbQpCtyvgHwbt8UmIJwGx2xyajf6tJlqwW+4QEBdr
-	 6rFHTA5xvMSa9nYpUb76gxxu6+PTfNZj8LgbeQdDRdjwT4bPCUI656hPgujUGwB8i3
-	 Y3EDXBoEGgalHblS1WRiAGPAoNNB8U1bvunvnrdqhN010WjyUphGeeW8+MtO/LxVZP
-	 BNfy+cqSsUMF1OeN1/5yobSN4XOsEEJ9cHOQvIbFO29iUQQcdOCDjTbrrUyhBl/hhR
-	 pKYaPi2pSf/8Q==
-Date: Tue, 13 Jan 2026 15:16:30 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 dig struggling with some commits
-Message-ID: <0890b0f9-24a5-4bd0-b682-fddfc3fb3cd4@sirena.org.uk>
+	s=k20201202; t=1768317525;
+	bh=foIDC4zAcSAdsTp2b+cv8DgMFKjbL8s0V18vaTP8OI0=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=brgC92LPqD7m20fZYk7hGALOdV5ktfmZQGwwS34ep6slrnHVFBvWT+VnIdeWuVXgB
+	 hQaD03cAKL/vECc+R+LWZdKN+TZze3iNIVlAtpQ+9R+1sKEShWkUvZkhYpC8GRSZSE
+	 A49SFaoPzhhVJGqXIOLkUZsppRY5cpOC6+vWo22cifgFRYoytnfM3rkC5lNWt9frtf
+	 xFo2n3JPT+FHyVtZgOqvaaqj70Nl6ced7MrLgsPPreOJW9PXT4vv65IvpS1ViId3XP
+	 4GIZYK1mdp+y2bEmEoNmlhP5ctPGx9E7eQe1WjAr9TqwftrNepmTiWcMXi29jI3SWI
+	 66twtXKJpvsMw==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id BAF983808200;
+	Tue, 13 Jan 2026 15:15:19 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yA8hoZrr5vCVbL74"
-Content-Disposition: inline
-X-Cookie: All models over 18 years of age.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: Bugspray Bot <bugbot@kernel.org>
+To: tools@kernel.org, bugs@lists.linux.dev, broonie@kernel.org, 
+ konstantin@linuxfoundation.org
+Message-ID: <20260113-b220972-b2dc53e64b19@bugzilla.kernel.org>
+In-Reply-To: <0890b0f9-24a5-4bd0-b682-fddfc3fb3cd4@sirena.org.uk>
+References: <0890b0f9-24a5-4bd0-b682-fddfc3fb3cd4@sirena.org.uk>
+Subject: Re: b4 dig struggling with some commits
+X-Bugzilla-Product: Linux
+X-Bugzilla-Component: Kernel
+X-Mailer: bugspray 0.1-dev
+Date: Tue, 13 Jan 2026 15:15:19 +0000 (UTC)
 
+Hello:
 
---yA8hoZrr5vCVbL74
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This conversation is now tracked by Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=220972
 
-Hi Konstantin,
+There is no need to do anything else, just keep talking.
+-- 
+Deet-doot-dot, I am a bot.
+Kernel.org Bugzilla (bugspray 0.1-dev)
 
-I've noticed that b4 dig -c frequently struggles with some commits, my
-immediate example is -next commit=20
-
-[2a0db5f7653b3576c430f8821654f365aaa7f178] struct filename: saner handling =
-of long names
-
-and I think most of the other examples are similar filesystem ones
-(though that might just be that they're the ones I most often look at
-that don't have a patch link in the commit log).  I think the above
-corresponds to:
-
-   https://lore.kernel.org/all/20260108073803.425343-16-viro@zeniv.linux.or=
-g.uk/
-
-but ICBW.
-
-Thanks,
-Mark
-
---yA8hoZrr5vCVbL74
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmlmYc4ACgkQJNaLcl1U
-h9AeLAf/YElqRD7fykskqR4E8klZnkM8DjwUmpvBJtvATenuaHMXRzkhBPAyQaKp
-4DAEsMCw3nfi9j55PnRW4Xy5ndjNEBpEvng1/iw7WU1PruoX8qQQS3l1K/Q5RlQn
-Q0UbSFd0FDDnuBN43mtfsHtj7r+V/7XlYYh1FNpEwSYFH64Q3ElH+0ACU97inPED
-F97irA+yHmS/YnIyapRHysm7GFCgFspD68bFQVvDl0+kSs/Yw30fzA1XDXukMbeV
-t8Z8duUFR/knNx7g71ZeUz2H0XE9qaZajXsNOo9N3NUANEMk5+VVvV99dc/G0uw1
-jQjjiaI3b6z7AoChZcoMxt/qHJIpCQ==
-=0ChI
------END PGP SIGNATURE-----
-
---yA8hoZrr5vCVbL74--
