@@ -1,36 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F733D1CBB
-	for <tools@linux.kernel.org>; Thu, 15 Jan 2026 18:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC7529B8C7
+	for <tools@linux.kernel.org>; Thu, 15 Jan 2026 20:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768503373; cv=none; b=nqGkau8hX7fnooqjFukKC3LwnX02ww3ghMZmJAWp5zwpnu2/+mWpLrzWU9Fw9+bw1KHJXL/BZTC5klOrWZpIcfB88AwsVbV3dL2i3/f0rmcPdMPzFGnE3OtM2LTzFsRJwB0picrfkywUlrvdTyyQRoVWDRZD5ojwQBTB/2PUQ38=
+	t=1768510756; cv=none; b=QGHe3m81lqKTeuKgz3m22RIQJo6EiiutFx9Xek2IdqOY3Y0BtpEm8fgP4lgrHeixEYxhQfaZ7tEOXBf7j2cns1tmhjEQrXZzEtFr6IGcK1NmyG98DmXcJruUlboqfM2wpMqWz6bU8vNHNtixYoFO9MmBinkYY500MnbQA3U3otw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768503373; c=relaxed/simple;
-	bh=TwfU27DAdIuIhgiiaf9b+qQoKV1xPnyxLgKM7+jUzLs=;
+	s=arc-20240116; t=1768510756; c=relaxed/simple;
+	bh=11Rxem80SweTCHNPsEG5ZkNzrt4dCnT9usu/GSa9Ebs=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=GPVE8Nq9J46czCKWQ6l4kTFkCBXYZEsgKvNe3FH61x+mXJdbE7ulRh9qJA4Htcht+WvD4/+oh5L1wZIdDSakSUW1RSWxuSSj9JmnLZAbPMRuTtXsf/OJ5+VwwnFk5D+P5oOxkKb82ZdkVS0fUoDE/7EX0O8jYPHhjrvUdO82VF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/lbdMz6; arc=none smtp.client-ip=10.30.226.201
+	 Content-Disposition; b=CLZoZw2ppCYvV5x+0hr1UKe8kl6biXFZRIanMHaP847fS/DYvQGeaJ+e96p4rqhKsP2mTKjUu3Fou3YG9B9D6IWaq5FiMcjx9vY3ZJ3n+ru4o/wf1fTzFHJ2Jr/8MdapAqVuqYR9Y90RKSiCGU1v5kj3wSbTpNSxJnRXpToLP1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqjb45zN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/lbdMz6"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqjb45zN"
 Received: by smtp.kernel.org (Postfix)
-	id E9F65C16AAE; Thu, 15 Jan 2026 18:56:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2381C116D0;
-	Thu, 15 Jan 2026 18:56:12 +0000 (UTC)
+	id 7C682C19422; Thu, 15 Jan 2026 20:59:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46536C116D0;
+	Thu, 15 Jan 2026 20:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768503372;
-	bh=TwfU27DAdIuIhgiiaf9b+qQoKV1xPnyxLgKM7+jUzLs=;
+	s=korg; t=1768510756;
+	bh=11Rxem80SweTCHNPsEG5ZkNzrt4dCnT9usu/GSa9Ebs=;
 	h=Date:From:To:Subject:From;
-	b=J/lbdMz67o8/niV4Wa8DCk9jnN/d/rH+wRmqHWvR65UzPu11PlNOqj5Gtf1F8qcNx
-	 1Cys0sQhx+6VDf9LFknHXLhFn3U3gVWxYjhajxZLMEBcj9UJxsCEltxLd3jPVBuIlg
-	 xNxrnEmZVzdJJZ4fC6T0v6+XauFLwcVwckWbns2w=
-Date: Thu, 15 Jan 2026 13:56:09 -0500
+	b=wqjb45zNKh9FuhudQB1EpyC9fGnG2fdHlUREqIEvECTICXw4MedEOcWJ9NDWELp+e
+	 WSoTUnRuYTvHGH2vmpW6IK+kvsGXIdDhL37SjKm6Ur4At/5RowzfvHvNbO5bQgiaJv
+	 WZtXv2GueWDplGQkL8ELE8UcI6UUtAz8GLVsx2Uk=
+Date: Thu, 15 Jan 2026 15:59:11 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: users@kernel.org, tools@kernel.org
-Subject: korgalore track-subsystem: auto-setup queries to track
- subsystem-relevant mail
-Message-ID: <20260115-lyrical-glittering-toucan-b6e5ff@lemur>
+Subject: korgalore v0.3 now available with lots of new features
+Message-ID: <20260115-economic-uncovered-nuthatch-36e35b@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,56 +39,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
-Hi:
+Hi, all:
 
-I added a new command to easily track Linux kernel subsystems by parsing the
-MAINTAINERS file. If you're a kernel developer who wants to follow a specific
-subsystem without manually setting up lei queries, this should make things
-much simpler.
+Korgalore v0.3 is now available with several new features that make it easier
+to track kernel development activity without subscribing directly to lists.
 
-Here's what it can do:
+This remains mostly useful to users of gmail, though there are now features
+that others may find handy as well, and we can now deliver to IMAP, JMAP,
+maildir, pipe targets as well.
 
-- Parse MAINTAINERS file and extract subsystem metadata (mailing lists, file patterns)
-- Automatically create lei queries for mailing list traffic and patches
+(No OAUTH2 IMAP support yet -- I need a way to test it first.)
 
-  - Converts F:, X: entries automatically to xapian queries
-  - Converts *some* N: and K: queries automatically -- xapian has no support
-    for regexes, so it will only use full-word matches
+A lot of functionality is dependent on lei, so make sure that is installed for
+the full set of features.
 
-Here's an example in action:
+New features
+------------
 
-    $ kgl track-subsystem -m ~/work/git/linux/MAINTAINERS \
-        -t work -l UNREAD,lore/subsystems/selinux \
-        'SELINUX SECURITY MODULE'
+GNOME Taskbar Application (kgl gui):
 
-    Found subsystem: SELINUX SECURITY MODULE
-    Creating mailinglist query: l:selinux.vger.kernel.org AND d:7.days.ago..
-    Creating patches query: (dfn:Documentation/ABI/removed/sysfs-selinux-checkreqprot OR dfn:Documentation/ABI/removed/sysfs-selinux-disable OR dfn:Documentation/admin-guide/LSM/SELinux.rst OR dfn:include/trace/events/avc.h OR dfn:include/uapi/linux/selinux_netlink.h OR dfn:scripts/selinux/ OR dfn:security/selinux/) AND d:7.days.ago..
-    Created 2 lei queries for subsystem "SELINUX SECURITY MODULE"
-    Configuration written to: /home/user/.config/korgalore/conf.d/selinux_security_module.toml
-    Target: work, Labels: UNREAD, lore/subsystems/selinux
+This release adds a GTK-based system tray application for automatic background
+syncing. It shows real-time status updates during sync and supports manual
+"Sync Now" and "Yank..." operations without needing to open a terminal. If
+your Gmail tokens expire, the GUI will detect this and offer to
+re-authenticate via the browser.
 
-This creates two lei feeds: one for messages to the subsystem's mailing
-list(s), and one for patches touching files owned by the subsystem. Both get
-delivered to your configured target with your specified labels.
+Thread Tracking (kgl track):
 
-Running "kgl pull" after that will feed the results to your inbox and
-automatically update them on every run.
+You can now track specific email threads for ongoing updates without needing to
+subscribe to an entire mailing list. Tracked threads are automatically updated
+during regular pull operations and auto-expire after 30 days of inactivity.
 
-You can customize the date range with --since (default: 7 days), specify
-labels with -l, or use --threads to include entire threads when any message
-matches (warning: can produce many results for busy subsystems and tends to
-pull in stable patchbombs).
+Subsystem Tracking (kgl track-subsystem):
 
-To stop tracking:
+(experimental)
 
-    $ kgl track-subsystem --forget 'SELINUX SECURITY MODULE'
+This feature parses the kernel MAINTAINERS file and creates lei queries to
+track a specific subsystem's mailing list traffic, maintainer messages, and
+patches. Configuration is automatically generated and stored in conf.d/ for
+easy management.
 
-It's not yet released, so you'll need korgalore master to try it out.
+Bozofilter (kgl bozofilter):
 
-Obviously, you'll need lei installed for this to work (should be now on most
-distros).
+(loosely tested)
 
-Happy to get any feedback.
+Block messages from unwanted senders. Blocked messages are silently skipped
+during delivery. Works from both CLI and the GUI menu.
+
+Bug fixes
+---------
+- Fix crash when initializing a new feed for the first time
+- Fix feed_lock failing when feed directory does not exist
+- Fix git commands failing with safe.bareRepository=explicit
+- Drop dependency on python-dateutil
+
+Full changelog and documentation:
+
+    https://korgalore.docs.kernel.org/
+
+Source repository:
+
+    https://git.kernel.org/pub/scm/utils/korgalore/korgalore.git
+
+Install via pipx:
+
+    pipx install korgalore
+
+Thanks to the following people who reported issues fixed in this release:
+
+- Ard Biesheuvel
+- Linus Walleij
+- Sudeep Holla
 
 -K
