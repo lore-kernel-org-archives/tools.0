@@ -1,50 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E673C1FC0
-	for <tools@linux.kernel.org>; Thu, 15 Jan 2026 17:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F733D1CBB
+	for <tools@linux.kernel.org>; Thu, 15 Jan 2026 18:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498028; cv=none; b=ig3jO/9PkopJxw+UvpYWgtpmIhKq1coXIGrof6KpHSNlwyZosqD6dT8J/9dBj6eOKJwXTzsQvGlTDdZld9r5TfWyGGlqLLN+LoMUfvry6b2zbi3DSxYNbepPKccbgyJqAabqyaN8XrOUMoAWod3/miX0E5u7UynqElFuo3wbmy4=
+	t=1768503373; cv=none; b=nqGkau8hX7fnooqjFukKC3LwnX02ww3ghMZmJAWp5zwpnu2/+mWpLrzWU9Fw9+bw1KHJXL/BZTC5klOrWZpIcfB88AwsVbV3dL2i3/f0rmcPdMPzFGnE3OtM2LTzFsRJwB0picrfkywUlrvdTyyQRoVWDRZD5ojwQBTB/2PUQ38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498028; c=relaxed/simple;
-	bh=JPdnzBZacwL7aGCvoiT63aPnRxTSmTfdX+eojlPjGEI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OxDpk/AXk9vHHUfPhjP/RxWmNs3gZ2L3UNMNxyzwKADXMr8lpkV5dumP0M1oDl4CQJrPoXv49+Hjxi4oVdprmet8/EZSVYVQ7OuGn0NyB3u4msIIMX92sSIfQLQU67TsdG6p/ihKO9bCANvQX7ueJTKiM7LmyiJnLze872DKZPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768503373; c=relaxed/simple;
+	bh=TwfU27DAdIuIhgiiaf9b+qQoKV1xPnyxLgKM7+jUzLs=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=GPVE8Nq9J46czCKWQ6l4kTFkCBXYZEsgKvNe3FH61x+mXJdbE7ulRh9qJA4Htcht+WvD4/+oh5L1wZIdDSakSUW1RSWxuSSj9JmnLZAbPMRuTtXsf/OJ5+VwwnFk5D+P5oOxkKb82ZdkVS0fUoDE/7EX0O8jYPHhjrvUdO82VF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/lbdMz6; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/lbdMz6"
 Received: by smtp.kernel.org (Postfix)
-	id 87609C2BC86; Thu, 15 Jan 2026 17:27:08 +0000 (UTC)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.kernel.org (Postfix) with ESMTP id C74BDC19425;
-	Thu, 15 Jan 2026 17:27:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org C74BDC19425
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=foss.arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3FF3F1515;
-	Thu, 15 Jan 2026 09:26:59 -0800 (PST)
-Received: from bogus (e133711.arm.com [10.1.197.51])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 172F43F59E;
-	Thu, 15 Jan 2026 09:27:04 -0800 (PST)
-Date: Thu, 15 Jan 2026 17:27:02 +0000
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Rob Herring <robh@kernel.org>
-Cc: Linus Walleij <linusw@kernel.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>, tools@kernel.org,
-	users@kernel.org
-Subject: Re: korgalore v0.2 released with JMAP, IMAP, Maildir support
-Message-ID: <aWkjZkI-sKqeM6ua@bogus>
-References: <CAD++jLk6=56izoMzfs_PVFvX3j9N+J6O1FGxrEg3wE78rOww4g@mail.gmail.com>
- <20251218-merry-azure-chicken-4d3724@lemur>
- <CAD++jLmwVSGwBZgSrbhcJ+w4BHWrgK57sBmMGR=ELRsHM+MzHQ@mail.gmail.com>
- <20251222-speedy-tuscan-salmon-4bfbb8@lemur>
- <CAD++jLmnGmdQtXraa0wzOmEs-j9BrzgnChvk=W8kE1NTUBqhVw@mail.gmail.com>
- <CAD++jL=JGmHWKDobmcf1v99335CrsLaT9My8-3Th_RNqq1EfuQ@mail.gmail.com>
- <20260111-hilarious-spicy-cobra-ad26c6@lemur>
- <CAD++jLnUtBod3+FNdLduG=g+6p3SmM7E55ZwcGqQdE6b2W=qbw@mail.gmail.com>
- <aWZCqXlJcMEQU-J9@bogus>
- <CAL_Jsq+f6A4zn6Ea-jK4YuP6RkY1syHEPwf-jGN3iPSOD5fL1w@mail.gmail.com>
+	id E9F65C16AAE; Thu, 15 Jan 2026 18:56:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2381C116D0;
+	Thu, 15 Jan 2026 18:56:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1768503372;
+	bh=TwfU27DAdIuIhgiiaf9b+qQoKV1xPnyxLgKM7+jUzLs=;
+	h=Date:From:To:Subject:From;
+	b=J/lbdMz67o8/niV4Wa8DCk9jnN/d/rH+wRmqHWvR65UzPu11PlNOqj5Gtf1F8qcNx
+	 1Cys0sQhx+6VDf9LFknHXLhFn3U3gVWxYjhajxZLMEBcj9UJxsCEltxLd3jPVBuIlg
+	 xNxrnEmZVzdJJZ4fC6T0v6+XauFLwcVwckWbns2w=
+Date: Thu, 15 Jan 2026 13:56:09 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: users@kernel.org, tools@kernel.org
+Subject: korgalore track-subsystem: auto-setup queries to track
+ subsystem-relevant mail
+Message-ID: <20260115-lyrical-glittering-toucan-b6e5ff@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -53,53 +39,57 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL_Jsq+f6A4zn6Ea-jK4YuP6RkY1syHEPwf-jGN3iPSOD5fL1w@mail.gmail.com>
 
-On Tue, Jan 13, 2026 at 11:29:02AM -0600, Rob Herring wrote:
-> On Tue, Jan 13, 2026 at 7:11 AM Sudeep Holla <sudeep.holla@arm.com> wrote:
-> >
-> > Hi Linus,
-> >
-> > Thanks for reporting this, I have been postponing it for a while.
-> >
-> > On Mon, Jan 12, 2026 at 08:52:45PM +0100, Linus Walleij wrote:
-> > > On Sun, Jan 11, 2026 at 9:16 PM Konstantin Ryabitsev
-> > > <konstantin@linuxfoundation.org> wrote:
-> > >
-> > > > > I would almost set this up to run as a cron job if it wasn't for the fact that
-> > > > > the Googly API wants to reauthenticate every now and then. Other than
-> > > > > that it is smooth as butter to work like this!
-> > > >
-> > > > I've not actually had to redo my gmail authentication again, but I do hear
-> > > > that it's less smooth for others.
-> > >
-> > > I've had to do it twice, second time today.
-> > >
-> > > About that!
-> > >
-> >
-> > For me, it's most 1 week and I can see that it matches the expiry in the
-> > token.
-> >
-> > > What happens when the token expires is this:
-> > >
-> > > $ kgl pull
-> > > (long splat like the one below)
-> > >
-> >
-> > Yes I too get the same if the token has expired.
-> 
-> In case you missed the earlier discussion, you can also just use IMAP
-> with gmail and avoid all this. I just moved over to IMAP and it works
-> fine. The only limitation I see is you can't set multiple labels on a
-> message if you wanted to do that. I only used multiple labels for the
-> UNREAD label, but that seems unnecessary for IMAP.
+Hi:
 
-I had missed that discussion. I will give that(IMAP) a try too just to see
-which works better for me. Thanks for pointing that out. I saw the discussion
-in the thread now.
+I added a new command to easily track Linux kernel subsystems by parsing the
+MAINTAINERS file. If you're a kernel developer who wants to follow a specific
+subsystem without manually setting up lei queries, this should make things
+much simpler.
 
--- 
-Regards,
-Sudeep
+Here's what it can do:
+
+- Parse MAINTAINERS file and extract subsystem metadata (mailing lists, file patterns)
+- Automatically create lei queries for mailing list traffic and patches
+
+  - Converts F:, X: entries automatically to xapian queries
+  - Converts *some* N: and K: queries automatically -- xapian has no support
+    for regexes, so it will only use full-word matches
+
+Here's an example in action:
+
+    $ kgl track-subsystem -m ~/work/git/linux/MAINTAINERS \
+        -t work -l UNREAD,lore/subsystems/selinux \
+        'SELINUX SECURITY MODULE'
+
+    Found subsystem: SELINUX SECURITY MODULE
+    Creating mailinglist query: l:selinux.vger.kernel.org AND d:7.days.ago..
+    Creating patches query: (dfn:Documentation/ABI/removed/sysfs-selinux-checkreqprot OR dfn:Documentation/ABI/removed/sysfs-selinux-disable OR dfn:Documentation/admin-guide/LSM/SELinux.rst OR dfn:include/trace/events/avc.h OR dfn:include/uapi/linux/selinux_netlink.h OR dfn:scripts/selinux/ OR dfn:security/selinux/) AND d:7.days.ago..
+    Created 2 lei queries for subsystem "SELINUX SECURITY MODULE"
+    Configuration written to: /home/user/.config/korgalore/conf.d/selinux_security_module.toml
+    Target: work, Labels: UNREAD, lore/subsystems/selinux
+
+This creates two lei feeds: one for messages to the subsystem's mailing
+list(s), and one for patches touching files owned by the subsystem. Both get
+delivered to your configured target with your specified labels.
+
+Running "kgl pull" after that will feed the results to your inbox and
+automatically update them on every run.
+
+You can customize the date range with --since (default: 7 days), specify
+labels with -l, or use --threads to include entire threads when any message
+matches (warning: can produce many results for busy subsystems and tends to
+pull in stable patchbombs).
+
+To stop tracking:
+
+    $ kgl track-subsystem --forget 'SELINUX SECURITY MODULE'
+
+It's not yet released, so you'll need korgalore master to try it out.
+
+Obviously, you'll need lei installed for this to work (should be now on most
+distros).
+
+Happy to get any feedback.
+
+-K
