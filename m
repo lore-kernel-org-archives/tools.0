@@ -1,114 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC7529B8C7
-	for <tools@linux.kernel.org>; Thu, 15 Jan 2026 20:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE04730E83F
+	for <tools@linux.kernel.org>; Fri, 16 Jan 2026 08:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768510756; cv=none; b=QGHe3m81lqKTeuKgz3m22RIQJo6EiiutFx9Xek2IdqOY3Y0BtpEm8fgP4lgrHeixEYxhQfaZ7tEOXBf7j2cns1tmhjEQrXZzEtFr6IGcK1NmyG98DmXcJruUlboqfM2wpMqWz6bU8vNHNtixYoFO9MmBinkYY500MnbQA3U3otw=
+	t=1768553606; cv=none; b=rCOThdaHpW6Ix+zM5aAARHcXBxWwhlZuH5/HGcPxqA1fyXsSbrRM+5jtW+24sn3FuSLgTat3cxzspi1zKT7lI3HTUlC0ZRS1K84YEfizASYJhoyUbO2hvAn673gTHqb86NJ1jneaOygOnhWk0dlPKz6+OnGR/QZPZBwdDVIUrqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768510756; c=relaxed/simple;
-	bh=11Rxem80SweTCHNPsEG5ZkNzrt4dCnT9usu/GSa9Ebs=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=CLZoZw2ppCYvV5x+0hr1UKe8kl6biXFZRIanMHaP847fS/DYvQGeaJ+e96p4rqhKsP2mTKjUu3Fou3YG9B9D6IWaq5FiMcjx9vY3ZJ3n+ru4o/wf1fTzFHJ2Jr/8MdapAqVuqYR9Y90RKSiCGU1v5kj3wSbTpNSxJnRXpToLP1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqjb45zN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768553606; c=relaxed/simple;
+	bh=tF6vpquZ8PugAPA7Vkl+dGzRfns2Cbo4zWa4Teg35cM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qar81I4a/i4C6PITCRpOSYVaCOowUm7+XzS50+r3H7obVO7piUCkcVsFGw6z/d4X+YI/d+kvdDAl2wPjFfc2lj9hVVIguSv0avBFz1uVp06v+/vqtfCah5z9MvA08roj7u7Rv4UlH/1SQe89PRxzMOCFaXeOKwGsh1sJRrSwdBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LzNhmaPq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqjb45zN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LzNhmaPq"
 Received: by smtp.kernel.org (Postfix)
-	id 7C682C19422; Thu, 15 Jan 2026 20:59:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46536C116D0;
-	Thu, 15 Jan 2026 20:59:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768510756;
-	bh=11Rxem80SweTCHNPsEG5ZkNzrt4dCnT9usu/GSa9Ebs=;
-	h=Date:From:To:Subject:From;
-	b=wqjb45zNKh9FuhudQB1EpyC9fGnG2fdHlUREqIEvECTICXw4MedEOcWJ9NDWELp+e
-	 WSoTUnRuYTvHGH2vmpW6IK+kvsGXIdDhL37SjKm6Ur4At/5RowzfvHvNbO5bQgiaJv
-	 WZtXv2GueWDplGQkL8ELE8UcI6UUtAz8GLVsx2Uk=
-Date: Thu, 15 Jan 2026 15:59:11 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: users@kernel.org, tools@kernel.org
-Subject: korgalore v0.3 now available with lots of new features
-Message-ID: <20260115-economic-uncovered-nuthatch-36e35b@lemur>
+	id 780D8C2BC87; Fri, 16 Jan 2026 08:53:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CEEC19421
+	for <tools@kernel.org>; Fri, 16 Jan 2026 08:53:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768553606;
+	bh=tF6vpquZ8PugAPA7Vkl+dGzRfns2Cbo4zWa4Teg35cM=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=LzNhmaPqq/YlvdukcehxM7T06+4S9ujVAsnLsRXvsRXkK+Z7D5pJJOSRg8u0FrUJ+
+	 MFTTLp3rbRChRzz5gynZvEaKjDvDoiOrPXiN4daL4wpn36HGKq5Rp20aX5tY77qOkE
+	 8ZeHNuOXSp5K1d7os7kVGzuY0W4YWh+IksXUHeUclS3FK6qsGUs6XhpC/pq54tHhjB
+	 RcGtRY+nTZ0EgB+sfq7xP7ZWU9yNSaGCktajk8uKOpo9gEcQBHDwElAexO7vRpyhhD
+	 ZwDYUIwvH4OlDa3SFyjqeba4TDZ9KarYJc8Xm665hUKN9UvWGsUtcx6rKqfg5309tl
+	 cO+eZYCX4oDmQ==
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-34f0bc64a27so803117a91.1
+        for <tools@kernel.org>; Fri, 16 Jan 2026 00:53:26 -0800 (PST)
+X-Gm-Message-State: AOJu0YxvItDk7gTaJ0lDqngzwLuAtAf21JCTfhb07uIMNQWisrraOxLk
+	edVuACVhEQfai069/eEGJosz7ZbuS6ttJGWz6OsGtysJoBwKgg2rujnDjRo5M/HFUpvYrl89QiJ
+	HuB1xxH9UIdfdZfRfGBmZ6JS1QphSubY=
+X-Received: by 2002:a17:90b:3c8d:b0:32e:5d87:8abc with SMTP id
+ 98e67ed59e1d1-3527327e0admr1788194a91.36.1768553606013; Fri, 16 Jan 2026
+ 00:53:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20260113-valiant-dragon-of-dignity-d98cea@lemur>
+In-Reply-To: <20260113-valiant-dragon-of-dignity-d98cea@lemur>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Fri, 16 Jan 2026 09:53:15 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXHnX9vSPOPtV0XSz9YQZi9ou_FmBfFAoc4zwFzDd09d8Q@mail.gmail.com>
+X-Gm-Features: AZwV_Qj8cEELB0W9bcoElaNjBmLhX1PbP4t1LQHxg9FjkmNoMffxMIHvc81OWrM
+Message-ID: <CAMj1kXHnX9vSPOPtV0XSz9YQZi9ou_FmBfFAoc4zwFzDd09d8Q@mail.gmail.com>
+Subject: Re: korgalore: small taskbar app ui
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org, users@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi, all:
+On Tue, 13 Jan 2026 at 17:51, Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> Hi:
+>
+> With the help of opus[*], I added a small taskbar miniapp to run background
+> korgalore syncs. It needs a lot of testing, so if you're a korgalore user,
+> please try it out. It should, in theory, work in most desktop environments but
+> I only tested it under gnome.
+>
+> Here's what it can do:
+>
+>   - System tray indicator with status icons (idle/syncing/error)
+>   - Automatic background sync at configurable intervals (default: 5 minutes)
+>   - Manual "Sync Now" option from the menu
+>   - Gmail re-authentication via browser when tokens expire (no terminal needed)
+>   - Edit configuration file directly from the menu with automatic TOML validation
+>
+> It's not yet released, so you'll need to get korgalore master and run from
+> checkout.
+>
+> You can run the taskbar app from terminal as `kgl gui`, or you can install the
+> .desktop file in ~/.local/share/applications/ and run it straight from the app
+> menu.
+>
+> The goal is not to make this an entirely GUI app -- initial setup is still
+> done in the terminal. However, the idea is that once you have `kgl pull`
+> running smoothly, you can then move the regular sync runs into the taskbar
+> app and receive notifications in your desktop environment when something goes
+> wrong.
+>
+> Please try it out.
+>
 
-Korgalore v0.3 is now available with several new features that make it easier
-to track kernel development activity without subscribing directly to lists.
+Another awesome feature, thanks a lot for this!
 
-This remains mostly useful to users of gmail, though there are now features
-that others may find handy as well, and we can now deliver to IMAP, JMAP,
-maildir, pipe targets as well.
+Some notes from a user:
 
-(No OAUTH2 IMAP support yet -- I need a way to test it first.)
+- AppIndicator3 is called AyatanaAppIndicator3 on my (debian testing
+based) system
+- when using pipx to install korgalore, the optional GUI dependencies
+need to be installed in the virtual environment too, e.g., I needed to
+so something like
 
-A lot of functionality is dependent on lei, so make sure that is installed for
-the full set of features.
+~/.local/share/pipx/venvs/korgalore/bin/python3 -m pip install PyGObject
 
-New features
-------------
-
-GNOME Taskbar Application (kgl gui):
-
-This release adds a GTK-based system tray application for automatic background
-syncing. It shows real-time status updates during sync and supports manual
-"Sync Now" and "Yank..." operations without needing to open a terminal. If
-your Gmail tokens expire, the GUI will detect this and offer to
-re-authenticate via the browser.
-
-Thread Tracking (kgl track):
-
-You can now track specific email threads for ongoing updates without needing to
-subscribe to an entire mailing list. Tracked threads are automatically updated
-during regular pull operations and auto-expire after 30 days of inactivity.
-
-Subsystem Tracking (kgl track-subsystem):
-
-(experimental)
-
-This feature parses the kernel MAINTAINERS file and creates lei queries to
-track a specific subsystem's mailing list traffic, maintainer messages, and
-patches. Configuration is automatically generated and stored in conf.d/ for
-easy management.
-
-Bozofilter (kgl bozofilter):
-
-(loosely tested)
-
-Block messages from unwanted senders. Blocked messages are silently skipped
-during delivery. Works from both CLI and the GUI menu.
-
-Bug fixes
----------
-- Fix crash when initializing a new feed for the first time
-- Fix feed_lock failing when feed directory does not exist
-- Fix git commands failing with safe.bareRepository=explicit
-- Drop dependency on python-dateutil
-
-Full changelog and documentation:
-
-    https://korgalore.docs.kernel.org/
-
-Source repository:
-
-    https://git.kernel.org/pub/scm/utils/korgalore/korgalore.git
-
-Install via pipx:
-
-    pipx install korgalore
-
-Thanks to the following people who reported issues fixed in this release:
-
-- Ard Biesheuvel
-- Linus Walleij
-- Sudeep Holla
-
--K
+to get the introspection working, even though python3-gi was already
+available system-wide.
