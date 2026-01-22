@@ -1,208 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA032E414
-	for <tools@linux.kernel.org>; Wed, 21 Jan 2026 16:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627D7353ED7
+	for <tools@linux.kernel.org>; Thu, 22 Jan 2026 17:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769014046; cv=none; b=R5UxhQ2n7dDjacigtTcnhzwtnUG7sAQqB120CH6vgF5aeL7egLsp4IqgRSuy4BM8cFsJwna9+s9H8a3X0rTBy7aFEZVGdp17MhX1Km7xOuGMPWvtaINj7bgQBXHJ7fayq8VMOYF5Moge58gjT7k9JhLbcGNUi4xkBV7NAP+FmM0=
+	t=1769103116; cv=none; b=JMiT4pY04B1oRPzmDUUHrDDWTTnNSWnFJzvpNkwxSCtk0DKK4YsZxAl/uHMdumfO9DQp2Fc3jvjWh80uneZvhIUiBpr8K319XzYTzo0ErBMJxXIiSlpefqMWCl/0v9YHsWAkyjOi/CiwneIE9uhgnM6f2+XolaN9mTSpDNBaUEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769014046; c=relaxed/simple;
-	bh=26m3GT1zK5qTkfWVyKH1UNMbAVemr5w8HahFbY3ZLZs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From; b=rzcnSXCwBvJMxnuffREXAa+HGRUm6QbnRga9u+OTtAYHSBYNStjz6RGCDSkF7jcBxvssKI/Fcy6Pd7SiWqY7ubo5FHUDS5pkfkjkk6gyLtD4AM1Vm/v4nkHhIT1QSAl/6OaZrCpcTdVDNBlO4WkG2B6NZLzGPUnvO+JhuxkaJSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=BzbZyQVH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1769103116; c=relaxed/simple;
+	bh=Jspfj489w8NcCWK3y55jt1AHHHiCZgzc3komGHEjO9k=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=jqSmFSuhofwWt9i3tzlxX+73YBoEvjLt1VSvxyEw4tBMqpaSbV1UGGSSZlMYrXT9rZb1dKAv8wSUs4eTDkltBDDKJaxSJRABxdrPUtdAUzKAmJRtlwgUmz1gRVfhShShn0gJ4JL3tr9ob12+3KVd71UrY+/8NLghnDI3DoEn/Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nPaaKn4r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="BzbZyQVH"
-Received: by smtp.kernel.org (Postfix)
-	id 5AB78C4CEF1; Wed, 21 Jan 2026 16:47:26 +0000 (UTC)
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id E615FC19424
-	for <tools@kernel.org>; Wed, 21 Jan 2026 16:47:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org E615FC19424
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id CF1A0C21A8D;
-	Wed, 21 Jan 2026 16:46:54 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 086976070A;
-	Wed, 21 Jan 2026 16:47:22 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id A426A119B1888;
-	Wed, 21 Jan 2026 17:47:20 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1769014041; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding; bh=KtlJWFbCaVh4s6A9IGCvj9tSbZ7YHsc+buK/tyVnsTU=;
-	b=BzbZyQVHzCBhsCxwvYv3WpR1SiQt6V4JQQAujI0moRHjlOuAvZxKyXhx2047HqTNfGezBk
-	4eHUbDQFn7F1A8C3UHf4GehIZofC8LD5CYSAAWf6yrDJdt5wa3Lkz3hrDB3VEohntUsamn
-	Djw1bpuD3Kc4RDvxP5AGvJHiZc9qF5sfYiLLkUFmjumvZik5cjwR2OcdX2/WAK5nBSQilw
-	ffIN1adRJYO9qU3DY5JwTDk2UFut78goLDX742v3BEYn1UralkrMUblJUtH49JAi/XTQxv
-	ag1SdRAbBvIdP47SvrTy9yJ6uHRP/gbLX0ZKTdmcq+BUnSRcKcaZ3AiHL52lmQ==
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nPaaKn4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BC1C116C6;
+	Thu, 22 Jan 2026 17:31:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769103115;
+	bh=Jspfj489w8NcCWK3y55jt1AHHHiCZgzc3komGHEjO9k=;
+	h=Date:From:To:Subject:From;
+	b=nPaaKn4rMDNeOQJ/l+7dqrhn2fKR0qd3SCVwAtJ8Dphn13YS0WOMBfu8GuIUS9iuB
+	 /RagYL5T8NNbYHAzTL+eCJiRjCHTHO195ByWZB6TTV8cxqFI8keEtvSJ8XFC1SkD4z
+	 vwX8uN9WkoggOaR9xNcgrd/HRhm5jqldkMaNX4mCj/nNTpUU84XSWF+dC+c0kok/Re
+	 jQzCFSlyQbJMLJCUatZgM56yO3e6RMPoS5O0SGJ4W5l7wp4wny8DZ0Zg4lQ+3gGkKp
+	 5f0/EA/BJYQvFvXKZ/gLbDdWellEDUqRgAqjwEWc9SffOr3Y0hUAhq47B8X+/KBFor
+	 iveSwEDRqYIRg==
+Message-ID: <f8463626-68c6-4b3e-ac0c-5a01db8e7755@kernel.org>
+Date: Thu, 22 Jan 2026 18:31:53 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+To: tools@linux.kernel.org
+Subject: pw-bot on kernel Patchwork misses pulls with different proto
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 21 Jan 2026 17:47:19 +0100
-Message-Id: <DFUF52RW81LD.28YE20HG4P0L1@bootlin.com>
-Subject: [BUG?] b4 shazam applies unrelated patches due to dfblob collision
- (b4 0.14.3)
-Cc: <louis.chauvet@bootlin.org>, <thomas.petazzoni@bootlin.org>
-To: <tools@kernel.org>
-From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
-X-Mailer: aerc 0.20.1
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 7bit
 
-Hello b4 developers,
+Hey,
 
-thanks for b4, it is great!
+After merging pull requests to soc.git, I expected pw-bot to react -
+change status in Patchwork and send thank you letter, but probably my
+insteadOf rules confused the pwbot:
 
-I have a problem (bug?) to report I'm afraid.
+.gitconfig:
+;rewrite git:// URLs to go over https:// instead:
 
-While trying to apply a 1-patch series, b4 shazam applied the correct
-patch, but:
 
- - in the output, it listed 22 paches being applied, and none was the
-   intended one
- - at the end the branch contained 8 new patches, the first one being the
-   intended one
- - it did not pick up the R-by line for the intended patch
+[url "https://git.kernel.org"]
+        insteadOf = http://git.kernel.org
+        insteadOf = git://git.kernel.org
 
-Patch and target branch details:
+Pull request which was missed by pw-bot:
+https://patchwork.kernel.org/project/linux-soc/patch/20260112115021.2551442-2-sudeep.holla@arm.com/
 
- - appliying on drm-misc-next from
-   ssh://git@ssh.gitlab.freedesktop.org/drm/misc/kernel.git currently at
-   commit 95d628c9e473 ("drm: rcar-du: lvds: convert to
-   of_drm_find_and_get_bridge()")
- - applying the 1-patch seried at
-   https://lore.kernel.org/all/20251231-drm-bridge-alloc-getput-drm_of_find=
-_bridge-kdoc-fix-v1-1-193a03f0609c@bootlin.com/
-
-Full log follows.
-
-----------------------8<----------------------
-=E2=96=B6 b4 shazam  https://lore.kernel.org/all/20251231-drm-bridge-alloc-=
-getput-drm_of_find_bridge-kdoc-fix-v1-1-193a03f0609c@bootlin.com/
-Grabbing thread from lore.kernel.org/all/20251231-drm-bridge-alloc-getput-d=
-rm_of_find_bridge-kdoc-fix-v1-1-193a03f0609c@bootlin.com/t.mbox.gz
-Checking for newer revisions
-Grabbing search results from lore.kernel.org
-  Added from v6: 22 patches
-  Added from v7: 23 patches
-Analyzing 48 messages in the thread
-Analyzing 48 code-review messages
-Will use the latest revision: v7
-You can pick other revisions using the -vN flag
-Checking attestation on all messages, may take a moment...
----
-  =E2=9C=93 [PATCH v7 1/22] drm/amd/display: Remove unnecessary SIGNAL_TYPE=
-_HDMI_TYPE_A check
-  =E2=9C=93 [PATCH v7 2/22] drm: Add new general DRM property "color format=
-"
-  =E2=9C=93 [PATCH v7 3/22] drm: Add enum conversions between DRM_COLOR_FOR=
-MAT and HDMI_COLORSPACE
-  =E2=9C=93 [PATCH v7 4/22] drm/bridge: Act on the DRM color format propert=
-y
-  =E2=9C=93 [PATCH v7 5/22] drm/display: hdmi-state-helper: Act on color fo=
-rmat DRM property
-  =E2=9C=93 [PATCH v7 6/22] drm/display: hdmi-state-helper: Try subsampling=
- in mode_valid
-  =E2=9C=93 [PATCH v7 7/22] drm/i915: Implement the "color format" DRM prop=
-erty
-  =E2=9C=93 [PATCH v7 8/22] drm/amdgpu: Implement "color format" DRM proper=
-ty
-  =E2=9C=93 [PATCH v7 9/22] drm/rockchip: Add YUV422 output mode constants =
-for VOP2
-  =E2=9C=93 [PATCH v7 10/22] drm/rockchip: vop2: Fix YUV444 output
-  =E2=9C=93 [PATCH v7 11/22] drm/rockchip: vop2: Add RK3576 to the RG swap =
-special case
-  =E2=9C=93 [PATCH v7 12/22] drm/rockchip: vop2: Recognise 10/12-bit YUV422=
- as YUV formats
-  =E2=9C=93 [PATCH v7 13/22] drm/rockchip: vop2: Set correct output format =
-for RK3576 YUV422
-  =E2=9C=93 [PATCH v7 14/22] drm/bridge: dw-hdmi-qp: Implement atomic_get_o=
-utput_bus_fmts
-  =E2=9C=93 [PATCH v7 15/22] drm/rockchip: dw_hdmi_qp: Implement "color for=
-mat" DRM property
-  =E2=9C=93 [PATCH v7 16/22] drm/rockchip: dw_hdmi_qp: Set supported_format=
-s platdata
-  =E2=9C=93 [PATCH v7 17/22] drm/connector: Register color format property =
-on HDMI connectors
-    + Reviewed-by: Maxime Ripard <mripard@kernel.org> (=E2=9C=93 DKIM/kerne=
-l.org)
-  =E2=9C=93 [PATCH v7 18/22] drm/tests: hdmi: Add tests for the color_forma=
-t property
-  =E2=9C=93 [PATCH v7 19/22] drm/tests: hdmi: Add tests for HDMI helper's m=
-ode_valid
-  =E2=9C=93 [PATCH v7 20/22] drm/tests: edid: Add __maybe_unused attribute =
-to EDID definitions
-  =E2=9C=93 [PATCH v7 21/22] drm/tests: bridge: Add KUnit tests for bridge =
-chain format selection
-  =E2=9C=93 [PATCH v7 22/22] drm/bridge: Document bridge chain format selec=
-tion
-  ---
-  =E2=9C=93 Signed: DKIM/collabora.com
----
-Total patches: 22
----
- Base: using specified base-commit dc0b90be8d513256a6594095731a702287f29602
- Deps: looking for dependencies matching 1 patch-ids
-Grabbing search results from lore.kernel.org
- Deps: Applying prerequisite patch: [PATCH] drm/bridge: fix kdoc syntax
-Applying: drm/bridge: fix kdoc syntax
-Applying: drm/amd/display: Remove unnecessary SIGNAL_TYPE_HDMI_TYPE_A check
-Applying: drm: Add new general DRM property "color format"
-Applying: drm: Add enum conversions between DRM_COLOR_FORMAT and HDMI_COLOR=
-SPACE
-Applying: drm/bridge: Act on the DRM color format property
-Applying: drm/display: hdmi-state-helper: Act on color format DRM property
-Applying: drm/display: hdmi-state-helper: Try subsampling in mode_valid
-Applying: drm/i915: Implement the "color format" DRM property
-Applying: drm/amdgpu: Implement "color format" DRM property
-Patch failed at 0009 drm/amdgpu: Implement "color format" DRM property
-error: sha1 information is lacking or useless (drivers/gpu/drm/amd/display/=
-amdgpu_dm/amdgpu_dm.c).
-error: could not build fake ancestor
-hint: Use 'git am --show-current-patch=3Ddiff' to see the failed patch
-hint: When you have resolved this problem, run "git am --continue".
-hint: If you prefer to skip this patch, run "git am --skip" instead.
-hint: To restore the original branch and stop patching, run "git am --abort=
-".
-hint: Disable this message with "git config set advice.mergeConflict false"
-=E2=96=B6 git log --oneline  drm-misc/drm-misc-next..
-38ebb10f2b83 (HEAD -> drm-misc-next) drm/i915: Implement the "color format"=
- DRM property
-01a8c2dc91e0 drm/display: hdmi-state-helper: Try subsampling in mode_valid
-50fdbeeed537 drm/display: hdmi-state-helper: Act on color format DRM proper=
-ty
-9cb7ad4f0a10 drm/bridge: Act on the DRM color format property
-280fd2cb4aa5 drm: Add enum conversions between DRM_COLOR_FORMAT and HDMI_CO=
-LORSPACE
-7f731f50bf3d drm: Add new general DRM property "color format"
-6e173053fa5c drm/amd/display: Remove unnecessary SIGNAL_TYPE_HDMI_TYPE_A ch=
-eck
-7a4637bce4f6 drm/bridge: fix kdoc syntax
-=E2=96=B6
-----------------------8<----------------------
-
-Clue: my colleague Louis found that both the intended patch and some in the
-other thread that got applied match the 'dfblob:6dcf8f6d3ec' query on
-lore. Maybe the query needs to become more restrictive?
-
-Workaround: I managed to apply the patch 100% correctly by adding the '-v1'
-flag to b4. Luckily the other patches matching 'dfblob:6dcf8f6d3ec' are at
-different versions. This workaround would not work otherwise, so it is not
-really generic.
+Merge:
+https://web.git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git/commit/?h=for-next&id=94cdfe3980539d1ac2387e6e51a35226785d2df2
 
 Best regards,
-Luca
+Krzysztof
 
---
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
