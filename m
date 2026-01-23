@@ -1,145 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7B5318B83
-	for <tools@linux.kernel.org>; Fri, 23 Jan 2026 11:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0112432C924
+	for <tools@linux.kernel.org>; Fri, 23 Jan 2026 16:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769169593; cv=none; b=YoyWoZRvki/8U30UoZKkBc/YpmbbL/jCXAEW1wDOLZzb/g49OXMi+4BbQSmG8yc+8DXHl/a4yGymjEXUV/RTicEMrFG5L71JXLcph1EkxKjs3xkTm6SS+rYuTr5Yw+S4+w1nnsCvvRtOo7JM39dHL7Z2CdKpY5kDAi7tl3DGWic=
+	t=1769184847; cv=none; b=g6aUI8oQszKMRMfU6zOakD/ZJ0Sp8te5/0xIfK6O9KxqGqJCEyseS8X/O2aGyaw1eVnQ1PSo8SyYlaFt5RzmrU024/OONsHqRlpyIZo8GwktNrQHJ+w+y/ef2Zw1QEdSfO8BP+8mKOcIpgtnUBZ1hpiiO2AozcL8g/0SpT1x4Bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769169593; c=relaxed/simple;
-	bh=evZsRdQQXGB4cFmG+njrMqMx+O+ci0NcK3msy0u3/AM=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XHbC+UDBgi41DlXcJuvrCqBO5hnFAZvQxYjWR7VBVn6kXGBxXo2dFBuhObBkASjMDzP4tkAcLBMXjlAw3UDqdEwgmrzNJB0iwjMsTiY/5I1CvbF++S65I5k91zLhEEylk6Z+7xlODvMB7+z7N9cH4rCH0IfOEEtcYqgPcmi+gzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s05PPdnG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1769184847; c=relaxed/simple;
+	bh=fg0VnVgzTbP6gu2wwVvJSkyThKJpc6iD/mXV9AFx+a4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bUsgnFavqYwap4lSNg8/ZcKYQfhAeIXdfddCZSgJQPm1/RY3r00oN2Cj8b0w3volgMcVF/kCjAsFBFX5cX2KMivCYrw6mmEtCqYtAzfDFR/5Uzx6neM2qliPNTvPU8xt28Uay8eD6LiFBdRuVJjro0la9xN0XLTK9Ol1Kx/DsC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uKGc3J1T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s05PPdnG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uKGc3J1T"
 Received: by smtp.kernel.org (Postfix)
-	id 38044C116D0; Fri, 23 Jan 2026 11:59:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C45C4CEF1;
-	Fri, 23 Jan 2026 11:59:52 +0000 (UTC)
+	id ACD98C19422; Fri, 23 Jan 2026 16:14:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A39C4CEF1;
+	Fri, 23 Jan 2026 16:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769169593;
-	bh=evZsRdQQXGB4cFmG+njrMqMx+O+ci0NcK3msy0u3/AM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=s05PPdnGQdB70uukJ+LkWMiUDZqUqv9pAxW8XfhrZCg6V/EgkgCr6AK5obIMMZpjb
-	 TtirKnxVQ8cqHVWvNcet8TAaB5XkGbHWBr/I5ZXfGJwinnfiFHL6bFs5K59lcMeorg
-	 3oUVN1pDKWTD5kEmBCDVCSp4FFjVXn4U60tgC+ttlUQIQYZ6aekALpuymg6VpBLCKK
-	 MfQ0NUkztSf52RJ/IsNEQUmLxEQf3jQO9grg0jKvh6cegcnb3LLlWf9/v9VjJddpfV
-	 RzSBu7zu7q5hAPQD1gy6D3vU84YCWKb6a+D7/pD0xkL+z6m2c+ZfJ9SsAKguCPtsv1
-	 xiGdN71z3N6TQ==
-Date: Fri, 23 Jan 2026 12:59:49 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	s=k20201202; t=1769184846;
+	bh=fg0VnVgzTbP6gu2wwVvJSkyThKJpc6iD/mXV9AFx+a4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uKGc3J1TiHJ8klTcGRmH8LBtsHfMa7ZsxRfZsSrsUhdqHBoNzoFl/2bBgqUCyFFc0
+	 0W6csnfVnllKGvtf0XarHlto5UN6YDVrNVJ+2lM94XiBfXszggC5tr9tmNYhCJ9Ghm
+	 Exk7zA1t8BiyL8qA9NY5Rc1nJR92Cfk828IAnd51i5MK9rdnAefm4eyIRzXYo00Rcf
+	 VZ+AU+T+ZHaTzsarH2oy/v2PbJy7m33YZaOUoHZWQcxVrzGLFvGZ4kTPfdBlR3fzvC
+	 mKW/gZc/eSZrTHLoD8XcNm6ByslrmOKnW+mync3ceZTplq6+29jE6cGOsWrjSoeMIW
+	 OoHPnOgCXyRGA==
+Date: Fri, 23 Jan 2026 11:14:05 -0500
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc: users@kernel.org, tools@kernel.org
 Subject: Re: korgalore v0.4 now available
-Message-ID: <20260123125949.01381d1f@foz.lan>
-In-Reply-To: <20260120-proud-energetic-pigeon-72bcec@lemur>
+Message-ID: <20260123-brawny-gregarious-pig-edcca1@lemur>
 References: <20260120-proud-energetic-pigeon-72bcec@lemur>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+ <20260123125949.01381d1f@foz.lan>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260123125949.01381d1f@foz.lan>
 
-Hi Konstantin,
+On Fri, Jan 23, 2026 at 12:59:49PM +0100, Mauro Carvalho Chehab wrote:
+> One thing that I missed is that "kgl pull" doesn't really pull
+> e-mails inside the mailbox, even when used with lei to pick the last
+> week/month of stuff: it just sets it to pick newest e-mails from
+> now on.
 
-On Tue, 20 Jan 2026 10:29:28 -0500
-Konstantin Ryabitsev <konstantin@linuxfoundation.org> wrote:
+Yes, for now it acts just like joining a mailing list -- you start receiving
+any new mail after you've subscribed. This is mostly to avoid starting off
+with delivering a potentially large number of messages to gmail on the very
+first run. It takes about 3-5 seconds per message (verily!), so if you are
+just setting up and your initial delivery is 1000 messages, you're sitting
+there for an hour looking at the progress bar crawling forward.
 
-> Hi, all:
-> 
-> Korgalore v0.4 is now available with IMAP OAuth2 support for Microsoft 365 and
-> several GUI improvements.
+> IMO, the default should be to populate maildir with the contents
+> from the lore git trees, when "kgl pull" is called, as, if one
+> wants to pick stuff there is because they usually want to look
+> at the most recent messages - eventually replying to them.
+> As such, IMHO, the mailbox to be sync altogether with the
+> already-existing messages from the specified period.
 
-I started trying it this week to have a copy of my public e-mails
-on a separate machine at my office, and indeed it is an interesting
-tool. I tested only maildir, as having accounts on oauth2 providers
-for kernel stuff is always a lot more complex than it should be.
+This is the behaviour we have with "track-subsystem" -- it will deliver the
+last 7 days of messages right away. At the moment, I'm loath to do this with
+arbitrary lei searches. I'd rather people manually yanked the threads they
+actually want.
 
-I used there both lei and non-lei feeds.
-
-One thing that I missed is that "kgl pull" doesn't really pull
-e-mails inside the mailbox, even when used with lei to pick the last
-week/month of stuff: it just sets it to pick newest e-mails from
-now on.
-
-IMO, the default should be to populate maildir with the contents
-from the lore git trees, when "kgl pull" is called, as, if one
-wants to pick stuff there is because they usually want to look
-at the most recent messages - eventually replying to them.
-As such, IMHO, the mailbox to be sync altogether with the
-already-existing messages from the specified period.
-
-On the exceptional case where one doesn't want that, you could
-provide a "--only-new" argument to pull - to skip the mailbox
-filling with existing e-mails.
-
-Just my 2 cents.
+Thanks for the feedback, though -- I appreciate it.
 
 Regards,
-Mauro
-
-
-
-> 
-> New features
-> ------------
-> 
-> IMAP OAuth2 Authentication for Microsoft 365:
-> 
-> This release adds support for OAuth2 authentication (XOAUTH2) with Microsoft
-> 365 accounts. The app includes a built-in Azure AD application ID for
-> zero-configuration setup, though it is going to show up as "unverified"
-> (it's too much work!).
-> 
-> Your corporate IT may block third-party or unverified apps by default, so in
-> this case you will need to either get them to approve the korgalore app or
-> give you their own client_id. 
-> 
-> Example configuration:
-> 
->     [targets.office365]
->     type = 'imap'
->     auth_type = 'oauth2'
->     server = 'outlook.office365.com'
->     username = 'user@company.com'
-> 
-> Improvements
-> ------------
-> - Close network connections after sync runs to avoid keeping idle connections
->   open between periodic syncs (IMAP, HTTP sessions)
-> - JMAP target now uses shared requests session for consistent User-Agent
->   header and proper connection cleanup
-> - Add GUI optional dependencies to pyproject.toml (pip install korgalore[gui])
-> - Support AyatanaAppIndicator3 as fallback for AppIndicator3 (needed on
->   Debian and derivatives)
-> - GUI now monitors network availability via Gio.NetworkMonitor and skips
->   sync attempts when network is unavailable (airplane mode, resume from
->   suspend, etc.). Sync is automatically scheduled when network is restored.
-> - GUI error messages now display actual error text instead of unhelpful
->   "see logs" messages, since logs are not collected by default
-> 
-> Full changelog and documentation:
-> 
->     https://korgalore.docs.kernel.org/
-> 
-> Source repository:
-> 
->     https://git.kernel.org/pub/scm/utils/korgalore/korgalore.git
-> 
-> Install via pipx:
-> 
->     pipx install korgalore
-> 
-> -K
-> 
-
-
-
-Thanks,
-Mauro
+-K
