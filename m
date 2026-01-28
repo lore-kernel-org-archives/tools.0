@@ -1,40 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A624284690
-	for <tools@linux.kernel.org>; Tue, 27 Jan 2026 22:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668662D0C9C
+	for <tools@linux.kernel.org>; Wed, 28 Jan 2026 10:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769552790; cv=none; b=jf3o7DHII2QgShbTJzM1vnIlQgmeZOPXw3xX3ibsBPuOBtA6KOT5/GYSZn5BbrmFjsr0OOILrGPJls/n6fu+zSOOB1mkyd/fCUOYQCY4s5/nLYh8xqSC41qjRKLFfUyF5KROgaKAXIodYiRJmSohoHZPh+S8B2eq6DE/aDEWGcU=
+	t=1769594860; cv=none; b=g1iCQ+UwpFV+MUwIzF3a4K0QHWp0NB5PVtAzoNxMyUMIEkEAopegRqnFw8JUF7ts0PYXuywj53BZaTjQ5OR/Bkz//cSgY333ac9Rrn2WokvaVwHwBxavFAQEgCrTBlY8/inLwOxJ8FfkKm+RxEw+hIAMEYU9Sg9TioKA3c81tfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769552790; c=relaxed/simple;
-	bh=ZRJzJOE1BXuwUwjNsfUhT5xqbYe5HeeN+aSnEni3BGM=;
+	s=arc-20240116; t=1769594860; c=relaxed/simple;
+	bh=dc5Up4a/vumotxTjBgsOwM80kZI0zOMTOhJqCvi4olA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EZLlq+8NJLmm1d9VI1pwU+FM17ww4cY2/DaEn20G4RkO8TYP/ftayu/mYHbRhZAFcoNsF+cihIabe0ArPavbW81GKiRfBIywQ5cuZWZH8LbKUyOklvXkf/DBaY6UfIc1CobOBupWPVPE+KjkasBeXfO0G55X0c/6ksTpYuMoF4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JFbsO8iU; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=cZVqbf5XFsxEYTO/MSBk9fhs5hORlwtuAXXG4CTqjYQklKYpkft0VEtC+WP6xq0GzMBpJWwqhSSQhHmcwc80+nWtDboBnxqCiIc2WMuy+mF25AEhr4k0bQdx9SOXb6FzKJlWk7b9g+9VKKAsORyyFVDAo/cs2IbDbgPafIWVLrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=g+K7hx6q; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=3sbBuLH4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JFbsO8iU"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="g+K7hx6q";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="3sbBuLH4"
 Received: by smtp.kernel.org (Postfix)
-	id 4B814C19425; Tue, 27 Jan 2026 22:26:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C30BC116C6;
-	Tue, 27 Jan 2026 22:26:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769552790;
-	bh=ZRJzJOE1BXuwUwjNsfUhT5xqbYe5HeeN+aSnEni3BGM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JFbsO8iU0NS7wHavpnHtlTMuUU83CpnBXaInjUm6W5fHtE4yvNp/O0ERRBOdC2P8z
-	 xFaXsHg4+gc8pWZZf28APFQOswq3k4AdX2GtOIsWtv7PNAEl9ESt0hyiP2c5RwFCKm
-	 yYe/e056hiEsG4iU3t3BONDLRfrdBFZ8WP6AEe7ed4zHLAbWtcsuwxyQ1eI2uJZGze
-	 +Eor1JOGxMSj7qHFmJ0JsRnCATnwYnRp4bdgAJIgOj2eUe/SVJgBiKP2jVJpZq/YiW
-	 c+eVhpjvnY9bFZ3EYdEe09JT32BtCI8g8frcqCooz2mwANDLiGOCXUam506qkGPUjA
-	 HrWUAQI7bV7Hg==
-Date: Tue, 27 Jan 2026 17:26:26 -0500
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: korgalore delivering duplicates
-Message-ID: <20260127-polite-literate-koala-4c8ccb@lemur>
-References: <26435143-82c8-452b-a06c-e47de6772802@app.fastmail.com>
+	id 23501C2BC9E; Wed, 28 Jan 2026 10:07:40 +0000 (UTC)
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 3D293C4CEF1;
+	Wed, 28 Jan 2026 10:07:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 3D293C4CEF1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+Date: Wed, 28 Jan 2026 11:07:36 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1769594857;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GbscuRDkEWKMwPed9C6neDCxDHBdvV77WV722sWbREY=;
+	b=g+K7hx6qS0L1y0MhiZpFOWuULMIbQRJYwUDWHC74Wq95p7uT8TsYQIX26i7GOrkJxAN8YT
+	IrDmRj0aAPkPVzbuEWSbXNC2jyHnn8NnarpDv3CPSvlEDZPU/T+xEzugOuo4oZG14Sbzfw
+	WUWXYNxOIzsqf3FGJRZinocotgu2phX2aDnz72oYH54cotu0aK9QQPgyflqG+L2U9ETKE2
+	F5Whexm3AddQ+PQKgz2htCxk7/+FsOqIwTDGa0o3ZPxIrLTDoFjjHDIwTvfPG6vWmZG5Yj
+	VpVbNAWPYMxSP25afRIGo3I633XeQlb1K6XWVVEOGMy2fUz46M2o/mJlO5jMMQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1769594857;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GbscuRDkEWKMwPed9C6neDCxDHBdvV77WV722sWbREY=;
+	b=3sbBuLH4Bz1dsvf1kBDTi4w1F3DwJVUn20MyqeIBVKDl2ZriCmNBsi9hGCoIk4MLf2kUcM
+	2mamiiTTzVMmMEBQ==
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: tools@kernel.org, linux-kernel@vger.kernel.org,
+	linux-rt-devel@lists.linux.dev, Thomas Gleixner <tglx@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Michael Hennerich <Michael.Hennerich@analog.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Marcelo Schmitt <marcelo.schmitt@analog.com>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Kent Gustavsson <kent@minoris.se>,
+	Gustavo Silva <gustavograzs@gmail.com>,
+	Nishant Malpani <nish.malpani25@gmail.com>,
+	linux-iio@vger.kernel.org
+Subject: Re: [PATCH 18/21] iio: Replace IRQF_ONESHOT with IRQF_NO_THREAD
+Message-ID: <20260128100736.Fdw5Oknz@linutronix.de>
+References: <20260123113708.416727-1-bigeasy@linutronix.de>
+ <20260123113708.416727-19-bigeasy@linutronix.de>
+ <aXOKVqxyhQ10l9V4@smile.fi.intel.com>
+ <20260126081510.jr8Rp6R7@linutronix.de>
+ <aXc5Efu-PlLNCxkk@smile.fi.intel.com>
+ <20260126101034.lnGGQmUD@linutronix.de>
+ <aXdJbidb3DPyRaxB@smile.fi.intel.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -43,33 +80,32 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <26435143-82c8-452b-a06c-e47de6772802@app.fastmail.com>
+In-Reply-To: <aXdJbidb3DPyRaxB@smile.fi.intel.com>
 
-On Tue, Jan 27, 2026 at 07:18:18PM +0100, Ard Biesheuvel wrote:
-> - messages received directly that are also pulled by korgalore, potentially
->   multiple times if they were cross-posted to multiple mailing lists;
-> - outgoing messages that are cc'ed to multiple mailing lists, which are then
->   looped back and delivered by korgalore in the same manner.
+On 2026-01-26 13:01:02 [+0200], Andy Shevchenko wrote:
+>   ---
+>   Cc: person 1
+>   Cc: person 2
+> 
+> Just don't reimport them via `git am`.
+> 
+> > I lose it on the next if I update patches in tree and re-export them. 
+> 
+> I don't understand this, sorry. Can you provide a step-by-step example?
+> Do you mean that you are taking previous version from the list and reapplying
+> it via `git am`? But shouldn't `b4` take care of that as long as it knows the
+> Change-ID and it matches?
 
-Okay, for JMAP and IMAP targets, korgalore now checks if a message with the
-same Message-ID already exists in the target folder before attempting to
-import it. This uses JMAP's Email/query with a header filter for JMAP targets,
-and IMAP's SEARCH HEADER for IMAP targets. Gmail already deduplicates
-automatically via its API, so no changes were needed there.
+So doing this and switching to b4 trailers to grab the tags actually
+help. Then I have been playing with prep. So thank you.
 
-Not doing anything for Maildir targets for now, because I don't want to
-iterate through potentially thousands of messages.
+Then I stumbled upon --auto-to-cc which picked up all addresses and
+added it to the cover letter which was fine. But then `send' used those
+for every patch in the series which I did not want. So for that part I
+probably stick with git-send-mail since this not in everyone's workflow
+(sending a series across multiple subsystems and avoiding flooding
+everyone).
 
-I've also added an X-Korgalore-Trace header to all delivered messages, e.g.:
+Anyway. This seems to have turned out nice.
 
-    X-Korgalore-Trace: from feed=lei:myquery for delivery=fastmail
-      by korgalore/0.5-dev; Mon, 27 Jan 2026 17:10:09 -0500
-
-This should help you identify which messages came through korgalore and
-from which feed, at least.
-
-The changes are in the 0.5 master branch and need more testing, if you are
-able to do that via the git repo directly.
-
-Best wishes,
--K
+Sebastian
