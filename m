@@ -1,121 +1,129 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0B832E120
-	for <tools@linux.kernel.org>; Wed, 28 Jan 2026 13:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7913191C9
+	for <tools@linux.kernel.org>; Wed, 28 Jan 2026 17:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769608460; cv=none; b=JHSe8SVTERaUOhly/YWA1uvH7BkXUw60NeCPS8zVMWRwnkArdBO57zM8Cq3ho6D93OpJ2gJzJRVsaJYOZjv3zaWj8/mpwNSqBn1nL9GAfL8phSzHQQvyOpdseQ67CDtcd6Kduo2tVT2EGYmXi+ITKiXJ2eVfz0l/1OloJfuSXic=
+	t=1769620343; cv=none; b=jAJBETsVr3g8WYYzUM2a8obwgLS4fSteUvtjW2SteLBNJVGJqv+W+Dx8lRged7A4JefHc2iwTF4LODR+9JcV7/Mr+N+Uu8bmsGxx76u/N05duWyWcNjGfdtPJylHL+vMJ6YQ1Uguxq2ib+yR/pouZY3VdUxLM1ZAtyI7o/RDDso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769608460; c=relaxed/simple;
-	bh=2QcDNGyNgBkYWykeDTplf++Ayzs/pq2q0ljJ9L3KqGE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=aLLmg7OSreqaTfAnIDLlfFeMHnNgBueMLo6RFK6B1RYr6RhG3J6RPl1OvIZ87k9NZCW+m0oE15jFDVV5R/Ra3L7NBPhmG7kiEIJ22ngeMpg17GIRZ6Y+eA59Lt2NAqYC0lKk0nd/8seQjByr8QHmzoYmUyU54GN85gQA7nqaTWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I7JWRdK5; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1769620343; c=relaxed/simple;
+	bh=ouVfGxicVm6yLuI/w1hv777/drJVqHgkCZdK3zkiYn8=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=foarVuoOnIGGfi4oFf3+iUQpnhyKFAITG2puIe2O9925nVvghxyO7AyFi+48DHAUdS43SSFWguVnmnCVuqkltenl8UNacNUCprT2kJCCaujouZ7UkLmhrwCI96h+KoLtYCXK9oSb0tEZqC9gji9K74LRzsgxggd5ndzWJJeRX9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XA380fgn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I7JWRdK5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XA380fgn"
 Received: by smtp.kernel.org (Postfix)
-	id 521A9C2BC87; Wed, 28 Jan 2026 13:54:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E38C4CEF7;
-	Wed, 28 Jan 2026 13:54:19 +0000 (UTC)
+	id E99DFC116C6; Wed, 28 Jan 2026 17:12:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48C6C4CEF1;
+	Wed, 28 Jan 2026 17:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769608460;
-	bh=2QcDNGyNgBkYWykeDTplf++Ayzs/pq2q0ljJ9L3KqGE=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=I7JWRdK5ZBXgNUdcCMLUdyjVYf2GJtxanzlxs2pr1j2CMszWXT1Fnl6+zmPqj2Vjx
-	 TRxPCZtLyajWyL6SF6LijJiN5XOFU4a1MxJoNzZkhpyMg4JhtWm1hCdkxE6t0Fp6x1
-	 vFQV0WP4M5lzu+RcFMnBy16dwKidmNuf+6KFWS6QvXgE4R2/ait+2LpNubQrBqxqh4
-	 Dnnvt677lZfbKNJ0N0PHu5DEk64BG4gqoV30imCS6I91W+Vv7bMc4lIHksrcD7tbpr
-	 +6I8jv+kEto49AzVAkKHmKR7qJcodynMZCW+z4rb9MVSn7XDUOCyGPNF4nlg3dCurj
-	 Zg+4Qb+U38TnQ==
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 98F5CF40069;
-	Wed, 28 Jan 2026 08:54:18 -0500 (EST)
-Received: from phl-imap-18 ([10.202.2.89])
-  by phl-compute-01.internal (MEProxy); Wed, 28 Jan 2026 08:54:18 -0500
-X-ME-Sender: <xms:ChV6aeDOtGQ6J7EITg0m42Fe4EJxXCvebl0aCqzayqgNK64hLVWcNw>
-    <xme:ChV6aTUp6CSYCIENRLJR3gXaWUrWw-hskJlVNE4OGDISB-GS7Pnm5BfEK5JIvNaZ8
-    sEx_slsTzW-3xb1jijcb3t6XVp7SDu9ilUvSM5JrIjcig7W3zheiEVH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieefheegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhonhhs
-    thgrnhhtihhnucfthigrsghithhsvghvfdcuoehmrhhitghonheskhgvrhhnvghlrdhorh
-    hgqeenucggtffrrghtthgvrhhnpeevfffgvdfgtdeufeekuefgudffgeeihffhvefhgfej
-    keetgfekgfefgedvkedvkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehmrhhitghonhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihht
-    hidqudeigedttdduvdeifedqvddutdegjedtleeiqdhmrhhitghonheppehkvghrnhgvlh
-    drohhrgheskhgvrhhnvghlmhgrihhlrdhnvghtpdhnsggprhgtphhtthhopedvtddpmhho
-    uggvpehsmhhtphhouhhtpdhrtghpthhtohepmhhitghhrggvlhdrhhgvnhhnvghrihgthh
-    esrghnrghlohhgrdgtohhmpdhrtghpthhtohepmhgrrhgtvghlohdrshgthhhmihhtthes
-    rghnrghlohhgrdgtohhmpdhrtghpthhtohepnhhunhhordhsrgesrghnrghlohhgrdgtoh
-    hmpdhrtghpthhtohepughlvggthhhnvghrsegsrgihlhhisghrvgdrtghomhdprhgtphht
-    thhopehguhhsthgrvhhoghhrrgiishesghhmrghilhdrtghomhdprhgtphhtthhopehmrg
-    hrtghushdrfhholhhkvghsshhonhesghhmrghilhdrtghomhdprhgtphhtthhopehnihhs
-    hhdrmhgrlhhprghnihdvheesghhmrghilhdrtghomhdprhgtphhtthhopehnohhnrghmvg
-    drnhhunhhosehgmhgrihhlrdgtohhmpdhrtghpthhtoheprghnughrihihrdhshhgvvhgt
-    hhgvnhhkohesihhnthgvlhdrtghomh
-X-ME-Proxy: <xmx:ChV6aX7V1_8HCqYRZn8gEQOGmUuxonsUTfhQTxiY33Az317g6QzkxA>
-    <xmx:ChV6aakB8fV7cTVtUyI-yeX5mIWN3nwtoQCm5uaPxzs2bW8kwpdcBQ>
-    <xmx:ChV6aQN1Wqi1_LjF5y6KLn78NdQgZDXY4pzdR1MKo8MK1XLiKP5QCg>
-    <xmx:ChV6aUo91Od22UhRy4_16F4XHetm_vaT8VA2WBVlCr-QjfRVjr9gcA>
-    <xmx:ChV6aRsrAtHZfF9hAu9YcTNrWl6RlThiP8k4qnxHOionOuUnesXKAHyu>
-Feedback-ID: i40364868:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 7135315C008F; Wed, 28 Jan 2026 08:54:18 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=k20201202; t=1769620342;
+	bh=ouVfGxicVm6yLuI/w1hv777/drJVqHgkCZdK3zkiYn8=;
+	h=Date:From:To:Subject:From;
+	b=XA380fgnY1j7bvqO7tS9AUiHhLNoDtRj7hPY+oL1ai6hkd2dwCSmmeJ482VrzAs7L
+	 JNQcf8Hkqgocx8AWepncE/yvX7X54BkLteVWikJ63YHpffd1/sLcHaN54ure6dl8MR
+	 VQR6CA8zkXQWlndCv1nYJRslhPiqnVRNLuQeTkvnjW/unlOb7gPX2sJ3Xe+jV4tnvF
+	 m5ueVydYnE3pjAUzBagt3JX/D2ud0abvzpC8mrCthaql+BA5+BdLd6TGCpe8MEw4yX
+	 KxqZjHg5WnCd0JekpJmkJDZWzwgGduSNEGYsE2vu0nqcSe/zzfAvMuUL0vpwC933Rk
+	 RbCCXhMERMNSQ==
+Date: Wed, 28 Jan 2026 12:12:21 -0500
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: users@kernel.org, tools@kernel.org
+Subject: korgalore v0.5 now available
+Message-ID: <20260128-tangible-bouncy-hyrax-277711@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ARb0NMl4zKKw
-Date: Wed, 28 Jan 2026 08:53:58 -0500
-From: "Konstantin Ryabitsev" <mricon@kernel.org>
-To: =?UTF-8?Q?Nuno_S=C3=A1?= <noname.nuno@gmail.com>,
- "Andy Shevchenko" <andriy.shevchenko@intel.com>
-Cc: "Sebastian Andrzej Siewior" <bigeasy@linutronix.de>, tools@kernel.org,
- linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev,
- "Thomas Gleixner" <tglx@kernel.org>, "Lars-Peter Clausen" <lars@metafoo.de>,
- "Michael Hennerich" <Michael.Hennerich@analog.com>,
- "Puranjay Mohan" <puranjay@kernel.org>,
- "Jonathan Cameron" <jic23@kernel.org>,
- "David Lechner" <dlechner@baylibre.com>,
- =?UTF-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
- "Andy Shevchenko" <andy@kernel.org>,
- "Marcelo Schmitt" <marcelo.schmitt@analog.com>,
- "Marcus Folkesson" <marcus.folkesson@gmail.com>,
- "Kent Gustavsson" <kent@minoris.se>,
- "Gustavo Silva" <gustavograzs@gmail.com>,
- "Nishant Malpani" <nish.malpani25@gmail.com>, linux-iio@vger.kernel.org
-Message-Id: <c064a31a-a2c7-4e35-b8d6-063684f48869@app.fastmail.com>
-In-Reply-To: <be27fa4404511cdf65a9a0f212653a7f1fcd86b6.camel@gmail.com>
-References: <20260123113708.416727-1-bigeasy@linutronix.de>
- <20260123113708.416727-19-bigeasy@linutronix.de>
- <aXOKVqxyhQ10l9V4@smile.fi.intel.com> <20260126081510.jr8Rp6R7@linutronix.de>
- <aXc5Efu-PlLNCxkk@smile.fi.intel.com> <20260126101034.lnGGQmUD@linutronix.de>
- <aXdJbidb3DPyRaxB@smile.fi.intel.com>
- <20260126-cocky-sawfish-of-variation-c0cedd@lemur>
- <be27fa4404511cdf65a9a0f212653a7f1fcd86b6.camel@gmail.com>
-Subject: Re: [PATCH 18/21] iio: Replace IRQF_ONESHOT with IRQF_NO_THREAD
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Wed, Jan 28, 2026, at 05:45, Nuno S=C3=A1 wrote:
-> Since I have you here, I might ask about something that I'm not sure
-> how to handle. Might be dumb but here it goes. One problem is when I
-> send v1 based on a branch and when I'm starting to work on v2 that
-> branch was force-updated and I want to base my v2 on it. Is there any
-> good way to handle this?
+Hi, all:
 
-You should be able to just rebase the b4 branch.
+Korgalore v0.5 is now available with message deduplication, subfolder support,
+and several improvements to make it easier to organise delivered messages.
 
-git switch b4/your-branch
-git rebase tracking-branch
+New features
+------------
 
-You can do this at any point, not necessarily between revisions. Since w=
-e have the tracking empty commit, we'll always know the base-commit auto=
-matically.
+Message-ID deduplication for JMAP and IMAP:
+
+Before importing a message, JMAP and IMAP targets now check if a message with
+the same Message-ID already exists in the target folder. This prevents
+duplicate messages when the same email arrives via multiple mailing lists or
+deliveries. Gmail already deduplicates automatically via its API, so this
+brings JMAP and IMAP to parity.
+
+Subfolder support for IMAP and Maildir:
+
+A new "subfolder" parameter at the delivery level allows routing messages to a
+target folder or directory without creating separate targets for each folder.
+For IMAP, it combines the base folder with the subfolder path (e.g., INBOX +
+Lists/LKML becomes INBOX/Lists/LKML). For Maildir, it creates subdirectories
+under the base path.
+
+Maildir subfolders additionally support strftime format codes (e.g., %Y/%m)
+for date-based directory organisation, so you can set up automatic archiving
+like "Archive/2026/01". Templates are validated at startup and refreshed before
+each GUI sync to ensure long-running processes use the correct folder.
+
+X-Korgalore-Trace header:
+
+Messages now include a provenance header when delivered to targets, which helps
+identify message origin when the same email arrives via multiple paths. The
+format is: 
+
+    X-Korgalore-Trace: from feed=<feed> for delivery=<delivery>; v<version>; <RFC 2822 date>
+
+Configuration options:
+
+- main.user_agent_plus: append a unique identifier to the User-Agent string
+  sent to remote servers, which helps server operators identify traffic from
+  specific korgalore installations.
+- main.catchall_lists: customise which mailing lists are excluded from
+  track-subsystem queries; the defaults are for Linux kernel subscribers
+
+Improvements
+------------
+- track-subsystem no longer requires -m/--maintainers; it automatically looks
+  for ./MAINTAINERS in the current directory and falls back to fetching from
+  kernel.org (cached for 24 hours).
+- track-subsystem now excludes catch-all lists (linux-kernel,
+  patches@lists.linux.dev) by default to avoid flooding results.
+- Centralised User-Agent handling across all remote connections (git, lei,
+  HTTP).
+- GUI now redirects stdout/stderr to /dev/null and logs only critical messages
+  to the systemd journal, preventing I/O errors when the terminal is closed
+  after launching with "kgl gui &".
+- New korgalore.toml(5) manpage documenting the configuration file format.
+
+Bug fixes
+---------
+- Maildir target now creates parent directories if they don't exist. Python's
+  mailbox.Maildir only creates the maildir structure (cur/new/tmp), not parent
+  directories.
+
+Full changelog and documentation:
+
+    https://korgalore.docs.kernel.org/
+
+Source repository:
+
+    https://git.kernel.org/pub/scm/utils/korgalore/korgalore.git
+
+Install via pipx:
+
+    pipx install korgalore
+
+Thanks to the following people for suggestions and reports addressed in this
+release:
+
+- Ard Biesheuvel (message deduplication suggestion)
+- Dirk Behme (maildir parent directory bug report)
+- Mark Brown (track-subsystem catch-all list filtering suggestion)
 
 -K
