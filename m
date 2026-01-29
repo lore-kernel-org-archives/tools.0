@@ -1,190 +1,136 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642AC3806CA
-	for <tools@linux.kernel.org>; Thu, 29 Jan 2026 10:31:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769682691; cv=pass; b=EfhWSdq2mxwhOTA8tl+6/qjaKoLKE0Xqw81/ngzIxm/pG3XfDuYGBddGaVs/mXD2cpdymH27lhVlAuPJpvDgAjvDfe/EvKSAqJOSTQjI7nzSTjASX5Yv42SYRPmenH6c3yWMr94+jDQuThKcdyy/eITQ69SnMPcGb1j33jHovlk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769682691; c=relaxed/simple;
-	bh=G/tiNs/mTMgpa5d7vl2e0jVlBVjtTMVTj/k/KEXQ+bI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SKm0DDvrCkaLVV1KI1ECJB4ihI71lbcTj7dMonVhD3+kPNsaQgPda6hsSZKKqGkxkhhQuLza4Y4A+L1HoWlPxgI03dQhhUJWs8lbviBboWUayLLPAa4qgmRrFkffIXvQ/y0d1QjONCTuSWQ70qZy1R7eWBIq0eTX895SbhEHSuE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=RP5E9VOR; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=Yc9WRDHJ; arc=pass smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5676352927
+	for <tools@linux.kernel.org>; Thu, 29 Jan 2026 11:18:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769685528; cv=none; b=Oc0oMMo18vqAvdvXM3PQSSxHNXxvXYal1T6rDLGz3jlFP/S84TPhpYgHe+bBiY7CxS2PP5WXoDLm6wxfKwp1A3zaVJMiru/+ODdT5GLE0LeKCr2fmK5gC437Rmyyo2hygfWHkEbDCRjey5tx5ufTKtnmMjbJ6T2eYKT7qiijL8c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769685528; c=relaxed/simple;
+	bh=8c/jeqoWiP9osrYb8sDOX15bUz8KbDAlLeusT0RdiDM=;
+	h=Content-Type:Date:Message-Id:Cc:From:To:Subject:Mime-Version:
+	 References:In-Reply-To; b=DbClfVVc/FXD44CPTKqyvV+7dEIkre+t/NFPNKZAg6ZASbU2BoMZB5jU53xzNLBx1qhm4phC9VmGwevvLfIreWUqmr7/ABuM3FokhhN3EMcBJ6N4OvQ4geAWBuvNFP04wjheID43S2rV2haqwjR7ehxa7i5F6JmzXkzKPmyhUoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=CgliF6g6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="RP5E9VOR";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="Yc9WRDHJ"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="CgliF6g6"
 Received: by smtp.kernel.org (Postfix)
-	id 17883C16AAE; Thu, 29 Jan 2026 10:31:31 +0000 (UTC)
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
+	id 6FA28C116D0; Thu, 29 Jan 2026 11:18:48 +0000 (UTC)
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id DCD2AC116D0;
-	Thu, 29 Jan 2026 10:31:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org DCD2AC116D0
-Authentication-Results: smtp.kernel.org; dmarc=fail (p=none dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.kernel.org; spf=none smtp.mailfrom=hartkopp.net
-ARC-Seal: i=1; a=rsa-sha256; t=1769682678; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=a/T6fMWNY6f9ILUxlwRkACXk8+X76U9ja/z2+l2cQBdYW3jmCE7ApZlDNWRW9BUJwU
-    8TjcD3HjM4byjTYsbJaaCQxuRwleUMwWOFUUi/nUvzHD6jObiAyfCxUEWQQmY+0QWWog
-    smsaImGxlD8HMJGCO0iamdO4n7VdywZt93jchZEzYNimRClHINAdEih7KlAS9Y0FT6gH
-    eFWYA3zGY6s9slJLrLwroeZmZvJiTrUdKLPT5jGSdB0ueUwpSOrzwKP/FjcJmcxjpoTS
-    XSLCl+aoNgxsDW9+WO15/sIRdMOD4YjgekgJ2MWVR3bYRK2GYahOMMNScqLnEQiE/1dk
-    v87A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1769682678;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=JqlCT0IG00qKTvNDZ7jbSBuWB4pRFgJ4gt42VupvEOA=;
-    b=WtfKyy8g3ToqrxOt0CqI3ysM7oVyf+i9aQmnG84qrymfYuFuDUIPjjKCeJE+Ws48rI
-    n5qFawYPCtTd58nFUTwMxgQkIDGwF9HbDJYt6BOkoDP9Hz4CgQC4TMJNy7WWJuzGdmoJ
-    LR7rt01VVUSW/r/4H33dZT+TbAbYTl2JLKO5gjP2eB4WAIH0MZnKgjVFbwbAh8hzTsRp
-    ErrPNNNhcdM8pwEXdapLG8f7qjTd8WCAnAsxI75ydvfh9Us167NipOtE52iSI7EQoLsj
-    39IduSaXaMmRAZoOoKFyd14VUnNGUZqGFOLBF6i1Bbvyp0dyt84IQogsZBhUyEDx7xPn
-    PcVw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1769682678;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=JqlCT0IG00qKTvNDZ7jbSBuWB4pRFgJ4gt42VupvEOA=;
-    b=RP5E9VORGjn/7BZu5XxIAUMHxPLAeLxDDyhz4RVnPfa5WHmRmcM+gvPnhRkLvYK58J
-    IuTjcZpttLiDh1uwU6gZpVJ2I8VLx15bm8pB439NzmKY/AHEBte9eUc7yKFkGWjZPDZE
-    rjnSj4uUP7cpHnv7tqy8Xytw1MNMbGPluepl03rFieTwLOYJNztcZ2zhHXm6yFKeguf+
-    /xqoWWUEZeObyeod0bATfRrSu9wkAtjVCK/BBDnHpoRsG9673nqeC+yxtPKi7FVP3aHj
-    ySXhznMSLGJbD6gQIFEHgCWrGDRyDyinuLHVdG4Up7+cSA1sxQxsZhv8qF6s4qd8nqCh
-    FmiA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1769682678;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=JqlCT0IG00qKTvNDZ7jbSBuWB4pRFgJ4gt42VupvEOA=;
-    b=Yc9WRDHJSH9uW2TspdOpfRjpfXwgSn8MsoxHG5xGKqDZcmabfcckn39K0HnpJEqCpW
-    ArIFaZTczoISPtYX4FAQ==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8YjX10Q=="
-Received: from [IPV6:2a00:6020:4a38:6810::76e]
-    by smtp.strato.de (RZmta 54.1.0 AUTH)
-    with ESMTPSA id K0e68b20TAVIqx4
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Thu, 29 Jan 2026 11:31:18 +0100 (CET)
-Message-ID: <1d9966d9-877f-46d4-a2a8-56b6d621bb36@hartkopp.net>
-Date: Thu, 29 Jan 2026 11:31:18 +0100
+	by smtp.kernel.org (Postfix) with ESMTPS id B50E8C4CEF7
+	for <tools@kernel.org>; Thu, 29 Jan 2026 11:18:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org B50E8C4CEF7
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id DF5DF1A2AFD;
+	Thu, 29 Jan 2026 11:18:43 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id B5FA1606B6;
+	Thu, 29 Jan 2026 11:18:43 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 2B4B8119A868D;
+	Thu, 29 Jan 2026 12:18:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1769685523; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=laYnNaREOXp0GSR6wj9WIP9wdujmrDUrjH5FIQj4H9Q=;
+	b=CgliF6g6M73urnSdinfORv7FYw4A469x8C3Iuj8WoV78//4VdE/o5KKPMtQnV4S8DFOXUE
+	Q1a5eMPQtYcy215BwS6Rfnkyb5icsE3l4m6/POZEljeDJ7Evw/CThMjkqzXj2An5Bq5Qqm
+	Mr8sEPReiVBIhycPIpzIdaaQFDimvBoK2klwB5jTVrGykwFJq5qJTdxeceUUeRzImx9knH
+	RgXgmKohTv5chOqJ6itr7wEFTmw8+GsN5OEYhuHXDfVBwX3EcAc5ur0CU8DREjHC4HYCfn
+	U57TvtcjrP7vSg+KE1ad157640DCS14lE89tEnMUspDATiw3pdPcPp3pkyuDSg==
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 29 Jan 2026 12:18:41 +0100
+Message-Id: <DG115TDKJFHA.2VQ4J0C51DKHX@bootlin.com>
+Cc: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>,
+ <kernel-team@meta.com>
+From: "Antonin Godard" <antonin.godard@bootlin.com>
+To: "Breno Leitao" <leitao@debian.org>, "Kernel.org Tools"
+ <tools@kernel.org>
+Subject: Re: [PATCH b4] send: Add --force-cover-letter to send separate
+ cover for single patch patch series
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: b4 prep --auto-to-cc fails with 'NoneType' object is not
- subscriptable
-To: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: linux-can@vger.kernel.org, tools@kernel.org, users@kernel.org,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-References: <20260125201601.5018-1-socketcan@hartkopp.net>
- <20260127174937.4c5fc226@kernel.org>
- <67cb17f4-2f72-4847-aa04-3633f3d8df33@hartkopp.net>
- <20260128-booby-of-phenomenal-proficiency-4db5ab-mkl@pengutronix.de>
- <20260129-versatile-tuscan-mongrel-f9b173-mkl@pengutronix.de>
- <f47126ee-8256-4077-a09c-47a1ed461f65@hartkopp.net>
- <20260129-fortunate-pompous-chinchilla-dcb99f-mkl@pengutronix.de>
- <c5e95a45-9aac-4a67-82b5-ac4ed8ae2844@hartkopp.net>
- <20260129-skilled-placid-lori-f58fb9-mkl@pengutronix.de>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260129-skilled-placid-lori-f58fb9-mkl@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20260127-force-cover-letter-v1-1-1ba8d7f9a64f@debian.org>
+In-Reply-To: <20260127-force-cover-letter-v1-1-1ba8d7f9a64f@debian.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
+Hi,
 
+On Tue Jan 27, 2026 at 1:53 PM CET, Breno Leitao wrote:
+> By default, b4 mixes the cover letter content into the patch body
+> (under the --- cut line) when sending a single-patch series. Add
+> --force-cover-letter option to allow sending a separate cover letter
+> message (as 0/1) even for single-patch series.
+>
+> This is useful when developers want to send a long cover letter with
+> extra information about an issue, and a commit. Having the cover-letter
+> "mixed-in" makes it hard to follow.
+>
+> Example:
+>  * https://lore.kernel.org/all/20260127-ipmi-v1-0-ba5cc90f516f@debian.org=
+/
+>
+> Signed-off-by: Breno Leitao <leitao@debian.org>
+> ---
+>  src/b4/command.py |  2 ++
+>  src/b4/ez.py      | 16 +++++++++-------
+>  2 files changed, 11 insertions(+), 7 deletions(-)
+>
+> diff --git a/src/b4/command.py b/src/b4/command.py
+> index 1f8b8f1..0e685cd 100644
+> --- a/src/b4/command.py
+> +++ b/src/b4/command.py
+> @@ -397,6 +397,8 @@ def setup_parser() -> argparse.ArgumentParser:
+>                           help=3D'Resend a previously sent version of the=
+ series')
+>      sp_send.add_argument('--no-sign', action=3D'store_true', default=3DF=
+alse,
+>                           help=3D'Do not add the cryptographic attestatio=
+n signature header')
+> +    sp_send.add_argument('--force-cover-letter', action=3D'store_true', =
+default=3DFalse,
+> +                         help=3D'Send a cover letter even for single-pat=
+ch series')
 
-On 29.01.26 11:19, Marc Kleine-Budde wrote:
-> On 29.01.2026 11:09:50, Oliver Hartkopp wrote:
->>> Latest version is v0.14.3, please re-check.
->>
->> $ b4 --version
->> 0.14.3
->>
->> Same behavior but different line numbers:
->>
->> $ b4 prep --auto-to-cc
->> Will collect To: addresses using get_maintainer.pl
->> Will collect Cc: addresses using get_maintainer.pl
->> Traceback (most recent call last):
->>    File "/usr/bin/b4", line 8, in <module>
->>      sys.exit(cmd())
->>               ~~~^^
->>    File "/usr/lib/python3/dist-packages/b4/command.py", line 417, in cmd
->>      cmdargs.func(cmdargs)
->>      ~~~~~~~~~~~~^^^^^^^^^
->>    File "/usr/lib/python3/dist-packages/b4/command.py", line 83, in cmd_prep
->>      b4.ez.cmd_prep(cmdargs)
->>      ~~~~~~~~~~~~~~^^^^^^^^^
->>    File "/usr/lib/python3/dist-packages/b4/ez.py", line 2907, in cmd_prep
->>      auto_to_cc()
->>      ~~~~~~~~~~^^
->>    File "/usr/lib/python3/dist-packages/b4/ez.py", line 2727, in auto_to_cc
->>      logger.debug('added %s to seen', ltr.addr[1])
->>                                       ~~~~~~~~^^^
->> TypeError: 'NoneType' object is not subscriptable
->>
->> I upgraded my machine from Debian Trixie to the "unstable" Debian Forky.
-> 
-> nitpick: Forky is "testing"
+I've had a different idea with this which would go a bit further.
 
-Ack!
+Instead of --force-cover-letter, have a --cover-letter option which acts as
+follows:
 
->> I didn't fiddle with https://kernel.googlesource.com/pub/scm/utils/b4/b4.git
->> nor pip.
-> 
-> Try the b4.git, you can directly use it after cloning. I'm using it
-> successfully on Forky.
-> 
-> Marc
-> 
+* --cover-letter=3Dyes: always generate a cover-letter, no matter if it's a=
+ single
+  patch or not
 
-Aaaahhhh!!!
+* --cover-letter=3Dauto (default): generate a cover-letter when there is mo=
+re
+  than one patch. This is the current behavior.
 
-~/net-next$ ~/b4/b4.sh prep --auto-to-cc
-Will collect To: addresses using get_maintainer.pl
-Will collect Cc: addresses using get_maintainer.pl
-Collecting To/Cc addresses
-     + To: Marc Kleine-Budde <mkl@pengutronix.de>
-     + To: Vincent Mailhol <mailhol@kernel.org>
-     + To: Oliver Hartkopp <socketcan@hartkopp.net>
-     + To: Robin van der Gracht <robin@protonic.nl>
-     + To: Oleksij Rempel <o.rempel@pengutronix.de>
-     + To: kernel@pengutronix.de
-     + To: David S. Miller <davem@davemloft.net>
-     + To: Eric Dumazet <edumazet@google.com>
-     + To: Jakub Kicinski <kuba@kernel.org>
-     + To: Paolo Abeni <pabeni@redhat.com>
-     + To: Simon Horman <horms@kernel.org>
-     + Cc: linux-can@vger.kernel.org
-     + Cc: linux-kernel@vger.kernel.org
-     + Cc: netdev@vger.kernel.org
----
-You can trim/expand this list with: b4 prep --edit-cover
-Invoking git-filter-repo to update the cover letter.
-New history written in 0.41 seconds...
-Completely finished after 0.81 seconds.
+* --cover-letter=3Dno: do not generate a cover-letter, even on multi-patch =
+series
 
-~/net-next$ ~/b4/b4.sh --version
-0.15-dev-47773
+This would be backed up by a setting (b4.send-cover-letter?) which can be s=
+et
+globally or on a per-branch basis.
 
-Then I can remove the b4 Debian package again.
+I don't know how easy it would be to support the last use-case though, as I
+don't know how b4 is going to behave with a multi-patch series with no
+cover-letter, but since you figured out the code paths I guess it would be
+relatively easy to try? Obviously, --edit-cover would have to be adapted as=
+ well
+to refuse editing the cover when --cover-letter=3Dno.
 
-Thanks for the support!
+I do find myself needing the last use-case sometimes, when the series does
+not require a cover-letter.
 
-Btw. that it does not work neither on Trixie nor on Forky out of the box 
-is not very satisfying :-/
+What do you think?
 
-Best regards,
-Oliver
+Antonin
