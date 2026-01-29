@@ -1,133 +1,189 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998DF379990
-	for <tools@linux.kernel.org>; Thu, 29 Jan 2026 10:07:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769681259; cv=none; b=YnEnm7m1khVfd+yEABFXK47VRm5bq232+lh3XiQoHpkaaUwHS/83mrLTSmI9mIBuijnQA/DFTjFbl6lx0LDWgfOKcVJN+ui3ThWw94TkdOSnT6p3WP6QiRv+tt+/LXr2T1LFkpMVCYMJDBDc44P926fc8RTrR71I6oehE3GWyEo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769681259; c=relaxed/simple;
-	bh=wu9M+YDfwJ8dOu+FlgbV64HrctEi6RsMM0HvZsHXUeY=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jCxn3NSQrPIcR7P4XyYfq6WmwqiHDh9nz+Snoqzk4CxNoBUkdGN8pE5abD1pc6qkOVmvJl0rhkyPPuJ6mBhBVVTGtnwDdBsst7UIibmZiiXL1+MZdq07HveK8wO0s0RydJeLlJZfg+kNwqZZYHnSVkqoDu/Y/cty9YqH9WbzYxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=SyAgZ00c; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA0C32AAA3
+	for <tools@linux.kernel.org>; Thu, 29 Jan 2026 10:10:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769681402; cv=pass; b=t1R5OhUxPkfOpoX8MJXfaYyFDoEpz/6RzND5gIMBDTOWEYHIPY/HigYrKElgSFtJMVgwY0dsepNx9KF9rtNSQf5haOBlLqbV5/2TtY7wTuNQWjqLM/1fCcsDlyyLMOR+sViwTmu63CLb2qyHRk3fEeGx/gkaXDC5lzxRifzVJCQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769681402; c=relaxed/simple;
+	bh=JTY0U9NB8+zkuFYX8i0TInKca3OsHJlmPQUUv/7wgvI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tAMSqmklRvzXSp5jTnhGsSiC5ftXL+YVmG0Hp4o1Nu/vpaiJ3MKMdgB3HkKCoUGgR/nycIvsf1aXZBYUTv4OstNc5PaXgUMdn20CT08R6IB3SPuOJlmcnOjQxQ9b9SyN1xjTsxkVlTx/kcC6UhlZJJwi1CNRZI5VBoT5SlQlNpk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=bPDdGrn5; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=YmXyYgRZ; arc=pass smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="SyAgZ00c"
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="bPDdGrn5";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="YmXyYgRZ"
 Received: by smtp.kernel.org (Postfix)
-	id 53817C116D0; Thu, 29 Jan 2026 10:07:39 +0000 (UTC)
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	id A2003C116D0; Thu, 29 Jan 2026 10:10:01 +0000 (UTC)
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.24])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id E5892C4CEF7
-	for <tools@kernel.org>; Thu, 29 Jan 2026 10:07:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org E5892C4CEF7
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-42fed090e5fso680399f8f.1
-        for <tools@kernel.org>; Thu, 29 Jan 2026 02:07:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1769681255; x=1770286055; darn=kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SXjsCpfPue0aejTaneGRUBU74TJUzAkFZKgHEp8NI+s=;
-        b=SyAgZ00c22rAQtweEGMfh1iQdimFUIBoJDYGH7q4SA49ypvPa8+xGmofQAQ2RA/qQW
-         C8ecNFMbc1UtvCGyrEplCNoaySQaBBOvqOuEgpCuFfYTR1Huu64h8bZ3f5nrE1I/li1g
-         WUQRtG9efNt5IBZjuim9v4Q882YEAYzega2VQCbbES+SyyBfwJSSGKluOPGCF0p++M3O
-         oYnD9FzBcqeodniH5BUL3Q1/GWydZSpOfL/2vA+9mMPTkWsa5qRgwTmXCPz32ylza+Bm
-         hH02Bjip2tvxC3xrdRN7cLMPJB001U5O/m9nG5D4Sxq6nqGMa4+MHZYWZ5JhZlK+oK+x
-         fL3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769681255; x=1770286055;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SXjsCpfPue0aejTaneGRUBU74TJUzAkFZKgHEp8NI+s=;
-        b=bZFACg+PFvXp1iOK5ntMgXmmKezLq9ksyfmqpSHbh0RtDhJsmABnR7Ha+qe0OZnMyF
-         oRxHJcl+e53Sx14IWa5wVBkrv3tRVEIQ7pb4TdV8Wm/YEribiPer6piPCKm3NObgpZN1
-         OPJvNA9ci1Y7CIJzA6DG2AKYofjRr9rDbI2oKl0omSlVs+3+IwtPKF0/rUZcq4cXd9N3
-         vWoxOELIANY6jH6/y7wQJeDg8HngxasNLPqTj14ZuCwIjcu0Cr/+pOilSqLNeZs8SkeT
-         F3spuUGlhpCmYXefqYRwQ1udfAX4YVzoSSBnvTnRMNdcIXafGCt2YspL+YesRdCtOfWR
-         105w==
-X-Gm-Message-State: AOJu0Ywawu/sjV8bA/dlvuyLnPiNjYeIs8jp/JqU96knlYVTEV9VreAJ
-	R0avy1NZ9eEt84Cm+/HfMS0tgNG/DJxBZyMfv/ZQ8TwD212Ys0BGO/X0OWo82I867vZ2HhcJj+2
-	CFjZs
-X-Gm-Gg: AZuq6aIOvauSGrXWxt1EWi7+XJRY0KJI7Mp9N20pPyspRzNFh94MpJPlqz9AW9AoV8G
-	8HYu9yQG5MQVJcwbdBhCQO4BWC022gXKuW+BiSiBQCt7e4l5PpDsPb23PnfBthZAKCwjxOORS7A
-	Bm3wWHY3MXyTFwoUmaE5pmf874JTlxELnm980KAtYnbt77SvyLzDqGKElv6qD79kIj4BqRsHgAn
-	T0TRI4X35+/PhbUcLg/8w2KnsUMOsWCbl4ga5fLEBc9YIeQ36/4utqe1kGsgusrWQOpOxWE4i3v
-	Wt30YJ1h1jcbEsBXvQxOGS0ixyYJoNbdFYPtgzoSniJqZCJXjbE3r3j3XxyNSPa+KGSZVAqoODX
-	u69fx+bYabkPPY/yhIfutZBsg9guYRaWMeuxyjOnaFvowEKJWhrpy+2rH/cjZtyrd7K3OiRv2C1
-	7V4Uu+emq+ZM+YjkUnZG69/nlU9DpRMj6m2P9I4DfVSrr2PDd6YlzcRpKRpvrlq95QTaHzp8XDb
-	yk=
-X-Received: by 2002:a05:6000:1786:b0:435:975d:33b0 with SMTP id ffacd0b85a97d-435dd0a39dfmr12242170f8f.35.1769681255161;
-        Thu, 29 Jan 2026 02:07:35 -0800 (PST)
-Received: from localhost (p200300f65f20eb04703f3ea9880728e0.dip0.t-ipconnect.de. [2003:f6:5f20:eb04:703f:3ea9:8807:28e0])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-435e10ee040sm13325632f8f.11.2026.01.29.02.07.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jan 2026 02:07:34 -0800 (PST)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: tools@kernel.org
-Subject: [PATCH wotmate] gpg_run_command: Set output charset to utf-8
-Date: Thu, 29 Jan 2026 11:07:22 +0100
-Message-ID: <20260129100727.950475-2-u.kleine-koenig@baylibre.com>
-X-Mailer: git-send-email 2.47.3
+	by smtp.kernel.org (Postfix) with ESMTPS id 80162C4CEF7;
+	Thu, 29 Jan 2026 10:09:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 80162C4CEF7
+Authentication-Results: smtp.kernel.org; dmarc=fail (p=none dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.kernel.org; spf=none smtp.mailfrom=hartkopp.net
+ARC-Seal: i=1; a=rsa-sha256; t=1769681396; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=nQavdIuzAmt4EjIOrtFRvTwufn9Ti2BRDl1umdMAcmopEUcwu1uYyucrAF678im9jn
+    xGEX6aUk4//tehjWSwflvnpJN4gI3VsfsKelLPyzeeXx0WSvwIxC21NTUO7uyk0Fc/BF
+    FrR2KGXaJg1KKcf5vmVvDCUW39pJ3t2tUZohDEZGQ5WeREROK1nOBRw43NHB+m9dFSic
+    KgEjyPGykBIPSPPMIVI/bVA0FgiMz6JJlU5KGCSBibHmepruBEZOKMA8Z/0zDT6IIQsG
+    LrcJ0ZC4uZ5gZ1b/bQk377CSaUzJKnMt7POhOTh+oeZdxb7QbK8MSQUKo7xqheTT5ad/
+    3EQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1769681396;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=dL4ovVaIoL14urawadtQfEiQbjiJiqTQipX6cUzdKIo=;
+    b=B0fv2B4LkBgBcgUksf9PF4E/eAnZyeY38j7iRa/riblecDVXASODqyXseLB9dD0DEz
+    HRdrjvzdZ1zKhMRBbfQ9/xoL6TOzJ0oFms+kCy0DMpZ6zZxtJPck4iRWyjvT3G3GhmQK
+    AW2hgQ6h14ljVtC/gTnoN27MAs5xUOyerIthh2SyyKkfPcFfWLdThIujf6No3pHLgeii
+    vU+X5QbUx0KwfZOA0iTaWLJWeKDiyim2OIIo0Mc7YHFBidYTritdgx9sY3j0isNVRrkd
+    CyhGMzcNv3I90cQvdzBaysZAX9VmKw6yIi/7uYvhscMhxAbxEQpLDWB5zkSP7tvmM5em
+    F+ig==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1769681396;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=dL4ovVaIoL14urawadtQfEiQbjiJiqTQipX6cUzdKIo=;
+    b=bPDdGrn5aaNYbBp91QCsa0yhtEET1eaz7kK0a5z//9N2QQ5DYu7pLsrGKbxc/8UbNY
+    /dVytx4cuRZ3eNUiIq98IVCdOjnGlaZUxPbO+HrpkR1uQ4oqO49XFPHiMUiBp+0xDvDp
+    3DcjP3cWkfOQ2QdKr9vLaGBVsbZR8nbc2JL4PccROLFz8pueHFuTa6IsATyOoDZfQgFB
+    prZcndiPaFFu/ARsGu/CE1T5UPoq29kOhBMjCCdEsT8VCwombkG21GYFTv3BwfOsl2XK
+    heqqZRl2Dw0cQK+6EWTgtBjcii05lMUv24KhCccoO5n5snwkfQdEYPUmWDmLAWhxL56j
+    AIFA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1769681396;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=dL4ovVaIoL14urawadtQfEiQbjiJiqTQipX6cUzdKIo=;
+    b=YmXyYgRZMPj1+dRlZy8OizJZ6AoIALZi6UTFruAj4p/wsAJWrJV1I19Yv3IfH+EG35
+    5u+4gbtskoHNihKmikCw==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8YjX10Q=="
+Received: from [IPV6:2a00:6020:4a38:6810::76e]
+    by smtp.strato.de (RZmta 54.1.0 AUTH)
+    with ESMTPSA id K0e68b20TA9uqlR
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Thu, 29 Jan 2026 11:09:56 +0100 (CET)
+Message-ID: <c5e95a45-9aac-4a67-82b5-ac4ed8ae2844@hartkopp.net>
+Date: Thu, 29 Jan 2026 11:09:50 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1600; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=wu9M+YDfwJ8dOu+FlgbV64HrctEi6RsMM0HvZsHXUeY=; b=kA0DAAoBj4D7WH0S/k4ByyZiAGl7MV+hqNmZ7jb2bMW4ynfWJ0pO3vqpF7Y59dwaVG7hmSXVJ YkBMwQAAQoAHRYhBD+BrGk6eh5Zia3+04+A+1h9Ev5OBQJpezFfAAoJEI+A+1h9Ev5OirsH/3KX xXvB9tCqEfr30LirAxcQuBxAFkGQPqd31Tzy/xWPIOdzHDDlTjYm4gckf//6GUZA3NILzInw1bt c2dHrITwQX6eoS4ceKZuz4GIw9CP2m+iGU2b+OwVHSxDRJ34Iob05w1HKev9LNy1ZMmKHTKSgEo 8VIkZCXz5hLuugdYhVgoRHG3y17Zh6Qn7N/PZ8PyqUs5J0OKdKpQFankW4s8YBhxrCO2Y8e8TnD aQz7mu0rr1KM3TOqzgSEDgCrR1nK/+JKPE2pdjTcJX6Vpvfx+E8aWeir4u0BRVJacEqVOO8ITLk LWq5LrYQNGJhKRfa5pGZ94FWED7H04qXVjd+ZPQ=
-X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: b4 prep --auto-to-cc fails with 'NoneType' object is not
+ subscriptable
+To: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: linux-can@vger.kernel.org, tools@kernel.org, users@kernel.org,
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+References: <20260125201601.5018-1-socketcan@hartkopp.net>
+ <20260127174937.4c5fc226@kernel.org>
+ <67cb17f4-2f72-4847-aa04-3633f3d8df33@hartkopp.net>
+ <20260128-booby-of-phenomenal-proficiency-4db5ab-mkl@pengutronix.de>
+ <20260129-versatile-tuscan-mongrel-f9b173-mkl@pengutronix.de>
+ <f47126ee-8256-4077-a09c-47a1ed461f65@hartkopp.net>
+ <20260129-fortunate-pompous-chinchilla-dcb99f-mkl@pengutronix.de>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20260129-fortunate-pompous-chinchilla-dcb99f-mkl@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-It's 2026 and still the certificate info in the kernel pgpkeys repo is
-encoded in latin1. This happens as the call to gpg happens with an
-(nearly) empty environment that doesn't contain locale information and
-GnuPG defaults to latin1 (aka iso8859-1) in this case.
 
-This creates difficulties to send patches to these files by mail as
-these are usually transported in UTF-8 and patatt only supports UTF-8
-files.
 
-So instruct gpg to output the data in UTF-8.
+On 29.01.26 09:48, Marc Kleine-Budde wrote:
+> Cc += tools@k.o, users@k.o, konstantin@l.o
+> 
+> On 29.01.2026 08:49:24, Oliver Hartkopp wrote:
+>>> Hooray for switching to b4!
+>>
+>> Yes! Unfortunately one of the most relevant features does not work:
+>>
+>> $ b4 prep --auto-to-cc
+>> Will collect To: addresses using get_maintainer.pl
+>> Will collect Cc: addresses using get_maintainer.pl
+>> Traceback (most recent call last):
+>>    File "/usr/bin/b4", line 8, in <module>
+>>      sys.exit(cmd())
+>>               ~~~^^
+>>    File "/usr/lib/python3/dist-packages/b4/command.py", line 417, in cmd
+>>      cmdargs.func(cmdargs)
+>>      ~~~~~~~~~~~~^^^^^^^^^
+>>    File "/usr/lib/python3/dist-packages/b4/command.py", line 83, in cmd_prep
+>>      b4.ez.cmd_prep(cmdargs)
+>>      ~~~~~~~~~~~~~~^^^^^^^^^
+>>    File "/usr/lib/python3/dist-packages/b4/ez.py", line 2835, in cmd_prep
+>>      auto_to_cc()
+>>      ~~~~~~~~~~^^
+>>    File "/usr/lib/python3/dist-packages/b4/ez.py", line 2655, in auto_to_cc
+>>      logger.debug('added %s to seen', ltr.addr[1])
+>>                                       ~~~~~~~~^^^
+>> TypeError: 'NoneType' object is not subscriptable
+>>
+>>
+>> $ b4 --version
+>> 0.14.2
+> 
+> Latest version is v0.14.3, please re-check.
 
-Note that the graph files (both txt and svg) already use UTF-8.
+$ b4 --version
+0.14.3
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
----
-Hello,
+Same behavior but different line numbers:
 
-if this patch is accepted, I suggest to regenerate all the headers in
-the pgpkeys repo in a single commit to not have different encodings for
-different files in the keys/ directory.
+$ b4 prep --auto-to-cc
+Will collect To: addresses using get_maintainer.pl
+Will collect Cc: addresses using get_maintainer.pl
+Traceback (most recent call last):
+   File "/usr/bin/b4", line 8, in <module>
+     sys.exit(cmd())
+              ~~~^^
+   File "/usr/lib/python3/dist-packages/b4/command.py", line 417, in cmd
+     cmdargs.func(cmdargs)
+     ~~~~~~~~~~~~^^^^^^^^^
+   File "/usr/lib/python3/dist-packages/b4/command.py", line 83, in cmd_prep
+     b4.ez.cmd_prep(cmdargs)
+     ~~~~~~~~~~~~~~^^^^^^^^^
+   File "/usr/lib/python3/dist-packages/b4/ez.py", line 2907, in cmd_prep
+     auto_to_cc()
+     ~~~~~~~~~~^^
+   File "/usr/lib/python3/dist-packages/b4/ez.py", line 2727, in auto_to_cc
+     logger.debug('added %s to seen', ltr.addr[1])
+                                      ~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
 
-Tell me if you want a PR for that as regenerating just the headers
-requires some changes wotmate.
+I upgraded my machine from Debian Trixie to the "unstable" Debian Forky.
 
-Best regards
-Uwe
+I didn't fiddle with 
+https://kernel.googlesource.com/pub/scm/utils/b4/b4.git nor pip.
 
- wotmate/__init__.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Best regards,
+Oliver
 
-diff --git a/wotmate/__init__.py b/wotmate/__init__.py
-index c88a209e1d59..e4b9d8d24cb5 100644
---- a/wotmate/__init__.py
-+++ b/wotmate/__init__.py
-@@ -63,7 +63,7 @@ def get_logger(quiet: bool = False, verbose: bool = False) -> logging.Logger:
- 
- 
- def gpg_run_command(args: List[str], with_colons: bool = True, stdin: Optional[bytes] = None) -> bytes:
--    cmdargs = [GPGBIN, '--batch']
-+    cmdargs = [GPGBIN, '--batch', '--display-charset', 'utf-8']
-     if with_colons:
-         cmdargs += ['--with-colons']
- 
-
-base-commit: 7d1694f954fe486332c3eac65b675a7c350ed7a6
--- 
-2.47.3
+> 
+>> While get_maintainer.pl itself works ...
+>>
+>> $ scripts/get_maintainer.pl net/can/bcm.c
+>> Oliver Hartkopp <socketcan@hartkopp.net> (maintainer:CAN NETWORK LAYER)
+>> Marc Kleine-Budde <mkl@pengutronix.de> (maintainer:CAN NETWORK LAYER)
+>> linux-can@vger.kernel.org (open list:CAN NETWORK LAYER)
+>> linux-kernel@vger.kernel.org (open list)
+>>
+>> At least posting via b4 relay works fine and downloading of the v2 patchset
+>> you sent was comparably easy too.
+> 
+> Marc
+> 
 
