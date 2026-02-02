@@ -1,72 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C3628AB0B
-	for <tools@linux.kernel.org>; Mon,  2 Feb 2026 14:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158641EBA19
+	for <tools@linux.kernel.org>; Mon,  2 Feb 2026 14:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=10.30.226.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770041402; cv=fail; b=CNOlPs+b9Z67M+lFwfb0rtwHgxMzhPHoICTs0FYN1uS7yA2JeYkZIsEAVGubCsiIPtclIdDQIDEQPqcvsHyQk4X/Qh42LvR0y06buqfaumST07cboGSXe6sKZlLPVRQ0TsjM2RmpC5J/qft1L3P0Tgi4d4gSwPCQcGGBCqP4yOI=
+	t=1770042692; cv=fail; b=YntuIUESKjcv7ZtpTZ5TznkzeMDyYVwsYNxLv3ZUMdDHRzn0z7ZhoqGyF29vbSfdxEavtJcUV66XYWC045zSHPKI4TR2bCPCtXxikVcIPaxnUGpk4N0tGbfL4Ybs7Dd7AnmcJTKLrPUrzE2D1/xqM2OdB/ok4DxLieFHnh+ZswU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770041402; c=relaxed/simple;
-	bh=YbvzkKWYt35sIEH7VrS+uV8O+Zk3jIL3AtgVxqe4TRg=;
+	s=arc-20240116; t=1770042692; c=relaxed/simple;
+	bh=z50uNOkd+wQC6NMdU5pJunIIhkZONgQ8ED/VpD1otHU=;
 	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=FAqVAio5lapfIuMaZnXMkwx2JWCFqRQ3EGlaAtUCK693xP/4pad1wgCZ2Nxkx8vZ/Kq+7Z5khpMVwgzObxNBhyQZudXAOGBdmSBOwbJQxFd4c2FK0iqu/wkhyvW55jgv7oGGGZ6whiyo8bKOmdsx00KoioATu3NEYU868Wh+FFI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=vaisala.com header.i=@vaisala.com header.b=g6foNUHB; arc=fail smtp.client-ip=10.30.226.201
+	 Content-Type:MIME-Version; b=FtoY/CwW4rRPz10rVzAoo3K3i3I+9UXSGstiOzeL7r4IGV5krWBPOGD/motTW17iwRMHALsrCBuPM14gzPN9o9S6J6f7JgTa1GtpTZ2Vw46cjzX5pMAUot7kpD8PBRpl5dtT1f9mn/m+J83vQMEPX1+GO1+byVh8PbSIKv3OpGw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=vaisala.com header.i=@vaisala.com header.b=2qUMUdDx; arc=fail smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vaisala.com header.i=@vaisala.com header.b="g6foNUHB"
+	dkim=pass (2048-bit key) header.d=vaisala.com header.i=@vaisala.com header.b="2qUMUdDx"
 Received: by smtp.kernel.org (Postfix)
-	id C1B54C19422; Mon,  2 Feb 2026 14:10:01 +0000 (UTC)
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11020143.outbound.protection.outlook.com [52.101.69.143])
+	id BACD9C19422; Mon,  2 Feb 2026 14:31:31 +0000 (UTC)
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11020120.outbound.protection.outlook.com [52.101.69.120])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 8577BC116C6
-	for <tools@kernel.org>; Mon,  2 Feb 2026 14:09:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 8577BC116C6
+	by smtp.kernel.org (Postfix) with ESMTPS id A3B0BC116C6
+	for <tools@kernel.org>; Mon,  2 Feb 2026 14:31:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org A3B0BC116C6
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=vaisala.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=vaisala.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nuB9Z6zIe0ZQSCG4p2e/D/TehFAymjW+Yk+/kuHpoTZPa7mxxG9Iyx9KegVntpqW5M5il0UkzvOGQzlCfxGy7hdlkA6QJY+6OUkr2VhjDpjZjZFNqwyhhcADgh3ja1za5nDkw8dn4XAKizVCNYfJAvBqL2TUsboGdtUe6jBcGNm83LTxSDbPAWtxJhW+xoVRNNi4v10xi1vlGUKNMT8t2idxFWmBXOjSunLGLO8UZ2biqvMlDeZiB0S5QCWoClmHbQ+FR1JVuSAV8q6oNgHPXs3+kHX/F+QJQnhCsp5PWfVujiZh9FU8HeOPJBY9z9vBGjcmbuvRImn+iorG+HVjIw==
+ b=doOge0cImT8CCsRCzH+f7xiJ6uOnk9IN9TRtlXroDbwuOdX6uhj0Xz9Ul49bfOrw+2/rIAEyTJIbLLlsa+FtwiU5FA252JYopGTVVwfiae+uUGZyxHz/mOdgmqzdOVQbvfyloIdzz900Rmnm7SWwDma/2J/vuMIJm72isNudEM4iIg64nQJPAq082upXmwWK3mj51TDzS2LQbRbYUHxkvkPBUr4Vi2OrVSGVu5OqObwKECNmO7vaY1V0Wma1z2kZhg1rNV4o5jXVSWmTC8OC51KijrPEiRYQmuKqY8hL83NwRx9FVaWxvuKbNceKl2jvFRXavkPhWgtb1eefz73Jtw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=euxmWCne9af6L32SNLH7h5GWzLxA+qYrTTk/y+dPOY4=;
- b=gfMyfa4jqxoYTHbi6YNY5PeB4At6MY3hdZIUikF9M70Drnp8HRuQjzcz/pKIrbNOeuKxWwXIXVpG/9YTicXHnyh4T0eodzc5+2kHZK857gPpGgDBN1NcRCDUDWP4qNRWswJRIY/u0A3EXoYA4PfE/uqWwDcfEX8EXj6sAp6mUHo+1Rtj683yWeqs6brQ2BKooXw3qXJuCEGfSf1qsUCFOJh6uR1a+LqbAPsVBJY9p40/yQwy5aadS/YXMzT8+nNAU4HG59gWS6SCUW3iVyNygBiqXZsBKJG1q+n0E98vLAE+sLtcgGRNcCDepZn1Duom4m7c0opa1edQybVfTcRMmA==
+ bh=OzdCWuoThOPhsrc/zEA4FV7onO71IunPeb6Pl7tgdkk=;
+ b=P4ql2pIcDqAR5BTMGPhfO1+Yx6mPxvZ5cdRmffBmffrE6+EjJswTJW90eR7u2j/4QAcf1lOIUh4AqyhCJtRG220V54tCSvUtiLtpkOrdHqitSIcqHBc672TzDBdHGIFChedCjPwCzDCdnKW6yLDbI5NPkvPXADvGahgr41PJX+lhjcWR75AABkjAqrJiqMATTUUvoJCBiQQKunGsxFwVp9R3XGT7lU4cJQsFbn11mWHDjI/Xso49dHfibbfKJjPBuMFpFKUhqGZ5A3kM++0o2MME/17zwbqWXFh7BGYe20s+ZaGTjY2/8lP9Ddx18vqqPZcpRU46PdDx+8itZ6g6FA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=vaisala.com; dmarc=pass action=none header.from=vaisala.com;
  dkim=pass header.d=vaisala.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vaisala.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=euxmWCne9af6L32SNLH7h5GWzLxA+qYrTTk/y+dPOY4=;
- b=g6foNUHBmRQJ4N5BfwfETRVfgA081Q+TWfTO85oyRqa+fAnmD+AptS7SATYhdGDcXfzdntCMBqRFfikBtSB1l4A1FtXwOpPaTEQlpgX0uBaGENUXrqkJGbigItpddKQ9c/qM8rC7zRUhQhBZHbiz/uyfZPEeK5FPCzmq/+EN6c2y6Xr8E8PKWaYXZxEkhuJgOBZ8oAm5gEwYhWRlr2TXB0F+s7IIShcGCPmuidurcmLORk7YUmsQyLkxLBT3bU84LLIiUTRcubTbDKZ7DT8/2SxOPznYISUG5XiSeuSH9YoVOLGQba1U3Q93KbXoRYqcazL13VPdE5AXJ5IIgkqKSw==
+ bh=OzdCWuoThOPhsrc/zEA4FV7onO71IunPeb6Pl7tgdkk=;
+ b=2qUMUdDxLzBvhPWqoNi6Cv+094uLcTZf6uq2ZHTqo9ALRRd+WbqD2xbwRwnlnwUndvytR4nq0ZX7n1m5lPgBigWDzfdUXcioKG9q3RlOhwnFJSGHCJuwhQEU3PGC1UCBCwGuYdpB3Ivyp0/Hk24iei+LXcH+0JzP9T00LHbuJ0U6toBCyZhMAYszekxUAReqtOeGECtd3dzLEjAkZFbdXLcyUtTzUZtymTPQosfKexM4XOotEa9lNAorF6bcABLbIhzsHTAz20idJa0d7tzxzySdqXnd90U5eFy8ypjtlwHaErAa/7rkSwUIkz3NPKI0goxD0k1tfMou9wG1agKslw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=vaisala.com;
 Received: from AMBPR06MB10365.eurprd06.prod.outlook.com (2603:10a6:20b:6f0::7)
- by AS5PR06MB8804.eurprd06.prod.outlook.com (2603:10a6:20b:682::22) with
+ by DB8PR06MB6362.eurprd06.prod.outlook.com (2603:10a6:10:12c::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Mon, 2 Feb
- 2026 14:09:53 +0000
+ 2026 14:31:23 +0000
 Received: from AMBPR06MB10365.eurprd06.prod.outlook.com
  ([fe80::addd:5e9b:7273:8049]) by AMBPR06MB10365.eurprd06.prod.outlook.com
  ([fe80::addd:5e9b:7273:8049%6]) with mapi id 15.20.9564.016; Mon, 2 Feb 2026
- 14:09:52 +0000
-Message-ID: <40efb93d-ee7c-4ce2-9a9f-d7e6ec8bcf14@vaisala.com>
-Date: Mon, 2 Feb 2026 16:08:16 +0200
+ 14:31:23 +0000
+Message-ID: <43054d10-388a-4414-966f-785d46f88e36@vaisala.com>
+Date: Mon, 2 Feb 2026 16:31:19 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH b4 2/2] b4: add support for oauth2 SMTP authentication
+Subject: Re: [PATCH b4 1/2] ez: add SMTP authentication method to printed
+ information
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
  "Kernel.org Tools" <tools@kernel.org>
 References: <20260129-smtp-oauth2-outlook-v1-0-e8c6d1b00c03@vaisala.com>
- <20260129-smtp-oauth2-outlook-v1-2-e8c6d1b00c03@vaisala.com>
- <176992425475.611611.11253371452032746350@lemur>
+ <20260129-smtp-oauth2-outlook-v1-1-e8c6d1b00c03@vaisala.com>
+ <176992425474.611611.3433768227265573567@lemur>
 Content-Language: en-US
 From: Tomas Melin <tomas.melin@vaisala.com>
-In-Reply-To: <176992425475.611611.11253371452032746350@lemur>
+In-Reply-To: <176992425474.611611.3433768227265573567@lemur>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: GV2PEPF000239D8.SWEP280.PROD.OUTLOOK.COM
- (2603:10a6:158:400::16f) To AMBPR06MB10365.eurprd06.prod.outlook.com
+X-ClientProxiedBy: GV3PEPF0001DBAC.SWEP280.PROD.OUTLOOK.COM
+ (2603:10a6:158:401::6ec) To AMBPR06MB10365.eurprd06.prod.outlook.com
  (2603:10a6:20b:6f0::7)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
@@ -75,234 +76,135 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AMBPR06MB10365:EE_|AS5PR06MB8804:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0000687e-2565-4bf1-34d6-08de6264bbfd
+X-MS-TrafficTypeDiagnostic: AMBPR06MB10365:EE_|DB8PR06MB6362:EE_
+X-MS-Office365-Filtering-Correlation-Id: bdf31a02-d11b-418a-2f16-08de6267bd74
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|7142099003;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?dWtxY1ZsT3JKaWx4Vk0rWGlwb2l2WUcwdk9uaHp0UDlNQStlc0hUWlhSTWpr?=
- =?utf-8?B?QlZQNnc4anJna1BFME5kLys5MHIyRlBCdmxXbGJGb2s1ekdLc0wyODd5OVBJ?=
- =?utf-8?B?WDVrZStOSktLTXBscmJZWVdocHJkcGsxckpSSk8zN3kxTHM4S0NLWnpyV0VH?=
- =?utf-8?B?aktmWjBVMm5pV20xWHZ2cmpSajdrbVBGUlkrbnpyWEp0bE40bFdmbVNBTENX?=
- =?utf-8?B?UDhNRW5ZU0VNeG94cUUxZFVkbXcvdENQdTZHU3BEWkpMd1VxdE1HMFZOUmJx?=
- =?utf-8?B?Z2lpK3RJU1dYVzMwUHgrQ3RRcU50QlJaR2NJWTVhUVc3dnFhd2Y3NkNSbGd0?=
- =?utf-8?B?WHZuL0VlaTMwSy80TnRqN2FCd1JMN3M0TlRLVlVjbW11ZTlsY3laQ2lJRTl1?=
- =?utf-8?B?UFZ0c1pnYWxJVThRQTVVK2xBQmV0dE13M3Bzdk85UWxxU3MxVWhucjNOWkxk?=
- =?utf-8?B?c04vb2twMllPeVhGUk8zblJYUGNUYURtd0ZMcktOaFV6R3BEeWFPWGYycGJS?=
- =?utf-8?B?S2FUb0Q4cS9HUFpNVHlTcENabnppbnROWjVWSmRpbUo3RlZ3OUV6S05wMkUy?=
- =?utf-8?B?OFBoazhFQWRUNW1BdmxqWXlkakFrMjVzSm9QQ1Z2T0RzSUlQZ0RBdGdHNmhp?=
- =?utf-8?B?dU1POUgwRHJXUEcrQm9mUnI5SGtqL3Z1NFAxMVBVbGdBREVObjI4SE85emR1?=
- =?utf-8?B?V0UxeGYvMlBXam1yVjBpalhYdDVrNFlTMEtWUUdSSDBZUVcrMUc5NWdPZFBj?=
- =?utf-8?B?V2F2RXArUktzbHIrYWJ2bjVlVndoN2Q2S3VWVGZUbTdPNHkvczBtcWlVQXVs?=
- =?utf-8?B?Nm1ZSVJEK0xUTklDZDI5NnNJaWFMa3pLRXZlMGRyYXdiUGlVT2VqbHpaQTVU?=
- =?utf-8?B?bzlXa0I1RXZlOFJlVDlLR0Y5TGo3UEdtTGl1UGpYV29ZY0ZZMUE3UUpFMzhP?=
- =?utf-8?B?K05acUlwNFppMmVMWFJsajVxeEFFeHJVdWJqMFF2Y3hnMjFKczRwTzdTTlNI?=
- =?utf-8?B?ZjBIY0tuTmlpN1YwNFZpUmdaWEhqZm05Y1Q4R3QwQWxSL2RZaythaHFkV3Br?=
- =?utf-8?B?a01pYzBBa0xhTStIcEJFQ2N1d2Vrb1pkOHd0S2NzUTh4cVVCQm10bnJSRitu?=
- =?utf-8?B?R3NKWi85MnZHdXlFeldvT2RvcDd3M0doek5ibWhCUUJtTjUwekZ5T2NLNmRm?=
- =?utf-8?B?dVhZMEY2SjJlVjQvbHpXQTBMRDc0SGVPOWprRXNJczRWUWY4OXRiOTJPOWQx?=
- =?utf-8?B?WmJ1R2hPSG1HL2dES0NJblhvb1VPcTA1V0JuYnJVS2duTEtFQ2tXR0xGbkFj?=
- =?utf-8?B?dFc1bDhnN0xJMU5JUEt4TndnSVg3cDNTcGVuOWtKVW1adjFYemVnWkFja1FL?=
- =?utf-8?B?aERjMkxRMFgrMXN5RFRvb0hDcTJvaUh5QjhaaHVDWVN3eWVQN0Q2bDEyeFhq?=
- =?utf-8?B?eXJza0ZuS0tSaXJyZzJYK0tuTzdkdGhaSTRsTWdwRC9UODB6WmIyRnFkaEQ3?=
- =?utf-8?B?dWhkNE11cjI1ZlFoQWJYQVFWZ2JxYUhhU2g0SHBJSytOZU4wL2tpZnRnaXB1?=
- =?utf-8?B?OVVqWFJVdVF6SG9yZ045N3NZWE9GcXRIa292YlJ2MGF4c3pxcXJpanVJVVlq?=
- =?utf-8?B?Y3VpOE1MUU9lUXNDcmw5aENIRDRERWFhdytzQ2k4ejR5TFJWcWVVZ085ZjVn?=
- =?utf-8?B?N3hVT2NWS2liM1htNXdWUXg5YWU4QnpaZkJRTk5veFFvVHl3b1piRGpKUHI5?=
- =?utf-8?B?ZG9xYjVBL3JPejY1V28rVnJ1THRnQjgyMUU0eGdmbHhMeFgxeC84OFVXbVNt?=
- =?utf-8?B?dmtjK3BjbnI2TlozQkd3d1RqQXo2RS9OV1NEcXhjamU5N0wzWHFhWXlQWUdY?=
- =?utf-8?B?d3ZYYnVPSlQxb01QcmFHOHF0S2RiZ1B1SVdRek01S2lrRnp4UnRXajNmcWxF?=
- =?utf-8?B?a3A4VmM5R3A2K200TUZOdDQraElBOVJhOXJrK3VoeTUxSTN0SjhyMEIxM0tU?=
- =?utf-8?B?czRmZjNDdmwyckJRVnpseXNlRkZiNzBuQ3NIQzFDZko2YVViQ1BzSCs0bzhm?=
- =?utf-8?B?aHNrN0FnVXFJejJWVG9aeVlCRDdyaHVrbDZHYU5DUEtsRUdnak9VbkFYMWlF?=
- =?utf-8?Q?uQO8=3D?=
+	=?utf-8?B?R3lwa2ZJL05jV2F6WTV2MnJNd1o4enY4amhMQ2szaVlkaThLa2dBS05obUZF?=
+ =?utf-8?B?VkFpNGxyM2xJQ2xncFZpaGx3b2dCRHloaUhWRGhSV2NkSURhK0NBbmlwVDNX?=
+ =?utf-8?B?T1BoazdqRjRjQzkxc0NyVFJrMjE0UGJ1VURZL1gvWjMrMGd0YXhvR1BhcCtj?=
+ =?utf-8?B?RHdwNXhUNGpiWHoxVHR6ZjBHT2ZKeWp6VFVla0E1eXErMXRMTkxWOTloeUVN?=
+ =?utf-8?B?ZDVzRFZGU203ZDNIS1VZT1hpUFJNTThURkpnaTNJNUJuZ2YwcExMb3ZPNXhJ?=
+ =?utf-8?B?YUFoZXBYMWpRdllnVUJhYWpEdlV0SWVwTkxyNG5hNFFqRHJKOFZ5Z3kwWXox?=
+ =?utf-8?B?eW03MzNSUTdZaDhvdHJwNHRPcy9Za01vc3lwUGgwTGF3MW1KdkRhUitLclF2?=
+ =?utf-8?B?RHN0ekN0TjV0ZHQzYUNESEY5OUpqcnQxendHMCtCYTZDSmtFdFZSaUJHR3lV?=
+ =?utf-8?B?MDloVVczRlMwUDFxSWlyU1ZDTDk0SHJpZXp1enZSYWZQNWZNVG5vT0k1NVRq?=
+ =?utf-8?B?Qis4UzZGUkNhNDRFN29WNlBiK2pRVVY3ZGV0RVBBbkpLME9pR2hJY0ZQZ09q?=
+ =?utf-8?B?Mkc0ZEplREp5UmZwS1lDMVVIMDdlSitFSlFZaUNQZUhhV2xXNGtoa0I2TnRy?=
+ =?utf-8?B?a1k0cTV5VURzYWt0K1VrN0tTcFdpalJDZm1vYzk0cTNleGg0d3I2Z1F3c1l2?=
+ =?utf-8?B?OFlVb1EwSnhiM09yenFKd2RsQlg0RVVpYzhHcDFvWWJSTFJoTW1VajhtQVp0?=
+ =?utf-8?B?Ymw0L25mRysrbUszcmk1eUhqYmdlQjMyS3NrL09mUXc3V0FPbjRUaVFGWVd1?=
+ =?utf-8?B?VE5BL1ZocFdQZWlsaVhkWmxqM0lZUlk1R3VRellyb3VESFBQOVFJUll5TjNY?=
+ =?utf-8?B?dm1DZEpmWmRZN3RncDdORWJZM2lrWjVZelNFZ2FNK1VmcmJEVUEyWlJzbzhj?=
+ =?utf-8?B?T08rMnYzdmMrUVZtd0phQVQ4QVFWczljUjBueE02T25WSzRTZjdubTVmckhN?=
+ =?utf-8?B?dXk0VURUM0o3Q2lPK3ppZjIzcGMzd1pQeFo0UzFNdnVBREUrNUJ5UTA0LzlV?=
+ =?utf-8?B?eHZzSkRxdnhtM1ZVci9VNkZtb081Q255U3o2ejRNQWhjSVM5Y2ZORjRBQTBz?=
+ =?utf-8?B?aUdwbXlWUVhtNWNUa1BFTUpCUFVVOGFkZDJnL2JDMUFJNWM2K3FjeFRJeDhZ?=
+ =?utf-8?B?MTBUQncrQUN5NHYxWlpVZm81aFc3VENSdWpIVWZLcncxTzZNeno0NHBCblVi?=
+ =?utf-8?B?aUk0RWk0M2FEUFNnVUdFVmtrQitEUnpCd2tpSnJpY3ZNQ3F4bEFVc0NnVEcx?=
+ =?utf-8?B?ZEN1dVlPTk9saE1YeDJRRS9qYUhnZm05TG9XY3dleitmVVVUaG93bVFUWkJT?=
+ =?utf-8?B?dmZ5Q3BrOCtkNjZ3OWhvOEc4OWRub3pDcGdLb0JZNG9zeEtuNHRydXBSaXRO?=
+ =?utf-8?B?R0lNYkliNW53eFltU2ZpdTdwMzRtSm44M0Rud2hpTE5vSTVxTTA3clpXandC?=
+ =?utf-8?B?a3E3ZkUydWExdTlCUE9sUlBIemdOS0pZcmx0MityQTZtZmdCOUw1OEtyNkpI?=
+ =?utf-8?B?WUZqYlVvQjh5SSszblh3Wm93enVaRU5XM3hkYlYwVi9LNFZReklQYnpuQUtj?=
+ =?utf-8?B?Z1NDOGp4NWFuZVI5SEtFSFZMTDhWOWtYbFdaQlZMRERvL21TR01DQmN6c1o0?=
+ =?utf-8?B?RHF6UXhkSEI5QTJHRzl3ZWs1dEo3QXJSTU1Ub3FqRWI3a2FYMGdXMXR2OVhX?=
+ =?utf-8?B?bHJJQ2pnOFQyK2oyV2FmdnpzV3B6a3cxaTRjSDhIOWxtQ2ZPQzBZM2NmR0xP?=
+ =?utf-8?B?REYzcGpwbjQ2WmY2R1N3TG53Q0xwTWcwSnRab09JMzhmZFk3Y0pnalFiT1FT?=
+ =?utf-8?B?YXRQR3BaelFCQTVFV0x1TFJBdmhnYjkxRHhDU3ZyUi9OblVJdkFZbkdyZ3hu?=
+ =?utf-8?B?cnhZYXpxcTVWai9lYklUTHVnYmtPbmN6WTFBcWp4TFFlSm5NdzZOV2pMc3JT?=
+ =?utf-8?B?OGV5cTRlL0tGSmJ0MGk4b2EzTXhwUEllOXBaRk41bFBscFdqZC9GZk43UW8y?=
+ =?utf-8?B?TzcveDRGd1lSOXdkWnlaWEJZZVNrUDlzMUlKZHBGVWRWTFNyWGsranltK2Ji?=
+ =?utf-8?Q?os7c=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AMBPR06MB10365.eurprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(7142099003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AMBPR06MB10365.eurprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZTJDWE83c0FwUmtyQUwvZUlad1MrYUJGZHJuaEpZQnNYcllxVHVMNlJsSVhK?=
- =?utf-8?B?YnBtMlVZVkdDVG1CKy9xbVdiajYxc0RhRWViMjVUTGVYODE0MWg4U0hiSlVY?=
- =?utf-8?B?U3hsdDljR0VHVjlwZXdHMzZIZUtlZGF1VkVUSC9PQWFscE9GeTZtdnk2Qk9k?=
- =?utf-8?B?WThKL1c2ZGdWNGdRUnc2bFpjMUlIcmhaRUVmQUlqS0ZQZzgxcWlGZWt5Q2lk?=
- =?utf-8?B?azZhRlFxK3pnKzF6NVdPWENVY3dRU0hFY002ZFFNVzdzSEJkSmdaZU9HZjBn?=
- =?utf-8?B?Uk1IT3JKMFBxOFhWOXNrTGZxYXl0aTlMdVZlRXpRdkRpZ0hySXpxY2JNT3ZC?=
- =?utf-8?B?UDdSR1hzTVR3SjdjbGNLTllOK3hKWHRXZ0RPN1NSekhYM2Iwb0tHMW93emM5?=
- =?utf-8?B?N1ZKZlcxMHVna2RNZzNoRFc0bUZxUzJGZmJwVlI1bjZlUGgvQmNFdGZQZVRi?=
- =?utf-8?B?NlZQbE5oaGhOTTNlOUV3YUxqdCsxTEhTVDI0NGlOYU4rNVV4bDkrVGN2RFc5?=
- =?utf-8?B?amZqUGpLa040TDkzcjFMWFJLeXhXc25zT21Ha0hKeFZJWngwNmMrcFdRRkNF?=
- =?utf-8?B?NVZWbVVIV1V1aVYzY0tjTXhZZTBYT1VNVzRQWTRreFNEdjR2MXphWURkZGor?=
- =?utf-8?B?b3dPQ0s2OEZ1TjNyVEMrWWtQWENodGtHMTY2S0FDdHVYa3R2Z2RITzBKUDhy?=
- =?utf-8?B?NlNlelBFMjJlZnh4YU1ra25SQ05OUWlVdFd4SklWY0FXTmk4MjNISm1pQmRH?=
- =?utf-8?B?RlRpUE1hbUowcU40aWpMZDdGSklTUllsRFdaZk9BMnh1UGJyR0ZNUHMvTStk?=
- =?utf-8?B?KzRWMDZpd1FGSExSZjVSYXRNdTZ1N3RsZjVWcVc2Ymsxa3p3SFVHcTBmZU1Q?=
- =?utf-8?B?NTZBWFJ1bjRhNUlUREh4UWo1NlV1UG5qT3lUR1A4VU9CMm5jN1J0SXpjaWU4?=
- =?utf-8?B?TUdOejRDQ211TjNMWUtrU2QxcTdpSHF0RWZ2b0c3RDYvcFhCUTltSm9NdFpq?=
- =?utf-8?B?Q2M4NHE5YmgxbjkvMWJYSkZCZzd2V3daemlEOXV0LzNoQjBwc3lqK2gwSXVa?=
- =?utf-8?B?T0ltMEpUakpJT0x5bnBpMlFvYkV0NVoySnhOV2lTMXpoNmFlaWU4d3JFMDA0?=
- =?utf-8?B?ZHpHR0lUNm5Ed3crSkVjaVEzSlM4VlJ2Skp2OU9Mc3Y2clA1YjN2eU5xNWY1?=
- =?utf-8?B?eHJFZWhYNkxjUXk5aGt2UWQ1d00yYWNvYnI3bllTNWtUZFo0dEVSUUs2bVE1?=
- =?utf-8?B?ZW4xemg4TER1aUo1NHJHYjVNTmtHcW00V1JaT3kxVU5HN1hEM2dZdkluTHlp?=
- =?utf-8?B?dzNIcFNNeFdNQ3cwa3BLd2tycS8wTTZieVNCZ3pQUXY5dm1heU9rYWw5ZDNW?=
- =?utf-8?B?bjBPcEhaeitjUi91K090UFIzTFZSUnA1VmxKNDlPa2VsbnhyQSt5Y2JWSG05?=
- =?utf-8?B?Y01pVUlyTWxtN2tBMUY3SS9MMWRPRXFGcXhmT2pMR1J3NlRmN2huc2d6em1R?=
- =?utf-8?B?NUI5aGE2bmc2OXJMTGIwNkNsbFh3N2VEa2hzMjJsbiticjFUTjI3MURkN2Z3?=
- =?utf-8?B?YXNJZS85MDBKNUFYL3preFczREROL3FBSlFIalpPWU1lODF0QjU2SjZDOVB5?=
- =?utf-8?B?K3ErbXRibGJ4a2FjOFduUWJwYnQyMzFLQi9LQXNtYSt0YjhXeU1FTTFXVTAv?=
- =?utf-8?B?eWc0c1ZtUWE0U3M5U1dsclBQQk9uU2ZKa3FORFREOFlxcXZTTzlJNG1LdDNU?=
- =?utf-8?B?Njc3WkZLUmhjcFRwZ1VoRld0NjhjYnlpOCtrdTFjMmZPWHhQUmE1V1FwY2N3?=
- =?utf-8?B?THc5VjBkNTF1QU9VU0pGc0R5a1A2cytWcDJwOUo1Wm9Rekx1MlYwOEt0K1Bm?=
- =?utf-8?B?R2FjVHNDRnY2Rzc5U29NUU0rTVF0UUpvZFZ6aXlNZFpQVVZQTlE1VkdJdktp?=
- =?utf-8?B?enFrdXJLVStMbHdSRnNCbHp6dHpwZGpjaWJoTjJyWC9MbExLRnFpSzBNdTd2?=
- =?utf-8?B?RmZKMytkaHh0ZFE3a3dvSnZnaWdFVHZPS2NRTXVpekYvNlFTeHlsRzZtNlB2?=
- =?utf-8?B?VWhyc0ZmbjFodURSdUdYRE4vb3lCVXRWTGpVL2M1WmhtOXRkZlovcUU0SkYy?=
- =?utf-8?B?Ykl4bThOREdpTkRpdTBrTlRBOGtXUE5kVG55SExTbHM5NzZuZGNtUTh4dzhO?=
- =?utf-8?B?N3duVXJGcTZmNTZSeGFjZVhlRGNPNlBLOHYvWkk0SmQvWHZZMHZISWEyV292?=
- =?utf-8?B?TWxkV1F2Rlp6c0t1aXVpZEpuYUVVZXRBTERUV1BVak9laTdJSDV6emxuejB6?=
- =?utf-8?B?SlhxbXpqN0l1YTJyUGtmQWV0MnMwRlBBSm9QY0krZjBZUFVuSkVreGx0OVZ2?=
- =?utf-8?Q?PhJcPWe169q9Im1Y=3D?=
+	=?utf-8?B?UDE1QkxmeU1RdU96N0lyNllhWDU4cVpXMThBNkMrMjBLZ3lFakVmMGZNRExZ?=
+ =?utf-8?B?elJmUFhtTVZQdHZGbTZHRnk2eG1EQUlTNkd1ZkZQbGlORmk3WWptVkx5OUxl?=
+ =?utf-8?B?bXNTUTc0cXBYUUJOL3E3QVJIT0tpcHRsWm14ODNDK1B2b2lUakdpNUFWOWUw?=
+ =?utf-8?B?OEdSTW1nVjcxallzMXQ0cHNPNUZ0dU53WUxnMzVpYjFYRWxxdFJHOEJxSGNz?=
+ =?utf-8?B?L1l2OTUwRGd1WVpBbzcvODdJY25DazJVcVdIRlRGMU1QZXJrbDlvMlBHdXcy?=
+ =?utf-8?B?M3JzbnJxa25SUFIzUUtuaThKci9FbjRSSVd4dEZLaUQ4SjB0MXNqS3U5Wm5B?=
+ =?utf-8?B?NU9UTG85RHovOUxyUDN2dFF1dWFjYUNHalgrbmFITkFwTkpwcUZTN0hRUk01?=
+ =?utf-8?B?eTFPc2RVK2c5UTA5bk10UXIxb1JRZ04rYjdQWWhjRSt1UzRDYTdGZk91d3F2?=
+ =?utf-8?B?TGJva2w1c3lhVHBJajhuMjI2UFB1WUVvTW0zN0M2YlBEeDdWRUtlQW9EUFdi?=
+ =?utf-8?B?N3FLRjEwMXA4MU1xZGRFcXMyOVlLUnRmL1VKRVZuelU4SnR2RFR5N1k5Wi9H?=
+ =?utf-8?B?NFFQaHhwL0gxVmliWjdyWDYwUWpFWmR0R1NiaTQ4YVVhaEZsRG1QU1Z0c00x?=
+ =?utf-8?B?NS94a3ZMZkNRWkJFQlRDamVaa0pDNmF3aVU5TUtXeE1uWkdSb3NleEZDa0Zt?=
+ =?utf-8?B?VWxLVy9keTF4VmtxZEJ0eEduTC9CeFFrZE1BeHNXVzR6MGFYM3ZRU3ZEZVdr?=
+ =?utf-8?B?a0huVUNOSytrUVVXMSsxVGtYSytFcTRRLzUrU1prZ29YZ0tnM3RDckZyWXZk?=
+ =?utf-8?B?Nk44UDFwS0xuY0x4azJwM1ZXK1NDUGUyLytqZytoaEsySis0K3VELzdncGxN?=
+ =?utf-8?B?TnFsODN2dUhsdDJWalF2YmpZa1VIcmRWaVVRS0VrTzZaRzRtK2hJUjJjS1Qz?=
+ =?utf-8?B?YzBUaWJxNEk2Vmtyc2JCdHVwNVFadHZ5SlAzMXdsR0dFUDBCakI5ZEw1aHRs?=
+ =?utf-8?B?RGd1aVBwOVZ6RHgxa2RVTWYrbG91alQyWDRoaVM0eVg2MnJSUG91T1F2TnlT?=
+ =?utf-8?B?MHFTdzRHZTJKWWJTbVZhdCtGQ2x4YXRabFErS0Uxeng2Ky92VkV6akdScllu?=
+ =?utf-8?B?OHZjcUJpcWp4VWk1RVo2ODNVVExWamxEaThNTGdQV2ZMVzE4VWEzU2p0SGVR?=
+ =?utf-8?B?YllWSk5KajBUNHNiZE9wdzBJM2JkVTZOY1FkbEVWdzgwMkJKaWNtV1VLVTk0?=
+ =?utf-8?B?Vm5yZzJMOTVkdmZObTljbjc3YjNTUEVObEY4UEVhMGxQYk9hMVBqNzByMGNE?=
+ =?utf-8?B?YjgwU2ZVWTZiLzVTcHp6cHN3aGlIelN0OGZnSzlHN2NrcE53VXVLWWpIcm4w?=
+ =?utf-8?B?eEwwQmJMYy9raVdJQ3E5WjI1M2pmVFNXbnJ4YktzSy9uVUZRbGhqU1E4dGdy?=
+ =?utf-8?B?K2lLeVlCYXN2bUNGVmFEc21BVHY5TnZBKzJrOWJ1b3QwdENKYzI3ZW9QSlh0?=
+ =?utf-8?B?a1ltNFlJdGVBVTdMSU9LeEhIZEtRUk9rRTZJYzZnazhqNXdlSVQrbnlkVkE5?=
+ =?utf-8?B?YXZxaUdzTlhTRWF3WXJ2bjhzcFJ0UlRualY3K3JBQmtqUjZhc1RKaTZuK0hl?=
+ =?utf-8?B?NkVBeVRnZlEzL1Z0V1JZamxVdmRRRkRKVCs3K3pZYXV4a2VRZ1NXcVFKa0xo?=
+ =?utf-8?B?SVVrL1NmTkhUNFd4Kzg2R3JKdmhGeWRwaDFFeUxkeitHV2JJY2xtUmVjaVNK?=
+ =?utf-8?B?cldGL3Z3Wk0vQktJV244VjV0UzF5NXhHUFRjeFcrNmNrUEZJZy9PazBRbGlr?=
+ =?utf-8?B?Mi9tNk15UXBFTEpIeTNLZVlxeDFKcmcvMGwvODVOOTJxZEJ0ZEh2SXlkMUhF?=
+ =?utf-8?B?czlCdERXQVB4RlpDc09jSHo2eGxWVkVON1B3T2lrbU1oQUFhUTU4T3VwMk5z?=
+ =?utf-8?B?U1BnNnRHNFAzZXVTeTExeE4vL0k3Mk13aTh6a050TVVBY2k1SkZLK2FmdVlz?=
+ =?utf-8?B?SUFhenlPamd2TzRqYzJiODhZclNIcWhBZzdpSXlxL2Nwc3RrZTY4WjdYK0ZQ?=
+ =?utf-8?B?SUdGUVJieU1JNC9RU1RZNHFjVGlEc0VGWTQvRWY1aWdITWVySldNTk9taHNy?=
+ =?utf-8?B?YnNuYUZSejl4QTZRTXBTbVFFM2hLOTdLalcvMVF4bkNnTm5Rb0lFMGdiUkZI?=
+ =?utf-8?B?RkRnY3I5d1J6MlR4cHRTU2hNZ0xocXhNcFdzZlFoZVBzVTlXSHNmNGphY0Rr?=
+ =?utf-8?B?K1JndzNCNW4weWFTVEM3WUFnU1Nmc1RzYTYydFBWTDhWb0FnK01uL0dEdUxi?=
+ =?utf-8?B?a0QzNUhQU3VqU3ZWSTFMbXI5OUwxRGEzUE80MjVya1dVakpCblB6TVg0bTJt?=
+ =?utf-8?Q?laN73SKb6FyX9K0g=3D?=
 X-OriginatorOrg: vaisala.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0000687e-2565-4bf1-34d6-08de6264bbfd
+X-MS-Exchange-CrossTenant-Network-Message-Id: bdf31a02-d11b-418a-2f16-08de6267bd74
 X-MS-Exchange-CrossTenant-AuthSource: AMBPR06MB10365.eurprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Feb 2026 14:09:52.8212
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Feb 2026 14:31:23.4364
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 6d7393e0-41f5-4c2e-9b12-4c2be5da5c57
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Lyx+cYGutaoDD/QCOxxIATGz/kULTwTfjg+2uDdVhPpLdrFnH95UdV0yPoRvFtK9yFayL7BIf1YUZmx4N6rTaQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS5PR06MB8804
+X-MS-Exchange-CrossTenant-UserPrincipalName: oo9BMtOMMzTqAQhAQVQ6ptNvyd55jtl5XlQAQE6XwaIaXfnBLlxuITKrjargCyuuM/ihsCwm4mj3E3sg3qiWqw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR06MB6362
 
 Hi,
 
 On 01/02/2026 07:37, Konstantin Ryabitsev wrote:
-> On Thu, 29 Jan 2026 11:10:30 +0200, Tomas Melin <tomas.melin@vaisala.com> wrote:
->> diff --git a/src/b4/__init__.py b/src/b4/__init__.py
->> index 3d774f7..0adf5ca 100644
->> --- a/src/b4/__init__.py
->> +++ b/src/b4/__init__.py
->> @@ -2922,6 +2923,16 @@ def git_credential_fill(gitdir: Optional[str], protocol: str, host: str, usernam
->>      return None
+> On Thu, 29 Jan 2026 11:10:29 +0200, Tomas Melin <tomas.melin@vaisala.com> wrote:
+>> diff --git a/src/b4/ez.py b/src/b4/ez.py
+>> index 298e382..581d513 100644
+>> --- a/src/b4/ez.py
+>> +++ b/src/b4/ez.py
+>> @@ -2193,7 +2193,7 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
+>>                      sys.exit(1)
 >>  
+>>              else:
+>> -                logger.info('  - via SMTP server %s', smtpserver)
+>> +                logger.info('  - via SMTP server %s using %s auth', smtpserver, sconfig.get('smtpauth', 'basic'))
 >>  
->> +def git_credential_helper(name: str) -> str:
->> +    if not name:
->> +        raise ValueError("credential helper name cannot be empty")
->> +    name = 'credential-' + name
->> +    ecode, out = git_run_command(None, args=[name])
->> +    if ecode == 0:
 > 
-> Any reason we're not making use of git_credential_fill() here? I'm not sure we
-> can expect correct return here, because credential helpers expect input on
-> stdin like:
-> 
->   protocol=smtp
->   host=<server>
->   username=<user>
-> 
-> The existing git_credential_fill() function should already handle this
-> correctly, unless I'm mistaken or you have other reasons not to use it.
+> This is a nit, but the default value 'basic' is displayed when smtpauth is not
+> configured, but the actual auth mechanism used by get_smtp() is login-based
+> (smtp.login()), not "basic". Consider 'login' as a more accurate default label,
+> or only display the auth method when smtpauth is explicitly set.
 
-AFAIU basically they are kindof related but with slightly different
-usage. git-credential-outlook will call out the helper and get the token.
-
-Using 'git-credential-something' follows directly from the documented
-usage for the git-credential helper
-https://github.com/AdityaGarg8/git-credential-email?tab=readme-ov-file#usage
-That way, the integration is seamless with git-send-email oauth2 and b4
-oauth usage.
-
-
-
-> 
->> +        return out.strip()
->> +    return ''
->> +
->> +
->>  def git_get_command_lines(gitdir: Optional[str], args: List[str]) -> List[str]:
->>      ecode, out = git_run_command(gitdir, args)
->>      lines = list()
->> @@ -4050,6 +4061,15 @@ def get_sendemail_config() -> Dict[str, Optional[Union[str, List[str]]]]:
->>      return SENDEMAIL_CONFIG
->>  
->>  
->> +def get_oauth2_token(server: str, smtpuser: str) -> str:
->> +    creds = get_config_from_git(rf'credential.*{server}*')
->> +    access_token = git_credential_helper(creds.get('helper', ''))
-> 
-> The regex does not look correct here. You probably want to do:
-> 
->     rf'credential\.{re.escape(server)}\.*'
-> 
-> or something like that.
-I've tested e.g. with server name smtp://smtp.office365.com:587.
-Escaping does sound like correct this to do, need to test it out some more..
-
-
-> 
->> +    if not access_token:
->> +        raise smtplib.SMTPException(f'Unable to get access token from git credential helper for server {server}')
->> +    auth_string = f'user={smtpuser}\x01auth=Bearer {access_token}\x01\x01'
->> +    return base64.b64encode(auth_string.encode()).decode()
->> +
->> +
->>  def get_smtp(dryrun: bool = False) -> Tuple[Union[smtplib.SMTP, smtplib.SMTP_SSL, List[str], None], str]:
->>      sconfig = get_sendemail_config()
->>      # Limited support for smtp settings to begin with, but should cover the vast majority of cases
->> @@ -4118,6 +4138,11 @@ def get_smtp(dryrun: bool = False) -> Tuple[Union[smtplib.SMTP, smtplib.SMTP_SSL
->>          if smtpauth.lower() == 'none':
->>              return smtp, fromaddr
->>  
->> +        if (sconfig.get('smtpauth').lower() == 'xoauth2'):
->> +            logger.debug('Authenticating to SMTP server using oauth2')
-> 
-> Two issues here:
-> 
-> 1. sconfig.get('smtpauth') has no default value. If smtpauth is not set
->    in the config, this returns None and .lower() raises AttributeError.
->    Two lines above, the same key is fetched with a default:
->      smtpauth = str(sconfig.get('smtpauth', ''))
->    You should use the existing `smtpauth` variable instead of re-fetching.
-> 
-> 2. The parentheses around the condition are unnecessary (minor Python style
->    issue).
-> 
->> +            auth_b64 = get_oauth2_token(server, sconfig.get('smtpuser'))
->> +            smtp.docmd('AUTH', 'XOAUTH2 ' + auth_b64)
->> +
->>          auser = str(sconfig.get('smtpuser', ''))
->>          apass = str(sconfig.get('smtppass', ''))
-> 
-> This is going to not do the right thing.
-> 
-> After successful XOAUTH2 authentication, there is no return statement.
-> Execution falls through to the basic auth block below, which will call
-> smtp.login(auser, apass). This will either fail (no password configured)
-> or attempt a second, unwanted authentication.
-
-Indeed here the basic auth is a fallback operation. Certainly I can
-change it to be exclusive so that it will not attempt basic auth.
-But with oauth2 it currently works, if the basic credentials are
-available they are autofilled and it proceeds.
-
-
-> 
-> Add `return smtp, fromaddr` after smtp.docmd() to prevent fall-through.
-
-Yes, will add.
-
-> 
-> Also: smtp.docmd() returns a (code, message) tuple. The response code
-> should be checked -- XOAUTH2 authentication can fail (e.g. expired
-> token), and silently ignoring the response means the caller will not
-> know authentication failed.
-Absolutely, thanks for pointing out. Adding return value check here.
-
+AFAIS, login() and basic auth are in this context the same. Basic in
+contrast to oauth2.
+But, indeed to avoid any confusion, it can be best to print the auth
+value only when smtpauth has been set.
 
 Thanks,
 Tomas
 
 > 
->>          if auser and not apass:
+>>          if not (cmdargs.reflect or cmdargs.resend or cmdargs.preview_to):
+>>              logger.info('  - tag and reroll the series to the next revision')
 > 
 
