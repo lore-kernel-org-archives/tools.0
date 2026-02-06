@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA472D12F5
-	for <tools@linux.kernel.org>; Fri,  6 Feb 2026 10:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926BB35E521
+	for <tools@linux.kernel.org>; Fri,  6 Feb 2026 14:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770373307; cv=none; b=OB2uxWpmosy0RoK5PIDOBg58V9j4/ViQheIMboqJTZgShoiG3ORnp+mrgen9N6nyt2APtwogNHjGzid0SHJvlqtODCkkKcIqnJxL0DRs2Z9f1YwBgMwL5tDwW5oCScapvvTUFaJZwkiw6UxEF/jwWIxIJQUdniRNX3+Knl2Mm6k=
+	t=1770388329; cv=none; b=M3rDJfI0kqDKdIBw8qo3he1Ez3cu13uzsHKPFlgq0+k63GuzUF7j8MWGC7EGE7TsYv2YGyWNdfDA5suEczhtwMGhuLmLfNMcwwiKuxm2mYmNNABbPCXv0/7vRmGkCyxmMy6hDJBhjrj6rVDNVyg9LF4vNhsuylXhmPZ0u5LNqQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770373307; c=relaxed/simple;
-	bh=IWLhNbGGRX2hG8gpAzoo17lCyBu0C7QBxF/lqUTowog=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hhkc6OaKsJItKDiV38RJdyYcUjXsESkHt6YTjf15HsJjHuLECzIl6yQSBQMu+hTmQMWjknbbHM4sp/xWzXxlvgclMrysUWyOJDW09+xNFsFjGLgy/ENzLC6CFsJozLXg0por+BLRfK/FxX7AhTb62K12sOBw+zsFk+4d2Z5XsSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXUOXO4X; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770388329; c=relaxed/simple;
+	bh=SFQPpduOBJv6L3mLglr7SQeIb9xt3zDihaNWKfjqGmE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IreIkWXkhL7bGbLHS8m66HjuQsVpcEwbN5TZVxpouUG+gZs7Af4skbuqZXNr27TTX11wVkns28h3tmTANX3UsA54XGU5yKO3A8ruZ1dVQobKGMiBHdkzl5zEcVo0w4BRAScCkFXVRAydNpufxlzQAoEFrHTVmHUfErQeeV34mMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KZtLAANq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXUOXO4X"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KZtLAANq"
 Received: by smtp.kernel.org (Postfix)
-	id F17EBC19421; Fri,  6 Feb 2026 10:21:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741BEC116C6;
-	Fri,  6 Feb 2026 10:21:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770373306;
-	bh=IWLhNbGGRX2hG8gpAzoo17lCyBu0C7QBxF/lqUTowog=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=gXUOXO4XcgWxKL9yzQ6GhWN/J44LZrcvk7eo4MU+xoid59Sd+E9mk0k0w0amlXX7d
-	 9YjiMC38i9L72kr7KuEcwjIWRlD8p4OOzdi1IKvUWqSOgurK3M+3t+ULq7oZBNU7CL
-	 DL6nPPz5H3OV48hT8OgctyHU+NnhcM/Gn57ChYV4=
-Date: Fri, 6 Feb 2026 11:21:43 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: tools@kernel.org
-Subject: odd b4 "Mail:" trailer added for USB patch
-Message-ID: <2026020637-cleft-viscosity-c984@gregkh>
+	id 2FD10C19423; Fri,  6 Feb 2026 14:32:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB27BC16AAE;
+	Fri,  6 Feb 2026 14:32:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770388329;
+	bh=SFQPpduOBJv6L3mLglr7SQeIb9xt3zDihaNWKfjqGmE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KZtLAANqCbTseEdJXsAR/IZcSGoidkJ2EJ/2oAByf6XnW4Sf+8ExMPRtksbL6plap
+	 OHjRZMHUm7oN8EJOD8rnjL958/jc2WoDcFvEbQW5VnxSFzBUtE1GBlooi9BQusHd9t
+	 ksb8GldurMs+zSu8gAFYBa6caWg1KPMuuA4pH2UOc9D1GoEkNA236phfq+dGuZg/CN
+	 zI2T9+vlHbYWPiyi71lBIneyg29lh4p01n40lZ35jANeuDGbhrPxpkp6FrxIful668
+	 2z2svUys0THrbQ+/WE/1SzH9I+7sLC4dEpPuycqvyfO1aG7/hoy6vB6A+xXj7jcJh/
+	 y5VJ0AsV7WY6A==
+Date: Fri, 6 Feb 2026 09:32:05 -0500
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: tools@kernel.org
+Subject: Re: odd b4 "Mail:" trailer added for USB patch
+Message-ID: <20260206-mighty-blond-ferret-e7bdb9@lemur>
 References: <20191024205803.qdn6p32iyj5rqvc6@chatter.i7.local>
+ <2026020637-cleft-viscosity-c984@gregkh>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,53 +45,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191024205803.qdn6p32iyj5rqvc6@chatter.i7.local>
+In-Reply-To: <2026020637-cleft-viscosity-c984@gregkh>
 
-When running the following command that I normally do to apply patches:
-	b4 am -S -t -o - | git am -s
-from my email client, for the patch with:
-	Message-ID: <20260206-wip-jremmet-hd3ss3220_vbus_split-v4-1-ee5b4e402187@phytec.de>
+On Fri, Feb 06, 2026 at 11:21:43AM +0100, Greg KH wrote:
+> When running the following command that I normally do to apply patches:
+> 	b4 am -S -t -o - | git am -s
+> from my email client, for the patch with:
+> 	Message-ID: <20260206-wip-jremmet-hd3ss3220_vbus_split-v4-1-ee5b4e402187@phytec.de>
+> 
+> I get:
+> 
+> Looking up https://lore.kernel.org/all/20260206-wip-jremmet-hd3ss3220_vbus_split-v4-1-ee5b4e402187@phytec.de/
+> Analyzing 1 messages in the thread
+> Analyzing 11 code-review messages
+> Checking attestation on all messages, may take a moment...
+> ---
+>   ✓ [PATCH v4] usb: typec: hd3ss3220: Check if regulator needs to be switched
+>  be switched") (✓ DKIM/phytec.de)typec: hd3ss3220: Check if regulator needs to
+>     + Mail: j.remmet@pyhtec.de (✓ DKIM/phytec.de)
 
-I get:
+Sigh. This happens occasionally, because we can't have a strict list of
+trailers we recognize for follow-ups (because of people's proclivity to use
+things like Suggested-and-co-developed-by: or whatnot). We have a junklist of
+things we know are bogus, but every now and again there's something we haven't
+thought of (like people using "Mail" instead of "Email").
 
-Looking up https://lore.kernel.org/all/20260206-wip-jremmet-hd3ss3220_vbus_split-v4-1-ee5b4e402187@phytec.de/
-Analyzing 1 messages in the thread
-Analyzing 11 code-review messages
-Checking attestation on all messages, may take a moment...
----
-  ✓ [PATCH v4] usb: typec: hd3ss3220: Check if regulator needs to be switched
- be switched") (✓ DKIM/phytec.de)typec: hd3ss3220: Check if regulator needs to
-    + Mail: j.remmet@pyhtec.de (✓ DKIM/phytec.de)
-  ---
-  ✓ Signed: DKIM/phytec.de
----
-Total patches: 1
----
- Link: https://patch.msgid.link/20260206-wip-jremmet-hd3ss3220_vbus_split-v4-1-ee5b4e402187@phytec.de
- Base: applies clean to current tree
-Applying: usb: typec: hd3ss3220: Check if regulator needs to be switched
+I'll add this to the junklist as well.
 
-
-It's that odd "Mail:" header being added, which then shows up in the
-commit itself:
-
-    Fixes: 27fbc19e52b9 ("usb: typec: hd3ss3220: Enable VBUS based on role state")
-    Signed-off-by: Jan Remmet <j.remmet@phytec.de>
-    Reviewed-by: Heikki Krogerus <heikki.krogerus@linu.intel.com>
-    Fixes: 7e7025811579 ("usb: typec: hd3ss3220: Check if regulator needs to ^M be switched")
-    Mail: j.remmet@pyhtec.de
-    Link: https://patch.msgid.link/20260206-wip-jremmet-hd3ss3220_vbus_split-v4-1-ee5b4e402187@phytec.de
-    Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-Along with the extra "^M" in there (actual character) in the Fixes tag?
-
-I'm using the latest git version of b4:
-
-$ b4 --version
-0.15-dev-47773
-
-Any ideas?
-
-thanks,
-
-greg k-h
+-K
