@@ -1,112 +1,102 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1779330FC3C
-	for <tools@linux.kernel.org>; Fri,  6 Feb 2026 17:42:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.179
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770399729; cv=pass; b=V/rk1p1nkAnKuvxYFzXy0F8appFboTN5zzOz51kIQoNU5IDtOwKjgViOUVrsc+U5+w1kxN+NPK2cG+hiYZqR6Lxg0rz2kkXkkUIrjNYR5kTSjtjGjb0poBLZtWbWeP0i8Jhd14vPzPdhton6MsUvA9Lc/7SHzxvgtUthhi9V+Kw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770399729; c=relaxed/simple;
-	bh=juqD/Z2B1iqnv2FcnCfjEvvv2vq44bgj3Kduv4ZhpUU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=EQ5BB095Z0t2cxi2Ny1AyLJm7xYh9dTgX/QTDqjrZEwbz3Ae8JV0h5Vgpo+wu8upC6T6D0/6eMxoKJKIgjeAC4ZkaH96EMhor3VYLrA7yGpNdJWN34vi4p3zDOmbmhETxC9FmUsRsyiaIil03JHsOXFxzz0eVK/8uEYUoslHD4Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cX8ytVOx; arc=pass smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4009C32570A
+	for <tools@linux.kernel.org>; Sat,  7 Feb 2026 10:40:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770460818; cv=none; b=s83Y8J4GWW+L3vz3FDQYZMy5LT+r6ieMpUZh9Wnwotkqi4dNx1dfgz8tCauRkz439wmfdIUReiTBHy9Twwp+Jjp8gdBuXn+2xZpiM1abS5gRduGCXyrFRcrlcT4YVl8EXDzSmPr0RGfkfrkV6VHxu0/WlLnCf9vwwyRucIpPun8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770460818; c=relaxed/simple;
+	bh=lB4AOpiwmcqde05ZdaGTaN63RFPI6j4a+y0fWVqovDs=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=G0RjaVxjs8xjlzwxRlL7o6IUBCdKdsMlVuW7goryMLt4WmgmpodgOOQ2aXalh5Y30NCu3qXBwzPwNo5q020JLlplZe07NQkQRqIyyf4xIk3IxudFLL483qs1y8A/ZJs6+ukj4pqyV8ElQV9g5rUlJsoEKht5NKD3rv90r8nJ9ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=gl1yrRzx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cX8ytVOx"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-794e0e933ccso10982827b3.1
-        for <tools@linux.kernel.org>; Fri, 06 Feb 2026 09:42:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770399728; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Qmc4tExDUAJzl2sDIbgNADEZnJzlQZ9Y2L1CmLlte7q2+dw9+u/4KtLQi3vk4Av1SX
-         MJ6BdGp1QeLbLRNzf7KGQqr3NO7Em9jqHxGHYXCl7suT0kzSPh9o5Ixlsjkc4lze17b9
-         4PmETpWOJXuQH0DvxAweHExY8nxCV+ecz1eQ8WGc4EeSTsO1lzn4MrJLfoT5oft8JSlX
-         9D+/1bcF8bj7Szwflg0yIzUBgoDES7HQLNwLcD2+dg53yNH/YeaMd9Z2Pr17o/ipVs5B
-         wM8qCOv02APK+Hj77ZSeAmI8jHpak2UbH34b9TPX+OoDUrs07agluMYWQVJCasR65pMy
-         Ujow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=tvJzSVNBOqrLQ7CPy5MrfaIAYIjtPikwFQPwCLUzv5A=;
-        fh=H6VFXKZTWUI/2eYmwMJY7Z+eUgSjlFmbmystdLuEPYY=;
-        b=NSvK0IPsBIaU8mQzPdxcaal5GoS/qt0XgF0Q0Or6Grwv3PAzpLFAKbW+92nAP1JJFH
-         GXM1qyBVFxIOBol6ex8970w856UlT/bL8NgaMPN/QgmC/+b3NMlVAkK67z956BKvYdDP
-         C1tp70aS0Z0ABTUcPXF8ZVQL/5VWduAlWiop9GDMGVaR2nsC6S9pNKRGRtUaYVoLWGg6
-         IiPg3WrwzzHParYv1yyP70xT8zugEAmWGXJOfWtVsmTu+T4lJNpCZECvzHkooOTu0MU2
-         ATQ/9mthF7c040nqa3mMDMTmQvOwvSYE1+MHB1fd/gd7XWi+t6PkgpbMqzG56IvqPgRO
-         R/9Q==;
-        darn=linux.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770399728; x=1771004528; darn=linux.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=tvJzSVNBOqrLQ7CPy5MrfaIAYIjtPikwFQPwCLUzv5A=;
-        b=cX8ytVOxTFOR/SX6gRoF5lm0ulOORbHaGLBmm92d/MckgmnXd81fOYUCk2nivrm5wa
-         2Yfr9jgVaRWeJhyRlePfrm1MB7emD1r2YuUTmwWcfSz+CyN1z2sed4A++2ogCMhhxtGE
-         5yMxHtPNx6KfdWZyvR8/D5QwfksJalMzLoex3NsSBHlVRwwR3GCGGt/zhWgL2rJRHzEn
-         rJ+umOoBFoh7uhWBtxMwjHq01cJLOW7qUnhlpxurwxNhErcZ/L0sgba5KyfivkZQVlg/
-         2bVOU6P78Rp7o2nQyW8xtJA7r0LwyuHNJIjA+CbPA4OMFfJ3snwyvylsYjO7oYUlgVdQ
-         6j1w==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="gl1yrRzx"
+Received: by smtp.kernel.org (Postfix)
+	id ED408C19423; Sat,  7 Feb 2026 10:40:17 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 6C55FC116D0
+	for <tools@kernel.org>; Sat,  7 Feb 2026 10:40:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 6C55FC116D0
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1770460815;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=Ap86LHTA0znMnuWg8S3nhgXnJpYbBUHfnWs2W4wD1X0=;
+	b=gl1yrRzxNBsvqj2tF8++ixkdAi89lAHmPyo9izXJNO4sDIpHs3wmKyk7gHeKnRGeowNkoB
+	CI4yLVB1RlKAmFrvUpea9Rzo5+EmJQkj7EZXcLXIoCpJYl3VYEB1R6HOtVGFPD1OLgPeh2
+	Mx3+bKNAutUpVzNNYIUNUD+YYqpai4A=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-511-cGmNwSB6O8i9qoLCX_iWcw-1; Sat, 07 Feb 2026 05:40:14 -0500
+X-MC-Unique: cGmNwSB6O8i9qoLCX_iWcw-1
+X-Mimecast-MFC-AGG-ID: cGmNwSB6O8i9qoLCX_iWcw_1770460813
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-43624564fc9so1204534f8f.2
+        for <tools@kernel.org>; Sat, 07 Feb 2026 02:40:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770399728; x=1771004528;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tvJzSVNBOqrLQ7CPy5MrfaIAYIjtPikwFQPwCLUzv5A=;
-        b=sQnOZ7xCIXGPV2Jp0STVvCial7OQG8FRYrd7cBDb5zuR2YHCnzdiYbrswZAbSgUd4k
-         D8tabpokSLCtNEm8wKK68QsiGSclJilIB01Fh6O/jaqadsDyfLtRLzZhTbU83ifq66dU
-         wnsT7oQdx/Caa/ocQy8DNxye+8RWERMw1uMew7xvecv0dLkkGRoRbMBAEGJlsGPadgRD
-         atHzdxm8BBBzUjMQJfFk0DHAHXxZGlpsPWm24LhADa0xigHh4o/rYM6ZhgGC8UPZS9eh
-         uOtC3X8B8dQmkbr3Vf+jnPA3hBeu5SLrd6PjXUgyg5M5f9OHXmIC0pliiBzbyUngmspV
-         drog==
-X-Forwarded-Encrypted: i=1; AJvYcCVAjd71o8lXI78/a/B/SY5X4fz5URrK6CSZqM6Z65+7R6/7X1ggkhbCXabN9z+oVYR9eiAA1w==@linux.kernel.org
-X-Gm-Message-State: AOJu0YxgN+eglZ1Igb1kuUXNJlRrWUkZDvHEnZCmIjWUra57PBR4unWV
-	E85N7a+uejvvFLBJrh0RIC8aQOejEd378wq/oP5Zn3nCYivfl5WmdFMzlzU4vrxuxD+v29UHSPd
-	irvWb5Ss1QjBcUOkzu92X1hx8qUHNYSI=
-X-Gm-Gg: AZuq6aJ6ErsduySe8Xn6GvOR3XVwp/cToPYVlT+ieC5iyn7V2rP6Ow+SfleWzHmpwJe
-	Ae1qz+yAkqsyGXkYDRBBv/RctXAEIE45Y/wZL0xF8oJvtnb6Q+mpKxX5mzJI0qJyz1qRfM3V9EO
-	ySMOauIk4A2ax+uiLSjQMf3gOV239yOtVtkezJB4KB1qkE7VWmf1yuG0BA5LN+qS26JEUiSrq5W
-	w/3qo6J+L+kuIFYOF9T8b29xIIuNdjM0fKB6vZyGceDwIxEMfRH4bFQnv9embj1alrp8OjQD2zd
-	0UjeKSpKj1LpWCXFRHmU7ANHgSAR02Ax+hkpQSTISvLNJ7PERLs=
-X-Received: by 2002:a05:690c:7305:b0:795:272b:1ea6 with SMTP id
- 00721157ae682-7952aa7490amr32960417b3.8.1770399728099; Fri, 06 Feb 2026
- 09:42:08 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770460813; x=1771065613;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ap86LHTA0znMnuWg8S3nhgXnJpYbBUHfnWs2W4wD1X0=;
+        b=NMbrs+bksEXiSFCnu+wXvHzt5l7YvWJwT7TKOS4V0EG7II7NDVzpkUWZoXRNA8QGxa
+         VuuWbqUGroWc0UbunlMSth1LEiFcfPeE9xWcB6Yl3MsrWVRRJi3SwSqwY6769MBOVapp
+         ZiIVKkpmzHoHhNRi4e/aYiSg6RJ9bOepRA/PQ5SaBlfPsQvmruPGli1zy6of9NOlgs+s
+         UrRDze/hARa97NrF1RD4JdadkkzVH6F/m5Mdcxfmxccw2pWdYWVwhp5gYIUygd0WWQ3F
+         usewiQW6f8KukqtCslFvPvpWt2Opmm7IDWDXdpYjHkocX//wi/KeTevr+JW433Gz9Xwr
+         Q07A==
+X-Gm-Message-State: AOJu0Yw7JIt4dYll4AYe9WH+3yttMiYJNAlEZauRgXeMYq5lJ2fhM68X
+	hon87FGPLfkhU0gecFEDcb4VKQMZBnKXkSPLEe1QFc3Yn1tyqu2h8sP7PofOY2PcUqkljELmIUE
+	d27E3IwaOdyaGhidE6Aah549WkQzpIPWrRzih7QaasmSM9jTgRxmvHVvfo2PhoCkip9ghHWu5zM
+	0mwK+gJKvx6nJZUsOgfvfs+ShuJ8w=
+X-Gm-Gg: AZuq6aKFYc3NnHYi5v5+5KHyV/rhETeJiD2w+HwI4I8RNTH3KT9dcSuTgYuVG3QwjGK
+	zGPypqw57V9g0nEoguml97ypsF6UkSw+yXQpRyqTpUhhx6Lnsa4/q6pPR1srNw2070yj5qOsGPz
+	PgoVWfV+mRNKswyfo862Z4sGcGXgFmGjzIkxt7XbXdhpHkS1LPI9e4Cv9QnuikTR0TaqZqF3Oix
+	1Z8Q0KIVhofCoE1gmkmJPmjEtKgFeu2vj33jfEplzrHQEixQ1kyvTNqUbsJZ7oEbRS5Obge8CqJ
+	84XqqIEna+sYhp9VhZ5BTkYoK9RUyJwWRJ2wEP3niXy6qjHwY5XTE/nEsMwXqoZMTGEtDJC12ME
+	1iSKH/ewH9FVNEvghzXHwxfCWEsRf7vt+bA==
+X-Received: by 2002:a5d:588b:0:b0:432:5b81:480 with SMTP id ffacd0b85a97d-43629341fdbmr8724774f8f.24.1770460812697;
+        Sat, 07 Feb 2026 02:40:12 -0800 (PST)
+X-Received: by 2002:a5d:588b:0:b0:432:5b81:480 with SMTP id ffacd0b85a97d-43629341fdbmr8724748f8f.24.1770460812240;
+        Sat, 07 Feb 2026 02:40:12 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43629664632sm12114259f8f.0.2026.02.07.02.40.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Feb 2026 02:40:11 -0800 (PST)
+Date: Sat, 7 Feb 2026 05:40:09 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: tools@kernel.org
+Cc: mricon@kernel.org
+Subject: mlmmj version?
+Message-ID: <20260207053820-mutt-send-email-mst@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-From: Mario Limonciello <superm1@gmail.com>
-Date: Fri, 6 Feb 2026 11:41:57 -0600
-X-Gm-Features: AZwV_Qg4Rfz7uRC5oZstGrLbCeODuN6U0mm4ElBxx_7c6KMRe1pVxzM4TDDovMo
-Message-ID: <CA+EcB1MR6VrwpbXc6eTOzvK5dN6R_n4DBQ7ZEvrPP890syKBww@mail.gmail.com>
-Subject: Korgalore Office 365 redux
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, users@kernel.org, 
-	tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: EEQGRraRbxV0m2CE8ja1Wio7Tf0VQVk2RI_FQBiTfbw_1770460813
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I've been trying to get my I/T to enable it.  Because of the
-unverified status they decided to make a dedicated tenant and
-dedicated client ID for me to use to experiment until we have it
-working.
-After a lot of back and forth they have the redirect URL for the app
-corresponding to it set up on their side as http://localhost.
+hello!
+a recent mlmmj release (1.7.0) has a feature attractive for virtio MLs
+(self moderation).
 
-This gets me much further than before, I actually get a
-Authentication Successful
-You can close this window and return to korgalore.
+Curious whether lore uses some distro version, or self built, or what.
 
-But then when I go back to korgalore on the terminal I'm left with a
-sad message:
+Thanks!
 
-  File "/home/supermario/.local/share/pipx/venvs/korgalore/lib/python3.14/site-packages/requests/models.py",
-line 1026, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url:
-https://login.microsoftonline.com/<tenant>/oauth2/v2.0/token
+-- 
+mST
 
-Obviously I swapped out the tenant for <tenant> above.
-
-Any thoughts here what could be wrong?  I'm using KGL in WSL and
-copy/pasting the auth URL into a browser outside WSL.
