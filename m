@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651C138B7D2
-	for <tools@linux.kernel.org>; Mon,  9 Feb 2026 18:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AE6324B2B
+	for <tools@linux.kernel.org>; Mon,  9 Feb 2026 20:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770661803; cv=none; b=FM2g9gqcMgBXJvKPsdkX7duDeOYu/RIrDMN9fe7bQCi376njpmlrJcJgCZUCav58hWzoUBWd5H8kJUsUnv7iPjTE+sh3+D+IcHy6vu7oEMZyXaGhk71WdLPf+6DTly4MLD+Iy7gJgcgAJFbYqKkamYn8nCJQ8yrmypTchtrlOE8=
+	t=1770668269; cv=none; b=mVIFLLXsuiPv3agLEt1KpEqVGtinUkEL9pwUFS5PMj9PnbI6LlYg8gX12YHir4OUIYv/wDrs7JqEa/ck/tuO+31VuyXAgtWdarw7KvF6zLKsT01SdSdvG/e3unRw7u+cy4lbOCw/GrIPYiXT3N7P/AMpa66fwVUt9mn1XfR7r4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770661803; c=relaxed/simple;
-	bh=jaTmFYtNRQSQ6Yfu8d3I1VU/DQaK/rRx97KyxdIJtac=;
+	s=arc-20240116; t=1770668269; c=relaxed/simple;
+	bh=hSb5o8yCnQuTgiw9MawLn57HBHwN07rUTo/5DLvKsB8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PATlUHa+djJdjB209bBfbwG7CFY5XAakZH5uL6YLqCx4M/jn8WZv61cNyb+K4IvsmcjmJyxKiVPz/iYLHNUC6kl/FBRcP72Pk4v4JF2l00S4P34cMhoKcoTQkpDLLY+UXPwCMu8hGLyAMO/btgPyEEeRTqxXG0ly48HJesj9Ekg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LfTETcXJ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=maFiWM/bZnFvYliTji5VH1yGiB+aG673s4vyJDbcM0oZU7lhivMpgesEPniRJyrB/iHTs80KZyoBScjUU8g1hhDW/2YTQZLNnZQ+RGYzY0PojaK4tSJE6IuWQTfPam6drni0XCpkwwWaqhNY28kaGSHnFcrvK3Ox8GVuNsQfBsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cffitgeh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LfTETcXJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cffitgeh"
 Received: by smtp.kernel.org (Postfix)
-	id 1D3FBC19423; Mon,  9 Feb 2026 18:30:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75AAC116C6;
-	Mon,  9 Feb 2026 18:30:02 +0000 (UTC)
+	id 88136C19424; Mon,  9 Feb 2026 20:17:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49509C16AAE;
+	Mon,  9 Feb 2026 20:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770661803;
-	bh=jaTmFYtNRQSQ6Yfu8d3I1VU/DQaK/rRx97KyxdIJtac=;
+	s=k20201202; t=1770668268;
+	bh=hSb5o8yCnQuTgiw9MawLn57HBHwN07rUTo/5DLvKsB8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LfTETcXJ2V05SFWcRTbHqVdI5OsVYGC6ltceUSiS3v80MlmYIQqwCqnR2gSBuqBqD
-	 ti4lXXC3synGVgo5ddhI//cs1ih60w52R63rc+QzUM2f8e0uUkhoZocbyXYLHTYvEK
-	 z4jhdJHqVSIFbv1H4KvEJTzSwV9YUeCSov9H3LQIKdG434DoB2+n8LgmkJn30VQk+I
-	 o/GjzfmXjRaTyLfnlpMReyp161yKGOYaDtMzzKZEH1nCXmMPACTKgcMJgTPaDS3Fyv
-	 8gO56+RSBfmInGL/1egEog8yx4c8G4OVMiwEs9IwGbfY7FXLfGi8Tx6Hwbrh6yPzx4
-	 +oVub8P+VvZZw==
-Date: Mon, 9 Feb 2026 13:30:01 -0500
+	b=cffitgehgyNUhBYeMSafiPMiB11WIqyLUHEuVbQWtNsHAWs6Lx19q3A7wr8/CvniE
+	 o9q4BqrxYRyYjxX52tQ4JyXHUjcKLpj8EbeGdAwHlqi4byqcN6g6LH3MrBWfz0iDh1
+	 a3jr0ojeOu6Cv5tCRkqdElc0af1LcTMKdz7ILcEiCSLuz8C+x2jrrZK0zWBP2fT4T5
+	 BV79NCzwAN9hqLfxyHQ8IOiDPHe0wcZLyYTkwUINwvEANHC+4XRzGMYzKb1hXw0CTL
+	 rENQRd8NfUPB7hGguM0KfonOihNCEqBM0a7VdjpTvG1Ty6pJscAzN94YT/AMcun2Yg
+	 0u7dWk5ejSrVg==
+Date: Mon, 9 Feb 2026 15:17:47 -0500
 From: Konstantin Ryabitsev <mricon@kernel.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: tools@kernel.org
-Subject: Re: mlmmj version?
-Message-ID: <20260209-ethereal-beneficial-owl-1ec496@lemur>
-References: <20260207053820-mutt-send-email-mst@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>, 
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: Re: korgalore bug: Feed state not found for lch@ list
+Message-ID: <20260209-hungry-phenomenal-unicorn-1ad4be@lemur>
+References: <695ccea6-bb19-4f6d-99cf-1d898b53b1cc@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -43,18 +44,26 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260207053820-mutt-send-email-mst@kernel.org>
+In-Reply-To: <695ccea6-bb19-4f6d-99cf-1d898b53b1cc@kernel.org>
 
-On Sat, Feb 07, 2026 at 05:40:09AM -0500, Michael S. Tsirkin wrote:
-> hello!
-> a recent mlmmj release (1.7.0) has a feature attractive for virtio MLs
-> (self moderation).
-> 
-> Curious whether lore uses some distro version, or self built, or what.
+On Sat, Feb 07, 2026 at 09:52:05PM +0100, Krzysztof Kozlowski wrote:
+>   File
+> "/home/krzk/.local/share/pipx/venvs/korgalore/lib/python3.13/site-packages/korgalore/pi_feed.py",
+> line 227, in find_epochs
+>     raise PublicInboxError(f"No existing epochs found in {epochs_dir}.")
+> korgalore.PublicInboxError: No existing epochs found in
+> /home/krzk/.local/share/korgalore/lch/git.
 
-We'll build it for sure, but it's pending migration to RHEL10, so I don't want
-to change it on the current system until the migration has been completed. At
-that point we'll probably be running the latest released version.
+I *think* this is from the code that wrongly assumes this is a migration from
+the previous data structure during korgalore-0.1 days and then falls on its
+face.
 
--- 
-KR
+I added a fix in master and stable-0.5.y -- would you be able to clone that
+and try?
+
+    git clone https://git.kernel.org/pub/scm/utils/korgalore/korgalore.git
+    cd korgalore
+    git checkout stable-0.5.y (or use master)
+    pipx install --force .
+
+-K
