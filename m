@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B9D2882A9
-	for <tools@linux.kernel.org>; Wed, 11 Feb 2026 15:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F9D2C21F7
+	for <tools@linux.kernel.org>; Wed, 11 Feb 2026 15:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770822868; cv=none; b=DsDPvOrGVPhS7ei3tEVJ0tquj4Hwqufb9aU/vO8JOiL0Aj+YZ1ln6aGPHc8G6m5pWWY96MSTAOXVXS2jmwY1Vk7zDyPxNYRleX6RfcB8YvL1eBGxV1kqlzYgF50HzoPcsczZKFukIm23WulkkLHPHI5/0bBSV+dCAv58rkGZN/s=
+	t=1770822901; cv=none; b=MxdId36IQMATBN/XvCAmxl3VOAsEV5yHLFxWd5tGfm6sobZIgYktRVj2K3Z9WUWWwcfjyIIZL8Mu/b/2ZmKdWFMOFlDiys3U+6TQ97EeGC+wIBqWLxx1bT/DAIcUYeIN2vULarOeHp0UTT1OM+tVk213eC5eBa8fFYRLVSoq3UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770822868; c=relaxed/simple;
-	bh=tkFbi09Zrxzub7TOkl+yOwwaDbe0k/tNPYmP2GGLVqs=;
+	s=arc-20240116; t=1770822901; c=relaxed/simple;
+	bh=Mi5FFnDFMOAqPWolsi/DMizWNFf5XzqvrQKvxEeCk5s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FB6R9Cs633BvqZwTs1Cuvw0lssz+B+2FZdFuETeXovq1GABOr0tGYmr6J0ZQ3OWeEPemwck65WkTSJZzCY7Ifdc2r+G4JvZFCIyYFgIzhzAUmPy1GVCG3m5D0zHyjkOyEop8DkPKBfaPwAqT6oztlrMxYpEFl/Kxe5WPxBp9ILw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oVm5EelG; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=FBwLP01L8ki5uxa/tha0RUQwfZ43QwcMq33XL04lRuexFJfNpneweiRtgDgSriYDPFhdsUg1nqZEcMFgwAKHFtXIec6gYMeLFAd93vzyZxEC3qKQ2IOhHPp5KBYQ/A6R8HpoRZEarKNoHEy+D1acyEhDWNKfs4haYhBMlQdbXPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IuG/dcFt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oVm5EelG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IuG/dcFt"
 Received: by smtp.kernel.org (Postfix)
-	id 2A625C19424; Wed, 11 Feb 2026 15:14:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3E0C4CEF7;
-	Wed, 11 Feb 2026 15:14:27 +0000 (UTC)
+	id 2E3E9C2BC86; Wed, 11 Feb 2026 15:15:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6569C16AAE;
+	Wed, 11 Feb 2026 15:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770822868;
-	bh=tkFbi09Zrxzub7TOkl+yOwwaDbe0k/tNPYmP2GGLVqs=;
+	s=k20201202; t=1770822901;
+	bh=Mi5FFnDFMOAqPWolsi/DMizWNFf5XzqvrQKvxEeCk5s=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oVm5EelGNBVn+5fFYE/7HTtI0HQSpuLcn3Sjvc3jWvMBiJGzm/W63OqpF5RMayTAT
-	 MJ0b7+0O1L5uGMk28UQnIJ8HKbOhA71ATX+ZJaQRrg3/wNyRwoHgvpmRmrkQJVYhb8
-	 p/5IuEz2uiP4DZ2CT8+i0BApH+4fzDJydqx1XZ41KGsHx58iUzAHDw5Ujce/55vVnZ
-	 qOYdTLn4wH8skt8ymnvujGp9rSxZM+jhkR5BxZ/xcXAOrIctld0sFxiv2SRrd1r0dW
-	 wAiiyIjTRvUPm9LhrDLgoQ3JQMO8TM0iL3RdEyCE0O/p/b89on286YLqNR2xaIaPpA
-	 fRmGHIlJlG1NQ==
-Date: Wed, 11 Feb 2026 10:14:24 -0500
+	b=IuG/dcFt4HN1XLrDoEVW0E918IKo8cWc4MMXi0dBJ5PbDXEXmG6B2K6AQCm2sjhN/
+	 h8PoVXh1hQnYwikTPwdWNkMeqZ5dOTniXdq/iORLYSHa3YU8EL0xzE7/DXjoHpGdMa
+	 VGEDxeVfsDFUBCcI31BgXEBOvWzgSy+X44zj1Tehk6fTRyDdJbfx5b2B117ftWXg8g
+	 ZjvPZoRwFia5GHXhSEedoue6Hozi9kCpkPb6IPcvcWNO+HLKU4BGBN5oMxGFUgKJU5
+	 UuypBFIhISxNRvt5m4SapW/D+zw8o3ZjsvcFVXyN98yKXGyHRgOVguac7xyNrL8kUD
+	 EnK2BoUxFi4xg==
+Date: Wed, 11 Feb 2026 10:14:59 -0500
 From: Konstantin Ryabitsev <mricon@kernel.org>
 To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>, 
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: Re: korgalore bug: Feed state not found for lch@ list
-Message-ID: <20260211-gigantic-aspiring-jaguarundi-aeddcd@lemur>
-References: <695ccea6-bb19-4f6d-99cf-1d898b53b1cc@kernel.org>
- <20260209-hungry-phenomenal-unicorn-1ad4be@lemur>
- <c3dcff19-7f6c-4f09-ad63-c3af15e8c5f6@kernel.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: Re: korgalore bug: kgl pull fails after kgl track
+Message-ID: <20260211-zippy-corgi-of-love-0e6c3b@lemur>
+References: <e7330b25-1e9d-445f-a1d4-e50a1ce0ddca@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -46,22 +43,18 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c3dcff19-7f6c-4f09-ad63-c3af15e8c5f6@kernel.org>
+In-Reply-To: <e7330b25-1e9d-445f-a1d4-e50a1ce0ddca@kernel.org>
 
-On Tue, Feb 10, 2026 at 05:30:31PM +0100, Krzysztof Kozlowski wrote:
-> "/home/krzk/.local/share/pipx/venvs/korgalore/lib/python3.13/site-packages/korgalore/lore_feed.py",
-> line 77, in clone_epoch
->     raise RemoteError(f"Git clone failed: {output.decode()}")
-> korgalore.RemoteError: Git clone failed:
+On Wed, Feb 11, 2026 at 11:05:44AM +0100, Krzysztof Kozlowski wrote:
+>   File
+> "/home/krzk/.local/share/pipx/venvs/korgalore/lib/python3.13/site-packages/korgalore/cli.py",
+> line 800, in retry_all_failed_deliveries
+>     for delivery_name, (feed, target, labels, subfolder) in
+> deliveries.items():
+>                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> ValueError: not enough values to unpack (expected 4, got 3)
 
-Ah, so in this particular case I wasn't testing with the actual --shallow
-parameter, which is why I couldn't reproduce the failure. The problem here
-is that the lch list doesn't have any messages since November 2025, so when we
-try to clone it with --shallow-since=1.week.ago, we get a clone failure.
-
-There is a workaround for this situation in both master and stable-0.5.y, and
-I can confirm that setting up the lch list works without a crash now.
-
-If you can confirm, I will tag 0.5.2 for the release.
+Thanks! We're now testing for this condition and there's a fix in master and
+stable-0.5.y.
 
 -K
