@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83444A32
-	for <tools@linux.kernel.org>; Wed, 11 Feb 2026 15:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AD02DB7AD
+	for <tools@linux.kernel.org>; Wed, 11 Feb 2026 15:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770823224; cv=none; b=qlbTzoptWPH70LHQuAsucjvqw0pV2LvYifJizDM/gUpCk0poO/I8khAg2FHBnOZYQVcQHGvZrP6PqEwxgrkCxvpBC0M/laTKVbmHXi+UxXRgBUqi5LMCWxmpcKDdVUHHc5gelS78hTckvwPXGYePhhA9jTFq8xKvk6SGeNS8sDw=
+	t=1770823232; cv=none; b=ERqzIc2A85t4FtFxjA3VEPMGv+BWvEiNbVteSPZVX1LAfhV4frepuVBnAqaX9kx3SwWbAbRefHz4uctMZb5gVLclde6S5z4LN/9eYblNLMiVsxSvhQYc2ygGsNd8jjnIJ6iHEDFAAPXcAbYJPk301JTn2ZlxN18uEUcaUnNgvRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770823224; c=relaxed/simple;
-	bh=R8kWmp9g9g5gxEcp0LjPk1x3Of8WN7meV2iC233N6z8=;
+	s=arc-20240116; t=1770823232; c=relaxed/simple;
+	bh=6GJubLmihPIeaeQmoPkJaxsfAt22d2gHtTtwm/iizGY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TonoYF5xkVtp9pQv0zxjSoNqj3s5iZq88gi0Mye5WahFB9bbtBgzIraIofEkqqLUf/DPY55vlBzlYWenvGzLG13gveDBd+YDZqkTKNE8md1HJ357i6eTyer5AU4g9CeQssbh/4VNHaowK11GSlvMfTa6e9tGPG0+HRNptIF+ZZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mqtPWu4f; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=AMmRXx2VRUiWatZZdaHDcvsEWwxAgrAZM9frLW9rPImrosJvtd8OHLhONLW3iNSXTaMo5VFqkm2ZrFiybsrd/hyOleRiLB4l0oJaezqEZzsa7vQRzOeyGZ2+HsYqFBP1BUrIqG06fwe55Iglg4ieuboIkbzXbYu3VIXXsxXjS8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TD64TiBc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mqtPWu4f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TD64TiBc"
 Received: by smtp.kernel.org (Postfix)
-	id 65FF6C16AAE; Wed, 11 Feb 2026 15:20:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B865C4CEF7;
-	Wed, 11 Feb 2026 15:20:23 +0000 (UTC)
+	id 57E55C19425; Wed, 11 Feb 2026 15:20:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA2CC16AAE;
+	Wed, 11 Feb 2026 15:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770823224;
-	bh=R8kWmp9g9g5gxEcp0LjPk1x3Of8WN7meV2iC233N6z8=;
+	s=k20201202; t=1770823232;
+	bh=6GJubLmihPIeaeQmoPkJaxsfAt22d2gHtTtwm/iizGY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=mqtPWu4f2MbGYZPpMzt7pjv2xFtWxoYic2FZFHnCqqMOUoQbDQ0bxHVCpgMqBSqHM
-	 XWZCqEtab1p7AoRHi+mCo8b/TkfhP6yAcBEF0Gml7bMHwy0rEMdBnghZ5A1AZBt/Ll
-	 OZFiN6QXp32FCHX89hCH8K/w3JM8f3jnNU0IW52SaZ47FzvwHcy/SCVm76uM6pJ0qR
-	 9HCxbkNK+911e1xWvxAdtceXgbBI5x86i8nVsy4zQj9U7WlRkaZQSrPf4Jw9WT1KZL
-	 5bHYuO9wileXFYt3RihLMRoxN9uKHzEJWlYgQ8O/pcbMbWR38tntUp/97Y6NrAyYHW
-	 b/9bDCusADxrg==
-Message-ID: <bc8445cc-f57f-48c0-b45a-747ac916d5b2@kernel.org>
-Date: Wed, 11 Feb 2026 16:20:21 +0100
+	b=TD64TiBcIyu15ja2EeOWH9mHRNew/Uu6zB1Oem0pYdT/+SM72zm6Q9pmvKBMO0HTH
+	 omEXyUrXA1oFERpMWL+YN9B5XrY121M2pCr3mlnuAO0JYAkexb+rSR3m1dMPdpUpPW
+	 5kTZJdkWkWC0eU1rcn/ZYwJFlpzL6OETIOPMDpWdkMem5FEG7WIYSEyOA9kM3yFbo9
+	 SiF24g9RQ9Z95YyDlBZOFYTF4VlbGTZ8lfi5tfOa+wEUNTe9Z4OvJ3ykosrNHxwzpW
+	 c8Z15tfOS127hJy6q9GMN7UMR++Pwi3w8ejOj3Q82eFO+q+kYuzuOTN6aNAmzWR5e6
+	 h0ELoCg+GGaPQ==
+Message-ID: <9d608b3a-fd52-4303-94ee-6d2a5128f94c@kernel.org>
+Date: Wed, 11 Feb 2026 16:20:29 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -37,13 +37,11 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: korgalore bug: Feed state not found for lch@ list
+Subject: Re: korgalore bug: kgl pull fails after kgl track
 To: Konstantin Ryabitsev <mricon@kernel.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>, Andi Shyti <andi.shyti@kernel.org>
-References: <695ccea6-bb19-4f6d-99cf-1d898b53b1cc@kernel.org>
- <20260209-hungry-phenomenal-unicorn-1ad4be@lemur>
- <c3dcff19-7f6c-4f09-ad63-c3af15e8c5f6@kernel.org>
- <20260211-gigantic-aspiring-jaguarundi-aeddcd@lemur>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+References: <e7330b25-1e9d-445f-a1d4-e50a1ce0ddca@kernel.org>
+ <20260211-zippy-corgi-of-love-0e6c3b@lemur>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -89,26 +87,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260211-gigantic-aspiring-jaguarundi-aeddcd@lemur>
+In-Reply-To: <20260211-zippy-corgi-of-love-0e6c3b@lemur>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 11/02/2026 16:14, Konstantin Ryabitsev wrote:
-> On Tue, Feb 10, 2026 at 05:30:31PM +0100, Krzysztof Kozlowski wrote:
->> "/home/krzk/.local/share/pipx/venvs/korgalore/lib/python3.13/site-packages/korgalore/lore_feed.py",
->> line 77, in clone_epoch
->>     raise RemoteError(f"Git clone failed: {output.decode()}")
->> korgalore.RemoteError: Git clone failed:
+> On Wed, Feb 11, 2026 at 11:05:44AM +0100, Krzysztof Kozlowski wrote:
+>>   File
+>> "/home/krzk/.local/share/pipx/venvs/korgalore/lib/python3.13/site-packages/korgalore/cli.py",
+>> line 800, in retry_all_failed_deliveries
+>>     for delivery_name, (feed, target, labels, subfolder) in
+>> deliveries.items():
+>>                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>> ValueError: not enough values to unpack (expected 4, got 3)
 > 
-> Ah, so in this particular case I wasn't testing with the actual --shallow
-> parameter, which is why I couldn't reproduce the failure. The problem here
-> is that the lch list doesn't have any messages since November 2025, so when we
-> try to clone it with --shallow-since=1.week.ago, we get a clone failure.
-> 
-> There is a workaround for this situation in both master and stable-0.5.y, and
-> I can confirm that setting up the lch list works without a crash now.
-> 
-> If you can confirm, I will tag 0.5.2 for the release.
+> Thanks! We're now testing for this condition and there's a fix in master and
+> stable-0.5.y.
 
 I tried master branch and works, thanks!
 
