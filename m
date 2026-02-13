@@ -1,90 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9736F3659EF
-	for <tools@linux.kernel.org>; Fri, 13 Feb 2026 17:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A4D2BEFEE
+	for <tools@linux.kernel.org>; Fri, 13 Feb 2026 22:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771005201; cv=none; b=bD+SxS3RQAT8ICJF+a4xFTSS1UwaRn4D5hJTgyCQKUeGGCjFcZimuDW5oRq5rcRrXmTU+rt4Qfo2JN/WeZFs+OnP30+6jDpQZCHj2JYb9BCzROU6IyI858qmjqGiHd3SYrqDwHRbku1mGz7h5Bwgecyz7WSqEh49OV//vpi/npw=
+	t=1771020301; cv=none; b=sc1bSDlt+p7Xr1vfBkY0ZGwnmt2/kc48UuC6Z9r0zmcsqMTOul2AbJ4EODBk+IaMFzJXR3gskdMbhvQKdF69J3SzXpZLONaupsV2ANkr6BpdO2YhwriqOsebRDDvZrb9JpVZSyTNddopDuLqooxBI21u5v7tqyePVGGvqx/Er5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771005201; c=relaxed/simple;
-	bh=n5l6/lwzzS998qJ88JU2MHPWaVXFwph2WCL/4hPvJ1o=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=CxWdNhL2i02ibIClqFIoXyHJIHSSlReodkBQprPDY8s3zc/bIj/hPrOiRcgxs2/tekpQxjgCxDtGOTzgvo5DrFHib5W0OzGpysflNeXYg6IxTVT0Zxj+JntOsqeIMEljMVwfmHcN3OAZaeqkiA5VGjpU0H60UTfu1ziYPfih/OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pha2sKIX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771020301; c=relaxed/simple;
+	bh=jPHCd3KTaw4n2bX/hwS7jY7iopEgu75OHxfyFcyh5QQ=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=knHu010opORVpGqPm0TGog8+4DjosGZdTVh2D1ow1j73wCJywGCv6MP0oSJAFIGSSWaR/ttyL+dJN+t311OG5p1CLBmP+b+pK6yuSy06NBN69EttcUSYO1PkXMFkI0Esp1NX2ErjzkMSeMQ4bjKV8pvKjOXYTiBpZhrbNN5WNqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R74p8aV/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pha2sKIX"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R74p8aV/"
 Received: by smtp.kernel.org (Postfix)
-	id 0C2A6C19421; Fri, 13 Feb 2026 17:53:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC71C116C6;
-	Fri, 13 Feb 2026 17:53:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771005201;
-	bh=n5l6/lwzzS998qJ88JU2MHPWaVXFwph2WCL/4hPvJ1o=;
-	h=Date:From:To:Cc:Subject:From;
-	b=pha2sKIXoDTQObx/mJQIUCKJ5hFk/Xm8dsuGCHF8zyYQBsn5qyW5lEnTIZEFeWuUZ
-	 g7C253ZtgxFi7uqz0MUxuI+H/abDxaCFg9/mVeokaCJMumnucEJxpt8c4Tenh8ZMyO
-	 7bTmMlnrz+40axblTtkLFBQBAxPIONsBsRn+lMb/Ny+5oDtvcLyx4xIoaiES4qkCHt
-	 5VrofmZZxufvsyRvabZTREHAABZThT9wjsjA1f/ItfQLxZ8PXkZ7QKEtigwRzc/xT3
-	 KpFM0SdAnd5HzKMbp9Rz1WHYAXT13PpAKkZctWGAyftJ1W0i0/8BIJbMpF//wR5IU1
-	 5Pv4fRSxZS8/g==
-Date: Fri, 13 Feb 2026 17:53:17 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 dig not finding commits due to alternate sender emails
-Message-ID: <aa4a44c9-7fee-4dd3-aafe-dca46c7038d0@sirena.org.uk>
+	id 18F54C19424; Fri, 13 Feb 2026 22:05:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C14C16AAE;
+	Fri, 13 Feb 2026 22:05:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1771020301;
+	bh=jPHCd3KTaw4n2bX/hwS7jY7iopEgu75OHxfyFcyh5QQ=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=R74p8aV/dXW9kMicNyh/9LtfzljnZZ7Ue1oU/Zlma6T2+oNMqwcs28kThzB9GwfVJ
+	 k6B55arv5tCqt6E80teLZLSR9WhRV7Ju2PIqMl8r4gqqRqITR8S5BPQawPV/SOrWuU
+	 rZbcJUuOyhPlqSZMZpslVhn9J4X2dwB4987So8Xo=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: tools@kernel.org, 
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+In-Reply-To: <20260213170418.4138575-2-u.kleine-koenig@baylibre.com>
+References: <20260213170418.4138575-2-u.kleine-koenig@baylibre.com>
+Subject: Re: [PATCH patatt] contributor-guide: Be more explicit than "Very
+ recent versions of git"
+Message-Id: <177102030061.2520541.9222199921584124757.b4-ty@linuxfoundation.org>
+Date: Fri, 13 Feb 2026 17:05:00 -0500
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CzheEfTyW77jk1l8"
-Content-Disposition: inline
-X-Cookie: I have become me without my consent.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.15-dev-4e7d2
 
 
---CzheEfTyW77jk1l8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Fri, 13 Feb 2026 18:04:19 +0100, Uwe Kleine-König wrote:
+> It was in 2021 (see commit 90b28bed4caf ("Add support for openssh
+> signatures")) when Konstantin claimed that you'd need a very recent
+> version of git to do openssh signatures. Now more than four years later
+> this isn't shiny new any more. So replace the fuzzy version hint with an
+> explicit version number that makes it easier for users to decide if
+> their git is capable of ssh signatures.
+> 
+> [...]
 
-Hi Konstantin,
+Applied, thanks!
 
-I'm seeing a bunch of commits that b4 dig is unable to locate on lore
-due to the sender using a different email address to send the patch to
-that used for the commit.  For example with:
+[1/1] contributor-guide: Be more explicit than "Very recent versions of git"
+      commit: 6b8d07cda802b79109919312bd55e7a865faca73
 
-  e48e16f3e37fac76e2f0c14c58df2b0398a323b0 f2fs: support non-4KB block size without packed_ssa feature
+Best regards,
+-- 
+KR
 
-the posting looks to git like a non-author send from daeho43@gmail.com
-of a patch from daehojeong@google.com but since b4 constrains based on
-the commit author email address:
 
-  q=(s:"f2fs: support non-4KB block size without packed_ssa feature" AND f:"daehojeong@google.com" AND d:..20260118)
-
-we don't match once we get beyond the patch ID searches.  I'd expect
-this to also hit for actual non-author sends but the examples I'm seeing
-pop up are all one person with multiple e-mail addresses.  Not sure what
-the best approach is here...
-
-Thanks,
-Mark
-
---CzheEfTyW77jk1l8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmPZQwACgkQJNaLcl1U
-h9Bcwgf8DTeyyL2VUwUGVVmhOf0jYiNaEl1gxIQqWFjg9mzsWAyDLZfJTQWr6MGe
-1fBiffJuOz6J5jBy8bVLTzNFqjh/En3LBvvkWQpyckFMGPdepn36ucpg2Jyd1Knh
-goKlLhuaDqiMvY1u+1lGwwZg+VuL6gL8ZIO7kpI9r/h9fj8azL6yi9UsvyUOrmsp
-gmR7nhR3/TIw/2ioNJp6SUg2eU/6thiMQnAf4xpHrT0kjSBKjlg21VAD/oer+3Pn
-HCifGfwvZfwLYPhdiapazg5ROUPbgHerA4QarQlxIWsjl/WjiQvKjq9loe/TWdgf
-Rmk7nJxAIphCbgwe2vGxXdVzxttJ8w==
-=eYoF
------END PGP SIGNATURE-----
-
---CzheEfTyW77jk1l8--
