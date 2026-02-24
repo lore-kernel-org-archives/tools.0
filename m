@@ -1,125 +1,144 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2A333B95D
-	for <tools@linux.kernel.org>; Tue, 24 Feb 2026 21:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C46D2DB7BF
+	for <tools@linux.kernel.org>; Tue, 24 Feb 2026 21:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771968170; cv=none; b=kRUi2N0Czs18F1DSmRnaPTcXw4bKlbCr+Ucfr6JjvRvHuulYEC40gfEtXUjsST9NaxKFL7MmNsTBQM/oc6yZOf/TMfzmBxQhzgIJPMrDGltOXNXdKpw5vSUIm3qyCygClq/Ujw7fyL1A4gi64n68vztva7TYr+IyoMs0+S/NAPo=
+	t=1771970396; cv=none; b=F/QblL1knp5c8MJbgTYLVU2z/Rg/v3Qcd4+nzQOT2MSs69sYQV4Cyy2X5ZgJWX5Rf5iYFRa/nx6oC9LkmqX9oxoYH/wEgUaTHUclB+0Q+sp0fTO2s70SUPV1rstzo7YNKxrqxPo8HlYVCdubUsBwxDqwsqWUzM0cj2IT1bYoiJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771968170; c=relaxed/simple;
-	bh=QBF93DDp0WDaqPMx6SjxOJU+j4D4AnUlyGD9vsCF0bQ=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=WHO7UvmUPVy/bliu+BYJgguz70xBlkyWIubDTKzMfPLNsE4QiuWM77MH966+xI+zxR96dsPyanJkj3xllcNerHce+i/CO3lP+ZzV//6Q1KbNXVL3RpryCx7gmmoOOHilI+g2w9xUq6Pu/HmabA98FmKo/cLaa4KXeingI0iRRsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Atq0PRdt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771970396; c=relaxed/simple;
+	bh=RYh68ZTZZ/shG6Aze7GCKuRt43H8uHQigQFUNzDiY6Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gndxtKu7pA0WyKM1VMVGws8IORhg+c02Kdln+VkvocYU74JeJqiY323q3WiYJQB6/ip3pOfGqwL9ntspg3+OZ+cqHOGTtR3vdKi9Z+KkzPZUe83K3um0oDgPaARRdFSMY3QlIr2a6PY1ILf/3xkYYLiEWBn0dwI/f/N/tXwGkbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=lht8cQBB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Atq0PRdt"
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="lht8cQBB"
 Received: by smtp.kernel.org (Postfix)
-	id 9E54FC19423; Tue, 24 Feb 2026 21:22:49 +0000 (UTC)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id 5DEF9C2BC86; Tue, 24 Feb 2026 21:59:56 +0000 (UTC)
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id A808DC116D0
-	for <tools@kernel.org>; Tue, 24 Feb 2026 21:22:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org A808DC116D0
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1771968169; x=1803504169;
-  h=message-id:date:mime-version:to:from:subject:
-   content-transfer-encoding;
-  bh=QBF93DDp0WDaqPMx6SjxOJU+j4D4AnUlyGD9vsCF0bQ=;
-  b=Atq0PRdtqLH3wYeQZ9ndHo0yR0rnC9wbey41gDhgsbpf39vu22zSAc0p
-   0Z9c8Pg3m1axMPIMtvoZIvCqa9tIsaLdFDHvGvfP2FBNVnGDx9cl6YjHj
-   eE9Pe6goOIvo33sSIrf0o7ny0AwY61HZ+TmuiXIwgNLE3N7Xpc/1Fatlx
-   pG5hqE8Cp+3w0Xq2OBrkm1u+UgS1hT8vy6YN36xGhlun3l0EwZr2oXx5c
-   9MborxMyWUEvRTHcEQz0VfCcqGhaHA4g0LKhR4pedODMvNOkujl8Cc2OA
-   f/hrN9FJOCY3CFE5KtcAVW2DfAXmbHjvaUZqGrfvofGEAlnbOBw5E6blq
-   w==;
-X-CSE-ConnectionGUID: CDNbBH7wTX6DIahInKQ54w==
-X-CSE-MsgGUID: LD5lne8XT1OUb+jIvv+LUA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11711"; a="84364428"
-X-IronPort-AV: E=Sophos;i="6.21,309,1763452800"; 
-   d="scan'208";a="84364428"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2026 13:22:48 -0800
-X-CSE-ConnectionGUID: O0iskNoNSsGu1nVHzbl8qw==
-X-CSE-MsgGUID: GayNdGiaQximmUXCsvMKnQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,309,1763452800"; 
-   d="scan'208";a="239030681"
-Received: from ray2.jf.intel.com (HELO [10.24.81.147]) ([10.24.81.147])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2026 13:22:48 -0800
-Message-ID: <77c934d2-27f5-4b1a-9465-92d25858e56b@intel.com>
-Date: Tue, 24 Feb 2026 13:22:47 -0800
+	by smtp.kernel.org (Postfix) with ESMTPS id 5A52EC19423
+	for <tools@kernel.org>; Tue, 24 Feb 2026 21:59:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 5A52EC19423
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61OJTZVi1879767;
+	Tue, 24 Feb 2026 21:59:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=jVll9cvghjUNKhmCkPSgrVLx8bPApX
+	gyRh0xgGo99xY=; b=lht8cQBBaxP8scVxaRSCWsZ+CDV30FEfM71DOocwEvI4iO
+	qi+2lpd0r6kLaLglcRGUsIkhqsvSJ355ZKB0FzZWl65gB2w1kBRrhMdRO6CRTtYx
+	W9VGbso9MaobLdeqSBHbfCCY6v03N7cKW2flSlFGf45V3MNnvf6nGGQhtmVnH9Y+
+	Fo1uvz29gPNK5w9Ipp43cFaOXLqvnket1KjWSIiX1NWFMOaiJmTOrlvJJaMzf6mM
+	iwLhJJ3BZw11jB6YbWwgtT6RSj7RPmDMkR9leUV98SfH1y698r6i5ydt69MzQ0An
+	APaVVOfLtyaN2kQ8mPXLR3C0dPdwzpgmBqwWE1Bg==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf34c53wn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Feb 2026 21:59:53 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61OLXO3u030259;
+	Tue, 24 Feb 2026 21:59:53 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cfrhkapq8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Feb 2026 21:59:53 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
+	by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 61OLxrMO21299914
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 24 Feb 2026 21:59:53 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E43C758055;
+	Tue, 24 Feb 2026 21:59:52 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A8C4C5804B;
+	Tue, 24 Feb 2026 21:59:52 +0000 (GMT)
+Received: from d (unknown [9.41.102.181])
+	by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue, 24 Feb 2026 21:59:52 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: Re: [PATCH RESEND v2] Make edit_in_editor use temporary file in Git
+ repository
+In-Reply-To: <177196128601.4027376.7838697675997419538@lemur> (Konstantin
+	Ryabitsev's message of "Tue, 24 Feb 2026 14:28:06 -0500")
+References: <20251118-edit-with-tmp-file-in-repo-v2-1-0b633b471ddb@linux.ibm.com>
+	<177196128601.4027376.7838697675997419538@lemur>
+Date: Tue, 24 Feb 2026 15:59:51 -0600
+Message-ID: <87zf4x246g.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: tools@kernel.org
-Content-Language: en-US
-From: Dave Hansen <dave.hansen@intel.com>
-Subject: Missing cover letter
-Autocrypt: addr=dave.hansen@intel.com; keydata=
- xsFNBE6HMP0BEADIMA3XYkQfF3dwHlj58Yjsc4E5y5G67cfbt8dvaUq2fx1lR0K9h1bOI6fC
- oAiUXvGAOxPDsB/P6UEOISPpLl5IuYsSwAeZGkdQ5g6m1xq7AlDJQZddhr/1DC/nMVa/2BoY
- 2UnKuZuSBu7lgOE193+7Uks3416N2hTkyKUSNkduyoZ9F5twiBhxPJwPtn/wnch6n5RsoXsb
- ygOEDxLEsSk/7eyFycjE+btUtAWZtx+HseyaGfqkZK0Z9bT1lsaHecmB203xShwCPT49Blxz
- VOab8668QpaEOdLGhtvrVYVK7x4skyT3nGWcgDCl5/Vp3TWA4K+IofwvXzX2ON/Mj7aQwf5W
- iC+3nWC7q0uxKwwsddJ0Nu+dpA/UORQWa1NiAftEoSpk5+nUUi0WE+5DRm0H+TXKBWMGNCFn
- c6+EKg5zQaa8KqymHcOrSXNPmzJuXvDQ8uj2J8XuzCZfK4uy1+YdIr0yyEMI7mdh4KX50LO1
- pmowEqDh7dLShTOif/7UtQYrzYq9cPnjU2ZW4qd5Qz2joSGTG9eCXLz5PRe5SqHxv6ljk8mb
- ApNuY7bOXO/A7T2j5RwXIlcmssqIjBcxsRRoIbpCwWWGjkYjzYCjgsNFL6rt4OL11OUF37wL
- QcTl7fbCGv53KfKPdYD5hcbguLKi/aCccJK18ZwNjFhqr4MliQARAQABzUVEYXZpZCBDaHJp
- c3RvcGhlciBIYW5zZW4gKEludGVsIFdvcmsgQWRkcmVzcykgPGRhdmUuaGFuc2VuQGludGVs
- LmNvbT7CwXgEEwECACIFAlQ+9J0CGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEGg1
- lTBwyZKwLZUP/0dnbhDc229u2u6WtK1s1cSd9WsflGXGagkR6liJ4um3XCfYWDHvIdkHYC1t
- MNcVHFBwmQkawxsYvgO8kXT3SaFZe4ISfB4K4CL2qp4JO+nJdlFUbZI7cz/Td9z8nHjMcWYF
- IQuTsWOLs/LBMTs+ANumibtw6UkiGVD3dfHJAOPNApjVr+M0P/lVmTeP8w0uVcd2syiaU5jB
- aht9CYATn+ytFGWZnBEEQFnqcibIaOrmoBLu2b3fKJEd8Jp7NHDSIdrvrMjYynmc6sZKUqH2
- I1qOevaa8jUg7wlLJAWGfIqnu85kkqrVOkbNbk4TPub7VOqA6qG5GCNEIv6ZY7HLYd/vAkVY
- E8Plzq/NwLAuOWxvGrOl7OPuwVeR4hBDfcrNb990MFPpjGgACzAZyjdmYoMu8j3/MAEW4P0z
- F5+EYJAOZ+z212y1pchNNauehORXgjrNKsZwxwKpPY9qb84E3O9KYpwfATsqOoQ6tTgr+1BR
- CCwP712H+E9U5HJ0iibN/CDZFVPL1bRerHziuwuQuvE0qWg0+0SChFe9oq0KAwEkVs6ZDMB2
- P16MieEEQ6StQRlvy2YBv80L1TMl3T90Bo1UUn6ARXEpcbFE0/aORH/jEXcRteb+vuik5UGY
- 5TsyLYdPur3TXm7XDBdmmyQVJjnJKYK9AQxj95KlXLVO38lczsFNBFRjzmoBEACyAxbvUEhd
- GDGNg0JhDdezyTdN8C9BFsdxyTLnSH31NRiyp1QtuxvcqGZjb2trDVuCbIzRrgMZLVgo3upr
- MIOx1CXEgmn23Zhh0EpdVHM8IKx9Z7V0r+rrpRWFE8/wQZngKYVi49PGoZj50ZEifEJ5qn/H
- Nsp2+Y+bTUjDdgWMATg9DiFMyv8fvoqgNsNyrrZTnSgoLzdxr89FGHZCoSoAK8gfgFHuO54B
- lI8QOfPDG9WDPJ66HCodjTlBEr/Cwq6GruxS5i2Y33YVqxvFvDa1tUtl+iJ2SWKS9kCai2DR
- 3BwVONJEYSDQaven/EHMlY1q8Vln3lGPsS11vSUK3QcNJjmrgYxH5KsVsf6PNRj9mp8Z1kIG
- qjRx08+nnyStWC0gZH6NrYyS9rpqH3j+hA2WcI7De51L4Rv9pFwzp161mvtc6eC/GxaiUGuH
- BNAVP0PY0fqvIC68p3rLIAW3f97uv4ce2RSQ7LbsPsimOeCo/5vgS6YQsj83E+AipPr09Caj
- 0hloj+hFoqiticNpmsxdWKoOsV0PftcQvBCCYuhKbZV9s5hjt9qn8CE86A5g5KqDf83Fxqm/
- vXKgHNFHE5zgXGZnrmaf6resQzbvJHO0Fb0CcIohzrpPaL3YepcLDoCCgElGMGQjdCcSQ+Ci
- FCRl0Bvyj1YZUql+ZkptgGjikQARAQABwsFfBBgBAgAJBQJUY85qAhsMAAoJEGg1lTBwyZKw
- l4IQAIKHs/9po4spZDFyfDjunimEhVHqlUt7ggR1Hsl/tkvTSze8pI1P6dGp2XW6AnH1iayn
- yRcoyT0ZJ+Zmm4xAH1zqKjWplzqdb/dO28qk0bPso8+1oPO8oDhLm1+tY+cOvufXkBTm+whm
- +AyNTjaCRt6aSMnA/QHVGSJ8grrTJCoACVNhnXg/R0g90g8iV8Q+IBZyDkG0tBThaDdw1B2l
- asInUTeb9EiVfL/Zjdg5VWiF9LL7iS+9hTeVdR09vThQ/DhVbCNxVk+DtyBHsjOKifrVsYep
- WpRGBIAu3bK8eXtyvrw1igWTNs2wazJ71+0z2jMzbclKAyRHKU9JdN6Hkkgr2nPb561yjcB8
- sIq1pFXKyO+nKy6SZYxOvHxCcjk2fkw6UmPU6/j/nQlj2lfOAgNVKuDLothIxzi8pndB8Jju
- KktE5HJqUUMXePkAYIxEQ0mMc8Po7tuXdejgPMwgP7x65xtfEqI0RuzbUioFltsp1jUaRwQZ
- MTsCeQDdjpgHsj+P2ZDeEKCbma4m6Ez/YWs4+zDm1X8uZDkZcfQlD9NldbKDJEXLIjYWo1PH
- hYepSffIWPyvBMBTW2W5FRjJ4vLRrJSUoEfJuPQ3vW9Y73foyo/qFoURHO48AinGPZ7PC7TF
- vUaNOTjKedrqHkaOcqB185ahG2had0xnFsDPlx5y
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI0MDE4OSBTYWx0ZWRfX5QrQHN05+XW3
+ Os0asXamK2P4PZIdsqkkCGj1RGT4ZU8wjjg/o0FjJ3pRiMjHCt8ZhjeGxpEmqNLDcaRH2UdTfYm
+ F+eOSyCuwvkoo9Eodcuup/tSllyCvBOTsGSqM+Pe1OQinrGFYT86xCHFbTgZpKq1Boy78IY2A4B
+ zscAnoWGwPZM/G0C//O60qRQUdlAZGf2yZDaaKk2BNHOQ2sYhuzROFXGpCXtigsRVbNcyixyDTy
+ 0WtKQcUAH+K2ElVB6DBVRLYD5EudP5KTkVIN0CXgF/kCF+mMiispfJdYzFsfw6byZ82g/rNHGn1
+ 0ohzoshS4Ut7Yqe3O5GozrLYWqexzhzD5kCQOrEeCivwArxvT16T31O//TbBQc5nJgjjLvsiUUk
+ S8qab3fyh2adt46hiunoPEnwGdrgzmpbKZEr1/3HD7tyXt1WUlPe9JUJOsnoyuY2xiG5tJ4Q++0
+ XS4mkl3z7kOWQeWGv7w==
+X-Proofpoint-ORIG-GUID: 6Br2Y2YYXEgNNJ_ISXywdy19AMgGe96O
+X-Authority-Analysis: v=2.4 cv=F9lat6hN c=1 sm=1 tr=0 ts=699e1f59 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=ag1SF4gXAAAA:8 a=VnNF1IyMAAAA:8
+ a=i4Q5uCyYQVFG6ZnuuTkA:9 a=Yupwre4RP9_Eg_Bd0iYG:22
+X-Proofpoint-GUID: 6Br2Y2YYXEgNNJ_ISXywdy19AMgGe96O
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-24_03,2026-02-23_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
+ clxscore=1011 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602240189
 
-b4 am doesn't seem to like my cover letter:
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-https://lore.kernel.org/all/20260213235119.6A9A0F80@davehans-spike.ostc.intel.com/
+> On Tue, 18 Nov 2025 15:34:25 -0600, Dave Marquardt <davemarq@linux.ibm.com> wrote:
+>> diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+>> index 7689550..cc7623a 100644
+>> --- a/src/b4/__init__.py
+>> +++ b/src/b4/__init__.py
+>> @@ -4575,8 +4575,16 @@ def edit_in_editor(bdata: bytes, filehint: str = 'COMMIT_EDITMSG') -> bytes:
+>>      corecfg = get_config_from_git(r'core\..*', {'editor': os.environ.get('EDITOR', 'vi')})
+>>      editor = corecfg.get('editor')
+>>      logger.debug('editor=%s', editor)
+>> +
+>> +    topdir = git_get_toplevel()
+>> +    if topdir is not None:
+>> +        p = Path(topdir)
+>> +        p = p / '.git' / 'b4'
+>
+> Hardcoding `.git` will break when b4 is run inside a git worktree,
+> where `.git` is a file rather than a directory.  This will cause
+> `p.mkdir()` below to raise NotADirectoryError.
+>
+> The existing code in mbox.py:395 already solves this correctly:
+>
+>     gitargs = ['rev-parse', '--git-dir']
+>     ecode, out = b4.git_run_command(topdir, gitargs, logstderr=True)
+>
+> Consider using `git rev-parse --git-dir` to obtain the actual git
+> directory and then creating a `b4/` subdirectory under it.
 
-I think it's because I didn't put a diffstat in that cover letter (it didn't get sent with git send-email). I even hacked:
+The current code in the b4 tree includes my changes from Nov. 19, commit
+ab9639a7685a0e488f7d32783d55aaa2101acc68, and that code doesn't do what
+is shown here. I think there were more iterations. I'm not sure why
+we're discussing this old thread.
 
--        if DIFFSTAT_RE.search(self.body):
--            self.has_diffstat = True
-+        self.has_diffstat = True
-
-and the cover letter is showing up now.
-
-Any chance b4 could use a different heuristic for determining cover letters? Or should I stop being lazy and fix my script? :)
+-Dave
 
