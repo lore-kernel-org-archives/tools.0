@@ -1,56 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA792E1EE0
-	for <tools@linux.kernel.org>; Tue, 24 Feb 2026 22:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7AC74317D
+	for <tools@linux.kernel.org>; Tue, 24 Feb 2026 22:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771971407; cv=none; b=SWyT1vKpEcApyJA/3L2L7Mk5RHUf1FwZlYxzjl20LrOR96DjP2EoX49IJXmg11oUoYwXHkXE3lpg0yJA+8xz1yLXB4s4zEamvhxpByLNF/l9OcAhCBgznOqEv9hqUMlb9jzGlIVSxsmkrDGRE7CZW7+DVgoEtGJCWVyXRLrISE8=
+	t=1771973302; cv=none; b=Q23IUccNDecTZbM+fWziNTGjLTGYRDLNZg3olxYWRoO/YDKz44gUo5lswtAOyjmTU8gN6nJq4qFLzPGINLYrqmQSz94bCUkfD6NWKIIVqU9BTN5APefGZcp6gbA57aENMr4ERdWrviv1BUeOCTlCVmfzGymn08M9gtd7ahtgFf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771971407; c=relaxed/simple;
-	bh=rTKXS7MxoJ3vjSJutzS9jSDxm6oy6TGKX8ymdZBd0U8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uhjZbwCgJ3lY6/BzkVCf0LTjy2VKCsBjY10wIBJhXyoAB3QYhzkbBkvZz7axPYXcXQ26D87ZV0+sbHgQBSeJfBnRB40uNafavv18j3BtnvlKHDShJqr21rcvPf3AkFQw0QlpGlLAgTieSh9+9xxinopzr7GU8/E90HBCDWhH/IQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bqyHEH7y; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771973302; c=relaxed/simple;
+	bh=Rd6JDa8LDe2eAVeOZdPfB3EGkepZGMR3F8smi/+ThxM=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Q88Be8WOXb5nTiAcZ5QJBxwJkmzK30IrFM7i2t6xicmyw3qtGn5JTBHhskhZyap7ICroqaa7dO4ROwq10UhDwHaYpot1e47iwgVCtCNY9UU0ooez/N2lQULl3QYuRe0q3hmOK7Ka1EWohoT59umCk+CwyQVPQTdIj5AoD5TXaVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qggCjo05; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bqyHEH7y"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qggCjo05"
 Received: by smtp.kernel.org (Postfix)
-	id 0774AC2BC86; Tue, 24 Feb 2026 22:16:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFAE6C19423;
-	Tue, 24 Feb 2026 22:16:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771971406;
-	bh=rTKXS7MxoJ3vjSJutzS9jSDxm6oy6TGKX8ymdZBd0U8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bqyHEH7y/rl6urhjA3gZUwlkATHAWIdKydLEzFw7nZVZqnZDEtVpgTHWHANEdScPx
-	 fhKFrMWXd+h2Kwv0gILDithkfXs9XLiWA094avZahkI8E/FJBqqqABudq0lVNy3qO3
-	 +6MCLT5uShzlhZncJrVFYVqmwatrhe51scYP5ZRXjAnhMXKHumUPmh0KP9GhXAieGD
-	 76LqM7wX7cvVGak25zPMZFibk/sXpwO/sgpYTbidt252mWbQDWupHvpZ6NFVYUDOHU
-	 QM7BpsQ/zPvya/mazRBYqfhpNoFjmyuXsUDmvHXXbYRq1ipU6NuFzd9K94bs5T+wus
-	 Iim7VEsY8IEnQ==
-Date: Tue, 24 Feb 2026 14:16:46 -0800
-From: Kees Cook <kees@kernel.org>
-To: Dave Hansen <dave.hansen@intel.com>
-Cc: tools@kernel.org
-Subject: Re: Missing cover letter
-Message-ID: <202602241414.3E5B6296E5@keescook>
-References: <77c934d2-27f5-4b1a-9465-92d25858e56b@intel.com>
+	id 5A28DC19424; Tue, 24 Feb 2026 22:48:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46D7C116D0;
+	Tue, 24 Feb 2026 22:48:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1771973302;
+	bh=Rd6JDa8LDe2eAVeOZdPfB3EGkepZGMR3F8smi/+ThxM=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=qggCjo05Kp2k+C1Hq9VU2Ki5blc6JgITMXe/LsjugNqVPxAkVU1cmLCPdsk8viPKJ
+	 y3NqoOkDiQ6/21jl69XIEeEr5EYNuqQ1LWLgoxKyuYmm+27LrAWf8wWL6fJZTPc8Hg
+	 Qufu7rSvAUD5eZ5cHaTDwR03B9FxlstkIXj8BaMs=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: tools@kernel.org, 
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+In-Reply-To: <20260129100727.950475-2-u.kleine-koenig@baylibre.com>
+References: <20260129100727.950475-2-u.kleine-koenig@baylibre.com>
+Subject: Re: [PATCH wotmate] gpg_run_command: Set output charset to utf-8
+Message-Id: <177197329793.4096808.9794368938787949318.b4-ty@linuxfoundation.org>
+Date: Tue, 24 Feb 2026 17:48:17 -0500
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <77c934d2-27f5-4b1a-9465-92d25858e56b@intel.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.15-dev-4ab14
 
-On Tue, Feb 24, 2026 at 01:22:47PM -0800, Dave Hansen wrote:
-> I think it's because I didn't put a diffstat in that cover letter (it didn't get sent with git send-email). I even hacked:
 
-I kinda think cover letters should always have a diffstat ... :P
+On Thu, 29 Jan 2026 11:07:22 +0100, Uwe Kleine-König wrote:
+> gpg_run_command: Set output charset to utf-8
 
-FWIW, I use: git format-patch --cover-letter -n -o outgoing/ ...
+Applied, thanks!
 
+[1/1] gpg_run_command: Set output charset to utf-8
+      commit: b417eeaf41bcf062b4e233060c6e54d39bc582c9
+
+Best regards,
 -- 
-Kees Cook
+KR
+
+
