@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7AC74317D
-	for <tools@linux.kernel.org>; Tue, 24 Feb 2026 22:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C7B2248A0
+	for <tools@linux.kernel.org>; Tue, 24 Feb 2026 22:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771973302; cv=none; b=Q23IUccNDecTZbM+fWziNTGjLTGYRDLNZg3olxYWRoO/YDKz44gUo5lswtAOyjmTU8gN6nJq4qFLzPGINLYrqmQSz94bCUkfD6NWKIIVqU9BTN5APefGZcp6gbA57aENMr4ERdWrviv1BUeOCTlCVmfzGymn08M9gtd7ahtgFf0=
+	t=1771973707; cv=none; b=Y2EYzI2A93oSCT581BSKslu8AKbJziK1oOfMU8KF7wESIzF0895ufnxLUheyH4TYgq/FHOvOGcO6sIpD9U7lZoMbN3G0aB7BuZVsgvZaog94jgNFfijeRUpgotTuC0x1CvNVceITOS4L3GBDF5DdbmRr4jvg07svnG6MYR5/HeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771973302; c=relaxed/simple;
-	bh=Rd6JDa8LDe2eAVeOZdPfB3EGkepZGMR3F8smi/+ThxM=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Q88Be8WOXb5nTiAcZ5QJBxwJkmzK30IrFM7i2t6xicmyw3qtGn5JTBHhskhZyap7ICroqaa7dO4ROwq10UhDwHaYpot1e47iwgVCtCNY9UU0ooez/N2lQULl3QYuRe0q3hmOK7Ka1EWohoT59umCk+CwyQVPQTdIj5AoD5TXaVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qggCjo05; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771973707; c=relaxed/simple;
+	bh=b0MrLh1vrAep+e9um1gGxeRa7SM5T/28Oa8PBWZwdoY=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=G8qkWmo339DkYreTjixVwcOoQvkDIhQG+J/CGQ8cYssykLJD+tj2//cT4o6g/I+NPme2TWz3VlEB+evacNURBvMqqjirWvXgQIKYeMdCuQ1X1LvQKefiM7IkuWP6UX2KGBVHY3HZ2JRuqj71wGmszoueqWjWs4a8LhCUss1FXCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCvzr9NO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qggCjo05"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCvzr9NO"
 Received: by smtp.kernel.org (Postfix)
-	id 5A28DC19424; Tue, 24 Feb 2026 22:48:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46D7C116D0;
-	Tue, 24 Feb 2026 22:48:21 +0000 (UTC)
+	id C1ED2C19423; Tue, 24 Feb 2026 22:55:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DE6C116D0;
+	Tue, 24 Feb 2026 22:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771973302;
-	bh=Rd6JDa8LDe2eAVeOZdPfB3EGkepZGMR3F8smi/+ThxM=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=qggCjo05Kp2k+C1Hq9VU2Ki5blc6JgITMXe/LsjugNqVPxAkVU1cmLCPdsk8viPKJ
-	 y3NqoOkDiQ6/21jl69XIEeEr5EYNuqQ1LWLgoxKyuYmm+27LrAWf8wWL6fJZTPc8Hg
-	 Qufu7rSvAUD5eZ5cHaTDwR03B9FxlstkIXj8BaMs=
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@kernel.org, 
- =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-In-Reply-To: <20260129100727.950475-2-u.kleine-koenig@baylibre.com>
-References: <20260129100727.950475-2-u.kleine-koenig@baylibre.com>
-Subject: Re: [PATCH wotmate] gpg_run_command: Set output charset to utf-8
-Message-Id: <177197329793.4096808.9794368938787949318.b4-ty@linuxfoundation.org>
-Date: Tue, 24 Feb 2026 17:48:17 -0500
+	s=korg; t=1771973706;
+	bh=b0MrLh1vrAep+e9um1gGxeRa7SM5T/28Oa8PBWZwdoY=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date:From;
+	b=nCvzr9NOajNm8c8TdJzkIPcVWCmHJ7WPUIS/paoxFQtUhMntwmGPpTM+zWvSBu6oa
+	 Njb2SS8i+r+ROQgMcFWfqGZYdDLUAsa//u6RpwTcufOk0jKM99pzLgvKU2RXJykQPo
+	 4B46C3UTCp4uwQBGZMEoMEJj2Gc11T/T6pibhYq8=
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -41,19 +33,39 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH wotmate] export-keyring: Add option to update
+ certificate header
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Cc: tools@kernel.org
+In-Reply-To: <20260210082521.1789192-2-u.kleine-koenig@baylibre.com>
+References: <20260210082521.1789192-2-u.kleine-koenig@baylibre.com>
+Date: Tue, 24 Feb 2026 17:55:03 -0500
+Message-Id: <177197370391.4096808.12228206025820310217@lemur>
 X-Mailer: b4 0.15-dev-4ab14
 
+On Tue, 10 Feb 2026 09:25:22 +0100, Uwe Kleine-König <u.kleine-koenig@baylibre.com> wrote:
+> diff --git a/export-keyring.py b/export-keyring.py
+> index 0208343..3aaba97 100755
+> --- a/export-keyring.py
+> +++ b/export-keyring.py
+> @@ -120,6 +123,11 @@ if __name__ == '__main__':
+>          keydata = wotmate.gpg_run_command(args, with_colons=False)
+>          keyout = os.path.join(keydir, '%s.asc' % kid)
+>  
+> +        # Now, generate the header
+> +        args = ['--list-options', 'show-notations', '--list-options',
+> +                'no-show-uid-validity', '--with-subkey-fingerprints', '--list-key', kid]
+> +        header = wotmate.gpg_run_command(args, with_colons=False)
 
-On Thu, 29 Jan 2026 11:07:22 +0100, Uwe Kleine-König wrote:
-> gpg_run_command: Set output charset to utf-8
+Hmm...  This unconditionally adds a second gpg_run_command invocation per key.
+Previously the header was only generated when key_changed was already True, so
+the default code path had one GPG call per key; now it has two regardless of if
+--update-header is set.
 
-Applied, thanks!
+Am I reading this wrong?
 
-[1/1] gpg_run_command: Set output charset to utf-8
-      commit: b417eeaf41bcf062b4e233060c6e54d39bc582c9
 
-Best regards,
 -- 
 KR
-
 
