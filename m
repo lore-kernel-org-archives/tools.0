@@ -1,30 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2C33A9DA8
-	for <tools@linux.kernel.org>; Tue, 24 Feb 2026 17:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371D52DC789
+	for <tools@linux.kernel.org>; Tue, 24 Feb 2026 18:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771955011; cv=none; b=hw10/DByrOsUEa2OKP4UA2C8POZaIVcK7V8Y/5PIHyh3gFtYD5fLawA4mIZAMhW+3egQn71z9AyA3zxGv4JCPBsmfoLJWSEbjeIJKNvt6Ix0kVwZ3a+SiZjG/YFHRnneaI5lLrEzawZdMDf1NSraO253Hmu3g0AmR9dZ4BTtSLo=
+	t=1771959470; cv=none; b=b4YuBxjldx92KPtWBEdapde3Nono7zM6CYPquioS5oBEnkGdBP6KXrTkYppogiBeUb3o2IyT9O2m7UqqAtzDhlDxUdShC4k9lXzNkEnsylh9MtfgTWIPCm82Ab43n/xvhr/hErZsjwngqU+ykaFAK7EchzuQR4j16uCVckgAL84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771955011; c=relaxed/simple;
-	bh=sNnxa9FSryZ47mHyv1MjSo7Ckbmwi61rm7HmqrtN0Qg=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=Wu3rQnEzQ/YrPJFc9oHILO48fW3i7828JoTreZof06FbPQD/4SYq7Clb2W9o41CB4gnpwceqH2X8CmDF+3+k7+jyMymcW+ynbhyMO0L66/Igp4n+mZWZ1fHUHFmEliLwTEzsIdYaGvTYsEApGGWXMoQGVjjT5V5GR9qQj3xbWyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9Wr+KCd; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771959470; c=relaxed/simple;
+	bh=wcCSFPxWBuCi3S/COx8eh+9IcAjTDhI19Kk992kkYE4=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Isr4S/ryUQpVpqjmOf0+aI0+L69izzpVgz2s8jaXYuLm0AmIgvxvX77xoN7RGbb2ug5MXXu+KXg0OJcpFL7WIg9s5zEotPXDIp5oJRwzdlg8TwVmIze/6wuh4ipl23/nMu85+Z2YG2HY7zckUb33ZOGhLfh2iDep63GiclPskJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OprLfAIa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9Wr+KCd"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OprLfAIa"
 Received: by smtp.kernel.org (Postfix)
-	id 7C576C19423; Tue, 24 Feb 2026 17:43:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122E1C116D0;
-	Tue, 24 Feb 2026 17:43:31 +0000 (UTC)
+	id E28C0C19423; Tue, 24 Feb 2026 18:57:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CBABC116D0;
+	Tue, 24 Feb 2026 18:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771955011;
-	bh=sNnxa9FSryZ47mHyv1MjSo7Ckbmwi61rm7HmqrtN0Qg=;
-	h=Subject:From:To:Cc:In-Reply-To:References:Date:From;
-	b=I9Wr+KCd0kfLrriyfPv6gzkEOMIFXFQ69VTpaTLXa1wjeKu9jd0ucI0o36sZErPJg
-	 a+69fnL3NAmlmj4ChjieV1pWFRK3GF4z5vhN6MxRctcUCLHrVw1l1UOzTKTSJNO34B
-	 XYFHhcSYDhEMK/0cMFfKaPCiDZM7x7esDkUh+uCE=
+	s=korg; t=1771959469;
+	bh=wcCSFPxWBuCi3S/COx8eh+9IcAjTDhI19Kk992kkYE4=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=OprLfAIaPoBt7Sd6h7tlVrRv3FIXlMPP/eWICiOyZE3C5BmUH9p+1XJaIY784MQf+
+	 IUa/QE7VGQ27uWn0Sz3OJZibrkZgRoqsD1a/4lwetykU8jJ5wuS55+i69QPSdJyFcG
+	 xngEpbzovtDZ1xUX2EbwtnkRwH6MG93tSG1/HNWg=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: "Kernel.org Tools" <tools@kernel.org>, Breno Leitao <leitao@debian.org>
+Cc: kernel-team@meta.com
+In-Reply-To: <20260127-force-cover-letter-v1-1-1ba8d7f9a64f@debian.org>
+References: <20260127-force-cover-letter-v1-1-1ba8d7f9a64f@debian.org>
+Subject: Re: [PATCH b4] send: Add --force-cover-letter to send separate
+ cover for single patch patch series
+Message-Id: <177195946358.4019869.10828476841398766948.b4-ty@linuxfoundation.org>
+Date: Tue, 24 Feb 2026 13:57:43 -0500
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -33,60 +42,19 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH b4] docs: document --set-presubject and
- b4.send-presubject
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Antonin Godard <antonin.godard@bootlin.com>
-Cc: "Kernel.org Tools" <tools@kernel.org>, 
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>
-In-Reply-To: <20260121-docs-presubject-v1-1-d625a279f1c5@bootlin.com>
-References: <20260121-docs-presubject-v1-1-d625a279f1c5@bootlin.com>
-Date: Tue, 24 Feb 2026 12:43:18 -0500
-Message-Id: <177195499898.4002465.17583596122781041255@lemur>
-X-Mailer: b4 0.15-dev-1529f
+X-Mailer: b4 0.15-dev-0bcb0
 
-On Wed, 21 Jan 2026 13:28:35 +0100, Antonin Godard <antonin.godard@bootlin.com> wrote:
-> Document the b4 prep --set-presubject option and b4.send-presubject
-> setting, added by commit d7232f5db2e4 ("Add support for setting a
-> presubject").
 
-Thank you for sending this in! I'll take this if you can send a small 
-rebase -- the latest doc format uses .. versionadded:: directives. See 
-below.
+On Tue, 27 Jan 2026 04:53:08 -0800, Breno Leitao wrote:
+> send: Add --force-cover-letter to send separate cover for single patch patch series
 
-> diff --git a/docs/config.rst b/docs/config.rst
-> index a1145af..af470fc 100644
-> --- a/docs/config.rst
-> +++ b/docs/config.rst
-> @@ -437,6 +437,17 @@ Contributor-oriented settings
->  
->    Default: ``None``
->  
-> +``b4.send-presubject`` (v0.15+)
+Applied, thanks!
 
-On latest master, config.rst has been migrated to glossary format. This entry
-should use :term:`b4.send-presubject` and a .. versionadded:: v0.15 directive
-instead of the inline (v0.15+) annotation. See the neighbouring
-:term:`b4.send-prefixes` entry for the expected format.
+[1/1] send: Add --force-cover-letter to send separate cover for single patch patch series
+      commit: 858baa2b2eeb93ea1b0e1b57adfb77e4a126043e
 
->
-> diff --git a/docs/contributor/prep.rst b/docs/contributor/prep.rst
-> index 18c710d..59cedc0 100644
-> --- a/docs/contributor/prep.rst
-> +++ b/docs/contributor/prep.rst
-> @@ -444,6 +444,27 @@ modifying defaults for some of these flags.
->    Similar to ``--set-prefixes``, but will add prefixes to any ones
->    currently defined, as opposed to completely replacing them.
->  
-> +``--set-presubject [PRESUBJECT]`` **(v0.15+)**
-
-Same thing here.
-
-Otherwise, looks good!
-
-Thanks,
-
+Best regards,
 -- 
 KR
+
 
