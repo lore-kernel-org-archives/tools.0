@@ -1,39 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371D52DC789
-	for <tools@linux.kernel.org>; Tue, 24 Feb 2026 18:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375622DB791
+	for <tools@linux.kernel.org>; Tue, 24 Feb 2026 19:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771959470; cv=none; b=b4YuBxjldx92KPtWBEdapde3Nono7zM6CYPquioS5oBEnkGdBP6KXrTkYppogiBeUb3o2IyT9O2m7UqqAtzDhlDxUdShC4k9lXzNkEnsylh9MtfgTWIPCm82Ab43n/xvhr/hErZsjwngqU+ykaFAK7EchzuQR4j16uCVckgAL84=
+	t=1771959906; cv=none; b=E/Z7Qsyjri2G02HQtHaRU1xg8FonjzX6b70gt32m0DTETq+WdKLZPDobaYQDiZFOY1ok+PHXaUm4ZPyKIgNPVt277RUSfExmRscUp97j8b5syeftAVqO8ijD2oiCLUaUnSYpC5OHZ255hurXh1FfMqD603iJSc/04addadS+Xj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771959470; c=relaxed/simple;
-	bh=wcCSFPxWBuCi3S/COx8eh+9IcAjTDhI19Kk992kkYE4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Isr4S/ryUQpVpqjmOf0+aI0+L69izzpVgz2s8jaXYuLm0AmIgvxvX77xoN7RGbb2ug5MXXu+KXg0OJcpFL7WIg9s5zEotPXDIp5oJRwzdlg8TwVmIze/6wuh4ipl23/nMu85+Z2YG2HY7zckUb33ZOGhLfh2iDep63GiclPskJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OprLfAIa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771959906; c=relaxed/simple;
+	bh=WXp20W5sjASQYwmrv0ezMdim/WgogkRaGN2G3ybkdxw=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=KZRZgHkT/rNsU+C0V150kFGS92ycRnwgP5XftDqIi231TrjNbMBG20pEnvMsGT8YRpZSHjEpfVOSJzJDv9fpBR41zpsih0QKsTq+f5HFKkyOL63vYq6rsFY1SEaTNwImUd0ECpEw+s6vTFLp7tbpGxEAzdy3MjxAhCdDG5WnO10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwU2OtLz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OprLfAIa"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwU2OtLz"
 Received: by smtp.kernel.org (Postfix)
-	id E28C0C19423; Tue, 24 Feb 2026 18:57:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CBABC116D0;
-	Tue, 24 Feb 2026 18:57:49 +0000 (UTC)
+	id BCBFAC19425; Tue, 24 Feb 2026 19:05:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44025C19422;
+	Tue, 24 Feb 2026 19:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771959469;
-	bh=wcCSFPxWBuCi3S/COx8eh+9IcAjTDhI19Kk992kkYE4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=OprLfAIaPoBt7Sd6h7tlVrRv3FIXlMPP/eWICiOyZE3C5BmUH9p+1XJaIY784MQf+
-	 IUa/QE7VGQ27uWn0Sz3OJZibrkZgRoqsD1a/4lwetykU8jJ5wuS55+i69QPSdJyFcG
-	 xngEpbzovtDZ1xUX2EbwtnkRwH6MG93tSG1/HNWg=
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@kernel.org>, Breno Leitao <leitao@debian.org>
-Cc: kernel-team@meta.com
-In-Reply-To: <20260127-force-cover-letter-v1-1-1ba8d7f9a64f@debian.org>
-References: <20260127-force-cover-letter-v1-1-1ba8d7f9a64f@debian.org>
-Subject: Re: [PATCH b4] send: Add --force-cover-letter to send separate
- cover for single patch patch series
-Message-Id: <177195946358.4019869.10828476841398766948.b4-ty@linuxfoundation.org>
-Date: Tue, 24 Feb 2026 13:57:43 -0500
+	s=korg; t=1771959905;
+	bh=WXp20W5sjASQYwmrv0ezMdim/WgogkRaGN2G3ybkdxw=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date:From;
+	b=GwU2OtLzc5aYlNnZ6OeSpETqK0URboh27nT4Jwyr0OSx6AX3Lv0eyOfASkeLAuQON
+	 e8DorJFELfEsIuEabMmiEK5EXeLvC+7fqZPlSi2188K/D86W8BMWOmnp/AI25tLrsT
+	 Ivv8403g02+B6LdWbsmdrmTjMNnrQ3MbagQMOTvQ=
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -42,19 +33,130 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-0bcb0
+Subject: Re: [PATCH b4 v2] ez: allow cleaning multiple branches at once
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Antonin Godard <antonin.godard@bootlin.com>
+Cc: "Kernel.org Tools" <tools@kernel.org>, 
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+In-Reply-To: <20260203-multiple-prep-cleanup-v2-1-50d8ccefe25c@bootlin.com>
+References: <20260203-multiple-prep-cleanup-v2-1-50d8ccefe25c@bootlin.com>
+Date: Tue, 24 Feb 2026 14:04:59 -0500
+Message-Id: <177195989990.4022197.15018082372301746649@lemur>
+X-Mailer: b4 0.15-dev-2de16
 
+On Tue, 03 Feb 2026 10:54:01 +0100, Antonin Godard <antonin.godard@bootlin.com> wrote:
+> Allow "b4 prep --cleanup" to cleanup multiple branches in one go. If an
+> error occurs (branch not known/empty branch/currently checked out), just
+> return to continue cleaning up branches. Give the user multiple options:
+> "y" to cleanup, "n" to skip, "q" to abort the cleanup, "s" to show
+> the branch log with diffs, and "?" to print help about these options.
+> 
+> Passing nothing to --cleanup still shows the available branches to
+> cleanup.
 
-On Tue, 27 Jan 2026 04:53:08 -0800, Breno Leitao wrote:
-> send: Add --force-cover-letter to send separate cover for single patch patch series
+Thanks for sending this in! I'm not against the feature, but there are 
+several places where I think this can be improved.
 
-Applied, thanks!
+> diff --git a/src/b4/ez.py b/src/b4/ez.py
+> index 298e382..7af8e14 100644
+> --- a/src/b4/ez.py
+> +++ b/src/b4/ez.py
+> @@ -26,6 +26,7 @@ import io
+>  import tarfile
+>  import hashlib
+>  import urllib.parse
+> +import subprocess
 
-[1/1] send: Add --force-cover-letter to send separate cover for single patch patch series
-      commit: 858baa2b2eeb93ea1b0e1b57adfb77e4a126043e
+This import is only needed for the single subprocess.run() call in the
+"s" handler. Consider using b4.git_run_command() instead, which would
+eliminate the need for this import entirely.
 
-Best regards,
+> @@ -2518,47 +2519,40 @@ def get_prep_managed_branches(gitdir: Optional[str] = None) -> List[str]:
+>      return mybranches
+>  
+>  
+> -def cleanup(param: str) -> None:
+> -    if param == '_show':
+> -        # Show all b4-tracked branches
+> -        mybranches = get_prep_managed_branches(None)
+> -        if not len(mybranches):
+> -            logger.info('No b4-tracked branches found')
+> -            sys.exit(0)
+> +def _cleanup_branch(branch: str) -> None:
+>  
+> -        logger.info('Please specify branch:')
+> -        for branch in mybranches:
+> -            logger.info(' %s', branch)
+> +    if not b4.git_branch_exists(None, branch):
+> +        logger.error('ERROR: Not a known branch: %s', branch)
+>          return
+>  
+> -    mybranch = param
+> -    if not b4.git_branch_exists(None, mybranch):
+> -        logger.critical('Not a known branch: %s', mybranch)
+> -        sys.exit(1)
+> -    is_prep_branch(mustbe=True, usebranch=mybranch)
+> -    base_commit, start_commit, end_commit = get_series_range(usebranch=mybranch)
+> +    if not is_prep_branch(usebranch=branch):
+
+is_prep_branch() without mustbe=True returns False silently. The user
+gets no indication of why this branch was skipped. Consider adding an
+error message here, e.g.:
+    if not is_prep_branch(usebranch=branch):
+        logger.error('ERROR: %s is not a prep-managed branch', branch)
+        return
+
+> @@ -2573,7 +2567,32 @@ def cleanup(param: str) -> None:
+>              tags.append((tagname, base_commit, tag_commit, revision, cover))
+>      logger.info('---')
+>      try:
+> -        input('Press Enter to confirm or Ctrl-C to abort')
+> +        resp = None
+> +        while resp is None:
+> +            resp = input('Proceed? [y/s/q/N/?] ')
+> +            if resp == "?":
+> +                logger.info(textwrap.dedent(
+> +                    """
+> +                    Possible answers:
+> +                    y: cleanup the branch
+> +                    s: show branch log
+> +                    q or Ctrl-C: abort cleanup
+> +                    n (default): do not cleanup this branch
+> +                    ?: show this help message
+> +                    """))
+> +                resp = None
+> +            elif resp in ("show", "s"):
+> +                start_commit = get_info(branch)["start-commit"]
+> +                end_commit = get_info(branch)["end-commit"]
+
+start_commit and end_commit are already computed at the top of this
+function via get_series_range(). Re-fetching them from get_info() is
+wasteful (get_info computes recipients, prereqs, preflight checks, etc.)
+and also shadows the outer local variables. If the user presses "s" then
+"y", the archiving code below will use these reassigned values.
+
+Just use the already-available locals directly, e.g.:
+    b4.git_run_command(None, ['log', '-p',
+                              f'{start_commit}~..{end_commit}'])
+
+> +                subprocess.run(["git", "--paginate", "log", "-p",
+> +                                f"{start_commit}~..{end_commit}"])
+
+Same as above, this should be using git_run_command().
+
+> @@ -2636,6 +2655,23 @@ def cleanup(param: str) -> None:
+>      logger.info('Wrote: %s', tarpath)
+>  
+>  
+> +def cleanup(branches: list[str]) -> None:
+
+Small nitpick: the lowercase list[str] type annotation requires Python 3.9+.
+The rest of this file uses List from typing (already imported). Use List[str]
+for consistency.
+
+Cheers,
+
 -- 
 KR
-
 
