@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A853939BE
-	for <tools@linux.kernel.org>; Wed, 25 Feb 2026 14:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6124C3E95AA
+	for <tools@linux.kernel.org>; Wed, 25 Feb 2026 16:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772031508; cv=none; b=r/VbSKKVEpYDr9lcOOynwSofdxWDgennYMV4feD5DyglLDXC87xzaeZmLxlbNMAk9ERk24qbfIE3gvufHR2Kwm8A2TDxiS4RqID5jX2iUvt8g5khcl2I5UnLE/XjODcF4Oq0Pdfzflly1DWhqJGjaPVzg5cibAA1ezLgLedV7iM=
+	t=1772037424; cv=none; b=kiFi1hU0bk3QsCqAw6ZXeGjkaQ4MkiyrTx7m7K0RuKOO77EdZGNUWmARFZUJbgI9uPZeS+YGync4YCQ6Ph1LE5wn4fd3iUD0u1wPHhOmRnO1u2d5mOjrpcIp646sVXRpdfwSYFYwfNte2y7pJftmgIUbKGiHjFPIL3W5Tnt/JNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772031508; c=relaxed/simple;
-	bh=9r+pRIl87DkmuuEu6PNaWtrMNYGYYylZ7OXc7OZH8XY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=KPZatsoHpZcdA92M7jjuxMMccgt5JoEzo011hrhqXuGeOk+TB2gE4qs+KHEbN23+xCBbwWYC3LwYmtfwYQrCiTeC2M7xLZ3pZlVA5FOkJLRu7efKTrquAzQvuUL9Ea1l8q8qvRZPQ9rF+Agzu4XaifmxwroYScCb7BoxI6FYs54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pzz7c92G; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772037424; c=relaxed/simple;
+	bh=9ZwJ75NYPV/wQMU2r/FpLuHy015MXArcnLD1awF/6es=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=pMND8ijLj04orzz012hCXY7zkPE+zKJN+f8XLgtLZ5pJl3za8vbNueoPWzIvAKNH/Ia9JIQNxtbuo7t4zgfQ5WrwO/qzA9dDamdQITqYOvR2EtylU3QDez6YpBwSKUJKK4qVEwU+PAqX983L21ypsxAIoC7ncjBbqmcJv1TJg50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvCwnR1B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pzz7c92G"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvCwnR1B"
 Received: by smtp.kernel.org (Postfix)
-	id 41167C19425; Wed, 25 Feb 2026 14:58:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA9BC116D0;
-	Wed, 25 Feb 2026 14:58:27 +0000 (UTC)
+	id D6A4EC19421; Wed, 25 Feb 2026 16:37:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE9BC116D0;
+	Wed, 25 Feb 2026 16:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772031508;
-	bh=9r+pRIl87DkmuuEu6PNaWtrMNYGYYylZ7OXc7OZH8XY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=Pzz7c92GdVYRII7XHSJeav2JH+Ont75fmUkUIzuMbjHbzHroLcGznDMgeGcWuulKb
-	 TSfkJI9KephZfrmmBvu5A9retyC9JkTVYBI1vHlqNf8xnveISf1ojWpczD64LstsPv
-	 rjh8d1IAQOJkp0ozBPBvytP8XimP0NdHReddRVsU=
+	s=korg; t=1772037423;
+	bh=9ZwJ75NYPV/wQMU2r/FpLuHy015MXArcnLD1awF/6es=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=rvCwnR1BKt/Y+mydPAIlTaoxrOZGJei5Gg3FPN5ZDVs/PbiKmzPpH5TtdCrMdVugZ
+	 nB6YiWuWksvpJPR7nshPWLSjSuVbZurMnof5UNrIOXJCsGJHlY/S41VlSdGXeNJ4Dk
+	 fN7V6rhuCK85yz5m5nPXa2/rt7I5x6zCH07gWAo4=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@kernel.org>, 
- Antonin Godard <antonin.godard@bootlin.com>
-Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
-In-Reply-To: <20260225-docs-presubject-v2-1-09f90b52db02@bootlin.com>
-References: <20260225-docs-presubject-v2-1-09f90b52db02@bootlin.com>
-Subject: Re: [PATCH b4 v2] docs: document --set-presubject and
- b4.send-presubject
-Message-Id: <177203150419.23440.172554179395105334.b4-ty@linuxfoundation.org>
-Date: Wed, 25 Feb 2026 09:58:24 -0500
+To: tools@kernel.org, 
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+In-Reply-To: <20260225114241.2609196-2-u.kleine-koenig@baylibre.com>
+References: <20260225114241.2609196-2-u.kleine-koenig@baylibre.com>
+Subject: Re: [PATCH wotmate v2] export-keyring: Add option to update
+ certificate header
+Message-Id: <177203741784.47517.7478486241680386558.b4-ty@linuxfoundation.org>
+Date: Wed, 25 Feb 2026 11:36:57 -0500
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -42,17 +41,17 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-97aec
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.15-dev-f479b
 
 
-On Wed, 25 Feb 2026 14:11:01 +0100, Antonin Godard wrote:
-> docs: document --set-presubject and b4.send-presubject
+On Wed, 25 Feb 2026 12:42:42 +0100, Uwe Kleine-König wrote:
+> export-keyring: Add option to update certificate header
 
 Applied, thanks!
 
-[1/1] docs: document --set-presubject and b4.send-presubject
-      commit: 3c4b3211bb94c3ea3c1cf3301b8ae73eecc55978
+[1/1] export-keyring: Add option to update certificate header
+      commit: ef63a30d8fd1e8797edbf8a4d67dbdceb5accb8a
 
 Best regards,
 -- 
