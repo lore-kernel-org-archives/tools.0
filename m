@@ -1,60 +1,122 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9291342980B
-	for <tools@linux.kernel.org>; Thu, 26 Feb 2026 16:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8E243E4BB
+	for <tools@linux.kernel.org>; Fri, 27 Feb 2026 19:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772123937; cv=none; b=UhfBIHIzK7qnXKIRt6SubvzWVMz5opd4Go6KxILeKu2J80ZXJspgZMCMkxy4CQC5/lzP4RRn1gSXQ4j3CG4txJ2y5Z9xHb/0NVHWdm3p1oYC41Q1Q4Fo7jDl/o3q/fNfH6xkd8540rm+dsR2qbikscNlfEB/k8E5WIU1YHboK3g=
+	t=1772221990; cv=none; b=d7PZovC5VCoXj3vD3I54kWIu4z6sGGnQtkRYpHbpxqf7d2O/UkTI/jhuYQfZRZIszj42f5eZnqELiN5t3EMCOBckdtkW5K+eBX4Frb2BFD27KRSuxOYCUjWB1Oe9oZxXnegaT3cwfJ1i+OGnIVWCblI5UQNjMBzVl24XlXWo7Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772123937; c=relaxed/simple;
-	bh=/t6WLiMvb9NP831/T4K5iNqIUtQkkfFcsUYWoUYGJN0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Qs9DM9JLFAO6fzmCrfzlaD3MSYot+VqVhxFo9AkiByx1/RG2N9lgY1fjciN/jgIQQyYSYi7SZfhS5X8MMYPj6Svu4320go74GoPIcdOAsBwKzG9Fhjysix7IsccHJbaseToKDY5uBmoZUvy1vdIh9kKF0URcl6FOjiIIA0b63UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtEJD/vS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772221990; c=relaxed/simple;
+	bh=0aq3X6MZeJbicD4gZmtgPYahp9kwdjtOB6pjrI0Za3c=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Yj5G73Vf3CBTs87BrT6RloiN/eE4XDS5hMlMKpzqIaeeWp9+5EeDaWq+LSjS48DmFcy5lm0TQKg/I0iAryTqPEwWdjt4dmDVKDLdhKku3vmeNrDrii4C6Onewo5gjkjtM3IeKtQvGvOIznGRZI3YkzfoWyjd6fFX5+u6BnLLdCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HBRXS2F7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtEJD/vS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HBRXS2F7"
 Received: by smtp.kernel.org (Postfix)
-	id 53667C2BCB1; Thu, 26 Feb 2026 16:38:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5B1C19424;
-	Thu, 26 Feb 2026 16:38:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772123937;
-	bh=/t6WLiMvb9NP831/T4K5iNqIUtQkkfFcsUYWoUYGJN0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=QtEJD/vSKmD4ZulqxJh59Tk6uHZbgzFR/xT2AtSeL1wqUtFjTbgDVV8GoPmyRrhhR
-	 E1qj//iwLpXH+GqwZWjJOF04g10EeikUcf9JzLq8f+ZoZwJHc/Z73v6MizW3DFb951
-	 eGdRCey4FtWOFFClmD0IR1OCJsktv78vB+WWj5tk=
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@kernel.org>, 
- Antonin Godard <antonin.godard@bootlin.com>
-Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
-In-Reply-To: <20260226-multiple-prep-cleanup-v4-1-c08834685aa3@bootlin.com>
-References: <20260226-multiple-prep-cleanup-v4-1-c08834685aa3@bootlin.com>
-Subject: Re: [PATCH b4 v4] ez: allow cleaning multiple branches at once
-Message-Id: <177212393256.306215.5273621962659097491.b4-ty@linuxfoundation.org>
-Date: Thu, 26 Feb 2026 11:38:52 -0500
+	id 96E62C19423; Fri, 27 Feb 2026 19:53:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D83C116C6;
+	Fri, 27 Feb 2026 19:53:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772221990;
+	bh=0aq3X6MZeJbicD4gZmtgPYahp9kwdjtOB6pjrI0Za3c=;
+	h=Date:From:To:Subject:From;
+	b=HBRXS2F7gIxj5b0cE+h+/RJRQZlC8207W0mZBz5gOkTwb4yHEsBl+ZtLXgP+lHQ8w
+	 lHPh4Xa9YQ2FkcW4h+XgIaFa6BizBxdZX3b9VGHTFnbBnZ+1I9NfoxKcphnFdB2g3e
+	 icBfG6LXekfVXSPp05veSiBVOjpLiccVCd3fLkYUvpzWg+ion/GTQtT7ITMGbXPnTQ
+	 UtHq4PR5ZCpj0JF4MQGM4eUdi2x8g7y1xNkAv3fVgUt/f9o+mPRlGzvSqvBsQdPtXQ
+	 r2SwVl0ycoaWftygIVQ64/kQ8V9ARUDXkNaWhBfe04470wGxOLyu96cDSxufls9evs
+	 lDVW/Xvx943Tw==
+Date: Fri, 27 Feb 2026 14:53:07 -0500
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: users@kernel.org, tools@kernel.org
+Subject: b4 review available in master
+Message-ID: <20260227-imported-aromatic-guppy-ad3dca@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-1a2be
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
+Hi, all:
 
-On Thu, 26 Feb 2026 11:05:35 +0100, Antonin Godard wrote:
-> ez: allow cleaning multiple branches at once
+TLDR: "b4 review" is a terminal UI that hopes to streamline a lot of
+maintainer duties. A getting-started guide with screencasts is here:
+https://b4.docs.kernel.org/en/latest/reviewer/getting-started.html
 
-Applied, thanks!
+It's available from b4 master pending initial testing and will be generally
+available in b4-0.15.
 
-[1/1] ez: allow cleaning multiple branches at once
-      commit: f57ceb524a15e55daa7573751101d67ccd50a7f9
+Longread:
+
+I've been working on "b4 review" for a while, with a few false-starts, a lot
+of despair, and then a whole new direction that seemed to have finally worked.
+So, the usual. :)
+
+I am finally feeling confident enough to release the code as initial
+technology preview, with the primary goal to get some direct feedback. The
+goal of the UI was to work alongside your usual email client, allowing you to
+use it for as much or as little as you like.
+
+The feature only exists in b4 master branch, so if you want to try it, you'll
+need to be comfortable running b4 from checkout. It also requires having a
+valid email server configured with git for sending outgoing mail. If you're
+already using "b4 ty" then you're good to go.
+
+The only new dependency introduced is python-textual. I say this with a bit of
+tongue-in-cheek, because textual pulls in a ton of other dependencies, but
+it's usually already installed on many modern distros anyway.
+
+You can do the following things:
+
+  - Track incoming patch series from lore using a message-id, URL, change-id,
+    or by piping a message from your mail client (e.g. via mutt integration)
+  - TUI-based tracking list with series lifecycle management (new, reviewing,
+    replied, taken, thanked, archived, waiting)
+  - Split-pane review interface with patch list and syntax-highlighted diff view
+  - Quick trailer addition (Reviewed-by, Acked-by, Tested-by) with a single
+    keypress
+  - Inline diff commenting via $EDITOR — comments are automatically formatted
+    as proper quoted-reply emails for the mailing list
+  - Preview emails to inspect exactly what will be sent before sending
+  - Fetch and display follow-up messages from other reviewers directly in the
+    diff view
+  - Range-diff between series revisions without leaving the TUI
+  - Automatic discovery of older and newer revisions when tracking a series
+  - Revision upgrade that preserves your review comments on unchanged patches
+  - Three merge strategies for applying series: merge commit, linear (git-am),
+    and cherry-pick
+  - Thank-you note generation listing each applied commit with its hash (and
+    more reliably than b4 ty, since we keep track of applied series instead of
+    guessing)
+  - AI-assisted review using an external agent (Claude Code, Gemini CLI,
+    OpenAI Codex CLI, GitHub Copilot CLI) — agent findings are private to the
+    maintainer and can then be selectively incorporated into the review
+  - Patchwork integration: browse series, view CI check results, track series
+    directly from Patchwork, and automatically synchronise Patchwork state as
+    you work
+
+Watch the screencasts in the link above if you're curious and please try it
+out. I'm sure there is a ton of corner cases that are not properly handled
+right now, so the more feedback I receive, the better.
+
+If you want to play with LLM reviews, you will need to specifically configure
+your agent. See docs for that. If you don't have a subscription available, I
+am told that there is a program for OSS maintainers available:
+
+https://claude.com/contact-sales/claude-for-oss
+
+If you know of a similar program offered by other LLM providers, I'll be happy
+to know about it. I've tested claude, gemini-cli and codex. (I did test using
+ollama-based agents a while back, but the results were a very mixed bag --
+there is usually not enough context available to these models to perform a
+useful code review, but ymmv.)
 
 Best regards,
 -- 
 KR
-
-
