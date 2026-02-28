@@ -1,105 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603491E8320
-	for <tools@linux.kernel.org>; Sat, 28 Feb 2026 15:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712662D47F1
+	for <tools@linux.kernel.org>; Sat, 28 Feb 2026 16:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772293988; cv=none; b=tBz+YldpkzlfYxFXw2D6gUEb1RagZhwRUNy2kBycu3nSc86letetDYdiV2kJkQ4+4n+tbypmWxq26Cf5u1zqXVU8wk0J2/ZTb/qo83ekmSzOh7X3NJA1TuKDNgaMgMeWrOGx+gP5mVS1f2h68TkpnqWtEiTQ8qTQxdNpX+cgpJk=
+	t=1772294437; cv=none; b=iUt7aSivo8E0n7QubPK6kJS6/2q/iIeo+xrCS98oE/Za4nxvUCLm7VATwV13DOQ09rLp0iHCN5rdPj75GPhBpktvviXcJI/1htkVCqMqPClUJJZJGhi5g7jOziSVEzljp8nB+cHmejktQjwo9SrzhhSGHY5VxvVs0iKwYVbQc98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772293988; c=relaxed/simple;
-	bh=klnPjgnIUfLby334Fa/aTJWpd5xPgGTUImrKZxsnx50=;
+	s=arc-20240116; t=1772294437; c=relaxed/simple;
+	bh=iaNSpVp230yahh9YET61YhjAWh/gBCxm2E7lnrYUxwQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cQFFLMNwN1oCQr/WPAcOPfftOP3Fi+lcvOAywstyj/Haiattycjz0IbfryZvYSfgBH52HsaQs+CRZ0F9kv7vJV+sUXRjEUhdeLwYVN+LyKj1YhU41cag2lDfLvlGgjYN2AGiWEiyYrtD7t3ybZDp9MR5QSoql1KzmCKqezOmQ/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rM956OCb; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=FyuCc58DVcx1PaLhBoRmnBn/df90X7QXJvA57s8rsekMEjeoGg9y72v5tnS6iGFVsZgOdiCw1sYns3tyBqn/p6RWHfIrbppkn0+1t0Vpn7EjVCS54+Jn6RD4QNpUHP6SHKdn5tE35rkx5ptcfF7fRI4pjxV4jWBtHJoFv4zSJnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t03/XQTi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rM956OCb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t03/XQTi"
 Received: by smtp.kernel.org (Postfix)
-	id 4A185C4AF09; Sat, 28 Feb 2026 15:53:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E060C116D0;
-	Sat, 28 Feb 2026 15:53:08 +0000 (UTC)
+	id 1C311C19424; Sat, 28 Feb 2026 16:00:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0313C116D0;
+	Sat, 28 Feb 2026 16:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772293988;
-	bh=klnPjgnIUfLby334Fa/aTJWpd5xPgGTUImrKZxsnx50=;
+	s=k20201202; t=1772294437;
+	bh=iaNSpVp230yahh9YET61YhjAWh/gBCxm2E7lnrYUxwQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rM956OCb6QZVz/zTlkOnDMZOYB3G6NLa6dJBOXjTbSef0lLt+MF12Z6kgvcgy3ryF
-	 6QmHPRsFGHpb8AxjbdkZctb0mF/jWhnO77477mpCH+DsrHCahQAsO00a6lhUwEhnZL
-	 RaXZO+EJ2NU6YzKfSDSvMWmHdzClwcBih3JS4kjYfF1PdG+3k1RVIBFzsiKMHaHnVM
-	 OT/RbKEvNt1rGEOpdHugzXyspv3ZowGfNgS8YKu4mEsKgTSLmKQHjw5IWsgzTZPZFA
-	 O3cyU9FU+Kh7rnQpBeLVJ1C3LQNNR37t/YMT1v350DHW6Zdv+ZcW1er3fd8S4jKiMR
-	 WfROkqn8ulbag==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 5BCF31AC597D; Sat, 28 Feb 2026 15:53:05 +0000 (GMT)
-Date: Sat, 28 Feb 2026 15:53:05 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <mricon@kernel.org>
+	b=t03/XQTiDe4wXzdNT3QQit2KjgXM2DAIqk7Lf64yHfkw4LxMdbsOaZ7sDenAk8iD8
+	 B7osq3n0rdnTl5chNDjKp4VDj7mnV7Y7LQolBzcmT9Mk0KUVA7LCtDsaruyuJBuHMJ
+	 0wiN1mfbiA3wtRQR3is/6SNfZZEWoGbUCtDG9CLAx1B3QaX+wI0ZBv7t3rzog/lAz0
+	 h+4Ap7MqQNQTqVantpIakA75mKXY2Ae5srU48FktjUK+xZaPmschIM7kzgwzrPGAYL
+	 iHvGpKn3FyO5ieSp06KZahHfZSjKEYmuZuNfxglPtL2IMQ93PSfgQz7PQQZjxSEv2o
+	 ef01W2uqbuqFg==
+Date: Sat, 28 Feb 2026 11:00:33 -0500
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: users@kernel.org, tools@kernel.org
 Subject: Re: b4 review available in master
-Message-ID: <aaMPYVIgmsDpn7Rw@sirena.co.uk>
+Message-ID: <20260228-prudent-otter-of-justice-702586@lemur>
 References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
+ <aaMF3GQvC26DsqQf@sirena.co.uk>
+ <20260228-bouncy-truthful-muskox-bcb0bc@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sHd5U6ozAlHMg5sF"
-Content-Disposition: inline
-In-Reply-To: <20260227-imported-aromatic-guppy-ad3dca@lemur>
-X-Cookie: Think big.  Pollute the Mississippi.
-
-
---sHd5U6ozAlHMg5sF
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260228-bouncy-truthful-muskox-bcb0bc@lemur>
 
-On Fri, Feb 27, 2026 at 02:53:07PM -0500, Konstantin Ryabitsev wrote:
+On Sat, Feb 28, 2026 at 10:47:21AM -0500, Konstantin Ryabitsev wrote:
+> > On Debian stable:
+> > 
+> >     class ReviewApp(App[None]):
+> >     ...<1351 lines>...
+> >             self.push_screen(HelpScreen(_review_help_lines(has_agent=has_agent, has_check=has_check)))
+> >   File "/home/broonie/git/b4/src/b4/review_tui/_review_app.py", line 138, in ReviewApp
+> >     _GRP_REVIEW = Binding.Group('Review')
+> >                   ^^^^^^^^^^^^^
+> > AttributeError: type object 'Binding' has no attribute 'Group'
+> > 
+> > where python3-textual is 2.1.2-1.
+> 
+> You're right, looks like the stuff I put in to make the status bar look nicer
+> pulls in textual >= 6.0, released in Aug 2025. I pushed the fix that sets the
+> requirement properly, but I'll also check if I can make it work with what's in
+> debian.
 
->   - AI-assisted review using an external agent (Claude Code, Gemini CLI,
->     OpenAI Codex CLI, GitHub Copilot CLI) =E2=80=94 agent findings are pr=
-ivate to the
->     maintainer and can then be selectively incorporated into the review
->   - Patchwork integration: browse series, view CI check results, track se=
-ries
->     directly from Patchwork, and automatically synchronise Patchwork stat=
-e as
->     you work
+Actually, this was a straightforward rewrite -- the latest master should work
+for you without a custom venv and the textual package available in Debian.
+I've also confirmed that it works on Fedora-43 with python-textual from system
+libs.
 
-As requested since it looks like the textual thing I reported might be a
-bit annoying to resolve a couple of bits of feedback just from reading
-the announce:
+Thanks for the report!
 
- - It'd be good to have a workflow for syncing the reviews between
-   machines (with privacy!), for example I move between my laptop and
-   desktop semi regularly.
- - An integration with non-patchwork CI would be useful, perhaps this
-   looks a bit like the agent stuff above?  It's "hand off to an
-   external tool and some time later see what the tool/a separate
-   results collection tool had to say about things"?
- - If this works for me I think I'm likely to want an "applied but not
-   taken" state, I CI the actual commits I end up merging and do end up
-   looking back at the results sometimes.
- - My existing tooling has an "I'll apply this at rcX" state which I use
-   moderately heavily when I'm happy but want to allow time for other
-   people to review.  Other units of time are available, I'm mostly
-   using the rcs as a proxy for that (and it's very useful for "apply
-   this after the merge window closes).
-
---sHd5U6ozAlHMg5sF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmjD1wACgkQJNaLcl1U
-h9ARQAf/ZD4ISJo+gF2pw26c7WHO/x7F5TTOpvl2OYYrWub+R/w3rTzKqzOQ0lSn
-pvIZkIHn0R/gpY7SskdD40uima6FI4YwnglU/OXg9arrA7o6CI1aNGBbO2OBhvK2
-NpLrY3fBAWu+COv2rpmW1sfPiF2Xz7oogoMVNkGnLLJ4Py/sDt53BBWeQdciUSgG
-fDEJFeE4SwUTsNgVridv/45zvZPltQQwwEyViZ/Ohc6J1hYGvXv6X/KRvCSAVcen
-sqYa2zNuKDzU3AhLFUFtyA7rXIvDNRAMsLymZv7FhQiGa2a8lc/2q+TBNsVSp8u7
-k5zWjjM747BMnvD42OGuSIG6kFLvVw==
-=e+5d
------END PGP SIGNATURE-----
-
---sHd5U6ozAlHMg5sF--
+-- 
+KR
