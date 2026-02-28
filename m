@@ -1,314 +1,229 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CD5430BBF
-	for <tools@linux.kernel.org>; Sat, 28 Feb 2026 21:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E502E1747
+	for <tools@linux.kernel.org>; Sat, 28 Feb 2026 21:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772312673; cv=none; b=JNDH8chHjwUz0ebbaIhu9LhZx2hr9g4oiF9qfC3WPBRHO7gH+fd98h2elWySBdDrbo3Cvdr+EW3PEDC/5zKq6y1dLm1+TXOrayxgei6cS65Jx5UEFmfvT1husRWBcvHSNaJAxaCik5zdO8nk3C47Hh1jklllkZfbQrgHuwBypJk=
+	t=1772313095; cv=none; b=H8uVK6ww22uUpiNLzlj9kxn0s5ZWo8qYPqZZcjN3GLUS2sTJKNBEmG5EUj97o6P+PVvyXk4UBTTknAC/u5Tiozmnm/ndrs9H0fL0YmLOXr+zhcNmg5P6LYbg2Tm+WX5JpCg5ucjBEpjtz8/MS8LJNDnOF3msIl52JzlNecP9d60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772312673; c=relaxed/simple;
-	bh=fuxH/yooxLR2VTDDFpk1u8iJSXHnCEwXKV8NT4aSrx8=;
+	s=arc-20240116; t=1772313095; c=relaxed/simple;
+	bh=Rcu7yDsIBh2EDvkW2mY9UjU8GvqcvcShR0S1QQ0vKyU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=aRM0N/IH5K/u0h2up8e2E7zPd1IzoTx42PHmMsiKq25w1qwU/VpJxO7rxujAfVsEEV3UwdaPp1CPdoBed4fKpL3H4hFXomkRhXM7glAbhxMhQpUVoYOu5TenJregMQtmxkyDbFV6OIKCHDDQ6iXYWwhvt1bj71f65wMhnv5FKqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=YxHDVI+X; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=lUNVP5rclgS7QiS5m8OnNBtwkv2f7K8CqCnmTWzGplg7S42ZMNf6iBcR+JgJ1G7xs+Bd69Ny98YNPjjFPhk5lWNBvHCDwRN+MlAXJzYg4YzA1pX6jeQmLtYKXXzx+lO7ckRKIaa76TdraPA179tgxbgFk62rwblPCK4Zhc2SDqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=up8Mck0G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="YxHDVI+X"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="up8Mck0G"
 Received: by smtp.kernel.org (Postfix)
-	id 5E98AC19423; Sat, 28 Feb 2026 21:04:33 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 0693DC116D0
-	for <tools@kernel.org>; Sat, 28 Feb 2026 21:04:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0693DC116D0
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1772312670;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ixO1wv+Rwh85l8QnIW4ZHvcgC2Ds6pQQYIPcamJynFs=;
-	b=YxHDVI+X2op5Jj4K7DjkrRD5j7h2N60CVVVImyF3BeA0cpqv/JinoHkU1XefjfBZZXMK+d
-	QG1Y9CoZl0HDWrmPjJdnX2DI9WDbkTN5HJYZCBHu1FxK6ns3kKVIp/8sEh3IKDr3KcOl2N
-	hG7kiqoMg3VxwemDLtpAlrWkYSElPRA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-6bb9LQOXOYK611z9ASuIYA-1; Sat, 28 Feb 2026 16:04:29 -0500
-X-MC-Unique: 6bb9LQOXOYK611z9ASuIYA-1
-X-Mimecast-MFC-AGG-ID: 6bb9LQOXOYK611z9ASuIYA_1772312668
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-437159d3ff2so1745133f8f.1
-        for <tools@kernel.org>; Sat, 28 Feb 2026 13:04:29 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772312668; x=1772917468;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ixO1wv+Rwh85l8QnIW4ZHvcgC2Ds6pQQYIPcamJynFs=;
-        b=TyyU1c/bBIsBgnaKcYCINIoczuM9Zs4cIqZInuPt3DNpFxAwwHJFv2SnEcLy0VNG34
-         WksOAQ/k8VufX967xZDwPTnlStAyOlScEk3UY6CphH+bBoN0oPDEaAH4WtFscTfx7ouz
-         U1XvyW2YUpmwjB7rpg90PiLGz9HRTMVyNX1SXLsJt22bUsOlenHmbWVqmNnRPiIpZoVd
-         GiDLUj0/pES6ytcktw5TAII2k56KAB41zlIExWvuDr5fmC8zOndxEH+UNqXsJJEaTauR
-         JbgVgvZ9LsTYQaT+srfE2C1AI0h1uo7CdcMsiwtGpDXwfUoILh7qNohSz6tx18PwufuF
-         MkxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVH1U7YRW8JeVMFAdRWK8s0sfB7fHHIm4cb0uQ+yfEXUep/NGdptzLJSSuubkleWPcYobi+YQ==@kernel.org
-X-Gm-Message-State: AOJu0YxbMtgH1RexVVdiHrqWrzYIZ984QRWjLQcFfNp6KWX0+6G0StSG
-	3LVtb1C4RPT/nNZQoFHa6RKwlS9DqnM+T8raTaKi1eRydAgpIkrd16+HC1XED60x1g3lmz0tC7L
-	qq6AuGdjBhFkmEnppWVowxawiQhKtvbDAGlpZ5epJt/CNlHtb6Q==
-X-Gm-Gg: ATEYQzwJlewOg5MWORfKuwe9NVFWD+RDruHGEht3FJY2TMIDeAZxk/WPPXTXWSztvQU
-	FIhNOPa4K5d7+k1XvqireCPt0GuMcYj0Qd6U+OCMiQa1pBAr6sSU53dZbpt92hpjwNO+WSEv7hw
-	hTDr2sfsoYB2ox0pHZ+I6I7uHYqeg/JO4C9sN72Ix6J5jHR6UqvQ4hNKZbk+ARK2kGAWyiLF57+
-	XdQFNmrxTyCDSMpLZhEsrRM9PHkPFwYipHmk0JUynJt8ysBKtVqjJFSUjfWv392GXs3gfaxcOJt
-	cR2dAZv31FQOLSHTYAENQmOhv8GteQvDaqoCLNS1bqiX5Z4hUQgCKgGxQRsUQb0l4irF7OGn3KR
-	eqJ69aakKFXv3l5YemQ==
-X-Received: by 2002:a05:6000:40c9:b0:437:6c23:3465 with SMTP id ffacd0b85a97d-4399ddf9b71mr11573773f8f.16.1772312667875;
-        Sat, 28 Feb 2026 13:04:27 -0800 (PST)
-X-Received: by 2002:a05:6000:40c9:b0:437:6c23:3465 with SMTP id ffacd0b85a97d-4399ddf9b71mr11573755f8f.16.1772312667383;
-        Sat, 28 Feb 2026 13:04:27 -0800 (PST)
-Received: from redhat.com ([2a06:c701:73e3:8f00:866c:5eeb:fc46:7674])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4399c70f50esm17011693f8f.13.2026.02.28.13.04.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Feb 2026 13:04:26 -0800 (PST)
-Date: Sat, 28 Feb 2026 16:04:24 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
+	id A61C7C19425; Sat, 28 Feb 2026 21:11:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68FB5C116D0;
+	Sat, 28 Feb 2026 21:11:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772313094;
+	bh=Rcu7yDsIBh2EDvkW2mY9UjU8GvqcvcShR0S1QQ0vKyU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=up8Mck0G3DmZsUsbcwV/M1nNA3tbEHZ1KCww6GjJ2H1EyoiuxoHmt69ZPAf429Hxz
+	 L0kpHVg78mY11ajm/x4OTQBxPm7PtGgpa4nyFaLCit1BTrEx7VlwJY+6dZV+XnB1iz
+	 tHpasFVHugJ1ETFY+wMdMZcBopI2yhvM6yoAm7Hk/aRXgsJugQjjLkrOseZzytQoVR
+	 E8TcFrbO9I+o5PbrCcMTNfRhTgBKRqSdPGdB0sqf0lmM0tIPh0/3k3GHmAIJJSYNtv
+	 4tYIroeYOpw1EeKPhx4hI9K5FZpQmDxghhWmBXdG7YLV/NV+ITOrZZRMoaAMBG7gnt
+	 s+fcfFmCQCXZw==
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+	id 1D4DD1AC5A92; Sat, 28 Feb 2026 21:11:31 +0000 (GMT)
+Date: Sat, 28 Feb 2026 21:11:30 +0000
+From: Mark Brown <broonie@kernel.org>
 To: Konstantin Ryabitsev <mricon@kernel.org>
 Cc: users@kernel.org, tools@kernel.org
 Subject: Re: b4 review available in master
-Message-ID: <20260228155515-mutt-send-email-mst@kernel.org>
+Message-ID: <aaNaArEgAe0SgmSh@sirena.co.uk>
 References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
- <20260228125823-mutt-send-email-mst@kernel.org>
- <20260228-sparkling-beryl-kagu-8c34c8@lemur>
- <20260228151029-mutt-send-email-mst@kernel.org>
- <20260228-military-deer-of-purring-c9ef1b@lemur>
- <20260228154713-mutt-send-email-mst@kernel.org>
- <20260228-sceptical-fierce-swift-db217c@lemur>
+ <aaMPYVIgmsDpn7Rw@sirena.co.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20260228-sceptical-fierce-swift-db217c@lemur>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: VrgzUVvZSgLNtDVVh5nTHpl8_q2Kd98WxPYncb6TIJU_1772312668
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="HL/fcDurPOayaEiY"
 Content-Disposition: inline
+In-Reply-To: <aaMPYVIgmsDpn7Rw@sirena.co.uk>
+X-Cookie: Think big.  Pollute the Mississippi.
 
-On Sat, Feb 28, 2026 at 03:53:40PM -0500, Konstantin Ryabitsev wrote:
-> On Sat, Feb 28, 2026 at 03:47:51PM -0500, Michael S. Tsirkin wrote:
-> > > Bah, that "--" was needed for Claude. /o\
-> > 
-> > at least for me, claude works without --. shrug.
-> 
-> Yes, but that's without passing --allowedTools, which takes a really complex
-> format with a ton of spaces. I may deprecate that in lieu of shipping policy
-> files instead.
 
-Since we are discussing this, I thought I'd share the following, written
-a while ago with help from claude. I know I sleep better with this than
-with running random stuff from the intertubes directly.
+--HL/fcDurPOayaEiY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--->
+On Sat, Feb 28, 2026 at 03:53:05PM +0000, Mark Brown wrote:
+> On Fri, Feb 27, 2026 at 02:53:07PM -0500, Konstantin Ryabitsev wrote:
 
-review: add sandbox wrappers and docs for AI review agents
+> >   - AI-assisted review using an external agent (Claude Code, Gemini CLI,
+> >     OpenAI Codex CLI, GitHub Copilot CLI) =E2=80=94 agent findings are =
+private to the
+> >     maintainer and can then be selectively incorporated into the review
+> >   - Patchwork integration: browse series, view CI check results, track =
+series
+> >     directly from Patchwork, and automatically synchronise Patchwork st=
+ate as
+> >     you work
+>=20
+> As requested since it looks like the textual thing I reported might be a
+> bit annoying to resolve a couple of bits of feedback just from reading
+> the announce:
 
-Add bwrap and firejail wrapper scripts that sandbox review agents
-against prompt injection in untrusted patches. Document agent
-configuration including a bunch of agents.
+I've now managed to actually play with this a bit.  It looks really
+great thus far, thanks a lot for working on it.  I've brain dumped a
+bunch of thoughts below which I appreciate is a bunch of
+demanding/moaning but please don't let that take away from the overall
+positive first impression.
 
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>  - It'd be good to have a workflow for syncing the reviews between
+>    machines (with privacy!), for example I move between my laptop and
+>    desktop semi regularly.
+>  - An integration with non-patchwork CI would be useful, perhaps this
+>    looks a bit like the agent stuff above?  It's "hand off to an
+>    external tool and some time later see what the tool/a separate
+>    results collection tool had to say about things"?
 
----
+Expanding on this a bit what I have ATM is effectively two operations
+both of which take commit ranges, one to start testing and another which
+will either say everything is OK or provide a list of outstanding issues
+(one of which might be that it's still waiting for results, that'd
+probably be useful to distinguish in UI).
 
-diff --git a/misc/bwrap-review-agent.sh b/misc/bwrap-review-agent.sh
-new file mode 100755
-index 0000000..460a21d
---- /dev/null
-+++ b/misc/bwrap-review-agent.sh
-@@ -0,0 +1,70 @@
-+#!/bin/bash
-+# bwrap-review-agent.sh -- bubblewrap sandbox for b4 review agents
-+#
-+# Full filesystem isolation: the entire filesystem is mounted
-+# read-only, real HOME is replaced with a temporary copy containing
-+# only agent auth config, and .git/b4-review/ is the sole writable
-+# path.  Agent binaries installed under HOME (npm, pip, cargo) are
-+# re-exposed read-only.
-+#
-+# Requires: bubblewrap (bwrap)
-+#
-+# Usage -- set as your review-agent-command in git config:
-+#
-+#   [b4]
-+#     review-agent-command = misc/bwrap-review-agent.sh cursor-agent --yolo
-+#     review-agent-prompt-path = .git/agent-reviewer.md
-+
-+set -euo pipefail
-+
-+mydir="$(cd "$(dirname "$0")" && pwd)"
-+# shellcheck source=review-agent-sandbox-lib.sh
-+. "$mydir/review-agent-sandbox-lib.sh"
-+
-+if ! command -v bwrap >/dev/null 2>&1; then
-+    echo >&2 "bwrap-review-agent: bwrap not found, running agent without sandbox"
-+    export HOME="$sandbox_home"
-+    exec "$@"
-+fi
-+
-+# Mount layout (later mounts override earlier ones):
-+#
-+#   /                    read-only   entire host filesystem
-+#   /dev                 read-write  minimal private devtmpfs
-+#   /proc                read-only   procfs
-+#   /tmp                 read-write  private tmpfs (empty, ephemeral)
-+#   $real_home           read-write  sandbox_home replaces real HOME;
-+#                                    ~/.ssh, ~/.gnupg, etc. are invisible
-+#   $real_home/.local/   read-only   agent binaries (pip, pipx installs)
-+#   $real_home/.npm-*/   read-only   agent binaries (npm global installs)
-+#   $real_home/.cargo/   read-only   agent binaries (cargo installs)
-+#   $real_home/.nvm|...  read-only   node version managers
-+#   $topdir              read-only   the git repository
-+#   $review_dir          read-write  .git/b4-review/ -- review output
-+#
-+bwrap_args=(
-+    --ro-bind / /                          # base: everything read-only
-+    --dev /dev                             # private /dev
-+    --proc /proc                           # procfs
-+    --tmpfs /tmp                           # private /tmp
-+    --bind "$sandbox_home" "${real_home}"  # replace HOME with sandbox copy
-+    --ro-bind "$topdir" "$topdir"          # repo read-only
-+    --bind "$review_dir" "$review_dir"     # review output writable
-+)
-+
-+# Re-expose directories under real HOME that contain agent binaries
-+# and their libraries/runtimes (symlinks often point into lib dirs).
-+# These are mounted read-only on top of the sandbox HOME.
-+for d in \
-+    .local/bin .local/share/cursor-agent \
-+    .npm-global \
-+    .cargo/bin \
-+    .nvm .fnm .volta \
-+; do
-+    p="${real_home}/$d"
-+    if [ -d "$p" ]; then
-+        bwrap_args+=(--ro-bind "$p" "$p")  # agent binary dir, read-only
-+    fi
-+done
-+
-+exec bwrap "${bwrap_args[@]}" -- "$@"
-diff --git a/misc/firejail-review-agent.sh b/misc/firejail-review-agent.sh
-new file mode 100755
-index 0000000..aa8093f
---- /dev/null
-+++ b/misc/firejail-review-agent.sh
-@@ -0,0 +1,55 @@
-+#!/bin/bash
-+# firejail-review-agent.sh -- firejail sandbox for b4 review agents
-+#
-+# The repository and real HOME are mounted read-only.  HOME env is
-+# redirected to a temporary copy containing only agent auth config.
-+# .git/b4-review/ is the sole writable path in the repository.
-+#
-+# Requires: firejail
-+#
-+# Note: firejail cannot fully hide the real HOME from the agent
-+# (read-only != invisible).  For stronger isolation, prefer
-+# bwrap-review-agent.sh which replaces HOME entirely.
-+#
-+# Usage -- set as your review-agent-command in git config:
-+#
-+#   [b4]
-+#     review-agent-command = misc/firejail-review-agent.sh cursor-agent --yolo
-+#     review-agent-prompt-path = .git/agent-reviewer.md
-+
-+set -euo pipefail
-+
-+mydir="$(cd "$(dirname "$0")" && pwd)"
-+# shellcheck source=review-agent-sandbox-lib.sh
-+. "$mydir/review-agent-sandbox-lib.sh"
-+
-+if ! command -v firejail >/dev/null 2>&1; then
-+    echo >&2 "firejail-review-agent: firejail not found, running agent without sandbox"
-+    export HOME="$sandbox_home"
-+    exec "$@"
-+fi
-+
-+# Mount layout:
-+#
-+#   $real_home    read-only   real HOME (still visible but not writable;
-+#                             ~/.ssh, ~/.gnupg are readable -- use bwrap
-+#                             wrapper if this is a concern)
-+#   $topdir       read-only   the git repository
-+#   $review_dir   read-write  .git/b4-review/ -- review output
-+#   /tmp          read-write  private tmpfs (empty, ephemeral)
-+#   /dev          read-write  minimal private devtmpfs
-+#   HOME env      sandbox_home  agent looks here for config by default
-+#
-+# Capabilities: all dropped.  No new privileges, no root.
-+#
-+export HOME="$sandbox_home"
-+firejail --noprofile \
-+    --read-only="${real_home}" \
-+    --read-only="$topdir" \
-+    --read-write="$review_dir" \
-+    --private-tmp \
-+    --private-dev \
-+    --caps.drop=all \
-+    --nonewprivs \
-+    --noroot \
-+    -- "$@"
-diff --git a/misc/review-agent-sandbox-lib.sh b/misc/review-agent-sandbox-lib.sh
-new file mode 100644
-index 0000000..df588ff
---- /dev/null
-+++ b/misc/review-agent-sandbox-lib.sh
-@@ -0,0 +1,44 @@
-+# review-agent-sandbox-lib.sh -- shared setup for sandbox wrappers
-+#
-+# Sourced by firejail-review-agent.sh and bwrap-review-agent.sh.
-+# Not executable on its own.
-+#
-+# After sourcing, the following variables are set:
-+#   topdir       -- repository top-level directory
-+#   review_dir   -- .git/b4-review/ (writable review output)
-+#   real_home    -- the user's real HOME
-+#   sandbox_home -- temporary HOME with only agent auth config
-+#
-+# A trap is registered to clean up sandbox_home on exit.
-+
-+topdir="$(git rev-parse --show-toplevel)"
-+review_dir="$topdir/.git/b4-review"
-+mkdir -p "$review_dir"
-+real_home="${HOME}"
-+
-+# Create a temporary HOME containing only agent auth config.
-+# The agent process sees this as $HOME, so ~/.ssh, ~/.gnupg, etc.
-+# simply do not exist.
-+mkdir -p "$review_dir/.sandbox"
-+sandbox_home="$(mktemp -d --tmpdir="$review_dir/.sandbox")"
-+trap 'rm -rf "$sandbox_home"' EXIT INT TERM
-+
-+# Copy top-level config files (auth, settings) for known agents.
-+# Only files under 1 MB are copied -- large session logs and caches
-+# are skipped since the agent only needs credentials.
-+for d in \
-+    .config/cursor .config/Cursor .cursor \
-+    .config/claude .claude .local/share/claude .local/state/claude \
-+    .codex \
-+    .gemini .config/gemini \
-+; do
-+    src="${real_home}/$d"
-+    if [ -d "$src" ]; then
-+        mkdir -p "$sandbox_home/$d"
-+        find "$src" -maxdepth 1 -type f -size -1024k \
-+            -exec cp -a {} "$sandbox_home/$d/" \;
-+    elif [ -e "$src" ] || [ -L "$src" ]; then
-+        mkdir -p "$(dirname "$sandbox_home/$d")"
-+        cp -a "$src" "$sandbox_home/$d"
-+    fi
-+done
+>  - If this works for me I think I'm likely to want an "applied but not
+>    taken" state, I CI the actual commits I end up merging and do end up
+>    looking back at the results sometimes.
 
+Having now actually used this I now see that the commits are actually
+being applied as part of the storage for the review so a lot of this is
+already happening (though without signoffs), it seems like this is quite
+close to what I'm looking for with having the actual commits that could
+be merged available with Link: and signoff.  I think I'm just suggesting
+moving the bit that adds those two from the apply part of the flow to
+the import part of the flow.
+
+I can see it might worrying people to have those commits there, but I'd
+definitely use this and I think the merge application strategy might
+actually be relying on this?
+
+>  - My existing tooling has an "I'll apply this at rcX" state which I use
+>    moderately heavily when I'm happy but want to allow time for other
+>    people to review.  Other units of time are available, I'm mostly
+>    using the rcs as a proxy for that (and it's very useful for "apply
+>    this after the merge window closes).
+
+Other things that came up:
+
+ - The initial import of the series and actions->rebase appear to not
+   allow the target branch to be specified, but taking does.  It'd be
+   good if this were selectable consistently, and I suspect if a base
+   has been explicitly specified for a branch we'd want to default to
+   rebasing against that.
+
+ - Some ability to either configure a list of branches to apply to or=20
+   just a recently used list of branches would be handy.
+
+ - It'd be good to have the ability to sort/filter by activity in the
+   series view ("What serieses have active discussion and should have
+   attention paid?", "Where's discussion died down and I should think
+   about applying?").
+
+ - Adding signoffs and Link: tags to applied serieses doesn't seem to
+   work for me with the merge strategy.  I think this is because it's
+   doing what I suggested above and reusing the commits that were being
+   used for review?  Linear strategy does the right thing.
+
+ - It feels like the reply and comment functionality isn't as joined up
+   as it could be.  Adding a comment doesn't block replies, but if
+   you've replied it's not possible to comment further.  I think I was
+   expecting that replies would be stored as a series of comments
+   injected at the point where the quoted text was interrupted and I'd
+   be free to switch between the two so long as I didn't edit the quoted
+   text.  As it is you can comment but once you've been in reply mode it
+   is no longer possible to use the comment functionality.  I do realise
+   that there is some fun with detecting that this is the case.
+
+ - At the minute cherry picking of individual patches can happen only at
+   merge time, it'd be useful to be able to do this during review.  For
+   example, with multi-subsystem serieses (especially large cleanup
+   serieses that really shouldn't have been a single series in the first
+   place) it can be easier to discard irrelevant bits so you can
+   actually find the bit you want to look at.
+
+ - I edited a dummy reply to be To: another of my email addresses but
+   when I tried sending I got a mail To: broonie@kernel.org, Cc the new
+   address.  Copying my main address is good for my mail archives, but
+   I'd have expected the To: to be what was configured.  The metadata
+   looks good in the UI if I hit 'T' to edit To/Cc but it's wrong in
+   both the TUI and what actually gets sent.  Quite possibly user error,
+   I didn't look too hard.
+
+ - If you use the comment feature and don't go into reply mode then the
+   entire diff chunk up to the line commented on will be quoted.  This
+   can blow up badly if the hunk is very big, for example when adding a
+   new file.  It's a sensible default but some mitigation might be in
+   order, for example warning if the quoted percentage is exessively
+   high and suggesting editing in reply mode.
+
+ - I can't see a way to add notes to trailers, for example a comment
+   about where/how something was tested.
+
+ - Any review on a patch causes a tick to be shown against it in the UI,
+   for larger or complicated patches it'd be good to have more control
+   of this so you could see in the summary if you're all done with the
+   patch.  The tick appears even if you added but did not send comments
+   or a reply which feels like a landmine.
+
+ - Especially given that there's not a key collision it feels a bit odd
+   that at least the send part of the reply functionality requires
+   switching to email mode.
+
+ - The UI for followup comments feels like it needs fleshing out:
+
+   - It feels like it should be more obvious from the initial series
+     view that followups exist (especially if they were previously
+     fetched) in either the list of serieses or the per-series view.
+
+   - Some way of tracking status for followups would be good (eg, read,
+     needs addressing, needs reply).
+
+   - The UI for followups shows each person's comments as a single
+     summary which doesn't really give a picture of how active the=20
+     discussion is or anything (mutt's thread view is great here!).
+
+   - It doesn't seem to be possible to reply to a followup?  The feels
+     like it's getting into "switch to your mail client" territory
+     though.
+
+   - It'd be good to be able to see message IDs for followups to make it
+     easier to find them in your mail client.
+
+ - Does the thank you note stuff integrate with b4 ty or have an
+   equivalent thereof?  I purposely generate the thank you notes by
+   asking b4 to check what's in my public branches so people don't get
+   confused by seeing the mail before I did a git push (that used to
+   happen often enough to be noticable).  It doesn't seem to AFAICT.
+
+ - pgp signing mails would be nice but very, very low priority.
+
+Like I say thanks for working on this.
+
+--HL/fcDurPOayaEiY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmjWgIACgkQJNaLcl1U
+h9CSdQf/RhVMGO5FkLQ69lp6v86klhihsd5qRP4U3gVCr7QIlXnJjlts0ySIsq8X
+wAZjyPu9Eyg7/TmQEfXkaXEsecCNjRn8kxiL4RZ4xfZ6IzCNg4eZOSgk3R27LPPg
+pzK0xcbz1J4fhcvbIill1y1D5agkZNYE6Uw70565Oi14RYpBCZ1OrQcsiPwCJFtd
+Lfz+9c/CDrGP0eQ54pcNJjiilId/WPeayIr6PhpHcx2vjNj04BlFzcQb6Y09DlkI
+c614c9ALdY1t0BUZWr7IbzXkKveddj+rK17LalnA3wGUOv6VMyrRZdwGLUf3majP
+YzUdz3LaK358i8RXejN1Cj/H7K4ibQ==
+=IwPj
+-----END PGP SIGNATURE-----
+
+--HL/fcDurPOayaEiY--
