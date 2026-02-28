@@ -1,122 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8E243E4BB
-	for <tools@linux.kernel.org>; Fri, 27 Feb 2026 19:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D323451069
+	for <tools@linux.kernel.org>; Sat, 28 Feb 2026 15:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772221990; cv=none; b=d7PZovC5VCoXj3vD3I54kWIu4z6sGGnQtkRYpHbpxqf7d2O/UkTI/jhuYQfZRZIszj42f5eZnqELiN5t3EMCOBckdtkW5K+eBX4Frb2BFD27KRSuxOYCUjWB1Oe9oZxXnegaT3cwfJ1i+OGnIVWCblI5UQNjMBzVl24XlXWo7Oc=
+	t=1772291551; cv=none; b=rH2sEoIrJg+h6XzqJScu0t787lSFEZ0RuklqW9bmYCz1ArU2EGVrYuruVoIOZHP/pXZjjye6FvCxkEb+kkBUxjOhyVLsqA2eTg2kjDSieWCP6UK60AECSscaBxN4XSnvNZV2yLYVfbiCal79C10WRu6OQ15kAlZBrTv1w5t8bWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772221990; c=relaxed/simple;
-	bh=0aq3X6MZeJbicD4gZmtgPYahp9kwdjtOB6pjrI0Za3c=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Yj5G73Vf3CBTs87BrT6RloiN/eE4XDS5hMlMKpzqIaeeWp9+5EeDaWq+LSjS48DmFcy5lm0TQKg/I0iAryTqPEwWdjt4dmDVKDLdhKku3vmeNrDrii4C6Onewo5gjkjtM3IeKtQvGvOIznGRZI3YkzfoWyjd6fFX5+u6BnLLdCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HBRXS2F7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772291551; c=relaxed/simple;
+	bh=dui350kHAd4TTqPxziYx7kiIVig/iDPIDRkaXsilY9Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X053BNhKvo4tW5dE4UMv8SRd+MKC8/bDcmow4QWAATH41aoYCL84LbnJRoZ1bbzxi0kEbf8KZnchfzOPgTYgJgECmb7raq9P7wzUkpaAq7DhFsyERLK1+0drCvhmDVvl5P7jI7jH0sDTFYl6KKvEMyhv14PYIclzKn1BBdARAQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bu/GonH/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HBRXS2F7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bu/GonH/"
 Received: by smtp.kernel.org (Postfix)
-	id 96E62C19423; Fri, 27 Feb 2026 19:53:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D83C116C6;
-	Fri, 27 Feb 2026 19:53:10 +0000 (UTC)
+	id 343ABC19424; Sat, 28 Feb 2026 15:12:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F2FC19421;
+	Sat, 28 Feb 2026 15:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772221990;
-	bh=0aq3X6MZeJbicD4gZmtgPYahp9kwdjtOB6pjrI0Za3c=;
-	h=Date:From:To:Subject:From;
-	b=HBRXS2F7gIxj5b0cE+h+/RJRQZlC8207W0mZBz5gOkTwb4yHEsBl+ZtLXgP+lHQ8w
-	 lHPh4Xa9YQ2FkcW4h+XgIaFa6BizBxdZX3b9VGHTFnbBnZ+1I9NfoxKcphnFdB2g3e
-	 icBfG6LXekfVXSPp05veSiBVOjpLiccVCd3fLkYUvpzWg+ion/GTQtT7ITMGbXPnTQ
-	 UtHq4PR5ZCpj0JF4MQGM4eUdi2x8g7y1xNkAv3fVgUt/f9o+mPRlGzvSqvBsQdPtXQ
-	 r2SwVl0ycoaWftygIVQ64/kQ8V9ARUDXkNaWhBfe04470wGxOLyu96cDSxufls9evs
-	 lDVW/Xvx943Tw==
-Date: Fri, 27 Feb 2026 14:53:07 -0500
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: users@kernel.org, tools@kernel.org
-Subject: b4 review available in master
-Message-ID: <20260227-imported-aromatic-guppy-ad3dca@lemur>
+	s=k20201202; t=1772291551;
+	bh=dui350kHAd4TTqPxziYx7kiIVig/iDPIDRkaXsilY9Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bu/GonH/FgHYQ9pmaek7FHkbC8Xi3pEWDklikJ9TdRuvPmMkSWBp8+uoKjQirnHM9
+	 1tpNLfHoD8DOvtg/hCAj+giF6zquQtIcpM1zYZSNYCGGf2aIE4s+rtDyD+HSIww44L
+	 T9jPabuAuJOUIO5NFXLayWuxUP/Kjn/E1cViJTrQt/lx4XmhU2EiSyaneXze5hrk1S
+	 gJtNVbm+/9221vQjX8Jsvkx7SFbOfcsIRVYFHNRKlEyzi09h7Jdk83wqO+9ldVARwo
+	 4LBPquUN67wYsmZkSqJty0ePZ98UkGBDLHQ+JE+CKhD6QyRV/00XBI41APmKG7SDI6
+	 QJi3L2ixei3Ow==
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+	id 7CF7B1AC597B; Sat, 28 Feb 2026 15:12:28 +0000 (GMT)
+Date: Sat, 28 Feb 2026 15:12:28 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <mricon@kernel.org>
+Cc: users@kernel.org, tools@kernel.org
+Subject: Re: b4 review available in master
+Message-ID: <aaMF3GQvC26DsqQf@sirena.co.uk>
+References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="roFMPvooowEXL9Vi"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260227-imported-aromatic-guppy-ad3dca@lemur>
+X-Cookie: Think big.  Pollute the Mississippi.
 
-Hi, all:
 
-TLDR: "b4 review" is a terminal UI that hopes to streamline a lot of
-maintainer duties. A getting-started guide with screencasts is here:
-https://b4.docs.kernel.org/en/latest/reviewer/getting-started.html
+--roFMPvooowEXL9Vi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-It's available from b4 master pending initial testing and will be generally
-available in b4-0.15.
+On Fri, Feb 27, 2026 at 02:53:07PM -0500, Konstantin Ryabitsev wrote:
 
-Longread:
+> The only new dependency introduced is python-textual. I say this with a bit of
+> tongue-in-cheek, because textual pulls in a ton of other dependencies, but
+> it's usually already installed on many modern distros anyway.
 
-I've been working on "b4 review" for a while, with a few false-starts, a lot
-of despair, and then a whole new direction that seemed to have finally worked.
-So, the usual. :)
+On Debian stable:
 
-I am finally feeling confident enough to release the code as initial
-technology preview, with the primary goal to get some direct feedback. The
-goal of the UI was to work alongside your usual email client, allowing you to
-use it for as much or as little as you like.
+    class ReviewApp(App[None]):
+    ...<1351 lines>...
+            self.push_screen(HelpScreen(_review_help_lines(has_agent=has_agent, has_check=has_check)))
+  File "/home/broonie/git/b4/src/b4/review_tui/_review_app.py", line 138, in ReviewApp
+    _GRP_REVIEW = Binding.Group('Review')
+                  ^^^^^^^^^^^^^
+AttributeError: type object 'Binding' has no attribute 'Group'
 
-The feature only exists in b4 master branch, so if you want to try it, you'll
-need to be comfortable running b4 from checkout. It also requires having a
-valid email server configured with git for sending outgoing mail. If you're
-already using "b4 ty" then you're good to go.
+where python3-textual is 2.1.2-1.
 
-The only new dependency introduced is python-textual. I say this with a bit of
-tongue-in-cheek, because textual pulls in a ton of other dependencies, but
-it's usually already installed on many modern distros anyway.
+--roFMPvooowEXL9Vi
+Content-Type: application/pgp-signature; name="signature.asc"
 
-You can do the following things:
+-----BEGIN PGP SIGNATURE-----
 
-  - Track incoming patch series from lore using a message-id, URL, change-id,
-    or by piping a message from your mail client (e.g. via mutt integration)
-  - TUI-based tracking list with series lifecycle management (new, reviewing,
-    replied, taken, thanked, archived, waiting)
-  - Split-pane review interface with patch list and syntax-highlighted diff view
-  - Quick trailer addition (Reviewed-by, Acked-by, Tested-by) with a single
-    keypress
-  - Inline diff commenting via $EDITOR — comments are automatically formatted
-    as proper quoted-reply emails for the mailing list
-  - Preview emails to inspect exactly what will be sent before sending
-  - Fetch and display follow-up messages from other reviewers directly in the
-    diff view
-  - Range-diff between series revisions without leaving the TUI
-  - Automatic discovery of older and newer revisions when tracking a series
-  - Revision upgrade that preserves your review comments on unchanged patches
-  - Three merge strategies for applying series: merge commit, linear (git-am),
-    and cherry-pick
-  - Thank-you note generation listing each applied commit with its hash (and
-    more reliably than b4 ty, since we keep track of applied series instead of
-    guessing)
-  - AI-assisted review using an external agent (Claude Code, Gemini CLI,
-    OpenAI Codex CLI, GitHub Copilot CLI) — agent findings are private to the
-    maintainer and can then be selectively incorporated into the review
-  - Patchwork integration: browse series, view CI check results, track series
-    directly from Patchwork, and automatically synchronise Patchwork state as
-    you work
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmjBdsACgkQJNaLcl1U
+h9DULgf+L13HtH2yYQK2s3hRS+cUXvtCk157c4Bv5nh3NBS2cVt7zS0EJqRKwNFp
+JVcOA4rwgLOG0QJJToohqB3eGUTgYsZR8y38vJCUpDprHnMeoENMuUEoq3ynSpOl
+0HZczqAF0NcZLf2UnF/+SknrgUVmPacN2SAyBLd4BMCQWLKf0gBrXbkF6kYQx03v
+9h+gvLda+ztHC3TgKI/p5mIOVG7GiKYdp2Cr7kJa/oVh7MEQ3UNZ4Hku1p0N7651
+AGgpcfetmlU/AIB+tzvJs5MJ/jpqQ9PZFu0eBA3smtp8amkriRoQ+J622AVNJ0tJ
+OJYIOn7nhYDCR4vq1UlmJFgt4yK7iw==
+=0/4A
+-----END PGP SIGNATURE-----
 
-Watch the screencasts in the link above if you're curious and please try it
-out. I'm sure there is a ton of corner cases that are not properly handled
-right now, so the more feedback I receive, the better.
-
-If you want to play with LLM reviews, you will need to specifically configure
-your agent. See docs for that. If you don't have a subscription available, I
-am told that there is a program for OSS maintainers available:
-
-https://claude.com/contact-sales/claude-for-oss
-
-If you know of a similar program offered by other LLM providers, I'll be happy
-to know about it. I've tested claude, gemini-cli and codex. (I did test using
-ollama-based agents a while back, but the results were a very mixed bag --
-there is usually not enough context available to these models to perform a
-useful code review, but ymmv.)
-
-Best regards,
--- 
-KR
+--roFMPvooowEXL9Vi--
