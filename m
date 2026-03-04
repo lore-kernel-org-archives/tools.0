@@ -1,135 +1,128 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4CD381B00
-	for <tools@linux.kernel.org>; Tue,  3 Mar 2026 18:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D024239E6F
+	for <tools@linux.kernel.org>; Wed,  4 Mar 2026 20:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772562088; cv=none; b=My1bqc4RhUQKOerImNJDrHeMirA1IlOYqYl1/ZVkJEZf0fTOEKqbvVWuV6uDt+IvTi/8WXWDGNfE2+nyC5PvpkFwxDHYmXK598UM9vzgWoqyVV4HCkV2Ub7FMXoQPtevvzgzByuNJfhOYYORKsd8lefo6ZrU+2KDmc5yR3uICys=
+	t=1772657802; cv=none; b=QLbE711kCa3mUfwwXmq+aCuZktb88jaeR04Bfar9QOPwrUchR1k2VNrrCjagcPLJaak+cZ3h8HYabKgdkbZJsyUMQ/MeAN4mA15viboJDMDgvi/NJafJzhY7mdH99ACGfVhkkPFQXYAB2wp6fDlYDF9xDFCR496zWJIM9jIjWzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772562088; c=relaxed/simple;
-	bh=zLoshS2c8cDWopcL2LVqDOrDLyYLT5W33delsLPE4kU=;
+	s=arc-20240116; t=1772657802; c=relaxed/simple;
+	bh=XSLZ5nCSmgR89xObsI5geanS7NQNY7P/ZQDrmQSieMM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f0h13v32v1c/Qnk81DEyDxKlJjA/D5E/IsCDsQfx64ocVF2xjuU8fLiBJvXBXjvwO8qgcHNVOkZHgyMIH+vY6F+b9nTMHSUAA9jetokYGfHvRIUYENrMbXFPBRenYbUM/Rb2Mn9q5+mu0g6IDmQzbDV++MLSGGkiGpsj9ZrRef4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jlNf3iEW; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jlNf3iEW"
+	 Content-Type:Content-Disposition:In-Reply-To; b=CTUEEFyhGDci3EOKrVvwk0De48MD51YUDeMz3bHbV53nKfkH0wSzfzR16fTEyAOuRPs7gg8EnSGHlf+namE929XuXEPzEBJFBbuOLMETvKsjJgaT+PeFukGFyBu/yDOWHZhjJEnErP3X399SXuJz31IgKft5h0M8MeFlXTuLcEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 Received: by smtp.kernel.org (Postfix)
-	id A96CDC19425; Tue,  3 Mar 2026 18:21:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1A3C2BC87;
-	Tue,  3 Mar 2026 18:21:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772562087;
-	bh=zLoshS2c8cDWopcL2LVqDOrDLyYLT5W33delsLPE4kU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jlNf3iEWbCGwVl1fZzoFDAXUlZrCAaqAYmhmDnuAotoARdPRE+VlJqm+bdGbCiJM8
-	 4KJRUsg6y5TyrN/MsClJ1Ahb+eOdaWjy4QnsZJSVfFhbFp5o1YeLvNq4Dj8bwaoFLI
-	 3MjN6lM1s5rn0FRYoAoMnc9MonydHni1/AGnu7opiRUWj6KedtEDaFQ6GCW9ifHf/z
-	 wu/ykRMulWr6gPZSpCYsitQsFv+8kGsOaQHPM96NZJLTqqN2V8Z8dbN3AdH9IMuobu
-	 C5xq1Nefxq8dieduwOHqT1M1fkdQG38y88GCxcRztSvxDNan+39mAyiQpmLv1By1pk
-	 klFs3anOuK9pA==
-Date: Tue, 3 Mar 2026 13:21:21 -0500
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Mark Brown <broonie@kernel.org>
+	id 09CDCC2BC86; Wed,  4 Mar 2026 20:56:42 +0000 (UTC)
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 351C7C19425
+	for <tools@kernel.org>; Wed,  4 Mar 2026 20:56:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 351C7C19425
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1vxtGm-00073F-L6; Wed, 04 Mar 2026 21:56:36 +0100
+Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1vxtGl-003lzg-0J;
+	Wed, 04 Mar 2026 21:56:36 +0100
+Received: from pengutronix.de (p4ffb2dc6.dip0.t-ipconnect.de [79.251.45.198])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	(Authenticated sender: mkl-all@blackshift.org)
+	by smtp.blackshift.org (Postfix) with ESMTPSA id 23B914F7E2A;
+	Wed, 04 Mar 2026 20:56:36 +0000 (UTC)
+Date: Wed, 4 Mar 2026 21:56:35 +0100
+From: Marc Kleine-Budde <mkl@pengutronix.de>
+To: Konstantin Ryabitsev <mricon@kernel.org>
 Cc: users@kernel.org, tools@kernel.org
-Subject: Re: b4 review available in master
-Message-ID: <20260303-true-glaring-raven-e78bf2@lemur>
+Subject: range-diff hangs
+Message-ID: <20260304-courageous-deft-skylark-a16e39-mkl@pengutronix.de>
+X-AI: stop_reason: "refusal"
 References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
- <aaMPYVIgmsDpn7Rw@sirena.co.uk>
- <aaNaArEgAe0SgmSh@sirena.co.uk>
- <20260302-juicy-spoonbill-of-jest-6fc659@lemur>
- <e7d999c0-c27f-4d9d-8812-9ff3254ea7cf@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ja6imwf4x2upfb6f"
 Content-Disposition: inline
-In-Reply-To: <e7d999c0-c27f-4d9d-8812-9ff3254ea7cf@sirena.org.uk>
+In-Reply-To: <20260227-imported-aromatic-guppy-ad3dca@lemur>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: mkl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: tools@kernel.org
 
-On Tue, Mar 03, 2026 at 12:42:26PM +0000, Mark Brown wrote:
-> > This was already kinda working, but it should work better now. "With privacy"
-> > is the complicated part, because we really-really don't want to deal with
-> > encryption and keys and all the stuff that comes with that. I recommend just
-> > having a private remote where you can push your review branches. It's not very
-> > well-documented, but you have a private space in
-> > git@gitolite.kernel.org:scratch/broonie/ -- don't let the name "scratch" spook
-> > you, it's just not replicated to git.kernel.org, that's all.
-> 
-> Yeah, pushing branches isn't a concern - it was more the database bit.
 
-The database is mostly there as a caching layer. We do a "rescan" on each
-application start and will update the database with whatever we find in actual
-review branches. So, you should be able to push and pull between systems and
-have it reasonably synchronized (bugs excepted). It's documented here:
-https://b4.docs.kernel.org/en/latest/maintainer/review.html#setting-up-a-sync-remote
+--ja6imwf4x2upfb6f
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: range-diff hangs
+MIME-Version: 1.0
 
-> > We can now define review-target-branch, but I don't think it's wired into the
-> > "rebase" flow yet, just in the "take" flow. I'll make a note to check both.
-> 
-> I'd expect many people have at least fixes and -next branches in the
-> same git repo (I have that, times four for each subsystem I have) so
-> it'd need to be runtime selectable which branch to use.
+On 27.02.2026 14:53:07, Konstantin Ryabitsev wrote:
+> TLDR: "b4 review" is a terminal UI that hopes to streamline a lot of
+> maintainer duties. A getting-started guide with screencasts is here:
+> https://b4.docs.kernel.org/en/latest/reviewer/getting-started.html
 
-Okay, I can't implement this as a combo box in textual, but it will now
-remember the branches you use for merging and will offer the last branch you
-used as the default entry, and if you start typing the name of another branch,
-it will show up as an option to auto-complete (with right-arrow key).
+I'm using b4 v0.12.0-419-g18f8fdb27a22 and a range diff "hangs":
 
-> > This is "as designed" right now -- the Signed-off-by and Link trailers are
-> > applied to the merge commit and leave the individual commits untouched. It's a
-> > controversial take, I know. :)
-> 
-> > Would you prefer that we always applied Signed-off-by: and Link: to each
-> > individual commit even if we're doing a merge?
-> 
-> *Especially* if we're doing a merge, I think the general expectation is
-> that there will be a signoff from the person who committed the patch -
-> in -next we check every commit for both author and committer signoffs.
-> If we cherry pick and they get applied then that'd work out OK, but if
-> we merge and the unsigned commits end up in -next that'd be an issue.
-> Missing signoffs will also mess up with flows like cherry picking
-> patches back into stable, the merge would be long gone by the time the
-> commit shows up in stable.
+| $ b4 review tui
+| Fetching v2 from lore...
+| Looking up https://lore.kernel.org/all/20260219-bcm_spin_lock_init-v2-1-6=
+94352bfca62@hartkopp.net/
+| Grabbing thread from lore.kernel.org/all/20260219-bcm_spin_lock_init-v2-1=
+-694352bfca62@hartkopp.net/t.mbox.gz
+| Checking for newer revisions
+|   Added from v3: 4 patches
+| Checking for older revisions
+| Preparing fake-am range for v2...
+| Preparing fake-am for v2: can: bcm: add/fix locking for config updates at=
+ runtime
+|   range: d9c253b4e17a..88c829c06921
+| Running range-diff...
 
-OK, this is now working exactly as with "b4 shazam" and has the functionality
-you're looking for.
+The relevant part of "ps auxwwf"
 
-> > I'll push back on this a little simply because there's a lot that is keyed off
-> > the number of patches in the series. If we cherry-pick before we even review,
-> > this makes a lot of other functionality fragile. However, there is code now to
-> > mark patches as "skip" (with x) -- this should let you completely ignore them.
-> > When we "take" a series with ignored patches we will automatically default to
-> > the cherry-pick strategy and pre-unselect the ignored patches. Would that come
-> > kinda close to what you want?
-> 
-> Possibly?  I'd need to try it.  Some of these serieses are quite large
-> so even finding the relevant mails can be annoying.
+| python3 local/git/b4/src/b4/command.py review tui
+|  \_ /usr/bin/perl local/bin/diff-highlight | less -RFX -x1,9 pengutronix/=
+socketcan/linux-can/.b4-pager66hzgdqv/range-diff.txt
 
-Let me know if that's not sufficient. We can also give a way to hide skipped
-patches so they aren't even in the picture.
+The diff-highlight and the less is configured in my "~/.gitconfig"
 
-> > I don't think I fixed this yet, but there's been churn in that code today. See
-> > if it's still doing that.
-> 
-> Yeah, still seems to be present.
+| $ git config get core.pager
+| diff-highlight | less -RFX -x1,9
 
-This should be now fixed.
+regards,
+Marc
 
-There's also new functionality in the current master:
+--=20
+Pengutronix e.K.                 | Marc Kleine-Budde          |
+Embedded Linux                   | https://www.pengutronix.de |
+Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
+Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
 
-- "take" is now decoupled from "accept" -- you can take into any branch and
-  the series won't be marked as "accepted" if you leave that checkbox
-  unchecked
-- you can snooze a series, including until we find a specific tag in the local
-  tree; so, in theory, you could snooze a series until v7.0-rc3 or something
-  like that
+--ja6imwf4x2upfb6f
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks for the feedback, and I'll work on improving the comment/review/email
-UI next once I collect a bit more feedback from others.
+-----BEGIN PGP SIGNATURE-----
 
-Cheers,
--- 
-KR
+iHUEABYKAB0WIQSl+MghEFFAdY3pYJLMOmT6rpmt0gUCaaicgQAKCRDMOmT6rpmt
+0qPYAP9qeSqQUcAXZcqcJqqMOBD69aVOl2WkzmbR5sCuEv2OEwEA984Jan+M6gG/
+CIyKQGn8H41SUVUXUJcuzBhbARh4CwU=
+=IDJh
+-----END PGP SIGNATURE-----
+
+--ja6imwf4x2upfb6f--
