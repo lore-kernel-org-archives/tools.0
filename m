@@ -1,70 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1DD3093BC
-	for <tools@linux.kernel.org>; Thu,  5 Mar 2026 21:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E026234D4D6
+	for <tools@linux.kernel.org>; Thu,  5 Mar 2026 23:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772746920; cv=none; b=X5HLxzUeVuh0E2lUB1+L/qVHx9ZgJXxCcWW5xAtKEUdAtwi9YrAQwuzMkeWyGG+oV9mFaQ0a86kT2DTY5Xyu5Dk8roTE9bPBaExIAfimMfLEkjDMDUiYRCLqBcK4X1OmBNHq/R2smIu1Hx3QLg6QOJqsLHOVpVpaT7PTXhcPdZ0=
+	t=1772754040; cv=none; b=Km3ey2rXsJ7e8Ih6q6c1aaue5HjIoaSkLLFQoUH3Q+7LM9R94uymDcyKsrMzBwcsOymtOQ6ZyHR9DSu7xrc1dQEqMsn3jlfDXjwdd4a1LinfujbzTGjuEEkUGo2kfse0wGR2HpckTIpLwFbBijdbZ2BHJHTwkt7pjnM0lTOSOfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772746920; c=relaxed/simple;
-	bh=+6CNumGRnwOZnUVy3BD6ekDk+vfk5z2HwXNZ03PQUds=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aTGj593g9rkVWXvmnz06PSC4Fj8ryQVJAfP5PjCGxZyr1xBUnWeXl8/AORikDoGB6rtGjIz+lc9Y/O/sN2zTQ72OBZ1k5X3IbzKilmxsStogTvMzr3K8snEox707ipvgFn7bgEaZr6t2J7z7FsvHNOVipbpZKreSd8IR/qedgiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLIVyfUW; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772754040; c=relaxed/simple;
+	bh=U8tiEFGD8hzWRhiZza8CPTa4tbVmgjRwBsFUEKBk/ys=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=ZlqxJu8HoHyK8fVoWyI/c5d4XIxKxGBn5MQ6fi4arGajDWcyI6GuXkabySrGyhF+2ZDXC0u4JM1r9bF+Jbw0ZutX6QjgNP887M7l+razA3/GGcTqTKTNDJL3Q5kO1459+tlI5rdxBx/qrsKrkr+UoA62P/PcdoQwFZf3ywwT1QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gfa7zgnj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLIVyfUW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gfa7zgnj"
 Received: by smtp.kernel.org (Postfix)
-	id 3E608C19425; Thu,  5 Mar 2026 21:42:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFE6C116C6;
-	Thu,  5 Mar 2026 21:41:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772746920;
-	bh=+6CNumGRnwOZnUVy3BD6ekDk+vfk5z2HwXNZ03PQUds=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dLIVyfUWbRBLoGzitPIrnZMh6gP9mmD9yVn32zMQaNJFJocykblv530pukV9e9qPJ
-	 XT5/dWEsBxt3HxbN4ZK2/Y++woX68QHzHbLRD61Rb6vCV7MEAF7XDJ5nWOiIZuHIm0
-	 sHTL8VpKRSJACMH5wrCqM9zqRg1A454iRU++D6sI=
-Date: Thu, 5 Mar 2026 16:41:58 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: b4 dig not finding commits due to alternate sender emails
-Message-ID: <20260305-walrus-of-unknown-engineering-ae11f6@lemur>
-References: <aa4a44c9-7fee-4dd3-aafe-dca46c7038d0@sirena.org.uk>
+	id A4E23C2BC9E; Thu,  5 Mar 2026 23:40:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D56AC116C6;
+	Thu,  5 Mar 2026 23:40:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772754040;
+	bh=U8tiEFGD8hzWRhiZza8CPTa4tbVmgjRwBsFUEKBk/ys=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=Gfa7zgnjZ4cmHB6ZwOrcMdXyylyoE95y9QnOnSic/HS3kTQOXsozpSDnwkvwDdpou
+	 rkoZsio+hFppX+gknjRfyEtI65TnHoEf1GFiLrbSpOQteWcMdw4IPS1I1zCNzEHGzO
+	 ioQW2rsE4j9b9S6uKAmOihrcTKRfQIYWc6I/fXb1BIXp9Z375unqJBj4fjzaxVZU5l
+	 Ppo1sOqoXEaDwB4ABmNrqOHh4pW1OCWkoooAuuEcWHH/A6KgAUPBNHRtQ2xoOVignA
+	 Gdjhf/bN91FcjI3P3+IfI3b/rCDA64nOFdrEtKeywCKVsQLIvwmH2zh8q3aS/f7bA2
+	 dLyUTdyU2zkUw==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 7FD1F3808200;
+	Thu,  5 Mar 2026 23:40:41 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: B4 Bugbot <bugbot+b4@kernel.org>
+To: tools@kernel.org, konstantin@linuxfoundation.org, bugbot+b4@kernel.org, 
+ broonie@kernel.org
+Message-ID: <20260305-b0eaec40940b268751f7e69161014d648e8242693df2e65b8ccc00a6e991eaf92-bc264a0a2715@git.kernel.org>
 In-Reply-To: <aa4a44c9-7fee-4dd3-aafe-dca46c7038d0@sirena.org.uk>
+References: <aa4a44c9-7fee-4dd3-aafe-dca46c7038d0@sirena.org.uk>
+Subject: Re: b4 dig not finding commits due to alternate sender emails
+X-Git-Bug-Id: 0eaec40940b268751f7e69161014d648e8242693df2e65b8ccc00a6e991eaf92
+X-Mailer: bugspray 0.1-dev
+Date: Thu,  5 Mar 2026 23:40:41 +0000 (UTC)
 
-On Fri, Feb 13, 2026 at 05:53:17PM +0000, Mark Brown wrote:
-> Hi Konstantin,
-> 
-> I'm seeing a bunch of commits that b4 dig is unable to locate on lore
-> due to the sender using a different email address to send the patch to
-> that used for the commit.  For example with:
-> 
->   e48e16f3e37fac76e2f0c14c58df2b0398a323b0 f2fs: support non-4KB block size without packed_ssa feature
-> 
-> the posting looks to git like a non-author send from daeho43@gmail.com
-> of a patch from daehojeong@google.com but since b4 constrains based on
-> the commit author email address:
-> 
->   q=(s:"f2fs: support non-4KB block size without packed_ssa feature" AND f:"daehojeong@google.com" AND d:..20260118)
-> 
-> we don't match once we get beyond the patch ID searches.  I'd expect
-> this to also hit for actual non-author sends but the examples I'm seeing
-> pop up are all one person with multiple e-mail addresses.  Not sure what
-> the best approach is here...
+Hello:
 
-Using this to test the lovely new git-bug integration via bugspray.
+This conversation is now tracked by b4 bug tracker.
+There is no need to do anything else, just keep talking.
 
-bugspray tag b4/dig
+--
+Deet-doot-dot, I am a bot.
+b4 bug tracker (bugspray 0.1-dev)
 
--- 
-KR
