@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCBC377ECF
-	for <tools@linux.kernel.org>; Wed,  4 Mar 2026 22:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E38025A2C9
+	for <tools@linux.kernel.org>; Thu,  5 Mar 2026 03:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772664930; cv=none; b=Vd9wYBHU3z3fkggsFKW7Fe79SqLN5+w725Lizh3lOUswWJxr6xGSbMPZ4Jihg9fwc8+/VkcAKyczlwL5KhCBmGov5RWAhgDjgNAJdw4SKHLsTAiQxpWV8+Dw+bB+aR1hII5kYOgqBpol+FniPVoehVW8T2wu/MwdjluIQZFyc1Q=
+	t=1772681215; cv=none; b=ZoEqF46R25zjbE0+MDj+W/iNzIaZZSWdDlEFWH2oGaMd1vzKRjUKNWAVq8/oxCLsurXzg9/pBustAGyUeslqzmt2iVqijopJ3La7PWQG6VRS0DDCaAiP4X8sD8iMAEMvGiLb7Yuwyx/LdfdNfFIxTMfZKREmyhg30SXGhW6j47M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772664930; c=relaxed/simple;
-	bh=17BJl0S3z3WCBYqZfSdul7KC405b9xZKZiketbJMZVE=;
+	s=arc-20240116; t=1772681215; c=relaxed/simple;
+	bh=f4bjqTvFddiEruGDPVlnLE5xrqxK/6VYhZ6B1mRLkxU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cjYHrpTEqbLyfFP+wNrN5cBULSVemrAEvSQ51rsyk1UAs085oeRZ0RKqN8AKd7SFRNdpih1STb+Qdt7xI/52jc7nVoWMW0NA4Imkfa6NMgIwm0EBzLkghq4hfU2l4+Zs5gdfneg/srvPQtKLSnQ/ESy8bWZn8ptmgRb9kEulUhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZthtNxfJ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=EVfQoFYZbA23RNO+BFcMZnCXKVNkR9yhpH5YniU03aBME4JXCYWYxo8p8Yymj9nAInwPO/eu8d+I3RN5KMi3rYcMDami+uDan9+xc7TgVzZ1D5LEi3uCahrNALDr9MZ1QdqzsMxL3NFzNepcINbWnL1joXzXN8kI1oufGOmjQfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kuVSKe4J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZthtNxfJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kuVSKe4J"
 Received: by smtp.kernel.org (Postfix)
-	id AD9A8C2BC86; Wed,  4 Mar 2026 22:55:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACBAC4CEF7;
-	Wed,  4 Mar 2026 22:55:29 +0000 (UTC)
+	id D2F60C2BC9E; Thu,  5 Mar 2026 03:26:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A47C4CEF7;
+	Thu,  5 Mar 2026 03:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772664930;
-	bh=17BJl0S3z3WCBYqZfSdul7KC405b9xZKZiketbJMZVE=;
+	s=k20201202; t=1772681214;
+	bh=f4bjqTvFddiEruGDPVlnLE5xrqxK/6VYhZ6B1mRLkxU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZthtNxfJb3xUKo5R3WtrcOMSj2kXfZM3+YtOcrHwFr3TZzdAnFgQs/DvUmdDv7ImN
-	 b8l7v9fL2lqw84s3aGmDTrpIWxPxVr/f7RywQ7AgX9KLprJ7MivX96UgRduCFchpJY
-	 LuezrVqQ71QZqjzIP4p9mpQ06jeJFRJSsl6zQh0I7w9bbdxKz9Zih2xSDdeXehVzfW
-	 tUOiAMApgnKB/CxJsLvQ+FATxwkuAvn+Gfyf6tJ+QYLXplWuEFJiNt3d5qC5XpyuIS
-	 rMfVgxndtTHgiGVwx3UyrrvgNLFMWxjFuTrCvMPseUxjYiZaAL4Inrx5SY1K9H99Wx
-	 0GQjTsEEKqNJQ==
-Date: Wed, 4 Mar 2026 22:55:27 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Konstantin Ryabitsev <mricon@kernel.org>
+	b=kuVSKe4JO1ed5LEc3I0D0rYiMD4Zbf4wY4yu01bTx367sdHr39DyQR6aCl2wc1mX6
+	 DzYfZmuGwISUnqv+Pm3jGQgZ0r32yuTmbz9OEwkfhafaIvqWAgvK71W2Sk0P4j1WNT
+	 sqrD/kiRBhDnEM/vS+yAQhjUDQjx7b9+l439AS/uN/lpT/sT4EM1xDG+9BJJSnOlcC
+	 8haVLqGaJv7+mgsTyA8giXZ0jBw/3lZlCEwh1N9To6BtpDj4xIJl4TqF7Lk2h7LfNS
+	 ld5dVY/ACfHpAKV3RfOUbKDQMRSaQFeECsYUfZkjp8p0oYPuRUr5KcPewDFbxhv3/1
+	 SMXpomQShitHw==
+Date: Wed, 4 Mar 2026 22:26:49 -0500
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Conor Dooley <conor@kernel.org>
 Cc: users@kernel.org, tools@kernel.org
 Subject: Re: b4 review available in master
-Message-ID: <20260304-anaconda-chance-345f697c9ef6@spud>
-References: <20260228-pasty-clerical-b87a92aead3c@spud>
- <20260228-ruby-hawk-of-valor-41f0b0@lemur>
+Message-ID: <20260304-dark-adventurous-skua-f3fd3e@lemur>
+References: <20260228-ruby-hawk-of-valor-41f0b0@lemur>
  <20260228-aqueduct-nuzzle-c03be63e03af@spud>
  <20260228-arcane-mamba-of-refinement-6dba82@lemur>
  <20260228-poodle-of-wonderful-justice-acfab2@lemur>
@@ -44,66 +43,26 @@ References: <20260228-pasty-clerical-b87a92aead3c@spud>
  <20260303-tactful-zippy-oxpecker-fbcadd@lemur>
  <20260304-deviancy-overlaid-e7947f09089c@spud>
  <20260304-keen-clever-cockatoo-a8dab6@lemur>
+ <20260304-anaconda-chance-345f697c9ef6@spud>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/GlPMV77m7/hFKg/"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260304-keen-clever-cockatoo-a8dab6@lemur>
+In-Reply-To: <20260304-anaconda-chance-345f697c9ef6@spud>
 
+On Wed, Mar 04, 2026 at 10:55:27PM +0000, Conor Dooley wrote:
+> > I know it's a pain to get textual's backtraces because they are not easy to
+> > copy-paste, so if you just want to screenshot the bottom of that dump and post
+> > a link to it, I'll be able to untangle it from there, usually.
+> 
+> https://i.nuuls.com/wLaX3.png
 
---/GlPMV77m7/hFKg/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks, this should be now fixed in master. Hopefully, not many more spots
+with this bug left.
 
-On Wed, Mar 04, 2026 at 05:40:17PM -0500, Konstantin Ryabitsev wrote:
-> On Wed, Mar 04, 2026 at 09:38:09PM +0000, Conor Dooley wrote:
-> > I tried again today to use it but ran into some things flow wise, that
-> > prevented me from actually doing any reviewing.
-> > Oh, and I managed to trigger a formatting bug again, on 0.15-dev-54639
->=20
-> /o\
->=20
-> > 	MissingStyle: Failed to get style 'v2,1/2'; unable to parse 'v2,1/2' a=
-s color; 'v2,1/2' is not a valid color
-> >=20
-> > after grabbing a series from patchwork
-> >=20
-> > 	/stuff/b4/b4.sh review tui -i linux-dt
-> > 	Retrieving series: <20260212082105.1878720-2-sh86.bae@samsung.com>
-> >=20
-> > It creates a massive spam of text, but it contains:
-> > 	text =3D <text 'Started tracking:  dt-bindings: soc: samsung: exynos-s=
-ysreg: Add hsi0 for ExynosAutov920' [Span(18, 88, 'v2,1/2')] ''>
-> >=20
-> > LMK if you require the full log for this.
->=20
-> I know it's a pain to get textual's backtraces because they are not easy =
-to
-> copy-paste, so if you just want to screenshot the bottom of that dump and=
- post
-> a link to it, I'll be able to untangle it from there, usually.
-
-https://i.nuuls.com/wLaX3.png
-
-> I'm not able to replicate this if I do "b4 review track", so this is some=
-thing
-> specific to the patchwork app, I think -- but seeing the trace will help.
-
---/GlPMV77m7/hFKg/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaai4XwAKCRB4tDGHoIJi
-0mHgAQDzm1QK7aVyL/ZjdsF8BCS/XewR3Xquv3YI67i2Afq25gD9FSt7AtQMBjOc
-5aAe7q+/J8gR0FlHE9Atc5Ssdpb5AQA=
-=4MUY
------END PGP SIGNATURE-----
-
---/GlPMV77m7/hFKg/--
+-- 
+KR
