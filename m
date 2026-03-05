@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E38025A2C9
-	for <tools@linux.kernel.org>; Thu,  5 Mar 2026 03:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64131A0BF3
+	for <tools@linux.kernel.org>; Thu,  5 Mar 2026 06:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772681215; cv=none; b=ZoEqF46R25zjbE0+MDj+W/iNzIaZZSWdDlEFWH2oGaMd1vzKRjUKNWAVq8/oxCLsurXzg9/pBustAGyUeslqzmt2iVqijopJ3La7PWQG6VRS0DDCaAiP4X8sD8iMAEMvGiLb7Yuwyx/LdfdNfFIxTMfZKREmyhg30SXGhW6j47M=
+	t=1772691436; cv=none; b=UGAz5XNuUm1EAA3su3eGsUza5xBTgpMcYZ1BZJUZwqF81Psf7wx58ljt0ueC5mxH985x3RJbxpl3TASlCXOJDAcWkX5DSOdAfdEsYnpNhcWvUWtiMIc7/Org6sgQgKCjETnUr1Oz3H7rNdC4ufQj4JpH/nu05TxLcmDbCdpE3wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772681215; c=relaxed/simple;
-	bh=f4bjqTvFddiEruGDPVlnLE5xrqxK/6VYhZ6B1mRLkxU=;
+	s=arc-20240116; t=1772691436; c=relaxed/simple;
+	bh=LbM2tVbcw2CveNOrkjrJOQH8LnKlM2YAq15cPNDAyh8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EVfQoFYZbA23RNO+BFcMZnCXKVNkR9yhpH5YniU03aBME4JXCYWYxo8p8Yymj9nAInwPO/eu8d+I3RN5KMi3rYcMDami+uDan9+xc7TgVzZ1D5LEi3uCahrNALDr9MZ1QdqzsMxL3NFzNepcINbWnL1joXzXN8kI1oufGOmjQfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kuVSKe4J; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=qEFWUvVI9NZQceFkz81J+GBQ0qPnT/qLFNg1oYV/hWK7J9h8GnB0hJlnYtJmfnebM//d1C9kafB+1JgsUL7NZiNMIOHf0Un2GbejdIMSEGuhBVAJ66hGGRkkg2Rpe7szWqhos3pWV+wvr7r3lvMjtyr1IXHY4SBVC2h9mrcnpR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fkXU+XOn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kuVSKe4J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fkXU+XOn"
 Received: by smtp.kernel.org (Postfix)
-	id D2F60C2BC9E; Thu,  5 Mar 2026 03:26:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A47C4CEF7;
-	Thu,  5 Mar 2026 03:26:54 +0000 (UTC)
+	id 6A11BC19425; Thu,  5 Mar 2026 06:17:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37782C116C6;
+	Thu,  5 Mar 2026 06:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772681214;
-	bh=f4bjqTvFddiEruGDPVlnLE5xrqxK/6VYhZ6B1mRLkxU=;
+	s=k20201202; t=1772691436;
+	bh=LbM2tVbcw2CveNOrkjrJOQH8LnKlM2YAq15cPNDAyh8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kuVSKe4JO1ed5LEc3I0D0rYiMD4Zbf4wY4yu01bTx367sdHr39DyQR6aCl2wc1mX6
-	 DzYfZmuGwISUnqv+Pm3jGQgZ0r32yuTmbz9OEwkfhafaIvqWAgvK71W2Sk0P4j1WNT
-	 sqrD/kiRBhDnEM/vS+yAQhjUDQjx7b9+l439AS/uN/lpT/sT4EM1xDG+9BJJSnOlcC
-	 8haVLqGaJv7+mgsTyA8giXZ0jBw/3lZlCEwh1N9To6BtpDj4xIJl4TqF7Lk2h7LfNS
-	 ld5dVY/ACfHpAKV3RfOUbKDQMRSaQFeECsYUfZkjp8p0oYPuRUr5KcPewDFbxhv3/1
-	 SMXpomQShitHw==
-Date: Wed, 4 Mar 2026 22:26:49 -0500
+	b=fkXU+XOnKJz8KAB7yXLRzBkpyXk8V8nfhgsZCWNxK4FUNMwqv1dNu3Ho1p0dhtXAc
+	 clrnJmP+YcrbkK8Vx17IEMJufXNvdo5nzfUz3fTUUC7M8VNSCv3QOcZeRq7uWJIemI
+	 twa7Yu2YXKUvClAogpyP7uMxpmAJtj41RyV/dTJs7SdSfkvaeNtNdidmG8ijnWjX42
+	 3V9NmwOv9KWZ8lgB7TikOE6SW1x4SBbBMbeKmmakakdGfe7zroolRsfzvCUfFg6IOC
+	 +cionIJlDRFqSx7g1BTGFgRUwEMeDf84KAnadLZpjB+MeICzfqYe8rYNrXCySGNd8D
+	 mEfvrtyeh849A==
+Date: Thu, 5 Mar 2026 01:17:13 -0500
 From: Konstantin Ryabitsev <mricon@kernel.org>
 To: Conor Dooley <conor@kernel.org>
 Cc: users@kernel.org, tools@kernel.org
 Subject: Re: b4 review available in master
-Message-ID: <20260304-dark-adventurous-skua-f3fd3e@lemur>
-References: <20260228-ruby-hawk-of-valor-41f0b0@lemur>
+Message-ID: <20260305-friendly-calm-warthog-e7d5a6@lemur>
+References: <20260228-pasty-clerical-b87a92aead3c@spud>
+ <20260228-ruby-hawk-of-valor-41f0b0@lemur>
  <20260228-aqueduct-nuzzle-c03be63e03af@spud>
  <20260228-arcane-mamba-of-refinement-6dba82@lemur>
  <20260228-poodle-of-wonderful-justice-acfab2@lemur>
@@ -43,7 +44,6 @@ References: <20260228-ruby-hawk-of-valor-41f0b0@lemur>
  <20260303-tactful-zippy-oxpecker-fbcadd@lemur>
  <20260304-deviancy-overlaid-e7947f09089c@spud>
  <20260304-keen-clever-cockatoo-a8dab6@lemur>
- <20260304-anaconda-chance-345f697c9ef6@spud>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -52,17 +52,28 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260304-anaconda-chance-345f697c9ef6@spud>
+In-Reply-To: <20260304-keen-clever-cockatoo-a8dab6@lemur>
 
-On Wed, Mar 04, 2026 at 10:55:27PM +0000, Conor Dooley wrote:
-> > I know it's a pain to get textual's backtraces because they are not easy to
-> > copy-paste, so if you just want to screenshot the bottom of that dump and post
-> > a link to it, I'll be able to untangle it from there, usually.
+On Wed, Mar 04, 2026 at 05:40:17PM -0500, Konstantin Ryabitsev wrote:
+> > Secondly, if I'm working from a patchwork, it'd be really great if I
+> > could reply to patches directly from the patchwork pane. 90% of patches
+> > I review (or more) I do not need to apply, so working in mutt is
+> > significantly faster than having to track, then open in a different
+> > pane. Related to that, being able to display the patchwork pane
+> > per-patch as an option would be a wishlist item to make this replace
+> > mutt for me.
 > 
-> https://i.nuuls.com/wLaX3.png
+> OK, noted, I'll think about how we can make this easier -- like a pre-review
+> state in both tracking app and patchwork app that lets you view the patches
+> and follow-ups and reply, but not do a more in-depth review where you have to
+> apply the series locally.
 
-Thanks, this should be now fixed in master. Hopefully, not many more spots
-with this bug left.
+OK, the latest master completely revamps the "view" screen -- it's more like a
+mutt experience. You can see the thread with all follow-ups and reply from
+within that modal.
 
--- 
-KR
+It's not quite complete -- we're not setting a "Replied" flag or inject your
+reply into the thread until it comes back from the lore, but it's something to
+poke at already. Let me know if this is more like what you were looking for.
+
+-K
