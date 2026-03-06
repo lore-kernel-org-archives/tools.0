@@ -1,60 +1,66 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B0419CD03
-	for <tools@linux.kernel.org>; Fri,  6 Mar 2026 00:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5577620C461
+	for <tools@linux.kernel.org>; Fri,  6 Mar 2026 00:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772756702; cv=none; b=Mxgga6DCiFmoRwetUGB4vrqBbgnMIzX0fhdDpgLXgZQneY46WdCksqp1XGLnZSYfMc5XMsuEQlyZfIBeWKP+W/JTsKM81ZchVIbaEft6YIb2yIcxMCqDgtf+BEyyzJRDZ6ErtbROPSM/QjshHW2mJco/LVsj0M9TaeSH7q2KCd4=
+	t=1772757597; cv=none; b=gia1SaFe5rMs/COAZKFqOwqFlW4qyv/Lk/yFumM5fANztMJztZHZVrdVEUwKQidvKZUhXHNXKqNi+4tEBNjzWh9X2ngARnXpVIYIfrhPjHoKg993QywL9/D2PAouktD3xDPJcGcdWsYMYN1JHxO+++AeNHRKT9wlJaU4UA0PJ/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772756702; c=relaxed/simple;
-	bh=U8tiEFGD8hzWRhiZza8CPTa4tbVmgjRwBsFUEKBk/ys=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=HYPCHRGtl589tIg+XW0ewPVrmX2okD5DqSKERdmenlwq4R2AxvMk0NQJ8RQ5q787CPtdYFbarCdgzj+AncYE+IjJGAo7VLB9Bri2lm0duVVnRUe7gbBgQ/vU57YwcQlQ3/viRsUcMtOP8yv0ZkB73w6+0necNHzQD+0G+V5FUrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UJrSviAq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772757597; c=relaxed/simple;
+	bh=oM4Ls3NTFgiqt/KMZKt/joWcVRVYAq32VljHzOR7CZA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pek35Qt4vsuTINtHgs2FF29c6pnptW1polOURh9fCKsXoVQEXDvb0AigeDwCqjCmSy3xg91KfyuU5qzJefY7nW8QRyPE3NdcJ2dtPMKVOGEtR63VHJWkfLvDor9NUe0Fm1vlf+zYrM9ONUhzyX37lCV1qLE2Vs1TcJVgQ3xHOQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fvl52aSc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UJrSviAq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fvl52aSc"
 Received: by smtp.kernel.org (Postfix)
-	id 3A22EC19423; Fri,  6 Mar 2026 00:25:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E4EC116C6;
-	Fri,  6 Mar 2026 00:25:02 +0000 (UTC)
+	id 04E0DC19423; Fri,  6 Mar 2026 00:39:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E4CC2BC87;
+	Fri,  6 Mar 2026 00:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772756702;
-	bh=U8tiEFGD8hzWRhiZza8CPTa4tbVmgjRwBsFUEKBk/ys=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=UJrSviAqKGlZrZ2Z3sO8uYgg+vwwVYjWPNuUt1NjJ4Vgw8dT4Tp71Nnds1nEIftfX
-	 9kr30WfrZacDKgiuUdsT/rzDADCpBKUtzhGeZGzoNa40F3v01GKPXX5n6SrmaUv48w
-	 E2bgPg8PUUdGPI3WndSdYa/0AWnnTH6935gkf4jrIM0YFZS6QzhZ6fC3Fs6QCu4YaC
-	 ezlaIIOmJ4cYMJKyXAwESlH7H1bucRqUkv/yz0fYXE3neYSV1JRS7JPxbmKDoKGATk
-	 tJ77g7aRQsVeo68zS22bRK08xR96ZseqVNxYfiS/AQxBAY/Xvj4w0ZY2Sj3hI3G5xu
-	 ITsvBUcbLeK+A==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 05C2F3808200;
-	Fri,  6 Mar 2026 00:25:03 +0000 (UTC)
+	s=k20201202; t=1772757596;
+	bh=oM4Ls3NTFgiqt/KMZKt/joWcVRVYAq32VljHzOR7CZA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fvl52aScGN0AwdRQrpq6ZdOwUz4BPDUrXyC4Lnzf8HNPdNpyppBh2gilXC0k2AmUv
+	 tTeonsBKR3T1yYfztEQEQYDjmD+esseY9zPG5ybGmR836NdRt7zu2B5voaIP2RcQyb
+	 Sy6oa+nItzNte9BogCdLgYJ8aal+Www1fEbGO6s1IfG/dzUQHWwIqIoickJCNClSpr
+	 oLJCzLQAVo3rqaXOcd6eSSiX0HfIGW9ZVqhPu7x3ErYEQiYzq6wIxrtxuY7mxuy72n
+	 ICPI/pG2SR3cEgJGf39U12Tz9t4waMM6ZT4uFcSsnqg87gcjB0VilBuZl9kKeI1f1T
+	 Hy7zopRJ961+g==
+Date: Thu, 5 Mar 2026 19:39:55 -0500
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc: tools@kernel.org, louis.chauvet@bootlin.org, 
+	thomas.petazzoni@bootlin.org
+Subject: Re: [BUG?] b4 shazam applies unrelated patches due to dfblob
+ collision (b4 0.14.3)
+Message-ID: <20260305-jackdaw-of-famous-excellence-d1fb9e@lemur>
+References: <DFUF52RW81LD.28YE20HG4P0L1@bootlin.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: B4 Bugbot <bugbot+b4@kernel.org>
-To: gregkh@linuxfoundation.org, bugbot+b4@kernel.org, tools@kernel.org
-Message-ID: <20260306-bcd06df9e282665334001751884c687a23d500a3bd17be35d4d2fd8a6fd137880-5036c0dbfac3@git.kernel.org>
-In-Reply-To: <2026020637-cleft-viscosity-c984@gregkh>
-References: <2026020637-cleft-viscosity-c984@gregkh>
-Subject: Re: odd b4 "Mail:" trailer added for USB patch
-X-Git-Bug-Id: cd06df9e282665334001751884c687a23d500a3bd17be35d4d2fd8a6fd137880
-X-Mailer: bugspray 0.1-dev
-Date: Fri,  6 Mar 2026 00:25:03 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <DFUF52RW81LD.28YE20HG4P0L1@bootlin.com>
 
-Hello:
+On Wed, Jan 21, 2026 at 05:47:19PM +0100, Luca Ceresoli wrote:
+> I have a problem (bug?) to report I'm afraid.
+> 
+> While trying to apply a 1-patch series, b4 shazam applied the correct
+> patch, but:
+> 
+>  - in the output, it listed 22 paches being applied, and none was the
+>    intended one
+>  - at the end the branch contained 8 new patches, the first one being the
+>    intended one
+>  - it did not pick up the R-by line for the intended patch
 
-This conversation is now tracked by b4 bug tracker.
-There is no need to do anything else, just keep talking.
+Thanks for the report, adding it to tracking.
 
---
-Deet-doot-dot, I am a bot.
-b4 bug tracker (bugspray 0.1-dev)
+bugspray tag b4/shazam
 
+-K
