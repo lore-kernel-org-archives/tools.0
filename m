@@ -1,107 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1591C42F559
-	for <tools@linux.kernel.org>; Fri,  6 Mar 2026 17:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B911F31B83B
+	for <tools@linux.kernel.org>; Fri,  6 Mar 2026 17:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772817532; cv=none; b=jJRS0SVOlZQGpi+Ee3R5m5lOdKn1nJB44b0li3nA6DvEYMalzaHf8zGlppFaGxJFiFG79Ro/iOIpzMyZ5z79i3EhMoQaWFHePEsGfY7BTADQ8ItMbxxpBRwkdk7p5bjMtkRywV02WHWcvhW4gKxhJujXJ7JMtSG9col8fg2/ORQ=
+	t=1772818018; cv=none; b=Yovpwx02ZN+heDc/UGopOctv0SXENoW43fv8tIjoLtFsNp6O0DKXq4dTGSTxgj5kPGADBwTSvcI8zdxqJOj6smfMCDcpTCGb29RSeu52DlGf7sDG7ycYCOy91FLZc3YreocfQcThVcmyhay/YRB8cOK4KnsUxzsB3j8Ecv5GWDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772817532; c=relaxed/simple;
-	bh=2AGUwqL31GZccUVD65fjN1sfHGl3GEq1pqLA9deTH7o=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=kGU/2dzM/JqBbmYhHKYdAuqVihYkTl09vBHUB2l11LYGC3Rr6p+DslG65X7vTmf3YENJYdGudRLs4pfnC/D9i7rRhE+iuGkZkI8z+TDPm+2XJTpkeHCJTEegVMzmW2n0aZPT9GspKwnI62zJ3v+cOnCPFFGq5SckCIRVWge9ycw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3encrFU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772818018; c=relaxed/simple;
+	bh=/AJ2ZGcAfKkzrHI0ifcYGaf+GEOiu1SL+g+h6wQ5sCY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RzjGE69bLA6DLSk7LBckzMEARHRBSnZHE4VYPNTdOGPDgJsolHCk0pWXeJgaicYJLVT/vKFiSgtAbHc7kKLrEsNoDBiBosqkO7tHIpXGoD1a3kLpfa5XyzHHqqfjQR+XB/dlSohBhrjGV1/V4MIfR55MjrtFbjMjM9aX0ptxdjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQS+Bcd6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3encrFU"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQS+Bcd6"
 Received: by smtp.kernel.org (Postfix)
-	id BF667C19425; Fri,  6 Mar 2026 17:18:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64EB7C4CEF7;
-	Fri,  6 Mar 2026 17:18:51 +0000 (UTC)
+	id 89C07C19425; Fri,  6 Mar 2026 17:26:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F5CC4CEF7;
+	Fri,  6 Mar 2026 17:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772817531;
-	bh=2AGUwqL31GZccUVD65fjN1sfHGl3GEq1pqLA9deTH7o=;
-	h=Subject:From:To:Cc:In-Reply-To:References:Date:From;
-	b=U3encrFULnuvZaukW5c7RtQ1Kg39tPCM1DGY3shywQv95HN3Wn+nHhJkPbKNjEY/n
-	 mDX6ZG7Be1myyJnkWjqBhpIz6db+0oFbXbk07Wd5ak8xv1nytVDb24JNRzWX/Ofp6w
-	 Xk33Ojkcoamjs/21cedGZPg85Smp18U1marIJ2dY=
+	s=korg; t=1772818018;
+	bh=/AJ2ZGcAfKkzrHI0ifcYGaf+GEOiu1SL+g+h6wQ5sCY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sQS+Bcd6ahXK4xPerlV7L3S544+xUaEdPezFXJvdZxjmZAImFNF5nJ7Ly4RKnyQEH
+	 NbvTiKw3UHc6MuP5OCYcduMgiZJ2j76PhWUPkoD01J99vG7tSB3Zrifg8mAbH+EjvS
+	 OW92dNdYOICXNH+5Q1pbtZfNWdeHt5IsMU4p1Ua4=
+Date: Fri, 6 Mar 2026 12:26:57 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Christian Brauner <brauner@kernel.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>, 
+	Christian Brauner <christian@amutable.com>
+Subject: Re: [PATCH b4] send: add --in-reply-to option for threading cover
+ letters
+Message-ID: <20260306-rare-spotted-wasp-adc84c@lemur>
+References: <20260306-b4-send-in-reply-to-v1-1-730b9b47d25f@kernel.org>
+ <20260306-cherubic-electric-bullmastiff-bcb0da@lemur>
+ <20260306-seepferdchen-ziffer-c69d1d90fc16@brauner>
+ <20260306-grumpy-jade-bulldog-a6f004@lemur>
+ <20260306-biobauer-mondfinsternis-cc602b2b9c3e@brauner>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH] b4: allow using xoauth2/bearer token to authenticate
- to SMTP servers
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@kernel.org
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Tomas Melin <tomas.melin@vaisala.com>
-In-Reply-To: <20260306162020.54683-1-dtor@chromium.org>
-References: <20260306162020.54683-1-dtor@chromium.org>
-Date: Fri, 06 Mar 2026 12:18:45 -0500
-Message-Id: <177281752583.2015423.2312633416921696209@lemur>
-X-Mailer: b4 0.15-dev-129ab
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2059;
- i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=2AGUwqL31GZccUVD65fjN1sfHGl3GEq1pqLA9deTH7o=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGDJX81R5Rxp9uLnM8/a0xQzXq7auDy3kPLQqad/8zENrZ
- 1yurums7ihlYRDjYpAVU2Qp2xe7KajwoYdceo8pzBxWJpAhDFycAjCRZ1MYGZreX+3N4i9Vu8vy
- yDdnXtuhDo6PYc7/3Ncryf40ipLdU8TwP3h9o8DkWsbMwirBuHvzMtxfV7qc2tBgUGRmIxP1taW
- ADwA=
-X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
- fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260306-biobauer-mondfinsternis-cc602b2b9c3e@brauner>
 
-On Fri, 06 Mar 2026 08:20:18 -0800, Dmitry Torokhov <dmitry.torokhov@gmail.com> wrote:
-> Allow using XOAUTH2 as an authentication protocol and assume that when
-> XOAUTH2 is specified the password is actually a bearer token (typically
-> not stored in the config but rather returned via "git credentials".
+On Fri, Mar 06, 2026 at 05:17:57PM +0100, Christian Brauner wrote:
+> > I don't see a way to reconcile what you're trying to do and keeping automation
+> > working reliably, do you?
 > 
-> Recognize "oauth", "oauth2" as aliases for "xoauth2".
+> Yeah, I wasn't aware that this is a limitation. If this isn't super
+> uncommon, than it is broken with similar mail chains. Good to know that
+> this breaks b4.
+> 
+> Maybe what Vlastimil proposed would serve at least a similar purpose
+> where it adds the people on the bug report to the Cc and automatically
+> inserts a Link: to the report in the message or the commit.
 
-Hmm... we do have another series already for XOAUTH2 support:
-https://lore.kernel.org/tools/20260205-smtp-oauth2-outlook-v2-2-6a5eb233b285@vaisala.com/
+Right, so if I understand it correctly, we want to be able to post a "here's a
+related patch" but without it being confused as a patch within the same
+series. I think one way to accomplish this would be to post the patch under
+the scissors, like so:
 
-However, it's outstanding with a few requests. I wonder if we can take 
-this one as a first patch and then build the other series on top of 
-this.
+    Hey, how about this patch...
 
-Cc'ing Tomas on this.
+    -- >8 --
 
-> diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-> index eab290b..9a5d25b 100644
-> --- a/src/b4/__init__.py
-> +++ b/src/b4/__init__.py
-> @@ -4331,7 +4331,11 @@ def get_smtp(dryrun: bool = False) -> Tuple[Union[smtplib.SMTP, smtplib.SMTP_SSL
->                  raise smtplib.SMTPException('No password specified for connecting to %s', server)
->          if auser and apass:
->              # Let any exceptions bubble up
-> -            smtp.login(auser, apass)
-> +            if smtpauth in ('oauth', 'oauth2', 'xoauth2'):
-> +                auth_str = f'user={auser}\x01auth=Bearer {apass}\x01\x01'
-> +                smtp.auth('XOAUTH2', lambda: auth_str)
+    From: ...
+    Subject: [PATCH ...] Unrelated Foo Patch
 
-This is what the agent tells me about this, and it seems valid.
+    This is foo patch for bar.
 
-smtplib.SMTP.auth() calls authobject(challenge) with a positional
-bytes argument when the server replies 334 (the XOAUTH2 error-detail
-challenge). Because this lambda accepts no arguments, that call
-raises TypeError, masking the real authentication error.
+    git --diff ...
 
-Suggest:
-    smtp.auth('XOAUTH2', lambda x=None: auth_str if x is None else '')
+I *think* this would do the right thing, but I need to test it first. From
+your perspective, would this do what you're looking for?
 
-This way the initial response (no args) returns the auth string, and
-a 334 challenge returns an empty string so the server sends its real
-error code.
-
-I'm happy to take this with this fix, but I'm also going to wait on 
-Tomas's thoughts.
-
-Thanks!
-
+Regards,
 -- 
 KR
-
