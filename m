@@ -1,58 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184BB2D8390
-	for <tools@linux.kernel.org>; Fri,  6 Mar 2026 00:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460AA2F12D4
+	for <tools@linux.kernel.org>; Fri,  6 Mar 2026 01:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772758717; cv=none; b=FqcDpA0dLfhAkERCMlIbG58KMBIyUWbDhocKNw+WSabp91y/h12zZKa0GSNRYMVRDWrKv/9RiS5pRMGbGJBCChrd73Y6y6UL17xkRUH7YshUiF7mn1vkbnVoysDDmz1XK6R0tP4rcrUzA5xEE9NqYlbLhIC7cDZKiCGrklvy97I=
+	t=1772759206; cv=none; b=fAhOu3PlWN75iR2v47VXvLm1ln7NZhICdXoflRGM9v6HNHXRbpfjy0zUb8b1mM8E4YqyswKU4jKbNAIEPfylGRLzikjgHMtjiPjS0GKaHZvv4JofOl6+YNYxqg1YVGVteUpjdW5fUGuBMJ2t/951LJREMHk9/gqrLmHA4D6QkTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772758717; c=relaxed/simple;
-	bh=0mfisFfUKHguAWeRZVp4t8Up56DNuSBztTJUKF575Pk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QKoe+/NBVORRJKxHqTDZ959sKz0LpWhdRon4oYy2C5ZfgMwgqoQ6NTB0ORIFeEGV9IEXjgpMM9lf5NgqHzQrGkutgjYHyf7T6Ek/rN4GkcsSMVYh2qEOZUOMovKFfnY6NJu7gEsubyPKCk0HBl8dCLq9EETqU8iqs4hO1fij1mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mhCF/zMc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772759206; c=relaxed/simple;
+	bh=U8tiEFGD8hzWRhiZza8CPTa4tbVmgjRwBsFUEKBk/ys=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=ZgbBzk+kFv301xZK2SezQKeGQax1eAQFu19zYdYwujnJVaDqci2O1Uz+SFCQzhl/HFc8PRQnGjrkw2n6w1EVvmVVZ+MKxt7I5mNiYa9r9DMrfQz5RMmH3xjOE4FvbXiPFZ3dFpjJlPjC4ipX/AHblpUIkXcelCNTyQ3YWnJtM5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EpgLSei4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mhCF/zMc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EpgLSei4"
 Received: by smtp.kernel.org (Postfix)
-	id C9BB5C2BC9E; Fri,  6 Mar 2026 00:58:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90767C2BC87;
-	Fri,  6 Mar 2026 00:58:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772758716;
-	bh=0mfisFfUKHguAWeRZVp4t8Up56DNuSBztTJUKF575Pk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mhCF/zMcsmpwhbs++kcDl+dCM/nEbTkmY8vH5r5Nw+R7sILb2Urj/rKTBc2EeTGHS
-	 8OT55EyJd9ljrZTxX0c+jffeGLGeVsU7/PLZh1SDUK1lCvjg+90lgdH2KuifX4RLBb
-	 aAF2S4Q4ZhYmKccedRecHrLWOY8BJB9Ecxz5ET9U=
-Date: Thu, 5 Mar 2026 19:58:33 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: tools@kernel.org
-Subject: Re: `b4` drops added trailers with peculiar patch
-Message-ID: <20260305-courageous-peach-badger-5edcfb@lemur>
-References: <CANiq72nLuYfoVnWGjmEmUJDKSpFJq9wUXfTND1e3cjwhe0KFFQ@mail.gmail.com>
+	id 3CB11C2BC87; Fri,  6 Mar 2026 01:06:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EB3C116C6;
+	Fri,  6 Mar 2026 01:06:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772759206;
+	bh=U8tiEFGD8hzWRhiZza8CPTa4tbVmgjRwBsFUEKBk/ys=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=EpgLSei4ILvXzDe4V76a240VhOoaxPv/UPe7aXYB7POS7fzTm/NfZ0TEoMrtq8Q+4
+	 AEbEhQ7pjIu44WO39Qf49CqedBROjC61/tjcgc6hK91Aze4+592ejr504yUjQpqwaz
+	 vy3o4M790mZMIN/GMb76rQOKqLEbwVyN5TW/V+XDOjlfcGVUvW+6FKIyNOJXPtxVuR
+	 7+h4d2lRKv70ZYQ58+7LsUPAxstzxh4K9tqmNkVj+fRK9EDJqAym6/yLIzVcZob7cz
+	 68EbYqvHPPInbW37yd/2qRHKIqISSEdZPmndkI5ZE+i54sL0BUS2+0ucjgd1KaYMK5
+	 yOM/DwF/o08rw==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 058993808200;
+	Fri,  6 Mar 2026 01:06:47 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: B4 Bugbot <bugbot+b4@kernel.org>
+To: tools@kernel.org, konstantin@linuxfoundation.org, 
+ miguel.ojeda.sandonis@gmail.com
+Message-ID: <20260306-b9453f65-b5f5c8b7f70d@git.kernel.org>
 In-Reply-To: <CANiq72nLuYfoVnWGjmEmUJDKSpFJq9wUXfTND1e3cjwhe0KFFQ@mail.gmail.com>
+References: <CANiq72nLuYfoVnWGjmEmUJDKSpFJq9wUXfTND1e3cjwhe0KFFQ@mail.gmail.com>
+Subject: Re: `b4` drops added trailers with peculiar patch
+X-Git-Bug-Id: 9453f6585824edbe1eb5a14fb2fc9f9ec2bbba7f6610a110b001176a17815709
+X-Mailer: bugspray 0.1-dev
+Date: Fri,  6 Mar 2026 01:06:47 +0000 (UTC)
 
-On Sun, Jan 04, 2026 at 09:10:44PM +0100, Miguel Ojeda wrote:
-> I just noticed that trying to use `shazam` on:
-> 
->   https://lore.kernel.org/rust-for-linux/20251201165601.31484-1-atharvd440@gmail.com/
-> 
-> would not add the trailers, including Link, SoB, etc.
+Hello:
 
-Thanks for the report. I haven't ignored it, I swear!
-(Well, I have, but not permanently.)
+This conversation is now tracked by b4 bug tracker.
+There is no need to do anything else, just keep talking.
 
-bugspray tag b4/shazam
+--
+Deet-doot-dot, I am a bot.
+b4 bug tracker (bugspray 0.1-dev)
 
--- 
-KR
