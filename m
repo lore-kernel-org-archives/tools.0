@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28A7334C08
-	for <tools@linux.kernel.org>; Fri,  6 Mar 2026 11:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83493612D8
+	for <tools@linux.kernel.org>; Fri,  6 Mar 2026 11:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772797955; cv=none; b=fpZKgsx+tbc7mzXixMklPeHCMKGU6VpEHgNvYTVkqQ4IwhYcEkc/1WCmUEjASyxUXhguJIIPzXQdIEabum/VPNTdIlXKC/MRedY1ZJPt0N6gKFQgeRLi0SZrx7oIvg6jalVnvaINISWT187PQeOYrW+TSEe6Ib9d1lFfeiQhsh0=
+	t=1772797957; cv=none; b=IiYNY5LamNN0Uo1srJ9bpowFrkJlWA+HdtCaWLoo45tsUuNU5LfCI1QVf/XlgkcrAcse1Os9hNX6acpuUKBigXHEmg8T6GgmboZV+5vFIKhUj0PIq8wZWOFK1UDXPVYFmSjgOsXWh6uYwUhcc8RbpSE/v7D5p+1LLBm1/mDPRfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772797955; c=relaxed/simple;
-	bh=vaGvH12c34k8/UdTyeystnWE8dRhffdVARu2BXIhl3Y=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CAjMupayNIW/ywKZ4NuSUpchWEegxiQkQBvSyx1Zq7N7Pw4V5vriA8W2P5hIuCNhX7xv1j2tepM1WGYXUtQUQ2OELyLZDEvHBRD9jJgwQ08AngO4iEm1gr7XWaRHqxPzkYgAFbmha2mXQXOdcSbnR0TXjXcrYiSed+zv20weeyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ponVFGA7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772797957; c=relaxed/simple;
+	bh=zRqyb6ASc1M4esfe6+vRu0Y/FiXCUC+Ms0Aw83BU690=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=kkJZtqybM7S+9Et70hxoJ7oPhoCwjrvZ8M89wH5Jr3oJwCrVCVtUXEGPctFUx0IGy0gkXA1qvnqcw+ktfQky8OJmRyV8KvZ9NRpeKHnoNi6Wx2VmD2aH/z2rpJb6KmvWfV94jFcZEA+6vRb5is6/s4YFxFPeyz0LZqeB6Mw0+Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZMMFFSsh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ponVFGA7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZMMFFSsh"
 Received: by smtp.kernel.org (Postfix)
-	id B0D92C2BC9E; Fri,  6 Mar 2026 11:52:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB99C4CEF7;
-	Fri,  6 Mar 2026 11:52:32 +0000 (UTC)
+	id D6B4CC2BC86; Fri,  6 Mar 2026 11:52:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2053BC4CEF7;
+	Fri,  6 Mar 2026 11:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772797954;
-	bh=vaGvH12c34k8/UdTyeystnWE8dRhffdVARu2BXIhl3Y=;
-	h=From:Subject:Date:To:Cc:From;
-	b=ponVFGA7XtG22a59jHxVOv6U2w9TVoNYobz8RnsVZKFIu5xFAnb8C+LnmZY424ge6
-	 9B1B9sAErnY3f8oxqJf0AMrxjt9kCALu0tC81AfhO24MTSwt1t1OMGFrUtDJiwADaf
-	 pKzrvgjWhAx7WR84xow/g5BKrnNP2c0AOsP5LdN50ftRcQppShRxrMaB+LKfanlOmU
-	 c6gjM0xg4+Hyl6qm4BexOa5j5hlqiU5Cx4UHcTHIV+j3Y4DwyML5lkkGSjXoNCqJul
-	 ulyvwxhwSEtXuvpJF6xrIio2Q1/7lINPvl0YhQrGZYd22UOxbZIAqPMzZzG0IXpRHG
-	 56wximMiyy5mQ==
+	s=k20201202; t=1772797956;
+	bh=zRqyb6ASc1M4esfe6+vRu0Y/FiXCUC+Ms0Aw83BU690=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=ZMMFFSshKAzUzzfpjcot6ZIBYuIHRE0OACd2Wk2IxJrwMZtwPdIivLmPvqANSto9b
+	 m2+w1kdOI/mi/gvta/dM09oiMom5B3GMY2Y3X1QjPxU/zADowwaB2rGKUfE0X77WOU
+	 gH+oI/rxnjJSAdLbyPGdb10op5ulO/SDGKRxD6mG1Wk6sUHLrwqVE2OoMim36n7pcp
+	 cRdyzfPApJDEPZChJUE/Ig70Se2j1toOq4z1XMG7KWjMf0uYaTsc0KOrbXBMHfxjhX
+	 BX798SUOLj+OLtukxZETHCFzj7mlBzufPsoRU1PtMPOVOlatPub54j0Tthvq+DiCbi
+	 YsYCVzrXgOUTA==
 From: Christian Brauner <brauner@kernel.org>
-Subject: [PATCH b4 0/3] shazam: conflict resolution support for b4 shazam
- -H
-Date: Fri, 06 Mar 2026 12:52:23 +0100
-Message-Id: <20260306-master-v1-0-5a4b9cbe11d7@kernel.org>
+Date: Fri, 06 Mar 2026 12:52:24 +0100
+Subject: [PATCH b4 1/3] shazam: refactor git_fetch_am_into_repo for
+ deterministic worktree
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,190 +39,174 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAPe/qmkC/yWMQQqDMBAAvyJ7bmg0VrRfEQ/JdtUtNJZdLQXx7
- 03qcYZhdlASJoV7sYPQh5WXmKC8FICzjxMZfiSGylaNdbYxL68riWm7zrXOlYg3Cyl+C438/Y9
- 6CDUMp9MtPAnXfMhV8EomiI84Z7UITxyv5xKO4wf9v3mJjgAAAA==
-X-Change-ID: 20260306-master-89938331cc50
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260306-master-v1-1-5a4b9cbe11d7@kernel.org>
+References: <20260306-master-v1-0-5a4b9cbe11d7@kernel.org>
+In-Reply-To: <20260306-master-v1-0-5a4b9cbe11d7@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Christian Brauner <christian@amutable.com>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Christian Brauner <brauner@kernel.org>, 
  "Claude Opus 4.6" <noreply@anthropic.com>
 X-Mailer: b4 0.15-dev-ace2f
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9068; i=brauner@kernel.org;
- h=from:subject:message-id; bh=vaGvH12c34k8/UdTyeystnWE8dRhffdVARu2BXIhl3Y=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSuOsBgYzHrQlSj7t+bK14sjty+d53hxEnGcZ/mP/zJ/
- EV6uqPNho5SFgYxLgZZMUUWh3aTcLnlPBWbjTI1YOawMoEMYeDiFICJtDky/NPeu+hydM5p+49m
- vKJB4TNa+74Whju9XO7I+nZz7SyHmnmMDPvPtq1YEMPGtp5vF0+56Pp9VtcC+ruOXQpaxxE+/b1
- dITsA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6601; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=zRqyb6ASc1M4esfe6+vRu0Y/FiXCUC+Ms0Aw83BU690=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSuOsAgZXor58mpoJLgV/MXOPG9y11r6/dbtnJtn8TiD
+ xssy+dt7ihlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZjId2dGhsMMmxorll1zyxJO
+ OFLxgsVbpDLWVkDGd7br92kxhsrqnowM+wRUdiupzfrQZxOwQNZ2yu1H5kVTdfPMnD1XcpvEX9D
+ gBgA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-When b4 shazam -H applies patches via git-am in a sparse worktree,
-conflicts cause the worktree to be destroyed before the user can act.
-Additionally, three-way merge was never enabled, so even
-auto-resolvable conflicts would fail.
+Replace the git_temp_worktree context manager with a deterministic
+worktree path (<git-common-dir>/b4-shazam-worktree) and manual
+lifecycle management. This is preparation for conflict resolution
+support where the worktree needs to persist after a failed git-am.
 
-This series fixes both problems and adds a conflict resolution
-workflow:
+Add AmConflictError(RuntimeError) exception so callers can
+distinguish am failures from other errors. Since it inherits from
+RuntimeError, existing callers that catch RuntimeError continue to
+work unchanged.
 
-Patch 1 refactors git_fetch_am_into_repo to use a deterministic
-worktree path and a structured AmConflictError exception, laying the
-groundwork for the worktree to survive a failed git-am.
+Add an am_flags parameter to allow callers to pass additional flags
+to git-am (e.g., -3 for three-way merge).
 
-Patch 2 passes -3 to git-am so three-way merge is attempted
-automatically, and adds a shazam-am-flags config option for further
-customization.
+Clean up any stale worktree from a previous run at the start of
+each invocation. On am failure, the worktree is intentionally left
+behind (for future conflict resolution use); the stale-worktree
+cleanup handles this on the next run.
 
-Patch 3 adds --resolve, --continue, and --abort flags. With
---resolve, a conflict triggers a workflow where successfully applied
-patches are fetched into FETCH_HEAD, a no-ff no-commit merge is
-started in the user's working tree, and remaining patches are applied
-one at a time with git apply --3way. The user resolves conflicts with
-their normal tools in their full working tree rather than in the
-sparse worktree.
+Update the shazam caller in make_am to explicitly catch
+AmConflictError, clean up the worktree, and log the failure,
+preserving the current user-visible behavior.
 
-Sample output:
+Also fix a minor str(gwt) -> gwt in the FETCH_HEAD origin rewrite
+since gwt is already a str.
 
-brauner@so61 ⊼οѕ ~/src/git/linux/vfs/vfs-7.1.casefolding|vfs-7.1.casefolding $%=
-> b4 shazam -H --merge-base=HEAD --sloppy-trailers --resolve 20260217214741.1928576-1-cel@kernel.org
-Looking up https://lore.kernel.org/20260217214741.1928576-1-cel@kernel.org/
-Grabbing thread from lore.kernel.org/all/20260217214741.1928576-1-cel@kernel.org/t.mbox.gz
-Checking for newer revisions
-Grabbing search results from lore.kernel.org
-Analyzing 22 messages in the thread
-Analyzing 49 code-review messages
-Checking attestation on all messages, may take a moment...
-
----
-  ✓ [PATCH v8 1/17] fs: Move file_kattr initialization to callers
-    + Link: https://patch.msgid.link/20260217214741.1928576-2-cel@kernel.org
-    + Reviewed-by: Jan Kara <jack@suse.cz> (✓ DKIM/suse.cz)
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 2/17] fs: Add case sensitivity flags to file_kattr
-    + Link: https://patch.msgid.link/20260217214741.1928576-3-cel@kernel.org
-    + Reviewed-by: Jan Kara <jack@suse.cz> (✓ DKIM/suse.cz)
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 3/17] fat: Implement fileattr_get for case sensitivity
-    + Link: https://patch.msgid.link/20260217214741.1928576-4-cel@kernel.org
-    + Reviewed-by: Jan Kara <jack@suse.cz> (✓ DKIM/suse.cz)
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 4/17] exfat: Implement fileattr_get for case sensitivity
-    + Link: https://patch.msgid.link/20260217214741.1928576-5-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 5/17] ntfs3: Implement fileattr_get for case sensitivity
-    + Link: https://patch.msgid.link/20260217214741.1928576-6-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 6/17] hfs: Implement fileattr_get for case sensitivity
-    + Link: https://patch.msgid.link/20260217214741.1928576-7-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 7/17] hfsplus: Report case sensitivity in fileattr_get
-    + Link: https://patch.msgid.link/20260217214741.1928576-8-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 8/17] ext4: Report case sensitivity in fileattr_get
-    + Link: https://patch.msgid.link/20260217214741.1928576-9-cel@kernel.org
-    + Acked-by: Theodore Ts'o <tytso@mit.edu> (✓ DKIM/mit.edu)
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 9/17] xfs: Report case sensitivity in fileattr_get
-    + Link: https://patch.msgid.link/20260217214741.1928576-10-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 10/17] cifs: Implement fileattr_get for case sensitivity
-    + Link: https://patch.msgid.link/20260217214741.1928576-11-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 11/17] nfs: Implement fileattr_get for case sensitivity
-    + Link: https://patch.msgid.link/20260217214741.1928576-12-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 12/17] f2fs: Add case sensitivity reporting to fileattr_get
-    + Link: https://patch.msgid.link/20260217214741.1928576-13-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 13/17] vboxsf: Implement fileattr_get for case sensitivity
-    + Link: https://patch.msgid.link/20260217214741.1928576-14-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 14/17] isofs: Implement fileattr_get for case sensitivity
-    + Link: https://patch.msgid.link/20260217214741.1928576-15-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 15/17] nfsd: Report export case-folding via NFSv3 PATHCONF
-    + Link: https://patch.msgid.link/20260217214741.1928576-16-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 16/17] nfsd: Implement NFSv4 FATTR4_CASE_INSENSITIVE and FATTR4_CASE_PRESERVING
-    + Link: https://patch.msgid.link/20260217214741.1928576-17-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ✓ [PATCH v8 17/17] ksmbd: Report filesystem case sensitivity via FS_ATTRIBUTE_INFORMATION
-    + Link: https://patch.msgid.link/20260217214741.1928576-18-cel@kernel.org
-    + Signed-off-by: Christian Brauner <brauner@kernel.org>
-  ---
-  ✓ Signed: DKIM/kernel.org
----
-Total patches: 17
----
- Base: HEAD
-Magic: Preparing a sparse worktree
----
-Applying: fs: Move file_kattr initialization to callers
-Applying: fs: Add case sensitivity flags to file_kattr
-Applying: fat: Implement fileattr_get for case sensitivity
-Applying: exfat: Implement fileattr_get for case sensitivity
-Applying: ntfs3: Implement fileattr_get for case sensitivity
-Applying: hfs: Implement fileattr_get for case sensitivity
-Applying: hfsplus: Report case sensitivity in fileattr_get
-Applying: ext4: Report case sensitivity in fileattr_get
-Applying: xfs: Report case sensitivity in fileattr_get
-Applying: cifs: Implement fileattr_get for case sensitivity
-Applying: nfs: Implement fileattr_get for case sensitivity
-Applying: f2fs: Add case sensitivity reporting to fileattr_get
-Applying: vboxsf: Implement fileattr_get for case sensitivity
-Applying: isofs: Implement fileattr_get for case sensitivity
-Applying: nfsd: Report export case-folding via NFSv3 PATHCONF
-Applying: nfsd: Implement NFSv4 FATTR4_CASE_INSENSITIVE and FATTR4_CASE_PRESERVING
-Using index info to reconstruct a base tree...
-M       fs/nfsd/nfs4xdr.c
-Falling back to patching base and 3-way merge...
-Patch failed at 0016 nfsd: Implement NFSv4 FATTR4_CASE_INSENSITIVE and FATTR4_CASE_PRESERVING
-error: Your local changes to the following files would be overwritten by merge:
-        fs/nfsd/nfs4xdr.c
-Please commit your changes or stash them before you merge.
-Aborting
-error: Failed to merge in the changes.
-hint: Use 'git am --show-current-patch=diff' to see the failed patch
-hint: When you have resolved this problem, run "git am --continue".
-hint: If you prefer to skip this patch, run "git am --skip" instead.
-hint: To restore the original branch and stop patching, run "git am --abort".
-hint: Disable this message with "git config advice.mergeConflict false"
----
-Patch series did not apply cleanly, resolving...
-Fetching successfully applied patches into FETCH_HEAD
-Merging successfully applied patches into your branch...
-Applying remaining patch 1/2...
----
-Applied patch to 'fs/nfsd/nfs4xdr.c' with conflicts.
-U fs/nfsd/nfs4xdr.c
-Resolved 'fs/nfsd/nfs4xdr.c' using previous resolution.
----
-Remaining patch 1/2 did not apply cleanly.
-Resolve conflicts in your working tree, then run: b4 shazam --continue
-To abort: b4 shazam --abort
-brauner@so61 ⊼οѕ ~/src/git/linux/vfs/vfs-7.1.casefolding|vfs-7.1.casefolding *+$%=|MERGING
-> git add fs/nfsd/nfs4xdr.c
-brauner@so61 ⊼οѕ ~/src/git/linux/vfs/vfs-7.1.casefolding|vfs-7.1.casefolding +$%=|MERGING
-> b4 shazam --continue
-Applying remaining patch 2/2...
-Invoking: git commit -F /home/brauner/src/git/linux/vfs/master/.git/worktrees/vfs-7.1.casefolding/b4-cover --signoff --edit
-[vfs-7.1.casefolding b125478aef10] Merge patch series "Subject: Exposing case folding behavior"
-
+Co-developed-by: Claude Opus 4.6 <noreply@anthropic.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
-
 ---
-Christian Brauner (3):
-      shazam: refactor git_fetch_am_into_repo for deterministic worktree
-      shazam: enable three-way merge for b4 shazam -H
-      shazam: enable merge conflict resolution for b4 shazam -H --resolve
+ src/b4/__init__.py | 51 +++++++++++++++++++++++++++++++++++++++------------
+ src/b4/mbox.py     |  8 ++++++++
+ 2 files changed, 47 insertions(+), 12 deletions(-)
 
- src/b4/__init__.py |  51 ++++++--
- src/b4/command.py  |   6 +
- src/b4/mbox.py     | 361 +++++++++++++++++++++++++++++++++++++++++++++++++----
- 3 files changed, 385 insertions(+), 33 deletions(-)
----
-base-commit: 5b4eaae60fd938a865dda1916885e9a1c7ddce8a
-change-id: 20260306-master-89938331cc50
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index eab290b..0baaec8 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -73,6 +73,13 @@ __VERSION__ = '0.15-dev'
+ PW_REST_API_VERSION = '1.2'
+ 
+ 
++class AmConflictError(RuntimeError):
++    def __init__(self, worktree_path: str, output: str):
++        self.worktree_path = worktree_path
++        self.output = output
++        super().__init__(output)
++
++
+ def _dkim_log_filter(record: logging.LogRecord) -> bool:
+     # Hide all dkim logging output in normal operation by setting the level to
+     # DEBUG. If debugging output has been enabled then prefix dkim logging
+@@ -4721,31 +4728,48 @@ def git_revparse_obj(gitobj: str, gitdir: Optional[str] = None) -> str:
+ 
+ 
+ def git_fetch_am_into_repo(gitdir: Optional[str], ambytes: bytes, at_base: str = 'HEAD',
+-                           origin: Optional[str] = None, check_only: bool = False) -> None:
++                           origin: Optional[str] = None, check_only: bool = False,
++                           am_flags: Optional[List[str]] = None) -> None:
+     if gitdir is None:
+         gitdir = os.getcwd()
+     topdir = git_get_toplevel(gitdir)
+ 
+-    with git_temp_worktree(topdir, at_base) as gwt:
++    common_dir = git_get_common_dir(topdir)
++    if not common_dir:
++        raise RuntimeError('Unable to determine git common dir')
++    gwt = os.path.join(common_dir, 'b4-shazam-worktree')
++
++    # Clean up any stale worktree from a previous run
++    if os.path.exists(gwt):
++        git_run_command(topdir, ['worktree', 'remove', '--force', gwt])
++
++    gitargs = ['worktree', 'add', '--detach', '--no-checkout', gwt]
++    if at_base:
++        gitargs.append(at_base)
++    ecode, out = git_run_command(topdir, gitargs, logstderr=True)
++    if ecode > 0:
++        raise RuntimeError('Failed to create worktree: %s' % out.strip())
++
++    cleanup = True
++    try:
+         logger.info('Magic: Preparing a sparse worktree')
+-        ecode, out = git_run_command(gwt, ['sparse-checkout', 'set'], logstderr=True)
++        ecode, out = git_run_command(gwt, ['sparse-checkout', 'set'], logstderr=True, rundir=gwt)
+         if ecode > 0:
+             logger.critical('Error running sparse-checkout set')
+             logger.critical(out)
+             raise RuntimeError
+-        ecode, out = git_run_command(gwt, ['checkout', '-f'], logstderr=True)
++        ecode, out = git_run_command(gwt, ['checkout', '-f'], logstderr=True, rundir=gwt)
+         if ecode > 0:
+             logger.critical('Error running checkout into sparse workdir')
+             logger.critical(out)
+             raise RuntimeError
+-        ecode, out = git_run_command(gwt, ['am'], stdin=ambytes, logstderr=True)
++        amargs = ['am']
++        if am_flags:
++            amargs.extend(am_flags)
++        ecode, out = git_run_command(gwt, amargs, stdin=ambytes, logstderr=True, rundir=gwt)
+         if ecode > 0:
+-            logger.critical('Unable to cleanly apply series, see failure log below')
+-            logger.critical('---')
+-            logger.critical(out.strip())
+-            logger.critical('---')
+-            logger.critical('Not fetching into FETCH_HEAD')
+-            raise RuntimeError
++            cleanup = False
++            raise AmConflictError(gwt, out.strip())
+         if check_only:
+             return
+         logger.info('---')
+@@ -4758,6 +4782,9 @@ def git_fetch_am_into_repo(gitdir: Optional[str], ambytes: bytes, at_base: str =
+             logger.critical('Unable to fetch from the worktree')
+             logger.critical(out.strip())
+             raise RuntimeError
++    finally:
++        if cleanup:
++            git_run_command(topdir, ['worktree', 'remove', '--force', gwt])
+ 
+     if not origin:
+         return
+@@ -4772,7 +4799,7 @@ def git_fetch_am_into_repo(gitdir: Optional[str], ambytes: bytes, at_base: str =
+     with open(fhf.rstrip(), 'r') as fhh:
+         contents = fhh.read()
+     mmsg = 'patches from %s' % origin
+-    new_contents = contents.replace(str(gwt), mmsg)
++    new_contents = contents.replace(gwt, mmsg)
+     if new_contents != contents:
+         with open(fhf.rstrip(), 'w') as fhh:
+             fhh.write(new_contents)
+diff --git a/src/b4/mbox.py b/src/b4/mbox.py
+index 3d12f8e..132cbb9 100644
+--- a/src/b4/mbox.py
++++ b/src/b4/mbox.py
+@@ -389,6 +389,14 @@ def make_am(msgs: List[EmailMessage], cmdargs: argparse.Namespace, msgid: str) -
+             else:
+                 logger.info(' Base: %s (use --merge-base to override)', base_commit)
+             b4.git_fetch_am_into_repo(topdir, ambytes=ambytes, at_base=base_commit, origin=linkurl)
++        except b4.AmConflictError as cex:
++            b4.git_run_command(topdir, ['worktree', 'remove', '--force', cex.worktree_path])
++            logger.critical('Unable to cleanly apply series, see failure log below')
++            logger.critical('---')
++            logger.critical(cex.output)
++            logger.critical('---')
++            logger.critical('Not fetching into FETCH_HEAD')
++            sys.exit(1)
+         except RuntimeError:
+             sys.exit(1)
+ 
+
+-- 
+2.47.3
 
