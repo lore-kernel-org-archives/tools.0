@@ -1,35 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9293D16FB
-	for <tools@linux.kernel.org>; Tue, 10 Mar 2026 17:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97292BD00C
+	for <tools@linux.kernel.org>; Tue, 10 Mar 2026 19:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773163895; cv=none; b=Um8fE+zl5CG/nAViIklE+uPybh6Dq+BsrPalKQO7A06wszw7K7LOpaCopQSwqe9hb7KvJHoAs5NorptfBDSM9rsaOGJ0I6s6D/QQco5uiGApyV+MGGLF1E90VSjvyV2VCgRRu2/EznN2ZbZsSmIHjLOMf+ArKFKYH4X31jVO23Q=
+	t=1773169753; cv=none; b=DIXK7FlozJTlvtLaDBPlYu3VnEk9oaPYhFGf/Jr5flBwlJArejLkD9hdI/KWxDN4xUV0NyDDhVvprOSu11mLPKgVBGUqFKzdM9Y5h6hPxp2TV9QHdeRz7JXl9W1loeUkmGW+2Fr7/XPSSYCAoTb56jbMNoQZA4Uuq8DxWwvTlnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773163895; c=relaxed/simple;
-	bh=DF/W1wYz9vAc/p72DRblokDMtunQ4TFEjaBgg1tJjUo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=U2MSMhQpongFZs2vnubZ0j+hgyEjLn6H9EZQt93tLS8ktImP3eJCAXkCnpb8/tpyStt8qNIFkeRLrHPMLFQvEuv9M7eY2+tVq4EVqBXfPzMiVkBsjsw/oZzpmvYS8v0NY5jDdliXf134YVd7dqmM1mq9GyNdyTYfxcgvrUOKXDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KK4ci0Rc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773169753; c=relaxed/simple;
+	bh=pS4HEBY9XuaUJvLu5qSHCnXEVS5fqqb7kih1R4ZzKEI=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=ioKaEYMvJSktxk6x1jqW+yNOLEPM4JWCjeAmBzNUixMQJx12OGyNw5l+d+TH+s5LHaaL4LZWub8S+NSRq6bJ01mtjq1HqpGBMuzspITXQhNE7uY2no0LAkBJHbVj+ZRR4gvio95W4EYOvI0cmgtI5ILAjecAZGNKMGw6w9Jujo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MZ4tp39M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KK4ci0Rc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MZ4tp39M"
 Received: by smtp.kernel.org (Postfix)
-	id 18F8CC19425; Tue, 10 Mar 2026 17:31:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E20C19423;
-	Tue, 10 Mar 2026 17:31:34 +0000 (UTC)
+	id 90A6FC2BC87; Tue, 10 Mar 2026 19:09:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D78C19423;
+	Tue, 10 Mar 2026 19:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773163895;
-	bh=DF/W1wYz9vAc/p72DRblokDMtunQ4TFEjaBgg1tJjUo=;
-	h=From:Date:Subject:To:Cc:From;
-	b=KK4ci0Rcn849qMLv6wbvxut/sKK1coVdI561RhjdU4a47CcbiTm5HF0MKyZcaERIx
-	 d3nIwow39BFlMgORJyjEM0vk6AezMK5+O6S+YTY9M1r82fXT3fUTwU6G09XxB2JPkW
-	 bhdYiKR28xsFFC/NFw+bvvf+b7KewP8Zyzxec+IT0m2NoFHsEpIqWWYDokMfQKvwYM
-	 uRrEzftFjqTIoIH3APce3i36zAQJgB8ZSqZ3g0dSLYqtmNMkmu84kjLp7v0KKYz8lM
-	 jIk6VQvN3o/8Qijp5VzaSa8qgtNfE+O8v6cyNE5crSJr1GA4K5hPGP+5qLDYJQqI5g
-	 bjs/rvEe2GekQ==
-From: Tamir Duberstein <tamird@kernel.org>
-Date: Tue, 10 Mar 2026 13:31:30 -0400
-Subject: [PATCH b4] review: use mail domain for review Message-IDs
+	s=k20201202; t=1773169753;
+	bh=pS4HEBY9XuaUJvLu5qSHCnXEVS5fqqb7kih1R4ZzKEI=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=MZ4tp39MCLGRyOK/lCZ5EZt1U9/Mjja3YqTnF2aw4GzvEwp/FE9Gy2Bbr26bEpJP8
+	 Up2ljRWAUWKQ9X4ew11IRYagBGg7rqgVe96oZdXmaopqhWNBSZ3j6NkKH36Ad7z+9T
+	 un5TJdprXyK/V05z+6cAQFKx3n2vZi6jDvAxSFJoyc+GyKZv/i/0JJBn2g7eFXLMCO
+	 UlDi6cWAIyvipdttEt0Azo+fycrRkLVdETyaMZP3J701Ya1m2Kh/5RwpoWqUi7BU0I
+	 Pc/1Pv215s6qJWPJs7RSZjd6uHDOF2CLwZH6/imyr4nC94q49IHKPtNbp8cubsdCuv
+	 SwdIv9yIsY/XQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 42EE13808200;
+	Tue, 10 Mar 2026 19:09:11 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -38,82 +39,68 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260310-review-reply-msgid-v1-1-3deef033dd25@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMwQ6CMBBEf4XM2SYFGhP8FeOB7q64RpF0FTCEf
- 6foafImM2+BSVIxnIoFSUY1ffUZykMBurV9J045MypfHX1derePZMoxPL7uaZ2yI+aWJVATAyE
- fhyRXnX/SM2LA5d/ZJ96F3rsN67oBQzqZR3oAAAA=
-X-Change-ID: 20260310-review-reply-msgid-cddade4c9b4c
-To: "\"Kernel.org Tools\"" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Tamir Duberstein <tamird@kernel.org>, Codex <noreply@openai.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2335; i=tamird@kernel.org;
- h=from:subject:message-id; bh=DF/W1wYz9vAc/p72DRblokDMtunQ4TFEjaBgg1tJjUo=;
- b=owGbwMvMwCV2wYdPVfy60HTG02pJDJkbQssurlA23MKyfNpuCfZFZTd4Y7a+f3817aAA1/1JX
- E9fM2gf6ihlYRDjYpAVU2RJFD20Nz319h7ZzHfHYeawMoEMYeDiFICJTFzAyPB+stNy6bBC5eCd
- SzQaj3PqvNnPaGZa6lZtXTBTPTLV2IiR4fYlv1nVL9XKpBKZFVPna97fW3FG6cVV6XdLZgYbfBR
- exwwA
-X-Developer-Key: i=tamird@kernel.org; a=openpgp;
- fpr=5A6714204D41EC844C50273C19D6FF6092365380
+From: B4 Bugbot <bugbot+b4@kernel.org>
+To: broonie@kernel.org, tools@kernel.org, konstantin@linuxfoundation.org
+Message-ID: <20260310-b38491bec3-dea49b25af83@git.kernel.org>
+In-Reply-To: <092a612b-4fa1-4fa7-a872-b3564fcb3749@sirena.org.uk>
+References: <092a612b-4fa1-4fa7-a872-b3564fcb3749@sirena.org.uk>
+Subject: Re: b4 review handling when base can't be guessed
+X-Git-Bug-Id: 38491be4ab034615182c75f1f9a86389c5126cdbca07726bcf8ad608ed097851
+X-Mailer: bugspray 0.1-dev
+Date: Tue, 10 Mar 2026 19:09:11 +0000 (UTC)
 
-Pass an explicit domain when generating review reply Message-IDs.
-This avoids Python deriving the domain from the local hostname,
-which can produce unreadable ip6.arpa-based IDs in b4 review.
+Konstantin Ryabitsev writes in commit 9189f0b31a20311748625d0f2f88afbcbc41f4e4:
 
-Add a regression test covering the review mail path.
+Add base selection, attestation display, and take confirmation to review TUI
 
-Signed-off-by: Tamir Duberstein <tamird@kernel.org>
-Co-authored-by: Codex <noreply@openai.com>
----
- src/b4/review/_review.py |  6 +++++-
- src/tests/test_review.py | 11 +++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+When the base of a series can't be guessed, the review TUI previously
+offered no way to specify an alternative base without quitting and
+manually checking out a different branch. This was reported by Mark
+Brown (bug 38491be).
 
-diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index 87b25b1..46fd165 100644
---- a/src/b4/review/_review.py
-+++ b/src/b4/review/_review.py
-@@ -1668,7 +1668,11 @@ def _build_review_email(series: Dict[str, Any], patch_meta: Optional[Dict[str, A
-     else:
-         msg['References'] = f'<{header_info["msgid"]}>'
-     msg['Date'] = email.utils.formatdate(localtime=True)
--    msg['Message-Id'] = email.utils.make_msgid()
-+    _, _, mid_domain = user_email.rpartition('@')
-+    msg['Message-Id'] = email.utils.make_msgid(
-+        idstring='b4-review',
-+        domain=mid_domain or 'b4',
-+    )
- 
-     return msg
- 
-diff --git a/src/tests/test_review.py b/src/tests/test_review.py
-index bcea452..f9c2d35 100644
---- a/src/tests/test_review.py
-+++ b/src/tests/test_review.py
-@@ -1237,6 +1237,17 @@ class TestBuildReviewEmailHeaders:
-         assert 'reviewer@example.com' in msg['From']
-         assert 'Reviewer' in msg['From']
- 
-+    @mock.patch('b4.get_email_signature', return_value='sig')
-+    @mock.patch('b4.get_user_config', return_value={
-+        'name': 'Reviewer', 'email': 'reviewer@example.com'})
-+    def test_message_id_uses_reviewer_domain(self, _mock_cfg: mock.Mock,
-+                                             _mock_sig: mock.Mock) -> None:
-+        msg = review._build_review_email(
-+            self._make_series(), None, self._make_review(), 'cover', '', None)
-+        assert msg is not None
-+        assert msg['Message-Id'].endswith('@example.com>')
-+        assert '.ip6.arpa' not in msg['Message-Id']
-+
- 
- # -- Tests for _build_review_email() user-edited To/Cc -----------------------
- 
+Improve the review tracking TUI with several interrelated features that
+give maintainers better control and visibility during patch review.
 
----
-base-commit: 0547fc7a21a580b2a6854aaff1776def2761bba4
-change-id: 20260310-review-reply-msgid-cddade4c9b4c
+Base commit selection: add BaseSelectionScreen modal that lets
+maintainers select or override the base commit when checking out a
+series for review. The screen tests patch applicability at the chosen
+base and shows the resolved SHA on success. A reusable WorkerScreen
+modal provides a loading indicator for running callables in worker
+threads.
 
-Best regards,
---  
-Tamir Duberstein <tamird@kernel.org>
+Attestation display: add a checkmark column (A) to the series listing
+that shows green when all patches have valid DKIM/patatt signatures.
+The details pane shows per-attestor breakdown after the From line.
+Schema v5 adds an attestation column to the tracking database, and
+check_series_attestation() checks signatures during update and
+checkout, storing per-attestor results (signed/nokey/badsig).
+
+Take confirmation: add TakeConfirmScreen as a final step in the take
+flow that test-applies patches before executing. This gives maintainers
+a chance to back out if the series will not apply cleanly to the target
+branch. Ctrl-y is now the confirmation key consistently across all take
+flow screens (TakeScreen, CherryPickScreen, TakeConfirmScreen).
+
+Keybinding changes: split the update keybinding so that u updates only
+the selected series while U updates all tracked series, with proper
+footer grouping. Cursor position is preserved after update operations.
+
+Key changes:
+- BaseSelectionScreen with test-apply and resolved SHA display
+- WorkerScreen reusable modal for worker thread callables
+- Schema v5 migration for attestation column
+- check_series_attestation() and _format_attestation() helpers
+- TakeConfirmScreen with pre-take applicability check
+- u/U keybinding split with cursor preservation
+- Documentation updated for all new features
+- 27 new tests for attestation and formatting
+
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://msgid.link/092a612b-4fa1-4fa7-a872-b3564fcb3749@sirena.org.uk # 38491be
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Assisted-by: claude-opus-4-6
+
+--
+Deet-doot-dot, I am a bot.
+b4 bug tracker (bugspray 0.1-dev)
 
