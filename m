@@ -1,115 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBD83B2FE2
-	for <tools@linux.kernel.org>; Wed, 11 Mar 2026 07:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7615A3D648D
+	for <tools@linux.kernel.org>; Wed, 11 Mar 2026 12:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773214821; cv=none; b=BlvPmIGIMt/ltpsQK0+CIGAMhj9pzEWGmomZlws8ke6/kINYnG+G++ILcLRAF/cg5p43JNJybcf27i/BVjDEdReOV8Iep6qUOHt0k/L4VOGqca0GC7RUmD7CLCGFGdny2yiwp6xxulQbE3mJbPhugtX6N/qH75HATMXGKi9g0Sw=
+	t=1773231253; cv=none; b=AcgLfxW4UxvJMu+n0zzkb8kIypLq2JGUTHU04c2xzxUaSGrC4b0kmiB4tvnD0LlnOH9lf3JoHbYQG4uxkuhuwdEg+rDaSVidc85619m0B76YhQoaYdOmFprYQmoXstOQwtEzc3DWPRqDKcy/hID3MuMWPyfNoFtmL1Z67SJk8LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773214821; c=relaxed/simple;
-	bh=Tn875eSAMGzFdl0FGDb0oQEd8uXQcfDpHgJ1iPYbUpk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=J2ueTSbzbz7l6LLPblkWeDIHJNYXI3RsKNaXIwn9kDzm+R0zUxHFOv6n+U+pQFBhf7HTke6NQduPg0FzTl34nnR0kQESmRJzt6pKvjgfPBVfspjY2uE5LvUQHkDTdH7YsrGF2jeKnSYg01KI8L0v25rynJ9bXeDe54hXl37HREI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=brighamcampbell.com header.i=@brighamcampbell.com header.b=b48RfZ7g; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773231253; c=relaxed/simple;
+	bh=PLUfmfSwgxgW13SuOeRRGltSKV7UzOXXost2rBwexaY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rEp2dG+LtXDjPlURdruEx784rTP836sPum5iSURyTiqfFTyQIB5Q45imoWq8S/iCY7iVM7D6NYPPi8x0ammniQgok9zSELm0JNYOuUa7l3zqBHzS4Xsb5Dp0x4d21DqKH6Ojxwl1TnQnMu79UcB8BRwEv78m/3Q2rnjhHomkwhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EC5UTEVW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=brighamcampbell.com header.i=@brighamcampbell.com header.b="b48RfZ7g"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EC5UTEVW"
 Received: by smtp.kernel.org (Postfix)
-	id 15695C4CEF7; Wed, 11 Mar 2026 07:40:21 +0000 (UTC)
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 3C404C2BC86
-	for <tools@kernel.org>; Wed, 11 Mar 2026 07:40:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 3C404C2BC86
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=brighamcampbell.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=brighamcampbell.com
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-50917417efbso5820351cf.0
-        for <tools@kernel.org>; Wed, 11 Mar 2026 00:40:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brighamcampbell.com; s=google; t=1773214819; x=1773819619; darn=kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jZhsndzNY/o5tKeSaSLwx1YoHC64cidQfqzZPOV3y/Y=;
-        b=b48RfZ7gVpVJlaFM4DHQAwkngRRGXQ9Ktq2cg9GypN4iSSIP48SEnH54LsZNugbGo8
-         1opFhoiBRJbkZuw5zYoovbSxUErMqwq4ONqbbJdvhNpoRftYcTySHT13sPYsPJlhBbqT
-         BpUPQbnJG9iQT/GlOno8sQKpzJ49CDBZhqP6oBujW9H7MIpmJBFVxAqCV5EljgNW08PJ
-         BdVA1WfvzQHAtPoUDIkc1X7qbrNcChZxymUHJK4qYRrVTGGVlS8D6/Cziwu4Aj56bf7n
-         0JyV+lkfnY4ai3QbtP+Tm8ykUuTqz7gIan4+PCE5ZTRrNbAIk5e+UF5ey+D24tKxcHy1
-         uzRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773214819; x=1773819619;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jZhsndzNY/o5tKeSaSLwx1YoHC64cidQfqzZPOV3y/Y=;
-        b=Uu/mRpyYSOkBRkxIxdSYHLwH+uL5Ud0MOEd0T0jA/8JWvZ7zJeW/b1DysS72btrE8t
-         Hm5w80mgv1/puk1fcJo1C8xjorpChXXBpF0fnJUzDF+HNXqSOm7JS5MQMGHt9hK5qoBH
-         HDog7l04Z366o4XhnCal4qFm6gigMTTQtlwCTUPtLiAQ/TnkUgPra1e4sPLUg4QAgTmC
-         MeHIdvymk8R0q0MbPxWFpEPCIjYogp6q6A8mGtMvDfYFR4LzbnF0Cxku9Mx3jjqjNa6a
-         isN5sQdI0pzaUxYdaz4qgZ+IvQ9601K5j928iKdzbiz5YziZuAMrLfrjdmKqhcuyBKZn
-         OHpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVJGdB0u7tuMo6MGM6rPA06B7PlabAQfMgbO+Q21s9yHX35WM5jUeW3O8/3gBSwopPJUWvxvg==@kernel.org
-X-Gm-Message-State: AOJu0Yzc6NGpRjeIlkV2EJLjy8HiHGdo/OfWVVzkdawYWRzhAQsbchKm
-	H3WilsSJggBtW81zmxqHSLwF4MDuTBqVKTR1eQ+SEI/QB6RHSLWIpqPZlD+vF3bOSEPBzwlD9i7
-	EMpKq5wA=
-X-Gm-Gg: ATEYQzz4tqZxoiGVhY1zYiXjdXAKYVXXAFt8Q9Ij0roHbmv/r+YdbQf291choCtZt2n
-	ZYWWRm6NxaJ6dMAOh3U3+1cqCXAX2bHI7lZCGfABLPjQwILdfrdps+FON5eaq4opklgc2MgMx8V
-	TI4l592hnT1tvJKsf3gnwVBtmDrKvuPGFpiq8VfyTJP8PWoowF5aIJBH47SsPuOhA6wG0I8JFn/
-	EuHwM0F133Ynv5Sy8a3I5+bEbfkDD9pKhJQt88VBIi14aZ7+MgAFRitk7G2gYQm1APhsuCHdNyr
-	VKkYtQxstlcoYH5tRyLZh4jTiL7VTo8Y3raB3LL7NLTSl3aPLB5GkToNT3vAC/NDKPBSX+rDyuK
-	Vc2lxwJBd88Wa/2YRgd+iRmSTxOC9RlNTFF991iGAel6XMBvPpS61ZifWi460d3rB7anseePsLT
-	aT10HP4AeR9gT1BBFAYmT4R6S49r7l9ZU+apLqyxVsy84rwmcVIS2HFCh7DLXQ8w9zGO6CFH9dm
-	40dnXSaHRadJ3M3nQ==
-X-Received: by 2002:a05:622a:1111:b0:509:1be4:97d1 with SMTP id d75a77b69052e-5093a19d134mr15507381cf.34.1773214819149;
-        Wed, 11 Mar 2026 00:40:19 -0700 (PDT)
-Received: from mystery-machine.brighamcampbell.com ([2605:fb40:0:c09:323a:5679:3782:80b8])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-509400d018csm2328051cf.24.2026.03.11.00.40.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2026 00:40:18 -0700 (PDT)
-From: Brigham Campbell <me@brighamcampbell.com>
-To: konstantin@linuxfoundation.org,
-	tools@kernel.org
-Cc: me@brighamcampbell.com
-Subject: [PATCH] Fix typo in maintainer docs
-Date: Wed, 11 Mar 2026 01:40:14 -0600
-Message-ID: <20260311074014.289088-1-me@brighamcampbell.com>
-X-Mailer: git-send-email 2.52.0
+	id 17BD2C116C6; Wed, 11 Mar 2026 12:14:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58ACBC4CEF7;
+	Wed, 11 Mar 2026 12:14:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773231253;
+	bh=PLUfmfSwgxgW13SuOeRRGltSKV7UzOXXost2rBwexaY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EC5UTEVWD0TnYkf//dFYZfivzo+ZsI86tte1XYK1qISMZtryhluz+qDC3r/MdiIbA
+	 WSaiLexQHE8TSwwQTZnZPo+XuKF7e5Sqwc2Lt/y7xioPM4jW61xB0mCppFKgDf1AP/
+	 7DndX1Kg/szZ0K/0llXcU/m/rjClI+9CN97OAea3pGxfbjAeY31lQmySMD25mBU2d1
+	 O3uMsh6u4AbnJNFweB+bfwLT7Fm/DmTI1sKB/oJdK3X5fZnPl6+VCxOizDApT0zKiE
+	 YaYIAoT7hzME2iChWrfmKpNklTAaqDvrEAmv+C0TEYD/bke1aGgs6J3GYY/tyZBXN5
+	 ni1RQMLlG11Vw==
+Date: Wed, 11 Mar 2026 12:14:09 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org
+Subject: b4 review looses thread on update
+Message-ID: <0dbd8df1-3c66-4ab0-a64b-1f3ded93a7b6@sirena.org.uk>
+References: <aTj6C69JzDUJUVP4@sirena.co.uk>
+ <20260306-steady-tunneling-asp-7febfd@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="KeQnNa8V5DkKYNp1"
+Content-Disposition: inline
+In-Reply-To: <20260306-steady-tunneling-asp-7febfd@lemur>
+X-Cookie: When all else fails, EAT!!!
 
-Fix a minor typo in the documentation for `b4 review`.
 
-Signed-off-by: Brigham Campbell <me@brighamcampbell.com>
----
+--KeQnNa8V5DkKYNp1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Unrelated, but thanks for your work on b4, Konstantin. It's been a
-wonderful help to me so far. I expect the new review functionalities to
-be very useful for reviewing many patches from kernel mentees.
+Hi Konstantin,
 
- docs/maintainer/review.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I had a review of v1 of:
 
-diff --git a/docs/maintainer/review.rst b/docs/maintainer/review.rst
-index 4af5f77..9b6a32d 100644
---- a/docs/maintainer/review.rst
-+++ b/docs/maintainer/review.rst
-@@ -23,7 +23,7 @@ Getting started
- 
- Enrolling a repository
- ~~~~~~~~~~~~~~~~~~~~~~
--Before you can track series, you need to enrol the repository::
-+Before you can track series, you need to enroll the repository::
- 
-     b4 review enroll [path] [-i identifier]
- 
+   e53aefc63e28caf32bcd553f3d0a8f2a5a25cd8d.1773193726.git.xiaopei01@kylinos.cn
 
-base-commit: cba5b5a9fd6078646a58531643e7365480504d77
--- 
-2.52.0
+which showed that v2 was available.  When I did actions->update (mildly
+annoying that that's a captial U BTW) b4 flashed up a screen saying that
+it couldn't work out a base and then returned me to the list, with the
+series gone from the list.  I'd have expected to get to pick a base in
+that case (ideally it'd remember what branch it was previously targeted
+at).
 
+Thanks,
+Mark
+
+--KeQnNa8V5DkKYNp1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmxXJAACgkQJNaLcl1U
+h9DasQf+IAhUfjZq7PEZ8JTkPXFBpqz2HgF/U3r+7pX4FV4OY9BBg0Hgf+aasWXK
+zj4QMxbkq8QQDDYnMLw/TA3Gn/kvyEwUi12KQj5q0JM3pCOBNOuLO+HuClkEMhiU
+cdh6n9DvImB6MgpwRkXsb2Rz9VfdKIv2np/Nzo1cBWwlGBtwiJBQhfNYUJ7rQUCR
+V2qlI4d/zgx+iWrcuzVCImzAqvkRO7gjobA2BEcoOxEcQdCKXOPN/5WFEVlRvJiv
+PBFSeKupRuuHuEgnLRWSMkkd4dpcy3aPNNiQVpHO5DeoHNEAp4G9ubQoxz8cXBdM
+iLj5Mkatr/myVvR3TWM8YeJAmh3g0Q==
+=g3lj
+-----END PGP SIGNATURE-----
+
+--KeQnNa8V5DkKYNp1--
