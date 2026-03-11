@@ -1,82 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513613CBE6C
-	for <tools@linux.kernel.org>; Wed, 11 Mar 2026 14:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5CE3DE43F
+	for <tools@linux.kernel.org>; Wed, 11 Mar 2026 15:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773239951; cv=none; b=VDx1pROJBpK/ZUJ+7DSiKVDoqNefaJ23CDgUclU1e9M47uMi4AYG3gFVB2RbXzXwTa/WBaz53ZveueT/TYsqoFinYLP90UZ3qpcMCYe0H79eXsLsZ0xdmjmur3LXmfKnPpj/Xw7gGdmBeHgOEY9nJBjarQfQbyNO/F1w5cwY3dU=
+	t=1773242387; cv=none; b=DES4ZXxgljZzszjSPKmG2kCm+Fct/cPjRWsHXvzsz738jXhAFMyL8k6wv3B5J1Dm/Me+gh9JO9h2mDguIWe59MeU8nrk+qX9Ctdtyw7e3QhcwfNcbKDC/YBO3A2ktLY1GqEsoulAbT/ro70BQw6qcYhgkU6wtqlytQ4DDBf4ndk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773239951; c=relaxed/simple;
-	bh=vovt/BNlr/Dvc38kOkzZNIvSopNCQ3NRYGpY2KOn5cU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VHFBNuQqxefn84fRAfVrs98ei+e5Ip6DGOohIxuvt6fFmcUuzXT9B9bNwtV9ieKgs7wPGCslVpGyxv1ro2DW5zzCwIZievFXYnAstBUYuVLHnP+2AjNI3hPzoj6Evl5hkL8dWNJ6s3B8X9GRD/jpMaf23zBxXGs2K++Ocpe+KIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BspTjv6B; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773242387; c=relaxed/simple;
+	bh=vtHIi3lXaqadtX4+6rwdndP55sx31Xb7G4sFSQ/M228=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=iqYSACsv9537/U9HKkAjJmFsQwXYmJfw32fo35sU6fcXIikAtKdLJTvX9ex9LeHBYQEFKzgqvTOZUkEUkiGZDbTqSQI05O6ngNq1bEWpsmQHIklW2rP2lvxPPvBiNKGDdNlUDmlaRXuQIE2vu6ga1b7mEgE+LoTA5Qx9cUzyZLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gg7HUJjZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BspTjv6B"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gg7HUJjZ"
 Received: by smtp.kernel.org (Postfix)
-	id ED7D7C4CEF7; Wed, 11 Mar 2026 14:39:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B51C19421;
-	Wed, 11 Mar 2026 14:39:10 +0000 (UTC)
+	id B972CC19424; Wed, 11 Mar 2026 15:19:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C323C4CEF7;
+	Wed, 11 Mar 2026 15:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773239950;
-	bh=vovt/BNlr/Dvc38kOkzZNIvSopNCQ3NRYGpY2KOn5cU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BspTjv6B7He029W94nnD+tdI+CdfyGS2XYzWdNis6rZkse9ziCkGy7Xc8OXu9nNzk
-	 tN271LxfGLoSeAvdYD0EHiR4lVM5yuJe1VdGr6J9DZ8iZE0IlhLWfPQi9rxmQS7UPU
-	 5Mvyjj52D8OTrGgL47AXir0nlE4kX18w4lOtda8E=
-Date: Wed, 11 Mar 2026 10:39:09 -0400
+	s=korg; t=1773242386;
+	bh=vtHIi3lXaqadtX4+6rwdndP55sx31Xb7G4sFSQ/M228=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=Gg7HUJjZhYlVGpZb7yEjfWpZTqIvek5hzfaTT9iYR+euNoVvb48+OykY7lZMg7PUB
+	 GBMLofFizOAW661Z9GCLWZLuDIGgBWlDfOkqzW/gvCAxjRaGQsgtHOC8Z+cCre3utF
+	 +MBagG/48myrtu/E+uiJcAQL6YTrCwM/Fe93tr34=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Brigham Campbell <me@brighamcampbell.com>
-Cc: tools@kernel.org
-Subject: Re: [PATCH] Fix typo in maintainer docs
-Message-ID: <20260311-invaluable-attentive-gopher-dd0a55@lemur>
+To: tools@kernel.org, Brigham Campbell <me@brighamcampbell.com>
+In-Reply-To: <20260311074014.289088-1-me@brighamcampbell.com>
 References: <20260311074014.289088-1-me@brighamcampbell.com>
+Subject: Re: [PATCH] Fix typo in maintainer docs
+Message-Id: <177324238051.718772.8510836521550957265.b4-ty@linuxfoundation.org>
+Date: Wed, 11 Mar 2026 11:19:40 -0400
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260311074014.289088-1-me@brighamcampbell.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-cba5b
+X-Developer-Signature: v=1; a=openpgp-sha256; l=231;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=eQQEeDOGgextxkD1PvQFYZotn6U7RUy+hvHxdm+ctLw=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGDI3dgj23NM8PL/Iu+vSxIlW/MrlVed1jQKt7iUXxXZov
+ L124YhcRykLgxgXg6yYIkvZvthNQYUPPeTSe0xh5rAygQxh4OIUgIl8MGH4H/k/+Ey9eOSxVccy
+ ZtSdXVnZenVlyALhewcLP3btnrfunzMjwyRHDvbHR59KtdtmvMhJNQveUf+2/brfXaMH+44dFrq
+ 7iQsA
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On Wed, Mar 11, 2026 at 01:40:14AM -0600, Brigham Campbell wrote:
-> Fix a minor typo in the documentation for `b4 review`.
 
-It's not actually a typo. ;) Welcome to the Canadian spelling where we
-arbitrarily spell some things the US way and others the UK way, and many of
-them are correct both ways! Like enroll and enrol, which are both accepted in
-Canadian spelling. *sigh*
+On Wed, 11 Mar 2026 01:40:14 -0600, Brigham Campbell wrote:
+> Fix typo in maintainer docs
 
-However, since the command is "b4 enroll" and not "b4 enrol" I will take the
-patch.
+Applied, thanks!
 
-> Signed-off-by: Brigham Campbell <me@brighamcampbell.com>
-> ---
-> 
-> Unrelated, but thanks for your work on b4, Konstantin. It's been a
-> wonderful help to me so far. I expect the new review functionalities to
-> be very useful for reviewing many patches from kernel mentees.
+[1/1] Fix typo in maintainer docs
+      commit: 7e1f9916f6fb508264693476d3f80d4aabd5030d
 
-Thank you! That's my hope as well.
-
-Cheers,
--K
-
->  Enrolling a repository
->  ~~~~~~~~~~~~~~~~~~~~~~
-> -Before you can track series, you need to enrol the repository::
-> +Before you can track series, you need to enroll the repository::
->  
->      b4 review enroll [path] [-i identifier]
->  
-> 
-> base-commit: cba5b5a9fd6078646a58531643e7365480504d77
-> -- 
-> 2.52.0
-> 
-
+Best regards,
 -- 
 KR
+
+
