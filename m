@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9583B2C0F95
-	for <tools@linux.kernel.org>; Wed, 11 Mar 2026 17:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3299B3E6395
+	for <tools@linux.kernel.org>; Wed, 11 Mar 2026 17:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773248959; cv=none; b=tzdXnHEDTkdcGJXBBqj2/ydJoc9pmC18YJ5RDAE+ksFhxAm3357mOm6nYfUZaD7sRX72SR3bZ7se1lSpodTKaGzCim/EPH3wKZSO5gLlquEiTlFf5SZtv8lzF87MOYTe/olbXaxlEm71OfEanlB9hPNMv3xTyDEJGwKQ7FOnvg8=
+	t=1773251715; cv=none; b=QCSytFGeavFpa2Mw4Mx1RB1Dl6kp4K9GjSSjT+UB1oOkNiSduex/XNJv4+5bL5qlN6hpNMEZ5mRVACXbwpIudqJYyJyAUFcWFs0w36tHvBURl3ks0/RjNTrtrsfdycHo2Osk1MRy87Bk2d4/Aogu1D+ezfu317Tr19vcvQZSjsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773248959; c=relaxed/simple;
-	bh=5HZkm+I+AzGS5YJcs7RHVeJj+nw4ZTTWFsyj95+Buys=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Vf15GlVq/KQubfNsLVje1S7ApmVqQTmInalViQI54mWJBV1gVHXHLMj79RSuwAPbQYvWFSkQaiC12VSHt+/bkUHyeMUCWgCxTshVHuO7VkEH/ddq9RCJyF0E4qMDepzZSviYJupQPdon9pi/iXQDL6qHfw+7hlDFIq2fkGmROCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a5d1V2lv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773251715; c=relaxed/simple;
+	bh=qC9unol7kLlNpVAnFQk65chtNHHv75fsKZDwWznYGtU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LAWPzEoU2fbqM5N+zElcO/Zlv/zIfS94DlDLsSgEkHFZKR9cyAzEEPpmYjOYSX9X0UDUWcd8/G6raKuozTsUpAbshOM2PCa4/xqISiylcGuXdJBgYuFE/PULG+9UDgdy0Y2CC/oSst4drI0AkwYuPNdHIO6Tc6FC8j4FheFNsqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U55PmrX5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a5d1V2lv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U55PmrX5"
 Received: by smtp.kernel.org (Postfix)
-	id 573CEC19424; Wed, 11 Mar 2026 17:09:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C00C4CEF7;
-	Wed, 11 Mar 2026 17:09:18 +0000 (UTC)
+	id E06CDC2BC86; Wed, 11 Mar 2026 17:55:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FAAC19425;
+	Wed, 11 Mar 2026 17:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773248959;
-	bh=5HZkm+I+AzGS5YJcs7RHVeJj+nw4ZTTWFsyj95+Buys=;
-	h=Date:From:To:Cc:Subject:From;
-	b=a5d1V2lvLNCuayxEy+dXfvVhqwJP0x2xK2hUbRBGZkZ3wX6D+fJ+yiT2dx6jv76GM
-	 /2KF1L38EgN7wKgccJvP6+9uQ7XhVCzAJRpakD6SLLUDXIpNm65B0ig5mPR/s+HURv
-	 4RsRMmK9Oc6holzkjjXarrdn4wpr6i+nrsCP74Qg2avS6jZ5yCzC/4B/l9dtXpKUc4
-	 ctSfr44JxKBmBzNe/1t+FueyAaJPh/dS4oPO1TMMPMEMTSMxMYHYF2HL8iMY2+cUas
-	 tdWWDFgbFOpIY6Pksf+TGvp+jLecXWuFAgS/No+GItOxwJl4h5cPPp7mTA7BqWNqhi
-	 ZZ6oOrsc8BdaA==
-Date: Wed, 11 Mar 2026 17:09:15 +0000
+	s=k20201202; t=1773251714;
+	bh=qC9unol7kLlNpVAnFQk65chtNHHv75fsKZDwWznYGtU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=U55PmrX5l6QQRZtAjUJYZr7Q+jcLz7YuyYZnlZYePtd+nlnlGAfEnOLt896sdrXGz
+	 XPAyoYNz/Xs+hQ9kd8MQRSbK0b2MbYVmSiPW0Nu5Jvzz7i2VSGqnXyi2iZ9YuFW0N0
+	 scSFbPfttArJvB94giZkgL+GXqoaNyrySB2FAL3P7cCCrsiLwRsHOsOQteMRfPRGci
+	 +4aM3k77SiuTcVAeqlTmMTKwjIxeXkUEbRkgaVo3n4F3Vf0M6aWmBPLvhw0o+J9Z/m
+	 r0XKocdfWVNJBlkSYxFm2upejt7zDK0aArj/E6IZ5Qdpqw+obeG9x4QiYR5ZqgMLoP
+	 B7PqrJ33wZlOw==
+Date: Wed, 11 Mar 2026 17:55:11 +0000
 From: Mark Brown <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@kernel.org
-Subject: b4 review feedback
-Message-ID: <c2cf828e-fb43-431d-91f8-ef7ca384edc6@sirena.org.uk>
+Subject: Re: b4 review feedback
+Message-ID: <207defd7-8533-4991-82d5-f42e676e9a7c@sirena.org.uk>
+References: <c2cf828e-fb43-431d-91f8-ef7ca384edc6@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -41,72 +42,45 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="f69okKx57j5Aaxj+"
+	protocol="application/pgp-signature"; boundary="ctcU9/dd5NDtcB5O"
 Content-Disposition: inline
+In-Reply-To: <c2cf828e-fb43-431d-91f8-ef7ca384edc6@sirena.org.uk>
 X-Cookie: When all else fails, EAT!!!
 
 
---f69okKx57j5Aaxj+
+--ctcU9/dd5NDtcB5O
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Wed, Mar 11, 2026 at 05:09:19PM +0000, Mark Brown wrote:
 
-I've run through a bunch of review using the b4 review functionality,
-it's mostly working well and helps with some things I'd been wanting to
-improve.  I've still been using mutt to reply to things so didn't really
-test that side of things.
+> I've run through a bunch of review using the b4 review functionality,
+> it's mostly working well and helps with some things I'd been wanting to
+> improve.  I've still been using mutt to reply to things so didn't really
+> test that side of things.
+>=20
+> Issues I've noticed with the flow, some of which are repeats:
 
-Issues I've noticed with the flow, some of which are repeats:
+One other thing:
 
- - There's the hooks for integration with custom CI ("test this list of
-   commits") that I've mentioned previously.  Perhaps b4 could natively
-   support KUnit, but it might be as well to just do that through a more
-   general mechanism.
+ - Checks for signoffs (patch sender and author) and the validity of
+   fixes tags seem like something the tool could just do directly
+   similarly to the checkpatch integration.
 
- - For the CI integration stuff a CLI for listing branches and commits
-   in them would be useful, for use in kicking off the CI en masse.
-   Could also be handy for indexing.  You can easily list the branches
-   with git but extracting the bases could use some help.
-
- - It would be really nice to have a mechanism to track which branch
-   reviews are targeted at and based off, right now it doesn't seem that=20
-   this is the case?  If a series was applied to a branch for review
-   it's probably where it should be merged, though it'd be good to be
-   able to track base and target this separately (eg, branch based on a
-   tag from Linus targeted at release/next).
-
- - Currently a series can only be marked as waiting for a new version if
-   it's been imported for review, this means that if other people made
-   comments or the issue is that it's difficult to apply you still need
-   to open a review to postpone the series.
-
- - It's weird that the "CI" (checkpatch) option isn't available in the
-   review view.
-
- - Being able to send thanks based on what's in a published branch, as
-   well as the thing where it's easier if people don't see a mail before
-   the changes are visible we need an equivalent of b4-treename for
-   local branches - it looked like the thanks mails were "applied to
-   local branch foo" which isn't ideal.
-
-Thanks,
-Mark
-
---f69okKx57j5Aaxj+
+--ctcU9/dd5NDtcB5O
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmxobsACgkQJNaLcl1U
-h9DTxgf/Z20JruCYVXOrxcXEub+pfcenyIVIrZ0+gJuYpKFPkB81nEBXhQQciYID
-XcC+YB5BzqqcuZ01d1+xJpuHTNAi4RfzmaQ59OXEbsG5oAnAsdlqbmm9WZdPnqHW
-tVKcMSKWv8Ks7TaybHgVeO7c1G0ahbcqhcAnySQH+awGBJeBW4HRWiQl8HGJgkoC
-2dYrrJyWQpCboybDE0q6EDwT1+JbIrYWDWa5h2YAZuB7MFuuXHkrCTniJK/3m+db
-Ivo20epSMHvmWm3U63PPTdzpLjlLsP7+pnk4000N8yrpkJaNWE2DKy/vDpIy43P1
-ZODL9td7z0oHd5fn1uSBOKhhxc62sw==
-=Bz+4
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmxrH4ACgkQJNaLcl1U
+h9Ct/wf9EoTnSqefQsxbvxDrx6mi7IKuvtn9ZcXnJlfoeKyWSXNDsuA3oQSluGHl
+BCXsC/dtUMSadyq8P34YGJzUU/xL4uVNnD2wImITtpcMbq9gtQHqDyTR1xEMj9+/
+e+tUCrWgWIXrQfq56kHxRA0b+gv+1ODe+nyZfkndRdznKTtCYgdWC4W1jID4sTg1
+uh1rPz+fS4eEqnDHWvpPZ2PQlye7CZk4nddC1dmsvb45tmz1bh81IZ7gLX8M1mCw
+zyFJu59oJRGZ1N9LNq6ijw/YZgZnHWtrsYFMXZOppNLWSqXbsmOGwmCw8AYiMYVn
+VcDMjuBu3zhsj8jOHWhNVrhp72EC3w==
+=hkmQ
 -----END PGP SIGNATURE-----
 
---f69okKx57j5Aaxj+--
+--ctcU9/dd5NDtcB5O--
