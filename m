@@ -1,97 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194293F074C
-	for <tools@linux.kernel.org>; Thu, 12 Mar 2026 17:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AFD3FEB17
+	for <tools@linux.kernel.org>; Thu, 12 Mar 2026 18:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773336917; cv=none; b=bs90iFHryhuTtXxHblWjcTZ4+/V3zDmsN+zj2gmGgYqTpAHOK4wrIc2/dQcmaqG7nZtxntXx4CVrok7X34MTUB/z4YLCfJp6OC6i6rxHedAwgxKCJ/kkTY8F2z5SxIbRLuXXx5d14BaeWzeZBD/OVbuUpsrUok1ZXn6LUuWHFQc=
+	t=1773339433; cv=none; b=JsS3g3k7Z8GQBccE/km1ZsoPLNIKEMPWju7lmtrXy8g2E3UXgJEct+63/Fm34s7GZVyll+RbRB9H9Jr4kp330SW0t/kaI5gBMWCR0A11+hwme9KvIH769iiTySpM1z19TvLMsf9yBH5EPrxOI2OLcBH4AYtTFD6WfY5X99HuVBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773336917; c=relaxed/simple;
-	bh=e4mP+jnQUd6HADjsSHBlOr49wrxgGHg3bnQu/7xkM2I=;
+	s=arc-20240116; t=1773339433; c=relaxed/simple;
+	bh=aHWYrMdV/Hv+p4AAWaqovvBtA5LuIEZ9OPtKfi8fl5Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z2e0Chn009HOtpouCiEcZaGqmsfzizKs/JgpxTRGvubofvJAJGaxbZTbvJul8k0fjeRW4xG9mEMhNyAg0C9hrfEqAXQTJRf7JrWs6SoPaf08rNtyERNaeAvAhLt6WdsY0X4qi11A0HhKDZ/Tvy3Yju77TcxlGZy0qQz8gigKqTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hOebYLrC; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=plhYkn5A3FDT/hdsgym2y+tT30/+kBxAOiq6kHQ2xb0bjwLx4E/A9Y39/lYqIdJrCiLkM9//AOqBmBkzpOSqCXQl8i3XVedM+xmwFr0ZcwUicr2O1YNrClYReY6psFBMyax3oKgQpM4rPwJ5XRvpn52xzye3WIUf5tFdy0Skz3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JXyBdu7B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hOebYLrC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JXyBdu7B"
 Received: by smtp.kernel.org (Postfix)
-	id DF51FC2BC87; Thu, 12 Mar 2026 17:35:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C034C4CEF7;
-	Thu, 12 Mar 2026 17:35:15 +0000 (UTC)
+	id 28170C2BC86; Thu, 12 Mar 2026 18:17:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDCBC4CEF7;
+	Thu, 12 Mar 2026 18:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773336916;
-	bh=e4mP+jnQUd6HADjsSHBlOr49wrxgGHg3bnQu/7xkM2I=;
+	s=k20201202; t=1773339433;
+	bh=aHWYrMdV/Hv+p4AAWaqovvBtA5LuIEZ9OPtKfi8fl5Y=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hOebYLrCj9K0JFsH9W9hMKRgoPjsYwiTjVrk0I20T/oGHOcvWU8A4IBQLoYUYNP8O
-	 Q9YDrp/VtKM2fQHiOxpaS5mZKrpGP0a5DikNedjzw50bKjyxH8oSwCyWBUmbaKRzHr
-	 6KFhQjrbVnhs6OwCNcL6YGMTIUKrVvhVFwzx0QwJzPgUEgd1AWffjiGWzJI0e+uwoU
-	 Way5kgPuJ0bddyhU0/NufkDInNSFS6VLBmQ82z7uTVhX2emTuv34ma4U8RhNZn50oN
-	 2oeOMLKwYFw4UIhz9LBbcRWjLimux5aZEcWN/K2x9q8ZOhztrH4gt96HAS3Fg8jJJ3
-	 0kTmE7FilO2xg==
-Date: Thu, 12 Mar 2026 17:35:13 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <mricon@kernel.org>
-Cc: users@kernel.org, tools@kernel.org
-Subject: Re: b4 review available in master
-Message-ID: <7bdd4c85-7202-4b80-aae5-67c99fabddf6@sirena.org.uk>
-References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
- <aaMPYVIgmsDpn7Rw@sirena.co.uk>
- <aaNaArEgAe0SgmSh@sirena.co.uk>
- <20260302-juicy-spoonbill-of-jest-6fc659@lemur>
- <e7d999c0-c27f-4d9d-8812-9ff3254ea7cf@sirena.org.uk>
- <20260303-true-glaring-raven-e78bf2@lemur>
+	b=JXyBdu7BVkXpJjfjWA7hl16yDFPlQA162xKZh2aTjld4Zw2BHRX8gjJ9MK/M0OAKh
+	 7nicgF6L0qqHyZBpW5YUIMFWRbvocK2eleUYuIuqtPtlifZDr+Ct3UIVW5HJRd5XXy
+	 ocvb3+pmV22wwvEhmPXiK4e1fzkNq7G2/OxDBgMjGb8wQYssMy0fA8Gv322b/or5x9
+	 3qKdQm26LilT97Vka7B6yAGPfnDV/FXeLbknSsn7v2G45zuwYwk3a0iJvHx6dz5rfO
+	 QrdIein/ypIpoXxjT9bSJNBn/nF3sg7aho+58vsEDBg73WWuPlgd+ESHsUFoBPfZDy
+	 XGBs9ELdSa03g==
+Date: Thu, 12 Mar 2026 14:17:11 -0400
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@kernel.org
+Subject: Re: Editing commits during review
+Message-ID: <20260312-nifty-ultra-koel-30d3b4@lemur>
+References: <182ee3cb-af98-4602-bddf-a2419e7add18@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7sqs0l//lZ93qOw7"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260303-true-glaring-raven-e78bf2@lemur>
-X-Cookie: I feel better about world problems now!
+In-Reply-To: <182ee3cb-af98-4602-bddf-a2419e7add18@sirena.org.uk>
 
+On Thu, Mar 12, 2026 at 04:44:21PM +0000, Mark Brown wrote:
+> I can't see a facility in b4 review for editing commits during review,
+> for example to fix subjects or remove spurious tags (Fixes: being a
+> common one, lots of people seem to just randomly add them).  There's
+> shell mode but it explicitly warns against edits to the commits.  For
+> patches that just get applied you can fix up after, but that's not so
+> good with the merge strategy.
 
---7sqs0l//lZ93qOw7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+OK, the latest master supports the following workflow:
 
-On Tue, Mar 03, 2026 at 01:21:21PM -0500, Konstantin Ryabitsev wrote:
-> On Tue, Mar 03, 2026 at 12:42:26PM +0000, Mark Brown wrote:
+From the review app, go into shell mode ("s"). This will drop you into a shell
+with that branch checked out already. You can run "git rebase -i" and make
+changes to the commits, including making light edits to the code. Just don't
+rearrange patches, drop, or squash them. After you are done, you can exit the
+shell and we should be able to find everything and remap commits to patches.
 
-> > > I'll push back on this a little simply because there's a lot that is keyed off
-> > > the number of patches in the series. If we cherry-pick before we even review,
-> > > this makes a lot of other functionality fragile. However, there is code now to
-> > > mark patches as "skip" (with x) -- this should let you completely ignore them.
-> > > When we "take" a series with ignored patches we will automatically default to
-> > > the cherry-pick strategy and pre-unselect the ignored patches. Would that come
-> > > kinda close to what you want?
+I only lightly tested this, so please review carefully.
 
-> > Possibly?  I'd need to try it.  Some of these serieses are quite large
-> > so even finding the relevant mails can be annoying.
-
-> Let me know if that's not sufficient. We can also give a way to hide skipped
-> patches so they aren't even in the picture.
-
-Having used this a bit I think for larger serieses hiding would be very
-useful, and it would be useful to still be able to do a merge even with
-skipped patches (common case is some DTS patches at the end of a series
-which are basically unrelated to the main series).
-
---7sqs0l//lZ93qOw7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmy+VAACgkQJNaLcl1U
-h9Cvvgf/Q33EfpDoaRuT8QKcpcQFVSHZq8umRKg7+ylau54sDZLE0O11N4kkhs2k
-FNltl55hnZX16v6BIIrNylc23dARPnz75xuH3m23pJX6ZJdeqE04gstOj5VqzwaG
-VbLXkJFcJ3dGbtBpaziMYLzZGM7/G9ygNVitn89IF4eGsBhNfVv2Ut9bujJlFdlv
-n+qqQIn8odUsM8KD3qA8gt+FZaONnkul+zsKbeiBSsYkn6oky6FBdMTg+CS3cg/x
-JQI9OMFfSCgsQSBJDOgtBxqiFdLYbqC3RFVeAAM+siH0iEVvETYWIdyisA4EgNhN
-X+8rluWI033ViULkV73JaFX5dtUEgg==
-=FFDt
------END PGP SIGNATURE-----
-
---7sqs0l//lZ93qOw7--
+Regards,
+-- 
+KR
