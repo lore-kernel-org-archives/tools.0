@@ -1,65 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5BE40DFD6
-	for <tools@linux.kernel.org>; Thu, 12 Mar 2026 14:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D866F3914FB
+	for <tools@linux.kernel.org>; Thu, 12 Mar 2026 16:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773327199; cv=none; b=oU0e3txxQdCOAqfXJBwT+89cyhXyOHP0vLagq2OCELldxZn5fsRpeXLeXnltsD1P5ovfiqtd2dzOwEhPehJHG2L/30I5Vrb5GDDYYPt1e1Lg7wmKM8b3Rjt2MlxCqfvguK/yRvCVLVhQymPOOgTHgj/KtX5aQl9mbO35ov6g7NQ=
+	t=1773333864; cv=none; b=imH3UdkoenMtMju2LstN/xoRqZ04FkYycQTVJL10lbnHwpzf5wrLp67Z6Ma/o19qeqYIRnxMg5A5OHhwILoLzpY+Mx1d9HuF5AFWf1iubV+JoS/JQBDgcgSJm3H8RPQc8IAdD1hrCO7Etl4qgyCpqfbEdd4H8Pbxud8f2nDME4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773327199; c=relaxed/simple;
-	bh=KLNrcDiKpi0gGwJ3TkUjPIXcSveyKJYWxYgWbqkL/Ww=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HdlFDr38HDBr4vK0dxuHkWyHFRTCsmMGWW5PtoTonk1lLX1tWGf1CN8Aiq1C0gDns5pfZmehDFKiU2+Q4DLmBDgLRKyyljabzqWNftSJ7jbQL+V+Sc+UrPRvhkJZ/BXGYPyd2dUV3bLgih1R1qfrdnbmQszcmmYXhG46Q+zI4Ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MOnVquRL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773333864; c=relaxed/simple;
+	bh=T+f91gxuO9fGKuIBIRQsl4h75H5jFHLJDEcTWkjYZuw=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=JaiyP57ncXru7G1xt4tXSVfhB3joyncEZpbks4oBIJuGxnNX6bwiPYFrtSxYcoYrUeCvxGN8iv0zUJT0X+tHIO6+g//PPyhiXSueg4O2gNht7nulFlzh8En/jjZNRzqHo6IwoAw8pzYxfvf4Qvuo5SBBsq5X4nrRusL2xncXsIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EFiQ3Uug; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MOnVquRL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EFiQ3Uug"
 Received: by smtp.kernel.org (Postfix)
-	id 9575BC2BC86; Thu, 12 Mar 2026 14:53:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62066C4CEF7;
-	Thu, 12 Mar 2026 14:53:19 +0000 (UTC)
+	id 8B539C19424; Thu, 12 Mar 2026 16:44:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC520C2BC86;
+	Thu, 12 Mar 2026 16:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773327199;
-	bh=KLNrcDiKpi0gGwJ3TkUjPIXcSveyKJYWxYgWbqkL/Ww=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MOnVquRL8+4h2f2HM8NeMmH87g3kvbHC/mHjKuYcQjTKXVT0nfSg9p91j+z4OOAnE
-	 Jcy+2oiqjWdrKdGrch+PeHKsVAl0ScKgDGaOjnLesB1aXbenat2WsSKMiXv2w360n0
-	 AzrzVohIy6g3j6rrdWkktOSJU29Zu/3lg4DtLMm3cKsZMUsvnnpNXsv1JEHUgqPGxj
-	 n9Wr76zQ+JbR2vyZSnaWF/lkafeSrWWP4Ef/WZ2zZN7VYvsZkMX9U5wWF7U1t0JsHc
-	 ++wfOLB/t5f0A4wpZpTCyCHKLUHMSa3/t3hnFG85TqYan1BCcDIczbNhNU86uiJB3D
-	 rpzXRZr2L86WQ==
-Date: Thu, 12 Mar 2026 10:53:18 -0400
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Mark Brown <broonie@kernel.org>
+	s=k20201202; t=1773333864;
+	bh=T+f91gxuO9fGKuIBIRQsl4h75H5jFHLJDEcTWkjYZuw=;
+	h=Date:From:To:Cc:Subject:From;
+	b=EFiQ3UugxtXE/dndMLFAuoqWgp4OKldfBFDWtei1nYBlZlsV3Gt9PX/u7jLZMT4qZ
+	 F1yPfYVXUUQW7wn0SZFKWfD/ux5k8C5qM1OMnTHenTCxMYlhIU/uTt5PzJzZJgC38U
+	 sPV5gFjOkgXPa+pK7/EJYOsDodPRdrSV+r/T+DMZ0hwDQ36f07v3v7skmZ0CtdyHRk
+	 LzD8yqaG7PW/ABDtf/oUuNxdquAfZkericefRQCF+pUFaHi0QVPZzRji3ZUcHzQtOB
+	 WVkTtKlfciIQ/J16DJoqLIfPaVkyvICa1yWwm+ZajW04R7p5tlhac1aR0/rUt2HoZj
+	 my+i8LuQt4zvA==
+Date: Thu, 12 Mar 2026 16:44:21 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <mricon@kernel.org>
 Cc: tools@kernel.org
-Subject: Re: Sorting of new patches
-Message-ID: <20260312-curious-jade-grouse-03f7d4@lemur>
-References: <121e9897-ee29-4af1-802d-2d2f979ea0fe@sirena.org.uk>
+Subject: Editing commits during review
+Message-ID: <182ee3cb-af98-4602-bddf-a2419e7add18@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="68qvvVRhcvcb05N8"
 Content-Disposition: inline
-In-Reply-To: <121e9897-ee29-4af1-802d-2d2f979ea0fe@sirena.org.uk>
+X-Cookie: I feel better about world problems now!
 
-On Thu, Mar 12, 2026 at 11:49:37AM +0000, Mark Brown wrote:
-> One thing I'm noticing is that patches in the "new" state get sorted
-> after patches that have had their reviews started (just above patches
-> waiting for new versions), this rather buries them in the UI.  It would
-> be good to either sort them first (as they need initial triage) or allow
-> limting by state.
 
-Yeah, every sorting approach I've tried doesn't quite do what I want. I'm
-going to revamp it again:
+--68qvvVRhcvcb05N8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-- list all series in a workable state at the top, sorted by last-activity:
-  new, reviewing, accepted, replied, thanked, etc
-- list all other series at the bottom: waiting, snoozed, gone
-- add a state filter to the "limit" dialog
+Hi Konstantin,
 
-Regards,
--- 
-KR
+I can't see a facility in b4 review for editing commits during review,
+for example to fix subjects or remove spurious tags (Fixes: being a
+common one, lots of people seem to just randomly add them).  There's
+shell mode but it explicitly warns against edits to the commits.  For
+patches that just get applied you can fix up after, but that's not so
+good with the merge strategy.
+
+Thanks,
+Mark
+
+--68qvvVRhcvcb05N8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmy7WQACgkQJNaLcl1U
+h9C4Lgf/bfuoGkkabK8drkuuzJp2Kh/evIQuC+fs9yTEAiAzPwG4OQtx+3E8u9cy
+2Z6Qm0yVxuXcGcyA5VQ01eHejutWSUc+NthUaCTMJgXp7VkwDS/T4p4RKBDSeZcc
+F76HuUXywCue0IQ+l2Q1555k/LoeuANyQ5jEMh7GiR2qPjqEM+zLsAybr5zCeImq
+Uv/I78Q1u1NuzV3R5Az8PlvTqxOZmmngdpQfD6CgouN+K7lFEJdDskPOlQVaym9j
+bVRA9z9YIi9cflD8CWyzNhzzos7ysTecPoSzlhZDYyLPhKDu+bplQ2M8KSm5Ldtk
+zYzq+J9oX8YhY2DiZ1Jt+ew5q3t0Ug==
+=ArBI
+-----END PGP SIGNATURE-----
+
+--68qvvVRhcvcb05N8--
