@@ -1,58 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8969426ED25
-	for <tools@linux.kernel.org>; Fri, 13 Mar 2026 15:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2CA35DA61
+	for <tools@linux.kernel.org>; Fri, 13 Mar 2026 15:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773417155; cv=none; b=u7NHl7NVuGNHFkWufwo3U8eA4qW7f8LcgFgfrLI52jsw8JAQfxHuCXbL8QJOEh1nY/pFPaeQJ72d36rfi8Z/A65DO0bfAkQLA1tORSMczy6RdE9yG/9qrLHTkx7Z99VP3MT0kNC+D80x828l9Y1RbCR12wNSxgj7mvNPH892WuA=
+	t=1773417309; cv=none; b=f8eABYgRJtU+WFa+OBKVPNVfc5fhZugt4MZKPQxPjCRKnhw+IKDhzysDsy6Lt7sDtdNk4ajbmKuZiB1ajzadJqPW5hWjT3ayWp3VWLUcP0aIANAb2TzgfBSPSn424gKHmwHChkcyyoM4UEBcpR6VFz8FdAAzp+CeBN4E1AVb0jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773417155; c=relaxed/simple;
-	bh=cLD4UeOXJEUjkMvUeEZ9aUKn0n85Sd7Thbn1qGBM0uo=;
+	s=arc-20240116; t=1773417309; c=relaxed/simple;
+	bh=Kl4ZLrWUFSiKowtRDY6dbd5qMhdVG+b4ltEEjnfdhXk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k4iGlZLhYkIV7tjDL2IRxRJRh++h7GciVJqF9W/ZXX/CDPuCleA2RpqKPptCYSAJePVtKwcZ08IoD6U18bcuH/JnK3xC09U/llpZEYOmZwhciD01+Q1zqGUOtIBl6DYZxvUAZh470Mi/vzwdIvAdgzG8t1wQd9PQAPRnb9ZUxRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqOmm3A0; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=dLML7fcoMXof9fFOs0iG3P4IRINoOzvNCQLlTYp7NjC9a5eAq37n1znmDwlzEgTFmCkICwtXQ0x8nb7TuyhnrC4ROvZoUc3OHoJgHMTdyaXesb+rpoqQmfFnfPF518isRsd0m9H6L270eL0NlPrJPqUPMlmVjXDgKgM7t0VXRME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Ceb5NfuL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqOmm3A0"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Ceb5NfuL"
 Received: by smtp.kernel.org (Postfix)
-	id 53B74C4AF09; Fri, 13 Mar 2026 15:52:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA18C19425;
-	Fri, 13 Mar 2026 15:52:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773417155;
-	bh=cLD4UeOXJEUjkMvUeEZ9aUKn0n85Sd7Thbn1qGBM0uo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XqOmm3A0UZs9o+49rm7NCPNLl6y2BgofzBQ/MVdHloql3+txX9ZVv6nIClHxFk7D0
-	 NxcnY6lKcEMxCqba0hVKiM+eb5ldNI4tGaTnjM5MliA8h9J3pZ6UQkctN7+z79HObz
-	 E3+AUjS96c53npC+NNUFW0NFVEnBwWvYXdq7mx7I=
-Date: Fri, 13 Mar 2026 16:52:30 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-kbuild@vger.kernel.org, linux-kselftest@vger.kernel.org,
-	workflows@vger.kernel.org, tools@kernel.org, x86@kernel.org,
-	Thomas Gleixner <tglx@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Cyril Hrubis <chrubis@suse.cz>, Kees Cook <kees@kernel.org>,
-	Jake Edge <jake@lwn.net>,
-	David Laight <david.laight.linux@gmail.com>,
-	Askar Safin <safinaskar@zohomail.com>,
-	Gabriele Paoloni <gpaoloni@redhat.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Ingo Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 6/9] kernel/api: add API specification for sys_close
-Message-ID: <2026031321-steadfast-fang-ba42@gregkh>
-References: <20260313150928.2637368-1-sashal@kernel.org>
- <20260313150928.2637368-7-sashal@kernel.org>
+	id A65CFC2BCFB; Fri, 13 Mar 2026 15:55:08 +0000 (UTC)
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 2CBB6C19425;
+	Fri, 13 Mar 2026 15:55:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 2CBB6C19425
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 5B2A51A2E04;
+	Fri, 13 Mar 2026 15:55:03 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 2870860027;
+	Fri, 13 Mar 2026 15:55:03 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 4831C10369BC8;
+	Fri, 13 Mar 2026 16:55:02 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1773417302; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=3hGGJp4RXGa4H4dnUV+AsCY4JG2u9AAuhHPHwLgXQJc=;
+	b=Ceb5NfuL/tTQrveK6hLZ4Zm+PDSrD6H0FdDBKvs6NjI1xAZdiD4LMBopI9jMvyy+wDSWfQ
+	W42P1MQtL7zp9fLwth+IJo0KZc7u+uEpe43rsKq+a1BOSGjzsdEgLAOoFBcVOC/nBT1r3H
+	KfupDNH44XddVB15JL3sn5zF62GzFGIdXJmA6zj3NbZydZWjwnbbLsgA8J8GakhGxmo4gF
+	Q/6FD6Zjf02h8suHRP35ccFd9fYMfDqRDhjHIbtXTzJlxUQPbvtGMpCM9c0X/jmDVOy6JS
+	8FsXgkVJdp8n7ONNzdA2fSFljkSYucVIkx443Zwwtm9LKHXnJy6DP8TcGf7oYw==
+Date: Fri, 13 Mar 2026 16:55:01 +0100
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Konstantin Ryabitsev <mricon@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>, users@kernel.org, tools@kernel.org
+Subject: Re: b4 review available in master
+Message-ID: <2026031315550105db2cc0@mail.local>
+References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
+ <aaMPYVIgmsDpn7Rw@sirena.co.uk>
+ <aaNaArEgAe0SgmSh@sirena.co.uk>
+ <20260302-juicy-spoonbill-of-jest-6fc659@lemur>
+ <e7d999c0-c27f-4d9d-8812-9ff3254ea7cf@sirena.org.uk>
+ <20260303-true-glaring-raven-e78bf2@lemur>
+ <20260312172156f5cb4041@mail.local>
+ <20260313-poetic-mosquito-of-sufficiency-2b8a86@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -61,32 +63,33 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260313150928.2637368-7-sashal@kernel.org>
+In-Reply-To: <20260313-poetic-mosquito-of-sufficiency-2b8a86@lemur>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Fri, Mar 13, 2026 at 11:09:16AM -0400, Sasha Levin wrote:
-> + * notes: This syscall has subtle non-POSIX semantics: the fd is ALWAYS closed
-> + *   regardless of the return value. POSIX specifies that on EINTR, the state
-> + *   of the fd is unspecified, but Linux always closes it. HP-UX requires
-> + *   retrying close() on EINTR, but doing so on Linux may close an unrelated
-> + *   fd that was reassigned by another thread. For portable code, the safest
-> + *   approach is to check for errors but never retry close().
+On 13/03/2026 11:42:12-0400, Konstantin Ryabitsev wrote:
+> On Thu, Mar 12, 2026 at 06:21:56PM +0100, Alexandre Belloni wrote:
+> > > Let me know if that's not sufficient. We can also give a way to hide skipped
+> > > patches so they aren't even in the picture.
+> > 
+> > This worked for me but thank-you still tried to thank for all the
+> > commits of the series.
+> 
+> This is fixed in the latest master.
+> 
+> > Also: I used cherry-pick, would Linear work?
+> 
+> It always uses linear for cherry-picked commits.
+> 
 
-We don't care about HP-UX :)
+Thanks!
 
-> + *   Error codes from the flush callback (EIO, ENOSPC, EDQUOT) indicate that
-> + *   previously written data may have been lost. These errors are particularly
-> + *   common on NFS where write errors are often deferred to close time.
+Maybe I should start a separate thread but since some time ago, b4 is
+not able to change patch state on patchwork.ozlabs.org. I attributed
+that to how they implemented anubis but b4 review is able to get the
+patch list. It is simply not able to update the patch status. Are there
+any logs that would help you?
 
-What flush callback?
-
-
-> + *
-> + *   The driver's release() callback errors are explicitly ignored by the
-> + *   kernel, so device driver cleanup errors are not propagated to userspace.
-
-What "The driver" here?  release() callbacks aren't really relevant
-here.
-
-thanks,
-
-greg k-h
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
