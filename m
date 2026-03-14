@@ -1,65 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E40E317164
-	for <tools@linux.kernel.org>; Sat, 14 Mar 2026 04:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823DD3A1CD
+	for <tools@linux.kernel.org>; Sat, 14 Mar 2026 18:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773462049; cv=none; b=gmh8sLSRVXM57fNrGdPkI1RKVO6dP0BJziTyccEwBaBAji2u4GidpLgM8Dy88TiX+RoXpwdssgWIipOiv1F+vcPKaD0FDG+1CS09wP7QBPnt5kp3gVhdgTLoEhNr5Ud1aVAZweKXvbOPuGuo4KXZqemLcj5zmjFdAhtOLnF8rms=
+	t=1773512304; cv=none; b=GwULPmlR3pl6Y4vCIHYxY0eMr8hzMmlwb+wXn2DMyAWcd5uDPWb8VighXw1QARQYZNFoTGPWbCB5E6Rkw902ZWKHDfBomDCplJ8wqVEwXQykr+ME8cYqkjLHvTY2UsKdPTlNwBhsROVH5CHl0LQjhoC8pXZ+JxxPkVHX2Xn5Ac8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773462049; c=relaxed/simple;
-	bh=K/bSlFpZaGns2rkPYOLiU/2Fk2GlAZZwVtiqL/IwEpQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U/IrQDCCKC9B6/s7fh4bhn1FBQw0k+QFTGiXOaGvJu3MlZFwUnxjsl/Fh96pI/ng6hGOogUTXf6aViqiXKPN6a1nJWLg4AYrTeqH6AWR5uo/8vEEnWT/2WGuTTQan0XYWAuBVW6xuOBxFAHGhP8e+WWmYH8CZQ1Ixv/oyconfb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CTUVyTFj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773512304; c=relaxed/simple;
+	bh=68Bjyoi3gtdErelVO/sN0br35R51BTPCrE2rCbJxO44=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=H1L36lQA72nGGy59SXGouwXW1OguRaAIcZaplBGYWLrYzhw53qGv6b7AnS7vKmR6loksuSnw1XVxDGq/2nHjbMTlFINOubTZAGNobFEZnaMFFidr1pCKWvjkUAuH+Quj/cjRybjzFhxM/PmOZT4Jo5NIAJa29QZEIQIUs2SmpI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ljmQoDo6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CTUVyTFj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ljmQoDo6"
 Received: by smtp.kernel.org (Postfix)
-	id 10FD5C2BC86; Sat, 14 Mar 2026 04:20:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C711DC116C6;
-	Sat, 14 Mar 2026 04:20:48 +0000 (UTC)
+	id 51E59C2BC86; Sat, 14 Mar 2026 18:18:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00466C116C6;
+	Sat, 14 Mar 2026 18:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773462049;
-	bh=K/bSlFpZaGns2rkPYOLiU/2Fk2GlAZZwVtiqL/IwEpQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CTUVyTFjIa8hf6A5eYM2INkq7Je+9TO9CxB3eq71yDOueHoInGqTjvGuEP7QXm/co
-	 WqeVCCBFqdDZWpUybzekjuUKuUUYbcz/JnvKlrEU4OHDLzD3d5rm1K1Z4prYGasswM
-	 fHXdBriTihWOaQcWVEPxxq2uj3D1tx9xq/5gH2q9rbSCi7KPi0HGRoxuDVEmHzOx0f
-	 QMnAUh8w9S6AhysrJlfxTe4x5bz2Uq4tPu3Gw62abtU4pQYHRb0m7xQO0IhndHNNbl
-	 Y9Xw+AHcGeehFU+UjBi63iDPWjL3yNTVMnXbj8mAG5OebslmCTj+RBzW4L9vdVIRcm
-	 1+Zx52AcavVOg==
-Date: Sat, 14 Mar 2026 00:20:47 -0400
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: users@kernel.org, tools@kernel.org
-Subject: Re: range-diff hangs
-Message-ID: <20260314-bouncy-lilac-mammoth-d6e6eb@lemur>
-References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
- <20260304-courageous-deft-skylark-a16e39-mkl@pengutronix.de>
+	s=k20201202; t=1773512304;
+	bh=68Bjyoi3gtdErelVO/sN0br35R51BTPCrE2rCbJxO44=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=ljmQoDo6+8N5qariNMP+lxBxK9JyF7T0M+fUn2PH5u1KxLF9wwqV4xeYeOD9teSUI
+	 0vRosx7dOI9CiCAb440Az7+OWWQgJXPXB9o73UyHwNLk7jTd7Kvb44zSI5Yg+eqMih
+	 Z4tqWM39rhUqviuVVfoBB7EyeE0f3aG67KuYz81hK+3HV3pD1sKJ9fHwr2ySEXA8Dt
+	 YZd9LQ+Y+G938tznqGltVQiP8SgiEHeMISaghcdU4Wy2FDoHlP0RKyN7bgzEngnDGT
+	 XqYkaEvqCd3epEpoGm0D8oEqQJV/9aal++4UMS4E34uFBDZgv/yPrLkytWT8aFAwbH
+	 iemdxGuEO1zJQ==
+Date: Sat, 14 Mar 2026 11:18:22 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-kbuild@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ workflows@vger.kernel.org, tools@kernel.org, x86@kernel.org, Thomas
+ Gleixner <tglx@kernel.org>, "Paul E. McKenney" <paulmck@kernel.org>, Greg
+ Kroah-Hartman <gregkh@linuxfoundation.org>, Jonathan Corbet
+ <corbet@lwn.net>, Dmitry Vyukov <dvyukov@google.com>, Randy Dunlap
+ <rdunlap@infradead.org>, Cyril Hrubis <chrubis@suse.cz>, Kees Cook
+ <kees@kernel.org>, Jake Edge <jake@lwn.net>, David Laight
+ <david.laight.linux@gmail.com>, Askar Safin <safinaskar@zohomail.com>,
+ Gabriele Paoloni <gpaoloni@redhat.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Christian Brauner <brauner@kernel.org>, Alexander
+ Viro <viro@zeniv.linux.org.uk>, Andrew Morton <akpm@linux-foundation.org>,
+ Masahiro Yamada <masahiroy@kernel.org>, Shuah Khan
+ <skhan@linuxfoundation.org>, Ingo Molnar <mingo@redhat.com>, Arnd Bergmann
+ <arnd@arndb.de>
+Subject: Re: [PATCH 0/9] Kernel API Specification Framework
+Message-ID: <20260314111822.63a2ba4a@kernel.org>
+In-Reply-To: <20260313150928.2637368-1-sashal@kernel.org>
+References: <20260313150928.2637368-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260304-courageous-deft-skylark-a16e39-mkl@pengutronix.de>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Wed, Mar 04, 2026 at 09:56:35PM +0100, Marc Kleine-Budde wrote:
-> On 27.02.2026 14:53:07, Konstantin Ryabitsev wrote:
-> > TLDR: "b4 review" is a terminal UI that hopes to streamline a lot of
-> > maintainer duties. A getting-started guide with screencasts is here:
-> > https://b4.docs.kernel.org/en/latest/reviewer/getting-started.html
-> 
-> I'm using b4 v0.12.0-419-g18f8fdb27a22 and a range diff "hangs":
+On Fri, 13 Mar 2026 11:09:10 -0400 Sasha Levin wrote:
+> This enables static analysis tools to verify userspace API usage at compile
+> time, test generation based on formal specifications, consistent error handling
+> validation, automated documentation generation, and formal verification of
+> kernel interfaces.
 
-> | $ git config get core.pager
-> | diff-highlight | less -RFX -x1,9
-
-I believe we should be handing the | in the core.pager config now, but please
-test out the latest master to confirm.
-
-Regards,
--- 
-KR
+Could you give some examples? We have machine readable descriptions for
+Netlink interfaces, we approached syzbot folks and they did not really
+seem to care for those.
