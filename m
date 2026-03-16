@@ -1,56 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB72326927
-	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 18:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A63B33A6F9
+	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 18:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773684052; cv=pass; b=jPe+E26uiKVaLTtE1tuuDTpNOlpWAIrHaeOzEPUOO8jod9coLLum6PUJZgzpDPAjxVFX6ifz7vekuJOjgdXgaTa3oDi3oDKpUmOa6KYufmdBr6fis2mqJcY3KlgEPsqrZXJRN3Q/A75fUOrbU+GGETUP3vU4dkshwFZeRgxylm8=
+	t=1773684056; cv=pass; b=pemHsO/zr7gU6Sb+/K5tScMgrokek+/XnPSGx9ju8CdXgqixeZUmv4URcJ2nvB0IUNbzIdpgxsyWwmQwkia30Og+zHlnTIkeoynutb9ZFgNwWSx1/m1jRJtaloJD0oDNAH6HSI2EZIOqwU/R89nglEgbUzucWdF2edjkNG2OMdY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773684052; c=relaxed/simple;
-	bh=Yvmj6/lFPX1kwSwqzxi/7xS6XkDvi0OZn0fPTXuGQ8s=;
+	s=arc-20240116; t=1773684056; c=relaxed/simple;
+	bh=6reXH8/fO1Sn8RfWi9jWe1joVxJWmlgFbpNRq3hio3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FlenaLj+deo3SrQd78iE467nPxZ1Zc+8cE8Kjcix9FLe4r2QKQ5+XZ45YONMiH9sEXWIzMI1GwMFM21VYP4PKHb0ukNJVs6HzVxcoCTrJhsmXOo2Rlj6/gdwC12jbN6MUZD/ck6YmGHVQ+gYZ8ANdu5dx8/yeTY2sZWSlOJR2LI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b=ajhiDyG2; arc=pass smtp.client-ip=10.30.226.201
+	 MIME-Version; b=puEcugrL8b2NAzeZS8yCbaRcji5sQB8QcvsaZ/R2O1gLiUPUhIya8EN2TGDcemjCklE4Tlvdnf6VPQNwYvfQNpR5svfzrz13mYDx/i+3HXYkBQal3EhsnAqQxxyHCOSiKOHuz8thLOubELoWg42kXT3cxkG/21Z0fNs6RxSPtW4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b=YDtXcb/E; arc=pass smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b="ajhiDyG2"
+	dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b="YDtXcb/E"
 Received: by smtp.kernel.org (Postfix)
-	id CCB23C2BC87; Mon, 16 Mar 2026 18:00:52 +0000 (UTC)
+	id 52B60C19425; Mon, 16 Mar 2026 18:00:56 +0000 (UTC)
 Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id B8195C19421
-	for <tools@kernel.org>; Mon, 16 Mar 2026 18:00:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org B8195C19421
+	by smtp.kernel.org (Postfix) with ESMTPS id ECFE4C19421
+	for <tools@kernel.org>; Mon, 16 Mar 2026 18:00:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org ECFE4C19421
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=ritovision.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ritovision.com
-ARC-Seal: i=1; a=rsa-sha256; t=1773684046; cv=none; 
+ARC-Seal: i=1; a=rsa-sha256; t=1773684047; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=YzsDuG0qkalrRyrvrFgXVdNpB0e/gaxFuRT/aFTmWNM3CKzlvgNFe1I7aTa7NiAbEr9IRkQ060vHKF9WY3679MuHJO02UNSEKXgyoc7xkL6MUL+AafA8/XIw+GqS9+pr+pNHjaTnkQ8Y8r9QsPtfsS+HQuyvl7DBjX7ISAzzW/c=
+	b=jSW/bdzmGtSuVqTI9mM1zMBBsQ/omjWnI53qELG0+vzEA6M9rsGYfoJbKfsoOwGPFWmtbUxqppoNoGwb7Sor5ElGtkErOYeRD9ijVQwKs1mhW5Ra3ZQn0ybD6+J688XsQ53q+Dd9WllokDyJedQF7Fa0mMXaFMbjhnOpJLyDI94=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1773684046; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=zAby+houxlWUbhFri9ceBbVoGBjAAvvqar9AOJdsKQo=; 
-	b=SK0cKyoQO6ix6jht5jJmYeVDZ4n5zc9Du9dNEGUp4ve01bxGJGRFbhREq4iKD6asGY43i7G0EfXJ8EjefQPHvocTIU3rDwZbBFodRub4teyIh71IssKzCty+lS8AfHyDyjjn6GZ4duxCYRCSO0NN+nb98e4NJfvWDYtRsWuEUws=
+	t=1773684047; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=H7FvGX0UiGC9jqFP438CACFR+UIguTb5q6aCytJ46oY=; 
+	b=do6QTOixTtQpA/tEuEoxk/FjWxYJ9JzzFI5zkSBtHfHd/Vtg4NfnyYv6JEgjXfz6E5DUANlyNuRX+HGRu3l+daVAMgPuqlRLosL7SyDD1gfL6ZluTuki4/irxmGbdHzngvO8CJ3TSivprOkYQk+9QdST6L2ttGjWu8wImoebGes=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=ritovision.com;
 	spf=pass  smtp.mailfrom=rito@ritovision.com;
 	dmarc=pass header.from=<rito@ritovision.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773684046;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773684047;
 	s=zmail; d=ritovision.com; i=rito@ritovision.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=zAby+houxlWUbhFri9ceBbVoGBjAAvvqar9AOJdsKQo=;
-	b=ajhiDyG25l7ElTU4jDyzq6YI8B+TM+yYgsuO6rW6RS19gRIyd8K4eLJ+k5LOV+mo
-	v5BRAeLrN9bSTxTJuzvMAshLGh4cL9idPxdwPjtpxQhoGgL/PqeU5wWFkNb4uuxl3ze
-	lwsTMCCCksrSLPQrTiTaHDi/6DWoykAt9p6Y/TgM=
-Received: by mx.zohomail.com with SMTPS id 1773684040718980.7511609668184;
-	Mon, 16 Mar 2026 11:00:40 -0700 (PDT)
+	bh=H7FvGX0UiGC9jqFP438CACFR+UIguTb5q6aCytJ46oY=;
+	b=YDtXcb/E3rs6U0yG0nHspITzltsrrN5w1RgpoMGZeegr43iHRU7ILwsqBHi0LfeB
+	/Y+ybtpaKWuaFOX1tc0wtKAVquPowj6X+6oWePxB3x+SR84vfiEV3loT+68L1hHlT22
+	TQNkxylRAtelXQF1PZ274IWrIZ3a47CmxbQbl5wo=
+Received: by mx.zohomail.com with SMTPS id 1773684041282349.7087327035093;
+	Mon, 16 Mar 2026 11:00:41 -0700 (PDT)
 From: Rito Rhymes <rito@ritovision.com>
 To: tools@kernel.org
 Cc: rito@ritovision.com
-Subject: [PATCH v1 4/6] add responsive extras and footer layout adjustments to contain overflow
-Date: Mon, 16 Mar 2026 14:00:34 -0400
-Message-ID: <20260316180036.71949-5-rito@ritovision.com>
+Subject: [PATCH v1 5/6] contain horizontal overflow in core content and homepage releases layout
+Date: Mon, 16 Mar 2026 14:00:35 -0400
+Message-ID: <20260316180036.71949-6-rito@ritovision.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260316180036.71949-1-rito@ritovision.com>
 References: <20260316180036.71949-1-rito@ritovision.com>
@@ -63,121 +63,64 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Below 848px, fixed-width extras and footer blocks overflow the page and
-create page-wide horizontal scrolling that breaks layout.
+On narrow viewports, fixed-width content containers, homepage release
+sections, and long preformatted strings can force page-wide horizontal
+overflow.
 
-Make extras and footer sections responsive by switching extras to
-wrapping layout, stacking blogroll/social blocks to full width, and
-relaxing fixed heights/widths. Update donors to wrap logos and hide
-manual <br> breaks so the sponsor area reflows naturally on small
-screens.
+Realign #protocols and #latest for narrow screens so they do not
+overflow and can wrap down as needed to fit.
 
-Add 550px and 400px refinements to progressively reduce
-blogroll/social column counts (3 -> 2 -> 1), preventing overlap and
-preserving readability as viewport width shrinks.
+Make #releases scroll within its own container, and keep release-date
+cells readable on mobile with nowrap and horizontal padding.
 
-This patch is intentionally limited to extras/footer behavior; content
-and homepage table overflow handling are addressed separately.
+Allow preformatted blocks to scroll horizontally within their own
+region instead of expanding page width and creating page-wide
+horizontal scrolling.
 
 Signed-off-by: Rito Rhymes <rito@ritovision.com>
 Assisted-by: claude-opus-4-6
 ---
- korgi/static/css/main.css | 84 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+ korgi/static/css/main.css | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
 diff --git a/korgi/static/css/main.css b/korgi/static/css/main.css
-index 19ee328..d20d8b6 100644
+index d20d8b6..16d97cd 100644
 --- a/korgi/static/css/main.css
 +++ b/korgi/static/css/main.css
-@@ -360,4 +360,88 @@ dt {
+@@ -360,6 +360,33 @@ dt {
      #banner li {
          padding: 0 0.5em;
      }
-+
-+    #extras {
++    #protocols {
++        margin: 1em 0;
 +        width: auto;
-+        margin: 1em;
-+        display: flex;
-+        flex-wrap: wrap;
-+        gap: 1em;
 +    }
-+    #extras > div {
-+        height: auto;
++    #latest {
++        margin-right: 0;    
 +    }
-+    #extras > .blogroll {
-+        float: none;
-+        width: 100%;
-+        padding: 0.5em 1em;
-+        box-sizing: border-box;
-+    }
-+    #extras > .blogroll ul {
-+        display: flex;
-+        flex-wrap: wrap;
-+        gap: 0.25em 1em;
-+    }
-+    #extras > .blogroll li {
-+        width: auto;
-+        float: none;
-+        flex: 1 1 30%;
-+    }
-+    #extras > .social {
-+        float: none;
-+        width: 100%;
-+        padding: 0.5em 1em;
-+        box-sizing: border-box;
-+    }
-+    #extras > .social ul {
-+        display: flex;
-+        flex-wrap: wrap;
-+        justify-content: space-between;
-+        gap: 0.5em;
-+    }
-+    #extras > .social li {
-+        flex: 1 1 30%;
-+    }
-+
-+    #contentinfo {
-+        width: auto;
-+        margin: 1em;
-+        padding-top: 2em;
-+    }
-+    #donors {
-+        display: flex;
-+        flex-wrap: wrap;
-+        justify-content: center;
-+        align-items: center;
-+        gap: 1em;
-+    }
-+    #donors br {
-+        display: none;
-+    }
-+    #donors img {
-+        max-width: 120px;
-+        height: auto;
-+    }
-+}
-+
-+@media screen and (max-width: 550px) {
-+    #extras > .blogroll li {
-+        flex: 1 1 45%;
-+    }
-+    #extras > .social ul {
++    #releases {
 +        display: block;
-+        columns: 2;
++        overflow-x: auto;
++        -webkit-overflow-scrolling: touch;
 +    }
-+    #extras > .social li {
-+        flex: none;
++    #releases td:nth-child(3) {
++        white-space: nowrap;
++        padding: 0 0.75em;
 +    }
-+}
-+
-+@media screen and (max-width: 400px) {
-+    #extras > .blogroll li {
-+        flex: 1 1 100%;
++    #featured,
++    #content {
++        width: auto;
++        margin: 1em;
++        padding: 1em;
 +    }
-+    #extras > .social ul {
-+        columns: 1;
++    pre,
++    .literal-block {
++        white-space: pre;
++        overflow-x: auto;
 +    }
- }
+ 
+     #extras {
+         width: auto;
 -- 
 2.51.0
 
