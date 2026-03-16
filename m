@@ -1,79 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFF83D88F6
-	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 18:18:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773685086; cv=pass; b=Y05FDSBpg1TDhE3c3OfpyVbHBAV4XWVJjyObgIzngxJ6vXCEKWgsq0McvKJZwDiR2vZg39uSDkpZ877iXR/aIyCe+l4dO3ChyLnbJFnZ8EXjMZhFETagvE1CA7j6+9sVCO+P3Qsg+MEHejCMYrG1TB7sRIayOZLTMVbgDSmN25o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773685086; c=relaxed/simple;
-	bh=d2PTXArNM7fZe7wpr9CU88axHqcZvUTIZRzi/bqrsz0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=p+mXDLnS8AXqKLoVJ+u98KeSrvT6efEuHaZy/KkSSLIRZZP9VbQKBdishVyfm6VlDVX59NFMktnr4CQOsp/eC3wd4FoJJtTo/ScUvn2R4hcs5EoxpGyvGZct0HStt0Z3aeZKO2iCpBbMT3D/drTPgpJCCvN3nTJmOnZApW5AO50=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b=U8MGcSxD; arc=pass smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F723D8124
+	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 18:19:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773685163; cv=none; b=elqX5k+k8mxYzOhG4FT8MrEKv0CAfcb5+7WhV4CDsJC74I3QUNiMN0qPzjVegQwvzKcShPVFBaHAr5seQmCqAPRLz71AQ8Ijb8pFknxA1fVDQmzNRN2oO6sO7Gxgp2VvGnGvNyxtk00Bp8IqhGivdJ+z//mS9UWJhd+rf4k+9uo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773685163; c=relaxed/simple;
+	bh=tFVWICphP6wEqMQITPgqemXIVkgWQSLG5h4IEmNRPyk=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=GC4/zbVawWSFXxvhM3S9J8CNQJ1B8pagzT65xvROo0Lu1txrmAZn/jXyCpUt4FUO1UurA7JwK/PduIUx5vdFTYHRmF5mi8RBhPNIVnir/VMaLLnlOF3ppoRUVS5lAQp1qF9u3WnqOZrnLyh+79w6W5e52wpuvJ2aFLPP7+Q56r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IuzOa5XT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b="U8MGcSxD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IuzOa5XT"
 Received: by smtp.kernel.org (Postfix)
-	id 9C333C2BC9E; Mon, 16 Mar 2026 18:18:05 +0000 (UTC)
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 894ECC19421
-	for <tools@kernel.org>; Mon, 16 Mar 2026 18:18:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 894ECC19421
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=ritovision.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ritovision.com
-ARC-Seal: i=1; a=rsa-sha256; t=1773685081; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=DvIbqxEfz3QjiedbXwmeK9GPLEfXSwCvm20NIvtUgKTYh9F+/vEPLWrbZ0DYoG415h9CXeS/xumalEfU/hlaOsqDUV1i7mAs4ZJeLTwrLXYbKja4utvn3AP2W/3HjHb/sPR0dg5fGs96kCO9p2c+poe8no9yjimeFur+CzhqVEw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1773685081; h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=MQI7cFh8Wo8JdJN1fE2mZlN15LuHQadP3uGB1cQ28vY=; 
-	b=Q8kFOrJN8gifBQiAkqB6BKvKONN2fiXuKMVu1YIG5ccL7dQOPd3f9yFsGBW+E+zMu6qDekfiNjewdWu5JGn3Q0iHb+ZKC+HjRCUx351XB3ylxNZVekxGrv521WbYKtIPd9114Amp2KEQSVl5zSu9NmIDvlkk7SSYZakNHKFGBgg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=ritovision.com;
-	spf=pass  smtp.mailfrom=rito@ritovision.com;
-	dmarc=pass header.from=<rito@ritovision.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773685081;
-	s=zmail; d=ritovision.com; i=rito@ritovision.com;
-	h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Date:Message-Id:Message-Id:Subject:Subject:From:From:To:To:References:In-Reply-To:Reply-To:Cc;
-	bh=MQI7cFh8Wo8JdJN1fE2mZlN15LuHQadP3uGB1cQ28vY=;
-	b=U8MGcSxDuDlRf5d2ZBeE3SkUeCBQFlbjCevpEQZcNQb89N7Lv7l6S/DGa6Fylwlz
-	VViXgdyXB1ycbk5xOHsE7czZkvmIFPOfNDHToLj1sZitqV2gR/ETokXZRUibCVxFvte
-	wqZ5BjjE/cb5z1zgYLHiIBVSVpdmjIBq+uVqVuVE=
-Received: by mx.zohomail.com with SMTPS id 1773685078648215.15923407780429;
-	Mon, 16 Mar 2026 11:17:58 -0700 (PDT)
+	id 8B9F6C2BCAF; Mon, 16 Mar 2026 18:19:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EB0C2BC87;
+	Mon, 16 Mar 2026 18:19:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773685163;
+	bh=tFVWICphP6wEqMQITPgqemXIVkgWQSLG5h4IEmNRPyk=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=IuzOa5XTuak6pzHZ14zSJDu7NgTMPuuOV43KanerRcBiSO3yQ/Zn9Fioelw66zPT6
+	 uuhBZM6EkwpC2TeCve+VhTFe57Pc1n2UER724Nv6OApm5EYN1GizEd8OgRpX1aYyge
+	 1fpmTfmi1Tl75proZzKYQUNR8uWza268uBNER+qk2rM2LDjKjp2BmKzktVe2muNvyB
+	 ToH5W+TAPsHPGjrWVAENAyYQp7U0d7c4s2KGZM+r/MuaR0C+Y66fb+qTAjxtq1gF5y
+	 N49jURy1Isq8K+hAgWCG7kecSeYNdPqMYGpFLkXAkNKxAL6mTgKycP4qHjR4CXlI5G
+	 Mt1X44XbjJCug==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 7FD9A3808200;
+	Mon, 16 Mar 2026 18:19:17 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 16 Mar 2026 14:17:56 -0400
-Message-Id: <DH4EVVGAKR15.1KVL1RYGQCI67@ritovision.com>
-Subject: Re: [PATCH v1 0/6] Allow site layouts to render properly on mobile
- devices
-From: "Rito Rhymes" <rito@ritovision.com>
-To: "Rito Rhymes" <rito@ritovision.com>, <tools@kernel.org>
-X-Mailer: aerc 0.21.0
-References: <20260316180036.71949-1-rito@ritovision.com>
-In-Reply-To: <20260316180036.71949-1-rito@ritovision.com>
-X-ZohoMailClient: External
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: B4 Bugbot <bugbot+b4@kernel.org>
+To: broonie@kernel.org, konstantin@linuxfoundation.org, tools@kernel.org
+Message-ID: <20260316-b2294e57c2-11bdae01d784@git.kernel.org>
+In-Reply-To: <aa4a44c9-7fee-4dd3-aafe-dca46c7038d0@sirena.org.uk>
+References: <aa4a44c9-7fee-4dd3-aafe-dca46c7038d0@sirena.org.uk>
+Subject: Re: b4 dig not finding commits due to alternate sender emails
+X-Git-Bug-Id: 2294e57541dec0d11c1b7f3180cbfa6c99c96f317431397405859c7a775742f0
+X-Mailer: bugspray 0.1-dev
+Date: Mon, 16 Mar 2026 18:19:17 +0000 (UTC)
 
-Also, I have a live demo of the rendered result here:
+Konstantin Ryabitsev writes in commit c43341f9442fd3d315302de9d8c99eb7b6928838:
 
-https://kernel.ritovision.com
+dig: search for in-body From when author email doesn't match
 
-For transparency, the demo includes two elements beyond the exact
-patchset as sent:
+When a patch is sent from a different email address than the one
+recorded in the commit (e.g. personal gmail vs. corporate address),
+the author+email search fails to find the patch on lore. Add a
+fallback that searches for the in-body "From:" line that git-am
+writes when the envelope sender differs from the patch author.
 
-1. a static recreation of the homepage releases table to demonstrate
-   the CSS changes to it, since unofficial builds / dry runs do not
-   include the live one
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://msgid.link/aa4a44c9-7fee-4dd3-aafe-dca46c7038d0@sirena.org.uk # 2294e57
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Assisted-by: claude-opus-4-6
 
-2. a mobile menu drawer UI that is a follow-on patch and not part
-   of this series
+--
+Deet-doot-dot, I am a bot.
+b4 bug tracker (bugspray 0.1-dev)
+
