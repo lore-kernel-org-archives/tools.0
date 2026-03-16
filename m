@@ -1,84 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBFC2C031E
-	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 15:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F151C2324
+	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 17:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773675426; cv=none; b=IMaDQctw+Ajq6RPAxdWJGgOmuL5U5bt1B+gBGzONdvT5AFM5spqLdJ1f3ide/Hwi/flxzOWAmRTKq+AKHrRTskuM1xLsqXqkQJvFXfEXRnyT+slo+3QKQwn5IjaJME3XYoqUZz9qwMsN+U/YOWs/iY9eV2RzzmXb9qo9JQv/62Y=
+	t=1773683341; cv=none; b=VnICU1Jq8+X+4XFPbrCxByW7ryUAl73R4do9uKvDXiiJjd1JXBYe9MpA5I8JlAzs2nUywpzYBdzjUOyklHIB9yDYrJ9hN9x5j/2eTDoSy+s6CMIono2QRQcEqFqqwYQEltJ2JZVQUoqC2R8/B1Xazc7IkSs3ZG+WuYLYlLAtLz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773675426; c=relaxed/simple;
-	bh=TS/oXd5oUVLCBNc7RS1+ohknXPeipwrKV5M+VcHBS5s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JJMofiGFslNmikAYbk2x14LNGv5D/HQS2wc7B5PaDWgIhjajsACqoX5Vau8QqWhZ2VapstadKUskjppnqUDpKnL6pETBhxmwZEzOoMS7gNMj8NL9Elzv5dsYDz4praO7NGLQTirlW8A1spZz3iKu+qvL+BW8UPSMuNFFqi26XgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PsnRJfkf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773683341; c=relaxed/simple;
+	bh=OV5PSYinO7E/pRPZW/R8Z5osPDBixJipUods773w00k=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=AFwhxE7QC3azLF3G7LFbbFGMSCwN9o1Sv2DjmB1HzhdGDQlByQSJeG2xlIg7ZgNtPbXjJSGeW5lQTwHWP2ddFSCKh//iR1Lf97qH28uM3VoG8t2AWglArkSURzDEfxUMkJUjHFYM/gX0/Vzl2GIftfeoHI1QGSETOE8UfN1EvKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UmYzbRpy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PsnRJfkf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UmYzbRpy"
 Received: by smtp.kernel.org (Postfix)
-	id 1907DC2BC9E; Mon, 16 Mar 2026 15:37:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0342FC19425
-	for <tools@kernel.org>; Mon, 16 Mar 2026 15:37:05 +0000 (UTC)
+	id 17CF7C2BC87; Mon, 16 Mar 2026 17:49:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE712C19421;
+	Mon, 16 Mar 2026 17:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773675426;
-	bh=TS/oXd5oUVLCBNc7RS1+ohknXPeipwrKV5M+VcHBS5s=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=PsnRJfkfIg4el2W48vt8Rkz5sZ4imxUGr72fl9XxpBbdo1/f8lm61DAKJm/9yF5/s
-	 gAVRQFfUolSG2tU76T/rDuDA1n8tobgLvvPl1WxHwJhbkbXkrO5tMfvEEUCawgPxz8
-	 F3TuctSu+j8vMte7Nz311GVIBYpRgxJ7k3SBg2m6d8Ky915b2HERjSKTRxygj9GCGw
-	 6A+QO8Ux4zhucx6FUwKTrEkE9YScbIoqm6OSdVOgqFZmytmE2khvfEAE5P4IO/v/7s
-	 mozhDlS8103lgBn7PBa9w+/+q1cbpauC2koX/vz5ukyqIPXzQXy2aBh3pgHlVB2lpA
-	 47jJUbtA10wyA==
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-38a3225d59fso35308101fa.0
-        for <tools@kernel.org>; Mon, 16 Mar 2026 08:37:05 -0700 (PDT)
-X-Gm-Message-State: AOJu0YwtaPpHPSqQZkPXDEQ73gyxe5UN+ctM/jFXa6lxNWvY6D0tzkUY
-	C0uNOIiXjeUmM77/jLk/twSqyiMgV43aY14Gr3I0suK37VHLd5O31r+wo0AqG4rHdiPuLimGhKF
-	LZp6PHvL6RVjpFJj2Eq8qiu0iAYcBm0U=
-X-Received: by 2002:a05:651c:41c5:10b0:38a:4106:5147 with SMTP id
- 38308e7fff4ca-38a89671253mr32750241fa.14.1773675424633; Mon, 16 Mar 2026
- 08:37:04 -0700 (PDT)
+	s=k20201202; t=1773683341;
+	bh=OV5PSYinO7E/pRPZW/R8Z5osPDBixJipUods773w00k=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=UmYzbRpyOYfu55ZrWImDgZYo4oYhvUF/XiorULcs5OCgRxSbmqCUduTksQFu2fYV5
+	 WKFyD2JjFTENVQTao+YGl8thnILExqv72zxBJJixkXsaqr4iviW4D3qN5Cb6nXCY95
+	 UEDzmutDma2wUA0JMI0wJOUyK9SZ4X5UMMxyrK9/4lbws9ciV4o0t+DX0IL7LTem22
+	 CkMVVRGF0Fm5XCJDzxyKwRBj+VTVuxm9oF/DlAsPGUTA7rdTpglGivxR3jBDz8X+ta
+	 y+GLpDFz0QUqio9WSAiS5uixarJojBBL/B4gTGAHmuM2/+rZCyedSfrKh3sFn6ws9F
+	 V5WsutaboyHXg==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 0635A3808200;
+	Mon, 16 Mar 2026 17:48:55 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20260316-followup-tui-bad-v1-1-ebe1beab9804@kernel.org>
- <20260316-peculiar-koala-of-inspiration-c80bfc@lemur> <CAJ-ks9k5D9Ua=Cnwe9mC8daQNR4oCAj0a-LMeVcd1PdzMpu1Hg@mail.gmail.com>
- <20260316-lively-chupacabra-of-destiny-5deedb@lemur>
-In-Reply-To: <20260316-lively-chupacabra-of-destiny-5deedb@lemur>
-From: Tamir Duberstein <tamird@kernel.org>
-Date: Mon, 16 Mar 2026 11:36:28 -0400
-X-Gmail-Original-Message-ID: <CAJ-ks9mFGG-NB61QuxXQib0KMZo64+is6UA8f6px=T6LAf1Fvg@mail.gmail.com>
-X-Gm-Features: AaiRm50t5-nPAThRsX7uf8d97Fk6TB7zAmAug0lZk1FzeOqoK-Z2XJQVatfmMh0
-Message-ID: <CAJ-ks9mFGG-NB61QuxXQib0KMZo64+is6UA8f6px=T6LAf1Fvg@mail.gmail.com>
-Subject: Re: [PATCH b4] review: suspend before tracking saves
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: B4 Bugbot <bugbot+b4@kernel.org>
+To: luca.ceresoli@bootlin.com, louis.chauvet@bootlin.org, mricon@kernel.org, 
+ thomas.petazzoni@bootlin.org, tools@kernel.org
+Message-ID: <20260316-bb9c4cdec2-7d562b690fb1@git.kernel.org>
+In-Reply-To: <DFUF52RW81LD.28YE20HG4P0L1@bootlin.com>
+References: <DFUF52RW81LD.28YE20HG4P0L1@bootlin.com>
+Subject: Re: b4 shazam applies unrelated patches due to dfblob collision
+ (b4 0.14.3)
+X-Git-Bug-Id: b9c4cde20c7a10eb5783d72d25ac8b832b5d0810c0f3883da72dae33c02dd358
+X-Mailer: bugspray 0.1-dev
+Date: Mon, 16 Mar 2026 17:48:55 +0000 (UTC)
 
-On Mon, Mar 16, 2026 at 11:31=E2=80=AFAM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Mon, Mar 16, 2026 at 11:24:23AM -0400, Tamir Duberstein wrote:
-> > > I've added a stern admonition in CONTRIBUTING.rst to instruct agents =
-to stop
-> > > using Co-whatever-by: trailers. It's more than just personal preferen=
-ce -- it
-> > > generates junk mail.
-> >
-> > Makes sense. Codex is quite adamant about the "Co-authored-by"
-> > trailer, so I've also submitted this feedback internally.
->
-> Yeah, well, Codex is a just a tool that can be convinced with strongly en=
-ough
-> worded instructions. "Co-authored-by" and similar trailers are wrong, bec=
-ause
-> they imply agency where none exists AND stick in bogus email addresses th=
-at
-> are most likely used for undisclosed purposes.
+Konstantin Ryabitsev writes in commit 8a652aeaaa90be4c26d7c2fb5cf899840c737ebd:
 
-I don't disagree, except that it cannot be convinced because the
-session prompt (where this instruction appears) takes precedence over
-user prompts. Anyway, I've resent with the proper trailer and reported
-this internally, as I said above.
+Fix get_extra_series pulling in unrelated prerequisite series
+
+When searching for newer revisions by change-id, the nq: query on
+lore can match messages that reference our change-id in a
+prerequisite-change-id trailer rather than as their own change-id.
+This causes get_extra_series to pull in entirely unrelated series,
+which b4 then treats as the "latest revision" and tries to apply.
+
+After collecting candidate messages from the search, validate that
+each revision actually belongs to the same series by checking that
+at least one message per revision contains a standalone change-id
+line matching ours. Revisions that only reference the change-id as
+a prerequisite are rejected.
+
+This affects b4 shazam, b4 review, and b4 diff, which all use
+get_extra_series for revision discovery.
+
+Reported-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Closes: https://lore.kernel.org/tools/DFUF52RW81LD.28YE20HG4P0L1@bootlin.com/ # b9c4cde
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Assisted-by: claude-opus-4-6
+
+--
+Deet-doot-dot, I am a bot.
+b4 bug tracker (bugspray 0.1-dev)
+
