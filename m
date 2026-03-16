@@ -1,89 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FA436C0D3
-	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 23:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1291527FB18
+	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 23:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773703788; cv=none; b=Gp2LB5bgKuW1l5yuTmZXJ36CLIFUwlPYZaBh5gTmScA8YPFyVPSW9iXQN91PgEmHleWOoyZSxZKK8pQDcsVKhtU0a9XBcSfKM5tp0nBNV2FBrm51peQW0OdAcYfcPp3xTTzXQC1OQDGDasavNiuAjPVHxjhvFBC97ueYD+gO3wg=
+	t=1773704510; cv=none; b=iMpLwBZxOB3Xj4NWR6eOBxfeIr75j/6pSqcjBUYMe2nVzJDw3jhHMVNdzlogaPXt/MSmom+/YYyVLsIzVSDRvh7XrJxjQttRRDZOHYuBLftxlGCUDBiavmyJz6krZxDzz0u4sy1wgz2hV+95yWFvGBtH6d+L4MMpMxAvwaVA+7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773703788; c=relaxed/simple;
-	bh=NCadKS5ZsnHD2ps3JUYPHi7Yeh7UZFaGoaJyQDUn554=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jeSqYRoNqjMW7H1EBJjwTREnlPXeIqmHlyAjKioUfmCFEGmwEhBnytIiKV1qegJiMq/WeIezPmWD7Gbi01qDCsbCmS4hn9thnJQAtQ2D9ZJmWSPI+GWyCufinJFXQtlr8GMmn5BWxKet9sNWqo/+SJ1f8wenNxGkV9plFkxKcLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VCAQuhQY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773704510; c=relaxed/simple;
+	bh=jJU7al3Uy2eFfWjvPMTk6mgvmangcczA4ZUFyD6/lbc=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PKNGdKqLPaazDZ/IfdafJWeFgcKzYZsuTXEaWkx35olQsoYk9Hba5n+bo3f2h4ukWonj1MBTZC+QpH8228FCtTezSbI62ScpMwKcgnncX1i0rv1HocPFo+WJRDdmHkr0ifj9mvvAqy12TUYBjW5XYL4TPOvSlEbcc0q89QKqZfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=dpvCRXGO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VCAQuhQY"
+	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="dpvCRXGO"
 Received: by smtp.kernel.org (Postfix)
-	id 4A56EC4AF09; Mon, 16 Mar 2026 23:29:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA388C19421;
-	Mon, 16 Mar 2026 23:29:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773703788;
-	bh=NCadKS5ZsnHD2ps3JUYPHi7Yeh7UZFaGoaJyQDUn554=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VCAQuhQYZcMND8Fu7rUdMk0lzEdJMHLtiw/XbeupwvkmulIXY3GA5LMTU1qasfKuC
-	 57Pm5IDe+FCqs8l6G0OoDGf9zk07bHw3z39KGe/WSDhezLZheaKZP5ywtRBBpX6Vrr
-	 KjAHsVFaW+mha9DGzYwyNd5kc7/7WlY4fjYh3ByrfMNk3eqXg7kMfo7I/UfzRgbMFW
-	 2RhfiFXeeH1fk5rpCoEtjh3/xrqvF+KdB++0qLnmfINKkFv+BsTX09nlPd0X+RiKcG
-	 hP7ku4/qrryLZUtWArBY1UYFh3icQ0RkoussBqGzC+jiAFosp8e3s9+nvsvU4Z3qjg
-	 Qt5WwQTeJ4AwQ==
-Date: Mon, 16 Mar 2026 19:29:46 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: Dmitry Vyukov <dvyukov@google.com>,
-	syzkaller <syzkaller@googlegroups.com>, linux-api@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, linux-kbuild@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, workflows@vger.kernel.org,
-	tools@kernel.org, x86@kernel.org, Thomas Gleixner <tglx@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Cyril Hrubis <chrubis@suse.cz>, Kees Cook <kees@kernel.org>,
-	Jake Edge <jake@lwn.net>,
-	David Laight <david.laight.linux@gmail.com>,
-	Askar Safin <safinaskar@zohomail.com>,
-	Gabriele Paoloni <gpaoloni@redhat.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Ingo Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 0/9] Kernel API Specification Framework
-Message-ID: <abiSas7bIIXkb4Uj@laps>
-References: <20260313150928.2637368-1-sashal@kernel.org>
- <20260314111822.63a2ba4a@kernel.org>
- <CACT4Y+arWePyxnV3hWk5RanWZpoc7=ALQ6DV_2MCuQkNoTtJUw@mail.gmail.com>
- <20260316155756.25b985f5@kernel.org>
+	id CD22DC19421; Mon, 16 Mar 2026 23:41:49 +0000 (UTC)
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id DEA46C19424;
+	Mon, 16 Mar 2026 23:41:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org DEA46C19424
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=lwn.net
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net E1F4940423
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1773704508; bh=f4b93TGZKqSfey65yl4jZtK90CPvtC8bZAgjW6oeqKY=;
+	h=From:To:Subject:In-Reply-To:References:Date:From;
+	b=dpvCRXGOdbBDla8c8Z8GC/Tz0lNH5AgSWHlj+K4yLsZaCa6vZKlua95PRfdN0xahK
+	 dj0zw7P617TpRykgvDTv/JtVOskAuFIwYnq0kYvPjbu1W+91lf69bWdKsp8Y4yhozG
+	 jiltihAiusEWP5e+XrPKDZL3CqVrzh1CSnDlIgFgplASVPYZUEqSVS2lGeXNdFTEWl
+	 qwTwmvYTCY0bTxk/RHo03AX88QwbGP408K1e3miOZfGg5V46ebPwAWvwDfuwTCpY9u
+	 wmNcipg80/pRmtJ91Dr7ZTX/zTq/z6+CyZaXhysH7KjX5auaFq4fbP+HfkGDdbS6la
+	 k42CBWL0UmTvw==
+Received: from localhost (c-71-229-227-126.hsd1.co.comcast.net [71.229.227.126])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by ms.lwn.net (Postfix) with ESMTPSA id E1F4940423;
+	Mon, 16 Mar 2026 23:41:47 +0000 (UTC)
+From: Jonathan Corbet <corbet@lwn.net>
+To: Konstantin Ryabitsev <mricon@kernel.org>, users@kernel.org,
+ tools@kernel.org
+Subject: Re: b4 review available in master
+In-Reply-To: <87tsuffj7h.fsf@trenco.lwn.net>
+References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
+ <87tsuffj7h.fsf@trenco.lwn.net>
+Date: Mon, 16 Mar 2026 17:41:47 -0600
+Message-ID: <87h5qffikk.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260316155756.25b985f5@kernel.org>
+Content-Type: text/plain
 
-On Mon, Mar 16, 2026 at 03:57:56PM -0700, Jakub Kicinski wrote:
->Didn't even think of that. LLMs should make short work of this sort of
->extraction of information from source code..
+Jonathan Corbet <corbet@lwn.net> writes:
 
-This is the primary reason that this proposal resurfaced :)
+> Konstantin Ryabitsev <mricon@kernel.org> writes:
+>
+>> Hi, all:
+>>
+>> TLDR: "b4 review" is a terminal UI that hopes to streamline a lot of
+>> maintainer duties. A getting-started guide with screencasts is here:
+>> https://b4.docs.kernel.org/en/latest/reviewer/getting-started.html
+>
+> So I've been playing with this a bit - fun stuff!  A few initial
+> comments.
 
-I've originally proposed[1] something like this almost a decade ago, but when I
-started trying to write the actual specs I hit a brick wall: it was simply not
-tractable.
+One more...  somehow it totally mangled the placement of the comments in
+the first review I did with it.  See
 
-With LLMs, writing the specs is something we can actually pull off, and we can
-verify their correctness so LLMs don't get to hallucinate.
+  https://lore.kernel.org/all/177370220974.1754131.9642805524574261129.b4-review@b4/
 
-The specs you see in the following patches are all LLM generated.
+...and the followup with the intended placement restored.
 
--- 
 Thanks,
-Sasha
+
+jon
