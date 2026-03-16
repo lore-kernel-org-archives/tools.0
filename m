@@ -1,81 +1,98 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F151C2324
-	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 17:49:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773683341; cv=none; b=VnICU1Jq8+X+4XFPbrCxByW7ryUAl73R4do9uKvDXiiJjd1JXBYe9MpA5I8JlAzs2nUywpzYBdzjUOyklHIB9yDYrJ9hN9x5j/2eTDoSy+s6CMIono2QRQcEqFqqwYQEltJ2JZVQUoqC2R8/B1Xazc7IkSs3ZG+WuYLYlLAtLz4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773683341; c=relaxed/simple;
-	bh=OV5PSYinO7E/pRPZW/R8Z5osPDBixJipUods773w00k=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=AFwhxE7QC3azLF3G7LFbbFGMSCwN9o1Sv2DjmB1HzhdGDQlByQSJeG2xlIg7ZgNtPbXjJSGeW5lQTwHWP2ddFSCKh//iR1Lf97qH28uM3VoG8t2AWglArkSURzDEfxUMkJUjHFYM/gX0/Vzl2GIftfeoHI1QGSETOE8UfN1EvKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UmYzbRpy; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061D11A9FAF
+	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 18:00:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773684045; cv=pass; b=B/HeQKNmkYDA8wJRs1e+bwd/gILxCtCY8p4GoYQAuySfOVfffay4QUzhcjKT6/w0v5F1mnm/yTB5yD9nyLjaDvHV97zPPTnjcxqLdTR0rTa5AtScRVDm2H8l5s5EQz5pVEtE5R570Jy7kovTnryNWWtS6PGT7uofLDTfWK+fwrg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773684045; c=relaxed/simple;
+	bh=B6jUsYkJWmn68CcqBnPzm2yrtsL6GT9HSlu/BLkN/y4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=X2yzMtPgbqKDUMWl6bfymsRJM+HZilzk/1OY0w5304F6ncAYdgpwu3AREGncV4rockqcnWmf9Mc3sSWm8xVQ9VwGxAAfV15dB+jd0yPlP5ZldEV+mdHQFgFWnV4z/oL5oPW3iOIbLAHTPCsTaXliysvaefE59T5sA3lC85nBHX0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b=mIJ3Fn54; arc=pass smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UmYzbRpy"
+	dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b="mIJ3Fn54"
 Received: by smtp.kernel.org (Postfix)
-	id 17CF7C2BC87; Mon, 16 Mar 2026 17:49:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE712C19421;
-	Mon, 16 Mar 2026 17:49:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773683341;
-	bh=OV5PSYinO7E/pRPZW/R8Z5osPDBixJipUods773w00k=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=UmYzbRpyOYfu55ZrWImDgZYo4oYhvUF/XiorULcs5OCgRxSbmqCUduTksQFu2fYV5
-	 WKFyD2JjFTENVQTao+YGl8thnILExqv72zxBJJixkXsaqr4iviW4D3qN5Cb6nXCY95
-	 UEDzmutDma2wUA0JMI0wJOUyK9SZ4X5UMMxyrK9/4lbws9ciV4o0t+DX0IL7LTem22
-	 CkMVVRGF0Fm5XCJDzxyKwRBj+VTVuxm9oF/DlAsPGUTA7rdTpglGivxR3jBDz8X+ta
-	 y+GLpDFz0QUqio9WSAiS5uixarJojBBL/B4gTGAHmuM2/+rZCyedSfrKh3sFn6ws9F
-	 V5WsutaboyHXg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 0635A3808200;
-	Mon, 16 Mar 2026 17:48:55 +0000 (UTC)
+	id B6164C19425; Mon, 16 Mar 2026 18:00:44 +0000 (UTC)
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 5606BC19421
+	for <tools@kernel.org>; Mon, 16 Mar 2026 18:00:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 5606BC19421
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=ritovision.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ritovision.com
+ARC-Seal: i=1; a=rsa-sha256; t=1773684039; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=EHg2Xpx96jJoKMI7wOPF3+aml9Cza8bfqKSYL3p5ZnwY3AmPG8k1lLw6SIBzZ5cgUnr+bvhfdu7DrB08sL1hZZTG6yGqxEgwsdgmed8Jv1BzvCjjGVR0nvqWLTXFK7WUPM7iHbM3+JxfagLJZEdYNRhlNvtileungtALo6Tbh38=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1773684039; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=3VWelUMcp6hAjdfiqlJhsfR8d14WYOG4633TmMMYCME=; 
+	b=DC3JfNNAC1Q93u0YIrEpYVfdZFNxTBsYbVVg2LiWU6wtZJuOlg1XOWGZHfafk035T2KU9ogkv1NbleRO/hU2ePNhny2mU3RxNzTMRdDfbE1HEh1467NKmhsfSNQ9Z6DN/QIWcgBoq3nwl7PqG/iauoz5R7xSlYugucadn1uxHgA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ritovision.com;
+	spf=pass  smtp.mailfrom=rito@ritovision.com;
+	dmarc=pass header.from=<rito@ritovision.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773684039;
+	s=zmail; d=ritovision.com; i=rito@ritovision.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=3VWelUMcp6hAjdfiqlJhsfR8d14WYOG4633TmMMYCME=;
+	b=mIJ3Fn54OV5Fk/kHAQp2wR4TvZ2owE2eqpfqtTGaGkFLGW0ZoZVZrC+JYLTX1+rG
+	QgAuhGt41DtW+mQS99BTO8Hdubi9DjaqzZ5KIBPEo/kQZ8tx7zb6yqL1FXOwgnofI8x
+	evDoQXD43ZIeOh87hlINV3kjpDupbVzx7E8C87gY=
+Received: by mx.zohomail.com with SMTPS id 1773684038060658.4265895863304;
+	Mon, 16 Mar 2026 11:00:38 -0700 (PDT)
+From: Rito Rhymes <rito@ritovision.com>
+To: tools@kernel.org
+Cc: rito@ritovision.com
+Subject: [PATCH v1 0/6] Allow site layouts to render properly on mobile devices
+Date: Mon, 16 Mar 2026 14:00:30 -0400
+Message-ID: <20260316180036.71949-1-rito@ritovision.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: B4 Bugbot <bugbot+b4@kernel.org>
-To: luca.ceresoli@bootlin.com, louis.chauvet@bootlin.org, mricon@kernel.org, 
- thomas.petazzoni@bootlin.org, tools@kernel.org
-Message-ID: <20260316-bb9c4cdec2-7d562b690fb1@git.kernel.org>
-In-Reply-To: <DFUF52RW81LD.28YE20HG4P0L1@bootlin.com>
-References: <DFUF52RW81LD.28YE20HG4P0L1@bootlin.com>
-Subject: Re: b4 shazam applies unrelated patches due to dfblob collision
- (b4 0.14.3)
-X-Git-Bug-Id: b9c4cde20c7a10eb5783d72d25ac8b832b5d0810c0f3883da72dae33c02dd358
-X-Mailer: bugspray 0.1-dev
-Date: Mon, 16 Mar 2026 17:48:55 +0000 (UTC)
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Konstantin Ryabitsev writes in commit 8a652aeaaa90be4c26d7c2fb5cf899840c737ebd:
+Currently, pages on mobile devices render against a desktop-width
+viewport, which makes the content appear tiny and forces users into
+a pan-zoom dance of pinch-zooming and horizontal panning to read
+content rather than simple vertical scrolling.
 
-Fix get_extra_series pulling in unrelated prerequisite series
+The first patch establishes the correct baseline by setting the
+viewport width to the device width. Once the site is allowed to
+render at actual mobile widths, however, numerous latent layout
+issues emerge. The remaining patches address those issues with
+targeted responsive adjustments.
 
-When searching for newer revisions by change-id, the nq: query on
-lore can match messages that reference our change-id in a
-prerequisite-change-id trailer rather than as their own change-id.
-This causes get_extra_series to pull in entirely unrelated series,
-which b4 then treats as the "latest revision" and tries to apply.
+It is not a transformative redesign and is not intended to affect the
+desktop layout.
 
-After collecting candidate messages from the search, validate that
-each revision actually belongs to the same series by checking that
-at least one message per revision contains a standalone change-id
-line matching ours. Revisions that only reference the change-id as
-a prerequisite are rejected.
+AI assistance note: this series was developed several weeks ago,
+before CONTRIBUTING.md instructed contributors to record the full
+model version identifier, and I could not recover the full identifier
+from the local session metadata.
 
-This affects b4 shazam, b4 review, and b4 diff, which all use
-get_extra_series for revision discovery.
+Rito Rhymes (6):
+  add viewport meta tag for proper mobile rendering
+  prevent wrapped headings from overlapping with text above it
+  add 848px mobile banner adjustments to prevent overflow
+  add responsive extras and footer layout adjustments to contain
+    overflow
+  contain horizontal overflow in core content and homepage releases
+    layout
+  improve mobile rendering of docutils tables
 
-Reported-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Closes: https://lore.kernel.org/tools/DFUF52RW81LD.28YE20HG4P0L1@bootlin.com/ # b9c4cde
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Assisted-by: claude-opus-4-6
+ korgi/static/css/main.css | 154 +++++++++++++++++++++++++++++++++++++-
+ korgi/templates/base.html |   1 +
+ 2 files changed, 153 insertions(+), 2 deletions(-)
 
---
-Deet-doot-dot, I am a bot.
-b4 bug tracker (bugspray 0.1-dev)
+-- 
+2.51.0
 
