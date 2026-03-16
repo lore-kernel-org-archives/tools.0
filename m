@@ -1,71 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F002632D45C
-	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 19:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA86C21B1BF
+	for <tools@linux.kernel.org>; Mon, 16 Mar 2026 22:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773691183; cv=none; b=NLcn3IRUhouF1fclY3k6xNOZiGiTKzGYsBSxcT7BN7sRD3lRxggNyGijB8GPeai+dSAC0PZTZ3Ck+Vnc/zkD60RA9xE/ezfYC7Howrl9Z6J0EZmDNHhIKJFcOo0hswbYQrHCCZF2947tFw7H3zaa3bViq5SMvKvDl3CVhK1InB8=
+	t=1773701878; cv=none; b=AjUNFH2jvGq8l3EzeX4JN+2Ffh2gMxrj46EKp7Il2z8ZAhMFG+EIh4S0p3DORtu7+hMh0rrU5P8qij1c51JyYO/7CRTCYzXuCeBkcKduO36LoIlqroT2voapv7XoStZaLu2/Qwj86FkXnGsbBQgDisUYX2j+OgvbPYbGkONb1Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773691183; c=relaxed/simple;
-	bh=otHbj998dYuFAjCoboGdvcNxIibFk8bQJgoI7829uqU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uVnvhHg+bQHZUuxGd+iBMWvKLnW6d/oQR+l3RClgXGBSyX8EQgXFFDwZeahj6+s4KM59ot+j+HRNr3TAPnbrHfKmaLclRkzyaYHO2lIR0PDyqaLAaixqAhuEDW3aRKAZ/9fe0LphvxrZ1dVz+zufO+JNhx5vHTQGR5YkVhtXgbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZjCRMFvh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773701878; c=relaxed/simple;
+	bh=mEnlDtD+uMXBaY3t2IfkmLKFopSN2YDt1ilz6+WKW4U=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Vu7xdIW5UxGQMMrJ5XOdy27SluBTkn49II5s8nY7NNTlOJ8Dru7UVX0sPPy9La+DlsEEHByA6rCZtAzGsRMn697SSIRvM8q2zxtN/MLCAXgEBHXlN7K8T7JhT7HkMIBWGk3hdINK/E3XNteVgHo2bhQjenwT9ssO2qxooowO2fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dYytfHIU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZjCRMFvh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dYytfHIU"
 Received: by smtp.kernel.org (Postfix)
-	id AE5C8C2BCAF; Mon, 16 Mar 2026 19:59:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943A5C2BC87
-	for <tools@kernel.org>; Mon, 16 Mar 2026 19:59:42 +0000 (UTC)
+	id 91E9FC2BCB2; Mon, 16 Mar 2026 22:57:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B5CC19421;
+	Mon, 16 Mar 2026 22:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773691182;
-	bh=otHbj998dYuFAjCoboGdvcNxIibFk8bQJgoI7829uqU=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=ZjCRMFvhhWN1OzMrUaSpTk2mDe0ZE5zoW+UMPw+4WNqeRqgAoRuBQF+yYnYi2fp0L
-	 5wl91k6F+y3qBKmmRmJbMBl6esRHRjhR/qYaqot7AH2rMCm/AS69x+tB7ibm+s75ky
-	 NIjwDUcR0SK71ekV377WBh/MGv3sBr1re0UjSrIBNaoJRybmmZDTWAD8+E27jT35xk
-	 b7KAMJX4rb2C0tIfXJx2NlSKtB26F8c9MOZbGwJrjX7Lc49ToVrqL8zasGOwhTjoUL
-	 LBVts29AR2DqtANP90w/r/JIg1UXaIdHv0rQ4Hg1qPWpWp2KtUlyW6O41UzZmhoXnC
-	 zZ69Nr+tH3qng==
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-386b553c70eso43292551fa.0
-        for <tools@kernel.org>; Mon, 16 Mar 2026 12:59:42 -0700 (PDT)
-X-Gm-Message-State: AOJu0YyrS7BLP5Gm8QJEjXo+FNvEOaMdHKz7SWsNrAsuACAKEwx2SGqq
-	0s9/njtrPdmJyAiGi7hleSgkEnEzUUX+Is8GfwSGxeF+dht/DEYJAt5O5sQ5QC8iQ83fT/iFRKM
-	xqclwsZN3j2j7tNVW4p9w5JKXYJc1rqw=
-X-Received: by 2002:a05:651c:1b12:b0:38a:a2b:5ef6 with SMTP id
- 38308e7fff4ca-38a897ab5b7mr53245801fa.24.1773691181261; Mon, 16 Mar 2026
- 12:59:41 -0700 (PDT)
+	s=k20201202; t=1773701878;
+	bh=mEnlDtD+uMXBaY3t2IfkmLKFopSN2YDt1ilz6+WKW4U=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=dYytfHIUOzat5FH4iDWFKQ+0LqEBB/CopaYZWcxqPfMn6TDVJ5aH2m7e7b6i2uI+G
+	 njfJqsJHJEfJczHdFp+9mf+HI3bQ1IsCULV7Za2wDaYAEj9Fo0kh8Pi7OuDertqPRS
+	 Rl0/jJqSngDaNVj6stP+jWC41xXtSehkjltX63SMWOlUwrzAnPwCmSA2iV+L1CjHhA
+	 LnNsPapvzaV6qITwziVvpn7+IND6I895QjO8R0ZPpEt5pxkemP75Fgna1R/Tbpw178
+	 fu0AaoYy8JiT2wSC0G1wnhYdgF9IahedQfdKYUX95VoEM5I5nt2m650V/+QJ3gT5aZ
+	 kaEqPojDY5xFA==
+Date: Mon, 16 Mar 2026 15:57:56 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Dmitry Vyukov <dvyukov@google.com>
+Cc: syzkaller <syzkaller@googlegroups.com>, Sasha Levin <sashal@kernel.org>,
+ linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-kbuild@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ workflows@vger.kernel.org, tools@kernel.org, x86@kernel.org, Thomas
+ Gleixner <tglx@kernel.org>, "Paul E. McKenney" <paulmck@kernel.org>, Greg
+ Kroah-Hartman <gregkh@linuxfoundation.org>, Jonathan Corbet
+ <corbet@lwn.net>, Randy Dunlap <rdunlap@infradead.org>, Cyril Hrubis
+ <chrubis@suse.cz>, Kees Cook <kees@kernel.org>, Jake Edge <jake@lwn.net>,
+ David Laight <david.laight.linux@gmail.com>, Askar Safin
+ <safinaskar@zohomail.com>, Gabriele Paoloni <gpaoloni@redhat.com>, Mauro
+ Carvalho Chehab <mchehab@kernel.org>, Christian Brauner
+ <brauner@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, Andrew
+ Morton <akpm@linux-foundation.org>, Masahiro Yamada <masahiroy@kernel.org>,
+ Shuah Khan <skhan@linuxfoundation.org>, Ingo Molnar <mingo@redhat.com>,
+ Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH 0/9] Kernel API Specification Framework
+Message-ID: <20260316155756.25b985f5@kernel.org>
+In-Reply-To: <CACT4Y+arWePyxnV3hWk5RanWZpoc7=ALQ6DV_2MCuQkNoTtJUw@mail.gmail.com>
+References: <20260313150928.2637368-1-sashal@kernel.org>
+	<20260314111822.63a2ba4a@kernel.org>
+	<CACT4Y+arWePyxnV3hWk5RanWZpoc7=ALQ6DV_2MCuQkNoTtJUw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20260316-review-reply-followup-v2-1-f0482c4e8241@kernel.org> <20260316-fox-of-glorious-gallantry-e105c4@lemur>
-In-Reply-To: <20260316-fox-of-glorious-gallantry-e105c4@lemur>
-From: Tamir Duberstein <tamird@kernel.org>
-Date: Mon, 16 Mar 2026 15:59:05 -0400
-X-Gmail-Original-Message-ID: <CAJ-ks9mt2pSVNWgvdBbnFoYGUjLDxxzy=vE8jvx9MFEZMQAt+A@mail.gmail.com>
-X-Gm-Features: AaiRm53X6cpCNqLdcXmrsmIOFPYO72yXDj8d05-oJOWL-P_uyWsd4vD5blyWViY
-Message-ID: <CAJ-ks9mt2pSVNWgvdBbnFoYGUjLDxxzy=vE8jvx9MFEZMQAt+A@mail.gmail.com>
-Subject: Re: [PATCH b4 v2] review: implement reply to selected follow-up
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 16, 2026 at 3:56=E2=80=AFPM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Mon, Mar 16, 2026 at 03:55:14PM -0400, Tamir Duberstein wrote:
-> > Reply to the selected follow-up instead of collapsing all follow-ups
-> > from the same author into one sidebar target.
->
-> I think I merged this in already, just sneakily. Can you check that the l=
-atest
-> master does what you expect?
->
-> -K
+On Mon, 16 Mar 2026 08:05:53 +0100 Dmitry Vyukov wrote:
+> On Sat, 14 Mar 2026 at 19:18, Jakub Kicinski <kuba@kernel.org> wrote:
+> > On Fri, 13 Mar 2026 11:09:10 -0400 Sasha Levin wrote:  
+> > > This enables static analysis tools to verify userspace API usage at compile
+> > > time, test generation based on formal specifications, consistent error handling
+> > > validation, automated documentation generation, and formal verification of
+> > > kernel interfaces.  
+> >
+> > Could you give some examples? We have machine readable descriptions for
+> > Netlink interfaces, we approached syzbot folks and they did not really
+> > seem to care for those.  
+> 
+> I think our reasoning wrt syzkaller was that not all interfaces in all
+> relevant kernels are described with netlink yml descriptions, so we
+> need to continue using the extraction of interfaces from the source
+> code. And if we have that code, then using yml as an additional data
+> source only adds code/complexity. Additionally, we may extract some
+> extra constraints/info from code that are not present in yml.
+> 
+> Realistically system call descriptions may have the same problem for
+> us at this point, since we extract lots of info from the source code
+> already:
+> https://raw.githubusercontent.com/google/syzkaller/refs/heads/master/sys/linux/auto.txt
 
-Yes indeed, looks good! Thanks, and thanks for making this awesome tool :)
+yup! we haven't tried to make the yml spec super useful to syzbot 
+to be fair. I'm just flagging that example because in our case we
+quickly went from "this will obviously be useful to syzbot" to
+"although we could, it may not be super practical"
+
+> (and LLMs obviously can allow us to extract more)
+
+Didn't even think of that. LLMs should make short work of this sort of
+extraction of information from source code..
