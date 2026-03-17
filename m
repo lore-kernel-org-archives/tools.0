@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5AF389DF3
-	for <tools@linux.kernel.org>; Tue, 17 Mar 2026 20:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF204340DB9
+	for <tools@linux.kernel.org>; Tue, 17 Mar 2026 21:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773779412; cv=none; b=LleXtwqmenT5+5Dk9k9guxLCztCEj41KnwFMtEr3aEMYHz/ELozA6izvhzGu9XPid98urp5Dz/48cxWK8O3GuvAWozXeE5KH53i0J4Lvvoow67vQBXJmcv6fuybDzFkuLep19TO5nkHWn5M5SDJRAaKdrap8c2uomBhWQhKxzOY=
+	t=1773781432; cv=none; b=SE8cCfhx503fLeb1BnYZLGx8jYraMO/evFbi7FPE4n8rCXr6jZ+Tujg9JLotty/4YAncToAePDMlWi4M35jLbnPo7MDQCNz4Va+8RT7KcWiL6thhdJErmrqDSK21N9A121ZYBLZtslWTn1wAq/b2rXgWbmZ0bB2dsVLgruWjPuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773779412; c=relaxed/simple;
-	bh=GLF958bNK5XB7Looum/C2QcTCxErMs4eqqciGGA1mTU=;
+	s=arc-20240116; t=1773781432; c=relaxed/simple;
+	bh=CI7DY23dRmkVZjgDjdkI8Mm70KCHhkjBjIL8yo17zEs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kWsRE0hOUbeB4Kcs91+MCe9bf3iBJYEcbZb4pMtcwKKcBXEzrtfD7LxA0DRSyhPI/SfJwYN4JpaVjrO8EVCiS8hvn0EIgR+tSSKH5ibeznjyHEcuOY/ZT2pQgcV8Jj2sVq3JRcQSuErgPRnjpgwpobGccyy5hSH+12fKcHdwmbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ulrRgrL6; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=BDpPUiiyD//gWjC2FrKnM0GG0Y4R286AbzYVMwyPkJsnCjCxiPUBR7K5pe3mW3Vd39h3NJp3Yclce3ycm9i1CIRvVCV8l9tuhNlXZ3ZOfOpvhVgCqZO162nqpIhwk3Put/FcQbJAJk4MOoV80O/NvDxQGzS9uBcJVcXKVMmEb8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KS15CpKM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ulrRgrL6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KS15CpKM"
 Received: by smtp.kernel.org (Postfix)
-	id 9EC53C2BCB1; Tue, 17 Mar 2026 20:30:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DA7C4CEF7;
-	Tue, 17 Mar 2026 20:30:12 +0000 (UTC)
+	id 85C66C4CEF7; Tue, 17 Mar 2026 21:03:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4474FC19425;
+	Tue, 17 Mar 2026 21:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773779412;
-	bh=GLF958bNK5XB7Looum/C2QcTCxErMs4eqqciGGA1mTU=;
+	s=k20201202; t=1773781432;
+	bh=CI7DY23dRmkVZjgDjdkI8Mm70KCHhkjBjIL8yo17zEs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ulrRgrL6ACis3fjskW2AGBAlCF6PfcRBIhUz5vF1a5ClNrIFDUtj/R5md9JRl4Tke
-	 /rzFmKqaJG6nD3EuFuGfwsnQoJNQM6hVcUvTHGO6nlH1HGSneq0UY1uZjXxOqacixI
-	 DL0CV7JLltgyrly9/SfFFwU2I9MXOpqcmNhX8L5LqoqCoM9wHEfTfR3iPqxGAfhYeB
-	 mb3b5hHCZQ0PGOOyHFEunCUHBDfEKBiGG3MF5SDLltUXaJzdXNnvn6ZHw6ZJbOdfDc
-	 PAvD4MKM5Y1Oqryv1HJ0ySgYU69v7bvY5yUSJDXd8gBk1W54JgEwqyskw+mVwP/8KC
-	 doQXuKofcMi2Q==
-Date: Tue, 17 Mar 2026 16:30:11 -0400
+	b=KS15CpKMNu7CnzU+U/dWL6QNNfd5EI7KYcq1zbfGEufcNWmnRZz85C8yonJIVWVl9
+	 4pmwY4x+KYn088UrGw2NayNrfNwLDA7gYcQYHDX68Bd8vh1YN0HP+7PHCRI5avrhjB
+	 OUl/LiB6z/C/+Vo31mUBARfEtlEgY/o6EBMTidCV5S1Xm5e7GEu1hxMhCTQL6w+PPz
+	 xzSiiLtQxCUao2lKlqzwVXCOMOFv5jireteAeEVDZHU8Ff/pYi6hG+xOzM5z3Um3HK
+	 MEapLPJ82F8A/pvzsQSQjcz7LNQhlaf5aYYWEMYjALlN6psd3srN6r8Mgh2xrNLSs1
+	 O7Iw+z5ZNVK7A==
+Date: Tue, 17 Mar 2026 17:03:51 -0400
 From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Jonathan Corbet <corbet@lwn.net>
-Cc: users@kernel.org, tools@kernel.org
-Subject: Re: b4 review available in master
-Message-ID: <20260317-optimistic-impartial-kudu-deefac@lemur>
-References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
- <87tsuffj7h.fsf@trenco.lwn.net>
- <87h5qffikk.fsf@trenco.lwn.net>
- <20260316-quizzical-raccoon-of-refinement-d88fdb@lemur>
- <87qzpieeb5.fsf@trenco.lwn.net>
- <20260317-starling-of-delightful-exercise-3472ce@lemur>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@kernel.org
+Subject: Re: Sorting for applied and thanked reviews
+Message-ID: <20260317-enigmatic-acrid-corgi-e9bee9@lemur>
+References: <4547f513-9e28-4f5c-93d1-823e70b110fc@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -48,34 +43,48 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260317-starling-of-delightful-exercise-3472ce@lemur>
+In-Reply-To: <4547f513-9e28-4f5c-93d1-823e70b110fc@sirena.org.uk>
 
-On Tue, Mar 17, 2026 at 10:23:33AM -0400, Konstantin Ryabitsev wrote:
-> > If I've done everything right, you'll find what you're looking for at
-> > 
-> >   git://git.lwn.net/linux.git b4/review/20260312-kernel-doc-use-a-c-lexical-tokenizer-for-transforms-0e0e9e143327
-> 
-> Yep, found it. *sigh*
-> 
-> Unfortunately, it's not an easy fix. I think I'll have to
-> abandon how we currently do inline comments -- the diff format is just too
-> fragile to try to intersperse it with comments. I think I'm just going to load
-> the diff using standard "> " quoting instead of trying to be creative with >>>
-> <<< markers. Maintainers are more used to seeing that anyway.
-> 
-> I'll let you know when the new code is ready for testing.
+On Tue, Mar 17, 2026 at 07:22:03PM +0000, Mark Brown wrote:
+> Currently it looks like in progress, applied and thanked reviews are all
+> sorted together (by activity I think?), with reviews that are snoozed or
+> waiting for new versions sorted after them.  This seems a bit
+> surprising, I'd expect at least the thanked reviews to be sorted even
+> further down the list than those that are in progress but waiting for
+> something.
 
-Okay, a fairly big change landed in master that completely does away with "C"
-and inline comments. You now just hit "r" to reply and add your comments just
-like you would to any other message -- benefiting from your existing mastery
-of your preferred editor.
+We currently split all your tracked series into "action required" ones at the
+top and "action not required" ones at the bottom, which is why all your
+snoozed and waiting series are below everything else. Within these two
+sections, the series are sorted by when they were last added to your tracking,
+not by most recent activity. I used to sort them by latest activity but I
+hated that they jump around -- if you have 5 series that you're working on
+throughout the day, you benefit from visual memory if they all sit in one
+spot.
 
-We also ship vim and emacs syntax files in misc/ -- they make it easier to
-reply to diffs than regular email syntax styling.
+I was expecting that "thanked" series would be prime candidates for archiving,
+which is why they are kept in "action required". However, it's an easy change
+to add them into "no action required".
 
-Please try it out again. Your old bugs should be gone and replaced by whole
-new bugs!
+We can instead differentiate this into:
 
-Best regards,
+active:
+
+    - new
+    - reviewing
+
+action required:
+
+    - replied
+    - accepted
+    - thanked
+
+inactive:
+
+    - snoozed
+    - waiting
+
+Does that work, and how would you sort these?
+
 -- 
 KR
