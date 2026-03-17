@@ -1,50 +1,41 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F221D618A
-	for <tools@linux.kernel.org>; Tue, 17 Mar 2026 15:54:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B8B3F54A5;
+	Tue, 17 Mar 2026 16:58:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.145.95.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773762897; cv=none; b=pExFS2rZfdQsal/LygxeRGNaqdOwGRt7UI9+r/o7xjuWevt0lMhmkBDu/Yyr8lA7SovkwNCM735JBqRjIEBNtiOrymPNSvhBoK2Y/XhLiHOUgrSFkVDpm05QCupIQ1j1yt+tu0tDJ0Bv4zkkTVF9ww4XpX+NzGrrvt9o/yknXsc=
+	t=1773766709; cv=none; b=lUPyfBzch3unzvZUVdUFJK3wZUlWfDQkico5USGdQKskBbeqcJT80HRFOO001mnBNhZjKoA9Tj9kHiTaT4ojS67B+uWWxeiEwQr7lz0NmnIhE1ru0mZ4nhXC3+14bWDGsndE/ZQqFabEUiGXt8+o0fKou/v/o4Z4XdupaSIlddo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773762897; c=relaxed/simple;
-	bh=A4w/IlduKr5bmHL9Fh8Wc5s56KtTkTqgG4qP2+9cBf4=;
+	s=arc-20240116; t=1773766709; c=relaxed/simple;
+	bh=xJGVFSz7J7RTuWThX++HP+JtsH/E2hNViNNUnLMggR4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FUF4IQ48pwHL2gVTwFMoKOHFpy+VSl5lVN27F27bZ6pJQzv/Xjvi3C/9b+lXcTNp+Ig8v5WxvSV67106xGl2lvsRDv2DEowOuKeffAiQGzqqvZt1J9fsihMrJSg3IOT9QJmkVPM/ywF+hpqfEUiKHaatSvD+h7pbxiRquWrCjWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=oSjqTRTV; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	 MIME-Version:Content-Type; b=c1xyC6NDnJS7f5xtqFmssxEty2fyKy4OqAjNhoU9Bvi+L0jaXDIMI6p0wjkJ7Mcy4/QW9vQwlafxMC6amrlaM/7KHE4sHkyCAqRLPqTcvY+GsqaPlinZKZdtFJbFY+RAXlFk+ythIUmhwBgbIshMX2pg+Qa9ehIZAOjfeHW+Eh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=toke.dk; spf=pass smtp.mailfrom=toke.dk; dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b=oJIgvoyC; arc=none smtp.client-ip=45.145.95.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=toke.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=toke.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="oSjqTRTV"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id E2EA81A2E05
-	for <tools@linux.kernel.org>; Tue, 17 Mar 2026 15:54:54 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id B71CE5FC9A;
-	Tue, 17 Mar 2026 15:54:54 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 843E610450603;
-	Tue, 17 Mar 2026 16:54:52 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1773762894; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=A4w/IlduKr5bmHL9Fh8Wc5s56KtTkTqgG4qP2+9cBf4=;
-	b=oSjqTRTVZPLDevYIMH4FMWKyEzcRasM9tghFRO66FKiJUjNpc8R3660KcRnTaaaC560IPl
-	/zEsUP4MK+yrFSeQm2SL48vz0R/aUsHAHUJw/EyXPdmYYukIkEIAFhlfyFk40O7W234mms
-	FkisE4io5UivDRUaBKufe0zLP7BWGxyC+2YMzbwqxUDgaw23Ue8uHQZ7m0m9+KD2mGR05t
-	sdGWw6OeQPm/AbCzuIUDlLpj5mHT2PGVBLmmyyaJYbTUTD8sD/qNYjbfY5pzhT6TMYyIYq
-	puuH/JkSuOPAt0GqmR8hUJeSwr41qO5AI66TePatgRJQMRdza1GAk3SeW1X/cg==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Paul Moore <paul@paul-moore.com>
-Cc: Chuck Lever <chucklever@gmail.com>,  Konstantin Ryabitsev
- <mricon@kernel.org>,  users@linux.kernel.org,  tools@linux.kernel.org
+	dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="oJIgvoyC"
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
+	t=1773766279; bh=xJGVFSz7J7RTuWThX++HP+JtsH/E2hNViNNUnLMggR4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=oJIgvoyC9QpSj5N/9CQPA2V6rDQgfeKu9BSAnvtPVtJUHMYHntQ+Bq5n/lPKjUMdU
+	 8LrmP4a4O4xUu2EayAh6/z9gFQIMbDTQZ57kQKR6DQ8p8zDBh6056jKCadCupwdT9m
+	 XgWeys/gNinV1x0DctbUYI78WNwPtIoNES/3lnC8+08yew/FAedm+D1XJs89UKqfAw
+	 KlbCgtsTjnNvlNqyeHhmGo6tZ0P7Wgqh+26Yi3jhur/MKY22zbPZTmTsey1LO6r8jQ
+	 S3Fl7FD0rZQYwxiyG/BdjKcATfE9Hrr2OyhWLoSSTq+QNu05WsA3EyG9cDLUsk4Nnn
+	 7T19Bdpaawj5w==
+To: Paul Moore <paul@paul-moore.com>, Chuck Lever <chucklever@gmail.com>
+Cc: Konstantin Ryabitsev <mricon@kernel.org>, users@linux.kernel.org,
+ tools@linux.kernel.org
 Subject: Re: Using "b4 prep" with Stacked Git
 In-Reply-To: <CAHC9VhS7nBWxZ0=1c_ec=Lq+J0CqZUGbriu2i==X7FciSw0K2g@mail.gmail.com>
-	(Paul Moore's message of "Tue, 17 Mar 2026 11:26:54 -0400")
 References: <CAFMMQGt-Dc4DiSNUYR1mQfUBswP9bmjyXfcvuy6HO57rZ79fHA@mail.gmail.com>
-	<CAHC9VhS7nBWxZ0=1c_ec=Lq+J0CqZUGbriu2i==X7FciSw0K2g@mail.gmail.com>
-User-Agent: mu4e 1.12.7; emacs 30.2
-Date: Tue, 17 Mar 2026 16:54:52 +0100
-Message-ID: <87tsuecuyb.fsf@bootlin.com>
+ <CAHC9VhS7nBWxZ0=1c_ec=Lq+J0CqZUGbriu2i==X7FciSw0K2g@mail.gmail.com>
+Date: Tue, 17 Mar 2026 17:51:18 +0100
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <87v7euo0vt.fsf@toke.dk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -53,10 +44,24 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
 
-Hello,
+Paul Moore <paul@paul-moore.com> writes:
 
+> On Tue, Mar 17, 2026 at 11:08=E2=80=AFAM Chuck Lever <chucklever@gmail.co=
+m> wrote:
+>>
+>> Hi Konstantin -
+>>
+>> I'm a long-time Stacked Git and b4 user and I'm hunting for a tool to
+>> juggle the many data items involved with posting kernel patch series
+>> for review. "b4 prep" seems to fit that bill but it has some issues
+>> when it comes to large cover letters with Stacked Git.
+>>
+>> The branch-description strategy is the least-bad option for StGit
+>> right now, but it's fighting git's design -- git config was never
+>> meant to hold multi-paragraph prose, and there's no way to tell StGit
+>> "don't print the branch description in stg branch --list."
+>>
 >> A file-based strategy would solve all three problems cleanly. Something =
 like:
 >>
@@ -66,19 +71,12 @@ like:
 >> .git/b4-cover/<branchname>/recipients
 >
 > Fellow stacked git fan here.
->
-> I do something very similar with my own scripts/tools, and if I could
-> offer a suggestion based on my experience, you might want to consider
-> some slight naming tweaks to support multiple cover letters in a
-> single branch.
 
-I've transitioned to b4 a few months ago, I really like the tool, but if
-there is one key feature it lacks based on my very own workflow, it is
-indeed the capability to stack series. I often have to manage several
-series which depend on each other. b4 in this case requires one branch
-per series which is painful to maintain.
+And here! I have been using the "cover letter as commit" mode of b4,
+which works as long as you remember to 'stg commit --all' before you
+invoke b4. I requested a pre-hook functionality in b4 to automate this,
+so will take this opportunity to bump that:
 
-A big +1 to whoever will propose such a stacked Git capability :-)
+https://lore.kernel.org/tools/87ttdkrylx.fsf@toke.dk/
 
-Cheers,
-Miqu=C3=A8l
+-Toke
