@@ -1,90 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF204340DB9
-	for <tools@linux.kernel.org>; Tue, 17 Mar 2026 21:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852B013B7A3
+	for <tools@linux.kernel.org>; Tue, 17 Mar 2026 21:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773781432; cv=none; b=SE8cCfhx503fLeb1BnYZLGx8jYraMO/evFbi7FPE4n8rCXr6jZ+Tujg9JLotty/4YAncToAePDMlWi4M35jLbnPo7MDQCNz4Va+8RT7KcWiL6thhdJErmrqDSK21N9A121ZYBLZtslWTn1wAq/b2rXgWbmZ0bB2dsVLgruWjPuM=
+	t=1773783971; cv=none; b=N3oBVl8i4cnKApw88/TbWoSE7teOWPTOC6GcH+JXzPYTvvZUXV/+BTZyGeRUZcbcS849M1yPyrpwh6ehJnNzJiFdpb7GNzmd48XjlolJ2PZxybUhMae6mUevYXT85yLmhSKl7A5F/KI5tfWskh21ow/YSjkuPpMkMzeMI8ZJGgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773781432; c=relaxed/simple;
-	bh=CI7DY23dRmkVZjgDjdkI8Mm70KCHhkjBjIL8yo17zEs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BDpPUiiyD//gWjC2FrKnM0GG0Y4R286AbzYVMwyPkJsnCjCxiPUBR7K5pe3mW3Vd39h3NJp3Yclce3ycm9i1CIRvVCV8l9tuhNlXZ3ZOfOpvhVgCqZO162nqpIhwk3Put/FcQbJAJk4MOoV80O/NvDxQGzS9uBcJVcXKVMmEb8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KS15CpKM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773783971; c=relaxed/simple;
+	bh=8JkDBCHAkpVi3/c/XWhrUsQBDJLwqY7dlF3RGNI9y5k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=K2Yty2yXpi0KNTvTfQTpjrDdaKDSvPZjFORdigeC4E990XGeE9pV8VXgTdOHfx+VzIL3S0A1CvGQAYUZolvP6NiHO/XIUHZLdU05xWIzFwEF4F4ziGfkkzx3FRb5gDTy7xiCOY315XvlarPsJqf+AaD5siLJZRy7IGcZ1YX6FlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=J0yRw5g7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KS15CpKM"
+	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="J0yRw5g7"
 Received: by smtp.kernel.org (Postfix)
-	id 85C66C4CEF7; Tue, 17 Mar 2026 21:03:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4474FC19425;
-	Tue, 17 Mar 2026 21:03:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773781432;
-	bh=CI7DY23dRmkVZjgDjdkI8Mm70KCHhkjBjIL8yo17zEs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KS15CpKMNu7CnzU+U/dWL6QNNfd5EI7KYcq1zbfGEufcNWmnRZz85C8yonJIVWVl9
-	 4pmwY4x+KYn088UrGw2NayNrfNwLDA7gYcQYHDX68Bd8vh1YN0HP+7PHCRI5avrhjB
-	 OUl/LiB6z/C/+Vo31mUBARfEtlEgY/o6EBMTidCV5S1Xm5e7GEu1hxMhCTQL6w+PPz
-	 xzSiiLtQxCUao2lKlqzwVXCOMOFv5jireteAeEVDZHU8Ff/pYi6hG+xOzM5z3Um3HK
-	 MEapLPJ82F8A/pvzsQSQjcz7LNQhlaf5aYYWEMYjALlN6psd3srN6r8Mgh2xrNLSs1
-	 O7Iw+z5ZNVK7A==
-Date: Tue, 17 Mar 2026 17:03:51 -0400
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: Sorting for applied and thanked reviews
-Message-ID: <20260317-enigmatic-acrid-corgi-e9bee9@lemur>
-References: <4547f513-9e28-4f5c-93d1-823e70b110fc@sirena.org.uk>
+	id 3E428C2BCAF; Tue, 17 Mar 2026 21:46:11 +0000 (UTC)
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 0D591C19425;
+	Tue, 17 Mar 2026 21:46:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0D591C19425
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=lwn.net
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 09F4040C7C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1773783966; bh=AZQzTli/nGebs7A1e9PK0vfY4uHj7pRKbO90zkUVamo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=J0yRw5g7K+WWJZbeirrKEmrPMQPG20H4YuXfah9H7pLN0fyYJRlvGSbfvuUiZ8yRi
+	 pNvSBzolckitJuV2xFca9r5V6LePpGALdCoUUc+uqLfxu0Y0KEtZLLm1gwjXRExRuD
+	 Heq61weJeSvDI5sH2yTTnd42P3GDII84BkXGWa0ffbR9U2E2sYWp1nKBUoxX9/kqNE
+	 jV9dgAePhBIrbGaRJHLdHCZ/8rNip6UYIJx94NGQKNRS+jtxdFa648/lLyaIe1atnn
+	 mjeNEvjsGK6vv0Z6/vl6RAVSUv1ZuVBWTrVfNFEh5eL7AtO08bvEAyogO8Yj2a3Ql3
+	 cpcgCfK/qdW9A==
+Received: from localhost (c-71-229-227-126.hsd1.co.comcast.net [71.229.227.126])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by ms.lwn.net (Postfix) with ESMTPSA id 09F4040C7C;
+	Tue, 17 Mar 2026 21:46:05 +0000 (UTC)
+From: Jonathan Corbet <corbet@lwn.net>
+To: Konstantin Ryabitsev <mricon@kernel.org>
+Cc: users@kernel.org, tools@kernel.org
+Subject: Re: b4 review available in master
+In-Reply-To: <20260317-optimistic-impartial-kudu-deefac@lemur>
+References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
+ <87tsuffj7h.fsf@trenco.lwn.net> <87h5qffikk.fsf@trenco.lwn.net>
+ <20260316-quizzical-raccoon-of-refinement-d88fdb@lemur>
+ <87qzpieeb5.fsf@trenco.lwn.net>
+ <20260317-starling-of-delightful-exercise-3472ce@lemur>
+ <20260317-optimistic-impartial-kudu-deefac@lemur>
+Date: Tue, 17 Mar 2026 15:46:05 -0600
+Message-ID: <87o6km86zm.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4547f513-9e28-4f5c-93d1-823e70b110fc@sirena.org.uk>
+Content-Type: text/plain
 
-On Tue, Mar 17, 2026 at 07:22:03PM +0000, Mark Brown wrote:
-> Currently it looks like in progress, applied and thanked reviews are all
-> sorted together (by activity I think?), with reviews that are snoozed or
-> waiting for new versions sorted after them.  This seems a bit
-> surprising, I'd expect at least the thanked reviews to be sorted even
-> further down the list than those that are in progress but waiting for
-> something.
+Konstantin Ryabitsev <mricon@kernel.org> writes:
 
-We currently split all your tracked series into "action required" ones at the
-top and "action not required" ones at the bottom, which is why all your
-snoozed and waiting series are below everything else. Within these two
-sections, the series are sorted by when they were last added to your tracking,
-not by most recent activity. I used to sort them by latest activity but I
-hated that they jump around -- if you have 5 series that you're working on
-throughout the day, you benefit from visual memory if they all sit in one
-spot.
+> On Tue, Mar 17, 2026 at 10:23:33AM -0400, Konstantin Ryabitsev wrote:
+>> > If I've done everything right, you'll find what you're looking for at
+>> > 
+>> >   git://git.lwn.net/linux.git b4/review/20260312-kernel-doc-use-a-c-lexical-tokenizer-for-transforms-0e0e9e143327
+>> 
+>> Yep, found it. *sigh*
+>> 
+>> Unfortunately, it's not an easy fix. I think I'll have to
+>> abandon how we currently do inline comments -- the diff format is just too
+>> fragile to try to intersperse it with comments. I think I'm just going to load
+>> the diff using standard "> " quoting instead of trying to be creative with >>>
+>> <<< markers. Maintainers are more used to seeing that anyway.
+>> 
+>> I'll let you know when the new code is ready for testing.
+>
+> Okay, a fairly big change landed in master that completely does away with "C"
+> and inline comments. You now just hit "r" to reply and add your comments just
+> like you would to any other message -- benefiting from your existing mastery
+> of your preferred editor.
+>
+> We also ship vim and emacs syntax files in misc/ -- they make it easier to
+> reply to diffs than regular email syntax styling.
+>
+> Please try it out again. Your old bugs should be gone and replaced by whole
+> new bugs!
 
-I was expecting that "thanked" series would be prime candidates for archiving,
-which is why they are kept in "action required". However, it's an easy change
-to add them into "no action required".
+So it's still behaving a bit strangely, at least that's how it seems to
+me.  I tried adding comments to a patch, doing my usual trick of
+trimming out stuff that is being skipped over.  Quitting that, then
+asking for email mode showed me a blank message, which is rather more
+terse than I usually am.
 
-We can instead differentiate this into:
+So I went and did it again, simply inserting a comment in the patch
+without removing anything, but it still shows up in the wrong place.  I
+guess it just doesn't like me...?
 
-active:
+(I can push another branch on request).
 
-    - new
-    - reviewing
-
-action required:
-
-    - replied
-    - accepted
-    - thanked
-
-inactive:
-
-    - snoozed
-    - waiting
-
-Does that work, and how would you sort these?
-
--- 
-KR
+jon
