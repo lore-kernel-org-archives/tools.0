@@ -1,128 +1,144 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6784A3E3C7C
-	for <tools@linux.kernel.org>; Tue, 17 Mar 2026 15:01:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0CC32D45C
+	for <tools@linux.kernel.org>; Tue, 17 Mar 2026 15:27:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.171
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773759718; cv=pass; b=FiVJfz1b3SRn8CIQltgIZ1LZqkxFecF4IInenK5nOzFJCbCo2ZRHeOH942GugVy1zrnklFlixGZuTrP7fV3Fe4OmLHzX1YemT9nr1cobe32K/g08LA/HMF9DsJh2rZb1lXxwGLilqAuf+QGJSjesR66Tkw1lrCdno2RaXxGCmCE=
+	t=1773761228; cv=pass; b=e+/LCnp9091DkhI/GMjeC3a4K5suY/MNQTtGCm0jwsgcnifHPZiy+rOuWV9X+hDPxq8H7xZfubzLVkO9g6JirtWUdxnFY1pRg5MV38cWvoHRQk1n4hZIatKSw39BLLKLG2ZVUlmUJ5o0jNVwzmRNNkmEpF4yECWGWYZ8WTx0jKE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773759718; c=relaxed/simple;
-	bh=9DYGv1zsWb7eo2NtLvGlKOZq15b80ahZhKLYQHJvuiA=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=mCC80hdknFVsd2I8PZ/YO6fNmXQ1juQT+sWLsHX+5x6CTNk39J9/RHbXddy8Dr41t+Bk28IEYdDD+Nne0iJzUXLjedfzp8/VYkFbHCSgvBMpgfrv63oCzTOvqatEaKrtJltrnTCMRegO+UJ/Ibpq2oEo+swNkw184QLd9BdPEdE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CYsFDDVK; arc=pass smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773761228; c=relaxed/simple;
+	bh=rWKJbnE1ORVx6krQkBEjhGrbfBBOYYauIdQl72uWBec=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jtU+Xc6eiB7MWC+vTAJkjTvIrDfIkJUo23oDxg1VyHS7IDEVURMTkWmIfY3oFp+fbl8y0ASETYzawy+atPtO/cHKWgSs1gahtCjok4jQLByIVuECJ0EH7ciyvA7I5Qp6arLHOQ9TaDnURvB1q18gfb/vaGxCtUED6NksZmsuqIg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com; spf=pass smtp.mailfrom=paul-moore.com; dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b=AG56j0Je; arc=pass smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=paul-moore.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CYsFDDVK"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-89c55a0a470so23191096d6.0
-        for <tools@linux.kernel.org>; Tue, 17 Mar 2026 08:01:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773759716; cv=none;
+	dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b="AG56j0Je"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c6dd5b01e14so2231884a12.0
+        for <tools@linux.kernel.org>; Tue, 17 Mar 2026 08:27:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773761226; cv=none;
         d=google.com; s=arc-20240605;
-        b=RWleWCQpueHIETwrwbIrQBimbe2elKWUyZnUvQ7UboBZbdeJhpQjnzqbvCXS+VIejH
-         K5df/WFr4UTGt1XD0uVBG3wAb6lgTWrvjlueZb3m0/t9EU0VlycxOJQRbeVL6xMvaXzO
-         JOdN7i/eDY43iP1gziBFmNh3QWC1soviOsgesWDQz3nufYA+r+gMJZBHb61bBnuj4ja+
-         gfjmJpsPJN0yG5LDu/4n1rxKd5N52LezIdzO8imKfdUJ5oea8FWExFFe6LGUUI4ubuDf
-         SP7jBz+BbzePjAfGhmVBT6v1vsBoW3b7QBXYugSARkc0nsBVp82tVCiLadmHDoTQEJw2
-         islA==
+        b=GFFvpINj1m89jbPnY4REQ3h23mygmnRa6Pay0wq9cnT/2IYbm9kFHwpwUoVHBr3k5a
+         DrqYlV31/2TPSyNSZAVUrZjBHVYLT4qBfdVceiAxZ+RR2vqPb2dCKulWUdKFQjnPUHzp
+         TX8H8LaIkxVVCMzctIdn+0oh7zh5OAVP98tM3xR4HuoAYElynLMvmaFlM1T3kq0Lg5YG
+         cGlrWxO9FRGIlZW3m2jMQM9NGgoOWAMWB1EeKmARi/LS5DrgLXEk0Xn3VKdAV9ZWSBxj
+         w/Szxqn+p55yDi4xQ2cNSS+cYY9a5jRijbUKnQt2M0ZavrlYg2i6sKaHwadJMO1Q4sOE
+         8pfg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=VkzVCcvD/qs9pvPpPx/vOich+3UZQN8LIBihoRdiGo4=;
-        fh=SLFtMA0WcE3eL6H/oV585MPjyT/DYEA5cb8AIsdKCLY=;
-        b=Za/do7+DYnI2VHUlXuSEHE/fqBqGPZNjIFjiBUSY8RjL/6HzeWGviRhUvrh+k7Sj62
-         HCtAFYcAuLzK2RaH97huE3aSiIbXos9z2g4w+qHmkvKXUkoKpDW20/FUBRwngJ4I1/u/
-         Ca9Wok9YHeI48SioqTzXTVh4+w3oBrlyQyh63DOpQOfQS5UhJvxbjkPt9cNTp5/F+7RI
-         +BfZkQZgbC9ysvjbIzVzyWqoOhblNl/wzP1A/Vtcvha82EKsG2/YrWyZGnWHZkxTLo7I
-         9IDRCXdQS27tIpIYq0W0Nh6cbzB3SAEKV7qrkWZXtYX/AsXW9tP5Nb0PkctXyzTTCNi5
-         54gw==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=5q54ms+bEbGHdxc/2JCs4Ws9Nof7MGHs5cF+RM34mxo=;
+        fh=SYzEM1Bz9HIe2u202Hfn6JYViaLmEddcbkAzexyXF6Q=;
+        b=XMxJqWmfHn/Cmkz5uEJWjiKIRO017j+Prs/F1zsfTIN1PY2exoq1/ByuM/B/gI8vSm
+         9Zjv6z0px2RyfbSxqhAXCxzup0A+rFVoE8X+dRfVcAW51qOmFmQRDxriu7lTGL+w1yXW
+         gfqJjl1Ts7ohEqIdnHDWY5d4eMOqsNgr04hv50oXJ8Ni249kM8h6o0Er4DKAm6s0CAS3
+         Ae0Icis9u1zlJzH+2GT/nk019r6AOJz2gPPmmQ9KS4z//JWORNqBK0fo4FSC11XnS0Wg
+         I47BhKVPFUH85rd2olsMXfrKNu0yeHQt2dVsShs8uSkPqFlgkNgmPU6rSgUCR2CZAyyE
+         TapA==;
         darn=linux.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773759716; x=1774364516; darn=linux.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VkzVCcvD/qs9pvPpPx/vOich+3UZQN8LIBihoRdiGo4=;
-        b=CYsFDDVK6skqDZ1/6edJiKfGWcSMjymvckky5oCux1QzuGSAhZmMaOdvDol9XtRJWM
-         FMEzNGp/OH5v6kx0ehB3ruKpgrblCAPhqS1495RAn4BVCzpVZaYO4h3h8VaELOdcMyfV
-         d9VRpjt57ailMLR0KAf0LmBvO8NrPOYu0qd7qBwAxUNZ7CpdIBz3109tDmTYWRe6bYFQ
-         2IS5ZNnS6v0nMmvXKedcioo2HIDGD2vJRNSgP9I5fD29kg6mVyn4vxPgfttUy4Ngo8tO
-         JRQTOka6D28FagMUrlLIKsFOZ+PmEnNa4Ce4h6+i2BjQYQ8Jtl+/E2oOgxirpP7YX5Yq
-         +ixw==
+        d=paul-moore.com; s=google; t=1773761226; x=1774366026; darn=linux.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5q54ms+bEbGHdxc/2JCs4Ws9Nof7MGHs5cF+RM34mxo=;
+        b=AG56j0JeFNFlrSiNFLUNnJfGKzbNvxlFG8QysMvm4MH8wQGAp35GaRQQPpXWpv3azQ
+         RVsvPvchEvCLg55p1LK06Zvx2wnJ/1bMm8n8RDT0XlPlRMKYvoW/F0hCCsJydAPhiN1R
+         VGXLXHEFk970oLguIgZGse/bmn4k6PjB4Xs0o6HCUdNqknSAEO0iqzZny6yF06zG95iI
+         UBFvoP9Qhr2TXvbtDdqcvIHhKYIob4LzjtKAECw7ZOS9ot/ZdIUBMQfYyyy8xsxATGq6
+         QzzR9xtyFTV+nTHDUREEuhnhy2r4+cbFcgy1ldZYQVen0HZcyYhyUZmX1/HjiAo8hT1j
+         5woA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773759716; x=1774364516;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VkzVCcvD/qs9pvPpPx/vOich+3UZQN8LIBihoRdiGo4=;
-        b=h7dA4jgBfi2kGazIScc7Ina0zG6dIFruYTn8SNhRs+/lp8Sg7M4fzf4NVpKtp9OrCD
-         u0d8sTkbbvVHmFypHWRz9QujHIF1At+l+mT2H+aRpHeBM1An2PtLxUUQOS2Z4D11/k+7
-         6CLojRnosmgFcs6GmsTN2LcSh14+lU7sMYSTW/LgjzTqT94kjGYCzD6Y6agkrQR9Ps/X
-         PlPE2gnRGPogn8gOqiLDQugqz8cor1Ia/asFQuOG5X+bbyAKySP8ZVP0w3QF09KGmph0
-         7Vd4GsfBOxPW/mNqoVcBBeh8A4i+gGxZ60XxVAixy193yaTgCNs33tB/IF3yPsS5tUF5
-         9QOA==
-X-Forwarded-Encrypted: i=1; AJvYcCW6GvQ6FDlBEi3a4//tee8zfAbAsSEHkKqM2oaMNNWbI5As3NRqdZRf6TyT6NGCrECDvdYJ0g==@linux.kernel.org
-X-Gm-Message-State: AOJu0Yymanpp18W5PVLAHbMxngAfGuF713/ItUjZyRxLvU9IqzcBJzyU
-	tAXMYXWpKG1/0lLvXF8a/IEh+o+c50X0mYCMYXS6q8AtNLbzmePwnt4GWOyJPPCg7xhvEbPie9r
-	wbHTsJ61vmd8Os9ypcu8R8/NHNT1rheo=
-X-Gm-Gg: ATEYQzxeW5B4tiBTtthsbKLprIzYBiJZYMXr1DCznPJRVIA2ojLcNjYeT3H3zFlPtJ7
-	4w7TduDjISIHaSbQEoJiGdVo4jnSLPkt9Y5/8fsWgoFtcYC9rJrygiEsGrsRaWFHkHlNCAxtFTo
-	uEQeueVoXgJrXD4kY/krLLwWKX9Vxx82t235r+99Eg7S8LcBMgy+Es9Z0gObqjnikc+WN4DzS30
-	Yd5mLnS1BDT8OgGOL6/s+MhY3ftjO2t4I6OAdtpNT0WIIN8737ZW2dA7zPw5rMybJmJCM1LPAhV
-	NCcF2nrD3+STZgEjzTQ8hJ4ogWFCZNvgf82wSMsdqt764TlhZGBIauz0uiyrIkI=
-X-Received: by 2002:a05:6214:dca:b0:89c:5f6e:451a with SMTP id
- 6a1803df08f44-89c5f6e467dmr43920376d6.21.1773759715546; Tue, 17 Mar 2026
- 08:01:55 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1773761226; x=1774366026;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=5q54ms+bEbGHdxc/2JCs4Ws9Nof7MGHs5cF+RM34mxo=;
+        b=GODLYaDLTPGSO8n4QQf/c1v8PbCAkl0EF6pEGHaCcKZivi2L/XnhKhoRpAhUeTCPSd
+         LMlFawf/xzrwnSE7pLNfDbDkR/x198pHIwe+ZiFgq7pnySh3CPZzQc+n81IfOLFuOhua
+         0OCREjyELFk4+0TiJSwerXU42UXU47rzR9Sh+JSN1G4lVWESG6qqvH9kRZ6A1m+lusSG
+         +uSbNH+51IKudkWWveOivR6Q+uCyiw/nF84gURsxMRmOdwdhgTWZQgGshXv/oHWv5DnL
+         H3Jh9mHGfTe2VtMz0WABeP/0kLnWzWhvA5ereWDnnd6HirxojLFTtU1Ih9Zp07eEXeYN
+         yDxw==
+X-Forwarded-Encrypted: i=1; AJvYcCXU8gApva2A5rDZUPiIh5i49cCMfgTbHkrb7O88Uz/Y9Vm3FKbY3AreFB1SSKjRUvpGppJWIw==@linux.kernel.org
+X-Gm-Message-State: AOJu0YyfBLbH8ZBPeetKOqUbPtpJsuyPohnI8R+mxNfhvC+p5Gg81CMk
+	rTuQNdJg42yCw4iD2b12W1QNNSCJUxKmuZKlKgx/q7wxAR3Vs86HhFChnwDngAbs9MoJlMkY7/z
+	YRqy3h89l6RUpyWB/gS88mBCpsFxCtsY2iMTowIX6
+X-Gm-Gg: ATEYQzx5ACJnoGkgmnyt0mj+rh3fWAjWLigYo11tAtQUEjsYMmxAn6/kXaARKvIGHiZ
+	QxWUKVSzg28QFqP3enqQ6b1X9nR7iqd/3JeCBptJQS71DX9oLeXXJGEdKWwvSMyavl6J+1adlao
+	j2rZ0hvZheYcEf8tyEfKxrkpIL69bkNNVrrDJ7nrUY5Kq6BuiVj3vLYLmUk4MNhqN05pwAnttdj
+	r+//CpppAemPJ+BJPVnf0b4r14JSVRKOs6gBY9HvwIQV7kD+PmnTp7xv6aBMWY8gML0rB1/e6Pc
+	4u7uvTw=
+X-Received: by 2002:a17:90b:4a46:b0:359:f6f8:57b8 with SMTP id
+ 98e67ed59e1d1-35a21e37d7cmr14288536a91.1.1773761226244; Tue, 17 Mar 2026
+ 08:27:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-From: Chuck Lever <chucklever@gmail.com>
-Date: Tue, 17 Mar 2026 11:01:44 -0400
-X-Gm-Features: AaiRm53_7a12sXGyddYsrdXqXsyy5c35m7Tuk2IJeTJ8b44ByBrieulVLpFFH20
-Message-ID: <CAFMMQGt-Dc4DiSNUYR1mQfUBswP9bmjyXfcvuy6HO57rZ79fHA@mail.gmail.com>
-Subject: Using "b4 prep" with Stacked Git
-To: Konstantin Ryabitsev <mricon@kernel.org>
-Cc: users@linux.kernel.org, tools@linux.kernel.org
+References: <CAFMMQGt-Dc4DiSNUYR1mQfUBswP9bmjyXfcvuy6HO57rZ79fHA@mail.gmail.com>
+In-Reply-To: <CAFMMQGt-Dc4DiSNUYR1mQfUBswP9bmjyXfcvuy6HO57rZ79fHA@mail.gmail.com>
+From: Paul Moore <paul@paul-moore.com>
+Date: Tue, 17 Mar 2026 11:26:54 -0400
+X-Gm-Features: AaiRm53fnzVtd37OG0jjhMkdlwG7Wzn27qWBEFGIE-U3XuXVv2BlvzAwLLGk_VM
+Message-ID: <CAHC9VhS7nBWxZ0=1c_ec=Lq+J0CqZUGbriu2i==X7FciSw0K2g@mail.gmail.com>
+Subject: Re: Using "b4 prep" with Stacked Git
+To: Chuck Lever <chucklever@gmail.com>
+Cc: Konstantin Ryabitsev <mricon@kernel.org>, users@linux.kernel.org, tools@linux.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Konstantin -
+On Tue, Mar 17, 2026 at 11:08=E2=80=AFAM Chuck Lever <chucklever@gmail.com>=
+ wrote:
+>
+> Hi Konstantin -
+>
+> I'm a long-time Stacked Git and b4 user and I'm hunting for a tool to
+> juggle the many data items involved with posting kernel patch series
+> for review. "b4 prep" seems to fit that bill but it has some issues
+> when it comes to large cover letters with Stacked Git.
+>
+> The branch-description strategy is the least-bad option for StGit
+> right now, but it's fighting git's design -- git config was never
+> meant to hold multi-paragraph prose, and there's no way to tell StGit
+> "don't print the branch description in stg branch --list."
+>
+> A file-based strategy would solve all three problems cleanly. Something l=
+ike:
+>
+> .git/b4-cover/<branchname>/subject
+> .git/b4-cover/<branchname>/body
+> .git/b4-cover/<branchname>/changelog
+> .git/b4-cover/<branchname>/recipients
 
-I'm a long-time Stacked Git and b4 user and I'm hunting for a tool to
-juggle the many data items involved with posting kernel patch series
-for review. "b4 prep" seems to fit that bill but it has some issues
-when it comes to large cover letters with Stacked Git.
+Fellow stacked git fan here.
 
-The branch-description strategy is the least-bad option for StGit
-right now, but it's fighting git's design -- git config was never
-meant to hold multi-paragraph prose, and there's no way to tell StGit
-"don't print the branch description in stg branch --list."
+I do something very similar with my own scripts/tools, and if I could
+offer a suggestion based on my experience, you might want to consider
+some slight naming tweaks to support multiple cover letters in a
+single branch.  It's common for me to use a single branch for multiple
+revisions of a patchset and being able to refer to previous cover
+letters without having to go to my email or lore is very handy.
 
-A file-based strategy would solve all three problems cleanly. Something like:
+This becomes easier if you include the To/CC, subject, body, and
+diffstat all in one file.  My cover letter tool formats and keeps the
+cover letter in a format that can be quickly copy-n-paste'd into my
+editor during 'stg email send --compose'.
 
-.git/b4-cover/<branchname>/subject
-.git/b4-cover/<branchname>/body
-.git/b4-cover/<branchname>/changelog
-.git/b4-cover/<branchname>/recipients
+> I'm asking before prototyping to see if you've already considered this
+> idea, might have another idea, or might have something already in the
+> works.
 
-Or b4 could use a single file with delimiters or structured with JSON.
+I've built up a collection of shell scripts/tools built on top of
+stacked git over the years to match my preferred workflow, but I
+wouldn't consider them very pretty or something I would want to
+support.  However, I'm happy to share the basics ideas/concepts that
+I've found helpful :)
 
-Advantages over the existing branch-description strategy:
-- Each piece is a plain text file, editable with $EDITOR directly
-- stg branch --list output stays clean
-- Changelog and recipients are structurally separated from the cover
-body, so --auto-to-cc can write to recipients without risking
-corruption of the larger prose items
-- Trivial to version-control the cover letters separately if desired
-
-The tracking metadata (change-id, revision, base-branch) could stay in
-b4-tracking in git config -- that data is small and
-machine-manageable. The cover-strategy mechanism already exists, so
-adding a new file or work-tree-file strategy would slot in naturally.
-
-I'm asking before prototyping to see if you've already considered this
-idea, might have another idea, or might have something already in the
-works.
-
--- 
-Chuck Lever
+--
+paul-moore.com
