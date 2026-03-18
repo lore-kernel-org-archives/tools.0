@@ -1,102 +1,111 @@
-Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8EC3DB623;
-	Wed, 18 Mar 2026 14:44:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.145.95.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFC03B7B63
+	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 14:53:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773845081; cv=none; b=UZmBJ2y8uC5Y3AO2WjrHdXDPTcewGtXV7ZQFbmx2KGdPKUWJXOU/kZwYHXqUs2JNtgqR/XjO9Puk9yaDkO4HPQpkXXX3JgQBhOS6sw54+GtQHHIxs1nE+6YfXP48plthk/LQ0DD8pSl7z73lwI9b5SQ6uxRCKF+FkgBLhDuOoVc=
+	t=1773845596; cv=none; b=T4PezzOunG4LsgIp8xGtPoUKYj0ar/qLddB54FP5SeLPzbDlpQ1BxGFITTcRzfAsqiS36g+qTQaL/VD2VHVwJ0EmcMS622Xacu7bvNOqw5D74vod/slgHBDlK67Wou9V1MplpJbPk/+JgdpFDXJ3lpkxanDqsKC2zIxODLvekPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773845081; c=relaxed/simple;
-	bh=74PkM8/gCSVvVNEVvEEfeVSIEsPsk86WlIv8cg49rno=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HqEhRxZC9D9sWYUdxfXf83qHsG3ZTq7J9iZfPlz4cNcafAeqmbA6m8JM4t7W9TO2q9JnmesniZlii7VaJnCLtEEEEN/r8gAHaToSny1P/w1gBV26XlDdwtmw4vJQQ9H+iEnTJJx25AF0WICassqbrPd10qq0Ff9C6VOV2utq0Qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=toke.dk; spf=pass smtp.mailfrom=toke.dk; dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b=OZYS/BLn; arc=none smtp.client-ip=45.145.95.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=toke.dk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=toke.dk
+	s=arc-20240116; t=1773845596; c=relaxed/simple;
+	bh=P3RmEfeVl5rB1RolpuEMWoYT1Rcb+L0pzJIV0hoByz0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JnR3tHnxcWIsvMci8/ZA7sqxZ8MMELKGvexir3hypxvEGl2biWlvDr/X4ztPK+2x2YpAf1zNh2J7hnqs7EEtbW4dYU5QTtOUQImp5h8GoIAzMT56QCo+gc19JaL0Mh8W/E5XsqwvcLjFIks55CR+RmVszHjG9XCE3xzPvQFRT+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nMbtNwkb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="OZYS/BLn"
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
-	t=1773845075; bh=74PkM8/gCSVvVNEVvEEfeVSIEsPsk86WlIv8cg49rno=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=OZYS/BLnmpy8AC2yKWN647umwX8GKy3cry8Hw8GYfV14DskQR1fPB00PJZeflmzp0
-	 2Q2+xQIBJC3fm9IOeOaeoXxCNtQfcedi/wA90TmLJJPUwmHPQemomrMf+eEiHNBOPj
-	 Be2b0uJ7GLEEx18NhA8XyA+7yu4+dA5Y+INgMq83ZwtdO0t6vR7WR3CXNntYbnoe5Z
-	 KQHooV4apX5/Rsze67BoWZh9ZReCPWHJ5xVIwbE4A3mLx/mOtN8wKO1YX9dsyYt/Kx
-	 2RV6JE0hIZKIsvc7a/WsvH//kVWoIRLSEaC1MT7fV7rpUehxSzXBjPF+2eGZhJ6sbu
-	 a+kcYIxq3DwLw==
-To: Chuck Lever <chucklever@gmail.com>
-Cc: Paul Moore <paul@paul-moore.com>, Konstantin Ryabitsev
- <mricon@kernel.org>, users@linux.kernel.org, tools@linux.kernel.org
-Subject: Re: Using "b4 prep" with Stacked Git
-In-Reply-To: <CAFMMQGu3FZKde_EK29Croffoqt_xucM--8CCJQ8QT0uHoeZUSQ@mail.gmail.com>
-References: <CAFMMQGt-Dc4DiSNUYR1mQfUBswP9bmjyXfcvuy6HO57rZ79fHA@mail.gmail.com>
- <CAHC9VhS7nBWxZ0=1c_ec=Lq+J0CqZUGbriu2i==X7FciSw0K2g@mail.gmail.com>
- <87v7euo0vt.fsf@toke.dk>
- <CAFMMQGu3FZKde_EK29Croffoqt_xucM--8CCJQ8QT0uHoeZUSQ@mail.gmail.com>
-Date: Wed, 18 Mar 2026 15:44:34 +0100
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <87jyv9nqnh.fsf@toke.dk>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nMbtNwkb"
+Received: by smtp.kernel.org (Postfix)
+	id 6CE3DC4AF09; Wed, 18 Mar 2026 14:53:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D76BC2BC87;
+	Wed, 18 Mar 2026 14:53:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773845596;
+	bh=P3RmEfeVl5rB1RolpuEMWoYT1Rcb+L0pzJIV0hoByz0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nMbtNwkbW+OUuU+yZQ/XPWW5ssKtSEb4Ak7q/TSWFTi1wWOwPNs4+4ISaQx6iagfz
+	 SkjanjkVNtPWbP0meWOJ7lP8DKAX82gAY7qP/HO0qgwANKwBEaLX+UKQbaJw+D6C4l
+	 cR7MNfb7Ps3FMv0WCCEcuE7F6ICzla5fkKL5ZwacsE/BHx5ZsfODCGaESSn5M/1m9Y
+	 Iy0rqm72AtdPHXAKQKIj3JK0t2PTMahvgBoriZKu9XfHjus3xtxWEYsxtM+bB8/69G
+	 TbFSJHr6guXlhZ+mNEfKjW7nIs0+yBRKs+UvYe7qkKW6lSP3VJp0HT+Jq8r1Bu3hme
+	 l/qsqdQKh8ryg==
+Date: Wed, 18 Mar 2026 10:53:15 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, linux-api@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, linux-kbuild@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, workflows@vger.kernel.org,
+	tools@kernel.org, x86@kernel.org, Thomas Gleixner <tglx@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Cyril Hrubis <chrubis@suse.cz>, Kees Cook <kees@kernel.org>,
+	Jake Edge <jake@lwn.net>,
+	David Laight <david.laight.linux@gmail.com>,
+	Askar Safin <safinaskar@zohomail.com>,
+	Gabriele Paoloni <gpaoloni@redhat.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Ingo Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH 1/9] kernel/api: introduce kernel API specification
+ framework
+Message-ID: <abq8W0jDtwgSsUdT@laps>
+References: <20260313150928.2637368-1-sashal@kernel.org>
+ <20260313150928.2637368-2-sashal@kernel.org>
+ <87h5qe9wig.fsf@trenco.lwn.net>
+ <20260318070055.39f1af80@foz.lan>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260318070055.39f1af80@foz.lan>
 
-Chuck Lever <chucklever@gmail.com> writes:
-
-> On Tue, Mar 17, 2026 at 12:51=E2=80=AFPM Toke H=C3=B8iland-J=C3=B8rgensen=
- <toke@toke.dk> wrote:
->>
->> Paul Moore <paul@paul-moore.com> writes:
->>
->> > On Tue, Mar 17, 2026 at 11:08=E2=80=AFAM Chuck Lever <chucklever@gmail=
-.com> wrote:
->> >>
->> >> Hi Konstantin -
->> >>
->> >> I'm a long-time Stacked Git and b4 user and I'm hunting for a tool to
->> >> juggle the many data items involved with posting kernel patch series
->> >> for review. "b4 prep" seems to fit that bill but it has some issues
->> >> when it comes to large cover letters with Stacked Git.
->> >>
->> >> The branch-description strategy is the least-bad option for StGit
->> >> right now, but it's fighting git's design -- git config was never
->> >> meant to hold multi-paragraph prose, and there's no way to tell StGit
->> >> "don't print the branch description in stg branch --list."
->> >>
->> >> A file-based strategy would solve all three problems cleanly. Somethi=
-ng like:
->> >>
->> >> .git/b4-cover/<branchname>/subject
->> >> .git/b4-cover/<branchname>/body
->> >> .git/b4-cover/<branchname>/changelog
->> >> .git/b4-cover/<branchname>/recipients
->> >
->> > Fellow stacked git fan here.
->>
->> And here! I have been using the "cover letter as commit" mode of b4,
->> which works as long as you remember to 'stg commit --all' before you
->> invoke b4. I requested a pre-hook functionality in b4 to automate this,
->> so will take this opportunity to bump that:
->>
->> https://lore.kernel.org/tools/87ttdkrylx.fsf@toke.dk/
+On Wed, Mar 18, 2026 at 07:00:55AM +0100, Mauro Carvalho Chehab wrote:
+>On Tue, 17 Mar 2026 11:49:27 -0600
+>Jonathan Corbet <corbet@lwn.net> wrote:
+>> So the reason for two completely separate mechanisms is not entirely
+>> clear to me.  The kerneldoc variant is essentially documentation, while
+>> the macro stuff is to be built into the executable?  What if you want
+>> both?
 >
-> To quote your 2024 email:
->> So, my feature request is this: add support to b4 for a hook command
->> that is executed before any operation that will rewrite history - and
->> abort the rewriting if the command fails.
+>You can easily add support at kernel-doc to output such macros.
 >
-> Ha! I set up a hook in my stg skill to interrupt Claude before it
-> tries to modify the series using raw git commands. Same hazard.
+>All you need is to create a new class derived from OutputFormat and
+>make it produce any different output format, including:
 >
-> I looked at using the commit strategy and felt it doesn't work well
-> with my own stg muscle memory. I didn't think of using a hook.
+>    #include <linux/kernel_api_spec.h>
+>
+>    DEFINE_KERNEL_API_SPEC(sys_open)
+>    KAPI_DESCRIPTION("Open or create a file")
+>    KAPI_CONTEXT(KAPI_CTX_PROCESS | KAPI_CTX_SLEEPABLE)
+>    /* ... parameter, error, constraint definitions ... */
+>    KAPI_END_SPEC
+>
+>I'd say that converting from such output to `.kapi_specs`` ELF section
+>itself and/or to sysfs/debugfs - e.g. something that would require to
+>compile or be linked with Kernel's compiled binaries should be done by a
+>separate tool, but we should aim to have a singe tool to process
+>kernel documentation markups.
+>
+>It is hard enough to maintain just one tool - and to have people actually
+>writing documentation. Having a second one to handle it, with a different
+>format will likely increase a lot the documentation burden.
 
-So that's a +1 for the hook feature request, then? ;)
+So this is exactly what happens under the hood :) kerneldoc outputs these
+macros and they get compiled ito the binary.
 
--Toke
+I exposed the macros as an option since they're there anyway, but I'm happy to
+hide them as internal plumbing too.
+
+-- 
+Thanks,
+Sasha
