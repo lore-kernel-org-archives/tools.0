@@ -1,74 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B568387350
-	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 13:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF483DA5A7
+	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 14:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773841801; cv=none; b=YNwLbzAo86NRePvlregw6xLDC+6rIiVJGnWZjppcMzKyqk3aLeSSK11qj3tPhqf1cW+J/jRWMx8hhQvtHR+c/nNBalpnPsFWFWxDlCffUsKWHkdlJ9907vWDcAgr5UzBExVmwiKY+/0LMB3ekhYCUSRZRuKGx3RtO15OG5V+5bg=
+	t=1773843138; cv=none; b=lnfVVIjxnHDf/ypzPC4/xRITU0PEBXTN7kqXLDUEuOiYVxhXkOpsOBsrEJDmxoymIeYoO+f/WiBFE5AhllYoAlllDZIWnPwWLQd44m9Q9tGEFcuknOjv5SE3nFqJLlUzRJOOlDOjGWYf9pI4LYwLk16Vx5wQe38ZJgehFg3ZcHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773841801; c=relaxed/simple;
-	bh=+pMOPDgl7YQ2jYOrz2ZM+yrEEvZaUihitvD0N17hh4s=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=JHfvvQA3jXho2OdQpDoKYJoErZPnpnyNRr7iYHKh4/z+hy6N8FhWon+ybIIg72I4BZTQvczBC/3i/eA8JeJljgWxzaJI6wjhZ/rHWvXTiw5cmTNiVf5gmXfx7kV8VRSO5f7QlssWRleQBfCCbz8mUpJ3hihwEOzdVvcBkX5tjH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eHfcN9Ej; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773843138; c=relaxed/simple;
+	bh=IXLmuwZSj5HSQo0tXWv3jOtalQVrJJQSZpbmeg/KbZo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dI+YtEnuJi66xY3DrRkHw+4G6t4ajaENdGEXLDu6AXBoOX9JcoXDDKLE/2XA0r2aa3WlKvYYAugO7weIMddwLtbMZ5L5T9HP+ZkoVWaJEcundXFfTVHNFG8R2RGSjcBCIktAazL7dj8LMzaeAoyxMOmDV7Tm4Z86+Yawi2iFPNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W/2JI14t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eHfcN9Ej"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W/2JI14t"
 Received: by smtp.kernel.org (Postfix)
-	id CE0ECC4AF0C; Wed, 18 Mar 2026 13:50:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CB2C19421;
-	Wed, 18 Mar 2026 13:50:00 +0000 (UTC)
+	id DA806C2BC87; Wed, 18 Mar 2026 14:12:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93490C19421;
+	Wed, 18 Mar 2026 14:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773841800;
-	bh=+pMOPDgl7YQ2jYOrz2ZM+yrEEvZaUihitvD0N17hh4s=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=eHfcN9Ejev8sbIRwb9ANgXFyh0pYMar3g53LxDuWuauaFlX2oVAiBpp8eVcq//0p6
-	 2gtEAxJG3Qv0MqDYT2ruyOOnb5EsYoT5MVMjRDZT+03ISgXCn3XUsR61oIYf3NWFTF
-	 slg0TcLvoFrR7V5ysRGsil59OOXs9umC9r62xMa/5ZBFge+GwI4rVsPt465HPnMmiY
-	 AmF0KRV13ohmwKXCG0chPrz+TmHaSFsHOn2BA3gV+wA9RXJ5ibV8MzZtbg1L4AinlY
-	 lrkQb5PMn8qbQwxsbNHO1AlzVx2dS5k2Ow1TkMJLPR7fsm5PFZN9qsPKzUQeR5m2TO
-	 X4YA1sUz6nPaw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 7FC003808200;
-	Wed, 18 Mar 2026 13:49:53 +0000 (UTC)
+	s=k20201202; t=1773843137;
+	bh=IXLmuwZSj5HSQo0tXWv3jOtalQVrJJQSZpbmeg/KbZo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=W/2JI14td5+LKwp+H9zABf8u7nvEipOZ6K872WIuzTaZpe/ImVkxCNnGwpXKs+NDK
+	 BrHtqY92Bw8ZMAoREajpxAdZHfz5lYmo5Lyz3QRwUp0TqjABu4Ns4pJ6KNfCQmDOHI
+	 WB7yn4Z1WX42HjH4l8LJeOwRcaHBct2SLFn+MKp/Y3tps5GKuuO6sAdhHDU+ReUi2U
+	 RspedWUhZWcmWIVPV3C5NL7L1ESVDg8z48DHtlLcjpPRzzBDJy6teoDaaIgHY/rqoL
+	 7Avdi31tl+YqiO8GsORYLlzhFHk6bAVRa04off99x/0A8Fzd8ZgRd56HOXKGEWXZDU
+	 MuOystwLEJMMw==
+Date: Wed, 18 Mar 2026 10:12:15 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Jonathan Corbet <corbet@lwn.net>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-kbuild@vger.kernel.org, linux-kselftest@vger.kernel.org,
+	workflows@vger.kernel.org, tools@kernel.org, x86@kernel.org,
+	Thomas Gleixner <tglx@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Cyril Hrubis <chrubis@suse.cz>, Kees Cook <kees@kernel.org>,
+	Jake Edge <jake@lwn.net>,
+	David Laight <david.laight.linux@gmail.com>,
+	Askar Safin <safinaskar@zohomail.com>,
+	Gabriele Paoloni <gpaoloni@redhat.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Ingo Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH 5/9] kernel/api: add API specification for sys_open
+Message-ID: <abqyv0DiT0LFUU4v@laps>
+References: <20260313150928.2637368-1-sashal@kernel.org>
+ <20260313150928.2637368-6-sashal@kernel.org>
+ <2026031343-raft-panhandle-0a21@gregkh>
+ <abQ-iIylzpuqlRv3@laps>
+ <878qbq9uau.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-From: B4 Bugbot <bugbot+b4@kernel.org>
-To: mricon@kernel.org, tools@kernel.org, broonie@kernel.org
-Message-ID: <20260318-b4a2fb75c2-7ac9eb879be3@git.kernel.org>
-In-Reply-To: <069aac52-a9a2-44e1-bdbb-eabc82e23641@sirena.org.uk>
-References: <069aac52-a9a2-44e1-bdbb-eabc82e23641@sirena.org.uk>
-Subject: Re: b4 review handing of rebasing issues for new versions
-X-Git-Bug-Id: 4a2fb759cfc2f44cbf9e652089fcce2386dceacf2f3df3fc93445e09cbc6c98d
-X-Mailer: bugspray 0.1-dev
-Date: Wed, 18 Mar 2026 13:49:53 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <878qbq9uau.fsf@trenco.lwn.net>
 
-Konstantin Ryabitsev writes in commit fed4cd88f9dc9b7370fcdb292aa27ecf40626635:
+On Tue, Mar 17, 2026 at 12:37:13PM -0600, Jonathan Corbet wrote:
+>Sasha Levin <sashal@kernel.org> writes:
+>
+>> On Fri, Mar 13, 2026 at 04:33:57PM +0100, Greg Kroah-Hartman wrote:
+>>>On Fri, Mar 13, 2026 at 11:09:15AM -0400, Sasha Levin wrote:
+>
+>>>> + * since-version: 1.0
+>>>
+>>>I think since older versions :)
+>>
+>> Right. I guess that in my mind 1.0 was the first official "release". I'll
+>> update it to 0.01.
+>
+>That kind of raises the question of just what since-version means.  The
+>version-0.01 (or 1.0) version of open() surely didn't do everything
+>described in this specification.  So it's saying that some version of
+>the system call has existed since then?
 
-review: do not re-promote waiting series for already-known versions
+You know, I'm not entierly sure what the definition should be here.
 
-When a newer version of a series fails to apply and the maintainer
-puts the series back into waiting, the next update cycle would
-immediately wake it up again because the (broken) version is still
-newer than the checked-out revision. Fix this by comparing discovered
-versions against what was already known in the revisions database
-before this update cycle, rather than against the applied revision.
+I stole this from man pages where they indicate at which version the API was
+introduced in. I'm not sure if it really adds any value.
 
-This means a waiting series is only promoted when a genuinely new
-version appears — one that was not already recorded in the database.
+Any objections to just dropping it?
 
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://msgid.link/069aac52-a9a2-44e1-bdbb-eabc82e23641@sirena.org.uk # 4a2fb75
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Assisted-by: claude-opus-4-6-20250904
-
---
-Deet-doot-dot, I am a bot.
-b4 bug tracker (bugspray 0.1-dev)
-
+-- 
+Thanks,
+Sasha
