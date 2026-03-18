@@ -1,134 +1,127 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BAE364940
-	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 06:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B52371042
+	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 07:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773815060; cv=none; b=EogV22PWhGsGIAEjhgbe/+qEXbt9Q+Yx/4xDYtZDpWhEaTE2fF+OZ8wLDFk/4nrfcLn7MoghOzOKCq12b+coZYEc0uIZuhTDDFIu4UnXmGAb/8G54wIMIJU7Wjq4GARJjf7GhWpxH8F86T9qwBlojrcYIbD8WrQAyzbYGFTosqs=
+	t=1773820632; cv=none; b=Tra6ubkuIIO3j6XPj2Q+xSuaJ12FT6ROxmCdeU26Im/gM6hg8dPRUBzXZluErOTH8FgU7W3AiNTVB0Vjb4ObC1GEUlA+oEIGiZmRrtf5WTZZpYoGYSuU/pyN2IhN8brrngOwWXyX490//7UD5D0u8q8zZQWbDRIKvDNiI6VLGNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773815060; c=relaxed/simple;
-	bh=pAl3NCDU41bTQKWjQ1fx4v1ez6c5MZxvJDobpWAZWPI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IcFajiegPqMGYuvfzNeMvJDsTuKk7xG0zKJUGxiFKCCHAOFPMKmHE17TfftxRFB/JUUg6GLOHE+5SyniyP0PNdF0Ew8mpdUjNmyK7UlteEyIOy+G1MezqLmVqQuVGtjSUiQHpZ+FQuAQjIK0vNIcK0lWhBoAasTDjtsE7aXutxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f0T+Bes8; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f0T+Bes8"
+	s=arc-20240116; t=1773820632; c=relaxed/simple;
+	bh=KL4fkua0zONoLHFqFYlmSIkV+AEtOce/sAqq4EW5+jI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ialru6+cAfYrw6CSu0C3hDblbi/DX9haPSIiaExtDcJ88NVVEF6Y1cX0hSybZPGxwyn9XpnPFTs2G7H43W1SsT/H8XM7gHUf4i3DTLJ4ZB/UVvg3nMj2eC4fZN/59YHmsq9UjhhBb3C4Vac2o3iFAo7HcaR42DDpl7cX8KIy1og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 Received: by smtp.kernel.org (Postfix)
-	id B7860C2BCB4; Wed, 18 Mar 2026 06:24:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81047C19421;
-	Wed, 18 Mar 2026 06:24:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773815059;
-	bh=pAl3NCDU41bTQKWjQ1fx4v1ez6c5MZxvJDobpWAZWPI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=f0T+Bes8xiS9A0l45/c+XTCgLFlaLmSNEwXKeV0UhdIKVqg8XHB5fceBVlEv1L3h5
-	 ogM6c3g4wlNPBR+yvkgm8A8pKuNDRxfsS2DyHMjjVq5LlSKC0I/5/HCqbK3bidn1T2
-	 9kN4AAzceTso+wOIn0s85hNexDCCoBN0KlvIen9wZQ1+51wtohABua4OOn6LHwT2Xc
-	 aPKny+zxfBx0fH6wjrs11SE5x5RQFA+ASX+tQdHP/741NgtTU70qGvXGqH0ZFzkmsu
-	 YPRTJksgl+A8mQGhr3aoEl9BA3Om+TOl0Lt4ezhL6yE745IFf2VAzrWGAQEU6iFTqp
-	 TArGYEojn3Fjg==
-Date: Wed, 18 Mar 2026 07:24:10 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>, linux-api@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-kbuild@vger.kernel.org,
- linux-kselftest@vger.kernel.org, workflows@vger.kernel.org,
- tools@kernel.org, x86@kernel.org, Thomas Gleixner <tglx@kernel.org>, "Paul
- E. McKenney" <paulmck@kernel.org>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Jonathan Corbet <corbet@lwn.net>, Dmitry
- Vyukov <dvyukov@google.com>, Randy Dunlap <rdunlap@infradead.org>, Cyril
- Hrubis <chrubis@suse.cz>, Kees Cook <kees@kernel.org>, Jake Edge
- <jake@lwn.net>, David Laight <david.laight.linux@gmail.com>, Askar Safin
- <safinaskar@zohomail.com>, Gabriele Paoloni <gpaoloni@redhat.com>, Mauro
- Carvalho Chehab <mchehab@kernel.org>, Christian Brauner
- <brauner@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, Andrew
- Morton <akpm@linux-foundation.org>, Masahiro Yamada <masahiroy@kernel.org>,
- Shuah Khan <skhan@linuxfoundation.org>, Ingo Molnar <mingo@redhat.com>,
- Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 0/9] Kernel API Specification Framework
-Message-ID: <20260318072410.72618011@foz.lan>
-In-Reply-To: <abZTg9ZwnE5J4qXa@laps>
-References: <20260313150928.2637368-1-sashal@kernel.org>
-	<20260314111822.63a2ba4a@kernel.org>
-	<abZTg9ZwnE5J4qXa@laps>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+	id C36B4C2BCB5; Wed, 18 Mar 2026 07:57:11 +0000 (UTC)
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 4CB80C2BC87
+	for <tools@kernel.org>; Wed, 18 Mar 2026 07:57:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 4CB80C2BC87
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-56a9076813bso197588e0c.3
+        for <tools@kernel.org>; Wed, 18 Mar 2026 00:57:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773820629; x=1774425429;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3AzRXten5FxMim/HPPYelLqjuWjBj8O0pBVTnoSN70A=;
+        b=l+sCg3gYqTZw/UtaVt61hWGecdoEzuRUw1QuX0z6YNRw8H1MvnyWNtE3/kTUn9boa0
+         HCNx0XzrycoV87eNr8J+qfhVYwoNMokdWCKsUCxQC/oJmL3pQJrEhEHeKErHMrrM8jB+
+         L1GasYzySgqiVKjWyXEP9s6ljC6TG1DPWxC3tIVl+Uula7gGIeqe1eJya1OiQ2SAA6+2
+         G4xCvjMNV/l+aebmP4LPVi7x9Py0BWf8Osw/IIcMu1ZYlDd8UrhiXtEyQVuoF/2nhZeX
+         azTE90b6R4mQRon04Y975tfwWYGP6tBbJXHOqVkhdC5kWovErZKBJGIWJe6knrBwzKMe
+         4Q5A==
+X-Forwarded-Encrypted: i=1; AJvYcCU4McvFCYnsz1XLc2Ybat9yk0Hrrru37ZMLMKun/5Pg1gm2RCaHMK5e5AiTPEVtntdIOpkKpA==@kernel.org
+X-Gm-Message-State: AOJu0Ywp5BzplXGz+y7usAdsokxW+3/4NzaOCks5C6gb0r/NeEjM0yHT
+	kyp/fFXFRTTTCgt2b2v6s3STzMCvwO4/E4Oeb6dAWYVLskZcJYSdjdR2mL9xzSAqaZ8=
+X-Gm-Gg: ATEYQzx3WAT/5NPFdjIfwu2qVXD9rFL5rqs0/JjhyKNLMo2pRsLQKL2Kyfx3AJZ6VFN
+	kpj/FkOUFIvpqx2nnJQg9RA2W5hF8006SZdi4DDF988UKRNnnNqKB+2UiMnu5Q2FmaoJWLuz+J0
+	TPv0GswvLzOrxNcC9zpu+7rxXl0HhtCZPgs4WMLL09HJNf6SMybToaNVp0BxrwQaB9GHv15a2I1
+	hCNEP8M4iE3MAEgy5rR0Q9On6rDNrirNOz0cYDB3KwCGsgwX6d2OO7uCdxxuQLiSX+sYje21Nf6
+	pJuc0ML+xm+MJh4aC6x7DTlUsbeVJMcaWpXNSq8UFBfcuAK/Z91bTw2lk4AtNnNRM0hhq3ny/gb
+	acPyYNbSrPbctHh+FUN5xl8d9S1SGtvAIHwBMcaGtY3AnVl92eVjt9udK3Nbn8C7AYXh4U0V7Ww
+	SF9qUEXEL+wtWg3wB7uOwE/STWcl3oDe3vK7mOqcxR0f17F2zjeJiycQzTXhoZ
+X-Received: by 2002:a05:6122:c8b:b0:56a:9841:9f81 with SMTP id 71dfb90a1353d-56ba707736bmr1398157e0c.6.1773820629127;
+        Wed, 18 Mar 2026 00:57:09 -0700 (PDT)
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com. [209.85.222.47])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-56ba6e2f265sm1232595e0c.2.2026.03.18.00.57.08
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Mar 2026 00:57:08 -0700 (PDT)
+Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-950b77942deso90540241.1
+        for <tools@kernel.org>; Wed, 18 Mar 2026 00:57:08 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVyj5A8pujNxuDFQwqFIh/6nhTguFTO3R2EDfUpdMg9WdVgMjQYexZsc9hucxQlQyRPrXknFg==@kernel.org
+X-Received: by 2002:a05:6102:c88:b0:5f1:b7b2:8929 with SMTP id
+ ada2fe7eead31-6027d13eb53mr1139892137.15.1773820628195; Wed, 18 Mar 2026
+ 00:57:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20260227-imported-aromatic-guppy-ad3dca@lemur>
+ <87tsuffj7h.fsf@trenco.lwn.net> <87h5qffikk.fsf@trenco.lwn.net>
+ <20260316-quizzical-raccoon-of-refinement-d88fdb@lemur> <87qzpieeb5.fsf@trenco.lwn.net>
+ <20260317-starling-of-delightful-exercise-3472ce@lemur> <20260317-optimistic-impartial-kudu-deefac@lemur>
+ <87o6km86zm.fsf@trenco.lwn.net> <20260317-crazy-belligerent-llama-a14ba6@lemur>
+ <20260317-majestic-efficient-raptor-59f17a@lemur>
+In-Reply-To: <20260317-majestic-efficient-raptor-59f17a@lemur>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 18 Mar 2026 08:56:56 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdVTLdeNr3gk7aE33+Kgedw+j3fmdaZ6CO9iDnNGsUxcGg@mail.gmail.com>
+X-Gm-Features: AaiRm531gan1tUm-dHLS2DOfJfDXvT8K5Av0wU_8-EnVl6lAquhGj3NLVNfYqas
+Message-ID: <CAMuHMdVTLdeNr3gk7aE33+Kgedw+j3fmdaZ6CO9iDnNGsUxcGg@mail.gmail.com>
+Subject: Re: b4 review available in master
+To: Konstantin Ryabitsev <mricon@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, users@kernel.org, tools@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 15 Mar 2026 02:36:51 -0400
-Sasha Levin <sashal@kernel.org> wrote:
+Hi Konstantin,
 
-> On Sat, Mar 14, 2026 at 11:18:22AM -0700, Jakub Kicinski wrote:
-> >On Fri, 13 Mar 2026 11:09:10 -0400 Sasha Levin wrote:  
-> >> This enables static analysis tools to verify userspace API usage at compile
-> >> time, test generation based on formal specifications, consistent error handling
-> >> validation, automated documentation generation, and formal verification of
-> >> kernel interfaces.  
+On Wed, 18 Mar 2026 at 00:37, Konstantin Ryabitsev <mricon@kernel.org> wrote:
+> On Tue, Mar 17, 2026 at 06:39:54PM -0400, Konstantin Ryabitsev wrote:
+> > > So it's still behaving a bit strangely, at least that's how it seems to
+> > > me.  I tried adding comments to a patch, doing my usual trick of
+> > > trimming out stuff that is being skipped over.
 > >
-> >Could you give some examples? We have machine readable descriptions for
-> >Netlink interfaces, we approached syzbot folks and they did not really
-> >seem to care for those.  
-> 
-> Once the API is in a machine-readable format, we can write formatters to
-> output whatever downstream tools need. 
+> > You don't need to do that. Just find the stuff you want commenting on. We'll
+> > take care of the rest! :)
+> >
+> > But, I'm able to reproduce what you're seeing -- trimming content doesn't do
+> > the right thing. Let me see if I can make this a lot more relaxed.
+>
+> The current master should be a lot more forgiving when parsing your comments.
+>
+> However, I am now curious to hear your feedback. The idea with the review app
+> is that you are not really sending an email, you're adding comments to code
+> and adding review trailers. The app will render and send that out for you,
+> trimming and formatting things nicely so you don't have to do it on your own
 
-Kernel-doc already does that. The way it works is that it handles 
-kernel-doc markups on two steps:
+I haven't tried b4 review yet, but how do you decide what (not) to trim?
+It is not uncommon to explicitly not trim some parts, as they are important
+to understand the comment on a seemingly unrelated part.
 
-- first step: parse kernel-doc markups, function prototypes and data
-  types for variables, typedefs, structs, unions, enums.
+> (I've noticed that many maintainers don't bother anyway -- there are emails
+> with a terse comment at the top and then a huge quoted bottom that is only
+> followed by their sig.
 
-  This is done inside tools/lib/python/kdoc/kdoc_parser.py.
+IMHO this is very bad behavior: not trimming replies forces everyone
+to skim the remainder for more comments.
 
-  The documentation is stored in memory as a list of documentation
-  entries. Each element there belongs to class KdocItem.
+Gr{oetje,eeting}s,
 
-  It is trivial to output its content in JSON or YAML format. I
-  submitted a path series a while ago doing exactly that, aiming to help
-  writing unittests for first step:
+                        Geert
 
-	https://lore.kernel.org/linux-doc/7648cb5f5a1b501d9ae9a57b4d8dbeb7273d9097.1770128540.git.mchehab+huawei@kernel.org/
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-  I'm planing to rebase such patch series on the top of my latest
-  kernel-doc patch series.
-
-- second step: output generation. There is an abstract class named
-  OutputFormat which contains the following output methods:
-
-    def out_doc(self, fname, name, args):
-        """Outputs a DOC block."""
-
-    def out_function(self, fname, name, args):
-        """Outputs a function."""
-
-    def out_enum(self, fname, name, args):
-        """Outputs an enum."""
-
-    def out_var(self, fname, name, args):
-        """Outputs a variable."""
-
-    def out_typedef(self, fname, name, args):
-        """Outputs a typedef."""
-
-    def out_struct(self, fname, name, args):
-        """Outputs a struct."""
-
-  Producing a different output is as easy as doing:
-
-	class MyFormat(OutputFormat):
-	...
-	    def out_var(self, fname, name, args):
-        	self.data =+ f"whatever {name}"
-	...
-
-
-Thanks,
-Mauro
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
