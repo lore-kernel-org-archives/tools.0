@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E16253359
-	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 16:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488AE3290A6
+	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 16:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773852638; cv=none; b=NEhAXKL/YF/XfIS2J5D/NH57GpkIM8MUikjx94+LYpQl9mtNoSNMwTfcs9dVdBOttxEl8kQe8j4NTdLpbrqgMS2pjyj1BjU61trVP/QK8a30iK2jB2LXyNzth7YKGXY2n4Sx1XAhNfK6wAMVDutIVlXhejwM7+cfm5mY8tid9Ow=
+	t=1773852719; cv=none; b=Y/ix6royHGUS1s5b5vil4MRZvnCEjQgnTvSKj2uOi5rKlm/1MdYs4+GN7Ya4YOpZFHeKDdqVZijmkK5dkEwlh1hfAddJLjTmNuGjRdkuy9ycYJwCfDkST0Moc+4L9dWGSIQRoxr0CzODuI8y87uG/2zqGV1QX6W6iUVkdN65w8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773852638; c=relaxed/simple;
-	bh=9OaN0Uw3P7eOowaB2AzTSywGE+7W/23m2yieLmnFUE0=;
+	s=arc-20240116; t=1773852719; c=relaxed/simple;
+	bh=o/7yE6t93yQtFz6v7eAty53R//5LEtd721EuvOxoFn4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XEaCY4kEwyjC6bIm8UsQJnhlu4oObfN3UMWnUFkwjCBwjO2cCgM0wLIJzu1qwwQ2WhOB2PUn2HARRUwiIU1UL7fYH39oEsI1IO34hlgaTBlonS9sC3bODIuzbjAoCtTEwy5kjHQKLiK6Mt+j+/puWjJE4CLYGp1pj4U9ZLErOF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=GONcFPpo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Gx5AOyWv8TNG2w4uaK++KMNz8ORlBO8RCs6PEwRBoZg8Albg05HRXrNaMqbt9cggnfzzM44KGgG/h1+W0LbMZH89AdTIh58XnF1Ubv5iycUadQgWl+ARS2Bz02ZBXxWnB6aciC+Crprngg6W2bvFYuWjURXy++thoiI0Fa4tnpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=WulDNP+7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="GONcFPpo"
+	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="WulDNP+7"
 Received: by smtp.kernel.org (Postfix)
-	id CD1C4C2BCB0; Wed, 18 Mar 2026 16:50:37 +0000 (UTC)
+	id E87DEC4AF09; Wed, 18 Mar 2026 16:51:58 +0000 (UTC)
 Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 94BA2C19421;
-	Wed, 18 Mar 2026 16:50:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 94BA2C19421
+	by smtp.kernel.org (Postfix) with ESMTPS id D5376C19421;
+	Wed, 18 Mar 2026 16:51:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org D5376C19421
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=lwn.net
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 90EF640423
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net E0DEB40423
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
-	t=1773852635; bh=2M7Isv+5gdy9BAEctVxVjLNklONTC2uyIdTw4SrIalU=;
+	t=1773852717; bh=nwEcRE80LRGRnH9IJ42jxIknbbtHfjezvT1c6qQwbv0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=GONcFPpoYmnGrS3SzGEF3hU7Uc9407nvyxU39NDNlEaKak4fdZYHMAmhoJhtpFZ8N
-	 JNEmd0E4olpCIQCPzZGc7MlSQ8G/Hzcp6VUh9M4ArARRPkgnIfWHwSt8IHjdP8bavs
-	 2AIcoHGOk9PJ539nJOAvwyX6MikHdVU5I1MkF3CF0kRIIqqaCGtD+ixo3VxfqXRIFN
-	 UOQSNrtc1LMU+j+nTyXp0lfd0RM+HV5LA4aLDqPiRZVNiYIjU6MA1A5AIXrgGTD8AF
-	 SllbqNakO8IJ9uuZEkF8Gc2iVkOa0vHQV1evaJk5G0xYbh6YiEfrtv+adFLD6pLass
-	 HYiPipiWeKROA==
+	b=WulDNP+7m6R8KkZAmeQSGPLvxaBvyXQI3v8TmWnQJHpjpLqPlKPJVWSwB4DatvWg3
+	 rt+SLAibuW96kRdSaOHpEuKw/vI3du5FlbI77xppMGnbxiRi5f1PTKH6zQAZNTz3fD
+	 7lYEJmmvcfYwypJHzACPy3BbF+zm7L4mq7PgPbdVIdw+OxSHRrZpGnIKX76mhOz3jP
+	 8KZxYjeaT/mVq+xis0VkYp/IJtfBs8I8+rlsyPViutIJ2bf2grknK6n2LdqEeMKDAk
+	 +MrzzQC6TEeUpSgHQgo7VHnbZHoMbbeb5KepqqlXsE9iRWTiY7dIX/SkuRUNIaEb/A
+	 jo1pLvWiAW/RQ==
 Received: from localhost (c-71-229-227-126.hsd1.co.comcast.net [71.229.227.126])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by ms.lwn.net (Postfix) with ESMTPSA id 90EF640423;
-	Wed, 18 Mar 2026 16:50:35 +0000 (UTC)
+	by ms.lwn.net (Postfix) with ESMTPSA id E0DEB40423;
+	Wed, 18 Mar 2026 16:51:56 +0000 (UTC)
 From: Jonathan Corbet <corbet@lwn.net>
 To: Sasha Levin <sashal@kernel.org>
 Cc: linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -60,12 +60,12 @@ Cc: linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
  Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
 Subject: Re: [PATCH 1/9] kernel/api: introduce kernel API specification
  framework
-In-Reply-To: <abq29NMpyXJrqv_7@laps>
+In-Reply-To: <abq3f5vdcwRXGJGX@laps>
 References: <20260313150928.2637368-1-sashal@kernel.org>
  <20260313150928.2637368-2-sashal@kernel.org>
- <87h5qe9wig.fsf@trenco.lwn.net> <abq29NMpyXJrqv_7@laps>
-Date: Wed, 18 Mar 2026 10:50:34 -0600
-Message-ID: <87o6kl5bfp.fsf@trenco.lwn.net>
+ <87h5qe9wig.fsf@trenco.lwn.net> <abq3f5vdcwRXGJGX@laps>
+Date: Wed, 18 Mar 2026 10:51:56 -0600
+Message-ID: <87jyv95bdf.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -76,21 +76,29 @@ Content-Type: text/plain
 
 Sasha Levin <sashal@kernel.org> writes:
 
->>> +The framework exports specifications via debugfs that can be used
->>> +to generate documentation. Tools for automatic documentation generation
->>> +from specifications are planned for future development.
+> On Tue, Mar 17, 2026 at 11:49:27AM -0600, Jonathan Corbet wrote:
+>>So the reason for two completely separate mechanisms is not entirely
+>>clear to me.  The kerneldoc variant is essentially documentation, while
+>>the macro stuff is to be built into the executable?  What if you want
+>>both?
 >>
->>Documentation always comes last :)
+>>It would be nice to only have one way if at all possible; I'm sure that
+>>crossed your mind at some point :)  If there have to be two, having both
+>>examples describe the same function would make the parallels more clear.
 >
-> So this is one thing I wanted to run by the doc maintainers: the kapi tool
-> already has the capability to export these specs in .rst format. Would it be
-> interesting to have a manual for kenrel APIs in Documentation/? It can be
-> automatically generated and updated and would always match the kernel code at
-> that point.
+> Woops, I forgot to finish writing my reply to this :)
+>
+> Under the hood, kerneldoc specs are translated into those macros so they could
+> be part of the build process and embedded into the resulting binary (both for
+> documentation as well as the runtime validation).
+>
+> I don't think anyone would use the macro format directly, but as it's there
+> anyway I figured I'd offer it as an option. Would it make sense to just hide it
+> behind the scenes?
 
-I suspect we could certainly find a place for it.  Maybe as a subsection
-of the user-space API manual, at least for the system-call portion of
-it.
+If there are two ways of doing it, people will use both ways.  My
+kneejerk reaction would be to hide the macros as an implementation
+detail, but perhaps that's just me.
 
 Thanks,
 
