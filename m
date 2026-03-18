@@ -1,152 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3374C3EDAC2
-	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 19:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2343F226D02
+	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 19:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773861733; cv=none; b=ENRPyhyIGxS5uMWt8TjF1hujbMoDw6t7GzoZn/0L36AT4rUXlsJiIHOz5BlhBXA5OXVtjRnZQcpgIJBd/ZnH1MyVhKTQZNn8fDnbXbWEDH1lkk1RvZtmhccmzjOco73I3p212gWUiD9NPfjAlGzMLq2gsq/XCe/Z1ihwi634kfk=
+	t=1773863142; cv=none; b=jBBXa8U1oPzofLxYQ5MM7VLJSuuof9ENM19HTuTOpbqaeA4S6bDF3vSduQuy5QkYQX43zweea8+xIg5fWlCMZs1v3FB9oZOzlKkeC4FCLJf0WWNGSGOK4z0GbFuoesVhTpzpczjVILILhOeytkrmyoJ0QxZB95hvDfuHcBVClm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773861733; c=relaxed/simple;
-	bh=lLTdgNESlW+5kJgPntLgLtyYxmmkW9pc4ZuCfr5zQ+w=;
+	s=arc-20240116; t=1773863142; c=relaxed/simple;
+	bh=eH7FGMzHWfYAIxOA3BtgvHvxUGFJypihyuyKe6tYEy0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fl21InTpuUz51YULrDUCRIYqvnXJ6/+diK65YH6QJb3IAgS+6wC3tNZwSxh/otuuLaCqKVpTzDBlyvspxfWzHY+DBtuBwebuCRrhTtYJEEnX6QN0f0s1zsaFJU+BI/ti/18MZO1pl13ejx1yhg3kRpaDZar63StsPbUWvT4ouy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sdgU0fJN; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=iejeEy/s71stH0AOi/1PJKpIEznY8AcaGvtzKR0RZUepcHSbIZAcNQMgZ0gY8i4ygQJaoMunOFs4636jv0suJLeEVPq/11rvyOBrun2fre5eELRXV0FXG1C5eNDlzGuov4NhCrknARmZP73cB7/R9QoxmHFzC4wDVR9fSyiKL84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mqWfOqlm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sdgU0fJN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mqWfOqlm"
 Received: by smtp.kernel.org (Postfix)
-	id F34D8C2BCAF; Wed, 18 Mar 2026 19:22:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB36BC19421;
-	Wed, 18 Mar 2026 19:22:12 +0000 (UTC)
+	id E532FC2BC9E; Wed, 18 Mar 2026 19:45:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B687C19421;
+	Wed, 18 Mar 2026 19:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773861732;
-	bh=lLTdgNESlW+5kJgPntLgLtyYxmmkW9pc4ZuCfr5zQ+w=;
+	s=k20201202; t=1773863141;
+	bh=eH7FGMzHWfYAIxOA3BtgvHvxUGFJypihyuyKe6tYEy0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sdgU0fJNXvR9hqv3zxqlKzmRigIUSLLrIAAuGwOgEj8jtOkKkcuZS2Uv5jP0IupJj
-	 y2kIs2JG/7TyHL19Gy+65qZy8pKN43AoFMswhpCprv62ZHXysGI41JXeejiVRUjmNy
-	 muUUO+lRIojHfknpPGUxKRlnbnk531Hi86z3zwyLuxkbpNQGa+d7t5VTcfTyKHmZI6
-	 KZrRfOMWijokQ7KL5QLbDuykEgxbAxwBMFSbMGIegcc4V65uhRIDVi+hP/voq4oSeo
-	 AQngMF+eVYRWt445DvxrGz4y0kboTeeqC+w2x+ZrlzVV0PVuk9S1pvTflM7E7LX1sO
-	 fWMgS/zPVDCOw==
-Date: Wed, 18 Mar 2026 15:22:11 -0400
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Jonathan Corbet <corbet@lwn.net>
+	b=mqWfOqlmV1KBiVLXxz2V4FTNkpalgcPN8xQ4xqtupX8m8HBxYqbKrkmKwv4Qvh31Y
+	 nsWnYv1/g3v5UHrPE1iR7hU6l6MvsQMpq1ETgRORvwuYHSkkLmsQgJuXrOh7AtoKUZ
+	 Kq/y9TYSNwPJpTf8IkeAA12WuqE+QNLn2zjfDWn8+bmhvIhrooW01UOOl7no7ys0Tb
+	 Lu/yVJOKoCsEKq7yI6esytMc8KUV6NNQBj1gGpCiGATuduU5PDnaCO6E0iVs5LNXBC
+	 z97nUmth3x9vw4lg7tnLGBOyob+y4ro/4KhQMRM4kFhSVD9DEofDbCT5s+J0fzfWmw
+	 oaVpPZeincYrg==
+Date: Wed, 18 Mar 2026 19:45:38 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <mricon@kernel.org>
 Cc: users@kernel.org, tools@kernel.org
-Subject: Re: b4 review available in master
-Message-ID: <20260318-groovy-daring-echidna-e109fc@lemur>
-References: <87tsuffj7h.fsf@trenco.lwn.net>
- <87h5qffikk.fsf@trenco.lwn.net>
- <20260316-quizzical-raccoon-of-refinement-d88fdb@lemur>
- <87qzpieeb5.fsf@trenco.lwn.net>
- <20260317-starling-of-delightful-exercise-3472ce@lemur>
- <20260317-optimistic-impartial-kudu-deefac@lemur>
- <87o6km86zm.fsf@trenco.lwn.net>
- <20260317-crazy-belligerent-llama-a14ba6@lemur>
- <20260317-majestic-efficient-raptor-59f17a@lemur>
- <87se9x5blg.fsf@trenco.lwn.net>
+Subject: Re: Sorting for applied and thanked reviews
+Message-ID: <eeaff7b6-1ac6-4cca-8c0b-74a6e8fadbd0@sirena.org.uk>
+References: <4547f513-9e28-4f5c-93d1-823e70b110fc@sirena.org.uk>
+ <20260317-steady-narwhal-of-courtesy-edccbb@lemur>
+ <f1fed64e-bee8-469f-8a83-da8e76f9e958@sirena.org.uk>
+ <20260318-micro-potoo-of-luxury-55ff41@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="P7595/RDlyQ5+EQG"
 Content-Disposition: inline
-In-Reply-To: <87se9x5blg.fsf@trenco.lwn.net>
+In-Reply-To: <20260318-micro-potoo-of-luxury-55ff41@lemur>
+X-Cookie: The coast was clear.
 
-On Wed, Mar 18, 2026 at 10:47:07AM -0600, Jonathan Corbet wrote:
-> > However, I am now curious to hear your feedback. The idea with the review app
-> > is that you are not really sending an email, you're adding comments to code
-> > and adding review trailers. The app will render and send that out for you,
-> > trimming and formatting things nicely so you don't have to do it on your own
-> > (I've noticed that many maintainers don't bother anyway -- there are emails
-> > with a terse comment at the top and then a huge quoted bottom that is only
-> > followed by their sig.
-> 
-> This is just me, of course ... and I was very much experimenting with it
-> as an alternative to my usual "do it in email" approach.  So one can
-> definitely argue that I was simply holding it wrong.
 
-I think it will help to look at not as an alternative to "do it in email" but
-"do it alongside email." Email works great for person-to-person communication,
-in-depth philosophical discussions, etc. But these are all fun and exciting
-things about participating in Linux development already. What b4 review aims
-to address is the "dull and boring" parts of participating in Linux
-development:
+--P7595/RDlyQ5+EQG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-- look through all diffs
-- look at CI results
-- drop to shell, poke around, run a local test
+On Wed, Mar 18, 2026 at 10:17:12AM -0400, Konstantin Ryabitsev wrote:
+> On Tue, Mar 17, 2026 at 10:21:38PM +0000, Mark Brown wrote:
 
-- send a quick Acked-by/Reviewed-by
-- park it until you get a new revision
+> > Given that I'm using the queued thanks feature things sit in applied for
+> > a bit before they actually get pushed out and thanked, the sorting of
+> > thanked mostly followed from expecting applied to get moved out of the
+> > active list while I go through other things that might get applied.
 
-or
+> I've now landed the 3-tier sort, plus a "queued" pseudo-state for exactly this
+> case. When you accept a series and queue the thank-you letter, it will show
+> with a different symbol and sort into the inactive tier alongside snoozed and
+> waiting series. Once the thank-you is actually delivered, it becomes "thanked"
+> and stays in the inactive tier. So neither queued nor thanked series will crowd
+> your active list.
 
-- take it in
-- send a thanks
-- archive it
+Thanks, this seems to be working great.
 
-> If, though, the intent is that one inserts comments and leaves the patch
-> text alone, I think that the interface *really* needs to not let you
-> mess with the stuff you're not supposed to change.
+--P7595/RDlyQ5+EQG
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I went down that path. You could at some point insert comments via textual
-pop-ups, but I hated it, because it's Not Like My Editor (also, see below).
+-----BEGIN PGP SIGNATURE-----
 
-> If one were to
-> implement this as <obnoxious>an Emacs mode</obnoxious>, that sort of
-> constraint could be implemented fairly easily.  If you're throwing
-> somebody into an arbitrary editor, it's going to be rather harder.
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmm7AOEACgkQJNaLcl1U
+h9DE4wgAhM7YFcYLJUs+o1jefzdaj6lRP75q8YWAQYJWAAvkffqcYSRQRr99Ghg5
+M5B3Rj0ng6rcPpx5Q02qHIR7cnITXSAUB6N52I9KVudKYdtM2Ji3ItxAOFIoO2mW
+uQrUHjnAR6E1Dejaqfh+pXqLgezv/ctYj8FeUAgjsXaU1YKe8Z6CRcvTc7Wa7ar6
+ChVGC1xF/WOo9YrGWJlkjtMF1N6PlirD9i774PMKmhTn2d7ngzapFpKPs5RZf06V
+VB0qR292IGAt+ZwCJVgV7jLAOxm8uJE4f0ohdKSMNJMzIi9yraZYkWr05THQXR/V
+Jbtywy0HEfcnUtuSaJa0I9Skz8Cv4g==
+=OoQV
+-----END PGP SIGNATURE-----
 
-I've debated this with myself for so long! The reason the arbitrary editor won
-is because it's so much easier to do powerful operations in it, including
-things like: copy this original block of code, paste it and reformat it / edit
-it to show how it should be done, add another buffer, edit the code there,
-make sure it compiles, return to the original message, paste working code,
-etc. All of this was dramatically more awkward when NOT done in your usual
-favourite editor.
-
-It only requires not looking at it as "sending an email" -- you're commenting
-on code, don't treat this as the final email.
-
-> I tend to be pretty careful about which text I trim when composing
-> replies.  It's pretty helpful to, for example, be able to do something
-> like:
-> 
->   > something from the patch
-> 
->   Here you're doing X...
-> 
->   [...]
->   > something rather further down
-> 
->   Here instead it's expecting Y, WTF?
-> 
-> ...so I would be less than fully pleased with an interface that prevents
-> that.
-
-Noted! Again, this is supposed to work alongside your email client, so if you
-find yourself constrained by the code review framework, you can always yank
-that thread into your inbox (or reply from the lite email viewer that b4
-review also provides).
-
-> But perhaps I'm a dinosaur who just isn't using the tool correctly.
-
-It *is* a bit of a challenge with the "users" crowd because everyone here is
-very much already comfortable with their workflow. ;) Once 0.15 is out, I'm
-hoping I get feedback from people who are not already well-established in
-their ways (who, on the other hand, may find it awkward because it's "not like
-Github").
-
-> > Is this rife for creating confusion? Will maintainers be fighting with this
-> > and growing grumpy because it's not exactly like their email client?
-> 
-> Some surely will, see above.  But that doesn't necessarily mean you're
-> not creating a better workflow in the long run.  I think we need to play
-> with a lot of ideas, and I'm really glad you're doing that.
-
-Great, thanks for the feedback!
-
--- 
-KR
+--P7595/RDlyQ5+EQG--
