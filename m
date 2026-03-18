@@ -1,110 +1,89 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158EB2248B3
-	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 14:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FB33DB625
+	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 14:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773843417; cv=none; b=LPtkfjpB3e0HsgO7VaUegstPlFzauTiYntWt3fJxJt2+3o7KnijXNzsyERNqlvBPbzbnKApcR1C4lmyHZkmGBODVZZXjYCBu2Oh6SLBVImQd2oqSWIACb3LZicmFxmNe3gx9AauRn5W9xwjQg7m5npLP9mboTI6In11shKrgbGo=
+	t=1773843434; cv=none; b=ZmMr74WDcku0HMmIklylYaKjzpSCVZ4QHoRGswx+fLC08t9B/FXkyNx8HyHQU0RMRPnRWqWu/2p7T3hybCB00PtPYwzfCSYXbbiA1keJ7plout6y/RkK0Lx1ZK1+HI4ij9W/kJfqHkdJDESU3EqHH0DWjzTpQsrNoKATTLzQrKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773843417; c=relaxed/simple;
-	bh=niTTayRNIX4EEYyDdhdDQo8aWS9N/JBwImjwEF9evEs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UKDzzWh+X0deYpDry/WMAbByGJ7FBY3znD+Q3vDqBGn59A9YpIBu3dlYNUDCBOYp4t3h/sqtGLXO7eRcogPyoqCFEevMjP+7QaTY9GA2jM+V3suI5F8CkFcKuyaP120RpQPcI/Fkebf7Yyza3ZqhDBblP/XHkxlGlSsWHruc3Ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=MmHH36B4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773843434; c=relaxed/simple;
+	bh=kNx7ven82UCRT3gl+qm544zDnL7gJkQ1u/dyCt/YX3E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=by7DMMeAxX1Ubn+pOr2cTZnhFzAmaruPH3bweKa5TJfpLuq0KG2poPDrUNGUkQhJSlmjoBuadLHjNlrID8YRJdyNRlwLJb1IIWBQEUukgHS57ucDFsjIH+zr9JacIcbnm3dx9XZavyI+aosFBTyQwrXbBoCdlK8ORY0mDdmlkGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eYWo6UD3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="MmHH36B4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eYWo6UD3"
 Received: by smtp.kernel.org (Postfix)
-	id C5AFBC4AF0D; Wed, 18 Mar 2026 14:16:56 +0000 (UTC)
-Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 4973EC19424;
-	Wed, 18 Mar 2026 14:16:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 4973EC19424
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=lwn.net
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 4104141213
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
-	t=1773843414; bh=pZLknu9kNmkFJXKOV+mk6Nd6QgIhMbsMx+SciRU/lEY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=MmHH36B45RNVUcw2zeWJbjSLA17c3huYZJvv3IiLmRQSMPfMzN9w59kEH762XP9ap
-	 NA0yipMcCGzpT2FROqqTQWpLCRaoj8s1lP67wUn6DvXnmtYZTLSSKGIG8mwQhYhpXy
-	 Y+WU1fIGCHaAemAFR29akbXlLYslpxGGb7IM7oMyrrsX3fWETZoIOG4JtgluqJSE87
-	 ndrllFLei8HjKkxQRTIR5opx2UePst3Xd+gbi3O/RyZYqXuXjJKcmg/NjF8p81cqLg
-	 UIpSExyazmd4/bn1J6GWBrsafDss8lyvwTtCQa4juny+otE0FNVRXGsl6ClDM515S9
-	 djt568QbhK/Xw==
-Received: from localhost (c-71-229-227-126.hsd1.co.comcast.net [71.229.227.126])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by ms.lwn.net (Postfix) with ESMTPSA id 4104141213;
-	Wed, 18 Mar 2026 14:16:54 +0000 (UTC)
-From: Jonathan Corbet <corbet@lwn.net>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-kbuild@vger.kernel.org, linux-kselftest@vger.kernel.org,
- workflows@vger.kernel.org, tools@kernel.org, x86@kernel.org, Thomas
- Gleixner <tglx@kernel.org>, "Paul E. McKenney" <paulmck@kernel.org>,
- Dmitry Vyukov <dvyukov@google.com>, Randy Dunlap <rdunlap@infradead.org>,
- Cyril Hrubis <chrubis@suse.cz>, Kees Cook <kees@kernel.org>, Jake Edge
- <jake@lwn.net>, David Laight <david.laight.linux@gmail.com>, Askar Safin
- <safinaskar@zohomail.com>, Gabriele Paoloni <gpaoloni@redhat.com>, Mauro
- Carvalho Chehab <mchehab@kernel.org>, Christian Brauner
- <brauner@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, Andrew
- Morton <akpm@linux-foundation.org>, Masahiro Yamada
- <masahiroy@kernel.org>, Shuah Khan <skhan@linuxfoundation.org>, Ingo
- Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 5/9] kernel/api: add API specification for sys_open
-In-Reply-To: <abqyv0DiT0LFUU4v@laps>
-References: <20260313150928.2637368-1-sashal@kernel.org>
- <20260313150928.2637368-6-sashal@kernel.org>
- <2026031343-raft-panhandle-0a21@gregkh> <abQ-iIylzpuqlRv3@laps>
- <878qbq9uau.fsf@trenco.lwn.net> <abqyv0DiT0LFUU4v@laps>
-Date: Wed, 18 Mar 2026 08:16:53 -0600
-Message-ID: <87jyv96x4a.fsf@trenco.lwn.net>
+	id A2789C2BC87; Wed, 18 Mar 2026 14:17:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECB4C19421;
+	Wed, 18 Mar 2026 14:17:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773843433;
+	bh=kNx7ven82UCRT3gl+qm544zDnL7gJkQ1u/dyCt/YX3E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eYWo6UD3nYnWOW5pvDnccEOMdZpdYknzKV+BpZOLCB3oTjL8R1OTJ/WciKUACFisD
+	 Di3a/15KMEQB+QUrks7d1NkRjyJo3yMAR90ioHFIC3yIgNSN0+YE9pvB9nq60PTvnu
+	 WqJYxyX3IBjbzDWjaE8zuPiI06EBepjbTnCa/Wim1JZppi/LXn/KqkGKUQGJzWX+6b
+	 e2HtXSSK6kII8RdohTA37zoylV3oXTOmlklNu980T0CqyBTfRSf/Zx+NdqQlSFzcy9
+	 QX5KUePBZGw6Rn9ci8hualD65I6mK8kfuDY3wQ8Il4JzpyqBWp9GLl0WOhs7QDvnOL
+	 OwMMLJgbHFntw==
+Date: Wed, 18 Mar 2026 10:17:12 -0400
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: users@kernel.org, tools@kernel.org
+Subject: Re: Sorting for applied and thanked reviews
+Message-ID: <20260318-micro-potoo-of-luxury-55ff41@lemur>
+References: <4547f513-9e28-4f5c-93d1-823e70b110fc@sirena.org.uk>
+ <20260317-steady-narwhal-of-courtesy-edccbb@lemur>
+ <f1fed64e-bee8-469f-8a83-da8e76f9e958@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f1fed64e-bee8-469f-8a83-da8e76f9e958@sirena.org.uk>
 
-Sasha Levin <sashal@kernel.org> writes:
+On Tue, Mar 17, 2026 at 10:21:38PM +0000, Mark Brown wrote:
+> Is "last added" last update to the series?  I did notice the order
+> seemed to move at times.
 
-> On Tue, Mar 17, 2026 at 12:37:13PM -0600, Jonathan Corbet wrote:
->>Sasha Levin <sashal@kernel.org> writes:
->>
->>> On Fri, Mar 13, 2026 at 04:33:57PM +0100, Greg Kroah-Hartman wrote:
->>>>On Fri, Mar 13, 2026 at 11:09:15AM -0400, Sasha Levin wrote:
->>
->>>>> + * since-version: 1.0
->>>>
->>>>I think since older versions :)
->>>
->>> Right. I guess that in my mind 1.0 was the first official "release". I'll
->>> update it to 0.01.
->>
->>That kind of raises the question of just what since-version means.  The
->>version-0.01 (or 1.0) version of open() surely didn't do everything
->>described in this specification.  So it's saying that some version of
->>the system call has existed since then?
->
-> You know, I'm not entierly sure what the definition should be here.
->
-> I stole this from man pages where they indicate at which version the API was
-> introduced in. I'm not sure if it really adds any value.
->
-> Any objections to just dropping it?
+It's when the series was first added to your tracking, which shouldn't change.
+However, the sort is stable within each tier, so if a series changes tiers
+(e.g. goes from "reviewing" to "waiting" and back), it may end up in a
+different position relative to its neighbours. I'll keep an eye on whether
+that's confusing in practice.
 
-Not here.  My general objective with the docs is to describe the kernel
-as it is now, without that sort of history unless there's something
-specific it can tell current users.
+> Given that I'm using the queued thanks feature things sit in applied for
+> a bit before they actually get pushed out and thanked, the sorting of
+> thanked mostly followed from expecting applied to get moved out of the
+> active list while I go through other things that might get applied.
 
-Thanks,
+I've now landed the 3-tier sort, plus a "queued" pseudo-state for exactly this
+case. When you accept a series and queue the thank-you letter, it will show
+with a different symbol and sort into the inactive tier alongside snoozed and
+waiting series. Once the thank-you is actually delivered, it becomes "thanked"
+and stays in the inactive tier. So neither queued nor thanked series will crowd
+your active list.
 
-jon
+The tiers are:
+
+    active:        new, reviewing
+    action needed: replied, accepted
+    inactive:      snoozed, waiting, queued, thanked
+
+> As a side note b4 is picking up replies I send with other mail clients
+> but doesn't track them as changing series state AFAICT.  I'm not sure if
+> this shouldn't sort into inactive (as waiting for reply) but it's going
+> to be more a case by case thing I think ("Thanks for doing this, let me
+> test!" vs "Could you clarify these things?").
+
+Yes, I'm not sure we can reasonably make the right call here. I would
+recommend judicious use of the "snooze" action here. :)
+
+Regards,
+-- 
+KR
