@@ -1,105 +1,144 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488AE3290A6
-	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 16:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE262264AB
+	for <tools@linux.kernel.org>; Wed, 18 Mar 2026 18:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773852719; cv=none; b=Y/ix6royHGUS1s5b5vil4MRZvnCEjQgnTvSKj2uOi5rKlm/1MdYs4+GN7Ya4YOpZFHeKDdqVZijmkK5dkEwlh1hfAddJLjTmNuGjRdkuy9ycYJwCfDkST0Moc+4L9dWGSIQRoxr0CzODuI8y87uG/2zqGV1QX6W6iUVkdN65w8E=
+	t=1773858675; cv=none; b=L2xZrEKrX+dzrQJnbRjcnd3qLfjtKOc07mI/g9NCgtXw7lbUBGEt63AaxSfBCxN7aQKc+/l5QKXhAC5onTd4TysB9glq/lSWSlDzMnqi/uamTAvKJAwjavaeVq294EyeiKje9Snv6uiBnOe7rNBtxEJ4tzju8XdEu3c/b9wSdgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773852719; c=relaxed/simple;
-	bh=o/7yE6t93yQtFz6v7eAty53R//5LEtd721EuvOxoFn4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Gx5AOyWv8TNG2w4uaK++KMNz8ORlBO8RCs6PEwRBoZg8Albg05HRXrNaMqbt9cggnfzzM44KGgG/h1+W0LbMZH89AdTIh58XnF1Ubv5iycUadQgWl+ARS2Bz02ZBXxWnB6aciC+Crprngg6W2bvFYuWjURXy++thoiI0Fa4tnpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=WulDNP+7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773858675; c=relaxed/simple;
+	bh=MHfIwDvTviu1mKnxoPOBERMUTcyFmvbOqUqjr1RYuA0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=at11owr/IyP0B1EsOKgGqt0UEoKEqaxYOolnkOzJE+aUYjn7/eGLHOLLAC6gI3c2aIxd38Rw06Nfr1wKTQZxGzIclYBap7cgiAyuHr0vf0awEcYSZDK3pCd2WcbsLyprT6Y/EGAJY1H0D1i9kYbUM6TlCjCuWnmSsJSmjcpSXzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=OL1gA33S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="WulDNP+7"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="OL1gA33S"
 Received: by smtp.kernel.org (Postfix)
-	id E87DEC4AF09; Wed, 18 Mar 2026 16:51:58 +0000 (UTC)
-Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+	id 91016C2BCAF; Wed, 18 Mar 2026 18:31:15 +0000 (UTC)
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id D5376C19421;
-	Wed, 18 Mar 2026 16:51:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org D5376C19421
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=lwn.net
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net E0DEB40423
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
-	t=1773852717; bh=nwEcRE80LRGRnH9IJ42jxIknbbtHfjezvT1c6qQwbv0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=WulDNP+7m6R8KkZAmeQSGPLvxaBvyXQI3v8TmWnQJHpjpLqPlKPJVWSwB4DatvWg3
-	 rt+SLAibuW96kRdSaOHpEuKw/vI3du5FlbI77xppMGnbxiRi5f1PTKH6zQAZNTz3fD
-	 7lYEJmmvcfYwypJHzACPy3BbF+zm7L4mq7PgPbdVIdw+OxSHRrZpGnIKX76mhOz3jP
-	 8KZxYjeaT/mVq+xis0VkYp/IJtfBs8I8+rlsyPViutIJ2bf2grknK6n2LdqEeMKDAk
-	 +MrzzQC6TEeUpSgHQgo7VHnbZHoMbbeb5KepqqlXsE9iRWTiY7dIX/SkuRUNIaEb/A
-	 jo1pLvWiAW/RQ==
-Received: from localhost (c-71-229-227-126.hsd1.co.comcast.net [71.229.227.126])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by ms.lwn.net (Postfix) with ESMTPSA id E0DEB40423;
-	Wed, 18 Mar 2026 16:51:56 +0000 (UTC)
-From: Jonathan Corbet <corbet@lwn.net>
-To: Sasha Levin <sashal@kernel.org>
-Cc: linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-kbuild@vger.kernel.org, linux-kselftest@vger.kernel.org,
- workflows@vger.kernel.org, tools@kernel.org, x86@kernel.org, Thomas
- Gleixner <tglx@kernel.org>, "Paul E. McKenney" <paulmck@kernel.org>, Greg
- Kroah-Hartman <gregkh@linuxfoundation.org>, Dmitry Vyukov
- <dvyukov@google.com>, Randy Dunlap <rdunlap@infradead.org>, Cyril Hrubis
- <chrubis@suse.cz>, Kees Cook <kees@kernel.org>, Jake Edge <jake@lwn.net>,
- David Laight <david.laight.linux@gmail.com>, Askar Safin
- <safinaskar@zohomail.com>, Gabriele Paoloni <gpaoloni@redhat.com>, Mauro
- Carvalho Chehab <mchehab@kernel.org>, Christian Brauner
- <brauner@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, Andrew
- Morton <akpm@linux-foundation.org>, Masahiro Yamada
- <masahiroy@kernel.org>, Shuah Khan <skhan@linuxfoundation.org>, Ingo
- Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 1/9] kernel/api: introduce kernel API specification
- framework
-In-Reply-To: <abq3f5vdcwRXGJGX@laps>
-References: <20260313150928.2637368-1-sashal@kernel.org>
- <20260313150928.2637368-2-sashal@kernel.org>
- <87h5qe9wig.fsf@trenco.lwn.net> <abq3f5vdcwRXGJGX@laps>
-Date: Wed, 18 Mar 2026 10:51:56 -0600
-Message-ID: <87jyv95bdf.fsf@trenco.lwn.net>
+	by smtp.kernel.org (Postfix) with ESMTPS id F0560C2BC9E;
+	Wed, 18 Mar 2026 18:31:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org F0560C2BC9E
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from killaraus.ideasonboard.com (2001-14ba-703d-e500--2a1.rev.dnainternet.fi [IPv6:2001:14ba:703d:e500::2a1])
+	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 01F5A379;
+	Wed, 18 Mar 2026 19:29:55 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1773858596;
+	bh=MHfIwDvTviu1mKnxoPOBERMUTcyFmvbOqUqjr1RYuA0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OL1gA33SigdHUCJ3nFi1Nyi4UWz6xahCofHpxn/IcfAWTMbl0jFYKKOI4upyE/Yhc
+	 pRgjRelJfElZzPIHeI5NrKfg4Bue9f9sP/GoIwBwSvIQogp+Bjt2YqPQV8XigKgDDw
+	 ZzD3P4JXpMjU9+gpv/VuhjQONoUcgJmt4eitOc8M=
+Date: Wed, 18 Mar 2026 20:31:07 +0200
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Jonathan Corbet <corbet@lwn.net>
+Cc: Konstantin Ryabitsev <mricon@kernel.org>, users@kernel.org,
+	tools@kernel.org
+Subject: Re: b4 review available in master
+Message-ID: <20260318183107.GL633439@killaraus.ideasonboard.com>
+References: <87tsuffj7h.fsf@trenco.lwn.net>
+ <87h5qffikk.fsf@trenco.lwn.net>
+ <20260316-quizzical-raccoon-of-refinement-d88fdb@lemur>
+ <87qzpieeb5.fsf@trenco.lwn.net>
+ <20260317-starling-of-delightful-exercise-3472ce@lemur>
+ <20260317-optimistic-impartial-kudu-deefac@lemur>
+ <87o6km86zm.fsf@trenco.lwn.net>
+ <20260317-crazy-belligerent-llama-a14ba6@lemur>
+ <20260317-majestic-efficient-raptor-59f17a@lemur>
+ <87se9x5blg.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87se9x5blg.fsf@trenco.lwn.net>
 
-Sasha Levin <sashal@kernel.org> writes:
+On Wed, Mar 18, 2026 at 10:47:07AM -0600, Jonathan Corbet wrote:
+> Konstantin Ryabitsev <mricon@kernel.org> writes:
+> 
+> > On Tue, Mar 17, 2026 at 06:39:54PM -0400, Konstantin Ryabitsev wrote:
+> >> > So it's still behaving a bit strangely, at least that's how it seems to
+> >> > me.  I tried adding comments to a patch, doing my usual trick of
+> >> > trimming out stuff that is being skipped over.
+> >> 
+> >> You don't need to do that. Just find the stuff you want commenting on. We'll
+> >> take care of the rest! :)
+> >> 
+> >> But, I'm able to reproduce what you're seeing -- trimming content doesn't do
+> >> the right thing. Let me see if I can make this a lot more relaxed.
+> >
+> > The current master should be a lot more forgiving when parsing your comments.
+> >
+> > However, I am now curious to hear your feedback. The idea with the review app
+> > is that you are not really sending an email, you're adding comments to code
+> > and adding review trailers. The app will render and send that out for you,
+> > trimming and formatting things nicely so you don't have to do it on your own
+> > (I've noticed that many maintainers don't bother anyway -- there are emails
+> > with a terse comment at the top and then a huge quoted bottom that is only
+> > followed by their sig.
 
-> On Tue, Mar 17, 2026 at 11:49:27AM -0600, Jonathan Corbet wrote:
->>So the reason for two completely separate mechanisms is not entirely
->>clear to me.  The kerneldoc variant is essentially documentation, while
->>the macro stuff is to be built into the executable?  What if you want
->>both?
->>
->>It would be nice to only have one way if at all possible; I'm sure that
->>crossed your mind at some point :)  If there have to be two, having both
->>examples describe the same function would make the parallels more clear.
->
-> Woops, I forgot to finish writing my reply to this :)
->
-> Under the hood, kerneldoc specs are translated into those macros so they could
-> be part of the build process and embedded into the resulting binary (both for
-> documentation as well as the runtime validation).
->
-> I don't think anyone would use the macro format directly, but as it's there
-> anyway I figured I'd offer it as an option. Would it make sense to just hide it
-> behind the scenes?
+What to trim and what not to trim is a question that will likely never
+receive a single answer. I find it (slightly) annoying when people start
+a conversation about a patch design in the text of the cover letter and
+leave 1000 lines of diffstat below, but I find it more frustrating when
+someone trims a patch agressively in their review and I end up not being
+able to comment in my reply to both their comments and related parts of
+the patch that they trimmed out.
 
-If there are two ways of doing it, people will use both ways.  My
-kneejerk reaction would be to hide the macros as an implementation
-detail, but perhaps that's just me.
+The obvious answer is "trim exactly the way I would". I have had very
+little success preaching that so far.
 
-Thanks,
+> This is just me, of course ... and I was very much experimenting with it
+> as an alternative to my usual "do it in email" approach.  So one can
+> definitely argue that I was simply holding it wrong.
+> 
+> If, though, the intent is that one inserts comments and leaves the patch
+> text alone, I think that the interface *really* needs to not let you
+> mess with the stuff you're not supposed to change.  If one were to
+> implement this as <obnoxious>an Emacs mode</obnoxious>, that sort of
+> constraint could be implemented fairly easily.  If you're throwing
+> somebody into an arbitrary editor, it's going to be rather harder.
+> 
+> I tend to be pretty careful about which text I trim when composing
+> replies.  It's pretty helpful to, for example, be able to do something
+> like:
+> 
+>   > something from the patch
+> 
+>   Here you're doing X...
+> 
+>   [...]
+>   > something rather further down
+> 
+>   Here instead it's expecting Y, WTF?
+> 
+> ...so I would be less than fully pleased with an interface that prevents
+> that.
 
-jon
+That's a style I sometimes use, usually not in the first e-mail reply,
+but quite often when the mail thread is 10 replies deep and it becomes
+clear large areas of the original patch are just not relevant to the
+discussion any more.
+
+> But perhaps I'm a dinosaur who just isn't using the tool correctly.
+> 
+> > Is this rife for creating confusion? Will maintainers be fighting with this
+> > and growing grumpy because it's not exactly like their email client?
+> 
+> Some surely will, see above.  But that doesn't necessarily mean you're
+> not creating a better workflow in the long run.  I think we need to play
+> with a lot of ideas, and I'm really glad you're doing that.
+
+-- 
+Regards,
+
+Laurent Pinchart
