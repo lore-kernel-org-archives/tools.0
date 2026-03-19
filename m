@@ -1,36 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8503EDAD9
-	for <tools@linux.kernel.org>; Thu, 19 Mar 2026 17:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF4F3FE346;
+	Thu, 19 Mar 2026 21:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773942395; cv=none; b=bRXQg0zS+DRjI02PZnaEu+GlmFSbNcwdrU7OZfTcjxmxfu/nH19//hSD75gwUqR7+YROFN3B055PCmUQFonNFU2ybSzGjFk0OjztTwa5LYRbjYTc+qKOnC7TgyWPXgpQViUi9fJPCAvy0h0PT9T+JPx26p/xja2+qyyW9FDlbsI=
+	t=1773956340; cv=none; b=d4Pp5c15Th8jeGncXNpJIRWkcworhLlVuuh/mu+hnu+NbAMSf5z2X2+3rmZ1SOMpwqAJU5snzqmM+1nfG09Spp19gl2q9AFDpIH9tLywNprddRC9+tobb6OZsGR4b6GqhWcWzplxB9MdEE6eptA1XGiNtLK1usTcM43xpRW3Axo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773942395; c=relaxed/simple;
-	bh=fi9ehUs2K3y8qrCok5Ce5JVF67dOtNXm5MlYwqDg0bk=;
+	s=arc-20240116; t=1773956340; c=relaxed/simple;
+	bh=cZFhWpmTq3GndIXHZyaYH98xkeyzZb9ww5qEVWABkS8=;
 	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=IpR5LTwTQBY3aSSz6o9piiySafq++ZM5tTjpfItFrf4UknL2Ty5MW6EV+dgkApCdhNBTintl2L5VkAL3miQ2kdBHkneFUw74vluFniK3qgkmmai4qkOTsyogW5ELEeKS9BtlVp1JTu+amfvUn2iP7C65ukrqjuIxsFFTfEn2G7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+Yx6Si6; arc=none smtp.client-ip=10.30.226.201
+	 References:Subject:Date; b=vDDbyZYXgOoc+R3frSSAQ78dYPiOBV9sYuaLrZB3Ke0CM4Bcs8IKmYOY968hmlInq5LRblHEcsXaMCm+DKoFccdN6gfpolP/BezUuInXKg4f15Oh7GuOTK5lOpFz8pOvihFQAIK3yyv20aHFm1Aem7c/x51tFtDRcrJyhl6/AFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GzozfodR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H+Yx6Si6"
-Received: by smtp.kernel.org (Postfix)
-	id 199A9C2BCAF; Thu, 19 Mar 2026 17:46:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038FEC19424;
-	Thu, 19 Mar 2026 17:46:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GzozfodR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F019C19424;
+	Thu, 19 Mar 2026 21:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773942395;
-	bh=fi9ehUs2K3y8qrCok5Ce5JVF67dOtNXm5MlYwqDg0bk=;
+	s=k20201202; t=1773956339;
+	bh=cZFhWpmTq3GndIXHZyaYH98xkeyzZb9ww5qEVWABkS8=;
 	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=H+Yx6Si6h5Z2+ZFnXD5HU8eQu5MvKmQp6WikBH9uOSva8jyt6ifZY5o3zcGqVvgip
-	 qT0bKNwUcd2HysU/ilkOLiU+fM5TGGh6UkSO537JQ2UBv5zWFVdQNxy5HsDR/+WBcG
-	 YCL/Zgb/kJoQJxA4MOygTal0nXNuLUCI74LJxIkiJfJVYpsU+/PxpA8TVHke3RTdjm
-	 H/dgSQxnTeYbUPbP8r0Fmlvn3AcCMzHqAZGfuSEE1OSiqyVNS2xzJrdO2IGhW2YcE6
-	 u1vBRY3KiCuYxmFxJpZmHCv1Q18eSU6TzvDvSQX8o8bo4mxE3GW3KtkC35R+i1XB8q
-	 ZqUWIXKKPEGUQ==
+	b=GzozfodR/3y1uz+zVXX22eNM5mt5RuFjvKHTxUeIGNL1dV9socmn5ZMclUQhFU3Ak
+	 OOByS4gMcwZFm8MAzp5gi2JhlV/MweL2APGoo1bMdl+lo9edBh75HWY1NFgkVmV9SU
+	 N/T+zejm953DSN/RIQF8NbmcxstMZvLmLC4Qm0INZT3x//gJJd84JzS8NEtxwjHvuu
+	 QqNdi7MKAMbiO45DOjZ5e2zd1j/TcL1lt4aXkUXMG5wF/q0QKX6h4FPCZTXO4Jn32n
+	 kZF0wpE0s4FFAGRGMhtyTYFznJtw1ZJ3DJsSiVJXGPhNLQKRckJX5QESTZL0wGn940
+	 rZEzwKiX76KkA==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 05BC339302E2;
-	Thu, 19 Mar 2026 17:46:27 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 42B4039302FD;
+	Thu, 19 Mar 2026 21:38:51 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -38,55 +36,47 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 From: B4 Bugbot <bugbot+b4@kernel.org>
-To: mricon@kernel.org, tools@kernel.org, broonie@kernel.org
-Message-ID: <20260319-bcc07a98c2-dc61cf5d01a0@git.kernel.org>
-In-Reply-To: <64a3ea45-bb7f-4a29-bce9-2dcf44ed7e25@sirena.org.uk>
-References: <64a3ea45-bb7f-4a29-bce9-2dcf44ed7e25@sirena.org.uk>
-Subject: Re: Problems with b4 review update workflow
-X-Git-Bug-Id: cc07a98ad6554be8888f9accb9f2bf19dcda1d94fa75207f88eb4a76c2e596bc
+To: tools@linux.kernel.org, konstantin@linuxfoundation.org, toke@redhat.com, 
+ users@linux.kernel.org
+Message-ID: <20260319-b73df66cc6-5ca5125a64ff@git.kernel.org>
+In-Reply-To: <87ttdkrylx.fsf@toke.dk>
+References: <87ttdkrylx.fsf@toke.dk>
+Subject: Re: b4 feature request: run command before rewriting history
+X-Git-Bug-Id: 73df66c98d8604ebb266e80cb6226df2a251802d645579214b7128deb548ccf7
 X-Mailer: bugspray 0.1-dev
-Date: Thu, 19 Mar 2026 17:46:27 +0000 (UTC)
+Date: Thu, 19 Mar 2026 21:38:51 +0000 (UTC)
 
-Konstantin Ryabitsev writes in commit db13a1e6989d946ae12fc7acfd7ec38a61df2148:
+Konstantin Ryabitsev writes in commit bc6c4d853c7eace3b7f325cbd17dfe2d67760fb7:
 
-review: use temporary upgrade branch for revision updates
+prep: add pre/post history-rewrite hooks
 
-Refactor _do_update_revision() into a three-phase workflow so the old
-review branch is never modified until the new revision applies
-successfully:
+Add two new configuration keys, prep-pre-rewrite-hook and
+prep-post-rewrite-hook, that let users run a command before and after
+any b4 operation that rewrites history on a prep branch.
 
-  Phase 1 (worker): fetch the new series from the network and compute
-  base commit hints -- same logic used during initial checkout.
+The pre-hook runs before the rewrite and aborts the operation if it
+exits non-zero.  The post-hook runs after a successful rewrite; a
+non-zero exit is logged as a warning but does not undo anything.
 
-  Phase 2 (modal): show BaseSelectionScreen so the maintainer can see
-  and correct the base commit, instead of silently guessing.
+The primary use case is Stacked Git: users can set
+prep-pre-rewrite-hook to "stg commit --all" so that StGit's internal
+state is cleared before b4 modifies the branch, and
+prep-post-rewrite-hook to "stg repair" to re-sync afterwards.
 
-  Phase 3 (suspend): apply patches to a temporary upgrade branch
-  (b4/review/{change_id}-v{rev}-upgrade), restore review data, then
-  archive the old branch and rename the upgrade branch into place.
-
-Previously the old review branch was archived (deleted) before
-attempting to apply the new version, so a failed git-am left the
-maintainer with no review data. Now the old branch stays untouched
-until the apply succeeds. If anything goes wrong the upgrade branch
-is cleaned up and the old review is intact.
-
-After a successful upgrade the TUI returns to the tracking list
-instead of immediately entering review mode.
+Hooks are called around git-filter-repo runs in run_frf(), which
+covers all history rewrites on existing prep branches: cover letter
+updates, trailer updates, and reroll cover rewrites.
 
 Key changes:
-- _do_update_revision() now pushes a WorkerScreen for the fetch phase
-- New _on_update_prepared() callback pushes BaseSelectionScreen
-- New _on_update_base_selected() does the apply/swap in suspend()
-- Archive only happens after the upgrade branch is fully built
-- git branch -m renames upgrade branch to review branch on success
-- Added 8 tests covering all phases, failure modes, and the safety
-  guarantee that the old branch survives errors
+- New run_rewrite_hook() helper in ez.py
+- Instrumented run_frf() with pre/post hooks around frf.run()
+- Added 6 unit tests for the hook mechanism
+- Documented both config keys in docs/config.rst
 
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://msgid.link/64a3ea45-bb7f-4a29-bce9-2dcf44ed7e25@sirena.org.uk # cc07a98
+Suggested-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Closes: https://msgid.link/87ttdkrylx.fsf@toke.dk # 73df66c
 Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Assisted-by: claude-opus-4-6
 
