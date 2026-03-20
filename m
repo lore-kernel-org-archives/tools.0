@@ -1,128 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A533C65EC
-	for <tools@linux.kernel.org>; Fri, 20 Mar 2026 14:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54D13B895E
+	for <tools@linux.kernel.org>; Fri, 20 Mar 2026 15:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774018377; cv=none; b=nE2lDwn7mFokYRAzqud/s7mSQrnqwVOkvjJkGxpgGD/Hr1D7jvGf+xdZWim2l0QaV/E7VR7sQZFDx36FvBIc4aKQZWd6UtTFyy9i5alp2gW2CO5lMOxMqySBakEJLfUQUCYPZl/YvTf6DoXr2yh3wotfTolYeiYlVmoXpPG318o=
+	t=1774019576; cv=none; b=Um+XABcjrTVpxiWsN4KKs2+FE9VA4KMbfdDkOF+paq1kp2YYYgawdXnoUlcAZlCVn9SLkjA3oXb1S4lURLJHCfjZVWC5+bb0GlkzLe5Uha0NUi5fAWjFVju0Z/pzBlg+0GJAAk6L8e8U5XlxCUYhHaaJwWjljH4EoCpDaxaF3D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774018377; c=relaxed/simple;
-	bh=vgGalh0lv/R+7C45xWUBKu1qX2jm3wJss42gjGPR8DE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=kABBaBokm0A01Oz/z6fp24J2sureSw4bT40bTCqEjzGgJvmnLauogF8NeCr6M7g6Tp6f0smUWXqbMIyE8oO12x15AcyExioGAbOqZSsEzxhcuhZC8+1RJ4687Gk48/vq9hlHWaw33HM7OTudxaaAWcItmZ+vLAcT3xoZZ/DEx7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=de4u4KPi; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774019576; c=relaxed/simple;
+	bh=EeB3KRHVLiLBKemne34ULql8aqu3AMmMhEx7BayL/6Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=gts89T0OCCeODo8DpK+03oDbiK3XP0VAm+siUze2HPgpw2TQ83IuIgIWuPiCFzZMPBS4dvshnF5HvRfJ5Il2x5claf17+3jlSXr8Yx3Q6qb7caY+d8sg/Nle3MB8r82/MZj0yB8sKaNSv270RlByWHEa1zrIq7NfboTzNhWOOUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HN/Hcc8J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="de4u4KPi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HN/Hcc8J"
 Received: by smtp.kernel.org (Postfix)
-	id 8FC6FC4CEF7; Fri, 20 Mar 2026 14:52:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53CDC2BCB2;
-	Fri, 20 Mar 2026 14:52:56 +0000 (UTC)
+	id 70B2BC19425; Fri, 20 Mar 2026 15:12:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1029C4CEF7;
+	Fri, 20 Mar 2026 15:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774018377;
-	bh=vgGalh0lv/R+7C45xWUBKu1qX2jm3wJss42gjGPR8DE=;
-	h=Date:Subject:To:References:From:Cc:In-Reply-To:From;
-	b=de4u4KPi89JQFsRRGiUPj4coO3Jjn6LkQ42FWbqcgcOUyba45a0wY5R7JVLQHn0hU
-	 xvnTMB6UyzEfR9xgKU2c0M9DiFvi18/JL/XI7bIUy3b1iTaSpUrGbGxaYzEqXDdBpu
-	 TcdMzlU/fZDUoDkO7SKt0zd9+ie/M/qcnu+U4Jo5/+ymCqR5/VpyXLq5n7OB4a6N7z
-	 Ilu+GZ3LDSrylUMqIIRyxyx25MO/Fhhi2kw68q6jQ3DyU/bsFQgCpcN/m0x4zJPkzr
-	 4pzx48P0R7stwnZbWCb6XkwT3D1wlDbe3lbbOzwfBJj5KfwLxiqxzMm12VEsdsRLVt
-	 WMKAaYbvbTVPw==
-Message-ID: <4c5b1214-e3ce-4da0-bede-6ee7ab252217@kernel.org>
-Date: Fri, 20 Mar 2026 15:52:54 +0100
+	s=k20201202; t=1774019576;
+	bh=EeB3KRHVLiLBKemne34ULql8aqu3AMmMhEx7BayL/6Q=;
+	h=Date:From:To:Cc:Subject:From;
+	b=HN/Hcc8JzWYWCR56vdf33fQVZVSUo5wJR0xEWfpV1xmGyEzvGtfQgCgd9AjcweupT
+	 M8hzsdu8ita19ggyjDLbTpKcq84IdEImf0QFpBUgHSKJc+/ToMT+uKPc7ynHe2l43n
+	 riEasvXB7aJkkqi+yzu6r3ACwYoais2jSZKnVgbnmqhvgQOVIYvMaodnbi84HKNq5X
+	 puOLbhGbwuYtu389hOIJj4tnBGQa+725FL0sj2DFrkT2oWL8HZ+TGw89nHHMCKnAcv
+	 KJ27xQIuLBiqLbhRCRcNlqH4v6BwMSHcFme0cI1or5niBnQkXI6l4oWGjYwqT/ggU1
+	 kepirfPsBB6+w==
+Date: Fri, 20 Mar 2026 15:12:52 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <mricon@kernel.org>
+Cc: tools@kernel.org
+Subject: Series revision identification issue
+Message-ID: <88549a4a-cc82-4200-b73b-e335cbb2b024@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: b4: prep --edit-cover emits strange message about "Already Ran"
-Content-Language: fr
-To: Dave Marquardt <davemarq@linux.ibm.com>
-References: <87v7eqd0lz.fsf@linux.ibm.com>
-From: Matthieu Baerts <matttbe@kernel.org>
-Cc: tools@kernel.org
-Autocrypt: addr=matttbe@kernel.org; keydata=
- xsFNBFXj+ekBEADxVr99p2guPcqHFeI/JcFxls6KibzyZD5TQTyfuYlzEp7C7A9swoK5iCvf
- YBNdx5Xl74NLSgx6y/1NiMQGuKeu+2BmtnkiGxBNanfXcnl4L4Lzz+iXBvvbtCbynnnqDDqU
- c7SPFMpMesgpcu1xFt0F6bcxE+0ojRtSCZ5HDElKlHJNYtD1uwY4UYVGWUGCF/+cY1YLmtfb
- WdNb/SFo+Mp0HItfBC12qtDIXYvbfNUGVnA5jXeWMEyYhSNktLnpDL2gBUCsdbkov5VjiOX7
- CRTkX0UgNWRjyFZwThaZADEvAOo12M5uSBk7h07yJ97gqvBtcx45IsJwfUJE4hy8qZqsA62A
- nTRflBvp647IXAiCcwWsEgE5AXKwA3aL6dcpVR17JXJ6nwHHnslVi8WesiqzUI9sbO/hXeXw
- TDSB+YhErbNOxvHqCzZEnGAAFf6ges26fRVyuU119AzO40sjdLV0l6LE7GshddyazWZf0iac
- nEhX9NKxGnuhMu5SXmo2poIQttJuYAvTVUNwQVEx/0yY5xmiuyqvXa+XT7NKJkOZSiAPlNt6
- VffjgOP62S7M9wDShUghN3F7CPOrrRsOHWO/l6I/qJdUMW+MHSFYPfYiFXoLUZyPvNVCYSgs
- 3oQaFhHapq1f345XBtfG3fOYp1K2wTXd4ThFraTLl8PHxCn4ywARAQABzSRNYXR0aGlldSBC
- YWVydHMgPG1hdHR0YmVAa2VybmVsLm9yZz7CwZEEEwEIADsCGwMFCwkIBwIGFQoJCAsCBBYC
- AwECHgECF4AWIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZUDpDAIZAQAKCRD2t4JPQmmgcz33
- EACjROM3nj9FGclR5AlyPUbAq/txEX7E0EFQCDtdLPrjBcLAoaYJIQUV8IDCcPjZMJy2ADp7
- /zSwYba2rE2C9vRgjXZJNt21mySvKnnkPbNQGkNRl3TZAinO1Ddq3fp2c/GmYaW1NWFSfOmw
- MvB5CJaN0UK5l0/drnaA6Hxsu62V5UnpvxWgexqDuo0wfpEeP1PEqMNzyiVPvJ8bJxgM8qoC
- cpXLp1Rq/jq7pbUycY8GeYw2j+FVZJHlhL0w0Zm9CFHThHxRAm1tsIPc+oTorx7haXP+nN0J
- iqBXVAxLK2KxrHtMygim50xk2QpUotWYfZpRRv8dMygEPIB3f1Vi5JMwP4M47NZNdpqVkHrm
- jvcNuLfDgf/vqUvuXs2eA2/BkIHcOuAAbsvreX1WX1rTHmx5ud3OhsWQQRVL2rt+0p1DpROI
- 3Ob8F78W5rKr4HYvjX2Inpy3WahAm7FzUY184OyfPO/2zadKCqg8n01mWA9PXxs84bFEV2mP
- VzC5j6K8U3RNA6cb9bpE5bzXut6T2gxj6j+7TsgMQFhbyH/tZgpDjWvAiPZHb3sV29t8XaOF
- BwzqiI2AEkiWMySiHwCCMsIH9WUH7r7vpwROko89Tk+InpEbiphPjd7qAkyJ+tNIEWd1+MlX
- ZPtOaFLVHhLQ3PLFLkrU3+Yi3tXqpvLE3gO3LM7BTQRV4/npARAA5+u/Sx1n9anIqcgHpA7l
- 5SUCP1e/qF7n5DK8LiM10gYglgY0XHOBi0S7vHppH8hrtpizx+7t5DBdPJgVtR6SilyK0/mp
- 9nWHDhc9rwU3KmHYgFFsnX58eEmZxz2qsIY8juFor5r7kpcM5dRR9aB+HjlOOJJgyDxcJTwM
- 1ey4L/79P72wuXRhMibN14SX6TZzf+/XIOrM6TsULVJEIv1+NdczQbs6pBTpEK/G2apME7vf
- mjTsZU26Ezn+LDMX16lHTmIJi7Hlh7eifCGGM+g/AlDV6aWKFS+sBbwy+YoS0Zc3Yz8zrdbi
- Kzn3kbKd+99//mysSVsHaekQYyVvO0KD2KPKBs1S/ImrBb6XecqxGy/y/3HWHdngGEY2v2IP
- Qox7mAPznyKyXEfG+0rrVseZSEssKmY01IsgwwbmN9ZcqUKYNhjv67WMX7tNwiVbSrGLZoqf
- Xlgw4aAdnIMQyTW8nE6hH/Iwqay4S2str4HZtWwyWLitk7N+e+vxuK5qto4AxtB7VdimvKUs
- x6kQO5F3YWcC3vCXCgPwyV8133+fIR2L81R1L1q3swaEuh95vWj6iskxeNWSTyFAVKYYVskG
- V+OTtB71P1XCnb6AJCW9cKpC25+zxQqD2Zy0dK3u2RuKErajKBa/YWzuSaKAOkneFxG3LJIv
- Hl7iqPF+JDCjB5sAEQEAAcLBXwQYAQIACQUCVeP56QIbDAAKCRD2t4JPQmmgc5VnD/9YgbCr
- HR1FbMbm7td54UrYvZV/i7m3dIQNXK2e+Cbv5PXf19ce3XluaE+wA8D+vnIW5mbAAiojt3Mb
- 6p0WJS3QzbObzHNgAp3zy/L4lXwc6WW5vnpWAzqXFHP8D9PTpqvBALbXqL06smP47JqbyQxj
- Xf7D2rrPeIqbYmVY9da1KzMOVf3gReazYa89zZSdVkMojfWsbq05zwYU+SCWS3NiyF6QghbW
- voxbFwX1i/0xRwJiX9NNbRj1huVKQuS4W7rbWA87TrVQPXUAdkyd7FRYICNW+0gddysIwPoa
- KrLfx3Ba6Rpx0JznbrVOtXlihjl4KV8mtOPjYDY9u+8x412xXnlGl6AC4HLu2F3ECkamY4G6
- UxejX+E6vW6Xe4n7H+rEX5UFgPRdYkS1TA/X3nMen9bouxNsvIJv7C6adZmMHqu/2azX7S7I
- vrxxySzOw9GxjoVTuzWMKWpDGP8n71IFeOot8JuPZtJ8omz+DZel+WCNZMVdVNLPOd5frqOv
- mpz0VhFAlNTjU1Vy0CnuxX3AM51J8dpdNyG0S8rADh6C8AKCDOfUstpq28/6oTaQv7QZdge0
- JY6dglzGKnCi/zsmp2+1w559frz4+IC7j/igvJGX4KDDKUs0mlld8J2u2sBXv7CGxdzQoHaz
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <87v7eqd0lz.fsf@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-Hi Dave,
-
-On 20/03/2026 15:41, Dave Marquardt wrote:
-> I found the message here a little confusing, and had to go code
-> spelunking to figure out what it might mean and how I should answer the
-> Y/N question.
-> 
->     $ b4 prep --edit-cover
->     Waiting for Emacs...
->     Invoking git-filter-repo to update the cover letter.
->     The previous run is older than a day (/home/davemarq/linux/linux/.git/worktrees/ibmvfc-fpin-bis/filter-repo/already_ran already exists).
->     See "Already Ran" section in the manual for more information.
->     Treat this run as a continuation of filtering in the previous run (Y/N)? n
->     New history written in 612.22 seconds...
->     Completely finished after 612.53 seconds.
->     Cover letter updated.
-> 
-> I first searched the b4 manual, and found nothing about "Already Ran".
-> Eventually, on reading the b4 code in ez.py, I found this was from the
-> git-filter-repo package and I should check its manual. I found the code.
-> There's no way to opt out of this check and message.
-
-Yes, there is: simply by removing the file. That's what b4 is doing for
-a while, and it has been backported in the last stable version (0.14.3):
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="F++k2G2yjALDM4/H"
+Content-Disposition: inline
+X-Cookie: Who's on first?
 
 
-https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?h=stable-0.14.y&id=e5369681808b
+--F++k2G2yjALDM4/H
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Is it not working on your side? If no, which b4 version are you using?
+Hi Konstantin,
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
+The series:
 
+    https://patch.msgid.link/20260309065137.949053-1-srinivas.kandagatla@oss.qualcomm.com
+
+has a new version:
+
+    https://lore.kernel.org/linux-sound/20260320144918.1685838-1-srinivas.kandagatla@oss.qualcomm.com/
+
+but b4 does not seem to notice this (there's no metadata in the series
+that'd track it, but there is the subject...).
+
+Since this sort of stuff is never going to be 100% accurate it might be
+handy to have a way of explicitly linking a new version in the UI.
+
+Thanks,
+Mark
+
+--F++k2G2yjALDM4/H
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmm9Y/MACgkQJNaLcl1U
+h9B3GQf/e8vj2icG2/haY+4pyYIHPihjRg8p5hraS1WpFhuT30wws/Yi3eGfQor7
+LRKmhpBKH6Dh0yeQL62dLAhsEPKB7wD4oDLuYrOwPivFVdqntmuj3iI0AmG6b2ZX
+ziNuPhejgk6sbaEyq5Xvsn7ZXNGqMKmxdJueDJ0862S+7gMJIH/YBqNt8DJeZFud
+HPPMsB08IkaSmtlD64G9UV7a7CsXnrrNiOnvdU+UchFsSvi6bLtn7gZ6e/09ymii
+v8KxWsgQiX6neTamQ0Su1atxXvKlMALPCPu6OHSonpYBBp5AdehLjvGX0guElfpo
+NThECv4geYRg1FNSgUtKbFsIk1vebg==
+=/MPL
+-----END PGP SIGNATURE-----
+
+--F++k2G2yjALDM4/H--
