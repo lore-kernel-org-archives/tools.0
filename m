@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F297F2DECDE
-	for <tools@linux.kernel.org>; Sat, 21 Mar 2026 12:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB762ED17B
+	for <tools@linux.kernel.org>; Sat, 21 Mar 2026 12:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774097469; cv=none; b=VF9ZHA8yYud6jWm+kE5YhxJMTM5FtsVfERh5y4+He8vul8Ch3ydaye1a7ZtrHp4Z4+ltP94gUfVHkkArs/HO2P8G4KejAGIrZEZWbrryy5J6XBdZKwne2OK4tCCLKDnwjVQsktpkTJ0siW6dkdCSCCzSDyucR775D2gNgARwJUI=
+	t=1774097596; cv=none; b=DzeXshLynTyGxicMV9ZnBrvKjSpgFjbgYnbt/8UAj+K5Cok0LBmBXyvSn2PqtV4Q7B+CtZnS8373Mp+CV6AGy2XEFBuq9oWglKtyQlY2DfrybLE46FK9cRT+nkfcSV0WYWvfFiHPC20EjyTqxLKs0OJ2XR2VLumtUZ47H42prVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774097469; c=relaxed/simple;
-	bh=sTEQ88S8SzXx4vL50slf7AG2DWjh96QAlEX0f6TPgLw=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=YAv29T77vfojn0tV1VuZ9PTryRr0quUNo+XWt0XPDmngToJaYyGSGv/jEyNcF0PeRU4nxtKMfH95yyBed0PlrhA++dKp7js8dsPImodpPVCeR+hg8VGKgTovC53dDiJqDpVMORNS37l4w7XrDji0N+tungfK3BFYZOe4yotxuOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GDl1Rxz6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774097596; c=relaxed/simple;
+	bh=hygtFUxMQ5Z5ti8AYYRbiK2PHhd+bGTIcu1torcHajU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=oRF/7Qw2RTBY+MmsU9Lj1HgsnekKuMYGpXOMUfrG43PmFSAxDRB0h6ekoLMi9ctPIAS4SLIHHmIpnt6feJeIpOy4penV4C5fXr2M44nkPDVUkwXdk49CV6rVufeyNjr2fL0x1u1iDcGTDIMskeQiVospeWWr7GvoYIimWZLdp20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fb8Zo4r/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GDl1Rxz6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fb8Zo4r/"
 Received: by smtp.kernel.org (Postfix)
-	id A996DC2BCB1; Sat, 21 Mar 2026 12:51:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C00C19421;
-	Sat, 21 Mar 2026 12:51:07 +0000 (UTC)
+	id 4DD55C2BC9E; Sat, 21 Mar 2026 12:53:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF350C19421;
+	Sat, 21 Mar 2026 12:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774097468;
-	bh=sTEQ88S8SzXx4vL50slf7AG2DWjh96QAlEX0f6TPgLw=;
-	h=Date:From:To:Subject:From;
-	b=GDl1Rxz6wLiVfiEVmS0c3Izng2VUgNInYXme4kQSZQaiv8NcXSa9yWzqlVZcE0ad5
-	 q9nnoErPvYQZoEV7tIBu+v7cxfC71yw3jpaFfKz/WJri+CS69c4LfssSyCMeObqkQp
-	 IeMW4IF7UtkKMZWt925gmvQLXz9xhnusHYQpN9amHxMedg8ED98DBZ4+gt1joYeJyL
-	 83gTilb5QNUIQdJaQIBRrkaEz05CGEVBxe+4zdCLiVKBnLNgAtGiNmvEWAqUiWKeoe
-	 DjjqfAgS0kVOtpRQRmHblvATMqtVIRamz0jTK7IzC9vtMvhT82vDXga/coPXZO4hri
-	 BL2yl3kUFXN1Q==
-Message-ID: <6737c71c-0397-45d3-b2c5-9f956de047a3@kernel.org>
-Date: Sat, 21 Mar 2026 13:51:06 +0100
+	s=k20201202; t=1774097596;
+	bh=hygtFUxMQ5Z5ti8AYYRbiK2PHhd+bGTIcu1torcHajU=;
+	h=Date:Subject:From:To:References:In-Reply-To:From;
+	b=fb8Zo4r/idC6XdhwZpsuDOzBazrh6PFOb/ZoHLZWZlFdO7i9XlkaC5C62SnykTxCj
+	 5nXeS2Dn2fUGM+PzE0hgj8WILrxCo0MHw2sdI+eQ3XrY+CAXGXICQFxIdLUeS/mfUO
+	 0kiKImdGzp+zOtHAnGMUpFGJvNcw8Tvswz8adwb5tzoFfkAvIa4aTg3Eiwd00NRzgc
+	 vHeyRAR2e1Li3QwKHJsqHX4hh4SXjwaTRPXJcr2NBegRfS8VGITB8DNGQSQ+EQexzi
+	 Km6GnVqYDN0axTPYNnDcrpbPzgL7yusxUa3CJ8fK9dLdyFahoudaMUFe/HX+GNZ7ln
+	 Qo4mrAKdXYTcQ==
+Message-ID: <d5efec30-8c99-4910-a5ab-5bed653c0c99@kernel.org>
+Date: Sat, 21 Mar 2026 13:53:13 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -36,10 +37,11 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [FEAT REQ] b4: Apply (action) on individual patches
 From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
 To: "Kernel.org Tools" <tools@kernel.org>
-Subject: [FEAT REQ] b4: Apply (action) on individual patches
+References: <6737c71c-0397-45d3-b2c5-9f956de047a3@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -83,27 +85,31 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <6737c71c-0397-45d3-b2c5-9f956de047a3@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hey,
+On 21/03/2026 13:51, Krzysztof Kozlowski wrote:
+> Hey,
+> 
+> Trying b4 from release v0.15.
+> 
+> Workflow of most of SoC developers involves multiple branches for the
+> same patchset. Often patchset consists of:
+> 1. dt-bindings - this can go to SoC platform subsystem or completely
+> different subsystem
+> 2. Actual driver change - same as above
+> 3. DTS - this is applied by SoC platform subsystem
+> 
+> When reviewing individual patches, this workflow needs picking up
+> individual patches, not entire set. I don't see such feature in b4
+> review tui currently, except escaping to shell.
+> 
+> Therefore my feature request: individual patch review should also have
+> "action" option.
 
-Trying b4 from release v0.15.
-
-Workflow of most of SoC developers involves multiple branches for the
-same patchset. Often patchset consists of:
-1. dt-bindings - this can go to SoC platform subsystem or completely
-different subsystem
-2. Actual driver change - same as above
-3. DTS - this is applied by SoC platform subsystem
-
-When reviewing individual patches, this workflow needs picking up
-individual patches, not entire set. I don't see such feature in b4
-review tui currently, except escaping to shell.
-
-Therefore my feature request: individual patch review should also have
-"action" option.
+I also do not see individual message ID shown, so I cannot throw it to
+other scripts from the TUI or from "escape to shell".
 
 Best regards,
 Krzysztof
-
