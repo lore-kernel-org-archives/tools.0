@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42C4223DE9
-	for <tools@linux.kernel.org>; Sat, 21 Mar 2026 12:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F297F2DECDE
+	for <tools@linux.kernel.org>; Sat, 21 Mar 2026 12:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774096073; cv=none; b=Zs9IQF+Xv2ZLs/NiBHtdRU9O2tyPsBFzQUitH7FnOPJWwbfV/RnKt1K1K7O2yVEPjxvqDlZondbSNRasZ1PhQJpP4TNNrZBFxMF7gpAZdVLsrB2tYf43VehawRTx5H7So/yPR7wzJYfAeb7pX0iFM1U84+O7QmJfH4equK3f/GM=
+	t=1774097469; cv=none; b=VF9ZHA8yYud6jWm+kE5YhxJMTM5FtsVfERh5y4+He8vul8Ch3ydaye1a7ZtrHp4Z4+ltP94gUfVHkkArs/HO2P8G4KejAGIrZEZWbrryy5J6XBdZKwne2OK4tCCLKDnwjVQsktpkTJ0siW6dkdCSCCzSDyucR775D2gNgARwJUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774096073; c=relaxed/simple;
-	bh=xXvqnZh6Iu7XvLlPpz7EMJMw48jQsCApqLSRqm9TKfw=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=Iv3eo0CRQR1ajFkPfExMpHCzMVEePHIlq7NYOJYIB4Cc97GiOoAv0UyTjF0KGv4+MVMouTrCxZUjPh1OIBh8wpNnVEgfCbrGSVcgJQMA7/mdvc5gNMiQO76y/cBM8X3fXp2eVJ+ztlbV5OAiMum0rMSvcznhvjTSRJeuzzMW4aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PO/fKXQF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774097469; c=relaxed/simple;
+	bh=sTEQ88S8SzXx4vL50slf7AG2DWjh96QAlEX0f6TPgLw=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=YAv29T77vfojn0tV1VuZ9PTryRr0quUNo+XWt0XPDmngToJaYyGSGv/jEyNcF0PeRU4nxtKMfH95yyBed0PlrhA++dKp7js8dsPImodpPVCeR+hg8VGKgTovC53dDiJqDpVMORNS37l4w7XrDji0N+tungfK3BFYZOe4yotxuOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GDl1Rxz6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PO/fKXQF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GDl1Rxz6"
 Received: by smtp.kernel.org (Postfix)
-	id 6A50FC2BC9E; Sat, 21 Mar 2026 12:27:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC820C19421;
-	Sat, 21 Mar 2026 12:27:52 +0000 (UTC)
+	id A996DC2BCB1; Sat, 21 Mar 2026 12:51:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C00C19421;
+	Sat, 21 Mar 2026 12:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774096073;
-	bh=xXvqnZh6Iu7XvLlPpz7EMJMw48jQsCApqLSRqm9TKfw=;
+	s=k20201202; t=1774097468;
+	bh=sTEQ88S8SzXx4vL50slf7AG2DWjh96QAlEX0f6TPgLw=;
 	h=Date:From:To:Subject:From;
-	b=PO/fKXQFQDIxo3v6aqhGDk+Ifx3GxQVkYM38NKwttE+Km2xTq6ySvh4b7LoC0UARj
-	 gWdFj/7Z/ISklpLBiAonjdIeMF6sk6V/VpKQ6eHkEu+TCY+UIU4QHhPMQeCxgg1eCQ
-	 2ePPNKlbRXHladPTK5UPIcrd8uGvwiFswfQXWifIMOanPfkzYN1keTHehvSt2X66NY
-	 ZhcNjD30q52E//p4SOOueEYbqUIJS62rwABW3aiXkqzZomO8TzwSrI9m0oCiEaoxFE
-	 EWBgno7DOmt4WCw4OqJTIT3v4yyaeB6iGB6FF9yBWDn9hFFbH6bwMJcd1NOF5oJ1GH
-	 B827tBqt/39kg==
-Message-ID: <d2333f94-54a8-4175-b4cd-377c7b4dae9b@kernel.org>
-Date: Sat, 21 Mar 2026 13:27:51 +0100
+	b=GDl1Rxz6wLiVfiEVmS0c3Izng2VUgNInYXme4kQSZQaiv8NcXSa9yWzqlVZcE0ad5
+	 q9nnoErPvYQZoEV7tIBu+v7cxfC71yw3jpaFfKz/WJri+CS69c4LfssSyCMeObqkQp
+	 IeMW4IF7UtkKMZWt925gmvQLXz9xhnusHYQpN9amHxMedg8ED98DBZ4+gt1joYeJyL
+	 83gTilb5QNUIQdJaQIBRrkaEz05CGEVBxe+4zdCLiVKBnLNgAtGiNmvEWAqUiWKeoe
+	 DjjqfAgS0kVOtpRQRmHblvATMqtVIRamz0jTK7IzC9vtMvhT82vDXga/coPXZO4hri
+	 BL2yl3kUFXN1Q==
+Message-ID: <6737c71c-0397-45d3-b2c5-9f956de047a3@kernel.org>
+Date: Sat, 21 Mar 2026 13:51:06 +0100
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,7 +39,7 @@ User-Agent: Mozilla Thunderbird
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 To: "Kernel.org Tools" <tools@kernel.org>
-Subject: [FEAT REQ / BUG] b4 review messes with hooks
+Subject: [FEAT REQ] b4: Apply (action) on individual patches
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -86,56 +86,23 @@ Autocrypt: addr=krzk@kernel.org; keydata=
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-I am trying b4 review in a repo I used for maintenance. That repo has
-also checkpach and signed-off hooks installed:
+Hey,
 
-https://web.git.kernel.org/pub/scm/linux/kernel/git/soc/soc-tools.git
+Trying b4 from release v0.15.
 
-Starting review causes quite a bunch of warnings, I guess from post commit:
+Workflow of most of SoC developers involves multiple branches for the
+same patchset. Often patchset consists of:
+1. dt-bindings - this can go to SoC platform subsystem or completely
+different subsystem
+2. Actual driver change - same as above
+3. DTS - this is applied by SoC platform subsystem
 
-1. Executes in other directory (?):
-line 17: ./scripts/checkpatch.pl: No such file or directory
+When reviewing individual patches, this workflow needs picking up
+individual patches, not entire set. I don't see such feature in b4
+review tui currently, except escaping to shell.
 
-2. Missing SoB:
-Errors in tree with Signed-off-by, please fix!
-
-Any idea how to adjust the hooks, so b4 review will not trigger them?
-
-Installed hooks are:
-post-applypatch
-post-commit
-post-merge
-
-
-Fuller log:
-####################
-Base: dcba46f4b7a86b0b93f46ecd9e7a82d758c7ea78
-Magic: Preparing a sparse worktree
----
-Applying: dt-bindings: clock: exynos850: Add APM_AP MAILBOX clock
-Applying: clk: samsung: exynos850: Add APM-to-AP mailbox clock
-Applying: dt-bindings: mailbox: google,gs101-mbox: Add
-samsung,exynos850-mbox
-Applying: mailbox: exynos: Add support for Exynos850 mailbox
-Applying: arm64: dts: exynos850: Add ap2apm mailbox
-[Checking commit]  0fab950fa7bf dt-bindings: clock: exynos850: Add
-APM_AP MAILBOX clock
-[Checkpatch]
-/home/krzk/dev/linux/krzk/.git/hooks/post-applypatch: line 17:
-./scripts/checkpatch.pl: No such file or directory
-
-[Signed-off-by]
-Commit 0fab950fa7bf ("dt-bindings: clock: exynos850: Add APM_AP MAILBOX
-clock")
-	committer Signed-off-by missing
-	author email:    alexey.klimov@linaro.org
-	committer email: krzk@kernel.org
-	Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-
-Errors in tree with Signed-off-by, please fix!
-####################
-
-
+Therefore my feature request: individual patch review should also have
+"action" option.
 
 Best regards,
 Krzysztof
