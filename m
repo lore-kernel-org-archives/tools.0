@@ -1,91 +1,239 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B816A1E9919
-	for <tools@linux.kernel.org>; Sun, 22 Mar 2026 02:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9402F4A0C
+	for <tools@linux.kernel.org>; Sun, 22 Mar 2026 12:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774145506; cv=none; b=gUJqnHXrYq3Hq2ugIREcqG/xC8q9J48nD3hZ956KOj2QPUUN6dMSFC5al3UWZuoZu06fP4icCMt/ncOC8w+2hPjBoh4JmXQvfwzbOQs0UgjKGxz4z4l7Frj2XokwOxkqO9nWAcyZ03NOGXCwsMxaYJ0Wwl7ArUGINM9O2n8nBFs=
+	t=1774181433; cv=none; b=MkdZTo5hbSEiwO8zuJqn4M1UHuzunsxisfLWng/vEdEyIa474rCdWZ+wjC1dvD71PioAh6JtYpmCXr6Qpmld8HSpDZzMni/vsPEdOuQJfvosL0y0A34K2Q7xez12OGfL0qNwjtLKEYOLbU13sc30h38+QLqILwJa+q7kaDTtuE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774145506; c=relaxed/simple;
-	bh=48ecGMCQ1eljubIJvWml0vxcjuLRyM39vCsG9yi60MU=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=oDRMApSm56XputMv9JXObUPLGxkSWa+k5eMO1nAmupAuVpDY+Fwzjkqc1Q1eK0DRaFNzOfk4ilP8gdedrEv2vtrf745Dopzc1D8/lahJiKUtZ8PJrglNiTNWhSI8xdLv2jSvElHdWkwnULXFdgc2EcslRUWC+k2kexeyA8Mj+hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774181433; c=relaxed/simple;
+	bh=eXYFZ7uGHI3Grre4sTGmBcfewI49V9FG78PjTdQ1SKY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fzLbTbw/aldSqPzTsmg8KJQ1J5Y2+Nb/Tj7yBR6SLzbX4UU64Sua3jbkkicvoWZUF8DkOIkYlNJHJTB2UuZYpbpAgig/F+i1OMeFcv93MZa6vts6rO++D3PAkRU2UtIvO4AnM9x+0ge28tBzBkSnWAbv5QwV4QS8enuSo5bj2h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=STYWrpAg; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="STYWrpAg"
 Received: by smtp.kernel.org (Postfix)
-	id 5963FC2BCAF; Sun, 22 Mar 2026 02:11:46 +0000 (UTC)
-Received: from csamuel.org (csamuel.org [74.50.50.137])
-	by smtp.kernel.org (Postfix) with ESMTP id CD21BC19421
-	for <tools@kernel.org>; Sun, 22 Mar 2026 02:11:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org CD21BC19421
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=csamuel.org
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=csamuel.org
-Received: from localhost (localhost [127.0.0.1])
-	by csamuel.org (Postfix) with ESMTP id 3690340068
-	for <tools@kernel.org>; Sat, 21 Mar 2026 19:11:35 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at csamuel.org
-Received: from csamuel.org ([127.0.0.1])
-	by localhost (csamuel.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yBJs7ba4KJWe; Sat, 21 Mar 2026 19:11:33 -0700 (PDT)
-Received: from [IPV6:2601:41:200:4c40:a5e6:563a:28d9:958a] (unknown [IPv6:2601:41:200:4c40:a5e6:563a:28d9:958a])
-	by csamuel.org (Postfix) with ESMTPSA;
-	Sat, 21 Mar 2026 19:11:33 -0700 (PDT)
-Message-ID: <2c1ab8a2-8a86-48a7-9a53-ef3a00ab4bd2@csamuel.org>
-Date: Sat, 21 Mar 2026 22:11:32 -0400
+	id 24EB7C4AF0C; Sun, 22 Mar 2026 12:10:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5834EC2BCB1;
+	Sun, 22 Mar 2026 12:10:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774181433;
+	bh=eXYFZ7uGHI3Grre4sTGmBcfewI49V9FG78PjTdQ1SKY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=STYWrpAgCo41wKZJhW7NJkEr3ztVpp0KU68Z2HYStMzLGJOHOBfqD6YN6swWHBaca
+	 V/nCHHRjylD36MiDuZD8GAu3wRAldXDHs1YuhQoJ7N5s2gFBAEPUODB8MUdyW9hS8W
+	 NemHjFt5jTsRk8tX9TVj+ob0JWYD8D7QSS5wjIHJEdj+TYIdEdxiFERbELTnXkzQuu
+	 hV3K7eeDhoSNlRTPR5h2Egpr5Yw42qOpG7ideiI3AL+bvntDvfLVKTGIVysqpBR0al
+	 0865/BdVyJSpulywHd8/Ez4pUEm+f5CNjnG4lCax8TfheOi35lBT9bYQIxS5/hgxO+
+	 Cem9dVcC/Rd0w==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-api@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: linux-doc@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kbuild@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	workflows@vger.kernel.org,
+	tools@kernel.org,
+	x86@kernel.org,
+	Thomas Gleixner <tglx@kernel.org>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Cyril Hrubis <chrubis@suse.cz>,
+	Kees Cook <kees@kernel.org>,
+	Jake Edge <jake@lwn.net>,
+	David Laight <david.laight.linux@gmail.com>,
+	Askar Safin <safinaskar@zohomail.com>,
+	Gabriele Paoloni <gpaoloni@redhat.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH v2 0/9] Kernel API Specification Framework
+Date: Sun, 22 Mar 2026 08:10:14 -0400
+Message-ID: <20260322121026.869758-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: tools@kernel.org
-Content-Language: en-AU
-From: Chris Samuel <chris@csamuel.org>
-Subject: b4 review experience
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi there,
+This proposal introduces machinery for documenting kernel APIs, addressing the
+long-standing challenge of maintaining stable interfaces between the kernel and
+user-space programs. Despite the kernel's commitment to never breaking user
+space, the lack of machine-readable API specifications has led to breakages and
+across system calls and IOCTLs.
 
-First of all thanks so much for this work, it looks really nice!  I'll 
-also preface this by saying I'm not a kernel person, I'm not even really 
-a programmer, just a sysadmin who likes to track what's going on in 
-certain parts of the kernel.
+Specifications can document parameter types, valid ranges, constraints, and
+alignment requirements. They capture return value semantics including success
+conditions and error codes with their meaning. Execution context requirements,
+capabilities, locking constraints, signal handling behavior, and side effects
+can all be formally specified.
 
-Having seen Jon Corbet's mentions of the new "b4 review" feature I 
-decided to try "b4" out from the git repo and I've got to say I really 
-like it. It took me a minute to get to grips with it but I'm enjoying 
-how it lets me look at patchsets and comments on them.
+These specifications live alongside the code they document and are both
+human-readable and machine-parseable. They can be validated at runtime when
+CONFIG_KAPI_RUNTIME_CHECKS is enabled, exported via debugfs for userspace
+tools, and extracted from either vmlinux or source code.
 
-One thing I've noticed is that if the patch set is large then I can't 
-scroll the list of patches on the left hand side of the review view with 
-the mouse, though I can use the arrow keys to go through the patches.
+This enables static analysis tools to verify userspace API usage at compile
+time, test generation based on formal specifications, consistent error handling
+validation, automated documentation generation, and formal verification of
+kernel interfaces.
 
-A similar issue that if I run the CI (to get checkpatch and Sashiko 
-input) I can scroll the list with the mouse, but I can't select any of 
-the patches with the mouse. I can move through the list with the arrow 
-keys but when I get to the bottom of the screen it doesn't scroll. I can 
-scroll with the mouse to see where it's got to, but as soon as I press 
-an arrow key it resets to the start of the list.
+The implementation includes a core framework with ELF section storage,
+kerneldoc integration for inline specification, a debugfs interface for runtime
+querying, and a Rust-based extraction tool (tools/kapi) supporting JSON, RST,
+and plain text output formats. Example specifications are provided for the four
+fundamental file syscalls (sys_open, sys_close, sys_read, sys_write). The
+series also includes a KUnit test suite with 38 tests and a runtime
+verification selftest with 29+ TAP tests.
 
-The only other thing I'll mention is that with the checkpatch output 
-it'd be handy (for the complaints about lines in the commit message) if 
-it showed the context like it does when you run it at the command line.
+The series with runtime testing enabled (CONFIG_KAPI_RUNTIME_CHECKS=y)
+currently survives LTP tests in a KVM VM.
 
-For my experiments I've been using two of the MPAM patchsets:
+Changes since v1:
 
-https://lore.kernel.org/lkml/20260319162225.378485-1-ben.horgan@arm.com/
+- Removed DEFINE_KERNEL_API_SPEC macro from user-facing documentation and
+  examples. The macros are now internal plumbing only; kerneldoc annotations
+  are the sole authoring interface. (Jonathan Corbet, Mauro Carvalho Chehab)
 
-That set has the checkpatch failure init.
+- Removed IOCTL specification section from documentation, as no IOCTL specs
+  are included in this series. (Jonathan Corbet)
 
-https://lore.kernel.org/lkml/20260313144617.3420416-1-ben.horgan@arm.com/
+- Removed since-version field entirely from the framework: struct
+  kernel_api_spec, debugfs output, JSON export, kdoc parser, and all
+  extractors/formatters in the kapi tool. (Jonathan Corbet)
 
-That is the large (40 patch) set I mention.
+- Removed stale :Date: field from documentation. (Jonathan Corbet)
 
-But again, I really like this and for alpha code it's pretty good!
+- Fixed kmalloc documentation example to include both parameters (size and
+  flags) and a side-effect entry, matching the output example. (Jonathan Corbet)
 
-Thank you, all the best,
-Chris
+- Simplified DSL references in documentation: converted Common Patterns
+  section from raw macros to kerneldoc annotation format, removed macro
+  references from Implementation Details and Troubleshooting. (Jonathan Corbet, Mauro Carvalho Chehab)
+
+- Reworded sys_close spec to describe behavior without referencing kernel
+  internal callbacks: "flush callback" replaced with "close-time flush
+  operation", "release callback" references removed entirely. (Greg Kroah-Hartman)
+
+- Removed HP-UX reference and "implementation-defined behavior" phrasing
+  from sys_close spec. (Greg Kroah-Hartman)
+
+- Added copyright lines to all new files: C headers, kernel modules, Python
+  scripts, Rust source files, and selftests. (Greg Kroah-Hartman)
+
+- Fixed rebasing artifact where patch 3 removed content from patch 1's
+  documentation additions. (Greg Kroah-Hartman)
+
+- Removed unnecessary pr_info() from debugfs init and braces from
+  single-line for loop. (Greg Kroah-Hartman)
+
+- Added commit message changelogs to all patches. (Greg Kroah-Hartman)
+
+References:
+
+  v1: https://lore.kernel.org/all/20260313150928.2637368-1-sashal@kernel.org/
+  RFC v5: https://lore.kernel.org/lkml/20251218204239.4159453-1-sashal@kernel.org/
+  RFC v4: https://lore.kernel.org/lkml/20250825181434.3340805-1-sashal@kernel.org/
+  RFC v3: https://lore.kernel.org/lkml/20250711114248.2288591-1-sashal@kernel.org/
+  RFC v2: https://lore.kernel.org/lkml/20250624180742.5795-1-sashal@kernel.org/
+  RFC v1: https://lore.kernel.org/lkml/20250614134858.790460-1-sashal@kernel.org/
+
+Sasha Levin (9):
+  kernel/api: introduce kernel API specification framework
+  kernel/api: enable kerneldoc-based API specifications
+  kernel/api: add debugfs interface for kernel API specifications
+  tools/kapi: Add kernel API specification extraction tool
+  kernel/api: add API specification for sys_open
+  kernel/api: add API specification for sys_close
+  kernel/api: add API specification for sys_read
+  kernel/api: add API specification for sys_write
+  kernel/api: add runtime verification selftest
+
+ .gitignore                                    |    1 +
+ Documentation/dev-tools/index.rst             |    1 +
+ Documentation/dev-tools/kernel-api-spec.rst   |  620 +++++++
+ MAINTAINERS                                   |   12 +
+ arch/x86/include/asm/syscall_wrapper.h        |   40 +
+ fs/open.c                                     |  565 +++++-
+ fs/read_write.c                               |  683 +++++++
+ include/asm-generic/vmlinux.lds.h             |   28 +
+ include/linux/kernel_api_spec.h               | 1580 +++++++++++++++++
+ include/linux/syscall_api_spec.h              |  186 ++
+ include/linux/syscalls.h                      |   39 +
+ init/Kconfig                                  |    2 +
+ kernel/Makefile                               |    3 +
+ kernel/api/.gitignore                         |    2 +
+ kernel/api/Kconfig                            |   70 +
+ kernel/api/Makefile                           |   14 +
+ kernel/api/kapi_debugfs.c                     |  499 ++++++
+ kernel/api/kapi_kunit.c                       |  538 ++++++
+ kernel/api/kernel_api_spec.c                  | 1277 +++++++++++++
+ scripts/Makefile.build                        |   31 +
+ scripts/Makefile.clean                        |    3 +
+ tools/docs/kernel-doc                         |    5 +
+ tools/kapi/.gitignore                         |    4 +
+ tools/kapi/Cargo.toml                         |   19 +
+ tools/kapi/src/extractor/debugfs.rs           |  578 ++++++
+ tools/kapi/src/extractor/kerneldoc_parser.rs  | 1555 ++++++++++++++++
+ tools/kapi/src/extractor/mod.rs               |  461 +++++
+ tools/kapi/src/extractor/source_parser.rs     |  408 +++++
+ .../src/extractor/vmlinux/binary_utils.rs     |  508 ++++++
+ .../src/extractor/vmlinux/magic_finder.rs     |  115 ++
+ tools/kapi/src/extractor/vmlinux/mod.rs       |  844 +++++++++
+ tools/kapi/src/formatter/json.rs              |  720 ++++++++
+ tools/kapi/src/formatter/mod.rs               |  142 ++
+ tools/kapi/src/formatter/plain.rs             |  707 ++++++++
+ tools/kapi/src/formatter/rst.rs               |  850 +++++++++
+ tools/kapi/src/main.rs                        |  122 ++
+ tools/lib/python/kdoc/kdoc_apispec.py         |  888 +++++++++
+ tools/lib/python/kdoc/kdoc_output.py          |    9 +-
+ tools/lib/python/kdoc/kdoc_parser.py          |   85 +-
+ tools/testing/selftests/kapi/Makefile         |    7 +
+ tools/testing/selftests/kapi/kapi_test_util.h |   33 +
+ tools/testing/selftests/kapi/test_kapi.c      | 1023 +++++++++++
+ 42 files changed, 15268 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/dev-tools/kernel-api-spec.rst
+ create mode 100644 include/linux/kernel_api_spec.h
+ create mode 100644 include/linux/syscall_api_spec.h
+ create mode 100644 kernel/api/.gitignore
+ create mode 100644 kernel/api/Kconfig
+ create mode 100644 kernel/api/Makefile
+ create mode 100644 kernel/api/kapi_debugfs.c
+ create mode 100644 kernel/api/kapi_kunit.c
+ create mode 100644 kernel/api/kernel_api_spec.c
+ create mode 100644 tools/kapi/.gitignore
+ create mode 100644 tools/kapi/Cargo.toml
+ create mode 100644 tools/kapi/src/extractor/debugfs.rs
+ create mode 100644 tools/kapi/src/extractor/kerneldoc_parser.rs
+ create mode 100644 tools/kapi/src/extractor/mod.rs
+ create mode 100644 tools/kapi/src/extractor/source_parser.rs
+ create mode 100644 tools/kapi/src/extractor/vmlinux/binary_utils.rs
+ create mode 100644 tools/kapi/src/extractor/vmlinux/magic_finder.rs
+ create mode 100644 tools/kapi/src/extractor/vmlinux/mod.rs
+ create mode 100644 tools/kapi/src/formatter/json.rs
+ create mode 100644 tools/kapi/src/formatter/mod.rs
+ create mode 100644 tools/kapi/src/formatter/plain.rs
+ create mode 100644 tools/kapi/src/formatter/rst.rs
+ create mode 100644 tools/kapi/src/main.rs
+ create mode 100644 tools/lib/python/kdoc/kdoc_apispec.py
+ create mode 100644 tools/testing/selftests/kapi/Makefile
+ create mode 100644 tools/testing/selftests/kapi/kapi_test_util.h
+ create mode 100644 tools/testing/selftests/kapi/test_kapi.c
+
 -- 
-Chris Samuel  :  http://www.csamuel.org/  :  Philadelphia, PA, USA
+2.51.0
 
