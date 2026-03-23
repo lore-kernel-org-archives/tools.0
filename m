@@ -1,99 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4EC3B2FEC
-	for <tools@linux.kernel.org>; Mon, 23 Mar 2026 15:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0753B38BF
+	for <tools@linux.kernel.org>; Mon, 23 Mar 2026 15:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279129; cv=none; b=rne/jwOse9HAPD/4Q7ZEzh/GIUdAN7Z9DmAfgpUcOEO2WmSyd90K4kW0vV+6rR3Y6yEstCzfySu3/AUQ8LvVnfcyWyKRRdenuh+tb+32Ak1SpoSvTFWQjlqg1TKqRstFRqlyS49cWDFOpPQJD9Mxbxy4oJ0Cs+rxATIov4vPiQc=
+	t=1774280689; cv=none; b=lZR5lP+Xw4iQtfuZALUtL7QaiPxkRADnNpGEq2N50eugpAKCTev7gg+0zORu2yf/9U7RTBYTjH9cL02DYfCD+YmtTz6ChLgd6S6zwgfdlTVH/QX5tXZ6J/VKaYuCgNX45E/QL/ntDFnVeEl6SCUSACO6W/0RQa87j4GOjGgn8Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279129; c=relaxed/simple;
-	bh=pbXYxhzMz1CXELl5GAMQGqn3VS0cXr+c3mpboLxq4hA=;
+	s=arc-20240116; t=1774280689; c=relaxed/simple;
+	bh=EFxYFMzeF0WIMxXGImyMCxFD1U+heyfg/BjiX301hw4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VmSXXN8c2WtH3wQQynNMPQ/4OJ1Uiby0h0yibazGqP0nyC08VKPKrqEkc2mYo/CrLemmjYefUxJhEgk+j+9xtLRyyydgJDuY1dBsKpzwQVR5QpZnJ8ozea5zTzisYi+u0qHwyFw4HtTHUCBw2oZbBuStV0Gh2a7JNJHtZkfRpFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJ5hRoCK; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=qHQ4l0NJwr2WOngtnw8SZOyLh1b4IeKW5+brP+/vK6ysc/3zoCczhkzLOfRkTzlILcbthCwFspmWuNOlaeqHxp23YSwWq30OHOamx03Uhe0qeCiUl2/DwtsCTT37/RKtnLHVcZfV+0p076bJ37jAsAt8F7XbWZZfEK9JRO1BstQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFCj1Q67; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJ5hRoCK"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFCj1Q67"
 Received: by smtp.kernel.org (Postfix)
-	id 1665BC4AF0C; Mon, 23 Mar 2026 15:18:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CCBC4CEF7;
-	Mon, 23 Mar 2026 15:18:48 +0000 (UTC)
+	id 3BBAEC2BCB0; Mon, 23 Mar 2026 15:44:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03B5C4CEF7;
+	Mon, 23 Mar 2026 15:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279129;
-	bh=pbXYxhzMz1CXELl5GAMQGqn3VS0cXr+c3mpboLxq4hA=;
+	s=korg; t=1774280689;
+	bh=EFxYFMzeF0WIMxXGImyMCxFD1U+heyfg/BjiX301hw4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CJ5hRoCKajUHc8KKiBAP2gYu1mVfUOfWRR6xc1nDC/KmFM8FTX4OS4y9Nfd8vhfAi
-	 J23Pc2XVcANhfXnjGTAo+urvXkyrzow5gFm2OspORm1S/DdOvkBQZXlQYlKUBUvn28
-	 tpGOuXncYvNz+HkAvROWP9p1b6eqV6ah8hy5xkd8=
-Date: Mon, 23 Mar 2026 14:52:58 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-kbuild@vger.kernel.org, linux-kselftest@vger.kernel.org,
-	workflows@vger.kernel.org, tools@kernel.org, x86@kernel.org,
-	Thomas Gleixner <tglx@kernel.org>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Cyril Hrubis <chrubis@suse.cz>, Kees Cook <kees@kernel.org>,
-	Jake Edge <jake@lwn.net>,
-	David Laight <david.laight.linux@gmail.com>,
-	Askar Safin <safinaskar@zohomail.com>,
-	Gabriele Paoloni <gpaoloni@redhat.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Ingo Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH v2 3/9] kernel/api: add debugfs interface for kernel API
- specifications
-Message-ID: <2026032309-jargon-stalling-28c2@gregkh>
-References: <20260322121026.869758-1-sashal@kernel.org>
- <20260322121026.869758-4-sashal@kernel.org>
+	b=ZFCj1Q67Xz46mluhJlmP1Eg/w9RYFTWCDjIK1Eel/nK4WemLVbfAEzkynKlCS7Xsw
+	 BLT07Uogv2Dmn1UWY6R9X4girunUD27gRbe3xGO1AtLN1rM47Ujsha1JHWF6dxA/ID
+	 jC+aPRf/juW8sFQ3dut3EOw8QpxJ+92lZzE6GHvM=
+Date: Mon, 23 Mar 2026 11:44:45 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@kernel.org
+Subject: Re: Stitching together serieses
+Message-ID: <20260323-electric-fancy-crow-b7db3b@lemur>
+References: <8637ff61-4eca-42ac-96fb-d530498b3f82@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260322121026.869758-4-sashal@kernel.org>
+In-Reply-To: <8637ff61-4eca-42ac-96fb-d530498b3f82@sirena.org.uk>
 
-On Sun, Mar 22, 2026 at 08:10:17AM -0400, Sasha Levin wrote:
-> Add a debugfs interface to expose kernel API specifications at runtime.
-> This allows tools and users to query the complete API specifications
-> through the debugfs filesystem.
+On Mon, Mar 23, 2026 at 02:07:13PM +0000, Mark Brown wrote:
+> When users send a patch series in a way that doesn't thread such as:
 > 
-> The interface provides:
-> - /sys/kernel/debug/kapi/list - lists all available API specifications
-> - /sys/kernel/debug/kapi/specs/<name> - detailed info for each API
+>   https://lore.kernel.org/r/20260323041505.2088-1-niranjan.hy@ti.com
+>   https://lore.kernel.org/r/20260323041545.2101-1-niranjan.hy@ti.com
+>   https://lore.kernel.org/r/20260323041624.2120-1-niranjan.hy@ti.com
+>   https://lore.kernel.org/r/20260323041641.2133-1-niranjan.hy@ti.com
 > 
-> Each specification file includes:
-> - Function name, version, and descriptions
-> - Execution context requirements and flags
-> - Parameter details with types, flags, and constraints
-> - Return value specifications and success conditions
-> - Error codes with descriptions and conditions
-> - Locking requirements and constraints
-> - Signal handling specifications
-> - Examples, notes, and deprecation status
-> 
-> This enables runtime introspection of kernel APIs for documentation
-> tools, static analyzers, and debugging purposes.
-> 
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> it would be useful if b4 review had a way for users to tell it that
+> actually this is a series and please treat it as such.
 
-Debugfs logic looks sane, nice.
+I'll see what I can do, but on the first approach this is proving fragile,
+because it's breaking a lot of assumptions we currently have about a series,
+such as ability to retrieve it as a single thread to check for updates, etc.
 
-But this only works if the kabi stuff is built into the kernel image,
-right?  This doesn't work if any of these abi sections are in a module
-or am I missing that logic here?
+bugspray tag b4/email
 
-thanks,
-
-greg k-h
+-- 
+KR
