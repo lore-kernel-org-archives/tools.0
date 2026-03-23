@@ -1,109 +1,111 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7440F3E6387
-	for <tools@linux.kernel.org>; Mon, 23 Mar 2026 20:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CB2389DF0
+	for <tools@linux.kernel.org>; Mon, 23 Mar 2026 23:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774299560; cv=none; b=GaEjfpEMsQVCTvbMxVWFlfS+7NsiWxtgxPwecW5y2DEkaBeJYxPR2L1gbVFepcXw2bJdSO4ZzmxvOot8H2JDPfsZfmq3MQb0UBe1OEV9YpYkWipopIK/LdlPHrSKeEJSXYChpwzxQjqSIqZeTISmdxCR8gU97isEzr6L1YnbYiU=
+	t=1774310333; cv=none; b=UvlVG1xKCQAx5X7qSqkOW1+a+z7nFyFSwnZOaWAhLsg301cXu0KOq2K3PTt+zE20/mJ+AgTm/c7pO3WeIUbBSIBNbEPpL3uu8QVqBIHuPVgXWbon9SZ5ghd/seOunP2rujNPa5ZE1w0juI2jb+TbPXZskikBYlkfV22w/1769U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774299560; c=relaxed/simple;
-	bh=3Uwy9kCqCqg4yeS0CUt8QhVPiVU6+dMv8XfmblnslOo=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=W4ElYKiIugLOn1izOPeyc0NJyzG8giloyjFFC8depyKCjIQJheYUpYWDSxkduSuEaFw1peoX12OiOQ0E/n5RB5g9oNu587CFcIgHEHNFRB9IDCwbqmfdb7fcxGr8H7w7hatOTpYB9N/IkMdMXGhWXPJiEVFWAvW4ciAeXry38Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dXWMhE9i; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774310333; c=relaxed/simple;
+	bh=09tSdPc4KE+Wrg/3IyzHyq6uHIuy+tsDuWBUHfhcgjg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qVvAaeK6PImMCYzCpn70eTuhyy+4LLqYHIFnIXXxz9M676Q1QTChxyGf4wQEHhKX7j5g+q7lM0puPh4iNeZBy1Gxx96jP8pdTtSV9vEL343NhE+7hOu9fjuP2Y6BXz0hrJMeNGoT52U1B6HWLUv1G0v7LJE0u05DjqPiWM5qG8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X09WVTvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dXWMhE9i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X09WVTvq"
 Received: by smtp.kernel.org (Postfix)
-	id 29618C2BCB7; Mon, 23 Mar 2026 20:59:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122DBC4CEF7;
-	Mon, 23 Mar 2026 20:59:20 +0000 (UTC)
+	id AE74FC2BCC6; Mon, 23 Mar 2026 23:58:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0ABC4AF0D;
+	Mon, 23 Mar 2026 23:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774299560;
-	bh=3Uwy9kCqCqg4yeS0CUt8QhVPiVU6+dMv8XfmblnslOo=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=dXWMhE9iJrC6fg/DrQ8LIjugxEj67yHpvxFwK1e1EH+ssBrGtbqvnh5WP7i2qN2wp
-	 Yg5IRBq608XGm8EkDcFUJBsYJKRwi6T8nPb04ZCnmQLgOUSsXgRnIDzJLdKG8I5PdR
-	 FZXpGbAllXiCcILIiy1bUnMm7Cwv4sF3b6eDHS2nb93nDOpL+oGv1/RwP6Od5pxkyZ
-	 Mz7PzyIBmhk1vRM68ix6S6FDd/3nXopC3i1iLLOO8F0AteKHzDKvdbBVBGRcSsTJiv
-	 sA/5M+jyMhM1iSgULmOeQNv3vm2Tgf/h9OaevjTncF2VpgOitos9lkCADiTBIYRExQ
-	 gCPIHEq93Fn4g==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 7FC6E3808200;
-	Mon, 23 Mar 2026 20:59:09 +0000 (UTC)
+	s=k20201202; t=1774310332;
+	bh=09tSdPc4KE+Wrg/3IyzHyq6uHIuy+tsDuWBUHfhcgjg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=X09WVTvqUzVe6286hdc2QsmRNSrbRb/vw8cWztfvWQ/PsFia8VsgYRjUvi7fytYj+
+	 g77WCldW1KRYfVbqbGvEI953LKcCNiEpqhig+r7z9IXJDtjpbYODlu/5zeqtRPqTGl
+	 WGFYbpUlPhvB4Y75BfaWj+EOwtbx6eoAbzTVsqSmc+la018UkNZJRWX2ZIKWR59p4/
+	 dEHJmDDGskDJimUR5GDykm4AHl27pHnJCuPITXKXDVOD1RFmz/XTClYe9AUIzQX61T
+	 LFm1pUBIv7zc90cEmkak7xQ5+RDcJVj8E2QhFGQqd9DX4R+o5OgtdCSZKMirZgEL8o
+	 3doxRZ3Z7A/XA==
+Date: Mon, 23 Mar 2026 19:58:50 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-api@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-kbuild@vger.kernel.org, linux-kselftest@vger.kernel.org,
+	workflows@vger.kernel.org, tools@kernel.org, x86@kernel.org,
+	Thomas Gleixner <tglx@kernel.org>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Cyril Hrubis <chrubis@suse.cz>, Kees Cook <kees@kernel.org>,
+	Jake Edge <jake@lwn.net>,
+	David Laight <david.laight.linux@gmail.com>,
+	Askar Safin <safinaskar@zohomail.com>,
+	Gabriele Paoloni <gpaoloni@redhat.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Ingo Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH v2 3/9] kernel/api: add debugfs interface for kernel API
+ specifications
+Message-ID: <acHTupVGxJR3gmFT@laps>
+References: <20260322121026.869758-1-sashal@kernel.org>
+ <20260322121026.869758-4-sashal@kernel.org>
+ <2026032309-jargon-stalling-28c2@gregkh>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-From: B4 Bugbot <bugbot+b4@kernel.org>
-To: tools@kernel.org, broonie@kernel.org, konstantin@linuxfoundation.org
-Message-ID: <20260323-b4958fdfc4-0e75d99fc85f@git.kernel.org>
-In-Reply-To: <8637ff61-4eca-42ac-96fb-d530498b3f82@sirena.org.uk>
-References: <8637ff61-4eca-42ac-96fb-d530498b3f82@sirena.org.uk>
-Subject: Re: Stitching together serieses
-X-Git-Bug-Id: 4958fdf4ef6259630525d09cd46f999c7f1fad416aa0c25819516efd8c89d691
-X-Mailer: bugspray 0.1-dev
-Date: Mon, 23 Mar 2026 20:59:09 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <2026032309-jargon-stalling-28c2@gregkh>
 
-Konstantin Ryabitsev writes in commit 1718708bd211406cc60f6343b559fe02ad2be2a4:
+On Mon, Mar 23, 2026 at 02:52:58PM +0100, Greg Kroah-Hartman wrote:
+>On Sun, Mar 22, 2026 at 08:10:17AM -0400, Sasha Levin wrote:
+>> Add a debugfs interface to expose kernel API specifications at runtime.
+>> This allows tools and users to query the complete API specifications
+>> through the debugfs filesystem.
+>>
+>> The interface provides:
+>> - /sys/kernel/debug/kapi/list - lists all available API specifications
+>> - /sys/kernel/debug/kapi/specs/<name> - detailed info for each API
+>>
+>> Each specification file includes:
+>> - Function name, version, and descriptions
+>> - Execution context requirements and flags
+>> - Parameter details with types, flags, and constraints
+>> - Return value specifications and success conditions
+>> - Error codes with descriptions and conditions
+>> - Locking requirements and constraints
+>> - Signal handling specifications
+>> - Examples, notes, and deprecation status
+>>
+>> This enables runtime introspection of kernel APIs for documentation
+>> tools, static analyzers, and debugging purposes.
+>>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>
+>Debugfs logic looks sane, nice.
 
-Add --rethread flag for stitching unthreaded patch series
+Thanks!
 
-When submitters send patches without proper threading, maintainers
-have no way to process them as a series with b4. Add a --rethread
-flag to retrieval commands (am, shazam, mbox) and review track that
-fetches unrelated messages and reconstitutes them into a properly
-threaded series.
+>But this only works if the kabi stuff is built into the kernel image,
+>right?  This doesn't work if any of these abi sections are in a module
+>or am I missing that logic here?
 
-With a single message ID, b4 auto-discovers the rest of the series
-by querying lore for patches from the same author within a 30-minute
-window, matching by [PATCH n/m] counters and revision. With multiple
-message IDs, b4 uses them directly. Stdin input is supported via
---rethread -.
+That is correct, for now.
 
-When no cover letter is found, the first patch becomes the thread
-root — the same structure as a normal coverless series on lore.
-This avoids synthetic message IDs and keeps all outgoing references
-(thank-you notes, trailers, review replies) pointing at real
-messages on real mailing lists.
+I'm only trying to tackle syscalls to begin with, and since no syscalls live in
+modules, we have no need for module support.
 
-For review tracking, an is_rethreaded flag on the series table
-(schema v7) gates the retrieval path so only rethreaded series use
-the multi-fetch pipeline. The flag is persisted in the tracking
-commit JSON so it survives database rebuilds via rescan. Member
-patch information is stored in a new series_patches table for every
-tracked series, laying the groundwork for future cherry-pick-at-
-track-time support.
-
-Key changes:
-- Extract parse_msgid() from get_msgid() for reuse
-- Add LoreSeries static methods for series reconstitution:
-  identify_cover_letter(), rewrite_subject_counter(),
-  renumber_patches(), rethread_messages(), rethread_series()
-- Add discover_rethread_series() for auto-discovery from a
-  single seed message using lore search (dt: time range queries)
-- Add fetch_rethread_messages() and retrieve_rethreaded_messages()
-- Hook into retrieve_messages() and review track's cmd_track()
-- New series_patches table with (change_id, revision, position) PK
-- New is_rethreaded column on series table for retrieval routing
-- Persist is-rethreaded in tracking commit JSON; read it back in
-  rescan_branches() and create_review_branch()
-- retrieve_series_messages() gateway for review TUI retrieval
-- ReviewApp._fetch_rethreaded_threads() for follow-up loading
-- 45 tests covering parsing, renumbering, rethreading, discovery
-  filtering, and integration with LoreMailbox
-- Document --rethread in mbox, am/shazam, review, and man page
-
-Closes: https://msgid.link/8637ff61-4eca-42ac-96fb-d530498b3f82@sirena.org.uk # 4958fdf
-Reported-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Assisted-by: claude-opus-4-6
-
---
-Deet-doot-dot, I am a bot.
-b4 bug tracker (bugspray 0.1-dev)
-
+-- 
+Thanks,
+Sasha
