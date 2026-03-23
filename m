@@ -1,60 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF4A33993
-	for <tools@linux.kernel.org>; Mon, 23 Mar 2026 19:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5314C3E51EF
+	for <tools@linux.kernel.org>; Mon, 23 Mar 2026 20:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774292535; cv=none; b=t5LiVhkmrvPQGFe9rtlovi2NBvI9vk16cJyzidkAwFOyG+6Ew2g383TeUzf7M9XKuNeVdvBpEKSoqqg1Zyia2SvqWinni71LgvRyYak5fpYpiOPutb6/KbrF5Vjl0mfzZVFf3R43ZyHRKDSXnYSAYFKeg+VL2uFZ+WlOt8kQH10=
+	t=1774299494; cv=none; b=LlMjlzUAcAoBM0Y53lYMWCz8H8tvGNLx6JFs0dsXiTBLQ6LhSp2dX74r24vKnsgznSOiEaVSnNCHcXONSBd+JMj20LPlhNuD0uFG2dilA9enp/+0aCsn8rNVDl+CWO9LRpiQp7TbJg+7Lk4chWl/9AcdV+Vgg/ckmu8scB0Q5a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774292535; c=relaxed/simple;
-	bh=U8tiEFGD8hzWRhiZza8CPTa4tbVmgjRwBsFUEKBk/ys=;
-	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
-	 References:Subject:Date; b=UnkiYmbW00kNCkcC6Dgzh9Xlj0hDc8fO9gyv0rofIMmBm6ycT28+xfiBLzAzGMeZrO3yvZevL+5Dqi04D/PUFi/oiDImuxuv3AqZPWlPtPGhTqm+VeODDV2810MV+EQZHHSxR18X+JZct9SoT3w/1p4VpA7jm3nl5KUkh8z3QFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=koYiWm1E; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774299494; c=relaxed/simple;
+	bh=dxHVTgQW4dImhwptvkTE68dPaSDJDZoECnbdKYGD7s8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jjbXf43RdHmy9UY/i7uXfAUZE9bTgtI+h5u+HkDF2r+wH+qfUORgh4nZnUtuO7B77WFG0Uw0Fi32hXDYaSFABs1gatZrOybj1ChU/5lMr8wCjd6/vl29N95e5po5j2tFRnj1iYp4zoRiCwW2MnyESUjnO1XH4v1t6OXiof0DrYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCMlBzEl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="koYiWm1E"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCMlBzEl"
 Received: by smtp.kernel.org (Postfix)
-	id 4ECB8C2BC87; Mon, 23 Mar 2026 19:02:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38EFEC4CEF7;
-	Mon, 23 Mar 2026 19:02:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774292535;
-	bh=U8tiEFGD8hzWRhiZza8CPTa4tbVmgjRwBsFUEKBk/ys=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=koYiWm1EAP28FsKn3BoS0e5U3ie1Fx972smD9I74hpsjuJTK+oZD5RnEu2BygAseq
-	 N47DZWLgN06x3yC4K7E/5u4G0sBZqopnT8zsxLIsCfQEXYta9ABNhJ4qLaOQZURngG
-	 vXmHe3NYh4okbPz9axQmATHq0yaCc+byp0hMgWzua0lsJT5wmOjgBVBscrp4jh+dpz
-	 igtG50/eqJbDFl0G8f0TSVYVwKDk5zttJZux/XWJNU0tnqeCGNQ5UdwcE9JADvz7eQ
-	 Tt2qryc2qbWczd9XAen5ymrsx3aVkMNXsJBkm52Bd2yX4avD8qSHQGRcEKawGJiswS
-	 Y3yWvQ6hafWAw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id BCD6E3808200;
-	Mon, 23 Mar 2026 19:02:04 +0000 (UTC)
+	id ED3ECC2BCB5; Mon, 23 Mar 2026 20:58:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA883C4CEF7;
+	Mon, 23 Mar 2026 20:58:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1774299493;
+	bh=dxHVTgQW4dImhwptvkTE68dPaSDJDZoECnbdKYGD7s8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GCMlBzElD/+hC6feP2+5CC95AIED1aE46HdP5nw9YCfNSEniif1h+UAnLCqniqNT3
+	 EuQC+3nE//Xsv7YcMOjAchhCEPuarU1sddmtejZT+dgDrDAVOZtvfiCo38W1kJivK5
+	 kcNWWAv3a4Wsoe4GvJNQyHrzilzcrCtu2Q44qaLc=
+Date: Mon, 23 Mar 2026 16:58:12 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@kernel.org
+Subject: Re: Stitching together serieses
+Message-ID: <20260323-spry-condor-of-discourse-abce3d@lemur>
+References: <8637ff61-4eca-42ac-96fb-d530498b3f82@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-From: B4 Bugbot <bugbot+b4@kernel.org>
-To: konstantin@linuxfoundation.org, broonie@kernel.org, tools@kernel.org
-Message-ID: <20260323-b4958fdf-674df256deee@git.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 In-Reply-To: <8637ff61-4eca-42ac-96fb-d530498b3f82@sirena.org.uk>
-References: <8637ff61-4eca-42ac-96fb-d530498b3f82@sirena.org.uk>
-Subject: Re: Stitching together serieses
-X-Git-Bug-Id: 4958fdf4ef6259630525d09cd46f999c7f1fad416aa0c25819516efd8c89d691
-X-Mailer: bugspray 0.1-dev
-Date: Mon, 23 Mar 2026 19:02:04 +0000 (UTC)
 
-Hello:
+On Mon, Mar 23, 2026 at 02:07:13PM +0000, Mark Brown wrote:
+> When users send a patch series in a way that doesn't thread such as:
+> 
+>   https://lore.kernel.org/r/20260323041505.2088-1-niranjan.hy@ti.com
+>   https://lore.kernel.org/r/20260323041545.2101-1-niranjan.hy@ti.com
+>   https://lore.kernel.org/r/20260323041624.2120-1-niranjan.hy@ti.com
+>   https://lore.kernel.org/r/20260323041641.2133-1-niranjan.hy@ti.com
+> 
+> it would be useful if b4 review had a way for users to tell it that
+> actually this is a series and please treat it as such.
 
-This conversation is now tracked by b4 bug tracker.
-There is no need to do anything else, just keep talking.
+After several bad takes, I landed --rethread in master that should do the
+right thing in Most Situations (and probably screw things up badly in all
+other situations, tbh).
 
---
-Deet-doot-dot, I am a bot.
-b4 bug tracker (bugspray 0.1-dev)
+E.g. this works:
 
+    b4 review track --rethread https://lore.kernel.org/r/20260323041505.2088-1-niranjan.hy@ti.com
+
+It also works for b4 am/shazam.
+
+Please try it out and let me know any bugs you find.
+
+Regards,
+-- 
+KR
