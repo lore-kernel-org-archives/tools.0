@@ -1,64 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95683A6B8F
-	for <tools@linux.kernel.org>; Tue, 24 Mar 2026 18:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3A73B3888
+	for <tools@linux.kernel.org>; Tue, 24 Mar 2026 18:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774377562; cv=none; b=EaFoqSc/stPma6TpiwI82pC7ueloU+VPPyK2prsjJJAZhQmtgqKwfger6WY94J9v2naifh2t2vCdYUOA3N5Ts5/NWMp5QEn0svPL9XdEnxeEGtabfLclcb32dRt/jKVmpOQ3wZYyNBqX7Wv0UtR6AXPTeZqLRsE9ZJYhudkuBAQ=
+	t=1774377678; cv=none; b=Olt4BHxIt2IaG1oZeYCzuQeiVvEdkV+9odXGSnQUVfU47C9rTPJnHXr9J5aWlOoK6wcFkgw2pKVkQnTuKQUNhiN9V3Y2OQN0C+GjqUyRsl/lC0MLAzpsk1kJxHxSHajjOddDNx3WZup58Qjh1VVFMhM6eoQJS5iG9xB9+ZBXjrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774377562; c=relaxed/simple;
-	bh=uPGGQjrIqgX4q0i8CMj8ytfJk4EN2I2Xop9JUMsXkMQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FbWo+2ir1LREQTJX2iGMD7GeWUJB6d5bSiFGVb8jk/z+secuUhPWXXdifRdyyX4BRsdb2bUXCE2Mcv/L/oXhIgn1AH5mNkH6t9jP0/ANRfE8iLk9UcwYtI56GzSKYgBeDWIkZLPvnEWfa9C17w2V27jSUhFFLwVxHKBzqGG/mSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qZVIHXSw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774377678; c=relaxed/simple;
+	bh=U8tiEFGD8hzWRhiZza8CPTa4tbVmgjRwBsFUEKBk/ys=;
+	h=MIME-Version:Content-Type:From:To:Message-ID:In-Reply-To:
+	 References:Subject:Date; b=lI/XWmjJ/dIvVIl5hdo8aKLp97YU+cp3NB152CoT2wPkI2U83/lku6z/c82S+zhto9u4WojFDL1HPXWWlB6ljGuXaws0FzF9X0uTT/3aLToozlyvPpfhtCcHxvWEeIaOZ3j+vTOmswSECa9v9uQxQiXMEUyM9pNh1NC6ZhJ6DnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EcTdwLX1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qZVIHXSw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EcTdwLX1"
 Received: by smtp.kernel.org (Postfix)
-	id 6DCF7C2BCB1; Tue, 24 Mar 2026 18:39:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40272C19424;
-	Tue, 24 Mar 2026 18:39:22 +0000 (UTC)
+	id E4FC0C2BCB1; Tue, 24 Mar 2026 18:41:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE972C19424;
+	Tue, 24 Mar 2026 18:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774377562;
-	bh=uPGGQjrIqgX4q0i8CMj8ytfJk4EN2I2Xop9JUMsXkMQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qZVIHXSwPawJ23W1wugZxcUJrCRbPYtX1yW3yLQc4WpiAo63XqEY/EJAUpbN8IBUE
-	 4B5hnK+EDo7MFNYtyJIrXLhVdGXKJxhRuWKDchvGxPHQDBUscnsV8cv6k4U2ocA1GV
-	 newI9yFQJuVOuXf7YvM93CNS84MmftMvmz2WYO7QZQAgxyZiQLU8hvf5KNJKKKJrU8
-	 49v81DuAUkRJyZZKVyGTT91st+MsdAZKzdDzsq5UWhRcFVmskYPKyfmNP64w3+u1WS
-	 Bxx8ieSieu39ArAMfQbgn1oHxwBZfk6Re1k1rXE0R/P+uj/XOndt3ehJCufSSraAM0
-	 Khd+zNF3nLD5A==
-Date: Tue, 24 Mar 2026 14:39:21 -0400
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: More non-interactive operations
-Message-ID: <20260324-masked-imported-taipan-f665ed@meerkat>
-References: <c5b1ef7c-047f-469e-bf5b-bd385b21bc32@sirena.org.uk>
+	s=k20201202; t=1774377677;
+	bh=U8tiEFGD8hzWRhiZza8CPTa4tbVmgjRwBsFUEKBk/ys=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=EcTdwLX1TzZk9W2Q8Rf5Nh/rerdqAIzmdsHdXVsC9RyQdA63z6UJVOUk/t1S9GVIl
+	 dSiqLeCym/9C3sB+reAXAsPe98Hl5xozEV+89gT/w90dAAPam2i0EUO1tUQN5x5pAt
+	 EtfS7l5co/BZWCiopLWnlqmLd2i1xW1x9yiGeyrALwnvHxZo+Jvi7zY1Uqxk4MWDHC
+	 JEyODTf0Ooi3MvW83bm6fMjaem09XxxeIhvLVZYVSKYjmO0OxzMZvgoh+ho70mXrXZ
+	 pVGSxGOwQSEcwH8Src2+XFYNIlHviPwuJExrarAjMK0K2qzsUna2zb/qgx4G0h84R9
+	 UTyc5rtKlaeUQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id BCBB93808203;
+	Tue, 24 Mar 2026 18:41:06 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+From: B4 Bugbot <bugbot+b4@kernel.org>
+To: tools@kernel.org, mricon@kernel.org, broonie@kernel.org
+Message-ID: <20260324-bd4c6cc1-ebcd35ad0b42@git.kernel.org>
 In-Reply-To: <c5b1ef7c-047f-469e-bf5b-bd385b21bc32@sirena.org.uk>
+References: <c5b1ef7c-047f-469e-bf5b-bd385b21bc32@sirena.org.uk>
+Subject: Re: More non-interactive operations
+X-Git-Bug-Id: d4c6cc1210e4a7bc7a891810f8b4f5912dc4cc5dc0f8dd58178b6069cd9c4775
+X-Mailer: bugspray 0.1-dev
+Date: Tue, 24 Mar 2026 18:41:06 +0000 (UTC)
 
-On Mon, Mar 23, 2026 at 06:35:21PM +0000, Mark Brown wrote:
-> There's a few things that feel like I should be able to script doing
-> them, rather than having to do them in the UI:
-> 
->  - Update all
->  - Sending queued thanks messages
-> 
-> Especially with the thanks it seems like I ought to be able to have
-> something that kicks the queue whenever I do a push rather than having
-> to manually remember to do it.
+Hello:
 
-Do you want this to happen even when the UI isn't running, or just an
-occasional auto-task from within the UI?
+This conversation is now tracked by b4 bug tracker.
+There is no need to do anything else, just keep talking.
 
--K
+--
+Deet-doot-dot, I am a bot.
+b4 bug tracker (bugspray 0.1-dev)
 
-bugspray tag b4/review
