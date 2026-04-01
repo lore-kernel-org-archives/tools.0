@@ -1,667 +1,177 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C793FB052
-	for <tools@linux.kernel.org>; Tue, 31 Mar 2026 15:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1350135B65D
+	for <tools@linux.kernel.org>; Wed,  1 Apr 2026 07:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774969450; cv=none; b=bZDYRSBdoQ+2eZ91jBO4Ggwy5Tx8ELy5djx+HJRToIHXNhDVU4TPaxgj4yrlBPxObdmfNaEXPbe57AqYxYADTKTJe13yPH3ipD3tH7qfUusAWRxM56pUXMoARTCv/qzTXLtgzhcOvzllXULwS37FFwgrm+CpbFejW2rBxQOIVpU=
+	t=1775027607; cv=none; b=Es2smfLYnRBentG5wml/ANIWqTASFwsXtzS6L/oROezf9fBaGZdTprj6KxoQCnjGea/uaDz/Cyij+Gx9Y2le5N+CUP5MGy/be2Phu5mproeMfkqvthOrIyCjZFJLWhI6mnT7wjeys2lDEX0z2Rq3opoQh6w55Qx+Mdw9osJSdQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774969450; c=relaxed/simple;
-	bh=nGGTEgCiek/bUTcNnD5UcuYhww5t11pzSNf8w+aQr+E=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=A8ar2W4sG0uslEX3RmLhe/onj9Lvc/uN/LbCisoNYcedP2CFW/Zn1Yyjx+dWsKmaYD7dsQ+0dRYp+JPSvkrriZ6203Wpq+k5B9LJcsqLCIE1bKiIBIX/3uzwMbX1fDJYJ3GYasuqbJ5fv/WASQmrD6zXJIHdWeYH5tNi00lpsKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qreD2XYp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775027607; c=relaxed/simple;
+	bh=p+uhv5Xlv2uts5pTgF/du2BDKi6w1FqzFcVYTxorB6w=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=TM+MjonQORTG/PLjJrp0IemCEBJ1p49Z9NAlefeXvOeQEWqR3V3SFNfXe+JA7WFeKKXmQA3tqW9srPynZs9HcD+LbcIKEQniXfa+4UgPCPvNhNROix1/EJXgJmtZEDVWtw9tAHLHRv4AiiLEngkBiwmpqMXmxEqsxRTem6J2qlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IfyXMTCK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qreD2XYp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IfyXMTCK"
 Received: by smtp.kernel.org (Postfix)
-	id 5AF8DC2BCB1; Tue, 31 Mar 2026 15:04:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF6AC19423;
-	Tue, 31 Mar 2026 15:04:09 +0000 (UTC)
+	id CDAA2C2BC9E; Wed,  1 Apr 2026 07:13:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6A0C19423
+	for <tools@kernel.org>; Wed,  1 Apr 2026 07:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774969450;
-	bh=nGGTEgCiek/bUTcNnD5UcuYhww5t11pzSNf8w+aQr+E=;
-	h=Date:From:To:Cc:Subject:From;
-	b=qreD2XYpHRn8FWbJogzDebqf4WbXQhCWPKIb2FmAcMpJOSQsmPMNPvZfoxQbEMwF7
-	 hBSQNAJ/l45Je8+3xw79tec63FQZq0T4eJ4IxgsjIlPlFP0Mfcs+BPT0v2M2xzvG+y
-	 vOwe2DcQsH5IpI8q0KtVbIoXvYM2VDm8EtxL5MnZxZhyWzIhO9pilspZBTfkf4wpWK
-	 KrFADj2W2Q9yRmy/7/DOHXWQWCuUebzkxv4bF1ajJJCd1tGTLq7+iApRQovFZYNpmn
-	 pB2F9EJAIE5lZjWltbD55pFtsrluqJPyx1s/9xS6yuG0YSgjvvqPpNM8MBMuyk2eHv
-	 BvSpAJw5sEyMw==
-Date: Tue, 31 Mar 2026 16:04:06 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 review crashes updating a series
-Message-ID: <78dff388-0d4f-43f1-b197-af64617f9df6@sirena.org.uk>
+	s=k20201202; t=1775027606;
+	bh=p+uhv5Xlv2uts5pTgF/du2BDKi6w1FqzFcVYTxorB6w=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=IfyXMTCKOfhHddwyJ5L5X5VnzzOVRurMa6/ieyc3Ax7KYY1/qaAUlxx1SB86yxKsC
+	 gmGtbdJOGhBtlth/Ou/M1FuZcmfM1OhkuY60dFrp3VQtocgylefNI/g5GcxgB+PNgf
+	 Bptuwmueiyw1kY5Ls8ou+ZoQhN/ky2cRfdd8VkirpJGNl+efE3IVKK6LTcTPO2S+8t
+	 o6dUsBUfZYMCv8pSs6ikFzwKKGOXsKDis2iUbZQazp5wcGZ9GAhPbh5RgwvUt7tdzo
+	 UPpERIZ9JFqqPe21JBYsFjwefxXEi2J/lO2iQsETeAXK7LJl0pqhiDzgxItaqLZ76m
+	 0GDQ+5OjqQorA==
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 9C69CF4006F;
+	Wed,  1 Apr 2026 03:13:25 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-01.internal (MEProxy); Wed, 01 Apr 2026 03:13:25 -0400
+X-ME-Sender: <xms:lcXMaYbi-OWusQNLPXixMPfNfMlOicAikK_fu-JXkXud5oIY-xRlUw>
+    <xme:lcXMaeOqk2mbkz6vxCx6njXW_dojP2SQklGfDVpSDg4vcFDHlnGYf6lChcNc3NAu1
+    qlEMbRP4EsCy0_Gn-sBULSLPTES-CBI8vgVb1yxCrvChP7jXhaYGoY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvgeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtre
+    dttdenucfhrhhomhepfdetrhguuceuihgvshhhvghuvhgvlhdfuceorghruggssehkvghr
+    nhgvlhdrohhrgheqnecuggftrfgrthhtvghrnhepvdeuheeitdevtdelkeduudetgffftd
+    elteefteevjeevjeeiheefhfejieejfedunecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomheprghrugdomhgvshhmthhprghuthhhphgvrhhsohhnrg
+    hlihhthidqudeijedthedttdejledqfeefvdduieegudehqdgrrhgusgeppehkvghrnhgv
+    lhdrohhrghesfihorhhkohhfrghrugdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepmhhrihgtohhnsehkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehtohholhhssehkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:lcXMaW6zTa6xhrpCRQNlh9lXwvkHRa1CTe3GJQA1Nv9-D9aoDoFJKQ>
+    <xmx:lcXMaV7ZRazM3gMVkkOi3no2mlfhigdHxQ35Z3kcq5XqbhNa7oVtRA>
+    <xmx:lcXMaTH3-DVC0vA_Gs7w6efLxE62YR36dhmTVBzCJ2Vk4qUiEJLmsw>
+    <xmx:lcXMaeSOHTCFfrRHvwVCdzaxLpDhWL3ofLdDfbzb-4Gqx4vAWBap3w>
+    <xmx:lcXMacss7WZJUQTICRWdRP5CIaodKnyEnI-IfXiZ5zZF_pqkmZ-seYGo>
+Feedback-ID: ice86485a:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 5B821700069; Wed,  1 Apr 2026 03:13:25 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="17Y0zPTemb8/g8qH"
-Content-Disposition: inline
-X-Cookie: I just had a NOSE JOB!!
+X-ThreadId: AMWi8b3sQivR
+Date: Wed, 01 Apr 2026 09:13:05 +0200
+From: "Ard Biesheuvel" <ardb@kernel.org>
+To: "Konstantin Ryabitsev" <mricon@kernel.org>
+Cc: tools@kernel.org
+Message-Id: <e77298ce-1e3e-449f-9864-b4fcf77a00b4@app.fastmail.com>
+In-Reply-To: <25a3c713-4fee-4a37-b535-58d9da34e008@app.fastmail.com>
+References: <c4de9f25-0c60-49e4-925f-7749eba57264@app.fastmail.com>
+ <20260330-uptight-leopard-of-awe-ee7afe@lemur>
+ <25a3c713-4fee-4a37-b535-58d9da34e008@app.fastmail.com>
+Subject: Re: another korgalore issue with linux-crypto
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+On Tue, 31 Mar 2026, at 08:45, Ard Biesheuvel wrote:
+> On Mon, 30 Mar 2026, at 20:43, Konstantin Ryabitsev wrote:
+>> On Sat, Mar 28, 2026 at 06:53:44PM +0100, Ard Biesheuvel wrote:
+>>> Hi Konstantin,
+>>> 
+>>> Not sure whether this happened because my local fork was in a funny state, but I got the following issue related to a 'rm' commit.
+>>
+>> Yeah, I think it's a real bug, but testing is tricky. I pushed a commit to
+>> master/stable-0.6.y that should hopefully fix this (or, at least, make it fail
+>> differently). Can you try that out? Using stable-0.6.y may be easier, as
+>> master currently pulls in a new library.
+>>
+>
+> Thanks for the fix. I've upgraded to this version now, but the 
+> underlying failure condition is no longer there, so I can't really say 
+> for sure whether things are any better now.
+
+Actually, I still think something fishy is going on. In my log below, it seems that linuxcrypto is still in a funny state, as the number of messages keeps going up. The last message that was actually newly delivered was
+
+Date: Tue, 31 Mar 2026 13:22:14 +0100
+Message-ID: <20260331122214.103145-1-julianbraha@gmail.com>
+
+When I run kgl on the command line I get
+
+$ korgalore/kgl.sh pull linuxcrypto
+Reattempting delivery  [####################################]  1/1
+Updating feeds  [####################################]  1/1                                      
+Pull complete with no updates.
 
 
---17Y0zPTemb8/g8qH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-I'm getting b4 review crashing when I attempt to review this series:
-
-   https://patch.msgid.link/20260319032112.5251-1-chaitanya.msabnis@gmail.c=
-om=20
-
-After I select "Review" I get:
-
-=E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80 Traceback (most recent call last) =E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AE
-=E2=94=82 /usr/lib/python3/dist-packages/textual/worker.py:368 in _run     =
-                                                     =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82   365 =E2=94=82   =E2=94=82   =E2=94=82   self.state =3D WorkerSt=
-ate.RUNNING                                                                =
-    =E2=94=82
-=E2=94=82   366 =E2=94=82   =E2=94=82   =E2=94=82   app.log.worker(self)   =
-                                                                           =
-  =E2=94=82
-=E2=94=82   367 =E2=94=82   =E2=94=82   =E2=94=82   try:                   =
-                                                                           =
-  =E2=94=82
-=E2=94=82 =E2=9D=B1 368 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   sel=
-f._result =3D await self.run()                                             =
-                    =E2=94=82
-=E2=94=82   369 =E2=94=82   =E2=94=82   =E2=94=82   except asyncio.Cancelle=
-dError as error:                                                           =
-  =E2=94=82
-=E2=94=82   370 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   self.state =
-=3D WorkerState.CANCELLED                                                  =
-            =E2=94=82
-=E2=94=82   371 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   self._error=
- =3D error                                                                 =
-            =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80 locals =E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=95=AE =E2=94=82
-=E2=94=82 =E2=94=82           app =3D TrackingApp(title=3D'b4 review', clas=
-ses=3D{'-dark-mode'}, pseudo_classes=3D{'dark', 'focus'})          =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82         error =3D LookupError('Series version 3 not fou=
-nd in retrieved messages')                                   =E2=94=82 =E2=
-=94=82
-=E2=94=82 =E2=94=82          self =3D <Worker                              =
-                                                             =E2=94=82 =E2=
-=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   ERROR                      =
-                                                                   =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   name=3D'_ws_work'          =
-                                                                     =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   description=3D'<function Tr=
-ackingApp._checkout_new_series.<locals>._fetch_and_prepare at        =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82                 0x7f2b'+9                              =
-                                                           =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82                 >                                      =
-                                                           =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82 worker_failed =3D WorkerFailed("Worker raised exception=
-: LookupError('Series version 3 not found in retrieved       =E2=94=82 =E2=
-=94=82
-=E2=94=82 =E2=94=82                 messages')")                           =
-                                                           =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=95=AF =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 /usr/lib/python3/dist-packages/textual/worker.py:352 in run      =
-                                                     =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82   349 =E2=94=82   =E2=94=82   Returns:                           =
-                                                                     =E2=94=
-=82
-=E2=94=82   350 =E2=94=82   =E2=94=82   =E2=94=82   Return value of the wor=
-k.                                                                         =
-  =E2=94=82
-=E2=94=82   351 =E2=94=82   =E2=94=82   """                                =
-                                                                     =E2=94=
-=82
-=E2=94=82 =E2=9D=B1 352 =E2=94=82   =E2=94=82   return await (             =
-                                                                           =
-  =E2=94=82
-=E2=94=82   353 =E2=94=82   =E2=94=82   =E2=94=82   self._run_threaded() if=
- self._thread_worker else self._run_async()                                =
-  =E2=94=82
-=E2=94=82   354 =E2=94=82   =E2=94=82   )                                  =
-                                                                     =E2=94=
-=82
-=E2=94=82   355                                                            =
-                                                     =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AE       =E2=94=82
-=E2=94=82 =E2=94=82 self =3D <Worker                                       =
-                                                       =E2=94=82       =E2=
-=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   ERROR                               =
-                                                             =E2=94=82     =
-  =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   name=3D'_ws_work'                   =
-                                                               =E2=94=82   =
-    =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   description=3D'<function TrackingApp=
-=2E_checkout_new_series.<locals>._fetch_and_prepare at 0x7f2b'+9 =E2=94=82 =
-      =E2=94=82
-=E2=94=82 =E2=94=82        >                                               =
-                                                     =E2=94=82       =E2=94=
-=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=95=AF       =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 /usr/lib/python3/dist-packages/textual/worker.py:324 in _run_thre=
-aded                                                 =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82   321 =E2=94=82   =E2=94=82                                      =
-                                                                     =E2=94=
-=82
-=E2=94=82   322 =E2=94=82   =E2=94=82   loop =3D asyncio.get_running_loop()=
-                                                                       =E2=
-=94=82
-=E2=94=82   323 =E2=94=82   =E2=94=82   assert loop is not None            =
-                                                                     =E2=94=
-=82
-=E2=94=82 =E2=9D=B1 324 =E2=94=82   =E2=94=82   return await loop.run_in_ex=
-ecutor(None, runner, self._work)                                           =
-  =E2=94=82
-=E2=94=82   325 =E2=94=82                                                  =
-                                                             =E2=94=82
-=E2=94=82   326 =E2=94=82   async def _run_async(self) -> ResultType:      =
-                                                             =E2=94=82
-=E2=94=82   327 =E2=94=82   =E2=94=82   """Run an async worker.            =
-                                                                     =E2=94=
-=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AE       =E2=94=82
-=E2=94=82 =E2=94=82 loop =3D <_UnixSelectorEventLoop running=3DTrue closed=
-=3DFalse debug=3DFalse>                                       =E2=94=82    =
-   =E2=94=82
-=E2=94=82 =E2=94=82 self =3D <Worker                                       =
-                                                       =E2=94=82       =E2=
-=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   ERROR                               =
-                                                             =E2=94=82     =
-  =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   name=3D'_ws_work'                   =
-                                                               =E2=94=82   =
-    =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   description=3D'<function TrackingApp=
-=2E_checkout_new_series.<locals>._fetch_and_prepare at 0x7f2b'+9 =E2=94=82 =
-      =E2=94=82
-=E2=94=82 =E2=94=82        >                                               =
-                                                     =E2=94=82       =E2=94=
-=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=95=AF       =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 /usr/lib/python3.13/concurrent/futures/thread.py:59 in run       =
-                                                     =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82    56 =E2=94=82   =E2=94=82   =E2=94=82   return                 =
-                                                      =E2=95=AD=E2=94=80=E2=
-=94=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=95=AE        =E2=94=82
-=E2=94=82    57 =E2=94=82   =E2=94=82                                      =
-                                              =E2=94=82 self =3D None =E2=
-=94=82        =E2=94=82
-=E2=94=82    58 =E2=94=82   =E2=94=82   try:                               =
-                                              =E2=95=B0=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=95=AF        =E2=94=82
-=E2=94=82 =E2=9D=B1  59 =E2=94=82   =E2=94=82   =E2=94=82   result =3D self=
-=2Efn(*self.args, **self.kwargs)                                           =
-              =E2=94=82
-=E2=94=82    60 =E2=94=82   =E2=94=82   except BaseException as exc:       =
-                                                                     =E2=94=
-=82
-=E2=94=82    61 =E2=94=82   =E2=94=82   =E2=94=82   self.future.set_excepti=
-on(exc)                                                                    =
-  =E2=94=82
-=E2=94=82    62 =E2=94=82   =E2=94=82   =E2=94=82   # Break a reference cyc=
-le with the exception 'exc'                                                =
-  =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 /usr/lib/python3/dist-packages/textual/worker.py:307 in run_calla=
-ble                                                  =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82   304 =E2=94=82   =E2=94=82   def run_callable(work: Callable[[],=
- ResultType]) -> ResultType:                                         =E2=94=
-=82
-=E2=94=82   305 =E2=94=82   =E2=94=82   =E2=94=82   """Set the active worke=
-r, and call the callable."""                                               =
-  =E2=94=82
-=E2=94=82   306 =E2=94=82   =E2=94=82   =E2=94=82   active_worker.set(self)=
-                                                                           =
-  =E2=94=82
-=E2=94=82 =E2=9D=B1 307 =E2=94=82   =E2=94=82   =E2=94=82   return work()  =
-                                                                           =
-          =E2=94=82
-=E2=94=82   308 =E2=94=82   =E2=94=82                                      =
-                                                                     =E2=94=
-=82
-=E2=94=82   309 =E2=94=82   =E2=94=82   if (                               =
-                                                                     =E2=94=
-=82
-=E2=94=82   310 =E2=94=82   =E2=94=82   =E2=94=82   inspect.iscoroutinefunc=
-tion(self._work)                                                           =
-  =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AE       =E2=94=82
-=E2=94=82 =E2=94=82 self =3D <Worker                                       =
-                                                       =E2=94=82       =E2=
-=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   ERROR                               =
-                                                             =E2=94=82     =
-  =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   name=3D'_ws_work'                   =
-                                                               =E2=94=82   =
-    =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   description=3D'<function TrackingApp=
-=2E_checkout_new_series.<locals>._fetch_and_prepare at 0x7f2b'+9 =E2=94=82 =
-      =E2=94=82
-=E2=94=82 =E2=94=82        >                                               =
-                                                     =E2=94=82       =E2=94=
-=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=95=AF       =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 /home/broonie/git/b4/src/b4/review_tui/_tracking_app.py:1220 in _=
-fetch_and_prepare                                    =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82   1217 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   msgs =3D b=
-4.review.retrieve_series_messages(series, self._identifier)                =
-            =E2=94=82
-=E2=94=82   1218 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   self._refr=
-esh_msg_count(series, len(msgs))                                           =
-          =E2=94=82
-=E2=94=82   1219 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   wantver =
-=3D series.get('revision')                                                 =
-              =E2=94=82
-=E2=94=82 =E2=9D=B1 1220 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   ls=
-er =3D b4.review._get_lore_series(msgs, wantver=3Dwantver)                 =
-                      =E2=94=82
-=E2=94=82   1221 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82             =
-                                                                           =
-          =E2=94=82
-=E2=94=82   1222 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   am_msgs =
-=3D lser.get_am_ready(                                                     =
-              =E2=94=82
-=E2=94=82   1223 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82 =
-  noaddtrailers=3DTrue, addmysob=3DFalse, addlink=3DFalse,                 =
-                        =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80 locals =E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=95=AE =E2=94=82
-=E2=94=82 =E2=94=82    msgs =3D [                                          =
-                                                             =E2=94=82 =E2=
-=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   <email.message.EmailMessage objec=
-t at 0x7f2b4ba5e490>,                                              =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   <email.message.EmailMessage objec=
-t at 0x7f2b4be6a170>                                               =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           ]                                            =
-                                                           =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82    self =3D TrackingApp(title=3D'b4 review', classes=3D=
-{'-dark-mode'}, pseudo_classes=3D{'dark', 'focus'})                =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82  series =3D {                                          =
-                                                             =E2=94=82 =E2=
-=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   'track_id': 224,                 =
-                                                                   =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   'change_id': '20260319-asoc-dt-bi=
-ndings-hisilicon-convert-hi6210-i2s-to-dt-schema-623a5c48cf16',    =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   'revision': 3,                   =
-                                                                   =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   'subject': 'ASoC: dt-bindings: hi=
-silicon: Convert hi6210 I2S to dt-schema',                         =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   'sender_name': 'Chaitanya Sabnis'=
-,                                                                  =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   'sender_email': 'chaitanya.msabni=
-s@gmail.com',                                                      =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   'sent_at': '2026-03-19T08:51:12+0=
-5:30',                                                             =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   'added_at': '2026-03-31T14:54:17.=
-878636+00:00',                                                     =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   'status': 'new',                 =
-                                                                   =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   'num_patches': 1,                =
-                                                                   =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           =E2=94=82   ... +11                          =
-                                                                   =E2=94=
-=82 =E2=94=82
-=E2=94=82 =E2=94=82           }                                            =
-                                                           =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82 wantver =3D 3                                          =
-                                                             =E2=94=82 =E2=
-=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=95=AF =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 /home/broonie/git/b4/src/b4/review/_review.py:229 in _get_lore_se=
-ries                                                 =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82    226 =E2=94=82   if wantver is None:                           =
-                                                             =E2=94=82
-=E2=94=82    227 =E2=94=82   =E2=94=82   wantver =3D max(lmbx.series.keys()=
-)                                                                      =E2=
-=94=82
-=E2=94=82    228 =E2=94=82   if wantver not in lmbx.series:                =
-                                                             =E2=94=82
-=E2=94=82 =E2=9D=B1  229 =E2=94=82   =E2=94=82   raise LookupError(f'Series=
- version {wantver} not found in retrieved messages')                       =
-  =E2=94=82
-=E2=94=82    230 =E2=94=82   lser =3D lmbx.get_series(wantver, sloppytraile=
-rs=3Dsloppytrailers,                                             =E2=94=82
-=E2=94=82    231 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82 =
-  =E2=94=82      codereview_trailers=3DFalse)                              =
-                            =E2=94=82
-=E2=94=82    232 =E2=94=82   if not lser:                                  =
-                                                             =E2=94=82
-=E2=94=82                                                                  =
-                                                     =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80 locals =E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=95=AE                   =E2=94=82
-=E2=94=82 =E2=94=82           lmbx =3D - Series: [v2] ASoC: dt-bindings: hi=
-silicon: Convert hi6210 I2S to dt-schema   =E2=94=82                   =E2=
-=94=82
-=E2=94=82 =E2=94=82                    author: Chaitanya Sabnis <chaitanya.=
-msabnis@gmail.com>                       =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                    revision: 2                         =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                    expected: 1                         =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                    complete: True                      =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                    has_cover: False                    =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                    base_commit: None                   =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                    change_id: None                     =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                    partial_reroll: False               =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                    patches:                            =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                  =E2=94=82   [0/1] MISSING             =
-                                                 =E2=94=82                 =
-  =E2=94=82
-=E2=94=82 =E2=94=82                  =E2=94=82   [1/1] ASoC: dt-bindings: h=
-isilicon: Convert hi6210 I2S to dt-schema        =E2=94=82                 =
-  =E2=94=82
-=E2=94=82 =E2=94=82                  --- Followups ---                     =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                    Re: [PATCH v2] ASoC: dt-bindings: hi=
-silicon: Convert hi6210 I2S to dt-schema =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82                  --- Unknowns ---                      =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82            msg =3D <email.message.EmailMessage object a=
-t 0x7f2b4be6a170>                          =E2=94=82                   =E2=
-=94=82
-=E2=94=82 =E2=94=82           msgs =3D [                                   =
-                                           =E2=94=82                   =E2=
-=94=82
-=E2=94=82 =E2=94=82                  =E2=94=82   <email.message.EmailMessag=
-e object at 0x7f2b4ba5e490>,                     =E2=94=82                 =
-  =E2=94=82
-=E2=94=82 =E2=94=82                  =E2=94=82   <email.message.EmailMessag=
-e object at 0x7f2b4be6a170>                      =E2=94=82                 =
-  =E2=94=82
-=E2=94=82 =E2=94=82                  ]                                     =
-                                         =E2=94=82                   =E2=94=
-=82
-=E2=94=82 =E2=94=82 sloppytrailers =3D False                               =
-                                           =E2=94=82                   =E2=
-=94=82
-=E2=94=82 =E2=94=82        wantver =3D 3                                   =
-                                           =E2=94=82                   =E2=
-=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=
-=AF                   =E2=94=82
-=E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF
-LookupError: Series version 3 not found in retrieved messages
-
-Thanks,
-Mark
-
---17Y0zPTemb8/g8qH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnL4mYACgkQJNaLcl1U
-h9A/PAf9GQFBs4YkBbIJaQNZ4vdrTWgb9wxcEpoyKYPST4v86VHOU4CgB+KwHpCu
-sCJcuKW27UHyxm/D9HiFbJ5fw3pCaGPw+0AfahLyviEtYj9BZVMOvv+3PLSxsjKG
-W3Vi1YkYvw2yiuQyBOZVLnnWg2oVcqni7uk/LYzorcF9SXhKufAfreKR8kEtI9QV
-qYLXkqyHQP71/72yh3OYdcApXSlN1UcqdiyrsNyosXlOFMHTTeuIFnfbahNfuwHd
-0U+hIchVNP7HlukUxr0Mo5ZuEnB43GEjY2B0247DNNpmwa+zj1B+jO3/ysIZ7YH6
-3GokaEuyyLPZTpbB45kuzsCQ5gCRBg==
-=wJBT
------END PGP SIGNATURE-----
-
---17Y0zPTemb8/g8qH--
+2026-04-01 02:36:48,183 - INFO - Pull complete with updates:
+2026-04-01 02:36:48,183 - INFO -   linuxcrypto: 305
+2026-04-01 02:36:48,183 - INFO -   lakml: 1
+2026-04-01 02:48:43,747 - INFO - Pull complete with updates:
+2026-04-01 02:48:43,747 - INFO -   linuxcrypto: 306
+2026-04-01 02:48:43,747 - INFO -   lakml: 1
+2026-04-01 03:09:04,468 - INFO - Pull complete with updates:
+2026-04-01 03:09:04,469 - INFO -   lakml: 4
+2026-04-01 03:18:03,423 - INFO - Pull complete with updates:
+2026-04-01 03:18:03,423 - INFO -   lakml: 1
+2026-04-01 03:21:04,713 - INFO - Pull complete with updates:
+2026-04-01 03:21:04,714 - INFO -   lakml: 1
+2026-04-01 03:24:03,478 - INFO - Pull complete with updates:
+2026-04-01 03:24:03,478 - INFO -   lakml: 1
+2026-04-01 03:48:03,506 - INFO - Pull complete with updates:
+2026-04-01 03:48:03,506 - INFO -   lakml: 1
+2026-04-01 04:00:04,528 - INFO - Pull complete with updates:
+2026-04-01 04:00:04,529 - INFO -   linuxhardening: 1
+2026-04-01 04:06:04,315 - INFO - Pull complete with updates:
+2026-04-01 04:06:04,315 - INFO -   lakml: 2
+2026-04-01 04:12:04,709 - INFO - Pull complete with updates:
+2026-04-01 04:12:04,709 - INFO -   lakml: 2
+2026-04-01 04:21:03,486 - INFO - Pull complete with updates:
+2026-04-01 04:21:03,486 - INFO -   lakml: 2
+2026-04-01 04:27:04,117 - INFO - Pull complete with updates:
+2026-04-01 04:27:04,117 - INFO -   lakml: 2
+2026-04-01 04:33:03,445 - INFO - Pull complete with updates:
+2026-04-01 04:33:03,445 - INFO -   lakml: 1
+2026-04-01 04:45:06,278 - INFO - Pull complete with updates:
+2026-04-01 04:45:06,278 - INFO -   lakml: 1
+2026-04-01 04:48:03,127 - INFO - Pull complete with updates:
+2026-04-01 04:48:03,128 - INFO -   lakml: 1
+2026-04-01 04:57:03,697 - INFO - Pull complete with updates:
+2026-04-01 04:57:03,698 - INFO -   lakml: 1
+2026-04-01 05:03:04,044 - INFO - Pull complete with updates:
+2026-04-01 05:03:04,044 - INFO -   lakml: 3
+2026-04-01 05:21:03,855 - INFO - Pull complete with updates:
+2026-04-01 05:21:03,855 - INFO -   lakml: 1
+2026-04-01 05:24:03,694 - INFO - Pull complete with updates:
+2026-04-01 05:24:03,694 - INFO -   lakml: 1
+2026-04-01 05:30:04,115 - INFO - Pull complete with updates:
+2026-04-01 05:30:04,115 - INFO -   lakml: 1
+2026-04-01 05:36:03,918 - INFO - Pull complete with updates:
+2026-04-01 05:36:03,918 - INFO -   lakml: 2
+2026-04-01 06:24:04,093 - INFO - Pull complete with updates:
+2026-04-01 06:24:04,093 - INFO -   lakml: 3
+2026-04-01 06:57:06,730 - INFO - Pull complete with updates:
+2026-04-01 06:57:06,730 - INFO -   lakml: 8
+2026-04-01 07:12:03,525 - INFO - Pull complete with updates:
+2026-04-01 07:12:03,525 - INFO -   lakml: 1
+2026-04-01 07:27:03,849 - INFO - Pull complete with updates:
+2026-04-01 07:27:03,850 - INFO -   lakml: 1
+2026-04-01 07:33:03,035 - INFO - Pull complete with updates:
+2026-04-01 07:33:03,035 - INFO -   lakml: 1
+2026-04-01 08:18:03,301 - INFO - Pull complete with updates:
+2026-04-01 08:18:03,301 - INFO -   lakml: 1
+2026-04-01 08:39:03,805 - INFO - Pull complete with updates:
+2026-04-01 08:39:03,805 - INFO -   lakml: 1
+2026-04-01 08:42:04,690 - INFO - Pull complete with updates:
+2026-04-01 08:42:04,691 - INFO -   lakml: 1
+2026-04-01 08:51:03,168 - INFO - Pull complete with updates:
+2026-04-01 08:51:03,168 - INFO -   lakml: 1
+2026-04-01 09:00:50,173 - INFO - Pull complete with updates:
+2026-04-01 09:00:50,173 - INFO -   linuxcrypto: 306
+2026-04-01 09:00:50,173 - INFO -   lakml: 1
+2026-04-01 09:03:48,518 - INFO - Pull complete with updates:
+2026-04-01 09:03:48,518 - INFO -   linuxcrypto: 307
+2026-04-01 09:03:48,518 - INFO -   lakml: 13
