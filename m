@@ -1,86 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E852EDD6B
-	for <tools@linux.kernel.org>; Thu,  2 Apr 2026 11:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7723138423B
+	for <tools@linux.kernel.org>; Thu,  2 Apr 2026 17:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775128258; cv=none; b=Dnd+qKNGIHZU+XR1jVHbNbV6XQXBYtlZ10O6HJFLUePE8ITVs+kEmysX5fnHLYSxAXMyeevaGjJn0RFohEBQC2yYjSF484eBoczN8Yg4w0/8xmDsE2HthN7vTkcslMGFTGzmyuvAIpU8TS34CntnElOVGZNRZd5nhSNSU+TgM0g=
+	t=1775150194; cv=none; b=plZDHaWLLKqXamYcmvdSisU8VTyjJd4i4CjxOv5P36xlG36QV2O093TUYi0t+nbSUH9+uSZ2SCMkpH8vHKvO82aFo2HHsbjIJBe4G/FXcFeIZrqsnF/iPQ8YP8IbSkVR/l9MWHXIEyM+V0LyX0DkLtC9zLQT3CNz6abgxnfwcPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775128258; c=relaxed/simple;
-	bh=/dBnnQzKVoH5/Mog5Gd7m0gCM30W8oMbVlNxg/rIaY4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C9jklpUfmtQ9rvQjf/ynmfs5WJ3g+vEsoVizHhCEbYu9LtYtuCpqx/u+wWd3pGn7sri4amJbT8pyz6B+S7JTr+UvXAp2yZSQykyy0W61IUAWJQkvonx6JIgw1n6WwQaNw7K01OuNmr6NVuvRHrMoKuyROYPFu5Iyj1BqjBrbV1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LxYqzn5E; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775150194; c=relaxed/simple;
+	bh=Tq1i4YAHxvINlmPbxQ0E8bNT/IPEM7cxafmMiOFLp3Q=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=sUmAQEJd2K+gRIfFiX99gOTVs9EvodS6+eogtZnC5LXi8xpHxgmLCXZgJWjs51mleiLTR1XqgrgaiNRqHXk6kdGWChMEupRJ0TT8fOo5mEwEiIP10XW/ix44YskohEbFSvVj8lqm5psJHna3pJyKJjyOij6+6BW6kHKYxLGcMVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M1bd4kZH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LxYqzn5E"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M1bd4kZH"
 Received: by smtp.kernel.org (Postfix)
-	id 6F44FC2BC9E; Thu,  2 Apr 2026 11:10:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44D2C116C6;
-	Thu,  2 Apr 2026 11:10:57 +0000 (UTC)
+	id 59398C2BC9E; Thu,  2 Apr 2026 17:16:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7FCC19424
+	for <tools@kernel.org>; Thu,  2 Apr 2026 17:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775128258;
-	bh=/dBnnQzKVoH5/Mog5Gd7m0gCM30W8oMbVlNxg/rIaY4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LxYqzn5Efj/BDZR+8SFWWCps0PziCD36GfFqiDnhsk5JDEG69MEmRCW14Ky5S1li/
-	 CgoOwQSxcVruHdUNeQnEx5enAVJoLsyppxWPl83eX9XD+UT5LOrMp9TKlqO0/GQDfp
-	 v0ZiSAdgakoE0ac4EEktW01vdc6PsbKVpjCxMxirscEMKiVo9ZszVggEGt1k3y3hYl
-	 fnPI3H+ZlgCx461FTBnd4Cs6DRDLKfJqwggTbVbKegzoFgwYQGQ3Shluxt8QmTCISU
-	 Q6Wew14Od6hte+awYhZ0+ssfx+SCKQDN45F7FZy0934sYWCl5/Yb2sNlMWWBHrLdfR
-	 I3TpfciPh9rUA==
-Date: Thu, 2 Apr 2026 12:10:54 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: Re: b4 review crashes updating a series
-Message-ID: <46a6b31b-a28b-468e-bcb4-9f2b3e7f4bec@sirena.org.uk>
-References: <78dff388-0d4f-43f1-b197-af64617f9df6@sirena.org.uk>
- <20260401-curly-chicken-from-asgard-133cae@lemur>
+	s=k20201202; t=1775150190;
+	bh=Tq1i4YAHxvINlmPbxQ0E8bNT/IPEM7cxafmMiOFLp3Q=;
+	h=From:Date:Subject:To:From;
+	b=M1bd4kZHrCswS652c7NQQFsynPWoVpTVSsZF3+A7ay4sWMK3MjbHhJlTDKzYjGFER
+	 ZvOWqVPbo0/fMABjBklsIU8nkIOqL4Xj4Uv/V+z6Oo6BdCVeEj7n6iaUy0q+wAAZTp
+	 wvk6TOxTg3IgHWxVGKMrX/dZzQ5ceHwOVmUI5zAscv0HkaKaQGANBcn0W0sOJjIff/
+	 2uO9cCp9x52elBSdtCsNLB5YuJzhB6cGCe1gpVcXHYimQnwXjcZ++COLQtCvBMVdi8
+	 7DETMAsjwFVFWCFDtSn/MpoJA5umrtRt7ATizDXSd/ITpaVAwAhuvSIoqugfFwly83
+	 8Id3Pr7SpxX0w==
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-38cc8708d76so9549691fa.3
+        for <tools@kernel.org>; Thu, 02 Apr 2026 10:16:30 -0700 (PDT)
+X-Gm-Message-State: AOJu0YwQEFFGp0FvMPzUSv0xiVQDszW/sIASbt/AyOyptBeSb/qmlpvt
+	4weRl8x8qM6EWwyH4r1mprnOmSmTuITA/7rTTfHIWTohvC0QMNBVdv2dUgbXoIyV1Rbkm2Upl+P
+	sHZ78xWg2Sbj5bplaoRxFZkqooc7Ee3E=
+X-Received: by 2002:a2e:b993:0:b0:38a:5102:9190 with SMTP id
+ 38308e7fff4ca-38cc3089324mr21050581fa.28.1775150188900; Thu, 02 Apr 2026
+ 10:16:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/ceIsLL6pPgNMaiu"
-Content-Disposition: inline
-In-Reply-To: <20260401-curly-chicken-from-asgard-133cae@lemur>
-X-Cookie: <doogie> dpkg has bugs?  no way!
+From: Tamir Duberstein <tamird@kernel.org>
+Date: Thu, 2 Apr 2026 13:15:51 -0400
+X-Gmail-Original-Message-ID: <CAJ-ks9nyNcqk0LPdCsir1i8=2FQZEEVRx6fTW6FWsCpiNDbJvA@mail.gmail.com>
+X-Gm-Features: AQROBzCVCI6JugZUstJ-xSvAJgrcu56H_M4Jbgof0tIZTSZlrxD8Hsgt5f3XJnM
+Message-ID: <CAJ-ks9nyNcqk0LPdCsir1i8=2FQZEEVRx6fTW6FWsCpiNDbJvA@mail.gmail.com>
+Subject: b4 type checking
+To: "Kernel.org Tools" <tools@kernel.org>, Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Konstantin,
 
---/ceIsLL6pPgNMaiu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I sent some typing improvements back in June 2025 and I see you've
+been steadily pushing things forward since then. However, when I try
+to run `uv tool run mypy .` on b4 I get just over 350 errors. Is there
+an invocation that's expected to be green?
 
-On Wed, Apr 01, 2026 at 04:48:45PM -0400, Konstantin Ryabitsev wrote:
-> On Tue, Mar 31, 2026 at 04:04:06PM +0100, Mark Brown wrote:
-> > Hi,
-> >=20
-> > I'm getting b4 review crashing when I attempt to review this series:
-> >=20
-> >    https://patch.msgid.link/20260319032112.5251-1-chaitanya.msabnis@gma=
-il.com=20
-
-> I think I found where it's happening, but please test it out -- the latest
-> master has the attempted fix.
-
-That seems to have worked, thanks!
-
---/ceIsLL6pPgNMaiu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnOTr4ACgkQJNaLcl1U
-h9AcAwf/Wfm9QebMmna2usRiDDzonlFjXgRp5E2TWmyq1clkGWTpn+33kiA7/HPG
-rXZq1yoskNqiD99d40IdsD2X4Z9uojv90I0u6DRviIyA6zdcoVQZMHwnkIayPcYO
-AspMiSqV4eT+XCmnxL0G0L0Z/Jj39w1DUOlMc0qQBTsI4HUrTLv1JTh8QvwRJsar
-8xYYQ/LhIWLYL67pIonxUf7kGyavnXPwM9lGF122a5MARprjv2tvWZTTyyrVSkB1
-mxU5F6gTJhS49aVVLuUdVB/9A7Gyl/f6P+2wUbc9fFfvPm9pF9hcLeNsdq11RT4Z
-isqtXSPAJJh+NtZ4I7UgptVxuNy4ww==
-=efCt
------END PGP SIGNATURE-----
-
---/ceIsLL6pPgNMaiu--
+Cheers.
+Tamir
