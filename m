@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ED92F3622
-	for <tools@linux.kernel.org>; Mon,  6 Apr 2026 18:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36513009F6
+	for <tools@linux.kernel.org>; Mon,  6 Apr 2026 21:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775500456; cv=none; b=NjstHI8p5d2H6tmMUSb3yN9XJ66qk/x8T4s4mRbUZWQEv27+T0AVOTyB5fDmnfwf3YWqZr4CCq/Ik4js1bnmBfqK7Ei5pv2zfRdfLrCzg5QgtwcD5nvxROloxL1W3jI/4z0TScxazMadd64vGSqojylvi09C90Uwx8P0TPZFxxk=
+	t=1775509612; cv=none; b=hjSyAEfIcYXuYwLeTdWhWil707UScYE4x510tMOqnyYg0JCjcN/gvlyMe2mexXqS2pRFRxyDrcI0JOduO2je3WZ8PdjlWj/MbrZ4Xhi9hPbRYiE9J2WsoHk2ObcGfXjGJY07cxenseBthgKGd9+bDRnXJ1VGeurV6rrWCONFrr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775500456; c=relaxed/simple;
-	bh=KCC0bcD/HFVrFCswDhcuKodFLpWwaXUdpgVV5RAEP/Y=;
+	s=arc-20240116; t=1775509612; c=relaxed/simple;
+	bh=ytnGzrLImLMHOnoND3EisIQSY2wkOWaVYCWFF7bnFvA=;
 	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=iAj9uRU+6yZ3KZBg2SCqL+WWq8nl+bRqYv1g7p0feubmGGnhCcBGWOK0wds9pW9ZyfVjUbfLzMFTn0En/Et1WuJFLDo9E6i0JH3ptramuY+0493YrBWEcPUk6ese5wCoQwzIunF0EhUch/NOL34X4h/EEofjH2qDbUql02KEyEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHS2Ryr/; arc=none smtp.client-ip=10.30.226.201
+	 References:Date:Message-Id; b=Q9ewF2aWOtYglwQn9mjlWyYn77Rpg2fBP/QUAYkct26U+XnG2oDgMZRF011QRibEIQ3xfT7XXKwxMvGOtiO108soXK8AQvtxs+htv2B96FeT+iTN0oF7mUDgJmnu0IL59U9pIiu7otiyB9C1xKHsuvKGk6QNTttJiWK4+gNPuEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ud1YryhT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHS2Ryr/"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ud1YryhT"
 Received: by smtp.kernel.org (Postfix)
-	id E2D86C19421; Mon,  6 Apr 2026 18:34:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D48C4CEF7;
-	Mon,  6 Apr 2026 18:34:15 +0000 (UTC)
+	id BA954C2BC9E; Mon,  6 Apr 2026 21:06:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F4DC4CEF7;
+	Mon,  6 Apr 2026 21:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775500455;
-	bh=KCC0bcD/HFVrFCswDhcuKodFLpWwaXUdpgVV5RAEP/Y=;
+	s=korg; t=1775509611;
+	bh=ytnGzrLImLMHOnoND3EisIQSY2wkOWaVYCWFF7bnFvA=;
 	h=Subject:From:To:Cc:In-Reply-To:References:Date:From;
-	b=NHS2Ryr/PUj5gY6sy+qJZDLl4EU0XcfMPC0+9IpAYhx2MEm55MkAIPBQnAJOsmaCu
-	 jZqqjG3/VPcKzveL8/gOkN9yq7TTDPSAk/lepq45qwtiQYyiQgGamTV3rH4SILF3bb
-	 2CSCmVgV4o/psk1az4bDSuhPkhP4CEw8CU1KbGJg=
+	b=Ud1YryhTXUZL8ZilLnIDdrSDFF80tXtLPoa863TFI/j0w0iJsKZMpis2V5CXIzGsC
+	 4H2Td9F7aXHvt2ng4ATqfiGqCs7JCB83saQs3xcWy3cFmzTBeOQopVYlsgG2dbb0bL
+	 43/1j1ttjbNtUYXAkFwMzsgAualCR3bJAzRgwtYc=
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -35,47 +35,37 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Subject: Re: b4 review state is broken after series reorders patches?
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Tamir Duberstein <tamird@gmail.com>, 
+To: Tamir Duberstein <tamird@gmail.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Kernel.org Tools" <tools@kernel.org>
-In-Reply-To: <177549837114.3355865.7109422546107942051.b4-reply@b4>
+In-Reply-To: <CAJ-ks9=De02zhrrrbqEO3wUCzBazsiDV8vgpKNKD7=mVUBomCQ@mail.gmail.com>
 References: <CAJ-ks9=De02zhrrrbqEO3wUCzBazsiDV8vgpKNKD7=mVUBomCQ@mail.gmail.com>
- <177549837114.3355865.7109422546107942051.b4-reply@b4>
-Date: Mon, 06 Apr 2026 14:34:10 -0400
-Message-Id: <177550045089.3385816.4021244769990222254.b4-reply@b4>
-X-Mailer: b4 0.16-dev-d5553
-X-Developer-Signature: v=1; a=openpgp-sha256; l=973;
+Date: Mon, 06 Apr 2026 17:06:47 -0400
+Message-Id: <177550960799.3495947.3585844597234766408.b4-reply@b4>
+X-Mailer: b4 0.16-dev-9febb
+X-Developer-Signature: v=1; a=openpgp-sha256; l=490;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=KCC0bcD/HFVrFCswDhcuKodFLpWwaXUdpgVV5RAEP/Y=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGDIv/1m296J8A7fvwu/q6bxuHNVdMnEZv16ypqU35ag89
- 1mrtH55RykLgxgXg6yYIkvZvthNQYUPPeTSe0xh5rAygQxh4OIUgInYyjL8FTwUY1F6W0qXZ7u3
- wFG+RoG6zU95t63y7/iRfHvz/8vJ4gx/eB6+uvjJQ7rr4MaWTcynmaLSK+RSj2hNk+AI2FMjFpv
- MCQA=
+ bh=ytnGzrLImLMHOnoND3EisIQSY2wkOWaVYCWFF7bnFvA=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGDKvKGQlHvVvbTxWLD7lUtLsKQs0H9pOTbJrfLrSacaHP
+ UFxZk6lHaUsDGJcDLJiiixl+2I3BRU+9JBL7zGFmcPKBDKEgYtTACbyagUjw8VF7jucuK7fX3V7
+ smTw1Cd89wytGBLzd1zecucS87TjDJmMDG/yNfR+8vEyXPqf63vhn+dWV9ObbR0ixzfdONJ/P0w
+ +jw0A
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On Mon, 06 Apr 2026 13:59:31 -0400, Konstantin Ryabitsev wrote:
-> - Maintainer writes reviews for v1 and sends them
-> - Sender provides v2 in response to feedback
-> - Maintainer upgrades to v2 and we carry forward all previous reviews 
->   (but they were already sent, so may or may not be relevant for v2)
-> 
-> Let me see if we can improve what happens in this scenario.
+On Mon, 06 Apr 2026 10:23:17 -0400, Tamir Duberstein wrote:
+> I reviewed v1 of
+> https://lore.kernel.org/all/20260405235309.418950-1-ojeda@kernel.org/,
+> but I was then unable to review v2; range diff failed with `Could not
+> find series v2 in retrieved messages`.
 
-There is an attempted fix in master. We're now marking comments that 
-were sent with sent-revision and will do two things on series upgrade:
+There's now a fix in master for this as well. It's also backported to 
+stable-0.15.y -- hopefully that improves the experience next time you 
+upgrade local branches.
 
-- not carry them forward to identical patches from vN to vN+1
-- will automatically mark identical patches as "skip" on upgrade, so you 
-  should only see patches that have changed
+Thanks for your reports!
 
-This won't work retroactively, but should kick in next time you send a 
-reply to a series.
-
-There are probably still lots of buggy corner-cases with reviews and 
-upgrades, so please keep sending the reports in as you discover them.
-
-Best wishes,
+Regards,
 -- 
 KR
 
