@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B41E33BBB1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD7C3BAD9B
 	for <tools@linux.kernel.org>; Tue,  7 Apr 2026 16:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775580522; cv=none; b=bBsqyTv6cM9Kl7sA89JLd3euAhRFR0ycZevjECTcPmIJXcjZ7Dj9F7n9cqpU3Lv53Lo4jUnEKBtcecic6IqY9B1W5+pk0yxwEJEyEBIkKzOyLVbxG27pndUyx3JlXPSiGIqABA5ZeH/KwSpHhWwXbk6pScCKnjVlKMpzKODcUVE=
+	t=1775580522; cv=none; b=CTK2vvQ0k3+SM1iRLtzeOY6L4YpPtXF/Y1Pwg53MAMdktuSctjbyWVqXRa3G+kSMx2gTuMZd9LVjoS/j9sqogDcOjI7b2gv/TTmf0TAy/ls3uM7+hsQPQ5PySJjNBtNtL5kJsMMgZv9UR8AEjm3NNKDsuhmMlWodm1+rw7EbHTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775580522; c=relaxed/simple;
-	bh=W5kNH9aHcd0Z3bhHsiR8Na7+VhPT7vK/YLxzL10JjIY=;
+	bh=0GQ1XEwWkDa5PRz2evEtSVgxD/zk3lZG9IKmvi9YLdo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=et3xYfAVYe+Koe5Kt5Yydf9ggY2k6DRpnEjNh7Hs2ghMXNad3qM2rERBjkikZz8MtXUua6cozDNG5UyWs14hHt+1KoZH9v6eRh4CRUUehcBZKnJ0uP1FNfelN4h5b4WYAm2mtsk668PagCLCYXu7I8PilDz2yHCBzNmQhkGwj4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KFuTaLG0; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=rddFclMDOQORq0gRRPnN+xEl/pwXsy+yP2Sy2/pHPfXe5JyP6A9Ns17izBjANkvIxNxaBzekKMQgyC8+NYVr+wOdT9tJIakgW8yY9YkIcq5A0+wkwt3k7mjII7qfecjrS3nJwQxKSuEHneWwhmN58Fx60jc0lYQFkHD9iA1xJNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GwyhVv3a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KFuTaLG0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GwyhVv3a"
 Received: by smtp.kernel.org (Postfix)
-	id 431D4C4AF0D; Tue,  7 Apr 2026 16:48:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59CEC19424;
-	Tue,  7 Apr 2026 16:48:41 +0000 (UTC)
+	id C81E1C2BC9E; Tue,  7 Apr 2026 16:48:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F0EC19424;
+	Tue,  7 Apr 2026 16:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775580522;
-	bh=W5kNH9aHcd0Z3bhHsiR8Na7+VhPT7vK/YLxzL10JjIY=;
+	bh=0GQ1XEwWkDa5PRz2evEtSVgxD/zk3lZG9IKmvi9YLdo=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=KFuTaLG08lUmTMNh3DlW0vO1RhLsrvsGXxuvB0YGnrXHx5sosldkO+Lac7+fOjlkl
-	 noj3+yuvgybtConzEVmEC/6p3fL5VewqnY4PVAWj+kCAc2IoDt1Ep9VY3nPxSC77V6
-	 WQ4wJnkFsALsxQ4eD5Nz3O/0BhqU37oBylvWL5IQO19yleMYaVV1n5UNZ5Dz7uERE/
-	 KLaj2SpZbTfAhpeLY3tsZI7kfVUxJYoJg+WOd8gO0fKHOPw9Ctfs+xws3K3SGj2lbv
-	 O8rqpeYzC+zjjTsF9iaaj1Nsfl9tpCe3/RxuVjL79Mec6MwTAsMErWPQ3MQKEaizcG
-	 zrUhJ4lJpzQaA==
+	b=GwyhVv3a6vT+Cu4RrZXEYMSoPdRhAqj5gryUj/RhkigXOoaNYRckI9KOtFlU9MF7M
+	 1Nh9h0xcyQxYo1JRWWL5l7hwVM3SULKlaOFM/nXuDgw/WfbaRl3DCshjuGfb2zKjJt
+	 7kOPmPXdOZhrTrHRl0CUvzCESFJF7KqbRkK3y5tsLbZAno6H34o22t7fgIa/UtH3MS
+	 6QVfHCCRzGsVb/Wld7DwKvHfUpgp36a/+1MfG1CDUyVkDJn9illfXZqY/4XO2sgTCN
+	 CLXVPQ0shbGSDg5V4y0VQZgkWCb4NB/462yuVytV1mS2J1AmGzSWIENd5Ya8rbQIz3
+	 eFE2MfQE1a6WA==
 From: Tamir Duberstein <tamird@kernel.org>
-Date: Tue, 07 Apr 2026 12:48:30 -0400
-Subject: [PATCH b4 01/12] Configure ruff format with single quotes
+Date: Tue, 07 Apr 2026 12:48:31 -0400
+Subject: [PATCH b4 02/12] Fix ruff check warnings
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,44 +39,52 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260407-ruff-check-v1-1-c9568541ff67@kernel.org>
+Message-Id: <20260407-ruff-check-v1-2-c9568541ff67@kernel.org>
 References: <20260407-ruff-check-v1-0-c9568541ff67@kernel.org>
 In-Reply-To: <20260407-ruff-check-v1-0-c9568541ff67@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Tamir Duberstein <tamird@kernel.org>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=560; i=tamird@kernel.org;
- h=from:subject:message-id; bh=W5kNH9aHcd0Z3bhHsiR8Na7+VhPT7vK/YLxzL10JjIY=;
- b=owGbwMvMwCV2wYdPVfy60HTG02pJDJlXTdOPqZjx64ds0y6sYw95cerMDt5fBdO82iXMlta7v
- 8j6cGJax0QWBjEuBksxRZZE0UN701Nv75HNfHccZg4rE8gQaZEGBiBgYeDLTcwrNdIx0jPVNtQz
- NNIx0DFm4OIUgKmeUsXIsENLmifi+IO7F8WWMZR++GvWud1orvX7rFkl+Q9m7bV+zcjI8DvxhUf
- AjErvH8o/LI7eTVVgD878WMF283P+sy69CfzLeAE=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1187; i=tamird@kernel.org;
+ h=from:subject:message-id; bh=0GQ1XEwWkDa5PRz2evEtSVgxD/zk3lZG9IKmvi9YLdo=;
+ b=owGbwMvMwCV2wYdPVfy60HTG02pJDJlXTdOri9/f/u5eoHTyoLRnqtuRtSsnGyT5iL95yG0xM
+ /2j6sPOjoksDGJcDJZiiiyJoof2pqfe3iOb+e44zBxWJpAh0iINDEDAwsCXm5hXaqRjpGeqbahn
+ aKRjoGPMwMUpAFN9aTLDP4Ucr8NXp9rf3BmbVbSMo5r9gubuDf+PzerLy9twcuqDLW2MDNdnByu
+ llFkE3oqJNi5NMtuQJdBTwhiu+Fqrr7DI/6cZGwA=
 X-Developer-Key: i=tamird@kernel.org; a=openpgp;
  fpr=5A6714204D41EC844C50273C19D6FF6092365380
 
-This allows me to format modified code as I go without changing
-pervasive style.
+Mark example-only variables as intentionally unused so ruff can check
+the script without changing its illustrative structure.
 
 Signed-off-by: Tamir Duberstein <tamird@kernel.org>
 ---
- pyproject.toml | 3 +++
- 1 file changed, 3 insertions(+)
+ misc/review-ci-example.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/pyproject.toml b/pyproject.toml
-index b418bca..a324583 100644
---- a/pyproject.toml
-+++ b/pyproject.toml
-@@ -81,6 +81,9 @@ files = [
-     {filename = "src/b4/man/b4.1"},
- ]
+diff --git a/misc/review-ci-example.py b/misc/review-ci-example.py
+index e5837eb..cbac2ae 100755
+--- a/misc/review-ci-example.py
++++ b/misc/review-ci-example.py
+@@ -43,7 +43,7 @@ import sys
  
-+[tool.ruff.format]
-+quote-style = "single"
-+
- [tool.ruff.lint]
- select = [
-     "F",       # https://docs.astral.sh/ruff/rules/#pyflakes-f
+ def main() -> None:
+     msg = email.message_from_binary_file(sys.stdin.buffer)
+-    subject = msg.get('subject', '(no subject)')
++    subject = msg.get('subject', '(no subject)')  # noqa: F841
+     msgid = msg.get('message-id', '').strip('<> ')
+ 
+     # Example: read tracking data for commit-based CI lookups
+@@ -53,7 +53,7 @@ def main() -> None:
+             tracking = json.load(fp)
+         branch_tips = tracking.get('series', {}).get('branch-tips', [])
+     else:
+-        branch_tips = []
++        branch_tips = []  # noqa: F841
+ 
+     # Seed the RNG with the message-id so results are stable across
+     # repeated runs of the same message (simulates cached CI results).
 
 -- 
 2.53.0
