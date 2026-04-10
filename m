@@ -1,76 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4A53A6F19
-	for <tools@linux.kernel.org>; Fri, 10 Apr 2026 22:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E303DD519
+	for <tools@linux.kernel.org>; Fri, 10 Apr 2026 22:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775860683; cv=none; b=QPm7jR664bP8ZTL7TIO7gEQ563kGSZKfECoHPi78BI7D4DUuiNY6rhdSXdf+xaXduLE+MD18IDdU0SaAdxwjbCDoNW8MC9X5gMaZq6g6CwvWCTtwF6sXZ17fiWoQEofAY6Qzz5UssdeKA9g0Z+0eNs3KCYTSazOkeVBUvXauonA=
+	t=1775860685; cv=none; b=ew+tpHFrlBoaItnma7sXMXOJniqcoHJeCQ+2SznnufqG78hZXfr2W+Yl08f2CJW4PK8BkjzOV6ZxUvHackJ8qt6jPQYyJ2QKmFcDkiUZfYpvqg0bpTaoRaN3vp6s3kD9q6vEsysza/mKeZ/glaJkv2UcKXPOh/d3o7aX4SDZvNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775860683; c=relaxed/simple;
-	bh=dDOWVhDYPw6fLeKLBANRFLAb9Xr2Ai1nvom50C8Gey8=;
+	s=arc-20240116; t=1775860685; c=relaxed/simple;
+	bh=3ywxRA3QVis+3J0Wtq89PIX/RjGT9IDb1vDzq8U/ZEA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VCKMRw/2rZ2Ja4jbVVREbYogFl70JbQl4n0d0Uq3uf0jKBCq2s5s17NkxxfxFmkUviVIducmLlAAmhR+xdI+oomOmqiTdleNwPd7LJejb6TwUE5kO/HB5f5S1IOgiGVolaik/58C7aBXLfWpahTIKrfq9JR5Q1hjEgUEFazfQLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fvngd9cO; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=T10nSmbPJ/lYZWt9iccAVt+43QHcOYAa4tOW0xUTkmtgjyYGG0pZU+7/XmAmxfygrQfhxavDkj9JlW5wODcWK4vPkUqTGzYTi+JG8HrHUl2s/uR6ifYUOxBlhYSyEIX8GwVdzmJWmSjZPiTx7BHGLep1D9BBx0ammQTj64J9lOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cxjPGqBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fvngd9cO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cxjPGqBV"
 Received: by smtp.kernel.org (Postfix)
-	id 31E88C2BC87; Fri, 10 Apr 2026 22:38:03 +0000 (UTC)
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+	id B51A3C19424; Fri, 10 Apr 2026 22:38:05 +0000 (UTC)
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 3FC25C19421
-	for <tools@kernel.org>; Fri, 10 Apr 2026 22:38:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 3FC25C19421
+	by smtp.kernel.org (Postfix) with ESMTPS id DB439C2BC87
+	for <tools@kernel.org>; Fri, 10 Apr 2026 22:38:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org DB439C2BC87
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8d424af6282so283264785a.0
-        for <tools@kernel.org>; Fri, 10 Apr 2026 15:38:02 -0700 (PDT)
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-50d8e11b948so25823551cf.3
+        for <tools@kernel.org>; Fri, 10 Apr 2026 15:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775860681; x=1776465481; darn=kernel.org;
+        d=gmail.com; s=20251104; t=1775860684; x=1776465484; darn=kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7qpjZGkrdmRj8MckvU+OxbiFiXKkY+U14b9XTlwLpWk=;
-        b=Fvngd9cO2wOMxzOlx2iGoXaeRQNZh659Ci1PGRt20UoAXAFzttUGQ9tyGNRizLXLcV
-         ehS1Mx8xyB2mku6fxjSA/+os+rrGIDZS9gtYoy0mbol/WgVu/70aKmmKMDNzAZZniHOB
-         dnwPvFHJPKDAuiUYmJJFak//3UUf8XrU9pogRlHs/Xd3JBhrR2VSEQGchVFZqP6i8yXB
-         bc2mWS4uQWl8J8W8FiVEIeAFvuB5C6yUWT7eSmH5uK4a68HYmeJHsRO/Y3NrONM74i/B
-         38qWW/NLokWprWaZ4cajQ6r7CDhXsM1uw99RuW8bAYXusi21ffBvej/R4TTL9bxBCxVa
-         5IEg==
+        bh=qwPG2M50z9GIRNMSBCcdA8NdqqoB4hHJ4jdyyFFNO/o=;
+        b=cxjPGqBVsSw6DRq+UDuv6dCRu9YPpr4Jr3dREsFfF82/sC3aN74oV+2/GmZTnhgKRe
+         ZQFeMNN/41KM41UdEZJOQI9owsKmkehgUo8p3hxfMAOgRz8kfx5lA8eGierN5SyuFPsV
+         WWL5NIv+sD4EXyfLZauFw1Op7d3ZOIipQzysU3QYOoGUkzfRqt4zniSJlX/tQwmfzeJm
+         oDfhLuAXZwStj37xWurcV8IcEvh25BgW74IPTUQ+Hsg779NVIxUzRnlgTmaXDD1P4hgl
+         oMvXnQJ7SUFKDnAxLsAxaCCnVp0l2LmNgxP8N3ICpwpNitUrhkYprkJJaokNXEZNjw+z
+         qnGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775860681; x=1776465481;
+        d=1e100.net; s=20251104; t=1775860684; x=1776465484;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=7qpjZGkrdmRj8MckvU+OxbiFiXKkY+U14b9XTlwLpWk=;
-        b=lkz7PLv7GUKCvJZN6juWDrCmL/GnkWND3tpzrmb5phfyflTvvSWJTDRQmKMlAzDcjk
-         s6oMSX2ORmhMWb5+LTdYyeuEtz07T+rlRImyOS5nhvVdcfR4GgiS1PWNHx3WtRqgcVMR
-         +sdqmDlEqVjK5EaK3OoMhEUPCPmw5vcy2+e47iR8yN6zFuaQ2NmN4ZuWvF+wVULLFg/U
-         n1osuGKfr62NMdy5oIIrhpfw2qFDajpD+WrA0OtTnsJAtksmpILiRlRkkoQuJaznzRO8
-         H3Y4G1fLiKt1AnHAdi+b+WRD3wWCqR+Zw2NxIuQNtJCAIBAg3OuPW4Dha0h4PbJVf6jV
-         8AFw==
-X-Gm-Message-State: AOJu0YyhJbxLH4lGfktRYGbhofj7hnX9aHtzX7/45f/l65XVXAr4I3lQ
-	utByMPoSzJGQNY/NGtc5edHHlPoeOmrTbBlV5o9wSZMHN/RxEfvWDdzj
-X-Gm-Gg: AeBDievRwhf2MNVj59u2otDWgdb7QeWo/a5ghMwE4RymmojtRrhx7OSUEnbTF/mIl+s
-	AYiKglchokR+628Fkd0ZKfJrpJjkSF9lWZeHCo/nnD82XxDZgfPF9HP64VKVgm7YX9wT2FrGHQf
-	JDDCNZMD0hFoEQsC7jAMzwjC16ZBtVwVtqXx+NFI8Y/sHd3WxETfPeoo989SKVTR9QHuT2vW37D
-	/LI5ejPBlc68JNkZ31rf+4BnEtvMVSNKr6o5Unqf2ja7LWZvTTw4X/7ePxY0f9CCUq89Pgh9tSX
-	nL9lE8VG1kdc0wcCJ3sPwu6M9dKYx2lXKApGqLUUnnVFT/gRwJjnKg762IgGeYpyEsdS+3g3fT8
-	GVjMF0QzirEsMwDGR7PtqqU7NOv7GxUfCHQjiTQXK5sdIoFz0z9o42DjoA8mWb5DIQnm7YQEmK1
-	VQxhrjjE8MuuFSBpJ0KJsbXGF4f6tPWX9lJAG+ou1PvOt5nhvqQJkLGxq3c+pwLDcqsij2cMvNI
-	bs7/uGjoYd9zTB8oVvLDVVS1GZngTSPcPL/KAB4TpwbHzaFosABc23ct0m5fK9KpCxnGt+zaOzT
-	WiZVsipTXuAsC1LI5cdUXZxuNz8Z0p6sysv2F3CXY5TVkQwSiPtl
-X-Received: by 2002:a0c:e004:0:b0:89c:4f7f:8479 with SMTP id 6a1803df08f44-8ac861562e2mr68741086d6.6.1775860681128;
-        Fri, 10 Apr 2026 15:38:01 -0700 (PDT)
+        bh=qwPG2M50z9GIRNMSBCcdA8NdqqoB4hHJ4jdyyFFNO/o=;
+        b=YTPpGPsxAUHMae4cVO2HbxsR0c1gyImj49dQrlr+ALPT3RNmJ5WUgf+x/0Td5KF1JW
+         +nYlSUg6zc8Ic7hPZVAbRCXzwt34fvy5uSsBcitHx5cdPEqR433e7cSUm3OUPSMDphEG
+         MyFiOgiHj9r4mzmHe5BtRzwkHyrBKmb3eMs2tylcVuPftX0zuEPVVXTKgj0i+QaM5JkQ
+         aPlM71+9Rsoa6Yg1uja4a76KLqO6HznwQ7ESXYk+ZXhsuEwoY0N42QCgofzSoidfAYja
+         EhC8tmzy9OTIkfLP5PuW2ElhjvDvYNeb7EfUF9bupE8I7VmjX4gcgofc/lfGcPGxhN+f
+         oaFQ==
+X-Gm-Message-State: AOJu0YziG2tWqUdbZsxxuThPexHVve1Vap15cG0AoVnFDrrq/i4YdsFT
+	trzlz9EU8Tger8MrxdIEe9tJqJtLdTTwKZdUwEzQ/Al7Zp+dUN6xOPqE0HczigdY
+X-Gm-Gg: AeBDietD0FsM658outJVFOcddm3fZw5CHU37qmjVfzR7YSqlTnBzgkPpdqq380WYsQ8
+	bnsB87X2ZcOuiRBttXgpvkAHYHo2F27prC6VrYpqvnFhxlp05TooVcsP+BrC3OYNhzmj4xQaJIJ
+	M3hu2ZJMfyzkjb8ZEmV/zvMezCMfLxNjXUETYxkbeI2CcVWnfTwbFqcJUGs76wEc5p1unPK2U1O
+	5GYSO+7eJcxWbQAsfNJYXhoOKKu6ohHi9dW+Ivwj+4FUaQgGaOhOF0WzG1MVU2rLUFFlXH+yVdc
+	To0C9GeEaQ30nbnru+NEwyVkJevyvQl2+KIhmjaJtZAX1mr78Iy3FA9PuVO6V8ypd4tu2qnKX2o
+	kSXykC80iTiIlImVx0lVoyXcg2TN2VSApRbWIzAjh3s45t0xbTePw7b3ExAxuH+lgHAnjUhIIep
+	N6/Ztrj5rllUDjCxuUSptjppah8qv8StPn6WS4NcXeByXcxNM3dTHL1bvwDKrnHN/mu1xxQ8Q7v
+	1ccqMUsR4l3B5B7Xh0G9mITpXFO1YBH63ROf0o5JLn1CFsFf1ntk3jXZRuYDKR2xNNaXchNF2Ok
+	hp5CYRDrtu5i53yTtILoc5HQA1sRp9BEAYYTxqOTrtBRE6//Wbdw
+X-Received: by 2002:a05:622a:4d06:b0:50d:abc3:eed5 with SMTP id d75a77b69052e-50dd5b7626cmr74237591cf.29.1775860683842;
+        Fri, 10 Apr 2026 15:38:03 -0700 (PDT)
 Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([208.80.35.36])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ac849db735sm41370096d6.2.2026.04.10.15.38.00
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ac849db735sm41370096d6.2.2026.04.10.15.38.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2026 15:38:00 -0700 (PDT)
+        Fri, 10 Apr 2026 15:38:03 -0700 (PDT)
 From: Tamir Duberstein <tamird@gmail.com>
-Date: Fri, 10 Apr 2026 18:37:56 -0400
-Subject: [PATCH 05/14] Add pyright strict checks to CI
+Date: Fri, 10 Apr 2026 18:37:59 -0400
+Subject: [PATCH 08/14] Drop redundant read-only property test
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -78,142 +78,50 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260410-harden-type-checking-v1-5-fcf314d9d748@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260410-harden-type-checking-v1-8-fcf314d9d748@gmail.com>
 References: <20260410-harden-type-checking-v1-0-fcf314d9d748@gmail.com>
 In-Reply-To: <20260410-harden-type-checking-v1-0-fcf314d9d748@gmail.com>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Tamir Duberstein <tamird@gmail.com>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1775860674; l=3971;
+X-Developer-Signature: v=1; a=openssh-sha256; t=1775860675; l=958;
  i=tamird@gmail.com; h=from:subject:message-id;
- bh=dDOWVhDYPw6fLeKLBANRFLAb9Xr2Ai1nvom50C8Gey8=;
+ bh=3ywxRA3QVis+3J0Wtq89PIX/RjGT9IDb1vDzq8U/ZEA=;
  b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
  MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QH5YsSHF1sEW3fiGzsQiyvii+UmPP/LiD8b8oLx5NsZ7NneV+xruGQQdFWBThlSRGPl3PITRiyu
- VwAuZFaIEwwU=
+ QGRc7xqhwNmBQWt4E4eRDfRTCuSjRHe1/tXTKBa1FRWmMrE+gU2HMbD5dJybV7cGdAHbT1yzjJ2
+ Qq9pUbU3HNQg=
 X-Developer-Key: i=tamird@gmail.com; a=openssh;
  fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-Configure pyright in strict mode and run it from the b4 CI checker.
+Remove the user_agent_plus assignment test. It's not clear to me what
+the point of this test is, and doing this already produces type checking
+errors.
 
-Allow private-usage checks to be disabled only for tests via a pyright
-execution environment override, and silence missing type stubs for the
-optional authheaders dependency.
-
-Add a small number of casts in tests to satisfy pyright. These casts
-should be removed in a follow-up commit by tightening the mocked types
-further.
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
 ---
- pyproject.toml       | 11 ++++++++---
- src/liblore/node.py  |  2 +-
- tests/test_node.py   | 11 ++++++++---
- tools/b4-ci-check.py |  6 ++++++
- 4 files changed, 23 insertions(+), 7 deletions(-)
+ tests/test_node.py | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/pyproject.toml b/pyproject.toml
-index 9bfadbe..7a96d23 100644
---- a/pyproject.toml
-+++ b/pyproject.toml
-@@ -39,6 +39,7 @@ Repository = "https://git.kernel.org/pub/scm/utils/liblore/liblore.git"
- dev = [
-     "build",
-     "mypy",
-+    "pyright",
-     "pytest",
-     "pytest-asyncio",
-     "ruff",
-@@ -53,9 +54,13 @@ asyncio_default_fixture_loop_scope = "function"
- [tool.mypy]
- strict = true
- 
--[[tool.mypy.overrides]]
--module = "authheaders"
--ignore_missing_imports = true
-+[tool.pyright]
-+typeCheckingMode = "strict"
-+
-+executionEnvironments = [
-+    # We're testing private APIs quite a bit.
-+    { root = "tests", reportPrivateUsage = false },
-+]
- 
- [tool.ruff.lint]
- extend-select = ["I"]
-diff --git a/src/liblore/node.py b/src/liblore/node.py
-index 503428b..095ba4f 100644
---- a/src/liblore/node.py
-+++ b/src/liblore/node.py
-@@ -195,7 +195,7 @@ class LoreNode:
-         self._authheaders: types.ModuleType | None = None
-         if add_auth_headers:
-             try:
--                import authheaders
-+                import authheaders  # type: ignore[import-untyped]
- 
-                 self._authheaders = authheaders
-             except ImportError:
 diff --git a/tests/test_node.py b/tests/test_node.py
-index 8f4ccac..af140db 100644
+index f4a3495..4abb4f4 100644
 --- a/tests/test_node.py
 +++ b/tests/test_node.py
-@@ -7,6 +7,7 @@ import gzip
- import os
- from datetime import datetime, timezone
- from email.message import EmailMessage
-+from typing import cast
- from unittest.mock import MagicMock, call, patch
+@@ -1924,12 +1924,6 @@ class TestUserAgentPlusProperty:
  
- import pytest
-@@ -25,7 +26,9 @@ class TestSessionManagement:
-         node = LoreNode()
-         s = node._get_session()
-         assert s is not None
--        assert 'liblore/' in s.headers['User-Agent']
-+        user_agent = s.headers['User-Agent']
-+        assert isinstance(user_agent, str)
-+        assert 'liblore/' in user_agent
-         node.close()
+         assert node.user_agent_plus == 'my-tracking-uuid'
  
-     def test_returns_same_session(self) -> None:
-@@ -74,7 +77,9 @@ class TestSessionManagement:
-     def test_default_no_plus(self) -> None:
-         node = LoreNode()
-         s = node._get_session()
--        assert '+' not in s.headers['User-Agent']
-+        user_agent = s.headers['User-Agent']
-+        assert isinstance(user_agent, str)
-+        assert '+' not in user_agent
-         node.close()
+-    def test_read_only(self) -> None:
+-        """Property has no setter — assignment raises AttributeError."""
+-        node = LoreNode()
+-        with pytest.raises(AttributeError):
+-            node.user_agent_plus = 'nope'  # type: ignore[misc]  # ty:ignore[invalid-assignment]
+-
  
-     def test_set_requests_session(self) -> None:
-@@ -1008,7 +1013,7 @@ class TestProbeOrigins:
-         def fake_head(url: str, **kwargs: object) -> MagicMock:
-             headers = kwargs.get('headers', {})
-             assert isinstance(headers, dict)
--            captured_headers.append(headers)
-+            captured_headers.append(cast(dict[str, str], headers))
-             resp = MagicMock()
-             resp.status_code = 200
-             return resp
-diff --git a/tools/b4-ci-check.py b/tools/b4-ci-check.py
-index 563e018..5690cd9 100644
---- a/tools/b4-ci-check.py
-+++ b/tools/b4-ci-check.py
-@@ -73,6 +73,12 @@ def main() -> None:
-             pass_summary='mypy passed',
-             run=mypy.api.run,
-         ),
-+        Check(
-+            tool='pyright',
-+            args=[],
-+            pass_summary='pyright passed',
-+            run=run_subprocess('pyright'),
-+        ),
-         Check(
-             tool='pytest',
-             args=['--durations=0'],
+ # =====================================================================
+ # Public API: origins property
 
 -- 
 2.53.0
