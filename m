@@ -1,85 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4A717A2EA
-	for <tools@linux.kernel.org>; Thu,  9 Apr 2026 19:03:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775761398; cv=none; b=UppBxgKgy5QvCxO/dqvT93ZifTL69SYQODY069QYK3GhZWnCxmmoqZh2it225sHQsZIsm9s/2QTQBPTyVZGJgdER0RpQzyfMcfV/8Iyx7p7Agha34FYYnWtBIJq56pKm87YCHsSYwPjqw8QdyxXCwHdfLAaCEnAFEsBWwxrNFdA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775761398; c=relaxed/simple;
-	bh=fkKgR68G8ZppUnyI06sML+UCHFJ3j7eKJQ4016r8niE=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=UZZHqH3DSew3RFjkFSwHJ3Nje4Qp92qva+UzRvgVdbs4DfHQeEWKkwF3vfzql0e9dsmoXfRltp8OkwWCKkxPCDpTwVhk/kgQzuaLFmC6MkEHIwc4Q/UYoLTbp94u4NoaJO/Zf3LcrT4M4uf0bsCsXBQVJrOuymauQwm4Y0/tdDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UN84Pxmp; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E571E2614
+	for <tools@linux.kernel.org>; Fri, 10 Apr 2026 02:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775788987; cv=pass; b=Fac1BiNewd/3GYyqU4CNc4ef5i4FZTCXQQbAe+RVoGda4Azi49V+XXGKVsULo1rDA9RSdbyCA8o3611g/9xDQgj7mjQRrBBbPGfwKt0/X9wAnt2oaOIvsaH56uVHhIYJDyEzJLym+ATDspaiuG1BPAA03a4SOP6+r0qxbboqXaQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775788987; c=relaxed/simple;
+	bh=bfObVD8mrW+KV4J48T48+smtUgbEvwsf0PDeVhMjv9E=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Subject:
+	 In-Reply-To; b=CiGqcLSnyrL/rvsvCpgKw/47eHgJ/K+2UcZ8DCp+wdZNXGVWk+PV8CwFEIYI2OaJxaZ8MwNK2yGYYgdnVZJWMQXzR6nEwF7QJzPViFN1jLTrdWt8lruFkRyEvgakMFUlZudR0nKK59bSbdPvH8lBjbZwJRQSaaSg5+a0WjuZXTA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b=k56tmrWx; arc=pass smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UN84Pxmp"
+	dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b="k56tmrWx"
 Received: by smtp.kernel.org (Postfix)
-	id 83CD1C4AF09; Thu,  9 Apr 2026 19:03:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A10C4CEF7;
-	Thu,  9 Apr 2026 19:03:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775761398;
-	bh=fkKgR68G8ZppUnyI06sML+UCHFJ3j7eKJQ4016r8niE=;
-	h=Date:From:To:Subject:From;
-	b=UN84PxmposJWHLuCV4ungQavrt8/ukE+xYjAziKhKTUYhgo1L9X2dyyaIlsJcpkaD
-	 XWl7lYb45nb3XQOFjhr01ao2wfemZFdswDx6q1d4pqbhkl8qrYtZO+5w4QhgE/d0QH
-	 Fs7kHVJ/XThkxob+DLwTB0/gCw6uQaRqH6VyITzg380myFdiPUnnw00pzldOlnfwgH
-	 AzbGyVv4Ivi3e/RS1//ADfsTEaBU1rJ0IOMgY7ahQEZUYf/7KFPm61JeV6Snk97Quu
-	 VSde7Xw2ZyFW6U7tmhvWw7FTiBXhnZSgHRxp0ubTooQt61Nn3lGJfI8FloJBKUFJZq
-	 ooTo0tg2xn16g==
-Date: Thu, 9 Apr 2026 15:03:15 -0400
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: users@kernel.org, tools@kernel.org
-Subject: b4 v0.15.2 released
-Message-ID: <20260409-daffy-maize-bettong-297fde@lemur>
+	id B2DACC116C6; Fri, 10 Apr 2026 02:43:06 +0000 (UTC)
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 84ADEC4CEF7
+	for <tools@kernel.org>; Fri, 10 Apr 2026 02:43:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 84ADEC4CEF7
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=ritovision.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ritovision.com
+ARC-Seal: i=1; a=rsa-sha256; t=1775788981; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=bLBjZCfImp8XFblbXclclkJ3CwzlWMgEAz7ld3hYXG2ZqwxC+7udaxE/JmKNOLKQZ0V+jwGpQk5UuS6zuJu3iQHOCP2NJcvK47+OEjnztbkUXmZx6Bqm2WIjuJyE5MqfuxnYf5KK92vWOZqVUAylGZvN2AqTaimrCSZhrbplqGI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1775788981; h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=bfObVD8mrW+KV4J48T48+smtUgbEvwsf0PDeVhMjv9E=; 
+	b=fZZm66AowXcYG7olZjRIys+fBURxWprvp2R/zdyMTqdcfYfUDGU3PsU+mwPvLK+J66TuozxKirlF60IZ/FNPZ1GhB7osCpMwBOFqjuF+t/68d0+xJkMDbmP/CsiTYeOOAMM1kccP+ihLBegvG8XxiVZeD4b/16bH+J/ZN2eOFqQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ritovision.com;
+	spf=pass  smtp.mailfrom=rito@ritovision.com;
+	dmarc=pass header.from=<rito@ritovision.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775788981;
+	s=zmail; d=ritovision.com; i=rito@ritovision.com;
+	h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Date:Message-Id:Message-Id:From:From:To:To:Subject:Subject:In-Reply-To:Reply-To:Cc;
+	bh=bfObVD8mrW+KV4J48T48+smtUgbEvwsf0PDeVhMjv9E=;
+	b=k56tmrWxynKS1ZBVZ39lvyssaAgr/2PPXxNfWBFHmyz3Uq3rfsKqPHg9zOT7GCxg
+	RS6goPn+/mIfTF6g2j6H0QM15580JqxJ/tLPDfoWZ4q4Kj9Rn1Ta/HeVPq9Lu29Qg2/
+	MBJ9CAu1xWyx8bT7hZvKZa3KOgB2xMmqHdMIBeGE=
+Received: by mx.zohomail.com with SMTPS id 177578897962882.42798116993038;
+	Thu, 9 Apr 2026 19:42:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 09 Apr 2026 22:42:57 -0400
+Message-Id: <DHP4NMANLLWE.2IAG0KWI6ZY06@ritovision.com>
+From: "Rito Rhymes" <rito@ritovision.com>
+To: <konstantin@linuxfoundation.org>, <tools@kernel.org>
+Subject: Re: [PATCH v1 0/6] Allow site layouts to render properly on mobile
+ devices
+X-Mailer: aerc 0.21.0
+In-Reply-To: <20260316180036.71949-1-rito@ritovision.com>
+X-ZohoMailClient: External
 
-Hi, all:
+Konstantin,
 
-B4 v0.15.2 is now available with bug fixes for the review TUI and mbox
-parsing. There won't be many more updates to the 0.15 stable branch, because
-the master is diverging rapidly and backporting fixes is becoming challenging.
+Following up on this patch since it has been about three weeks.
 
-Upgrade using your usual mechanism:
+I=E2=80=99m checking in because the thread has been idle while review
+activity has continued on other tools@kernel.org threads,
+including some submitted after this one, and I want to
+understand whether this series is still something you expect to
+review. It addresses a broken mobile and small-screen desktop
+experience in the kernel.org site theme, and I submitted it in
+good faith through kernel.org=E2=80=99s publicly stated channel for
+theme/CSS improvements, as described at:
 
-    pipx upgrade b4
+kernel.org/cleanroom-styles.html
+kernel.org/fifty-shades-of-tux.html
 
-New feature (introduced in response to a bugfix):
+Based on CONTRIBUTIONS.md, this appears to be the right thread
+for work like this, but it is not clear to me that it is
+functioning that way in practice here. If there is some other
+more active path for theme work, I=E2=80=99d appreciate a clear signal
+on that. If this is simply not a direction you want to take, I=E2=80=99d
+appreciate a clear signal on that as well so I can calibrate
+accordingly.
 
-- review: show visual cue for patches unchanged between revisions --
-  when upgrading a series, identical patches now display a dim "≡"
-  marker so you can focus your review on patches that actually changed
-
-Bug fixes:
-
-- review: prevent double-sending of reviews carried over from a prior
-  revision after a series upgrade
-- review: fix crash when stored message-id points to wrong version
-  thread after a series upgrade
-- review: fix IndexError crash when toggling followups
-- review: fix crash when background rescan completes while a modal
-  screen is active
-- review: fix replies to additional patches being treated as inline
-  reviews on the wrong patch
-- review: fix range-diff failing to find previous series revision
-- review: fix upgrade branches polluting tracking DB with wrong
-  change-id
-- review: show per-series error details after "Update all" instead of
-  only a total error count
-- mbox: don't split on "---" in free-form reply messages (fixes body
-  content being silently discarded when encountering a "---" marker)
-
-Thanks to Mark Brown and Miroslav Benes for the bug reports.
-
-Best regards,
--- 
-KR
+Thanks,
+Rito
