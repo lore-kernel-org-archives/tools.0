@@ -1,89 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18303E024F
-	for <tools@linux.kernel.org>; Fri, 10 Apr 2026 22:39:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775860781; cv=none; b=lJXXhtbX2NcR9AQedGssc2JXpq/2qdqssNpYs/NIJqae8GO3NIBcT+J8iVwJgocPd6Tp7pTgZmRuPX5Zr1gdm0F0jmcqBA6kbpzoBdL/pc8GsutDYEa9OaiTG5nB/nvvRQ7dxnbI0zDQYE5aj0usTVlvSFIokqAg++uB3Lnwqpk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775860781; c=relaxed/simple;
-	bh=5FXgTbcMD4vryKcNiJb56EElIh/38dcF91sV8qXFfaM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kvig2as9ZOn5V5AfjYrUbEMKjWXxN8oH/BOfv0lhKq4rF8YannALQgKp3+KgIrmu9FsENvKVY2Pd4dUa75Ot38iQmHZb6foeGuX4817E27bGH6HvECBJjToYVMHKdvwEVU4i+9CDL7GRxk/cnj9g4Gh6qcHB9VMK4bTeBr1tXUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eRiNgay4; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4481DD0EF
+	for <tools@linux.kernel.org>; Sat, 11 Apr 2026 13:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775913190; cv=pass; b=Xrsfs9Ena94sRGuxQzkDGeQLNl5oMbiib5ukY4bDQCdLDxe3lY0I/27KwPYxjMGSBHrABQQNUNV/13h+iPzstkwJvXfWP7RiPHOwFuk8y7iyoecGYH49raNxrGg6nxSkok4sQUEYDqUQhSBXYsQ/iigpHLUTr41URugtcxE4r8M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775913190; c=relaxed/simple;
+	bh=81d6Isk1n/HCQrR47WCk6y1C++qnngju5IZ84AedRo0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:From:To:Subject:
+	 References:In-Reply-To; b=Qt599FKWgxbAFNK9HuNB5+X1e3Oz1Srng+VfkEjsl6CEVqlAe9yIsfMG8VFVTSzmt+N+F8v1EvJ1zMcCN6ZJoLH/yFgkeirMMaX9rhr5+SS4nuKxIjV5OneCLWkahZDNnZCAFhEXnAJkOhiay74cMyywLYiewPuBiwyGTJlc2bE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b=LCnx58tx; arc=pass smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eRiNgay4"
+	dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b="LCnx58tx"
 Received: by smtp.kernel.org (Postfix)
-	id 6304BC2BC87; Fri, 10 Apr 2026 22:39:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE50C2BC9E
-	for <tools@kernel.org>; Fri, 10 Apr 2026 22:39:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775860781;
-	bh=5FXgTbcMD4vryKcNiJb56EElIh/38dcF91sV8qXFfaM=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=eRiNgay4pSjQT39HFcnmSZueczic4fTGLDbtE6miyvmQEWP57nNOq34zx1wKJaxZE
-	 6jFHvL9sNAEWujzB7DAaHBl95fcOV3W1+oKf41zVetADLTA4xByLReutk+t+5MaCAe
-	 fGwX1jk3j9+yku8rs/76qO2Xgjt8OsjCCeyoTncZjUAcIhPF+Q8KxaPn75KxEiGrZy
-	 9w5NfEOiYoPB3pSuDfoI/d0M2LnRTNJFayksQrG5uPeN7KYXPx+xFTUjqjmguYk3X0
-	 a/YRL4TcDlKss911ofPIVo8Hdf9jfUsfzEbZ6BM7sKOVVXJR5aYGdSbTCxPhEJy4rg
-	 uREkZo93MtSUw==
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-3870778358aso22948311fa.1
-        for <tools@kernel.org>; Fri, 10 Apr 2026 15:39:41 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yy78wyp+L7LiPxM/YzG0R+bkOsZp4DC6SJ6x3q/bAvzeqHiFCq7
-	WyOGFjbYboe/PoQIRQZUUIVWFODYT5OP546EBbRet1VDADpsG29XXckT01cnpW511YR4qKuxvgF
-	VWq2uk67saTjw9MI6uJNZlflfx2uU+gU=
-X-Received: by 2002:a05:651c:2109:b0:38a:6acc:85e with SMTP id
- 38308e7fff4ca-38e4bee61f6mr14632761fa.32.1775860780041; Fri, 10 Apr 2026
- 15:39:40 -0700 (PDT)
+	id 2FA48C2BC9E; Sat, 11 Apr 2026 13:13:10 +0000 (UTC)
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 319C4C4CEF7
+	for <tools@kernel.org>; Sat, 11 Apr 2026 13:13:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 319C4C4CEF7
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=ritovision.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ritovision.com
+ARC-Seal: i=1; a=rsa-sha256; t=1775913171; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=ZwluQAr5jMlMRAw2ok86EOqVXs58LDaNTM1N0wxRzqdEyahFoTvHXVm1Z0cgw30P8lGgXfY9CQHWtJSTQ66JdhEXRKAxe3WNjzw6XomRI4/K2kCyxhkPpRDc7rr+yBbdxOvlJf7UxdmfcLRIzOhCyOSXAKMak+eUnOMptw7/WRg=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1775913171; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=81d6Isk1n/HCQrR47WCk6y1C++qnngju5IZ84AedRo0=; 
+	b=UAYUVsDtji+8NIbrUHmCpydqTr4oj9Br5VaP+/hnoHMS2qd3GoUmvN6bIDTSk3bXoDBhciiE5s4IqaoSvi34lu6Z88PlZ1wSoVgk8N8NqCE7N8/Qh88KiJGsQyO3duxZKxXk2HaFmLNYQCDNvWb7bU0jW3Dclw3PDrjV+8LMnb4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ritovision.com;
+	spf=pass  smtp.mailfrom=rito@ritovision.com;
+	dmarc=pass header.from=<rito@ritovision.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775913171;
+	s=zmail; d=ritovision.com; i=rito@ritovision.com;
+	h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Date:Message-Id:Message-Id:Cc:Cc:From:From:To:To:Subject:Subject:References:In-Reply-To:Reply-To;
+	bh=81d6Isk1n/HCQrR47WCk6y1C++qnngju5IZ84AedRo0=;
+	b=LCnx58txhS+56tBseigA9SgoHydYA1N+DbdEFeAHfrlf2B30nxEpGGnrcYwyvkFX
+	kVdjOmCICviXjeXaXYaQsmD2tZTFE/GQezGcAv9JXifizmc1/+V/FOpsGarabRkIHvp
+	FFjrBTbhK+MFfEqX1pd4nGAyFp02RrK+vw1z2+uA=
+Received: by mx.zohomail.com with SMTPS id 177591316853834.42635244769349;
+	Sat, 11 Apr 2026 06:12:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-References: <20260407-ruff-check-v1-0-c9568541ff67@kernel.org>
- <CAJ-ks9n_cg=NNFKYKoJPR1AzzxMRa7CB3i2Vz2SgWbG=ZeoSxg@mail.gmail.com> <20260410-soft-funny-platypus-e14ad7@lemur>
-In-Reply-To: <20260410-soft-funny-platypus-e14ad7@lemur>
-From: Tamir Duberstein <tamird@kernel.org>
-Date: Fri, 10 Apr 2026 18:39:03 -0400
-X-Gmail-Original-Message-ID: <CAJ-ks9nFGV2umd4pNG0WwmUPV6cVKB1mYdOKRekvADLo4e=gmQ@mail.gmail.com>
-X-Gm-Features: AQROBzAXr9824YTqiplqplCGWYDGUM7iXDsKtPXwkCr5SjR1anbYzJE0me4MLzM
-Message-ID: <CAJ-ks9nFGV2umd4pNG0WwmUPV6cVKB1mYdOKRekvADLo4e=gmQ@mail.gmail.com>
-Subject: Re: [PATCH b4 00/12] Enable stricter local checks
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 11 Apr 2026 09:12:45 -0400
+Message-Id: <DHQCODGCPETY.7ZD0U9Q9TIJ2@ritovision.com>
+Cc: <tools@kernel.org>
+From: "Rito Rhymes" <rito@ritovision.com>
+To: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>, "Rito Rhymes"
+ <rito@ritovision.com>
+Subject: Re: [PATCH v1 0/6] Allow site layouts to render properly on mobile
+ devices
+X-Mailer: aerc 0.21.0
+References: <20260316180036.71949-1-rito@ritovision.com>
+ <DHP4NMANLLWE.2IAG0KWI6ZY06@ritovision.com>
+ <20260410-hulking-juicy-boa-daef75@lemur>
+In-Reply-To: <20260410-hulking-juicy-boa-daef75@lemur>
+X-ZohoMailClient: External
 
-On Fri, Apr 10, 2026 at 11:21=E2=80=AFAM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Fri, Apr 10, 2026 at 11:05:31AM -0400, Tamir Duberstein wrote:
-> > > The last patch wires the review TUI to run the same local checks thro=
-ugh
-> > > a JSON-emitting series check helper, so reviewers can see ruff, mypy,
-> > > pyright, ty, and pytest results from b4 itself.
-> > >
-> > > Signed-off-by: Tamir Duberstein <tamird@kernel.org>
-> >
-> > Hi Konstantin, any interest in these changes? I see some of b4 has
-> > been moved to liblore, but I believe that package has the same type
-> > checking gaps. No worries if you're not interested in these patches,
-> > but I wanted to demonstrate that mypy (even in strict mode) is still
-> > quite lax (e.g. it doesn't warn on unreachable code).
->
-> No, I do want to see them -- it's just with the latest changes in master =
-the
-> series no longer applies and it got pushed down in priority. If you want =
-to
-> target liblore first, that will be an easier target for me to take and th=
-en we
-> can revisit b4 linting changes.
+I understand.
 
-Good to hear. The liblore series is
-https://lore.kernel.org/all/20260410-harden-type-checking-v1-0-fcf314d9d748=
-@gmail.com/.
+Thanks for the update.
 
-Cheers.
-Tamir
+Rito
