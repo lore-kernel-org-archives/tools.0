@@ -1,131 +1,175 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F5D397E6D
-	for <tools@linux.kernel.org>; Mon, 13 Apr 2026 21:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776117462; cv=pass; b=asy4048BBTpw3DHpWwYDAyRp+oGTJ2EMZY522boSB7ADfDslVwmpExxJGIg7MuFFRhYnuIIHO5cH8u9RYy5b7xs5DS6Cw37iXCuya6Fx4e+J03mTDfeaODJz+DBAuuREPvw1ZY+a1R5/R0q447FQtiqXsSpCLVD8PuS7UHrdAyo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776117462; c=relaxed/simple;
-	bh=etQpLBMZXOt5Qlup+67iFF0bklb/QXJjeR6PqcH7ffc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H2MY0ekH/CbOAUcrWKqAP+uPk9Vx07SfN60yxiwxrLBI5+m9pXsa+x8LiQfRCRgdNqnF2bV7JuNZeQgXF5b4r2h3ohJuucDRuLIT5B7Sqdb1xgAAH+SqbeT2IY6b5JTC/KrsQzglv+uAFzs703nszXHYyeDshg14B66Leo6WBAo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hmlrc+Al; arc=pass smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C84A39A055
+	for <tools@linux.kernel.org>; Mon, 13 Apr 2026 22:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776118102; cv=none; b=GN1m478X4411q/9Q+ty9qSNuBZiEauEjDalu2ujsm+ujExs7RQejqYNWnVZau88GFnpJVsLnlArKRfLYHeoLUCVuLtVjQt/tBNcaFEXNKnqFDYJaYaAYXLF3MR9RiAIMTeaV3ST5ECR3AjTvfxbmC3jqY8xli/mmNqUKexB3lds=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776118102; c=relaxed/simple;
+	bh=c+qAYqCwX+waRpE2PlBlBdjM3Ih59kJd5GE/ctERXzk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=e3tsDeLenw0HxDFiwHNP8VPUTK7OfrDDMF6r5xb/aTxADnXsAuiTlM0ZgZ9YwaK72I6gY/3114tDO+ST9J1Cl60otizVhzP0kHEER7OXJDlNgKul5FnNlqA6YM2FHq996wftvhdi2qFn3PoUsCwfGWcfCDbsfItxIS8pJtiT0V8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qBvvuu3e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hmlrc+Al"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qBvvuu3e"
 Received: by smtp.kernel.org (Postfix)
-	id 838E1C2BCB5; Mon, 13 Apr 2026 21:57:42 +0000 (UTC)
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	id 51A8CC2BCB3; Mon, 13 Apr 2026 22:08:22 +0000 (UTC)
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 4C344C2BCAF
-	for <tools@kernel.org>; Mon, 13 Apr 2026 21:57:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 4C344C2BCAF
+	by smtp.kernel.org (Postfix) with ESMTPS id 619C4C2BCAF
+	for <tools@kernel.org>; Mon, 13 Apr 2026 22:08:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 619C4C2BCAF
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-38e7d983f50so15180991fa.1
-        for <tools@kernel.org>; Mon, 13 Apr 2026 14:57:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776117456; cv=none;
-        d=google.com; s=arc-20240605;
-        b=BMkeUh7+Y9cf6h6XoLe80sSpkKgi203Eb1EtwVnUN1TxfhYys4ifa3dLolqBFl+7Tb
-         AALKIk8fvOVX184fzMcnVIRtJp1PaAXnHrcAf0MCO5OPvjv/n7nt4J2CfnxWaBKNsN4N
-         Xj7ChslNtzWof5VjdHOgx6OONWofHHvu3F/cviKWriNWEqhCn3CeDnYtcJxuGtVinzsZ
-         /LniZyy3lkRnkzTbU1rZyei0ksNkn/h3kX7TI7ebTvyaxm+3sOfNZrOGHWwx4RHUcv06
-         Qx/D5WkBez9WRJBPuD0HeqpLaV4XxZfcc95OAzjEuFTEiO+UkLEQFyu7MJZp6RV/Bshg
-         x3og==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=etQpLBMZXOt5Qlup+67iFF0bklb/QXJjeR6PqcH7ffc=;
-        fh=IJqJYq/8aA5bZ5zN54OMKN21XKKG5OJ3sR8aAJnlCLI=;
-        b=Vto3qj/ltnXFysqRs+iFP8kWHBEiT5ZKwpqYo/7MmPrLhi88BKNybqSECX4OD6RMdH
-         eU3Z1lqvuahpc1R5CU/Xvb7UpUrMSkBSz890ycRyLyVpSuoSR0UvtOggG2Up8KOBcYwC
-         IhXpGzfylG62YaUVYRfoemqpeuFInIOdvot48xjW2OEY5p/lCxBBEjMJ31W54QiRHGVs
-         N2OOfBcyMWthnB2XZR1vusoPUXHJpu8LHhbYZ7n6W2SgLENiNjPazM8HfC1MV7hCJGbI
-         t2qusETG1fowX6PUmI+bcTqOkLDWqi6QKjAp7UFxCTmSjB/quKqO0zEqEqPKN+onS3pv
-         WICQ==;
-        darn=kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8cfc085395fso472653385a.2
+        for <tools@kernel.org>; Mon, 13 Apr 2026 15:08:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776117456; x=1776722256; darn=kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=etQpLBMZXOt5Qlup+67iFF0bklb/QXJjeR6PqcH7ffc=;
-        b=Hmlrc+AlERKIenC67uEYTjdokzBrcSGJ4T0VIrkTjySD7zjk3VRE5kUd5hJzkftzo7
-         tvBko036dFZV8BrI6eg8+lEv4Wm1VKOgb7QAp+JrYWSoF+E8jRMmONImY4s2/HoFCejQ
-         JsptNXPLTiJto+U9wuVma2z6VLIFuWfpLGjPVz2H0F5qQ9kPOXGx7UOsQbLp4a8faJcQ
-         StQRbtNS3qEKVpBwwVLJVqSLO3g1n1HDkyY5egdgGHbFhIcDjLQFClyd73ibMIFOgCuu
-         dm76Nf7Q9vItMylNhQ51P6QkHCkKO2hD6tZlFNXg77VilR5mIApuSb6DOlDMMg52yf5P
-         ywfQ==
+        d=gmail.com; s=20251104; t=1776118100; x=1776722900; darn=kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LH4xB+NOiqSft7Cvv+8c2C1ihpKu9D2rWhj6Bd4gaEM=;
+        b=qBvvuu3e0bktjrHuadEPcbOglV4FJge1ssSoJZz4IyhX9Hvp5GRqD1lCO9ykbVKCKl
+         cWXtHbYjq/+8guuhT2OUCvGrs8I43ZLg3GJfhtRZXUZVxXRG3jVvt3ogc59tF/4pFs8F
+         laBZtEIghMgnX3dvEFNzTi+0Wn/pgWBqLoqJ7cyQswmUJaq99EHiqnCSpiNWBvhpVAjt
+         M4QPaEYbNLgfsOpJNMPsD0PasVzRX3c9rhGx2SW5xzZl1GgiZ/s5UBfp8oxtyYh6OMGI
+         glOPUv5dkqlFZNdGdRqrIHXL7jRXzucSGEhNjCgrqzjOuDLyF6ynzZbGwFW4Dx6FRXsN
+         e19g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776117456; x=1776722256;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=etQpLBMZXOt5Qlup+67iFF0bklb/QXJjeR6PqcH7ffc=;
-        b=BwDcwO+ENeFUb5tvRoEwaqWSOwLMoecCLbEQloUv1mtvP/eqytg50KwFG7Hb6ZtblN
-         xGzKEKOhDOWsUIdWDI7RomFX8DULZjPplKcM5TATqslF3GnPFmEnc330UOKzn041TtrQ
-         BAm/HtxQNW0KPq1bEzCkMwFgmEZBNoTSukT0CxXp4pqOQ3QQGuydlNwsrNeuONafaWfD
-         0ZRC43s5ZpGfHfB0NIbEb+5F/BK998xo/1BMb9QZ5IJdHcFnhhv1GD7x3wX4WkFukIvB
-         rzXyBV3OMt6H0B67P6ABshRk3Wg3w4EG6cniQUQ92ZL3TQouzI16WupDBZTC3NXxEFXU
-         aw1w==
-X-Gm-Message-State: AOJu0Yzyb6XvtEJiNGpMeQOiU9sympTiax8+z2CPZ1Vg35XcmNLUauyR
-	tkU4nhs3r/+jn7tUie1gt/ncD+7poFFKGawC4p5CdP7kxnW4wnstGEcXl8yq2hxziRsZkYBENzu
-	oo4VsMny8xBX0gBGoeGMPBuDfPMC0VO9H4yom
-X-Gm-Gg: AeBDievfcD++k9QFH5d0BQfcILX/ZiwQ/0w1P5D6zI1Z8w1YtNtK7Ye5dl8e+bqI6+k
-	jlj4TGipzN1j03+X2wg4RhMiEtR3sCe0AejroXA78+oF2d5iMKEBRUY77DJpd80/FpRZFWdfkVy
-	XlrYd0mZRRUM/uPkkpKl359ODdSEe7lEVPVbGUvyRZLvLKqIt9Ke6gtzJCucK1rN+bQESo/V9b9
-	ridX9AYNEYUH4KDuek1DI9y2OsG8OTl6rxGGyve/XKCqHE6p1is2gBx57cbKug3hKuFR/CrgNIH
-	SQwwfqdtyPQ1+DCBfnmlxmNYCNnrHivyIq+2e7rvyBgDVhwHYH4Ig0IA+uKT4cf2XqeAFBxgonr
-	dt7yP/QXAGj8JnSeXncr/jdbdNPUhV7GwM6Iz/Ymb3IOToHkJYtiE
-X-Received: by 2002:a05:651c:198f:b0:38c:bf69:64e2 with SMTP id
- 38308e7fff4ca-38e4bddb862mr42993111fa.5.1776117456132; Mon, 13 Apr 2026
- 14:57:36 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1776118100; x=1776722900;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LH4xB+NOiqSft7Cvv+8c2C1ihpKu9D2rWhj6Bd4gaEM=;
+        b=DXJJ24LBMcb2JV47sTzWWrxRAVu4EHrJ0TY7ffItO9GId8d5tpR6OcqMwA2B0V3tqf
+         d8rvCjGaTwiBNYkITFsDf8Nsbk3IxScg0PoOASYHQIQfVlKhH2h38L/dIzU85wwh6D2X
+         7P4daKf76HLcKmeFJkDDgeNJMarVT83A1I+PkFfErHPclx73nkRJXmvY3fYvB58Seo4G
+         xghQWmjYPFtQWe2P3ZjgxwVM/9eBTy7GVY49Xfmx+bDbMLD9x6ewgVLFHKU1rznUHmNy
+         KoNUsxqE81a1ZAcwmhSaSCeCF+ItGQ8ChpFZaSZhlT+wz6Ixc9deenixFxupJIq/eB9Y
+         54yg==
+X-Gm-Message-State: AOJu0Yye4++ukZRLvpbQEv4ZmcZFiAFmTRNshR0LKQbPPOo+pTEevTds
+	UL5x9ekWyDfxlylQpu99NQB7NJWTAbiATSbN4GAlTrpgyytWvxcn1Lwn
+X-Gm-Gg: AeBDietyLolQpuCZAJnvVwLIqA2toG7+wTUIzken5nW7sqAG+IrflkvwwQATwtXGO3y
+	ohAJPUzSOG4z626nRS/VAg6YdKAAVfqpGH0cyrNAATSrTyVZJdHolgYz1SF3hdLUyB9lYSErGIL
+	x950DlhgCLLKsTPDaWQfDhqk7qbLEN1OT8FOQvpwN3gqdEPevgihy2gx6rDenFmKZqxGPR2nNd7
+	GGfBdBkTmCZIWKwKY77yUlbZXRbWttawVWVm9PEBLSp8fpCPd+nAGBIsdPIwSf0tgwyP8lY0MS8
+	tiVlp0WTFf+P8zTSInDz2G0O6jzt0bFYLhgCb1/NlLi0YxxcMYXQHfjrKFHyuFdFdXpemwWiXYH
+	XMx1ETZWrcXxx1uEQ4VOeWEwy2Bx81tCuJGjwNOS0RF5FDtUcBMkxovES/jlTYf0bT/w8DAQDbx
+	plnL4E8/IU3xTdcNSJHpV68GHhCwwE/cJduXwtF6xPjYX2d4xFm+sju+KrRKSVGE0GvbAcX6oqe
+	Xn5DkgqQfyFkRtb56ARlNNfPlm02vszLwujD58eRKqN2TxmmC2XqHS9WHQlELNjaaVyjYnRJ3qa
+	BVRn+4AqUQgMHgNyc+uCpPzR4zbolcax/iFbw7ylHEe1/Yn24EzwmmEaOxxZlCQ+nXMau3/8TIg
+	=
+X-Received: by 2002:a05:620a:4109:b0:8cf:f215:24c6 with SMTP id af79cd13be357-8ddcd8f7171mr2206000785a.21.1776118100288;
+        Mon, 13 Apr 2026 15:08:20 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([2600:4808:6353:5c00:c007:ed8:60aa:a884])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8ddb8d6e387sm907506185a.30.2026.04.13.15.08.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Apr 2026 15:08:19 -0700 (PDT)
+From: Tamir Duberstein <tamird@gmail.com>
+Subject: [PATCH v2 00/14] Harden local type checking and test mocking
+Date: Mon, 13 Apr 2026 18:08:14 -0400
+Message-Id: <20260413-harden-type-checking-v2-0-1ba6056288d9@gmail.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20260410-harden-type-checking-v1-0-fcf314d9d748@gmail.com>
- <20260410-harden-type-checking-v1-1-fcf314d9d748@gmail.com>
- <177611517998.749969.8235396053359093909.b4-review@b4> <CAJ-ks9kr8QPp5jx8QRueN+XOCahTjvmMm1nK7KgbLK4+szbNmA@mail.gmail.com>
-In-Reply-To: <CAJ-ks9kr8QPp5jx8QRueN+XOCahTjvmMm1nK7KgbLK4+szbNmA@mail.gmail.com>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Mon, 13 Apr 2026 17:56:58 -0400
-X-Gm-Features: AQROBzBZyZ9SBZdvshaYPwKkMrLfvCxRTMY0QQu1JGtblrnLp5yRE292Doir2fE
-Message-ID: <CAJ-ks9mnEqeNGPTPy9qC_6mgmxSLst4hMz9XoNTdainDCzxWrg@mail.gmail.com>
-Subject: Re: [PATCH 01/14] Add b4 CI checks and mypy suppressions
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNQQ6CMBBFr0JmbU1bGwVX3sOwKNOBjkohLRIJ4
+ e4CHsDlS95/f4ZEkSnBNZsh0siJu7CCPmSA3oaGBLuVQUt9lkZJ4W10FMQw9STQEz45NIIKTS6
+ vDFpUsE77SDV/9uy9/HF6Vw/CYWtthuc0dHHaf0e1eX8uRiWkqLE+KeMKdzH5rWktv47YtVAuy
+ /IFHBh9fMoAAAA=
+X-Change-ID: 20260410-harden-type-checking-e92ed8b4cac1
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Tamir Duberstein <tamird@gmail.com>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openssh-sha256; t=1776118097; l=2980;
+ i=tamird@gmail.com; h=from:subject:message-id;
+ bh=c+qAYqCwX+waRpE2PlBlBdjM3Ih59kJd5GE/ctERXzk=;
+ b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
+ MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
+ QAonyCQA4yhn8+7+/TQea7K2HfQgFfT/XSydiFCmu17J+wVUNj/cHpJ+vg2q2YA7nje15+1hQ3N
+ FegtEqpDfiw0=
+X-Developer-Key: i=tamird@gmail.com; a=openssh;
+ fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-On Mon, Apr 13, 2026 at 5:55=E2=80=AFPM Tamir Duberstein <tamird@gmail.com>=
- wrote:
->
-> On Mon, Apr 13, 2026 at 5:19=E2=80=AFPM Konstantin Ryabitsev
-> <konstantin@linuxfoundation.org> wrote:
-> >
-> > On Fri, 10 Apr 2026 18:37:52 -0400, Tamir Duberstein <tamird@gmail.com>=
- wrote:
-> > > Add a repo-local b4 CI check command and helper script that runs mypy
-> > > and pytest so review status surfaces local checks in the b4 UI.
-> >
-> > No, this introduces a hidden vulnerability -- we're running a script
-> > from the same workdir with code modifications. A series that modifies
-> > tools/b4-ci-check.py will make the code run with permissions of the
-> > maintainer.
-> >
-> > I am cognizant that this is what we do with b4 review and checkpatch,
-> > but I already have a fix in mind for that, plus a check that will
-> > specifically refuse to run a script from the workdir of the series.
->
-> Shall I drop pytest from the set of commands, or drop this patch entirely=
-?
+This series raises the local quality floor by making the type-checking
+tooling stricter and by removing test patterns that rely on unsafe or
+poorly typed mocks.
 
-Oh, I misread - the objection is that this script exists at all. Will
-drop this patch.
+It starts by wiring the repository into b4 CI checks, then adds ruff,
+pyright, and ty so the same checks run consistently in one place. After
+that, it removes suppressions incrementally by making the code and tests
+more explicit and better typed: typed keyword forwarding in
+from_git_config, a typed authheaders integration, and test-local
+subclasses instead of method reassignment.
+
+The goal is to keep each change reviewable on its own while moving the
+tree toward a stricter baseline with fewer exceptions and less fragile
+mocking.
+
+It would be nice to reduce or remove the use of `patch` entirely, but
+this series stops short of that since it would require significant
+restructuring.
+
+The final commit adds the minimal b4 configuration needed to send this
+series. :)
+
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+---
+Changes in v2:
+- Replace b4 CI integration with simple shell script.
+- Fix placement of test docstrings.
+- Fix `from_git_config(cache_dir=None)`.
+- Add missing spaces in README.md.
+- Fix b4 send-prefixes.
+- Link to v1: https://patch.msgid.link/20260410-harden-type-checking-v1-0-fcf314d9d748@gmail.com
+
+---
+Tamir Duberstein (14):
+      Add ci script and mypy suppressions
+      Type make_msg and drop test suppressions
+      Add ruff import checks to b4 CI
+      Add ruff format check to CI
+      Add pyright strict checks to CI
+      Replace HTTP session mocks with responses
+      Add ty checks to CI
+      Drop redundant read-only property test
+      Type from_git_config keyword arguments
+      Add authheaders stub and typed callable
+      Replace batch mocks with subclasses
+      Use CompletedProcess in git config tests
+      Update README for uv-based dev checks
+      Add b4 send configuration
+
+ .b4-config                       |    7 +
+ README.md                        |   11 +-
+ ci.sh                            |   10 +
+ pyproject.toml                   |   25 +-
+ src/liblore/__init__.py          |    2 +-
+ src/liblore/node.py              |  104 +-
+ src/liblore/utils.py             |   89 +-
+ tests/conftest.py                |   90 +-
+ tests/test_auth_headers.py       |   83 +-
+ tests/test_cache.py              |  214 ++--
+ tests/test_email_utils.py        |   63 +-
+ tests/test_formatting.py         |  324 +++---
+ tests/test_mbox.py               |    7 +-
+ tests/test_message.py            |   11 +-
+ tests/test_node.py               | 1999 +++++++++++++++++++++-----------------
+ tests/test_thread.py             |   35 +-
+ typings/authheaders/__init__.pyi |   13 +
+ 17 files changed, 1809 insertions(+), 1278 deletions(-)
+---
+base-commit: 1c0b653bdb6eeb95625e99419d4b34d31cb55c99
+change-id: 20260410-harden-type-checking-e92ed8b4cac1
+
+Best regards,
+--  
+Tamir Duberstein <tamird@gmail.com>
+
