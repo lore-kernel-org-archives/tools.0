@@ -1,57 +1,79 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD3E3E4C74
-	for <tools@linux.kernel.org>; Wed, 15 Apr 2026 18:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D66D18050
+	for <tools@linux.kernel.org>; Thu, 16 Apr 2026 11:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776276839; cv=none; b=opNepPddHOvNG0NBDidB6VZoMw+t4fanjXAoSMR0IvrWsB2ORk8+PXub0hZcSHVOow62b1zuq/5OReAobot1CvdK8ijKQgKzCaxlfvZykNy5f5DT5MAVyq5wwU3LAJbK1ayD05aE9jtYFAttespP4+qABzCm+0Je0WSpNBwlddA=
+	t=1776338523; cv=none; b=YX5PlNk+VBM7Hwh3mx5bdbVqh1ADYgBadrK2M2gV3udnT0SNy/x9fmiQyP2yZslJBDmqRoiEyydNnsDnQ2VmpOXvMeR2v87sJcBOGyIkulf78a7261IYz8Kr2KEK0xrMNRjVRt26djvQ9sKYkgnr8hg2Gnmlq/cvOLaC7IHBGI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776276839; c=relaxed/simple;
-	bh=zsvJDiLaX/fw4SBQoC2xccf1vEuRCBL6AB/j/p7je44=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O8EyhzmersBid/WfAHrlWiw4cNdpjlNwLJ2Qy0OYQ1OdIzKQMTApxaB218JEjhvMFBdAb/61gGEXcrZe39mWGbwVUglhfzG5NFtFcanubNEOc2n8mVD06ZCa8IH6Br94Vki2CWl/aahFv5Np4cdtsP7oIcR1X+Ncqw8hIswGxuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pw95abQf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776338523; c=relaxed/simple;
+	bh=IcjKEGMjjrjyKYJlouFBzoMfsgbE+z2vxLakV2uPKkg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mJK52nEx2LE1tYOAnI6PxSbloCSVNqn/YMUBe93czfv+hJIITfTagphWw84OKjQ/0gVFivEOUx0M3t0YPkzU0ClSnEBfcTAUmkSU0EhCCou7Ri7CG3FlUviftLPhO/Oqrx0oNdwEyFQddqYWoeB/IWBwPeREDjfvjIq5KaL6z8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rLvtLHXi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pw95abQf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rLvtLHXi"
 Received: by smtp.kernel.org (Postfix)
-	id A2C1FC2BCB5; Wed, 15 Apr 2026 18:13:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE40C19424;
-	Wed, 15 Apr 2026 18:13:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776276839;
-	bh=zsvJDiLaX/fw4SBQoC2xccf1vEuRCBL6AB/j/p7je44=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Pw95abQfH2RcPTtN0m6ELK1YzIdI86GVKAdjjP3NR73QG3o2jG59v5QWecOKINzlF
-	 Yski6e/sPD4eCk+HYqIaoDxLti3utkEkp+WS84nx7GH58fV1FwpPtvZvnQfHTooaks
-	 ml3x3Qu54tq1ReFAcPpqLqvaTwVAwr7jCpP5/uJc=
-Date: Wed, 15 Apr 2026 14:13:58 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Tamir Duberstein <tamird@gmail.com>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Subject: Re: [PATCH v2 00/14] Harden local type checking and test mocking
-Message-ID: <20260415-thoughtful-calculating-crane-2dbd7b@lemur>
-References: <20260413-harden-type-checking-v2-0-1ba6056288d9@gmail.com>
- <177618771367.847180.16159053169602920819.b4-ty@b4>
- <CAJ-ks9=sT+7_D+QnN6RLid-1izKLWZqTcPwqVB+dAdRr3Ns5_A@mail.gmail.com>
+	id ECD32C2BCB4; Thu, 16 Apr 2026 11:22:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D9CC2BCAF;
+	Thu, 16 Apr 2026 11:22:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776338522;
+	bh=IcjKEGMjjrjyKYJlouFBzoMfsgbE+z2vxLakV2uPKkg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=rLvtLHXiC0jEkr7MXhZie4yNWsFW16bug9VPxiML36ny9nD/FIe2Zgx3ysW+Wwyqr
+	 pgmsAI9LwUVSn9F5q/HrxCQHG00REzUM2lHeKXmI/QSCQV/4MUlOA7Wowh6bpPyhi5
+	 k44RZwOywz5yuanD5xfPKbvXWfN8DUb/GqVhy84eRYr7HDvkKld7j5kgq5oz5FXO5g
+	 EKF+7oUQXQQGyi6AsyI6fZz/fk6G6DppdoW5ocobUR5MKiFc/oYJBHGimHvPxGaNuT
+	 2CnmPTQFNhu+ekZghN6vY5GmR6WRgRnzVCj0nZBk4rl+tPZ37aqb4FbLMI3Uyn7fVr
+	 DJ3yi2KOZUHgQ==
+From: Mike Rapoport <rppt@kernel.org>
+To: Dan Rue <danrue@gmail.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	tools@kernel.org,
+	Mike Rapoport <rppt@kernel.org>
+Subject: [PATCH] add sashiko URLs
+Date: Thu, 16 Apr 2026 14:21:56 +0300
+Message-ID: <20260416112156.1059032-1-rppt@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJ-ks9=sT+7_D+QnN6RLid-1izKLWZqTcPwqVB+dAdRr3Ns5_A@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 14, 2026 at 07:38:41PM -0400, Tamir Duberstein wrote:
-> Thanks! Should I revive the b4 series, or wait until you've bumped the
-> liblore pointer there?
+sashiko is gaining traction and it's easy to add its URLs along with
+lore ones.
 
-You don't have to wait on that -- the master should be quiet for the next few
-days as I'm focusing more on infra work, so now is a good time to do a big
-linter change.
+Signed-off-by: Mike Rapoport <rppt@kernel.org>
+---
+ lorifier.py | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Thanks!
+diff --git a/lorifier.py b/lorifier.py
+index be7294b..96529bd 100755
+--- a/lorifier.py
++++ b/lorifier.py
+@@ -25,6 +25,7 @@ import sys
+ from email.utils import mktime_tz, parsedate_tz, formatdate
+ 
+ LORE_MASK = "https://lore.kernel.org/all/%s"
++SASHIKO_MASK = "https://sashiko.dev/#/message/%s"
+ 
+ 
+ class muttemail:
+@@ -65,7 +66,9 @@ class muttemail:
+             return
+ 
+         lore_url = LORE_MASK % str(message_id).strip("<>")
++        sashiko_url = SASHIKO_MASK % str(message_id).strip("<>")
+         self.message.add_header("X-URI", lore_url)
++        self.message.add_header("X-URI", sashiko_url)
+ 
+ 
+ if __name__ == "__main__":
 -- 
-KR
+2.51.0
+
