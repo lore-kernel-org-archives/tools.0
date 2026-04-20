@@ -1,69 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDBB26F29C
-	for <tools@linux.kernel.org>; Sun, 19 Apr 2026 18:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585F5342530
+	for <tools@linux.kernel.org>; Mon, 20 Apr 2026 01:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776622035; cv=none; b=nDoyVbCVjCBai6T8xffdtLqcovQEVGlf94OJAMBYvtZlPRb2AmDFAH3intaRHAVLednJXbU4XHcrq0qSYfaIRKV7hsWdxlUuXN0CppSIrgmC2StV8EZ6MCmPpcKJZZ/xE1PosR7MWI/ioz7u6jUyXxNLFUOP5v9CSjluzPIboF0=
+	t=1776648177; cv=none; b=KeOIk18C+bTnVysDWpB6Vu79fDITvJIPPQK3r7vvQpywpTbDl0RMRaCGHVs3VaU3Lwi4h2JsKxYjXeW611r2doWYbOo2TUaf+SluN4Sp7Jg2dtbaEfMUwZ1q3hDy49CwlL8BaTFCiDyvrBTFq7ekWkF6na6M/75l8vA67i2oET4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776622035; c=relaxed/simple;
-	bh=urV1FQgnFegQ7SOKuePehMDRPRM+BNpDrlPsxWCKeeg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=oc7YJGuGkXG8/1FbKXDzXj54YbdwHIfjT86NWFjRUcOBIXBUGvdZ9Zlida4fjRv/FzNrWTSFPPalcjBQMqmvqf96yIiWunm+CrBZ7G9B4xj2zEtc7jbYw8VG7wWsu5rV2N/emkDxSJ5AH2SRffoF/ITXa6ZuyQvBguS1QZrwNrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r/Ar3snM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776648177; c=relaxed/simple;
+	bh=H2B7l/1QSVfi30AunMmeIkZzI6NFLsLhwhOIpySk81Q=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=eQKnht7xynjtEK2uSDF/Zx8quoLXP4fOLXR6kZGXPKk1GYBWv9Wm2b4Y8vdxYdxz42eMdGz6wyC1kvwVe9O1lJXfEpkX16WvoYNxtp8eUn2g8/NLaQqZziXSJCd8EJDk5djnqcpKZT2Dk/VcWtRM4quUZ6nBOWqhUlD5pFcM/I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fmvBwF56; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r/Ar3snM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fmvBwF56"
 Received: by smtp.kernel.org (Postfix)
-	id DB400C2BCB6; Sun, 19 Apr 2026 18:07:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0AB7C2BCAF
-	for <tools@kernel.org>; Sun, 19 Apr 2026 18:07:14 +0000 (UTC)
+	id D0095C2BCB5; Mon, 20 Apr 2026 01:22:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15141C2BCAF;
+	Mon, 20 Apr 2026 01:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776622034;
-	bh=urV1FQgnFegQ7SOKuePehMDRPRM+BNpDrlPsxWCKeeg=;
-	h=References:In-Reply-To:From:Date:Subject:To:From;
-	b=r/Ar3snMkZito4VEOm860GtQz42/Y+7DzeqXi7nbQ2i4bUeG6QVjqjKUT4nZ7beH+
-	 MJpUZl8aNJQLfoi1joiaugf8A14up1B8VdmdqsXgpQsHLBtYfiUseTUIu1dI0qWMpd
-	 llF2a1O6Yif0+QDoSwqa1wJj/8k2zKUxRwSglhS/cWnbYpyppFm309sQ5z84321aMR
-	 MpQJvTL19+wxRIXeJLVMHamlf5Htx+p4DUqoa+9lvVGyD1iOJV9L6981NCPBO/aaa4
-	 kYab3xU8L99Uc9JmV13Ex8kjZKkuJUqgelFpfTg1CY21GOCa/GzzlHQxEEtybdhZj5
-	 CvGc55rGtZ3qg==
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5a2967e5de4so2303255e87.3
-        for <tools@kernel.org>; Sun, 19 Apr 2026 11:07:14 -0700 (PDT)
-X-Gm-Message-State: AOJu0YwXhdnMrqt4t8e9D7PIhGTTg9c0y5oNVedfsFOxXIxPVDAqJvyY
-	M1f6C7PtQeCka3nBzcbbFECpV/M3lFUXl4IXUkamn61VljbxoqT6MyFMeqH4HTeru0qqlN6udiK
-	cZkpz/qGJte7xIp0vZ8VRR3eNv4ut2w8=
-X-Received: by 2002:a05:6512:3d27:b0:5a2:b219:3eb3 with SMTP id
- 2adb3069b0e04-5a417308f0bmr3645384e87.41.1776622033437; Sun, 19 Apr 2026
- 11:07:13 -0700 (PDT)
+	s=k20201202; t=1776648176;
+	bh=H2B7l/1QSVfi30AunMmeIkZzI6NFLsLhwhOIpySk81Q=;
+	h=From:Subject:Date:To:Cc:From;
+	b=fmvBwF564qC/74PQMLShwH4up0U4lxAAcfv2/wKEhuybPotBfQA3AJAu3RBVmDL2h
+	 U5v7vq9dO8q5GRyY5tXbxIvXEfV8cxl5fQAm0hEPTHkABwNOcFpBQtfdkaB1vbZ4KK
+	 BZovohkAYWW9F1kmtpbMZflhlktTq6qZuaD+yhV6PJDVDpxUGUbkInv4+ML927Pdxm
+	 skPZPJ0vPZ3trirJEtmyRFTZykFp8jhFVQAEcIFTLA0TZNbBSaxGUU/u8NrNhRnfdl
+	 Dot57IdiYyiig/bq6SEqZ7lglgkI/y5HpEXAjekBdEO5x4SK8OFlYLKQ/aKjvtR8ay
+	 jztvb1XvBDaPg==
+From: Tamir Duberstein <tamird@kernel.org>
+Subject: [PATCH patatt 0/7] Harden local checks
+Date: Sun, 19 Apr 2026 21:22:20 -0400
+Message-Id: <20260419-stronger-type-checking-v1-0-5c108048d2c7@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-References: <20260419-ruff-check-v2-0-089dfb264501@kernel.org> <20260419-ruff-check-v2-4-089dfb264501@kernel.org>
-In-Reply-To: <20260419-ruff-check-v2-4-089dfb264501@kernel.org>
-From: Tamir Duberstein <tamird@kernel.org>
-Date: Sun, 19 Apr 2026 14:06:37 -0400
-X-Gmail-Original-Message-ID: <CAJ-ks9nC3KEfw4c1D_yLJxH67p0FEKKVu8125Y-R-6XRJi4J9g@mail.gmail.com>
-X-Gm-Features: AQROBzBxZnyMDe_28emh35H3ntSG9dBsZvIaG4nSMy8WGHXp5RE4pUauTaroFaw
-Message-ID: <CAJ-ks9nC3KEfw4c1D_yLJxH67p0FEKKVu8125Y-R-6XRJi4J9g@mail.gmail.com>
-Subject: Re: [PATCH b4 v2 04/11] Add ruff format check to CI
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWM0QrCMAwAf2Xk2UJXnVJ/RXzoYtyi0JUkysbYv
+ 1v18Q7uVlASJoVzs4LQm5WnXKHdNYBjygM5vlWG4MPRH9ro1GSqWpwthRyOhE/Og9uffOi6mLB
+ PEWpchO48/8YXKMmSGVz/Xl/9g9C+V9i2Dzfob9WCAAAA
+X-Change-ID: 20260419-stronger-type-checking-3702559acba9
 To: "Kernel.org Tools" <tools@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Tamir Duberstein <tamird@kernel.org>, 'test@example.com'}
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1492; i=tamird@kernel.org;
+ h=from:subject:message-id; bh=H2B7l/1QSVfi30AunMmeIkZzI6NFLsLhwhOIpySk81Q=;
+ b=owGbwMvMwCV2wYdPVfy60HTG02pJDJlP65+wO/1tfaXPZpc38eiMcwUvFCczbv9irvWdre31j
+ 6ZFAludOiayMIhxMViKKbIkih7am556e49s5rvjMHNYmUCGSIs0MAABCwNfbmJeqZGOkZ6ptqGe
+ oZGOgY4xAxenAEz1u9uMDFNm95gwiBe7zpm557JF236jO4dmTDgc8ePNhmnSJ70vC5sz/LNVFTb
+ au/npgZRvDAcYGcO8Fl12SCt2WyNhGXz6f0etIh8A
+X-Developer-Key: i=tamird@kernel.org; a=openpgp;
+ fpr=5A6714204D41EC844C50273C19D6FF6092365380
 
-On Sun, Apr 19, 2026 at 12:00=E2=80=AFPM Tamir Duberstein <tamird@kernel.or=
-g> wrote:
->
-> Enable ruff format checking in the b4 CI script and configure Ruff's
-> formatter in pyproject.toml.
->
-> Apply a one-time repo-wide format pass so the new check enforces the
-> current style without leaving the branch permanently red.
->
-> Signed-off-by: Tamir Duberstein <tamird@kernel.org>
+This series adds a local CI helper and raises patatt's local quality
+baseline incrementally while keeping the tree green after each step.
 
-This patch suggests a bug in B4; looks like it took some emails from
-the patch body and put them in the cc line.
+It starts with the checks that already pass, then adds Ruff import and
+format enforcement, strict pyright, and ty. The later patches make the
+small typing and cleanup changes needed for the stricter checkers, and
+remove stale optional-dependency handling for PyNaCl.
+
+Signed-off-by: Tamir Duberstein <tamird@kernel.org>
+---
+Tamir Duberstein (7):
+      Add local CI script
+      Add Ruff import checks
+      Add Ruff format check
+      Add pyright strict checks
+      Add ty checks
+      Reduce dictionary lookups
+      Import PyNaCl unconditionally
+
+ ci.sh                               |  10 +
+ conftest.py                         |   3 +-
+ docs/conf.py                        |   5 +-
+ pyproject.toml                      |  18 +-
+ src/patatt/__init__.py              | 480 ++++++++++++++++++++++++------------
+ tests/conftest.py                   |  21 +-
+ tests/test_validation.py            |  25 +-
+ tests/unit/test_byhash.py           |   4 +-
+ tests/unit/test_devsig_header.py    |  26 +-
+ tests/unit/test_get_algo_keydata.py |  22 +-
+ tests/unit/test_patatt_message.py   |  27 +-
+ 11 files changed, 410 insertions(+), 231 deletions(-)
+---
+base-commit: f09b5a5681c2b7af33aa5b0fcea659f4534eed9b
+change-id: 20260419-stronger-type-checking-3702559acba9
+
+Best regards,
+--  
+Tamir Duberstein <tamird@kernel.org>
+
