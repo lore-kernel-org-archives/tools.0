@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD0737F8A1
-	for <tools@linux.kernel.org>; Mon, 20 Apr 2026 04:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7901329D27A
+	for <tools@linux.kernel.org>; Thu, 23 Apr 2026 02:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776659966; cv=none; b=Y/2shQ0LkVKSVF8vs9fH6LDToSRT4dljvTwYu6GOulVOBlG4st7srC9c08BnJ6XnJ/9SszUcNHYoQR1M/RGucq2J/Ao93dUn76fVyFIKLkrVvTOgyEU/fuzLHjV19FEovgrj93umHCxXZTOysPN+PqtTljA8UhUkFE7Y4GnTTk4=
+	t=1776912507; cv=none; b=RENmk7mdil+PLK6UeBkRnA6gEVviTgj91nvGtRllpkAetrmRbfO7SNdV9nQpOtVRM7Q2u9O5ZfGgwVHk5rdDzaDx0IokSOsJ2onDQsiGCSu1atCYjZsbxYTXMdJo9kzJBYa8X32STQSsxiRegTanx32BzV5AWSclX5u1RkzJkkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776659966; c=relaxed/simple;
-	bh=fefpQV3yahiY4dU2OCpDyqGjkR47eM2X04jt29pav3Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=koZOPQSISKUlOJhiEA8xVxFrM1p3nokfBDxLCDUTVeiC4yWjtQsKVmRXE8YtmP7xRa7TjtP7U0Z9XXMXaKNb0BJii1EyhCtu22Qg84MUoTqUcagpofnApaVPjlGNGwfSKv7KgWgGp090/vyzIwyYOt+z5dnieCNK1SL3baDNw6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WFYSqauk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776912507; c=relaxed/simple;
+	bh=IX3+cHixQbhBpxRCdEsOUvpkRgyZQIAr3gPZFSsgQl4=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=BYxPfyPFChpPkEj4ZatsETaPlEs5v110w6d99jG8+WcICsoX3Vj7naNZHN7cO4AEqWl7Clwu4rTuJqmxQgN8pF8xXzME9e7Ieluls5hej4Ty+1ENAcq5KeJB6q4bsn10TkdSzq60GSkSs1Rat+eMQ+razy9uSjM3VRSW9mv9h4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkW5wURx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WFYSqauk"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkW5wURx"
 Received: by smtp.kernel.org (Postfix)
-	id 3F865C19425; Mon, 20 Apr 2026 04:39:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CC4C2BCB7;
-	Mon, 20 Apr 2026 04:39:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776659966;
-	bh=fefpQV3yahiY4dU2OCpDyqGjkR47eM2X04jt29pav3Y=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=WFYSqauk5rBUKbITc6BOwUsVGhaJLJIvq5JW5DVAo0hYlBU98XtLSa2vM54jcYpW/
-	 rv0uRRnGeAaZ7tGhQy3l0Ne/NTWJ4FPL2kYLt3oDrigfVVZzIOuT+1efVr94ktT9W5
-	 yh7GtSgLZIamCuJuGMesT5TM+abNG0mLJKAI3tBkbgPRPLGxKXaaA9gMQrS8QbbJCJ
-	 r2xxluBHKJ+eezy8cqor50uoxghYrtHkUorQQ2Sovh27KbVtUeG3i+XyU5aqX1rIuS
-	 W4+TJ9C0b4ui+RNX/c+yqWwVLS7G1heJtM7loNXUvHqCGb0mAF/QygOAZEjqBh7I8O
-	 M0kxynC7CWDRg==
-From: Tamir Duberstein <tamird@kernel.org>
-Date: Sun, 19 Apr 2026 21:39:27 -0700
-Subject: [PATCH ezgb 6/6] Document local CI checks
+	id 1812AC2BCC6; Thu, 23 Apr 2026 02:48:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9BEC19425;
+	Thu, 23 Apr 2026 02:48:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1776912507;
+	bh=IX3+cHixQbhBpxRCdEsOUvpkRgyZQIAr3gPZFSsgQl4=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=EkW5wURxY5TkLVD/yeqEeOwFy7oQm2/vdPuWEZCRreOTJ9PHeI2gmLkaM2wnD4+2G
+	 ujbJAbqgTiwPm+BZ3cqD3I/rlR0rxLHPmSDshHmlsrRPHdAMF0v9Adi3eu6uEPQxJX
+	 ynvQ9zfQ3rqnLBgAeKPwZvDvqnsJHouS2tczoV9E=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: "Kernel.org Tools" <tools@kernel.org>, 
+ Tamir Duberstein <tamird@kernel.org>
+Cc: "str = 'reply"@example.com', "str = 'reviewer"@example.com', 
+ "str = 'author"@example.com', "str = 'patch1"@example.com'
+In-Reply-To: <20260419-ruff-check-v2-0-089dfb264501@kernel.org>
+References: <20260419-ruff-check-v2-0-089dfb264501@kernel.org>
+Subject: Re: [PATCH b4 v2 00/11] Enable stricter local checks
+Message-Id: <177691250092.2224433.2009633315510519367.b4-ty@b4>
+Date: Wed, 22 Apr 2026 22:48:20 -0400
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,62 +43,59 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260419-stronger-type-checking-v1-6-222775b987e5@kernel.org>
-References: <20260419-stronger-type-checking-v1-0-222775b987e5@kernel.org>
-In-Reply-To: <20260419-stronger-type-checking-v1-0-222775b987e5@kernel.org>
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Tamir Duberstein <tamird@kernel.org>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1132; i=tamird@kernel.org;
- h=from:subject:message-id; bh=fefpQV3yahiY4dU2OCpDyqGjkR47eM2X04jt29pav3Y=;
- b=owGbwMvMwCV2wYdPVfy60HTG02pJDJlP1/4JvylzeaHxyYNffk40k8iat8z3SV5w4dlF7r9NP
- +qYnw2275jIwiDGxWAppsiSKHpob3rq7T2yme+Ow8xhZQIZIi3SwAAELAx8uYl5pUY6Rnqm2oZ6
- hkY6BjrGDFycAjDV+1QZGfbdlHNR2jqLxTPHbGVUJHdc5JlX66R5nbQ+b483qBPklmT4n5JuWK3
- y5NvkCUm8v4Q2WU9VWaJT8rmRPSkvUE2mODGDFwA=
-X-Developer-Key: i=tamird@kernel.org; a=openpgp;
- fpr=5A6714204D41EC844C50273C19D6FF6092365380
+X-Mailer: b4 0.16-dev-3bfbc
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1698;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=i0A/vXWTvhhojQ3o4buXeYpTsysZQxo+NGUbAcJguY4=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGDJfdlS2/pi6bt7cOX8dpBd8vZjFdMEoWXPZyqfb5NdXq
+ sYreiXe7ShlYRDjYpAVU2Qp2xe7KajwoYdceo8pzBxWJpAhDFycAjCRT28YGSbttJY79+2Hjc8p
+ b4ZDHnbrHh9efar7Ne/rO9Y/krnOLkhnZHge9/FSQPesiK7yimknahX+Wr3XUykxDhJkFpKX/39
+ WlQMA
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-Replace the old pytest-only development instructions with the uv
-workflow and the local CI script.
 
-This keeps contributor documentation aligned with the checks used by
-the branch.
+On Sun, 19 Apr 2026 11:59:55 -0400, Tamir Duberstein wrote:
+> Enable stricter local checks
+> 
+> This series makes b4 local developer checks enforceable from the
+> review TUI and makes the repo clean under ruff, mypy, pyright, and ty.
+> 
+> The early patches set ruff formatting and import behavior, make the
+> test environment reproducible under uv, and type the misc helpers enough
+> for whole-repo mypy. The middle patches tighten mypy and pyright, then
+> add ty with all rules enabled and bump the Python requirement to 3.11
+> because the code already uses 3.11-only syntax.
+> 
+> [...]
 
-Signed-off-by: Tamir Duberstein <tamird@kernel.org>
----
- README.md | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+Applied, thanks!
 
-diff --git a/README.md b/README.md
-index ce65d34..e4cbdf8 100644
---- a/README.md
-+++ b/README.md
-@@ -59,16 +59,17 @@ make -C docs html
- 
- Then open `docs/_build/html/index.html` in your browser.
- 
--## Running tests
-+## Development checks
- 
- ```bash
--pip install -e '.[dev]'
--python -m pytest
-+uv sync --all-groups
-+./ci.sh
- ```
- 
--The test suite includes unit tests (using real git objects in temporary
--repos via pygit2) and integration tests that exercise the full stack
--including the `git-bug` binary.
-+The CI script runs Ruff, ty, mypy, pyright, and pytest. The test suite
-+includes unit tests (using real git objects in temporary repos via
-+pygit2) and integration tests that exercise the full stack including the
-+`git-bug` binary.
- 
- ## Contributing
- 
+[01/11] Add CI script
+        commit: a08a591943b0d1f18d6590242fab649ac62616e7
+[02/11] Add ruff checks to CI
+        commit: 07fa553598c68805f3bb023903fc4f16d64a4f54
+[03/11] Import dependencies unconditionally
+        commit: 24faa874f9f245484a62c29d0094f251396d93cd
+[04/11] Add ruff format check to CI
+        commit: 0a0a42f6166f287f986f483502a1ef3a06ebc18d
+[05/11] Fix tests under uv with complex git config
+        commit: 9231a4ebe52d35fc42ea5f71a6551d79cf7f51c8
+[06/11] Fix typings in misc/
+        commit: 04c3e2a781b7e557d9be4525eaef5523d1ba35cf
+[07/11] Enable mypy unreachable warnings
+        commit: 6de7cb316dc3a8cbcaa5547930d0c5b97bb46789
+[08/11] Enable and fix pyright diagnostics
+        commit: c61f5cb97b461c90732c47130471e72cae069aa7
+[09/11] Avoid duplicate map lookups
+        commit: badbf476853eefe57c4f51593c1483a937428aee
+[10/11] Add ty and configuration
+        commit: b150595b630814ba95c1178319dfa5f46730adb1
+[11/11] Enable pyright strict mode
+        commit: 9186f8a042abb29c90db79fc70967d0d88236d10
 
+Best regards,
 -- 
-2.53.0
+KR
+
 
