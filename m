@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED02719CD0A
-	for <tools@linux.kernel.org>; Sun, 26 Apr 2026 12:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C29E257845
+	for <tools@linux.kernel.org>; Sun, 26 Apr 2026 19:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777206196; cv=none; b=Gx0+WYzmLDYaC1Vh2HKEOKImB58Yp96AHDpM6Wtj/TEYSxxaYP9aqq33w0QBo2acaxQ4w/z3BTyI3gAmb4Zv3b0CY5mZhtSYD8OwL8RhO5mafYLioJgkdoYsng//LE+rFr5XqFMK55akgNeq2OGn/vMfB2QHgYW9cLHWYvqQXhU=
+	t=1777232696; cv=none; b=VUujagnnY0SUlhVm83pmxi4EOVPi7KPOhEnFFton5lRdMfberAkykMin9zwckcSt3mn/kehsJ83SgtsPw+NpvfrNp+8OxCE7zZAf3Oz27UucEHP0m6FU/4kmS83fIc3WsBix9BH66etwAqNmkhQ5xQpl74UKr6T2qjdugJZTZlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777206196; c=relaxed/simple;
-	bh=ild+E33EAw5zEZ+BYG9Jv6xNMm2FO5UUa5Bn7evoU6w=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oeAE27MgPE+7deANuvqArjBm7G/4mQmRoRvsVTMU5NRb/VtCAO+EXw5+iFKGNMjy7zLiQQZfSnGhnGDzOozTq7pV0FmzYx1eV8lDT45no46GK5/lqYJdpixO+uSeBCqd+2STsv0S6LoiXRysgxS9AWLh+GjtNL+uaBSQQHT8JyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (4096-bit key) header.d=beyermatthias.de header.i=@beyermatthias.de header.b=AYdq4ryI; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777232696; c=relaxed/simple;
+	bh=+wJuG5hchyEDN8l8SSK1E/3nspJWgoCAt7puC8b1+tY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=l8aAvsnz+TjJSBMp8i8q8J5iMsfbCjTtcxBbrMGfqgTdomCk/1k0CKUis2VF1ZMpkJbWSZ+6p8wNak4RUreyZETfJ2h+ppDThjdmVv4ryQyemmwUoUQ/CL6ncXAfBDuFYr6b4BzNHLu7mMgLeUTS7HvhohgaxF3Cngy4yn9FnDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bOp291Dx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=beyermatthias.de header.i=@beyermatthias.de header.b="AYdq4ryI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bOp291Dx"
 Received: by smtp.kernel.org (Postfix)
-	id 9B984C2BCB3; Sun, 26 Apr 2026 12:23:15 +0000 (UTC)
-Received: from mailgate02.uberspace.is (mailgate02.uberspace.is [185.26.156.114])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 638E5C2BCAF
-	for <tools@kernel.org>; Sun, 26 Apr 2026 12:23:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 638E5C2BCAF
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=beyermatthias.de
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=beyermatthias.de
-Received: from cressida.uberspace.de (cressida.uberspace.de [185.26.156.202])
-	by mailgate02.uberspace.is (Postfix) with ESMTPS id DBFD4182EF9
-	for <tools@kernel.org>; Sun, 26 Apr 2026 14:23:11 +0200 (CEST)
-Received: (qmail 18616 invoked by uid 989); 26 Apr 2026 12:23:11 -0000
-Authentication-Results: cressida.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
-	by cressida.uberspace.de (Haraka/3.1.1) with ESMTPSA; Sun, 26 Apr 2026 14:23:11 +0200
-Date: Sun, 26 Apr 2026 14:23:09 +0200
-From: Matthias Beyer <mail@beyermatthias.de>
-To: tools@kernel.org
-Subject: b4 shazam -H succeeds but -M does not (was: b4 shazam generate
- branch to apply patches to?)
-Message-ID: <2qkkv4zikpyfw6wxggxoromsh42hap2ltquihtwivbaikjyso7@wjxvfvavtecj>
-References: <2aczixw5erzdkkbnfflkzzyu6pkumodss7uqisvj2lldllsd2x@rd7shjtvz5me>
+	id EA9A6C2BCB4; Sun, 26 Apr 2026 19:44:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6204C2BCAF;
+	Sun, 26 Apr 2026 19:44:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777232695;
+	bh=+wJuG5hchyEDN8l8SSK1E/3nspJWgoCAt7puC8b1+tY=;
+	h=Date:From:To:Cc:Subject:From;
+	b=bOp291Dx+Hkcn9ZodqBBRxPhlx5W6ZxPiZESDpRU1Jr0lWWepTOsBzOA3hrYDhprD
+	 ofHFwzdgxfH4duxh7mpksx2Voe4KKSj5ZvFO59VvgT5SYjlWoU19BXClc7juD4eGvS
+	 bWjlZaQyBFQmYcC55r3C3eGg9w2cOHklj/WyJCNKy3gpqkRCwqgyvhh5pErteP+AEC
+	 ie47Jikqkk6HxKi40f9UNQjMx+50TSmram1h2tLb6oxUrav6X7hSn/D9E7OHSxSYnN
+	 XTKh0qoZMVLwFcLBystDoa6MUreUkWQSK2XXV5DDLVTDdaT2xYrdDoJHPMkhs7j5lu
+	 eNxgFAV7aqGDQ==
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+	id 3208A1AC581F; Sun, 26 Apr 2026 20:44:53 +0100 (BST)
+Date: Mon, 27 Apr 2026 04:44:53 +0900
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org
+Subject: b4 tui: Bulk archive of thanked serieses
+Message-ID: <ae5rNeQeDeZKQHwg@sirena.co.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -47,58 +43,38 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dp7nac2kosj5xotf"
+	protocol="application/pgp-signature"; boundary="HRCjDKzYtIyuGaUl"
 Content-Disposition: inline
-In-Reply-To: <2aczixw5erzdkkbnfflkzzyu6pkumodss7uqisvj2lldllsd2x@rd7shjtvz5me>
-X-Rspamd-Bar: ---
-X-Rspamd-Report: BAYES_HAM(-1.747937) MID_RHS_NOT_FQDN(0.5) SIGNED_PGP(-2) MIME_GOOD(-0.2)
-X-Rspamd-Score: -3.447937
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=beyermatthias.de; s=uberspace;
-	h=from:to:subject:date;
-	bh=ild+E33EAw5zEZ+BYG9Jv6xNMm2FO5UUa5Bn7evoU6w=;
-	b=AYdq4ryI1l4HI0kuiR1o9/waQUrJpCIXNXz2/ruXP63lAjL3nOaxZZuZLYNjoGYnXqbEJOOXn5
-	YSzmDdJ3jY3GZUaWEtjlI518CjxwRA1Oga1eICcx3omEUXlbeLbfMUM5bs2O6BvDRxUhnK5jRhhx
-	LwOxA5AgwLMglbgbai19OzaT6pZ+hZrjULgV5u7KSAzHE0T0adDA8karylR4eFgOLbA7el+xityk
-	1WYbBOkzOKvF9GyLaJC5bQw1Rzl/aWbREk0nTIXwba6Vxpzdri8Si0cFxG8EwYwvtyaLKokyn6O5
-	IC31mWwG8a2Y5rHVKGSr/q1iM1YccwkXnWHb+NcaB7e3HFZEjYtiHeKwwrpfXBupZH5rbBGfpYlP
-	wZv7jW0R72OJkQzuPMvB9PdCw+Stf722SCSgbJLXaXBMHY7NNHOjClD2dqN7KuAMpjxTiVivSbqs
-	NALcAK1lKaRE1CueuzIT77/foAY6x4NVKhNhMhRTYyvhw6L/Hx0tFIMWwDcHQKtEPujSwHN2qIZM
-	icYbagp7DagpH3Rytf2DPla2VUoAy3TeAOp5trRqx8z6X8YoSPLo32RGRLIrwke6JnDxXSnpkS/0
-	gC7GAUTB2qU8nFFJXVF6hCCtSmhThxfimTlwSnINcF7CnaNTbKJWQzF3Skq1V9YsFw1J7atjzwuX
-	M=
+X-Cookie: Victory uber allies!
 
 
---dp7nac2kosj5xotf
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+--HRCjDKzYtIyuGaUl
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: b4 shazam -H succeeds but -M does not (was: b4 shazam generate
- branch to apply patches to?)
-MIME-Version: 1.0
 
-And of course the subject was totally wrong.
-Sorry about that.
+Hi,
 
-Matthias
+Given that the only available action for thanked serieses is to archive
+them it would be really nice if it were possible to do this en masse
+rather than having to click through each individual series and confirm
+archiving.
 
---dp7nac2kosj5xotf
+Thanks,
+Mark
+
+--HRCjDKzYtIyuGaUl
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEUJGUus1GMTrRclzcEKWX9Kitz80FAmnuA60ACgkQEKWX9Kit
-z83lnBAAmmmGZ6nm8aaskuz05Hwi9C02vZtD/0KqcmwBZLD66Q21X8QXMGv5HVaL
-h50KDwM9i7HiMAnAESihXnX4N92Avcr4X1UkVQMrUkoVL8fOuG1NfkBaVaEHBjut
-cJxbLpLH3JXheC5whIJ0EREHvmV+a9xdbC0AnWsNqLA0XL/AftrPWylo2OfzEanJ
-Mxor6CGSD1D7H1SfMttnm6x0sPyZlqRPRIz7yQ5LuOkpEv/DFSLGW6GOVtyFVqKP
-ZQgemEz7V5y9xNOLggGNxpcANSLKRkrlGUa+yh9FGdolh0GJLUEk8MjM/0bNoJUQ
-n0GkuO+ihEwLYjyw9odfiSPKcDepzTSWURg5mqDPaS+Ge/nBKpUVqU0pn5adxnvs
-9JA3znTG6k9L23WChsMbYtis2/elFgM9CFiZcMD/U4z7IVPAPJycd7gfRvwN+jgs
-dYIAd9yZvWJKuyCbypRw7fcrSZdXLZJlDKDiOGFKCU8HQ3jVPl+pdMdfqBpmnVtR
-iUKCFIBNdn8ALLZWIaONQkGs28E7OIS+NAxE2rUqC31SfnKAPt2asC5gbcOd+8Bc
-iQHuHSZ/JF6pPCXd7nkTpwl0GNxQHGzwuHZmeHa+jGTlvvcKUA3Rm9pE4OYlf128
-gFkWZPRu27hkLs2LjSloC4MKbIFnjLrRtuFDi4wOKzobJ6o5RAs=
-=UkrX
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnuazEACgkQJNaLcl1U
+h9D5Ngf/W1CeyjT04V9V6T4FcYFBLxXqNwEp4deAWW7Jt897E0dYLdSWaHlL3rLA
+MR/aAAqehTWoDnBdXbHIBFGx8GK1u6HXkxoXEmR/AbCOgYC+59y3yPtr2aQDGyjB
+M6nCktTM2eQacdzEP3j9kcAOMcjON47la0/7FXbL/T8zh30redBrJBGTU7kHpl3R
+TLRCHasz/ClYHu1vY8sP629CLUQOrVZahXmOczjeFML7gpMPUXJBzURL43vvRQjE
+z0BnZJ5ZvhEVc3Z+6gzDXxjzZFrYypWmsFPphgGEsb21+KkkbAWzIttGE5Qtym8O
+R6DWko7oi+KJy4YPfT5pg7K/j1fPFQ==
+=q7h+
 -----END PGP SIGNATURE-----
 
---dp7nac2kosj5xotf--
+--HRCjDKzYtIyuGaUl--
