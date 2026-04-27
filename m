@@ -1,79 +1,133 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E476A219EB
-	for <tools@linux.kernel.org>; Sun, 26 Apr 2026 21:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B114246768
+	for <tools@linux.kernel.org>; Mon, 27 Apr 2026 03:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777240024; cv=none; b=WbpS5lKPD8olmmgTLPNuZNGEyPSQtphYbpDPROwwDNdAQVkxhSYcIrHDJHSVwubQsLgA1j4AToBGune9EQemyTP1Bu4xCpC9Jma8mmU5pUbHyxpG/mjvwATrc57jIMAvq3TLuhwkxsADFtonMPkm+Vgo42FAzS5UjHMCxMu1Wq0=
+	t=1777261080; cv=none; b=f89MNaetJRwwFmN7SnJOmRFb+xGeheb77Qu7mk3lYmABCeGj+sIJhFeQgJ5KIDDdmOFBaWJyejX0yfZ3pyZHOYjwTOqqEaMC2AyjEw006IVhOCYk/u5aPWf58L1ugVQiWiHepdBYs18DOoxH00Lv7CcV+gYaG4ru1rySAbaA3Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777240024; c=relaxed/simple;
-	bh=yfrNwHOYAT5S6aHW/Lb38N89+7oPzdoppbIMcawZ8Bk=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=TdAoV6DAZHNA8BcHSW7LF9IftLzkqtq9pCIW9lAzRhdVD2/VWDRzWprOiIidQH1wUK0Axdqiz/WyBUGSONvFOCwKx7lJGszrHrRBYs1wxgCXjulzVMOopV8w04DwDQRxYD3+SfSoY/k/fdp4IpnFrZdqP+/Awn5VgMxt1HYpmzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HVklHgaw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777261080; c=relaxed/simple;
+	bh=3lD5uG9ZXrIgOwKv6Um8sK6s94l7Kup9XM0KiGIDbKk=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=JM9WRBd4lay/DMsA2S74RCLPaCyq+mGzAS9Jog94uuZjSLM0cxErLw2sgm3d7on6Cs0Ek0kLp3yU7L/VCIvqmSNM9bNSdjfuTPC/dP23a47kDvpxOHHx/wOKkllDTWlos1UG5notr/0DvWsrb0gyhOj30J8CxD4E45PB04ylEag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ueDIdW2Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HVklHgaw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ueDIdW2Q"
 Received: by smtp.kernel.org (Postfix)
-	id 8E90AC2BCB6; Sun, 26 Apr 2026 21:47:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A70CC2BCAF;
-	Sun, 26 Apr 2026 21:47:03 +0000 (UTC)
+	id 34DB3C2BCC4; Mon, 27 Apr 2026 03:38:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26B3C19425;
+	Mon, 27 Apr 2026 03:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777240023;
-	bh=yfrNwHOYAT5S6aHW/Lb38N89+7oPzdoppbIMcawZ8Bk=;
-	h=Date:From:To:Cc:Subject:From;
-	b=HVklHgawktDoUv9jXwqUY6FTXBv/iLWSzqD2DpTZf8u/x6QMFiZzWgqaROE9HSv/l
-	 zMX9VCkBOPZsE33XYYxckhlorlyzHbezKsrUndS++/2g7hHFPRL6cauCM4apDpYKES
-	 hSfpE79qmpwbHa1Qi9VdycHMXKSGY/h/Xhcc+T9Qarp+x8pvWiujb4Rj0lpisA6h7I
-	 GorMfiaDDpM5TkVDIF+JZlgyJWswaQGKEOc96EZ78PgkHcPCZxMwR0kVa53T5Ywcu5
-	 abOstOXQeW17M/qGLKUd3YmPQ/ki4njeWoqIZbhmr3BsyboX0V6f73BbrmUe8sonbE
-	 VYa/z1g7cp0FA==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 870BF1AC5824; Sun, 26 Apr 2026 22:47:00 +0100 (BST)
-Date: Mon, 27 Apr 2026 06:47:00 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 review 'U' doesn't wake serieses
-Message-ID: <ae6H1L3J4tCEoDuY@sirena.co.uk>
+	s=k20201202; t=1777261080;
+	bh=3lD5uG9ZXrIgOwKv6Um8sK6s94l7Kup9XM0KiGIDbKk=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date:From;
+	b=ueDIdW2QNALDTJ/C2+Pao0DLtIk/kUmxy2nFeMoFOMQSyhS2o72k/23L9IoqrjhQ+
+	 eqhnZW+rv6AklFPQbXcCcP+Ra2rzb5EXUrhSUHOn7/4GzJ/n5EjPxiQCPFX4XmJIgl
+	 YxVt1FGwO9KkqD0oEOIyDwqi6ShV5ZPOupOyJ0wnZ3ALzdo2D+8n2rA8d8Kkcgy8Zf
+	 Ceu6H4sb3xZmrZGWLAEND5rlnksFEL/BNJOcHA7m+V8EpsGjqrRXR4/NrasNa7QIs3
+	 IgBVuUGTdkaOD93o8vk5UvMfD5xZ/nJVd7hlni3sZCBTECxNdEiRlPuFBnuin+Upvm
+	 QeVDF4WHotxzA==
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VOku3ca+5UQy/han"
-Content-Disposition: inline
-X-Cookie: Victory uber allies!
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v3 1/9] kernel/api: introduce kernel API specification
+ framework
+From: Nathan Chancellor <nathan@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: linux-api@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+ linux-kbuild@vger.kernel.org, linux-kselftest@vger.kernel.org, 
+ workflows@vger.kernel.org, tools@kernel.org, x86@kernel.org, 
+ Thomas Gleixner <tglx@kernel.org>, "Paul E . McKenney" <paulmck@kernel.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Jonathan Corbet <corbet@lwn.net>, Dmitry Vyukov <dvyukov@google.com>, 
+ Randy Dunlap <rdunlap@infradead.org>, Cyril Hrubis <chrubis@suse.cz>, 
+ Kees Cook <kees@kernel.org>, Jake Edge <jake@lwn.net>, 
+ David Laight <david.laight.linux@gmail.com>, 
+ Askar Safin <safinaskar@zohomail.com>, 
+ Gabriele Paoloni <gpaoloni@redhat.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Christian Brauner <brauner@kernel.org>, 
+ Alexander Viro <viro@zeniv.linux.org.uk>, 
+ Andrew Morton <akpm@linux-foundation.org>, 
+ Masahiro Yamada <masahiroy@kernel.org>, 
+ Shuah Khan <skhan@linuxfoundation.org>, Ingo Molnar <mingo@redhat.com>, 
+ Arnd Bergmann <arnd@arndb.de>
+In-Reply-To: <20260424165130.2306833-2-sashal@kernel.org>
+References: <20260424165130.2306833-1-sashal@kernel.org>
+ <20260424165130.2306833-2-sashal@kernel.org>
+Date: Sun, 26 Apr 2026 23:37:45 -0400
+Message-Id: <177726106581.2478607.12645653803520391071.b4-review@b4>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1542; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=3lD5uG9ZXrIgOwKv6Um8sK6s94l7Kup9XM0KiGIDbKk=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDJnvbgm1r5pyv/K7x/Tv7+cZzqk2VsnvUDl6munyJTXvs
+ Koa+1qfjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCR/UYMf0U11lj1XX7AtCjO
+ fXF2kv/PvgNKjmblB63e8+xfICtkfImRYVLPkjsTOQI7GiX0LqTO2iJ2suHBWkY15dq1Ir8eHhY
+ 8wA4A
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+On Fri, 24 Apr 2026 12:51:21 -0400, Sasha Levin <sashal@kernel.org> wrote:
+> diff --git a/kernel/Makefile b/kernel/Makefile
+> index 6785982013dc..564315153643 100644
+> --- a/kernel/Makefile
+> +++ b/kernel/Makefile
+> @@ -59,6 +59,9 @@ obj-y += dma/
+>  obj-y += entry/
+>  obj-y += unwind/
+>  obj-$(CONFIG_MODULES) += module/
+> +obj-$(CONFIG_KAPI_SPEC) += api/
+> +# Ensure api/ is always cleaned even when CONFIG_KAPI_SPEC is not set
+> +obj- += api/
 
---VOku3ca+5UQy/han
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+If $(CONFIG_KAPI_SPEC) is not set, shouldn't
 
-Hi,
+  obj-$(CONFIG_KAPI_SPEC) += api/
 
-If I run 'U' from the main menu of b4 review tui I would expect that if
-a new tag has appeared that serieses were snoozed waiting for then they
-would be woken.  I need to go and manually wake them.
+evaluate to
 
-Thanks,
-Mark
+  obj- += api/
 
---VOku3ca+5UQy/han
-Content-Type: application/pgp-signature; name="signature.asc"
+anyways? Why the duplication? This is the only place in the kernel where
+this would be needed?
 
------BEGIN PGP SIGNATURE-----
+>
+> diff --git a/kernel/api/.gitignore b/kernel/api/.gitignore
+> new file mode 100644
+> index 000000000000..ca2f632621cf
+> --- /dev/null
+> +++ b/kernel/api/.gitignore
+> @@ -0,0 +1,2 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +/generated_api_specs.c
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnuh84ACgkQJNaLcl1U
-h9Bv/Qf/T6m5xBRW/pDDpeaO0dBhO8qymCiqdfY8U2lzxp6r5ewo0uNy9ywBB+lI
-6/sx5OgSXgjFuOBhB5b48FJ+VT55IP/Q+763Rcd+tfb4BHzRH3Z7WR6TJbvXRzB2
-fMnFOEw6qDLlxLZgdWxnKC2b1URF21bmLVTM4b+82IM6+i+df3l1YHunAtjbf9He
-/kp58tYobFrZaHzJNzBzp+Z9kUOEqEPDv7iBh5Xo6SV3dEEJMXlIowdekSa1rTUL
-Nn8Jll/GERCUKUpwT7yCJaCapRhqtebSkB/1EtpdRiRiDksPqFPGDv/JRBvMKjA2
-8IlZoxDXYftsp83ANleY2vBv91RJ/w==
-=RXFH
------END PGP SIGNATURE-----
+This appears unused?
 
---VOku3ca+5UQy/han--
+>
+> diff --git a/kernel/api/Kconfig b/kernel/api/Kconfig
+> new file mode 100644
+> index 000000000000..d1072728742a
+> --- /dev/null
+> +++ b/kernel/api/Kconfig
+> @@ -0,0 +1,77 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +#
+> +# Kernel API Specification Framework Configuration
+> +#
+> +
+> +config KAPI_SPEC
+> +	bool "Kernel API Specification Framework"
+> +	default n
+
+I think 'default n' is tautological since 'n' is the default for all
+bool symbols. Consider dropping it on all symbols throughtout this file.
+
+-- 
+Nathan Chancellor <nathan@kernel.org>
