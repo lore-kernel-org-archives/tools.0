@@ -1,133 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B114246768
-	for <tools@linux.kernel.org>; Mon, 27 Apr 2026 03:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C302334F46F
+	for <tools@linux.kernel.org>; Mon, 27 Apr 2026 15:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777261080; cv=none; b=f89MNaetJRwwFmN7SnJOmRFb+xGeheb77Qu7mk3lYmABCeGj+sIJhFeQgJ5KIDDdmOFBaWJyejX0yfZ3pyZHOYjwTOqqEaMC2AyjEw006IVhOCYk/u5aPWf58L1ugVQiWiHepdBYs18DOoxH00Lv7CcV+gYaG4ru1rySAbaA3Qw=
+	t=1777304029; cv=none; b=JpsPBcxHj0zWP/MTMNsjbnRA+CVDpqrSY+ZKqFW8JzqYGrgg/9rRKChIWughN6siK5qU0UpsmJde5PJm+WvwYsSmhWZFdnsLQL1vxpQnVtVrqXSoQbyuP9rDczEj+R2cMNjABlg+MdDTLcYJOsISwoxAKvcn+Nd7+BLokDRfmRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777261080; c=relaxed/simple;
-	bh=3lD5uG9ZXrIgOwKv6Um8sK6s94l7Kup9XM0KiGIDbKk=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=JM9WRBd4lay/DMsA2S74RCLPaCyq+mGzAS9Jog94uuZjSLM0cxErLw2sgm3d7on6Cs0Ek0kLp3yU7L/VCIvqmSNM9bNSdjfuTPC/dP23a47kDvpxOHHx/wOKkllDTWlos1UG5notr/0DvWsrb0gyhOj30J8CxD4E45PB04ylEag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ueDIdW2Q; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777304029; c=relaxed/simple;
+	bh=Z3Kg+2P7vlHfiKXDW3a9nWMWeiTjmyvJkrSnrrxkAQs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j0hDpQyEeEN/wCdHBKDL8L2IGoA3AhL9eYaM5/Y4Nqq+ZlZaRtSjpZD7aa03jfaRW/demljNIzCypQ+Wn6YOQ5WnYPUmDBtpI6VnUkrGoV6B89llJ3HBRPM2D4Tk55RaQdC63KA+Cm+0nKSuaJkvo4f3vhNg8qfAgUy+Ok/r8o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djHaWB4A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ueDIdW2Q"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djHaWB4A"
 Received: by smtp.kernel.org (Postfix)
-	id 34DB3C2BCC4; Mon, 27 Apr 2026 03:38:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26B3C19425;
-	Mon, 27 Apr 2026 03:37:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777261080;
-	bh=3lD5uG9ZXrIgOwKv6Um8sK6s94l7Kup9XM0KiGIDbKk=;
-	h=Subject:From:To:Cc:In-Reply-To:References:Date:From;
-	b=ueDIdW2QNALDTJ/C2+Pao0DLtIk/kUmxy2nFeMoFOMQSyhS2o72k/23L9IoqrjhQ+
-	 eqhnZW+rv6AklFPQbXcCcP+Ra2rzb5EXUrhSUHOn7/4GzJ/n5EjPxiQCPFX4XmJIgl
-	 YxVt1FGwO9KkqD0oEOIyDwqi6ShV5ZPOupOyJ0wnZ3ALzdo2D+8n2rA8d8Kkcgy8Zf
-	 Ceu6H4sb3xZmrZGWLAEND5rlnksFEL/BNJOcHA7m+V8EpsGjqrRXR4/NrasNa7QIs3
-	 IgBVuUGTdkaOD93o8vk5UvMfD5xZ/nJVd7hlni3sZCBTECxNdEiRlPuFBnuin+Upvm
-	 QeVDF4WHotxzA==
+	id A1F2BC2BCB7; Mon, 27 Apr 2026 15:33:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665B4C19425;
+	Mon, 27 Apr 2026 15:33:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1777304029;
+	bh=Z3Kg+2P7vlHfiKXDW3a9nWMWeiTjmyvJkrSnrrxkAQs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=djHaWB4AGrH/tiGRAT9mzECKMIwYSKkBMdG/MwhRvpe3wGUBhQmAHkgzWuxaqhRQv
+	 QFMGdaEo4zp9BEPOSoEvRSzlx/bOTx73YXrpoF0V5sw5ljeINWD7odaufgT4nwZcJl
+	 33yoe10YaEkVO9kFnXgCHdh5ctkGZDqkalGMIxug=
+Date: Mon, 27 Apr 2026 11:33:48 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@kernel.org
+Subject: Re: b4 tui: Old serieses not removed
+Message-ID: <20260427-adept-bonobo-of-prestige-e729eb@lemur>
+References: <ae5uBJGVI5plpGkb@sirena.co.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v3 1/9] kernel/api: introduce kernel API specification
- framework
-From: Nathan Chancellor <nathan@kernel.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: linux-api@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
- linux-kbuild@vger.kernel.org, linux-kselftest@vger.kernel.org, 
- workflows@vger.kernel.org, tools@kernel.org, x86@kernel.org, 
- Thomas Gleixner <tglx@kernel.org>, "Paul E . McKenney" <paulmck@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jonathan Corbet <corbet@lwn.net>, Dmitry Vyukov <dvyukov@google.com>, 
- Randy Dunlap <rdunlap@infradead.org>, Cyril Hrubis <chrubis@suse.cz>, 
- Kees Cook <kees@kernel.org>, Jake Edge <jake@lwn.net>, 
- David Laight <david.laight.linux@gmail.com>, 
- Askar Safin <safinaskar@zohomail.com>, 
- Gabriele Paoloni <gpaoloni@redhat.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Christian Brauner <brauner@kernel.org>, 
- Alexander Viro <viro@zeniv.linux.org.uk>, 
- Andrew Morton <akpm@linux-foundation.org>, 
- Masahiro Yamada <masahiroy@kernel.org>, 
- Shuah Khan <skhan@linuxfoundation.org>, Ingo Molnar <mingo@redhat.com>, 
- Arnd Bergmann <arnd@arndb.de>
-In-Reply-To: <20260424165130.2306833-2-sashal@kernel.org>
-References: <20260424165130.2306833-1-sashal@kernel.org>
- <20260424165130.2306833-2-sashal@kernel.org>
-Date: Sun, 26 Apr 2026 23:37:45 -0400
-Message-Id: <177726106581.2478607.12645653803520391071.b4-review@b4>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1542; i=nathan@kernel.org;
- h=from:subject:message-id; bh=3lD5uG9ZXrIgOwKv6Um8sK6s94l7Kup9XM0KiGIDbKk=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDJnvbgm1r5pyv/K7x/Tv7+cZzqk2VsnvUDl6munyJTXvs
- Koa+1qfjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCR/UYMf0U11lj1XX7AtCjO
- fXF2kv/PvgNKjmblB63e8+xfICtkfImRYVLPkjsTOQI7GiX0LqTO2iJ2suHBWkY15dq1Ir8eHhY
- 8wA4A
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ae5uBJGVI5plpGkb@sirena.co.uk>
 
-On Fri, 24 Apr 2026 12:51:21 -0400, Sasha Levin <sashal@kernel.org> wrote:
-> diff --git a/kernel/Makefile b/kernel/Makefile
-> index 6785982013dc..564315153643 100644
-> --- a/kernel/Makefile
-> +++ b/kernel/Makefile
-> @@ -59,6 +59,9 @@ obj-y += dma/
->  obj-y += entry/
->  obj-y += unwind/
->  obj-$(CONFIG_MODULES) += module/
-> +obj-$(CONFIG_KAPI_SPEC) += api/
-> +# Ensure api/ is always cleaned even when CONFIG_KAPI_SPEC is not set
-> +obj- += api/
+On Mon, Apr 27, 2026 at 04:56:52AM +0900, Mark Brown wrote:
+> As part of an effort to sync review state between machines I have
+> arranged for the set of b4/review branches on the destination machine to
+> be the same as it was on the source.
 
-If $(CONFIG_KAPI_SPEC) is not set, shouldn't
+So, let's call these "machineA" and "machineB". You do most work on machineA,
+but machineB runs a periodic git fetch to get all the review branches from
+machineA, correct?
 
-  obj-$(CONFIG_KAPI_SPEC) += api/
+> When I open b4 tui and run 'U' to
+> update all branches it reports the existance of several hundred more
+> branches, looking at them going past and what's in the UI I think most
+> but not all of them are thanked branches which I later archived on the
+> source machine, the branches are gone but they remain in the UI.
 
-evaluate to
+This is the part that's confusing to me, so I need clarification. I assume the
+following happened:
 
-  obj- += api/
+- These series were reviewed on machineA (creating b4/review/* branches for
+  them).
+- MachineB runs periodic fetches from machineA, which creates these
+  b4/review/* branches on machineB.
+- The seriews are applied, thanked, and archived on machineA
+- When you open "b4 review tui" on machineB, these branches come back to life
+  as still being reviewed
 
-anyways? Why the duplication? This is the only place in the kernel where
-this would be needed?
+Is this the correct description of your workflow? If so, are you running the
+sync script with --prune, so that archived branches are properly removed on
+machineB to match machineA?
 
->
-> diff --git a/kernel/api/.gitignore b/kernel/api/.gitignore
-> new file mode 100644
-> index 000000000000..ca2f632621cf
-> --- /dev/null
-> +++ b/kernel/api/.gitignore
-> @@ -0,0 +1,2 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +/generated_api_specs.c
-
-This appears unused?
-
->
-> diff --git a/kernel/api/Kconfig b/kernel/api/Kconfig
-> new file mode 100644
-> index 000000000000..d1072728742a
-> --- /dev/null
-> +++ b/kernel/api/Kconfig
-> @@ -0,0 +1,77 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +#
-> +# Kernel API Specification Framework Configuration
-> +#
-> +
-> +config KAPI_SPEC
-> +	bool "Kernel API Specification Framework"
-> +	default n
-
-I think 'default n' is tautological since 'n' is the default for all
-bool symbols. Consider dropping it on all symbols throughtout this file.
+Just trying to fully understand the sequence of events.
 
 -- 
-Nathan Chancellor <nathan@kernel.org>
+KR
