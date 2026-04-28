@@ -1,90 +1,141 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79E6389DE0
-	for <tools@linux.kernel.org>; Tue, 28 Apr 2026 09:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526A13F7860
+	for <tools@linux.kernel.org>; Tue, 28 Apr 2026 10:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777368571; cv=none; b=s630gdjNmAYs6QtbSVW2eEAkfg15qrcE93a78Ckjmj6bCJTmu+Ou+XZZ8wNjhBpInSXR0v5wGxp1BrpQ+IB7QTm+NAQQ8wmyGT5Kiexa7yIWRZXoWL4e/C+uKqakkfGFO9DfjjFuPhceWn3OIitKqiH251VRDBJFc7we7/tdGJk=
+	t=1777373525; cv=none; b=RBeZJFgrGvNEPCaijTd2b/xmp9aDMh4OYkVS1PmVW2dKz5aV5l6wcund0pKSznYFB3DZRilhcMUhJXFWdk1EWvl1L28uxUE1sVCGDC5NTahzU7xa41toOaNjD8JLTtmbsrIneYS1fHJOrqQKScV3V6dKUh+Ix2BZ/6LUXmNhfjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777368571; c=relaxed/simple;
-	bh=cu6S6ES2lC1Xz0xLlS8Fk0sBUI+nNR+w4Oiu82bxLHs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Q0rcVIE5EF4Gzfr3g3rVjEfr1tvRtKgdGk6EvFTsV8/pZfzYcLMD5cHBdAlXSM/QT4ziKAlskB8iw3a66JFyz0iQkH4IolwoEYC4cGfk+G2IV9PKQDAmqgbJlzViGYpZDv1U88BxVM6iznXeyzm7hTnLisuMkm1053h1KuBORnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XzFAnmFc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777373525; c=relaxed/simple;
+	bh=tjm2GyVl1DjkkhkNEO720oBBkf1AHERiElT9TGP4fiQ=;
+	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=jc3pxJ6+of4egd5NpK0gcowWbDm9KCfE/MBrhdgQeZ1zFuQNpJfwtwSjnwFl2RLbNqjVljTo+OJ787zhfOA+QL9ZwUvgaa5qjin09lm9mt1wrxVTG8PePiLhKvSTCXFjtSWkWJ8KArzivIoEAjPxt062HsRee0AvA9j/3Y8+gFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dRYeTNLY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XzFAnmFc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dRYeTNLY"
 Received: by smtp.kernel.org (Postfix)
-	id CF5A3C2BCC6; Tue, 28 Apr 2026 09:29:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333B8C2BCB5;
-	Tue, 28 Apr 2026 09:29:31 +0000 (UTC)
+	id 46CD4C2BCB6; Tue, 28 Apr 2026 10:52:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92448C2BCAF;
+	Tue, 28 Apr 2026 10:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777368571;
-	bh=cu6S6ES2lC1Xz0xLlS8Fk0sBUI+nNR+w4Oiu82bxLHs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=XzFAnmFcW7hf20asq6H8i3dDOTF+48IQ+4KCVEDyxnwN0kNMTlpXhIX4hHOI6GfP8
-	 zqSIM2UU8SxiCkIaVNHQNi5Qd22XbWKK5lgR+6YWfBygd0GZYqqN1QYoeGtoO8HX2S
-	 aDiVDQIuyJSPKYkDS9aBE9j/atU/3Emo6mYdpLNZ8yU9WprR9jm2gOMN2YbMAJ2ir8
-	 46TeD+54okPgtZOaIzePi+lDmDNj8cxcoxOt2FXBDAozF4P85+ES6np8DGede59Co9
-	 j6ngRq3alVGxanIO1FTBDukdr0ZswyzMVa0sq36nJkCR5e9w9Ks0I69CnqUjZpYoQy
-	 2NqLLb6o9snlA==
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Date: Tue, 28 Apr 2026 11:29:16 +0200
-Subject: [PATCH b4 3/3] review: patchwork: use the target URL
+	s=k20201202; t=1777373525;
+	bh=tjm2GyVl1DjkkhkNEO720oBBkf1AHERiElT9TGP4fiQ=;
+	h=Date:From:To:Cc:Subject:From;
+	b=dRYeTNLYGykUxHplSVdyQ0BPT5NmqraRXHfzYfuHo5kcI8oc0gsTsWq8oXcupg9Ih
+	 tZQJh3crJ6v+YIVasP9RPpc3ReNyy27kGmpSYtP5/QsWozDTtmPYMDvdNIwqxP1dLQ
+	 tMnT3cxcG4GEyfEOqIdX2ruqENK3cteOwVR+xNQYSFmiq1Mfmg7lDOJBHXs07AjEXZ
+	 1NSEnIcdVhOodp9T4a3NjFiqOuCvNMazkiOKzAP1hIswcQMWGE/MIC5gPPNLtZ7zQY
+	 Y3apwUqaJla1+G2MQktfd+l6fF+hynIVUZiG7kISHjsOfsQxUPIKFVJlTE90/8KavH
+	 sCX2knwiIlAoA==
+Message-ID: <c281cf50-7935-488c-8429-03eac9b8902e@kernel.org>
+Date: Tue, 28 Apr 2026 12:52:01 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird Beta
+From: Matthieu Baerts <matttbe@kernel.org>
+Content-Language: fr
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: b4 review tui: too smart reply features?
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260428-sashiko-patchset-api-v1-3-24d4ac34b4ae@kernel.org>
-References: <20260428-sashiko-patchset-api-v1-0-24d4ac34b4ae@kernel.org>
-In-Reply-To: <20260428-sashiko-patchset-api-v1-0-24d4ac34b4ae@kernel.org>
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1057; i=matttbe@kernel.org;
- h=from:subject:message-id; bh=cu6S6ES2lC1Xz0xLlS8Fk0sBUI+nNR+w4Oiu82bxLHs=;
- b=owGbwMvMwCVWo/Th0Gd3rumMp9WSGDI/1H7XnWKyN4Hj1uaSS2fUU/ZwzJy5/ayrwO+enX7/F
- 2WUXrNi7ihlYRDjYpAVU2SRbovMn/m8irfEy88CZg4rE8gQBi5OAZjIfB1GhpdSrItOfFa/L3JY
- 8Gq09sv5O1jyV9o/57jPZssqvXYqgwkjw6KT8WumO1ZMO13qoF49R/pGo5DqBNMD0nN4PG8tv3e
- 7hhkA
-X-Developer-Key: i=matttbe@kernel.org; a=openpgp;
- fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
 
-The 'url' field from the 'checks' endpoint is pointing to the Patchwork
-API, not very interesting to display, e.g.
+Hi Konstantin,
 
-  https://patchwork.kernel.org/api/patches/14521024/checks/9433123/
+I'm still trying 'b4 review tui', and something that bothers me is when
+my replies are mangled. I have three examples.
 
-Instead, use the 'target_url' which typically points to something useful
-linked to the results: more details, logs, etc. e.g.
+- Most of the time, I don't send a reply with only a Reviewed-by tag,
+but I add some text, e.g. "Thank you for the new version", "Good
+catch!", "Please next time do this", "This should be that, but I will
+fix it when applying it", etc. But then, when I look at the "email mode"
+view, I don't know where the RvB tag will be added -- in dedicated email
+apparently -- and the "trailers" menu doesn't show it checked any more.
+Personally, when more text is added, I would prefer to send a single
+email with the trailer tags placed where I want.
 
-  https://github.com/multipath-tcp/mptcp_net-next/actions/runs/24274365064
+- When a tag is added in the "reply" view, it is no longer visible when
+the "reply" view is re-opened. Also, in the "email mode" view, such tag
+is displayed twice.
 
-Assisted-by: Not-my-dog
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
----
- src/b4/review/checks.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+- Any word followed by a colon is interpreted as a tag and moved
+elsewhere, e.g.
 
-diff --git a/src/b4/review/checks.py b/src/b4/review/checks.py
-index 942935e..96c769e 100644
---- a/src/b4/review/checks.py
-+++ b/src/b4/review/checks.py
-@@ -333,7 +333,7 @@ def _run_builtin_patchwork(
-                 'status': status,
-                 'state': state,
-                 'description': check.get('description', ''),
--                'url': check.get('url', ''),
-+                'url': check.get('target_url', ''),
-             }
-         )
- 
+    <a long line ending with> you need to Cc
+    stable: without that <rest of the line>
+    <end>.
 
+  Then in the "email mode" view, I can see:
+
+    <a long line ending with> you need to Cc
+    <end>.
+
+    (...)
+
+    stable: without that <rest of the line>
+
+    stable: without that <rest of the line>
+
+    --
+
+
+Do you think the "reply" view could have an option to insert trailers
+tags, and not move what has been added there? It feels simpler: if the
+"reply" view is used, the text is not modified, but the code can still
+be trimmed. If a tag has been previously added from the "trailers" menu,
+it is added at the end of the commit message in the "reply" view, so
+people can move it if needed.
+
+Cheers,
+Matt
 -- 
-2.53.0
+Sponsored by the NGI0 Core fund.
 
