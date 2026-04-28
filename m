@@ -1,122 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D062877DE
-	for <tools@linux.kernel.org>; Mon, 27 Apr 2026 22:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5919F38A71E
+	for <tools@linux.kernel.org>; Tue, 28 Apr 2026 09:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777328737; cv=none; b=ZoVRAnTcfwq+bPHeos9cvOfTnNqiHlwadUkAnfYt6lFNe15rGkcsTLfknf+fYDN9QFt/D1LeMk+M2K2jDcD2xr4EsHodnF3Z72i9u2lt8in20iIyUUks4l3COcXXE8zX6+UiwUoqaVStehRQ8gyJvX7RvPpZ+kKdTDhOhaF304g=
+	t=1777368569; cv=none; b=XLDUUcp9WOtfJTZNDQBOOPN4T5yXQo53AANvi23/dYsJBLBUWljUPuwQg2LZ38il8/zybPgxuxkQO+ez9XyBr5A7YUgBJyqrgql4OTsx3slCPDG2opBYRWin9lIF2C35swdyqZqbhbFJwHWpZ7ofD4n51M7molRIxFq621EZQyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777328737; c=relaxed/simple;
-	bh=dfCdaPBh2o0D1/8YPYUAUfPNdOaF+nq7/gHMXnxxHiQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L6WWMFOVcJob/l4sxeVBrsuSaxKfibMrZQ6t+ZdjoCaO+jIxCggxrMHejwb0kw/Xaa0Aj2Gpff5vXRukw1JGxnpOWNptowl+q8r3zLKlVQjhgpQ89ADeRMDx6Fm88+Av0uTsPguhCdZ/tBXk7EVespGIOGkwtvv8Yfo6FNR8J34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dt4BXNkR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777368569; c=relaxed/simple;
+	bh=cvwXG+KA5rWLcypd8HjVHuuFPHU9HDwL60JnHxCJBJU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=e1BBi440yN9X+5JKcWB1QgUkePEqq9Ny8qzayHx4X09NN+j3jdzjhghJ4E6CQEgOcg/8PNHZzqWTv0g7vg5vFxBSDAnzXpd7usp37SYMk6fCBSw3fk17URhedb8+hQWJkSEAkS6csdIvD4Pi7CbZwqIY1vJWT/+BUaIqjqKmKUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MUPdqDv8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dt4BXNkR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MUPdqDv8"
 Received: by smtp.kernel.org (Postfix)
-	id 90836C19425; Mon, 27 Apr 2026 22:25:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6416BC2BCB5;
-	Mon, 27 Apr 2026 22:25:37 +0000 (UTC)
+	id 0CD8DC2BCB8; Tue, 28 Apr 2026 09:29:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650F6C2BCB5;
+	Tue, 28 Apr 2026 09:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777328737;
-	bh=dfCdaPBh2o0D1/8YPYUAUfPNdOaF+nq7/gHMXnxxHiQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dt4BXNkRW7AEsUHAbI6Vq/OMn/Rgpoff0KbwnetYHGX4JCtV4SH/2YO+2DFtQUnKU
-	 bgVRHwnSWHpkedReupoaoXa9cFITe6WJUIYkKORvg0YPvV8N8D4JNF6GNeg6jDxMBV
-	 4hxJ4hXVYWEGHb4YvS4CFy1dBUPXK20VJRRcZdS7zbBE0adHG+/Iag/jLMSiY2PvXK
-	 nNyfw6bagSiBAyyF/UJtj7HdgcAjZ4xOEdAEaW0i4VXkijzUG4roBRyCSKEDqcfoGS
-	 yj6CjBXqM0nFkWM6u9pPYZgwVlFV3nO8W6DT6fo3F+Lv/hnT/cu+114MJUNiLJhlCv
-	 rsEcjJibA2tXg==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id D85641AC583E; Mon, 27 Apr 2026 23:25:34 +0100 (BST)
-Date: Tue, 28 Apr 2026 07:25:34 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: Re: b4 tui: Old serieses not removed
-Message-ID: <ae_iXiB5FpXcbmqi@sirena.co.uk>
-References: <ae5uBJGVI5plpGkb@sirena.co.uk>
- <20260427-adept-bonobo-of-prestige-e729eb@lemur>
+	s=k20201202; t=1777368569;
+	bh=cvwXG+KA5rWLcypd8HjVHuuFPHU9HDwL60JnHxCJBJU=;
+	h=From:Subject:Date:To:Cc:From;
+	b=MUPdqDv8didmdUhzCQUy+ys5T9x7VD9mpS2dW0hT5qNcWEBwtkKokm0NkUN/41QE4
+	 ROF8WzOANzST1RDZYU8pSeJDMZjXox4k3NHROnV0jBpxOC/TvzpbpE/uK5gx6Pnab8
+	 PYjYkgJsQXuqM2tZiQSsIJi3ywE0M1MUxhL27C4OgKMRBZHpNJnn8h2LcSJ1sjNiec
+	 yUYENdcqLtgheRihFuYPKaKDg9zpSTjweoc6gMOZ4iMPfdTdrArVBu0gs3Y14uuo7F
+	 NX/APRHGm3M6bcI8xUiNURJgP8ABkibFdaJzqAGcjjCo04bL5AApiq83yuMLS2W5Qk
+	 xrN8Kt1VkcXGQ==
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH b4 0/3] review: avoid downloading logs and fix URLs
+Date: Tue, 28 Apr 2026 11:29:13 +0200
+Message-Id: <20260428-sashiko-patchset-api-v1-0-24d4ac34b4ae@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="XB6nri6rTlfb3hzf"
-Content-Disposition: inline
-In-Reply-To: <20260427-adept-bonobo-of-prestige-e729eb@lemur>
-X-Cookie: Victory uber allies!
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWM0QrCMAwAf2Xk2cAMZRN/RXxos9RGYStNJ8LYv
+ 1vn4x3cbWBSVAyu3QZF3mq6zA3Opw44+fkhqFNjoJ6G3tEFzVvS14LZV04mFX1WpHEUZooxTA5
+ amotE/RzbGwQH97+zNTyF6+8H+/4FYr3Ib3wAAAA=
+X-Change-ID: 20260428-sashiko-patchset-api-277ecc2ffbd4
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=830; i=matttbe@kernel.org;
+ h=from:subject:message-id; bh=cvwXG+KA5rWLcypd8HjVHuuFPHU9HDwL60JnHxCJBJU=;
+ b=owGbwMvMwCVWo/Th0Gd3rumMp9WSGDI/1H4tCX52r6Ln8Utzc54t3grWM4+3JeZWzvt09GTi7
+ zlTnQ0fdZSyMIhxMciKKbJIt0Xmz3xexVvi5WcBM4eVCWQIAxenAEzkizXDf/8gkT1TpoYfYtp3
+ 5EcW43tBmwMJl3TV22+en5T6z5TVS4aRYTtr6+4PB85uOdmzivvQ3h8/ptc7PNl/pjA2cW77jdK
+ vjhwA
+X-Developer-Key: i=matttbe@kernel.org; a=openpgp;
+ fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
 
+The build-in Sashiko and Patchwork support is nice!
 
---XB6nri6rTlfb3hzf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Here are just some small fixes:
 
-On Mon, Apr 27, 2026 at 11:33:48AM -0400, Konstantin Ryabitsev wrote:
-> On Mon, Apr 27, 2026 at 04:56:52AM +0900, Mark Brown wrote:
+- Patch 1: avoid downloading the review logs that are not used.
 
-> > As part of an effort to sync review state between machines I have
-> > arranged for the set of b4/review branches on the destination machine to
-> > be the same as it was on the source.
+- Patch 2: fix Sashiko URLs that were leading to a 404.
 
-> So, let's call these "machineA" and "machineB". You do most work on machineA,
-> but machineB runs a periodic git fetch to get all the review branches from
-> machineA, correct?
+- Patch 3: use Patchwork target URL instead of the API one.
 
-The use case is more that I have machines that I switch between - mostly
-I'll just work on one machine, but sometimes I'll move that to a
-different machine and use that for a period before switching in the
-opposite direction.  The sync is done by mirroring the current state of
-the active machine to a git server, then syncing the set of b4/review
-branches with that on the machine that's picking things up.  It's more
-than just fetches, I've also started clearing out old branches that were
-archived.
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+---
+Matthieu Baerts (NGI0) (3):
+      review: sashiko: switch to patchset endpoint
+      review: sashiko: fix URLs
+      review: patchwork: use the target URL
 
-> > When I open b4 tui and run 'U' to
-> > update all branches it reports the existance of several hundred more
-> > branches, looking at them going past and what's in the UI I think most
-> > but not all of them are thanked branches which I later archived on the
-> > source machine, the branches are gone but they remain in the UI.
+ src/b4/review/checks.py         | 9 ++++++---
+ src/tests/test_review_checks.py | 4 ++--
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+---
+base-commit: d5d981426ead3f490713ef5d2fd1aa3d0f13b005
+change-id: 20260428-sashiko-patchset-api-277ecc2ffbd4
 
-> This is the part that's confusing to me, so I need clarification. I assume the
-> following happened:
+Best regards,
+--  
+Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-> - These series were reviewed on machineA (creating b4/review/* branches for
->   them).
-> - MachineB runs periodic fetches from machineA, which creates these
->   b4/review/* branches on machineB.
-> - The seriews are applied, thanked, and archived on machineA
-> - When you open "b4 review tui" on machineB, these branches come back to life
->   as still being reviewed
-
-IIRC they were actually listed as thanked, some of them would've been
-synced prior to actually being archived (since that's a fiddly manual
-process).
-
-> Is this the correct description of your workflow? If so, are you running the
-> sync script with --prune, so that archived branches are properly removed on
-> machineB to match machineA?
-
-Yes, the branches are being pruned (not with git prune).  I can't see
-any local record of them and when I deleted the b4 review database they
-were gone.
-
---XB6nri6rTlfb3hzf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnv4l4ACgkQJNaLcl1U
-h9AM2Qf/TuBnIGS5PERIdMXZoT5TcpTSmKwIbafZPwH/DfOpC0wvJxCZSY0oNptU
-uuKl+WlCRrJUTDihSRORUXuH+PEx6bexN8MnYPfz1L+0opHIs/pG4rZCyIYKFD0T
-U42tYMOWAJ22u9mRLHm2GniTCEWb7rAHvpbKb6oTlLt3+eWnQoEe3fW40ckLn7Gz
-sXJyOPWOM1OIu2spqXVfLiVq6BVGMpwPTvvhwg2lkaB+J2jqI/attAsQufiSHCH9
-NkXoIKHmgxjJGerxtydiSln1RHq4la//CUMi0YMAgr6tY9vMjhyJ1uNOyr0ISVdU
-PCQeuJe54YJWjzHG51JydwzRZalZlw==
-=576m
------END PGP SIGNATURE-----
-
---XB6nri6rTlfb3hzf--
