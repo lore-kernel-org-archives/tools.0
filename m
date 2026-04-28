@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526A13F7860
-	for <tools@linux.kernel.org>; Tue, 28 Apr 2026 10:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931E132ED2E
+	for <tools@linux.kernel.org>; Tue, 28 Apr 2026 11:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777373525; cv=none; b=RBeZJFgrGvNEPCaijTd2b/xmp9aDMh4OYkVS1PmVW2dKz5aV5l6wcund0pKSznYFB3DZRilhcMUhJXFWdk1EWvl1L28uxUE1sVCGDC5NTahzU7xa41toOaNjD8JLTtmbsrIneYS1fHJOrqQKScV3V6dKUh+Ix2BZ/6LUXmNhfjE=
+	t=1777374134; cv=none; b=gvTxXayL58z/M5OqSXe+vmeNmnDuOblCF3zHM94EnvrGKQJu4kBFsaux0Qgqi/Exfu+3DpGFkVrc6bsOdPIjtkqFgn229gRBe/U+tMHz1hLDSEG9nSHGQykZlblTas8o1Zgd0dkVy6X0gsgrSPztGXOXKAkHuWSWB/CklpHJMCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777373525; c=relaxed/simple;
-	bh=tjm2GyVl1DjkkhkNEO720oBBkf1AHERiElT9TGP4fiQ=;
-	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=jc3pxJ6+of4egd5NpK0gcowWbDm9KCfE/MBrhdgQeZ1zFuQNpJfwtwSjnwFl2RLbNqjVljTo+OJ787zhfOA+QL9ZwUvgaa5qjin09lm9mt1wrxVTG8PePiLhKvSTCXFjtSWkWJ8KArzivIoEAjPxt062HsRee0AvA9j/3Y8+gFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dRYeTNLY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777374134; c=relaxed/simple;
+	bh=BkGGGpyYDSmV3CNtJsUZKcjz6hKNGWY6kh8UGf8cxiY=;
+	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=tgbnMGo7crzIvmTWmXwv0u1FZS7qUxnM3acAkaUWSgYFkKlImZ8C6AyqHqm0L8Y8CPhfGOuizP1tJ3a7u0HQJ1lQmEtXfZcN+xodOQXuy5W9pB0T3RPMFkPMt5AJ9ifH59awg9jm/PjSq8paChmIydaEPDbhPh9XkiCl0sb1LVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WaVp4SsZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dRYeTNLY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WaVp4SsZ"
 Received: by smtp.kernel.org (Postfix)
-	id 46CD4C2BCB6; Tue, 28 Apr 2026 10:52:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92448C2BCAF;
-	Tue, 28 Apr 2026 10:52:04 +0000 (UTC)
+	id 2CF1CC2BCB6; Tue, 28 Apr 2026 11:02:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6BFC2BCAF;
+	Tue, 28 Apr 2026 11:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777373525;
-	bh=tjm2GyVl1DjkkhkNEO720oBBkf1AHERiElT9TGP4fiQ=;
+	s=k20201202; t=1777374134;
+	bh=BkGGGpyYDSmV3CNtJsUZKcjz6hKNGWY6kh8UGf8cxiY=;
 	h=Date:From:To:Cc:Subject:From;
-	b=dRYeTNLYGykUxHplSVdyQ0BPT5NmqraRXHfzYfuHo5kcI8oc0gsTsWq8oXcupg9Ih
-	 tZQJh3crJ6v+YIVasP9RPpc3ReNyy27kGmpSYtP5/QsWozDTtmPYMDvdNIwqxP1dLQ
-	 tMnT3cxcG4GEyfEOqIdX2ruqENK3cteOwVR+xNQYSFmiq1Mfmg7lDOJBHXs07AjEXZ
-	 1NSEnIcdVhOodp9T4a3NjFiqOuCvNMazkiOKzAP1hIswcQMWGE/MIC5gPPNLtZ7zQY
-	 Y3apwUqaJla1+G2MQktfd+l6fF+hynIVUZiG7kISHjsOfsQxUPIKFVJlTE90/8KavH
-	 sCX2knwiIlAoA==
-Message-ID: <c281cf50-7935-488c-8429-03eac9b8902e@kernel.org>
-Date: Tue, 28 Apr 2026 12:52:01 +0200
+	b=WaVp4SsZy+gYUz4UimTsvhQLHdktj+vVF7sZY3RvwW/XCcVyUCbI7ReGx2gPRLkAF
+	 4YLwWUz8tPf72TqYLwu2rSGQC9gJsrwJrZC4vkMQZe3Hhz/UI0iOA9agljgSBYir5y
+	 sDpjLBOzw91BmKcADiN+ePidzbf7EzJf7PEMLjGuuyN1paoSjdbZijPwoyHl+5jaQ1
+	 8S+NkX3yeu+MVzmVC3Dlao03ewuCh9Z40OwNSCgMIg9klzfaRgrjdPKNeZ5yTYWlBi
+	 qPrVPRO5k1f1lHIDhsllCPa3emerQ+W4JXOEG2kSqgE59bcMTGvWvdoOQKOpxtvBFn
+	 SwVo6Y4oE7Oog==
+Message-ID: <f329a913-b0b3-4f5d-8bb5-a57b5b814081@kernel.org>
+Date: Tue, 28 Apr 2026 13:02:11 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,7 +40,7 @@ From: Matthieu Baerts <matttbe@kernel.org>
 Content-Language: fr
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: "Kernel.org Tools" <tools@kernel.org>
-Subject: b4 review tui: too smart reply features?
+Subject: b4 review tui: patchwork integration
 Autocrypt: addr=matttbe@kernel.org; keydata=
  xsFNBFXj+ekBEADxVr99p2guPcqHFeI/JcFxls6KibzyZD5TQTyfuYlzEp7C7A9swoK5iCvf
  YBNdx5Xl74NLSgx6y/1NiMQGuKeu+2BmtnkiGxBNanfXcnl4L4Lzz+iXBvvbtCbynnnqDDqU
@@ -90,49 +90,28 @@ Content-Transfer-Encoding: 7bit
 
 Hi Konstantin,
 
-I'm still trying 'b4 review tui', and something that bothers me is when
-my replies are mangled. I have three examples.
+It's great to have a built-in patchwork support!
 
-- Most of the time, I don't send a reply with only a Reviewed-by tag,
-but I add some text, e.g. "Thank you for the new version", "Good
-catch!", "Please next time do this", "This should be that, but I will
-fix it when applying it", etc. But then, when I look at the "email mode"
-view, I don't know where the RvB tag will be added -- in dedicated email
-apparently -- and the "trailers" menu doesn't show it checked any more.
-Personally, when more text is added, I would prefer to send a single
-email with the trailer tags placed where I want.
+Something that is blocking me to use 'b4 review tui' more is that not
+all Patchwork status are supported, e.g. I cannot mark a patch as
+"Queued", and delegate it to someone.
 
-- When a tag is added in the "reply" view, it is no longer visible when
-the "reply" view is re-opened. Also, in the "email mode" view, such tag
-is displayed twice.
+I see that patches are automatically marked as "under-review", but it
+would be nice to assign myself as well, so others know who is reviewing
+what. Eventually, it might be good to ask for a confirmation: I might
+use the "review" mode simply to validate a patch reviewed by someone else.
 
-- Any word followed by a colon is interpreted as a tag and moved
-elsewhere, e.g.
+Something that was already reported by someone else I think is that the
+"patchwork" view only shows the "Action Required" ones, and it is not
+possible to show more patches.
 
-    <a long line ending with> you need to Cc
-    stable: without that <rest of the line>
-    <end>.
+One last thing: it might be good to have other automations, e.g. when
+the "Reviewed-by" tag is sent from the "review" mode, then the patch
+could be marked as "Queued" on Patchwork.
 
-  Then in the "email mode" view, I can see:
-
-    <a long line ending with> you need to Cc
-    <end>.
-
-    (...)
-
-    stable: without that <rest of the line>
-
-    stable: without that <rest of the line>
-
-    --
-
-
-Do you think the "reply" view could have an option to insert trailers
-tags, and not move what has been added there? It feels simpler: if the
-"reply" view is used, the text is not modified, but the code can still
-be trimmed. If a tag has been previously added from the "trailers" menu,
-it is added at the end of the commit message in the "reply" view, so
-people can move it if needed.
+(And eventually, have a way to run script as an action during the review
+and from the "patchwork" view, e.g. to apply a patch using a script that
+will do extra quick checks and select the right tree.)
 
 Cheers,
 Matt
