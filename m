@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDD8393DE8
-	for <tools@linux.kernel.org>; Wed, 29 Apr 2026 06:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CD63793DE
+	for <tools@linux.kernel.org>; Wed, 29 Apr 2026 09:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777445413; cv=none; b=Lg853Tf9p+KbtjhC3sGxLn5/Fdjh0xVIdVJOIyQaluOmIITg3fUCa5mzUXaYoN74J8VPe7VQ5TEdxvsxbomvI8wbZ7t+7SRx1mYteGhlZH7vyBsDZ9BoCEJzBuu4wClPSUi5z9TNhMy7oCu+METP4pJE/w99TBW796DRQfb6gfw=
+	t=1777456481; cv=none; b=PVyEfcOJ29AUlXjJtiuq7WGNbbhxM2eyxEFbmDgVJhNcOrdRFrtgGr4A8Z7HbSpG68cwtaaA6jMtq5okXXHGlWmr+Lza64YzBWALxlzfai4yra2QC7NOZZXCD4HULaYW5IS0HDzh/KeqXnStQdJOvbhFqpa3bAuj69gR7J87iy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777445413; c=relaxed/simple;
-	bh=ce5rVLxN8d0JCUiRnoJhKh7C8/M7nznj6QUdMVpOUhw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=g6/Jk2AQmmdkDDXrlhTAMGMtLn0Qs4AVpvmwJrZRYzRhqkl3+Wn49ngmnL5l2lSZcbmAG5Nskb9DBTVKO67KNU613/EYPq/CO04fJ5jCTAkzNBsM10Rx+6NvnBnkGO/15P5t/SGSsSdtvhy//RcyeDNy8i+1AmDIlHegYUJITZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.b=Fm8/vuy+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777456481; c=relaxed/simple;
+	bh=A3ZjyX5BRnk39H5aZBWgspeC60fMsPdq1qT3KNvNEXc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=RPP+Z8+txYC+kHuyFmZSyW+lr5UHaEd0oLbWWW9ghVXGDVUAcIns6zAfwNDUieBbAIlPQfK7lTlZQtsQ0wAZNuCL2IAq2stCcrrl+kK8hfCK6R6oQpKMCoDSdG3S9FIAtPkzDxmLdmyrg420WTcMVmFihiD3GXelGWVpEwJUGJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=vZijXHUF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.b="Fm8/vuy+"
+	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="vZijXHUF"
 Received: by smtp.kernel.org (Postfix)
-	id 26D0EC2BCC4; Wed, 29 Apr 2026 06:50:13 +0000 (UTC)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+	id 6BFA6C2BCC6; Wed, 29 Apr 2026 09:54:41 +0000 (UTC)
+Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id BA87CC19425
-	for <tools@kernel.org>; Wed, 29 Apr 2026 06:50:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org BA87CC19425
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=codeconstruct.com.au
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1777445408;
-	bh=jHW8TBYa/2A5N7ugo5gnzoWm2f1xlGEHP6rOncHd5sY=;
-	h=From:Date:Subject:To:Cc;
-	b=Fm8/vuy+TG2mJ7LnhyRFpyuBiqDXdg1l6qVGX79mwGEXjFIJzMUqcuTlDZou5OULX
-	 TyS0/8j6CmJ6sSRfC/bD4plnuzSBPBA4jQNI8jxOlK+tyyBAYUf1fVAv8leCuASrgU
-	 vwM6Aaz+Lcwl9RBmrzzxBO2AlMejl6iTjcc3roXNCDz3MwrCdejkf7uiwB6+aJf5eF
-	 Mv9h8ats+9Fmney69ZVw3txNUbigK/Htxk9H8PcCqBIO17gc+1VtlQDE+eVHp3PWJh
-	 XE0+kvL+txFhtKg6JyGpoxPaj/Xt2bcYVzof8HGbgF+K64fy00xzA3/gUwlXqMVHbW
-	 HuO0yQhrB9DCg==
-Received: by codeconstruct.com.au (Postfix, from userid 10000)
-	id 2070C60263; Wed, 29 Apr 2026 14:50:08 +0800 (AWST)
-From: Jeremy Kerr <jk@codeconstruct.com.au>
-Date: Wed, 29 Apr 2026 14:49:46 +0800
-Subject: [PATCH b4] config: add send-me-too configuration
+	by smtp.kernel.org (Postfix) with ESMTPS id 51B1DC19425
+	for <tools@kernel.org>; Wed, 29 Apr 2026 09:54:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 51B1DC19425
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=narfation.org
+Received: by dvalin.narfation.org (Postfix) id B91012035D;
+	Wed, 29 Apr 2026 09:54:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
+	s=20121; t=1777456476;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=+40gsXhj5kvHLLoRdnQBx0oZv7lIwJWflWODCio0dqs=;
+	b=vZijXHUFFrC0H4dFWxsCxC4QtrGGssdNheexSsC95JfzWVxtJX1X36mD/0hdvqQ8w82Cub
+	TDyssTuOQzfSIPUePNST1K0DNgVB3cZ/shJhRVazLXqplqpUAQbWyRnKCXk2cgEdGn07Xc
+	TPCFzW9KawhkverxGFL/BtuHod8WMNk=
+From: Sven Eckelmann <sven@narfation.org>
+Date: Wed, 29 Apr 2026 11:54:28 +0200
+Subject: [PATCH b4] review: Fix sashiko patchset URL format
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -47,98 +46,84 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-master-v1-1-f5052d8b7f9b@codeconstruct.com.au>
-X-B4-Tracking: v=1; b=H4sIAAmq8WkC/12NQQ6CMBBFr0JmbQktWNSV9zAs2ukgNYGSTiEaw
- t0F3Ll8Py/vL8AUPTHcsgUizZ59GDaQpwywM8OThHcbgyqULip1Fb3hRFFcKo3WGnKqOMMmj5F
- a/z5CD7AVNL+NJ/siTHthtzrPKcTP8TbLw/0Pz1JIgaXTWGql6ra+Y3CEYeAUJ0w5hj43EzTru
- n4Bf80TgL0AAAA=
-X-Change-ID: 20260429-master-846cbbaed205
+Message-Id: <20260429-sashiko-patchset-url-v1-1-de8027029bca@narfation.org>
+X-B4-Tracking: v=1; b=H4sIAFPV8WkC/yWMwQrCMBAFf6Xs2YUk1Ir+inhI4tOsSluyaRFK/
+ 93UHmdgZiFFFihdmoUyZlEZ+gr20FBMvn+C5V6ZnHGdad2Z1WuS98CjLzEpCk/5w90x4mRNgIW
+ hmo4ZD/n+t1cKLd12p1N4IZbtR+v6A1rYkI18AAAA
+X-Change-ID: 20260429-sashiko-patchset-url-65ce710be1e0
 To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-X-Mailer: b4 0.16-dev
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Sven Eckelmann <sven@narfation.org>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2797; i=sven@narfation.org;
+ h=from:subject:message-id; bh=A3ZjyX5BRnk39H5aZBWgspeC60fMsPdq1qT3KNvNEXc=;
+ b=owGbwMvMwCXmy1+ufVnk62nG02pJDJkfr0Zs36KX1HpR3NRtTvhl/W9yh+8deH55+qatsiIT9
+ xV+mX5mT0cJC4MYF4OsmCLLniv55zezv5X/PO3jUZg5rEwgQxi4OAVgIr33GBl2n++Yk77/yLON
+ Zzx/HAp/e/1NeFv6kr8Wpz882Jv7LH+CHMP3rFmrpTKZq/ckC8V+SPj5xdpVYKOoCnuzz9zfbY/
+ 1zRkA
+X-Developer-Key: i=sven@narfation.org; a=openpgp;
+ fpr=522D7163831C73A635D12FE5EC371482956781AF
 
-My mail transport automatically saves a copy of outgoing patches, so I'm
-always using the `--no-me-too` argument to `b4 send`.
+The sashiko server does not expose a direct `/patch/{ps_id}` endpoint.
+Requesting https://sashiko.dev/patch/93 returns a 404, because the frontend
+is a JavaScript single page application (SPA) that relies on the API to
+fetch and render content dynamically.
 
-Instead of having to specify this every time, add a configuration option
-to control the send-to-myself setting. In order to avoid
-double-negatives in configuration (ie., `send-not-me-too = no`), use an
-affirmative version, `send-me-too`, which defaults to `yes` (the current
-behaviour).
+The correct approach is to load the root page and pass the resource as a
+URL fragment (anchor), e.g. https://sashiko.dev/#/patchset/93, so the SPA
+can query the API and display the patchset accordingly.
 
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Fixes: 5154a8c9934c ("review: integrate sashiko and follow-up inline comments")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 ---
- docs/config.rst           | 6 ++++++
- docs/contributor/send.rst | 4 +++-
- src/b4/__init__.py        | 2 ++
- src/b4/ez.py              | 3 ++-
- 4 files changed, 13 insertions(+), 2 deletions(-)
+Just noticed this while playing around with the Check functionality of
+`b4 review tui`. I didn't actually ran the test suite.
+---
+ src/b4/review/checks.py         | 2 +-
+ src/tests/test_review_checks.py | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/docs/config.rst b/docs/config.rst
-index 2490f54..7251786 100644
---- a/docs/config.rst
-+++ b/docs/config.rst
-@@ -725,6 +725,12 @@ Contributor-oriented settings
+diff --git a/src/b4/review/checks.py b/src/b4/review/checks.py
+index 36c0780..51378a9 100644
+--- a/src/b4/review/checks.py
++++ b/src/b4/review/checks.py
+@@ -462,7 +462,7 @@ def _run_builtin_sashiko(msg: EmailMessage, sashiko_url: str) -> List[Dict[str,
+     reviews = data.get('reviews', [])
+     patches = data.get('patches', [])
+     base_url = sashiko_url.rstrip('/')
+-    patchset_url = f'{base_url}/patch/{ps_id}' if ps_id else ''
++    patchset_url = f'{base_url}/#/patchset/{ps_id}' if ps_id else ''
  
-      Default: ``no``
+     # Build a map from patch message-id to sashiko patch id
+     patch_id_by_msgid: Dict[str, int] = {}
+diff --git a/src/tests/test_review_checks.py b/src/tests/test_review_checks.py
+index 1469bf3..9a43a76 100644
+--- a/src/tests/test_review_checks.py
++++ b/src/tests/test_review_checks.py
+@@ -861,7 +861,7 @@ class TestRunBuiltinSashiko:
+         assert '1 critical' in results[0]['summary']
+         assert '1 high' in results[0]['summary']
+         assert '1 low' in results[0]['summary']
+-        assert results[0]['url'] == 'https://sashiko.dev/patch/93'
++        assert results[0]['url'] == 'https://sashiko.dev/#/patchset/93'
+         # Details should be valid JSON
+         details = json.loads(results[0]['details'])
+         assert len(details) == 3  # 1 low + 1 critical + 1 high
+@@ -992,7 +992,7 @@ class TestRunBuiltinSashiko:
+         msg = _make_msg(msgid='patch1@example.com')
+         results = checks._run_builtin_sashiko(msg, 'https://sashiko.dev/')
+         # Trailing slash should not cause double slash
+-        assert results[0]['url'] == 'https://sashiko.dev/patch/93'
++        assert results[0]['url'] == 'https://sashiko.dev/#/patchset/93'
  
-+   :term:`b4.send-me-too`
-+     Instructs b4 to include your own address when sending. Set by default,
-+     use ``no`` to suppress sending to yourself.
-+
-+     Default: ``yes``
-+
-    :term:`b4.send-prefixes`
-      Extra prefixes to add to ``[PATCH]`` (e.g. ``RFC mydrv``).
  
-diff --git a/docs/contributor/send.rst b/docs/contributor/send.rst
-index ba18ef5..5769cd7 100644
---- a/docs/contributor/send.rst
-+++ b/docs/contributor/send.rst
-@@ -321,7 +321,9 @@ Command line flags
-   :ref:`contributor_settings`).
- 
- ``--not-me-too``
--  Removes your own email address from the recipients.
-+  Removes your own email address from the recipients. This can be set in the
-+  configuration using the :term:`b4.send-me-too`, setting to `no`. (see
-+  :ref:`contributor_settings`).
- 
- ``--no-sign``
-   Don't sign your patches with your configured attestation mechanism.
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index 0530fec..fae5de6 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -177,6 +177,8 @@ DEFAULT_CONFIG: ConfigDictT = {
-     'review-target-branch': None,
-     # Do not patatt-sign outgoing review emails
-     'review-no-patatt-sign': None,
-+    # Send to myself
-+    'send-me-too': 'yes',
- }
- 
- # This is where we store actual config
-diff --git a/src/b4/ez.py b/src/b4/ez.py
-index 3e81138..39168e6 100644
---- a/src/b4/ez.py
-+++ b/src/b4/ez.py
-@@ -2252,7 +2252,8 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
-                 ccdests.append(btr.addr)
- 
-         excludes = b4.get_excluded_addrs()
--        if cmdargs.not_me_too:
-+        conf_me_too = config.get('send-me-too').lower()
-+        if cmdargs.not_me_too or conf_me_too in {'no', 'n', 'false'}:
-             excludes.add(myemail)
- 
-     tos = set()
+ class TestSashikoAutoWire:
 
 ---
 base-commit: d5d981426ead3f490713ef5d2fd1aa3d0f13b005
-change-id: 20260429-master-846cbbaed205
+change-id: 20260429-sashiko-patchset-url-65ce710be1e0
 
 Best regards,
 --  
-Jeremy Kerr <jk@codeconstruct.com.au>
+Sven Eckelmann <sven@narfation.org>
 
