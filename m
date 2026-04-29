@@ -1,129 +1,114 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CD63793DE
-	for <tools@linux.kernel.org>; Wed, 29 Apr 2026 09:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B00733A6E2
+	for <tools@linux.kernel.org>; Wed, 29 Apr 2026 10:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777456481; cv=none; b=PVyEfcOJ29AUlXjJtiuq7WGNbbhxM2eyxEFbmDgVJhNcOrdRFrtgGr4A8Z7HbSpG68cwtaaA6jMtq5okXXHGlWmr+Lza64YzBWALxlzfai4yra2QC7NOZZXCD4HULaYW5IS0HDzh/KeqXnStQdJOvbhFqpa3bAuj69gR7J87iy0=
+	t=1777457616; cv=none; b=pNcNv0ngKRacVyL2wUtHpzTiPhqFDhsmsTk61FgYnVXRxriHuQLJjk++f9IN1x6zESXVBYXZDvtlkSP9YXXzqSR9DgfDj0hDaR7lcCAZpE4GBiLII34Y0C28hW6ToLB0T4RZHTofZ3h1Sx/mC5GqqEHp+uiadAsAz1s1fYPOtHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777456481; c=relaxed/simple;
-	bh=A3ZjyX5BRnk39H5aZBWgspeC60fMsPdq1qT3KNvNEXc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=RPP+Z8+txYC+kHuyFmZSyW+lr5UHaEd0oLbWWW9ghVXGDVUAcIns6zAfwNDUieBbAIlPQfK7lTlZQtsQ0wAZNuCL2IAq2stCcrrl+kK8hfCK6R6oQpKMCoDSdG3S9FIAtPkzDxmLdmyrg420WTcMVmFihiD3GXelGWVpEwJUGJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=vZijXHUF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777457616; c=relaxed/simple;
+	bh=TcKhKv7bu2+OvI0+guYuovppF93mwhCCYa2DnGJHJVg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nH9Sw3WFv311WoK0WAsQxFXLlJEdgT6c0gDppWE6MvLjrnucGzSHdEP13ScL2PMHDQMJyrrOiBVY1qB8E2u5+yq3i2Gg/2+6ImDMLNDIV7efMnnXu7vhsK+HnnQHSLYpzwWnBi9YZihOtW+WNJy7l3GLdQNU6nI/6RlWraaC7Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cO6H3ISV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="vZijXHUF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cO6H3ISV"
 Received: by smtp.kernel.org (Postfix)
-	id 6BFA6C2BCC6; Wed, 29 Apr 2026 09:54:41 +0000 (UTC)
-Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 51B1DC19425
-	for <tools@kernel.org>; Wed, 29 Apr 2026 09:54:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 51B1DC19425
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=narfation.org
-Received: by dvalin.narfation.org (Postfix) id B91012035D;
-	Wed, 29 Apr 2026 09:54:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
-	s=20121; t=1777456476;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=+40gsXhj5kvHLLoRdnQBx0oZv7lIwJWflWODCio0dqs=;
-	b=vZijXHUFFrC0H4dFWxsCxC4QtrGGssdNheexSsC95JfzWVxtJX1X36mD/0hdvqQ8w82Cub
-	TDyssTuOQzfSIPUePNST1K0DNgVB3cZ/shJhRVazLXqplqpUAQbWyRnKCXk2cgEdGn07Xc
-	TPCFzW9KawhkverxGFL/BtuHod8WMNk=
-From: Sven Eckelmann <sven@narfation.org>
-Date: Wed, 29 Apr 2026 11:54:28 +0200
-Subject: [PATCH b4] review: Fix sashiko patchset URL format
+	id 47E89C2BCB3; Wed, 29 Apr 2026 10:13:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E92EC19425;
+	Wed, 29 Apr 2026 10:13:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777457616;
+	bh=TcKhKv7bu2+OvI0+guYuovppF93mwhCCYa2DnGJHJVg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=cO6H3ISVX9jUkHwTDktxcoCPdUjOf8xGzM03JB4AJiONH4wO4ObnHJEEq4fjHen7y
+	 eHEUldZLK1k43Ny08OlhwgzWQ/zEvlEWLcGosykbRnxEhQSAiyO2grRiR9/WOuh8Hz
+	 Ez399j4uYEDAZdEvEj3557Nte8dco3VXqAlIrWk4WtIIgjk2H+at8VTHIyezazigE2
+	 KI76RaqATxdeONJoOoJIVVvqymIrj+4RvKs26pnJUS6H8bay8hordApmFFNL/68e4X
+	 ggv0FFX6P86dmAHoLAceK6KHqN4S0qi03rbfdb28CcMq4eNuHYseSz81PKo/lUZdA9
+	 M1EyAmK0ONBJw==
+Message-ID: <3cd8a333-1724-45c0-b288-b82480781471@kernel.org>
+Date: Wed, 29 Apr 2026 12:13:32 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH b4] review: Fix sashiko patchset URL format
+Content-Language: fr
+To: Sven Eckelmann <sven@narfation.org>, "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+References: <20260429-sashiko-patchset-url-v1-1-de8027029bca@narfation.org>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <20260429-sashiko-patchset-url-v1-1-de8027029bca@narfation.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-sashiko-patchset-url-v1-1-de8027029bca@narfation.org>
-X-B4-Tracking: v=1; b=H4sIAFPV8WkC/yWMwQrCMBAFf6Xs2YUk1Ir+inhI4tOsSluyaRFK/
- 93UHmdgZiFFFihdmoUyZlEZ+gr20FBMvn+C5V6ZnHGdad2Z1WuS98CjLzEpCk/5w90x4mRNgIW
- hmo4ZD/n+t1cKLd12p1N4IZbtR+v6A1rYkI18AAAA
-X-Change-ID: 20260429-sashiko-patchset-url-65ce710be1e0
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Sven Eckelmann <sven@narfation.org>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2797; i=sven@narfation.org;
- h=from:subject:message-id; bh=A3ZjyX5BRnk39H5aZBWgspeC60fMsPdq1qT3KNvNEXc=;
- b=owGbwMvMwCXmy1+ufVnk62nG02pJDJkfr0Zs36KX1HpR3NRtTvhl/W9yh+8deH55+qatsiIT9
- xV+mX5mT0cJC4MYF4OsmCLLniv55zezv5X/PO3jUZg5rEwgQxi4OAVgIr33GBl2n++Yk77/yLON
- Zzx/HAp/e/1NeFv6kr8Wpz882Jv7LH+CHMP3rFmrpTKZq/ckC8V+SPj5xdpVYKOoCnuzz9zfbY/
- 1zRkA
-X-Developer-Key: i=sven@narfation.org; a=openpgp;
- fpr=522D7163831C73A635D12FE5EC371482956781AF
 
-The sashiko server does not expose a direct `/patch/{ps_id}` endpoint.
-Requesting https://sashiko.dev/patch/93 returns a 404, because the frontend
-is a JavaScript single page application (SPA) that relies on the API to
-fetch and render content dynamically.
+Hi Sven,
 
-The correct approach is to load the root page and pass the resource as a
-URL fragment (anchor), e.g. https://sashiko.dev/#/patchset/93, so the SPA
-can query the API and display the patchset accordingly.
+On 29/04/2026 11:54, Sven Eckelmann wrote:
+> The sashiko server does not expose a direct `/patch/{ps_id}` endpoint.
+> Requesting https://sashiko.dev/patch/93 returns a 404, because the frontend
+> is a JavaScript single page application (SPA) that relies on the API to
+> fetch and render content dynamically.
+> 
+> The correct approach is to load the root page and pass the resource as a
+> URL fragment (anchor), e.g. https://sashiko.dev/#/patchset/93, so the SPA
+> can query the API and display the patchset accordingly.
 
-Fixes: 5154a8c9934c ("review: integrate sashiko and follow-up inline comments")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
----
-Just noticed this while playing around with the Check functionality of
-`b4 review tui`. I didn't actually ran the test suite.
----
- src/b4/review/checks.py         | 2 +-
- src/tests/test_review_checks.py | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Thank you for sharing this. It looks like your patch is similar to this one:
 
-diff --git a/src/b4/review/checks.py b/src/b4/review/checks.py
-index 36c0780..51378a9 100644
---- a/src/b4/review/checks.py
-+++ b/src/b4/review/checks.py
-@@ -462,7 +462,7 @@ def _run_builtin_sashiko(msg: EmailMessage, sashiko_url: str) -> List[Dict[str,
-     reviews = data.get('reviews', [])
-     patches = data.get('patches', [])
-     base_url = sashiko_url.rstrip('/')
--    patchset_url = f'{base_url}/patch/{ps_id}' if ps_id else ''
-+    patchset_url = f'{base_url}/#/patchset/{ps_id}' if ps_id else ''
- 
-     # Build a map from patch message-id to sashiko patch id
-     patch_id_by_msgid: Dict[str, int] = {}
-diff --git a/src/tests/test_review_checks.py b/src/tests/test_review_checks.py
-index 1469bf3..9a43a76 100644
---- a/src/tests/test_review_checks.py
-+++ b/src/tests/test_review_checks.py
-@@ -861,7 +861,7 @@ class TestRunBuiltinSashiko:
-         assert '1 critical' in results[0]['summary']
-         assert '1 high' in results[0]['summary']
-         assert '1 low' in results[0]['summary']
--        assert results[0]['url'] == 'https://sashiko.dev/patch/93'
-+        assert results[0]['url'] == 'https://sashiko.dev/#/patchset/93'
-         # Details should be valid JSON
-         details = json.loads(results[0]['details'])
-         assert len(details) == 3  # 1 low + 1 critical + 1 high
-@@ -992,7 +992,7 @@ class TestRunBuiltinSashiko:
-         msg = _make_msg(msgid='patch1@example.com')
-         results = checks._run_builtin_sashiko(msg, 'https://sashiko.dev/')
-         # Trailing slash should not cause double slash
--        assert results[0]['url'] == 'https://sashiko.dev/patch/93'
-+        assert results[0]['url'] == 'https://sashiko.dev/#/patchset/93'
- 
- 
- class TestSashikoAutoWire:
+https://lore.kernel.org/tools/20260428-sashiko-patchset-api-v1-2-24d4ac34b4ae@kernel.org/T/#u
 
----
-base-commit: d5d981426ead3f490713ef5d2fd1aa3d0f13b005
-change-id: 20260429-sashiko-patchset-url-65ce710be1e0
-
-Best regards,
---  
-Sven Eckelmann <sven@narfation.org>
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
 
