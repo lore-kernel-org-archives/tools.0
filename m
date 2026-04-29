@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B00733A6E2
-	for <tools@linux.kernel.org>; Wed, 29 Apr 2026 10:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A2C3ECBD4
+	for <tools@linux.kernel.org>; Wed, 29 Apr 2026 10:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777457616; cv=none; b=pNcNv0ngKRacVyL2wUtHpzTiPhqFDhsmsTk61FgYnVXRxriHuQLJjk++f9IN1x6zESXVBYXZDvtlkSP9YXXzqSR9DgfDj0hDaR7lcCAZpE4GBiLII34Y0C28hW6ToLB0T4RZHTofZ3h1Sx/mC5GqqEHp+uiadAsAz1s1fYPOtHw=
+	t=1777459800; cv=none; b=hVoeSBdr3wL6yqN/iQJd+AZzTkCdcYhjq2t3ygjkoquPbA+olnJ8B1sOU0UtdKku3iHGnVUPQLL3BvsGj3Q5y0HIbb0xePYQdPebE+FPLpF9XfG8SPfRf1fcNjSVYgMt8iOgbJaDup48axaE7qjeXg1skOsoYGhX5+rts770F98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777457616; c=relaxed/simple;
-	bh=TcKhKv7bu2+OvI0+guYuovppF93mwhCCYa2DnGJHJVg=;
+	s=arc-20240116; t=1777459800; c=relaxed/simple;
+	bh=/lt6/1yhjhViUDZdBU6FCpaEjk/xy44RjrtljInLrb4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nH9Sw3WFv311WoK0WAsQxFXLlJEdgT6c0gDppWE6MvLjrnucGzSHdEP13ScL2PMHDQMJyrrOiBVY1qB8E2u5+yq3i2Gg/2+6ImDMLNDIV7efMnnXu7vhsK+HnnQHSLYpzwWnBi9YZihOtW+WNJy7l3GLdQNU6nI/6RlWraaC7Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cO6H3ISV; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=OG5eW39R58QMsOkF9VMFwX2KmaiHtVdiwHaK/j2H9QbnFaGHInl9/d7othfNZNCKtpvsJKDwP/BTvAlrtWm8UqU+70BT43Exa+KLd/epxXO9Fco58OJdCGp5AjwuMFxvAbxdFpMgj7Fpg4c4RbAhuhq3X1Ttr9ME+O4i63glsng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lhriNJnK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cO6H3ISV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lhriNJnK"
 Received: by smtp.kernel.org (Postfix)
-	id 47E89C2BCB3; Wed, 29 Apr 2026 10:13:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E92EC19425;
-	Wed, 29 Apr 2026 10:13:35 +0000 (UTC)
+	id 48539C2BCC4; Wed, 29 Apr 2026 10:50:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F87C2BCB3;
+	Wed, 29 Apr 2026 10:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777457616;
-	bh=TcKhKv7bu2+OvI0+guYuovppF93mwhCCYa2DnGJHJVg=;
+	s=k20201202; t=1777459800;
+	bh=/lt6/1yhjhViUDZdBU6FCpaEjk/xy44RjrtljInLrb4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=cO6H3ISVX9jUkHwTDktxcoCPdUjOf8xGzM03JB4AJiONH4wO4ObnHJEEq4fjHen7y
-	 eHEUldZLK1k43Ny08OlhwgzWQ/zEvlEWLcGosykbRnxEhQSAiyO2grRiR9/WOuh8Hz
-	 Ez399j4uYEDAZdEvEj3557Nte8dco3VXqAlIrWk4WtIIgjk2H+at8VTHIyezazigE2
-	 KI76RaqATxdeONJoOoJIVVvqymIrj+4RvKs26pnJUS6H8bay8hordApmFFNL/68e4X
-	 ggv0FFX6P86dmAHoLAceK6KHqN4S0qi03rbfdb28CcMq4eNuHYseSz81PKo/lUZdA9
-	 M1EyAmK0ONBJw==
-Message-ID: <3cd8a333-1724-45c0-b288-b82480781471@kernel.org>
-Date: Wed, 29 Apr 2026 12:13:32 +0200
+	b=lhriNJnKXnvXwVID7o4qw+RV0prjfMeblwqyqUkxQvZalNkh5z1dpM82yUqu0cmnV
+	 vex5CIFGg3NMvTbpUj0pnyHP3yDoF67XVWAHLanuRT2TJIiQQI5B3Cz9ey8G96/XW9
+	 Wx2ie9ldn/yfWb0uuJxkxvFlM0SoD0Y2f8KZiwelUXKkkgsgxh1piF/i/T3FwYUc63
+	 GRwZFqSoX4KBK4X8D/1NzKkEjMvPNX6fKek6GqkLPopGI7IIk3hF1Eko+75ceQFMFY
+	 +oU5tr+24acR924lXbiV36IwPxhb+3UamMCvWAwxebXTKqqqgkb6Yk6ux4WF6vGsV0
+	 4vDJW2YAgawWw==
+Message-ID: <f26c0d9a-518d-47c4-8ace-595866b493fc@kernel.org>
+Date: Wed, 29 Apr 2026 12:49:57 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -37,11 +37,12 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH b4] review: Fix sashiko patchset URL format
+Subject: Re: b4 review tui: patchwork integration
 Content-Language: fr
-To: Sven Eckelmann <sven@narfation.org>, "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-References: <20260429-sashiko-patchset-url-v1-1-de8027029bca@narfation.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+References: <f329a913-b0b3-4f5d-8bb5-a57b5b814081@kernel.org>
+ <20260428-unyielding-fat-chameleon-a264cc@lemur>
 From: Matthieu Baerts <matttbe@kernel.org>
 Autocrypt: addr=matttbe@kernel.org; keydata=
  xsFNBFXj+ekBEADxVr99p2guPcqHFeI/JcFxls6KibzyZD5TQTyfuYlzEp7C7A9swoK5iCvf
@@ -87,25 +88,74 @@ Autocrypt: addr=matttbe@kernel.org; keydata=
  JY6dglzGKnCi/zsmp2+1w559frz4+IC7j/igvJGX4KDDKUs0mlld8J2u2sBXv7CGxdzQoHaz
  lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
 Organization: NGI0 Core
-In-Reply-To: <20260429-sashiko-patchset-url-v1-1-de8027029bca@narfation.org>
+In-Reply-To: <20260428-unyielding-fat-chameleon-a264cc@lemur>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hi Sven,
+Hi Konstantin,
 
-On 29/04/2026 11:54, Sven Eckelmann wrote:
-> The sashiko server does not expose a direct `/patch/{ps_id}` endpoint.
-> Requesting https://sashiko.dev/patch/93 returns a 404, because the frontend
-> is a JavaScript single page application (SPA) that relies on the API to
-> fetch and render content dynamically.
+Thank you for your reply!
+
+On 28/04/2026 23:16, Konstantin Ryabitsev wrote:
+> On Tue, Apr 28, 2026 at 01:02:11PM +0200, Matthieu Baerts wrote:
+>> Hi Konstantin,
+>>
+>> It's great to have a built-in patchwork support!
+>>
+>> Something that is blocking me to use 'b4 review tui' more is that not
+>> all Patchwork status are supported, e.g. I cannot mark a patch as
+>> "Queued", and delegate it to someone.
 > 
-> The correct approach is to load the root page and pass the resource as a
-> URL fragment (anchor), e.g. https://sashiko.dev/#/patchset/93, so the SPA
-> can query the API and display the patchset accordingly.
+> The issue here is that patchwork doesn't expose what statuses are available
+> via any API call, so we can either hardcode it to whatever we have on
+> patchwork.kernel.org (and have it not work for any other patchwork instance),
+> or we can hack patchwork to expose it. :) Either option is... not that great.
 
-Thank you for sharing this. It looks like your patch is similar to this one:
+Could we eventually set all statuses in the config file?
 
-https://lore.kernel.org/tools/20260428-sashiko-patchset-api-v1-2-24d4ac34b4ae@kernel.org/T/#u
+For git-pw [1], I added them in my .git/config:
+
+  $ git config pw.states
+
+new,under-review,accepted,rejected,rfc,not-applicable,changes-requested,awaiting-upstream,superseded,deferred,mainlined,queued,needs-ack,handled-elsewhere
+
+(I think I'm missing 'in-next')
+
+The ones from kernel.org could be added to the documentation as an
+example.
+
+[1] https://github.com/getpatchwork/git-pw/
+
+>> I see that patches are automatically marked as "under-review", but it
+>> would be nice to assign myself as well, so others know who is reviewing
+>> what. Eventually, it might be good to ask for a confirmation: I might
+>> use the "review" mode simply to validate a patch reviewed by someone else.
+> 
+> OK, I'll take a poke.
+
+Thank you!
+
+>> Something that was already reported by someone else I think is that the
+>> "patchwork" view only shows the "Action Required" ones, and it is not
+>> possible to show more patches.
+> 
+> Kinda same limitation as the one I described above, but I can take a closer
+> look.
+
+Maybe another config option, instead of using hardcoded values?
+
+>> One last thing: it might be good to have other automations, e.g. when
+>> the "Reviewed-by" tag is sent from the "review" mode, then the patch
+>> could be marked as "Queued" on Patchwork.
+> 
+> Noted!
+> 
+>> (And eventually, have a way to run script as an action during the review
+>> and from the "patchwork" view, e.g. to apply a patch using a script that
+>> will do extra quick checks and select the right tree.)
+> 
+> Hm... from the patchwork view I'm not so sure, but I can take a look.
+Only from the "tracked" view is probably enough.
 
 Cheers,
 Matt
