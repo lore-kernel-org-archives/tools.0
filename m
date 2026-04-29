@@ -1,107 +1,127 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735EC36D517
-	for <tools@linux.kernel.org>; Wed, 29 Apr 2026 11:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4C12641CA
+	for <tools@linux.kernel.org>; Thu, 30 Apr 2026 14:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777461904; cv=none; b=F31nqP/lPEtdn2wzcVA+3n/cTIzTxICf4AWNfIyrSkQI9TkPHJHCDFltMm+TpJTwKJeW95NnJJSKD2kh4IdrVXioNyiQuBvNQZQDaEG2ujOz4v0nO+12ViSlQeIqor9p7FQ8/FDihm0gwjOiJZI7MvV6ZEwFExgsb3B/X7Na14E=
+	t=1777560438; cv=none; b=pzR/DbyM7TnSEQYoX9au5NbCOuJ+lRuqi1T7iknPyDeiQm25j2WyacDWk5Db4JDVPyYYknOZ8ub38Vs4ljwFcoiD9lvAuczphQPoKBJBrjMtL+Fxp5Tx6OD/mnj6M6VUHw5LPYib2ZheuPw/h4hA8ryNxPRKsUaFNZWYlqAKa9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777461904; c=relaxed/simple;
-	bh=n0dmDGvvUbajN1Pu8PUC4Ggo5WDz9VUqXkb64GgXJLg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OmvwFoxrg3g1FmTt5m4+fJOidG8Jp0prR3LFwUljAkWiS2/1o5nHvBamUtzhi4cmGAAAPxWP2mvdChme/ynPFZvM+gcT82Vn50eFydLtBSfvbPQ3ZCKVOj69tMiUlszUnjvUTJpGq4hJ9mqx8TKpcFIL84KJbA0bMXRj4vc77mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=youbRjM6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777560438; c=relaxed/simple;
+	bh=PgjNJKLT2zJkSi9VpdJOFcoOhqQHfDSBNF35mCNRBI4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VzYMVwUUIacKnMjp8AmQ+5i25cCCFFxEr5z1MBw7P9TErzRSaA3w913p/yfFsOl6i7j1tmCCD26KuV3IcT3h0xk+ZDVKbQkCKMr3RS5Ns9gAxhlEgP7g905m0ltuZtMgPDBoGcjGPqH73c+DR9SyFI4M4BXW2eF2c93t4PQuDIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vM1iY9/t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="youbRjM6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vM1iY9/t"
 Received: by smtp.kernel.org (Postfix)
-	id 18B20C2BCC6; Wed, 29 Apr 2026 11:25:04 +0000 (UTC)
-Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id EF778C2BCC4;
-	Wed, 29 Apr 2026 11:25:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org EF778C2BCC4
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=narfation.org
-Received: by dvalin.narfation.org (Postfix) id C31B81FF0F;
-	Wed, 29 Apr 2026 11:24:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
-	s=20121; t=1777461898;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=DB/FigGFsARfJ8AAAn/gyL/qxJXfd6q0ufqr8mkTjAc=;
-	b=youbRjM6qJrV1lv38cBGONej4omMrtsTwXAcRkP04zpig/wNcgsrAnVjnMfR1cLY3iGpNc
-	wbnsXOVaa7xOCNCs3DCzg31mqb8be4sBL+BI2T+emNaNkn0ajZz9LpxUHTOx5HoX1nQNmv
-	6dT3SgpMPv5IuUezA3UEvFzmBXHO7a0=
-From: Sven Eckelmann <sven@narfation.org>
-To: "Kernel.org Tools" <tools@kernel.org>,
- Matthieu Baerts <matttbe@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: [PATCH b4] review: Fix sashiko patchset URL format
-Date: Wed, 29 Apr 2026 13:24:53 +0200
-Message-ID: <3409149.aeNJFYEL58@ripper>
-In-Reply-To: <3cd8a333-1724-45c0-b288-b82480781471@kernel.org>
-References:
- <20260429-sashiko-patchset-url-v1-1-de8027029bca@narfation.org>
- <3cd8a333-1724-45c0-b288-b82480781471@kernel.org>
+	id 5A451C2BCC9; Thu, 30 Apr 2026 14:47:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2039C2BCB3;
+	Thu, 30 Apr 2026 14:47:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777560438;
+	bh=PgjNJKLT2zJkSi9VpdJOFcoOhqQHfDSBNF35mCNRBI4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=vM1iY9/t2BKQ45wuFAsqyAf/5CCva2wC6dU+JCnJ0IdlWvR2j3/AnA/0d31WDzruV
+	 imgLERpZhP/AubkiUNQk0DTfTomV0cDRKxCDPqgYn+dSrq0kQ8wO0Bn3ySopJtC1AY
+	 WIO8hhikkM7Cxdq0+UU4hER8OBwXdbXfyBJ3TYM7GV4RbJmmIZr8CFPU2h09+nntnP
+	 jBjY6wUdgRnnGC3sq6F8CqLNFsES1uliYwFO3ABzDjXGjybbY/3tfsXno3eq2ytHmX
+	 NNAotC3v8dUJwcpbKulD7LPfUyJAN7L0kY6Dsz4VQ1RRz/ooRyhv/n1kAQ2COSiCgP
+	 MINuZ0sKWe+ag==
+Date: Wed, 29 Apr 2026 18:32:16 +0200
+From: Nicolas Schier <nsc@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Sasha Levin <sashal@kernel.org>, linux-api@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, linux-kbuild@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, workflows@vger.kernel.org,
+	tools@kernel.org, x86@kernel.org, Thomas Gleixner <tglx@kernel.org>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Cyril Hrubis <chrubis@suse.cz>, Kees Cook <kees@kernel.org>,
+	Jake Edge <jake@lwn.net>,
+	David Laight <david.laight.linux@gmail.com>,
+	Askar Safin <safinaskar@zohomail.com>,
+	Gabriele Paoloni <gpaoloni@redhat.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Ingo Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH v3 1/9] kernel/api: introduce kernel API specification
+ framework
+Message-ID: <afIykLLPj7m0fcsX@levanger>
+Mail-Followup-To: Nicolas Schier <nsc@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>, linux-api@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, linux-kbuild@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, workflows@vger.kernel.org,
+	tools@kernel.org, x86@kernel.org, Thomas Gleixner <tglx@kernel.org>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Cyril Hrubis <chrubis@suse.cz>, Kees Cook <kees@kernel.org>,
+	Jake Edge <jake@lwn.net>,
+	David Laight <david.laight.linux@gmail.com>,
+	Askar Safin <safinaskar@zohomail.com>,
+	Gabriele Paoloni <gpaoloni@redhat.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Ingo Molnar <mingo@redhat.com>, Arnd Bergmann <arnd@arndb.de>
+References: <20260424165130.2306833-1-sashal@kernel.org>
+ <20260424165130.2306833-2-sashal@kernel.org>
+ <177726106581.2478607.12645653803520391071.b4-review@b4>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart3415685.44csPzL39Z";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <177726106581.2478607.12645653803520391071.b4-review@b4>
 
---nextPart3415685.44csPzL39Z
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Sven Eckelmann <sven@narfation.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: [PATCH b4] review: Fix sashiko patchset URL format
-Date: Wed, 29 Apr 2026 13:24:53 +0200
-Message-ID: <3409149.aeNJFYEL58@ripper>
-In-Reply-To: <3cd8a333-1724-45c0-b288-b82480781471@kernel.org>
-MIME-Version: 1.0
-
-On Wednesday, 29 April 2026 12:13:32 CEST Matthieu Baerts wrote:
-> Hi Sven,
+On Sun, Apr 26, 2026 at 11:37:45PM -0400, Nathan Chancellor wrote:
+> On Fri, 24 Apr 2026 12:51:21 -0400, Sasha Levin <sashal@kernel.org> wrote:
+> > diff --git a/kernel/Makefile b/kernel/Makefile
+> > index 6785982013dc..564315153643 100644
+> > --- a/kernel/Makefile
+> > +++ b/kernel/Makefile
+> > @@ -59,6 +59,9 @@ obj-y += dma/
+> >  obj-y += entry/
+> >  obj-y += unwind/
+> >  obj-$(CONFIG_MODULES) += module/
+> > +obj-$(CONFIG_KAPI_SPEC) += api/
+> > +# Ensure api/ is always cleaned even when CONFIG_KAPI_SPEC is not set
+> > +obj- += api/
 > 
-> On 29/04/2026 11:54, Sven Eckelmann wrote:
-> > The sashiko server does not expose a direct `/patch/{ps_id}` endpoint.
-> > Requesting https://sashiko.dev/patch/93 returns a 404, because the frontend
-> > is a JavaScript single page application (SPA) that relies on the API to
-> > fetch and render content dynamically.
-> > 
-> > The correct approach is to load the root page and pass the resource as a
-> > URL fragment (anchor), e.g. https://sashiko.dev/#/patchset/93, so the SPA
-> > can query the API and display the patchset accordingly.
+> If $(CONFIG_KAPI_SPEC) is not set, shouldn't
 > 
-> Thank you for sharing this. It looks like your patch is similar to this one:
+>   obj-$(CONFIG_KAPI_SPEC) += api/
 > 
-> https://lore.kernel.org/tools/20260428-sashiko-patchset-api-v1-2-24d4ac34b4ae@kernel.org/T/#u
+> evaluate to
+> 
+>   obj- += api/
+> 
+> anyways? Why the duplication? This is the only place in the kernel where
+> this would be needed?
 
-Yes, your patch series looks better than my single patch.
+yes, this is definitely not needed, as obj- is always evaluated during
+'make clean', cp. scripts/Makefile.clean [1].
 
-Regards,
-	Sven
---nextPart3415685.44csPzL39Z
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
+Kind regards
+Nicolas
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCafHqhQAKCRBND3cr0xT1
-y6TpAP9kU+2a/Od8QrGNsfiYCn7sR0NZIEAJGO5F1vjUZklYFQEA96zULbvYLlmJ
-iLHUOlHsLX2cUWYwcdBM4PJa2G5SoQ0=
-=VF0j
------END PGP SIGNATURE-----
-
---nextPart3415685.44csPzL39Z--
-
-
-
+[1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/Makefile.clean?h=v7.1-rc1#n30
