@@ -1,84 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D24D2BB1D
-	for <tools@linux.kernel.org>; Tue,  5 May 2026 00:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247F43CFF65
+	for <tools@linux.kernel.org>; Tue,  5 May 2026 05:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777940805; cv=none; b=PTPLBJJsqF1b+ZdU0zFCNr+4mxtfYYhZohDyqR77Vtw5QJu7i+qHtbvhgn6TptIlRELaNieBPRQ+TH/mB4Djp/WijR3a6Ql27CG60QEmkNxh/aFe0X9C853wm2cFpH3efJZSbm0Av0Dj3bQx7dqxuoLhJNaOCesDGT/9zzE99cw=
+	t=1777957222; cv=none; b=SC63JitPgxNi3ezlkSiUeE7FW8P88OpsRmMEpZtXyvSuHfswTY1GqNk13IMmfpBw/6drzkqyClLRrkPts6IzByIKSO9j9k+LblpMJjuWD5apB4Ou7jjCUh6rNcRxIkPIQ4dKrcextMLtbOLL9WrQzGm3Lq8GttHmuZsyFtE06CQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777940805; c=relaxed/simple;
-	bh=IHgC0AAUbmEALwVuXK685UHmF+uVh6vIZR/wxKPnuHI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=FP5k8VpHzfNmrinJJwmI84nbdB3ieVssxPJkzbvRBiuFqDaCsa7/hGV2qbBJyX59AsSYgL9XRAe649ZI7a+RoZGNlaQX+Aiyfb+pEN1ns/uvHjby5/64jq0kaMJXYj9K17Aepvc7wtE+J+QL8SOzL6SdItVg8ut+8MnntXDJvD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q0gSBspi; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777957222; c=relaxed/simple;
+	bh=rh8odky3D5jNP5n0PgVNbeWps2Fm5k419VCl6b9988k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=gEtAs8MoA04VjBK9790vZVdeoWgmeJIfvxWFqQYwe2hujvOK1hgY+gw3LklLCqL+3Jmq6kZ8xPGTF4ym6EH8pQSyE4Vw6004YIHoNpzVZdSVH8BNd8MS7kMvf4fqmGPWNR8x7hv4/+NwI3CI30R5sZHG9nPj4juYuZbXfOAhK/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=dCoS9LBa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q0gSBspi"
+	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="dCoS9LBa"
 Received: by smtp.kernel.org (Postfix)
-	id B62DAC2BCC4; Tue,  5 May 2026 00:26:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8855DC2BCB9;
-	Tue,  5 May 2026 00:26:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777940804;
-	bh=IHgC0AAUbmEALwVuXK685UHmF+uVh6vIZR/wxKPnuHI=;
-	h=Date:From:To:Cc:Subject:From;
-	b=Q0gSBspiFzrRqCaZMy0jXhaoPnF/9XAMT3jQ02xR7K6EMfpu1pdW1YI6fWTm/HESi
-	 qdhvr6fXrsJvmfAwQyH6TMtVGTtWP7xQ9KvnIucedi1Xg7rOiQW8A4plI0RBZblvUq
-	 mk1lRz4qmu/D1Of8b4Ue1yX8eRr9GM4nbjDvDrarEKzQKYHMMCHRK0FMisctvE2bVk
-	 6zln/clnQ1vfVXA9z8sfRp9DHbiKnqJLaVvXXHdRMfy3NxVPsVxMdNQBh02JMFqKuF
-	 MBkbADSl7BAqXO310DTKsE3ej7VksNPMl1YvO+e4WrpEClaw+6efUeq4MYtzSGaTFM
-	 vJxEcJ5li78XQ==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 2BAA01AC586A; Tue, 05 May 2026 01:26:42 +0100 (BST)
-Date: Tue, 5 May 2026 09:26:42 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 review workflow issue with partially accepted serieses
-Message-ID: <afk5QvNAQDxFCbvT@sirena.co.uk>
+	id 0E413C4AF0C; Tue,  5 May 2026 05:00:22 +0000 (UTC)
+Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 97861C2BCC7;
+	Tue,  5 May 2026 05:00:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 97861C2BCC7
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=narfation.org
+Received: by dvalin.narfation.org (Postfix) id B1DB31FF65;
+	Tue, 05 May 2026 05:00:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
+	s=20121; t=1777957218;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0p63Vuyg2BHhSCETxmGqmI4a7vMqL3by6SZS5CTlcLk=;
+	b=dCoS9LBafapQqcaPCIGlZCEsmGIVJ5bwtRDdM5qEu1t604SHKmFW5JGuU4hGMIQ6YoB5GC
+	NY/LLnm60aRptb233MQUyr838Uak5inR/AMAmxcY7ctCH+et1EFlFcRkez5UuyJHvrwVW+
+	2QLLEV3uI2cIs2NMQYVFrl/DFlyPhvI=
+From: Sven Eckelmann <sven@narfation.org>
+To: Jakub Kicinski <kuba@kernel.org>,
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Marek Lindner <marek.lindner@mailbox.org>,
+ Simon Wunderlich <sw@simonwunderlich.de>,
+ Antonio Quartulli <antonio@mandelbit.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>,
+ b.a.t.m.a.n@lists.open-mesh.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Ao Zhou <n05ec@lzu.edu.cn>,
+ Haoze Xie <royenheart@gmail.com>, Jiexun Wang <wangjiexun2025@gmail.com>,
+ Juefei Pu <tomapufckgml@gmail.com>, Luxing Yin <tr0jan@lzu.edu.cn>,
+ Ruide Cao <caoruide123@gmail.com>, Xin Liu <bird@lzu.edu.cn>,
+ Yifan Wu <yifanwucs@gmail.com>, Yuan Tan <yuantan098@gmail.com>,
+ stable@kernel.org, "Kernel.org Tools" <tools@kernel.org>
+Subject: Re: [PATCH batadv 0/8] batman-adv: follow up fixes
+Date: Tue, 05 May 2026 07:00:13 +0200
+Message-ID: <2262783.irdbgypaU6@sven-l14>
+In-Reply-To: <5990011.DvuYhMxLoT@sven-l14>
+References:
+ <20260503-fixes-followup-v1-0-4313278918d3@narfation.org>
+ <20260504171051.2b3e47ef@kernel.org> <5990011.DvuYhMxLoT@sven-l14>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VTqy5DUXjxyzg46e"
-Content-Disposition: inline
-X-Cookie: Alex Haley was adopted!
+Content-Type: multipart/signed; boundary="nextPart14003289.uLZWGnKmhe";
+ micalg="pgp-sha512"; protocol="application/pgp-signature"
 
+--nextPart14003289.uLZWGnKmhe
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
+From: Sven Eckelmann <sven@narfation.org>
+Subject: Re: [PATCH batadv 0/8] batman-adv: follow up fixes
+Date: Tue, 05 May 2026 07:00:13 +0200
+Message-ID: <2262783.irdbgypaU6@sven-l14>
+In-Reply-To: <5990011.DvuYhMxLoT@sven-l14>
+MIME-Version: 1.0
 
---VTqy5DUXjxyzg46e
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Tuesday, 5 May 2026 06:46:11 CEST Sven Eckelmann wrote:
+> On Tuesday, 5 May 2026 02:10:51 CEST Jakub Kicinski wrote:
+> > On Sun, 03 May 2026 14:22:33 +0200 Sven Eckelmann wrote:
+> > > While reviewing the fixes submitted to batman-adv in the recent weeks,
+> > > further problems in similar or adjecent code was identified. This was either
+> > > noticed in the manual review or reported by sashiko.dev.
+> > 
+> > Are you CCing netdev to get this reviewed by Sashiko?
+> > Please don't..
+> > We delegate code to sub-sub-systems to lower the patch volume :(
+> > 
+> 
+> Because of `b4 prep --auto-to-cc`. Will now manually remove you.
 
-Hi Konstantin,
+To speed up the discussion: @Konstantin, is there a way in b4 to say "stop at 
+the sub-sub-systems" when doing `b4 prep --auto-to-cc`? I am just trying to get the 
+`b4` workflow somehow working with the netdev requirements.
 
-b4 review tracks the state of a series at the top level.  This gets
-confused if you partially accept a series (eg, taking fixes at the start
-of a bigger series that needs more work) then the state gets confused.
-The bits that are accepted trigger the applied->thanks->archive flow
-but that means that new versions of the series can't be ingested even
-after the series is archived.  This is a pretty severe workflow problem,
-there should be a way of splitting serieses and/or retrieving them from
-the thanked/archived states to reviewing.
-
-Thanks,
-Mark
-
---VTqy5DUXjxyzg46e
+Regards,
+	Sven
+--nextPart14003289.uLZWGnKmhe
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmn5OUEACgkQJNaLcl1U
-h9COGgf9GD7zJ8gsAh100p8qyQEKTpzwdQ4D1jTx01rQQGuv7oQy/bwea5pJKMIf
-ndYVQVqgyd8lSyRhDLcIEaG/+LdR3w5sUsTDPj3Wn6UdDBnFhPuE6YZSh4Of0aNn
-4wa1y+s+BA85BeVpdZmZWfyq0jxiL7noiZmxwEvBUIjmmm1K+Eia31s3uPe6FlMG
-Ti3PNj8LPEJuYkpl2UBjJ8HIysEQL1vEsyXC/kVGJgOix1/vbvJBOtaAJlMzcfPJ
-c7r5ns8Inh6JOA7lcSWJlYcigGROqfr6uevoZkB/KrXbzz+1T7Knqn7mzEVfBaLM
-cMskOLfMhG4V4+NNqxUFlOW50Z3bHA==
-=MDh4
+iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCafl5XQAKCRBND3cr0xT1
+y9kbAP0We2KhIMdc154ZGMvJr5fgFhZ3BuBDeXGUee0WAUaLPgEA4HdEwJwLk+ri
+//HNnBYNg7ZtoVdLqMIpLaFy0KqO0AY=
+=KjI1
 -----END PGP SIGNATURE-----
 
---VTqy5DUXjxyzg46e--
+--nextPart14003289.uLZWGnKmhe--
+
+
+
