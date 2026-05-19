@@ -1,112 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B580648AE38
-	for <tools@linux.kernel.org>; Fri, 15 May 2026 14:02:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778853752; cv=none; b=QRZ38rohBxmpnEZcEukDr2H0r6ApSUyikVY6wqxBA1YrqXvEV87cbavFg1Y6ldQmFFjhWzIxh0Y45C88t5ndH9lS2vi3Rj4+ilFWkTLjbL4npMkF/z2N0cf2bSTD3FgQSEslaxHJpxrAODXm69x0lEpWnO8BAyWMAz9DdbnrxhA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778853752; c=relaxed/simple;
-	bh=LaKig/8Xl/uQwzdOyLkBwBdJWzNvezXHKDrTjI+YPIs=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=T193obcAThzdu/+ZDSvfzuBFfF8U2Ezp2YwaAE26Xl5R/QdImo1WK0GM282JwZup5lhsQWqlU0o1kIAufVftuM7LZ9BICpQS6bMzvatv1bxwCEMFIxNkx/LHB/lIz5xC7/XIjtviHECh987o9Sr3Zn64/gQTIQ+w0AJgGXrBgbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=bB1bBgYq; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C399F40757A
+	for <tools@linux.kernel.org>; Tue, 19 May 2026 09:51:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779184282; cv=pass; b=Xq2PIBAzfaAcKxHi3dh6sG8FszhYUUaz1C8hCJXHvCW2iHiu7YX+OicekNxI30L0hLcZf98+nhO4A2rZalef7bcLxUyzbKZcPJS0woHTS8z4Sxa0BMUCbmfTbmta5G6qob+a2kb90Jp5FIc/wWdKO8xzzQXSrCBKBsRYaBwPNnk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779184282; c=relaxed/simple;
+	bh=FMWVDVROsFrgfM6hzX/CHBgP7/umYnnjp11Vuqb7Uq0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:From:To:Subject:
+	 References:In-Reply-To; b=ZWla2lgSj+eZ9+CYmxzsImWYu7bmsUd8UDYOzXew9hQkNJruSGE39oovwLAA/gKazoi+zD0nrbpcMedsvXtshY7zoiSrDOxgW1MnrKXW0Odtl++SkHBUZONEhnJes2U1F8rer0xbDGBAc8znVq8Zsn19vMs23Qya4tYJB2ZGXdo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b=F7MhZMkj; arc=pass smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="bB1bBgYq"
+	dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b="F7MhZMkj"
 Received: by smtp.kernel.org (Postfix)
-	id 0421FC2BCB8; Fri, 15 May 2026 14:02:32 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	id 7562CC2BCC6; Tue, 19 May 2026 09:51:22 +0000 (UTC)
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 1D438C2BCB7
-	for <tools@kernel.org>; Fri, 15 May 2026 14:02:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 1D438C2BCB7
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1778853750;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=LaKig/8Xl/uQwzdOyLkBwBdJWzNvezXHKDrTjI+YPIs=;
-	b=bB1bBgYqAX/9J/BTWSorgQZrPUADza284sCRbMRthQiyUisar+1M3HJMMSdmRUQDggkpKc
-	JNVFQLRwuRUCoyaSOiyIQcsK0x/Jc5U9I/Qhtev+aW7fjRbaUCoXapuC/NRfTWV/Sn8ebN
-	HXRsXtH1z2rtSGmRfrX/0PSNoIvvVes=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-436-pkh5e-xPPAa8H1IXGYOZZA-1; Fri, 15 May 2026 10:02:27 -0400
-X-MC-Unique: pkh5e-xPPAa8H1IXGYOZZA-1
-X-Mimecast-MFC-AGG-ID: pkh5e-xPPAa8H1IXGYOZZA_1778853746
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-83836443305so5287846b3a.1
-        for <tools@kernel.org>; Fri, 15 May 2026 07:02:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778853746; x=1779458546;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LaKig/8Xl/uQwzdOyLkBwBdJWzNvezXHKDrTjI+YPIs=;
-        b=nQf+ay+b5yDps1aBEzYK0tU9QGAbwwE1EctAMfzR2BJL9Gh29vCJExz9cJJNY+mNw7
-         OBF2d56wOw1o7xHwXkaDMDBc3Q5G3PH4Lx8mF6K72gLcYTUT4qVGvWtN82w1qykKfazi
-         aGyxdcwPeqp5ymXpEfygYhL3cAUinyiACdJW0tkwBIi1Xwqte5uKHGC6b/erIRt+f36V
-         Cpx9x4HEL2IbahCwuhTaPTcmK32pPBSBHVvpGrtDPt0Fb8nJgwQ4q6I5mMluV0YhJUFn
-         UlK5VKqUsXJDs+1siznRZAgZOymrvKHEPKUQ6CKUJ7mvegFy4gb05dLpxo7jtPtZrZYn
-         k9qg==
-X-Gm-Message-State: AOJu0YwHN6cclu/g7xxrA0hpwjs6FIR+R2mt2CMwGBXQ6GBPvTBbnig3
-	4aOAxvR2RW0LUjYlxC5JkSk8ZUFFrRPLfP02NNNLOzQO0veqKVh0/xTnlnF3tKSm/b+jyyLUEDh
-	5AbioQhjYWB6v2kfnZP+BjwlHuI0O71eChv79YQhY9psVoAdIQCG0ZnL1BpUV4zOCgSFbR7+xqm
-	sgJz05dsv7LonLLAN6AakvxH1o5UYi2fLiiJg=
-X-Gm-Gg: Acq92OFARV4wT5Zr6rI8Xh7AyZvP3jvDyBMMJwoFOynPn3Rg9yR3d+CDl/X7nVgfOvR
-	FmFWMTclT5lo1wwSUDnY70LF3v4G6NLfadpE7XEu+2364v5OjPLA24t+Dcbp7WWu5k45iLfut5q
-	ohk2oExEV+r/L33D8iJsoYg9hR+AK15jfRhDDDXVNb/8zZTrmC9Nd0F0WOdU+hIuLCRvHOof3a+
-	SiXwOCYq9ViqFMKoiGA1EO6MFwqJF4pNf8P4QH3mrmLm4SAcw==
-X-Received: by 2002:a05:6a21:3294:b0:3a2:d79c:415d with SMTP id adf61e73a8af0-3b22ebbf030mr5303113637.30.1778853744304;
-        Fri, 15 May 2026 07:02:24 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3294:b0:3a2:d79c:415d with SMTP id
- adf61e73a8af0-3b22ebbf030mr5302746637.30.1778853742079; Fri, 15 May 2026
- 07:02:22 -0700 (PDT)
+	by smtp.kernel.org (Postfix) with ESMTPS id 4AD6DC2BCB3
+	for <tools@kernel.org>; Tue, 19 May 2026 09:51:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 4AD6DC2BCB3
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=ritovision.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ritovision.com
+ARC-Seal: i=1; a=rsa-sha256; t=1779184277; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=iSXgMXhk4g5gyZpobvA3uf9au2ab9QKuyaCvl5DOXyWuNtQnAxB2h/ZH/BD2A51XCvFPDtzk6qpR2aXIc6V7FAmNqurfdlepO58mP1OZDiCAvbOaZrh4Kb1qYrVgbNakJotNcQelHqUuveJdKjP13UWv5H77uR2h5aUnJ3Fim2M=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1779184277; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=FMWVDVROsFrgfM6hzX/CHBgP7/umYnnjp11Vuqb7Uq0=; 
+	b=AWgGskZJTxWGfevnau4gpsqjz5pKJsbfrUINzV68AK2q8ODB682LmS60S66pFDXzTUfSRRtVX6ZCkbwsjCIyWEj7temU3ggHxCiRINC8EZWTbj6UMJR/ytrGEasVzJ3CnQLxD3Jzvp8wDB1G1I5n58JHHIWjdaMPiI/Xo9/3wk8=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ritovision.com;
+	spf=pass  smtp.mailfrom=rito@ritovision.com;
+	dmarc=pass header.from=<rito@ritovision.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1779184277;
+	s=zmail; d=ritovision.com; i=rito@ritovision.com;
+	h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Date:Message-Id:Message-Id:Cc:Cc:From:From:To:To:Subject:Subject:References:In-Reply-To:Reply-To;
+	bh=FMWVDVROsFrgfM6hzX/CHBgP7/umYnnjp11Vuqb7Uq0=;
+	b=F7MhZMkjY4qABkI+JjAvlmsFM8/rnUTgDj8nGixmKeVelwJBci1YwbqEud5/mV2/
+	Bj5YCBpEP5qrdaXzXw46VrBibKLOtTdPakZN6duKWgaHlbKfLBHL/cji+4v+Ad/B9b8
+	yd1Yb5APEaejbBBU6lBhh92e1blstttLgGGq+6qU=
+Received: by mx.zohomail.com with SMTPS id 1779184275069864.7399755497792;
+	Tue, 19 May 2026 02:51:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Fri, 15 May 2026 16:02:11 +0200
-X-Gm-Features: AVHnY4KJm2usoskPlohZgQolNwYzh2Ijc68PH9TGhg3YOvrnMCsmwdimF6sZSEo
-Message-ID: <CANo9s6mjy57bsiib_+BhpftUZ73=Nwg35VK_v+ebt_KK-yf9Bg@mail.gmail.com>
-Subject: b4: not possible to disable automatic commit changes
-To: tools@kernel.org
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: CkHZKh5D0BeDNjcR7VgjNvTYYszFki-yYcx5FmdR36Q_1778853746
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 19 May 2026 05:51:11 -0400
+Message-Id: <DIMK6QKSFZ06.1CO47QXMHEKQ6@ritovision.com>
+Cc: <tools@kernel.org>
+From: "Rito Rhymes" <rito@ritovision.com>
+To: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>, "Rito Rhymes"
+ <rito@ritovision.com>
+Subject: Re: [PATCH v1 0/6] Allow site layouts to render properly on mobile
+ devices
+X-Mailer: aerc 0.21.0
+References: <20260316180036.71949-1-rito@ritovision.com>
+ <DHP4NMANLLWE.2IAG0KWI6ZY06@ritovision.com>
+ <20260410-hulking-juicy-boa-daef75@lemur>
+In-Reply-To: <20260410-hulking-juicy-boa-daef75@lemur>
+X-ZohoMailClient: External
 
-Hi all,
+Are we able to get this series moving, or should it be routed elsewhere?
 
-I was backporting a patch to linux stable and I added a [] tag after
-the maintainer's SoB,
-explaining the changes I made to the commit.
+I get how prioritization works here, and if I were in your shoes I'd be
+focused on functional issues too, it makes sense. This series isn't the
+same class of issue as the others on your queue, even though it does fix
+the entire site's broken mobile layout in one swoop. At best, it's a
+significant brand and UX problem; it's not preventing the website from
+functioning, and nobody's going to stop using kernel.org because mobile
+is broken.
 
-The [] tag, which spans two lines, was automatically moved by b4 to
-the text section,
-without warning me when sending.
-Going through the documentation I didn't find an option to disable
-such reordering.
+But that's exactly the issue with it sitting in this channel. By that
+prioritization bar, it will NEVER clear the threshold here over other
+pending items, and we're over 2 months in with no movement. If website
+theme edits aren't really in scope for this channel, I'd rather see them
+routed somewhere they can actually be managed instead of being in limbo
+here.
 
-For reference, I wanted to achieve [1], but I ended up with [2].
+Review shouldn't take long. The code is clean, commits are logically
+ordered, there's a live demo to test against, and this isn't my first
+patch around here. Once it's done, the website can sit pretty for the
+long haul.
 
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[LL: something something]
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+Happy to walk through it if that helps.
 
-but [LL: something something] was moved into the text part of the commit.
-
-Did I miss something in the documentation?
-If not, I think adding an option to disable the reordering would be great.
-
-Thanks for the great work with b4,
-Luigi
-
-[1] https://lore.kernel.org/all/20260515-linux-6-6-y-v1-1-b47eaf4cc6e6@redhat.com/
-[2] https://lore.kernel.org/all/20260515-linux-5-15-y-v1-1-033f2ea86d6c@redhat.com/
-
+Rito
