@@ -1,123 +1,159 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CF3258CE5
-	for <tools@linux.kernel.org>; Fri, 22 May 2026 00:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779411021; cv=pass; b=t6OebN7E6Jl5h48MqGNXClisjxDrDjipVVdk8jkprOxwwT5OtP4HpKgPGNGxuUUPYZejNQbtCzEhBf3zJpEzWyUNvLjW6YuQdYzN3u5IjRGNjDYg1w0oOQhKCVvHnJYbw4rO+1ZyZklBNcDXG2tRdcaV5z5mqQ6UFY1THI0NPko=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779411021; c=relaxed/simple;
-	bh=VWBNQLp5i3tfCmDySLJ5kT1dzfNbrCFkt3nUhvg59Vk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SpImsOp2IoJlsykrBmnkUfaFYLLsxoPuzr7JBQDTLFZLY4bE6m78PhaqVH08HLqQKzi+BiVjhnMILgqobwNHBTdMdDhW2masKLQlxqBhbmXRA9VQAqVDdnjK3MfCYZHyzbN3+4DeTh40Qp3C0gVTcI65R16kUOka0mKFeZJjbFg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=W3YdEEIV; arc=pass smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A804535837E
+	for <tools@linux.kernel.org>; Fri, 22 May 2026 10:57:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779447481; cv=none; b=i2z9mQaMt+pAP7ntOLE2rBwQ6noBkvs+6KeRavV4ZF+GRtj3l7ZiOnCES/rtoCiXSM9CMnx8+JabgnjoOSWUCdJac1i2Jee8T9jkk7PeZUejt8Dqo+baMbzoWeE3WPsdhAT4wA/hCtEeSX7xdyAXFKTmC3o2L+CBYj70g+V75Lk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779447481; c=relaxed/simple;
+	bh=arE9CODRT3CZtGy4exhJPDDdVVCdFpoKh+Cz+l24tGE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VeA4ZgXKKXrt8LI3ybyvVS7jRs2AXkdWbnQPvn4h+wfjKNuKN9rpP9xXPf5KqrDfAXPDogVIMXtxWG92vFCzcXOtPxnBEpRdVJJZQPNRJugtZizQNQKDe5OK10WOQFyJRimltQV8a/M59+Y1718S6vOWCnvcOXCWyCRgn0I8M0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EmmXW6sv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="W3YdEEIV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EmmXW6sv"
 Received: by smtp.kernel.org (Postfix)
-	id 7C67A1F00A3D; Fri, 22 May 2026 00:50:18 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=65.109.113.108
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1779411018;
-	b=X+J1f++l/9DboY7+LVG1a/BUYM4WrnmwTcBL9eReoSpFJFbyooNgCYTK8Y9dJjCK/nZ5
-	 HCaaNd0Jh/4xg0tDY30BPfOXxaIVkVlRLVJCSvUdJwFHxMBSz7SPhqUgt5gBNygzetV3P
-	 cA+KHdRjJZKKv+KOQDoCIOZqk7RBdqwcbZQH+X8HTxo9rEfvuD+tkB3yWmakRnC04k6JQ
-	 mqDTfW08o7+F73Mf10n0LPGUAB2tER/3EbS/IOzdMOq68CyNrSprXYogeKo8i3PRXE1tB
-	 8Nmy3VLXswr3J4m5Qpl4NFinKqJN3OvJ+pZFMOnnC/HM4VlGNxCSTLX4hahLcY+PVLg==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1779411018;
-	h=DMARC-Filter:Received:X-Virus-Scanned:Received:DKIM-Signature:
-	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=GyoAnLMRLF5QlP89FUSdWOA5yy7H00VwoH1O55nR1/c=;
-	b=vBRMv+/qp61xq60Oplz8aBJni2vJciYW25Fe9Qv00UDDSKbnbQbKy/XvRmEPcglzSRpV
-	 rNiIqsc0bPbP3K47ZrgG6FqgjRgdRqaawboXgl8ZNydBB1jQirifRlJDcBcBbJmhUu91h
-	 UAbRSgh64sxeHMltmiLg/DKslaaXm4aAFcCIF2oCE3CN4hoATbP5V67M6Og6GHSmVqr/S
-	 k8Cp066ykGkC/NpXdb0dQc4TGCJOhlwanyxwAElnZh027J1qg6kkyByT4u0hXtwjYug3i
-	 KLtn/4ESBC7aiVuypOTrF6rgK2X34q2NMP4EC7idsntcR6PatsJup2UDzErw24Jb0+Q==
-ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=alien8 header.b=W3YdEEIV;
-	dmarc=pass header.from=alien8.de;
-	spf=pass smtp.mailfrom=alien8.de;
-	arc=none smtp.remote-ip=65.109.113.108
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 99EA21F000E9;
-	Fri, 22 May 2026 00:50:16 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (4096-bit key, unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=alien8 header.b=W3YdEEIV
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 99EA21F000E9
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=alien8.de
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 79CEA40E01B5;
-	Fri, 22 May 2026 00:50:14 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id fIUKfy_V-YDF; Fri, 22 May 2026 00:50:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1779411004; bh=GyoAnLMRLF5QlP89FUSdWOA5yy7H00VwoH1O55nR1/c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=W3YdEEIVnJMDpOKHD2lWP7zbJaFwlkdQeCUOEg8H0SuiECMMHUvnL9vuf7PTfCz2u
-	 YN9z+94j4kPaCPd1xF4xqeVLmsrcU+nXa5bMsdbtyALXAygRyvBd295JxudY+Bxa/q
-	 Epp1Su0j6Idn7Ftc8Oyz4xrx2W/Czu7Y2ePvqKwDhBX7RwEsyYp1ALvetPegKK0h7U
-	 Y/WrJd0mwOix7ay8x9J29v6GeLAfbA5GGf7oJPjVruLIfQ79X9J0LzanWXkQYQN+rL
-	 OtLMjAWGw/EkvvdKwKnPmjaX9ooi2ryp41rGH3DX8dAkeAi81zxJGb52pi3FnmWAzf
-	 WTTmB1vD8CpBwVBUaqB3LDG8rD0P7ycT8JIvB5fAMBE2EqKI1S0IgBRYKpGVvJo2Zc
-	 ook0XBSweW+6FqknHgpq2iGPk+Cvhea0j1IAOqckOXLtktupHPb+orHBcQ7Mwg/IYt
-	 Xkioe3Q+DqGfCS3njLevGlICeL+Mt4hEwAATcakl/XxQVD+LX3jNO/36G3eXGEO6nc
-	 HdDnEFU8SvpciTttjrnmn1FmS+6UVgU2vtu/4dJEGvPVNiz0AaV2jX/5h8HLkdTJ51
-	 0m0kMDvVw8W9Yhkp3omptcZ2Zj6sKi8PRmC96xQZtJlhZkzJSxvG/OVSd5AZ/H3s/4
-	 063c5M+H3TPEZuu0RWZ8S2Lc=
-Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00:b8a3:f58e:8829:9ca6])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 1E0BA40E00BA;
-	Fri, 22 May 2026 00:50:02 +0000 (UTC)
-Date: Thu, 21 May 2026 17:49:44 -0700
-From: Borislav Petkov <bp@alien8.de>
-To: Konstantin Ryabitsev <mricon@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: kgl and git shallow issue
-Message-ID: <20260522004944.GAag-oKAsjY0tTGBT2@fat_crate.local>
-References: <20260520-invaluable-careful-cockatrice-e6ed3d@meerkat>
- <20260520-ancient-thundering-bobcat-2f086c@meerkat>
- <20260521011540.GBag5cvFqefROohMlm@fat_crate.local>
- <20260520-greedy-dalmatian-of-protection-4e28ed@meerkat>
- <20260521020958.GCag5pdn7ojEIRXMrY@fat_crate.local>
- <20260520-determined-emotional-porpoise-1cf7ae@meerkat>
- <20260521035853.GDag6C_Td1WFqMjFro@fat_crate.local>
- <20260521-chirpy-hot-cassowary-5df4ff@meerkat>
- <20260521154232.GAag8n6HItOIrVPd5o@fat_crate.local>
- <20260521-vigorous-otter-of-peace-daed58@meerkat>
+	id 653CB1F00A3D; Fri, 22 May 2026 10:57:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE351F000E9;
+	Fri, 22 May 2026 10:57:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779447479;
+	bh=s9i2Eec7pAev/btfO93KCQzcRVBjtGF7tXYzCWNVwG4=;
+	h=From:Date:Subject:To:Cc;
+	b=EmmXW6svfhal/aHEEMuhBTy4ak3f3nfIxiXZXPUKTZC/TPdaYm91oof9Si43kgMhb
+	 1ZyN58bY/A+MgcwFOSwWLybAcMwRS5DyMytsBbPnaj2nutMqFK76tenmF4osTYlzRb
+	 m+TgOBkEDv4LZym6ri3CLQe68hd7TUIk4NUDkLEtfegGVr9hV40TkqgN603k9ugDko
+	 c1WOIUd+AujS5Bz3OZ99eYewQe0yDAA0qY/Ldm0kRiF4a5M8U2i8ksaRw/PjHuAICi
+	 n8QCdB7xz8lJqsaIJLSIdOxZdE+vJNw2aspBPlTuJppXHAC5K4815zvID72jDTeTPG
+	 SI2jkRa+6okoQ==
+From: Christian Brauner <brauner@kernel.org>
+Date: Fri, 22 May 2026 12:57:56 +0200
+Subject: [PATCH b4] review: allow a custom Message-Id command for TUI
+ replies
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260521-vigorous-otter-of-peace-daed58@meerkat>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260522-review-msgid-cmd-v1-1-facc71f2e084@kernel.org>
+X-B4-Tracking: v=1; b=H4sIALM2EGoC/yWMQQqDMBBFryKz7oCGKNirlC4myahTSFoy2hbEu
+ zexy/d4/++gnIUVrs0Omd+i8kwFuksDfqE0M0ooDKY1Q9sbgzXiD0adJaCPAe04GhsG29uOoMx
+ emSf5npc3cBbuf6ebe7Bf61etHCmjy5T8UlUkXTnDcfwATLjCu5EAAAA=
+X-Change-ID: 20260522-review-msgid-cmd-49924d64541a
+To: tools@kernel.org
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ "Christian Brauner (Amutable)" <brauner@kernel.org>
+X-Mailer: b4 0.16-dev-981da
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4075; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=arE9CODRT3CZtGy4exhJPDDdVVCdFpoKh+Cz+l24tGE=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWQJmG175b/u0eIcBYZUl2OKdzS+dlxnlJrmcTVpQfOCj
+ KxZtzfO6yhlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZiIgynDH86ve8O8D/idaN5l
+ 6JN8kGGmRqHMEvNv3/niKrol5ufY/WdkuC/fZGF14q6551UL/rbik7fWbLG/r61l9/auWLDNxL4
+ uDgA=
+X-Developer-Key: i=brauner@kernel.org; a=openpgp;
+ fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-On Thu, May 21, 2026 at 01:04:59PM -0400, Konstantin Ryabitsev wrote:
-> Ah, yes, the famed U.S. approach to foreign policy.
+The review TUI composes replies and sends them directly over SMTP via
+send_mail(), bypassing git-send-email and therefore any sendemail-validate
+hook that would normally rewrite the Message-Id. Review replies thus always
+got a built-in <...@b4> id.
 
-Well, that has been my approach to sw since forever! :-P
+Add an opt-in b4.review-msgid-cmd option: when set, run it and use its
+stdout as the Message-Id (angle brackets optional), falling back to the
+built-in id when unset or on failure. Wire it into both the review-reply
+builder and LoreMessage.make_reply() so follow-up replies are covered too.
 
-> I will, at least, add a better error message than just shrugging and failing.
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+---
+I love b4 review and I'm in the process of making it my default review
+tool. 2026 and kernel review is officially better than Github. Didn't
+expect to see that day tbh.
 
-Ack, thanks for writing kgl, I find it very useful!
+All my reviews come with specific message ids and I would like to be
+able to continue using them so I would appreciate the ability to define
+a message-id generation command in the [b4] .gitconfig section.
 
-:-)
+I've written the patch for this.
 
--- 
-Regards/Gruss,
-    Boris.
+Thanks!
+Christian
+---
+ src/b4/__init__.py       | 28 +++++++++++++++++++++++++++-
+ src/b4/review/_review.py |  2 +-
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
-https://people.kernel.org/tglx/notes-about-netiquette
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 0530fec..ff056e2 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -177,6 +177,8 @@ DEFAULT_CONFIG: ConfigDictT = {
+     'review-target-branch': None,
+     # Do not patatt-sign outgoing review emails
+     'review-no-patatt-sign': None,
++    # Command whose stdout is used as the Message-Id for review-TUI replies
++    'review-msgid-cmd': None,
+ }
+ 
+ # This is where we store actual config
+@@ -2531,7 +2533,7 @@ class LoreMessage:
+         references = LoreMessage.clean_header(self.msg.get('References', '') or '')
+         msg['References'] = f'{references} <{self.msgid}>'.strip()
+         msg['Date'] = email.utils.formatdate(localtime=True)
+-        msg['Message-Id'] = make_msgid(idstring='b4-reply')
++        msg['Message-Id'] = make_msgid_with_cmd(idstring='b4-reply')
+         return msg
+ 
+     @staticmethod
+@@ -5853,6 +5855,30 @@ def make_msgid(idstring: Optional[str] = None, domain: str = 'b4') -> str:
+     return email.utils.make_msgid(idstring=idstring, domain=domain)
+ 
+ 
++def make_msgid_with_cmd(idstring: Optional[str] = None, domain: str = 'b4') -> str:
++    """Like make_msgid(), but use b4.review-msgid-cmd's output when set."""
++    config = get_main_config()
++    cmdstr = config.get('review-msgid-cmd')
++    if isinstance(cmdstr, (list, tuple)):
++        cmdstr = cmdstr[0] if cmdstr else None
++    if cmdstr:
++        sp = shlex.shlex(str(cmdstr), posix=True)
++        sp.whitespace_split = True
++        args = [os.path.expanduser(os.path.expandvars(a)) for a in sp]
++        try:
++            out = subprocess.check_output(args, text=True).strip()
++            if out:
++                if not out.startswith('<'):
++                    out = f'<{out}>'
++                return out
++            logger.warning('review-msgid-cmd %s produced no output', args)
++        except (OSError, subprocess.SubprocessError) as ex:
++            logger.warning(
++                'review-msgid-cmd failed (%s); using built-in message-id', ex
++            )
++    return make_msgid(idstring=idstring, domain=domain)
++
++
+ def is_maildir(dest: str) -> bool:
+     return (
+         os.path.isdir(os.path.join(dest, 'new'))
+diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
+index 47098c1..f874bb3 100644
+--- a/src/b4/review/_review.py
++++ b/src/b4/review/_review.py
+@@ -2521,7 +2521,7 @@ def _build_review_email(
+     else:
+         msg['References'] = f'<{header_info["msgid"]}>'
+     msg['Date'] = email.utils.formatdate(localtime=True)
+-    msg['Message-Id'] = b4.make_msgid(idstring='b4-review')
++    msg['Message-Id'] = b4.make_msgid_with_cmd(idstring='b4-review')
+ 
+     return msg
+ 
+
+---
+base-commit: d5d981426ead3f490713ef5d2fd1aa3d0f13b005
+change-id: 20260522-review-msgid-cmd-49924d64541a
+
