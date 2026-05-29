@@ -1,179 +1,258 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F29C2EA481
-	for <tools@linux.kernel.org>; Fri, 29 May 2026 13:09:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780060190; cv=pass; b=ImeBThRxfwwCoiXJegnIBwnB+9Z0KifQwnwcbLAJGvlFBBmSEV0RKEmwcF2jVHtN9bFXSQL2bd+d4i5d5/1f8vf6HNatWKK2Ex2bkMLa/KkOZsXI6cWGKXj4pgNXsxKFOMP50K6DSwIO1K3a9sEiBk9k6cSV/hTbvVTEAGXzAbw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780060190; c=relaxed/simple;
-	bh=v2HeTxNq3PoWtYDMWwaAfJj37+shOuEVRHtJWh++R7E=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=nigMuMRma3ZTSca0/HuGIpSxm5F20w2WVJjrOWFp6QaFEpFQT/dmrPivzHvfMPyDKgPaaM+ZtfsDwSi+cvIAxC+grcGVFvMczwP5nrQFH3r3GVsZOcobyZ/LJ0G+ojZbG3VGLA5KqfNAvaL629M0AHERpi5UnpZ9IGljLfR4Edk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NgXnYCsn; arc=pass smtp.client-ip=209.85.221.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E6A2DA749
+	for <tools@linux.kernel.org>; Fri, 29 May 2026 23:33:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780097596; cv=none; b=uJwtcx6gmpGCKLzA/Pl4pSXZd3qRGoEiUqMTnJJ3tUAz9GHQ5wcnf6oYMwmBrhUflJ/mgoYToi/0F0++Nw0GCfXDCfWMkOCV+x+xw4bDMDHSN54SPDJLqE0A7wWleqlpsijhsb0ayEfcFqlBYXlgOLF0aWlLGSbwja8VNkfHCnE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780097596; c=relaxed/simple;
+	bh=cr2J61wIRbdLJ8JeVUMZMRpYithBTTq8UapgpGnMiyc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m85PTOUd3GYpi/edYCdAfWDnR7lIL4DeaCjrmH6Q3FrXF4KoYb7r9wbWCOFqMCwga5xNrAI5x1KZQj7qZNT4UtrIW+EArR9goSxMP8hEfXqheneSqt0Sco9quHUXEt2yBul2ztnGFvzqv+ocaQDZG3uERXvJ8/qgtHJdcOk2qUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hZ11a3QO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NgXnYCsn"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-57516e08474so10086384e0c.3
-        for <tools@linux.kernel.org>; Fri, 29 May 2026 06:09:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780060188; cv=none;
-        d=google.com; s=arc-20240605;
-        b=WUexc+qZNI/e6ykbO9NiOasBVXLJKbBqoLuP3tuiqce1gYNqd6qA+HkgGaYT9CiOMU
-         iyNt5Myt2Ef3Oijbybv4RSzcE7zjwM+e7UMbyty4ABpYuvIh6CgGhrhmSt+egFd/+Bb8
-         bLdcvyqqmvcP74JjaP1x7Iw6O4iy8JjaX1k3XLtFF9KtlPgcY3fp94Cc0VCEVx/NqqcT
-         0KZLh8OivVV9C7MpQD3Xnrpc/bCdD61EGrr1AorYs2JnY5KK5EWcNdJ3hcQBJ5jeMyL4
-         t4xK3GYLeeYnkzuXjuBnWnhUEVUGDfWqB1grNzAA4k9GgjjGDbzOo1HPJ/7EotQ4JnK7
-         ynzg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=v2HeTxNq3PoWtYDMWwaAfJj37+shOuEVRHtJWh++R7E=;
-        fh=7cPBddYPjf7aYOAPEfc3AwtYQk7kCCFyDxvco1WGy8s=;
-        b=d9lXXlub8E22WVWKCaOdO8ATofe+B+tl23EWUcA+OuS3YFkO5WWnEoBFv/2zOyE0Ks
-         hpqfqLMDdRetcHt6ZdlyIBP6e+ESZU/yPXJl6AGH1aQGaz/1gZfEfSFWiKicWNLXy1ad
-         YlIRlh6Y0CwaKwkPsPTIyyONncj8Sa/gUG3k3iJO9fjKm2IMYgw/GJ4gSyawJPtKrJKB
-         U1Mym27uyTYdbUoCWaC+woRNzdnuHRf0uFiq7Lao4ZLiu/M/D3hXotlb53MJabOrs6KX
-         LnmEaFAWpCNUvwBIEBDiSg0jQrkZqxU+Q+3Ql/UG1/hXSMgFUvLM3QJTIPmJfwWShVdH
-         BcVQ==;
-        darn=linux.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780060188; x=1780664988; darn=linux.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=v2HeTxNq3PoWtYDMWwaAfJj37+shOuEVRHtJWh++R7E=;
-        b=NgXnYCsnzGzHv+jOnOxtxW6PLLTl32WY52rPQC2DGYGKNPG210UHn2kFcvgB6Mlae1
-         Ty7FNTb2KeaJfYQHS9M76iE/s09N17gqAw0jD4WUMRDSriBHJaCqpU4SpqD4L1ovBtVV
-         NWk3Ex7iDHejpg10OWBFpMyDFFvJswYfNWXA0BAKJriniAKfVTRgC370Wb4ZwOm+66gT
-         PUcP57/TGAWibWchERyvzvqysEFoK7g+aKi6iwzM0cMpk2VnFHzxYAY9mMiJ9UDWtEyL
-         bvVkftJSDJzkD2zF836p7hZxo8UB2A3gvqLWBvXi+s//si1ey/pX1VHK/F2byzTjTfVv
-         rDGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780060188; x=1780664988;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v2HeTxNq3PoWtYDMWwaAfJj37+shOuEVRHtJWh++R7E=;
-        b=f1r8JNcZOBMwePxJ3k6s9vf6gBOEoL8H/3NmsfWk2JlrBIr5QZvq/CXRxkW0H7cQWY
-         bkMy8mrI/XNyhg6CLbHpd5VHDdWJ7mtRlDVrQSSU6uHA+q2w/Kg+sbQFupzpL+BJy35e
-         89mdVhnIrcFAMvc0k0Eq/K2j+4aF1MYtAagWNaFCT5rMGzjemmRszTMGuGBqpkJnb8+f
-         Ex4bJ0KrkHXS39DVIqOqrBls/OBeDXh6S9WIfPeyZdDmmQuS8bPfOUgpKZFScyAaXKFt
-         zsEEvV7aM1Pon286fX2mD88i7KPER/3gs65Vh8XhFJWbAYqhhg2cPq+7Cp8KB8RVfnXu
-         YQxA==
-X-Gm-Message-State: AOJu0YxHIekJLkHaelQ4lgSP7iepEZyK3REnZbILRm4H41YCEB0tZGiY
-	1PqME3qioQuPW5LAfeGTir9RiijPZIZBraInGbHhl6Geru5wRl+ErDc+wettw9OQlKC8SE9IgGt
-	7eWsnutvKZaHc6BeX4y0q/TBpNX2VIYsw82cXit8=
-X-Gm-Gg: Acq92OEGbsyx2s3sGLDlGcY9JBCidrZsYNMrtZQyOS0Gpg6yNKIj2PTi4S7IDrCaACV
-	ikXMJBgUmbXjsdELsSqZQYFjisfB8PHa/qtW9ZVuoWZpy53NoX5g3IRmiVraDpsV9e60rAKEH6A
-	YrLF9Q8NF4tJFtQFHrW0KGYzurqWgNHPXorhpaulpc8Cf6haBRC1OjlnzpNsgI3LkMLlQ3iCXc6
-	pFnTkgNaMFKjXB5T7XOr/XmzVtSayeEWVTpZEqDuUg9ovDTOpcIhyg/ggthQjTuSSpMu9A+Af8k
-	aMx+mxTMcLiF2rxKP+eWDbLop5b7kmwMB9L/l+9Rp3sr4qNF
-X-Received: by 2002:a05:6122:4d10:b0:56b:7d4d:4d11 with SMTP id
- 71dfb90a1353d-599f2c4c703mr1000119e0c.1.1780060188156; Fri, 29 May 2026
- 06:09:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hZ11a3QO"
+Received: by smtp.kernel.org (Postfix)
+	id 3B7121F0089F; Fri, 29 May 2026 23:33:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DA91F00893;
+	Fri, 29 May 2026 23:33:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780097595;
+	bh=M2EDTxvUOf0FbYXWsVSHXg6R0s2buLubx0e5ZZg5Khk=;
+	h=From:To:Cc:Subject:Date;
+	b=hZ11a3QOKXffID46ltLUxrUd2cCaPk+eMhXGx8u5J1Lqig1jyCbNWvY8IBsmmvGge
+	 0DXFCUBpnaFeMyS74W4xq2LFH2odLikObxUKzbmJh/8GNG4bUfu6svDhirg+YeyNJX
+	 WMVucwiyOf6xkXAt9f00+Lv44Aon5eUvDeyY4v+GA+2D+aDUX2WAYlez231N0t8pjy
+	 9RAW5DgtYZ9o8Bz559WbMHBzbrE2Y1RkJUTnvS8vTAlhvqZJtIUw8lwmoQoRSP7Vi1
+	 wSqkymW4r18VqTS+PAmMxYrHeFKRqZq5HpaiXQhgiBMjQM5yoX91gGtjdeVpLa/Zy4
+	 2MAFG5gCsEeZg==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-api@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: linux-doc@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kbuild@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	workflows@vger.kernel.org,
+	tools@kernel.org,
+	x86@kernel.org,
+	Thomas Gleixner <tglx@kernel.org>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Cyril Hrubis <chrubis@suse.cz>,
+	Kees Cook <kees@kernel.org>,
+	Jake Edge <jake@lwn.net>,
+	David Laight <david.laight.linux@gmail.com>,
+	Gabriele Paoloni <gpaoloni@redhat.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Subject: [PATCH v4 00/11] Kernel API Specification Framework
+Date: Fri, 29 May 2026 19:32:59 -0400
+Message-ID: <20260529233311.1901670-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-From: mo to <pitar21@gmail.com>
-Date: Fri, 29 May 2026 22:09:37 +0900
-X-Gm-Features: AVHnY4JBM-Qu9vQAa9PhowlPhXN4BxV5J-9YRNJ2B4b1E2jg_GbxJjoXCPtSc4A
-Message-ID: <CAJLQH1vPmWd0gL2MqfsTPF74_cSKqb7H8LL8nwjK2gYv6mB55Q@mail.gmail.com>
-Subject: Proposal: preflight checklist/lint for AI-assisted Linux kernel bug reports
-To: workflows@vger.kernel.org
-Cc: tools@linux.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hello,
+This proposal introduces machinery for documenting kernel APIs, addressing the
+long-standing challenge of maintaining stable interfaces between the kernel and
+user-space programs. Despite the kernel's commitment to never breaking user
+space, the lack of machine-readable API specifications has led to breakages
+across kernel interfaces.
 
-I understand that AI-assisted vulnerability and bug reports have
-recently become a burden for kernel maintainers, especially when
-reports are duplicated, unverified, or lack enough technical detail to
-be actionable.
+Specifications can document parameter types, valid ranges, constraints, and
+alignment requirements. They capture return value semantics including success
+conditions and error codes with their meaning. Execution context requirements,
+capabilities, locking constraints, signal handling behavior, and side effects
+can all be formally specified.
 
-I would like to suggest a lightweight =E2=80=9Cpreflight=E2=80=9D process f=
-or
-AI-assisted bug reports.
+These specifications live alongside the code they document and are both
+human-readable and machine-parseable. They can be validated at runtime when
+CONFIG_KAPI_RUNTIME_CHECKS is enabled, exported via debugfs for userspace
+tools, and extracted from either vmlinux or source code.
 
-The goal is not to replace the existing Linux kernel email workflow,
-nor to move kernel development into a web-based ticket system.
-Instead, the idea is to add a simple validation layer before a report
-reaches maintainers.
+This enables static analysis tools to verify userspace API usage at compile
+time, test generation based on formal specifications, consistent error handling
+validation, automated documentation generation, and formal verification of
+kernel interfaces.
 
-For AI-assisted reports, the submitter could be required to include a
-structured checklist such as:
+The implementation includes a core framework with ELF section storage,
+kerneldoc integration for inline specification, a debugfs interface for runtime
+querying, ftrace tracepoints that report each spec'd syscall's parameters and
+return value, and a Rust-based extraction tool (tools/kapi) supporting JSON,
+RST, and plain text output formats. Example specifications are provided for the
+four fundamental file syscalls (sys_open, sys_close, sys_read, sys_write) and
+for sys_madvise. The series also includes a KUnit test suite with 27 tests and
+a runtime verification selftest with 29 TAP tests.
 
-AI-assisted bug report checklist:
+The series with runtime testing enabled (CONFIG_KAPI_RUNTIME_CHECKS=y)
+currently survives LTP tests in a KVM VM.
 
-- Kernel version:
-- Commit hash:
-- Architecture:
-- Kernel config:
-- Affected subsystem / file / function:
-- Reproducer:
-- Reproduction rate:
-- Full dmesg / KASAN / UBSAN / lockdep / syzkaller log:
-- Checked latest mainline: yes/no
-- Checked stable trees: yes/no
-- Checked lore.kernel.org for duplicates: yes/no
-- Existing patch found: yes/no
-- Why this is considered a security issue:
-- Impact assessment:
-- Suggested fix or mitigation:
-- Human verification performed: yes/no
+Changes since v3:
 
-Reports that do not include basic information such as a tested commit,
-reproducer, full logs, duplicate search summary, and existing-patch
-check could be automatically rejected or redirected before maintainers
-spend time on them.
+- Fix the build with CONFIG_KAPI_SPEC=y: scripts/Makefile.build now derives the
+  list of instrumented sources from $(real-obj-y)/$(real-obj-m) instead of a
+  recursive find, and the detection regex matches "contexts:" (the token the
+  syscalls actually use). The previous "context-flags:"-only match found no
+  files, so no *.apispec.h was generated and the guarded includes failed to
+  compile.
 
-This could be implemented in a few possible ways:
+- Force-include the generated *.apispec.h via a per-object -include cflag in
+  scripts/Makefile.build rather than a manual "#include" at the end of each
+  instrumented source; the include blocks are dropped from fs/open.c and
+  fs/read_write.c.
 
-1. A simple web form that outputs a properly formatted plain-text report.
-2. A local command-line tool, similar in spirit to checkpatch.pl.
-3. A report.yaml / report.txt format with a validator.
-4. A mail bot that replies automatically when mandatory fields are missing.
+- kernel/Makefile: drop the redundant "obj- += api/"; the
+  obj-$(CONFIG_KAPI_SPEC) gate already covers 'make clean'.
 
-A local tool may fit the kernel workflow better than a centralized web
-form, since it avoids dependence on Google Forms, GitHub Issues, or
-any specific hosted service.
+- kernel/api/Makefile: build kernel_api_spec.o with obj-y now that the subdir
+  gate lives in kernel/Makefile.
 
-For example:
+- kernel/api/Kconfig: drop the tautological "default n" from KAPI_SPEC,
+  KAPI_RUNTIME_CHECKS and KAPI_SPEC_DEBUGFS.
 
-$ kernel-bug-report-lint report.txt logs/
+- Add an API specification for sys_madvise.
 
-[FAIL] No tested commit hash
-[FAIL] No reproducer
-[WARN] No lore.kernel.org duplicate search summary
-[WARN] Impact says "privilege escalation" but no reachable path is describe=
-d
-[PASS] KASAN log included
-[PASS] kernel config included
+- Add ftrace tracepoints on the runtime-check path: kapi_syscall_enter (spec
+  name and named parameter values) and kapi_syscall_exit (return value and
+  spec match).
 
-The key principle would be:
+Changes since v2:
 
-If AI was used to find the bug, AI or automation should also be used
-by the reporter to perform initial triage before sending the report to
-maintainers.
+- Replace statically sized arrays in the spec structs with const char *
+  pointers to reduce memory footprint and remove string truncation.
 
-In other words, AI-assisted reports should include AI-assisted or
-human-assisted triage results, not just an unverified =E2=80=9Cthis may be =
-a
-vulnerability=E2=80=9D claim.
+- Simplify the kerneldoc DSL to short tokens (e.g. `type: uint, input`,
+  `contexts: process, softirq`, `constraint-type: range(0, KMAX)`,
+  `side-effect: alloc_memory`) in place of raw KAPI_* enum names.
 
-This would reduce duplicate and low-quality reports while preserving
-the existing mailing-list-based development process.
+- tools/kapi: commit Cargo.lock for reproducible offline builds, add a
+  Makefile and README, expand the kerneldoc parser to cover the full
+  DSL, and refactor the vmlinux extractor for the const-pointer layout.
 
-This proposal is intentionally small. It does not require maintainers
-to pay for LLM APIs or run an AI system themselves. The cost of
-AI-based analysis should remain on the reporter side. The kernel
-project would only define the minimum structure and validation rules
-for acceptable AI-assisted reports.
+- tools/lib/python/kdoc/kdoc_apispec.py expanded to match the DSL so
+  scripts/kernel-doc --apispec emits the structure the extractor consumes.
 
-Thank you for considering the idea.
+References:
 
-Best regards,
+  v3: https://lore.kernel.org/all/20260424165130.2306833-1-sashal@kernel.org/
+  v2: https://lore.kernel.org/all/20260322121026.869758-1-sashal@kernel.org/
+  v1: https://lore.kernel.org/all/20260313150928.2637368-1-sashal@kernel.org/
+  RFC v5: https://lore.kernel.org/lkml/20251218204239.4159453-1-sashal@kernel.org/
+  RFC v4: https://lore.kernel.org/lkml/20250825181434.3340805-1-sashal@kernel.org/
+  RFC v3: https://lore.kernel.org/lkml/20250711114248.2288591-1-sashal@kernel.org/
+  RFC v2: https://lore.kernel.org/lkml/20250624180742.5795-1-sashal@kernel.org/
+  RFC v1: https://lore.kernel.org/lkml/20250614134858.790460-1-sashal@kernel.org/
+
+Sasha Levin (11):
+  kernel/api: introduce kernel API specification framework
+  kernel/api: enable kerneldoc-based API specifications
+  kernel/api: add debugfs interface for kernel API specifications
+  tools/kapi: add kernel API specification extraction tool
+  kernel/api: add API specification for sys_open
+  kernel/api: add API specification for sys_close
+  kernel/api: add API specification for sys_read
+  kernel/api: add API specification for sys_write
+  kernel/api: add runtime verification selftest
+  kernel/api: add API specification for sys_madvise
+  kernel/api: add syscall enter/exit tracepoints
+
+ .gitignore                                    |    1 +
+ Documentation/dev-tools/index.rst             |    1 +
+ Documentation/dev-tools/kernel-api-spec.rst   |  746 +++++
+ MAINTAINERS                                   |   12 +
+ Makefile                                      |    1 +
+ arch/x86/include/asm/syscall_wrapper.h        |   40 +
+ fs/open.c                                     |  561 ++++
+ fs/read_write.c                               |  692 ++++
+ include/asm-generic/vmlinux.lds.h             |   28 +
+ include/linux/kernel_api_spec.h               | 1270 ++++++++
+ include/linux/syscalls.h                      |   38 +
+ include/trace/events/kapi.h                   |   74 +
+ init/Kconfig                                  |    2 +
+ kernel/Makefile                               |    1 +
+ kernel/api/Kconfig                            |   74 +
+ kernel/api/Makefile                           |   14 +
+ kernel/api/internal.h                         |   21 +
+ kernel/api/kapi_debugfs.c                     |  553 ++++
+ kernel/api/kapi_kunit.c                       |  538 ++++
+ kernel/api/kernel_api_spec.c                  | 1424 +++++++++
+ mm/madvise.c                                  |  575 ++++
+ scripts/Makefile.build                        |   20 +
+ tools/docs/kernel-doc                         |    5 +
+ tools/kapi/.gitignore                         |    4 +
+ tools/kapi/Cargo.lock                         |  679 ++++
+ tools/kapi/Cargo.toml                         |   20 +
+ tools/kapi/Makefile                           |   33 +
+ tools/kapi/README.md                          |   32 +
+ tools/kapi/src/extractor/debugfs.rs           |  849 +++++
+ tools/kapi/src/extractor/kerneldoc_parser.rs  | 2831 +++++++++++++++++
+ tools/kapi/src/extractor/mod.rs               |  388 +++
+ tools/kapi/src/extractor/source_parser.rs     |  415 +++
+ .../src/extractor/vmlinux/binary_utils.rs     |  462 +++
+ .../src/extractor/vmlinux/magic_finder.rs     |  115 +
+ tools/kapi/src/extractor/vmlinux/mod.rs       |  857 +++++
+ tools/kapi/src/formatter/json.rs              |  634 ++++
+ tools/kapi/src/formatter/mod.rs               |  122 +
+ tools/kapi/src/formatter/plain.rs             |  646 ++++
+ tools/kapi/src/formatter/rst.rs               |  726 +++++
+ tools/kapi/src/main.rs                        |  123 +
+ tools/lib/python/kdoc/kdoc_apispec.py         | 1313 ++++++++
+ tools/lib/python/kdoc/kdoc_output.py          |    9 +-
+ tools/lib/python/kdoc/kdoc_parser.py          |   86 +-
+ tools/testing/selftests/Makefile              |    1 +
+ tools/testing/selftests/kapi/Makefile         |    7 +
+ tools/testing/selftests/kapi/kapi_test_util.h |   33 +
+ tools/testing/selftests/kapi/test_kapi.c      | 1096 +++++++
+ 47 files changed, 18167 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/dev-tools/kernel-api-spec.rst
+ create mode 100644 include/linux/kernel_api_spec.h
+ create mode 100644 include/trace/events/kapi.h
+ create mode 100644 kernel/api/Kconfig
+ create mode 100644 kernel/api/Makefile
+ create mode 100644 kernel/api/internal.h
+ create mode 100644 kernel/api/kapi_debugfs.c
+ create mode 100644 kernel/api/kapi_kunit.c
+ create mode 100644 kernel/api/kernel_api_spec.c
+ create mode 100644 tools/kapi/.gitignore
+ create mode 100644 tools/kapi/Cargo.lock
+ create mode 100644 tools/kapi/Cargo.toml
+ create mode 100644 tools/kapi/Makefile
+ create mode 100644 tools/kapi/README.md
+ create mode 100644 tools/kapi/src/extractor/debugfs.rs
+ create mode 100644 tools/kapi/src/extractor/kerneldoc_parser.rs
+ create mode 100644 tools/kapi/src/extractor/mod.rs
+ create mode 100644 tools/kapi/src/extractor/source_parser.rs
+ create mode 100644 tools/kapi/src/extractor/vmlinux/binary_utils.rs
+ create mode 100644 tools/kapi/src/extractor/vmlinux/magic_finder.rs
+ create mode 100644 tools/kapi/src/extractor/vmlinux/mod.rs
+ create mode 100644 tools/kapi/src/formatter/json.rs
+ create mode 100644 tools/kapi/src/formatter/mod.rs
+ create mode 100644 tools/kapi/src/formatter/plain.rs
+ create mode 100644 tools/kapi/src/formatter/rst.rs
+ create mode 100644 tools/kapi/src/main.rs
+ create mode 100644 tools/lib/python/kdoc/kdoc_apispec.py
+ create mode 100644 tools/testing/selftests/kapi/Makefile
+ create mode 100644 tools/testing/selftests/kapi/kapi_test_util.h
+ create mode 100644 tools/testing/selftests/kapi/test_kapi.c
+
+-- 
+2.53.0
+
