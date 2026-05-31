@@ -1,367 +1,243 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A0D3F0ABD
-	for <tools@linux.kernel.org>; Fri, 29 May 2026 23:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780097631; cv=none; b=ijWzPrKXhMXYHzqa4HeasaWvZegSbDvsAhVOYEhKhXDfbBe+kPkIPV//NoJesjQNXlNtdjiRRMHfVYBx/EuDzFp1JyP1ApoMFxFlHrXvWtlmlpSynRO4540mpb7t2f2ij59j/nMmjrkmsgzbNRWh8KlUhucAhh9Y2HQlgO+Y00I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780097631; c=relaxed/simple;
-	bh=hXTACtBIV6hiJQgdeXIpXE8oX0VfwYXpGLrdPdwrSB0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TTMqRFntTERLYZjBiPP8P5NhyRP+8BEhx2p3+5HDfm3A/iZ7r0pS7zER5QGgDuUlULS/kKC3fiDSQDNl84jbvOs7Q0GueLH4Ax6ulAulhM0ZuMh91oXAgorVkp5MtMiFmzWr9hglVe+u4DSEELxKlx7F7hHqkP5GT4+zJmwq1bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qxe1bqFi; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC42BA3D
+	for <tools@linux.kernel.org>; Sun, 31 May 2026 17:59:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780250385; cv=pass; b=W5wsgbPYHYfyea0kKRU9AAZBzD1ZaXrrM+sIkbTBz6D1Qwhx47hfhopPZ4rMXHyLqirB/GCQJ6KZA8U/5Th3IYYTMHpmlUXz9rYiJ5fo29mhicoKlqgLUI49pHF9HaaFiuVkozX0cXMoXbWGFT2bI4ELiP3mDAO+42zrTjTi+5c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780250385; c=relaxed/simple;
+	bh=UoLupISDDRYAdCCnAHPCnYDTKcxyPeLll01dssEweE0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=o3LI4XjTG911T7LfCF4mL7c5sHB0n7Z60twFLLz0DhgduuQGlRiRxGjlS7NmohdGFfmGpsR5bkXy5kyCgBV38SPKg13Jrrs+Sn1p4yTt2QidblruvZ5G6HJjdoLzWmI86eC/F0CW7uhXAbDsmUAT5KObcV+fAvClMS0pvgxGPEE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SuueWSL4; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qxe1bqFi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SuueWSL4"
 Received: by smtp.kernel.org (Postfix)
-	id 4D7281F0089C; Fri, 29 May 2026 23:33:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673CE1F00899;
-	Fri, 29 May 2026 23:33:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780097629;
-	bh=i5xoYOu+H/E2Qmd6vKoz6csEWSVaDrwB5J3ezvyhCxg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qxe1bqFiXTODd2f4grnOICVXbhq2ocNkz+jxYbVEHDomrL78/pKUYx6CwgTDPf2vH
-	 yYmEnf7cSymZUlV7TX73zpm92q33c6jgFedQoR+P139razqoNlh+Vqu2FbcDUi/1ei
-	 aY5LEkRZvBGSGTExyqarQKrQAtrDiYkxXRa7Waa3cnrOC3qBH8L4aNhqW7VJWC1jAl
-	 1s+e748Q14/FPA6VAOCaaexu3U1xzaXCgjTHrL1mjdt3aXzWqO+/TidI2GkfNCHHFJ
-	 +lnMI48vCXplKCo+YH3PTS4B8U3HK6FmSkgl5VuEkIH2VPTy38q5sjCJA4KH8dNTWa
-	 ZxJTWsYDgAo1g==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-api@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: linux-doc@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-kbuild@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	workflows@vger.kernel.org,
-	tools@kernel.org,
-	x86@kernel.org,
-	Thomas Gleixner <tglx@kernel.org>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Cyril Hrubis <chrubis@suse.cz>,
-	Kees Cook <kees@kernel.org>,
-	Jake Edge <jake@lwn.net>,
-	David Laight <david.laight.linux@gmail.com>,
-	Gabriele Paoloni <gpaoloni@redhat.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Subject: [PATCH v4 11/11] kernel/api: add syscall enter/exit tracepoints
-Date: Fri, 29 May 2026 19:33:10 -0400
-Message-ID: <20260529233311.1901670-12-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260529233311.1901670-1-sashal@kernel.org>
-References: <20260529233311.1901670-1-sashal@kernel.org>
+	id D72371F00898; Sun, 31 May 2026 17:59:43 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.221.54
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1780250383;
+	b=AmQfK/h7dy38DydSCDkgDsVy+Sich5zHe4eClyL1bU2dof0SACHiQu3paOGvs39adjxJ
+	 AmhbT+f7HOM4G3SHtquKTMnfmZ+3CjsqPmDMi6ig0NWYA5eI8liBfEh++oFloNVTjXjA3
+	 kQrZNcK5jyVnzuWcA4NWK/WvI/4yHwEnkZq4QSX9LG/g7gmOk9N2PqY+GtUFZitzzAbMg
+	 MWhYo1bPsPR5bG36TCc+IbN8vXDgGwAb/FcHh2r7pfipyS60mwmBER2vJ2xxum9wFkIUv
+	 iMrUBSHobpRNgS5wGfyUu20cfcJGv12BiE7Ox8ofDe1rt2rtR71ckHFuLR2RU75aZrQ==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1780250383;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key;
+	bh=NtjgIDullXyIPa5oKp5eEqk537C8gpe3ilMzVxuUb5M=;
+	b=t5aHEXNEWvwk8QaOaG6SgrDxt3qK2YmqbMfLyDcjQX/l6wNdY1U5I3O2+8ptOuyy7BSX
+	 981yWGYJz5jhrj9EcjI0JciwTNnVtLTYwIdZuDzbyMxZJEFFB/dNmuq9MKnoMqEArjX3b
+	 dzYDhfnD0G8k7PMQdKxlZWz5krJWLwqfKibiuSduS+2+dFNux2iwISG4uSkD40EZ48VKa
+	 7GdTwKU8fyMBziqU7u5venIl1T6oP3o4jFej/Vva2HQG2XFOwdkw49hY8Wd6U5GhlDz8s
+	 Q7C2Y6foAzSB8V65ajOdKvJG9YQ2ZdKbakl3p1wrHMZX0LVMfltmv1nrpzCRHGxfqUg==
+ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SuueWSL4;
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=209.85.221.54
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 43DE31F00893
+	for <tools@kernel.org>; Sun, 31 May 2026 17:59:43 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SuueWSL4
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 43DE31F00893
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-45ee1a56328so3809139f8f.3
+        for <tools@kernel.org>; Sun, 31 May 2026 10:59:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780250382; x=1780855182; darn=kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NtjgIDullXyIPa5oKp5eEqk537C8gpe3ilMzVxuUb5M=;
+        b=SuueWSL4w4sq1OdYsxOXHWblsXz9anqcC+cNMROSA9yNClFbWZs8Y7dnkTNYrHvZKk
+         lKsuG4jvjk74hjwOgU/TN77qCWLBnite8kpHCXwmQb9R14abnB3rzz1f3rVkdzSuj+ob
+         7ooCBli9sM1zA7r/Qp41ifjM0pTIhlkkxskSKjh7WV8xjmoxqwkYMBY9w2S2Hqq2yUtd
+         E1AWBpjrUxMR0pilyh7yeBU060Vy8q2K6+SACAdWcxNWafOY58mRPDbRfhvxKCw7yibT
+         VaMvwMETAzr1pPhJbXIsAO5iEcoW+xsL9Wp8BLbHpPhL1WT8ngJ8+UGttlrwRm1nWicQ
+         gBXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780250382; x=1780855182;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NtjgIDullXyIPa5oKp5eEqk537C8gpe3ilMzVxuUb5M=;
+        b=mLuOjGttuJH324am7R0d5MsQIODNjrmSuIXD9LWH6z8OS4NNLKbu1VcPenqvrRAA85
+         GFnbdWXyjJDrT9mjYnQOhPwFKdeF7tK17Zj9eeY+PGaYor/3f/psjl9Rz4sR1hsVbrRM
+         JWe+Sf6zD8/ecrF3w8fUQgDpmZGlKOjt4RMYYtmBgUsz1Tk+o9p1MkwIz1IEhnxlEgHP
+         HLGQG7cgGns0LfzVQh/EN9uYn4HUQogDQVxhqajSMLV4hcSlLhpWupQA7HaFG9MsarU+
+         8siy9k63wqXeuFx52qiOe7un6pCatKPqXmlfj94uztZe5J0gR/TlNfZpipvcg85t54Cj
+         maUQ==
+X-Gm-Message-State: AOJu0YwCjIZH5A5GB7YaA6pCbuNHmG/YqRxI6brJsI0GtIk6lZMeLL6a
+	ZVA7OB2QUhaLHl0TJ9ds7GtsEEik57PUA807p1TMigjZC3NSIwRF6noScV9rrg==
+X-Gm-Gg: Acq92OGDhc0bgIXeW6gHuIFeRRP0PeGsr8O9NHdk2VlCfzR6zqeL6Z4ORvfLw1K2Qj2
+	xZQyAC1Om/ajePrYqYPlQhKEQqTiyQSM2ncjKF3bVgqpB9Ht6iX/eGLzm1BhFxDmGoJw3WlXFcF
+	/s9xeiyypQ0Hx0YOR/25zTy2HIGafTF2CW+E6/mafug7q3Ks6PVdXrN2lStWJSLwLwOY19VmC3s
+	T/ccUYW3Ib2CyNdw6mhuP4aRGSSYTESoDMY2SFjbsm2G+FMnzz6g4FDMr1Qqd1ieGfLuY6yZj/P
+	ULE0DeRNItAqGwRNE9ayOAymvDyq4GKhpWL9AonQFo9rWOhlqH7KgLBOEhE0h2CPBr/ykBiLb9/
+	4nNkRJe98VivUSGHcRoEF4VuzSEMECrYU0tgEA8UALoRskcceZlC9E1NKT9EHFXdkC6tKoIm526
+	wLCHmDQYa59sKkq6xPpQFERsDmlKS4Dspu
+X-Received: by 2002:a05:6000:b12:b0:45e:6518:21ad with SMTP id ffacd0b85a97d-45ef6aec9c7mr12826269f8f.3.1780250381421;
+        Sun, 31 May 2026 10:59:41 -0700 (PDT)
+Received: from localhost ([94.53.77.213])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef34a0674sm17800529f8f.8.2026.05.31.10.59.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 31 May 2026 10:59:40 -0700 (PDT)
+From: Catalin Iacob <iacobcatalin@gmail.com>
+Date: Sun, 31 May 2026 21:00:33 +0300
+Subject: [PATCH kgl] Fix thread tracking not delivering new messages after
+ a few days
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260531-thread-track-msgid-in-only-url-v1-1-f68f8e5d2497@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWNQQ6CMBAAv0L27CYFgka/YjyUdltWajHbQjSEv
+ 1P0OHOYWSGRMCW4VSsILZx4igXqUwVm0NETsi0MjWrOqmtrzIOQtphFmxFfybNFjjjF8MVZAqq
+ Lc13bK2f0FUrkLeT48xvcYfQBHn+Z5v5JJh9p2LYdDaO3EIcAAAA=
+X-Change-ID: 20260531-thread-track-msgid-in-only-url-07ff53b0fca9
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Catalin Iacob <iacobcatalin@gmail.com>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5382;
+ i=iacobcatalin@gmail.com; h=from:subject:message-id;
+ bh=UoLupISDDRYAdCCnAHPCnYDTKcxyPeLll01dssEweE0=;
+ b=owGbwMvMwCX261qtXAKXKjvjabUkhiyZclfb9Vv0M1afD/Qo6HKS9l538af/lBPupWZbz9pLx
+ 4TIv3ToKGVhEONikBVTZHlx7nrbhj1nAu4l2bXAzGFlAhnCwMUpABNpsmJkuNm7s/70FLlrisuP
+ /L5anCH92bjKr2Dy3e7LP7pb71guYWb4n/Og7vsx7/M+R448+Lwi2WLVQvuAWRqOa6+qFMzgkX+
+ UwwUA
+X-Developer-Key: i=iacobcatalin@gmail.com; a=openpgp;
+ fpr=F609BFABD84EB5C9DDDC37EDE89C6A3571CD0E33
 
-Add two tracepoints to the CONFIG_KAPI_RUNTIME_CHECKS syscall validation
-path so the framework's behavior can be observed without the noise and
-loss of pr_warn_ratelimited():
+Thread tracking was using a msgid:<msgid> query and --threads which
+interacts badly with how lei update works.
 
-  kapi_syscall_enter - the spec name, the raw argument values, and a
-                       rendered "name=value" list of the specified
-                       parameters (pointer-like values in hex, integers
-                       and file descriptors in decimal)
-  kapi_syscall_exit  - the spec name, the return value, and whether it
-                       matched the specification (spec_match)
+After every run, lei update remembers the time for the most recent
+successfully retrieved email (in the lastresult entry of the
+lei.saved-search file). In subsequent runs, the user's query is limited
+by lei to only 2 days prior to that time (see the --remote-fudge-time
+argument of lei update). Therefore, for thread tracking, all lei updates
+after the very first did:
+- query msgid:<msgid> AND dt:<2 days before last msg>..
+- for every message returned by the query, fetch the whole thread
+If the thread kept getting new messages past that 2 day boundary the
+date filter caused the query to return no message and no more updates
+would be delivered. --threads does not matter as it only acts on
+messages returned by the query and there was no message returned.
 
-Both fire only for syscalls that have a KAPI specification and live
-inside the existing CONFIG_KAPI_RUNTIME_CHECKS region, so they exist
-exactly when the runtime checks do; they compile to no-ops without
-CONFIG_TRACEPOINTS and stay dormant until enabled. The parameter list
-is rendered only when the enter tracepoint is enabled.
+Note that this behavior applies to all lei searches. In practice it
+works out because searches for a mailing list or a sender or recipient
+will keep matching new messages so the query will not end up with no
+results, searching repeatedly for a Message-ID is the one that makes
+this noticeable.
 
-kapi_syscall_exit is also emitted on the parameter-validation rejection
-path -- where the validator returns -EINVAL and the real handler is
-skipped -- with spec_match=0, so every kapi_syscall_enter has a matching
-exit.
-
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Catalin Iacob <iacobcatalin@gmail.com>
 ---
- Documentation/dev-tools/kernel-api-spec.rst | 29 ++++++++
- MAINTAINERS                                 |  1 +
- include/trace/events/kapi.h                 | 74 ++++++++++++++++++++
- kernel/api/kernel_api_spec.c                | 77 ++++++++++++++++++---
- 4 files changed, 173 insertions(+), 8 deletions(-)
- create mode 100644 include/trace/events/kapi.h
+The dt:1970-01-01.. looks a bit odd but I didn't find a way to do it
+better.
 
-diff --git a/Documentation/dev-tools/kernel-api-spec.rst b/Documentation/dev-tools/kernel-api-spec.rst
-index 26598a98c0f69..561e7bff58379 100644
---- a/Documentation/dev-tools/kernel-api-spec.rst
-+++ b/Documentation/dev-tools/kernel-api-spec.rst
-@@ -285,6 +285,35 @@ custom validation functions via the ``validate`` field in the constraint spec:
-     .type = KAPI_CONSTRAINT_CUSTOM,
-     .validate = validate_buffer_size,
+Considered alternatives for fixing this which I believe would all work
+from inspecting the code and the reasons why I did not pick them
+
+Alternative 1
+lei q offers a --thread-id which triggers the server side to do the
+search we want (any message in the thread of this Message-ID) rather
+than the search lei currently does (full thread of message with this
+Message-ID that is newer than ...). However that argument is not
+persisted in the lei.saved-search file so lei update can't use it. Going
+this route would have required changing lei and waiting for that to
+trickle to all users with no real advantage as that --thread-id seems to
+trigger on the server side the same code as the one triggered by the
+/all/<msgid>/ URL.
+
+Alternative 2
+Call lei up with a higher --remote-fudge-time to basically cancel the
+date filter that lei adds. Also works but seems more indirect/hacky and
+it suffers from needing to pick a value, is 10 years enough etc. I did
+check public-inbox code and as far as I see there is no command line
+argument or config to disable this date filter for lei up except for a
+high --remote-fudge-time.
+
+Alternative 3
+Remove the lastresult line from the lei.saved-search file every time
+before invoking lei up. Needs knowledge of the path to the file,
+violates layering by reaching into lei implementation details.
+
+BTW, thanks for korgalore (and b4). I'm getting started with kernel
+development and they are an absolute boon for watching the lists and
+sending patches easily.
+---
+ docs/usage.rst            |  2 +-
+ src/korgalore/tracking.py | 10 +++++++---
+ 2 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/docs/usage.rst b/docs/usage.rst
+index 66c6ecf4a098..779b190aaa8d 100644
+--- a/docs/usage.rst
++++ b/docs/usage.rst
+@@ -539,7 +539,7 @@ How Thread Tracking Works
  
-+Tracepoints
-+-----------
-+
-+When ``CONFIG_KAPI_RUNTIME_CHECKS`` is enabled, the syscall validation path emits
-+two ftrace tracepoints (in the ``kapi`` trace system) for every syscall that has a
-+specification:
-+
-+- ``kapi_syscall_enter`` -- fired before parameter validation, recording the spec
-+  name, the raw syscall argument values, and -- when the spec provides parameter
-+  metadata -- a rendered ``name=value`` list: pointer-like values are shown in hex,
-+  integers and file descriptors in decimal, and an unnamed parameter as ``arg``.
-+- ``kapi_syscall_exit`` -- fired after the handler returns, or in place of the
-+  handler when parameter validation rejects the call (the handler is skipped and
-+  ``-EINVAL`` is returned). Records the spec name, the return value, and
-+  ``spec_match``: 0 when the call did not conform to the spec -- the parameters were
-+  rejected, or the return value was not one the spec allows -- and 1 otherwise.
-+
-+Unlike the ``pr_warn_ratelimited`` violation reports, the tracepoints capture every
-+spec'd call rather than only violations, are lossless under load, and can be filtered
-+with the usual ftrace facilities. They require ``CONFIG_TRACEPOINTS`` and stay dormant
-+until enabled::
-+
-+    # echo 1 > /sys/kernel/tracing/events/kapi/enable
-+    # cat /sys/kernel/tracing/trace
-+     ...  kapi_syscall_enter: sys_read(fd=3, buf=0x7ffd46780b58, count=0x340)
-+     ...  kapi_syscall_exit: sys_read = 832 spec_match=1
-+     ...  kapi_syscall_enter: sys_open(filename=0x480300, flags=268435456, mode=0x0)
-+     ...  kapi_syscall_exit: sys_open = -22 spec_match=0
-+
- DebugFS Interface
- =================
+ 1. When you run ``track add``, korgalore:
  
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ddfd9cad98916..48def631ad823 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -13823,6 +13823,7 @@ L:	linux-api@vger.kernel.org
- S:	Maintained
- F:	Documentation/dev-tools/kernel-api-spec.rst
- F:	include/linux/kernel_api_spec.h
-+F:	include/trace/events/kapi.h
- F:	kernel/api/
- F:	tools/kapi/
- F:	tools/lib/python/kdoc/kdoc_apispec.py
-diff --git a/include/trace/events/kapi.h b/include/trace/events/kapi.h
-new file mode 100644
-index 0000000000000..47828f3338828
---- /dev/null
-+++ b/include/trace/events/kapi.h
-@@ -0,0 +1,74 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM kapi
-+
-+#if !defined(_TRACE_KAPI_H) || defined(TRACE_HEADER_MULTI_READ)
-+#define _TRACE_KAPI_H
-+
-+#include <linux/tracepoint.h>
-+
-+/* Max length of the rendered "name=value, ..." parameter list. */
-+#define KAPI_TP_PARAMS_LEN 256
-+
-+/*
-+ * Emitted from the CONFIG_KAPI_RUNTIME_CHECKS syscall validation path for
-+ * syscalls that have a KAPI specification: kapi_syscall_enter fires before
-+ * parameter validation, kapi_syscall_exit after the handler returns.
-+ * @name is the spec name, e.g. "sys_open".
-+ *
-+ * kapi_syscall_enter carries both the raw argument values (args[]) and, when
-+ * the spec provides parameter metadata, a rendered "name=value" list (params,
-+ * built by the caller): pointer-like values in hex, integers and fds in decimal.
-+ */
-+TRACE_EVENT(kapi_syscall_enter,
-+
-+	TP_PROTO(const char *name, int nargs, const s64 *args, const char *params),
-+
-+	TP_ARGS(name, nargs, args, params),
-+
-+	TP_STRUCT__entry(
-+		__string(	name,	name	)
-+		__field(	int,	nargs	)
-+		__array(	u64,	args,	6	)
-+		__string(	params,	params	)
-+	),
-+
-+	TP_fast_assign(
-+		__assign_str(name);
-+		__entry->nargs = nargs;
-+		memset(__entry->args, 0, sizeof(__entry->args));
-+		if (args && nargs > 0)
-+			memcpy(__entry->args, args,
-+			       min_t(int, nargs, 6) * sizeof(__entry->args[0]));
-+		__assign_str(params);
-+	),
-+
-+	TP_printk("%s(%s)", __get_str(name), __get_str(params))
-+);
-+
-+TRACE_EVENT(kapi_syscall_exit,
-+
-+	TP_PROTO(const char *name, long ret, bool spec_match),
-+
-+	TP_ARGS(name, ret, spec_match),
-+
-+	TP_STRUCT__entry(
-+		__string(	name,		name		)
-+		__field(	long,		ret		)
-+		__field(	bool,		spec_match	)
-+	),
-+
-+	TP_fast_assign(
-+		__assign_str(name);
-+		__entry->ret = ret;
-+		__entry->spec_match = spec_match;
-+	),
-+
-+	TP_printk("%s = %ld spec_match=%d",
-+		  __get_str(name), __entry->ret, __entry->spec_match)
-+);
-+
-+#endif /* _TRACE_KAPI_H */
-+
-+/* This part must be outside protection */
-+#include <trace/define_trace.h>
-diff --git a/kernel/api/kernel_api_spec.c b/kernel/api/kernel_api_spec.c
-index 1a9041a7f21a4..2aa8c04a5851e 100644
---- a/kernel/api/kernel_api_spec.c
-+++ b/kernel/api/kernel_api_spec.c
-@@ -659,6 +659,45 @@ EXPORT_SYMBOL_GPL(kapi_print_spec);
+-   * Creates a lei search for the thread using ``lei q "mid:<msgid>" --threads``
++   * Creates a lei search for the thread
+    * Populates the search with current thread messages
+    * Delivers all existing messages to your target
+    * Saves tracking metadata in ``~/.local/share/korgalore/tracking.json``
+diff --git a/src/korgalore/tracking.py b/src/korgalore/tracking.py
+index 2d12e484aa8a..dd26a33c046b 100644
+--- a/src/korgalore/tracking.py
++++ b/src/korgalore/tracking.py
+@@ -6,6 +6,7 @@ storing metadata in a separate manifest file from the main configuration.
+ import json
+ import logging
+ import shutil
++import urllib.parse
+ from dataclasses import dataclass
+ from datetime import datetime, timezone, timedelta
+ from enum import Enum
+@@ -345,7 +346,7 @@ class TrackingManifest:
+ def create_lei_thread_search(msgid: str, output_path: Path) -> Tuple[int, bytes]:
+     """Create a new lei search for a thread by message ID.
  
- #ifdef CONFIG_KAPI_RUNTIME_CHECKS
+-    Uses: lei q "mid:<msgid>" --threads --only https://lore.kernel.org/all -o v2:<output_path>
++    Uses: lei q "dt:1970-01-01.." --only https://lore.kernel.org/all/<msgid> -o v2:<output_path>
  
-+#define CREATE_TRACE_POINTS
-+#include <trace/events/kapi.h>
-+
-+/*
-+ * Render a syscall's parameters as a "name=value, ..." string for the
-+ * kapi_syscall_enter tracepoint.  Names come from the spec; pointer-like
-+ * values are shown in hex, integers and file descriptors in decimal.
-+ */
-+static void kapi_trace_format_params(const struct kernel_api_spec *spec,
-+				     const s64 *args, int nargs,
-+				     char *buf, size_t size)
-+{
-+	int i, used = 0;
-+
-+	buf[0] = '\0';
-+	/* Bound by the caller-supplied arg count; the spec arity may differ. */
-+	for (i = 0; args && i < nargs && i < 6; i++) {
-+		const char *name = "arg";
-+		bool dec = false;
-+
-+		if (i < spec->param_count) {
-+			const struct kapi_param_spec *ps = &spec->params[i];
-+
-+			if (ps->name)
-+				name = ps->name;
-+			dec = ps->type == KAPI_TYPE_INT || ps->type == KAPI_TYPE_FD;
-+		}
-+
-+		used += scnprintf(buf + used, size - used, "%s%s=",
-+				  i ? ", " : "", name);
-+		if (dec)
-+			used += scnprintf(buf + used, size - used, "%lld",
-+					  (long long)args[i]);
-+		else
-+			used += scnprintf(buf + used, size - used, "0x%llx",
-+					  (unsigned long long)args[i]);
-+	}
-+}
-+
- /**
-  * kapi_validate_fd - Validate that a file descriptor value is in valid range
-  * @fd: File descriptor to validate
-@@ -1154,16 +1193,24 @@ EXPORT_SYMBOL_GPL(kapi_validate_syscall_param);
- int kapi_validate_syscall_params(const struct kernel_api_spec *spec,
- 				 const s64 *params, int param_count)
- {
--	int i;
-+	int i, ret = 0;
+     Args:
+         msgid: The message ID to search for (without angle brackets).
+@@ -360,8 +361,11 @@ def create_lei_thread_search(msgid: str, output_path: Path) -> Tuple[int, bytes]
+     # Ensure output directory's parent exists
+     output_path.parent.mkdir(parents=True, exist_ok=True)
  
- 	if (!spec || !params)
- 		return 0;
+-    args = ['q', f'mid:{msgid}', '--threads',
+-            '--only', 'https://lore.kernel.org/all',
++    # We use the dt:1970-01-01.. query to mean "search for all", it's the Message-ID in the url that
++    # returns the full thread of that message.
++    qmsgid = urllib.parse.quote_plus(msgid)
++    args = ['q', 'dt:1970-01-01..',
++            '--only', f'https://lore.kernel.org/all/{qmsgid}',
+             '-o', f'v2:{output_path}']
+     logger.debug('Creating lei thread search: lei %s', ' '.join(args))
  
-+	if (trace_kapi_syscall_enter_enabled()) {
-+		char pbuf[KAPI_TP_PARAMS_LEN];
-+
-+		kapi_trace_format_params(spec, params, param_count, pbuf, sizeof(pbuf));
-+		trace_kapi_syscall_enter(spec->name, param_count, params, pbuf);
-+	}
-+
- 	/* Validate that we have the expected number of parameters */
- 	if (param_count != spec->param_count) {
- 		pr_warn_ratelimited("API %s: parameter count mismatch (expected %u, got %d)\n",
- 			spec->name, spec->param_count, param_count);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto out;
- 	}
- 
- 	/* Validate each parameter with context */
-@@ -1173,12 +1220,22 @@ int kapi_validate_syscall_params(const struct kernel_api_spec *spec,
- 		if (!kapi_validate_param_with_context(param_spec, params[i], params, param_count)) {
- 			if (strncmp(spec->name, "sys_", 4) == 0) {
- 				/* For syscalls, we can return EINVAL to userspace */
--				return -EINVAL;
-+				ret = -EINVAL;
-+				goto out;
- 			}
- 		}
- 	}
- 
--	return 0;
-+out:
-+	/*
-+	 * Emit the exit event on the rejection path too (the wrapper
-+	 * short-circuits the handler on a non-zero return), so every
-+	 * kapi_syscall_enter has a matching kapi_syscall_exit.
-+	 */
-+	if (ret)
-+		trace_kapi_syscall_exit(spec->name, ret, false);
-+
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(kapi_validate_syscall_params);
- 
-@@ -1301,14 +1358,18 @@ EXPORT_SYMBOL_GPL(kapi_validate_return_value);
-  */
- int kapi_validate_syscall_return(const struct kernel_api_spec *spec, s64 retval)
- {
-+	bool valid = true;
-+
- 	if (!spec)
- 		return 0;
- 
--	/* Skip return validation if return spec was not defined */
--	if (spec->return_magic != KAPI_MAGIC_RETURN)
--		return 0;
-+	/* Validate against the return spec when one was defined */
-+	if (spec->return_magic == KAPI_MAGIC_RETURN)
-+		valid = kapi_validate_return_value(spec, retval);
-+
-+	trace_kapi_syscall_exit(spec->name, retval, valid);
- 
--	if (!kapi_validate_return_value(spec, retval)) {
-+	if (!valid) {
- 		/* Log the violation but don't change the return value */
- 		pr_warn_ratelimited("KAPI: Syscall %s returned unspecified value %lld\n",
- 				    spec->name, retval);
--- 
-2.53.0
+
+---
+base-commit: 9060fd4d0d24895e29ca6d982bdd22b64ea45220
+change-id: 20260531-thread-track-msgid-in-only-url-07ff53b0fca9
+
+Best regards,
+--  
+Catalin Iacob <iacobcatalin@gmail.com>
 
