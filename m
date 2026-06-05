@@ -1,87 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C0B37F74A
-	for <tools@linux.kernel.org>; Fri,  5 Jun 2026 12:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9502E975E
+	for <tools@linux.kernel.org>; Fri,  5 Jun 2026 12:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780663265; cv=none; b=saQnl9+k9DwC1JB87rh+ESPP3a3+DJbY1M47KqNcTdtqwYSJxgzWWTaTPo33jmH9sp5s+J/hQYmhdE5HSEj60Wvyn12cA6kfkuafPFVho45M5uUmr2bm0luq29k0t70atuGktDeSStlcsXyuIjKbyt4u8tWYcY9gUm/L4gqs4so=
+	t=1780663346; cv=none; b=qT0piYzy9Q7zluxiMbX/RM63QN9HTC2LETPUpmI5H+sqzYVPFcAVyTAyblg1LuA7IrHk8NFlOVGsqNios39+rT5OAnvj+EWXrr79HgC2zoZuKyxWTxlKNRsuYVWr63+0w6oVGlstj9f30CkbJqgP3UY8ehjt9FDxBTu8i7gQR8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780663265; c=relaxed/simple;
-	bh=WWnau4lcC/UDc4iNDo/JNHyAonD7sRzSblV7nAGhBK8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ELJoqfJEo+OpiwoBXvvDsUNyDCjfhIweV8xVfr2kVLtY4Y7C6phyPL+NzGRKl1a/JVx8QuTdu3+9k4qXg6yxsQn/z0pU2r64pvJ3MtkpfBIR8sfsIKhAmw083wphCBzGTWXcH7QRIorIA4TBzbI4165H0JZOTmSxlWA6mAos2Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i5unOdYs; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780663346; c=relaxed/simple;
+	bh=6dDeBBJ6f7UfSXW1Pq3FUnVJjemP/N9Eny6+Xa48r3U=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=k8nGHLlnYY/+iz4JQrUDFFLTJOs/euse3EKsPmd4jGNNGuEHHpCQZ4weMSSPc0prAQPMadhs+ravOunbekNVoDYdE33nhE8rchKQzfYXnoOfckkvjHL/en9RaghEvozSAkn16RC7BQNxyeXaqvw3ryU0cmPDIQn3IsQTqizV01M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YO6tM1Lg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i5unOdYs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YO6tM1Lg"
 Received: by smtp.kernel.org (Postfix)
-	id A08D51F0089A; Fri,  5 Jun 2026 12:41:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98361F00899;
-	Fri,  5 Jun 2026 12:41:03 +0000 (UTC)
+	id A8D791F00898; Fri,  5 Jun 2026 12:42:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF5E1F00893;
+	Fri,  5 Jun 2026 12:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780663264;
-	bh=SzT9FFt8a0zsaW+YzKEDHBFi/iS4m4SPwHHG7agrLec=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=i5unOdYs9zWe2p1PY8aiBPWDhwsy9B3xNM5nx6RrRH9s5K+5UeO2gajBucbRXiXvJ
-	 fdSMBqNKFB+k7ygUlWbe9kurBe2qrDOq1tYEZpx7/LOB8Mhzam9P2ofS6YsE6amK42
-	 v4TjvXXY3292TXrpilassZe4RNHh2oNmbS41IlWklSMxoZ43JnJQDIg3gxUBjuyfpq
-	 p283eiBGSRG67J6M7zqYE+19RG5hBUDGzKTfvu9ecFy9V0bm9RukKJCvxUgMoObH8e
-	 7mBEnmgxuXMpEYx+Y5eRRJuE469H+k08JLxiQEIZCtSIwR1obMm75xyIBwX2B4FqCd
-	 NQmLxuNiw0XdA==
-Date: Fri, 5 Jun 2026 13:41:01 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <mricon@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: b4 review -- biggest pain points?
-Message-ID: <b7061a78-632d-4fa3-8ffa-c0cb1d36d852@sirena.org.uk>
-References: <20260604-dangerous-bobcat-from-shambhala-97b022@lemur>
+	s=k20260515; t=1780663345;
+	bh=eS//zeeqhH22hIBTJgW1CTCv/+c53HHnXnNhWw3+2nY=;
+	h=From:Date:Subject:To:Cc;
+	b=YO6tM1Lgxygsy7O9NGpkdao8qpq0/2uXGqpJicqpgk/RXLKM+fK5C5eh5bSxoTxJ+
+	 Wa20euCHJ6TjgZKCZasPt8aqP2LQW7lly4TDgWjSk30gjp9DPBBWKymjBVUQv4gl2c
+	 aIZn2JMr8U/0Raq/7je9rgcyFpkfjeIpgeiHKGQC9bua+fR4tLHaZpnlYkv/6v0t01
+	 ogZJ7TOyDlYxc9Z9cO3q65w4sBYqBXaIC8ZIicV5AfyyDNPDy9eFfHuynQAwU1UMUV
+	 Ym812aS/2jdZib2iyMu/eEPFrqU4CzYuQB1EezmW1ik6TdmXFz/hZkB0q5YiLz/F9w
+	 CBhSCkILtURNA==
+From: Tamir Duberstein <tamird@kernel.org>
+Date: Fri, 05 Jun 2026 08:42:22 -0400
+Subject: [PATCH b4] Avoid expiring snooze test data
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yztXW4vlzO69MGVv"
-Content-Disposition: inline
-In-Reply-To: <20260604-dangerous-bobcat-from-shambhala-97b022@lemur>
-X-Cookie: Error in operator: add beer
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260605-date-expiry-test-v1-1-972c2589973d@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMwQ6CQAwFf4X0bJO6CiT+ivFQ2IfWA5LtYjCEf
+ 3eV40wys5IjGZwu1UoJb3N7jQWOh4r6h453sMXCFCQ00kjNUTMYy2TpwxmeWTQOp9BKC1Uq2ZQ
+ w2PJfXqk70213PndP9Pn3om37Am4+cch4AAAA
+X-Change-ID: 20260605-date-expiry-test-0adf32707eaa
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Tamir Duberstein <tamird@kernel.org>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1977; i=tamird@kernel.org;
+ h=from:subject:message-id; bh=6dDeBBJ6f7UfSXW1Pq3FUnVJjemP/N9Eny6+Xa48r3U=;
+ b=owGbwMvMwCV2wYdPVfy60HTG02pJDFlKRwwUS17tsNKeeO+YqKhrXEX7BO/s/dwvqoMVnB54S
+ uqGOzzomMjCIMbFYCmmyJIoemhveurtPbKZ747DzGFlAhkiLdLAAAQsDHy5iXmlRjpGeqbahnqG
+ RjoGOsYMXJwCMNUZ8gx/xROzn8Qv2+wXwDN5rtr/rj9Cfa+MW4XmeB2NWWpryGeZz/DPMinjDov
+ zRUe/Rdc8Qisa1rnsKpqa3by1zVa05oXC2xOsAA==
+X-Developer-Key: i=tamird@kernel.org; a=openpgp;
+ fpr=5A6714204D41EC844C50273C19D6FF6092365380
 
+The tracking TUI test used a fixed snooze date that eventually passed,
+causing startup to correctly wake the series and clear snoozed_until.
 
---yztXW4vlzO69MGVv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Generate a future timestamp relative to the test run so the test
+continues to exercise loading an active snooze from the database.
 
-On Thu, Jun 04, 2026 at 11:07:37PM -0400, Konstantin Ryabitsev wrote:
+Assisted-by: Codex gpt-5.5
+Signed-off-by: Tamir Duberstein <tamird@kernel.org>
+---
+ src/tests/test_tui_tracking.py | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-> I finally have some cycles to get back to b4 development in a fuller
-> capacity, so I'd like to do the next iteration of b4 review and b4 bugs
-> features. I know some of you are using b4 review fairly regularly, while
-> others have tried once and decided it's not working for them.
+diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
+index d8feb6f..c395772 100644
+--- a/src/tests/test_tui_tracking.py
++++ b/src/tests/test_tui_tracking.py
+@@ -11,6 +11,7 @@ core user workflows: series listing, navigation, filtering,
+ status transitions, and modal interactions.
+ """
+ 
++import datetime
+ import pathlib
+ from typing import Any, Dict, List, Optional
+ from unittest.mock import patch
+@@ -2780,13 +2781,14 @@ class TestLoadSeriesCaching:
+         ]
+         _seed_db('cache-snooze', series)
+         conn = tracking.get_db('cache-snooze')
+-        tracking.snooze_series(
+-            conn, 'test-snooze-detail', '2026-06-01T00:00:00', revision=1
+-        )
++        snoozed_until = (
++            datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=1)
++        ).strftime('%Y-%m-%dT%H:%M:%S')
++        tracking.snooze_series(conn, 'test-snooze-detail', snoozed_until, revision=1)
+         conn.close()
+ 
+         app = TrackingApp('cache-snooze')
+         async with app.run_test(size=(120, 30)) as pilot:
+             await pilot.pause()
+             assert len(app._all_series) == 1
+-            assert app._all_series[0].get('snoozed_until') == '2026-06-01T00:00:00'
++            assert app._all_series[0].get('snoozed_until') == snoozed_until
 
-> What are the biggest pain points I should focus on? From my memory:
+---
+base-commit: d5d981426ead3f490713ef5d2fd1aa3d0f13b005
+change-id: 20260605-date-expiry-test-0adf32707eaa
 
-> - I know Mark sent quite a few bug reports and from talking to him I know that
->   huge series are problematic performance-wise.
+Best regards,
+--  
+Tamir Duberstein <tamird@kernel.org>
 
-FWIW probably the biggest single issue I have right now is that the
-state machine around serieses can't cope with things being partially
-applied.  This is a problem with things like picking bugfixes off the
-start of serieses, or multi-subsystem serieses.
-
---yztXW4vlzO69MGVv
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoiw9wACgkQJNaLcl1U
-h9Bk+gf+J+yoN/csB+wXV9oZ5PPvFKKcrHVLZ04pswWW9hV7MTqhdaXvlarMp1Am
-5Jg6PRvZIjHeVNTk+eDEk4xozXbdIaOKncNTpUiHwtNn4lTC0pCuFDiiu6/Wm3Bj
-XF7g2kJSAzATM+7DuWbpYyBAk7Zq5NcpcOv/U7n2LM8wyPucEcLlhIzpR3UmU8gR
-YeeAGRclfYZ7Snedj5eGbkz7ZkY67kA+F0MCA+pi9KaiaZEoauHDNzUAcV3Y+N5Z
-B0qVM6N70eqNBHK7QYgLBxYsLc8thoJbg8r1Ly6JNilxAkIgTeehCOjZTmC4Z9g4
-t/WR70a93If18D3L7xuVojglwUTtWw==
-=2jhB
------END PGP SIGNATURE-----
-
---yztXW4vlzO69MGVv--
