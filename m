@@ -1,69 +1,79 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD95B3168E1
-	for <tools@linux.kernel.org>; Wed, 10 Jun 2026 01:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B42F336885
+	for <tools@linux.kernel.org>; Wed, 10 Jun 2026 01:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781056064; cv=none; b=qap75XjRRxEgA3jrsp45Uv3NbH6yGM6B+JzyyBvUDKQuolcqFRXQlGZO8iF+k6ca6OEquOvl/U4+us6j8jawZWT5GZCSVPC3LxjQmsnfI3bB6GzW033oZ8mOWEll5kV/zna8BV6nG3Whkb/43Cf7BUzDvnrfT6GImcHFV9hB4ok=
+	t=1781056265; cv=none; b=KZzRd05Ysfkml1FQYYh4ozQ4daHKecl9OWaGPY9BXINE6sS6y0dG9D2YT394CkGLRUEuQOwU0EmutfAcGfbmS3nPUuyLQIKANJbBVc6LawPgA4ga8imhci60qKskYpojPqjjwTSGzN1OLtWAw9W6/4+r/iexT/8FTeuhlTKm43E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781056064; c=relaxed/simple;
-	bh=VIUKq5pE5pks+3D/ggJeX6ZhViYj158hAaCY80DtVJU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DSZAjJLN9LzRTCSesPI4GfIhJvg7ASIzY+TvDdmHKqkH+jaQCFwSoE799lBQggxgTPN5eOtQLhlXAsy0vKIVWDxzMqS8VWghc68nPS1caumxV+Ks9JqHP3Yp2DFXvwskNKRZkAMSgExh6JvuOQEQL5QoUwa4mvHWta1jYUuvd6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bC/yu/Em; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781056265; c=relaxed/simple;
+	bh=3gU3NMPo8KEUcr1LPTYp+wwB2bHwt39pYEQ2YRKfgMY=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=hIR1hV+YNLotiMyPaGS0lbjZw5q8BEpHMsfhF07tue/fmh1u5Vs5cRW8MWInd3fFyWg/5PzHJSTOw6m6JsOHOaT86URhvV6BIutaYmxJPMXJ4NtMHahWyeVLOmhQp47v+7vZTKDihKpOfA9kgbmgYxoIJmoEv3YAyEfPhhyiU+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j04CjWDO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bC/yu/Em"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j04CjWDO"
 Received: by smtp.kernel.org (Postfix)
-	id 2BC061F00898; Wed, 10 Jun 2026 01:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2151F00893;
-	Wed, 10 Jun 2026 01:47:40 +0000 (UTC)
+	id E676E1F00898; Wed, 10 Jun 2026 01:51:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E3B1F00893;
+	Wed, 10 Jun 2026 01:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781056061;
-	bh=VIUKq5pE5pks+3D/ggJeX6ZhViYj158hAaCY80DtVJU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=bC/yu/EmXHRKykbKyC8afZlbad/Fdgx5VXQumb5Cnnk2kNb3PK5L1/1VzlrLxhkQp
-	 L7ZeCKTbo7fxMV2x8N0uPw8xKWB7ImFHfErXwAg2nY6B1IzVy8d6ClKw04d/fCjD9E
-	 xeKHefKB8nAw6kJRyRyrw4tmoq0dX324PHuxPlWU=
-Date: Tue, 9 Jun 2026 21:47:39 -0400
+	s=korg; t=1781056262;
+	bh=kcfVagyp8Zri2mqFy2+0hzlj9Vc1uCUw01JFQbE40R8=;
+	h=From:To:In-Reply-To:References:Subject:Date;
+	b=j04CjWDOKlFNZsrvN0/GraLMf7BDphz32lTW6MhITOa3K87U5myNikn7hq98n1VNR
+	 2QyKzFggPOoyrVQg2b3AbUydYKquuP2at0XTxv5taP1qPY8ND8KcOyRBfgexgu9dIT
+	 Fu+QMUzX4NYYI2zzVT45/3LV9hjSus1kCtZhFVHw=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Christian Brauner <brauner@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: [PATCH b4] review: allow a custom Message-Id command for TUI
- replies
-Message-ID: <20260609-terrestrial-military-honeybee-d6ffcc@meerkat>
-References: <20260522-review-msgid-cmd-v1-1-facc71f2e084@kernel.org>
- <20260609-loutish-busy-curassow-33ac37@meerkat>
+To: "Kernel.org Tools" <tools@kernel.org>, 
+ "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+In-Reply-To: <20260428-sashiko-patchset-api-v1-0-24d4ac34b4ae@kernel.org>
+References: <20260428-sashiko-patchset-api-v1-0-24d4ac34b4ae@kernel.org>
+Subject: Re: [PATCH b4 0/3] review: avoid downloading logs and fix URLs
+Message-Id: <178105625588.169838.7317918514653839888.b4-ty@b4>
+Date: Wed, 10 Jun 2026 01:50:55 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260609-loutish-busy-curassow-33ac37@meerkat>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=693;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=NVWdMfiAsdaZAcxsBLxi0FF0SppiCbI1CH8Y0+RYOv4=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLI0DrO63tgiyVXm81Ytnu2C9Dvubw9SD9aq3jXQOXGxR
+ KeDd75PRykLgxgXg6yYIkvZvthNQYUPPeTSe0xh5rAygQxh4OIUgIm8TWRkOLXmb2eM1NKjGvua
+ gg4kGyxbYWexLqH0v839Ltv2qns6Nxj+KbRN/3VohrHbipTdH9JSGUou9yp6Ty47u+HbnUuJDxO
+ NWQE=
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On Tue, Jun 09, 2026 at 09:11:01PM -0400, Konstantin Ryabitsev wrote:
-> This patch won't quite cover every possible case -- e.g. it will miss the
-> thank-you notes that are still sent with the same code path as "b4 ty". Let
-> me think of a more global way to plug this in that won't clash with
-> message-id's that are generated for series with "b4 prep/send".
 
-Rather than adding a parallel make_msgid_with_cmd() helper, I folded the
-hook directly into make_msgid() behind an allow_custom_msgid_cmd flag,
-and flipped that flag on at exactly the reply/notification call sites:
-review replies, follow-up replies, and ty notes. When the flag is set
-and b4.custom-msgid-cmd is configured, b4 runs the command and uses its
-stdout as the Message-Id (angle brackets optional), falling back to the
-built-in <...@b4> id when the option is unset, produces no output, or
-fails.
+On Tue, 28 Apr 2026 11:29:13 +0200, Matthieu Baerts (NGI0) wrote:
+> review: avoid downloading logs and fix URLs
+> 
+> The build-in Sashiko and Patchwork support is nice!
+> 
+> Here are just some small fixes:
+> 
+> - Patch 1: avoid downloading the review logs that are not used.
+> 
+> [...]
 
-I renamed the option to b4.custom-msgid-cmd (dropping the "review-"
-prefix) since it now reaches beyond the review TUI.
+Applied, thanks!
 
-Try it out and let me know if that's what you were looking for.
+[1/3] review: sashiko: switch to patchset endpoint
+      commit: 0073094fee274bf2403cae4043d4f269056501e8
+[2/3] review: sashiko: fix URLs
+      commit: c45bf35c4908b8e133b34597a23f1b0b94be1124
+[3/3] review: patchwork: use the target URL
+      commit: af6d8bb4e4ba9fafc9b0b3efe1b0e605d939b606
 
-Thanks,
--K
+Best regards,
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
