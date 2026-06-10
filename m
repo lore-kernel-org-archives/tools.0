@@ -1,81 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85B8261B71
-	for <tools@linux.kernel.org>; Tue,  9 Jun 2026 23:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C81335BA
+	for <tools@linux.kernel.org>; Wed, 10 Jun 2026 00:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781048181; cv=none; b=O4mKExNVkfsB1Ipy8cAS02RdCG7gEqEMhiJt3+6qn8fD9Z11cRdrDbuXazuSwpUMtsMZz4cRckywKkrZiLkQsypRA+K1C4RESoXvl2V3Uw0LyPJSERTrHfeanol5wg/RdUNx+UtVASPfMtWw96EYST884rrvKwviJLJc3IS/1po=
+	t=1781052480; cv=none; b=AGp0HnYiamDFZRMKyw1BNEZKHzTQsKg+j6aysK/bK8FQkW+3hesBE4im1250cU1R2IRzQNc/5CS+h65N6SwDeonkykLtr3HE9846Do8R4WWGXjXv3lNjlA5mZUGHbUGc6Gh4i08gveodEL6nYWLmGLjBJjRYtqlvRAlK0sYa470=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781048181; c=relaxed/simple;
-	bh=XpXR6owPgXRVmlwp/c8uo2g3fGrjY9ZzRXhfrdh5Z4w=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=QP2LMihH9bz9UQyJdhgA6DUu4Lg9rHZUQyc02887w9JdgPCKUq26I5JQ8VL+rR2CaDnkxck/K0lG/hV1xXVmQLNwEI+0w5RAr/rjiDVXb4YNpbwo+aqCHFlr5NKbMWp95nwOs/4Mb+5UVolWuxNlG26UmwvLjEKokTR+XlOwk0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BSspygKu; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781052480; c=relaxed/simple;
+	bh=0W7m5dqeM3B0vLopOs4ehQ7HY3LG3eW/tCdGRqyHt10=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=P0lTRq8kXzUV5EH0vX63U+Oz7yXAyELz4SPaV3Cwgao7mRD8CiMEoEkP2YUuF8tVuTipXWmEgoKg+W6qVWbYwuCdccqbkDSkEDWQhDxFj5dbz+uyLvhKBOBpzuM+GlkJBhTEa9sVgO2t1t1dblslVXJWItZw7oclAMtaF0U1IXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B4a95tU/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BSspygKu"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B4a95tU/"
 Received: by smtp.kernel.org (Postfix)
-	id 811BF1F00898; Tue,  9 Jun 2026 23:36:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414291F00893;
-	Tue,  9 Jun 2026 23:36:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781048180;
-	bh=XpXR6owPgXRVmlwp/c8uo2g3fGrjY9ZzRXhfrdh5Z4w=;
-	h=Date:From:To:Cc:Subject;
-	b=BSspygKukj9O2xaPk6fGaR87CzVDXx4MhFQ7hzpwvtrknHAnRtsDuJ2LkF+ZjljYf
-	 R6r4dWYlW888n7I66BZ3PdKyF7H+pKfsfkwlgRo0aUs8cB9lMxaGvpWLQtUwYsMd8t
-	 jTKXy5lzjbYbCZ3KUkrqTe5Cr++qMzngzSxkTqx9vBrbJmA0UA5vRZiy+sTC9/9vNI
-	 4PcQDNAz0V6YTsA3mhIdR1vV96OnO7jyd+7aF+cvOhI1llYLLEWnPkOOIuGaUaNvCM
-	 aW6M3KUklTzWY14xXt5gH1XZkEDPtGvZiDCaDNcNWP1kKaDH1jNEk735L5xrl7VGDC
-	 +6BWbNdB4ZtSA==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 767BF1AC56BF; Wed, 10 Jun 2026 00:36:17 +0100 (BST)
-Date: Wed, 10 Jun 2026 00:36:17 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 review can't use merge strategy when skipping patches
-Message-ID: <aiijcYQInbjJ3kT4@sirena.co.uk>
+	id 11FEC1F00898; Wed, 10 Jun 2026 00:47:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0D11F00893;
+	Wed, 10 Jun 2026 00:47:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1781052479;
+	bh=yXEhv/cgLt306wlsXr9l6grqKkhaxrwPjfBpGqaE9jo=;
+	h=From:To:In-Reply-To:References:Subject:Date;
+	b=B4a95tU/EZ5urGa50PusGm6T2T9UxOlL0QwVwT64O7h62KjkCnyDygySfE7Z2oL59
+	 RiD3ze6YkDmz/GCpvkMcSYwjvP5IuOFC0qxPuZDtuoIZRoGQ5c0r3pxo4hAaWEwCYz
+	 0olQx02jF5lJHns8xh6PD9AN972/zJFaaR8hhK6s=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: "Kernel.org Tools" <tools@kernel.org>, 
+ Jacob Keller <jacob.e.keller@intel.com>
+In-Reply-To: <20260513-jk-dont-interpret-branch-as-filename-v1-1-220e7b8b006d@intel.com>
+References: <20260513-jk-dont-interpret-branch-as-filename-v1-1-220e7b8b006d@intel.com>
+Subject: Re: [PATCH b4] Prevent interpreting usebranch as a path in
+ find_cover_commit
+Message-Id: <178105247054.120849.915073760812820686.b4-ty@b4>
+Date: Wed, 10 Jun 2026 00:47:50 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YMcfvxzQSUDjRKbR"
-Content-Disposition: inline
-X-Cookie: Leave no stone unturned.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=346;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=Mdgu5LzFQ3jH/IVeOSVrB0TWnIvOGozdqw0SzlKt7NE=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLI0ttjdPX71d6G7s+k9z6qFXk3zap6svrQ8zPfrnmXhe
+ 0Jf6ZdHdpSyMIhxMciKKbKU7YvdFFT40EMuvccUZg4rE8gQBi5OAZjIo8WMDEvYVuvuOXFUj+vR
+ 38WHNspt/Tlx6Z8wg7JFbAmtAln6p9wY/lklH1nO+zJl/pPkslOsjbqhvwtLJ129HbxXvuuZYky
+ pOQcA
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
 
---YMcfvxzQSUDjRKbR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Wed, 13 May 2026 14:30:25 -0700, Jacob Keller wrote:
+> Prevent interpreting usebranch as a path in find_cover_commit
 
-Hi,
+Applied, thanks!
 
-It's kind of annoying that b4 review can't use the merge strategy when
-applying a series that has skipped patches in it, it means there's no
-way to include a cover letter even if that cover letter is very good.
-Skipping is very common with multi-subsystem serieses, especially when
-DTS updates for some SoC or board are included along with a new driver.
+[1/1] Prevent interpreting usebranch as a path in find_cover_commit
+      commit: 546b02489abf7bfe19d3ad6381692b544dd95535
 
-Thanks,
-Mark
+Best regards,
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
---YMcfvxzQSUDjRKbR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmooo3AACgkQJNaLcl1U
-h9DvmAf9E/Cx7N2oKLBkFY5LuBk98DppEUp9ndzaox8etXJSfwk1WHFoaj/yNOhT
-nj9gjOYzI5Ne7X0otbEiGBe1V/K77eCVspV3+Lszl4X0b5tPCSD2bGmub100GAoO
-AIPtkraueEak6W61jHykH7msed1vvXioHBHVQsmx9VGrNCaJc/WVhpotrojie0eX
-REsYUEbLMLEK5WoImvFuB4uUTKdJH5HVMWTUPJfYgdllJst3H9KhkTRWuwya7x21
-xc0H2HpixKQT4TG0WOTh2ungbWVlGxMnKsxbAK+hjsDAhmsL7wlJJQh8KMK9/thj
-XqtAB2aDlmykUZBNg2Jxg/7CPTL3Tg==
-=UbzK
------END PGP SIGNATURE-----
-
---YMcfvxzQSUDjRKbR--
