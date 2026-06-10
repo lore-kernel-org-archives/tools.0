@@ -1,72 +1,72 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC2341360C
-	for <tools@linux.kernel.org>; Wed, 10 Jun 2026 15:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7CC3FC5B2
+	for <tools@linux.kernel.org>; Wed, 10 Jun 2026 15:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781106841; cv=none; b=DbjsyQTKxtGdtFxr41LEf6cz49RSAG5iw1W07ll4qAilSTShJ/AB47+GUmdXLzHsxGS7rnFgDVi3/dRWSzpUwOF994ihtOGRFwcF+mNk/P9TbqEAfIsBGKvedG5xKfxEu6Q0aYOCBaroINowBUUrg1vL2pRsPkcovi3ApDeKIRM=
+	t=1781106970; cv=none; b=MFbxsYRPqzBAnN2/qE/aq/FqSYjoMD8eiYUg6L74lFT3ssNCfdWUunOCHzQCKD5K6xJxs+w4GVPPB+9ayqEKniLEc+iRc/xODKwR1sVIrzl/56YbfJSyX7iZS7ZUHys9t427EE8ho5NwvlfEUaUNS3FObQd28W8/TlQkGHnxZl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781106841; c=relaxed/simple;
-	bh=Ba27PYfSOmG+Eu7Lrd3NyH7YACpY7tS6tEMc2a7RjSg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I8U5mj/+nTYOaWHtmquWsr1/z87+JDYWVOpUdeE3YpzS1gwQ3UYtai8VrIcPjiFd1p9n2On35GTjdByMggevAFP9t1KlPQ8k4pFOMzQ3DPFcemaDWfOTiDdeCcD8zKTx6LPc/dGCEZM7wSGHHjjCgM4yu7WgddVbZU+V2njHT3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgMVCXJ8; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781106970; c=relaxed/simple;
+	bh=/2NvMJ/oBlbIrlif7086aztNgcNy/ir6/CI7RmgKrjY=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=kbDe7kLo5ytPeEguitrtcu5zDYfB1Q8DlVdoVkDNoeHXeQtYIpTc8BVZZGSdptvG19K/VTJGY3rvzUgX/SHWUvtb8DC7Bu04oLtPlNBN2ruTaeqCuXxlRfHhSJLVN7gJiXniMNLd6CRQMaJOiDj8OLuTYzf9gXYhuGPC68gwARk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFf4Kc7g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgMVCXJ8"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFf4Kc7g"
 Received: by smtp.kernel.org (Postfix)
-	id 3F5541F00898; Wed, 10 Jun 2026 15:54:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4E41F00893;
-	Wed, 10 Jun 2026 15:53:59 +0000 (UTC)
+	id 4D2E11F00898; Wed, 10 Jun 2026 15:56:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06C91F00893;
+	Wed, 10 Jun 2026 15:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781106840;
-	bh=/eqESjBhq9GwaE5SAJknHm5hf5TarZMwPLUeSQpk5R0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=lgMVCXJ8vtbZhl+R/XmxepcAunWAI0RX4cPygAfhev4J0DQi1tRVXg7JLfZ8LG0p7
-	 ibXKLcpO4ppXE/wjnPk+G0ZcbPQG9jwL+dhHmPQ51Nm/PHO1XHbSbRZxBeJDO2uk/S
-	 8PFkVlPNa4rLQppY6BrVqu/Lw5AjyniS9+zrTkyA=
-Date: Wed, 10 Jun 2026 11:53:58 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: b4 review workflow issue with partially accepted serieses
-Message-ID: <20260610-cocky-unstoppable-myna-603f17@meerkat>
-References: <afk5QvNAQDxFCbvT@sirena.co.uk>
- <178104250404.112711.2880594121343252200.b4-reply@b4>
- <ailGd8akixhx_GHg@sirena.co.uk>
- <20260610-influential-wolverine-of-improvement-f01d0d@meerkat>
- <aimB2DACiXv6MIQk@sirena.co.uk>
- <20260610-premium-congenial-beaver-2af169@meerkat>
- <aimGrsvLkQEHXmgV@sirena.co.uk>
+	s=korg; t=1781106969;
+	bh=dAFXbzA5Qxm5Ht3ihDFznNPil5fp10ksrEPxS4FZ5z0=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=vFf4Kc7ghUwDASeKdV498y/BZkGmHAYAvbjgsu/0GkGGUV5EJHpORD2k1G+2NU1+6
+	 0RV1XKaogSC9hpZYiyLW7MYzMSyZHKVcsqh5Piz7ebRZ1i7uTE0eYc/PvZ+JmATVrr
+	 i/cxPeXZk2gI76LXv7LAy7fd0AfduXEOnsQviAOY=
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aimGrsvLkQEHXmgV@sirena.co.uk>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: b4 review can't use merge strategy when skipping patches
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, tools@kernel.org
+In-Reply-To: <aiijcYQInbjJ3kT4@sirena.co.uk>
+References: <aiijcYQInbjJ3kT4@sirena.co.uk>
+Date: Wed, 10 Jun 2026 15:56:04 +0000
+Message-Id: <178110696427.220060.12567432631798909648.b4-reply@b4>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=756;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=/2NvMJ/oBlbIrlif7086aztNgcNy/ir6/CI7RmgKrjY=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLI0OyWK3OalhuXxJ7Gc49L9rhZxwNbJbfvH2xN2vzj6+
+ rd8SWJVRykLgxgXg6yYIkvZvthNQYUPPeTSe0xh5rAygQxh4OIUgIkUyjAyrLnnf+lO8w3WCa8V
+ 2G8/vOH0te+Kzi6PDdFK8yddfh12MZuRYZZV5c8PjkIiB+V1w11XrFsfUvPlQGpefUdS2nl50Tv
+ rOQA=
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On Wed, Jun 10, 2026 at 04:45:50PM +0100, Mark Brown wrote:
-> > Ok, thanks for confirming. So, a partially accepted series falls in these two
-> > workflows:
+On Wed, 10 Jun 2026 00:36:17 +0100, Mark Brown wrote:
+> Hi,
 > 
-> > - waiting for next revision; a v+1 should wake it up and put the series back
-> >   into review mode; additional patches may be accepted from follow-up
-> >   revisions (partial+more)
-> 
-> > - done and dealt with, thanks sent, series archived; a v+1 should be
-> >   completely ignored (partial+done)
-> 
-> > I'll see if I can disambiguate these two workflows.
-> 
-> Yes, both those flows exist.
+> It's kind of annoying that b4 review can't use the merge strategy when
+> applying a series that has skipped patches in it, it means there's no
+> way to include a cover letter even if that cover letter is very good.
+> Skipping is very common with multi-subsystem serieses, especially when
+> DTS updates for some SoC or board are included along with a new driver.
 
-OK, looks like this was already mostly working correctly, just needed a logic
-bug fixed. You should be able to send thanks from a partially accepted series
-and then archive it.
+The latest master should allow you to do this. Please let me know if the 
+workflow works for you -- we pop up the patch selection screen as an 
+additional check, but any patches you've skipped during review should 
+already be deselected in it.
 
-Let me know if that's fixed for you.
+Thanks,
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
--K
