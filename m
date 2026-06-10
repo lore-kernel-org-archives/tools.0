@@ -1,57 +1,93 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BB918A92F
-	for <tools@linux.kernel.org>; Wed, 10 Jun 2026 02:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF402165EA
+	for <tools@linux.kernel.org>; Wed, 10 Jun 2026 02:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781058097; cv=none; b=mOILqYKbrCVKx9whgLLNxnORRgCjyBg5iOZfWsTnGobmKHApzHECa2939K4O3WVAPncRUSSAHZU+rncB8oH+qts7HWYKZ4ZQM95ixLCJj+9iBVd+9r2RkwRa83NAOzVQ7PpmJ5o7JB6db+wJ1QeGdocQ9wOn2kXkSoBoPnP5vs8=
+	t=1781058973; cv=none; b=i8oGiUpnjczII87qdySvkrdL+G5aPctaH1zl6vOduepBtFdANwn1YCenql5E40tFlQGZfr/2KNrZaJt2/otIbFDfBvXKiwJmRFiU1iTPJMXmVwoKvKDPlYkv0N8BHlMaq9Kl82bhabW6s2OpzD7ivfxgE3Z0+cnJ2HUBWjiAPGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781058097; c=relaxed/simple;
-	bh=AjXTuYxNR6ms0K8njW6RaXl1sscG6ePDnp4MKhbh7R8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bS4u73R97Z6HO/20ccxFJV9tq/Bjr2gEFbPuxzvc6gAkV8vAneCY92MsGVJ7NHE+1t73Py7Doc7KIheDrqxeKPLQsBCydqjcOn4N4L/SzSTvsqzPDrnuW3G3GfqF2U2J3TxAK5P9dnJE9ieGChIxhh6AirBTYn6zuxbzKvQTm2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hx8gG+WO; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781058973; c=relaxed/simple;
+	bh=OkWk8GAt8+D1Eov5J5+nRQBM/gdmFfWtVSZ7yH9jOcI=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=P3Im7erQaHRFYrioHuziRrKx+3Pd/CkqOHE8pCdX3/Qkmo/AM0Kw+OJDy+yN9hPvFS0pa+JPSdwYK/2Xk5pGPxI8XdzzrWyQ8Rz318/cxIZpLCzsFNgSk3bKtcKXAiTtUIS3w7tHZkjblj8h1qTYI1PtNrJPzdcELxv6+usFoeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3mTd9wu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hx8gG+WO"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3mTd9wu"
 Received: by smtp.kernel.org (Postfix)
-	id F17971F00898; Wed, 10 Jun 2026 02:21:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1F51F00893;
-	Wed, 10 Jun 2026 02:21:35 +0000 (UTC)
+	id 0A54B1F00898; Wed, 10 Jun 2026 02:36:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86C81F00893;
+	Wed, 10 Jun 2026 02:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781058095;
-	bh=fWCCCLktqjo0MMvsShHTHQT93h78S2GdCZw0NzGFNcY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hx8gG+WOV8pieJpbSkQF5GA0KTys6sWcLW55lmXSPvrIGsOOiNkiZ6wc8G1wYRnod
-	 +pusuqKYq8hE7ZHKtCVJMcHXgI6hbevbtF6Q60iCCX98yL52KoAYa8Ou5GeG1S9diN
-	 E0Cvp+kTJfxPxnHa9tRxNqnntgPbxqrbFj5BNjQM=
-Date: Tue, 9 Jun 2026 22:21:34 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Sven Eckelmann <sven@narfation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>, 
-	Matthieu Baerts <matttbe@kernel.org>
-Subject: Re: [PATCH b4] review: Fix sashiko patchset URL format
-Message-ID: <20260609-valiant-oryx-of-typhoon-2a6c4d@meerkat>
-References: <20260429-sashiko-patchset-url-v1-1-de8027029bca@narfation.org>
- <3cd8a333-1724-45c0-b288-b82480781471@kernel.org>
- <3409149.aeNJFYEL58@ripper>
+	s=korg; t=1781058971;
+	bh=DCkJvGWlEqV6L/7ypwKschTWkj05qFPR1+7k7DO+ERg=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=Q3mTd9wurhLM3UKCR+LPbn2qwdhnsox2jQr7gVlNSt0mbBqK7hi/7LaAsCZbFC8hm
+	 lXSExtqU+EbvcQZtxfCnAGId4AouJ7ccBIpWssk7PitVRThIRrktwDMpBGX7Hw1Tx7
+	 fPDbNQWRwiVmZfHsZ6no0E+Am1ROGeupAsZDx6L4=
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3409149.aeNJFYEL58@ripper>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH b4] config: add send-me-too configuration
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Jeremy Kerr <jk@codeconstruct.com.au>
+Cc: "Kernel.org Tools" <tools@kernel.org>, 
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+In-Reply-To: <20260429-master-v1-1-f5052d8b7f9b@codeconstruct.com.au>
+References: <20260429-master-v1-1-f5052d8b7f9b@codeconstruct.com.au>
+Date: Wed, 10 Jun 2026 02:36:08 +0000
+Message-Id: <178105896854.172387.14154860070343570175.b4-review@b4>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1373;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=OkWk8GAt8+D1Eov5J5+nRQBM/gdmFfWtVSZ7yH9jOcI=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLI0zs668uzvh41u195vcr3BM6VOqXXtraMGdwwr2Mu+s
+ YV6Smls7ihlYRDjYpAVU2Qp2xe7KajwoYdceo8pzBxWJpAhDFycAjCRXzMZGY5OOacwu0tYyyrO
+ 2lpafb7Nx/SE8vpI7hvapzw0zLTO6jH8s7jlr+Iwy+rssy3zDHVXL09deWX9p/qstVWxOzIXPpt
+ zgBUA
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On Wed, Apr 29, 2026 at 01:24:53PM +0200, Sven Eckelmann wrote:
-> > https://lore.kernel.org/tools/20260428-sashiko-patchset-api-v1-2-24d4ac34b4ae@kernel.org/T/#u
-> 
-> Yes, your patch series looks better than my single patch.
+On Wed, 29 Apr 2026 14:49:46 +0800, Jeremy Kerr <jk@codeconstruct.com.au> wrote:
+> diff --git a/docs/contributor/send.rst b/docs/contributor/send.rst
+> index ba18ef5..5769cd7 100644
+> --- a/docs/contributor/send.rst
+> +++ b/docs/contributor/send.rst
+> @@ -321,7 +321,9 @@ Command line flags
+>    :ref:`contributor_settings`).
+>  
+>  ``--not-me-too``
+> -  Removes your own email address from the recipients.
+> +  Removes your own email address from the recipients. This can be set in the
+> +  configuration using the :term:`b4.send-me-too`, setting to `no`. (see
+> +  :ref:`contributor_settings`).
 
-That's the one I took.
+Small nit -- you probably wanted to use ``no`` here, not `no` (trips me 
+up all the time, too).
 
-Much thanks to both of you!
+>
+> diff --git a/src/b4/ez.py b/src/b4/ez.py
+> index 3e81138..39168e6 100644
+> --- a/src/b4/ez.py
+> +++ b/src/b4/ez.py
+> @@ -2252,7 +2252,8 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
+>                  ccdests.append(btr.addr)
+>  
+>          excludes = b4.get_excluded_addrs()
+> -        if cmdargs.not_me_too:
+> +        conf_me_too = config.get('send-me-too').lower()
+> +        if cmdargs.not_me_too or conf_me_too in {'no', 'n', 'false'}:
 
--K
+Safer to do:
+
+  conf_me_too = str(config.get('send-me-too', 'yes')).lower()
+
+Also, I believe, mypy won't yell at you then. :)
+
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
