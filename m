@@ -1,68 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB08165F1A
-	for <tools@linux.kernel.org>; Wed, 10 Jun 2026 18:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BB21E7C2E
+	for <tools@linux.kernel.org>; Thu, 11 Jun 2026 01:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781115445; cv=none; b=at7bQFXNhMuS2Xw2U6T1igOgWh40jvuvJGuufDxy8ZLDcAv+pJqZ5eWURfUkNwQZJnfuEs6bldSzZjQZ3DI1o9K3805iGdGLbqt+c2HYKWsXFUFGb65/FyyZi2a3BuF8B0iGGHyQhR+Rj9CGqT4nP4RZd4G73fma868TPRQOWdY=
+	t=1781142998; cv=none; b=HzsPoMYoJ7+UouZEsxdw3DAUHjim84+8nVeD2VlPYxdy1x8lEvWMru/VPHFyEDkVqzE46jQRNKMmhfwqx288PdoAgCqhDg4SlQ8qetnAJtt+WVJ/S9gBAlt9ZU6D76Y92z5XJcEZnO4wI7lt/ecqFS0ZOAcSWN7S4Vw0/y3+lCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781115445; c=relaxed/simple;
-	bh=Gfv/kblQT2QKe9vxp8kvAr9p+KDPCJmykWdeKy55i2Y=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Vs3DhAcG65bLxLvPgIeZU1rhGPRN0E9h/9UMkNs2F+sdFZkRGXwpiSCr/dUgRVkANZZ9tTlYrpXpKJT9HvqrrVF96ajutCebukFFs/DuL0wLzBus55tGZ2bSKuOQrB8AbOwuOhXEZ8mz+EOpU1BM6rdQkjFB2yfM9MP7wPQBYQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlqXByGd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781142998; c=relaxed/simple;
+	bh=igCxPeLUXuj/6Yl58gbmifYnTHKf+T3JAZb3G3StSV0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WestNvkgS2V8dsD+lZXUUrEfis/LxEJjqScnCv302CqmSAIN3zpRYjx1GhAkLKu2mc2Csc9psYehBhdZiSNgOvnIN3nkusG5dagkIP4dVC2iiwkd7mPf3CB/aJHFsdpLyjsB53Jb4KZ8JApjxawDgrC/NAKTXyU3qrPlYVnNgCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yx/vkt64; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlqXByGd"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yx/vkt64"
 Received: by smtp.kernel.org (Postfix)
-	id 2B79E1F00898; Wed, 10 Jun 2026 18:17:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBBD01F00893;
-	Wed, 10 Jun 2026 18:17:23 +0000 (UTC)
+	id F1A521F00899; Thu, 11 Jun 2026 01:56:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3631F00893;
+	Thu, 11 Jun 2026 01:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781115444;
-	bh=uVFFv3FTOhuy3EP8U/bakJLkZgUm0IW9y9xkzAoPO5M=;
-	h=From:To:In-Reply-To:References:Subject:Date;
-	b=NlqXByGd7FWzzwD804Q9kWjZ6Nn4RMLTzsARwRVIXN9SzpthzY1JCMcIfWOCX3cBj
-	 D9a38VKQz2JahPPfdEYoZ3WHNsoxG3RWK274/ft227MVRORAn9mHYGL8Z9P/MsZZka
-	 zsRoASUMGMKNnQwtCK8Rau4WqNjxXaDDdJjFVfQU=
+	s=korg; t=1781142996;
+	bh=SSi9ngqxCM0DfevvGsPaJHLRVg5M15QnevkAo5iwDYA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Yx/vkt64QO8e6ct/00tk/fDiq5tU+ggPETfyuVAYixA91vnQuQbkOZUJxkKnwRc1F
+	 Ujm0BIZs4yQuNOgAScc9mCpKpRe3xA88V7xoFP0X5ABREtEagcX984Je8gdo+3kLnx
+	 i7Wma85Ql1f132ai/pMGqpu+puy7jveVNc9Dp6do=
+Date: Wed, 10 Jun 2026 21:56:35 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@kernel.org>, 
- Catalin Iacob <iacobcatalin@gmail.com>
-In-Reply-To: <20260608-thread-track-msgid-in-only-url-v2-1-29d929e3542b@gmail.com>
-References: <20260608-thread-track-msgid-in-only-url-v2-1-29d929e3542b@gmail.com>
-Subject: Re: [PATCH kgl v2] Fix thread tracking not delivering new messages
- after a few days
-Message-Id: <178111543930.241224.1587984357650490983.b4-ty@b4>
-Date: Wed, 10 Jun 2026 18:17:19 +0000
+To: Matthieu Baerts <matttbe@kernel.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: Re: b4 review tui: too smart reply features?
+Message-ID: <20260610-psychedelic-encouraging-quoll-c7b949@lemur>
+References: <c281cf50-7935-488c-8429-03eac9b8902e@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=353;
- i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=KaHA81BP08UrcNdWLoWArFzZsvx0CnZ7F2Djc0u60rY=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGLI0Vxl3pMYrLJv7puPHsagJsrutfxVaTzUqTpD4H7+Io
- /i12AfLjlIWBjEuBlkxRZayfbGbggofesil95jCzGFlAhnCwMUpABMJ6WP4n16+yWnSrX3z4t8X
- hZ6227BBLGyz6q7T29OXhJ9exMIT2cLIcPeV5BwTlbRJsv/5xXmuXiveOnWrvmtU7/MXKTP/Tsr
- n5AUA
-X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
- fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c281cf50-7935-488c-8429-03eac9b8902e@kernel.org>
 
+On Tue, Apr 28, 2026 at 12:52:01PM +0200, Matthieu Baerts wrote:
+> Hi Konstantin,
+> 
+> I'm still trying 'b4 review tui', and something that bothers me is when
+> my replies are mangled. I have three examples.
 
-On Mon, 08 Jun 2026 18:08:36 +0300, Catalin Iacob wrote:
-> Fix thread tracking not delivering new messages after a few days
+Okay, the latest master has revamped that quite a bit. I was also not really
+happy with the way I kept fighting with the tooling, which is the opposite of
+where I want to go. I had the bright idea to move some of the functionality
+into a vim plugin instead of doing it in b4 directly -- this way you still get
+most of the neat features but without the inability to undo or forced/awkward
+quote trimming.
 
-Applied, thanks!
+Can you try it out and see if you're fighting with the current master less?
 
-[1/1] Fix thread tracking not delivering new messages after a few days
-      commit: e1de2e29d9a5ba1a893d4a2271d0bdd746ba1ccd
+Thanks for riding the sharp edge! :)
 
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
+-K
