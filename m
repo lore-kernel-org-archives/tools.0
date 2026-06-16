@@ -1,872 +1,169 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E2C3655E3
-	for <tools@linux.kernel.org>; Tue, 16 Jun 2026 12:06:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781611591; cv=none; b=JdsWSe0MMe2LPf9sHd2UzYDEEOqoaA6wug+Gwcaa3j0Lm51y7iHS0XWj7Y28UejwJUcJa9ylmXEpcQfhmpoUqfvXQoRcB6qrEekUjt0UM858ul+CZsu7H0FuBGDnN+vhMkylf8A4acoGgJPhFRgCvf+vVI5572IKsD66wjf7Z4c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781611591; c=relaxed/simple;
-	bh=leVW/hnreOyMqUTI3+2JNSdhj+xybSfJ4i9U4n0FuA8=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=sU4UO7n+TVdZx1ozBWC8zZ/udRIXJCMPrsXZtPSAy2eO9Rrugw4Hgo7ADY2EfgbOLeaEIX9zu/CSYlYAPSK/Dn4ZnqLeT/AeqsRpZXa9k64QNwKf2hYvrxLQiwxJA4EnYH8n84yvLMYx6nRUkkwOUiodPuZjlspmgFWNnz4UCaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TBCKQmb6; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7E831714A
+	for <tools@linux.kernel.org>; Tue, 16 Jun 2026 12:52:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781614362; cv=pass; b=VAs0t/R08KefwnecO8jsHwF4Bg73C6D7xd0vUCGxwW7ntZveaPFoHabP8IoCD3XHhgWYM5qGjjQsnz4abo7LPH3gwrUvUHX94Igg5q67m7kL+MO0AYmSkma11d4nj/UOJpUfH1lGRA4q7LCCWiKAR4t459C0njEV8yHK23gbxek=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781614362; c=relaxed/simple;
+	bh=anWBRhrrlUvXNHWiTzWePc9cDaUqJEcyi60rrtaT2Hc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PEGCFQRnexDqDM/dhhkrV8ZMhTUIrAAhm6BLpEaC+lXhSjujDX0lxYScsTJb6GahB6NXzG1jhzWD+U6+MvTjWArvejtdJMfaHDsMevEbt92itwhaHUFPVhe80ELjAbM1MF3M/Ozj99chPvZ3JcnKubehweUy5XjW7CbgOd5cDQI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Dc3aiUXA; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TBCKQmb6"
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Dc3aiUXA"
 Received: by smtp.kernel.org (Postfix)
-	id 673861F00A3A; Tue, 16 Jun 2026 12:06:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB011F00A3E;
-	Tue, 16 Jun 2026 12:06:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781611589;
-	bh=26WjfvHnykqCY33p9Ea6AbaEeJiSwmnKvK0TeAGik6w=;
-	h=Date:From:To:Cc:Subject;
-	b=TBCKQmb6IBw120tSiYNZPmNtRC2sPDYwaGIp+8VdXUbp7PMYdnbbrEC1WtkvOcIKR
-	 TQTbTO0QZWu83E3U/5GA3DocaPw3uXrG/vVtMBw6AHRKK2VEPrkGOT7flbwK3eHLIQ
-	 wxOHs/0jEdnWV1pSwWF9Lvkllk2hv/S+4SbHGP/m97kccFg80q2KNUVP2W3pyhOXul
-	 TIcoNTxnjNL1nTq1E4q3LwKoXOxIBsg3RGmbvQUS/50ooCnuXPLd0E+DuDKXvrxN3L
-	 ns7V3OUcuCLPWWh2zzaq+l6ErfA04NIt+YN/7cljqNxGo+Xrup/Iv7PhyOEk6azqf0
-	 Vv/TzIU+DMaGg==
-Date: Tue, 16 Jun 2026 13:06:25 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 review tui crashes while openining serieses
-Message-ID: <21fe13c1-5c9a-4a47-b97b-251da4748aea@sirena.org.uk>
+	id 91E5C1F00A3A; Tue, 16 Jun 2026 12:52:41 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1781614361;
+	b=w+XwhNTbcTmBjQI/+JOpd2wYckSzHGu7SBPbIX07WyRBAA5g61DKWzLSdp+EsU2U6TEl
+	 2XGZVfgx4C7p0dtlXnEwgyYsHpvwHGEd0jOnKx5JKdE24MhEccvmMFT77jedUUvLfgjMZ
+	 jwWF4mFmDOHXr8rfNX7p/VjqfSrJj9lER+LwRw4T60s/3eEyuIIN2lpDn3ZpsEo9rKiK3
+	 FHmtGIbJyQmcaVsTAkkKy1QJzpr9APZSYd/PSt8ZrHZWXYsdKmI21q2dRnRhLM9enTQqQ
+	 s8mSfjGBqoJ7lelrk4IJWo2pQHap5Btrd0k5XIjHSnwhHIX5UgN5WINjbLwArRNco7Q==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1781614361;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:User-Agent:MIME-Version:Content-Type:
+	 X-TM-AS-GCONF:X-Proofpoint-Spam-Info:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-GUID:X-Authority-Analysis:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=0eLShnodH+ucQpLXxXtfKk9Mjykr+JnjYDrX0kMskCI=;
+	b=EgnYASYdUGKsocpXa2/KsYysgEzJ3Iuzkilw0jmpEarWQP1qU7zNOIDMPw1pplUiU3Hi
+	 +o36gMj2B5RvlVA1mkIhysS8qLn7rapCe4wU2B9u50VGYkQoEiSli279X5bC+HI25cUQC
+	 N+GleekLqa+ozhnrFCzE+tOHN7fN7yilTIqZQloni147cnKP7X/m4U1QRE+UvNjIADSfJ
+	 rx1oLXI5X0cP24Boo0yYYI3/WIMbYE8HtzEDst08L7fdL5aewDGRQGLvZsj8JxewrURHN
+	 PdbWet9u7db1F8AYaQ/xjp7xysbBjtsGP6sTfIlH2pY8PawBmIBG7HJOVgbcxjHdu8A==
+ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Dc3aiUXA;
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	arc=none smtp.remote-ip=148.163.158.5
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id DFFAA1F000E9;
+	Tue, 16 Jun 2026 12:52:40 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Dc3aiUXA
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org DFFAA1F000E9
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65GAIV7x1156302;
+	Tue, 16 Jun 2026 12:52:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=0eLShnodH+ucQpLXxXtfKk9Mjykr+J
+	njYDrX0kMskCI=; b=Dc3aiUXAj+fJBBBvHGKfFdUUGjcl2y2tj8Wmoq0kkQT2p7
+	9P+NY2D8j5pxtrbsUV4bYv+jmAtZzTd1y9EdodDIIlV5dg/MyoKE9uT5hcZbV9OP
+	1XXaBWu5xmj5kdoMWLHKWWV7NyzVM64iUS8N0ignOG7XjkeYitqifvuAm0e7Uhu+
+	y03FildgzCmNszBiqn3vbZvBeaBh0lZn3wrVnrErZ31rz6sVWq2jFubwgPUcabLG
+	Y55wtxvv8G1WGGhWqPE5wdGvthyuV+TeZDMvfUzxpqeevEtqzcRLh6+U+LDh4lo3
+	zRDLUokfVy9IdsM7JgbJkz8SISFHMrmm72EAZC5A==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4es1eg55gs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jun 2026 12:52:39 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65GCnbpE026987;
+	Tue, 16 Jun 2026 12:52:39 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4esjhk3bkd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jun 2026 12:52:39 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com [10.39.53.229])
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65GCqbGh27787858
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 16 Jun 2026 12:52:38 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id AFEE358059;
+	Tue, 16 Jun 2026 12:52:37 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6FFE55805B;
+	Tue, 16 Jun 2026 12:52:37 +0000 (GMT)
+Received: from d (unknown [9.61.20.230])
+	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue, 16 Jun 2026 12:52:37 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: Konstantin Ryabitsev <mricon@kernel.org>
+Cc: tools@kernel.org, Tyrel Datwyler <tyreld@linux.ibm.com>
+Subject: Re: [Tyrel Datwyler] Re: [PATCH v2 6/7] ibmvfc: register and use
+ asynchronous sub-queue
+In-Reply-To: <20260615-smiling-kelpie-of-temperance-4dd61b@meerkat>
+	(Konstantin Ryabitsev's message of "Mon, 15 Jun 2026 17:51:39 -0400")
+References: <87h5n3o69j.fsf@linux.ibm.com>
+	<20260615-smiling-kelpie-of-temperance-4dd61b@meerkat>
+Date: Tue, 16 Jun 2026 07:52:36 -0500
+Message-ID: <87cxxqodez.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LZJi9gF1LfelcSSg"
-Content-Disposition: inline
-X-Cookie: Password:
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDEzMCBTYWx0ZWRfX1mVCeCb8Z7ew
+ lk8NHxe45Zj3z9A2iWESl6gUCjzFSn28iNDTsp0MFxnCsth/LCCU0hSA5R2RY8vTeuD9rFBciWj
+ WAqxevWdYNutoKo9rwqqIqHFXDDLG7c=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDEzMCBTYWx0ZWRfX9ZrfpY/NWLuK
+ vuMiDEROKGQiiqNKuXmyP6oL4GjEUfSOmEXIPUmd9gGuGaabpuPUWdwltiiLWPQe4QfvJqhiOdX
+ 3dRX0Sxgww6+o6tCiFnGqVVQtDnbWK4OQWDBSjaWN9zEFAtF/fixJAXrVvoCcH+ZBiC+nzSbtEg
+ Zg7GspepHzjmQPPXcnPPJzGbKQHT+e8iQUdQ+McpjURS1dl3LPYVsOaXAWU/lLvz8f72f2iWGIO
+ cr3mViBYydKFY12vt2cDQTHzrU4IT5flMqfE9ovK1fBktMu3GHKZGmZ7yMjbxToTZDTIu/psHkG
+ cuk/lNVxM3ymzXmuCZjDhXIdT0XHv/EHLGDcxA4GZmBOCDOnupHhVu0twLK/Pdi88ZDA1TKVaNR
+ XUkEF4S+Zp+gYah8b8IzsuMSUBPlUENYi/SRQNEP3ugzcuCo44+aZZye5OTHIaNY0tuboDlgA1i
+ tCyg2ZoY87HiSBoBY9g==
+X-Proofpoint-GUID: ESTX7CSkBcz9oH3pAdymvKnGvpVNBffI
+X-Authority-Analysis: v=2.4 cv=NuDhtcdJ c=1 sm=1 tr=0 ts=6a314717 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8 a=fyQQCtO3a4J-0CZA60EA:9
+X-Proofpoint-ORIG-GUID: ESTX7CSkBcz9oH3pAdymvKnGvpVNBffI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_03,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 suspectscore=0 impostorscore=0 clxscore=1015
+ phishscore=0 bulkscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160130
 
+Konstantin Ryabitsev <mricon@kernel.org> writes:
 
---LZJi9gF1LfelcSSg
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Mon, Jun 15, 2026 at 04:14:48PM -0500, Dave Marquardt wrote:
+>> 
+>> Hi Konstantin. I'm using b4 to send patch series. I get these comments
+>> about not having a Signed-off-by: tag. Should the tag be added by b4? Or
+>> should the patch attestation be enough?
+>
+> That's not really the right way to put it. Different projects will have
+> different DCO requirements and it's not up to b4 to enforce the presence of
+> trailers. It's not the same as patch attestation -- the attestation's job is
+> to mechanically attest that the patches haven't been tampered since they left
+> your system. The Signed-off-by: trailer is more about the actual code you're
+> committing.
+>
+>> I do notice that "b4 prep --check" flags some patches as missing the
+>> Signed-off-by: tag, particularly when I've chosen to not fix some
+>> warnings.
+>
+> It's speaking to you, then! :)
+>
+> You can either manually run all commits with -s (which is what I do), or you
+> can set up a hook to do that for you automatically -- but since it's supposed
+> to be a deliberate action by the committer, I recommend just always
+> remembering to add that little "-s" after "git commit".
 
-Hi,
+Thanks. I searched and searched the b4 documentation, and now, from your
+explanation, understand why I don't see anything about Signed-off-by:
+when submitting a patch series. Would it be worth adding something to
+the manual? (Yes, if so, I'm volunteering :) )
 
-Recently (since the support for cancelling network requests came in?)
-I've started getting crashes sometimes when opening serieses, I think
-only when opening them for the first time, I've not been explicitly
-cancelling anything.  Retrying generally works fine, it's some race or
-old state:
-
-=E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80 Traceback (most recent call last) =E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=95=AE
-=E2=94=82 /home/broonie/git/b4/.venv/lib/python3.13/site-packages/textual/w=
-orker.py:370 in _run                      =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82   367 =E2=94=82   =E2=94=82   =E2=94=82   self.state =3D WorkerSt=
-ate.RUNNING                                                         =E2=94=
-=82
-=E2=94=82   368 =E2=94=82   =E2=94=82   =E2=94=82   app.log.worker(self)   =
-                                                                  =E2=94=82
-=E2=94=82   369 =E2=94=82   =E2=94=82   =E2=94=82   try:                   =
-                                                                  =E2=94=82
-=E2=94=82 =E2=9D=B1 370 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   sel=
-f._result =3D await self.run()                                             =
-         =E2=94=82
-=E2=94=82   371 =E2=94=82   =E2=94=82   =E2=94=82   except asyncio.Cancelle=
-dError as error:                                                  =E2=94=82
-=E2=94=82   372 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   self.state =
-=3D WorkerState.CANCELLED                                                  =
- =E2=94=82
-=E2=94=82   373 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   self._error=
- =3D error                                                                 =
- =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=
-=AE =E2=94=82
-=E2=94=82 =E2=94=82           app =3D TrackingApp(                         =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   title=3D'b4 review',       =
-                                                          =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82                 =E2=94=82   classes=3D{'-dark-mode'},  =
-                                                          =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82                 =E2=94=82   pseudo_classes=3D{'dark', '=
-focus'}                                                   =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82                 )                                      =
-                                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82         error =3D OperationCancelledError('Request canc=
-elled')                                           =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          self =3D <Worker                              =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   ERROR                      =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   name=3D'_ws_work'          =
-                                                          =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82                 =E2=94=82   description=3D'<function   =
-                                                          =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82                 TrackingApp._checkout_new_series.<local=
-s>._fetch_and_prepare at 0x7fb5'+9              =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 >                                      =
-                                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82 worker_failed =3D WorkerFailed("Worker raised exception=
-: OperationCancelledError('Request cancelled')")  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /home/broonie/git/b4/.venv/lib/python3.13/site-packages/textual/w=
-orker.py:354 in run                       =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82   351 =E2=94=82   =E2=94=82   Returns:                           =
-                                                          =E2=94=82
-=E2=94=82   352 =E2=94=82   =E2=94=82   =E2=94=82   Return value of the wor=
-k.                                                                =E2=94=82
-=E2=94=82   353 =E2=94=82   =E2=94=82   """                                =
-                                                          =E2=94=82
-=E2=94=82 =E2=9D=B1 354 =E2=94=82   =E2=94=82   return await (             =
-                                                                  =E2=94=82
-=E2=94=82   355 =E2=94=82   =E2=94=82   =E2=94=82   self._run_threaded() if=
- self._thread_worker else self._run_async()                       =E2=94=82
-=E2=94=82   356 =E2=94=82   =E2=94=82   )                                  =
-                                                          =E2=94=82
-=E2=94=82   357                                                            =
-                                          =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=
-=AE =E2=94=82
-=E2=94=82 =E2=94=82 self =3D <Worker                                       =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   ERROR                               =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   name=3D'_ws_work'                   =
-                                                          =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82        =E2=94=82   description=3D'<function TrackingApp=
-=2E_checkout_new_series.<locals>._fetch_and_prepare at      =E2=94=82 =E2=
-=94=82
-=E2=94=82 =E2=94=82        0x7fb5'+9                                       =
-                                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82        >                                               =
-                                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /home/broonie/git/b4/.venv/lib/python3.13/site-packages/textual/w=
-orker.py:326 in _run_threaded             =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82   323 =E2=94=82   =E2=94=82                                      =
-                                                          =E2=94=82
-=E2=94=82   324 =E2=94=82   =E2=94=82   loop =3D asyncio.get_running_loop()=
-                                                            =E2=94=82
-=E2=94=82   325 =E2=94=82   =E2=94=82   assert loop is not None            =
-                                                          =E2=94=82
-=E2=94=82 =E2=9D=B1 326 =E2=94=82   =E2=94=82   return await loop.run_in_ex=
-ecutor(None, runner, self._work)                                  =E2=94=82
-=E2=94=82   327 =E2=94=82                                                  =
-                                                  =E2=94=82
-=E2=94=82   328 =E2=94=82   async def _run_async(self) -> ResultType:      =
-                                                  =E2=94=82
-=E2=94=82   329 =E2=94=82   =E2=94=82   """Run an async worker.            =
-                                                          =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=
-=AE =E2=94=82
-=E2=94=82 =E2=94=82 loop =3D <_UnixSelectorEventLoop running=3DTrue closed=
-=3DFalse debug=3DFalse>                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82 self =3D <Worker                                       =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   ERROR                               =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   name=3D'_ws_work'                   =
-                                                          =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82        =E2=94=82   description=3D'<function TrackingApp=
-=2E_checkout_new_series.<locals>._fetch_and_prepare at      =E2=94=82 =E2=
-=94=82
-=E2=94=82 =E2=94=82        0x7fb5'+9                                       =
-                                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82        >                                               =
-                                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /usr/lib/python3.13/concurrent/futures/thread.py:59 in run       =
-                                          =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82    56 =E2=94=82   =E2=94=82   =E2=94=82   return                 =
-                                                                  =E2=94=82
-=E2=94=82    57 =E2=94=82   =E2=94=82                                      =
-                                                          =E2=94=82
-=E2=94=82    58 =E2=94=82   =E2=94=82   try:                               =
-                                                          =E2=94=82
-=E2=94=82 =E2=9D=B1  59 =E2=94=82   =E2=94=82   =E2=94=82   result =3D self=
-=2Efn(*self.args, **self.kwargs)                                           =
-   =E2=94=82
-=E2=94=82    60 =E2=94=82   =E2=94=82   except BaseException as exc:       =
-                                                          =E2=94=82
-=E2=94=82    61 =E2=94=82   =E2=94=82   =E2=94=82   self.future.set_excepti=
-on(exc)                                                           =E2=94=82
-=E2=94=82    62 =E2=94=82   =E2=94=82   =E2=94=82   # Break a reference cyc=
-le with the exception 'exc'                                       =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=
-=95=AE                                                                     =
-                       =E2=94=82
-=E2=94=82 =E2=94=82 self =3D None =E2=94=82                                =
-                                                            =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF   =
-                                                                           =
-              =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /home/broonie/git/b4/.venv/lib/python3.13/site-packages/textual/w=
-orker.py:309 in run_callable              =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82   306 =E2=94=82   =E2=94=82   def run_callable(work: Callable[[],=
- ResultType]) -> ResultType:                              =E2=94=82
-=E2=94=82   307 =E2=94=82   =E2=94=82   =E2=94=82   """Set the active worke=
-r, and call the callable."""                                      =E2=94=82
-=E2=94=82   308 =E2=94=82   =E2=94=82   =E2=94=82   active_worker.set(self)=
-                                                                  =E2=94=82
-=E2=94=82 =E2=9D=B1 309 =E2=94=82   =E2=94=82   =E2=94=82   return work()  =
-                                                                          =
-=E2=94=82
-=E2=94=82   310 =E2=94=82   =E2=94=82                                      =
-                                                          =E2=94=82
-=E2=94=82   311 =E2=94=82   =E2=94=82   if (                               =
-                                                          =E2=94=82
-=E2=94=82   312 =E2=94=82   =E2=94=82   =E2=94=82   inspect.iscoroutinefunc=
-tion(self._work)                                                  =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=
-=AE =E2=94=82
-=E2=94=82 =E2=94=82 self =3D <Worker                                       =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   ERROR                               =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82        =E2=94=82   name=3D'_ws_work'                   =
-                                                          =E2=94=82 =E2=94=
-=82
-=E2=94=82 =E2=94=82        =E2=94=82   description=3D'<function TrackingApp=
-=2E_checkout_new_series.<locals>._fetch_and_prepare at      =E2=94=82 =E2=
-=94=82
-=E2=94=82 =E2=94=82        0x7fb5'+9                                       =
-                                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82        >                                               =
-                                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /home/broonie/git/b4/src/b4/review_tui/_tracking_app.py:1444 in _=
-fetch_and_prepare                         =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82   1441 =E2=94=82   =E2=94=82                                     =
-                                                          =E2=94=82
-=E2=94=82   1442 =E2=94=82   =E2=94=82   def _fetch_and_prepare() -> Tuple[=
-b4.LoreSeries, bytes, str, str]:                          =E2=94=82
-=E2=94=82   1443 =E2=94=82   =E2=94=82   =E2=94=82   with _quiet_worker(): =
-                                                                  =E2=94=82
-=E2=94=82 =E2=9D=B1 1444 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   ms=
-gs =3D b4.review.retrieve_series_messages(series, self._identifier)        =
-         =E2=94=82
-=E2=94=82   1445 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   self._refr=
-esh_msg_count(series, len(msgs))                                          =
-=E2=94=82
-=E2=94=82   1446 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   wantver =
-=3D series.get('revision')                                                 =
-   =E2=94=82
-=E2=94=82   1447 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   try:      =
-                                                                          =
-=E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=
-=AE =E2=94=82
-=E2=94=82 =E2=94=82   self =3D TrackingApp(title=3D'b4 review', classes=3D{=
-'-dark-mode'}, pseudo_classes=3D{'dark', 'focus'})      =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82 series =3D {                                           =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   'track_id': 718,                  =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   'change_id':                      =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          '20260615-asoc-dt-bindings-mtk-btcvsd-snd-conv=
-ert-to-dt-schema-611f77a4d16d',                 =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   'revision': 4,                    =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   'subject': 'ASoC: dt-bindings: mtk=
--btcvsd-snd: Convert to DT Schema',                     =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   'sender_name': 'Luca Leonardo Scor=
-cia',                                                   =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   'sender_email': 'l.scorcia@gmail.c=
-om',                                                    =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   'sent_at': '2026-06-15T20:57:50+02=
-:00',                                                   =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   'added_at': '2026-06-16T10:58:10.7=
-38093+00:00',                                           =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   'status': 'new',                  =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   'num_patches': 1,                 =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          =E2=94=82   ... +10                           =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82          }                                             =
-                                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /home/broonie/git/b4/src/b4/review/_review.py:221 in retrieve_ser=
-ies_messages                              =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82    218 =E2=94=82                                                 =
-                                                  =E2=94=82
-=E2=94=82    219 =E2=94=82   if not message_id:                            =
-                                                  =E2=94=82
-=E2=94=82    220 =E2=94=82   =E2=94=82   raise LookupError('No message-id f=
-or this series')                                          =E2=94=82
-=E2=94=82 =E2=9D=B1  221 =E2=94=82   return _retrieve_messages(message_id) =
-                                                          =E2=94=82
-=E2=94=82    222                                                           =
-                                          =E2=94=82
-=E2=94=82    223                                                           =
-                                          =E2=94=82
-=E2=94=82    224 def _get_lore_series(                                     =
-                                          =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=
-=AE =E2=94=82
-=E2=94=82 =E2=94=82     change_id =3D '20260615-asoc-dt-bindings-mtk-btcvsd=
--snd-convert-to-dt-schema-611f77a4d16d'           =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82    identifier =3D 'apply'                              =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82 is_rethreaded =3D False                                =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82    message_id =3D '20260615185810.11804-1-l.scorcia@gma=
-il.com'                                           =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82      revision =3D 4                                    =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82        series =3D {                                    =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   'track_id': 718,           =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   'change_id':               =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 '20260615-asoc-dt-bindings-mtk-btcvsd-s=
-nd-convert-to-dt-schema-611f77a4d16d',          =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   'revision': 4,             =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   'subject': 'ASoC: dt-bindin=
-gs: mtk-btcvsd-snd: Convert to DT Schema',              =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   'sender_name': 'Luca Leonar=
-do Scorcia',                                            =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   'sender_email': 'l.scorcia@=
-gmail.com',                                             =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   'sent_at': '2026-06-15T20:5=
-7:50+02:00',                                            =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   'added_at': '2026-06-16T10:=
-58:10.738093+00:00',                                    =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   'status': 'new',           =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   'num_patches': 1,          =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 =E2=94=82   ... +10                    =
-                                                        =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82                 }                                      =
-                                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /home/broonie/git/b4/src/b4/review/_review.py:183 in _retrieve_me=
-ssages                                    =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82    180 =E2=94=82   =E2=94=82   wantname=3DNone,                  =
-                                                            =E2=94=82
-=E2=94=82    181 =E2=94=82   =E2=94=82   wantver=3DNone,                   =
-                                                            =E2=94=82
-=E2=94=82    182 =E2=94=82   )                                             =
-                                                  =E2=94=82
-=E2=94=82 =E2=9D=B1  183 =E2=94=82   _ret_msgid, msgs =3D b4.retrieve_messa=
-ges(cmdargs)                                                =E2=94=82
-=E2=94=82    184 =E2=94=82   if not msgs:                                  =
-                                                  =E2=94=82
-=E2=94=82    185 =E2=94=82   =E2=94=82   raise LookupError(f'Could not retr=
-ieve messages for {message_id}')                          =E2=94=82
-=E2=94=82    186 =E2=94=82   return msgs                                   =
-                                                  =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=
-=AE =E2=94=82
-=E2=94=82 =E2=94=82    cmdargs =3D Namespace(msgid=3D'20260615185810.11804-=
-1-l.scorcia@gmail.com', localmbox=3DNone,             =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82              nocache=3DTrue, noparent=3DFalse, wantname=
-=3DNone, wantver=3DNone)                                =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82 message_id =3D '20260615185810.11804-1-l.scorcia@gmail.=
-com'                                              =E2=94=82 =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /home/broonie/git/b4/src/b4/__init__.py:5469 in retrieve_messages=
-                                          =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82   5466 =E2=94=82   =E2=94=82   =E2=94=82   # Just that msgid, ple=
-ase                                                               =E2=94=82
-=E2=94=82   5467 =E2=94=82   =E2=94=82   =E2=94=82   pickings.add(msgid)   =
-                                                                  =E2=94=82
-=E2=94=82   5468 =E2=94=82   =E2=94=82   msgs =3D (                        =
-                                                            =E2=94=82
-=E2=94=82 =E2=9D=B1 5469 =E2=94=82   =E2=94=82   =E2=94=82   get_pi_thread_=
-by_msgid(                                                                 =
-=E2=94=82
-=E2=94=82   5470 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   msgid,    =
-                                                                          =
-=E2=94=82
-=E2=94=82   5471 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   nocache=3D=
-cmdargs.nocache,                                                           =
- =E2=94=82
-=E2=94=82   5472 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   onlymsgids=
-=3Dpickings,                                                               =
- =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80 locals =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=
-=AE =E2=94=82
-=E2=94=82 =E2=94=82     cmdargs =3D Namespace(msgid=3D'20260615185810.11804=
--1-l.scorcia@gmail.com', localmbox=3DNone,            =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82               nocache=3DTrue, noparent=3DFalse, wantnam=
-e=3DNone, wantver=3DNone)                               =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82       msgid =3D '20260615185810.11804-1-l.scorcia@gmail=
-=2Ecom'                                             =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82    pickings =3D set()                                  =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=94=82 with_thread =3D True                                   =
-                                                  =E2=94=82 =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /home/broonie/git/b4/src/b4/__init__.py:4306 in get_pi_thread_by_=
-msgid                                     =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82   4303 =E2=94=82   =E2=94=82   logger.info('Looking up %s', msgid=
-)                                                         =E2=94=82
-=E2=94=82   4304 =E2=94=82   node =3D get_lore_node()                      =
-                                                    =E2=94=82
-=E2=94=82   4305 =E2=94=82   try:                                          =
-                                                  =E2=94=82
-=E2=94=82 =E2=9D=B1 4306 =E2=94=82   =E2=94=82   t_mbox =3D node.get_mbox_b=
-y_msgid(msgid, nocache=3Dnocache)                                     =E2=
-=94=82
-=E2=94=82   4307 =E2=94=82   except liblore.RemoteError as ex:             =
-                                                  =E2=94=82
-=E2=94=82   4308 =E2=94=82   =E2=94=82   if not quiet:                     =
-                                                          =E2=94=82
-=E2=94=82   4309 =E2=94=82   =E2=94=82   =E2=94=82   logger.critical('Could=
- not retrieve thread: %s', ex)                                    =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80 locals =E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=95=AE                                         =E2=94=82
-=E2=94=82 =E2=94=82       msgid =3D '20260615185810.11804-1-l.scorcia@gmail=
-=2Ecom'     =E2=94=82                                         =E2=94=82
-=E2=94=82 =E2=94=82     nocache =3D True                                   =
-          =E2=94=82                                         =E2=94=82
-=E2=94=82 =E2=94=82        node =3D <liblore.node.LoreNode object at 0x7fb5=
-c2998ad0> =E2=94=82                                         =E2=94=82
-=E2=94=82 =E2=94=82  onlymsgids =3D set()                                  =
-          =E2=94=82                                         =E2=94=82
-=E2=94=82 =E2=94=82       quiet =3D False                                  =
-          =E2=94=82                                         =E2=94=82
-=E2=94=82 =E2=94=82 with_thread =3D True                                   =
-          =E2=94=82                                         =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=95=AF                                         =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /home/broonie/git/b4/.venv/lib/python3.13/site-packages/liblore/n=
-ode.py:837 in get_mbox_by_msgid           =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82    834 =E2=94=82   =E2=94=82                                     =
-                                                          =E2=94=82
-=E2=94=82    835 =E2=94=82   =E2=94=82   qmsgid =3D urllib.parse.quote_plus=
-(msgid)                                                     =E2=94=82
-=E2=94=82    836 =E2=94=82   =E2=94=82   mbox_url =3D f'{self._url}/{qmsgid=
-}/t.mbox.gz'                                                =E2=94=82
-=E2=94=82 =E2=9D=B1  837 =E2=94=82   =E2=94=82   resp =3D self._request('GE=
-T', mbox_url)                                                       =E2=94=
-=82
-=E2=94=82    838 =E2=94=82   =E2=94=82   if resp.status_code =3D=3D 404:   =
-                                                              =E2=94=82
-=E2=94=82    839 =E2=94=82   =E2=94=82   =E2=94=82   # The message may live=
- under a different list path.  Try a                              =E2=94=82
-=E2=94=82    840 =E2=94=82   =E2=94=82   =E2=94=82   # HEAD against the bar=
-e origin and follow redirects to                                  =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80 locals =E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=95=AE        =E2=94=82
-=E2=94=82 =E2=94=82      key =3D 'a36d75cecaf9499f5c9bc0815c0aedb3f079ffe4b=
-18f8ffe978c45677ef724d3'                   =E2=94=82        =E2=94=82
-=E2=94=82 =E2=94=82 mbox_url =3D 'https://lore.kernel.org/all/2026061518581=
-0.11804-1-l.scorcia%40gmail.com/t.mbox.'+2 =E2=94=82        =E2=94=82
-=E2=94=82 =E2=94=82    msgid =3D '20260615185810.11804-1-l.scorcia@gmail.co=
-m'                                         =E2=94=82        =E2=94=82
-=E2=94=82 =E2=94=82  nocache =3D True                                      =
-                                           =E2=94=82        =E2=94=82
-=E2=94=82 =E2=94=82   qmsgid =3D '20260615185810.11804-1-l.scorcia%40gmail.=
-com'                                       =E2=94=82        =E2=94=82
-=E2=94=82 =E2=94=82     self =3D <liblore.node.LoreNode object at 0x7fb5c29=
-98ad0>                                     =E2=94=82        =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=
-=AF        =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 /home/broonie/git/b4/.venv/lib/python3.13/site-packages/liblore/n=
-ode.py:686 in _request                    =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82    683 =E2=94=82   =E2=94=82                                     =
-                                                          =E2=94=82
-=E2=94=82    684 =E2=94=82   =E2=94=82   for origin in self._all_origins:  =
-                                                          =E2=94=82
-=E2=94=82    685 =E2=94=82   =E2=94=82   =E2=94=82   if self._cancel_event.=
-is_set():                                                         =E2=94=82
-=E2=94=82 =E2=9D=B1  686 =E2=94=82   =E2=94=82   =E2=94=82   =E2=94=82   ra=
-ise OperationCancelledError('Request cancelled')                           =
-       =E2=94=82
-=E2=94=82    687 =E2=94=82   =E2=94=82   =E2=94=82   request_url =3D self._=
-rewrite_url(url, origin)                                            =E2=94=
-=82
-=E2=94=82    688 =E2=94=82   =E2=94=82   =E2=94=82   logger.debug('Trying %=
-s %s', method, request_url)                                       =E2=94=82
-=E2=94=82    689 =E2=94=82   =E2=94=82   =E2=94=82   try:                  =
-                                                                  =E2=94=82
-=E2=94=82                                                                  =
-                                          =E2=94=82
-=E2=94=82 =E2=95=AD=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80 local=
-s =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AE  =E2=
-=94=82
-=E2=94=82 =E2=94=82         kwargs =3D {'timeout': (5.0, 30.0)}            =
-                                                 =E2=94=82  =E2=94=82
-=E2=94=82 =E2=94=82       last_exc =3D None                                =
-                                                 =E2=94=82  =E2=94=82
-=E2=94=82 =E2=94=82      last_resp =3D None                                =
-                                                 =E2=94=82  =E2=94=82
-=E2=94=82 =E2=94=82         method =3D 'GET'                               =
-                                                 =E2=94=82  =E2=94=82
-=E2=94=82 =E2=94=82         origin =3D 'https://lore.kernel.org'           =
-                                                 =E2=94=82  =E2=94=82
-=E2=94=82 =E2=94=82 raise_on_error =3D True                                =
-                                                 =E2=94=82  =E2=94=82
-=E2=94=82 =E2=94=82           self =3D <liblore.node.LoreNode object at 0x7=
-fb5c2998ad0>                                     =E2=94=82  =E2=94=82
-=E2=94=82 =E2=94=82        session =3D <requests.sessions.Session object at=
- 0x7fb5c2074b90>                                 =E2=94=82  =E2=94=82
-=E2=94=82 =E2=94=82            url =3D 'https://lore.kernel.org/all/2026061=
-5185810.11804-1-l.scorcia%40gmail.com/t.mbox.'+2 =E2=94=82  =E2=94=82
-=E2=94=82 =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF  =E2=94=82
-=E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=95=AF
-OperationCancelledError: Request cancelled
-
-Thanks,
-Mark
-
---LZJi9gF1LfelcSSg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoxPEAACgkQJNaLcl1U
-h9B86gf/c0/73IrYBw2U9W1X0Sf0eqhj8gmO0sr+yuCgplJmzcSKCBh9u/mqzt26
-fWJNRSxk9+W8LAvoXWvtXxRSG74onXd08LPg/WXkQRdo2qxdtKSge5FWINggnls7
-XvUvQfBBWgsgsD/n+Kls/0y1SOJRB5RY/1/sR/7opBZJPlXUC3DBZVI/AkJI5qih
-6C+QxKM/rYoSk/3iROhSD6QK3DHylwkOg+mQ86LaGJ6SnxlwHSzBWcbuF4IZGijd
-Jq+OLAe8VLAPNMYK0GDufs92qLrHEb7ouxCJ3LaaEj/PTp+9LTkcPqDcqDVlAfMm
-4bYvdgLUSltZS2frymEKmIV3f6tMLw==
-=+eUS
------END PGP SIGNATURE-----
-
---LZJi9gF1LfelcSSg--
+-Dave
