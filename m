@@ -1,156 +1,127 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AD524A05D
-	for <tools@linux.kernel.org>; Wed, 17 Jun 2026 12:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C173BCD31
+	for <tools@linux.kernel.org>; Wed, 17 Jun 2026 13:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781697765; cv=pass; b=uPQcsF+qk3S0E8R1TYgOF6jDXD6e9gaUo7RPTYqmXbhXy1kAY/SyWPCkpaOZ9vPRzU5O+UHWfpc/GV37lNa4Nm6WMAUOXuaIM6HO+gKTfkH6F9JnGMn8AfXbTtjLt/JhII7R452xSXdFxtyMm8AJO8tVIH1qjKjo2G5YG2DYWBQ=
+	t=1781702966; cv=pass; b=pSc1KUxaUzXwkDeZvO+WBAxMtwIEl9jelCOhsE8/zLvT0UVYZzukt9gtfWa/7+/bQm8yXNV45LmRz6ZkvMGNxRfPyMItXDPBjppu6Kx4D4/h3HSjq7b8/2S312I5hgH5hY1YsLnYVQT3skmKbKOPrFI0MIXuO6vAP1yLdfEJ3IA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781697765; c=relaxed/simple;
-	bh=O5Z+zAEDu1iGdqReJLBib8lHSt9n4DjpGtVRideahs0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ecxn8yqOzVW5v3Pe1n+BwVZ0NuJDBQUArNutnxPtPvy9jLWTMhpdgqIoGC4h6eP7TQCBi/YYQ80qA0hfGl1woQ5LoIL7VbU5aU4RRdTeJ2+4zB3MRQllTMykQbxJozwp03SjKCTLT1BJlfEj+bWUabTuTDVkpsuJYU+9geKcDMg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=K368SCc6; arc=pass smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781702966; c=relaxed/simple;
+	bh=VvYcSOAAXRb5TKmyBHYiQ4vCBjDY2E5V8abY5hyWkGM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nsVkngkPAiHgpnxfim3qzLkfxCdVU20FgHAZPFx+9dQTa0/Vddrh3DYm7RaguqRnnKYU73KYV3HCrMHJsf8KLZb7R5CHh6zLRsNPkwT16mMiWIXVHABZWc8ErZT3BjX1TzHXdW0j8rY6t3nHjNp/wJsaxiHarwd26PJgfTjbhf0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IdU9mmRb; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="K368SCc6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IdU9mmRb"
 Received: by smtp.kernel.org (Postfix)
-	id 0B6961F00A3D; Wed, 17 Jun 2026 12:02:44 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=213.167.242.64
+	id EEFE71F00A3A; Wed, 17 Jun 2026 13:29:22 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=198.175.65.14
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1781697763;
-	b=wa/4wIDVJ2PMjA1TFyf6RSrOKAyVYAUj3I6rFotnWiGDi6y8a7g0yDQDhvMX+VagIgpS
-	 qCOgdBMLL7leMasC0MEXv8aZ5XHo78O0uwgumLJu+0++yLOWf8U6sKXIMUBNNMVJVyfAd
-	 biLMx6YchUn+bw74753TPMoGM95l/CwwOz8ZirQaygAq3NIsnXoBIZosUMo3GcToInT8I
-	 6MIC+waZVK2KP83N4AP+UG5Rv5U2KiZRSzg2amxKnonXwv0HTYB9ToK8WYfivoyChFkKB
-	 odrt62xnZIz4yv8T5NIB1FNyrswiIVNAX4wxWxjzaXBygFzDFCUkbguNI0ks/HmLlNw==
+	t=1781702962;
+	b=mqlyLsZsY5E0YQMG8yAytZC7kd2ZTUbLZke3iuFA4gnh8Y226N0KSBK/+pj1c3HFS+Hk
+	 RRO4wK8JBItI6PNHdbhlcIB4E3NKRoVuDsNMlfsxkmK1RQGUc/yz8PH/M5TzWLQzloWdv
+	 AoK15sWSck4Js1w+NOC2cuo9fsldqSmpyB6IAPx6TOQtY2romCsOz8O2H9F2AUWGS8ZaZ
+	 4mU4CX1uuTVIthxTNOwb/UHrZmDqISA6G7PEOxrX/Dho4/9v8PO1OZi30okmDzA9UXzU2
+	 yKMvlgfsB5Ig/4lq0LFTZWbExfNjmlnEUrb+RVw46/xSqbg952LMxBN3Fi6phuWrvFQ==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1781697763;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	c=relaxed/relaxed; t=1781702962;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
+	 In-Reply-To:Organization:References:Date:Message-ID:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=dTr3KDpdtw3STxP1M0eo7y2vJ9kN6AAOYU1WBLlXFJU=;
-	b=CIRN0msLOJSBzc+kZhM1yiwdFT4ltipcFmypYyGIKlT0zdbaYq2sBitYNjTaaoaIylxq
-	 H0WvEhe6pcG7PqTpHxSYO/TtDr380e3s1UA2UHgjPS3xbJh52zXdha/02E0TOHSOYoOjV
-	 J1VIwNMyJsrJIkNfAo+0URfBChjIuORCOiKAuWk3weWRzUCwrVto65EgBwu6Ct56Wyt0W
-	 wCxqSp6mNbwtPEhXuW/VjVfucGomCvlD3CO0MgE8Mmowp8fxUkPlVqTg7FLE0RiBwqwFx
-	 wIIzVrBR2OLIezdKlS9CQR112u5ptcEBXXG86yhRDczamCO5zWoKMUttR669tw9lXbA==
-ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=ideasonboard.com header.i=@ideasonboard.com header.a=rsa-sha256 header.s=mail header.b=K368SCc6;
-	dmarc=pass header.from=ideasonboard.com;
-	spf=pass smtp.mailfrom=ideasonboard.com;
-	arc=none smtp.remote-ip=213.167.242.64
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	bh=VvYcSOAAXRb5TKmyBHYiQ4vCBjDY2E5V8abY5hyWkGM=;
+	b=QjNb6TTj3KQKfh6Q/Tlw4lK5yBwzw8GyIGJwyjYNgOylWfKhZz1WbI1czFpETWBzMJfE
+	 LGNsKi944bX4miORVn4OuK9WxQ7vxC7wwG6iDpDWs5qYz0isVkxw94hOI7US8PMYruR9F
+	 VZi6KB0v8P5VwTYOPTEoipNAozxlQdJ6mfulSTLBrBYSWMMxrvxao3ljOV2v6ZBypPZbj
+	 6Z+tsLFNwTX6ADa0dSWthr/cwhTyKwbzky83P/RLmOxjJc8kGcAqioDHwAESO+MXvDB8e
+	 99b5Shx7JiSDOLIypye2YHhQIKOeb3N/i/BHnWMfH42HiaN1RUOcGekrRHwIVK8yPYg==
+ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IdU9mmRb;
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	arc=none smtp.remote-ip=198.175.65.14
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 45E0C1F00A3A;
-	Wed, 17 Jun 2026 12:02:43 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id E72EE1F000E9
+	for <tools@kernel.org>; Wed, 17 Jun 2026 13:29:21 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=ideasonboard.com header.i=@ideasonboard.com header.a=rsa-sha256 header.s=mail header.b=K368SCc6
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 45E0C1F00A3A
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 74A372F8;
-	Wed, 17 Jun 2026 14:02:07 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1781697727;
-	bh=O5Z+zAEDu1iGdqReJLBib8lHSt9n4DjpGtVRideahs0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=K368SCc6nVZtU6co8tw8lF7pYnvkT1FMNXPV9E6XQjnLRApC9FaVpNkLHFHXF9mKZ
-	 JSM1nhoBTZ4VdapEL8ElrV6aLHYRbZUuDiaPtdkPU+a5cgIeRsvzU1hecClet3Fk5M
-	 6PHL6TjhkAlisNUcBQrE5ZgnXXG9Ld6HlPG3WQlg=
-Message-ID: <1ab61866-71ec-4b9e-bd3d-a0cd49856994@ideasonboard.com>
-Date: Wed, 17 Jun 2026 15:02:37 +0300
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IdU9mmRb
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org E72EE1F000E9
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1781702962; x=1813238962;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version:content-transfer-encoding;
+  bh=VvYcSOAAXRb5TKmyBHYiQ4vCBjDY2E5V8abY5hyWkGM=;
+  b=IdU9mmRbycXA+jq5AZ2W8n7jD/jvsoTJ9T2+S/ESUTiMyvRxoHddBith
+   VTubb5djW1zXuYvimAIAzXss5dH8UFSnEQ3H9mCLttvHcCYYjtQ8d7hBX
+   fugBCFi5L0n/UvnE4cc2dRKjmKrYmY+HVtVvZquisF13ukvvtfHCy2ALM
+   QAbUP4cRvrkC5c/P79seiDe8i59mIARLxN8IJR2ltWlyB4dgrPfRhs8ML
+   73/Ys7d2TtuLt54b4BSv3moz5cCtbQKAGMZZJNrmRlIzMjc+b/upS5PWq
+   BRHd1p4uouWNjFrh0HzKgEiB5tn5+T30JPBDnPTrhVSRL6JYsvDSvtYi+
+   A==;
+X-CSE-ConnectionGUID: qyYatjPtQv6NRj4z3n4Epw==
+X-CSE-MsgGUID: wb+X5x7LSXi1qh79yd2weA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11819"; a="86422488"
+X-IronPort-AV: E=Sophos;i="6.24,209,1774335600"; 
+   d="scan'208";a="86422488"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2026 06:29:21 -0700
+X-CSE-ConnectionGUID: EoOBR697RC+oKJMF2lnVTQ==
+X-CSE-MsgGUID: PRB1d35kShyCBJ1+btEIDA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,209,1774335600"; 
+   d="scan'208";a="248145725"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.158])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2026 06:29:20 -0700
+From: Jani Nikula <jani.nikula@linux.intel.com>
+To: Ville Syrjala <ville.syrjala@linux.intel.com>,
+ intel-gfx@lists.freedesktop.org, tools@kernel.org, Konstantin Ryabitsev
+ <konstantin@linuxfoundation.org>
+Cc: intel-xe@lists.freedesktop.org
+Subject: Re: [PATCH 01/14] drm/i915/cdclk: Don't bail if pcode post nofify
+ fails
+In-Reply-To: <511da82834da302ac50a326c082c45f6134b2556@intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
+ 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+References: <20260610170652.5320-1-ville.syrjala@linux.intel.com>
+ <20260610170652.5320-2-ville.syrjala@linux.intel.com>
+ <511da82834da302ac50a326c082c45f6134b2556@intel.com>
+Date: Wed, 17 Jun 2026 16:29:16 +0300
+Message-ID: <8c18eca330bd63182319a18f238e78f1c451ede2@intel.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: b4 fails filter-repo with FileNotFoundError
-To: Konstantin Ryabitsev <mricon@kernel.org>
-Cc: users <users@kernel.org>, tools@kernel.org
-References: <3ed2080e-c8a2-44de-b68f-4b23338a572a@ideasonboard.com>
- <20260615-tremendous-dandelion-kelpie-4aab9e@meerkat>
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Content-Language: en-US
-In-Reply-To: <20260615-tremendous-dandelion-kelpie-4aab9e@meerkat>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-On 15/06/2026 21:39, Konstantin Ryabitsev wrote:
-> On Mon, Jun 15, 2026 at 03:52:53PM +0300, Tomi Valkeinen wrote:
->> Hi,
+On Wed, 10 Jun 2026, Jani Nikula <jani.nikula@linux.intel.com> wrote:
+> On Wed, 10 Jun 2026, Ville Syrjala <ville.syrjala@linux.intel.com> wrote:
+>> From: Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
 >>
->> I'm seeing this with a few commands, I think at least "b4 trailers -u" and
->> "b4 prep --edit-cover". Linux mint, b4 0.15.2.
->>
->> $ b4 prep --edit-cover
->> Invoking git-filter-repo to update the cover letter.
-> 
-> We got rid of git-filter-repo in the upcoming 0.16, so, since it's succeeding
-> anyway, I'm going to put this on the backburner.
-> 
-> Thanks for the report, though!
-Alright, I'll wait for 0.16 =).
+>> We already changed the actual cdclk frequency by the time we do
+>> the pcode post notify. So skipping the subsequent readout is plain
+>> wrong.
+>
+> Fixes: ?
 
-Just for completeness, today when using "b4 send" I got a slightly 
-different one (but, again, everything seems to be ok):
+Turns out posing the question about Fixes: trailer like that leads to b4
+shazam literally adding that trailer. Please clean them up before
+pushing!
 
-Sent 12 messages
-Tagging sent/20250219-rcar-streams-1fdea8860e5e-v6
-Recording series message-id in cover letter tracking
-Created new revision v7
-Updating cover letter with templated changelog entries.
-Invoking git-filter-repo to update the cover letter.
-New history written in 0.08 seconds...
-Traceback (most recent call last):
-   File "/home/tomba/.local/bin/b4", line 6, in <module>
-     sys.exit(cmd())
-              ^^^^^
-   File 
-"/home/tomba/.local/share/pipx/venvs/b4/lib/python3.12/site-packages/b4/command.py", 
-line 512, in cmd
-     cmdargs.func(cmdargs)
-   File 
-"/home/tomba/.local/share/pipx/venvs/b4/lib/python3.12/site-packages/b4/command.py", 
-line 95, in cmd_send
-     b4.ez.cmd_send(cmdargs)
-   File 
-"/home/tomba/.local/share/pipx/venvs/b4/lib/python3.12/site-packages/b4/ez.py", 
-line 2352, in cmd_send
-     reroll(mybranch, tag_msg, cl_msgid)
-   File 
-"/home/tomba/.local/share/pipx/venvs/b4/lib/python3.12/site-packages/b4/ez.py", 
-line 2491, in reroll
-     store_cover(new_cover, tracking)
-   File 
-"/home/tomba/.local/share/pipx/venvs/b4/lib/python3.12/site-packages/b4/ez.py", 
-line 749, in store_cover
-     run_frf(frf)
-   File 
-"/home/tomba/.local/share/pipx/venvs/b4/lib/python3.12/site-packages/b4/ez.py", 
-line 157, in run_frf
-     frf.run()
-   File 
-"/home/tomba/.local/share/pipx/venvs/b4/lib/python3.12/site-packages/git_filter_repo.py", 
-line 4936, in run
-     self._record_metadata(self.results_tmp_dir(), self._orig_refs)
-   File 
-"/home/tomba/.local/share/pipx/venvs/b4/lib/python3.12/site-packages/git_filter_repo.py", 
-line 4767, in _record_metadata
-     self._compute_metadata(metadata_dir, orig_refs)
-   File 
-"/home/tomba/.local/share/pipx/venvs/b4/lib/python3.12/site-packages/git_filter_repo.py", 
-line 4712, in _compute_metadata
-     assert(usoa == intermediate) # old wasn't pruned => usoa == 
-intermediate
-            ^^^^^^^^^^^^^^^^^^^^
-AssertionError
+Cc: tools@k.o and Konstantin, FYI
 
-  Tomi
 
+BR,
+Jani.
+
+
+--=20
+Jani Nikula, Intel
