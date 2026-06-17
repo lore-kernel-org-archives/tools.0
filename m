@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB502D0614
-	for <tools@linux.kernel.org>; Wed, 17 Jun 2026 15:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FAB3F8EB3
+	for <tools@linux.kernel.org>; Wed, 17 Jun 2026 21:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781709356; cv=none; b=KhjuBg5DD8kN7AnnMAu5TOCmtZZNvwTppvSG9Bczy6rtKslL8NcjrVpNmif3zSrGRZi+0tV6p5Fc7n+JCJdKZvwCamBGjobgFk+6R9UtSUCJ3yTkcAOoF7ucePOTfl2P5qk32wC2sWOGC+1/57qlo+DrROX4/+tPK5p5GdEbE8M=
+	t=1781731050; cv=none; b=ubpakq5I/CIhy/bT0qR0q2qx59fr/aY94i+EsVqJYavQpYchVJZRjRkUql3LFzX9C3Sf5+wr6FngANjY4tgBnXswjiCi8Qbp/RVIIzlLPK8cMHy81C2aADB7VF8TbBoNqgzawqt7Lm6My4H4E/8TEKHOmE77BhsjroM05d3YqrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781709356; c=relaxed/simple;
-	bh=x6mlvjNWNH+JVm2lDUByPdP79cjwz7lLCVED6po774w=;
+	s=arc-20240116; t=1781731050; c=relaxed/simple;
+	bh=Yk4tVq1lrzxdZFUAaVqyEbKzTOwr8HRt8IUxIX7FNwk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J9zCR9UK4nPo1iIkZGrrnLRfJLRw+ZX8V4jsQW3nSDxDfzLICBCjBRoLopacWX4xuKeGzwa5d1LgN3n6nURHRlydyuoBRW3JWCSsSL4WK/uAVjNiNerjlkOlKTWnVoy4c+gY7mSxN/LTnX3PMTgAWP1rJXmUlbIeufISmQNk0HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnQCGLuL; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=MqECmR5tgme5w//tTf5O7rznb8z3xJLatcFHvCRRna/cRKGq7ViX+co+RX40yGrjEWLKJWJp7b6BXJbd650cypheATNqDX0xMYbDOXhlM64oHSlOXhoYZIbxUeTcGOT61ddaSrix7xRP3KZt67AK+sIxt1RSRSAP8QxItETKWsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AoS0ZkOv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnQCGLuL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AoS0ZkOv"
 Received: by smtp.kernel.org (Postfix)
-	id C669F1F000E9; Wed, 17 Jun 2026 15:15:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368EC1F00A3A;
-	Wed, 17 Jun 2026 15:15:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781709354;
-	bh=PRtwX9XZuKeOePBQ1eaXIZKRl+06gjsxGdVK1OpTJto=;
+	id ED6EE1F00A3A; Wed, 17 Jun 2026 21:17:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FE91F000E9;
+	Wed, 17 Jun 2026 21:17:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781731048;
+	bh=6keK19PIn/cdnFgvrvyEhKeTqBGzwzaVBOon4weB2dA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=SnQCGLuLG6CoDNtPjBGeifYyw4Q5oqmW4Wje3sAiyfVUKH81TG114bc1QrLiGivRX
-	 i6osstjx2OzdrQH8fZuKZEq+j38LZCpiO8ePbHj3Ix+jcdKUkIgDtQ+ydapMv7Qx61
-	 EpwcnJkvHen2ne2XtH2K5R3ZYJwJDYy1xnBteMsI=
-Date: Wed, 17 Jun 2026 11:15:52 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Ville Syrjala <ville.syrjala@linux.intel.com>, 
-	intel-gfx@lists.freedesktop.org, tools@kernel.org, intel-xe@lists.freedesktop.org
-Subject: Re: [PATCH 01/14] drm/i915/cdclk: Don't bail if pcode post nofify
- fails
-Message-ID: <20260617-horned-orthodox-zebu-625bcb@meerkat>
-References: <20260610170652.5320-1-ville.syrjala@linux.intel.com>
- <20260610170652.5320-2-ville.syrjala@linux.intel.com>
- <511da82834da302ac50a326c082c45f6134b2556@intel.com>
- <8c18eca330bd63182319a18f238e78f1c451ede2@intel.com>
+	b=AoS0ZkOvtR6JUAbDXuZDIZFNMYO1AJr5skK3NZmNL3qQIKr6zxOKbhfxE4Ak1uXF0
+	 J3tDloEdoqoA+eR1eZlIOIbGLWi4jN1iJhy9fCX/aQO6CO8MIhE4O4NLvY/ctI/XfC
+	 xeEnqfzLvoVtU0qGjrgZSFLCeOPy62pR24BR7e+BiIbbE4Y1XMAmLzK5Wq7QsEY8qc
+	 OjY1BIljUqKUdMOKdCESkMoRgDNQvcVvNQy44msmR/f7ADd0cNITFsRrQaKzmZrNXa
+	 dFnYypt3Wqc72gMwIROpTFX8PpuY9m/uh1iTDsLEqmWuSt6Mkl1NAgYqPxB0Ulox6m
+	 6bmnm3bBnJNjA==
+Date: Wed, 17 Jun 2026 17:17:27 -0400
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Dave Marquardt <davemarq@linux.ibm.com>
+Cc: tools@kernel.org, Tyrel Datwyler <tyreld@linux.ibm.com>
+Subject: Re: [Tyrel Datwyler] Re: [PATCH v2 6/7] ibmvfc: register and use
+ asynchronous sub-queue
+Message-ID: <20260617-true-spiked-wallaby-4834ad@meerkat>
+References: <87h5n3o69j.fsf@linux.ibm.com>
+ <20260615-smiling-kelpie-of-temperance-4dd61b@meerkat>
+ <87cxxqodez.fsf@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -45,28 +46,25 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8c18eca330bd63182319a18f238e78f1c451ede2@intel.com>
+In-Reply-To: <87cxxqodez.fsf@linux.ibm.com>
 
-On Wed, Jun 17, 2026 at 04:29:16PM +0300, Jani Nikula wrote:
-> >> We already changed the actual cdclk frequency by the time we do
-> >> the pcode post notify. So skipping the subsequent readout is plain
-> >> wrong.
-> >
-> > Fixes: ?
+On Tue, Jun 16, 2026 at 07:52:36AM -0500, Dave Marquardt wrote:
+> > You can either manually run all commits with -s (which is what I do), or you
+> > can set up a hook to do that for you automatically -- but since it's supposed
+> > to be a deliberate action by the committer, I recommend just always
+> > remembering to add that little "-s" after "git commit".
 > 
-> Turns out posing the question about Fixes: trailer like that leads to b4
-> shazam literally adding that trailer. Please clean them up before
-> pushing!
-> 
-> Cc: tools@k.o and Konstantin, FYI
+> Thanks. I searched and searched the b4 documentation, and now, from your
+> explanation, understand why I don't see anything about Signed-off-by:
+> when submitting a patch series. Would it be worth adding something to
+> the manual? (Yes, if so, I'm volunteering :) )
+ 
+I don't think so. The Signed-off-by: is common, but not at all a requirement,
+and since enabling/adding it must be a deliberate and well-understood decision
+by the commit author, I don't think it belongs in b4.
 
-We now recognize this and properly change this to:
+I know we can spell it out in the b4 docs, but I don't know if people are
+going to be more likely to read them as opposed to the actual kernel
+documentation.
 
-| Fixes: ¯\_(ツ)_/¯
-
-(Just kidding... I'll see if I can clean this up to be more discerning of the
-actual Fixes: format.)
-
-Thanks,
 -K
