@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1A722D4C3
-	for <tools@linux.kernel.org>; Thu, 18 Jun 2026 21:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B6214ABE
+	for <tools@linux.kernel.org>; Thu, 18 Jun 2026 21:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781819568; cv=none; b=NN2GhQdCRCjxIMF4lAUj9tumiHUhTVP3YqfKRtzWkqDCF6hfmsMQ/Ak6j1P5h6c2mdZBEufHsjNHjoU7PKdZb4IamQTd9kAK172X8yMllFjDAD1XfaGo/ew3GSzgG/EpDxRGvsCdDwRPd8AghGXclD4TIIU/J3VOhvKIKe2XzBs=
+	t=1781819938; cv=none; b=T1TSpNUahjEZBCUzuDqKf+7zVcLcXjiyQQi7C/PomNoTlyYpxmJcUe77XwAGzbDYGolCxGwwcw78TvQ8pBl5zoF6u1C8/xz8ZdkEQlis9J9toQPHoKmD2Zg3taHFwvx9bVMckj9KJuRfTkFZgiYjVpTIPpamU7Ep+7ORRYD8Upo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781819568; c=relaxed/simple;
-	bh=5jTkHQhpEcCg29oSXNuFbOma2EpzEzG20YwopGGN1sw=;
+	s=arc-20240116; t=1781819938; c=relaxed/simple;
+	bh=WJHtw0GIQxYsOUoYZdlvj449eKmn8cFPWhCc2I0lSE0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=o7UPRDkWUFu0zK08cNmEUVsOZ21XijKxRziXv6UorwDEf/BPm7bZiS2XzkVWpAynGQbbPuDNM9WQkJ1JS7IvJ6SI04WoKDelmLLGTqpCp+psXGK5HThbjdGN7qFsnwEU6WHzj6woWXsZN755fNy6kdV3wQt1PkN1QnyGTGoqbQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O5ZONKz0; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=lCD3gJB4qwPZu3WIWFLt6fl5anDjeNUvGAwpP/SdEk/pk7nAI8853oJCq04Tq90rE89CN1COTjCvoXpmI4qCTAsZ8MctSGoP93bulq0e1XN90qtJasAueKAimJuw4MjPUTcnyuE/pc9ZTkiZJpoCsfUkeeVlpRVMuhf/4U+v4TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lpBvcUTM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O5ZONKz0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lpBvcUTM"
 Received: by smtp.kernel.org (Postfix)
-	id 01C881F00AC4; Thu, 18 Jun 2026 21:52:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191541F00A3D;
-	Thu, 18 Jun 2026 21:52:43 +0000 (UTC)
+	id E56941F00ADB; Thu, 18 Jun 2026 21:58:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AD81F000E9;
+	Thu, 18 Jun 2026 21:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781819566;
-	bh=G6cQs3TxuQfOdbvIRU/5rlZb5+qzIrPN08c/7VWJYWw=;
+	s=k20260515; t=1781819936;
+	bh=XkEzmCTIYq00JeZcpCRLidvLGtccWCCoiCXRJV4ivSA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=O5ZONKz0LozKWgr+OExhxG/DR4SyN+LHy5HvoC3z+4Q1F2tVXCPJVe5wD6rKzXepk
-	 M/SPWb7/+kMK8wVoaVzCxlCZ2Fati853lRVa7LlFBJHZ8UT7flluIp7dCooGQKxCEo
-	 fliwLHiLQa20a7HirxrABmJuqPWIsvYJfIBkTZRzFulosOFyTx2lmG1Xm0ZrsWMuw8
-	 SSteYztyj2LXkgVM/X7upoCgBlYxkLhBF2s7O0AiX/xUfgVqtJ0chWcEtqnFNzCb2L
-	 eT65cKyjqkpms6xRQn1/sUV1QJE0NP2DGM6NDy3p5HgGd3d5XGo1UHQ4tLJ2J4/yoT
-	 XB37hm6RwdPoA==
-Message-ID: <0795e3e1-6c4e-4de0-a62a-6b03ce0c88ce@kernel.org>
-Date: Thu, 18 Jun 2026 23:52:41 +0200
+	b=lpBvcUTMMVRfw4+JUOk4OK8QG9hbugNQyFMHxRwmfLI3E+L4zKcs4VvRy8lmkAaVo
+	 i3j7wbePvW3/dOF29vDvSDJBve4wLd+UC78V7DSyGZQU/dHVtvtqDqUx+lPj6Z9h+d
+	 D/CPPIu9IiKQweKXrLssX2TNRk4g8yzPgDqpfrC6wnyIRdK6/JSGhUT1MvX8L8u5mX
+	 sAgGACNyq+krg+j5ypVAylFaU0ipx9Up2yF+8QiflE9iwjLt4us9bvVbSDbFKRTA0B
+	 W/Q9ZPAC7shAitttbapEYS9pEIzmN9aFjPywbjFzOI5c9UfcYNEBq1z3J13eX33W8s
+	 gAKGb0M6nVd/A==
+Message-ID: <5b9777ac-64e7-4e93-ba16-90d1077812f4@kernel.org>
+Date: Thu, 18 Jun 2026 23:58:52 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -38,8 +38,8 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: kdevops-ng: graduating kdevops beyond Ansible
-To: Jeff Layton <jlayton@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>,
- Chuck Lever <cel@kernel.org>
+To: Chuck Lever <cel@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
+ Luis Chamberlain <mcgrof@kernel.org>, Jeff Layton <jlayton@kernel.org>
 Cc: kdevops@lists.linux.dev, tools@kernel.org, GOST <gost.dev@samsung.com>,
  Josef Bacik <josef@toxicpanda.com>, Amir Goldstein <amir73il@gmail.com>,
  Carlos Maiolino <cem@kernel.org>, Chandan Babu R <chandanbabu@kernel.org>,
@@ -48,86 +48,105 @@ Cc: kdevops@lists.linux.dev, tools@kernel.org, GOST <gost.dev@samsung.com>,
  Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
  Konstantin Ryabitsev <mricon@kernel.org>
 References: <9f64bee9-ecc3-4587-9645-2190223cbc4e@kernel.org>
- <a9e73c72b603e64724bf64fb1a7b4e6a045ed386.camel@kernel.org>
+ <244ce59c-c2ad-46a6-9753-488a48063a74@app.fastmail.com>
 Content-Language: en-US
 From: Daniel Gomez <da.gomez@kernel.org>
-In-Reply-To: <a9e73c72b603e64724bf64fb1a7b4e6a045ed386.camel@kernel.org>
+In-Reply-To: <244ce59c-c2ad-46a6-9753-488a48063a74@app.fastmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 18/06/2026 14.31, Jeff Layton wrote:
-> On Thu, 2026-06-18 at 11:30 +0200, Daniel Gomez wrote:
-> Some thoughts:
+On 18/06/2026 15.22, Chuck Lever wrote:
 > 
-> I'd be interested to see the demo.  
+> On Thu, Jun 18, 2026, at 5:30 AM, Daniel Gomez wrote:
+> 
+> + How much development effort is this? I have nearly zero time to
+>   work on kdevops these days. Even with AI assistance, this seems
+>   like an enormous task.
 
-Great! I will send an invite if this thread moves forward.
+You're right that it's large, but not all of it needs to migrate. I
+wouldn't move libvirt or libguestfs unless people actually want it; the
+main thing that path buys you is the auto-generated UI [1].
 
-> It's a little hard to make a
-> judgment about moving it in this direction without knowing specifically
-> what it would look like.  I took a quick look at the git repo and the
-> windmill site, but I don't really "get it" yet.
+Workflows could be migrated as-is, since Ansible is one of the languages
+Windmill runs, but I think most of them are entangled with libvirt and
+9p. If we're not migrating libvirt/libguestfs, porting the workflows
+verbatim doesn't make sense either; the effort is better spent rewriting
+them in whichever Windmill language fits (Bash, Python, Rust, ...). The
+ones that are already decoupled should convert fairly straightforwardly.
 
-100%.
+One thing I should have made clearer in the cover: I lean on systemd as
+the process manager, not just for QSU (QEMU in systemd), but also to run
+the test suites themselves, e.g. the fstests check script as a systemd
+unit. That keeps the "scripts" simple while still being powerful.
 
-AFAIK, even Windmill itself struggles a bit to position what it is in
-the market. But I think they get some obviously useful things right for
-developer workflow orchestration that nobody else does. BTW, before
-landing on this project I also looked at others: cijoe [1], Kestra,
-and, at a different level, task.dev and just.systems. And these are the
-alternatives Windmill compares itself against [2], in case any of them
-are familiar to you (none were to me).
+I do think the rewrite into Nix/Windmill (Bash/Python/Rust/whatever)
+plus systemd is worth it. Until then, both worlds can coexist.
 
-For a quick sense of what Windmill is, here's their architecture
-diagram: https://www.windmill.dev/docs/misc/architecture
-
-The way I think of it: a GitLab runner plus the YAML pipeline in
-.gitlab-ci.yml (or the GitHub Actions equivalent), but for your
-development workflows, not your project's CI. Though it can obviously be
-used for project's CI too. All in one package, with far more pipeline
-("flow", in Windmill terms) features [3]. That last part is one that I'm
-also interested in: we could turn kdevops into a kernel regression
-workflow engine with git-bisect and generate reports we can submit
-directly to the mailing list and maintainers (similar to 0-day). Yes, we
-can already do this today with Luis's patches from last year (I tried
-them and they work), but it's exactly the kind of workflow where you can
-see Ansible isn't the right tool.
-
-Link: https://cijoe.readthedocs.io/en/latest/# [1]
-Link: https://www.windmill.dev/docs/compared_to/peers [2]
-Link: https://www.windmill.dev/docs/core_concepts#flow-specific-features [3]
+Link: https://www.windmill.dev/docs/script_editor/customize_ui [1]
 
 > 
-> I do agree that kconfig/makefiles are not really suited to this task.
-> We've made it work, but it's a bit of a square peg in a round hole.
-> 
-> One of the things I liked is that kdevops spawns a normal (familiar)
-> distro, and that makes it easy to get in and troubleshoot when things
-> are broken. If I have to learn how to operate in yet another new
-> distro, I suppose I can, but it doesn't excite me.
+> + Also as a user of kdevops, this means I would have to spend a
+>   lot of time I don't have learning the new configuration shapes
+>   and figuring out how to migrate my current CI to them. That's
+>   not inviting.
 
-I understand, and I'm 100% with you: Nix (+ Windmill) is simply too
-many new things at once.
-
-The real benefit here is that the guest and the controller run the exact
-same environment. You could compare it to virtme-ng with overlayfs,
-where, AFAIK, you boot a guest off the host's rootfs (read-only, with
-an overlay for writes), so the guest mirrors the host. The difference is
-that with virtme-ng that shared environment is still whatever Debian or
-Fedora you happen to be running, so it isn't pinned or reproducible;
-with Nix it's the same shared environment (same /nix/store).
-
-A way forward could be to use Windmill as the Ansible, Makefile, Kconfig
-replacement or the Nix-based paths, and keep the current toolkit for the
-libvirt/libguestfs/Terraform paths. Both can coexist.
+Agreed, the learning curve is real. The upside is that migrating also
+gives you CI essentially for free: the same flows, run on Windmill's
+workers and schedules, are the CI.
 
 > 
-> OTOH, the goal here is kernel testing, so userland really doesn't
-> matter too much.
+> + What would cloud support look like in a post-Ansible world? I>   don't think Nix has impact on the cloud aspect of kdevops, and this
 
-But we also need changes on userland test suites so I think it matters
-too. I use Nix for exactly that, to build and pin custom versions
-of the test suites and tools (e.g. fstests, fio, bcc, etc.) that I can
-run either baremetal or in a VM. The benefit is that the host and guest
-share the same /nix/store (the guest mounts it over virtiofs), so a tool
-you build on the host is the exact same build the guest runs.
+Correct.
+
+
+>   proposal seems to shift Nix into the role of the primary kdevops
+>   virtualization method. 
+
+Correct.
+
+> Should we simply split kdevops into an "all
+>   local virtualization" project and an "all cloud virtualization"
+>   project that go their separate ways? Tying cloud and local together
+>   seems to be a frequent source of chafing.
+
+Good question. The same tension arguably applies to the Nix/QSU world
+versus the Debian/Fedora/openSUSE + libvirt/libguestfs world. But I
+don't think kdevops is really about which tools you use underneath; it's
+a broader framework and idea, the same principles applied as a
+kernel-development framework whatever the technology beneath. So rather
+than splitting by tooling, I'd keep the framework and let the backends
+differ.
+
+> 
+> + I'd rather see a focus on addressing the technical debt of
+>   continuing to support distributions that no one uses any more,
+>   and moving away from requiring root to run local virtualization
+>   by installing kdevops from a package. 
+
+That's exactly why QSU was merged, and I'm very happy with the
+transition. Guests now run as systemd user services with virtiofsd
+instead of 9p, with all the QEMU knobs I need and KVM acceleration, and
+no libvirt permissions or qemu:///session vs qemu:///system headaches.
+
+That said, fully unwiring the controller setup and the sudo escalations
+is tedious, significant work for relatively little reward. I do reach
+this paths even with QSU.
+
+
+> Those are narrower work
+>   items that offer a bigger bang-for-buck. (You might argue that
+>   Nix solves the latter problem already).
+
+Roughly, yes: Nix solves the reproducibility part, on both the
+controller and guest sides, and QSU sidesteps the libvirt permission and
+SELinux/apparmor sudo configuration steps.
+
+BTW, on the cloud side with Nix I came across terranix [2], which lets
+you describe Terraform/Opentofu infrastructure in the Nix language. And
+either way, once a cloud guest is up you can just install Nix on it and
+run the same paths as in local virtualization, so the workflow layer is
+identical regardless of which deployment users choose. Only the bringup
+differs.
+
+Link: https://terranix.org/docs/what-is-terranix/ [2]
