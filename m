@@ -1,33 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F87535675B
-	for <tools@linux.kernel.org>; Tue, 23 Jun 2026 20:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FF22C11EE
+	for <tools@linux.kernel.org>; Tue, 23 Jun 2026 20:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782245933; cv=none; b=tLr0Foc0uzrmKpqsC7h9os/5ZZf4Nox9zvdDTAtTbyBGf1kKGqXOU1GbqQt2ZUBrjVX2bqh1dd8rv5Qf7rEshhFn537qyihSf2FBqdy6DTqNalfASCKDDNn/uY/htO3gcbw1JZ5p3DO7oJ6XbuOf2jDcFtcl2ShMPKSvP9jJjU8=
+	t=1782246865; cv=none; b=O8xLtFl4gQ63oYeBZp+uRHwevdzkHl2GyMC/6HpMm4eNuVKvb8PuWcLRC9H7Zm4Wg/ktbfM+cuRRhBG0qZ3JLfUzlesXELBlN7p5uhUIdbh1iaBZtv4s5gLLbO6sMREPtrFvj9BeCDOe9jGnGaCZ1vaoYpk3810AWFFLRahzq8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782245933; c=relaxed/simple;
-	bh=y2gMX5ykkQ71upnMNgmHH1GD9pTjWy3+deTe3ipAY1k=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=KzNDewYQMGMTFhIP68DBRJX+Im6qc7LOxWiar82uu93srds4mQm8GUSOJiJHn8BwKgCRjEZTr/DTFtOKIii+noMddYwpxtwnZNcgBk5/1UPE9xTskaVBJjJxQ66CpKjiXjVWwseLs/OedRhEpMiIJrCDorABjHdL9Zk6hdz//ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mOEcdrC9; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782246865; c=relaxed/simple;
+	bh=0e7Wy1w/F27iPzstTKFsIKybkZPPSj12z3k4emm8tDw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NApbnEiuHYPbc53bFZBZdXuDBwNH92fBRMrE6QH4sUI8hSvcHEXC7Cp0UN3XKVmULl6srXu7+rvDgUfsMV2V6ZgZ4vVf+JztBFqjxTA7ZKHPktunZHiYSeqzs8k6p99IhUifYhQdHCHqauVynHhCpW2dilEWFC3AbaR312o5iXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aSADd5Th; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mOEcdrC9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aSADd5Th"
 Received: by smtp.kernel.org (Postfix)
-	id 4427A1F00A3A; Tue, 23 Jun 2026 20:18:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0F81F000E9;
-	Tue, 23 Jun 2026 20:18:50 +0000 (UTC)
+	id 68B4D1F00A3A; Tue, 23 Jun 2026 20:34:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6F71F000E9;
+	Tue, 23 Jun 2026 20:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782245932;
-	bh=eCEgyj5HARtZHRhNlfuWBgCx28+czOR4g8aTdzc9DkM=;
-	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=mOEcdrC9qcMqXXTJuwQaiQE5DpAaSQFqySgHqBW+DzM/b+bZz0OL7cWioL/FLZqbC
-	 0bWrzXK94Td7b9hKHtrUB8FZEovSSG6y6/Uwj650jEZyoHkRkhn6aBfqZA+I3HJum1
-	 tiGmowqk/jSykrpxj8ay7BO+sj7cvMz3uwU4aHME6ps11cIwe5G2fIJo0T8eMuLHWO
-	 4GDqZXHI94fwxsw/TcVR8lspKhOhxfAQG3zgClG4Z61crP4Y6pvAmjAktIabnlyPE9
-	 r0kWumaQZBm93jw848bET7O0FcjWW7rCcPoc0cvFToseO51zEFjaKcO4lSQnRIRLV6
-	 8YaKGOrGT3giA==
+	s=k20260515; t=1782246864;
+	bh=L4m6PCMpXKegTnSOFqAm3CFZqF9DoCH/u8pWemnnDy0=;
+	h=From:Subject:Date:To:Cc;
+	b=aSADd5Th4Os/Anx4bNqtorSoFLXF1fE4HfXPw7LvX4m9rvzGSXQtDzx3qSbbIHhyr
+	 d2+7XLHpth8H3T9iJMYU7ZAEmljXXvJA6ZX1jMNF+c609DzuevcmkYeT5vtckd4ulp
+	 s66wmBlQFzUMwPFu5v++W67K8x/mA8wTk5aotOwAqpl7rgVBHl+6uftF3M32yGv1pX
+	 DZUrBc+ecOdtje4HINNcN3Hv3AwzJj9xw6yiXPFmUDpuVyz+la0IZVlVS0HzEgavyN
+	 bwi01EFMFTm1BC0N0+uKd+Yq0LZQdwUsiiik5G4wmRBsi5wR9Zhuhk+xWPfiCoNH1m
+	 3L2zHHhvg9lqw==
+From: Christian Brauner <brauner@kernel.org>
+Subject: [PATCH b4 v2 0/6] review-tui: worktree-aware takes, resolve
+ take->merge conflicts in place
+Date: Tue, 23 Jun 2026 22:34:16 +0200
+Message-Id: <20260623-20260623-review-tui-take-am-worktree-v2-0-2cbbab5d5441@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -35,54 +39,106 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH b4 0/6] review-tui: worktree-aware takes, resolve
- take->merge conflicts in place
-From: Christian Brauner <brauner@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Christian Brauner <brauner@kernel.org>, 
- "Kernel.org Tools" <tools@kernel.org>
-In-Reply-To: <178223858665.1539887.18387233629212425068.b4-review@b4>
-References: <20260623-20260623-review-tui-take-am-worktree-v1-0-e8a2140a287e@kernel.org>
- <178223858665.1539887.18387233629212425068.b4-review@b4>
-Date: Tue, 23 Jun 2026 22:18:40 +0200
-Message-Id: <20260623-habicht-helium-pragmatisch-686af4fe7167@brauner>
-X-Mailer: b4 0.16-dev-5fdb0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1356; i=brauner@kernel.org;
- h=from:subject:message-id; bh=y2gMX5ykkQ71upnMNgmHH1GD9pTjWy3+deTe3ipAY1k=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRZvVJ+d8f8mJNX+ZMo3sz0zb3fuA/GFG6Qqt58cuOzD
- p/J2ub7O0pZGMS4GGTFFFkc2k3C5ZbzVGw2ytSAmcPKBDKEgYtTACay7zcjw2/vrUw8nYmTVtpa
- h0xj3dTxVfQjK4OG8PwJS1VKU1Zqr2ZkWKxnEvPK/6z0y2MqycV7mJ4fTu4JLK6KfOF5PcIv4S8
- PEwA=
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMjtOmoC/5WO3Q7BQBCFX0Xm2sh2UcuV9xAX0zp0lVZmVxHpu
+ +tW4t7dnJ98c94UoB6BNpM3KToffNsMwk4nVFbSnMD+MGiyxuYmt3P+HamNB8e75yg1WK78aLW
+ OCvDaleLmcEuYnAbUTXH0z/HNjooF7b9euBdnlDHxU6uQAC5UmrJK1lVChKag8iG2+hpHdtkI+
+ W9Pl7FhOLHZwoh1K2xraIPLrNUT7fu+/wD/Z5RdCAEAAA==
+X-Change-ID: 20260623-20260623-review-tui-take-am-worktree-98ca83e85e06
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ "Christian Brauner (Amutable)" <brauner@kernel.org>
+X-Mailer: b4 0.16-dev-e850d
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4203; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=0e7Wy1w/F27iPzstTKFsIKybkZPPSj12z3k4emm8tDw=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRZvT337DXviTVix+Oneu/S01v5puH5tPOsXWpcbz4eC
+ nmSrTlDtqOUhUGMi0FWTJHFod0kXG45T8Vmo0wNmDmsTCBDGLg4BWAiq1sZGc732ax7vebw4p2p
+ ct6vP5n2Tvsq9Hq3hZ7gJNdS7fxwsXWMDF8KVvWdsRFwynl+tcaiLyv516dMzr/MG3XesoQ82nF
+ FlhcA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-On 2026-06-23 18:16 +0000, Konstantin Ryabitsev wrote:
-> > b4 review's "take" action applies a reviewed series to a target branch by
-> > one of two methods: a merge (git merge) or a linear/cherry-pick apply (git
-> > am). Review is often driven from a different worktree than the one the
-> > series is applied into, and the target branch may be checked out in yet
-> > another worktree, so a take has to run wherever the target branch lives and
-> > never disturb the current checkout. This series makes both take methods do
-> > that correctly and teaches take->merge to resolve conflicts in place.
-> 
-> No objections to this at all, but I do want you to fix a few issues that
-> running ci.sh identifies (mypy errors).
-> 
-> I should plug this into .b4-config, really, but until I do that, can you
-> run ci.sh and ci-matrix.sh to make sure they are all green?
+b4 review's "take" action applies a reviewed series to a target branch by
+one of two methods: a merge (git merge) or a linear/cherry-pick apply (git
+am). Review is often driven from a different worktree than the one the
+series is applied into, and the target branch may be checked out in yet
+another worktree, so a take has to run wherever the target branch lives and
+never disturb the current checkout. This series makes both take methods do
+that correctly and teaches take->merge to resolve conflicts in place.
 
-Sure. I fixed all mypy errors. There's a bunch of pre-existing ones:
+Worktree handling (take->am and take->merge):
 
-- ty (121)
-  all in 11 untouched files (misc/send-receive.py, __init__.py, the
-  other TUI modules...) . Pre-existing on master, newly surfaced by
-  ty 0.0.52 release and the all = "error" config.
+  - take->am checked the target branch out in the *current* worktree, so
+    applying to a branch already checked out elsewhere failed outright
+    ("fatal: 'vfs.fixes' is already used by worktree ..."), and otherwise
+    clobbered whatever was checked out where review was being driven from.
+    It now runs git-am in the worktree that holds the target branch, or a
+    throwaway one when it is checked out nowhere.
 
-- pytest (9)
-  test_ez::test_trailers ×4 and test_mbox::test_shazam ×5. They exercise
-  ez.py/mbox.py code byte-identical to master, so they fail identically
-  there.
+  - take->merge already picked that worktree, but its "git merge --abort"
+    (and the non-interactive merge used by the tests) still ran in b4's own
+    cwd. On a conflict that left the markers in the target worktree while
+    rewriting b4's checkout from the target's index -- silently dirtying one
+    worktree and clobbering another. Both calls are now anchored to the
+    target worktree.
 
-I'll send v2 in a minute or two.
+  - Both methods need the same "find or create the right worktree, then
+    clean up after" dance, so it is factored into one _take_worktree()
+    context manager shared by merge and am.
+
+In-place conflict resolution:
+
+  A conflicting take->merge used to abort the merge and discard the take,
+  forcing the user to start over. take->am already drops the user into a
+  shell to finish (or abort) the conflict by hand; take->merge now does the
+  same, matching "b4 shazam". Finishing the conflicted merge in place keeps
+  the merged-in side fully reachable, so no commit is silently dropped --
+  unlike "b4 shazam --resolve", which replays patches with "git apply
+  --3way" + "git add -u" and so omits a patch that only adds a new file. The
+  shared "drop to a shell, then check what the user did" logic is factored
+  into _resolve_worktree_take_conflict() and used by both methods.
+
+Concretely, a conflicting take->merge reports the conflict and drops you
+into a shell (prompt marked "(b4 conflict)") in the target worktree; you
+finish the merge and Ctrl-d back to the review UI:
+
+    CONFLICT (content): Merge conflict in fs/namei.c
+    Merge conflict:
+    You can resolve the conflict now.
+    ... When done, Ctrl-d to return to review UI.
+    (b4 conflict) $ git add -A
+    (b4 conflict) $ git merge --continue
+    (b4 conflict) $ exit
+    Conflict resolved, series merged.
+    Merged b4/review/vfs-fixes into vfs.fixes
+    Press Enter to continue...
+
+Exiting with the merge unfinished -- or "git merge --abort" -- drops the
+take instead of recording it.
+
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+---
+Changes in v2:
+- No functional changes; type-checker (pyright/ty/mypy) fixes only.
+- _take_worktree(): annotate the @contextmanager as Generator[...]
+  instead of Iterator[...].
+- Tests: fix two `# type: ignore` codes (attr-defined -> assignment)
+  and drop a now-unused ignore.
+- Link to v1: https://patch.msgid.link/20260623-20260623-review-tui-take-am-worktree-v1-0-e8a2140a287e@kernel.org
+
+---
+Christian Brauner (6):
+      review-tui: factor cross-worktree take setup into _take_worktree
+      review-tui: run take->am in the target branch's worktree
+      review-tui: test cross-worktree takes
+      review-tui: run take->merge abort in the target branch's worktree
+      review-tui: resolve take->merge conflicts in place
+      review-tui: test take->merge conflict resolution
+
+ src/b4/review_tui/_tracking_app.py | 353 +++++++++++++++++++-----------
+ src/tests/test_tui_tracking.py     | 426 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 653 insertions(+), 126 deletions(-)
+---
+base-commit: 42c0c1e6eccec7b067aa8072bf3a77c43f9fc0bd
+change-id: 20260623-20260623-review-tui-take-am-worktree-98ca83e85e06
 
