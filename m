@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7193B27C5
-	for <tools@linux.kernel.org>; Tue, 23 Jun 2026 23:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11E43CF692
+	for <tools@linux.kernel.org>; Tue, 23 Jun 2026 23:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782258106; cv=none; b=Ly/a0y6iG6lVGgTE4L6MVGu/2NLUX5oFTRrJ8+WATs4mygar1fjEche1ZYPC/qDZTh5/N+ZO6e5JBq98awpfyHOGbZpfzt3KgH+8XPjIs9wGGstnbC6bgBFRM/pqGr1fxx0q9W7kkKLD5Hgq9WktJ+bocCSdph1Ii8okA2BnNME=
+	t=1782258108; cv=none; b=Z8zNpI3FFaN/Ja4K4OPqkYgoGqe5GEmRJSznb9DVjQkG6ubfLjdnj1tWMmD5vKWh/P3dY5dD9c1C2t102h4mw5FoWQPqb2e5IVcy2FZ2uDDJVH6+YpVRBpMGw1h/VSKeWcOBP/ma9q86z0iKUhMIVsFsJ6FlaniBkFugzj0nU6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782258106; c=relaxed/simple;
-	bh=3obZ7tUEC+5FX1V+c2DwsxmOnj5qInQgWcwwRIrkHwM=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=doRwXlX3i+/kTOrucKXE/rBYLUW2HNm6Hf6L8GKiIrPZJUsYjCYkyn9pIvFHfV9Cy0jveLMh6u0zkc64dq3paZxbC69C3hO1QNR5d1UzXk6ZD/Ai8EjAuUiuhqVlw/4sRCyv/Qc8uet9JsMoZCGKM9aUyN5lIahbHpOBwNErn9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n5iFWhVw; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782258108; c=relaxed/simple;
+	bh=F/zXBS03hoDvCOUoMV0QBPaMlf3T2pmQ6JrXeMeiUWw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=N1QgqR4JHK9sj3KiZHXSkvA0td+16Pl8C/OFWAVVRdhv5Fyrgk8grM6RtB8A/3RHlB502Nu20JKtepAryrQ1i/9TnwBYF95lvs3F4sN/OUR/mTycu6qGg5logg3zYAiE4yDSix49qQ9QJoxQ/H3ezZk2Nu5wAepAO3Gk42WwxUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JuJBMPYJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n5iFWhVw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JuJBMPYJ"
 Received: by smtp.kernel.org (Postfix)
-	id 3BEAB1F00A3F; Tue, 23 Jun 2026 23:41:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1DA1F000E9;
-	Tue, 23 Jun 2026 23:41:44 +0000 (UTC)
+	id A05291F00A3A; Tue, 23 Jun 2026 23:41:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FCE1F000E9;
+	Tue, 23 Jun 2026 23:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782258105;
-	bh=CqAkZ0GYIvDm0jMsLNVGMGNHd7g+kxxCC6Eva8EVI3g=;
-	h=From:Subject:Date:To:Cc;
-	b=n5iFWhVw6bV0hPRmBynSrtHBA5QzkHv6gog20L0JoRJCW3GdiiXY7nTUogunCWIt/
-	 xPJ6p13m/D9gpqzl1D89DdAZNf4zbd+lly9UAE4i4egLvnT5ZQUDj9ErrwuH2jtwk4
-	 Me3y9oruYKZctV0wVppjWbvNR842pZqSuK2yi21Qn+H14scChG7Voz6QB5EoCxuyu8
-	 4XFGdUFy12pdMP0b0G7iideWH2I2ZaW6ufbnrWhWgzs0HT749VFFRfv22YVWeEGIrn
-	 LY/2TFL+MoytvsRrXpFmwviD3R9yuW55s3l+dOic9Djhjj8pQda2YUmgtCrOKn5AdM
-	 B4AmB1Fe27sYA==
+	s=k20260515; t=1782258106;
+	bh=6OjzQOfNv+VlLYaNZ6xo0avW9VBlJPf3oFlZVAr3TTw=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=JuJBMPYJq9GRShoH0TCWN6OY1LOMSKRQCBrHjRovLUDRhAjEHkUqikB/Z3+qC2twH
+	 fGnEQ3mEFnA5REwPGSWsI68DZLMNbg3uZURS/05vkaSDQoHxCsKIWiH5DvEbrqrxAB
+	 Qn1aGmks/m9KGZkHroZ+KAMB9yizlUXQ/iyhHcYEIqOX7kNkHn80ir+mrMAF9yz7oU
+	 iu3nX1wAk2kvBcK8wIFsBsWFVzd4LQEu/CuZx+tF7h1zBDI6gtIfBBsLlwgi+eQemz
+	 JYEMF/ROYCSQzhyJdCrueIxSVKQ6vAT0aY5zU207y+bMmAeOnKMMxbj6gHFjo7DlrF
+	 eCx3rmDXZBxVA==
 From: Christian Brauner <brauner@kernel.org>
-Subject: [PATCH b4 0/5] shazam: stop --resolve from silently dropping
- commits
-Date: Wed, 24 Jun 2026 01:41:35 +0200
-Message-Id: <20260624-shazam-resolve-native-am-v1-0-91f5e5678998@kernel.org>
+Date: Wed, 24 Jun 2026 01:41:36 +0200
+Subject: [PATCH b4 1/5] review-tui: lift worktree am-conflict helpers into
+ b4 core
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,114 +40,224 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAK8ZO2oC/yWMwQrCMBBEf6Xs2UBMNRR/RTxs4tas2FR2YxFL/
- 91ET8N7zMwKSsKkcOpWEFpYec4V9rsOYsJ8I8PXyuCs89a73mjCD05GSOfHQiZj4RrVxKMfafB
- D7L2FOn8Kjfz+XZ8hHODyd/oKd4qlfbZWQCUTBHNMTU2ohQS27QtyqXAemQAAAA==
-X-Change-ID: 20260623-shazam-resolve-native-am-c56fe868c360
+Message-Id: <20260624-shazam-resolve-native-am-v1-1-91f5e5678998@kernel.org>
+References: <20260624-shazam-resolve-native-am-v1-0-91f5e5678998@kernel.org>
+In-Reply-To: <20260624-shazam-resolve-native-am-v1-0-91f5e5678998@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.16-dev-6067f
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4873; i=brauner@kernel.org;
- h=from:subject:message-id; bh=3obZ7tUEC+5FX1V+c2DwsxmOnj5qInQgWcwwRIrkHwM=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRZS27/aX7g68ULWx7+1c4UNv+xTHdygevBY0Kb+4xk/
- 84+tCZAuKOUhUGMi0FWTJHFod0kXG45T8Vmo0wNmDmsTCBDGLg4BWAiKToMf+VWtbTYHH7k13yP
- 4UeV5qu+EzrZ3HqL93f8Wz1v7qkcE2WGf2qPsmbff3ZiYVfGI/Xo0M79tR/SK2f9/yqe99D9Qe6
- zYywA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9492; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=F/zXBS03hoDvCOUoMV0QBPaMlf3T2pmQ6JrXeMeiUWw=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRZS27fNnNh932JdYvNjcXVDqx7/itl/5qtfqtrsu3eH
+ TKO2yTr1FHKwiDGxSArpsji0G4SLrecp2KzUaYGzBxWJpAhDFycAjCROg5Ghnv84b82fXwZfLSS
+ M+bJvkvrkrYUbTukK3MxceFsB6fnJ2cwMiwsdbhUnSAu43Lm8HZGXZfQG7/vnnsjVZ7VUbA2fpt
+ RFx8A
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-b4 shazam --resolve exists to help land a series that doesn't apply
-cleanly. The problem that motivated this series is that, while resolving,
-it can silently drop whole commits from the merge it produces: you end up
-with a merge that is quietly missing changes, and nothing in the output
-points at what went missing.
+The review TUI's take->am/->merge conflict resolution carries a few small
+pieces of git-worktree plumbing: detecting an in-progress git am
+(_worktree_rebase_apply_dir) or merge (_worktree_merge_in_progress), and
+fetching a finished git am out of a throwaway worktree before dropping it.
 
-Why they vanish
+Move the two detection helpers into b4 core (next to git_fetch_am_into_repo
+and _rewrite_fetch_head_origin) and add _fetch_and_drop_am_worktree(),
+which fetches the worktree HEAD into the destination's FETCH_HEAD --
+anchored via rundir, optionally rewriting the origin -- and removes the
+worktree. _resolve_worktree_am_conflict() now uses it instead of an inline
+fetch/remove; that also anchors the fetch's FETCH_HEAD via rundir (matching
+git_fetch_am_into_repo and the clean path) rather than relying on the
+process cwd.
 
-When git am can't apply the series, the old --resolve path merged the
-patches that did apply, then replayed each remaining patch with
-"git apply --3way" and staged the result with "git add -u".
-
-git apply --3way can only do its three-way merge if the blob IDs recorded
-in the patch's "index <old>..<new>" lines are present in your object
-store. For patches that arrived over email those blobs usually aren't
-there -- which is frequently the very reason git am -3 failed to begin
-with. In that case git apply --3way falls back to a plain apply, fails
-with "patch does not apply", and exits non-zero having written nothing at
-all: no conflict markers, no unmerged index entries.
-
-The replay loop assumed any non-zero exit meant "conflict markers are in
-the tree." It advanced past the patch and asked you to resolve conflicts
-that did not exist, so b4 shazam --continue happily resumed at the next
-patch. The skipped patch's changes never entered the merge -- they were
-simply gone, with no warning. A patch that only adds a new file can
-disappear the same way when it rides along with a change that can't be
-applied.
-
-How this fixes it
-
-Stop replaying patches with git apply entirely. On a conflict, b4 already
-leaves the in-progress git am parked in a throwaway worktree; keep it
-there and finish it natively:
-
-    cd <worktree printed by b4>
-    # resolve the conflicted files
-    git am --continue        # or: git am --skip
-
-git am drives the whole remaining series through git's own machinery,
-which stops on every patch it cannot apply and never silently skips one.
-Once it is done, b4 shazam --continue fetches the fully-applied series and
-merges it exactly once -- the same merge a clean b4 shazam makes. Because
-every patch now goes through git am, nothing can vanish. This also brings
---resolve in line with how the review TUI already resolves conflicts.
-
-Since both now resolve am conflicts the same way, the series starts by
-lifting the worktree plumbing the TUI already had -- detecting an
-in-progress git am, and fetching the finished result out of the worktree
-before dropping it -- into b4 core, and shazam reuses it rather than
-growing its own copy.
-
-Resolving conflicts in subdirectory files
-
-One gap hid behind that guarantee. The series is applied in a sparse
-worktree where only root-level files are materialized, and git's 3-way
-merge refuses to touch skip-worktree paths. So a conflict in a
-subdirectory file -- the common case for real series -- still made
-git am -3 abort with a clean index: no markers, nothing to resolve. The
-user was pointed at a conflict that was not there, git am --continue
-dead-ended, and git am --skip silently dropped the patch. Only root-file
-conflicts, which the tests happened to use, ever worked.
-
-git_fetch_am_into_repo now rebuilds a full worktree on a conflict before
-handing it back -- abort the partial am, disable sparse-checkout, replay --
-so the conflict is recorded with real markers to resolve. b4 shazam
---resolve and the review TUI both apply through this one function, so both
-are fixed, and a regression test drives a subdirectory conflict end to end.
-
-The same commit hardens the rest of the flow: b4 shazam --abort no longer
-crashes on a corrupt state file, --continue refuses up front on a dirty
-working tree (keeping its state so it stays re-runnable), a failed
-worktree fetch leaves the resolved am in place to retry, and the docs now
-note that --continue merges with -M and leaves FETCH_HEAD with -H.
+No behavioral change intended. This is groundwork: the next commit teaches
+b4 shazam --resolve to resolve conflicts the same way, reusing these
+helpers instead of growing its own copies.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
-Christian Brauner (5):
-      review-tui: lift worktree am-conflict helpers into b4 core
-      shazam: resolve conflicts via native git-am, never dropping patches
-      shazam: test native-am conflict resolution keeps every patch
-      shazam: resolve conflicts in subdirectory files, not just the repo root
-      shazam: note subshell alternative to the --resolve two-phase model
+ src/b4/__init__.py                 | 52 ++++++++++++++++++++++++++++++++++++++
+ src/b4/review_tui/_tracking_app.py | 46 +++++----------------------------
+ src/tests/test_tui_tracking.py     |  2 +-
+ 3 files changed, 59 insertions(+), 41 deletions(-)
 
- docs/maintainer/am-shazam.rst      |  41 ++--
- src/b4/__init__.py                 |  88 ++++++-
- src/b4/mbox.py                     | 485 +++++++++++++++----------------------
- src/b4/review_tui/_tracking_app.py |  61 +----
- src/tests/test_three_way_merge.py  | 480 +++++++++++++++++++++++++-----------
- src/tests/test_tui_tracking.py     |   2 +-
- 6 files changed, 662 insertions(+), 495 deletions(-)
----
-base-commit: 0a1954d329ab57f7aab40743fad7dc6e3c45d35d
-change-id: 20260623-shazam-resolve-native-am-c56fe868c360
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 2806656..be41da1 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -5699,6 +5699,58 @@ def _rewrite_fetch_head_origin(topdir: str, old_origin: str, new_origin: str) ->
+             fhh.write(new_contents)
+ 
+ 
++def _worktree_rebase_apply_dir(worktree: str) -> Optional[str]:
++    """Return *worktree*'s in-progress ``git am`` state dir, or ``None``.
++
++    ``rebase-apply`` lives under the per-worktree git dir, not the shared
++    ``.git``, so resolve it via ``--absolute-git-dir`` to handle linked and
++    throwaway worktrees too.
++    """
++    ecode, gitdir = git_run_command(worktree, ['rev-parse', '--absolute-git-dir'])
++    if ecode != 0:
++        return None
++    rebase_apply = os.path.join(gitdir.strip(), 'rebase-apply')
++    return rebase_apply if os.path.isdir(rebase_apply) else None
++
++
++def _worktree_merge_in_progress(worktree: str) -> bool:
++    """Return whether *worktree* has a conflicted ``git merge`` in progress.
++
++    ``MERGE_HEAD`` lives under the per-worktree git dir, not the shared
++    ``.git``, so resolve it via ``--absolute-git-dir`` to handle linked and
++    throwaway worktrees too.
++    """
++    ecode, gitdir = git_run_command(worktree, ['rev-parse', '--absolute-git-dir'])
++    if ecode != 0:
++        return False
++    return os.path.exists(os.path.join(gitdir.strip(), 'MERGE_HEAD'))
++
++
++def _fetch_and_drop_am_worktree(
++    dest: str, gwt: str, origin: Optional[str] = None
++) -> bool:
++    """Fetch *gwt*'s HEAD into *dest*'s FETCH_HEAD, then remove the worktree.
++
++    Shared by the conflict-resolution paths in ``b4 shazam`` and the review
++    TUI: once the user has finished the ``git am`` in the throwaway worktree
++    *gwt*, pull the result into *dest*'s FETCH_HEAD so it can be merged, then
++    tear the worktree down. The fetch is anchored to *dest* via ``rundir`` so
++    FETCH_HEAD lands in the worktree the caller merges in (see
++    git_fetch_am_into_repo). When *origin* is given, rewrite FETCH_HEAD so the
++    merge message names the series origin instead of the worktree path. Returns
++    False (after still removing the worktree) if the fetch failed.
++    """
++    ecode, out = git_run_command(dest, ['fetch', gwt], logstderr=True, rundir=dest)
++    if ecode == 0 and origin:
++        _rewrite_fetch_head_origin(dest, gwt, origin)
++    git_run_command(dest, ['worktree', 'remove', '--force', gwt])
++    if ecode > 0:
++        logger.critical('Unable to fetch from the worktree')
++        logger.critical(out.strip())
++        return False
++    return True
++
++
+ def git_fetch_am_into_repo(
+     gitdir: Optional[str],
+     ambytes: bytes,
+diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
+index d184680..9b3ad65 100644
+--- a/src/b4/review_tui/_tracking_app.py
++++ b/src/b4/review_tui/_tracking_app.py
+@@ -253,33 +253,6 @@ def _take_worktree(
+             b4.git_run_command(topdir, ['worktree', 'remove', '--force', temp_wt])
+ 
+ 
+-def _worktree_rebase_apply_dir(worktree: str) -> Optional[str]:
+-    """Return *worktree*'s in-progress ``git am`` state dir, or ``None``.
+-
+-    ``rebase-apply`` lives under the per-worktree git dir, not the shared
+-    ``.git``, so resolve it via ``--absolute-git-dir`` to handle linked and
+-    throwaway worktrees too.
+-    """
+-    ecode, gitdir = b4.git_run_command(worktree, ['rev-parse', '--absolute-git-dir'])
+-    if ecode != 0:
+-        return None
+-    rebase_apply = os.path.join(gitdir.strip(), 'rebase-apply')
+-    return rebase_apply if os.path.isdir(rebase_apply) else None
+-
+-
+-def _worktree_merge_in_progress(worktree: str) -> bool:
+-    """Return whether *worktree* has a conflicted ``git merge`` in progress.
+-
+-    ``MERGE_HEAD`` lives under the per-worktree git dir, not the shared
+-    ``.git``, so resolve it via ``--absolute-git-dir`` to handle linked and
+-    throwaway worktrees too.
+-    """
+-    ecode, gitdir = b4.git_run_command(worktree, ['rev-parse', '--absolute-git-dir'])
+-    if ecode != 0:
+-        return False
+-    return os.path.exists(os.path.join(gitdir.strip(), 'MERGE_HEAD'))
+-
+-
+ def _resolve_worktree_am_conflict(topdir: str, cex: 'b4.AmConflictError') -> bool:
+     """Handle an AmConflictError by dropping the user into a shell.
+ 
+@@ -316,7 +289,7 @@ def _resolve_worktree_am_conflict(topdir: str, cex: 'b4.AmConflictError') -> boo
+     )
+     _suspend_to_shell(hint='b4 conflict', cwd=cex.worktree_path)
+     # Check if am is still in progress (user exited without finishing)
+-    if _worktree_rebase_apply_dir(cex.worktree_path):
++    if b4._worktree_rebase_apply_dir(cex.worktree_path):
+         logger.warning('Conflict resolution incomplete, aborting')
+         b4.git_run_command(topdir, ['worktree', 'remove', '--force', cex.worktree_path])
+         return False
+@@ -331,16 +304,9 @@ def _resolve_worktree_am_conflict(topdir: str, cex: 'b4.AmConflictError') -> boo
+         logger.warning('Conflict resolution aborted')
+         b4.git_run_command(topdir, ['worktree', 'remove', '--force', cex.worktree_path])
+         return False
+-    # am completed -- fetch result into FETCH_HEAD
++    # am completed -- fetch result into FETCH_HEAD and drop the worktree
+     logger.info('Conflict resolved, fetching result...')
+-    ecode, _out = b4.git_run_command(
+-        topdir, ['fetch', cex.worktree_path], logstderr=True
+-    )
+-    b4.git_run_command(topdir, ['worktree', 'remove', '--force', cex.worktree_path])
+-    if ecode > 0:
+-        logger.critical('Unable to fetch from resolved worktree')
+-        return False
+-    return True
++    return b4._fetch_and_drop_am_worktree(topdir, cex.worktree_path)
+ 
+ 
+ def _resolve_worktree_take_conflict(
+@@ -2909,7 +2875,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 # (mirrors the git-am path above and "b4 shazam"). Anything
+                 # else (e.g. a dirty worktree) leaves no merge to resolve, so
+                 # abort and bail as before.
+-                if not _worktree_merge_in_progress(merge_dir):
++                if not b4._worktree_merge_in_progress(merge_dir):
+                     logger.critical(
+                         'Merge failed%s', f': {out.strip()}' if out.strip() else ''
+                     )
+@@ -2933,7 +2899,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 )
+                 pre_merge_head = pre_merge_head.strip() if ecode == 0 else ''
+                 if not _resolve_worktree_take_conflict(
+-                    wt, 'merge', pre_merge_head, _worktree_merge_in_progress
++                    wt, 'merge', pre_merge_head, b4._worktree_merge_in_progress
+                 ):
+                     _wait_for_enter()
+                     return
+@@ -3202,7 +3168,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 logger.critical('git-am failed:')
+                 logger.critical(out.strip())
+                 if not _resolve_worktree_take_conflict(
+-                    wt, 'am', pre_am_head, _worktree_rebase_apply_dir
++                    wt, 'am', pre_am_head, b4._worktree_rebase_apply_dir
+                 ):
+                     _wait_for_enter()
+                     return
+diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
+index b7d543b..0c716b7 100644
+--- a/src/tests/test_tui_tracking.py
++++ b/src/tests/test_tui_tracking.py
+@@ -24,6 +24,7 @@ from textual.widgets import Input, ListView, Static
+ import b4
+ import b4.review
+ import b4.review.tracking as tracking
++from b4 import _worktree_merge_in_progress
+ from b4.review_tui._modals import (
+     ActionItem,
+     ActionScreen,
+@@ -43,7 +44,6 @@ from b4.review_tui._tracking_app import (
+     _take_worktree,
+     _TakeWorktree,
+     _worktree_for_branch,
+-    _worktree_merge_in_progress,
+ )
+ 
+ # ---------------------------------------------------------------------------
+
+-- 
+2.53.0
 
