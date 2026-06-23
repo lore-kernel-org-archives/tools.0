@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6251E2727EB
-	for <tools@linux.kernel.org>; Tue, 23 Jun 2026 16:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4A83090C2
+	for <tools@linux.kernel.org>; Tue, 23 Jun 2026 16:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782230499; cv=none; b=tMPsIv2zxQ1phsapkTKs0BSTYT8sgC3RWDCp1bb6ezTsbWZ2KuJX8RdME32M93i/8e4sqa4z0us9Ns7nebSmrZDH5jskTqou3phAYsSzSyCgmE9AGS7DGbnaPKEmUJdWtmFN8xZcwEhUMFQNAiKVtrjqHOcMT72diXlfZNGhLNM=
+	t=1782230500; cv=none; b=fBg4HW/DX/YliscH2uyVSJdPuVk0mHDeHOtg+u2ZUxn4C++arQpF1E2v6U3mYF5ZxLPVqwm8FKrKGbv7ODPD958EciNdloGUkZv8RgV/+GXahtznsF+Vh1y8z7SBG3po1bBrMYdHIH7j/IdOO8dddK7IsaOY5mkJYgRwEL1RVsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782230499; c=relaxed/simple;
-	bh=Z7N7iMVRN9NAqPvh2lFpKScUoMek7QC6N+OGJu3Ep44=;
+	s=arc-20240116; t=1782230500; c=relaxed/simple;
+	bh=qs6n9+to+L1GrF1RXxbcwF26eZaycLo/8SMfdk0G7O0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BgtcqOV4t8vBWP/X3Om7BedcbDrcnui1NwbmT+aVnHErCCCiPIFVPeIN79GngZwH6ZonuiCkwCa7zf6sL3O1qJOCyw6tgZ59XmP6rUraRLvT4gxf6MTaX2CrYUUPk6wAccZg+FCaUE5H0zAVVVElYXlJQpy1n3byHQbtekhhDmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dJulkLh2; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=g/RbrUS8iIhwEDXODPp7tEjyHZKulOWw5zP/l8S+tpvKMg/fvacmoxcQl6PxklTz40upccJ8XRPBVFSrfRGDuu9N1u3nt/76J1XMwdJoVG4nL9bVsplV7J2REg1DI459lMCvK1zwGGZdY9I5eY5pKkeBl8GmeNV+vDqC+xxPt+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A/xTNtuR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dJulkLh2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A/xTNtuR"
 Received: by smtp.kernel.org (Postfix)
-	id 18AA01F00A3D; Tue, 23 Jun 2026 16:01:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437D11F000E9;
-	Tue, 23 Jun 2026 16:01:37 +0000 (UTC)
+	id 5B8431F00A3A; Tue, 23 Jun 2026 16:01:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DFA1F000E9;
+	Tue, 23 Jun 2026 16:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782230498;
-	bh=k7+kHpBemWP2ewLkcjc7UlLh+wGinQUfSBB58ZJWN1c=;
+	s=k20260515; t=1782230499;
+	bh=OEe42RpRxSv81fJjavZmZsdC20CuuPZlJOBAyjx9EFY=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=dJulkLh2OfiTXPK2MfJ1mb+jzwiSg9d5vrB9zDUcC95/Aj/2h2lwssFsJtaCvKWZF
-	 +B1GE3AYRhzkTfJzLkyCpTwBgeKD+XEhi4g6MllA5LBwFCmBG1qBknUNRk/Qn9oJfp
-	 b4APtglp8/3m2ZgPkl3rUgw9y5hosuwUCXKqSVzNmPbIPgHRwcGd+Ho5rDMZtAwGNR
-	 zgnZiDqoiz0ZCdILAZefeXp32Skukh+RqnyBAloh2r4aGhXDlpPmGkeQMfrrSKBUyR
-	 vqlw4ZA41WjcPFzAg6sEcnn7pytOjI/nckcoq3awjAuvrX3Rb3wazZfmtaAy+tHuGu
-	 wxP9dP1GMYgDg==
+	b=A/xTNtuRXx9HH0OxVojbjTWkYk4RawV/qwVUzy73OR33nqdbNEa5HKBu2OI88AjmH
+	 rzX4vOdJBlrCc5fSxZk9Do2HjNBVkhDzI/NFcCYzCvS7J7j63YogoHN7LcbFRY1vMI
+	 GQF0wcmS2XFX12rlM9sMwruzCZKUUzuG1UYNIj3EqBGzTaGqDW8JWzKsMH9yv7sXxD
+	 p3RBCVU1S4p5fMUozh+hHX8khDnvE+5atRc5Kq/5vux8mh0gQnO2RzK3gffH8UrJsQ
+	 fTf5bSnjvP7/mACnP+WvF+IuGymRAmiSOzwnLvitHRvsYDPCXadZvFN7ZCE69GBfzn
+	 YtA73ZLpw6otA==
 From: Christian Brauner <brauner@kernel.org>
-Date: Tue, 23 Jun 2026 18:01:30 +0200
-Subject: [PATCH b4 2/6] review-tui: run take->am in the target branch's
- worktree
+Date: Tue, 23 Jun 2026 18:01:31 +0200
+Subject: [PATCH b4 3/6] review-tui: test cross-worktree takes
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,223 +39,250 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260623-20260623-review-tui-take-am-worktree-v1-2-e8a2140a287e@kernel.org>
+Message-Id: <20260623-20260623-review-tui-take-am-worktree-v1-3-e8a2140a287e@kernel.org>
 References: <20260623-20260623-review-tui-take-am-worktree-v1-0-e8a2140a287e@kernel.org>
 In-Reply-To: <20260623-20260623-review-tui-take-am-worktree-v1-0-e8a2140a287e@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.16-dev-50a61
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9592; i=brauner@kernel.org;
- h=from:subject:message-id; bh=Z7N7iMVRN9NAqPvh2lFpKScUoMek7QC6N+OGJu3Ep44=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRZrb234enrWXOn9bZ3MmRMFlj4VX2dnFHYn1PRn06I6
- N56aHd+X0cpC4MYF4OsmCKLQ7tJuNxynorNRpkaMHNYmUCGMHBxCsBEeOwYGfbX/563RMmXNc7z
- yImuV3dWtmXbV85fuE1p5U+5a7XXVxsyMtzI3/VZK2NVZ5R9oKDm9vub7gke9PT8H7Yvdf1UqRN
- u6gwA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10474; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=qs6n9+to+L1GrF1RXxbcwF26eZaycLo/8SMfdk0G7O0=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRZrb0naLvq4BNN9aC857rXtJS29V21fs73Y9GGps4H7
+ 45YZzO+7ChlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZhIYyDD/8Df7abXBYzD/TsN
+ y48q5XKsLbrMXKRa5HairYBt3RIGJYb//rJb7jBe6D1x6P0s/YzPq40jlq62eXL7oUILezzPt5d
+ ZLAA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Applying a reviewed series with the linear/cherry-pick (git-am) take method
-checked the target branch out in the *current* worktree. When the target
-was already checked out elsewhere this failed outright --
+Cover the shared worktree resolution and the take->am path:
 
-    Could not checkout vfs.fixes: fatal: 'vfs.fixes' is already used by
-    worktree at '/home/brauner/src/git/linux/vfs/vfs.fixes'
-
--- and otherwise it clobbered whatever was checked out where review was
-being driven from. take->merge already avoided this; take->am did not.
-
-Run git-am through _take_worktree() like the merge path: apply in the
-worktree that holds the target branch, or a throwaway one when it is
-checked out nowhere, leaving the current checkout untouched. Conflict state
-is probed in that worktree's own git dir (rev-parse --absolute-git-dir, not
-topdir/.git), the conflict shell opens there, and an unfinished am in a
-throwaway worktree is kept rather than torn down under the user.
+- _take_worktree(): reuses an existing worktree that holds the target and
+  leaves it in place, creates and tears down a throwaway when the target is
+  checked out nowhere, and honors keep() for an unfinished am.
+- _do_take_am(): applies onto a target checked out in another worktree (the
+  reported failure) and via a throwaway when it is not, asserting in both
+  cases that the patch lands on the target and the current checkout is left
+  untouched. The mbox is a real, cleanly-applying format-patch and
+  _prepare_am_messages is stubbed, so there is no network or lore access.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review_tui/_tracking_app.py | 147 +++++++++++++++++++------------------
- 1 file changed, 74 insertions(+), 73 deletions(-)
+ src/tests/test_tui_tracking.py | 190 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 190 insertions(+)
 
-diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index 7af469f..0496eaa 100644
---- a/src/b4/review_tui/_tracking_app.py
-+++ b/src/b4/review_tui/_tracking_app.py
-@@ -253,6 +253,20 @@ def _take_worktree(
-             b4.git_run_command(topdir, ['worktree', 'remove', '--force', temp_wt])
+diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
+index 4950dbd..f21b98d 100644
+--- a/src/tests/test_tui_tracking.py
++++ b/src/tests/test_tui_tracking.py
+@@ -13,6 +13,7 @@ status transitions, and modal interactions.
  
+ import datetime
+ import email.message
++import os
+ import pathlib
+ from typing import Any, Dict, List, Optional
+ from unittest.mock import patch
+@@ -38,6 +39,7 @@ from b4.review_tui._tracking_app import (
+     TrackedSeriesItem,
+     TrackingApp,
+     _shazam_merge_flags,
++    _take_worktree,
+     _worktree_for_branch,
+ )
  
-+def _worktree_rebase_apply_dir(worktree: str) -> Optional[str]:
-+    """Return *worktree*'s in-progress ``git am`` state dir, or ``None``.
+@@ -3583,3 +3585,191 @@ class TestLoadSeriesCaching:
+             await pilot.pause()
+             assert len(app._all_series) == 1
+             assert app._all_series[0].get('snoozed_until') == snoozed_until
 +
-+    ``rebase-apply`` lives under the per-worktree git dir, not the shared
-+    ``.git``, so resolve it via ``--absolute-git-dir`` to handle linked and
-+    throwaway worktrees too.
++
++# ---------------------------------------------------------------------------
++# Cross-worktree takes (merge + am share _take_worktree)
++# ---------------------------------------------------------------------------
++
++
++def _canned_am_patch(gitdir: str, tmp_path: pathlib.Path, fname: str) -> bytes:
++    """Build a real, cleanly-applying mbox (adds *fname*) via git format-patch.
++
++    Uses a detached worktree so it works even though master is checked out in
++    the main worktree; the patch adds a brand-new file so it applies on any
++    base without conflicts.
 +    """
-+    ecode, gitdir = b4.git_run_command(worktree, ['rev-parse', '--absolute-git-dir'])
-+    if ecode != 0:
-+        return None
-+    rebase_apply = os.path.join(gitdir.strip(), 'rebase-apply')
-+    return rebase_apply if os.path.isdir(rebase_apply) else None
++    wt = str(tmp_path / f'patchgen-{fname}')
++    ecode, _ = b4.git_run_command(gitdir, ['worktree', 'add', '--detach', wt, 'master'])
++    assert ecode == 0
++    try:
++        (pathlib.Path(wt) / fname).write_text('hello from take\n')
++        b4.git_run_command(wt, ['add', fname])
++        ecode, _ = b4.git_run_command(wt, ['commit', '-m', f'add {fname}'])
++        assert ecode == 0
++        ecode, patch = b4.git_run_command(wt, ['format-patch', '-1', '--stdout'])
++        assert ecode == 0
++    finally:
++        b4.git_run_command(gitdir, ['worktree', 'remove', '--force', wt])
++    return patch.encode()
 +
 +
- def _resolve_worktree_am_conflict(topdir: str, cex: 'b4.AmConflictError') -> bool:
-     """Handle an AmConflictError by dropping the user into a shell.
- 
-@@ -289,17 +303,7 @@ def _resolve_worktree_am_conflict(topdir: str, cex: 'b4.AmConflictError') -> boo
-     )
-     _suspend_to_shell(hint='b4 conflict', cwd=cex.worktree_path)
-     # Check if am is still in progress (user exited without finishing)
--    ecode, wt_gitdir = b4.git_run_command(
--        cex.worktree_path,
--        ['rev-parse', '--git-dir'],
--        logstderr=True,
--        rundir=cex.worktree_path,
--    )
--    if ecode == 0:
--        rebase_apply = os.path.join(wt_gitdir.strip(), 'rebase-apply')
--    else:
--        rebase_apply = ''
--    if rebase_apply and os.path.isdir(rebase_apply):
-+    if _worktree_rebase_apply_dir(cex.worktree_path):
-         logger.warning('Conflict resolution incomplete, aborting')
-         b4.git_run_command(topdir, ['worktree', 'remove', '--force', cex.worktree_path])
-         return False
-@@ -3094,75 +3098,72 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         if ambytes is None:
-             return
- 
--        # Save current branch so we can report it on failure
--        prev_branch = b4.git_get_current_branch(topdir)
--        if prev_branch is None:
--            prev_branch = b4.git_revparse_obj('HEAD', gitdir=topdir)
--
--        # Checkout target branch
--        ecode, out = b4.git_run_command(
--            topdir, ['checkout', target_branch], logstderr=True
--        )
--        if ecode != 0:
--            logger.critical('Could not checkout %s: %s', target_branch, out.strip())
--            _wait_for_enter()
--            return
--
--        # Save HEAD before git-am so we can find the new commits afterwards
--        ecode, out = b4.git_run_command(topdir, ['rev-parse', 'HEAD'])
--        pre_am_head = out.strip() if ecode == 0 else ''
--
--        # Run git-am with three-way merge
--        ecode, out = b4.git_run_command(
--            topdir, ['am', '-3'], stdin=ambytes, logstderr=True
--        )
--        if ecode != 0:
--            logger.critical('git-am failed:')
--            logger.critical(out.strip())
--            logger.info('You can resolve the conflict now.')
--            logger.info(
--                'Use "git am --continue" after resolving, or "git am --abort" to give up.'
--            )
--            _suspend_to_shell(hint='b4 conflict')
--            # Check if am is still in progress (user exited without finishing)
--            rebase_apply_path = os.path.join(topdir, '.git', 'rebase-apply')
--            if os.path.isdir(rebase_apply_path):
--                logger.warning('Conflict resolution incomplete')
--                logger.warning('Run "git am --abort" to clean up')
--                _wait_for_enter()
--                return
--            # Check if am was aborted (HEAD unchanged)
--            ecode, current_head = b4.git_run_command(
--                topdir, ['rev-parse', 'HEAD'], logstderr=True
--            )
--            if ecode != 0 or current_head.strip() == pre_am_head:
--                logger.warning('Conflict resolution aborted')
--                _wait_for_enter()
-+        # Apply in whichever worktree holds the target branch (or a throwaway
-+        # one), so the current checkout is never disturbed.
-+        with _take_worktree(topdir, target_branch) as wt:
-+            if wt is None:
-                 return
--            logger.info('Conflict resolved, patches applied.')
-+            am_dir = wt.path
- 
--        logger.info(out.strip())
--        logger.info('Applied patches to %s', target_branch)
-+            # Save HEAD before git-am so we can find the new commits afterwards
-+            ecode, out = b4.git_run_command(am_dir, ['rev-parse', 'HEAD'])
-+            pre_am_head = out.strip() if ecode == 0 else ''
- 
--        # Record per-patch commit IDs in the tracking data
--        new_status: Optional[str] = None
--        if pre_am_head:
-+            # Run git-am with three-way merge in the target worktree. Anchor to
-+            # am_dir via rundir: git_run_command targets a primary worktree with
-+            # --git-dir (not -C), so without it git-am writes files into b4's
-+            # cwd rather than the target worktree (cf. git_fetch_am_into_repo).
-             ecode, out = b4.git_run_command(
--                topdir, ['rev-list', '--reverse', f'{pre_am_head}..HEAD']
-+                am_dir, ['am', '-3'], stdin=ambytes, logstderr=True, rundir=am_dir
-             )
--            if ecode == 0:
--                commit_ids = out.strip().splitlines()
--                new_status = self._record_take_metadata(
--                    topdir,
--                    review_branch,
--                    target_branch,
--                    commit_ids,
--                    cherrypick=cherrypick,
--                    accepted=take_screen.accept_series,
-+            if ecode != 0:
-+                logger.critical('git-am failed:')
-+                logger.critical(out.strip())
-+                logger.info('You can resolve the conflict now.')
-+                logger.info(
-+                    'Use "git am --continue" after resolving, or "git am --abort" to give up.'
-+                )
-+                _suspend_to_shell(hint='b4 conflict', cwd=am_dir)
-+                if _worktree_rebase_apply_dir(am_dir):
-+                    logger.warning('Conflict resolution incomplete')
-+                    if wt.is_temp:
-+                        wt.keep()
-+                        logger.warning('Finish or abort it in: %s', am_dir)
-+                    logger.warning('Run "git am --abort" to clean up')
-+                    _wait_for_enter()
-+                    return
-+                # Check if am was aborted (HEAD unchanged)
-+                ecode, current_head = b4.git_run_command(
-+                    am_dir, ['rev-parse', 'HEAD'], logstderr=True
-                 )
-+                if ecode != 0 or current_head.strip() == pre_am_head:
-+                    logger.warning('Conflict resolution aborted')
-+                    _wait_for_enter()
-+                    return
-+                logger.info('Conflict resolved, patches applied.')
- 
--        self._finalize_take(topdir, target_branch, change_id, series, new_status)
--        _wait_for_enter()
-+            logger.info(out.strip())
-+            logger.info('Applied patches to %s', target_branch)
++class TestTakeWorktreeHelper:
++    """The shared _take_worktree picks the right worktree and cleans up.
 +
-+            # Record per-patch commit IDs in the tracking data
-+            new_status: Optional[str] = None
-+            if pre_am_head:
-+                ecode, out = b4.git_run_command(
-+                    am_dir, ['rev-list', '--reverse', f'{pre_am_head}..HEAD']
-+                )
-+                if ecode == 0:
-+                    commit_ids = out.strip().splitlines()
-+                    new_status = self._record_take_metadata(
-+                        topdir,
-+                        review_branch,
-+                        target_branch,
-+                        commit_ids,
-+                        cherrypick=cherrypick,
-+                        accepted=take_screen.accept_series,
-+                    )
++    Both take paths (merge and am) route through this, so a target that is
++    checked out elsewhere is applied there, an unchecked-out target gets a
++    throwaway worktree, and the current checkout is never touched.
++    """
 +
-+            self._finalize_take(topdir, target_branch, change_id, series, new_status)
-+            _wait_for_enter()
- 
-     def action_rebase(self) -> None:
-         """Rebase the review branch on top of current HEAD."""
++    def test_uses_existing_worktree_and_leaves_it(
++        self, gitdir: str, tmp_path: pathlib.Path
++    ) -> None:
++        b4.git_run_command(gitdir, ['branch', 'target', 'master'])
++        linked = str(tmp_path / 'target-wt')
++        ecode, _ = b4.git_run_command(gitdir, ['worktree', 'add', linked, 'target'])
++        assert ecode == 0
++        with _take_worktree(gitdir, 'target') as wt:
++            assert wt is not None
++            assert not wt.is_temp
++            assert os.path.realpath(wt.path) == os.path.realpath(linked)
++        # An existing worktree must survive the context.
++        assert os.path.isdir(linked)
++
++    def test_creates_and_removes_throwaway(self, gitdir: str) -> None:
++        b4.git_run_command(gitdir, ['branch', 'target', 'master'])
++        common_dir = b4.git_get_common_dir(gitdir)
++        assert common_dir
++        throwaway = os.path.join(common_dir, 'b4-take-worktree')
++        with _take_worktree(gitdir, 'target') as wt:
++            assert wt is not None
++            assert wt.is_temp
++            assert os.path.realpath(wt.path) == os.path.realpath(throwaway)
++            assert os.path.isdir(throwaway)
++        # The throwaway is torn down on exit.
++        assert not os.path.isdir(throwaway)
++
++    def test_keep_preserves_throwaway(self, gitdir: str) -> None:
++        b4.git_run_command(gitdir, ['branch', 'target', 'master'])
++        common_dir = b4.git_get_common_dir(gitdir)
++        assert common_dir
++        throwaway = os.path.join(common_dir, 'b4-take-worktree')
++        with _take_worktree(gitdir, 'target') as wt:
++            assert wt is not None and wt.is_temp
++            wt.keep()
++        # keep() leaves an unfinished worktree in place for the user.
++        assert os.path.isdir(throwaway)
++
++
++class TestAmTakeWorktree:
++    """Regression: take->am must apply in the target branch's worktree.
++
++    Reported failure: applying a series to a branch already checked out in
++    another worktree died with "fatal: '<branch>' is already used by worktree
++    ...".  The am path now mirrors the merge path and never checks out the
++    target in the current worktree.
++    """
++
++    def _run_am(self, gitdir: str, target_branch: str, ambytes: bytes) -> None:
++        from types import SimpleNamespace
++
++        change_id = 'am-wt-1'
++        review_branch = _create_review_branch(gitdir, change_id, status='reviewing')
++        app = TrackingApp.__new__(TrackingApp)
++        app._identifier = None  # type: ignore[attr-defined]
++        app._selected_series = {}  # type: ignore[attr-defined]
++        app._prepare_am_messages = lambda *a, **k: ambytes  # type: ignore[method-assign]
++        take_screen: Any = SimpleNamespace(
++            target_result=target_branch,
++            add_signoff=False,
++            add_link=False,
++            accept_series=False,
++        )
++        with patch('b4.review_tui._tracking_app._wait_for_enter'):
++            app._do_take_am(
++                change_id, review_branch, take_screen, {'subject': 'x'}, None
++            )
++
++    def test_applies_to_target_in_other_worktree(
++        self, gitdir: str, tmp_path: pathlib.Path
++    ) -> None:
++        # Target checked out in a *separate* worktree -- the reported failure.
++        b4.git_run_command(gitdir, ['branch', 'vfs.fixes', 'master'])
++        linked = str(tmp_path / 'vfs.fixes-wt')
++        ecode, _ = b4.git_run_command(gitdir, ['worktree', 'add', linked, 'vfs.fixes'])
++        assert ecode == 0
++
++        ecode, head_before = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
++        ecode, branch_before = b4.git_run_command(
++            gitdir, ['rev-parse', '--abbrev-ref', 'HEAD']
++        )
++
++        ambytes = _canned_am_patch(gitdir, tmp_path, 'takefile.txt')
++        self._run_am(gitdir, 'vfs.fixes', ambytes)
++
++        # The patch landed on vfs.fixes...
++        ecode, subj = b4.git_run_command(
++            gitdir, ['log', '-1', '--format=%s', 'vfs.fixes']
++        )
++        assert ecode == 0 and subj.strip() == 'add takefile.txt'
++        # ...without disturbing the current checkout.
++        ecode, head_after = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
++        assert head_after.strip() == head_before.strip()
++        ecode, branch_after = b4.git_run_command(
++            gitdir, ['rev-parse', '--abbrev-ref', 'HEAD']
++        )
++        assert branch_after.strip() == branch_before.strip()
++
++    def test_applies_via_throwaway_when_not_checked_out(
++        self, gitdir: str, tmp_path: pathlib.Path
++    ) -> None:
++        # Target exists but is checked out nowhere -> throwaway worktree.
++        b4.git_run_command(gitdir, ['branch', 'vfs.fixes', 'master'])
++        ecode, head_before = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
++
++        ambytes = _canned_am_patch(gitdir, tmp_path, 'takefile.txt')
++        self._run_am(gitdir, 'vfs.fixes', ambytes)
++
++        ecode, subj = b4.git_run_command(
++            gitdir, ['log', '-1', '--format=%s', 'vfs.fixes']
++        )
++        assert ecode == 0 and subj.strip() == 'add takefile.txt'
++        # Current checkout untouched and the throwaway worktree is gone.
++        ecode, head_after = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
++        assert head_after.strip() == head_before.strip()
++        common_dir = b4.git_get_common_dir(gitdir)
++        assert common_dir
++        assert not os.path.isdir(os.path.join(common_dir, 'b4-take-worktree'))
++
++    def test_applies_into_main_worktree_from_other_cwd(
++        self, gitdir: str, tmp_path: pathlib.Path
++    ) -> None:
++        # Regression: target checked out in the MAIN worktree while b4 is driven
++        # from a different cwd. git_run_command targets a primary worktree via
++        # --git-dir (not -C), so the apply must anchor its cwd (rundir) to the
++        # target worktree, else git-am writes the patched files into the wrong
++        # one -- committing to the branch but leaving the target worktree dirty.
++        side = str(tmp_path / 'side-wt')
++        b4.git_run_command(gitdir, ['branch', 'sidebr', 'master'])
++        ecode, _ = b4.git_run_command(gitdir, ['worktree', 'add', side, 'sidebr'])
++        assert ecode == 0
++
++        ambytes = _canned_am_patch(gitdir, tmp_path, 'takefile.txt')
++
++        olddir = os.getcwd()
++        os.chdir(side)
++        try:
++            self._run_am(gitdir, 'master', ambytes)
++        finally:
++            os.chdir(olddir)
++
++        # The patch landed on master, written into the MAIN worktree...
++        ecode, subj = b4.git_run_command(gitdir, ['log', '-1', '--format=%s', 'master'])
++        assert ecode == 0 and subj.strip() == 'add takefile.txt'
++        assert os.path.isfile(os.path.join(gitdir, 'takefile.txt'))
++        # ...not leaked into the driving worktree, and the target stays clean.
++        assert not os.path.isfile(os.path.join(side, 'takefile.txt'))
++        ecode, status = b4.git_run_command(
++            gitdir, ['status', '--porcelain', '--untracked-files=no']
++        )
++        assert ecode == 0 and status.strip() == ''
 
 -- 
 2.53.0
