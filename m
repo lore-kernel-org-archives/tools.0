@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092C03A4F47
-	for <tools@linux.kernel.org>; Tue, 23 Jun 2026 20:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FA92C11EE
+	for <tools@linux.kernel.org>; Tue, 23 Jun 2026 20:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782246867; cv=none; b=Akl3MskCmmJYsfeFQEujyiarlOVXHlF6Ls4wvXqkqUleYmxUXrnBqhTImMjHGZJb0XfAxS2/aT7SKZDcppYOMDKgk4jv34iof8ywhUALBYad/LaxV/SCkQqWUBd+NSaggiduyrU/gCfS/1ddgssUqviO0lA0JueMoxen+tQeeRM=
+	t=1782246868; cv=none; b=duuuEJO0amlk6oNaYaWarnCRE7uvueUiPaUZiRM6IJmVA8sqLWAvVktCpVU0jqksoROKg94InfhY1D4DEMkgJk0a7SNWYRtBOI6Ap3oIqXE5/NJXSlvq/mx8T7A7xrBqfWSEspIDSgJ0XJsCbk0uHkRk+KY+Z7k8ZWYz4/SPySk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782246867; c=relaxed/simple;
-	bh=0HFfY7MNn/IKCMV5fwTYfpT2G47Q7MXqukYq+41KQ+s=;
+	s=arc-20240116; t=1782246868; c=relaxed/simple;
+	bh=IEAjJP2D3BVQ7iAOLK+zmdXikqJ0dLpbnqe5+t80GdQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nVBdel+nokrSrlxZnk4yM8b2s5JxlgEsXMz6d4eJjiU5JGu+tmYPSwSLTcroYGmTd5Shb1UJdoK3Oo7oew+hx5B6jRxj9U6tFmwEHaoV+QKV/JloK0X7IG6OOIjFZJ1i0nCmm8DCrUKiZPS43p31F3v2bbsVlxT5HX5ca8sRELc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i6VJiBzf; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=IIGPsvtERojEZMIbK3ptaMaSU5ZLyKHHoiziiuuryVn+ierU1VgNIs2tvIGsgSlDpnfMr82IvL4PLBCyV9LfpmAmkockPOw/njhHVXGXEjIelghGIbA+Eeko+iJP10N7aZYvcrHkye4G0o6xFOYif+3rS3n1v4x9FwVYf2SFvso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CnviExP9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i6VJiBzf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CnviExP9"
 Received: by smtp.kernel.org (Postfix)
-	id CF5911F00A3A; Tue, 23 Jun 2026 20:34:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C301F000E9;
-	Tue, 23 Jun 2026 20:34:24 +0000 (UTC)
+	id 2ADF61F00A3D; Tue, 23 Jun 2026 20:34:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7B81F000E9;
+	Tue, 23 Jun 2026 20:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782246865;
-	bh=CYZEq8xKY95BeZm3cEBvvEfgHWU1EgFMncurnVoq2RY=;
+	s=k20260515; t=1782246867;
+	bh=h5Z5mnM4ZRwH+YE5+T2kRkS19fgoPnPbcknfDmqNRNI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=i6VJiBzfioAH3G7oyYlFo6sbiUk6CcbapMhw5W6HCw0rNroVci2PFw6yw4uItrqLD
-	 yhSpT34jHnhdtxxUqZIx+6t2oLLwg6NAP1zKY5O81YN+gTBJPIgl5fh74qdpVHwo2g
-	 uIAzs/Mk20XSdsGD7siI3NnaS1gIZDak58P/xsPlEdk0RvjgM4xZorVwjUweKqBltW
-	 N4DfqVBn8YEaNOuaXCE+9iZAefA/O6Wb5WA5y7RYibU1P+Jpatae38al7g8VQ+iRe4
-	 +C1QandPgvJzY6N10P54j3qc0IHtJcyqYKPRerNBXop4pbUwxfko7J0C8cy3XSLYJG
-	 vJgr2rAgzirWA==
+	b=CnviExP9XRuA/5gFKcZUtEwGKKtKK8fHKPmoiPZM6bzcyxkJU9G5NB2oXfNtTv6V4
+	 IHRfAtKDWzNEEzujl5lZuT3qohIb2akbq+mxROtHQzH+RPqWssdPgb9JqYPO7VnN+0
+	 EWdchpk/daKuTZX3w7dtOL0g29Ik2c8+C1yUxADTwNhIr12iT0QNknrajM6DklNK1B
+	 yXShVKg0Vdzk/IkC6qRpgnm2iAcK1HvSK9+A5JtNNVqm1p9z9CZWU7qSVqt4nl4gei
+	 pvFQIK0nhw0a17vk9TKv+LEubiTpOWnak80+W3SmfbIuNsM+7Ya4AC6Re6jwWZ+ws2
+	 QBP6odE6AqVmA==
 From: Christian Brauner <brauner@kernel.org>
-Date: Tue, 23 Jun 2026 22:34:17 +0200
-Subject: [PATCH b4 v2 1/6] review-tui: factor cross-worktree take setup
- into _take_worktree
+Date: Tue, 23 Jun 2026 22:34:18 +0200
+Subject: [PATCH b4 v2 2/6] review-tui: run take->am in the target branch's
+ worktree
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,204 +40,223 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260623-20260623-review-tui-take-am-worktree-v2-1-2cbbab5d5441@kernel.org>
+Message-Id: <20260623-20260623-review-tui-take-am-worktree-v2-2-2cbbab5d5441@kernel.org>
 References: <20260623-20260623-review-tui-take-am-worktree-v2-0-2cbbab5d5441@kernel.org>
 In-Reply-To: <20260623-20260623-review-tui-take-am-worktree-v2-0-2cbbab5d5441@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.16-dev-e850d
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8272; i=brauner@kernel.org;
- h=from:subject:message-id; bh=0HFfY7MNn/IKCMV5fwTYfpT2G47Q7MXqukYq+41KQ+s=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRZvT2355fqg0YBn9Xvruf7XN20ovRfhJTRAYaVqjveJ
- tvvv8a8taOUhUGMi0FWTJHFod0kXG45T8Vmo0wNmDmsTCBDGLg4BWAilxYwMpzMal/23+luUeXk
- DrVUyzW5WacLP5i/+/DhgNKtHV4pn5Yz/C+x5vn3K1WxuXzjjCiFaqnMLIWZh4z2fPguuiJ4lmR
- oJRsA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9592; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=IEAjJP2D3BVQ7iAOLK+zmdXikqJ0dLpbnqe5+t80GdQ=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRZvT3HYmpj0nVM4OOM4w0S/+zt9j465M60br6APkfAp
+ +7+23s4OkpZGMS4GGTFFFkc2k3C5ZbzVGw2ytSAmcPKBDKEgYtTACYS0MXwh98h+Pe9svcMNxel
+ zgu5qLz8eP/5pRO6hZXtrzWc/Kfme57hF9PHdcGiJ+z59+vvWvN02bdJd7ycriw0fim69LhkbkR
+ 4EjMA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-The take->merge path resolves which worktree to apply a series in (the one
-already holding the target branch, or a throwaway b4-take-worktree when it
-is checked out nowhere), clears any stale throwaway first, and removes its
-own on the way out. take->am needs the exact same dance, so pull it out of
-_do_take_merge into a _take_worktree() context manager plus a small
-_TakeWorktree handle (path/is_temp/keep).
+Applying a reviewed series with the linear/cherry-pick (git-am) take method
+checked the target branch out in the *current* worktree. When the target
+was already checked out elsewhere this failed outright --
 
-No functional change: _do_take_merge behaves as before -- it never marks
-the worktree keep(), so a throwaway is always removed -- and the take->am
-path is converted in the next commit.
+    Could not checkout vfs.fixes: fatal: 'vfs.fixes' is already used by
+    worktree at '/home/brauner/src/git/linux/vfs/vfs.fixes'
+
+-- and otherwise it clobbered whatever was checked out where review was
+being driven from. take->merge already avoided this; take->am did not.
+
+Run git-am through _take_worktree() like the merge path: apply in the
+worktree that holds the target branch, or a throwaway one when it is
+checked out nowhere, leaving the current checkout untouched. Conflict state
+is probed in that worktree's own git dir (rev-parse --absolute-git-dir, not
+topdir/.git), the conflict shell opens there, and an unfinished am in a
+throwaway worktree is kept rather than torn down under the user.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review_tui/_tracking_app.py | 126 ++++++++++++++++++++++++-------------
- 1 file changed, 81 insertions(+), 45 deletions(-)
+ src/b4/review_tui/_tracking_app.py | 147 +++++++++++++++++++------------------
+ 1 file changed, 74 insertions(+), 73 deletions(-)
 
 diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index e2bfd9a..c910c36 100644
+index c910c36..a16f845 100644
 --- a/src/b4/review_tui/_tracking_app.py
 +++ b/src/b4/review_tui/_tracking_app.py
-@@ -5,6 +5,7 @@
- #
- __author__ = 'Konstantin Ryabitsev <konstantin@linuxfoundation.org>'
- 
-+import contextlib
- import copy
- import datetime
- import email.message
-@@ -21,7 +22,7 @@ import sqlite3
- import subprocess
- import sys
- from string import Template
--from typing import Any, Dict, List, Literal, Optional, Tuple
-+from typing import Any, Dict, Generator, List, Literal, Optional, Tuple
- 
- from rich.text import Text as RichText
- from textual.app import App, ComposeResult
-@@ -178,6 +179,80 @@ def _worktree_for_branch(topdir: str, branch: str) -> Optional[str]:
-     return out.strip() or None
+@@ -253,6 +253,20 @@ def _take_worktree(
+             b4.git_run_command(topdir, ['worktree', 'remove', '--force', temp_wt])
  
  
-+class _TakeWorktree:
-+    """Handle for the worktree a take runs in (see :func:`_take_worktree`)."""
++def _worktree_rebase_apply_dir(worktree: str) -> Optional[str]:
++    """Return *worktree*'s in-progress ``git am`` state dir, or ``None``.
 +
-+    def __init__(self, path: str, is_temp: bool) -> None:
-+        self.path = path
-+        self.is_temp = is_temp
-+        self._keep = False
-+
-+    def keep(self) -> None:
-+        """Leave a throwaway worktree in place on exit (e.g. unfinished am)."""
-+        self._keep = True
-+
-+
-+@contextlib.contextmanager
-+def _take_worktree(
-+    topdir: str, target_branch: str
-+) -> Generator[Optional[_TakeWorktree], None, None]:
-+    """Yield the worktree in which to apply a take onto *target_branch*.
-+
-+    The review TUI may be driven from a different worktree than the one the
-+    series is applied to, and the target may even be checked out elsewhere, so
-+    the take must run wherever the branch lives rather than in the current
-+    checkout. Runs in whichever worktree already holds *target_branch*; when it
-+    is checked out nowhere, a throwaway ``b4-take-worktree`` is created and
-+    removed on exit unless the caller marks it :meth:`~_TakeWorktree.keep`.
-+    Yields ``None`` (after logging and waiting) when no worktree can be
-+    established, so the caller can simply return.
++    ``rebase-apply`` lives under the per-worktree git dir, not the shared
++    ``.git``, so resolve it via ``--absolute-git-dir`` to handle linked and
++    throwaway worktrees too.
 +    """
-+    # A throwaway worktree from a previously interrupted take may still be
-+    # registered -- possibly even holding target_branch, in which case the
-+    # resolution below would latch onto it and never clean it up. Remove any
-+    # such leftover up front; this also clears a bare leftover directory that a
-+    # plain `worktree remove` would choke on.
-+    common_dir = b4.git_get_common_dir(topdir)
-+    if common_dir:
-+        leftover = os.path.join(common_dir, 'b4-take-worktree')
-+        if os.path.exists(leftover):
-+            b4.git_run_command(topdir, ['worktree', 'remove', '--force', leftover])
-+            if os.path.isdir(leftover):
-+                shutil.rmtree(leftover, ignore_errors=True)
-+        # Prune unconditionally: a directory deleted out-of-band leaves only a
-+        # registration that _worktree_for_branch would still resolve to a dead
-+        # path.
-+        b4.git_run_command(topdir, ['worktree', 'prune'])
-+
-+    work_dir = _worktree_for_branch(topdir, target_branch)
-+    temp_wt: Optional[str] = None
-+    if work_dir is None:
-+        if not common_dir:
-+            logger.critical('Unable to determine git common dir')
-+            _wait_for_enter()
-+            yield None
-+            return
-+        temp_wt = os.path.join(common_dir, 'b4-take-worktree')
-+        ecode, out = b4.git_run_command(
-+            topdir, ['worktree', 'add', temp_wt, target_branch], logstderr=True
-+        )
-+        if ecode != 0:
-+            logger.critical(
-+                'Could not create a worktree for %s: %s', target_branch, out.strip()
-+            )
-+            _wait_for_enter()
-+            yield None
-+            return
-+        work_dir = temp_wt
-+
-+    handle = _TakeWorktree(work_dir, is_temp=temp_wt is not None)
-+    try:
-+        yield handle
-+    finally:
-+        if temp_wt and not handle._keep:
-+            b4.git_run_command(topdir, ['worktree', 'remove', '--force', temp_wt])
++    ecode, gitdir = b4.git_run_command(worktree, ['rev-parse', '--absolute-git-dir'])
++    if ecode != 0:
++        return None
++    rebase_apply = os.path.join(gitdir.strip(), 'rebase-apply')
++    return rebase_apply if os.path.isdir(rebase_apply) else None
 +
 +
  def _resolve_worktree_am_conflict(topdir: str, cex: 'b4.AmConflictError') -> bool:
      """Handle an AmConflictError by dropping the user into a shell.
  
-@@ -2690,48 +2765,12 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                 return
-             base_commit = out.strip()
+@@ -289,17 +303,7 @@ def _resolve_worktree_am_conflict(topdir: str, cex: 'b4.AmConflictError') -> boo
+     )
+     _suspend_to_shell(hint='b4 conflict', cwd=cex.worktree_path)
+     # Check if am is still in progress (user exited without finishing)
+-    ecode, wt_gitdir = b4.git_run_command(
+-        cex.worktree_path,
+-        ['rev-parse', '--git-dir'],
+-        logstderr=True,
+-        rundir=cex.worktree_path,
+-    )
+-    if ecode == 0:
+-        rebase_apply = os.path.join(wt_gitdir.strip(), 'rebase-apply')
+-    else:
+-        rebase_apply = ''
+-    if rebase_apply and os.path.isdir(rebase_apply):
++    if _worktree_rebase_apply_dir(cex.worktree_path):
+         logger.warning('Conflict resolution incomplete, aborting')
+         b4.git_run_command(topdir, ['worktree', 'remove', '--force', cex.worktree_path])
+         return False
+@@ -3094,75 +3098,72 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         if ambytes is None:
+             return
  
--        # A throwaway worktree from a previously interrupted take may still be
--        # registered -- possibly even holding target_branch, in which case the
--        # resolution below would latch onto it and then never clean it up
--        # (temp_wt stays None, so the finally skips removal). Remove any such
--        # leftover up front. This also clears a bare leftover directory that a
--        # plain `worktree remove` would choke on.
--        common_dir = b4.git_get_common_dir(topdir)
--        temp_wt: Optional[str] = None
--        if common_dir:
--            leftover = os.path.join(common_dir, 'b4-take-worktree')
--            if os.path.exists(leftover):
--                b4.git_run_command(topdir, ['worktree', 'remove', '--force', leftover])
--                b4.git_run_command(topdir, ['worktree', 'prune'])
--                if os.path.isdir(leftover):
--                    shutil.rmtree(leftover, ignore_errors=True)
+-        # Save current branch so we can report it on failure
+-        prev_branch = b4.git_get_current_branch(topdir)
+-        if prev_branch is None:
+-            prev_branch = b4.git_revparse_obj('HEAD', gitdir=topdir)
 -
--        # Run the merge in whichever worktree holds the target branch -- the
--        # review TUI may be driven from a different worktree than the one the
--        # series is being applied to, and the target may even be checked out
--        # elsewhere. If it is not checked out anywhere, use a throwaway
--        # worktree, so the current checkout is never disturbed.
--        merge_dir = _worktree_for_branch(topdir, target_branch)
--        if merge_dir is None:
--            if not common_dir:
--                logger.critical('Unable to determine git common dir')
+-        # Checkout target branch
+-        ecode, out = b4.git_run_command(
+-            topdir, ['checkout', target_branch], logstderr=True
+-        )
+-        if ecode != 0:
+-            logger.critical('Could not checkout %s: %s', target_branch, out.strip())
+-            _wait_for_enter()
+-            return
+-
+-        # Save HEAD before git-am so we can find the new commits afterwards
+-        ecode, out = b4.git_run_command(topdir, ['rev-parse', 'HEAD'])
+-        pre_am_head = out.strip() if ecode == 0 else ''
+-
+-        # Run git-am with three-way merge
+-        ecode, out = b4.git_run_command(
+-            topdir, ['am', '-3'], stdin=ambytes, logstderr=True
+-        )
+-        if ecode != 0:
+-            logger.critical('git-am failed:')
+-            logger.critical(out.strip())
+-            logger.info('You can resolve the conflict now.')
+-            logger.info(
+-                'Use "git am --continue" after resolving, or "git am --abort" to give up.'
+-            )
+-            _suspend_to_shell(hint='b4 conflict')
+-            # Check if am is still in progress (user exited without finishing)
+-            rebase_apply_path = os.path.join(topdir, '.git', 'rebase-apply')
+-            if os.path.isdir(rebase_apply_path):
+-                logger.warning('Conflict resolution incomplete')
+-                logger.warning('Run "git am --abort" to clean up')
 -                _wait_for_enter()
 -                return
--            temp_wt = os.path.join(common_dir, 'b4-take-worktree')
--            ecode, out = b4.git_run_command(
--                topdir, ['worktree', 'add', temp_wt, target_branch], logstderr=True
+-            # Check if am was aborted (HEAD unchanged)
+-            ecode, current_head = b4.git_run_command(
+-                topdir, ['rev-parse', 'HEAD'], logstderr=True
 -            )
--            if ecode != 0:
--                logger.critical(
--                    'Could not create a worktree for %s: %s',
--                    target_branch,
--                    out.strip(),
--                )
+-            if ecode != 0 or current_head.strip() == pre_am_head:
+-                logger.warning('Conflict resolution aborted')
 -                _wait_for_enter()
-+        # Merge in whichever worktree holds the target branch (or a throwaway
++        # Apply in whichever worktree holds the target branch (or a throwaway
 +        # one), so the current checkout is never disturbed.
 +        with _take_worktree(topdir, target_branch) as wt:
 +            if wt is None:
                  return
--            merge_dir = temp_wt
--
--        try:
-+            merge_dir = wt.path
-             # Apply trailer-amended patches in a sparse worktree and fetch into
-             # the target worktree's FETCH_HEAD (which is per-worktree), so the
-             # merge below sees them and each commit carries its trailers.
-@@ -2836,9 +2875,6 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+-            logger.info('Conflict resolved, patches applied.')
++            am_dir = wt.path
  
-             self._finalize_take(topdir, target_branch, change_id, t_series, new_status)
-             _wait_for_enter()
--        finally:
--            if temp_wt:
--                b4.git_run_command(topdir, ['worktree', 'remove', '--force', temp_wt])
+-        logger.info(out.strip())
+-        logger.info('Applied patches to %s', target_branch)
++            # Save HEAD before git-am so we can find the new commits afterwards
++            ecode, out = b4.git_run_command(am_dir, ['rev-parse', 'HEAD'])
++            pre_am_head = out.strip() if ecode == 0 else ''
  
-     def _finalize_take(
-         self,
+-        # Record per-patch commit IDs in the tracking data
+-        new_status: Optional[str] = None
+-        if pre_am_head:
++            # Run git-am with three-way merge in the target worktree. Anchor to
++            # am_dir via rundir: git_run_command targets a primary worktree with
++            # --git-dir (not -C), so without it git-am writes files into b4's
++            # cwd rather than the target worktree (cf. git_fetch_am_into_repo).
+             ecode, out = b4.git_run_command(
+-                topdir, ['rev-list', '--reverse', f'{pre_am_head}..HEAD']
++                am_dir, ['am', '-3'], stdin=ambytes, logstderr=True, rundir=am_dir
+             )
+-            if ecode == 0:
+-                commit_ids = out.strip().splitlines()
+-                new_status = self._record_take_metadata(
+-                    topdir,
+-                    review_branch,
+-                    target_branch,
+-                    commit_ids,
+-                    cherrypick=cherrypick,
+-                    accepted=take_screen.accept_series,
++            if ecode != 0:
++                logger.critical('git-am failed:')
++                logger.critical(out.strip())
++                logger.info('You can resolve the conflict now.')
++                logger.info(
++                    'Use "git am --continue" after resolving, or "git am --abort" to give up.'
++                )
++                _suspend_to_shell(hint='b4 conflict', cwd=am_dir)
++                if _worktree_rebase_apply_dir(am_dir):
++                    logger.warning('Conflict resolution incomplete')
++                    if wt.is_temp:
++                        wt.keep()
++                        logger.warning('Finish or abort it in: %s', am_dir)
++                    logger.warning('Run "git am --abort" to clean up')
++                    _wait_for_enter()
++                    return
++                # Check if am was aborted (HEAD unchanged)
++                ecode, current_head = b4.git_run_command(
++                    am_dir, ['rev-parse', 'HEAD'], logstderr=True
+                 )
++                if ecode != 0 or current_head.strip() == pre_am_head:
++                    logger.warning('Conflict resolution aborted')
++                    _wait_for_enter()
++                    return
++                logger.info('Conflict resolved, patches applied.')
+ 
+-        self._finalize_take(topdir, target_branch, change_id, series, new_status)
+-        _wait_for_enter()
++            logger.info(out.strip())
++            logger.info('Applied patches to %s', target_branch)
++
++            # Record per-patch commit IDs in the tracking data
++            new_status: Optional[str] = None
++            if pre_am_head:
++                ecode, out = b4.git_run_command(
++                    am_dir, ['rev-list', '--reverse', f'{pre_am_head}..HEAD']
++                )
++                if ecode == 0:
++                    commit_ids = out.strip().splitlines()
++                    new_status = self._record_take_metadata(
++                        topdir,
++                        review_branch,
++                        target_branch,
++                        commit_ids,
++                        cherrypick=cherrypick,
++                        accepted=take_screen.accept_series,
++                    )
++
++            self._finalize_take(topdir, target_branch, change_id, series, new_status)
++            _wait_for_enter()
+ 
+     def action_rebase(self) -> None:
+         """Rebase the review branch on top of current HEAD."""
 
 -- 
 2.53.0
