@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25593B0AF0
-	for <tools@linux.kernel.org>; Thu, 25 Jun 2026 12:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E86175A62
+	for <tools@linux.kernel.org>; Thu, 25 Jun 2026 12:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782389383; cv=none; b=mN+r75Ngq8UM6AFmc2eVgmTxJlhQynJJtfrz5M/Xj6ziqgKXh/jk5lrDI8lNnfuSYexxFy+aGYVyWlaGa2gte7EaIGsCDDCc8Y8CDaDWjFguQbeH2uh6Aax2t4VdbHbINOUQXLDlz87aK9Ixk1aVoFi2PCQlYz/Ubaqf4gGQz54=
+	t=1782389386; cv=none; b=Dtyeiv0CNG1m1MzFqLH+8Cx5aS+3zMlTSMVZVtV6ToTpvOEbW+B70x7Z/9ZNMyF7z9vCwoDQNgq69wau98X2ExQjfrvPA8rH5UGjncPnDvzN5BUKMGQ0mpOenSxjCOntkXXlHCGbfRofhOOt8Qvw/VNM5bOOLaDdx4JkYHy9oxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782389383; c=relaxed/simple;
-	bh=6V4wwBpD45hzZe1nBr280JCjLnPu78GjEic+cX7fy8c=;
+	s=arc-20240116; t=1782389386; c=relaxed/simple;
+	bh=XO9X56URAbvdvROYpjZyzsZjhY/oIvZa5R+rJcd5L44=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HE3CNLQkzJ/AG6s0d+HGqYdisGBXVOggkzTLkk63YPXAFKOgTmesXNBILoqDbqfd1pXU4Xqhs5eaZd91U/TBNxeGAP+1QfGDR4e4bu2ZhRSXut8vkG0lZ42LeUNcBDxHFrspI4o5GuhV0YuJ1UyM2kBLSlwbJ0JBsb6CofZFmDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QhfJqV2l; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=QlQtTwQaB+KL906Ny8/Sgtr92zvcL8rYJRj0k7szMdu1vA/YaZL0nZ8+BN4bteiuUY3g9X7+271fX3Uk19JVcyVp6hHrKMsITMStRK65eOgyD/JD8OoKMjW17WomKzVWMlD1qITL+j7YX5h+3wqnt7Q/h9jxSnVqrph7GFUgpTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g/2D0qRD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QhfJqV2l"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g/2D0qRD"
 Received: by smtp.kernel.org (Postfix)
-	id 819881F00A3A; Thu, 25 Jun 2026 12:09:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0B91F000E9;
-	Thu, 25 Jun 2026 12:09:40 +0000 (UTC)
+	id 15D9C1F00A3A; Thu, 25 Jun 2026 12:09:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB301F000E9;
+	Thu, 25 Jun 2026 12:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782389381;
-	bh=ExOll1rSLoD5iYTp0KLZQebnPAeNpAcYzA9dx9vb7c8=;
+	s=k20260515; t=1782389384;
+	bh=v7wU3IKvQFQsLJ7h1u43q1uX0c8Zpy8FRIlAfLUedig=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=QhfJqV2lfG024TADE7UPHVDe04OdXOvGGVpsAE4OnVFvGn8FJIaN468/KxW8WHSN3
-	 88ohPSme/76Q9F02LNzT0vm2Kf1NgDVdjGC73fgmpuf7dEuEZ7t/AxeSqcl80vES72
-	 8eO7CNIGyQ6JM35isqf1RwF38wEKw7WPOwz9uOkcpQBZdcNcG++qGzzh74rgln46nD
-	 vGDA8qNEFsqWC/3eo4h6rXiO3wrh0l1NNzZdZ/kZMGB6QJ4k1mUlu0gtLHI+gkVqmR
-	 i6Ul7lbvKFB90Qwr3Onq/Bm32E7jJQ4iL/R4b9Eh9N08kmeeW5qryuh4GaoYKoINgI
-	 ryQL1nqVUFlJQ==
+	b=g/2D0qRDDYy7HeGR89TLqkGB/XkNIWYgxfQTJsYqONi+VhGx8v8vcRTdO+V8g/DXA
+	 LUXR0l9ofrJU3tWxdEXr+mU1zsvB0fmU6x0brsdXKq1FN878dycDvCvZ/hil44p9wI
+	 rL0RYgsfPXZ6GJDUk8xq5m7PZ3Bvx1SK49cl6ykQhnLJdOsm6NrzvXfu2i/yTCrX0v
+	 7FZ1zXXL62oTk77CsS+y3iWe/zk1x2bV61CthR8gENGyHNNWmJs6yzxmMku5wvSczc
+	 kZGLs/kSeBtePZq1+s+LYliZcBrqgxm07KzEy8+El9E4/a8e6vWGpsw+wrBG5oNYU4
+	 8YT6vc3Ot5Hiw==
 From: Christian Brauner <brauner@kernel.org>
-Date: Thu, 25 Jun 2026 14:09:24 +0200
-Subject: [PATCH b4 v3 4/9] shazam: resolve conflicts in subdirectory files,
- not just the repo root
+Date: Thu, 25 Jun 2026 14:09:26 +0200
+Subject: [PATCH b4 v3 6/9] shazam: resolve --resolve conflicts inline via a
+ subshell
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,625 +40,776 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260625-shazam-resolve-native-am-v3-4-622b37a7f3b2@kernel.org>
+Message-Id: <20260625-shazam-resolve-native-am-v3-6-622b37a7f3b2@kernel.org>
 References: <20260625-shazam-resolve-native-am-v3-0-622b37a7f3b2@kernel.org>
 In-Reply-To: <20260625-shazam-resolve-native-am-v3-0-622b37a7f3b2@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.16-dev-0a195
-X-Developer-Signature: v=1; a=openpgp-sha256; l=29902; i=brauner@kernel.org;
- h=from:subject:message-id; bh=6V4wwBpD45hzZe1nBr280JCjLnPu78GjEic+cX7fy8c=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTZStU9Se/qOr421PTmSWPb5rc53h/XbtnJ95mhf9NWN
- 7/wOUc/dpSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzkeyrD/zLtiIu1/mJXCyda
- L01XCdxqvdK/dN2yPVyvCjXcvMy2BjL8d1ZdJPfya6WZ1KdcxnXPw5nEnr28GcPi+UZZ4rp57X0
- BFgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=34645; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=XO9X56URAbvdvROYpjZyzsZjhY/oIvZa5R+rJcd5L44=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTZStUfdHov9OgifxBn+4FjhrU2lU7swbPmX5//p4f9y
+ ZsOueaOjlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIksPcrI8GjrGYMZoa+31sly
+ +pefDndq2L9cesfhCUICBmulZSR/GzMyzGN/W35D1P/IhCVyz7pP/3gYck2a1bT++MzXDurzJvF
+ EsgAA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-The native-am --resolve flow applies the series in a sparse worktree
-(only root-level files materialized). git's 3-way merge refuses to touch
-skip-worktree paths, so a conflict in a subdirectory file -- the common
-case for real series -- makes `git am -3` abort with a clean index: no
-conflict markers, no unmerged entries. b4 then points the user at a
-conflict that isn't there; `git am --continue` dead-ends and
-`git am --skip` silently drops the patch -- the very failure this series
-set out to prevent. Only root-file conflicts worked, which is exactly
-what the tests covered, so it slipped through.
+b4 shazam --resolve used a two-phase, git-rebase-style flow: on a git-am
+conflict it parked the in-progress am in a worktree, persisted
+b4-shazam-state.json, and exited, leaving the user to finish the am by hand
+and then run "b4 shazam --continue" (or "--abort").
 
-Fix it at the shared chokepoint. git_fetch_am_into_repo grows a `resolve`
-flag; on a conflict it rebuilds a full (non-sparse) worktree -- abort the
-partial am, disable sparse-checkout, replay -- so the conflict is recorded
-with real markers for the user (or `git am --continue`) to resolve. Both
-`b4 shazam --resolve` and the review TUI apply through this one function,
-so both are fixed at once, and the now-redundant sparse-checkout disables
-in the two resolve handlers go away. A regression test drives a
-subdirectory conflict end to end (and fails without the rebuild).
+Replace that with the subshell model the review TUI already uses: suspend into
+a shell inside the conflict worktree (a blocking subprocess.run, so b4 stays
+the parent) and finish inline when the shell exits -- fetch the fully-applied
+series into FETCH_HEAD and merge on success, tear the worktree down on "git am
+--abort" or an unfinished am. b4 only execvp's git-merge at the very end, once
+the worktree has already been dropped. This drops the persisted state file and
+the separate --continue/--abort subcommands.
 
-While here, harden the surrounding flow:
+Factor the shell-and-finish logic into b4.resolve_am_conflict_in_shell() and
+have both shazam and the review TUI's three am-conflict call sites use it. Move
+_suspend_to_shell() out of b4.tui._common (which imports textual, an optional
+dependency) into b4 itself so the non-TUI shazam path can call it without
+pulling in textual; b4.tui._common re-exports it for the TUI callers.
 
-  - b4 shazam --abort no longer crashes on a corrupt/truncated state file
-    (_load_shazam_state only guarded the json parse for --continue); abort
-    now treats it as no state and cleans it up.
-  - shazam --continue refuses up front when the working tree is dirty,
-    keeping its saved state so it stays re-runnable, instead of deleting
-    state and then letting the final merge fail with nothing to retry.
-  - _fetch_and_drop_am_worktree leaves the worktree in place on a fetch
-    failure so the resolved git-am can be retried rather than discarded.
-  - docs: b4 shazam --continue merges only with -M; with -H it leaves the
-    series in FETCH_HEAD, exactly as a clean run would. Say so.
+The shared helper detects "nothing applied" by comparing the worktree HEAD to
+the am's base commit, not to the pre-shell HEAD: after a partial multi-patch
+apply, "git am --abort" resets HEAD all the way back to base, which a
+before/after-HEAD compare (as the TUI helper previously used) would misread as
+success and silently merge a no-op. Passing the base from every call site
+hardens the TUI's abort detection too.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- docs/maintainer/am-shazam.rst      |  12 +-
- src/b4/__init__.py                 |  46 ++++++-
- src/b4/mbox.py                     |  56 +++++++-
- src/b4/review_tui/_tracking_app.py |  15 +--
- src/tests/test_three_way_merge.py  | 264 ++++++++++++++++++++++++++++++++++++-
- 5 files changed, 366 insertions(+), 27 deletions(-)
+ docs/maintainer/am-shazam.rst      |  39 ++-----
+ src/b4/__init__.py                 | 145 +++++++++++++++++++++++-
+ src/b4/command.py                  |  14 ---
+ src/b4/mbox.py                     | 221 +++----------------------------------
+ src/b4/review_tui/_tracking_app.py |  60 +---------
+ src/b4/tui/_common.py              |  58 +---------
+ 6 files changed, 182 insertions(+), 355 deletions(-)
 
 diff --git a/docs/maintainer/am-shazam.rst b/docs/maintainer/am-shazam.rst
-index 37dc80f..9671c97 100644
+index 9671c97..3205f77 100644
 --- a/docs/maintainer/am-shazam.rst
 +++ b/docs/maintainer/am-shazam.rst
-@@ -317,7 +317,8 @@ the merge commit.
- ``--continue``
-   Continue after a conflicted ``--resolve``. Run this once you have
-   finished the ``git am`` in the resolution worktree; b4 then fetches the
--  applied series and merges it.
-+  applied series and finishes exactly as a clean run would — with ``-M`` it
-+  merges the series, with ``-H`` it leaves it in ``FETCH_HEAD`` for you.
+@@ -314,16 +314,6 @@ the merge commit.
+   enables interactive conflict resolution instead of simply reporting
+   the failure. See :ref:`shazam_conflict_resolution` below.
  
- ``--abort``
-   Abort a conflicted shazam: remove the resolution worktree and clean up
-@@ -374,10 +375,11 @@ branch and run::
-     b4 shazam --continue
+-``--continue``
+-  Continue after a conflicted ``--resolve``. Run this once you have
+-  finished the ``git am`` in the resolution worktree; b4 then fetches the
+-  applied series and finishes exactly as a clean run would — with ``-M`` it
+-  merges the series, with ``-H`` it leaves it in ``FETCH_HEAD`` for you.
+-
+-``--abort``
+-  Abort a conflicted shazam: remove the resolution worktree and clean up
+-  any saved state.
+-
+ Please also see the :ref:`shazam_settings` section for some
+ configuration file options that affect some of ``b4 shazam`` behaviour.
  
- B4 fetches the fully-applied series out of the worktree, removes the
--worktree, and merges the series into your branch — exactly the merge a
--clean ``b4 shazam`` would have made. If that final merge itself
--conflicts, resolve it the normal way (git leaves the conflicted merge in
--your tree) and commit.
-+worktree, and finishes exactly as a clean ``b4 shazam`` would: with
-+``-M`` it merges the series into your branch, while with ``-H`` (as in the
-+example above) it leaves the series in ``FETCH_HEAD`` for you to merge or
-+check out. If a ``-M`` merge itself conflicts, resolve it the normal way
-+(git leaves the conflicted merge in your tree) and commit.
+@@ -360,31 +350,26 @@ add the ``--resolve`` flag::
+     b4 shazam -H --resolve <msgid>
  
- If you decide you don't want to proceed, run::
+ With ``--resolve``, instead of giving up, b4 leaves the in-progress
+-``git am`` parked in a throwaway worktree and prints its path. The whole
+-series is applied there by git itself, so no patch is ever silently
+-dropped. Resolve the conflict the usual way and let ``git am`` work
+-through the rest of the series::
++``git am`` parked in a throwaway worktree and drops you into a sub-shell
++whose working directory is that worktree. The whole series is applied
++there by git itself, so no patch is ever silently dropped. Resolve the
++conflict the usual way and let ``git am`` work through the rest of the
++series::
  
+-    cd <worktree path printed by b4>
+     # edit the conflicted files
+     git am --continue        # or: git am --skip
+ 
+-Repeat until ``git am`` reports that it is done, then come back to your
+-branch and run::
+-
+-    b4 shazam --continue
++Repeat until ``git am`` reports that it is done, then leave the sub-shell
++with ``Ctrl-d``.
+ 
+-B4 fetches the fully-applied series out of the worktree, removes the
++B4 then fetches the fully-applied series out of the worktree, removes the
+ worktree, and finishes exactly as a clean ``b4 shazam`` would: with
+ ``-M`` it merges the series into your branch, while with ``-H`` (as in the
+ example above) it leaves the series in ``FETCH_HEAD`` for you to merge or
+ check out. If a ``-M`` merge itself conflicts, resolve it the normal way
+ (git leaves the conflicted merge in your tree) and commit.
+ 
+-If you decide you don't want to proceed, run::
+-
+-    b4 shazam --abort
+-
+-This removes the resolution worktree (discarding the in-progress ``git
+-am``), backs out a half-finished merge, and clears the saved state,
+-leaving your branch as it was before.
++If you decide you don't want to proceed, run ``git am --abort`` in the
++sub-shell (or simply leave without finishing the ``git am``) and press
++``Ctrl-d``. B4 sees that nothing was applied, removes the worktree, and
++leaves your branch exactly as it was before.
 diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index be41da1..7a695ea 100644
+index 7a695ea..d9e3bff 100644
 --- a/src/b4/__init__.py
 +++ b/src/b4/__init__.py
-@@ -5737,20 +5737,41 @@ def _fetch_and_drop_am_worktree(
-     tear the worktree down. The fetch is anchored to *dest* via ``rundir`` so
-     FETCH_HEAD lands in the worktree the caller merges in (see
-     git_fetch_am_into_repo). When *origin* is given, rewrite FETCH_HEAD so the
--    merge message names the series origin instead of the worktree path. Returns
--    False (after still removing the worktree) if the fetch failed.
-+    merge message names the series origin instead of the worktree path. On fetch
-+    failure the worktree is left in place (so the resolved git-am can be retried)
-+    and False is returned.
-     """
-     ecode, out = git_run_command(dest, ['fetch', gwt], logstderr=True, rundir=dest)
--    if ecode == 0 and origin:
--        _rewrite_fetch_head_origin(dest, gwt, origin)
--    git_run_command(dest, ['worktree', 'remove', '--force', gwt])
-     if ecode > 0:
-+        # Leave the worktree in place so the resolved git-am can be retried.
-         logger.critical('Unable to fetch from the worktree')
-         logger.critical(out.strip())
-         return False
-+    if origin:
-+        _rewrite_fetch_head_origin(dest, gwt, origin)
-+    git_run_command(dest, ['worktree', 'remove', '--force', gwt])
+@@ -80,9 +80,10 @@ PW_REST_API_VERSION = '1.2'
+ 
+ 
+ class AmConflictError(RuntimeError):
+-    def __init__(self, worktree_path: str, output: str):
++    def __init__(self, worktree_path: str, output: str, base_sha: str = ''):
+         self.worktree_path = worktree_path
+         self.output = output
++        self.base_sha = base_sha
+         super().__init__(output)
+ 
+ 
+@@ -5753,6 +5754,75 @@ def _fetch_and_drop_am_worktree(
      return True
  
  
-+def _replay_am_on_full_worktree(
-+    gwt: str, ambytes: bytes, amargs: List[str]
-+) -> Tuple[int, str]:
-+    """Replay a sparse-blocked ``git am`` on a full (non-sparse) checkout.
++def resolve_am_conflict_in_shell(
++    topdir: str,
++    cex: 'AmConflictError',
++    *,
++    origin: Optional[str] = None,
++) -> bool:
++    """Drop the user into a subshell to finish a conflicted ``git am`` inline.
 +
-+    git_fetch_am_into_repo applies into a sparse worktree (only root-level files
-+    materialized). git's 3-way merge will not write ``skip-worktree`` paths, so a
-+    subdirectory file makes the sparse ``git am`` stop even when the 3-way is
-+    clean -- and a real conflict there is recorded with an empty index (no markers
-+    to resolve). Abort the partial am, drop the sparse restriction so every path
-+    is present, and replay. Returns the replay's (exit code, output): non-zero is
-+    a genuine conflict the user resolves; zero means only sparseness had blocked
-+    it and the series actually applies cleanly.
++    Shared by ``b4 shazam --resolve`` and the review TUI: the throwaway worktree
++    *cex.worktree_path* already holds the parked, full-checkout ``git am`` (rebuilt
++    by git_fetch_am_into_repo on conflict). Suspend into a shell there so the user
++    drives the am to completion natively, then act on the outcome:
++
++    - finished (``git am --continue``): fetch the result into *topdir*'s
++      FETCH_HEAD, drop the worktree, return True.
++    - aborted (``git am --abort``) or left unfinished: drop the worktree, return
++      False.
++
++    b4 stays the parent for the whole call (blocking subshell, no exec); the
++    caller must not exit or execvp until this returns -- and only then, once the
++    worktree is gone, hand off to git-merge.
++
++    The am's starting commit is pinned on *cex* (``cex.base_sha``) when the
++    conflict is raised; an am that ends back there (everything aborted or skipped)
++    counts as "nothing applied" and returns False rather than merging a no-op that
++    would silently drop the series. *origin* annotates FETCH_HEAD with the series
++    origin instead of the worktree path (see _fetch_and_drop_am_worktree).
 +    """
-+    git_run_command(gwt, ['am', '--abort'], logstderr=True, rundir=gwt)
-+    git_run_command(gwt, ['sparse-checkout', 'disable'], logstderr=True, rundir=gwt)
-+    return git_run_command(gwt, amargs, stdin=ambytes, logstderr=True, rundir=gwt)
++    gwt = cex.worktree_path
++    logger.critical('---')
++    logger.critical(cex.output)
++    logger.critical('---')
++    logger.critical('Patch series did not apply cleanly.')
++
++    _suspend_to_shell(
++        hint='b4 conflict',
++        cwd=gwt,
++        guidance=[
++            'You are now in a shell in the conflict worktree.',
++            'Resolve the conflict, then run "git am --continue"'
++            ' (or "git am --skip" to drop a patch).',
++            'Run "git am --abort" to give up on the whole series.',
++            'When done, Ctrl-d returns to b4.',
++        ],
++    )
++
++    # The am must be finished before we can fetch and merge the series.
++    if _worktree_rebase_apply_dir(gwt):
++        logger.warning('git-am is still in progress; conflict resolution incomplete.')
++        git_run_command(topdir, ['worktree', 'remove', '--force', gwt])
++        return False
++
++    # The am is finished -- but did it apply anything? If the user ran
++    # "git am --abort" (or "--skip"ped every patch) the worktree is back at the
++    # am's starting point (cex.base_sha, pinned when the conflict was raised);
++    # fetching+merging that is a no-op that silently drops the whole series.
++    _e1, wt_head_after = git_run_command(gwt, ['rev-parse', 'HEAD'], rundir=gwt)
++    wt_head_after = wt_head_after.strip()
++    if not wt_head_after or wt_head_after == cex.base_sha:
++        logger.warning('No patches are applied; conflict resolution aborted.')
++        git_run_command(topdir, ['worktree', 'remove', '--force', gwt])
++        return False
++
++    # am completed: fetch the fully-applied series into FETCH_HEAD and drop the
++    # worktree so the caller can merge it exactly like a clean apply would.
++    logger.info('Conflict resolved, fetching result...')
++    return _fetch_and_drop_am_worktree(topdir, gwt, origin=origin)
 +
 +
- def git_fetch_am_into_repo(
-     gitdir: Optional[str],
-     ambytes: bytes,
-@@ -5758,6 +5779,7 @@ def git_fetch_am_into_repo(
-     origin: Optional[str] = None,
-     check_only: bool = False,
-     am_flags: Optional[List[str]] = None,
-+    resolve: bool = False,
- ) -> None:
-     if gitdir is None:
-         gitdir = os.getcwd()
-@@ -5803,8 +5825,18 @@ def git_fetch_am_into_repo(
-             gwt, amargs, stdin=ambytes, logstderr=True, rundir=gwt
-         )
-         if ecode > 0:
--            cleanup = False
--            raise AmConflictError(gwt, out.strip())
-+            if resolve:
-+                # The sparse worktree can't write skip-worktree paths, so git-am
-+                # stops on any subdirectory file -- a real conflict (recorded
-+                # with an empty index, no markers) or even a clean 3-way. Replay
-+                # on a full worktree to tell them apart.
-+                ecode, out = _replay_am_on_full_worktree(gwt, ambytes, amargs)
-+            if ecode > 0:
-+                # Genuine conflict: park the am for the user to resolve.
-+                cleanup = False
-+                raise AmConflictError(gwt, out.strip())
-+            # else: only sparseness blocked it; the series applied cleanly --
-+            # fall through to the normal fetch-into-FETCH_HEAD path.
+ def _replay_am_on_full_worktree(
+     gwt: str, ambytes: bytes, amargs: List[str]
+ ) -> Tuple[int, str]:
+@@ -5801,6 +5871,15 @@ def git_fetch_am_into_repo(
+     if ecode > 0:
+         raise RuntimeError('Failed to create worktree: %s' % out.strip())
+ 
++    # Pin the commit the worktree (hence the am) starts on, while HEAD still
++    # points at it. A symbolic base like 'HEAD' re-resolved later would follow
++    # the worktree's own HEAD as git-am advances it past base.
++    ecode, base_sha = git_run_command(gwt, ['rev-parse', 'HEAD'], rundir=gwt)
++    base_sha = base_sha.strip()
++    if ecode > 0 or not base_sha:
++        git_run_command(topdir, ['worktree', 'remove', '--force', gwt])
++        raise RuntimeError('Unable to determine worktree base commit')
++
+     cleanup = True
+     try:
+         logger.info('Magic: Preparing a sparse worktree')
+@@ -5834,7 +5913,7 @@ def git_fetch_am_into_repo(
+             if ecode > 0:
+                 # Genuine conflict: park the am for the user to resolve.
+                 cleanup = False
+-                raise AmConflictError(gwt, out.strip())
++                raise AmConflictError(gwt, out.strip(), base_sha)
+             # else: only sparseness blocked it; the series applied cleanly --
+             # fall through to the normal fetch-into-FETCH_HEAD path.
          if check_only:
-             return
-         logger.info('---')
+@@ -5867,6 +5946,68 @@ def git_fetch_am_into_repo(
+         _rewrite_fetch_head_origin(gitdir, gwt, origin)
+ 
+ 
++def _suspend_to_shell(
++    hint: str = 'b4',
++    cwd: Optional[str] = None,
++    guidance: Optional[List[str]] = None,
++) -> None:
++    """Spawn an interactive sub-shell with a PS1 hint.
++
++    For bash and zsh, a temporary rc file is used so the user's normal
++    configuration is loaded first and then the prompt is prefixed with
++    a short marker.  For other shells the B4_REVIEW environment variable
++    is set so the user can incorporate it into their own prompt.
++
++    *guidance* overrides the default banner lines (the review-oriented "do not
++    rewrite commits" advice) with caller-specific instructions -- e.g. the
++    git-am conflict flow, where finishing the am does add a commit.
++    """
++    logger.info('---')
++    if guidance is None:
++        logger.info(
++            'You are now in shell mode. You can execute git commands or run checks.'
++        )
++        logger.info('Cosmetic commit edits (reword subjects, fix trailers) are fine;')
++        logger.info('b4 will reconcile tracking data when you return.')
++        logger.info('Do NOT add, remove, squash, or reorder commits.')
++        logger.info('When done, Ctrl-d to return to review UI.')
++    else:
++        for line in guidance:
++            logger.info(line)
++    logger.info('---')
++
++    shell = os.environ.get('SHELL', '/bin/sh')
++    shellname = os.path.basename(shell)
++    env = os.environ.copy()
++    env['B4_REVIEW'] = hint
++
++    if shellname == 'bash':
++        bashrc = os.path.expanduser('~/.bashrc')
++        source = f'[ -f "{bashrc}" ] && . "{bashrc}"\n'
++        source += f'PS1="({hint}) $PS1"\n'
++        with tempfile.NamedTemporaryFile(
++            mode='w', prefix='b4-shell-', suffix='.sh', delete=False
++        ) as rcf:
++            rcf.write(source)
++            rcfile = rcf.name
++        try:
++            subprocess.run([shell, '--rcfile', rcfile], env=env, cwd=cwd)
++        finally:
++            os.unlink(rcfile)
++    elif shellname == 'zsh':
++        real_zdotdir = os.environ.get('ZDOTDIR', os.path.expanduser('~'))
++        with tempfile.TemporaryDirectory(prefix='b4-shell-') as tmpdir:
++            zshrc = os.path.join(tmpdir, '.zshrc')
++            with open(zshrc, 'w') as f:
++                f.write(f'ZDOTDIR="{real_zdotdir}"\n')
++                f.write('[ -f "$ZDOTDIR/.zshrc" ] && . "$ZDOTDIR/.zshrc"\n')
++                f.write(f'PS1="({hint}) $PS1"\n')
++            env['ZDOTDIR'] = tmpdir
++            subprocess.run([shell], env=env, cwd=cwd)
++    else:
++        subprocess.run([shell], env=env, cwd=cwd)
++
++
+ def edit_in_editor(bdata: bytes, filehint: str = 'COMMIT_EDITMSG') -> bytes:
+     # To avoid losing the cover letter, ensure that we are still on the same
+     # branch as when the cover-letter was originally opened.
+diff --git a/src/b4/command.py b/src/b4/command.py
+index 19a34d7..3c3dd73 100644
+--- a/src/b4/command.py
++++ b/src/b4/command.py
+@@ -491,20 +491,6 @@ def setup_parser() -> argparse.ArgumentParser:
+         default=False,
+         help='(use with -H or -M) Enable conflict resolution if patches fail to apply',
+     )
+-    sp_sh.add_argument(
+-        '--continue',
+-        dest='shazam_continue',
+-        action='store_true',
+-        default=False,
+-        help='Continue after resolving merge conflicts from --resolve',
+-    )
+-    sp_sh.add_argument(
+-        '--abort',
+-        dest='shazam_abort',
+-        action='store_true',
+-        default=False,
+-        help='Abort a conflicted shazam and clean up',
+-    )
+     sp_sh.set_defaults(func=cmd_shazam)
+ 
+     # b4 review
 diff --git a/src/b4/mbox.py b/src/b4/mbox.py
-index 97ef51f..374328a 100644
+index 7852c1a..a2646ee 100644
 --- a/src/b4/mbox.py
 +++ b/src/b4/mbox.py
-@@ -488,6 +488,18 @@ def make_am(msgs: List[EmailMessage], cmdargs: argparse.Namespace, msgid: str) -
+@@ -488,18 +488,6 @@ def make_am(msgs: List[EmailMessage], cmdargs: argparse.Namespace, msgid: str) -
              sp.whitespace_split = True
              am_flags.extend(list(sp))
  
-+        # A parked --resolve owns the shared resolution worktree; a fresh shazam
-+        # would force-remove it (git_fetch_am_into_repo) and discard the user's
-+        # in-progress conflict edits. Refuse until they --continue or --abort.
-+        common_dir = b4.git_get_common_dir(topdir)
-+        if common_dir and os.path.exists(
-+            os.path.join(common_dir, 'b4-shazam-state.json')
-+        ):
-+            logger.critical('A shazam conflict resolution is already in progress.')
-+            logger.critical('Finish it with:  b4 shazam --continue')
-+            logger.critical('Or discard it:   b4 shazam --abort')
-+            sys.exit(1)
-+
+-        # A parked --resolve owns the shared resolution worktree; a fresh shazam
+-        # would force-remove it (git_fetch_am_into_repo) and discard the user's
+-        # in-progress conflict edits. Refuse until they --continue or --abort.
+-        common_dir = b4.git_get_common_dir(topdir)
+-        if common_dir and os.path.exists(
+-            os.path.join(common_dir, 'b4-shazam-state.json')
+-        ):
+-            logger.critical('A shazam conflict resolution is already in progress.')
+-            logger.critical('Finish it with:  b4 shazam --continue')
+-            logger.critical('Or discard it:   b4 shazam --abort')
+-            sys.exit(1)
+-
          try:
              if cmdargs.mergebase:
                  logger.info(' Base: %s', base_commit)
-@@ -499,6 +511,7 @@ def make_am(msgs: List[EmailMessage], cmdargs: argparse.Namespace, msgid: str) -
-                 at_base=base_commit,
-                 origin=linkurl,
-                 am_flags=am_flags,
-+                resolve=cmdargs.shazam_resolve,
-             )
-         except b4.AmConflictError as cex:
-             gwt = cex.worktree_path
-@@ -520,6 +533,7 @@ def make_am(msgs: List[EmailMessage], cmdargs: argparse.Namespace, msgid: str) -
+@@ -525,23 +513,24 @@ def make_am(msgs: List[EmailMessage], cmdargs: argparse.Namespace, msgid: str) -
+                 logger.critical('Use --resolve to enable conflict resolution')
+                 sys.exit(1)
  
-             state = {
-                 'worktree': gwt,
-+                'base': base_commit,
-                 'origin': linkurl,
-                 'merge_template_values': tptvals,
-                 'merge_template': merge_template,
-@@ -1058,9 +1072,8 @@ def _begin_shazam_resolve(
-     logger.critical('---')
-     logger.critical('Patch series did not apply cleanly.')
+-            common_dir = b4.git_get_common_dir(topdir)
+-            if not common_dir:
+-                logger.critical('Unable to determine git common dir')
++            # --resolve into a dirty tree can't finish: the user would resolve the
++            # whole series in the subshell only for the final git-merge to refuse.
++            # Fail fast before any of that resolution work is done.
++            status_lines = b4.git_get_repo_status(topdir)
++            if status_lines:
++                logger.critical('You have uncommitted changes in your working tree.')
++                logger.critical('Please commit or stash them before resolving.')
+                 b4.git_run_command(topdir, ['worktree', 'remove', '--force', gwt])
+                 sys.exit(1)
  
--    # Drop sparse-checkout so the user can see and edit every conflicted file.
--    b4.git_run_command(gwt, ['sparse-checkout', 'disable'], logstderr=True, rundir=gwt)
--
-+    # git_fetch_am_into_repo already rebuilt a full (non-sparse) worktree on the
-+    # conflict, so every conflicted file is present for the user to edit.
-     state_file = os.path.join(common_dir, 'b4-shazam-state.json')
-     with open(state_file, 'w') as sfh:
-         json.dump(state, sfh, indent=2)
-@@ -1090,8 +1103,17 @@ def _load_shazam_state(
-     state_file = os.path.join(common_dir, 'b4-shazam-state.json')
-     state = None
-     if os.path.exists(state_file):
--        with open(state_file, 'r') as fh:
--            state = json.load(fh)
-+        try:
-+            with open(state_file, 'r') as fh:
-+                state = json.load(fh)
-+        except (json.JSONDecodeError, OSError) as ex:
-+            # A truncated/corrupt state file (e.g. an interrupted write) must not
-+            # crash the recovery command: --abort still cleans it up (state=None
-+            # falls back to the default worktree path), --continue can't proceed.
-+            if require_state:
-+                logger.critical('Shazam state file is corrupt: %s', ex)
-+                logger.critical('Run: b4 shazam --abort')
+-            state = {
+-                'worktree': gwt,
+-                'base': base_commit,
+-                'origin': linkurl,
+-                'merge_template_values': tptvals,
+-                'merge_template': merge_template,
+-                'merge_flags': mergeflags,
+-                'no_interactive': cmdargs.no_interactive,
+-                'do_merge': cmdargs.merge,
+-            }
+-            _begin_shazam_resolve(cex, common_dir, state)
++            # --resolve: drop into a subshell in the worktree and finish the
++            # git-am inline. On success FETCH_HEAD holds the fully-applied series
++            # and the worktree is gone, so we fall through to the same merge the
++            # clean path runs. b4 stays the parent until then -- no exec/exit
++            # here -- so _run_shazam_merge can only execvp git-merge at the very
++            # end, once the worktree has already been dropped.
++            if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
 +                sys.exit(1)
-     elif require_state:
-         logger.critical('No shazam state found. Nothing to continue.')
-         sys.exit(1)
-@@ -1118,6 +1140,30 @@ def shazam_continue(cmdargs: argparse.Namespace) -> None:
-         logger.critical('then run: b4 shazam --continue')
-         sys.exit(1)
+         except RuntimeError:
+             sys.exit(1)
  
-+    # git-am is finished -- but did it apply anything? If the user ran
-+    # "git am --abort" (or "--skip"ped every patch) the worktree is back at its
-+    # base; fetching+merging that is a no-op ("Already up to date") that would
-+    # silently drop the whole series. Refuse instead of reporting false success.
-+    base = state.get('base')
-+    if base:
-+        _e1, head = b4.git_run_command(gwt, ['rev-parse', 'HEAD'], rundir=gwt)
-+        _e2, base_sha = b4.git_run_command(
-+            gwt, ['rev-parse', '%s^{commit}' % base], rundir=gwt
-+        )
-+        if head.strip() and head.strip() == base_sha.strip():
-+            logger.critical('No patches are applied in the resolution worktree.')
-+            logger.critical('(git-am was aborted, or every patch was skipped.)')
-+            logger.critical('Nothing to merge -- run: b4 shazam --abort')
-+            sys.exit(1)
-+
-+    # A dirty working tree can make the final merge refuse or fail. Only the
-+    # merge cares (do_merge), so check up front and keep the saved state intact
-+    # so --continue stays re-runnable once the tree is clean.
-+    if state.get('do_merge', True) and b4.git_get_repo_status(topdir):
-+        logger.critical('You have uncommitted changes in your working tree.')
-+        logger.critical('Commit or stash them, then run: b4 shazam --continue')
-+        sys.exit(1)
-+
-     # git-am completed: fetch the fully-applied series into FETCH_HEAD, drop the
-     # worktree, and merge it exactly like a clean shazam would.
-     logger.info('Fetching resolved series into FETCH_HEAD')
+@@ -1002,8 +991,8 @@ def _run_shazam_merge(
+ ) -> None:
+     """Merge the series sitting in FETCH_HEAD into the current branch.
+ 
+-    Shared by the clean ``b4 shazam`` path and ``b4 shazam --continue``: render
+-    the cover letter as the merge message and either run ``git merge`` (handing
++    Shared by the clean ``b4 shazam`` path and the ``--resolve`` conflict path:
++    render the cover letter as the merge message and either run ``git merge`` (handing
+     the terminal to git so it can open the editor and resolve any conflicts
+     natively) or just point the user at FETCH_HEAD.
+     """
+@@ -1056,185 +1045,9 @@ def _run_shazam_merge(
+     sys.exit(0)
+ 
+ 
+-def _begin_shazam_resolve(
+-    cex: b4.AmConflictError, common_dir: str, state: Dict[str, Any]
+-) -> None:
+-    """Hand a conflicted ``git am`` back to the user to finish in the worktree.
+-
+-    Rather than replaying the not-yet-applied patches with ``git apply``, keep
+-    the in-progress ``git am`` (already preserved by git_fetch_am_into_repo) so
+-    the user drives it to completion natively and nothing is silently dropped.
+-    The fully-applied series is merged once, by ``b4 shazam --continue``.
+-    """
+-    # TODO: switch --resolve to a subshell model like the review TUI's
+-    # _resolve_worktree_am_conflict -- suspend into a shell in the worktree
+-    # (blocking subprocess.run; b4 stays the parent) and finish inline when it
+-    # exits: fetch+merge on success, tear the worktree down on "git am --abort"
+-    # or an unfinished am. That drops the persisted b4-shazam-state.json and the
+-    # separate --continue/--abort commands, at the cost of the git-rebase-style
+-    # two-phase UX. Two constraints make it robust:
+-    #  - b4 must stay alive while the shell runs (no sys.exit/os.execvp until
+-    #    cleanup has run); _run_shazam_merge may only execvp git-merge at the
+-    #    very end, once the worktree is already dropped.
+-    #  - guard the worktree with try/finally (or atexit + a SIGINT/SIGTERM
+-    #    handler) so it is reclaimed even if b4 is killed while the shell is up --
+-    #    a shell "trap ... EXIT" analogue. Keep it outcome-aware (finished vs
+-    #    aborted), never an unconditional remove, or a half-done resolution dies.
+-    gwt = cex.worktree_path
+-    logger.critical('---')
+-    logger.critical(cex.output)
+-    logger.critical('---')
+-    logger.critical('Patch series did not apply cleanly.')
+-
+-    # git_fetch_am_into_repo already rebuilt a full (non-sparse) worktree on the
+-    # conflict, so every conflicted file is present for the user to edit.
+-    state_file = os.path.join(common_dir, 'b4-shazam-state.json')
+-    with open(state_file, 'w') as sfh:
+-        json.dump(state, sfh, indent=2)
+-
+-    logger.critical('Resolve the conflict in the worktree and finish the git-am:')
+-    logger.critical('  cd %s', gwt)
+-    logger.critical('  git am --continue   (or "git am --skip" to drop a patch)')
+-    logger.critical('Once git-am is done, come back and run:')
+-    logger.critical('  b4 shazam --continue')
+-    logger.critical('To give up and clean everything up:')
+-    logger.critical('  b4 shazam --abort')
+-    sys.exit(1)
+-
+-
+-def _load_shazam_state(
+-    require_state: bool = True,
+-) -> Tuple[str, str, str, Optional[Dict[str, Any]]]:
+-    topdir = b4.git_get_toplevel()
+-    if not topdir:
+-        logger.critical('Could not figure out where your git dir is.')
+-        sys.exit(1)
+-    common_dir = b4.git_get_common_dir(topdir)
+-    if not common_dir:
+-        logger.critical('Unable to determine git common dir.')
+-        sys.exit(1)
+-
+-    state_file = os.path.join(common_dir, 'b4-shazam-state.json')
+-    state = None
+-    if os.path.exists(state_file):
+-        try:
+-            with open(state_file, 'r') as fh:
+-                state = json.load(fh)
+-        except (json.JSONDecodeError, OSError) as ex:
+-            # A truncated/corrupt state file (e.g. an interrupted write) must not
+-            # crash the recovery command: --abort still cleans it up (state=None
+-            # falls back to the default worktree path), --continue can't proceed.
+-            if require_state:
+-                logger.critical('Shazam state file is corrupt: %s', ex)
+-                logger.critical('Run: b4 shazam --abort')
+-                sys.exit(1)
+-    elif require_state:
+-        logger.critical('No shazam state found. Nothing to continue.')
+-        sys.exit(1)
+-
+-    return topdir, common_dir, state_file, state
+-
+-
+-def shazam_continue(cmdargs: argparse.Namespace) -> None:
+-    topdir, _common_dir, state_file, state = _load_shazam_state(require_state=True)
+-    assert state is not None
+-
+-    gwt = state.get('worktree')
+-    if not gwt or not os.path.isdir(gwt):
+-        logger.critical('Resolution worktree is gone. Run: b4 shazam --abort')
+-        sys.exit(1)
+-
+-    # The git-am has to be finished before we can fetch and merge the series.
+-    if b4._worktree_rebase_apply_dir(gwt):
+-        logger.critical('git-am is still in progress in the worktree:')
+-        logger.critical('  %s', gwt)
+-        logger.critical(
+-            'Finish it there with "git am --continue" (or "git am --skip"),'
+-        )
+-        logger.critical('then run: b4 shazam --continue')
+-        sys.exit(1)
+-
+-    # git-am is finished -- but did it apply anything? If the user ran
+-    # "git am --abort" (or "--skip"ped every patch) the worktree is back at its
+-    # base; fetching+merging that is a no-op ("Already up to date") that would
+-    # silently drop the whole series. Refuse instead of reporting false success.
+-    base = state.get('base')
+-    if base:
+-        _e1, head = b4.git_run_command(gwt, ['rev-parse', 'HEAD'], rundir=gwt)
+-        _e2, base_sha = b4.git_run_command(
+-            gwt, ['rev-parse', '%s^{commit}' % base], rundir=gwt
+-        )
+-        if head.strip() and head.strip() == base_sha.strip():
+-            logger.critical('No patches are applied in the resolution worktree.')
+-            logger.critical('(git-am was aborted, or every patch was skipped.)')
+-            logger.critical('Nothing to merge -- run: b4 shazam --abort')
+-            sys.exit(1)
+-
+-    # A dirty working tree can make the final merge refuse or fail. Only the
+-    # merge cares (do_merge), so check up front and keep the saved state intact
+-    # so --continue stays re-runnable once the tree is clean.
+-    if state.get('do_merge', True) and b4.git_get_repo_status(topdir):
+-        logger.critical('You have uncommitted changes in your working tree.')
+-        logger.critical('Commit or stash them, then run: b4 shazam --continue')
+-        sys.exit(1)
+-
+-    # git-am completed: fetch the fully-applied series into FETCH_HEAD, drop the
+-    # worktree, and merge it exactly like a clean shazam would.
+-    logger.info('Fetching resolved series into FETCH_HEAD')
+-    if not b4._fetch_and_drop_am_worktree(topdir, gwt, origin=state.get('origin')):
+-        sys.exit(1)
+-
+-    # Clean up state before merging -- an interactive merge hands off via execvp
+-    # and never returns here.
+-    if os.path.exists(state_file):
+-        os.unlink(state_file)
+-
+-    _run_shazam_merge(
+-        topdir,
+-        merge_template=state.get('merge_template', DEFAULT_MERGE_TEMPLATE),
+-        tptvals=state.get('merge_template_values', {}),
+-        merge_flags=str(state.get('merge_flags', '')),
+-        no_interactive=state.get('no_interactive', False),
+-        do_merge=state.get('do_merge', True),
+-    )
+-
+-
+-def shazam_abort(cmdargs: argparse.Namespace) -> None:
+-    topdir, common_dir, state_file, state = _load_shazam_state(require_state=False)
+-    found = False
+-
+-    # Back out the FETCH_HEAD merge if --continue started one and it conflicted.
+-    ecode, _out = b4.git_run_command(
+-        topdir, ['merge', '--abort'], logstderr=True, rundir=topdir
+-    )
+-    if ecode == 0:
+-        found = True
+-
+-    # Remove the resolution worktree, discarding its in-progress git-am.
+-    gwt = state.get('worktree') if state else None
+-    if not gwt:
+-        gwt = os.path.join(common_dir, 'b4-shazam-worktree')
+-    if os.path.exists(gwt):
+-        b4.git_run_command(topdir, ['worktree', 'remove', '--force', gwt])
+-        found = True
+-
+-    if os.path.exists(state_file):
+-        os.unlink(state_file)
+-        found = True
+-
+-    if found:
+-        logger.info('Shazam aborted and cleaned up.')
+-    else:
+-        logger.info('No shazam in progress.')
+-
+-
+ def main(cmdargs: argparse.Namespace) -> None:
+     # We force some settings
+     if cmdargs.subcmd == 'shazam':
+-        if getattr(cmdargs, 'shazam_continue', False):
+-            return shazam_continue(cmdargs)
+-        if getattr(cmdargs, 'shazam_abort', False):
+-            return shazam_abort(cmdargs)
+         cmdargs.checknewer = True
+         cmdargs.threeway = False
+         cmdargs.nopartialreroll = False
 diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index 9b3ad65..34f5ad5 100644
+index 34f5ad5..0c00917 100644
 --- a/src/b4/review_tui/_tracking_app.py
 +++ b/src/b4/review_tui/_tracking_app.py
-@@ -256,8 +256,9 @@ def _take_worktree(
- def _resolve_worktree_am_conflict(topdir: str, cex: 'b4.AmConflictError') -> bool:
-     """Handle an AmConflictError by dropping the user into a shell.
+@@ -253,56 +253,6 @@ def _take_worktree(
+             b4.git_run_command(topdir, ['worktree', 'remove', '--force', temp_wt])
  
--    Disables sparse checkout in the worktree, suspends to an interactive
--    shell for conflict resolution, then checks the outcome:
-+    Suspends to an interactive shell for conflict resolution (the worktree is
-+    already a full checkout -- git_fetch_am_into_repo rebuilds it on conflict),
-+    then checks the outcome:
  
-     - If the user completed ``git am --continue``, fetches the result
-       into FETCH_HEAD and removes the worktree.  Returns True.
-@@ -268,13 +269,6 @@ def _resolve_worktree_am_conflict(topdir: str, cex: 'b4.AmConflictError') -> boo
-     logger.critical(cex.output)
-     logger.critical('---')
-     logger.critical('Patch did not apply cleanly.')
--    # Disable sparse checkout so user can see and edit files
--    b4.git_run_command(
+-def _resolve_worktree_am_conflict(topdir: str, cex: 'b4.AmConflictError') -> bool:
+-    """Handle an AmConflictError by dropping the user into a shell.
+-
+-    Suspends to an interactive shell for conflict resolution (the worktree is
+-    already a full checkout -- git_fetch_am_into_repo rebuilds it on conflict),
+-    then checks the outcome:
+-
+-    - If the user completed ``git am --continue``, fetches the result
+-      into FETCH_HEAD and removes the worktree.  Returns True.
+-    - If the user aborted (``git am --abort``) or exited without
+-      finishing, cleans up the worktree and returns False.
+-    """
+-    logger.critical('---')
+-    logger.critical(cex.output)
+-    logger.critical('---')
+-    logger.critical('Patch did not apply cleanly.')
+-    # Save worktree HEAD before shell so we can detect abort
+-    _ecode, wt_head_before = b4.git_run_command(
 -        cex.worktree_path,
--        ['sparse-checkout', 'disable'],
+-        ['rev-parse', 'HEAD'],
 -        logstderr=True,
 -        rundir=cex.worktree_path,
 -    )
-     # Save worktree HEAD before shell so we can detect abort
-     _ecode, wt_head_before = b4.git_run_command(
-         cex.worktree_path,
-@@ -1871,6 +1865,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                     at_base=base_commit,
-                     origin=linkurl,
-                     am_flags=['-3'],
-+                    resolve=True,
-                 )
- 
-                 # Create the review branch
-@@ -2804,6 +2799,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                     at_base=base_commit,
-                     origin=t_series.get('link', ''),
-                     am_flags=['-3'],
-+                    resolve=True,
-                 )
+-    wt_head_before = wt_head_before.strip()
+-    logger.info('You can resolve the conflict in the worktree.')
+-    logger.info(
+-        'Use "git am --continue" after resolving, or "git am --abort" to give up.'
+-    )
+-    _suspend_to_shell(hint='b4 conflict', cwd=cex.worktree_path)
+-    # Check if am is still in progress (user exited without finishing)
+-    if b4._worktree_rebase_apply_dir(cex.worktree_path):
+-        logger.warning('Conflict resolution incomplete, aborting')
+-        b4.git_run_command(topdir, ['worktree', 'remove', '--force', cex.worktree_path])
+-        return False
+-    # Check if am was aborted (HEAD unchanged from before shell)
+-    _ecode, wt_head_after = b4.git_run_command(
+-        cex.worktree_path,
+-        ['rev-parse', 'HEAD'],
+-        logstderr=True,
+-        rundir=cex.worktree_path,
+-    )
+-    if wt_head_after.strip() == wt_head_before:
+-        logger.warning('Conflict resolution aborted')
+-        b4.git_run_command(topdir, ['worktree', 'remove', '--force', cex.worktree_path])
+-        return False
+-    # am completed -- fetch result into FETCH_HEAD and drop the worktree
+-    logger.info('Conflict resolved, fetching result...')
+-    return b4._fetch_and_drop_am_worktree(topdir, cex.worktree_path)
+-
+-
+ def _resolve_worktree_take_conflict(
+     wt: '_TakeWorktree',
+     op: str,
+@@ -1884,10 +1834,9 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 logger.info('Review branch created: %s', branch_name)
+                 checkout_success = True
              except b4.AmConflictError as cex:
-                 if not _resolve_worktree_am_conflict(merge_dir, cex):
-@@ -4309,6 +4305,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                     at_base=base_sha,
-                     origin=linkurl,
-                     am_flags=['-3'],
-+                    resolve=True,
-                 )
+-                if not _resolve_worktree_am_conflict(topdir, cex):
++                if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
+                     _wait_for_enter()
+                     return
+-                b4._rewrite_fetch_head_origin(topdir, cex.worktree_path, linkurl)
+                 # Create the review branch from resolved result
                  b4.review.create_review_branch(
                      topdir,
-diff --git a/src/tests/test_three_way_merge.py b/src/tests/test_three_way_merge.py
-index 090aa66..4db592e 100644
---- a/src/tests/test_three_way_merge.py
-+++ b/src/tests/test_three_way_merge.py
-@@ -526,6 +526,83 @@ def _build_multi_patch_conflict(gitdir: str) -> Tuple[bytes, str]:
-     return mbox.encode(), base
+@@ -2802,7 +2751,9 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                     resolve=True,
+                 )
+             except b4.AmConflictError as cex:
+-                if not _resolve_worktree_am_conflict(merge_dir, cex):
++                if not b4.resolve_am_conflict_in_shell(
++                    merge_dir, cex, origin=t_series.get('link', '')
++                ):
+                     _wait_for_enter()
+                     return
+             except RuntimeError:
+@@ -4321,14 +4272,13 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 )
+                 logger.info('Upgrade branch created: %s', upgrade_branch)
+             except b4.AmConflictError as cex:
+-                if not _resolve_worktree_am_conflict(topdir, cex):
++                if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
+                     # User aborted — clean up upgrade branch if it was
+                     # partially created before the conflict
+                     if b4.git_branch_exists(topdir, upgrade_branch):
+                         b4.git_run_command(topdir, ['branch', '-D', upgrade_branch])
+                     _wait_for_enter()
+                     return
+-                b4._rewrite_fetch_head_origin(topdir, cex.worktree_path, linkurl)
+                 b4.review.create_review_branch(
+                     topdir,
+                     upgrade_branch,
+diff --git a/src/b4/tui/_common.py b/src/b4/tui/_common.py
+index c3312a8..52f6fdd 100644
+--- a/src/b4/tui/_common.py
++++ b/src/b4/tui/_common.py
+@@ -8,9 +8,6 @@
+ __author__ = 'Konstantin Ryabitsev <konstantin@linuxfoundation.org>'
+ 
+ import email.utils
+-import os
+-import subprocess
+-import tempfile
+ import unicodedata
+ from collections import defaultdict
+ from typing import Any, Dict, List, Optional, Protocol
+@@ -23,6 +20,11 @@ from textual.worker import NoActiveWorker, get_current_worker
+ 
+ import b4
+ 
++# _suspend_to_shell now lives in b4 itself (textual-free, so the non-TUI shazam
++# conflict flow can reuse it). Re-export it so this stays the import home for the
++# TUI callers (and b4.review_tui._common's re-export of it).
++from b4 import _suspend_to_shell as _suspend_to_shell
++
+ logger = b4.logger
  
  
-+def _build_subdir_conflict(gitdir: str) -> bytes:
-+    """2-patch mbox whose conflicting patch touches a file in a SUBDIRECTORY.
-+
-+    The shazam worktree is a cone-mode sparse checkout (only root-level files
-+    materialized), and git's 3-way merge refuses to touch skip-worktree paths,
-+    so a conflict in a subdirectory file used to abort ``git am`` with a clean
-+    index (no markers) -- and ``git am --skip`` would silently drop the patch.
-+    With ``resolve=True``, git_fetch_am_into_repo rebuilds a full worktree and
-+    replays so the conflict is recorded. Patch 1 changes a root file cleanly;
-+    patch 2 changes ``drivers/foo.txt`` and conflicts with master.
-+    """
-+    # Seed a subdirectory file on master so it is part of the base tree.
-+    os.makedirs(os.path.join(gitdir, 'drivers'), exist_ok=True)
-+    with open(os.path.join(gitdir, 'drivers', 'foo.txt'), 'w') as fh:
-+        fh.write('1\n2\n3\n')
-+    b4.git_run_command(gitdir, ['add', 'drivers/foo.txt'])
-+    b4.git_run_command(gitdir, ['commit', '-m', 'Seed drivers/foo.txt'])
-+
-+    b4.git_run_command(gitdir, ['checkout', '-b', 'subdir-patch'])
-+    with open(os.path.join(gitdir, 'file2.txt'), 'a') as fh:
-+        fh.write('Added by patch 1.\n')
-+    b4.git_run_command(gitdir, ['add', 'file2.txt'])
-+    b4.git_run_command(gitdir, ['commit', '-m', 'Patch 1: modify file2'])
-+    with open(os.path.join(gitdir, 'drivers', 'foo.txt'), 'w') as fh:
-+        fh.write('1\nPATCH\n3\n')
-+    b4.git_run_command(gitdir, ['add', 'drivers/foo.txt'])
-+    b4.git_run_command(gitdir, ['commit', '-m', 'Patch 2: change drivers/foo'])
-+
-+    ecode, mbox = b4.git_run_command(gitdir, ['format-patch', '-2', '--stdout'])
-+    assert ecode == 0
-+
-+    b4.git_run_command(gitdir, ['checkout', 'master'])
-+    b4.git_run_command(gitdir, ['branch', '-D', 'subdir-patch'])
-+    with open(os.path.join(gitdir, 'drivers', 'foo.txt'), 'w') as fh:
-+        fh.write('1\nMASTER\n3\n')
-+    b4.git_run_command(gitdir, ['add', 'drivers/foo.txt'])
-+    b4.git_run_command(gitdir, ['commit', '-m', 'Master: change drivers/foo'])
-+    return mbox.encode()
-+
-+
-+def _build_subdir_clean_3way(gitdir: str) -> bytes:
-+    """1-patch mbox: a subdir change that 3-way merges CLEANLY against master.
-+
-+    The patch edits ``drivers/foo.txt`` near (but clear of) a line master also
-+    changed, so the direct ``git apply`` misses on context and falls back to a
-+    3-way merge that is clean. In the sparse shazam worktree git-am still stops
-+    (it can't write the skip-worktree subdir file), but the full replay applies
-+    cleanly -- so ``git_fetch_am_into_repo(resolve=True)`` must NOT report a
-+    conflict.
-+    """
-+    lines = ''.join('%d\n' % n for n in range(1, 21))
-+    os.makedirs(os.path.join(gitdir, 'drivers'), exist_ok=True)
-+    with open(os.path.join(gitdir, 'drivers', 'foo.txt'), 'w') as fh:
-+        fh.write(lines)
-+    b4.git_run_command(gitdir, ['add', 'drivers/foo.txt'])
-+    b4.git_run_command(gitdir, ['commit', '-m', 'Seed drivers/foo.txt'])
-+
-+    b4.git_run_command(gitdir, ['checkout', '-b', 'clean3'])
-+    with open(os.path.join(gitdir, 'drivers', 'foo.txt'), 'w') as fh:
-+        fh.write(lines.replace('10\n', 'TEN-from-patch\n'))
-+    b4.git_run_command(gitdir, ['add', 'drivers/foo.txt'])
-+    b4.git_run_command(gitdir, ['commit', '-m', 'Patch: drivers/foo line 10'])
-+
-+    ecode, mbox = b4.git_run_command(gitdir, ['format-patch', '-1', '--stdout'])
-+    assert ecode == 0
-+
-+    b4.git_run_command(gitdir, ['checkout', 'master'])
-+    b4.git_run_command(gitdir, ['branch', '-D', 'clean3'])
-+    # Line 13 is inside the patch's context window for line 10 (forces 3-way)
-+    # but two lines clear of it, so the merge is clean rather than a conflict.
-+    with open(os.path.join(gitdir, 'drivers', 'foo.txt'), 'w') as fh:
-+        fh.write(lines.replace('13\n', 'THIRTEEN-master\n'))
-+    b4.git_run_command(gitdir, ['add', 'drivers/foo.txt'])
-+    b4.git_run_command(gitdir, ['commit', '-m', 'Master: drivers/foo line 13'])
-+    return mbox.encode()
-+
-+
- def _make_shazam_state(common_dir: str, state: Optional[Dict[str, Any]] = None) -> str:
-     """Write a shazam state file; return its path."""
-     state_file = os.path.join(common_dir, 'b4-shazam-state.json')
-@@ -575,10 +652,14 @@ def _trigger_am_conflict(
-     _begin_shazam_resolve).
-     """
-     ambytes, _base = _build_multi_patch_conflict(gitdir)
-+    _ecode, head = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
-     with pytest.raises(b4.AmConflictError) as exc_info:
--        b4.git_fetch_am_into_repo(gitdir, ambytes, at_base='HEAD', am_flags=['-3'])
-+        b4.git_fetch_am_into_repo(
-+            gitdir, ambytes, at_base='HEAD', am_flags=['-3'], resolve=True
-+        )
-     state = {
-         'worktree': exc_info.value.worktree_path,
-+        'base': head.strip(),
-         'origin': 'https://example.com',
-         'merge_template_values': {},
-         'merge_template': 'Merge test series\n\nResolved conflict.\n',
-@@ -682,6 +763,38 @@ class TestShazamResolveContinue:
-         b4.git_run_command(gitdir, ['worktree', 'remove', '--force', wt])
-         os.unlink(os.path.join(common_dir, 'b4-shazam-state.json'))
+@@ -206,56 +208,6 @@ def _wait_for_enter() -> None:
+         pass
  
-+    def test_continue_refuses_after_am_abort(self, gitdir: str) -> None:
-+        # Regression: if the user runs "git am --abort" instead of finishing,
-+        # the worktree is back at base with no rebase-apply. --continue must
-+        # refuse rather than merge the bare base -- a no-op ("Already up to
-+        # date") that would silently drop the whole series and report success.
-+        common_dir = b4.git_get_common_dir(gitdir)
-+        assert common_dir is not None
-+        cex, state = _trigger_am_conflict(gitdir)
-+        wt = cex.worktree_path
-+
-+        with pytest.raises(SystemExit):
-+            b4.mbox._begin_shazam_resolve(cex, common_dir, state)
-+
-+        # User gives up with "git am --abort" in the worktree.
-+        ecode, _out = b4.git_run_command(wt, ['am', '--abort'], rundir=wt)
-+        assert ecode == 0
-+        assert b4._worktree_rebase_apply_dir(wt) is None
-+
-+        # --continue refuses (nothing applied), keeping state + worktree, and
-+        # makes NO commit on the branch.
-+        _e, head_before = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
-+        with pytest.raises(SystemExit) as exit_info:
-+            b4.mbox.shazam_continue(argparse.Namespace())
-+        assert exit_info.value.code == 1
-+        assert os.path.exists(os.path.join(common_dir, 'b4-shazam-state.json'))
-+        assert os.path.isdir(wt)
-+        _e, head_after = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
-+        assert head_after.strip() == head_before.strip()
-+
-+        b4.git_run_command(gitdir, ['worktree', 'remove', '--force', wt])
-+        os.unlink(os.path.join(common_dir, 'b4-shazam-state.json'))
-+
  
- class TestShazamAbort:
-     """Tests for shazam_abort cleanup."""
-@@ -704,3 +817,152 @@ class TestShazamAbort:
-     def test_noop_when_nothing_to_clean(self, gitdir: str) -> None:
-         # Should not raise.
-         b4.mbox.shazam_abort(argparse.Namespace())
-+
-+
-+class TestSubdirConflictResolve:
-+    """Regression: a conflict in a subdirectory file must be resolvable.
-+
-+    The sparse shazam worktree can't record conflicts in subdirectory files,
-+    so ``git am`` aborted with a clean index and the patch was silently
-+    dropped. ``resolve=True`` must rebuild a full worktree so the conflict is
-+    materialized and every patch survives.
-+    """
-+
-+    def test_subdir_conflict_records_markers_and_keeps_patch(self, gitdir: str) -> None:
-+        common_dir = b4.git_get_common_dir(gitdir)
-+        assert common_dir is not None
-+        ambytes = _build_subdir_conflict(gitdir)
-+
-+        with pytest.raises(b4.AmConflictError) as exc_info:
-+            b4.git_fetch_am_into_repo(
-+                gitdir, ambytes, at_base='HEAD', am_flags=['-3'], resolve=True
-+            )
-+        wt = exc_info.value.worktree_path
-+
-+        # The subdir file is materialized and recorded as an unmerged conflict
-+        # (without the fix it would be absent / clean and the patch lost).
-+        assert os.path.exists(os.path.join(wt, 'drivers', 'foo.txt'))
-+        _ecode, unmerged = b4.git_run_command(
-+            wt, ['diff', '--name-only', '--diff-filter=U'], rundir=wt
-+        )
-+        assert 'drivers/foo.txt' in unmerged
-+
-+        state = {
-+            'worktree': wt,
-+            'origin': 'https://example.com',
-+            'merge_template_values': {},
-+            'merge_template': 'Merge series\n\nResolved.\n',
-+            'merge_flags': '--signoff',
-+            'no_interactive': True,
-+            'do_merge': True,
-+        }
-+        with pytest.raises(SystemExit):
-+            b4.mbox._begin_shazam_resolve(exc_info.value, common_dir, state)
-+
-+        # User resolves the subdir conflict natively and finishes the git-am.
-+        with open(os.path.join(wt, 'drivers', 'foo.txt'), 'w') as fh:
-+            fh.write('1\nRESOLVED\n3\n')
-+        b4.git_run_command(wt, ['add', 'drivers/foo.txt'], rundir=wt)
-+        ecode, _out = b4.git_run_command(wt, ['am', '--continue'], rundir=wt)
-+        assert ecode == 0
-+
-+        with pytest.raises(SystemExit) as exit_info:
-+            b4.mbox.shazam_continue(argparse.Namespace())
-+        assert exit_info.value.code == 0
-+
-+        # Both patches survived: patch 1 (file2) and patch 2 (drivers/foo).
-+        ecode, file2 = b4.git_run_command(gitdir, ['show', 'HEAD:file2.txt'])
-+        assert ecode == 0 and 'Added by patch 1.' in file2
-+        ecode, foo = b4.git_run_command(gitdir, ['show', 'HEAD:drivers/foo.txt'])
-+        assert ecode == 0 and 'RESOLVED' in foo
-+
-+        assert not os.path.exists(os.path.join(common_dir, 'b4-shazam-state.json'))
-+        assert not os.path.exists(wt)
-+
-+
-+class TestSubdirCleanThreeWay:
-+    """Regression: a clean 3-way in a subdir file must not be a phantom conflict.
-+
-+    The sparse worktree can't write skip-worktree paths, so git-am stops on the
-+    subdir file even though the 3-way is clean. The full replay applies cleanly,
-+    so ``resolve=True`` must complete normally -- not raise AmConflictError and
-+    send the user off to resolve a conflict that does not exist.
-+    """
-+
-+    def test_clean_subdir_3way_does_not_raise(self, gitdir: str) -> None:
-+        common_dir = b4.git_get_common_dir(gitdir)
-+        assert common_dir is not None
-+        ambytes = _build_subdir_clean_3way(gitdir)
-+
-+        # Must NOT raise: only sparseness blocked the sparse am; the replay is clean.
-+        b4.git_fetch_am_into_repo(
-+            gitdir, ambytes, at_base='HEAD', am_flags=['-3'], resolve=True
-+        )
-+
-+        # The series landed in FETCH_HEAD with BOTH edits 3-way merged.
-+        ecode, foo = b4.git_run_command(gitdir, ['show', 'FETCH_HEAD:drivers/foo.txt'])
-+        assert ecode == 0
-+        assert 'TEN-from-patch' in foo and 'THIRTEEN-master' in foo
-+
-+        # Worktree torn down, nothing parked for resolution.
-+        assert not os.path.exists(os.path.join(common_dir, 'b4-shazam-worktree'))
-+        assert not os.path.exists(os.path.join(common_dir, 'b4-shazam-state.json'))
-+
-+
-+class TestCorruptShazamState:
-+    """A corrupt state file must not crash the recovery command."""
-+
-+    def test_abort_survives_corrupt_state(self, gitdir: str) -> None:
-+        common_dir = b4.git_get_common_dir(gitdir)
-+        assert common_dir is not None
-+        state_file = os.path.join(common_dir, 'b4-shazam-state.json')
-+        with open(state_file, 'w') as fh:
-+            fh.write('{ this is not valid json')
-+        # Cleans up the corrupt file instead of raising JSONDecodeError.
-+        b4.mbox.shazam_abort(argparse.Namespace())
-+        assert not os.path.exists(state_file)
-+
-+    def test_continue_refuses_corrupt_state(self, gitdir: str) -> None:
-+        common_dir = b4.git_get_common_dir(gitdir)
-+        assert common_dir is not None
-+        state_file = os.path.join(common_dir, 'b4-shazam-state.json')
-+        with open(state_file, 'w') as fh:
-+            fh.write('{ this is not valid json')
-+        with pytest.raises(SystemExit) as exit_info:
-+            b4.mbox.shazam_continue(argparse.Namespace())
-+        assert exit_info.value.code == 1
-+        os.unlink(state_file)
-+
-+
-+class TestContinueDirtyTree:
-+    """shazam --continue refuses (keeping state) when the main tree is dirty."""
-+
-+    def test_continue_refuses_dirty_tree(self, gitdir: str) -> None:
-+        common_dir = b4.git_get_common_dir(gitdir)
-+        assert common_dir is not None
-+        cex, state = _trigger_am_conflict(gitdir)
-+        wt = cex.worktree_path
-+        with pytest.raises(SystemExit):
-+            b4.mbox._begin_shazam_resolve(cex, common_dir, state)
-+
-+        # Finish the git-am in the worktree.
-+        with open(os.path.join(wt, 'file1.txt'), 'w') as fh:
-+            fh.write('Resolved file1.\n')
-+        b4.git_run_command(wt, ['add', 'file1.txt'], rundir=wt)
-+        ecode, _out = b4.git_run_command(wt, ['am', '--continue'], rundir=wt)
-+        assert ecode == 0
-+
-+        # Dirty the main tree, then --continue must refuse and keep state/worktree
-+        # so it stays re-runnable.
-+        with open(os.path.join(gitdir, 'file2.txt'), 'a') as fh:
-+            fh.write('uncommitted local edit\n')
-+        state_file = os.path.join(common_dir, 'b4-shazam-state.json')
-+        with pytest.raises(SystemExit) as exit_info:
-+            b4.mbox.shazam_continue(argparse.Namespace())
-+        assert exit_info.value.code == 1
-+        assert os.path.exists(state_file)
-+        assert os.path.isdir(wt)
-+
-+        b4.git_run_command(gitdir, ['checkout', '--', 'file2.txt'])
-+        b4.git_run_command(gitdir, ['worktree', 'remove', '--force', wt])
-+        os.unlink(state_file)
+-def _suspend_to_shell(hint: str = 'b4', cwd: Optional[str] = None) -> None:
+-    """Spawn an interactive sub-shell with a PS1 hint.
+-
+-    For bash and zsh, a temporary rc file is used so the user's normal
+-    configuration is loaded first and then the prompt is prefixed with
+-    a short marker.  For other shells the B4_REVIEW environment variable
+-    is set so the user can incorporate it into their own prompt.
+-    """
+-    logger.info('---')
+-    logger.info(
+-        'You are now in shell mode. You can execute git commands or run checks.'
+-    )
+-    logger.info('Cosmetic commit edits (reword subjects, fix trailers) are fine;')
+-    logger.info('b4 will reconcile tracking data when you return.')
+-    logger.info('Do NOT add, remove, squash, or reorder commits.')
+-    logger.info('When done, Ctrl-d to return to review UI.')
+-    logger.info('---')
+-
+-    shell = os.environ.get('SHELL', '/bin/sh')
+-    shellname = os.path.basename(shell)
+-    env = os.environ.copy()
+-    env['B4_REVIEW'] = hint
+-
+-    if shellname == 'bash':
+-        bashrc = os.path.expanduser('~/.bashrc')
+-        source = f'[ -f {bashrc} ] && . {bashrc}\n'
+-        source += f'PS1="({hint}) $PS1"\n'
+-        with tempfile.NamedTemporaryFile(
+-            mode='w', prefix='b4-shell-', suffix='.sh', delete=False
+-        ) as rcf:
+-            rcf.write(source)
+-            rcfile = rcf.name
+-        try:
+-            subprocess.run([shell, '--rcfile', rcfile], env=env, cwd=cwd)
+-        finally:
+-            os.unlink(rcfile)
+-    elif shellname == 'zsh':
+-        real_zdotdir = os.environ.get('ZDOTDIR', os.path.expanduser('~'))
+-        with tempfile.TemporaryDirectory(prefix='b4-shell-') as tmpdir:
+-            zshrc = os.path.join(tmpdir, '.zshrc')
+-            with open(zshrc, 'w') as f:
+-                f.write(f'ZDOTDIR="{real_zdotdir}"\n')
+-                f.write('[ -f "$ZDOTDIR/.zshrc" ] && . "$ZDOTDIR/.zshrc"\n')
+-                f.write(f'PS1="({hint}) $PS1"\n')
+-            env['ZDOTDIR'] = tmpdir
+-            subprocess.run([shell], env=env, cwd=cwd)
+-    else:
+-        subprocess.run([shell], env=env, cwd=cwd)
+-
+-
+ def _addrs_to_lines(header_str: str) -> str:
+     """Parse a comma-separated address header into one-per-line display."""
+     if not header_str:
 
 -- 
 2.53.0
