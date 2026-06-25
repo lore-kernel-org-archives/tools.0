@@ -1,60 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E179023E25B
-	for <tools@linux.kernel.org>; Thu, 25 Jun 2026 17:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA081A9F87
+	for <tools@linux.kernel.org>; Thu, 25 Jun 2026 18:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782406908; cv=none; b=NM8m2xHdk63AgTh3N6dQL2tfnx339IKQ9HqqY1KRjsValzVOgppVwFwEWIxg2n3Q8w3aKuhYoPJOLFGfQmzFfIW9epiBYvNGFp+AbPrda5V1cMfyPNkyf8YdetxIwHMAO9D+ZCAgP0/pxHLJ0jvEqrY4YYYLz+HsI6DleVivjw0=
+	t=1782412488; cv=none; b=cVyWif/My+IZpErjMypqc7Ddx/NiawpXLUxP88Wmq2pP+7TjPsayqOA0BJyZO0UW/ksY8JF3iz6qICCg9JP9bj8ORBrOO4TYCbl6dw2+9mN/s71Iito6jNSApQo1gRBKg4+ugG14bA2h+18weXw+W4DrV96FDruzgfDI6U/Dwsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782406908; c=relaxed/simple;
-	bh=QFL6GCMyi4+yixqo2DmBXyzh48GlVe6sogW+tkAaGkA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DSQ+/VQXlqeP71VfF92jgUrk0iN6QBaZEsUmdjyy9O7T9DxDnMpD7KE4EhhdhJq32slAQFRDXCsA9TlZb6RzOv+xI7GIlAuH82/PhlKiiNArib7RCQ4h5hKC1qpvkb116AcnSzdwpbkdbLgFrlmKO1mPFTU7HyfYtem6HG9bHy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bODUMXSl; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782412488; c=relaxed/simple;
+	bh=aABwxCVdsvFsFW7YyGpvIYUAihoTorRENhhQiRjo4mk=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=c+dWptdODhLiDOoTZtbEIXQ9dZHOhRKyvvwUw3TFJGprDw4JJnp3iZBQpfOkyFh3RSn/vsvZffegZonsJh32riFMoowWUYMrdL6GjjXj74qLSRe7gbm8ETQ3RJh/jMVaeuMjoFPav+kYtvkojxdMkNCEYb4EeADf7tKOGRCVRUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8yOIaJV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bODUMXSl"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8yOIaJV"
 Received: by smtp.kernel.org (Postfix)
-	id A47971F00A3A; Thu, 25 Jun 2026 17:01:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D7E1F000E9;
-	Thu, 25 Jun 2026 17:01:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782406907;
-	bh=QFL6GCMyi4+yixqo2DmBXyzh48GlVe6sogW+tkAaGkA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=bODUMXSlulEMagr1DNMQqRw8EJU2dqgAjY5q5BW46g2rnvBMrsMbSIbw1nptZxFdS
-	 4SA05JW2XTk2HD4ZA4cTh781xQj5yLkvqvsPmWfnHiOuWj1HaBD7KfYcK33X+9CfeS
-	 Bdx5DceJ/+FTgReLCE2x8oYKCv5q0kLJA0h72N/1ku+SKbtVBneM/9vkXyEFgvsUuw
-	 xLE0uzqKhk1tM9vaMH1E6NNcCkDt4stE7GaZsU4hhbSsz5s3NPTFCooa0RzNSxHspp
-	 3zuT1455o6bvDVKjg+46YQZfVaERJNxpwS0bB+m3hHkoKu+ilWuVNsgHuh+KASjxvQ
-	 xh4lShWjUrjpQ==
-Date: Thu, 25 Jun 2026 18:01:44 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Christian Brauner <brauner@kernel.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: [PATCH RFC 0/2] review-tui: add a "cherry-pick + merge" take
- method
-Message-ID: <741f7bc9-18ea-45fe-85a5-2976352750e6@sirena.org.uk>
-References: <20260625-20260625-review-tui-take-cherry-pick-merge-v1-0-8ba4809d048a@kernel.org>
+	id AF3721F00A3A; Thu, 25 Jun 2026 18:34:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FE51F000E9;
+	Thu, 25 Jun 2026 18:34:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1782412487;
+	bh=Clcl/L0+AuNZ0WABMPKZZ7YHfYKmC0lwbptZ1Qu5e9c=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=R8yOIaJVYHSpRFP/bG2UYQ2p4AXefktSSHKQmI2lcV/Vi1PXx/ptVHnw6THIbZtfV
+	 cFuA3qOwx3shWB1CBbTyuYG754OSmQPos9MhkggclXzpH3eNm5WylftkCNFInEBftH
+	 05YGIYR82cj4zZGHJ++HaJUBAr1+ax6etk8ww8gI=
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="i5Gb2Y0FgUC6vPcy"
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH RFC 0/2] review-tui: add a "cherry-pick + merge" take
+ method
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Christian Brauner <brauner@kernel.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>, 
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 In-Reply-To: <20260625-20260625-review-tui-take-cherry-pick-merge-v1-0-8ba4809d048a@kernel.org>
-X-Cookie: If in doubt, mumble.
+References: <20260625-20260625-review-tui-take-cherry-pick-merge-v1-0-8ba4809d048a@kernel.org>
+Date: Thu, 25 Jun 2026 18:34:24 +0000
+Message-Id: <178241246473.56008.7989203027158709620.b4-review@b4>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1531;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=aABwxCVdsvFsFW7YyGpvIYUAihoTorRENhhQiRjo4mk=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLJsS7aIXcpffsLcgfHWrHB+f3Y5lYUTd8/zm/TG/bBoS
+ qXy1MWPO0pZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAEzEqouRYe/LpLK9UzQPVT5e
+ eGSS5aXdRQfOy2dU5c/75hq+zyCg6y3D/7ifN69Eqfn/6bnU9+zZlZ3vHTMjvq2PnLr4J/ehvrf
+ XXdkA
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-
---i5Gb2Y0FgUC6vPcy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Thu, Jun 25, 2026 at 02:18:35PM +0200, Christian Brauner wrote:
 > The review TUI's Take dialog can apply a series three ways: merge (a
 > cover-letter merge commit of the whole series), linear (git am onto the
 > target branch), or cherry-pick (pick a subset and git am it). It could
@@ -62,23 +61,28 @@ On Thu, Jun 25, 2026 at 02:18:35PM +0200, Christian Brauner wrote:
 > subset of a series *and* record it as a cover-letter merge commit -- the
 > equivalent of "b4 shazam -M -P".
 
-Assuming this doesn't impact the existing flow:
+I don't have any specific objections to this series, especially since it
+covers a workflow gap that is useful to you.
 
-Acked-by: Mark Brown <broonie@kernel.org>
+> That path was already half-wired. When some patches were marked skipped,
+> the "merge" method fell through to the patch picker and merged just the
+> non-skipped patches -- _do_take_merge already builds its mbox from a
+> cherry-pick selection. But with nothing pre-skipped there was no way to
+> ask for it: "merge" always took the whole series.
 
---i5Gb2Y0FgUC6vPcy
-Content-Type: application/pgp-signature; name="signature.asc"
+Yes, in my mind the skipping would have been done in the review app, but
+if this speeds things up for a busy maintainer, then I'm happy to also
+let this happen in the take process.
 
------BEGIN PGP SIGNATURE-----
+> ci.sh checkers (ruff format/check, ty) are clean on the changed sources,
+> and the tui-tracking, tui-modals, tui-review, and three-way-merge suites
+> pass (213 tests).
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmo9XvcACgkQJNaLcl1U
-h9BSSwf+OpzY3crQSZBKAJkY5yG18AzLwxsq7LRrfuSeubDjK1pDPOzx2PQgB7WB
-1sXq5IY9TMmqymP0k/IbB3G0pViUuzkgnPms+kbmNLUu0/Y5TayzEv1DepuNIyle
-02+CWZYXBM9+ceoY76WrjYZAJTqWK7IMzkEFmcrf/hXxwH+zuY5sQyshDVWQivSl
-fe6aTkQMS0jUwOfu1PVKfhUMUA2pvHxuBBmxEnojCs9uPZ640yiOSeywT88uL2jb
-w4mRCXGQw8xZoi7kYIaKIOVuWJgAfJ7gTUuxwrTO+rqYKIpUGvmuCeoxeiJMHKbd
-iq0pFAzHG3j467v4F1qeCo9A6WlZ/A==
-=WWSt
------END PGP SIGNATURE-----
+This phrasing looks familiar, so I do suggest that you add
+"Assisted-by:" trailers when you rely on an LLM agent, if only for
+stats-gathering reasons. :)
 
---i5Gb2Y0FgUC6vPcy--
+Reviewed-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
