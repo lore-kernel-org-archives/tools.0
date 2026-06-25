@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00A63DE423
-	for <tools@linux.kernel.org>; Thu, 25 Jun 2026 12:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE283EBF01
+	for <tools@linux.kernel.org>; Thu, 25 Jun 2026 16:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782389924; cv=none; b=ChMe3LOTIj+PPyaTH9nrDtQpuJXzhnhUxZDgBciw/GhNRhsKpX3jtGJIQSG74wZrFkkmGQeSMqY0RQsqDh3tzKsiGScIaOYqqA42uLIJ7u2WTbPZjnYnwzVIWEOebTu7g79q75KePmsg4ngGnlSDlkkbwp7eNVqXgTPP+fHaQD8=
+	t=1782406591; cv=none; b=f8HQHpTMUA4Shyjd+vH01LWjRhC138bat81VITJyl23WBfXlI+yuz8g2VlWLnlCJJkEuHHXYSpcKms71VDlM/CmDsusRth7X9WCaK+lsoXdCXNa3kCpov0r8+Mf6jo3ekmHc90+aUU2y2R8u7XSoxUzjmhTCDkCibQ5Fp652Jvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782389924; c=relaxed/simple;
-	bh=FruY43eCsGu3vpUUny73ewj7Rx7YDx/+3HVzeHDo9/g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=J/qIvMVks1URuyUhmHwrRFvQ0UZkorSsFYaUVJlwPJK3uKE82bhOxOG9+QrDcC0ckpHtM1ZvHADl8Q9UcBJfuy3/zDkxnuddcrZR12VXLziVhtFtw3UN8coyPQvarU8pnp7JROiwnY1/ijBAA+NLfrGx1bOPozNR65RD++6PHxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gxBwC/nP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782406591; c=relaxed/simple;
+	bh=QO1z1My4WOKsSPzfNKEB6B4pa+jxJpdE21yitBVDP9M=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=IVwO4ciWc3bOxkdhMQ/Pw6SSR7KUzmAK5NF8ypie+0wteZHikZX0rUYaYBUrI/f3Ef6WdD0FOSns9ma0WhVTORWS/grw3lPj1ZsZHX68c+PqzFmiRHfs4RIbjkW4BG7Mm5ccTpSWgjPWRPeUETp6XE6eIbkdeK2TrHOme5erX3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWQ91z2l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gxBwC/nP"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWQ91z2l"
 Received: by smtp.kernel.org (Postfix)
-	id 777DF1F00A3A; Thu, 25 Jun 2026 12:18:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30B41F000E9;
-	Thu, 25 Jun 2026 12:18:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782389923;
-	bh=lL0siYn7A+UbSNqOysNiGBgRZo4pk67Jht/YNM5odsI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=gxBwC/nPCVD2C7ZoigLjwANEZpizIfJN564rMR0j01PMouk09yu7ZP8t82HKHN8ah
-	 yIecpK0A9S/iMf2G63/w41SdQWEiQ0kst9R1YMEblBRkfX46tBC9WStoFu4LwIGki0
-	 XueD8+qcM50zydlCN3u9xo2NEGiJa6rp5bKdWWzCbvMW/wbegjgLxWO+ZMf5xGo+Vr
-	 lvICYyxCjFqFle5d9nOG+FBYM/fKBehaDWA/IH0L6NdoW9lGBcnbYEPtyzWU6MDJD/
-	 dQqUVdE8vrcntkz1IubPlWd3Rm2bsAkHtzNKkeIHo/G8WjeGn6CGgl/MeSw0FJ0t2U
-	 xj0BduQcSzOOQ==
-From: Christian Brauner <brauner@kernel.org>
-Date: Thu, 25 Jun 2026 14:18:37 +0200
-Subject: [PATCH RFC 2/2] review-tui: test the cherry-pick+merge take method
+	id 6EF471F00A3A; Thu, 25 Jun 2026 16:56:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9371F000E9;
+	Thu, 25 Jun 2026 16:56:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1782406590;
+	bh=MCn73oK+1r9l65grae71kQD9uzMFqn7dcOu5oot9UUk=;
+	h=From:To:In-Reply-To:References:Subject:Date;
+	b=dWQ91z2lEFfyOWpga+/xv6qGG6t1DR8LafJqjacLH/5IrEJ5qe+i5yaaO/dgWzC3k
+	 kZQo6aiY9yAQWkzFNhrjvBmWGK05BNEKbk2jqMBWkS746gDn14spagBAhBagYQ/Pu1
+	 NXmYW1sRBNS488S+nulN0aSWhrdvEsFlJ2YM6cVw=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: "Kernel.org Tools" <tools@kernel.org>, 
+ Christian Brauner <brauner@kernel.org>
+In-Reply-To: <20260625-shazam-resolve-native-am-v3-0-622b37a7f3b2@kernel.org>
+References: <20260625-shazam-resolve-native-am-v3-0-622b37a7f3b2@kernel.org>
+Subject: Re: [PATCH b4 v3 0/9] shazam: stop --resolve from silently
+ dropping commits
+Message-Id: <178240658581.13679.4664987884278426086.b4-ty@b4>
+Date: Thu, 25 Jun 2026 16:56:25 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,117 +42,51 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260625-20260625-review-tui-take-cherry-pick-merge-v1-2-8ba4809d048a@kernel.org>
-References: <20260625-20260625-review-tui-take-cherry-pick-merge-v1-0-8ba4809d048a@kernel.org>
-In-Reply-To: <20260625-20260625-review-tui-take-cherry-pick-merge-v1-0-8ba4809d048a@kernel.org>
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- "Christian Brauner (Amutable)" <brauner@kernel.org>
-X-Mailer: b4 0.16-dev-d56bb
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4164; i=brauner@kernel.org;
- h=from:subject:message-id; bh=FruY43eCsGu3vpUUny73ewj7Rx7YDx/+3HVzeHDo9/g=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTZysyPXKQ248i6nzstNj6LblhZM0PC0aJAZ59vnEKDr
- ZvV1QN6HaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABMRkGX4Z3Y8gL9rRz/jypgn
- v3+fv7LGfGpl3t/G93+nTmLiU1lqNYuRYYFww8ZF1+3bRfo9BHY1RzImsbu7aqsZMv+6d7rI1vQ
- cEwA=
-X-Developer-Key: i=brauner@kernel.org; a=openpgp;
- fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1698;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=XT+3Ubpe4U+QMbKsdfrjl15hBfn/B9oqzwqXlFCdjN0=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLJsY/feLW55aGqnt870hH6fza5HzkfLFZUad3TaXZ27+
+ dCHz+8TO0pZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAExkjxvD/0g92c3vS0IXMXV9
+ Sw1xmDDZ64j1oZ8u83/tbk2/aFZmMZPhn9m6z/fPnuHJ8V9fpWcfGlHfePl1+N6dLz2CCtJj126
+ YzQMA
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-Cover the merge-pick routing added in the previous commit:
 
-  - the patch picker always opens for merge-pick, even when no patch is
-    skipped (like cherry-pick, unlike a plain merge);
-  - the chosen method survives the picker, so the selection reaches
-    _show_take_confirm as merge-pick with the picked indices;
-  - _on_take_final dispatches merge-pick to _do_take_merge rather than
-    the git-am path, so the "+merge" half actually produces a merge.
+On Thu, 25 Jun 2026 14:09:20 +0200, Christian Brauner wrote:
+> shazam: stop --resolve from silently dropping commits
+> 
+> b4 shazam --resolve exists to help land a series that doesn't apply
+> cleanly. The problem that motivated this series is that, while resolving,
+> it can silently drop whole commits from the merge it produces: you end up
+> with a merge that is quietly missing changes, and nothing in the output
+> points at what went missing.
+> 
+> [...]
 
-These extend TestMergeTakeSkipRouting, which already exercises the
-plain-merge skip-trimming path.
+Applied, thanks!
 
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
----
- src/tests/test_tui_tracking.py | 66 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
+[1/9] review-tui: lift worktree am-conflict helpers into b4 core
+      commit: 6b15cfa16456da10b8af880545435b66e5d9495f
+[2/9] shazam: resolve conflicts via native git-am, never dropping patches
+      commit: 7190ccb7f1a3c8fbc3e012d166f132af63c11f74
+[3/9] shazam: test native-am conflict resolution keeps every patch
+      commit: bb612997ec37248ea5522f76620fbdc01587f44b
+[4/9] shazam: resolve conflicts in subdirectory files, not just the repo root
+      commit: 5c23710165d4c2795060e89269334822f2bb0c75
+[5/9] shazam: note subshell alternative to the --resolve two-phase model
+      commit: eb4912334a3a0df55e8d1565f8e21a81770a7ba3
+[6/9] shazam: resolve --resolve conflicts inline via a subshell
+      commit: 51ddf6927cee81f0a5ea948658c0f50c617b38e2
+[7/9] shazam: test the inline --resolve subshell flow
+      commit: 13bf2b686de5fa54637ef3651fde7684d3386677
+[8/9] review-tui: don't leave a take's target worktree mid-conflict
+      commit: 84ad10c6c8b903c9b337e7ef15c32eab96788f15
+[9/9] review-tui: test take-worktree conflict abort and dirty-target guard
+      commit: 4ce46544a9c9dd12d56ce559da2f746e006c4e2d
 
-diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
-index b7d543b..853f405 100644
---- a/src/tests/test_tui_tracking.py
-+++ b/src/tests/test_tui_tracking.py
-@@ -2807,6 +2807,72 @@ class TestMergeTakeSkipRouting:
-         assert args[0] == 'merge', 'method must remain merge, not cherry-pick'
-         assert kwargs.get('cherrypick') == [1, 3]
- 
-+    def test_merge_pick_always_opens_picker(self, gitdir: str) -> None:
-+        """cherry-pick+merge offers the picker even with nothing skipped."""
-+        branch = self._setup_branch(gitdir, 'mp-noskip-1', skip_indices=[])
-+        pushed, confirmed = self._route(gitdir, branch, 'merge-pick')
-+        assert len(pushed) == 1
-+        assert isinstance(pushed[0], CherryPickScreen)
-+        assert not confirmed
-+
-+    def test_merge_pick_confirmed_preserves_method(self, gitdir: str) -> None:
-+        """cherry-pick+merge keeps method='merge-pick' through the picker."""
-+        from types import SimpleNamespace
-+
-+        branch = self._setup_branch(gitdir, 'mp-keep-1', skip_indices=[])
-+        app = TrackingApp.__new__(TrackingApp)
-+        confirmed: list[Any] = []
-+        app._show_take_confirm = (  # type: ignore[method-assign]
-+            lambda *a, **k: confirmed.append((a, k))
-+        )
-+        take_screen: Any = SimpleNamespace(
-+            method_result='merge-pick', target_result='master'
-+        )
-+        pick_screen: Any = SimpleNamespace(selected_indices=[1, 3])
-+        app._on_cherrypick_confirmed(
-+            True,
-+            'cid',
-+            branch,
-+            take_screen,
-+            {'subject': 'Test'},
-+            pick_screen,
-+        )
-+        assert len(confirmed) == 1
-+        args, kwargs = confirmed[0]
-+        assert args[0] == 'merge-pick', 'method must remain merge-pick'
-+        assert kwargs.get('cherrypick') == [1, 3]
-+
-+    def test_take_final_routes_merge_pick_to_merge(self, gitdir: str) -> None:
-+        """cherry-pick+merge executes the merge path, not git-am."""
-+        from contextlib import nullcontext
-+        from types import SimpleNamespace
-+
-+        branch = self._setup_branch(gitdir, 'mp-final-1', skip_indices=[])
-+        app = TrackingApp.__new__(TrackingApp)
-+        calls: list[str] = []
-+        app.suspend = lambda: nullcontext()  # type: ignore[method-assign]
-+        app._invalidate_caches = lambda *a, **k: None  # type: ignore[method-assign]
-+        app._load_series = lambda *a, **k: None  # type: ignore[method-assign]
-+        app._do_take_merge = (  # type: ignore[method-assign]
-+            lambda *a, **k: calls.append('merge')
-+        )
-+        app._do_take_am = (  # type: ignore[method-assign]
-+            lambda *a, **k: calls.append('am')
-+        )
-+        take_screen: Any = SimpleNamespace(target_result='master')
-+        confirm_screen: Any = SimpleNamespace(accept_series=True)
-+        app._on_take_final(
-+            True,
-+            'merge-pick',
-+            'cid',
-+            branch,
-+            take_screen,
-+            {'subject': 'Test'},
-+            confirm_screen,
-+            cherrypick=[1, 3],
-+        )
-+        assert calls == ['merge'], 'merge-pick must run _do_take_merge'
-+
- 
- @patch('b4.review.tracking.get_review_target_branches', return_value=['master'])
- class TestTargetBranch:
-
+Best regards,
 -- 
-2.53.0
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
