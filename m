@@ -1,81 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAC018DB35
-	for <tools@linux.kernel.org>; Mon, 29 Jun 2026 18:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311652D838E
+	for <tools@linux.kernel.org>; Mon, 29 Jun 2026 19:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782756086; cv=none; b=hFiylCuM4fq5P9GS487nG17LTsP20Whw+dwXSPLyAXo2k7IGcLkL2OSr8+SRiIM2RULjcSidDCJlNP2OGSbYcWY0FQdaZ79YbCUWuBd/rpiUfU9lNTgrNSI9xQCrNkYAWZIzpVu+r2HJAwDt6EREtAufvvjOUHXu56fFIzgsr6s=
+	t=1782759683; cv=none; b=sVC/puXCCqBa28pCJpg2CambWcRn+Ktjk0M7blEbRO/ve59wEZ0yHGq4/qaOQybihB/JvMMDQa01/iGswe0kTHo0C9rVPCy3Fm4z2mY3EqxrsAB+MWAOfYVitFUFKCXSq6pTirI6rtnAEeQMs3tLz8jZw9iy7zGR+Z45QH32qUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782756086; c=relaxed/simple;
-	bh=oJYZf+TJr1YPk8lUpEmeZb66OLOEAXJMM06Wjw12Tq0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=boNL2WJQxjVsFVwYs0gUFCayCizvQZItfvFuz9DGd6o45WBs2MJiU3nYR4RqkErvHuuVfH9kjYvcCEVizaDrx9G2mcLBtTTj28jICSAPdZh8RtTqjqdK88+xSWcfMWNYZVHmbmibzJkj528vjrKXtMHy8ejUcmqRB596O0RsTjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cJcf1jYh; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782759683; c=relaxed/simple;
+	bh=hbxFRNmJhzjjb9evgJO3n7QrUv1285ukP4faPv4L01Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R1ISf6mF6eyxAa57+wI2IRuz4YIqtuIV/wQFMG8kGOJlJ0PMYEpkhVVn2kyPPqvQ5tnBXUhsvRc/40Jj0a+LeCTF9WGouJnOCwuOPj/7C/I8c8FWnSiKFPZdX4sFlfJ2q8Pc+RsRk6s8pIgK6gRR1IIRxCgwobi3whotGGGfCqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCbVSN3p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cJcf1jYh"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCbVSN3p"
 Received: by smtp.kernel.org (Postfix)
-	id 9A27C1F00A3A; Mon, 29 Jun 2026 18:01:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89051F000E9;
-	Mon, 29 Jun 2026 18:01:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782756085;
-	bh=oJYZf+TJr1YPk8lUpEmeZb66OLOEAXJMM06Wjw12Tq0=;
-	h=Date:From:To:Cc:Subject;
-	b=cJcf1jYhFPLZoQ2AYoKOe8/u2wqGGv8jCSAvEQ/E+varhySrwwACrONUxbtkm2YsH
-	 FYVR+HJnL2ixMOJ/HetsdlaEjCfx+1BgCD6LW+oqx25Whhzb6qyTdadGLq6HfUAyQy
-	 ZUZFQbKGrJB8+m+eQPaYc5iEgVvYcwsFCAl5hVVXcoCoiG3/yAEXAGqWuxwjJN8M7Q
-	 t/8lay5xGNGzXRdNgWq2IhAgXFbXh7Q0OBkO76830dayVEGTlfJ6Mz4dLuNOsPixTy
-	 qzMza3ZKgXVV+3r5tX44VZzbcyJye2tuwVR6XthxOO6sTwubKAgiNF2pv62BAgspOa
-	 dMuCbsmQ0mO0g==
-Date: Mon, 29 Jun 2026 19:01:22 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	id C85B31F00A3A; Mon, 29 Jun 2026 19:01:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BF31F000E9;
+	Mon, 29 Jun 2026 19:01:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1782759681;
+	bh=hbxFRNmJhzjjb9evgJO3n7QrUv1285ukP4faPv4L01Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=VCbVSN3p1QghtqiL/EGYuKrl1DeHFa6iwMkecKrCf+qXoy7Zk7I6mVGBhOa28iHzG
+	 xbrNvRDmqdUARGL40EyfEihV/5z8ik5i6DLtPcNc1PM6UojIuDgy/mV7MOwcmtMNRi
+	 W8iJ47IIQPibkdYf05hbpfK5/Z7onGbUsJ8yyTNk=
+Date: Mon, 29 Jun 2026 15:01:20 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: tools@kernel.org
-Subject: b4 review batching operations
-Message-ID: <55e2fdf0-f825-4c10-ac82-90d73790cb3a@sirena.org.uk>
+Subject: Re: b4 review batching operations
+Message-ID: <20260629-pristine-hospitable-spoonbill-c79a3a@meerkat>
+References: <55e2fdf0-f825-4c10-ac82-90d73790cb3a@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="axhoNFHeLYDQGgMV"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <55e2fdf0-f825-4c10-ac82-90d73790cb3a@sirena.org.uk>
 
+On Mon, Jun 29, 2026 at 07:01:22PM +0100, Mark Brown wrote:
+> Going through my post -rc1 stack of patches to apply using b4 review it
+> occurs to me that it would really benefit from being able to batch up
+> operations - the interface is fairly laggy, partly but not entirely due
+> to doing checkouts per patch, and requires quite a few interactions per
+> series (take, confirmation dialog, thank, confirmation dialog, edit
+> message to fix up tree, queue with more if it's a series) so the whole
+> procedure is very much slower than it would have been with my custom
+> scripting.
 
---axhoNFHeLYDQGgMV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Yes, I should definitely think about features that would aim at high-rate
+reviewers like yourself. The current TUI model works well for a R: reviewer,
+but for an M: maintainer of a busy subsystem (or several), a lot of design
+choices would be actively slowing them down.
 
-Hi,
+What I'm thinking:
 
-Going through my post -rc1 stack of patches to apply using b4 review it
-occurs to me that it would really benefit from being able to batch up
-operations - the interface is fairly laggy, partly but not entirely due
-to doing checkouts per patch, and requires quite a few interactions per
-series (take, confirmation dialog, thank, confirmation dialog, edit
-message to fix up tree, queue with more if it's a series) so the whole
-procedure is very much slower than it would have been with my custom
-scripting.
+- tag multiple series at once
+- create a playbook for the order in which to apply them
+- run the playbook as a single take+thank+archive routine
 
-Thanks,
-Mark
+There will be caveats and corner-cases to deal with, such as backing out if
+a series in the middle of the playbook causes too much grief, but nothing
+seems insurmountable.
 
---axhoNFHeLYDQGgMV
-Content-Type: application/pgp-signature; name="signature.asc"
+I'm away for a couple of weeks, but I'll refocus on that after I return.
 
------BEGIN PGP SIGNATURE-----
+Thanks for the feedback!
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpCsvEACgkQJNaLcl1U
-h9C1ggf/UCnnKA8z5nicEaT9jf5C9RQSYTLP4seHIBuz+Ya7ZR6iHfs+6hnEheHh
-Lgh18Z7d1sF0Mg/KDNJdWgkK07hKMLJz7emECUH90vxE/rJ29IMrjOlsE7fTPc1S
-zkYoWEL9ZQPVZSB55pd9Jm56518uAbBjWMnGYMhSZqfUOlwf+EZCr693AWdDtFBD
-RnjCfK08OF/z71cDXEaeg9jFKyyQxTYgtJGXZaLdNjlM+id/YZPQT+EDA2C8F53h
-IXMfL5rYDI0LVK8TZ5KagL7Xb9D0V9LukVFkCbQBPorZiJ8Rcl+blpS9SvvrQtad
-MmWtP3lqhDo8l1vIN91oWwZYNa2izg==
-=SouL
------END PGP SIGNATURE-----
-
---axhoNFHeLYDQGgMV--
+-K
