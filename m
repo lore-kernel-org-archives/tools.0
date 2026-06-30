@@ -1,135 +1,142 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E649738F928
-	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 13:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A6D305E3B
+	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 14:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782826899; cv=none; b=MH3vNIWmlOw032JmyKZPy+YN3oZ4YcYSY6WRqJwk+ygGO1j1TETffhvoQDMORHb/xX94p832atCMbaD1f1/DBqmbqk5s3LgmwzUxhcj/owjn8AhVwmpwdufczL5Sk3UdbAJfsk+yJmuv5pG9lP1B2ZcJCC50GvmSEOR8582OO9E=
+	t=1782828777; cv=none; b=TWQfzeqhtx2yxRb3iJdqZlKK9q/ifZppv7RAYNNAxkD7JHjwvb5e+b8NapM2kxXfb6g7hCX7I9Y2jqbL2wrKBOau9TwUIyiWkiPAs/hA8bW/bi5bk1NrlSO/J3KOKCe0E7e0Gw9eBsLERk6kh7wO8ikqj3rMfm9rxa2eQI6l5vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782826899; c=relaxed/simple;
-	bh=wbyFrSHmI2N6WTGaYNxmb7zDmv6Lcbhz1Vzluq37aZs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Hn+B2FmObytvHORMCh2MQtzTh9seupl2QdFCL9c8QSpf5H5oR9uCC0zziHU2DogleFgZn93ZJ8U8JO14zl+GhL+reFt97p/rg2/uEKHILNrQS6r+fm+PFuS14Rqm3P8HsbH2f0CxDvrY6uEkZkW+6W0TEmzpo21Q+Q+itJ2zwp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yp5eCe5o; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782828777; c=relaxed/simple;
+	bh=42YONAod2lAk7xUe6I7fcrmgkxViFYXEB0Fjs5O421I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=XZzqC8bPVuX9DoUJpWgMEnBa13aY2vZst4iLQI9OIu5EETu6avqGWqkiTcc9q7L3FztJeRVZX1Ygj8xDkpXGV2chydwpZpkFPP3FnUUAnJmSpIwP6j0t7BhSPbVtLvvItke1yKjonLv/b8wxHD4xeEcEA5krqVRg4TkW3E7ogTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cHvNDKvx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yp5eCe5o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cHvNDKvx"
 Received: by smtp.kernel.org (Postfix)
-	id BB5B51F00A3A; Tue, 30 Jun 2026 13:41:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39A41F000E9;
-	Tue, 30 Jun 2026 13:41:37 +0000 (UTC)
+	id 0A2781F00A3A; Tue, 30 Jun 2026 14:12:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00A91F000E9;
+	Tue, 30 Jun 2026 14:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782826898;
-	bh=8SDYW6e015hrM/Z1/bEh/hI8P1I1o0AlSO68tOVGrwU=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=Yp5eCe5oo5RlsdHxFE+3JQGg6X9oFjqtFcdlA2F+05H7yGzLlgqWarxOA3CfcvROm
-	 MQaiIjTSjspkca4bTiUg1GTvd8jkz7jkDM42y2vvatMKFwO+2CLBANcb5BP7rCcIx3
-	 trzcWCpwEPwdc5uyvb/F8supXzlo5WP2iT3qWrLF1aKqrJfYLndsohTYUGCSiTSTHB
-	 S0oS7cDUecJkAk1ch+VQNuVVhvvdsmPWQXHCSVAqrbaorLNvdCXvV0z8/96vjhevXW
-	 vTvA06g90vtaWA59Jc1uX/ivHCIayoDTAB51rPUzcScsijOonbv1K2WOQ8GP6V9vDK
-	 8ctlCzH9fLvHg==
+	s=k20260515; t=1782828775;
+	bh=X5AANzelYr6tNN1PJ8OBcXlSMllO6zSLMNtcgkChsUI=;
+	h=From:To:Cc:Subject:Date;
+	b=cHvNDKvxRriL/njV8Tmfncgg+7GGqMV/cvp7eJzyIjnZqaLE2LTQ4F5fR48S9XESd
+	 M5E9foylWnASg1ogjAV9AaTm0/q2WGsberlQAaM2MJN+1t2JjSzZbc47eMu7TKbvEd
+	 7PbhMcWXQUSJJ0JwkSbJ38GOYJW7RKlnyr7fxNmdNRtGIL/Kkg9YWUS+FANs3Jd4L7
+	 DAnKi3A1ifnWbfgpcQuDl0EWqomLvK85M3c3d9AHEFMMJTPrJg+3ZgTYrgmZkq59e6
+	 oD488jXbdcETJMT5jPU5rMRTXNvyjzVdE0Af46c0SLoqXTXMgU16mDbDpU8gVsfEeJ
+	 MPIH2yw4P+tHw==
 From: Christian Brauner <brauner@kernel.org>
-Date: Tue, 30 Jun 2026 15:41:33 +0200
-Subject: [PATCH b4 2/2] review-tui: test null Patchwork series name in bulk
- set-state
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Christian Brauner <brauner@kernel.org>,
+	"Kernel.org Tools" <tools@kernel.org>
+Subject: b4 review tui + lore/lei/korgalore
+Date: Tue, 30 Jun 2026 16:12:47 +0200
+Message-ID: <20260630-einhundert-bauamt-atemlos-5b92514a1443@brauner>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260630-review-tui-null-series-name-v1-2-67d7c9334454@kernel.org>
-References: <20260630-review-tui-null-series-name-v1-0-67d7c9334454@kernel.org>
-In-Reply-To: <20260630-review-tui-null-series-name-v1-0-67d7c9334454@kernel.org>
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- "Christian Brauner (Amutable)" <brauner@kernel.org>
-X-Mailer: b4 0.16-dev-7d1c2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3496; i=brauner@kernel.org;
- h=from:subject:message-id; bh=wbyFrSHmI2N6WTGaYNxmb7zDmv6Lcbhz1Vzluq37aZs=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWQ5H+8/s1+H0afAZunfdofOtdz/lkR9bDJ9fZnxz4Q47
- 82G6+w+dJSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzEx42RYZfQkvCM3k4LlUyr
- 615HrxjE8x05/kjAwcTvGTfToX+BlxgZDsivzH0R9aCeX1PrqvKu/30zc9p33NdjXB8dmOmwbl4
- KIwA=
-X-Developer-Key: i=brauner@kernel.org; a=openpgp;
- fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6423; i=brauner@kernel.org; h=from:subject:message-id; bh=42YONAod2lAk7xUe6I7fcrmgkxViFYXEB0Fjs5O421I=; b=kA0DAAoWkcYbwGV43KIByyZiAGpDzuOh7a0B/s/dGbtRdb22cxewhfxAy0s+tUwhrAUsJQ/SY Ih1BAAWCgAdFiEEQIc0Vx6nDHizMmkokcYbwGV43KIFAmpDzuMACgkQkcYbwGV43KLPtgD/ZFWI K+ozi5ZD5+AYXpm6bVvwWe9u6ptnoWehmgg2jC4BAP6XFO69qtSiK2o9mIa00SfglfZAZZdwkU3 4KbZk+eEO
+X-Developer-Key: i=brauner@kernel.org; a=openpgp; fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Add a regression test that drives the set-state action on a series whose
-name is None. Before the fix the apply-state modal raised VisualError
-("unable to display 'NoneType'") while laying out its heading Label; the
-test asserts the modal now renders the '(no subject)' placeholder instead.
+Hey Konstantin,
 
-The apply worker -- the only thing the modal's on_mount starts -- is stubbed
-out so the modal stays mounted for inspection and never touches the network,
-while the compose + layout pass that used to crash still runs.
+So I've now been working with b4 review tui exclusively for a while and
+have added a bunch of extensions that put it on steroids for me. In
+place merge conflict resolution when applying individual patches or
+series is just "chef's kiss".
 
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
----
- src/tests/test_tui_pw.py | 44 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
+I also do like the patchwork integration which is very nice and allows
+me to pick series from patchwork into b4 review tui without much effort.
 
-diff --git a/src/tests/test_tui_pw.py b/src/tests/test_tui_pw.py
-index 2360166..755064b 100644
---- a/src/tests/test_tui_pw.py
-+++ b/src/tests/test_tui_pw.py
-@@ -21,7 +21,7 @@ import b4.review
- import b4.review.tracking as tracking
- import liblore
- from b4.review._review import PwFetchResult
--from b4.review_tui._modals import SetStateScreen
-+from b4.review_tui._modals import ApplyStateModal, SetStateScreen
- from b4.review_tui._pw_app import PwApp, PwFetchProgress
- 
- # ---------------------------------------------------------------------------
-@@ -685,3 +685,45 @@ class TestPwBulkSetState:
-             app.action_set_state()
-             await pilot.pause()
-             assert not isinstance(app.screen, SetStateScreen)
-+
-+
-+class TestPwSetStateNullName:
-+    """A Patchwork series with a null ``name`` must not crash set-state.
-+
-+    Patchwork returns ``name: null`` for a series with no cover letter. The
-+    bulk set-state path built the apply modal's heading with
-+    ``series.get('name', '(no subject)')``, whose default only applies when the
-+    key is *absent* -- a present-but-None name sailed through as ``None`` into
-+    ``ApplyStateModal``'s Label, which Textual refuses to render ("unable to
-+    display 'NoneType'"). It must fall back to '(no subject)'.
-+    """
-+
-+    @pytest.mark.asyncio
-+    async def test_null_name_falls_back_to_no_subject(
-+        self, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        # Skip the apply worker (the only thing on_mount starts) so the modal
-+        # stays up and off the network; we just need it to compose and lay out
-+        # its Labels -- the render pass that raised VisualError before the fix.
-+        monkeypatch.setattr(ApplyStateModal, 'on_mount', lambda self: None)
-+
-+        series = _mk_series(1)
-+        series['name'] = None
-+        _install_series(monkeypatch, [series])
-+        app = PwApp('k', 'https://pw.example.org', 'proj')
-+        async with app.run_test(size=(120, 30)) as pilot:
-+            await app.workers.wait_for_complete()
-+            await pilot.pause()
-+            app.action_set_state()
-+            await pilot.pause()
-+            assert isinstance(app.screen, SetStateScreen)
-+            await app.screen.dismiss(('reviewing', False))
-+            # Mounting + laying out the modal is what crashed before the fix;
-+            # reaching the assertions at all proves it now renders.
-+            await pilot.pause()
-+
-+            modal = app.screen
-+            assert isinstance(modal, ApplyStateModal)
-+            assert modal._series_name == '(no subject)'
-+            label = modal.query_one('#apply-series', Label)
-+            assert _static_text(label) == '(no subject)'
+One thing that I'm missing is a companion to the patchwork app
+integration for mailing lists. Here's what I mean. I want to be able to
+browse a mailing list the same way I'm browsing the patchwork app ('p')
+in b4 review tui, then mark them as "tracked" etc (ideally it would
+de-duplicate by message-id or something between the patchwork app and
+the mailing list.
 
--- 
-2.53.0
+I'm not well-versed enough in lore/lei/korgalore to find the correct
+integration point for this so this makes sense.
 
+Here's some proposals that I came up with talking to an LLM:
+
+The shared idea (both D and C)
+
+Both add the same feature — a browse-and-pick LoreListApp (a lore-native
+sibling of the Patchwork browser PwApp): it lists new patch series
+discovered from lore mailing lists, you eyeball them, press t to enroll
+one into the existing review tracker. They share the entire spine and
+differ only in the transport that produces messages:
+
+- The seam is a List[EmailMessage] → _get_lore_series → add_series_to_db
+  (b4 already owns all of this).
+- A lore_scan.py series-scanner: LoreSubject finds [PATCH vN m/n] roots
+  → get_strict_thread groups → find_existing_change_id dedups → emits
+  candidate-series rows.
+- Entry wiring: a LORE_SENTINEL + g binding in TrackingApp, and
+  run_lore_tui in _entry.py, exactly mirroring how p opens Patchwork.
+- Tracking reuses add_series_to_db with pw_series_id=None (identity via
+  change-id/fingerprint).
+
+Option D — native public-inbox git
+
+b4 mirrors and walks the lore git repos itself. Transport is
+lore_mirror.py, a port of korgalore's pi_feed/lore_feed: fetch
+manifest.js.gz → auto-discover v2 epochs → git clone --mirror →
+incremental git rev-list {cursor}..HEAD → read each commit's m blob →
+parse → scan into series. Per-epoch OID cursor + rebase-recovery for
+when lore repacks.
+
+- Pros: fully self-contained and offline, zero external tools, replaces
+  l2md outright; the public-inbox reader is upstreamable into the shared
+  liblore later.
+- Cons: b4 carries ~1000 lines of git plumbing;
+  subsystem-by-touched-file discovery (fs/**) isn't free — by-List-Id is
+  easy, by-file would need local indexing.
+- Note: plan.otl already has a v0.17 "Auto-consume / b4 review consume"
+  item that instead delegates the walking to korgalore's pipe target — D
+  is the b4-native-walk alternative and should reconcile with it.
+
+Option C — lei-backed
+
+b4 shells out to lei (public-inbox's local email interface). Transport
+is lore_lei.py: build a query (l:<list-id> and/or dfn:<glob>
+touched-file), run lei q -I https://lore.kernel.org/all/ -t -o
+<maildir>, refresh incrementally with lei up, parse the Maildir → scan
+into series.
+
+- Pros: least new b4 code; gives server-side dfn: touched-file search —
+  "show me every new series touching fs/**" — which is the maintainer
+  superpower Patchwork can't match; korgalore already proves the
+  pattern. No local mirror needed (queries lore over HTTP).
+- Cons: runtime dependency on lei being installed/configured; hybrid-online.
+
+┌───────────────────┬─────────────────────────────────────┬─────────────────────────────────┐
+│                   │           D — native git            │             C — lei             │
+├───────────────────┼─────────────────────────────────────┼─────────────────────────────────┤
+│ Transport         │ b4 walks v2 epochs (lore_mirror.py) │ shell out to lei (lore_lei.py)  │
+├───────────────────┼─────────────────────────────────────┼─────────────────────────────────┤
+│ External dep      │ none                                │ lei                             │
+├───────────────────┼─────────────────────────────────────┼─────────────────────────────────┤
+│ Offline           │ ✅ full                             │ hybrid (HTTP queries)           │
+├───────────────────┼─────────────────────────────────────┼─────────────────────────────────┤
+│ Subsystem-by-file │ needs indexing                      │ ✅ free (dfn:)                  │
+├───────────────────┼─────────────────────────────────────┼─────────────────────────────────┤
+│ New b4 code       │ most (~1000 lines git)              │ least                           │
+└───────────────────┴─────────────────────────────────────┴─────────────────────────────────┘
+
+I don't think I can work on this but I would really love to see a variant of this happening.
+I'm not tied to any specific form I just want to get the idea of a
+mailing list/mbox/lore/korgalore/lei type browser app like the patchwork app in b4 review tui.
+I think that would be an absolute killer feature.
+
+Thanks!
+Christian
