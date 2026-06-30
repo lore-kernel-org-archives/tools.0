@@ -1,145 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F773FE674
-	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 10:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAE2405C5C
+	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 11:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782816932; cv=none; b=JXvHAK3vUPfCT+mcxYe5g178w2aYOoaDzHbVJpzaV41w8fkDLh+B7AiDqdSqxavsWdP/8oVWPSvIOGv0iMWyFzEOz6ZkvQhimnr3LJhFWOCfw7rZXDmD0jzZqbxjwQzrVgeXvJUNfQg71zclABS+Vp66HtTaMNfFihhvXlI8jpc=
+	t=1782819650; cv=none; b=MlKzXQ1iO8gMHCWhiS6POkBx3T/jLd/tc8YZzC5kmdn2G6dsDDN8pPgpTrL+mZm1gdbA08JUGmolws6baqvw1o3WqJMAfAKK/g+q7XJiF5XhzrbKQAFD0rUy97UY3QBOlrFN1lUY+1WWddmK2xBjH9zzh4RM6ebm2jtXCN09xwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782816932; c=relaxed/simple;
-	bh=eRZMmkYCDtkyNiwNbpOWnIPSJVUD8eZI0Bth2oWb0uQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AbeTmQfiVI9nfX74HjpRAP7xxvnnbyQ4DZeBU8T91NNUvj54dbdP4HAnV+dtaqPajkJkmVO3Gs1nnoq1FkrNRgPwRHFR4YSSVzIc7OhKmvvYL99zEeKdj2NWcu+0XUjaw6RJgPSjQ4n/4PcfcQGO1CPpZVHpat6ucBm2rkvXmhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YzkP/0WD; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782819650; c=relaxed/simple;
+	bh=iWTzNWfA0XEPg19gLekqcZp6+UghEfDnrOmF1z35pM0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=S4gtpRU+kbzSzpQxEd0otRM5gmJ2aui8XSODttgP7YZ0WqnHLEMZUV03whe9fFkc0Npgk9ixJYPq3Zc+Cnbcgdylxw+gT4XuxjYwCztEpdbLa3MGDu37MOYpdPtw0Li8sXChiYHB+aR79Bfd20CJenuQTxhMEm9UDQqbAStdNc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mXMWtzm8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YzkP/0WD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mXMWtzm8"
 Received: by smtp.kernel.org (Postfix)
-	id 32B7D1F00A3A; Tue, 30 Jun 2026 10:55:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9402A1F000E9;
-	Tue, 30 Jun 2026 10:55:27 +0000 (UTC)
+	id CF06B1F00A3A; Tue, 30 Jun 2026 11:40:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237371F01558;
+	Tue, 30 Jun 2026 11:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782816928;
-	bh=c0RFxtfH6SShkaiK8jDwXlO5qiCb+kEzEm9gSbP1VTQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=YzkP/0WDD2H/yDkqDuBn9mq4Wm1FPWwAcgULaEwtEe5AifzhB7xBTErDffLboKPcP
-	 II6uTvf6MSNZ6ice+PhYKGZljl2reymVvuaJHt1QDBn/ma7VBPDJOTnnTKSa3Qmjbh
-	 Af2nAZz+n0maZvDmpC+iuw3BWDUUMIkzqeuvSK6WAroJysrhrQURcSHCEMjiQPJAx4
-	 uyYUwD36N8culB/B6Ij8o4IGaklhuk9HfEKvOJEyvdVGpmkpo3fs+2MIFzTG6/4Kbs
-	 9rLu5RtqCL+aDjPP95w3m7fikh1mJUuI+BDWPvasSO2lmcRA6uZauYHoTqFLtip/T1
-	 HTtGBFye7XzXA==
-Message-ID: <b2c44799-85a9-4576-9aae-b43eb1092315@kernel.org>
-Date: Tue, 30 Jun 2026 12:55:25 +0200
+	s=k20260515; t=1782819648;
+	bh=AEg4rwQKgqP0SNKtkffVwO55HFvi8XBDS44BY6yJ0is=;
+	h=Date:From:To:Cc:Subject;
+	b=mXMWtzm8ThpjT5ElcANuRs6yLYxV2hX4E9gBX/goTGyNofZu3t5kLDZjX6b/+0HJW
+	 AH7aHDPVfgjlwgauaUK6cuHu8BTQaYFuIzd9Dv+8nKnC75M7HMgtuGnsbpCf9CPaSs
+	 fyVy4btD3RGJWIUD+yCpPDww2i1/HkwglyjmbM4oZ8Dvq7vpenHmqDSCB19uyj6nlt
+	 QiI0+1K1bqPbzHrZ1AWLa+QY0eTPj7DTYIhT4Xe4wlPu/+v89D4rp/KxoMfJ2wHDz3
+	 S/zdcdFtVhEZD2AmYs1owIW1YaM8naAlD/FFbHIXo7HRVT5KCnx4pBANEfulhg25Jz
+	 MogerpuwnENZA==
+Date: Tue, 30 Jun 2026 12:40:45 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org
+Subject: b4 review merge mode with no cover letter
+Message-ID: <ba9789cf-a526-4bf9-8db7-351ff9f2cc11@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: b4 review tui: too smart reply features?
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-References: <c281cf50-7935-488c-8429-03eac9b8902e@kernel.org>
- <20260610-psychedelic-encouraging-quoll-c7b949@lemur>
-From: Matthieu Baerts <matttbe@kernel.org>
-Content-Language: fr
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <20260610-psychedelic-encouraging-quoll-c7b949@lemur>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="WM+GBxeO2f8LfLZX"
+Content-Disposition: inline
+X-Cookie: Air is water with holes in it.
 
-Hi Konstantin,
 
-On 11/06/2026 03:56, Konstantin Ryabitsev wrote:
-> On Tue, Apr 28, 2026 at 12:52:01PM +0200, Matthieu Baerts wrote:
->> Hi Konstantin,
->>
->> I'm still trying 'b4 review tui', and something that bothers me is when
->> my replies are mangled. I have three examples.
-> 
-> Okay, the latest master has revamped that quite a bit. I was also not really
-> happy with the way I kept fighting with the tooling, which is the opposite of
-> where I want to go. I had the bright idea to move some of the functionality
-> into a vim plugin instead of doing it in b4 directly -- this way you still get
-> most of the neat features but without the inability to undo or forced/awkward
-> quote trimming.
-> 
-> Can you try it out and see if you're fighting with the current master less?
+--WM+GBxeO2f8LfLZX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Thank you for the update, and sorry for the delay!
+Hi,
 
-I just retried, and it is indeed much better now! Yet, I still have an
-issue with trailers, e.g.
+When applying a single patch b4 defaults to applying linearly, and when
+applying a series it defaults to merge.  With a merge we create a merge
+commit with the cover letter in it but when the submitter didn't send a
+cover letter this looks a bit weird.  It feels like it would be better
+to default to linear when there is no cover letter, you can adjust this
+by hand but it's not obvious from the series list that the cover letter
+is missing.
 
-  Please add a Fixes tag. Here I guess it should be:
+Thanks,
+Mark
 
-  Fixes: (...)
+--WM+GBxeO2f8LfLZX
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The Review view then correctly showed my comment with the Fixes tag, but
-*I think* the Fixes tag was not visible in green at the bottom left (not
-sure, because I also added a Reviewed-by tag after the reply). When
-looking at the 'email mode' view, the Fixes tag got dropped, leaving 2
-empty lines around.
+-----BEGIN PGP SIGNATURE-----
 
-Back to the 'reply' view, vim showed all lines ending with ^M, and the
-line starting with 'Fixes:' was no longer there. Adding it back re-added
-it to the other views, and the Fixes tag was also listed at the bottom
-left in the 'review' view, but I could see extra new lines due to all
-these \r. Stripping them from the 'reply' view fixes all the issues, and
-I was able to send the reply with both my Fixes and Reviewed-by tags.
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpDqzwACgkQJNaLcl1U
+h9Aa3gf/VIL3JxRw0rdahgl39DtRseFOcuE9di1aqPDb7uZ/3+vxnA64Sosgbreh
+bF2YQo0TBSqn8Q3W34sM+rC78BoubkGkV4IPI+wfGAbMQ+KGz4CzZ2f48APwA6u2
+/K/gnO+sh5y8MZeONsD1lrCgY1x4feXbr5Z73AZ55B9UD8/YnGCauiSDtxNYW/wy
+NScWdET8qcCDqf0Ss6RUznMSO1dQtL5soLcwZS/HiKEwmVexGITRursdYf6peu4d
+cKwdcok9r+xQbEgoUvtRRhq8LlC3+F5PfOUMYKiUMUl0uBTUmu7iM1Dx3fFzRJRt
+EE0GygBKnqQ+YZ0bFZCHDf2rHQ3/ug==
+=sjdw
+-----END PGP SIGNATURE-----
 
-Any idea was caused that? :)
-
-BTW, after having sent a reply, it appears a few seconds later as unread
-in my inbox. I guess only a filter on the inbox side can help to mark
-them as read, right?
-
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
-
+--WM+GBxeO2f8LfLZX--
