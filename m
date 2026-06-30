@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BED23F1660
-	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 10:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F773FE674
+	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 10:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782814674; cv=none; b=d7qIDnhGQ4+YET3rPQr3xsUsa458RDdcsI/BZcEQdiZ4aQOHWTdpADdQJfh8q5zOpvETly1vFwQOx+FDtgLu8VrlhBpNlw3w1Cmg70L303tzwt6f66jcMkQ2xnTgRvwptrEJw/RiCIu6ikdnSfpSqHv67aYChbhxid3u7l+WON4=
+	t=1782816932; cv=none; b=JXvHAK3vUPfCT+mcxYe5g178w2aYOoaDzHbVJpzaV41w8fkDLh+B7AiDqdSqxavsWdP/8oVWPSvIOGv0iMWyFzEOz6ZkvQhimnr3LJhFWOCfw7rZXDmD0jzZqbxjwQzrVgeXvJUNfQg71zclABS+Vp66HtTaMNfFihhvXlI8jpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782814674; c=relaxed/simple;
-	bh=jwFWJ5B1x3UBGBppN0IxRCuYldA4YiPPzTeXCwBfC1c=;
-	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=GZOVomMwNcLh2/q2N/0ApVrmjkvNngalx+fSIB5ex6E9kvc88mEsv3ghHFjzuem7c0MkYY8yxgJiNTFVgxQNFzbbREkBYGJGfRTGbuTeR7P4/q1yf6jnGmCy+6RaiDNumr4g3DvjhkKKxrXqmnb4DNWVpYCcbB6URlJYuBIDAu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DzgUXoYL; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782816932; c=relaxed/simple;
+	bh=eRZMmkYCDtkyNiwNbpOWnIPSJVUD8eZI0Bth2oWb0uQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AbeTmQfiVI9nfX74HjpRAP7xxvnnbyQ4DZeBU8T91NNUvj54dbdP4HAnV+dtaqPajkJkmVO3Gs1nnoq1FkrNRgPwRHFR4YSSVzIc7OhKmvvYL99zEeKdj2NWcu+0XUjaw6RJgPSjQ4n/4PcfcQGO1CPpZVHpat6ucBm2rkvXmhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YzkP/0WD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DzgUXoYL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YzkP/0WD"
 Received: by smtp.kernel.org (Postfix)
-	id 231851F00A3D; Tue, 30 Jun 2026 10:17:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848291F000E9;
-	Tue, 30 Jun 2026 10:17:45 +0000 (UTC)
+	id 32B7D1F00A3A; Tue, 30 Jun 2026 10:55:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9402A1F000E9;
+	Tue, 30 Jun 2026 10:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782814666;
-	bh=gHRfWImst2rkesrQraVGs5ujLYaPN/xdiGrIPj83UCw=;
-	h=Date:From:To:Cc:Subject;
-	b=DzgUXoYLEfRc7Sit66/Xt4jfX8fGM17RIEIpi3Kk0S9dGbvIwGAvi43jD8N/nEyv7
-	 aL4D6LdYCJNyl2p8WrS8zojGf8UddiEBprBE+o5GL1YoZDkIVviA2+R6ivyUVdAEuZ
-	 5GfoIuAVncklLf0oSwMZThr6Cj/U5dHKZ9x2/Z6h/BYreqBy2mbEDXvJhsxiUJvQ0F
-	 /eVFVXS6foiNHv9U9xYm/e2anngESP4BksbgV5c0YfcmLKRFoJMFwyjR55THkqloSN
-	 LQ+IZJDye17OCQqAViyifhVrnuQCCsyMAGIdMnZiTTyPAjsxRRO/Sc60ZIIsTGSfmH
-	 Xvu68t7tKjRPg==
-Message-ID: <bc88076e-2629-45bf-ab20-242f823dde4e@kernel.org>
-Date: Tue, 30 Jun 2026 12:17:43 +0200
+	s=k20260515; t=1782816928;
+	bh=c0RFxtfH6SShkaiK8jDwXlO5qiCb+kEzEm9gSbP1VTQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=YzkP/0WDD2H/yDkqDuBn9mq4Wm1FPWwAcgULaEwtEe5AifzhB7xBTErDffLboKPcP
+	 II6uTvf6MSNZ6ice+PhYKGZljl2reymVvuaJHt1QDBn/ma7VBPDJOTnnTKSa3Qmjbh
+	 Af2nAZz+n0maZvDmpC+iuw3BWDUUMIkzqeuvSK6WAroJysrhrQURcSHCEMjiQPJAx4
+	 uyYUwD36N8culB/B6Ij8o4IGaklhuk9HfEKvOJEyvdVGpmkpo3fs+2MIFzTG6/4Kbs
+	 9rLu5RtqCL+aDjPP95w3m7fikh1mJUuI+BDWPvasSO2lmcRA6uZauYHoTqFLtip/T1
+	 HTtGBFye7XzXA==
+Message-ID: <b2c44799-85a9-4576-9aae-b43eb1092315@kernel.org>
+Date: Tue, 30 Jun 2026 12:55:25 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -36,11 +37,13 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird Beta
-From: Matthieu Baerts <matttbe@kernel.org>
-Content-Language: fr
+Subject: Re: b4 review tui: too smart reply features?
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: "Kernel.org Tools" <tools@kernel.org>
-Subject: b4 review: reply to a patch note + misc.
+References: <c281cf50-7935-488c-8429-03eac9b8902e@kernel.org>
+ <20260610-psychedelic-encouraging-quoll-c7b949@lemur>
+From: Matthieu Baerts <matttbe@kernel.org>
+Content-Language: fr
 Autocrypt: addr=matttbe@kernel.org; keydata=
  xsFNBFXj+ekBEADxVr99p2guPcqHFeI/JcFxls6KibzyZD5TQTyfuYlzEp7C7A9swoK5iCvf
  YBNdx5Xl74NLSgx6y/1NiMQGuKeu+2BmtnkiGxBNanfXcnl4L4Lzz+iXBvvbtCbynnnqDDqU
@@ -85,34 +88,55 @@ Autocrypt: addr=matttbe@kernel.org; keydata=
  JY6dglzGKnCi/zsmp2+1w559frz4+IC7j/igvJGX4KDDKUs0mlld8J2u2sBXv7CGxdzQoHaz
  lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
 Organization: NGI0 Core
+In-Reply-To: <20260610-psychedelic-encouraging-quoll-c7b949@lemur>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 Hi Konstantin,
 
-When a patch has a note under 3 dashes, the note is dropped when the
-patch is applied during a review, as expected. Except that it also means
-the note is no longer there when replying to a patch from b4 review tui.
+On 11/06/2026 03:56, Konstantin Ryabitsev wrote:
+> On Tue, Apr 28, 2026 at 12:52:01PM +0200, Matthieu Baerts wrote:
+>> Hi Konstantin,
+>>
+>> I'm still trying 'b4 review tui', and something that bothers me is when
+>> my replies are mangled. I have three examples.
+> 
+> Okay, the latest master has revamped that quite a bit. I was also not really
+> happy with the way I kept fighting with the tooling, which is the opposite of
+> where I want to go. I had the bright idea to move some of the functionality
+> into a vim plugin instead of doing it in b4 directly -- this way you still get
+> most of the neat features but without the inability to undo or forced/awkward
+> quote trimming.
+> 
+> Can you try it out and see if you're fighting with the current master less?
 
-Do you think the "Reply" view could use the email from lore instead?
+Thank you for the update, and sorry for the delay!
 
-While at it, some small ideas:
+I just retried, and it is indeed much better now! Yet, I still have an
+issue with trailers, e.g.
 
-- I find it "too easy" to quit the "Review" view: I'm on a patch,
-  checking follow-up comments, etc. then if I hit an extra 'q', I'm
-  back on the "Tracked" list, switching back to another commit in git,
-  etc. Maybe a "confirmation" question could help? Or a different short
-  key?
+  Please add a Fixes tag. Here I guess it should be:
 
-- When I press the 'review' button, I need to specify the commit/branch
-  for the new base. I usually prefer to apply it on top of the current
-  HEAD, but I'm not sure how to force b4 to suggest that by default. I
-  tried using "git config b4.review-target-branch", but it still guesses
-  something else.
+  Fixes: (...)
 
-- Could we eventually have a template for the replies? It would be good
-  to automatically add a header (Hi <first name>,) and a trailer (like
-  here at the bottom).
+The Review view then correctly showed my comment with the Fixes tag, but
+*I think* the Fixes tag was not visible in green at the bottom left (not
+sure, because I also added a Reviewed-by tag after the reply). When
+looking at the 'email mode' view, the Fixes tag got dropped, leaving 2
+empty lines around.
+
+Back to the 'reply' view, vim showed all lines ending with ^M, and the
+line starting with 'Fixes:' was no longer there. Adding it back re-added
+it to the other views, and the Fixes tag was also listed at the bottom
+left in the 'review' view, but I could see extra new lines due to all
+these \r. Stripping them from the 'reply' view fixes all the issues, and
+I was able to send the reply with both my Fixes and Reviewed-by tags.
+
+Any idea was caused that? :)
+
+BTW, after having sent a reply, it appears a few seconds later as unread
+in my inbox. I guess only a filter on the inbox side can help to mark
+them as read, right?
 
 Cheers,
 Matt
