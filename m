@@ -1,104 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7583F2118
-	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 13:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916303921CE
+	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 13:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782824738; cv=none; b=Q2CFOvNIPV7IYrKmwKa3LzKyvMlenafvCLoCWvmasjv00NW7rmaMJH1d+/egmktqFUI1QKsDIkbxD+B/is05ZI+1KJz7fMt+4LEbI9uNm6yPqeVz7Pkq5X0xcBmWVhjPVOLpINXmYsWw625OSRYOgKH+l7M5eRst1vTuQnUbDeU=
+	t=1782826897; cv=none; b=PgqQGt12CemeEobsCutW3ZADlAW17/aIMYGzXR6hWPkkZUabbtVSEUbYVqLMW/8bFjme5Xbf+GPN+Mz9AQXJvswo0Oy7IWY6EhBZONyDX5CmL5u5MvadtJyGUP4yayFHGff10zcdUrgUScKAT2kH65oT1KvBXN46yFOqQS+st5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782824738; c=relaxed/simple;
-	bh=8V93lw0ZV1hWdhpU84LdsJBqtsjPznBqVDhutaPDPss=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VPP8o9N4So/Z3bT3sLCW0Lr22wPM8Umr82pEdQTB8kNcOT89RBOb3zGYQ9rW5zTcbOtAuTurNUpDSGnCunOnVUZxRV2ndyEMEuu/G2dG7ZkZCigx5FUA2H5RMoEcJi4cwVJ3g1inlszyVRPO4nOGTARoX2pbEZne4Jm7NJghrzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PEd8RLku; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782826897; c=relaxed/simple;
+	bh=w86Z8/ct1BOyWwlfwKtuYGFJvau3IxV/bgKnmkgHvdk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DF1jOdN7FKJRHnSgIOZdkXH/tveCCQKI3Hv9eVyIyEXy5N6C/vgHRwRCiqffcuIgihZfQmIgtXF+SXTHht/ucbJxFGGUP0pLJDT2/WIN8uxRWBqQeoV7tWe8cq956pSfOQ3o7QkG9wFg1PZS05/4+9v8R1wDfFl1p3SQL48lPhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oRjzg7ka; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PEd8RLku"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oRjzg7ka"
 Received: by smtp.kernel.org (Postfix)
-	id 76A121F00AC4; Tue, 30 Jun 2026 13:05:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B680F1F000E9;
-	Tue, 30 Jun 2026 13:05:36 +0000 (UTC)
+	id 3DD1A1F00A3A; Tue, 30 Jun 2026 13:41:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675BD1F000E9;
+	Tue, 30 Jun 2026 13:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782824737;
-	bh=5tCr1cUxUMGRXDzbaCYQ8MhcfqEvbxx1+Tsc2QVbofo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=PEd8RLku97L7iePbmWKlk6qv8pHZgPHTaEWq4XRinKqwOam+UXVwTSefhTJyRp4d2
-	 x1v8/dytsKXCQkL5A35XTzExuJ98qT6KIO2jRaCWWv1Ow6UJEU8l9TRYl5Ti7k2EKO
-	 ajq27BquEnGEe+jUzl8WAhjq3qR6PqU8DSoa9i4kVgGzWmYiDlwVc/U3XYj5k+iiSb
-	 C+ZuGgmF70mo+tSsiaz1z/hKpQeCVksbzEl33tBIW9QFeLVH8cL6pvksKgU465+YRO
-	 JZ1B42XJhP0b4e/YeUgG//hCubcO3Gv5wCiFwqz3jYJWlHezBrjrKnPzbzAyGYdqRP
-	 HAJcM9z98mwJg==
-Date: Tue, 30 Jun 2026 14:05:33 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: Re: b4 review batching operations
-Message-ID: <a3fae830-9867-42d9-b6c8-3f7409e7e51f@sirena.org.uk>
-References: <55e2fdf0-f825-4c10-ac82-90d73790cb3a@sirena.org.uk>
- <20260629-pristine-hospitable-spoonbill-c79a3a@meerkat>
+	s=k20260515; t=1782826896;
+	bh=Bpkkt6hZPCPhkCguQ19bUxJjNDio/3TFTxkYO1UA8YQ=;
+	h=From:Subject:Date:To:Cc;
+	b=oRjzg7kaQQQcOgLR+CYyM9ueXbtRTOzbMqqSH5CnMk5eHojCPUtpnlhRlPbQTdwwn
+	 BXPpC8LePFDOvnAFOHR6L8zbEq0j42duRaMwTWb/IDMY8wcANXIxItXiNRJlt/jsUV
+	 Z/wvC10xAxsSftcTCM2CvgWTKWRfv1j+wQKPZq/FGc6yew5hOT+eKr+l9PVcdmm5sc
+	 VX1E0HsfQJpvoAqm3l19LISKSMYoEX+TspT36BMVEC0x131CdN7/kp8RGC1ChF6dyV
+	 BWuEUHLkwp3kfl4nZlz3qakCous9XE8Kly4HzHHA1I8Iou2u/Afgq9+bUbQzmYYnZB
+	 SxEnc0cVjQOpA==
+From: Christian Brauner <brauner@kernel.org>
+Subject: [PATCH b4 0/2] review-tui: handle null Patchwork series names
+Date: Tue, 30 Jun 2026 15:41:31 +0200
+Message-Id: <20260630-review-tui-null-series-name-v1-0-67d7c9334454@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="y7WmKVJ2ticqlIE1"
-Content-Disposition: inline
-In-Reply-To: <20260629-pristine-hospitable-spoonbill-c79a3a@meerkat>
-X-Cookie: Air is water with holes in it.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIvHQ2oC/yWMQQ6CMBBFr0Jm7SSFViRexbhoyyhjoJpOqyaEu
+ 9vK8r38/1YQikwC52aFSG8WfoYC7aEBP9lwJ+SxMHSq61WvFdYRfTBlxpDnGfc/BrsQtu6kjT4
+ O42A0lMIr0o2///oFnIHr7iS7B/lUs3XlrBC6aIOfqlqsJIqwbT+n8mfmnAAAAA==
+X-Change-ID: 20260630-review-tui-null-series-name-1b734358d843
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ "Christian Brauner (Amutable)" <brauner@kernel.org>
+X-Mailer: b4 0.16-dev-7d1c2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1547; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=w86Z8/ct1BOyWwlfwKtuYGFJvau3IxV/bgKnmkgHvdk=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWQ5H++T75zLVW7lW7OhzfFiyJqTqvc+Gmx76ecqNy/ol
+ fWj1Y7JHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABPJD2NkOL9u6Zo+Q1MDmd+f
+ 2FYzz9n498GP/w+MBQzf7Zg66fqaDSEM/x2CUpjfCLXF3ngrbl/6Sj5za29/4tGZScwPtq4LTe7
+ 8zwIA
+X-Developer-Key: i=brauner@kernel.org; a=openpgp;
+ fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
+Patchwork returns "name": null for a series posted without a cover
+letter. The review TUI's Patchwork app read that field with
+series.get('name', '(no subject)') in several places, but the dict
+default only applies when the key is absent. A present-but-None
+value passes straight through unchanged.
 
---y7WmKVJ2ticqlIE1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On the bulk set-state path that None reached a Textual Label, which
+cannot render it, so opening the apply-state dialog for such a series
+crashed the whole TUI during layout:
 
-On Mon, Jun 29, 2026 at 03:01:20PM -0400, Konstantin Ryabitsev wrote:
+    VisualError: unable to display 'NoneType' type; must be a str,
+    Rich renderable, or Textual Visual object
 
-> Yes, I should definitely think about features that would aim at high-rate
-> reviewers like yourself. The current TUI model works well for a R: reviewer,
-> but for an M: maintainer of a busy subsystem (or several), a lot of design
-> choices would be actively slowing them down.
+The track/hide/unhide notification paths shared the same latent bug,
+displaying a literal "None" in place of the placeholder.
 
-FWIW for me it's usually more just the general lag in the UI than the
-batching thing, for my flow more usually I'm reviewing and applying as I
-go.  It's if I get a large number of patches that I've already reviewed
-but not applied for some reason like the merge window that it builds up.
+Switch these spots to the series.get('name') or '(no subject)' idiom
+already used by the list-row renderer, so a null name consistently
+becomes the placeholder, and add a regression test that drives
+set-state on a null-named series and asserts the modal renders.
 
-> What I'm thinking:
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+---
+Christian Brauner (2):
+      review-tui: fall back to '(no subject)' for null Patchwork series names
+      review-tui: test null Patchwork series name in bulk set-state
 
-> - tag multiple series at once
-> - create a playbook for the order in which to apply them
-> - run the playbook as a single take+thank+archive routine
+ src/b4/review_tui/_pw_app.py |  8 ++++----
+ src/tests/test_tui_pw.py     | 44 +++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 47 insertions(+), 5 deletions(-)
+---
+base-commit: 4217c3e5d3e1eb259626142fd71b91ec6d5e3d1e
+change-id: 20260630-review-tui-null-series-name-1b734358d843
 
-That sounds reasonable, yes - TBH it'd be kind of nice to be able to tag
-things permanently as a note about their state and then be able to say
-"For all things with tag X do Y", the tags could also be useful for
-sorting in process stuff as well as more structured notes.  My custom
-scripting lets me say "This is good for applying to branch X" and then
-actually do that later which was working well.
-
-> There will be caveats and corner-cases to deal with, such as backing out if
-> a series in the middle of the playbook causes too much grief, but nothing
-> seems insurmountable.
-
-I think I'd be happy with just skipping anything that causes any kind of
-issue then going back and dealing with it separately (that's how my
-custom stuff works).
-
---y7WmKVJ2ticqlIE1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpDvx0ACgkQJNaLcl1U
-h9AoYQf9FW/KB6nEQZ3L/9cPPp+/Vqja0pXLdJfVTZ2auY+Z1JP0VF1Uc0DHvC23
-HTDuaZyZwo6TIesPKZhWsRNb05jTvhE/+hdGgZzzQoiGJU40x+SSV54cRrFjAMyW
-IBVkbUl/W3sOXqzD3ZhyCUsJY5I+pHDkZsCR6uxcQO+4tBoq5LbXdmuYvYZhftkz
-SqzgkXr2tlMlBMn6q2lx2Acl04WhIFq+t6ouIQ0rdbqk9gGbVvqeAlb3DgNQMbh3
-I9ILJ4+LwS/DOd/DKhlDqKM0GKmcFymG21QyzTRlJ2u7XKVFUyWj+HCpmiSjBUck
-zJmVqcK8o/4ZaEoNa0K8oY8FBsEqyw==
-=6FNv
------END PGP SIGNATURE-----
-
---y7WmKVJ2ticqlIE1--
