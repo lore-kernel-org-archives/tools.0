@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6193E95BD
-	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 09:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BED23F1660
+	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 10:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782811686; cv=none; b=gc92NjG1sBXZf/NvkR0HgeZQJTRFUcvO/rumgCe2Os4Y8uUycV5/UtA3zTd5YJrnn2pJASFwEvD76XT1Z5S8rxPxkcdPFoxNh2PcDx0DXV9eTqQ0ecL17SSXtQQNc1svPhTZ64i7bfAiWKlCj+Uz7J+j+0ZiMaKs0rMELRvG1KQ=
+	t=1782814674; cv=none; b=d7qIDnhGQ4+YET3rPQr3xsUsa458RDdcsI/BZcEQdiZ4aQOHWTdpADdQJfh8q5zOpvETly1vFwQOx+FDtgLu8VrlhBpNlw3w1Cmg70L303tzwt6f66jcMkQ2xnTgRvwptrEJw/RiCIu6ikdnSfpSqHv67aYChbhxid3u7l+WON4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782811686; c=relaxed/simple;
-	bh=5xnCk0bYFwTmMjm2S7Qf0Rs2qn0B5fhUTr77SbT8Svk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=nukMsfGUrqkIjBOFXEMVLY5qYNvvybtSwtNICfq/ovyhvFM5Ta0nyP0DNySTMlmyOT3byZMbXB4qs/CiKvZbAY5zXv6Ry0PoDNVFKiqq9MT8qqTfN6pFvecrz9aeK3RDe22Bl/ee7LT16DG+tQjgIXItrnjmKC7pXzwh6Fa6Whg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j13pNp+G; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782814674; c=relaxed/simple;
+	bh=jwFWJ5B1x3UBGBppN0IxRCuYldA4YiPPzTeXCwBfC1c=;
+	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=GZOVomMwNcLh2/q2N/0ApVrmjkvNngalx+fSIB5ex6E9kvc88mEsv3ghHFjzuem7c0MkYY8yxgJiNTFVgxQNFzbbREkBYGJGfRTGbuTeR7P4/q1yf6jnGmCy+6RaiDNumr4g3DvjhkKKxrXqmnb4DNWVpYCcbB6URlJYuBIDAu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DzgUXoYL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j13pNp+G"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DzgUXoYL"
 Received: by smtp.kernel.org (Postfix)
-	id CDC611F00AC4; Tue, 30 Jun 2026 09:28:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374C41F000E9;
-	Tue, 30 Jun 2026 09:28:04 +0000 (UTC)
+	id 231851F00A3D; Tue, 30 Jun 2026 10:17:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848291F000E9;
+	Tue, 30 Jun 2026 10:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782811684;
-	bh=PSXiGWpGmWy+Yh9vRXpTKKZHv/q/Dvge0DDUTpLR8qA=;
-	h=Date:From:Subject:To:Cc;
-	b=j13pNp+GMavm4AG/HrZ+2UFbP1qG9OnGRpf+XfVxvuuVF1WUkUoUdEs5cXkvDeZiq
-	 IqTskoxis3MZ5gTKiPxdzxbmdWgtQlkCwmYh17M+9MuRB0gV6J65PQ7cP+2S8Z/qIL
-	 0c098Hkq0sZJZSbXWX9WFkmkSIRBkIZG3NW7qJJ8LUKbnRi/7XZ8hdfULvexv7+6X6
-	 yH6H9JCtgasL3CKgBdlSZCexcv8mniszQxiowMQ8/mB/Dr8s/2MpKa+Di1JNXzmIZ5
-	 4eYU9U4oYLKltJ93gWACmbjzXBnDtP3Hw6ADFu2ng5hfeB5Ss4kavjUfIoAlmc7NcJ
-	 +Oh/IBul+iIeA==
-Message-ID: <db20312a-5846-4d32-8913-f3265bfe5f93@kernel.org>
-Date: Tue, 30 Jun 2026 11:28:01 +0200
+	s=k20260515; t=1782814666;
+	bh=gHRfWImst2rkesrQraVGs5ujLYaPN/xdiGrIPj83UCw=;
+	h=Date:From:To:Cc:Subject;
+	b=DzgUXoYLEfRc7Sit66/Xt4jfX8fGM17RIEIpi3Kk0S9dGbvIwGAvi43jD8N/nEyv7
+	 aL4D6LdYCJNyl2p8WrS8zojGf8UddiEBprBE+o5GL1YoZDkIVviA2+R6ivyUVdAEuZ
+	 5GfoIuAVncklLf0oSwMZThr6Cj/U5dHKZ9x2/Z6h/BYreqBy2mbEDXvJhsxiUJvQ0F
+	 /eVFVXS6foiNHv9U9xYm/e2anngESP4BksbgV5c0YfcmLKRFoJMFwyjR55THkqloSN
+	 LQ+IZJDye17OCQqAViyifhVrnuQCCsyMAGIdMnZiTTyPAjsxRRO/Sc60ZIIsTGSfmH
+	 Xvu68t7tKjRPg==
+Message-ID: <bc88076e-2629-45bf-ab20-242f823dde4e@kernel.org>
+Date: Tue, 30 Jun 2026 12:17:43 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -38,7 +38,9 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird Beta
 From: Matthieu Baerts <matttbe@kernel.org>
 Content-Language: fr
-Subject: b4 review: please update the requirements files
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: b4 review: reply to a patch note + misc.
 Autocrypt: addr=matttbe@kernel.org; keydata=
  xsFNBFXj+ekBEADxVr99p2guPcqHFeI/JcFxls6KibzyZD5TQTyfuYlzEp7C7A9swoK5iCvf
  YBNdx5Xl74NLSgx6y/1NiMQGuKeu+2BmtnkiGxBNanfXcnl4L4Lzz+iXBvvbtCbynnnqDDqU
@@ -83,97 +85,37 @@ Autocrypt: addr=matttbe@kernel.org; keydata=
  JY6dglzGKnCi/zsmp2+1w559frz4+IC7j/igvJGX4KDDKUs0mlld8J2u2sBXv7CGxdzQoHaz
  lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
 Organization: NGI0 Core
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 Hi Konstantin,
 
-Thank you for having updated b4 review!
+When a patch has a note under 3 dashes, the note is dropped when the
+patch is applied during a review, as expected. Except that it also means
+the note is no longer there when replying to a patch from b4 review tui.
 
-Today, I tried to use 'b4 review tui', latest dev version -- 4217c3e
-("plan: normalize body text to valid vim-outliner markup") -- but I got
-a few crashes, e.g. the following one when using the 'Update all'
-"button":
+Do you think the "Reply" view could use the email from lore instead?
 
----------------------------- 8< ----------------------------
-/src/b4/src/b4/review_tui/_modals.py:2781 in on_mount
+While at it, some small ideas:
 
-  2778 │   │   │   )
-  2779 │
-  2780 │   def on_mount(self) -> None:
-❱ 2781 │   │   run_lore_worker(self, self._do_updates, name='_do_updates')
-  2782 │
-  2783 │   def action_cancel(self) -> None:
-  2784 │   │   self._cancelled = True
+- I find it "too easy" to quit the "Review" view: I'm on a patch,
+  checking follow-up comments, etc. then if I hit an extra 'q', I'm
+  back on the "Tracked" list, switching back to another commit in git,
+  etc. Maybe a "confirmation" question could help? Or a different short
+  key?
 
-╭───────── locals ─────────╮
-│ self = UpdateAllScreen() │
-╰──────────────────────────╯
+- When I press the 'review' button, I need to specify the commit/branch
+  for the new base. I usually prefer to apply it on top of the current
+  HEAD, but I'm not sure how to force b4 to suggest that by default. I
+  tried using "git config b4.review-target-branch", but it still guesses
+  something else.
 
-/src/b4/src/b4/review_tui/_common.py:266 in run_lore_worker
-
-   263 │     ``WorkerFailed`` (``exit_on_error=False``), so it surfaces through the
-   264 │     host's ``on_worker_state_changed`` handler instead.
-   265 │   """
-❱  266 │   with lore_request():
-   267 │   │   return host.run_worker(
-   268 │   │   │   work, name=name, thread=True, exit_on_error=exit_on_error, **kwargs
-   269 │   │   )
-
-╭──────────────────────────────────── locals ─────────────────────────────────────╮
-│ exit_on_error = False                                                           │
-│          host = UpdateAllScreen()                                               │
-│        kwargs = {}                                                              │
-│          name = '_do_updates'                                                   │
-│          work = <bound method UpdateAllScreen._do_updates of UpdateAllScreen()> │
-╰─────────────────────────────────────────────────────────────────────────────────╯
-
-/usr/lib/python3.14/contextlib.py:141 in __enter__
-
-  138 │   │   # they are only needed for recreation, which is not possible anymore
-  139 │   │   del self.args, self.kwds, self.func
-  140 │   │   try:
-❱ 141 │   │   │   return next(self.gen)
-  142 │   │   except StopIteration:
-  143 │   │   │   raise RuntimeError("generator didn't yield") from None
-  144
-
-╭─────────────────────────────── locals ────────────────────────────────╮
-│ self = <contextlib._GeneratorContextManager object at 0x7e55b9903230> │
-╰───────────────────────────────────────────────────────────────────────╯
-
-/src/b4/src/b4/review_tui/_common.py:238 in lore_request
-
-   235 │   left behind by a prior aborted operation.  Use it directly around a
-   236 │   synchronous fetch, or via :func:`run_lore_worker` for a threaded one.
-   237 │   """
-❱  238 │   b4.get_lore_node().reset_cancel()
-   239 │   yield
-   240
-   241
-
-AttributeError: 'LoreNode' object has no attribute 'reset_cancel'
----------------------------- 8< ----------------------------
-
-Note that I also had a crash with the 'update' and 'review' "buttons".
-
-I initially thought that it was because my tracked list contains patches
-from the end of April, and that's why I first tried to "clean" my
-environment by renaming ~/.cache/b4, ~/.local/share/b4 and ~/.local/
-hare/b4-archived directory. But I still had patches in the list. I
-finally fixed the issue by updating the requirements files, but first:
-how do I reset b4 review?
-
-When you have a chance, could you please update these requirements
-files? I guess you prefer to apply the modifications generated by 'uv'
-yourself.
-
-(While at it, it might be good to have batch actions on the tracked list
-view as well :) )
+- Could we eventually have a template for the replies? It would be good
+  to automatically add a header (Hi <first name>,) and a trailer (like
+  here at the bottom).
 
 Cheers,
 Matt
 -- 
 Sponsored by the NGI0 Core fund.
+
