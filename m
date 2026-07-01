@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638BA3A5443
-	for <tools@linux.kernel.org>; Wed,  1 Jul 2026 08:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DCB3B52FA
+	for <tools@linux.kernel.org>; Wed,  1 Jul 2026 09:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782894157; cv=none; b=FAGwYqEVYYZ1ux5SHB+ElB7h/3y0M0poNH1A4FL9lPdbfee0YrAp3gT6AeMBRph1DqS4/JhrWJBCAJUMd91tTCO6L+dIWvo3oGinrqPqhQ9624ibnX7JPBVK7ea0oOJ4DTioMjVNUaFe0UpSD4BIILjG/Tgpq321GvlPOQNUDYA=
+	t=1782898902; cv=none; b=iFxS1xMzfFKLpd4Ef6eLimk7J6uCKFzptkva6pdlYAnd6i3kiNh3v2KQineySJ/wJ/FwuOBImABkjut/A7HLqTpSWouF8d7qcc4fXyyg274gE6BsBuqNR1G1gz0EuDtXH5GkeBT4WpnFzmLnJYv5q97ykAC0qy6jcWIBXVwvxy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782894157; c=relaxed/simple;
-	bh=HZ03r89dHiGdgs7Wjvpdbt7BSOOuOkL0oF4z+0mcAcE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CI4wOiJi4IR8+6v6AiD0SeOsBMH+gBHDz/5Cce4pnY0ZPWvZkJkLYsNyTdi5wgP2xdrH7s7/AVcMliJm2JXoTpvJQOXMuCO2Z6cFmYkYWAVIG67DR7ccfI6kwF3WL2iW3GehwnPzjIRunwb7Yag/0pizGRsil9PB/Q1eo/VjXMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KVEFr2+k; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782898902; c=relaxed/simple;
+	bh=UzXDZDK7UEbOH6Uzzi0+8o1EEjbrM+QpdnH4mrbtUNU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wsk/lelXzMs97DFKCp16RpLyhu4HGmTpbgcVJoxbHeiS74ZgnuvOnvXHc4DcaifLb/u1joqFW+FkpPVw/Gq3eTp3DrZGy0/9Ew/tWk/hNwTS9dpMK3nB/UJDHkL46wavraM4v/EMFCSwAjmXbbEyEUM9WkC8kNBT9aDnhQBr/a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Firz6bbL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KVEFr2+k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Firz6bbL"
 Received: by smtp.kernel.org (Postfix)
-	id C2D1D1F00A3F; Wed,  1 Jul 2026 08:22:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21CD1F000E9;
-	Wed,  1 Jul 2026 08:22:29 +0000 (UTC)
+	id 930921F00A3A; Wed,  1 Jul 2026 09:41:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5E51F000E9;
+	Wed,  1 Jul 2026 09:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782894153;
-	bh=hrJMDyzsiXGM+qo9pHWwqxLVblQQb1h6SX0y913VALE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=KVEFr2+kSIloj1ZKE7fvW5zvaN6Kx9oY6ux54H2llciY/4rgngMNc3GCQjPB8UE5m
-	 zYVJ7KPdRLHbhzPyzHTGzgwCwFpvrHXTs1uIkaQBgjFJeRjW7teNJpxTceFVHTzF16
-	 bh8vRaxIGoxr/8IjJ5nX83K6gshh9GEJCGqGox9jhqp6iEFkTLCWNPgaBmJ0qLLtGg
-	 4kAfXnTkoqHJfpromW84m8TWHH79vEVtHrVw4x2jzlcqHTSAnxALbtr8vv1EUWbKg1
-	 geHG+u0tiCRMIfRFp8WZFPfxm+6V49B5k85hRt2UGfN7IhtCSrwLcs/nHZcA8Qmz0w
-	 mP98LAn98kPpw==
-Date: 
-From: Daniel Gomez <da.gomez@kernel.org>
-To: Jeff Layton <jlayton@kernel.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, Chuck Lever <cel@kernel.org>, kdevops@lists.linux.dev, tools@kernel.org, GOST <gost.dev@samsung.com>, Josef Bacik <josef@toxicpanda.com>, Amir Goldstein <amir73il@gmail.com>, Carlos Maiolino <cem@kernel.org>, Chandan Babu R <chandanbabu@kernel.org>, David Sterba <dsterba@suse.com>, Song Liu <liu.song.a23@gmail.com>, Scott Mayhew <smayhew@redhat.com>, Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>, Konstantin Ryabitsev <mricon@kernel.org>, linux-xfs@vger.kernel.org, Darrick J. Wong <djwong@kernel.org>, Carlos Maiolino <cem@kernel.org>, Zorro Lang <zlang@kernel.org>, fstests@vger.kernel.org
-Subject: Re: kdevops-ng: graduating kdevops beyond Ansible
-Message-ID: <20260701011751.0-da.gomez@kernel.org>
-In-Reply-To: a9e73c72b603e64724bf64fb1a7b4e6a045ed386.camel@kernel.org
-References: 9f64bee9-ecc3-4587-9645-2190223cbc4e@kernel.org a9e73c72b603e64724bf64fb1a7b4e6a045ed386.camel@kernel.org
+	s=k20260515; t=1782898901;
+	bh=Sah+U50Nzx5dZpGncDEWF+D16sQaPKpFLHLupkwSQ88=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Firz6bbLFphsyZmU7SOQcZAF6ui0NYDGeQ74NzAwiAFaEKGsbffmfobP1PuBS2T6V
+	 ypSHVKCOVETKubL+PUNxUhCjH1UlrFHD+TXVKskvlMUmttwi9R1IY3F0kXqWdIEpHS
+	 qr0HUDJZ7Uj41ORCmzkbcsRPtCGuj4J1WiD2Pqsuh6Wfd+XrH9Sg6vkYyfvgPtHxHt
+	 7khiKi9yUpMBlwikkLDTWCUOU3Irm2kRwBqtbXW8ExAXLTHk/76Yml0Wh9lnOLHD7z
+	 cHySdgfkDWp05PbPDxjMnpOABvnWy7UQacuMx/WregDBMkLs0/MAVM3uKbtVguxnMv
+	 W+FHHgfCG3mng==
+Date: Wed, 1 Jul 2026 11:41:38 +0200
+From: Christian Brauner <brauner@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: Re: b4 review tui + lore/lei/korgalore
+Message-ID: <20260701-bewerben-einjagen-pensum-3b864edd765e@brauner>
+References: <20260630-einhundert-bauamt-atemlos-5b92514a1443@brauner>
+ <20260630-spectral-tan-bull-c935e3@lemur>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -43,97 +43,83 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Mailer: lorebird
+Content-Disposition: inline
+In-Reply-To: <20260630-spectral-tan-bull-c935e3@lemur>
 
-
-
-On 2026-06-18T08:31:51-04:00, Jeff Layton <jlayton@kernel.org> wrote:
-> On Thu, 2026-06-18 at 11:30 +0200, Daniel Gomez wrote:
-> > kdevops is a framework for Linux kernel development and test automation.
-> > Its core features, namely workflow reproducibility, variability, and
-> > scalability, are delivered through Kconfig, the variability language,
-> > and Ansible, which provides host and guest idempotency along with
-> > workflow orchestration at scale, whether on baremetal, local VMs, or
-> > the cloud.
+On Tue, Jun 30, 2026 at 11:19:53AM -0400, Konstantin Ryabitsev wrote:
+> On Tue, Jun 30, 2026 at 04:12:47PM +0200, Christian Brauner wrote:
+> > Hey Konstantin,
 > > 
-> > kdevops supports rolling distributions such as Debian testing, Fedora,
-> > and openSUSE. Recently we extended Nix support, which raised the
-> > question: how do we drive Nix's declarative language from Ansible? We
-> > answered by wiring Nix in under Ansible and its templates, as one more
-> > way to declare host and guest environments. But that was the wrong
-> > framing: we had bolted Nix onto today's toolkit instead of rethinking
-> > it. Reproducibility and idempotency now come from Nix by construction,
-> > so I think Ansible's original reason for being in kdevops falls away.
-> > The better question is: how do we keep kdevops's core principles, lean
-> > on Nix, and drop Ansible?
+> > So I've now been working with b4 review tui exclusively for a while and
+> > have added a bunch of extensions that put it on steroids for me. In
+> > place merge conflict resolution when applying individual patches or
+> > series is just "chef's kiss".
+> 
+> Great to hear. Please feel free to share all your "on steroids" changes -- if
+> it's useful to you, then it should be useful to others as well.
+
+Thanks, will do!
+
+> Are you using editor integrations (vim/emacs) at all?
+
+So for b4 review tui it falls back to my git neovim default editor and
+it just works very well. From your message I gather that I missed other
+integration so now I'm busy finding them... Oh wow, no. I didn't know
+that. Let me try them immediately.
+
+> > I also do like the patchwork integration which is very nice and allows
+> > me to pick series from patchwork into b4 review tui without much effort.
 > > 
-> > What remains once you do is not the configuration management plane. It
-> > is development workflow orchestration: build QEMU, build the kernel,
-> > build a guest rootfs/closure, boot it, run a test, collect results,
-> > diff against a baseline. That work is imperative and sequenced, work
-> > for a workflow engine, which is where tools like Windmill [1] come in.
-> > Windmill calls itself as "the fastest workflow engine" and an
-> > "open-source developer platform to power your entire infra and turn
-> > scripts into webhooks, workflows and UIs." Choosing to move kdevops
-> > onto Windmill would keep what made kdevops kdevops, namely workflows,
-> > quick bring-ups, baselines, and A/B regression detection, while trading
-> > Kconfig, Make, Ansible, and host-distro provisioning for typed
-> > run-forms, flows as code, and a worker queue. Nix supplies the
-> > environment, much like a container or venv/poetry, along with the guest
-> > OS system closure: declarative and portable. Windmill orchestrates the
-> > whole pipeline end to end, graduating kdevops into a fully reproducible,
-> > scalable, and configurable kernel-development framework, with both a UI
-> > and a CLI, that runs locally or in the cloud. Defined as code and driven
-> > by schedules and triggers, the same flows also make it a continuous
-> > integration pipeline. Because steps can be written in any language
-> > Windmill supports, including Ansible, Bash, Go, Python, and Rust,
-> > developers can not only use kdevops but extend it with their own
-> > scripts, turning it into a workflow hub. Note that choosing this path
-> > does not mean NixOS is required on the controller node; Nix is simply a
-> > runtime dependency that can be installed alongside your distro of
-> > choice.
-> > 
-> > It'd be good to know what folks think about the possibility of evolving
-> > kdevops in this direction, deprecating Ansible along with Kconfig and
-> > Makefiles in favor of the new approach. To that end, I suggest a demo
-> > day where I can show why I think this is the next step worth taking, and
-> > whether it's a tradeoff users and maintainers are willing to make.
-> >
-> > If this is of interest and you'd like a look, I've ported equivalents of
-> > bootlinux (direct boot), qemu-build, and the systemd/QEMU bringup (QSU),
-> > plus an fstests run for XFS in the proof-of-concept demo project [2].
-> > You can also find some screenshots in [3].
-> > 
-> > A note on licensing. Windmill's engine is AGPLv3; its OpenFlow flow
-> > format and client libraries are Apache-2.0. kdevops-ng runs Windmill
-> > unmodified and self-hosted as a separate service, and the flows and
-> > scripts are kdevops-ng's own copyleft-next-0.3.1 code, executed by
-> > Windmill rather than derived from it, so there shouldn't be any
-> > licensing concerns.
-> > 
-> > [1] https://windmill.dev
-> > [2] https://github.com/dagomez137/kdevops-ng
-> > [3] https://github.com/dagomez137/kdevops-ng/tree/main/screenshots
->
-> Some thoughts:
->
-> I'd be interested to see the demo.  It's a little hard to make a
-> judgment about moving it in this direction without knowing specifically
-> what it would look like.  I took a quick look at the git repo and the
-> windmill site, but I don't really "get it" yet.
+> > One thing that I'm missing is a companion to the patchwork app
+> > integration for mailing lists. Here's what I mean. I want to be able to
+> > browse a mailing list the same way I'm browsing the patchwork app ('p')
+> > in b4 review tui, then mark them as "tracked" etc (ideally it would
+> > de-duplicate by message-id or something between the patchwork app and
+> > the mailing list.
+> 
+> Yes, we're thinking along the same lines -- check plan.otl. You will find a
+> "consume a public-inbox archive" section under 0.17 that is admittedly just a
+> stream of consciousness right now.
 
-+cc xfs folks.
+Lovely! I cannot wait for this!
 
-I have published a documentation website here:
-https://kdevops-ng.readthedocs.io/en/latest/
+> 
+> > I'm not well-versed enough in lore/lei/korgalore to find the correct
+> > integration point for this so this makes sense.
+> 
+> It doesn't exist yet, but the idea will be to set up korgalore to get the
+> stuff from the list you want, and then just throw it at a "b4 review consume"
+> pipe, and let b4 figure out the rest. The end-result should be a sort of
+> "maintainer's dashboard":
+> 
+> - bug reports
+> - outstanding series
 
-It covers the project's concepts, terminology, deployment, roadmap and more.
-I've also included a demo video to showcasing how to build the kernel
-and run the fstest suite for XFS and review the results (all in Windmill UI):
+Perfect!
 
-https://kdevops-ng.readthedocs.io/en/latest/getting-started/demos.html
+> - general correspondence
 
-I'd also like to suggest holding an office hours session toward the end of 
-this month (in about four weeks), so we can discuss about this, questions, etc.
+I have dreamed about this specific feature. Just two days ago I started
+tracking a thread outside of b4 review and was wondering how I could
+make the case for having this inside of b4 review tui natively. Love it!
 
+> This effectively reverses the current b4 flow: instead of going from a mail
+> client to b4, everything goes to b4 first, and then you can yank things into
+> your mail client that you actually want to view there. The mailing lists and
+> lore in general become mostly a sort of a distributed messaging bus.
 
+Love it.
+
+> > Here's some proposals that I came up with talking to an LLM:
+> 
+> Thanks for sharing! I'm away for 2 weeks, so I deliberately skipped reading
+
+Enjoy the vacation!
+
+> the rest, because it requires a fresher brain. :) I'll take a look and
+> cross-reference with where I want things to go once I'm back.
+
+Absolutely. :)
+
+Thanks!
+Christian
