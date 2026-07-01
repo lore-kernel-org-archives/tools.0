@@ -1,112 +1,98 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00742425CD1
-	for <tools@linux.kernel.org>; Wed,  1 Jul 2026 10:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D0523BD1D
+	for <tools@linux.kernel.org>; Wed,  1 Jul 2026 13:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782903356; cv=none; b=cT5fZ5Txt9/FAGr4PXJ9c5FP8D46lCWsU5Rjy6AKC7KCp/z7SdwgrKrh8dRED7ngJA7kFiaht/Jo+FKLDD69O5uSjlKnDh1IKOCk3rY6Tf4zfMRBZfHeuoiwT2qdKItG4m6rYKv07g8usqkJmw8gmvYe4fImUrIAFD9uLz73kac=
+	t=1782913888; cv=none; b=NsAdtTIuMmIV0DV2GMNSw9tTKzH92dh2jcG39RUns6PdfzLnCkJ+EeCTO6HaKPIjIBwsBw3tuAg+ZAqdn3JlKX0e6d5STBDUKkFZp6ZM36Hf9QdXtsHel6YqYuECrLF8kLxmGgA7GB7S7GmEm4tkbizQ0FgjpWkgAZ7T5yHAWkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782903356; c=relaxed/simple;
-	bh=ohbvBVk5r1kiU99KW6IeGFqNpUfaNqVKoZbTS4b+B2A=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QrH3jpzu00CJhZMK7tHZyky+Dv0fsffiHlhjB409VxkXOgD6wEqxjx6YIhk2EG1A/EgovJlkxI3u0aOrwDeAldedlnP80YU7F2OokbUp7Bd852n6QKqGzlJkVjjxsuEW06AsW+fzAUB9KdVbUIweqUHHmmw4LvPPAWJRNggRHQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nzjp1DMx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782913888; c=relaxed/simple;
+	bh=drWiLFJKr+FJjIb8sV8Y6o6zeXjfaHCEoI+iGQeFnwg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TGFwXYIOcSmeVnjEeKx0yaAfAK7RRN4QNo4Jn+6olEHvYCLcl/p39j5MvvPFcGjXjuWy9M68agCiJmQOH+Tqb5o0el7y2vMULR0e2g0Bnh+E2MPm4PfBG5Aw3L/BMKFi6EMKl+UoHcsl2x9HH7rMnC0GSrNa5x32OvnmKiYarPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SSiHzsaH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nzjp1DMx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SSiHzsaH"
 Received: by smtp.kernel.org (Postfix)
-	id 2F9241F00A3A; Wed,  1 Jul 2026 10:55:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8430D1F000E9;
-	Wed,  1 Jul 2026 10:55:51 +0000 (UTC)
+	id 2193D1F00A3A; Wed,  1 Jul 2026 13:51:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7571F00A3D;
+	Wed,  1 Jul 2026 13:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782903352;
-	bh=4WfPITw77HHLAzLwNFv1chbF7QfHgjP9PtTX9HD7Grc=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To;
-	b=Nzjp1DMxouw6Iu65vCAYjGx1Nnn3gcMdmFRh4g+7fS6bzWkBSjzBipYI7Yn7TBJBL
-	 1IZMcW6GuHa+6PsOkHlp3C1L15cB+kdB5UMGuz6qih1sPc/x9ApQNXSjPzc0s4XakP
-	 b8+Fyu0dYMcwzuqUcr3JmMHgIQJKghR0ct+n84OrHr7zC16M+4qb9FIIVmL36pHekF
-	 c2xJ1VCsTkpZ6J9z4po2LGSMcVCqlGobvNkI/2+l17/+xoMc3vc6Bmjl7XqOsFKkWQ
-	 4a5T/svxONVUcz4SS82xQhlGcnT2NI/MDy6sqDCRY/MePI9mBgUSEd5kEoSsLAS1Gg
-	 3sStdsHuEwT4Q==
-Message-ID: <7776be8f-89d2-443e-bbe5-844dee25054d@kernel.org>
-Date: Wed, 1 Jul 2026 12:55:49 +0200
+	s=k20260515; t=1782913887;
+	bh=rfkeKqJq82eImMSzDxqJG2pLuYhYk7ayvtnHwYo8WnQ=;
+	h=From:Subject:Date:To:Cc;
+	b=SSiHzsaHEe6B5wOfK6o1QHF0O7kgMLVEf8GaDpwu1EQM4uZRkAiunvGqPX80n0Vqa
+	 CFksrPm2L/kHsHNsxMh2m3/2JaiBVPJZysCKBo/ctPOyW45E9hJsU9GGbr+Py9ImqU
+	 pykvkULlVjoM5yZ+1dsEjkB8a8UO8F9o26xVxtAJ6XM5y9Wa8IYvzP+tR+IlseE634
+	 8E//4/CznYqMdyk9l6VWDqI8fqwnYns0OCyWaOqVxO3tFmdap17+4BVoLBlH/f0Uvb
+	 4SUNxJ86cMrhAJiddF2RgXRbsLDe0vbGuGqEOQ9qigFNAdJBugnLWWmWqgsKTiGah9
+	 +ALS0pZ1HpmoA==
+From: Christian Brauner <brauner@kernel.org>
+Subject: [PATCH b4 0/2] Detect naked cover letters that lack a 0/N prefix
+ and diffstat
+Date: Wed, 01 Jul 2026 15:51:20 +0200
+Message-Id: <20260701-work-b4-naked-cover-letter-v1-0-f651c2ffb63b@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: b4 review: please update the requirements files
-Content-Language: fr
-From: Matthieu Baerts <matttbe@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-References: <db20312a-5846-4d32-8913-f3265bfe5f93@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <db20312a-5846-4d32-8913-f3265bfe5f93@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFgbRWoC/yWMQQrCMBREr1L+2g9piVq9irj4SUcbq4kksQqld
+ zfR1fAew1soITokOjYLRcwuueALtJuG7Cj+CnZDYepUt1N71fI7xImNZi8TBrZhRuQ7ci4DHHp
+ RWmFreyqBZ8TFfX7xExlN579LL3ODzbVaX0YS2ETxdqzqIam0aF2/0R+fTZsAAAA=
+X-Change-ID: 20260701-work-b4-naked-cover-letter-ee98a040e5c8
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ "Christian Brauner (Amutable)" <brauner@kernel.org>
+X-Mailer: b4 0.16-dev-4217c
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1984; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=drWiLFJKr+FJjIb8sV8Y6o6zeXjfaHCEoI+iGQeFnwg=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWS5SsfOaFu29criO4kRPrJ7p9glvjG/vOgiF8eLXzdZH
+ +68sODy7o5SFgYxLgZZMUUWh3aTcLnlPBWbjTI1YOawMoEMYeDiFICJxJswMry/dvZjzQVjrlCG
+ +U+UNvY36EyccyamOOGp+pZPvR+Kki4z/E/n3cLGGC34opCtd8ZthdKGzUv0cwMfWbLlvGPXefJ
+ wJTMA
+X-Developer-Key: i=brauner@kernel.org; a=openpgp;
+ fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-On 30/06/2026 11:28, Matthieu Baerts wrote:
+LoreMailbox only recognizes a cover letter when the message carries an
+explicit zero counter ([PATCH 0/N]) or, via the in-reply-to fallback in
+get_series(), when the thread root carries a diffstat.  A "naked" cover --
+one with neither a [PATCH 0/N] subject prefix nor a diffstat in the body --
+matches neither test, so it lands in self.unknowns and is dropped, and
+LoreSeries.has_cover stays False.
 
-(...)
+The visible fallout is in shazam -M, which then reports "No cover letter
+provided by the author" and links the first patch instead of the real
+cover.  This happens whenever an author writes a short prose cover with no
+diffstat, e.g. Christoph Hellwig's "don't build bios/contexts over multiple
+iomaps" series:
 
-> I initially thought that it was because my tracked list contains patches
-> from the end of April, and that's why I first tried to "clean" my
-> environment by renaming ~/.cache/b4, ~/.local/share/b4 and ~/.local/
-> hare/b4-archived directory. But I still had patches in the list. I
-> finally fixed the issue by updating the requirements files, but first:
-> how do I reset b4 review?
+  https://lore.kernel.org/linux-xfs/20260629121750.3392300-1-hch@lst.de
 
-I think I found out why I still had items in the list: I guess I also
-need to remove all the "b4/review/*" branches to fully reset b4 review.
+Patch 1 extends the in-reply-to fallback to also accept the parent as the
+cover when it is a non-patch, same-author thread root (in_reply_to is None
+and not itself a reply).  Requiring the same author and the thread root
+avoids mistaking an unrelated message the series was merely sent
+in-reply-to -- a third party's bug report, say -- for a cover letter.
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
+Patch 2 adds positive (naked single-patch cover) and negative (patch sent
+in-reply-to a stranger's bug report) fixtures and a test.
+
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+---
+Christian Brauner (2):
+      Detect naked cover letters that lack a 0/N prefix and diffstat
+      tests: exercise naked cover-letter detection
+
+ src/b4/__init__.py                           | 13 +++++---
+ src/tests/samples/naked-cover-bugreport.mbox | 47 ++++++++++++++++++++++++++++
+ src/tests/samples/naked-cover-single.mbox    | 44 ++++++++++++++++++++++++++
+ src/tests/test___init__.py                   | 32 +++++++++++++++++++
+ 4 files changed, 132 insertions(+), 4 deletions(-)
+---
+base-commit: 4217c3e5d3e1eb259626142fd71b91ec6d5e3d1e
+change-id: 20260701-work-b4-naked-cover-letter-ee98a040e5c8
 
