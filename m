@@ -1,89 +1,139 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D42B3DB32F
-	for <tools@linux.kernel.org>; Tue, 30 Jun 2026 17:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638BA3A5443
+	for <tools@linux.kernel.org>; Wed,  1 Jul 2026 08:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782839545; cv=none; b=NgNJnSLAQiUHCOQ5OyHtsHkmkSWlKmHNpr8Yd14zSRBV+Ga+jORzeDdd9kR2kH7h6NQtItruKnKcE660A7pG+wB1cXgL6mgU2YFj4FUHf9q29CK6VADjcuvLEXhp0k0bxdseq7y7Auf1odh9H25aw5TZTZS4l1UwYDuJkob7gmQ=
+	t=1782894157; cv=none; b=FAGwYqEVYYZ1ux5SHB+ElB7h/3y0M0poNH1A4FL9lPdbfee0YrAp3gT6AeMBRph1DqS4/JhrWJBCAJUMd91tTCO6L+dIWvo3oGinrqPqhQ9624ibnX7JPBVK7ea0oOJ4DTioMjVNUaFe0UpSD4BIILjG/Tgpq321GvlPOQNUDYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782839545; c=relaxed/simple;
-	bh=tliRwgeAcDje8ht7q2qL18uY2rc1Cd2tlp0V0eGHaI0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=ChNEG8jkN3DaAhzbQEIOV1nUOpJjBI/o8PvdHpUVNaznQafwcfmZPkxdie1DAla2qrTflR/ZXbBdF39S+l3zupvTLs9OVstwyGil752QkLgbY+qDvrCyP6SUxrDLJnGfHz+SoK0I62qhr+EUpqwbDeoNXx8Hindl8/9iF3zdkVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PY9J20DD; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782894157; c=relaxed/simple;
+	bh=HZ03r89dHiGdgs7Wjvpdbt7BSOOuOkL0oF4z+0mcAcE=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CI4wOiJi4IR8+6v6AiD0SeOsBMH+gBHDz/5Cce4pnY0ZPWvZkJkLYsNyTdi5wgP2xdrH7s7/AVcMliJm2JXoTpvJQOXMuCO2Z6cFmYkYWAVIG67DR7ccfI6kwF3WL2iW3GehwnPzjIRunwb7Yag/0pizGRsil9PB/Q1eo/VjXMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KVEFr2+k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PY9J20DD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KVEFr2+k"
 Received: by smtp.kernel.org (Postfix)
-	id 495921F00A3A; Tue, 30 Jun 2026 17:12:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BEC1F000E9;
-	Tue, 30 Jun 2026 17:12:23 +0000 (UTC)
+	id C2D1D1F00A3F; Wed,  1 Jul 2026 08:22:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21CD1F000E9;
+	Wed,  1 Jul 2026 08:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782839544;
-	bh=tliRwgeAcDje8ht7q2qL18uY2rc1Cd2tlp0V0eGHaI0=;
-	h=Date:From:To:Cc:Subject;
-	b=PY9J20DD3YIWTXghk8ntsRD/yPjYRwvU3coZluYYXp8TvFREZqPNSIcE3VAALfW+p
-	 sMlMegaHLqvTsF8prwhPXKh9pNwkeyyh7TKBOxsWP6+0BRuxPKlgh95qqLvbmjSxma
-	 WtoRNk2eS90VdWcm8/IOsQisl/35lzWNptoCzMYpdoG2p7yjHx+N2guGK466sBxfYq
-	 3CkTS5vi96wAxbU2n4X83oUbPzrrpfHFGu6OcwUNqcrBncbMukXTrEe6xGAYa5CFxZ
-	 9Ulx1sTw26HYCKOCe0qXBQ8aWChGmxkfib2MVYldmOEGrS5+SEI8mRTDZAkaxgH0OH
-	 zdhIOhD5yrVow==
-Date: Tue, 30 Jun 2026 18:12:21 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 review base commit isshes
-Message-ID: <48314580-a660-459e-b2d6-0abc57f26878@sirena.org.uk>
+	s=k20260515; t=1782894153;
+	bh=hrJMDyzsiXGM+qo9pHWwqxLVblQQb1h6SX0y913VALE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=KVEFr2+kSIloj1ZKE7fvW5zvaN6Kx9oY6ux54H2llciY/4rgngMNc3GCQjPB8UE5m
+	 zYVJ7KPdRLHbhzPyzHTGzgwCwFpvrHXTs1uIkaQBgjFJeRjW7teNJpxTceFVHTzF16
+	 bh8vRaxIGoxr/8IjJ5nX83K6gshh9GEJCGqGox9jhqp6iEFkTLCWNPgaBmJ0qLLtGg
+	 4kAfXnTkoqHJfpromW84m8TWHH79vEVtHrVw4x2jzlcqHTSAnxALbtr8vv1EUWbKg1
+	 geHG+u0tiCRMIfRFp8WZFPfxm+6V49B5k85hRt2UGfN7IhtCSrwLcs/nHZcA8Qmz0w
+	 mP98LAn98kPpw==
+Date: 
+From: Daniel Gomez <da.gomez@kernel.org>
+To: Jeff Layton <jlayton@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, Chuck Lever <cel@kernel.org>, kdevops@lists.linux.dev, tools@kernel.org, GOST <gost.dev@samsung.com>, Josef Bacik <josef@toxicpanda.com>, Amir Goldstein <amir73il@gmail.com>, Carlos Maiolino <cem@kernel.org>, Chandan Babu R <chandanbabu@kernel.org>, David Sterba <dsterba@suse.com>, Song Liu <liu.song.a23@gmail.com>, Scott Mayhew <smayhew@redhat.com>, Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>, Konstantin Ryabitsev <mricon@kernel.org>, linux-xfs@vger.kernel.org, Darrick J. Wong <djwong@kernel.org>, Carlos Maiolino <cem@kernel.org>, Zorro Lang <zlang@kernel.org>, fstests@vger.kernel.org
+Subject: Re: kdevops-ng: graduating kdevops beyond Ansible
+Message-ID: <20260701011751.0-da.gomez@kernel.org>
+In-Reply-To: a9e73c72b603e64724bf64fb1a7b4e6a045ed386.camel@kernel.org
+References: 9f64bee9-ecc3-4587-9645-2190223cbc4e@kernel.org a9e73c72b603e64724bf64fb1a7b4e6a045ed386.camel@kernel.org
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0B1gnQxaphknGHKn"
-Content-Disposition: inline
-X-Cookie: Air is water with holes in it.
+Content-Type: text/plain; charset=utf-8
+X-Mailer: lorebird
 
 
---0B1gnQxaphknGHKn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-Hi Konstantin,
+On 2026-06-18T08:31:51-04:00, Jeff Layton <jlayton@kernel.org> wrote:
+> On Thu, 2026-06-18 at 11:30 +0200, Daniel Gomez wrote:
+> > kdevops is a framework for Linux kernel development and test automation.
+> > Its core features, namely workflow reproducibility, variability, and
+> > scalability, are delivered through Kconfig, the variability language,
+> > and Ansible, which provides host and guest idempotency along with
+> > workflow orchestration at scale, whether on baremetal, local VMs, or
+> > the cloud.
+> > 
+> > kdevops supports rolling distributions such as Debian testing, Fedora,
+> > and openSUSE. Recently we extended Nix support, which raised the
+> > question: how do we drive Nix's declarative language from Ansible? We
+> > answered by wiring Nix in under Ansible and its templates, as one more
+> > way to declare host and guest environments. But that was the wrong
+> > framing: we had bolted Nix onto today's toolkit instead of rethinking
+> > it. Reproducibility and idempotency now come from Nix by construction,
+> > so I think Ansible's original reason for being in kdevops falls away.
+> > The better question is: how do we keep kdevops's core principles, lean
+> > on Nix, and drop Ansible?
+> > 
+> > What remains once you do is not the configuration management plane. It
+> > is development workflow orchestration: build QEMU, build the kernel,
+> > build a guest rootfs/closure, boot it, run a test, collect results,
+> > diff against a baseline. That work is imperative and sequenced, work
+> > for a workflow engine, which is where tools like Windmill [1] come in.
+> > Windmill calls itself as "the fastest workflow engine" and an
+> > "open-source developer platform to power your entire infra and turn
+> > scripts into webhooks, workflows and UIs." Choosing to move kdevops
+> > onto Windmill would keep what made kdevops kdevops, namely workflows,
+> > quick bring-ups, baselines, and A/B regression detection, while trading
+> > Kconfig, Make, Ansible, and host-distro provisioning for typed
+> > run-forms, flows as code, and a worker queue. Nix supplies the
+> > environment, much like a container or venv/poetry, along with the guest
+> > OS system closure: declarative and portable. Windmill orchestrates the
+> > whole pipeline end to end, graduating kdevops into a fully reproducible,
+> > scalable, and configurable kernel-development framework, with both a UI
+> > and a CLI, that runs locally or in the cloud. Defined as code and driven
+> > by schedules and triggers, the same flows also make it a continuous
+> > integration pipeline. Because steps can be written in any language
+> > Windmill supports, including Ansible, Bash, Go, Python, and Rust,
+> > developers can not only use kdevops but extend it with their own
+> > scripts, turning it into a workflow hub. Note that choosing this path
+> > does not mean NixOS is required on the controller node; Nix is simply a
+> > runtime dependency that can be installed alongside your distro of
+> > choice.
+> > 
+> > It'd be good to know what folks think about the possibility of evolving
+> > kdevops in this direction, deprecating Ansible along with Kconfig and
+> > Makefiles in favor of the new approach. To that end, I suggest a demo
+> > day where I can show why I think this is the next step worth taking, and
+> > whether it's a tradeoff users and maintainers are willing to make.
+> >
+> > If this is of interest and you'd like a look, I've ported equivalents of
+> > bootlinux (direct boot), qemu-build, and the systemd/QEMU bringup (QSU),
+> > plus an fstests run for XFS in the proof-of-concept demo project [2].
+> > You can also find some screenshots in [3].
+> > 
+> > A note on licensing. Windmill's engine is AGPLv3; its OpenFlow flow
+> > format and client libraries are Apache-2.0. kdevops-ng runs Windmill
+> > unmodified and self-hosted as a separate service, and the flows and
+> > scripts are kdevops-ng's own copyleft-next-0.3.1 code, executed by
+> > Windmill rather than derived from it, so there shouldn't be any
+> > licensing concerns.
+> > 
+> > [1] https://windmill.dev
+> > [2] https://github.com/dagomez137/kdevops-ng
+> > [3] https://github.com/dagomez137/kdevops-ng/tree/main/screenshots
+>
+> Some thoughts:
+>
+> I'd be interested to see the demo.  It's a little hard to make a
+> judgment about moving it in this direction without knowing specifically
+> what it would look like.  I took a quick look at the git repo and the
+> windmill site, but I don't really "get it" yet.
 
-I've run into a few issues recently where b4 has applied a series on a
-merge base I am fairly sure I didn't expect - I *think* there is some
-lag between me entering a merge base in the UI and it actually being
-paid attention to, possibly if checks are ongoing while I'm editing the
-UI.
++cc xfs folks.
 
-Relatedly it's not really visible in the UI what the base for a series
-is, I've only noticed this from the diffstat when applying which would
-be even more annoying if it got as far as testing after I've applied a
-bunch more things on top.
+I have published a documentation website here:
+https://kdevops-ng.readthedocs.io/en/latest/
 
-Something I did in my custom stuff is that I'd only pay attention to
-base commits specified in the series if they were on specifically
-approved branches, that way the common case where someone says they
-based on -next doesn't cause -next to get pulled in by mistake.
+It covers the project's concepts, terminology, deployment, roadmap and more.
+I've also included a demo video to showcasing how to build the kernel
+and run the fstest suite for XFS and review the results (all in Windmill UI):
 
-Thanks,
-Mark
+https://kdevops-ng.readthedocs.io/en/latest/getting-started/demos.html
 
---0B1gnQxaphknGHKn
-Content-Type: application/pgp-signature; name="signature.asc"
+I'd also like to suggest holding an office hours session toward the end of 
+this month (in about four weeks), so we can discuss about this, questions, etc.
 
------BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpD+PQACgkQJNaLcl1U
-h9ClNgf/XEN68wmt+nH4nvkUKJuVrAMLtBeu9TdGWN5ZtfRUWkzKegLelaCMVeB0
-9EGULQutT2CrrXkLKYxTNybRpyjA+1ZxN5KSYR/hQfq2QWrxxKMzWIT6bWovY2c3
-HkAR1ZTYIIvXurQifpFBycsCcn6R6EIiRaR+rmdQ8Vh6tGWUuo40pfmuXgjbX+xD
-BHjorNNisJexduk7aI9U1jS0p148vRCfJ1rEBsPMHfKGZBSz4Hd32ZGZQkMX66Wk
-EPi7FsD5GDZCCE8fcSjj5JN+hehIhYVIceC/uXpS0AqKxBBFP/Ou6Cr6QTjE589O
-jhxMfv9tonIY8/PvPPsMnQJoMGHZZQ==
-=itAV
------END PGP SIGNATURE-----
-
---0B1gnQxaphknGHKn--
