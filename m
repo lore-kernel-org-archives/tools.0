@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D0523BD1D
-	for <tools@linux.kernel.org>; Wed,  1 Jul 2026 13:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727F923BD1D
+	for <tools@linux.kernel.org>; Wed,  1 Jul 2026 13:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782913888; cv=none; b=NsAdtTIuMmIV0DV2GMNSw9tTKzH92dh2jcG39RUns6PdfzLnCkJ+EeCTO6HaKPIjIBwsBw3tuAg+ZAqdn3JlKX0e6d5STBDUKkFZp6ZM36Hf9QdXtsHel6YqYuECrLF8kLxmGgA7GB7S7GmEm4tkbizQ0FgjpWkgAZ7T5yHAWkY=
+	t=1782913889; cv=none; b=jzAjZ2lPtXGrlx7Lo8cCKbn8hjzH1LwNls2h7bDa7h0KnN/l6/mABcPOUR9UO110xi8ZtcE2DNx3Qu1f/3iCx4QokLEEXV8wG80zsQtFCgykoi4aOrAa+sZpDmqOwYu67g7NAESf2wsxhL5zkY68WF5wmhR3t3CfaMxBlfX+iqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782913888; c=relaxed/simple;
-	bh=drWiLFJKr+FJjIb8sV8Y6o6zeXjfaHCEoI+iGQeFnwg=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TGFwXYIOcSmeVnjEeKx0yaAfAK7RRN4QNo4Jn+6olEHvYCLcl/p39j5MvvPFcGjXjuWy9M68agCiJmQOH+Tqb5o0el7y2vMULR0e2g0Bnh+E2MPm4PfBG5Aw3L/BMKFi6EMKl+UoHcsl2x9HH7rMnC0GSrNa5x32OvnmKiYarPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SSiHzsaH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782913889; c=relaxed/simple;
+	bh=BVYh3XTeQGD1qRDJ1asRGS9J1+MVDNx7VyD4nvk9sUk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=RUTjS1ex+pF7tTipZAptTDWjMiSpLbmscSLBWIYI/EpVq8tQ95JBGweojWF6zcSbUcUSRViq6gH9uRKp2xJbFUKUlHJKBKDDKOIwkck61X03rtcVt6XvmKnOmZIFZhhugwdk/IjMTRsYqW1+nkGBoUEZIllDAQ5hYvdXQB0gF9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CN96V7Pq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SSiHzsaH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CN96V7Pq"
 Received: by smtp.kernel.org (Postfix)
-	id 2193D1F00A3A; Wed,  1 Jul 2026 13:51:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7571F00A3D;
-	Wed,  1 Jul 2026 13:51:26 +0000 (UTC)
+	id 521701F00A3E; Wed,  1 Jul 2026 13:51:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EBF61F00A3D;
+	Wed,  1 Jul 2026 13:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782913887;
-	bh=rfkeKqJq82eImMSzDxqJG2pLuYhYk7ayvtnHwYo8WnQ=;
-	h=From:Subject:Date:To:Cc;
-	b=SSiHzsaHEe6B5wOfK6o1QHF0O7kgMLVEf8GaDpwu1EQM4uZRkAiunvGqPX80n0Vqa
-	 CFksrPm2L/kHsHNsxMh2m3/2JaiBVPJZysCKBo/ctPOyW45E9hJsU9GGbr+Py9ImqU
-	 pykvkULlVjoM5yZ+1dsEjkB8a8UO8F9o26xVxtAJ6XM5y9Wa8IYvzP+tR+IlseE634
-	 8E//4/CznYqMdyk9l6VWDqI8fqwnYns0OCyWaOqVxO3tFmdap17+4BVoLBlH/f0Uvb
-	 4SUNxJ86cMrhAJiddF2RgXRbsLDe0vbGuGqEOQ9qigFNAdJBugnLWWmWqgsKTiGah9
-	 +ALS0pZ1HpmoA==
+	s=k20260515; t=1782913888;
+	bh=zjehOviV7cWzaPHviC88gcx6izu26TW3RA8JLyy3lAU=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=CN96V7Pqzyff3iZVn0Rd1RkQwo3Zw2FEn7TbwATq6Ld4cpLKhsStyuxF+rKE2UChX
+	 MBABiXouo2bxk2/ZOuVm5pLSPMnCEaIPpEP/MqjZBhAq00pS26TaLC6d3aC5pQY6NB
+	 0yrADP8x0/KvN2QomG/RHh89G3Mn2KLXmfdxG/i4Xz2uqp4W3EKAk8+Hm277iZ8//L
+	 4fNGc5pu3peJa1tFECIsDzbVboOVz8AyJX3n1PvaU28Xl1AlZrQTFvkhfJdry88y9y
+	 cccX5qkhAqQODNdLpZyH0JBOcMwFq0dTxumwxwEAUL8LfJ72NUNqRnp1AH3W3duFjB
+	 Xf0MfN5CptgWA==
 From: Christian Brauner <brauner@kernel.org>
-Subject: [PATCH b4 0/2] Detect naked cover letters that lack a 0/N prefix
+Date: Wed, 01 Jul 2026 15:51:21 +0200
+Subject: [PATCH b4 1/2] Detect naked cover letters that lack a 0/N prefix
  and diffstat
-Date: Wed, 01 Jul 2026 15:51:20 +0200
-Message-Id: <20260701-work-b4-naked-cover-letter-v1-0-f651c2ffb63b@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,59 +40,74 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFgbRWoC/yWMQQrCMBREr1L+2g9piVq9irj4SUcbq4kksQqld
- zfR1fAew1soITokOjYLRcwuueALtJuG7Cj+CnZDYepUt1N71fI7xImNZi8TBrZhRuQ7ci4DHHp
- RWmFreyqBZ8TFfX7xExlN579LL3ODzbVaX0YS2ETxdqzqIam0aF2/0R+fTZsAAAA=
-X-Change-ID: 20260701-work-b4-naked-cover-letter-ee98a040e5c8
+Message-Id: <20260701-work-b4-naked-cover-letter-v1-1-f651c2ffb63b@kernel.org>
+References: <20260701-work-b4-naked-cover-letter-v1-0-f651c2ffb63b@kernel.org>
+In-Reply-To: <20260701-work-b4-naked-cover-letter-v1-0-f651c2ffb63b@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.16-dev-4217c
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1984; i=brauner@kernel.org;
- h=from:subject:message-id; bh=drWiLFJKr+FJjIb8sV8Y6o6zeXjfaHCEoI+iGQeFnwg=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWS5SsfOaFu29criO4kRPrJ7p9glvjG/vOgiF8eLXzdZH
- +68sODy7o5SFgYxLgZZMUUWh3aTcLnlPBWbjTI1YOawMoEMYeDiFICJxJswMry/dvZjzQVjrlCG
- +U+UNvY36EyccyamOOGp+pZPvR+Kki4z/E/n3cLGGC34opCtd8ZthdKGzUv0cwMfWbLlvGPXefJ
- wJTMA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2646; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=BVYh3XTeQGD1qRDJ1asRGS9J1+MVDNx7VyD4nvk9sUk=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWS5SsfOssxmnp9p9M9cUffV9K1/on7qXNrW1XUmcEqU5
+ LozDEd+d5SyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzkBw/Df5cXdfN6exPPrdDh
+ f16nnvrzi8NmaUM/4zfLJtelPTn7hYXhn7qfQvGa6+dZLY9Mt5mRdD5q8hrZgv/vj1c+2sI26cH
+ 09ewA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-LoreMailbox only recognizes a cover letter when the message carries an
+LoreMailbox recognized a cover letter only when the message carried an
 explicit zero counter ([PATCH 0/N]) or, via the in-reply-to fallback in
-get_series(), when the thread root carries a diffstat.  A "naked" cover --
-one with neither a [PATCH 0/N] subject prefix nor a diffstat in the body --
-matches neither test, so it lands in self.unknowns and is dropped, and
-LoreSeries.has_cover stays False.
+get_series(), when the thread root carried a diffstat.  A "naked" cover
+-- one with neither a [PATCH 0/N] subject prefix nor a diffstat in the
+body -- matched neither test.  It was filed under self.unknowns and
+dropped, so LoreSeries.has_cover stayed False.
 
-The visible fallout is in shazam -M, which then reports "No cover letter
-provided by the author" and links the first patch instead of the real
-cover.  This happens whenever an author writes a short prose cover with no
-diffstat, e.g. Christoph Hellwig's "don't build bios/contexts over multiple
-iomaps" series:
+The user-visible fallout is in shazam -M, which then reports "No cover
+letter provided by the author" and links the first patch instead of the
+real cover.  This bites postings whose author writes a short prose cover
+with no diffstat, e.g. Christoph Hellwig's "don't build bios/contexts
+over multiple iomaps" series, whose cover carries no [PATCH 0/N] prefix
+and no diffstat:
 
   https://lore.kernel.org/linux-xfs/20260629121750.3392300-1-hch@lst.de
 
-Patch 1 extends the in-reply-to fallback to also accept the parent as the
-cover when it is a non-patch, same-author thread root (in_reply_to is None
-and not itself a reply).  Requiring the same author and the thread root
-avoids mistaking an unrelated message the series was merely sent
-in-reply-to -- a third party's bug report, say -- for a cover letter.
-
-Patch 2 adds positive (naked single-patch cover) and negative (patch sent
-in-reply-to a stranger's bug report) fixtures and a test.
+Extend the in-reply-to fallback to also accept the parent as the cover
+when it is a non-patch, same-author thread root (in_reply_to is None and
+not itself a reply).  Requiring the same author and the thread root keeps
+us from mistaking an unrelated message the series was merely sent
+in-reply-to -- a bug report from someone else, say -- for a cover letter.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
-Christian Brauner (2):
-      Detect naked cover letters that lack a 0/N prefix and diffstat
-      tests: exercise naked cover-letter detection
+ src/b4/__init__.py | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
- src/b4/__init__.py                           | 13 +++++---
- src/tests/samples/naked-cover-bugreport.mbox | 47 ++++++++++++++++++++++++++++
- src/tests/samples/naked-cover-single.mbox    | 44 ++++++++++++++++++++++++++
- src/tests/test___init__.py                   | 32 +++++++++++++++++++
- 4 files changed, 132 insertions(+), 4 deletions(-)
----
-base-commit: 4217c3e5d3e1eb259626142fd71b91ec6d5e3d1e
-change-id: 20260701-work-b4-naked-cover-letter-ee98a040e5c8
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index d7b41ee..ad5f62f 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -393,10 +393,15 @@ class LoreMailbox:
+             for member in lser.patches:
+                 if member is not None and member.in_reply_to is not None:
+                     potential = self.msgid_map.get(member.in_reply_to)
+-                    if (
+-                        potential is not None
+-                        and potential.has_diffstat
+-                        and not potential.has_diff
++                    if potential is None or potential.has_diff:
++                        continue
++                    # A diffstat marks the classic cover letter; a naked cover
++                    # (no [PATCH 0/N], no diffstat) is only trusted when it's a
++                    # same-author thread root.
++                    if potential.has_diffstat or (
++                        potential.in_reply_to is None
++                        and not potential.reply
++                        and potential.fromemail == member.fromemail
+                     ):
+                         # This is *probably* the cover letter
+                         lser.patches[0] = potential
+
+-- 
+2.53.0
 
