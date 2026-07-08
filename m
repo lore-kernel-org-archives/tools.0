@@ -1,80 +1,120 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671293F6600
-	for <tools@linux.kernel.org>; Tue,  7 Jul 2026 12:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5044142A79B
+	for <tools@linux.kernel.org>; Wed,  8 Jul 2026 16:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783428478; cv=none; b=RQLoZ1ld/A/JbiZqf6c9hKiZmLsPAl3iWKQjX+jcb78qUI8USgLbGSuk+PUufZgvrzgBWrzJCsVZoMLPDTpmDfqZaCH3uI92adB8HVyF2pSof9/plmv6gzquz/4Sufsy9pXXmDjdLInsHv4iv+Aa5TbCh8lMyP2192wTssmv7GM=
+	t=1783527383; cv=none; b=jJAsIzuLMzzllJOhEwnQMLXgl+AvgtvAUkaqsukBi1ArLA9OsXn3hEn5C7BuTY1ZdG0OTIHBeFn4ZqtzwCZP8AAdxS5b686HoJLKpXpYKDIADj7PBOKoumebYLaZSEwLP83cYnDOYUYwVWiYK0cUX45FUZklde0E2TsaVhVCxDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783428478; c=relaxed/simple;
-	bh=JgPUHbEQaxwQvfJiO1Ti3pGa98/ZRUPM63hUOcp4Rcw=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=dV06/r7fGj+fT0SzgWy0pVUEUlEdvfpnP47OPX3LvBkd5BZJ1aECJ1reBm+9yLsAGILYCcn/a4LRj01qO6b+6tyXcIm1ab0ryTUcjEaizhFnLayxUnaLOBAvxvv3v17IHUHVcrhDiNTOrdbyqE+KWME3y98YbOSi41l42blbz/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qv5999jX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783527383; c=relaxed/simple;
+	bh=IV57HNdktZ/UxgfXGPNYQHEzlcBIkLUMZaYYfWoLPqI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LX0HJTFwp7SpXDEmvQ0XlFNb/fZqD5AsYq/HsCv/znOW50JZsSd3xXuuEtgBtmsefNLPBALNNPsZe2/zk+1iMxh0F3ZRXoZVxczFDB2CZzDjkM9cBqC6/0oOZv6QQCd4+rk/5JXOCX1VYlYcqjUA7aPcbyBrWKG529ClKZ7HXdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UoWMkXaA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qv5999jX"
-Received: by smtp.kernel.org (Postfix)
-	id 1EC511F00A3A; Tue,  7 Jul 2026 12:47:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6645F1F000E9;
-	Tue,  7 Jul 2026 12:47:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UoWMkXaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F8A1F000E9;
+	Wed,  8 Jul 2026 16:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783428477;
-	bh=q1prhFmRevKQndCXZQVK0qOMUV28drAJT+5LnC92Ybw=;
-	h=Date:From:To:Cc:Subject;
-	b=Qv5999jXIPqKwxFgj/Sj1kd/CHvSNSgQO4uxiYv/tGeh0EmtCDCHa1aCtrI8vY4mg
-	 GeNt01st6hkIHnxIEW/+fnVvxQfMx2nqIqdKcu7Jep4adOoCxVqk9UHn//zBXh7lOa
-	 heLQNRL05kwYGc4jXQDhGD6yC2nC0tphPhND9ZuCcbY3rNxn4I/35CHlfurap6D1uQ
-	 SKUodFQo23UCiSpWrSqDO3s2X+rNqWJO9rTxhThPXPivLVhUzt4Kjimsj2x9Ithlfj
-	 ekPolzdgMTpcWvKZg4KEh7Od8VuShwJPvkl/d3qsHej04NQKyQ7fQMXS1nJlRv1EAT
-	 hGNQMbVJdhMrA==
-Date: Tue, 7 Jul 2026 13:47:53 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 review sashkio integration
-Message-ID: <24e7e23d-2413-4185-bd5c-b563209630e5@sirena.org.uk>
+	s=k20260515; t=1783527380;
+	bh=M8g+YOYJHRgDBNU7QIyDM+EBOEIbkxAX/X2xnD0Rosk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=UoWMkXaARDFd3AFt9YYNYGhcBlFg/tXZ0K4V9G0poPNba4X174JY7VpUsyvJrwuwG
+	 UdY7BdGFY7q4nZwGsb/5MN3hkKRs5RSnLhl8rtwLmLzPd7qx+0Aw8TG4OfUBVgguvO
+	 OxsNKXN3CrHsDstOS/itaJYO10wAar3ZvdFHymDVIlD2R2gi0FzbsQnfNtEHeFrxit
+	 eEYix5F9RmIC9muzMfpVk7YDg3qT9fqLeQQvgeMJYp1ea6GrIYG9RbAPfeS+4+s/gS
+	 s0nDrl4MUUVEES70JqNkdDsXf2S/yTZ6DobW9ENcvAq1hrpmJok9Sh7irmSCkUOVIN
+	 e8wJfkT1Erqxg==
+Message-ID: <916a7ec4-cf10-42ee-9624-18e13ff35ed4@kernel.org>
+Date: Wed, 8 Jul 2026 18:16:18 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lx0xb1Z6AgZlsrh/"
-Content-Disposition: inline
-X-Cookie: Walk softly and carry a megawatt laser.
+User-Agent: Mozilla Thunderbird
+Subject: Re: possible fuzziness for b4 trailers -u?
+Content-Language: en-US
+To: Konstantin Ryabitsev <mricon@kernel.org>
+Cc: tools@linux.kernel.org
+References: <b0e433ff-fa15-4715-ae0a-7f23da217d51@kernel.org>
+ <20260618-wooden-dragon-of-devotion-bcece2@meerkat>
+From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Autocrypt: addr=vbabka@kernel.org; keydata=
+ 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
+In-Reply-To: <20260618-wooden-dragon-of-devotion-bcece2@meerkat>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 6/18/26 20:30, Konstantin Ryabitsev wrote:
+> On Thu, Jun 18, 2026 at 10:50:52AM +0200, Vlastimil Babka (SUSE) wrote:
+>> I sometimes run b4 trailers -u to collect tags on patches that have been
+>> meanwhile slightly modified in git since the posting. Sometimes it's on the
+>> b4/$cover_topic branch as a submitter, sometimes it's already applied (but
+>> not stable as in no history rewrite) on a maintainer tree branch (I do use
+>> --since-commit and doublecheck the result of the update closely since some
+>> past surprises...).
+>> 
+>> AFAICS the trailers update relies only patch-id (?) so it will miss the tags
+>> when patch-id changes due to these local modifications. Could it try some
+>> fuzzy matching in that case? Some ideas:
+>> 
+>> - in b4/$cover_topic branch the metadata allows finding the posting thread
+>> and matching the patch subject
+>>   - ok, subject can sometimes change too, but not so often as the code
+>> 
+>> - in maintainer tree branch, there's usually a patch.msgid.link Link: that
+>> can lead to the given patch rather deterministically.
+> 
+> This was actually easier than I'd thought, because we already did the bulk of
+> this logic for "b4 dig". The latest master has a new --fuzzy flag to `b4
+> trailers`, which you can also couple with the new --interactive flag, which
+> should let you review the trailers before you actually apply them.
+> 
+> Try it out and let me know if this is what you were looking for.
 
---lx0xb1Z6AgZlsrh/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Just used it successfully, thanks a lot! The --interactive flag will also be
+very useful.
 
-Hi,
+> Cheers,
+> -K
 
-b4 review tui can display sashiko comments it fetches from the API,
-currently it displays all comments.  It looks like Sashiko has the
-ability to flag comments that are preexisting issues in the API, it
-would be very useful if b4 could optionally hide or distringush these
-=66rom issues identified in the patch itself.
-
-Thanks,
-Mark
-
---lx0xb1Z6AgZlsrh/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpM9XkACgkQJNaLcl1U
-h9Ch8Af/U+v5Il8i+/iV7fzgqacaTo63bVUDmwyEDsre1YgjuEj9zV2tmbQtwloU
-57VAcJu2IrK9gn/aRdhHOMtil5w15yQwMUftXvdk71VUmqbjPExnee7vIE2yNNbf
-JdlY7CkgDvB+OQ5Tx/0QpHyN3rQDnh5+Ni+qMGAC/PLMV7xjkSBZpcjSMttiN0fG
-8rQAwdkAB9I8GUke/oxbyOzicjV8rFIDU3mHr/yKmwE3hFOm9wKhl2qt0QSFZSQP
-ip7PwNaLkj8oDYuARo+msbjsh9az+Gx3541dP5JXEs2KpC92zsnr1x4ZjG2BrjyT
-O3RlhaIDSYDen+aw7a5619vMHkRMPw==
-=s+NE
------END PGP SIGNATURE-----
-
---lx0xb1Z6AgZlsrh/--
