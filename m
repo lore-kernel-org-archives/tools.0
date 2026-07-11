@@ -1,163 +1,132 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DC72D3A7C
-	for <tools@linux.kernel.org>; Fri, 10 Jul 2026 16:14:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783700080; cv=none; b=GmrXhdDiuLagFyLaACy8TPsA11A+ylWbM3Esk89GKYVpKX8oj+i2RUsrKXkRTwo/+Wn1s5x+UjoaCBmp9UJA+pFA1ejF/M9JtsfcFE8tqz0qm1No2YyD9hu0MSUeBEeczd1Cs3oXkgtIYHOhwo/AgO2uR7hKmXWlCqEiCZFWuZw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783700080; c=relaxed/simple;
-	bh=vOA76ND/wCE5ON2vgTIT7Ue+/Q2KiLDf7Oqr4WcU2AI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JKQ7j2tm71IoZWTUf7dXZUO8FJKKnOKGwnHELcgnhyx4PqDOf2AwMuAOusSfdj5BHhxN1PSfz67lPXA5CL0uHRPjx2lXkJjkoOJfknFVpLRauMWUjJcS7w40LU8AhrckPURswI2wRi+bg6YLHG8IOly5It0MshHb/gF0PQu3xrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i1ywBJ/A; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BCE225775
+	for <tools@linux.kernel.org>; Sat, 11 Jul 2026 08:19:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783757994; cv=pass; b=Vn8gkZhpA0eFhFpymYWCEo1uR3+36TUoCmQGQPG1m9kvbW73yrworXRfRHARvKVaJ2Ik5KXXZppXxWZFN46KfHry6tlQ/1C2uz7ZIY2CYAh0DP+9Qbgi/hBFtU8aR4bY9qZWuH+bdUJHLCsaXitHp8gnBAVAMngsr4Tm70LKh0I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783757994; c=relaxed/simple;
+	bh=8hKwJfsj2GYGdJnoBuIs6IJUK01KKQJXrDJSkwqasys=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DwA6i+a3Cx2g0YIqTazXt9oPCQEVV0BTuF1n7y2BFHBFDquxZ0h6noET7CO/ok+Mh2vHi+mj2EDVXLWIbdyGwTrZcET0Jm6Yf3KZaCB9M8X0VDjysSJfHzxwCqRF84Y67UcrrmAMPSsfR1zvD03LP/LmSEsySRuxxFgjvxkWFtI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=UbMhBWKf; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=S1Fiq9tR; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i1ywBJ/A"
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="UbMhBWKf";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="S1Fiq9tR"
 Received: by smtp.kernel.org (Postfix)
-	id C0D4B1F00A3A; Fri, 10 Jul 2026 16:14:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0231F1F000E9;
-	Fri, 10 Jul 2026 16:14:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783700078;
-	bh=1YDyg2kTOiLneydCsK5JGo7UPYrIJDSzDHY1S/m4GaA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=i1ywBJ/AtqfLPbM46x4+Lqr/A7LbOt5Pt8eCH8B4+Q8lzqFi6C2x1W/eMsIZsj36s
-	 GLqxXPBEWtuBV3nageZmiyoNkBDXIpYnDXHOkP8tX9b7al6HyiwJBAbWfAVS1AzobT
-	 gQ4oMl51wUz0vS5NGMOD7uKjaGc9DKrLPzUjWr57j80FYo5wY5QWoOXjd58G7sO4oA
-	 vNMtfDDVh+jMcH2JWv4DWH0tQlcEq36Hycrs2ckzzaehrAbhs/p/XS1/smV7Kh2/FK
-	 2+Vi8Qb5Ez4dSDAtxDp8DAEzDUuO3rpkPJg/sQ6fKVfMjCQaEINpEP04xkP6S1ZaD4
-	 PE+R/vPpIUwFg==
-Message-ID: <1fbfbdfe-38f8-45b5-9af0-e39b8db15ec8@kernel.org>
-Date: Fri, 10 Jul 2026 18:14:36 +0200
+	id 027CF1F00A3A; Sat, 11 Jul 2026 08:19:52 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=80.241.56.171
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1783757991;
+	b=TiFHVZOnzldocfuMhnw1FOqMZBSVqJ8WW4SXzr80bhKltTqV2UxdRld4fqIfKm1CFT3t
+	 iZMltTExdvnAilpACvxNLqOs88ubYxrX3OQPGS5ix1KbP/BHN/RlWr7lfXUc3zN6qiWvA
+	 E1+u7xZv3LgtXdX49kSJDVDVPSy5dOvaj8nbcaTBR07i3RtdCSH15MP05VpVEf/thQrYV
+	 k6QBjk41fNiVLbn+coiopDsFsYBGmEN2podkNhhLFNYNMwo6shFap06PepmBkcH8e2Rkj
+	 3EAlUXIAAhRkIR4SIpVWnTm6rBuABB2/MUHkod1CaWaL6UDb4HaHEnlxWAz4fe54FPw==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1783757991;
+	h=DMARC-Filter:Received:DKIM-Signature:From:DKIM-Signature:To:Cc:
+	 Subject:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:
+	 X-MBO-RS-ID:X-MBO-RS-META:X-Rspamd-Queue-Id;
+	bh=9wtnhk5ubZVMVG0DAG7OmDUvqJLoMFzpB//A5VzlJbQ=;
+	b=M6z8BZW8OlQ0y+pea4KLaNjFefeUvwGsKQvLMDaS35qTauNB04hlWZ46MJlgRJeXOKBx
+	 ctjaf5tEZVtY1VCqBTxDGA1p6LOElo0OQgfpurIbtxM0uaDOuaB0GSPl/xLDFvkFEBL5i
+	 PmylM+jsCMlF0BEnJeSJsrKiIX29ZS/rYRMT0+M9dt4XkKb9kCQAArHVhMuzEckxbLExU
+	 3XTbOgomeZLbmXk2sw+LW2HErj44/QC++lSDFukkLr5AUC1v3aoWCzjlmUmgv1fEDUp+C
+	 vroOVlPEJW+MZYRnBFZy8zqHdFrzq58q1SwK15kPG/QTu1xVt82BN6QnC9IE3nfh9Tg==
+ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=UbMhBWKf;
+	dkim=pass header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=S1Fiq9tR;
+	dmarc=pass header.from=mailbox.org;
+	spf=pass smtp.mailfrom=mailbox.org;
+	arc=none smtp.remote-ip=80.241.56.171
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 4B5561F000E9
+	for <tools@kernel.org>; Sat, 11 Jul 2026 08:19:49 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=UbMhBWKf;
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=S1Fiq9tR
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 4B5561F000E9
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4gy1pC4TgCzMlH6;
+	Sat, 11 Jul 2026 10:19:47 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1783757987;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=9wtnhk5ubZVMVG0DAG7OmDUvqJLoMFzpB//A5VzlJbQ=;
+	b=UbMhBWKffXFj6LH1Vo3vecjvYajbuV/1LJ108V5PV0POEAuQvXskGW3RgYQXhQZOYT2J5o
+	xI7OLRRsE+z6NJpEIQ8tc1UAXBGGxfrw1lEWdvtRuIC8EczmSv/3wIgljDVp8PfGd8J+aC
+	7FKUsNX5ybqBJ0ELctlYDVSC++8EBN4tSU1nPwYR/DBEog7hogpanvRoxdnzyaySIXQCpR
+	VGa55lo6HNq3vjoMDnKYuSwzRfplkLV5IW3lfevUZhIL6RJ5Q/LbNkKBzKTaXK8Mpk3s8E
+	4c/sgWut8tWzSeNzQ9LdvCQBRKz+S3j/cJYwYLV9RTsIQ8GQkLONoGWsRWnrgw==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=S1Fiq9tR;
+	spf=pass (outgoing_mbo_mout: domain of mhi@mailbox.org designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=mhi@mailbox.org
+From: Maurice Hieronymus <mhi@mailbox.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1783757986;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=9wtnhk5ubZVMVG0DAG7OmDUvqJLoMFzpB//A5VzlJbQ=;
+	b=S1Fiq9tRbkW60/rZ15ebh2rgL8/iFuS2ziF3tF1X2wF6BrJYlN2ymFQytn51FhA9tXmvru
+	Tm47qFcUMUl6F+O9MDyXmZBkOvAMJnXU2CAOpW1z2YomK9yvU8BUJl9fBr3E96ccniCTaO
+	aYvJ9DOTKgUSwlT4UEyB0iKR/D56RwuMLgXCW4EZqudUv521gIWaY6wF0z1C0bRCbeMWp7
+	7crDj7KiX/1/L0TsmalC5yPw7WyYLoRc7CHZX+V/qKybd33F4/VGUbIr4nrnHvAWIigzEc
+	1s9bZtyY0UtiqMZsDoblouBvG1+DCssG8Q2ZygTf6v2TVzsv3MFLgwKeFwfHGw==
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	tools@kernel.org
+Cc: Maurice Hieronymus <mhi@mailbox.org>
+Subject: RFC: b4 prep --enforce-deps to materialize series dependencies locally
+Date: Sat, 11 Jul 2026 10:19:37 +0200
+Message-ID: <20260711081938.59972-1-mhi@mailbox.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH b4] config: accept prep-pre-flight-checks from .b4-config
-Content-Language: fr
-To: =?UTF-8?Q?Cl=C3=A9ment_Le_Goffic?= <clegoffic@baylibre.com>,
- "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-References: <20260710-b4-config-pre-flight-checks-v1-1-ab16cf14a00c@baylibre.com>
- <a7e019e7-584f-4be4-bf15-c3ac51be8edc@kernel.org>
- <74f0e494-10e4-490a-bb3e-94efce984586@baylibre.com>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- xsFNBFXj+ekBEADxVr99p2guPcqHFeI/JcFxls6KibzyZD5TQTyfuYlzEp7C7A9swoK5iCvf
- YBNdx5Xl74NLSgx6y/1NiMQGuKeu+2BmtnkiGxBNanfXcnl4L4Lzz+iXBvvbtCbynnnqDDqU
- c7SPFMpMesgpcu1xFt0F6bcxE+0ojRtSCZ5HDElKlHJNYtD1uwY4UYVGWUGCF/+cY1YLmtfb
- WdNb/SFo+Mp0HItfBC12qtDIXYvbfNUGVnA5jXeWMEyYhSNktLnpDL2gBUCsdbkov5VjiOX7
- CRTkX0UgNWRjyFZwThaZADEvAOo12M5uSBk7h07yJ97gqvBtcx45IsJwfUJE4hy8qZqsA62A
- nTRflBvp647IXAiCcwWsEgE5AXKwA3aL6dcpVR17JXJ6nwHHnslVi8WesiqzUI9sbO/hXeXw
- TDSB+YhErbNOxvHqCzZEnGAAFf6ges26fRVyuU119AzO40sjdLV0l6LE7GshddyazWZf0iac
- nEhX9NKxGnuhMu5SXmo2poIQttJuYAvTVUNwQVEx/0yY5xmiuyqvXa+XT7NKJkOZSiAPlNt6
- VffjgOP62S7M9wDShUghN3F7CPOrrRsOHWO/l6I/qJdUMW+MHSFYPfYiFXoLUZyPvNVCYSgs
- 3oQaFhHapq1f345XBtfG3fOYp1K2wTXd4ThFraTLl8PHxCn4ywARAQABzSRNYXR0aGlldSBC
- YWVydHMgPG1hdHR0YmVAa2VybmVsLm9yZz7CwZEEEwEIADsCGwMFCwkIBwIGFQoJCAsCBBYC
- AwECHgECF4AWIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZUDpDAIZAQAKCRD2t4JPQmmgcz33
- EACjROM3nj9FGclR5AlyPUbAq/txEX7E0EFQCDtdLPrjBcLAoaYJIQUV8IDCcPjZMJy2ADp7
- /zSwYba2rE2C9vRgjXZJNt21mySvKnnkPbNQGkNRl3TZAinO1Ddq3fp2c/GmYaW1NWFSfOmw
- MvB5CJaN0UK5l0/drnaA6Hxsu62V5UnpvxWgexqDuo0wfpEeP1PEqMNzyiVPvJ8bJxgM8qoC
- cpXLp1Rq/jq7pbUycY8GeYw2j+FVZJHlhL0w0Zm9CFHThHxRAm1tsIPc+oTorx7haXP+nN0J
- iqBXVAxLK2KxrHtMygim50xk2QpUotWYfZpRRv8dMygEPIB3f1Vi5JMwP4M47NZNdpqVkHrm
- jvcNuLfDgf/vqUvuXs2eA2/BkIHcOuAAbsvreX1WX1rTHmx5ud3OhsWQQRVL2rt+0p1DpROI
- 3Ob8F78W5rKr4HYvjX2Inpy3WahAm7FzUY184OyfPO/2zadKCqg8n01mWA9PXxs84bFEV2mP
- VzC5j6K8U3RNA6cb9bpE5bzXut6T2gxj6j+7TsgMQFhbyH/tZgpDjWvAiPZHb3sV29t8XaOF
- BwzqiI2AEkiWMySiHwCCMsIH9WUH7r7vpwROko89Tk+InpEbiphPjd7qAkyJ+tNIEWd1+MlX
- ZPtOaFLVHhLQ3PLFLkrU3+Yi3tXqpvLE3gO3LM7BTQRV4/npARAA5+u/Sx1n9anIqcgHpA7l
- 5SUCP1e/qF7n5DK8LiM10gYglgY0XHOBi0S7vHppH8hrtpizx+7t5DBdPJgVtR6SilyK0/mp
- 9nWHDhc9rwU3KmHYgFFsnX58eEmZxz2qsIY8juFor5r7kpcM5dRR9aB+HjlOOJJgyDxcJTwM
- 1ey4L/79P72wuXRhMibN14SX6TZzf+/XIOrM6TsULVJEIv1+NdczQbs6pBTpEK/G2apME7vf
- mjTsZU26Ezn+LDMX16lHTmIJi7Hlh7eifCGGM+g/AlDV6aWKFS+sBbwy+YoS0Zc3Yz8zrdbi
- Kzn3kbKd+99//mysSVsHaekQYyVvO0KD2KPKBs1S/ImrBb6XecqxGy/y/3HWHdngGEY2v2IP
- Qox7mAPznyKyXEfG+0rrVseZSEssKmY01IsgwwbmN9ZcqUKYNhjv67WMX7tNwiVbSrGLZoqf
- Xlgw4aAdnIMQyTW8nE6hH/Iwqay4S2str4HZtWwyWLitk7N+e+vxuK5qto4AxtB7VdimvKUs
- x6kQO5F3YWcC3vCXCgPwyV8133+fIR2L81R1L1q3swaEuh95vWj6iskxeNWSTyFAVKYYVskG
- V+OTtB71P1XCnb6AJCW9cKpC25+zxQqD2Zy0dK3u2RuKErajKBa/YWzuSaKAOkneFxG3LJIv
- Hl7iqPF+JDCjB5sAEQEAAcLBXwQYAQIACQUCVeP56QIbDAAKCRD2t4JPQmmgc5VnD/9YgbCr
- HR1FbMbm7td54UrYvZV/i7m3dIQNXK2e+Cbv5PXf19ce3XluaE+wA8D+vnIW5mbAAiojt3Mb
- 6p0WJS3QzbObzHNgAp3zy/L4lXwc6WW5vnpWAzqXFHP8D9PTpqvBALbXqL06smP47JqbyQxj
- Xf7D2rrPeIqbYmVY9da1KzMOVf3gReazYa89zZSdVkMojfWsbq05zwYU+SCWS3NiyF6QghbW
- voxbFwX1i/0xRwJiX9NNbRj1huVKQuS4W7rbWA87TrVQPXUAdkyd7FRYICNW+0gddysIwPoa
- KrLfx3Ba6Rpx0JznbrVOtXlihjl4KV8mtOPjYDY9u+8x412xXnlGl6AC4HLu2F3ECkamY4G6
- UxejX+E6vW6Xe4n7H+rEX5UFgPRdYkS1TA/X3nMen9bouxNsvIJv7C6adZmMHqu/2azX7S7I
- vrxxySzOw9GxjoVTuzWMKWpDGP8n71IFeOot8JuPZtJ8omz+DZel+WCNZMVdVNLPOd5frqOv
- mpz0VhFAlNTjU1Vy0CnuxX3AM51J8dpdNyG0S8rADh6C8AKCDOfUstpq28/6oTaQv7QZdge0
- JY6dglzGKnCi/zsmp2+1w559frz4+IC7j/igvJGX4KDDKUs0mlld8J2u2sBXv7CGxdzQoHaz
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <74f0e494-10e4-490a-bb3e-94efce984586@baylibre.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-MBO-RS-ID: 0913f8881e5aefc2dd7
+X-MBO-RS-META: jgm96k59k3n6oimznkouhz8zyjh8jjmj
+X-Rspamd-Queue-Id: 4gy1pC4TgCzMlH6
 
-On 10/07/2026 18:04, Clément Le Goffic wrote:
-> Hi Mathieu,
-> 
-> On 7/10/26 5:51 PM, Matthieu Baerts wrote:
->> Hi Clément,
->>
->> On 10/07/2026 17:14, Clément Le Goffic wrote:
->>> The .b4-config file is a convenient way to share project-level b4
->>> configuration among contributors via version control.  However, only
->>> keys matching a set of glob patterns are currently accepted from it
->>> (see wtglobs in _setup_main_config).
->>>
->>> The prep-pre-flight-checks key, which controls which pre-flight
->>> checks are enabled or disabled before sending a series, is not
->>> matched by any of the existing patterns.  The closest glob,
->>> 'prep-*-check-cmd', only matches keys ending in '-check-cmd', not
->>> '-checks'.  As a result, setting prep-pre-flight-checks in
->>> .b4-config has no effect: the value is silently dropped and the
->>> default 'enable-all' is used instead.
->>>
->>> Add 'prep-pre-flight-checks' to the wtglobs list so it can be set
->>> from .b4-config, allowing projects to disable checks (e.g.
->>> needs-checking, needs-auto-to-cc) that are not relevant to their
->>> workflow and share that decision via version control.
->> I don't remember if it was present in this list for security reasons --
->> similar to *-check-cmd at some points [1] -- but I do remember a bug
->> report with the same patch [2] which has never been applied.
->>
->> On my side, I think it would be useful to be able to use
->> "disable-needs-auto-to-cc" on some specific dev tree of a
->> "sub-subsystem". On these dev branches, no need to add extra reviewers
->> from the "parent" subsystem.
->>
->> We could then have this config:
->>
->>      [b4]
->>          send-series-to = <dev ML>
->>          prep-pre-flight-checks = disable-needs-auto-to-cc
->>          send-prefixes = <specific dev prefix>
->>
->> [1] https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=a1360385
->> [2] https://bugzilla.kernel.org/show_bug.cgi?id=219705
-> 
-> 
-> This is actually what this patch allows.
-> My usecase is to use b4 in a project unrelated to kernel process and
-> internals and I wanted to be able to use and push a .b4-config file with:
-> "prep-pre-flight-checks = disable-needs-auto-to-cc, disable-needs-checking"
-> in it so the pre-flight-checks doesn't fire for this project and for
-> everyone.
-> Note that disable all should also work here, not tested.
-> 
-> It should fix the bugzilla bug though.
+Hi Konstantin,
 
-I don't know, but I guess no, otherwise Konstantin would have applied
-the original bug attached to this bug report:
+b4 prep can declare series dependencies (--edit-deps) and verify them
+(--check-deps), but it never materializes them: --check-deps applies
+everything in a throwaway sparse worktree and discards it. If I work
+on stacked series, I still stack the branches by hand, and re-stack
+them by hand every time a prerequisite gets a new revision.
 
-https://msgid.link/a8bc0958-6c46-4622-96ef-b1e55c15f30f@cherry.de
+I'd like to close that gap with something like:
 
-> Should I add a Fixes trailer or something like that?
-Better to wait for Konstantin's feedback before sending a new version ;)
+  b4 prep --enforce-deps
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
+which reads the declared prerequisites, figures out what needs to be
+rebased on what, and runs the git commands to bring the local branch
+into the state the dependencies describe. Conflicts stop the rebase
+as usual and are the user's problem. Since an enforce can involve
+several steps, there would also be:
 
+  b4 prep --abort-enforce-deps
+
+which restores the pre-enforce state after a partially completed
+enforce. That means saving the branch head and tracking state to
+a backup ref before touching anything.
+
+If this is seen as useful I can sketch a prototype and send patches.
+
+Best,
+
+Maurice
