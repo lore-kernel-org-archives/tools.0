@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0842DC32E
-	for <tools@linux.kernel.org>; Sun, 12 Jul 2026 11:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADC53A6407
+	for <tools@linux.kernel.org>; Sun, 12 Jul 2026 11:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783854418; cv=none; b=Gd9q9FqDtsCHAG4qd/vIhAlbNDdYmGnfkiGXw/oqamx5wGlMRoWIdm3R/ydVrbEVWYJ9pQ8mHKXb8g/ASgiwW0j4JUtyTbSByYzt6S/lW4zNWxi6giXdwEdS3eH5Y9hRuMxrfJrD7lvLbT1pkuia5EsPTNg9D8AqIXDeJVkllu0=
+	t=1783855360; cv=none; b=TZS4WeLrPZ2PQByq1JBI+hF3oLbPXx55BGSUpo9v1TdobUUcEq7gl/Mg2XoNVIwEyagpTlHxjo0F+OksXvW6W5J0z7TpVneVqraoAmJnpbWaPKC/e4OQU4w682rslvZPsyns/ox35WifFZujUYyLaGQkd62GrEMNMyIJACVBDno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783854418; c=relaxed/simple;
-	bh=T0uJRKY/hffTZuZxixSc0Cj/wiy6Rb8obChU/OpJHYg=;
+	s=arc-20240116; t=1783855360; c=relaxed/simple;
+	bh=igW/DhRUoBojNA1Q9M1UPpNOwihVx79KMGrqLTh8gsk=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=SCIgq6K/dr6lq0xQgreG/urU3snuDxxeXkxuSW9aFHRc0CRr5ZWCmUSlDjrchFmT02GxTvysdk1qyex7cBnzlkYuAenV9DwjRKf9Mm9N8lFBACkzvpCH91Fdi/nRqHfpdRMmthEsrN41WgeA+LTxhVrsjDxfmwG0WLK7Hbicvt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PQh5h0qy; arc=none smtp.client-ip=100.103.45.18
+	 Content-Disposition; b=anTiBdGGP1h53VQMfmdUJSDRMXkbOoQX1Tth7BeSVkvucNH1LPn9T681txZiOo2Z7muHQ0LBmTkzUyXRfCt/2CX/TYYGtXwXjuPmoU+2464IC4VB3WKRuQcZnus79CPZ8V+EhZrpifaQav9r630drMcpTulkScf2zhdUnVF0R0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MIKmH7r9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PQh5h0qy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19A51F000E9;
-	Sun, 12 Jul 2026 11:06:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MIKmH7r9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0D21F000E9;
+	Sun, 12 Jul 2026 11:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783854416;
-	bh=T0uJRKY/hffTZuZxixSc0Cj/wiy6Rb8obChU/OpJHYg=;
+	s=k20260515; t=1783855358;
+	bh=igW/DhRUoBojNA1Q9M1UPpNOwihVx79KMGrqLTh8gsk=;
 	h=Date:From:To:Cc:Subject;
-	b=PQh5h0qy6Q8nibEc/ejYLM0+FDp0f6TVt4xOmpPZxaxZyc4Mup+UcuMJWKL4picfs
-	 cvOY6Gld7VDJLam3/smIt029VyDNQr3xoxy6EQoYXab1qTvqV4shyjXDGtlYIzsPo6
-	 u+NISS1O4n0SUHOzhgwPNLsOrpH1/TkmH5WaJebOjKLrcKv2KEGI0Aqw0iZS9aAD2w
-	 464b8lhs7SkcrIns5ZOToyCSRlZLg701f3BaDdeLgPVVOS8S5/tqKY7MGquRQwZ/lk
-	 NoUoZRteIszmjKm+iaarhbiSZOuQ9bbW7PayxR82prR2jD6B8jccT3fTyZvpw0Lqxk
-	 StlWCYscqz6Og==
-Date: Sun, 12 Jul 2026 12:06:45 +0100
+	b=MIKmH7r9RaaNwQpgBoDnRjxEy7ttjPyG7vFP1MgNjo6Mw05UJeG8LsFEKzBU5+Onj
+	 WrJZZIUam9oWFcqPPBrKOJNLaqZhqe+cQwLVzlhZbcc7TXupRVJlGr7h1JEIO9lopM
+	 VeqXQYesaiI/NMDoytVRyJtkUOJXxhZ0I7gPgLGQVZB7166q7uid+kzeAyxkNnALI/
+	 PtIOe5svK+pEdRqibqYHkJwT0O5kyOALcHqdvG0myKAmXZIoyfdiZJIWjdTW1PbP3O
+	 1w0Zkxaf/wJF6iQOypwGFFXDgbdt2L/BcZ9jtzVUlmfhE7PfBZTM7A5yQUaQVhx6mc
+	 wrabgPM0Rtnnw==
+Date: Sun, 12 Jul 2026 12:22:27 +0100
 From: Lorenzo Stoakes <ljs@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@linux.kernel.org
-Subject: b4 review not picking up v2 with prefix?
-Message-ID: <alNzLxOk2V04cNgo@lucifer>
+Subject: b4 review silently freezes on patatt fail
+Message-ID: <alN2yOZmbl31BfVW@lucifer>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -43,32 +43,36 @@ Content-Disposition: inline
 
 Hi Konstantin,
 
-Thanks for b4 review is a great tool that I'm now integrating into my workflow
-(alongside b4 for sending series which I previously... resisted :)
+I noticed a bug in b4 review (as pinged on fedi but better to send the bug
+report properly :)
 
-So maybe an edge case here, and sorry for lazy report vs. patching (just so much
-to do elsewhere) but for series [0] I set a mm-hotfixes prefix via:
+So I had an incorrect configuration locally - my signing key in git (git config
+user.signingKey) was set to the wrong one (the old, revoked one, the one
+I... err... lost the private key for :P).
 
-$ b4 prep --set-prefixes 'mm-hotfixes'
+And with this in place, I was using b4 review tui --email-dry-run to experiment
+with composing a reply.
 
-Which is a convention in mm used sometimes to highlight that a series/patch
-is a hotfix.
+The replying bit worked fine. But when I hit 'S' to send it froze up. No error
+shown, just frozen.
 
-I have the v1 tracked ([1]), but when doing an update via 'u' or 'U' in the
-review tui it doesn't seem to find the v2.
+Some strace's later and I identified that gpg (of course) was to blame - it
+seems the python code just hangs waiting forever (idle event loop looks like).
 
-To make things more complicated, I sent patches separately previously ([2]
-and [3]) which I decided to combine into the series sent in [0].
+And it seems to be when it tried to use patatt to sign my reply to a mail, gpg
+failed with exit code 2:
+
+execve("/usr/bin/gpg", ["gpg", "--batch", "--no-auto-key-retrieve",
+"--no-auto-check-trustdb", "-s", "-u", "130EC0891A27271B"]) = 0
+exit_group(2)
+
+(I can give you a full strace if you need!)
+
+I confirmed this was the signing for sure as passing --no-sign fixed it.
+
+Once I updated my signing key to the correct one, everything worked fine.
 
 $ b4 --version
 0.15.2
 
-Thanks, Lorenzo
-
-(And yes I am using b4 review to track my own series as well as reviews :P
-makes it easier for me to keep track of what I've sent also :)
-
-[0]:https://lore.kernel.org/linux-mm/20260712-series-vmap-race-fix-v2-0-ad134cc3a12a@kernel.org/
-[1]:https://lore.kernel.org/all/20260710-series-vmap-race-fix-v1-0-5b3794c113fe@kernel.org/
-[2]:https://lore.kernel.org/all/20260710-fix-cpa-ptdump-race-v1-1-d898699a7417@kernel.org/
-[3]:https://lore.kernel.org/all/20260710-b4-fix-non-init_mm-ptdump-v1-1-2d40982c98ec@kernel.org/
+Cheers, Lorenzo
