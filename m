@@ -1,78 +1,126 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC9A42A796
-	for <tools@linux.kernel.org>; Mon, 13 Jul 2026 13:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909663128D4
+	for <tools@linux.kernel.org>; Tue, 14 Jul 2026 13:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783949978; cv=none; b=gLJ1hHsSFePnU2DusDeSZtaWe5mn9uGfTlZUuJnViFv4Snbb13rKpJQcY59H3ouTHJ2rXpUtdBxGEFgmkqiOvg6T1C+xc7t7el6L+nf74EgPM2tsIXQeFyqXiZXVtmwU6OHMX0Xv7AKhobn93p2Mk9Kk3OfLFM4CqwyfUEVUsA8=
+	t=1784035733; cv=none; b=Earklef60mqbVkda24Z9Gx2Wl1yOgq4JX/x6msz10tl5UTBBx/Ew+q9OauQF1ZxAEFmDSnMVNxF860krO61rzcbonSYNCamS3V5ZJAVSAJ1gDYkTTUT4IiyWyz4UDFBUrirzQ6lBMM6tgrCDQ+wQGGUVxkLpnVlIRm9/FEJD3gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783949978; c=relaxed/simple;
-	bh=xGZIGXg2Uj+QTxrftBHoGeoqliQycM/FBDQA37OZ9aU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=ThXMkWbdX79BnOXY6cT5Ssqfe8dXLqp5GhELypL/CuXBLMhGskJOfAeDVLCk9eZnPLWlYXb08g9NjMx8I+w0gShVql7Lo/tPx1qJ12rNoYF/J8K1H9LQD8wY4dxn9mQDfJIGvVJWKcDVK9BRJnpzZZvIyegActBLYkLcVNKDkkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AmI/JA4B; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784035733; c=relaxed/simple;
+	bh=/Fws3KSlxMHdlwhAyumJrPu7ncFfg/67W0PtF0gorPE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=S/vO9oOZg3JXym4hYn//OhqZdCHCUvhnU4a2O9RO+XPA/nqXOQKeWO1dOJJrIQPeFZG1IxgaeLTjRPwbWQSwW3N94m7no4KWFEiGguYo4syzH2kbi8Is/aDH5rtA/Y6J+WbkkgApOI+Di2XkxErO5bKFYGdfDJtCJEsHs6cB4V8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n3gytVbV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AmI/JA4B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n3gytVbV"
 Received: by smtp.kernel.org (Postfix)
-	id A700F1F00A3A; Mon, 13 Jul 2026 13:39:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30A51F000E9;
-	Mon, 13 Jul 2026 13:39:36 +0000 (UTC)
+	id 4F0761F00A3A; Tue, 14 Jul 2026 13:28:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05441F000E9;
+	Tue, 14 Jul 2026 13:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783949977;
-	bh=fFh1y+W0GK7Eqr9oAxz3E25zy0zsx+MpdBQoSPBZIFo=;
-	h=Date:From:To:Cc:Subject;
-	b=AmI/JA4B6Ou5XdAIOu5+7BhgLgLiGDNNaimVRa+jPnkRnnX7ahM/zqyCV6DiDMums
-	 OV+e5o1pOJu4xc/tBVMmjp7XIOjfMICYvlleCqw5WXh4wAFzKC4Q73R7RF9GvZgmLh
-	 Bf0JfVKOALTaawLuGYQTjO4m7cY7AhybhAfMXrnD6/TiYyLmv8b6soG/iE6zDVb8gu
-	 YEHQT3SLzOBqAF8RHpwnvl82Bxx4k1m+uevbr6sI6B0nVgWxblzMpJo/51GsAQwUCX
-	 BX5wcx0NdZCmubGU+qPU+7/c2afBOj1xdZ7nUY2Z3WLmUe9EFDOUMqDNzNfes0lyrc
-	 tN6pS8NH8Kqpg==
-Date: Mon, 13 Jul 2026 14:39:34 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 review animates scrolling slowly
-Message-ID: <985fb687-8990-4112-9e65-3701d35c71b9@sirena.org.uk>
+	s=k20260515; t=1784035732;
+	bh=H36A1UwBA81/M9Le4MHJyifGj7jbl/lZipCjYoJT+oM=;
+	h=From:Date:Subject:To:Cc;
+	b=n3gytVbVOIbgBCZyatkqjnseKWPY92FOnqFwdPjO8CIM7NiiNadazY12Wis7FYhhh
+	 XardR0wsSfLLSJCOVUxscnRCymn+pkru3GNtIhOJ+CTfEAdh31aThAqBsof38LroAx
+	 GSnweSoyTPccExeqhhedlJelru74Okm7RCoGdM4C+tLsfuJcmvrRSQ6mmLzUwDdrVe
+	 ES4uHs/obq7VWgWRHRvoSrpYyVkSA+DIdmngieXulh8iDaXosMVWsqYYz2wtbWSjYh
+	 U2hB0XXUS/z4VBcwYgGaV2UomEDykHRlneUxLlZ+7/z96sSXsrx/AXVLtiXMVX/lXB
+	 K3dVQqpkScJqg==
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+Date: Tue, 14 Jul 2026 14:28:04 +0100
+Subject: [PATCH b4] Correctly quote usernames when setting From field
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dTmHnS2KxglWMP4d"
-Content-Disposition: inline
-X-Cookie: Courage is grace under pressure.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260714-b4-fix-from-v1-1-8166064bd700@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAGM5VmoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDc0MT3SQT3bTMCt20ovxcXcvEpJTEFAsLE0tDAyWgjoKiVKAc2LRopSQ
+ TpViIWHFpUlZqcgnIGKXaWgAqRlwEcwAAAA==
+X-Change-ID: 20260714-b4-fix-from-9abdad884910
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: ljs@kernel.org
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2703; i=ljs@kernel.org;
+ h=from:subject:message-id; bh=/Fws3KSlxMHdlwhAyumJrPu7ncFfg/67W0PtF0gorPE=;
+ b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLLCLHt0Lr0VfnFuc/SKV82eTtsD/nN+W7Q2auPTK3sOL
+ zJ/17k3r6OUhUGMi0FWTJHl+Rfx/UEiYfM6L/i7wcxhZQIZwsDFKQATef+YkeFqaMhZX9vD+66u
+ 5df3fV7jfLnv1qENpn8mbr+Vse/9p5XVDP/TA//W1R0MtzunYLlMWuhlyNJG7/NnHfat3Xptyj2
+ FHz0cAA==
+X-Developer-Key: i=ljs@kernel.org; a=openpgp;
+ fpr=E7F417BF5214569E89D04F46CF9DCD8A81E27F14
 
+make_reply(), get_pr_from_github() and _build_review_email() construct the
+email From field without properly quoting the user name and email.
 
---dTmHnS2KxglWMP4d
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This is especially problematic for users adopting the convention of "Joe
+Bloggs (Company) <foo@bar.com>", as the text contained within parentheses
+is interpreted as a comment and dropped.
 
-Hi Konstantin,
+Resolve the isssue by passing the name and email address through
+format_addrs() as is already done for To and Cc fields.
 
-When moving to the next review comment with , and . b4 animates the
-scroll at a fairly slow rate.  When the patch is large and the review
-comments spaced widely apart this can become rather tedious to watch,
-taking at least tens of seconds at times.
+We use clean=False as the username and email have been obtained from git
+config user.[name,email] so do not need LoreMessage.clean_header() to be
+applied to them.
 
-Thanks,
-Mark
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+---
+ src/b4/__init__.py       | 2 +-
+ src/b4/pr.py             | 2 +-
+ src/b4/review/_review.py | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---dTmHnS2KxglWMP4d
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index d7b41ee..2682ae5 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -2530,7 +2530,7 @@ class LoreMessage:
+         msg = EmailMessage()
+         msg.set_payload(body, charset='utf-8')
+         msg['Subject'] = subject
+-        msg['From'] = f'{user_name} <{user_email}>'
++        msg['From'] = format_addrs([(user_name, user_email)], clean=False)
+         msg['To'] = format_addrs(deduped_to, clean=False)
+         if deduped_cc:
+             msg['Cc'] = format_addrs(deduped_cc, clean=False)
+diff --git a/src/b4/pr.py b/src/b4/pr.py
+index 9beaa08..7cf736d 100644
+--- a/src/b4/pr.py
++++ b/src/b4/pr.py
+@@ -430,7 +430,7 @@ def get_pr_from_github(ghurl: str) -> Optional[b4.LoreMessage]:
+         uemail = fake_email
+ 
+     msg = email.message.EmailMessage(policy=b4.emlpolicy)
+-    msg['From'] = f'{uname} <{uemail}>'
++    msg['From'] = b4.format_addrs([(uname, uemail)], clean=False)
+     title = prdata.get('title', '')
+     msg['Subject'] = f'[GIT PULL] {title}'
+     msg['Message-Id'] = b4.make_msgid(
+diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
+index 8c025ea..a3d82ac 100644
+--- a/src/b4/review/_review.py
++++ b/src/b4/review/_review.py
+@@ -2841,7 +2841,7 @@ def _build_review_email(
+     if not subject.lower().startswith('re:'):
+         subject = f'Re: {subject}'
+     msg['Subject'] = subject
+-    msg['From'] = f'{user_name} <{user_email}>'
++    msg['From'] = b4.format_addrs([(user_name, user_email)], clean=False)
+ 
+     # Build reply headers.  When the user has explicitly edited the
+     # To/Cc fields via the ToCcScreen, honour their choices as-is.
 
------BEGIN PGP SIGNATURE-----
+---
+base-commit: 4217c3e5d3e1eb259626142fd71b91ec6d5e3d1e
+change-id: 20260714-b4-fix-from-9abdad884910
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpU6pUACgkQJNaLcl1U
-h9A8dQf+NUWYaV1hl8cbsYVEj0dXXl3gvtnawMXNaSizSUAZkI5cNIm+8Fb/cutb
-TLfTdhCViCG7g28dmL5ZctmgNyWu8vFezVJOd/E+8UCxM0FypS9gKYVApW2j/Gjs
-7Cp4BHkY//Abg7mP95I7hUeSJ1lAaivouKCtkwJbDs95QwU6831sTBAni8IrfRQM
-bNtUIeB+3Xmpmm/shgofkJUQdk2xajFPqEVrfGp2A1wrb2pq5OOW3xaUMzKXVYU7
-xij2lQcKuZFaQ1h1i14zkryvhfpmTmnMVfbJGCZbcQzeHhBiSSFrs69iDvVktF7M
-eUXwTL4EZvzT0rw+70fgME21Zu95Og==
-=METz
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
---dTmHnS2KxglWMP4d--
