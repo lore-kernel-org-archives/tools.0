@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA2E34B1B0
-	for <tools@linux.kernel.org>; Wed, 15 Jul 2026 14:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBBA360EE8
+	for <tools@linux.kernel.org>; Wed, 15 Jul 2026 14:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784124339; cv=none; b=nexsBJfzvDPQOIO3zYvSPnQwCOqcBuI5uzmoRzivIVZFkNWO3XyO/GWYL8kwljndvv/fFiaO3EQ56cduX+oUpp2RNcjt7mYUVxbLLB9CCImMmEOOjCC5D2JGcB20o/jqWUhWFppTS/9LHyxAzyspgb/gtmlFtPCszuXD2fwjGSo=
+	t=1784125512; cv=none; b=TY+0xRYC+pZ4SBJs0ni0k+fGzRYUDYTxIS4npMj7QM3CHDQEHfznMgnVkbK0RGgMiaxM+MpjpzQkyOtFXUYixKrb9CFKmMxfvPcZ1GGNNueu+TY9YYHOUz43GaFT+wvXPrCntRVixoh0jjA4Kt4bj6W4jE99jPvN9twDxHyDi8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784124339; c=relaxed/simple;
-	bh=6bxzGMO44nR6WUJhskYkW/xgIm2UOzJnsmXsJ8WIxe4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hgPq9kB6KXwfA6/iV1Y5QRI7WgRYNuXbyU98OTHkTXSVGV4M5CNMvLZlRveJX+yil44Py9YySgazpTF3miX3XEffFKKZJ3I06h0SqpsnRBepaVUvDlcSItj1M3LMlG5RB02ufQ+B2oFkze2KcmJFQ+SH+BVCnvWdcGuIiU/ZlFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eow5aZUv; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784125512; c=relaxed/simple;
+	bh=UTzu1zw6vi9fgp2Gu6TziQHfqFDYaDll351yA+MMlvo=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=lScITkMpx4jVTcwa3Hukn4Sx9njDzfx+dDBdOFf1P74cK4t98lgOdt/xvVGfz/mKDZdruA5iwYZDz6BbuNN+Lih8xoqBM6MeN2/w41/e0BAjh2gOV7tsJIojaPx3IFiVd/fFV9D/NK0Yo3ekOMgegnl4rbDtJF3C+K+6286ylSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PQYlp8+z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eow5aZUv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3432D1F000E9;
-	Wed, 15 Jul 2026 14:05:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PQYlp8+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67371F000E9
+	for <tools@linux.kernel.org>; Wed, 15 Jul 2026 14:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784124338;
-	bh=6bxzGMO44nR6WUJhskYkW/xgIm2UOzJnsmXsJ8WIxe4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=eow5aZUv75K7qnPZr0C+VDi7sHGQiIpnoNfT+q/eI/lghUcfJcEkbhPFhG8XlvCoO
-	 6GGlKDpu4oMur0oBYrt9cF0dfrFV1pyoDG33RS8G9TVQ6zIO+S1RpWRf9CgUHYCHAl
-	 g3u5DBOi4LEVoVq0Y1Z3u6yHP3fhKo14vg2VWfuM6rdSnjaRvruBXXqyksQlG7SsNo
-	 xMPVeePSGK/AslpO3WjUkDWJ6cCAhNsUqCRRzi+pCOEcTZAo6ue/ws+o5kIDOC4PuT
-	 amxGKOAVvao73u8o0H3eSdrRGPmAezM8fYqYJblKrUBxxemTCJ5iRyWBrkPiTMohou
-	 ADs3jCgJwrD/g==
-Date: Wed, 15 Jul 2026 15:05:25 +0100
+	s=k20260515; t=1784125510;
+	bh=UTzu1zw6vi9fgp2Gu6TziQHfqFDYaDll351yA+MMlvo=;
+	h=Date:From:To:Subject;
+	b=PQYlp8+zaVxtZxg0lO0bMDSiZhcBsY10EmQOcdjnb06w635x5WxNCMwhk/glUGkgu
+	 u3GSzJRUQWoGqpXeGYOHjeOtJdSpiVORCEhqeTebv3kEBpiu4JBfI2/pJppgv1L4ri
+	 mvl3DoQkfsZJ5QuqnbG7EirM25hrFAJvlPI6Rpq66BOk41dqbI3jvLDLaAcuPWpMLy
+	 rH4YBSxV2iz3/iTSDWFztwrTAuFwQyUjfNhhyljtFu8WLJMHNAD8o1YXng4Wnh0QDv
+	 abuHQLcCyDpYXRMzpXCqWweF/im6VLGsA6NmTz0EnTL2asE9ECOqj/TmL4cw+HK2gq
+	 IGohpIHxImHyg==
+Date: Wed, 15 Jul 2026 15:24:58 +0100
 From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@linux.kernel.org
-Subject: Re: b4 review not picking up v2 with prefix?
-Message-ID: <aleTasCAYAvzz6cU@lucifer>
-References: <alNzLxOk2V04cNgo@lucifer>
+To: tools@linux.kernel.org
+Subject: b4 review feature request - search :)
+Message-ID: <aleXuTEXAJ7if1wt@lucifer>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -41,44 +39,18 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <alNzLxOk2V04cNgo@lucifer>
 
-On Sun, Jul 12, 2026 at 12:06:49PM +0100, Lorenzo Stoakes wrote:
-> Hi Konstantin,
->
-> Thanks for b4 review is a great tool that I'm now integrating into my workflow
-> (alongside b4 for sending series which I previously... resisted :)
->
-> So maybe an edge case here, and sorry for lazy report vs. patching (just so much
-> to do elsewhere) but for series [0] I set a mm-hotfixes prefix via:
->
-> $ b4 prep --set-prefixes 'mm-hotfixes'
->
-> Which is a convention in mm used sometimes to highlight that a series/patch
-> is a hotfix.
->
-> I have the v1 tracked ([1]), but when doing an update via 'u' or 'U' in the
-> review tui it doesn't seem to find the v2.
->
-> To make things more complicated, I sent patches separately previously ([2]
-> and [3]) which I decided to combine into the series sent in [0].
+Hi Konstantin,
 
-Ohhh this may be on purpose. I noticed with v3 that it picked it up, but kept it
-at v2, and prompted me to do 'a' (action) then 'U' (upgrade) so possibly PEBKAC
-here :>)
+It's totally fine to respond to this with 'patches welcome' :) but something
+that'd be nice for the b4 review tui mode is being able to fuzzy incremental
+search entries, kinda like C-s in emacs.
 
->
-> $ b4 --version
-> 0.15.2
->
-> Thanks, Lorenzo
->
-> (And yes I am using b4 review to track my own series as well as reviews :P
-> makes it easier for me to keep track of what I've sent also :)
->
-> [0]:https://lore.kernel.org/linux-mm/20260712-series-vmap-race-fix-v2-0-ad134cc3a12a@kernel.org/
-> [1]:https://lore.kernel.org/all/20260710-series-vmap-race-fix-v1-0-5b3794c113fe@kernel.org/
-> [2]:https://lore.kernel.org/all/20260710-fix-cpa-ptdump-race-v1-1-d898699a7417@kernel.org/
-> [3]:https://lore.kernel.org/all/20260710-b4-fix-non-init_mm-ptdump-v1-1-2d40982c98ec@kernel.org/
+So maybe default-bind '/' to that and it moves the highlighted entry to one that
+contains the searched phrase in submitter or series subject line, or something
+simple like that.
 
-Cheers, Lorenzo
+Have found myself scanning the list thinking 'hmm I definitely remember b4
+review track'ing that but where is it?' :)
+
+Thanks, Lorenzo
