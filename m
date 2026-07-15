@@ -1,126 +1,136 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909663128D4
-	for <tools@linux.kernel.org>; Tue, 14 Jul 2026 13:28:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784035733; cv=none; b=Earklef60mqbVkda24Z9Gx2Wl1yOgq4JX/x6msz10tl5UTBBx/Ew+q9OauQF1ZxAEFmDSnMVNxF860krO61rzcbonSYNCamS3V5ZJAVSAJ1gDYkTTUT4IiyWyz4UDFBUrirzQ6lBMM6tgrCDQ+wQGGUVxkLpnVlIRm9/FEJD3gk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784035733; c=relaxed/simple;
-	bh=/Fws3KSlxMHdlwhAyumJrPu7ncFfg/67W0PtF0gorPE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=S/vO9oOZg3JXym4hYn//OhqZdCHCUvhnU4a2O9RO+XPA/nqXOQKeWO1dOJJrIQPeFZG1IxgaeLTjRPwbWQSwW3N94m7no4KWFEiGguYo4syzH2kbi8Is/aDH5rtA/Y6J+WbkkgApOI+Di2XkxErO5bKFYGdfDJtCJEsHs6cB4V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n3gytVbV; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45103AE1AF
+	for <tools@linux.kernel.org>; Wed, 15 Jul 2026 04:23:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784089397; cv=pass; b=OzBxa+kNfTgjw68AR27srN5xBU9+YUxIz59w4Q+jOAcsruZIs17gWz4A3aHKjt9WiElI6E0MVeWPthF41fQEHz3zCjYiGj1ZbclIqD9X26PPDC1BKhjKm1Dv9DzfzfZKNzE63XUOWQi9VCXY+Ob1sPs9SH04Itwm75t5tt3GSmI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784089397; c=relaxed/simple;
+	bh=8BmOWmmwPuqIGUQo3jJN3PREUOCrsDHVM0b0uoLoSkE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To; b=rAgOuBUBZSf59ZLnFS1qCWixvhbMUxORgHzw5e8qKCdmj04gh5AX/h+Lhg1nEXMRI+1nZ3IY1l0eBWtm6BDH4+19k8Td7l3tRKhwKm9pNErisY7gPHJTp4f0pLq0fu9CjSgksrL3mT9WQNlV0nOk+ANF5G3hTiFDFW4L0VzY/Vg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ukb7yinz; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n3gytVbV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ukb7yinz"
 Received: by smtp.kernel.org (Postfix)
-	id 4F0761F00A3A; Tue, 14 Jul 2026 13:28:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05441F000E9;
-	Tue, 14 Jul 2026 13:28:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784035732;
-	bh=H36A1UwBA81/M9Le4MHJyifGj7jbl/lZipCjYoJT+oM=;
-	h=From:Date:Subject:To:Cc;
-	b=n3gytVbVOIbgBCZyatkqjnseKWPY92FOnqFwdPjO8CIM7NiiNadazY12Wis7FYhhh
-	 XardR0wsSfLLSJCOVUxscnRCymn+pkru3GNtIhOJ+CTfEAdh31aThAqBsof38LroAx
-	 GSnweSoyTPccExeqhhedlJelru74Okm7RCoGdM4C+tLsfuJcmvrRSQ6mmLzUwDdrVe
-	 ES4uHs/obq7VWgWRHRvoSrpYyVkSA+DIdmngieXulh8iDaXosMVWsqYYz2wtbWSjYh
-	 U2hB0XXUS/z4VBcwYgGaV2UomEDykHRlneUxLlZ+7/z96sSXsrx/AXVLtiXMVX/lXB
-	 K3dVQqpkScJqg==
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-Date: Tue, 14 Jul 2026 14:28:04 +0100
-Subject: [PATCH b4] Correctly quote usernames when setting From field
+	id 3B7581F000E9; Wed, 15 Jul 2026 04:23:15 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.215.178
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1784089395;
+	b=pWyYB4GpOH9fatC7/GHLe3yqmfvqRsfUxg1vF/6IvRFQTAQphju672RLRtoHCNmVQWFL
+	 PfwxGZ68FeiINih6jawRBWHbtfFtolCs9w5p5PIHQLDKx7HtBTyK+TPFx+GyaguFigGQZ
+	 m+j9BKMhPAH6DI0zbBAcHlTdxEojXVeiVVLuh1vk9eo0YNxqPfbNmcRQWtuGh8mqbx/M0
+	 ONgxGw20J17zIQjHG3B9f7BPe8lGRxc1zQ4M6kdHVuCAyAVgGzPp29+ZG3tZpqC7T9Bgh
+	 tI6K6XuCoaexdPaivnCyiC7JUefZpg+O3oHjVR0WHKn5WdK342Nqb78FGRdIsfbDbmQ==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1784089395;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Mime-Version:
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Subject:From:
+	 To:X-Mailer;
+	bh=8BmOWmmwPuqIGUQo3jJN3PREUOCrsDHVM0b0uoLoSkE=;
+	b=JQ6yus4LBnurHmtDWQprB5iKD2PeJkHKbkPpYXt0wQz77ixTaLXxmhY2gnjtvRWLtfHS
+	 B3KWhD7Qm3lem5T4r5PdljSAWnxzgdrrL0o4+UHYJr54OztNDfSDlwuPl67/xVK/CAw0U
+	 TfNskeV/CyvkN2VIwmjBrqQp+yrh5wfH+9OpdmBspcbyNjOlqkfvEt9ZVcp39UnsFMwXe
+	 VRAT+mpuo4QsEnfBMBI3tAf8kQziLHfUofYU0vX6r3VO9VuRrL+Al1D3N4CZXedTIrQmE
+	 /69CxLRwxD1YqXtIm0aJX4HsLCIVroGdhZzo3GkKs5C6pJBo2MuwI8sP/bRniizFfNw==
+ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Ukb7yinz;
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=209.85.215.178
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id E7F2C1F00A3E
+	for <tools@kernel.org>; Wed, 15 Jul 2026 04:23:13 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Ukb7yinz
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org E7F2C1F00A3E
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c9e30214d8fso3520720a12.3
+        for <tools@kernel.org>; Tue, 14 Jul 2026 21:23:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784089393; x=1784694193; darn=kernel.org;
+        h=to:from:subject:message-id:date:content-type
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=8BmOWmmwPuqIGUQo3jJN3PREUOCrsDHVM0b0uoLoSkE=;
+        b=Ukb7yinz6kMD5v4rJjJCVXTdyQ9Pchey4c50yOMpR1BU9OE5yb3BTvmqDvjg52Ak33
+         wYFRSUsXPjo4NiGfRoDngQF8Z9A8ck/tT2G/8sXTqtq0Y8AHKFRggaAuLb2+hSg/Kg93
+         zA6xm6ZkI+lJoISYMqGv2RETimibFnSka7vql7YVGuLmOhqIBKKWxTEOLzDYxfeFZoCj
+         AVaHsK8Kz1sORWaH9zzFu5ybcb6VLGfD3Zu5Kx081Z95kCPKccOwIWxXX4DWQDyAyKk4
+         Ux9msdxvu9EMU5gnmeezmAqaV+iotMohfRwiYYOGtxzriRpuUMdWhowJgrrMMXDHICzK
+         zM2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784089393; x=1784694193;
+        h=to:from:subject:message-id:date:content-type
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=8BmOWmmwPuqIGUQo3jJN3PREUOCrsDHVM0b0uoLoSkE=;
+        b=RcpqAUjGJtEXi7zYUps2KWjh6FaGRarq1cU153A68Bo2praQ1RWNCVqeKiejW6L0Nl
+         ZJAqnhc6to8gt+ypcxiSRj/GMxdaG1JGArFw16uY4TtFeVIOzf2/jfP+M+X3kjJIxEbn
+         hYSeRB6iVUZpvxI+NSKAMPQNjEMNbbO1PqiZnVVwrFcd525NSX/Ip24iYdNH/1/3wl1p
+         EjDx9yDj54TGB1g38DFDtvFHCQuKOP3J3byQy9qZ8chMuE9uzm6FIz4tvscJNse+ofvM
+         61bIu/YcwAlbNsagojk1KivWNficcoWw3bAuz//dpjMNwQkNTEoA/MfSAH0vT9a+kjg4
+         FqKA==
+X-Gm-Message-State: AOJu0Yw6iz9+079TzC+4o2Xic27/KYCNEC9Ng3jeVB4IpfNCjSpI0/2y
+	tAzOuPJAIYyBD5So6Jmgw1SuXgiMJVnq/7v1wuvtu1tLD4WHYkn5axePEARxg+2l
+X-Gm-Gg: AfdE7cmWS4+yoAHeRSwm7YrepwhQ1L9dWujHlPyxbCXih95fJ9z8lbaFub9ywWOnX0T
+	YGsWJeQWjKZQN33kI+VS9NTF1NO4ghCD6PkdDhzkzSuXjny1QXUiD6EGeGMNYlKFk3qfojUmnJN
+	yuJaTVprwIJfRTMN2puir4w8v2930oq9LRHtobX/Hxglp8NBauk2E6kXSSoNgI6rICfYhA6DtAg
+	3EV5UrT4a9b249XmCzit91ryZWe12IQBz3HWsJR6bEDFpSlnkHL8778DWVcncLWdMIjY1QHlpKA
+	41I24Kpjy7kITFUM3rl5MPq2BZ1dAbfC1SzDq1HrXEdVI8OBXSUcneUfiI2+Mtc6z18W2UU8PJD
+	AJ9DOU1MhoOTthtqMvgaiHrE5gOLCqwGyIJ/57vwEAWgwcL9oP8frsZwNDkwHfMSKlRzUQOlacb
+	UZMqBt5FNUyo5hKw==
+X-Received: by 2002:a05:6a21:3cca:b0:3c0:9c19:65bd with SMTP id adf61e73a8af0-3c36c4983b8mr1282673637.69.1784089393224;
+        Tue, 14 Jul 2026 21:23:13 -0700 (PDT)
+Received: from localhost ([98.35.8.117])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3117483dec6sm87720342eec.11.2026.07.14.21.23.12
+        for <tools@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Jul 2026 21:23:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260714-b4-fix-from-v1-1-8166064bd700@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAGM5VmoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDc0MT3SQT3bTMCt20ovxcXcvEpJTEFAsLE0tDAyWgjoKiVKAc2LRopSQ
- TpViIWHFpUlZqcgnIGKXaWgAqRlwEcwAAAA==
-X-Change-ID: 20260714-b4-fix-from-9abdad884910
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: ljs@kernel.org
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2703; i=ljs@kernel.org;
- h=from:subject:message-id; bh=/Fws3KSlxMHdlwhAyumJrPu7ncFfg/67W0PtF0gorPE=;
- b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLLCLHt0Lr0VfnFuc/SKV82eTtsD/nN+W7Q2auPTK3sOL
- zJ/17k3r6OUhUGMi0FWTJHl+Rfx/UEiYfM6L/i7wcxhZQIZwsDFKQATef+YkeFqaMhZX9vD+66u
- 5df3fV7jfLnv1qENpn8mbr+Vse/9p5XVDP/TA//W1R0MtzunYLlMWuhlyNJG7/NnHfat3Xptyj2
- FHz0cAA==
-X-Developer-Key: i=ljs@kernel.org; a=openpgp;
- fpr=E7F417BF5214569E89D04F46CF9DCD8A81E27F14
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 14 Jul 2026 21:23:11 -0700
+Message-Id: <DJYUWNNX1I22.2632DDSHKRPNQ@gmail.com>
+Subject: b4: NixOS module
+From: "Farid Zakaria" <farid.m.zakaria@gmail.com>
+To: <tools@kernel.org>
+X-Mailer: aerc 0.21.0
 
-make_reply(), get_pr_from_github() and _build_review_email() construct the
-email From field without properly quoting the user name and email.
+Hi everyone,
 
-This is especially problematic for users adopting the convention of "Joe
-Bloggs (Company) <foo@bar.com>", as the text contained within parentheses
-is interpreted as a comment and dropped.
+I have been using b4 for the last few days as a new contributor and it's
+been a great experience so far.
 
-Resolve the isssue by passing the name and email address through
-format_addrs() as is already done for To and Cc fields.
+It's definitely a full packed tool with lots of features but it's made
+sending and rerolling patch series much easier.
 
-We use clean=False as the username and email have been obtained from git
-config user.[name,email] so do not need LoreMessage.clean_header() to be
-applied to them.
+I just tried the `b4 review tui` feature and that was pretty awesome
+too. I did find it a but hard to see the inline Agent notes however.
+I had to enter the "Reply mode" to see them rather than in the "View
+mode" (these are the inline notes and not the high-level commit notes).
 
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
----
- src/b4/__init__.py       | 2 +-
- src/b4/pr.py             | 2 +-
- src/b4/review/_review.py | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+In any case, I run NixOS and I wanted to share my current NixOS module
+for b4 in case anyone else is interested in using it that way.
 
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index d7b41ee..2682ae5 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -2530,7 +2530,7 @@ class LoreMessage:
-         msg = EmailMessage()
-         msg.set_payload(body, charset='utf-8')
-         msg['Subject'] = subject
--        msg['From'] = f'{user_name} <{user_email}>'
-+        msg['From'] = format_addrs([(user_name, user_email)], clean=False)
-         msg['To'] = format_addrs(deduped_to, clean=False)
-         if deduped_cc:
-             msg['Cc'] = format_addrs(deduped_cc, clean=False)
-diff --git a/src/b4/pr.py b/src/b4/pr.py
-index 9beaa08..7cf736d 100644
---- a/src/b4/pr.py
-+++ b/src/b4/pr.py
-@@ -430,7 +430,7 @@ def get_pr_from_github(ghurl: str) -> Optional[b4.LoreMessage]:
-         uemail = fake_email
- 
-     msg = email.message.EmailMessage(policy=b4.emlpolicy)
--    msg['From'] = f'{uname} <{uemail}>'
-+    msg['From'] = b4.format_addrs([(uname, uemail)], clean=False)
-     title = prdata.get('title', '')
-     msg['Subject'] = f'[GIT PULL] {title}'
-     msg['Message-Id'] = b4.make_msgid(
-diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index 8c025ea..a3d82ac 100644
---- a/src/b4/review/_review.py
-+++ b/src/b4/review/_review.py
-@@ -2841,7 +2841,7 @@ def _build_review_email(
-     if not subject.lower().startswith('re:'):
-         subject = f'Re: {subject}'
-     msg['Subject'] = subject
--    msg['From'] = f'{user_name} <{user_email}>'
-+    msg['From'] = b4.format_addrs([(user_name, user_email)], clean=False)
- 
-     # Build reply headers.  When the user has explicitly edited the
-     # To/Cc fields via the ToCcScreen, honour their choices as-is.
+I've upstreamed it to home-manager here [1] and you can see it in my
+current NixOS configuration here [2].
 
----
-base-commit: 4217c3e5d3e1eb259626142fd71b91ec6d5e3d1e
-change-id: 20260714-b4-fix-from-9abdad884910
+If you have more suggestions or ideas on how I could improve the module
+please let me know.
 
-Cheers,
--- 
-Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Thanks!
 
+[1] https://github.com/nix-community/home-manager/pull/9658
+[2] https://github.com/fzakaria/nix-home/blob/6f0e8ece2749db124e99fd7630cb9=
+e8fc8b3ffaf/modules/home-manager/b4.nix
