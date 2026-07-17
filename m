@@ -1,93 +1,133 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0676344044
-	for <tools@linux.kernel.org>; Fri, 17 Jul 2026 15:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953B9246BD5
+	for <tools@linux.kernel.org>; Fri, 17 Jul 2026 22:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784302946; cv=none; b=Yszxqy83PnT6sIVq1h1A4XEyH7b/+QRKoGVDl07ll8oBfBagftBaXAhvuTRmUyS3td4U3zPiFbYb4n2aXPbxhCU+4RXOpFBgk6ouTQPoWOM/BGJRzhMimh5QNDzuPg4ygwrF15mSdLyUyFwPmQ5ZlMHRZeS5yP4MQt3xmQHN9Ao=
+	t=1784327900; cv=none; b=jW6TweyKrO734YRdibSu0ynFPxj4kgHwp7Or6oehwMRhOqxk8dslv/2agPtvvCXy6LQAjNhtSHRBCmkQmg8gU0ZbtgT/3PaUz6ZGjXSgxDya8p3R/fJZ5ZRc7uwnbII9Eo07ac/4mcy0hc0cpPjVEJP3hu9Q4aj9KUANrrQk3c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784302946; c=relaxed/simple;
-	bh=YY+Je27CQ6Ncccm5N87O9fFdpsPVN2KTirw/ZjDsWmA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jAFi0K14MZmgCwRoUBTZ+9kKeft4mhXwH7G2FboF6OF5yA4trzbCZXWZCN5FP5BvYOfvTKVI+pDwqBG5nrNq5KlKgkIJEr+KPHsslZ2v5kzIqYeOhjurckElVEObHk5EsOGzXTChW0DrIadJC4vfOcwwd5u8VSQhm6zV/892usE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jw24jZyJ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784327900; c=relaxed/simple;
+	bh=j8t4CnwKfUlvG1l3Ak5JVosrnHd4xijaYFoxyOHRDdM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=eD1SFdjY395DXQRaU4Eyw4HgAq8pcA8vd9EIstdpaKY+fxcqP7QwgbZKTf7mNp0sEmo02UwN25W0PsY9Kw9OQH99okE88n+BO2fmeb7hrnXLAGYrm1BL1fvAAluNr7OH8fckNo3k6FivQui5S932QGQ7BKhVjcj6oGNuNFM+DHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AG4Ry33K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jw24jZyJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AG4Ry33K"
 Received: by smtp.kernel.org (Postfix)
-	id 70A721F00A3A; Fri, 17 Jul 2026 15:42:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB5A1F000E9;
-	Fri, 17 Jul 2026 15:42:23 +0000 (UTC)
+	id 4D3011F00A3A; Fri, 17 Jul 2026 22:38:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496DC1F000E9;
+	Fri, 17 Jul 2026 22:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784302944;
-	bh=z0cPT2V1XVkGpgpNIHx2sdnOb9DZHe2rAkrgr91C/ck=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=jw24jZyJ0Lo/tnAHYoazc8QIGKk0dG/ktA2g28q4+4JaOcdwyz9cemaYlHVZvDvgH
-	 DEmGZ0N1nSwvvJBJurjZ9ukVY49sk+5OuRHG+wKZFlbKClnr2ofk+ZSdBob+cKbcuJ
-	 IjtZGmPJNv+jhygd59C9gTaEh/IaiKn5L2zZtqewkYCjpKQv4k+RstxO7vIIkCBzFl
-	 FsU+BS/ZqZrckImkAAGSc5RLPOZjaAfz8lDuS5YXNs22jLUdTo6fup+YL3yQalblYf
-	 e8xp2qX7URlF51/I9UJOmMXj18bmwppk2itOxdMOGSMV7OeA7r8QAEC5pcNQinufDl
-	 50axSQI74J0qg==
-Date: Fri, 17 Jul 2026 16:42:20 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: Re: b4 review animates scrolling slowly
-Message-ID: <ae49b85f-148e-40cc-be27-bfbc72ac0886@sirena.org.uk>
-References: <985fb687-8990-4112-9e65-3701d35c71b9@sirena.org.uk>
- <20260717-smooth-petrel-of-champagne-2039cd@lemur>
- <40154af2-c28c-4903-a9fd-bd7f4f986096@sirena.org.uk>
- <20260717-fervent-barnacle-of-painting-9a5f74@lemur>
+	s=k20260515; t=1784327899;
+	bh=QIxYIEPlr4uLdKKvy0uJyq2lnWpjXmpDmgh2IfWcqEs=;
+	h=From:Subject:Date:To:Cc;
+	b=AG4Ry33K5DgV2JqE9ft3aYWeLmvzv3FkLe+pqTS1+23KyVOLCnShTSnGFNm3wKb49
+	 aw6ugWejUuXvC7fyTKiwjJi5FNpbE5e6zyhqxnPDNiOpzWD7EZHUho9eApEWI9sD2m
+	 jhytPDpGRm6MYgU/mPSt9fuDMZRTAc0Dv5rTQCVr5kQRAdc612qy/Jd0bviqkqn1FO
+	 sdnAH56y5lNdZe03PtKgcxW1kcVroHhZ3d0Xtq0J6Vv9+dExwPx36coMp6E4qwBVt1
+	 5zCU9cBGS0gPD5I7HkOup7Ujkk+cgFEQ2mhOatf2VrML2JbWUoCq5MECEIHSCliyhW
+	 FYBHbuDx2aPKg==
+From: Christian Brauner <brauner@kernel.org>
+Subject: [PATCH RFC 00/11] review: track and browse every version of a
+ tracked series
+Date: Sat, 18 Jul 2026 00:37:36 +0200
+Message-Id: <20260718-work-b4-multiver-rows-v1-0-3c539d2a3095@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="V73EKUSUn+jKtrqe"
-Content-Disposition: inline
-In-Reply-To: <20260717-fervent-barnacle-of-painting-9a5f74@lemur>
-X-Cookie: Enjoy yourself while you're still old.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALCuWmoC/yWMQQ6CMBBFr0Jm7SRtVVC3Jh7ArXHR4iBVac1MA
+ RPC3S26fC//vwmE2JPAoZiAafDiY8igVwXUrQ13Qn/LDEaZUlV6h2PkJ7oNdv0r+YEYOY6CpVq
+ bxlWa9lsN+ftmavzn173A+XSE619K7x5Up6W4zJwVQsc21O2iOiuJGOb5C65C5d6XAAAA
+X-Change-ID: 20260718-work-b4-multiver-rows-6032fb71e951
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ "Christian Brauner (Amutable)" <brauner@kernel.org>
+X-Mailer: b4 0.16-dev-4217c
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3648; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=j8t4CnwKfUlvG1l3Ak5JVosrnHd4xijaYFoxyOHRDdM=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRFrbv5Qdkw3741bNNUe8WlOTL1CQetHZYZar5RX+bOu
+ tc6YSVfRykLgxgXg6yYIotDu0m43HKeis1GmRowc1iZQIYwcHEKwES2rWX4n1l0c+lzvpg8wZrv
+ wXsfJdn9lXPlCuLnv2lbdXjSQdsTPgz/g+7mcK5otXrz801uSsL7gP/c59b25kW0fD778nfE1fV
+ FzAA=
+X-Developer-Key: i=brauner@kernel.org; a=openpgp;
+ fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
+The review TUI binds all mail visibility to the revision a series is
+tracked at: 'e' opens only the tracked thread, unread badges exist
+only on the series row, and u/U updates poll only the tracked
+revision.  Earlier versions of a series -- and the discussion that
+shaped it -- are invisible even though the revisions catalog knows
+they exist.
 
---V73EKUSUn+jKtrqe
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Make every known version of a tracked series a first-class citizen of
+the mail-tracking machinery:
 
-On Fri, Jul 17, 2026 at 11:17:45AM -0400, Konstantin Ryabitsev wrote:
-> On Fri, Jul 17, 2026 at 03:59:02PM +0100, Mark Brown wrote:
+- The revisions catalog grows per-revision message counts (schema
+  v11).  Reads stitch the series row over the catalog so the tracked
+  revision's live counts win while archived upgrade leftovers never
+  shadow anything.
 
-> > I'd push back on that and say that I can't imagine that anyone wants to
-> > spend a literal minute watching code scroll past.  I think the scrolling
-> > is fine when it's for smaller moves but it should have some sort of time
-> > bound on it that adjusts the rate of scroll or turns it off entirely
-> > when the move gets too big.
+- u/U updates poll every cataloged revision for new mail using the
+  same incremental thread queries used elsewhere: zero database
+  writes when a thread is quiet, a full refetch plus git-blob caching
+  when something new arrived.  Rethreaded revisions sum their
+  per-patch threads.
 
-> Can you let me know if setting the following helps at all:
+- A new "Find older revisions" action runs the b4 am/mbox backward
+  search (change-id query when the cover carries one, subject+sender
+  otherwise) with an explicit wantvers covering every previous
+  version, records what it finds, and polls the new entries
+  immediately so they arrive with counts and cached threads.  A
+  retitled series without a change-id still needs manual linking --
+  the same limitation b4 am -vN has.
 
->     TEXTUAL_ANIMATIONS=basic
+- The tracker list gains expandable per-version rows: 'x' unfolds a
+  series into child rows (tracked revision starred) with their own
+  unread badges and activity dates, 'X' toggles all series at once.
+  Enter/'e' on a child opens that version's thread with
+  revision-correct seen syncing, and 'd' range-diffs it against the
+  tracked revision directly.  Expansion and cursor state survive the
+  periodic DB reloads and limit filtering.
 
-> We can switch to this being the default mode if that's an acceptable
-> middle-ground. If not, I can look at turning off all animations in the absence
-> of a defined TEXTUAL_ env var, but this would be fighting with the framework a
-> bit.
+Message-level read state was already keyed by message-id alone, so
+Seen/Flagged/Answered flags apply across versions unchanged; this
+series adds the missing count/badge and navigation layers on top.
 
-I'll try that next time I've got an affected patch.
+Also included is a standalone fix for 'e' on rethreaded series, which
+never passed is_rethreaded and thus fetched a single patch's thread
+instead of reassembling the series from its per-patch message-ids.
 
---V73EKUSUn+jKtrqe
-Content-Type: application/pgp-signature; name="signature.asc"
+The series is bisectable, with implementation and tests split
+throughout.
 
------BEGIN PGP SIGNATURE-----
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+---
+Christian Brauner (11):
+      review-tui: fix rethreaded series thread viewing
+      review: track message counts for all revisions of a series
+      review: test per-revision message tracking
+      review-tui: poll every revision on u/U updates
+      review-tui: guarantee the tracked revision in revision lists
+      review: add backward discovery of older series revisions
+      review-tui: add a "Find older revisions" action
+      review: test backward revision discovery
+      review-tui: extract the Msgs column renderer from TrackedSeriesItem
+      review-tui: expand tracked series into per-version rows
+      review-tui: test per-version tracker rows
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpaTVwACgkQJNaLcl1U
-h9Czfgf9FpFvYwo/VmlN5NOqgR1uNqjjFieoTJhkKC6j+prVuQnCsUFCXUrAy7wk
-MqAKgjP6QsHiwJXZwrOZfTXXh6Ml9uaMHEGnN+u3eLm7wBWmWryYKontlbECwueN
-Z89xRpBB/NahIl/5haVKVQvt0fepMoa//xpXhykau6juBlPy3FFXi1EygWRRSHQd
-ZDZ626b/aH09ppDtKv1Ff8AfyTfQeY8nEguNOaZaDCiJpHyZtFXQ6vuDcp40xaR7
-m4ooaPhgoUguitFCFxeXiANUa0dQVySKTPW7i8/dG7AA4tGiC6SmodBLUVpkHPvs
-yJtDgiluzIdrih/+FIxBAuqJXhM+ZA==
-=23Sn
------END PGP SIGNATURE-----
+ src/b4/review/tracking.py          | 636 ++++++++++++++++++++++++----
+ src/b4/review_tui/_lite_app.py     |   1 +
+ src/b4/review_tui/_modals.py       |  27 ++
+ src/b4/review_tui/_tracking_app.py | 464 ++++++++++++++++++---
+ src/tests/test_review_tracking.py  | 823 +++++++++++++++++++++++++++++++++++++
+ src/tests/test_tui_tracking.py     | 578 +++++++++++++++++++++++++-
+ 6 files changed, 2393 insertions(+), 136 deletions(-)
+---
+base-commit: 4217c3e5d3e1eb259626142fd71b91ec6d5e3d1e
+change-id: 20260718-work-b4-multiver-rows-6032fb71e951
 
---V73EKUSUn+jKtrqe--
