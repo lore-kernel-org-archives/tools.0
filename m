@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0BD390C81
-	for <tools@linux.kernel.org>; Fri, 17 Jul 2026 22:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70772395D86
+	for <tools@linux.kernel.org>; Fri, 17 Jul 2026 22:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784327917; cv=none; b=M7e0bomV/aqiNnyfXeWnTf+Mh0Fmx7CEqNroVeTMxNqv37lmmQqNVwGg3HV/xaNiGh8CdY3+XwCS3+Y2zunS/n5PHRKG4bZ9Or6XtwJg29W16mdWnuVSi/Ro5HnUvLgAq5lThcBcLGU3s2vWKgyfblG1xo3hlhobGMCe7yDr35E=
+	t=1784327918; cv=none; b=EV8Pu5/n72sGyKiZgJXeFdn/ViQa1TU/dTZlv6K69pOVCztQjPyOGzucYFEpm1fKXw0kYLE0/0kN+CiTMK/x1pqjJlL2nshoViyXzB4sTmOj0/x+lxX2Sv8hYuvKesZYfauCmyhud1J22XZVobfumeiwH00BGXDaHfZsqCeeC6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784327917; c=relaxed/simple;
-	bh=Oy4IMKbIEoxvLGRd7Ch2zaDd4VWXO5DAYVDq0oAXSzg=;
+	s=arc-20240116; t=1784327918; c=relaxed/simple;
+	bh=xxvfndwoOR69+qF8vHXUZzrVG9KiE31+e2s/Mmdh8aM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=L+JYkhXQsoIV0oPuZeAxJsQFIK1FD/PkAimOLQHkr6N+HAQGq5jR6OwuYha1LwgLbjEgSaJH7V6HSX9qAcAHXekdmQP+FLSmhkVopda/C8vGka5W1x91jC8hHGOeln/L4DdPV7+BWS8X3Vjl+dwDUNF2iFx2Aogt6n91Deiyv2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aCA4xKDz; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=C1rR63YTiZjovshMOstlN78SWzKWHsYiHn6gfGqyQksYYpT8kmdVPnC5Spu9T7fwClqhyE7LQ3VU8qqLD82n1zt6XVk9BP7R4hlcqDrnQRb1X+RNJIrhjNpNFzjlR+uGO4xNXXIjDc+VvROEoBuE82iRoRhqp+VCYLhJW7OjHro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iT4E7Xul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aCA4xKDz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iT4E7Xul"
 Received: by smtp.kernel.org (Postfix)
-	id 1700B1F00A3E; Fri, 17 Jul 2026 22:38:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9DC1F000E9;
-	Fri, 17 Jul 2026 22:38:33 +0000 (UTC)
+	id 6CA0F1F00A3A; Fri, 17 Jul 2026 22:38:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1271F000E9;
+	Fri, 17 Jul 2026 22:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784327915;
-	bh=WJpYlmokOeQSFQY9nasrvimKBQgoyivyyPDYTxMnrEo=;
+	s=k20260515; t=1784327916;
+	bh=4It39Hp9NerYG5AQEPHxkHZCA100BEEDF7ml+mdr+NU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=aCA4xKDzWDuiQw6W86njq7PsE+XsubNM+COPhrED5Dg6euC1Ql1+qiHmDspMJU+zP
-	 +0z8rDoS6axixewSstLSmCyQG18rDe509bKdT+z3aZg2wO/ONKTJqEuOBw0FkiWUsw
-	 ciaWMIP8rkeoutAJfbvcC5Mpxpes7qLmvFS0DuLNh3rv9KAi0n6bP6h9ZBNXToR+dB
-	 5OVUh6Sb1avC/mEieJaVvrVaQcK98FcHFxTlXGXf9auhoMwykUaUlgQHZ5alRJ0LrU
-	 At2LAaq2BXcgw9lxmlORTRb1HP0YXvhzRN+EnVzpXNuAiZmjw48+hN5ORaqkW2jrbU
-	 jB5ppBge3CBSg==
+	b=iT4E7XultXoo0DzWcKsqY1Lo/BfDNb2J32pKXjbkFNULJpjXYIS6H9ojUUEydDzFa
+	 6c886qI3rdLi6kX5P2ngY5T2/O12UCYATZ18JRxvq17m6OkyOqD6wMfJo2Tr/bK2/j
+	 vUQ9jubE9IeyVPK17bWghyBt7v4L9zseOIP6kEKrlb4B4vcLQ//2tXVODk5qNDY+iK
+	 s+m+EcLZPm6WYCU7tqO5uaMYnhraYiZWLGYyFEAqKbOpi8a8RiuikF7CQ7HMAy1zRl
+	 SOI/KJK5pfN6EwU1SQ8gGtBl1RQLMbMdVF4uLlJ+UVJz36erZ/B5koqwI1jjBRmD5k
+	 bGrYdubumotcw==
 From: Christian Brauner <brauner@kernel.org>
-Date: Sat, 18 Jul 2026 00:37:46 +0200
-Subject: [PATCH RFC 10/11] review-tui: expand tracked series into
- per-version rows
+Date: Sat, 18 Jul 2026 00:37:47 +0200
+Subject: [PATCH RFC 11/11] review-tui: test per-version tracker rows
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,575 +39,611 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260718-work-b4-multiver-rows-v1-10-3c539d2a3095@kernel.org>
+Message-Id: <20260718-work-b4-multiver-rows-v1-11-3c539d2a3095@kernel.org>
 References: <20260718-work-b4-multiver-rows-v1-0-3c539d2a3095@kernel.org>
 In-Reply-To: <20260718-work-b4-multiver-rows-v1-0-3c539d2a3095@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.16-dev-4217c
-X-Developer-Signature: v=1; a=openpgp-sha256; l=25850; i=brauner@kernel.org;
- h=from:subject:message-id; bh=Oy4IMKbIEoxvLGRd7Ch2zaDd4VWXO5DAYVDq0oAXSzg=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRFrbsps+Gg5/uZvfXyFfem/gw3XjlbY1avGLtrnu/sq
- 6z+Yp7FHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABPZP4mRYeL/tIetV/bNFJGT
- eapio3/bQ2OGl9c1mwPuIo7+RTOm1zMy7JDcsvxh3xf/fwsS5nM/8a86b7L5Ddfi15aOmgYBPjp
- 32QA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=23359; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=xxvfndwoOR69+qF8vHXUZzrVG9KiE31+e2s/Mmdh8aM=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRFrbt5aaH+fYWZM/6ctkzT5L/s/6bU4F2C6evZqgsTx
+ IKaRP8+7ChlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZgIdxXD/8A/i4um+yw54L/s
+ lWHNDK93YtvnrrBsu1Nm5WrbUv2N6R4jw36Ty+5FZTLi5zXXqW6690ot4f1b75S6Tb5Hjrrrn9v
+ IxwMA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Series with more than one known version become expandable: 'x'
-unfolds indented child rows (one per catalog revision, the tracked
-one starred) showing per-version unread badges and activity dates,
-'X' toggles every series at once.  Enter or 'e' on a child opens that
-revision's thread with revision-correct seen syncing, 'd' range-diffs
-it against the tracked revision directly, and every other action
-keeps operating on the parent series.  Expansion state and the
-(change_id, revision) cursor position survive the periodic DB-mtime
-reloads and limit filtering.
+Cover the expansion affordance and toggling, tracked-revision
+marking, child-row selection state, survival of expansion and cursor
+position across DB reloads and limit filtering, child-row thread
+opening with the right revision, direct child range-diff, expand-all,
+details-panel version row, and NULL-count rendering.
 
 Assisted-by: LLM
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review_tui/_modals.py       |   7 +
- src/b4/review_tui/_tracking_app.py | 282 ++++++++++++++++++++++++++++++++++---
- 2 files changed, 266 insertions(+), 23 deletions(-)
+ src/tests/test_tui_tracking.py | 534 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 533 insertions(+), 1 deletion(-)
 
-diff --git a/src/b4/review_tui/_modals.py b/src/b4/review_tui/_modals.py
-index 5943426..32f92a3 100644
---- a/src/b4/review_tui/_modals.py
-+++ b/src/b4/review_tui/_modals.py
-@@ -328,9 +328,16 @@ TRACKING_HELP_LINES = [
-     '  [bold]d[/bold]         Range-diff between revisions\n',
-     '  [bold]a[/bold]         Open action menu (take, rebase, etc.)\n',
-     '  [bold]u[/bold]         Update selected series\n',
-+    '  [bold]x[/bold]         Expand/collapse the version rows of a ▸ series\n',
-+    '\n',
-+    '[bold]Version rows[/bold]\n',
-+    '  v2*           Asterisk marks the revision the series tracks\n',
-+    '  [bold]Enter[/bold] / [bold]e[/bold] View the thread of that version\n',
-+    '  [bold]d[/bold]         Range-diff that version against the tracked one\n',
-     '\n',
-     '[bold]App[/bold]\n',
-     '  [bold]U[/bold]         Update all tracked series\n',
-+    '  [bold]X[/bold]         Expand/collapse all multi-version series\n',
-     '  [bold]l[/bold]         Filter series by pattern\n',
-     '  [bold]s[/bold]         Suspend to shell\n',
-     '  [bold]p[/bold]         Switch to Patchwork TUI\n',
-diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index 8800383..3135781 100644
---- a/src/b4/review_tui/_tracking_app.py
-+++ b/src/b4/review_tui/_tracking_app.py
-@@ -334,6 +334,27 @@ def _resolve_worktree_take_conflict(
-     return True
+diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
+index e9d646e..0d4be62 100644
+--- a/src/tests/test_tui_tracking.py
++++ b/src/tests/test_tui_tracking.py
+@@ -11,6 +11,7 @@ core user workflows: series listing, navigation, filtering,
+ status transitions, and modal interactions.
+ """
+ 
++import contextlib
+ import datetime
+ import email.message
+ import os
+@@ -19,7 +20,7 @@ from typing import Any, Dict, List, Optional, Tuple
+ from unittest.mock import patch
+ 
+ import pytest
+-from textual.widgets import Input, ListView, Static
++from textual.widgets import Input, Label, ListView, Static
+ 
+ import b4
+ import b4.review
+@@ -30,6 +31,7 @@ from b4 import (
+     _worktree_inprogress_op,
+     _worktree_merge_in_progress,
+ )
++from b4.review_tui._lite_app import LiteThreadScreen
+ from b4.review_tui._modals import (
+     ActionItem,
+     ActionScreen,
+@@ -38,10 +40,12 @@ from b4.review_tui._modals import (
+     HelpScreen,
+     LimitScreen,
+     LinkRevisionScreen,
++    RangeDiffScreen,
+     SnoozeScreen,
+     TargetBranchScreen,
+ )
+ from b4.review_tui._tracking_app import (
++    TrackedRevisionItem,
+     TrackedSeriesItem,
+     TrackingApp,
+     _resolve_worktree_take_conflict,
+@@ -1544,6 +1548,534 @@ class TestTrackingDetailPanel:
+             assert 'alpha' in app._selected_series.get('subject', '')
  
  
-+def _format_version(rev: Dict[str, Any], series: Dict[str, Any]) -> str:
-+    """Summarize one known version of *series* for the details panel."""
-+    revision = rev.get('revision', 1)
-+    out = f'v{revision}'
-+    if revision == series.get('revision', 1):
-+        out += ' (tracked)'
-+    count = rev.get('message_count')
-+    if count is None:
-+        out += ' — - msgs (- unseen)'
-+    else:
-+        unseen = max(0, int(count) - int(rev.get('seen_message_count') or 0))
-+        out += f' — {count} msgs ({unseen} unseen)'
-+    found_at = rev.get('found_at') or ''
-+    if found_at:
-+        out += f', found {found_at[:10]}'
-+    last_activity = rev.get('last_activity_at') or ''
-+    if last_activity:
-+        out += f', last activity {last_activity[:10]}'
-+    return out
++# ---------------------------------------------------------------------------
++# Per-version child rows
++# ---------------------------------------------------------------------------
 +
 +
- def _format_snooze_until(value: str) -> str:
-     """Format a snoozed_until value for display.
- 
-@@ -576,9 +597,10 @@ class TrackedSeriesItem(ListItem):
-     }
-     """
- 
--    def __init__(self, series: Dict[str, Any]) -> None:
-+    def __init__(self, series: Dict[str, Any], expanded: bool = False) -> None:
-         super().__init__()
-         self.series = series
-+        self.expanded = expanded
-         status = series.get('status', 'new')
-         effective = 'queued' if series.get('queued') else status
-         if _STATUS_TIER.get(effective, 2) >= 2:
-@@ -607,6 +629,11 @@ class TrackedSeriesItem(ListItem):
-         width = len(str(num_patches)) if num_patches > 0 else 1
-         parts = extras + [f'v{revision}', f'{"0" * width}/{num_patches:0{width}d}']
-         subject_display = f'[{",".join(parts)}] {ls.subject}'
-+        # Series with more than one known version can be expanded with [x]
-+        if len(TrackingApp._merge_tracked_revision(self.series)) > 1:
-+            # U+25BE black down-pointing / U+25B8 black right-pointing triangle
-+            marker = '▾' if self.expanded else '▸'
-+            subject_display = f'{marker} {subject_display}'
-         if display_width(submitter) > 20:
-             while display_width(submitter) > 19:
-                 submitter = submitter[:-1]
-@@ -633,6 +660,68 @@ class TrackedSeriesItem(ListItem):
-         yield Label(label, markup=False)
- 
- 
-+class TrackedRevisionItem(ListItem):
-+    """A single known version of an expanded series.
++def _seed_multiver(
++    identifier: str,
++    change_id: str = 'multi-1',
++    tracked: int = 2,
++    revisions: Optional[List[int]] = None,
++) -> None:
++    """Seed a series tracking v*tracked* with *revisions* in the catalog.
 +
-+    Rendered as a child row underneath its TrackedSeriesItem, with the
-+    submitter column replaced by a tree glyph and the version number.
++    The tracked revision has message counts (5 total, 2 unseen); the
++    other revisions were never fetched, so their counts stay NULL.
 +    """
++    conn = tracking.init_db(identifier)
++    tracking.add_series_to_db(
++        conn,
++        change_id=change_id,
++        revision=tracked,
++        subject=f'[PATCH v{tracked} 0/2] multi: test series',
++        sender_name='Vera Version',
++        sender_email='vera@example.com',
++        sent_at='2026-03-10T10:00:00+00:00',
++        message_id=f'{change_id}-v{tracked}@example.com',
++        num_patches=2,
++    )
++    conn.execute(
++        'UPDATE series SET message_count = 5, seen_message_count = 3'
++        ' WHERE change_id = ? AND revision = ?',
++        (change_id, tracked),
++    )
++    conn.commit()
++    for rev in [1, 2, 3] if revisions is None else revisions:
++        tracking.add_revision(
++            conn,
++            change_id,
++            rev,
++            f'{change_id}-v{rev}@example.com',
++            subject=f'[PATCH v{rev} 0/2] multi: test series',
++        )
++    conn.close()
 +
-+    DEFAULT_CSS = """
-+    TrackedRevisionItem Label {
-+        text-style: dim;
-+    }
++
++def _list_items(app: TrackingApp) -> List[Any]:
++    """Every row currently in the tracking list, parents and children."""
++    return list(app.query_one('#tracking-list', ListView).children)
++
++
++def _row_text(item: Any) -> str:
++    """The rendered text of a single tracking list row."""
++    return _static_text(item.query_one(Label))
++
++
++def _msgs_column(text: str) -> str:
++    """The Msgs column of a rendered row (total + unseen badge).
++
++    Fixed offset: 20 (submitter) + 1 (attestation) + 1 + 7 (A·R·T) = 29,
++    then 5 for the total and 3 for the badge.  Slicing it asserts that
++    parent and child rows agree on the column layout.
 +    """
++    return text[29:37].strip()
 +
-+    def __init__(
-+        self,
-+        series: Dict[str, Any],
-+        rev: Dict[str, Any],
-+        is_tracked: bool,
-+        is_last: bool,
++
++class TestVersionExpansion:
++    """Tests for expanding a series into per-version child rows."""
++
++    @pytest.mark.asyncio
++    async def test_affordance_only_with_multiple_versions(
++        self, tmp_path: pathlib.Path
 +    ) -> None:
-+        super().__init__()
-+        self.series = series
-+        self.rev = rev
-+        self.is_tracked = is_tracked
-+        self.is_last = is_last
-+
-+    def compose(self) -> ComposeResult:
-+        # U+2514/U+251C box drawings light up-and-right / vertical-and-right
-+        tree = '└─' if self.is_last else '├─'
-+        mark = '*' if self.is_tracked else ''
-+        version = f'  {tree} v{self.rev.get("revision", 1)}{mark}'
-+        # Date of the last known activity, falling back to when the
-+        # revision was first seen.
-+        date_str = ''
-+        stamp = self.rev.get('last_activity_at') or self.rev.get('found_at') or ''
-+        if stamp:
-+            try:
-+                date_str = datetime.datetime.fromisoformat(stamp).strftime('%d %b')
-+            except (ValueError, TypeError):
-+                date_str = ''
-+        # Show each version's own title, prefix-stripped -- the version
-+        # column already carries the vN part.  Fall back to the series
-+        # subject when the catalog has none.
-+        rev_subject = self.rev.get('subject') or self.series.get('subject') or ''
-+        if rev_subject:
-+            rev_subject = b4.LoreSubject(rev_subject).subject
-+        label = RichText(no_wrap=True, overflow='ellipsis')
-+        label.append(pad_display(version, 20))
-+        # Attestation (1), separator (1) and A·R·T (7) stay blank
-+        label.append(' ' * 9)
-+        _append_msgs(
-+            label,
-+            self.app,
-+            self.rev.get('message_count'),
-+            self.rev.get('seen_message_count'),
++        """Only a series with more than one known version gets the marker."""
++        _seed_multiver('expand-affordance')
++        conn = tracking.get_db('expand-affordance')
++        tracking.add_series_to_db(
++            conn,
++            change_id='single-1',
++            revision=1,
++            subject='[PATCH] single: just one version',
++            sender_name='Sam Single',
++            sender_email='sam@example.com',
++            sent_at='2026-03-11T10:00:00+00:00',
++            message_id='single-v1@example.com',
++            num_patches=1,
 +        )
-+        label.append(f'  {date_str:<6s}')
-+        if rev_subject:
-+            label.append(f'  {rev_subject}')
-+        yield Label(label, markup=False)
++        tracking.add_revision(conn, 'single-1', 1, 'single-v1@example.com')
++        conn.close()
 +
++        app = TrackingApp('expand-affordance')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            rows = {i.series['change_id']: _row_text(i) for i in _list_items(app)}
++            assert '▸' in rows['multi-1']
++            assert '▸' not in rows['single-1']
 +
- class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-     """Textual app for browsing tracked series.
- 
-@@ -731,10 +820,12 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         'check': 'Series',
-         'thread': 'Series',
-         'range_diff': 'Series',
-+        'toggle_expand': 'Series',
-         'action': 'Series',
-         'update_one': 'Series',
-         'target_branch': 'Series',
-         'update_all': 'App',
-+        'expand_all': 'App',
-         'process_queue': 'App',
-         'limit': 'App',
-         'suspend': 'App',
-@@ -756,7 +847,9 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         Binding('a', 'action', 'action'),
-         Binding('u', 'update_one', 'update'),
-         Binding('d', 'range_diff', 'range-diff'),
-+        Binding('x', 'toggle_expand', 'versions'),
-         # App-global actions
-+        Binding('X', 'expand_all', 'Expand all', key_display='X', show=False),
-         Binding('l', 'limit', 'limit'),
-         Binding('s', 'suspend', 'shell'),
-         Binding('p', 'patchwork', 'patchwork'),
-@@ -782,6 +875,11 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         self._patatt_sign = patatt_sign
-         self._all_series: List[Dict[str, Any]] = []
-         self._selected_series: Optional[Dict[str, Any]] = None
-+        # Series showing per-version child rows, and the child row (if any)
-+        # the cursor is on — both survive a list rebuild.
-+        self._expanded_change_ids: set[str] = set()
-+        self._selected_revision: Optional[Dict[str, Any]] = None
-+        self._focus_revision: Optional[int] = None
-         self._limit_pattern: str = ''
-         self._db_mtime: float = 0.0
-         # Detect patchwork configuration
-@@ -829,6 +927,16 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         self._cached_revisions = None
-         self._cached_art_counts = None
- 
-+    def _stash_focus(self) -> None:
-+        """Remember the highlighted row so the next _refresh_list restores it."""
-+        if self._selected_series:
-+            self._focus_change_id = self._selected_series.get('change_id')
-+        self._focus_revision = (
-+            self._selected_revision.get('revision')
-+            if self._selected_revision is not None
-+            else None
-+        )
++    @pytest.mark.asyncio
++    async def test_x_expands_into_child_rows(self, tmp_path: pathlib.Path) -> None:
++        """x adds one child row per known version, oldest first."""
++        _seed_multiver('expand-toggle')
 +
-     def _refresh_msg_count(self, series: Dict[str, Any], total_messages: int) -> None:
-         """Opportunistically refresh message count after fetching messages."""
-         if not self._identifier:
-@@ -872,6 +980,9 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             with Horizontal(classes='details-row', id='detail-revisions-row'):
-                 yield Static('Revisions:', classes='details-label')
-                 yield Static('', id='detail-revisions', markup=False)
-+            with Horizontal(classes='details-row', id='detail-version-row'):
-+                yield Static('Version:', classes='details-label')
-+                yield Static('', id='detail-version', markup=False)
-             with Horizontal(classes='details-row', id='detail-branch-row'):
-                 yield Static('Branch:', classes='details-label')
-                 yield Static('', id='detail-branch', markup=False)
-@@ -950,8 +1061,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                 # pick up the change once the modal closes.
-                 if len(self.app.screen_stack) > 1:
-                     return
--                if self._selected_series:
--                    self._focus_change_id = self._selected_series.get('change_id')
-+                self._stash_focus()
-                 self._invalidate_caches()
-                 self._load_series()
- 
-@@ -1141,8 +1251,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         except OSError:
-             return
-         if mtime != self._db_mtime:
--            if self._selected_series:
--                self._focus_change_id = self._selected_series.get('change_id')
-+            self._stash_focus()
-             self._invalidate_caches()
-             self._load_series()
- 
-@@ -1216,7 +1325,26 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             header_text = f'{"Submitter":<20s}{"A":>1s} {"A·R·T":>7s}  {"Msgs":>6s}  {"S":<4s}{"Subject"}'
-             header = Static(header_text, id='tracking-header')
- 
--            list_items: List[ListItem] = [TrackedSeriesItem(s) for s in display_series]
-+            list_items: List[ListItem] = []
-+            for series in display_series:
-+                revs = self._merge_tracked_revision(series)
-+                expanded = (
-+                    len(revs) > 1
-+                    and series.get('change_id', '') in self._expanded_change_ids
-+                )
-+                list_items.append(TrackedSeriesItem(series, expanded=expanded))
-+                if not expanded:
-+                    continue
-+                tracked = series.get('revision', 1)
-+                for idx, rev in enumerate(revs):
-+                    list_items.append(
-+                        TrackedRevisionItem(
-+                            series,
-+                            rev,
-+                            is_tracked=rev.get('revision') == tracked,
-+                            is_last=idx == len(revs) - 1,
-+                        )
-+                    )
-             lv = ListView(*list_items, id='tracking-list')
-             await self.mount(header, before=self.query_one(Footer))
-             await self.mount(lv, before=self.query_one(Footer))
-@@ -1228,8 +1356,11 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                     and item.series.get('change_id') == self._focus_change_id
-                 ):
-                     lv.index = idx
-+                    if self._focus_revision is not None:
-+                        lv.index = self._find_focus_child(list_items, idx)
-                     break
-             self._focus_change_id = None
-+        self._focus_revision = None
-         lv.focus()
- 
-         # Populate the details panel for the highlighted item now that
-@@ -1239,10 +1370,30 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         # status without waiting for the async Highlighted message to
-         # be processed from the queue.
-         highlighted = lv.highlighted_child
--        if isinstance(highlighted, TrackedSeriesItem):
-+        if isinstance(highlighted, TrackedRevisionItem):
-+            self._selected_series = highlighted.series
-+            self._selected_revision = highlighted.rev
-+            self._show_details(highlighted.series, rev=highlighted.rev)
-+        elif isinstance(highlighted, TrackedSeriesItem):
-             self._selected_series = highlighted.series
-+            self._selected_revision = None
-             self._show_details(highlighted.series)
- 
-+    def _find_focus_child(self, list_items: List[ListItem], parent_idx: int) -> int:
-+        """Index of the _focus_revision child row below *parent_idx*.
++        app = TrackingApp('expand-toggle')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert len(_list_items(app)) == 1
 +
-+        Falls back to the parent index when that version is no longer
-+        listed — it may have gone away, or the series may have been
-+        collapsed since the focus was stashed.
-+        """
-+        for idx in range(parent_idx + 1, len(list_items)):
-+            item = list_items[idx]
-+            if not isinstance(item, TrackedRevisionItem):
-+                break
-+            if item.rev.get('revision') == self._focus_revision:
-+                return idx
-+        return parent_idx
++            await pilot.press('x')
++            await pilot.pause()
++            items = _list_items(app)
++            assert len(items) == 4
++            assert isinstance(items[0], TrackedSeriesItem)
++            assert items[0].expanded
++            assert '▾' in _row_text(items[0])
++            children = items[1:]
++            assert all(isinstance(c, TrackedRevisionItem) for c in children)
++            assert [c.rev['revision'] for c in children] == [1, 2, 3]
 +
-     def action_limit(self) -> None:
-         self.push_screen(
-             LimitScreen(
-@@ -1255,8 +1406,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         if result is None:
-             return
-         self._limit_pattern = result
--        if self._selected_series:
--            self._focus_change_id = self._selected_series.get('change_id')
-+        self._stash_focus()
-         self._load_series()
- 
-     def action_cursor_down(self) -> None:
-@@ -1271,17 +1421,58 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         except Exception:
-             pass
- 
-+    def action_toggle_expand(self) -> None:
-+        """Show or hide the version rows of the selected series."""
-+        series = self._selected_series
-+        if not series or len(self._merge_tracked_revision(series)) < 2:
-+            return
-+        change_id = series.get('change_id', '')
-+        if change_id in self._expanded_change_ids:
-+            self._expanded_change_ids.discard(change_id)
-+            # The highlighted version row is about to go away
-+            self._selected_revision = None
-+        else:
-+            self._expanded_change_ids.add(change_id)
-+        self._stash_focus()
-+        self.call_later(self._refresh_list)
++    @pytest.mark.asyncio
++    async def test_x_collapses_again(self, tmp_path: pathlib.Path) -> None:
++        """A second x hides the child rows and restores the parent cursor."""
++        _seed_multiver('expand-collapse')
 +
-+    def action_expand_all(self) -> None:
-+        """Expand every multi-version series, or collapse them all."""
-+        expandable = {
-+            s.get('change_id', '')
-+            for s in self._all_series
-+            if len(self._merge_tracked_revision(s)) > 1
-+        }
-+        if not expandable:
-+            return
-+        if expandable - self._expanded_change_ids:
-+            self._expanded_change_ids |= expandable
-+        else:
-+            self._expanded_change_ids.clear()
-+            self._selected_revision = None
-+        self._stash_focus()
-+        self.call_later(self._refresh_list)
++        app = TrackingApp('expand-collapse')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            # Collapse from a child row — focus must return to the parent
++            await pilot.press('j')
++            await pilot.pause()
++            assert app._selected_revision is not None
 +
-     def on_list_view_highlighted(self, event: ListView.Highlighted) -> None:
-         if event.list_view.id != 'tracking-list':
-             return
-         item = event.item
--        if isinstance(item, TrackedSeriesItem):
-+        if isinstance(item, TrackedRevisionItem):
-+            self._selected_series = item.series
-+            self._selected_revision = item.rev
-+            self._show_details(item.series, rev=item.rev)
-+        elif isinstance(item, TrackedSeriesItem):
-             self._selected_series = item.series
-+            self._selected_revision = None
-             self._show_details(item.series)
-         self.refresh_bindings()
- 
-     def on_list_view_selected(self, event: ListView.Selected) -> None:
-         if event.list_view.id == 'tracking-list':
-+            # A version row opens that version's thread
-+            if isinstance(event.item, TrackedRevisionItem):
-+                self.action_thread()
-+                return
-             if not self._selected_series:
-                 return
-             status = self._selected_series.get('status', 'new')
-@@ -1355,6 +1546,11 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             return bool(self._pwkey and self._pwurl and self._pwproj)
-         if action == 'action':
-             return self._selected_series is not None
-+        if action == 'toggle_expand':
-+            return bool(
-+                self._selected_series
-+                and len(self._merge_tracked_revision(self._selected_series)) > 1
-+            )
-         if action in self._GATED_ACTIONS:
-             if not self._selected_series:
-                 return False
-@@ -1581,10 +1777,19 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         self._checkout_new_series()
- 
-     def action_thread(self) -> None:
--        """View a series thread in the lite thread viewer."""
-+        """View a series thread in the lite thread viewer.
++            await pilot.press('x')
++            await pilot.pause()
++            items = _list_items(app)
++            assert len(items) == 1
++            assert '▸' in _row_text(items[0])
++            assert app._selected_revision is None
++            assert app.query_one('#tracking-list', ListView).index == 0
 +
-+        A highlighted version row views that version's thread; otherwise
-+        the thread of the revision the series tracks.
-+        """
-         if not self._selected_series:
-             return
--        message_id = self._selected_series.get('message_id', '')
-+        source = (
-+            self._selected_revision
-+            if self._selected_revision is not None
-+            else self._selected_series
-+        )
-+        message_id = source.get('message_id', '')
-         if not message_id:
-             self.notify('No message-id available for this series', severity='error')
-             return
-@@ -1593,10 +1798,10 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             tracking_info = {
-                 'identifier': self._identifier,
-                 'change_id': self._selected_series.get('change_id', ''),
--                'revision': self._selected_series.get('revision', 1),
--                'is_rethreaded': bool(self._selected_series.get('is_rethreaded')),
-+                'revision': source.get('revision', 1),
-+                'is_rethreaded': bool(source.get('is_rethreaded')),
-             }
--        self._focus_change_id = self._selected_series.get('change_id')
-+        self._stash_focus()
-         from b4.review_tui._lite_app import LiteThreadScreen
- 
-         self.push_screen(
-@@ -1608,7 +1813,8 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             )
-         )
- 
--    def _merge_tracked_revision(self, series: Dict[str, Any]) -> List[Dict[str, Any]]:
-+    @staticmethod
-+    def _merge_tracked_revision(series: Dict[str, Any]) -> List[Dict[str, Any]]:
-         """Known revisions of a series, guaranteed to include the tracked one.
- 
-         The revisions catalog is not guaranteed a row for the tracked
-@@ -2042,8 +2248,14 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         # Exit to review mode
-         self.exit(branch_name)
- 
--    def _show_details(self, series: Dict[str, Any]) -> None:
-+    def _show_details(
-+        self, series: Dict[str, Any], rev: Optional[Dict[str, Any]] = None
++    @pytest.mark.asyncio
++    async def test_tracked_version_is_marked(self, tmp_path: pathlib.Path) -> None:
++        """The child row for the tracked revision carries an asterisk."""
++        _seed_multiver('expand-marker')
++
++        app = TrackingApp('expand-marker')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            children = _list_items(app)[1:]
++            marked = [c for c in children if c.is_tracked]
++            assert len(marked) == 1
++            assert marked[0].rev['revision'] == 2
++            assert 'v2*' in _row_text(marked[0])
++            assert 'v1*' not in _row_text(children[0])
++            assert 'v3*' not in _row_text(children[2])
++
++    @pytest.mark.asyncio
++    async def test_highlighting_child_keeps_parent_series(
++        self, tmp_path: pathlib.Path
 +    ) -> None:
-+        """Fill the details panel for *series*, or for one of its versions.
- 
-+        With *rev* given the version-specific fields (subject, link) come
-+        from that revision instead of the tracked one.
-+        """
-         try:
-             panel = self.query_one('#details-panel', Vertical)
-         except NoMatches:
-@@ -2051,6 +2263,9 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
- 
-         raw_subject = series.get('subject', '(no subject)')
-         revision = series.get('revision', 1)
-+        if rev is not None:
-+            raw_subject = rev.get('subject') or raw_subject
-+            revision = rev.get('revision', revision)
-         num_patches = series.get('num_patches', 0) or 0
-         ls = b4.LoreSubject(raw_subject)
-         extras = ls.get_extra_prefixes(exclude=['patch'])
-@@ -2066,7 +2281,10 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
- 
-         # Create link URL from message-id using linkmask
-         link_url = ''
--        if message_id:
-+        if rev is not None:
-+            link_url = rev.get('link') or ''
-+            message_id = rev.get('message_id', '')
-+        if not link_url and message_id:
-             config = b4.get_main_config()
-             linkmask = config.get('linkmask', b4.LOREADDR + '/%s')
-             if isinstance(linkmask, str) and '%s' in linkmask:
-@@ -2149,6 +2367,16 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             else:
-                 revisions_row.display = False
- 
-+        # Describe the highlighted version row, if any
-+        version_row = self.query_one('#detail-version-row', Horizontal)
-+        if rev is not None:
-+            self.query_one('#detail-version', Static).update(
-+                _format_version(rev, series)
-+            )
-+            version_row.display = True
-+        else:
-+            version_row.display = False
++        """A child row selects its version, but the series stays the parent."""
++        _seed_multiver('expand-select')
 +
-         # Show branch name for series with a review branch
-         status = series.get('status', 'new')
-         branch_row = self.query_one('#detail-branch-row', Horizontal)
-@@ -2324,7 +2552,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         linkmask = str(config.get('linkmask', 'https://lore.kernel.org/r/%s'))
-         topdir = b4.git_get_toplevel()
- 
--        self._focus_change_id = self._selected_series.get('change_id')
-+        self._stash_focus()
-         self.push_screen(
-             UpdateAllScreen(
-                 [self._selected_series], self._identifier, linkmask, topdir
-@@ -2345,8 +2573,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         # Skip snoozed series during update-all
-         update_list = [s for s in self._all_series if s.get('status') != 'snoozed']
- 
--        if self._selected_series:
--            self._focus_change_id = self._selected_series.get('change_id')
-+        self._stash_focus()
-         self.push_screen(
-             UpdateAllScreen(update_list, self._identifier, linkmask, topdir),
-             callback=self._on_update_complete,
-@@ -2389,6 +2616,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         if self._selected_series is not None:
-             panel.styles.height = 0
-             self._selected_series = None
-+            self._selected_revision = None
- 
-     def action_take(self) -> None:
-         """Show take options dialog for the selected series."""
-@@ -3589,6 +3817,15 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         change_id = self._selected_series.get('change_id', '')
-         current_rev = self._selected_series.get('revision', 1)
- 
-+        # A highlighted version row already names the other side of the
-+        # diff, so skip the picker.
-+        if self._selected_revision is not None:
-+            other_rev = self._selected_revision.get('revision')
-+            if other_rev is not None and other_rev != current_rev:
-+                with self.suspend():
-+                    self._do_range_diff(change_id, current_rev, other_rev)
-+                return
++        app = TrackingApp('expand-select')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
 +
-         try:
-             conn = b4.review.tracking.get_db(self._identifier)
-             revisions = b4.review.tracking.get_revisions(conn, change_id)
-@@ -5107,8 +5344,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             self.notify(', '.join(parts) if parts else 'Queue empty')
-             self._refresh_queue_indicator()
-             if delivered_series:
--                if self._selected_series:
--                    self._focus_change_id = self._selected_series.get('change_id')
-+                self._stash_focus()
-                 self._load_series()
++            await pilot.press('j')
++            await pilot.pause()
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == 1
++            assert app._selected_series is not None
++            assert app._selected_series['change_id'] == 'multi-1'
++
++            # Back on the parent row the version selection is cleared
++            await pilot.press('k')
++            await pilot.pause()
++            assert app._selected_revision is None
++            assert app._selected_series is not None
++            assert app._selected_series['change_id'] == 'multi-1'
++
++    @pytest.mark.asyncio
++    async def test_expansion_and_cursor_survive_db_reload(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """An external DB change rebuilds the list without losing the child."""
++        _seed_multiver('expand-reload')
++
++        app = TrackingApp('expand-reload')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.press('j')
++            await pilot.pause()
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == 2
++
++            # Bump the mtime the way another b4 process writing the DB would
++            db_path = tracking.get_db_path('expand-reload')
++            stamp = os.path.getmtime(db_path) + 10
++            os.utime(db_path, (stamp, stamp))
++            app._check_db_changed()
++            await pilot.pause()
++
++            items = _list_items(app)
++            assert len(items) == 4
++            assert isinstance(items[2], TrackedRevisionItem)
++            assert app.query_one('#tracking-list', ListView).index == 2
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == 2
++
++    @pytest.mark.asyncio
++    async def test_x_is_noop_on_single_version_series(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """A series with only the tracked version has nothing to expand."""
++        _seed_db('expand-single', [SAMPLE_SERIES[1]])
++
++        app = TrackingApp('expand-single')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            assert len(_list_items(app)) == 1
++            assert not app._expanded_change_ids
++
++    @pytest.mark.asyncio
++    async def test_expansion_survives_limit_filter(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """Setting and clearing a limit keeps the series expanded."""
++        _seed_multiver('expand-limit')
++
++        app = TrackingApp('expand-limit')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            assert len(_list_items(app)) == 4
++
++            await pilot.press('l')
++            await pilot.pause()
++            app.screen.query_one('#limit-input', Input).value = 'multi'
++            await pilot.press('enter')
++            await pilot.pause()
++            assert len(_list_items(app)) == 4
++
++            await pilot.press('l')
++            await pilot.pause()
++            app.screen.query_one('#limit-input', Input).value = ''
++            await pilot.press('enter')
++            await pilot.pause()
++            assert len(_list_items(app)) == 4
++
++    @pytest.mark.asyncio
++    async def test_expand_all_toggles_every_series(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """X expands all multi-version series, then collapses them."""
++        _seed_multiver('expand-all', change_id='multi-a')
++        _seed_multiver('expand-all', change_id='multi-b')
++
++        app = TrackingApp('expand-all')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert len(_list_items(app)) == 2
++
++            await pilot.press('X')
++            await pilot.pause()
++            assert len(_list_items(app)) == 8  # 2 parents + 3 versions each
++            assert app._expanded_change_ids == {'multi-a', 'multi-b'}
++
++            await pilot.press('X')
++            await pilot.pause()
++            assert len(_list_items(app)) == 2
++            assert not app._expanded_change_ids
++
++            # A partially expanded list expands the rest before collapsing
++            await pilot.press('x')
++            await pilot.pause()
++            assert len(_list_items(app)) == 5
++            await pilot.press('X')
++            await pilot.pause()
++            assert len(_list_items(app)) == 8
++
++    @pytest.mark.asyncio
++    async def test_child_msgs_column(self, tmp_path: pathlib.Path) -> None:
++        """Child counts render like the parent, with '-' when never fetched."""
++        _seed_multiver('expand-msgs')
++
++        app = TrackingApp('expand-msgs')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            items = _list_items(app)
++            # v1 was never fetched, v2 is tracked (5 messages, 2 unseen)
++            assert items[1].rev['message_count'] is None
++            assert _msgs_column(_row_text(items[1])) == '-'
++            assert _msgs_column(_row_text(items[2])) == '5(2)'
++            assert _msgs_column(_row_text(items[0])) == '5(2)'
++
++    @pytest.mark.asyncio
++    async def test_child_rows_show_subjects(self, tmp_path: pathlib.Path) -> None:
++        """Every version row carries its own prefix-stripped title."""
++        _seed_multiver('expand-subject', revisions=[1, 2])
++        conn = tracking.get_db('expand-subject')
++        tracking.add_revision(
++            conn,
++            'multi-1',
++            3,
++            'multi-1-v3@example.com',
++            subject='[PATCH v3 0/2] multi: renamed after review',
++        )
++        conn.close()
++
++        app = TrackingApp('expand-subject')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            items = _list_items(app)
++            # Versions keeping the series title still show it -- an empty
++            # subject cell reads as missing data.
++            assert 'multi: test series' in _row_text(items[1])
++            assert 'multi: test series' in _row_text(items[2])
++            # A retitled version shows its own title, prefix-stripped.
++            assert 'multi: renamed after review' in _row_text(items[3])
++            assert '[PATCH v3' not in _row_text(items[3])
++
++    @pytest.mark.asyncio
++    async def test_details_panel_version_row(self, tmp_path: pathlib.Path) -> None:
++        """The Version row describes the highlighted child, and hides for parents."""
++        _seed_multiver('expand-details')
++
++        app = TrackingApp('expand-details')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            row = app.query_one('#detail-version-row')
++            assert not row.display
++
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.press('j')
++            await pilot.pause()
++            assert row.display
++            text = _static_text(app.query_one('#detail-version', Static))
++            assert text.startswith('v2 (tracked)')
++            assert '5 msgs (2 unseen)' in text
++            assert ', found ' in text
++
++            # A version that was never fetched has no counts to show
++            await pilot.press('k')
++            await pilot.pause()
++            text = _static_text(app.query_one('#detail-version', Static))
++            assert text.startswith('v1')
++            assert '(tracked)' not in text
++            assert '- msgs (- unseen)' in text
++
++            # Back on the parent row the version detail disappears
++            await pilot.press('k')
++            await pilot.pause()
++            assert not row.display
++
++
++class TestChildRowActions:
++    """Tests for actions taken while a version row is highlighted."""
++
++    @pytest.mark.asyncio
++    async def test_e_opens_that_version_thread(self, tmp_path: pathlib.Path) -> None:
++        """e on a child views the child's thread, not the tracked one."""
++        _seed_multiver('child-thread')
++
++        app = TrackingApp('child-thread')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.pause()
++
++            with patch.object(app, 'push_screen') as mock_push:
++                await pilot.press('e')
++                await pilot.pause()
++
++            assert mock_push.call_count == 1
++            screen = mock_push.call_args[0][0]
++            assert isinstance(screen, LiteThreadScreen)
++            assert screen._message_id == 'multi-1-v1@example.com'
++            assert screen._tracking_info is not None
++            assert screen._tracking_info['change_id'] == 'multi-1'
++            assert screen._tracking_info['revision'] == 1
++
++    @pytest.mark.asyncio
++    async def test_enter_opens_that_version_thread(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """Enter on a child opens the thread instead of the action menu."""
++        _seed_multiver('child-enter')
++
++        app = TrackingApp('child-enter')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            for _ in range(3):
++                await pilot.press('j')
++            await pilot.pause()
++
++            with patch.object(app, 'push_screen') as mock_push:
++                await pilot.press('enter')
++                await pilot.pause()
++
++            assert mock_push.call_count == 1
++            screen = mock_push.call_args[0][0]
++            assert isinstance(screen, LiteThreadScreen)
++            assert screen._message_id == 'multi-1-v3@example.com'
++            assert screen._tracking_info is not None
++            assert screen._tracking_info['revision'] == 3
++
++    @pytest.mark.asyncio
++    async def test_e_on_parent_still_opens_tracked_thread(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """With no child highlighted, e views the tracked revision's thread."""
++        _seed_multiver('child-parent-thread')
++
++        app = TrackingApp('child-parent-thread')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++
++            with patch.object(app, 'push_screen') as mock_push:
++                await pilot.press('e')
++                await pilot.pause()
++
++            screen = mock_push.call_args[0][0]
++            assert screen._message_id == 'multi-1-v2@example.com'
++            assert screen._tracking_info['revision'] == 2
++
++    @pytest.mark.asyncio
++    async def test_d_range_diffs_child_against_tracked(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """d on a child diffs it against the tracked revision, no picker."""
++        _seed_multiver('child-rangediff')
++
++        app = TrackingApp('child-rangediff')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            for _ in range(3):
++                await pilot.press('j')
++            await pilot.pause()
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == 3
++
++            with (
++                patch.object(app, '_do_range_diff') as mock_diff,
++                patch.object(app, 'suspend', return_value=contextlib.nullcontext()),
++            ):
++                await pilot.press('d')
++                await pilot.pause()
++
++            mock_diff.assert_called_once_with('multi-1', 2, 3)
++            assert not isinstance(app.screen, RangeDiffScreen)
++
++    @pytest.mark.asyncio
++    async def test_d_on_tracked_child_shows_picker(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """The tracked version has no implied other side — pick one."""
++        _seed_multiver('child-rangediff-self')
++
++        app = TrackingApp('child-rangediff-self')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.press('j')
++            await pilot.pause()
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == 2
++
++            with patch.object(app, '_do_range_diff') as mock_diff:
++                await pilot.press('d')
++                await pilot.pause()
++                assert isinstance(app.screen, RangeDiffScreen)
++                await pilot.press('escape')
++                await pilot.pause()
++
++            mock_diff.assert_not_called()
++
++    @pytest.mark.asyncio
++    async def test_series_actions_use_parent_from_child_row(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """The action menu on a child row acts on the parent series."""
++        _seed_multiver('child-action')
++
++        app = TrackingApp('child-action')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.pause()
++
++            await pilot.press('a')
++            await pilot.pause()
++            assert isinstance(app.screen, ActionScreen)
++            lv = app.screen.query_one('#action-list', ListView)
++            actions = [c.key for c in lv.children if isinstance(c, ActionItem)]
++            assert 'review' in actions
++            await pilot.press('escape')
++            await pilot.pause()
++            assert app._selected_series is not None
++            assert app._selected_series['change_id'] == 'multi-1'
++
++
+ class TestTrackingMultipleSeries:
+     """Tests for workflows involving multiple series."""
  
-         self.push_screen(
 
 -- 
 2.53.0
