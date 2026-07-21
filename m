@@ -1,189 +1,82 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE71A2AD2E
-	for <tools@linux.kernel.org>; Tue, 21 Jul 2026 07:42:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784619733; cv=pass; b=or2lxETo8qGwjLOEbBj6o09q4uE/jm51YC/PS6yO5mp5c2VewQ1lloj4eLT3ceHCNFKzY1mdB5crvPNERasLc8TvQr6XV++RhZwfsVhSQ1eExSB1YYQsDfAv7wH9+IYpWyhtTX5D5ZiLZl3KqmUXkmqczRTjD20xoXrHpFey0N8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784619733; c=relaxed/simple;
-	bh=qHwLheAvzPGw6QmHsfV44h3VX0SJAXe7znWwH4p97t4=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To:Cc:Content-Type; b=mpp7VEf/vzu/yqgqywQc6yljOlF/Xe1ufX0Qra0fukrHE5dmlYhOHY0yXQoJw1ZSzm/y8BLPSiXgwLw9Kx1RA2PtQxOP6R63/a17ZfsXvXJgtvLXd/CEaz2eANPy+hR+Yw4e+C0H+s9u60cuOHbltI8MVFBe27Z8NcSZsvRzdB0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IVdu3wab; arc=pass smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2BF39021C
+	for <tools@linux.kernel.org>; Tue, 21 Jul 2026 14:20:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784643608; cv=none; b=KCI+OVbmM3s0HSAOQL7cp2kFMyyXpY8WUvteeqLCOFWT8SHHprbG9cW5vQscEdRNhHWuLuQ/5e9FoaoGV45kBDrDBImlhPOtc3x5tlH4tEd/EfGw+vNsikVpzUcI3F7qxmaribasnysxhBC6A85NCxxh8jG+y/Z4QaIo4os22iQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784643608; c=relaxed/simple;
+	bh=eR4loKjNrBvcsj5a93iG/PRB1lR4qbrIWwiDxqyb2e4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Go6ikwA4N+LLLQX63HhncIJehpTY1R6IlFyruVHwSPrGlJ1mUKlPcIvEN+5458oI50rOI+Es3RY+tUkMQtQl8PzVXPCkPS8QQtnD4TjTcX5owOr48M9YvrmEK6Zjt4NkGOMHMfX/Hk3d6LHDqw79ueS9FP8T0IrPnJi7YXhOf+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YmAmkMOK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IVdu3wab"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YmAmkMOK"
 Received: by smtp.kernel.org (Postfix)
-	id 9CAB11F00A3A; Tue, 21 Jul 2026 07:42:11 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=170.10.129.124
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1784619731;
-	b=aXIlscM/BY6eeQ4LsFenRBWngWil2dTdvzPHTp2C+pgdyUtItIqPq0sy03We/w7SBf3I
-	 Sf1V5J/E0Xd37K5lFLFhDWCcZSAz7bBkZWYm5BGHUnrQ3CQSkIHoiLXlLIDGkJhFRJ5+L
-	 i1q9fAgKK58juck7/sDj287lbKW6re8/uUHpeuoNg6QdFnHz5xDtLCnQak58PYbRJTnfc
-	 Qmn2Y016f3iAY4gWnU5+O0phRIFp3mZl4Xc0Up2/E18IZbCk9/3VxLnbhn6eaqS8XEA2q
-	 qc8Qacm+mX/nHnP12E5N0abUBEXePocTmMnTyGOg0lhGokQfjeWrOY+h38fpiTURx9w==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1784619731;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:Received:From:Date:Subject:
-	 MIME-Version:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:
-	 X-Developer-Signature:X-Developer-Key:X-Scanned-By:
-	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=xAt7f/69chuG0QRu5f3UQ13bJ5Pws1QZkAOx6wtKNeQ=;
-	b=qYNOoofBATG+Abp1uIoW9Jbr2P4u59Ph9/PqbVTAyCSdu4qIVLNcpEA+W8kLcJx+qo7l
-	 2hQu+yQO5hWXW5kaeK38A+fJKg3m60Bvj+m+21usWy2OwvY6JT0mmLYAfiztixzS9+Yz1
-	 jGor4tYJRjR1FcFhmsDr1YjeuMEf+fMgB3e0muKvV5CmRHtTFOtuFp1oHXFNygsnMqlNN
-	 DR0NiFXxOtqN+jwr+e1xDNYPr5R7OokkSGp9W41WneDGa4XJ2jJeBVYRXrYTp4HzDarlc
-	 7tTMDgvztJRA0kMHpG/I7oYSrv2InrTx9fxwVlwFvVq+v8kjO7bMlwp78YEKLE8uTow==
-ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=IVdu3wab;
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	arc=none smtp.remote-ip=170.10.129.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id BC0441F000E9
-	for <tools@kernel.org>; Tue, 21 Jul 2026 07:42:10 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=IVdu3wab
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org BC0441F000E9
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1784619729;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=xAt7f/69chuG0QRu5f3UQ13bJ5Pws1QZkAOx6wtKNeQ=;
-	b=IVdu3wabZso3gIN3LX+tNVLqmPo20S6egMd27vb31KlsuARLgyUdKE0c/s3TTDlZDUR2+F
-	fMYUEX7gY5aU2HlOZWaV4a5AMG6oNaqnrRvSTqbRToymP3c4hPUyZjXotSwx3D9nY3AIya
-	BocnCNnvM+LkFDMlzdB2BZtCPkPw30Y=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-205-wOyjDvARMN-95srmNjOTXw-1; Tue,
- 21 Jul 2026 03:42:06 -0400
-X-MC-Unique: wOyjDvARMN-95srmNjOTXw-1
-X-Mimecast-MFC-AGG-ID: wOyjDvARMN-95srmNjOTXw_1784619725
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id E02DB180895D;
-	Tue, 21 Jul 2026 07:42:04 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.17])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id B0D34300418D;
-	Tue, 21 Jul 2026 07:42:03 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 21 Jul 2026 11:41:51 +0400
-Subject: [PATCH liblore] utils: extract message-ID before clean_header to
- fix Gnus In-Reply-To
+	id B35771F00A3A; Tue, 21 Jul 2026 14:20:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC2C1F000E9;
+	Tue, 21 Jul 2026 14:20:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784643607;
+	bh=ra5nx6+7ZYbdSXnEJK77X9B1ueIa8lmwsbYrFz/yGKg=;
+	h=Date:From:To:Cc:Subject;
+	b=YmAmkMOKfxhZ/vPWj2S9okNiw0JSlUVFaODRktH0FDJNzCwOgYObmvR5MqRxM2bYK
+	 TiYOamZwpYktxIw2+c+p9dmwIacogPh7kVJaqOr9+66Y+CdUmE4c4i7TpaFH67PGJc
+	 bKpsjIt9hP0mIuSHuTNpb7raKeBdHTM8QI/0t2+yRpR/TvPIv5SCBdqS2R0G9twmE8
+	 4FQykVJpY6myxXaWqZ9rOJGmmSss+YMDH5l5CckgVcu0+0fFJMmFkPcyyzjUcaTa3A
+	 mf19tSZQbtq4CcDKkjxZXTKaha2hNMUNBR+CHpppxbicy6XywObkEx0SlW7+udRyDf
+	 mQVRqAFrOCTYA==
+Date: Tue, 21 Jul 2026 15:20:04 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org
+Subject: b4 review uses the title of the first patch of the series
+Message-ID: <7b03c035-202e-4eee-8029-a257d7f83705@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Message-Id: <20260721-fix-gnus-in-reply-to-v1-1-630a4ea4f696@redhat.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMQQqDQAxFryJZNzAzSou9SumiarQpw4wkWhTx7
- sZ2+fjvvw2UhEnhXmwg9GXlnAz8pYD2/UoDIXfGEFy4ulvw2POCQ5oVOaHQGFecMrq+8nXly9o
- 0sOsoZN4v+4DITcxC8PwPOjcfaqczCvt+AH/DwwWBAAAA
-X-Change-ID: 20260721-fix-gnus-in-reply-to-0f4194139202
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- "Claude Opus 4.6" <noreply@anthropic.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2803;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=qHwLheAvzPGw6QmHsfV44h3VX0SJAXe7znWwH4p97t4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqXyLHC/rXAgkhv3YB2WaZdsLzNTbaSifV/l++/
- Zmc7AtMo/uJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCal8ixwAKCRDa6OEJdZac
- 5SqeEACubUVALAcNHPogD74vjk5ugaDBq+7YJTzX73QnDx2jRots4FtsNRjZRpvxwmVXJtbQtGW
- Sv/b9N/Y/xwKA9KX0CxDwVYm3LEJFWJSJuZv0Qfj1kD9S/9oRYZtkfjz2+cwW1XMDZ46nATDmgr
- fxhyN8APSqc/3dC2+GbsyjKjf1HHWbasYlwM3MK+f0defMzvlLvGxggLCDaPZsFxwgdoLRGLSeX
- PROne5adOf5v6ZmkG1hRGz62/N0c3+LidhjM+0uBDWuJ6V/BcPvtnsdluz6Z7WpqGhKwC6HQscZ
- pSx9z9zAFuN8/8P4gZ40aSVpkRana+MC8LMSRJnAmDZK4+pVPIP5kIG+iEIZ7p/jTNkgl3s0QgQ
- rPqKPU88MZE8Jt4oZsgX5MCW1GFJafdYUUPBs0OJz/cadW03uLsH6k7LicWeLUFqdw4FWEACFNS
- iBQZo61OUzMDGgui1NswXMzN7AJEDw2kZG3MPBtQFmYZTcAqGNNLMECPl++8nqPu2vEvsDypbVM
- erqqq3CmYPrbnsgGm0I7NsUO+d0yxvjrB71oSqPTs7yucazjcRDmvjVvgSoshPOQ992p3EldZcE
- rglB0jOfmcDHiBvDkwwP6XmhJcR6VjO+k5olR4lK9zSBE+3MSq80hNGCg3EDejBu6+f95wXWCk9
- 2sjT5Rr3GB63uGA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: lv8bb-uZ7L3Vq6k7OqBPz7jvDsF-eZQMsoDgstL7Sr4_1784619725
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="x7fTeo2jZNnzVRxA"
+Content-Disposition: inline
+X-Cookie: Love America -- or give it back.
 
-When an In-Reply-To header contains both a message-ID and RFC 2047
-encoded words (as produced by Gnus), clean_header() would enter the
-email-address parsing path and destroy the message-ID.  This caused
-get_clean_msgid() to return None for the In-Reply-To header, making
-the follow-up trailer logic fall back to References and pick the
-cover letter as parent, which then broadcast the trailer to all
-patches via add_cover_trailers().
 
-tests: add test for get_clean_msgid with Gnus-style In-Reply-To
+--x7fTeo2jZNnzVRxA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
----
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- src/liblore/utils.py  |  8 +++++++-
- tests/test_message.py | 10 ++++++++++
- 2 files changed, 17 insertions(+), 1 deletion(-)
+Hi Konstantin,
 
-diff --git a/src/liblore/utils.py b/src/liblore/utils.py
-index 04823bf..73be4d6 100644
---- a/src/liblore/utils.py
-+++ b/src/liblore/utils.py
-@@ -82,7 +82,13 @@ def get_clean_msgid(msg: EmailMessage, header: str = 'Message-Id') -> str | None
-     """Extract a clean message ID (without angle brackets) from a header."""
-     raw = msg.get(header)
-     if raw:
--        matches = re.search(r'<([^>]+)>', clean_header(raw))
-+        # Try the raw value first — message-IDs are always in angle brackets
-+        # and never need RFC 2047 decoding.  Passing through clean_header()
-+        # can destroy the value when the header also contains encoded words
-+        # (e.g. Gnus-style In-Reply-To with a display-name comment).
-+        matches = re.search(r'<([^>]+)>', raw)
-+        if not matches:
-+            matches = re.search(r'<([^>]+)>', clean_header(raw))
-         if matches:
-             return matches.groups()[0]
-     return None
-diff --git a/tests/test_message.py b/tests/test_message.py
-index 77c4cd4..6d3aa84 100644
---- a/tests/test_message.py
-+++ b/tests/test_message.py
-@@ -50,6 +50,16 @@ class TestGetCleanMsgid:
-         msg = make_msg(in_reply_to='parent@example.com')
-         assert get_clean_msgid(msg, 'In-Reply-To') == 'parent@example.com'
- 
-+    def test_in_reply_to_with_encoded_comment(self) -> None:
-+        """Gnus adds an RFC 2047 encoded comment after the message-ID."""
-+        msg = EmailMessage()
-+        msg['In-Reply-To'] = (
-+            '<patch-v1-1-abc123@example.com>'
-+            ' (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"\'s'
-+            ' message of "Mon, 20 Jul 2026 11:55:30 +0400")'
-+        )
-+        assert get_clean_msgid(msg, 'In-Reply-To') == 'patch-v1-1-abc123@example.com'
-+
- 
- class TestParseMessage:
-     def test_roundtrip(self) -> None:
+Recently it seems that b4 review tui has taken to using the title of the
+first patch of a series in the list UI rather than the title of the
+cover letter, for example this is happening with:
 
----
-base-commit: a20d90228c111908d1af6f7de583bfcf9197c0ad
-change-id: 20260721-fix-gnus-in-reply-to-0f4194139202
+   https://patch.msgid.link/87pl0hjg4g.wl-kuninori.morimoto.gx@renesas.com
 
-Best regards,
---  
-Marc-André Lureau <marcandre.lureau@redhat.com>
+This is confusing and makes looking up a series harder than it should
+be.
 
+Thanks,
+Mark
+
+--x7fTeo2jZNnzVRxA
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpfgBMACgkQJNaLcl1U
+h9Dvegf+LPK644n8T5VtB1Kvs8D++kIOlQmsQIQH8yNC2ZJx+mOlW6JRZcv3DHl1
+SVJXKBQKJTL0P5A4FWr6bN7v5HfLua4AomlchL/v+ZqjG9mzg3s72iBNGVc3R0Eq
+/fgRsiOUESwUnQJpkEVVqjkMFUKv2fGxT80zB0gj9Sv/6dqCapLnbCiHf3DKuNQb
+9Zea1/RgbEJRKA+Wy+KPjIdCtiGT7a6+haXqKwA5t2McWOkw/fBUs/jfP1o9sHDo
+17EUxiCZ9FWnWEP1PiKE8U8ngh0+onLTGfbHBjRaQ+f4oKn9sJbWsOzBVVLcR4Lb
+uGHgIhMcA5C6p24THKZDacs4SzZk3Q==
+=bT3D
+-----END PGP SIGNATURE-----
+
+--x7fTeo2jZNnzVRxA--
