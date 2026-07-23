@@ -1,65 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F5E456E10
-	for <tools@linux.kernel.org>; Thu, 23 Jul 2026 16:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C001E3BB675
+	for <tools@linux.kernel.org>; Thu, 23 Jul 2026 18:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784823520; cv=none; b=M7A51r2wjN3NckVmzNsccyaUTVKgyYNtqlp3HV2cfrYC0af7lEJJyJ0uyaiqnqpVtNaySnNPsMD7GujX+goR8Nor6+c/xgJKkhPJvBPwAtH+INcm2O0ae+Gbfd+LStY4WmGXCHjaUxS+h/e7FtuyA0yDywl3mhLNzMkTNAiRt78=
+	t=1784830724; cv=none; b=ZaFI+K8pCGH+pMAsaVaV4qL8vRlfzz2tVA6vgCg0YA0pWyDX7/RVK0Se1Pjpjw89AtYt/7vLnw/11I2pU3+ZqL0Ugy439TMI264JNjapOFTZEohqfgbtJHsaT1d2Cwg4WMQFJ+cfnZ73dzc5ZjlS2ZsdzV8P+2JWIa4ZbTZTFgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784823520; c=relaxed/simple;
-	bh=lFcsa8AbIx21NRozfsTawdOEweZHNRQBChYwjwIf4O8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JqkAkTKXrz1I2xZi4g7UNMtb7mkn0K55ifjXI+En+s8O004FES4kAzQyGV0bIAgBBjU0x/bm2yeVFHqMLKtTNWG7ui2YyL8kAkG9W3TQNowzbHvYe3k4Dl8POifnbHNiGysEur/QICZS7/eLwhFxFy1d9fqtwI1u7vNFI6Dkqog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AVS+KkZI; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784830724; c=relaxed/simple;
+	bh=MkuE22HGlobhaZ1AwHsYTkDVP4QDjPOMw2SWOnp2Qkc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Dq8TJyjC1g4N0Ym1lLIEA2j5jT18PNjAyQ3CcA68CHcm9nESKErj1Tq+lt5si8bpH7PlDHtWoI87mODQflJJ81PcWRaw+HK9oTHibEGi0jTPl42Lockn2NGgxfYlaw4GSr3kBMlAgssrStP2Lv8sbZf6V+4s2Cy/lqnLo3nld94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RtFz0MsK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AVS+KkZI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RtFz0MsK"
 Received: by smtp.kernel.org (Postfix)
-	id 2160E1F00A3A; Thu, 23 Jul 2026 16:18:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 7F5051F000E9;
-	Thu, 23 Jul 2026 16:18:22 +0000 (UTC)
+	id C17D51F000E9; Thu, 23 Jul 2026 18:18:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B05A1F00A3A;
+	Thu, 23 Jul 2026 18:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784823503;
-	bh=9ZLPT99w2/2qzY8jo0JrwghwVCo87W/V4+cfZCbLZtQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=AVS+KkZI6hPnn/mtniSuDND0ltENjS3v/IZU+xpFg83JswcfomQhSIh8cAwpwyNUP
-	 V8ZiJTT246uqiTxw+wLU6jBV52cWOc08ziRnLkM9D/yInpm8dMJOrPBHiRkmZRNMVd
-	 5OqJfh07TmPdgc2gPJuYCkHijTSN82U49ErBZJVFT5lmuRSWnJNRPcmAzFrzqgvGEF
-	 5Fvlkcp+1o0xjUzur6kBSwHpwkHufMejIk8RwutyrcyHvlDRQ/9TpzpcHGOM2r8l/+
-	 8x/GCr7e42h5MYc6iMCzkeukK27Jtz6A4MRssWbV89v0IJxen7hj9LIl9Ba5LK2bMR
-	 r6ziXAX77C9Gg==
-Date: Thu, 23 Jul 2026 17:33:15 +0200
-From: Nicolas Schier <nsc@kernel.org>
-To: Christian Brauner <brauner@kernel.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: [PATCH b4 0/2] review-tui: don't gpg-sign throwaway test-apply
- commits
-Message-ID: <amI0O4M8Ie4qK9Yk@levanger>
-References: <20260723-work-b4-testapply-nosign-v1-0-a7cb7105e06f@kernel.org>
+	s=k20260515; t=1784830708;
+	bh=ScTZbuu3pUihOCB722hDz7nCkM4bkGn0CzbkswlsELg=;
+	h=Date:From:To:Cc:Subject;
+	b=RtFz0MsK7edx6DfNXitPZn8Lu9cfrt8KAGgtavfzlPqgK6iu6kr7t9OoQm4vxwHrU
+	 Zicq/d9BsHwX+Ib+6jdWD1jKbwIoZFx46h5MQxIMSAGXHN3q5S/p6VEpymzKh6lukq
+	 rHj3VRLbMgGApT2fZleNfZpkEocgPOkCEqyWuuGMnOx20N/FmCrCGXLVM7pcQmSKvs
+	 Krqsi8iiM+FdSnrGGvEmY7M1W1rajJmCOSGVN1cFHFxclA6Ima6ngubVWiqh+anM8w
+	 qMU+3/DtJYXot3pAth6qMbDdEmtgYfVPo9r5WWVvAkW/zjWc80SPcy5tuBeNPDkNQL
+	 78ZD0i2G+G6Wg==
+Date: Thu, 23 Jul 2026 19:18:17 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org
+Subject: b4 review spurious duplicate detections
+Message-ID: <0a399ae7-d60a-4378-8c66-2ef6f48aeead@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Yt2yciO5TMPiGXE7"
+Content-Disposition: inline
+X-Cookie: (null cookie
+
+
+--Yt2yciO5TMPiGXE7
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260723-work-b4-testapply-nosign-v1-0-a7cb7105e06f@kernel.org>
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 23, 2026 at 10:33:34AM +0200, Christian Brauner wrote:
-> The take/rebase/target/base modals check whether a series applies
-> cleanly by running a real git-am into a temporary worktree and rebase
-> additionally probes with a cherry-pick. The four modal probes run from
-> worker threads while the TUI keeps the terminal.
-> 
-> With commit.gpgsign=true and pinentry-curses git tries to sign every
-> probe commit. pinentry then pops up on the tty that Textual owns in raw
-> mode. The TUI repaints over the PIN dialog and its input reader swallows
-> the keystrokes and so gpg never gets the PIN and the apply hangs. With a
-> card-backed key this reproduces on every take.
+Hi,
 
-yes, thanks a lot!
+For some reason b4 review thinks all Randy's posts are the same series,
+mostly recently that
 
-Tested-by: Nicolas Schier <nsc@kernel.org>
+   https://lore.kernel.org/r/20260723181215.419984-1-rdunlap@infradead.org
 
+is:
+
+   https://patch.msgid.link/20260713175510.524728-1-rdunlap@infradead.org=
+=20
+
+Thanks,
+Mark
+
+--Yt2yciO5TMPiGXE7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpiWugACgkQJNaLcl1U
+h9D8cAf/eRr0wSbnDOb1A5EXNCx7204+y/6/e31ek1XCRQFKK+XsRPFs39Dbmn1Q
+TZfzzxtXAgP+gxwzUa+6+j7jCj4w2eQlCSCJ2IldJo9HZ7nArgiVFwKNEYX+y5W6
+nOLh0GHTeeG6v7BgPUdv2KzZ6klIHRvAqkgN97MUCs8aN0gy59th6SQo5NaTrcbX
+NL4UINOgEB72w4wXKS5ZvP+PcQ7SJBRBf0e9NUDMUODdA44LohhBcpqjXrXU4sLn
+jZ7UHYWNbl0f8e+GjNWIL/TF3Cflo050T+UqlmlCcDQJnU+DCF43xtcBObRGAmE0
+B8mSoiXzt8S43YCxfty1MalVYj+LgA==
+=0h7/
+-----END PGP SIGNATURE-----
+
+--Yt2yciO5TMPiGXE7--
