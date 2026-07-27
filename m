@@ -1,62 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923B3380FD4
-	for <tools@linux.kernel.org>; Mon, 27 Jul 2026 18:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E6F3CCFA8
+	for <tools@linux.kernel.org>; Mon, 27 Jul 2026 19:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785175828; cv=none; b=NtQ4CviUlhTR3mEZVLkvAwoxHSAgaHLr0xCGXE1Mlt4o2JUkyDOBqYFZCSqKqwvpbBgiDqd6gio4h5L9eCyRAoFW0chyQ0n6bEUNZapZs+A0+boqTGZYHRyFnrXPdO7Yhn9RcFfKTLGHhyOOyVBPrCapUdYf4kJOciMTz2+an74=
+	t=1785179708; cv=none; b=JedhyWCso1dNHRM5b+PU0CsRCSk6Ok8ifC28HfWOgzqG+yNYgM7rXJ3mKZJjwYyQY2UwwCvJAA3sUjPXwzPk4pAbUEKa55USYaxF/HXS3cZ0zKcRLcX46ZdunAy78H3nzurHfrYqIkO2Ur7i/yAApNA6LPxcuteXMfxWIqW3l0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785175828; c=relaxed/simple;
-	bh=RVcOdnhkW6p1ypVE0KODeIs7KGLk0SVG+1ncebVzoN8=;
+	s=arc-20240116; t=1785179708; c=relaxed/simple;
+	bh=tqsyZWe6CkJyOG+wNCQC+wm7OVBZHrwrFIk3MyMlHS0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EPJIqIRcdis/DGE0fGjg10rqoaGaXE1albFRRMlCy5/d6i+Vpan5GixL3bWujOajrItfz76q1T+E2mxL4iFSBta2nZMQz+pGulcA4EBTQ5b6+bqin+qQdtDBaFCXAjZL4F9zDmPcR+UDe+HSIB7sWXttjrSxb5Xu3lGYtQ0BwhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sseyLIVR; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=DiYR1EwJJ3Ba6Xh9bg2lAlriVR5qrAQ+QkV64ltVTKTUp0ZaKfVGLopCxdxslV+LwRR4Xj1NHDiMsU1Kn6dfp2RKq+HMVj0WL39t+75vnPBLztaF3IENCmtW9X2aGKEclw/Qk+rNW1i+uTqty0Dtf4U+8v2sm31gTvr2c6yt24c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kHgp/Gmz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sseyLIVR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kHgp/Gmz"
 Received: by smtp.kernel.org (Postfix)
-	id 012091F00A3D; Mon, 27 Jul 2026 18:10:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF32C1F000E9;
-	Mon, 27 Jul 2026 18:10:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785175825;
-	bh=48MgISgTdTfM7PiyfxhnLtfxptuL+MHLiqKEfxGmm6A=;
+	id A20221F00A3A; Mon, 27 Jul 2026 19:15:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BB31F000E9;
+	Mon, 27 Jul 2026 19:15:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785179706;
+	bh=GruF64rypl76n+MLr+g/wt7sOaXZ+QCOAVgg7YTrbyk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=sseyLIVRbPIEAYymDgoOyp0XWC+8IP8WOYy84PLhfBj96wIHra63wcStRkSnJ2NNq
-	 zBr8QiOhB0lmcP5aLiyusV72760dHk5OhQxHP6Ktmyl3zPsUYAWwnpdN+xITAKgcoD
-	 hLLcURKhs3OQkJ9A9xTqoqO+VCmKmUZRAEWp4rqE=
-Date: Mon, 27 Jul 2026 14:10:24 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
+	b=kHgp/Gmzat52nZq1+tKtC6hy+CxlyDJjk1Fx5kE4+NMl5Ayk+Ng6I+eYCcHLk3Ghd
+	 oK4OuUMxzsrvzMvAY5zzX0S2zDwJIBE5tjuV01iAruEKzSMzOtRyynDRkS1b+dzfdi
+	 FzIZkgW4p6P7Y3OwSi9fV7MdOoX1uSs/GH2H3Pf8gLtBWMHWVFXqw+G7YQmQXXTAsZ
+	 p1AsBCwVHGgavXjXW/q49EwnWQLjAFAdM6jmkK+pvmS40+phBt71mTev+jQh007LoQ
+	 7jX71trOoDvBnilHcQphlPVbjyq4lH0SxuaXdM0xy6hLoae0G8TnCxtrX0A8RxWfL8
+	 9CfPQvgKqAu4A==
+Date: Mon, 27 Jul 2026 20:15:03 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: tools@kernel.org
 Subject: Re: b4 review spurious duplicate detections
-Message-ID: <20260727-tiny-marvellous-coucal-1c21ef@meerkat>
+Message-ID: <d022e6d2-c1d5-4753-81a9-8378f9d60f03@sirena.org.uk>
 References: <0a399ae7-d60a-4378-8c66-2ef6f48aeead@sirena.org.uk>
+ <20260727-tiny-marvellous-coucal-1c21ef@meerkat>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="we/1SEw16/QgLgFr"
 Content-Disposition: inline
-In-Reply-To: <0a399ae7-d60a-4378-8c66-2ef6f48aeead@sirena.org.uk>
+In-Reply-To: <20260727-tiny-marvellous-coucal-1c21ef@meerkat>
+X-Cookie: It's OKAY -- I'm an INTELLECTUAL, too.
 
-On Thu, Jul 23, 2026 at 07:18:17PM +0100, Mark Brown wrote:
-> For some reason b4 review thinks all Randy's posts are the same series,
-> mostly recently that
-> 
->    https://lore.kernel.org/r/20260723181215.419984-1-rdunlap@infradead.org
-> 
-> is:
-> 
->    https://patch.msgid.link/20260713175510.524728-1-rdunlap@infradead.org 
 
-To make a "party like it's '99" joke, these patches are special because they
-appear to have been generated by "diff -u" as opposed to "git diff" -- and
-introduced an unexpected corner-case where they generate no git-patch-id
-despite actually being patches.
+--we/1SEw16/QgLgFr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We're now properly handling this in the latest master.
+On Mon, Jul 27, 2026 at 02:10:24PM -0400, Konstantin Ryabitsev wrote:
+> On Thu, Jul 23, 2026 at 07:18:17PM +0100, Mark Brown wrote:
+> > For some reason b4 review thinks all Randy's posts are the same series,
+> > mostly recently that
 
--K
+> >    https://lore.kernel.org/r/20260723181215.419984-1-rdunlap@infradead.=
+org
+
+> > is:
+
+> >    https://patch.msgid.link/20260713175510.524728-1-rdunlap@infradead.o=
+rg=20
+
+> To make a "party like it's '99" joke, these patches are special because t=
+hey
+> appear to have been generated by "diff -u" as opposed to "git diff" -- and
+> introduced an unexpected corner-case where they generate no git-patch-id
+> despite actually being patches.
+
+> We're now properly handling this in the latest master.
+
+That seems to be working, thanks.
+
+--we/1SEw16/QgLgFr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpnrjYACgkQJNaLcl1U
+h9AaJgf/cv1dw7kSeDqfERwXLXnrfUq8BdZ5pi5c4ZaZX+oQJ2XHNSLrsgVFWyTh
+/FljnIwXDvAq+YO3fKtAGZF7chlwu21E9FiYn0Hs3kKkvOwu1G4utUgu0HiQ6d0x
+fQo3qkKHDAqik2A9dZMpzurCWX/pVqD0bEVh6RV6DnsA7ji08/rhq8wUcANy/xG1
+LupkeMfhggV0TPaXRXk8AxZ7oN1L0BEkjb2NdXedp/R3aHOsXCkpYSYKkOvUPQQX
+C5Po0FW/MCSnog1WTDsrGaexe2+Kfeafx0vbh7qNi/lSyCPXsywCQaCaRdS5PBH7
+noe1p7dxtpeitdNcK52gS7/GVLcX+Q==
+=lG6y
+-----END PGP SIGNATURE-----
+
+--we/1SEw16/QgLgFr--
