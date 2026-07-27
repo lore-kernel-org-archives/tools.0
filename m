@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83C837E5D7
-	for <tools@linux.kernel.org>; Mon, 27 Jul 2026 21:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1479337B00E
+	for <tools@linux.kernel.org>; Mon, 27 Jul 2026 21:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785187614; cv=none; b=AA7Ka8vNqMqkTlpTlaE/87HBDtRAU8e9AjSw9HpIhOtI17pN4B1Kmf8rU8ujn2nA8ajNsyJzxb0x7ggUvZbZU67rQ6lWZe55jJSOWEgywV+IStfhdQyPrKJ+ejuemH5PD/zWFUm/MLFmSsqmXOUnLFo87tV9WvofhOo5JxIGQO0=
+	t=1785187679; cv=none; b=tlm0dp/rUm/xBsZOMbc77yb0T0mi5S5r9dOKVVmpfpUbELY+eD30l2t5E8fv5+aWJ00+vZNzg70oXD9yzAjdULz56Exdg0HBhRBoJNec6xr8516UOLOT1EZV8zVnwlhD1rmX1l4E6+I1CEDxsILYCQQtSf7FH20NoZk6YSyGlG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785187614; c=relaxed/simple;
-	bh=HE2D+wdNUvy1I3sc4cqso3+yn5OZU99+De34O28Aa3w=;
+	s=arc-20240116; t=1785187679; c=relaxed/simple;
+	bh=04pqW5dtFpXqT7LP9aGyCZmC4JEiPIX88d+e0sB0ARY=;
 	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=DID+qShIbOjfVAPPHhe4qgN3gziy92E/eZun9uIPA0iKeV+yPSEUucYxZqWQF+sblRUMOu+Hd268usrYh0bGOzr9R2n/acwiRA6iTHrdJNE1WjHmqW2dUJ8h4KzPRwbweKPhv4dBgehdzm/rzkh26UBQav1qqQhyvXbk4fwQ6dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RjFpKEiP; arc=none smtp.client-ip=100.103.45.18
+	 References:Date:Message-Id; b=POnpyVhN8DzCRjfKdPZ768vMcTIcYnfeEeJY0yUgv2zAj4OsjY3/ZHmQyElejWaL97Cih8LOkPYOyjhR1kfgNFRnOyeTjRFyzQ7lyLhyiUXNgP30cBbgDHQUTc6+1r1gEmvGYzd+auDIKXza298JTAm5l3dIQbLM7G+GBNJ/k9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lu1m1uqF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RjFpKEiP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lu1m1uqF"
 Received: by smtp.kernel.org (Postfix)
-	id 89B3D1F00A3A; Mon, 27 Jul 2026 21:26:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57BA1F000E9;
-	Mon, 27 Jul 2026 21:26:52 +0000 (UTC)
+	id C56101F00A3A; Mon, 27 Jul 2026 21:27:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2571F000E9;
+	Mon, 27 Jul 2026 21:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785187613;
-	bh=umS0DnT+vvw9uUmbPeaVwfTqmEhwrp2krFcw2picj68=;
+	s=k20260515; t=1785187677;
+	bh=+1qVn6ix2n9GW2n45ZN+vZM3+ljVjscmW4QBjohM7y0=;
 	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=RjFpKEiPXbj5wiA9Zj7tYq7Q27j0XgRiVVq8ObLXqFtF2xBQbJ5DJ0BPjSC8UvPCC
-	 pPHsXezztb2TKHCMH5pYKCd1+CBliToL5r7btCzdlKmojx1ZHZb8wNGDPDiTAVWi6x
-	 jPXTa8nLfKHXavRO8e4vURxc0Ihws5EKLv8Za1GA3zMssprzoOuwj/66qaNcodWCIO
-	 L+c0gygi6tI+srPda5HykyXLaAeZmzUVBkDYq82zAFKHHddQx1jyHMKi8q2F11cxD6
-	 4sL2DidoW8h+eg2gXNyiWg9HXsjgcl8+Ck5ygMcJ8U0ourBl9ykp4aDVe3MqUkjPAx
-	 Mhj4HY+RaTz/g==
+	b=lu1m1uqFfOQP1AdRljAgyh6kFL4OK/uqwJO8DOizeMfE7ylJXCMlfpgTDzC3H6cbw
+	 fRuS34nGB/cvhdnzdm60c65ZOC7m7NMXVY8nXYnHdPpc/P2hxXNnfkHeR9i/Q7bsL1
+	 ut61A+JBeFrI4t1fSS7EuXyaL8y/rcs4HOxefsBvtZ2Imqfw0Desry27eFZgTjTWdr
+	 QU7kNCLyMPjuyNwyZhOKFlKVD/zXOqG3ozAuOt9xonOf5WD1zDXC0RKiIaGzDCLB+z
+	 Y7KrdNDd6eccGVrw5i2KEdbn2ppvlCLzv6C7+4Xg4zF4tc/B0oKobd0Pmxg8blJp17
+	 yFkShifv/Emew==
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -36,33 +36,39 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH b4 0/2] Detect naked cover letters that lack a 0/N
- prefix and diffstat
+Subject: Re: [PATCH RFC 00/11] review: track and browse every version of a
+ tracked series
 From: Christian Brauner <brauner@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: Christian Brauner <brauner@kernel.org>, 
  "Kernel.org Tools" <tools@kernel.org>
-In-Reply-To: <178518050148.2787052.7066452208131813379.b4-reply@b4>
-References: <20260701-work-b4-naked-cover-letter-v1-0-f651c2ffb63b@kernel.org>
- <20260727-umfahren-klinke-mutation-b23efcc7258c@brauner>
- <178518050148.2787052.7066452208131813379.b4-reply@b4>
-Date: Mon, 27 Jul 2026 23:26:50 +0200
-Message-Id: <20260727-entwachsen-ehrung-geowissenschaften-8629305c86b7@brauner>
+In-Reply-To: <178518503184.2983685.7373099669069578683.b4-reply@b4>
+References: <20260718-work-b4-multiver-rows-v1-0-3c539d2a3095@kernel.org>
+ <178518503184.2983685.7373099669069578683.b4-reply@b4>
+Date: Mon, 27 Jul 2026 23:27:54 +0200
+Message-Id: <20260727-checken-gastarbeiter-eintagsfliege-d025f1f4d98b@brauner>
 X-Mailer: b4 0.16-dev-09492
-X-Developer-Signature: v=1; a=openpgp-sha256; l=348; i=brauner@kernel.org;
- h=from:subject:message-id; bh=HE2D+wdNUvy1I3sc4cqso3+yn5OZU99+De34O28Aa3w=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSln5Wp7jt6XJ73vtNt+/C/e96ISGxyZ3skMp/n/JPJQ
- tNY4tM2dpSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzk+k9GhskxlqIN94rZ+Ney
- nTT3l9TVsNny73PTPcPEaOfPU2tjIhn+5/smXJy/84im3Bu7G8+urj4SVZz2Kmq741S+Uoe1VkW
- L2AE=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=728; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=04pqW5dtFpXqT7LP9aGyCZmC4JEiPIX88d+e0sB0ARY=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSln43ZZiSrUbWk8cK8Q1v2CPxuvpJm6b3TL0spb2LlX
+ KVzyVbpHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABPhLWRkOBoWl8n9IqSlXM9t
+ Y6aV36STqeFfjrKIptQeuFfzon5jFMP//PdqV1xlQsrM53r/85l01p7Zftl/pug7nFULmWobFeM
+ YAQ==
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-> I will take this, but I will grumpily point out that it's the second 
-> time today that I'm adding special handling for patch series generated 
-> basically the same way as in 1999.
+On 2026-07-27 20:43 +0000, Konstantin Ryabitsev wrote:
+> On 2026-07-18 00:37 +0200, Christian Brauner wrote:
+> > The review TUI binds all mail visibility to the revision a series is
+> > tracked at: 'e' opens only the tracked thread, unread badges exist
+> > only on the series row, and u/U updates poll only the tracked
+> > revision.  Earlier versions of a series -- and the discussion that
+> > shaped it -- are invisible even though the revisions catalog knows
+> > they exist.
+> 
+> I'm sitting on this merely because I'd like to get 0.16 out first and 
+> this seems like a feature that should land after that release is out.
 
-Believe me, if I would've seen any chance of getting said offenders to
-change their ways I would've done so. But you need a reasonable
-counterpart for that.
+Thank you for the update. I wasn't sure whether I should ping or not.
+This was helpful!
 
