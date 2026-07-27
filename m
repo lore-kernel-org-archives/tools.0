@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7A03876C9
-	for <tools@linux.kernel.org>; Mon, 27 Jul 2026 14:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43C3383304
+	for <tools@linux.kernel.org>; Mon, 27 Jul 2026 14:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785162936; cv=none; b=JZc1PnGevpOisXNc0e0uK50XsprimUb6Oac5GEj2TOqakmgSQN+Oyua8soBctTfKwxMS6cfGfPHdiUNMZY+Z193tkB2hKewFC2axkTq0d8H16c9dcF7tDg4KhOeMjl8H1vSfetgbs04jOp9s88sN6RduB8th/Mr7LeFSXbScG3o=
+	t=1785163074; cv=none; b=XKz8MFrpDS+wHKj6K5RpTfGF30Ih/UZ0FQMlKPWS+9ZWNnl4QvsepuCzhSts9OKM1y5cJ4gY743YGFh9iiH251TLGaX4MyW8PyiuphEAS6q4AIdFNVtnhXqU7E3bJWv5BUNSwIimZRDSlrIyqMdV9WIEpyJEGFlR14B3UIYa3aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785162936; c=relaxed/simple;
-	bh=djga3Li9DcW4mXjPLV3HCXOH9NkAw/sK/JN7uXMj8iE=;
+	s=arc-20240116; t=1785163074; c=relaxed/simple;
+	bh=C7PGmkfcHp5x9QVie/9lR6pAD4CU5l5fjkN4gOmpHc0=;
 	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=HoZPolpk5GIRSlGBnl+48QUrgiKyPN0HLUzPE7l/iFuXOZbUDnjq0dZsL9Vu2JGMXtLN95G+lauOHfTRM/I0tWz3tH3oXZO1qX6lYKUJdV5PnJFvNs/EqXCS0BxQTDYkyhPiux3Knq5/l1Y9wyw1bXacYnbcjU/RoKJK3BJAtL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U22Fl0J5; arc=none smtp.client-ip=100.103.45.18
+	 References:Date:Message-Id; b=a1KdA6v4RXKQ08AREPV6+Ov/ZVFJv6v2hnk0+vnmE5Gg6RyXymMumkTexELAi4QTOzjDE7YrnedT1RmKBtfRAEui1Cisj+UWS8b2pi54BiRdKcSkss8asxhZhWSZYMT4LfxnvTIKKOl8hx9FILUjQrK5YzOBf2IPklOg+1p5G2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nDeH6e+E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U22Fl0J5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nDeH6e+E"
 Received: by smtp.kernel.org (Postfix)
-	id 6E0E41F00ADF; Mon, 27 Jul 2026 14:35:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A6DF1F01558;
-	Mon, 27 Jul 2026 14:35:34 +0000 (UTC)
+	id A62D91F00ACA; Mon, 27 Jul 2026 14:37:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17D41F000E9;
+	Mon, 27 Jul 2026 14:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785162935;
-	bh=7F8lmMYYF3mgIYbRRC+fyLUPvcWjZBqtBHVZKPOF7IM=;
+	s=k20260515; t=1785163068;
+	bh=lIqIz7Q1vcCmpEvKfCT3FtAbzkB10oGS+fpyXgmIiQc=;
 	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=U22Fl0J5kU6S9uHnfm7dkPjAUruZ6llc8s2pVj41poRS4M4zHAukz69d1onXNArSc
-	 dn6gh1jKic1CMieCoVAyN+dTTk2K01YoKXIxvm6nyoavYbcWIv9zj5z5rQnZmfCT8O
-	 V8iXoZlt4JNTxhwtxyJ5UCPADHrPRoHCUYHSG9Z36DjM/8WOvNidSvaSMUcCP5Vk1s
-	 B1a8KfQD/CzW5QkC6lfeX4aurOlXkQO/Hvo7VXYuRthjUBS5Nb2tttwMkqqJOmIvSB
-	 FXwG4JZ7Kkoln9acNozQAx4Fiwua/pYZbaAfat6jjYD0JztzopwdniWc8FSK3lCknb
-	 25rAR3TCXDnTg==
+	b=nDeH6e+ES7SX689x7mZJCG6yILhaVp/rd2e3WQSUQrxQg9YJzTYr4gRXrUt0MLVnD
+	 nj5xXVsP1UN6g+QD6Vkxee5Ddzd47yl5X2p3fBUcThoRr6HW+9lenQbZCzPX/agoZI
+	 ljuhCoFjYilMVSvMomHDr/Kw1z9X7TOknZwwP0617ybsKwV5Qm0iw6jbzeeWgtr4e8
+	 dTakOyL1QiHGHrRa+sKc9U10cIK4e1G0E5JODGngS7qA0lFRVHpjaI+wjRSpEbb7nZ
+	 pmSCDnzWs+ZJWW689XI+RiJPLaNW5XAiDedosCGO4rUodWMs9lCCaaEaCbS+5g8EcU
+	 f3Nxr1OPWCnBA==
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -36,54 +36,55 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH b4 0/2] review-tui: don't gpg-sign throwaway test-apply
- commits
+Subject: Re: [PATCH b4 0/2] Detect naked cover letters that lack a 0/N
+ prefix and diffstat
 From: Christian Brauner <brauner@kernel.org>
 To: Christian Brauner <brauner@kernel.org>
 Cc: "Kernel.org Tools" <tools@kernel.org>, 
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- "str = 'test"@example.com'
-In-Reply-To: <20260723-work-b4-testapply-nosign-v1-0-a7cb7105e06f@kernel.org>
-References: <20260723-work-b4-testapply-nosign-v1-0-a7cb7105e06f@kernel.org>
-Date: Mon, 27 Jul 2026 16:35:32 +0200
-Message-Id: <20260727-ordnen-zimmer-abseilen-f4c572bf1bf1@brauner>
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+In-Reply-To: <20260701-work-b4-naked-cover-letter-v1-0-f651c2ffb63b@kernel.org>
+References: <20260701-work-b4-naked-cover-letter-v1-0-f651c2ffb63b@kernel.org>
+Date: Mon, 27 Jul 2026 16:37:45 +0200
+Message-Id: <20260727-umfahren-klinke-mutation-b23efcc7258c@brauner>
 X-Mailer: b4 0.16-dev-09492
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1449; i=brauner@kernel.org;
- h=from:subject:message-id; bh=djga3Li9DcW4mXjPLV3HCXOH9NkAw/sK/JN7uXMj8iE=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSl52y7vN6/T2vH5fXntZ3zz/rxTwxf3zb9sNViC8eHJ
- Vp53RXFHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABP5dJKRYUUaT/KbEJH7z5s8
- npyovB6+/7WC2c2K0NgLUzxn8Zev3cfIMIXFXCXu294mkTfnvaW5fqpIt1xIas+WbFlYa3bxOXM
- wPwA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1649; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=C7PGmkfcHp5x9QVie/9lR6pAD4CU5l5fjkN4gOmpHc0=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSl51ofOSkgkqllsM3vcUihrbZp6JEJV1xidzqG/w+RM
+ rv1/sPnjlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIn0XGRkmLZrZhTrpjaRe1+n
+ ME4saO041CFRM8Ovu3Wt2uuKvvpEaUaG+W83si+93fRa4t0qz5tZVr0vGL8YPEjRuN7h3cy9a7Y
+ +OwA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-On 2026-07-23 10:33 +0200, Christian Brauner wrote:
-> The take/rebase/target/base modals check whether a series applies
-> cleanly by running a real git-am into a temporary worktree and rebase
-> additionally probes with a cherry-pick. The four modal probes run from
-> worker threads while the TUI keeps the terminal.
+On 2026-07-01 15:51 +0200, Christian Brauner wrote:
+> LoreMailbox only recognizes a cover letter when the message carries an
+> explicit zero counter ([PATCH 0/N]) or, via the in-reply-to fallback in
+> get_series(), when the thread root carries a diffstat.  A "naked" cover --
+> one with neither a [PATCH 0/N] subject prefix nor a diffstat in the body --
+> matches neither test, so it lands in self.unknowns and is dropped, and
+> LoreSeries.has_cover stays False.
 > 
-> With commit.gpgsign=true and pinentry-curses git tries to sign every
-> probe commit. pinentry then pops up on the tty that Textual owns in raw
-> mode. The TUI repaints over the PIN dialog and its input reader swallows
-> the keystrokes and so gpg never gets the PIN and the apply hangs. With a
-> card-backed key this reproduces on every take.
+> The visible fallout is in shazam -M, which then reports "No cover letter
+> provided by the author" and links the first patch instead of the real
+> cover.  This happens whenever an author writes a short prose cover with no
+> diffstat, e.g. Christoph Hellwig's "don't build bios/contexts over multiple
+> iomaps" series:
 > 
-> The probe commits are discarded together with the temporary worktree
-> so signing them is pure waste. Let's pass -c commit.gpgsign=false to all
-> five probes. The rebase cherry-pick runs under suspend() and so cannot
-> deadlock. But its commits are just as throwaway. Real applies (checkout,
-> take, rebase, merge) are unaffected. They run with the TUI suspended,
-> where pinentry works, and keep signing per the user's configuration.
+>   https://lore.kernel.org/linux-xfs/20260629121750.3392300-1-hch@lst.de
+> 
+> Patch 1 extends the in-reply-to fallback to also accept the parent as the
+> cover when it is a non-patch, same-author thread root (in_reply_to is None
+> and not itself a reply).  Requiring the same author and the thread root
+> avoids mistaking an unrelated message the series was merely sent
+> in-reply-to -- a third party's bug report, say -- for a cover letter.
+> 
+> Patch 2 adds positive (naked single-patch cover) and negative (patch sent
+> in-reply-to a stranger's bug report) fixtures and a test.
 > 
 > Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 > ---
 
-It would be nice to get this issue fixed as I have to keep the patch on
-my local b4 source to be able to use b4 review tui and I would like to
-get rid of carrying that change (or something else that fixes it)
-locally. :)
-
-Thanks!
-Christian
+A solution to this problem would also be nice as Christoph keeps sending
+me patch series with naked cover letters and I have to fight with b4 to
+apply them correctly. :)
 
