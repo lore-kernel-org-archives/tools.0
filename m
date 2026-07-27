@@ -1,90 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43C3383304
-	for <tools@linux.kernel.org>; Mon, 27 Jul 2026 14:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903AC3B42F2
+	for <tools@linux.kernel.org>; Mon, 27 Jul 2026 15:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785163074; cv=none; b=XKz8MFrpDS+wHKj6K5RpTfGF30Ih/UZ0FQMlKPWS+9ZWNnl4QvsepuCzhSts9OKM1y5cJ4gY743YGFh9iiH251TLGaX4MyW8PyiuphEAS6q4AIdFNVtnhXqU7E3bJWv5BUNSwIimZRDSlrIyqMdV9WIEpyJEGFlR14B3UIYa3aQ=
+	t=1785166684; cv=none; b=XuYXn1k+yElMW9yeJO21oNqQw0dudPOBTga9pceNQ1gCQ22mnTO53+FJh6U5lNZ8wrNlB0jhjNlhANv8VvQ9EVZD83ZHY51DHZh8n3rUI1oBoQfPfHCr338X5He5LmKvW+1Lz+SBUn4be+OiFWKga7gdzR9slSwRIQ7KkbmG7nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785163074; c=relaxed/simple;
-	bh=C7PGmkfcHp5x9QVie/9lR6pAD4CU5l5fjkN4gOmpHc0=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=a1KdA6v4RXKQ08AREPV6+Ov/ZVFJv6v2hnk0+vnmE5Gg6RyXymMumkTexELAi4QTOzjDE7YrnedT1RmKBtfRAEui1Cisj+UWS8b2pi54BiRdKcSkss8asxhZhWSZYMT4LfxnvTIKKOl8hx9FILUjQrK5YzOBf2IPklOg+1p5G2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nDeH6e+E; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785166684; c=relaxed/simple;
+	bh=crHUYEWLlD4NIUVo9ne195plJ6jPElanPMTH28cbk8s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WyQ1z8TdF3gTrh2xDoWJyt/4oHYP4JHdwQwDtVNf/pL9m7vlEJ0J7W2g7VlI5x27GpQvGUoYNuorWPq9miWWs1y1ISTXHcegYmSxReY9RzxDeTLlFzcPeGh0quyz4aAok1BIzyVGyuaSoGprm+xarBOMyrNFWlH1IkdKWg6nOb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2Yac5TN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nDeH6e+E"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2Yac5TN"
 Received: by smtp.kernel.org (Postfix)
-	id A62D91F00ACA; Mon, 27 Jul 2026 14:37:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17D41F000E9;
-	Mon, 27 Jul 2026 14:37:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785163068;
-	bh=lIqIz7Q1vcCmpEvKfCT3FtAbzkB10oGS+fpyXgmIiQc=;
-	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=nDeH6e+ES7SX689x7mZJCG6yILhaVp/rd2e3WQSUQrxQg9YJzTYr4gRXrUt0MLVnD
-	 nj5xXVsP1UN6g+QD6Vkxee5Ddzd47yl5X2p3fBUcThoRr6HW+9lenQbZCzPX/agoZI
-	 ljuhCoFjYilMVSvMomHDr/Kw1z9X7TOknZwwP0617ybsKwV5Qm0iw6jbzeeWgtr4e8
-	 dTakOyL1QiHGHrRa+sKc9U10cIK4e1G0E5JODGngS7qA0lFRVHpjaI+wjRSpEbb7nZ
-	 pmSCDnzWs+ZJWW689XI+RiJPLaNW5XAiDedosCGO4rUodWMs9lCCaaEaCbS+5g8EcU
-	 f3Nxr1OPWCnBA==
+	id ED5981F00A3A; Mon, 27 Jul 2026 15:38:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD0F1F000E9;
+	Mon, 27 Jul 2026 15:38:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1785166681;
+	bh=goEwTfIWuRDgtfj+hMOWlSgdt5OTK3TpY7V7+tCxCbc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Z2Yac5TN0GWJ9sg3m9boUq2H3sbdyu7VKnaDybxE62qw6Zz3/qwlpOmZ1YHLOnh/+
+	 ywT+GSsKuVQaqQlrr6MOCtcGu1T+gN2sRjovwTQ9fAagHHrw7wvgFeNWQldKL4byHr
+	 bI7fgYrGv8TPOI+ZpmRZLWlrW3l3LBRrcAJWex64=
+Date: Mon, 27 Jul 2026 11:37:59 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@kernel.org
+Subject: Re: b4 review surfacing updated serieses
+Message-ID: <20260727-innocent-zippy-sambar-51cfe4@meerkat>
+References: <b356bccf-8e14-41da-8369-53eb442d0f30@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH b4 0/2] Detect naked cover letters that lack a 0/N
- prefix and diffstat
-From: Christian Brauner <brauner@kernel.org>
-To: Christian Brauner <brauner@kernel.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>, 
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-In-Reply-To: <20260701-work-b4-naked-cover-letter-v1-0-f651c2ffb63b@kernel.org>
-References: <20260701-work-b4-naked-cover-letter-v1-0-f651c2ffb63b@kernel.org>
-Date: Mon, 27 Jul 2026 16:37:45 +0200
-Message-Id: <20260727-umfahren-klinke-mutation-b23efcc7258c@brauner>
-X-Mailer: b4 0.16-dev-09492
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1649; i=brauner@kernel.org;
- h=from:subject:message-id; bh=C7PGmkfcHp5x9QVie/9lR6pAD4CU5l5fjkN4gOmpHc0=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSl51ofOSkgkqllsM3vcUihrbZp6JEJV1xidzqG/w+RM
- rv1/sPnjlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIn0XGRkmLZrZhTrpjaRe1+n
- ME4saO041CFRM8Ovu3Wt2uuKvvpEaUaG+W83si+93fRa4t0qz5tZVr0vGL8YPEjRuN7h3cy9a7Y
- +OwA=
-X-Developer-Key: i=brauner@kernel.org; a=openpgp;
- fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b356bccf-8e14-41da-8369-53eb442d0f30@sirena.org.uk>
 
-On 2026-07-01 15:51 +0200, Christian Brauner wrote:
-> LoreMailbox only recognizes a cover letter when the message carries an
-> explicit zero counter ([PATCH 0/N]) or, via the in-reply-to fallback in
-> get_series(), when the thread root carries a diffstat.  A "naked" cover --
-> one with neither a [PATCH 0/N] subject prefix nor a diffstat in the body --
-> matches neither test, so it lands in self.unknowns and is dropped, and
-> LoreSeries.has_cover stays False.
+On Thu, Jul 23, 2026 at 01:38:38PM +0100, Mark Brown wrote:
+> One issue I have frequently with the UI for b4 is that it's not great at
+> surfacing serieses which have new versions.  There's nothing in the list
+> of serieses that says that a series has a new version, they stay sorted
+> in the list with whatever date they arrived and you can't see that a new
+> version is there until you actually highlight the series.
 > 
-> The visible fallout is in shazam -M, which then reports "No cover letter
-> provided by the author" and links the first patch instead of the real
-> cover.  This happens whenever an author writes a short prose cover with no
-> diffstat, e.g. Christoph Hellwig's "don't build bios/contexts over multiple
-> iomaps" series:
-> 
->   https://lore.kernel.org/linux-xfs/20260629121750.3392300-1-hch@lst.de
-> 
-> Patch 1 extends the in-reply-to fallback to also accept the parent as the
-> cover when it is a non-patch, same-author thread root (in_reply_to is None
-> and not itself a reply).  Requiring the same author and the thread root
-> avoids mistaking an unrelated message the series was merely sent
-> in-reply-to -- a third party's bug report, say -- for a cover letter.
-> 
-> Patch 2 adds positive (naked single-patch cover) and negative (patch sent
-> in-reply-to a stranger's bug report) fixtures and a test.
-> 
-> Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-> ---
+> It also doesn't seem to reliably move things out of "waiting for new
+> version" when there is a new version.
 
-A solution to this problem would also be nice as Christoph keeps sending
-me patch series with naked cover letters and I have to fight with b4 to
-apply them correctly. :)
+I've reworked the upgrade flow on a branch (feature/has-newer-first-class)
+to cover both the waiting-upgrade awkwardness and the stuck-partial case.
+Please give it a whirl -- it should be safe to try/back out as it doesn't
+change the db schema. I don't have nearly as many series being reviewed as you
+do, so I can't fully test it beyond what's in the test framework.
 
+Specific changes:
+
+Upgrade is now gated purely on a newer version existing, not on the series
+state, so you can upgrade straight from waiting -- it archives the old branch
+and drops you back into reviewing. A series with a new version also gets a
+dedicated "up-arrow" marker and pops back up into the active list instead of
+sitting at the bottom. There's now also a special "up:" filter for 'l' to show
+just the series for which an upgrade exists. I dropped the old implicit
+auto-upgrade-on-update while I was at it -- upgrading is now always something
+you trigger, so hopefully there are fewer surprises or stale states.
+
+Same change unblocks the partial case: [u]pgrade should no longer refuse
+partially-applied series. The partial label itself can still linger after a
+revert -- I didn't auto-clear it, since a revert leaves the commit in history
+and guessing is worse than a stale label. Easy to add an explicit "reset
+coverage" action if it's actually annoying.
+
+I was hoping to get 0.16 out, but these look like real quality of life issues,
+so it's best to get them working better before we invite others to try the
+review features.
+
+Thanks!
+
+-K
