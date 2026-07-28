@@ -1,74 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1479337B00E
-	for <tools@linux.kernel.org>; Mon, 27 Jul 2026 21:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F423D9699
+	for <tools@linux.kernel.org>; Tue, 28 Jul 2026 18:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785187679; cv=none; b=tlm0dp/rUm/xBsZOMbc77yb0T0mi5S5r9dOKVVmpfpUbELY+eD30l2t5E8fv5+aWJ00+vZNzg70oXD9yzAjdULz56Exdg0HBhRBoJNec6xr8516UOLOT1EZV8zVnwlhD1rmX1l4E6+I1CEDxsILYCQQtSf7FH20NoZk6YSyGlG0=
+	t=1785262230; cv=none; b=LWnyBGIHBRUlygPuk6mzRuNQB7pvyN5RnxsYEywSmPqajvF9vNPm1O/kMNDR9THJHi1yfb9UD2QW0vWgeaQXtL5ERKKmflg0I18c/YCEgRrWZQH6qQ8AxLxIWmjD+HpGHBHXZ0NLVtiRIxQ1IPTHT0Jt2PlJ9uZamvYVBpBibms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785187679; c=relaxed/simple;
-	bh=04pqW5dtFpXqT7LP9aGyCZmC4JEiPIX88d+e0sB0ARY=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=POnpyVhN8DzCRjfKdPZ768vMcTIcYnfeEeJY0yUgv2zAj4OsjY3/ZHmQyElejWaL97Cih8LOkPYOyjhR1kfgNFRnOyeTjRFyzQ7lyLhyiUXNgP30cBbgDHQUTc6+1r1gEmvGYzd+auDIKXza298JTAm5l3dIQbLM7G+GBNJ/k9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lu1m1uqF; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785262230; c=relaxed/simple;
+	bh=0P8pDMthmDLxs+ftydRcr/4rUO4d6WHrIiKRU6Oq3x0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kik/7ZY3V3VynR4IdHKAYKPdgl57r2B+3TpiN0kFOzVpyAX4IhQa3vKVUHbqjS4y5kXRgSC+mEP+RhKs0qZ7O+3FUsrudSIyPv/kka8cMjfw0EjFjnh2bYWqRn4Uny8wzYZIilS2arNikgPMv4cp+SNTzBmh8YWJbhp1rYSlh04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d3ZlkBnH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lu1m1uqF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d3ZlkBnH"
 Received: by smtp.kernel.org (Postfix)
-	id C56101F00A3A; Mon, 27 Jul 2026 21:27:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2571F000E9;
-	Mon, 27 Jul 2026 21:27:56 +0000 (UTC)
+	id E58A91F000E9; Tue, 28 Jul 2026 18:10:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3904F1F00A3A;
+	Tue, 28 Jul 2026 18:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785187677;
-	bh=+1qVn6ix2n9GW2n45ZN+vZM3+ljVjscmW4QBjohM7y0=;
-	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=lu1m1uqFfOQP1AdRljAgyh6kFL4OK/uqwJO8DOizeMfE7ylJXCMlfpgTDzC3H6cbw
-	 fRuS34nGB/cvhdnzdm60c65ZOC7m7NMXVY8nXYnHdPpc/P2hxXNnfkHeR9i/Q7bsL1
-	 ut61A+JBeFrI4t1fSS7EuXyaL8y/rcs4HOxefsBvtZ2Imqfw0Desry27eFZgTjTWdr
-	 QU7kNCLyMPjuyNwyZhOKFlKVD/zXOqG3ozAuOt9xonOf5WD1zDXC0RKiIaGzDCLB+z
-	 Y7KrdNDd6eccGVrw5i2KEdbn2ppvlCLzv6C7+4Xg4zF4tc/B0oKobd0Pmxg8blJp17
-	 yFkShifv/Emew==
+	s=k20260515; t=1785262228;
+	bh=fCP42HB0cn2cw8q40URe6oB5bE2t6rGbrNAhvkTkl6o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=d3ZlkBnHL0fPlkITS2WkEO5fCoXBSUBLci1XAO/XNixo1/t5bBnn1qGpFxR+b4kOh
+	 uyK9F7W4kgOJCpOe77ZMndxCieRoz1y8AnmlcJ7JGvzEhxXy24/7jNiuAGHITvCK+L
+	 Kg8jiyQFA1GFhenwbni9Q9qvbNTLU8xp3JY8LPvf/ip6w9wCpl+HKJC/NaYhF2ea95
+	 b/w4JXLlK8dbIaf1z0jNrG4XLVLOE63RojflXTkfvbIA4BYGjHEOT3Cv2nm9AhwZMV
+	 vfEsV37Hvaw/Q5g76Aodam4w9160bjNEqW+sMuGSw7urs2VnB5k8qjCRDduS7S/Yuh
+	 J7oQ9kWrYiScg==
+Date: Tue, 28 Jul 2026 19:10:25 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org
+Subject: Re: b4 review surfacing updated serieses
+Message-ID: <2eccbfad-af34-4f0d-81b8-2f38735a9780@sirena.org.uk>
+References: <b356bccf-8e14-41da-8369-53eb442d0f30@sirena.org.uk>
+ <20260727-innocent-zippy-sambar-51cfe4@meerkat>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH RFC 00/11] review: track and browse every version of a
- tracked series
-From: Christian Brauner <brauner@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Christian Brauner <brauner@kernel.org>, 
- "Kernel.org Tools" <tools@kernel.org>
-In-Reply-To: <178518503184.2983685.7373099669069578683.b4-reply@b4>
-References: <20260718-work-b4-multiver-rows-v1-0-3c539d2a3095@kernel.org>
- <178518503184.2983685.7373099669069578683.b4-reply@b4>
-Date: Mon, 27 Jul 2026 23:27:54 +0200
-Message-Id: <20260727-checken-gastarbeiter-eintagsfliege-d025f1f4d98b@brauner>
-X-Mailer: b4 0.16-dev-09492
-X-Developer-Signature: v=1; a=openpgp-sha256; l=728; i=brauner@kernel.org;
- h=from:subject:message-id; bh=04pqW5dtFpXqT7LP9aGyCZmC4JEiPIX88d+e0sB0ARY=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSln43ZZiSrUbWk8cK8Q1v2CPxuvpJm6b3TL0spb2LlX
- KVzyVbpHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABPhLWRkOBoWl8n9IqSlXM9t
- Y6aV36STqeFfjrKIptQeuFfzon5jFMP//PdqV1xlQsrM53r/85l01p7Zftl/pug7nFULmWobFeM
- YAQ==
-X-Developer-Key: i=brauner@kernel.org; a=openpgp;
- fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/aDwkvehfQppg257"
+Content-Disposition: inline
+In-Reply-To: <20260727-innocent-zippy-sambar-51cfe4@meerkat>
+X-Cookie: Stop me, before I kill again!
 
-On 2026-07-27 20:43 +0000, Konstantin Ryabitsev wrote:
-> On 2026-07-18 00:37 +0200, Christian Brauner wrote:
-> > The review TUI binds all mail visibility to the revision a series is
-> > tracked at: 'e' opens only the tracked thread, unread badges exist
-> > only on the series row, and u/U updates poll only the tracked
-> > revision.  Earlier versions of a series -- and the discussion that
-> > shaped it -- are invisible even though the revisions catalog knows
-> > they exist.
-> 
-> I'm sitting on this merely because I'd like to get 0.16 out first and 
-> this seems like a feature that should land after that release is out.
 
-Thank you for the update. I wasn't sure whether I should ping or not.
-This was helpful!
+--/aDwkvehfQppg257
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+On Mon, Jul 27, 2026 at 11:37:59AM -0400, Konstantin Ryabitsev wrote:
+
+> I've reworked the upgrade flow on a branch (feature/has-newer-first-class)
+> to cover both the waiting-upgrade awkwardness and the stuck-partial case.
+> Please give it a whirl -- it should be safe to try/back out as it doesn't
+> change the db schema. I don't have nearly as many series being reviewed as you
+> do, so I can't fully test it beyond what's in the test framework.
+
+I've merged it in and have been using it today, it's much easier to work
+with and I didn't notice any issues.  The up arrow is particularly
+useful.
+
+--/aDwkvehfQppg257
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpo8JAACgkQJNaLcl1U
+h9Bj4AgAhnzQ1Z68ox4cvqm7RJWrH09+8xYbLaIB9H4kfm72kL0qhoSflzANLTyj
+FOor05AZydt03524ktljfADHOflyWzfxEqABwZCUNb6atz70ZDkAkvLRjxCkRDTG
+VY+7EJxgsNow2MotufWvjx0fjUgSvmtkmI+wrgVMsKsX6PBp/wQQi38LWo0kthAK
+RCozNHwqMPrRaFRqucmuspPHt1BEf6XRTUV9fdLEy/ZrcAj4fdo82heocO9cfMcC
+IN/rlXIoqz2xuhzzXMGNvKzXOA/DyWjP1TRGDCEmfGVelSRS3a1tdKLvXJ34+jAj
+/uoz21uEJcoL1OEHG3/Vha33WRjBig==
+=tAv6
+-----END PGP SIGNATURE-----
+
+--/aDwkvehfQppg257--
