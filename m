@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D752435ABE
-	for <tools@linux.kernel.org>; Tue, 28 Jul 2026 18:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6982621ABAA
+	for <tools@linux.kernel.org>; Wed, 29 Jul 2026 04:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785263111; cv=none; b=n/uUJTCoG9DVfpCPRMJ7u1y74qWpJb0Q1U/qTuzeM1zW5xww4vhiLeA1bzv/KoWow3PYs01gjyoMA/tSta/+sqc90RBr3BcWdJyNl2sxWhS56m874q7glGT7pt1VczroBPZbYfvu0O21UKW+JbzuFLNBRt4FM8dB1cXom7+JTXU=
+	t=1785299899; cv=none; b=JUNuTzBJja/rvJ0+0vfRz2ZJK2PAwXDiMgfcffOkcuvb/NzgJnHAq8YpOZIZ/dYsjoIXd70SFhrIQp7emMNSXcBgJMsZwmA70oEhKGfnqJBvuHSF3o2JQdkgxB6MziXeRE8ucoaln9uQob7YRE1Rt5UAi+9NdKgoji9H46/pFLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785263111; c=relaxed/simple;
-	bh=X4hk6lbLsPS/vISstuhyEBdORoI8KBzZI58vMBk3tYA=;
+	s=arc-20240116; t=1785299899; c=relaxed/simple;
+	bh=uI0OZThkwuVtDs4O3xUJBPyfYlkmzfOMmGUy2FLPs6k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Eg31XXaqviPUKzLRlEsXqOLKuFPzo6HrDXEUAzvURpQJpWxxjOs17/MvC3DDHj2ZMDnktCyuwT9oMpO5U0pzdtX3s8A2Nwc3iS88Cn3AuAzIxt5lzl1VFC0UZBndzgT16w8+C0z+UriZqFBaOEgFCUSdgxayptN7pr7e7ldqZ8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSg0JqYv; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=dkLfazUSj61xiekhiBhkmIZqphDB0/HZU9VT04FW9I89LAYY2m8PlysM8kH7Xsxatx6DyH1FUSE3684a7x2gY8DCY+TBA23VS9zyk8lTcm3swdoVJ5RMB4G8AFbtsJZkSMEWefbPkSgc1hc/PySpP8z3bpAkPoyKE0HFecWKvZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cL6GaYCy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSg0JqYv"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cL6GaYCy"
 Received: by smtp.kernel.org (Postfix)
-	id 1B0CE1F00A3D; Tue, 28 Jul 2026 18:25:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931D01F000E9;
-	Tue, 28 Jul 2026 18:25:09 +0000 (UTC)
+	id E36221F00A3D; Wed, 29 Jul 2026 04:38:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D4F1F000E9;
+	Wed, 29 Jul 2026 04:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785263110;
-	bh=w6b2Nwt+NVN5ekAqOgx6zHFnFBA9a4or2l0IID7pO6U=;
+	s=korg; t=1785299897;
+	bh=L/xlPMU6LobLj2sIG7E4k6Wdvo3MMTW5jGPmoLqhl7A=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=DSg0JqYvK80QqdD05yd+f7J1puyK4Uj1zLgMcCoKRwmaEr4/pVZbgRUle2LuHoVzv
-	 eOfFYUBVwOwmvtvVmZcW0bqpWU8nGjiVSxyQ+jJAraWeaFt2aD4k5QtE0W4Nx/ddfF
-	 PP8juDzydw751bKiYRC3Iz6vnL89Yo/2WK1oTYco=
-Date: Tue, 28 Jul 2026 14:25:07 -0400
+	b=cL6GaYCyX4ndSmy5QVLCJPOVFRMle+jOGjU4/pfMOG+D+B24rDBmjGF+nz7b4jJ/Y
+	 1NkqDb89whH8HlnbG0XMUYj4DPjI1hs6f6D80hC217832rXoXQ8aEHZ97Sn+/7vbVd
+	 FAvMLxpsPumHa3qhKgDfFtjsuNQW6sWpG0hyPZmc=
+Date: Wed, 29 Jul 2026 00:38:16 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: b4 review surfacing updated serieses
-Message-ID: <20260728-precise-speedy-fossa-cfb4ba@meerkat>
-References: <b356bccf-8e14-41da-8369-53eb442d0f30@sirena.org.uk>
- <20260727-innocent-zippy-sambar-51cfe4@meerkat>
- <2eccbfad-af34-4f0d-81b8-2f38735a9780@sirena.org.uk>
+To: Matthieu Baerts <matttbe@kernel.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: Re: b4 review tui: too smart reply features?
+Message-ID: <20260729-pig-of-lucky-economy-3a5ace@meerkat>
+References: <c281cf50-7935-488c-8429-03eac9b8902e@kernel.org>
+ <20260610-psychedelic-encouraging-quoll-c7b949@lemur>
+ <b2c44799-85a9-4576-9aae-b43eb1092315@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -42,19 +42,53 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2eccbfad-af34-4f0d-81b8-2f38735a9780@sirena.org.uk>
+In-Reply-To: <b2c44799-85a9-4576-9aae-b43eb1092315@kernel.org>
 
-On Tue, Jul 28, 2026 at 07:10:25PM +0100, Mark Brown wrote:
-> > I've reworked the upgrade flow on a branch (feature/has-newer-first-class)
-> > to cover both the waiting-upgrade awkwardness and the stuck-partial case.
-> > Please give it a whirl -- it should be safe to try/back out as it doesn't
-> > change the db schema. I don't have nearly as many series being reviewed as you
-> > do, so I can't fully test it beyond what's in the test framework.
+On Tue, Jun 30, 2026 at 12:55:25PM +0200, Matthieu Baerts wrote:
+> I just retried, and it is indeed much better now! Yet, I still have an
+> issue with trailers, e.g.
 > 
-> I've merged it in and have been using it today, it's much easier to work
-> with and I didn't notice any issues.  The up arrow is particularly
-> useful.
+>   Please add a Fixes tag. Here I guess it should be:
+> 
+>   Fixes: (...)
+> 
+> The Review view then correctly showed my comment with the Fixes tag, but
+> *I think* the Fixes tag was not visible in green at the bottom left (not
+> sure, because I also added a Reviewed-by tag after the reply). When
+> looking at the 'email mode' view, the Fixes tag got dropped, leaving 2
+> empty lines around.
 
-Great. Thanks for the feedback, I'll merge it in.
+This turned out to be two separate bugs, thanks for the detailed description!
 
+There's an attempted fix in the current master: the trailer menu now only ever
+touches its own trailer types (Acked-by, Reviewed-by, Tested-by, NACKed-by).
+Anything else you type into the reply -- Fixes:, Cc:, Suggested-by:, whatever
+-- is treated as your content and is never moved or removed.
+
+Removing a trailer via the menu should also no longer leave a doubled blank
+line behind.
+
+> Back to the 'reply' view, vim showed all lines ending with ^M, and the line
+> starting with 'Fixes:' was no longer there. Adding it back re-added it to
+> the other views, and the Fixes tag was also listed at the bottom left in the
+> 'review' view, but I could see extra new lines due to all these \r.
+> Stripping them from the 'reply' view fixes all the issues, and I was able to
+> send the reply with both my Fixes and Reviewed-by tags.
+> 
+> Any idea was caused that? :)
+
+That was bug number two, also with a fix on mater: b4 now normalizes
+line endings on every editor round-trip, whatever your editor decides to
+write, and previously stored buffers get cleaned up the next time they're
+touched.
+
+Try them out!
+
+> BTW, after having sent a reply, it appears a few seconds later as unread in
+> my inbox. I guess only a filter on the inbox side can help to mark them as
+> read, right?
+
+This annoys me, too, so I'll think of a way to handle this.
+
+Thanks again,
 -K
