@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A485448B82
-	for <tools@linux.kernel.org>; Wed, 29 Jul 2026 09:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451E9378D94
+	for <tools@linux.kernel.org>; Wed, 29 Jul 2026 10:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785319109; cv=none; b=FHwaN0ecL9TaDQ0I0/ZdQj5TDdoqdt5g+FSFUs/s342VFXrsjGdGZxcbCHdLIEvPSyB7zoyaBgikUlthkHSiqJcMHkXRHMhXQbZfax440A9l0XOtbZ0ua5JHMskn37LLNbObLbLVtiU/eoK24NoiPf1yDiIOOepweYW7CfzRAcs=
+	t=1785321881; cv=none; b=RUMKLM8DT9+a+xltmcL5cOTkJOPHbfhTtuOGZCQbsGqORd5GbcmkneNaruvFn/+OLvuT8urfzI7AyTPNL5qcDxJVwpDPcVO28IDe6/5tyaSWverWPbmwT/9Xn8LxLCSWuakPef1Pm5+YUHBJeHMJYG/1rUKK44tn/WqQuJWbuOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785319109; c=relaxed/simple;
-	bh=khVMnB77WHFxK2Qp/67KKzlaqpOrMpm7/bOVToCmQQ4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=k1dMN+3HTnLj+XQatVsVrYWtowf9r/oCHxzg/psAyVZBIuXPrpWOIVJO3B2cz3bGwnSaZcqkRV2NNMh+pXScIxI5U6/bC6px1fBdTtH+iqm03OZfEKXxl5ATKw4YU5kDH7xoG5vsj6c9E+tT6CQrqApkJzsHweB2JeIw9OARBpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OsNTPSmU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785321881; c=relaxed/simple;
+	bh=WOC61+N+yMSrSlWPKPV8LKR/+jQ4/U//mGLpeO+B6sc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=i5bWfQnGJJCwxZ0RMFuM5lAJ+NGCOaHag5MeQvRuuq6Yatmzlns7BXjylUF/VaxEW9CTl3rEAtxmOlGEC2w8HaWA9PAO/rr5ljTYXV3UU/rSwKBWxE/Q82qR5sJ5GqPvMM4uyvrSJAICMsyceNY0m2+vA2eHNOcxQ6JastsvFtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NBdgHEas; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OsNTPSmU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NBdgHEas"
 Received: by smtp.kernel.org (Postfix)
-	id 3237D1F00A3A; Wed, 29 Jul 2026 09:58:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3BB1F000E9;
-	Wed, 29 Jul 2026 09:58:27 +0000 (UTC)
+	id 18FB51F00A3A; Wed, 29 Jul 2026 10:44:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 458721F000E9;
+	Wed, 29 Jul 2026 10:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785319108;
-	bh=KD/3HOT6RZiHrwwXZPLF6LVL8d6w7YkoldHEhq02TII=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=OsNTPSmU3lJn3BI9CRrEhfhMpHbrDPBQaOf7O2GsfyXKIuQVtXaBfjzCR4rlML4ZT
-	 sGNGILxQGuIsDJzvL5XIEVCVyfdeAR9lGhgSq159KzjgFR89MRflx20WgGrEUwWOWQ
-	 Fi/NhoeutJKOYz36QFSW0tutMgVlfWoAatuqdboZCyXeJHnD+wrI61WWlp27KHMu0i
-	 MuxJ2eEHo3/ti7YmUNfPMTt96EMDy/BMeWyrdOfkE2+Bv9ZF1ypF6q9eGA94U7jNrN
-	 MD1plpDJY6apMHqKUI548nJ2iBjO0BLKz+usuXRaxYHwyjGSxM7LTzVSIlZ002v5Uh
-	 0mCwjlGyQvosA==
+	s=k20260515; t=1785321874;
+	bh=Z3m/XRslxY0egFZU0X/pvGYKWjfbZDrjgSdp8HWTtZc=;
+	h=From:Subject:Date:To:Cc;
+	b=NBdgHEaskElieOG+FMCKvy3whaQu4f43LdrnoSHq1rJgAqiFvlsRCVkGya689uHMf
+	 7Oycv3C3JWyGh4OUFyTEWnvJ4VFn5cOjAlOW05TE206LIAWlqxq0XgxX+1GdgFBVKH
+	 Mk7CGbzN1kajlM4BtmlcLS18UPGN4YsvXZfCd79HO/KhldjgLngBYRaKKkUP9MX1Xr
+	 gPsOWW6gx7tYi6LBBI8uaFAEDAu972siSGyGKtIvByQm9DOPH4K/mXfYYHun/DCMZk
+	 c66GarI2UPZ7RpGiKBDbQ81gcWvBY2+ZEc+j9RlzbMQhIq3SQfjaxu953mJDxSsGIm
+	 5ROMYLJ5k8NTg==
 From: Christian Brauner <brauner@kernel.org>
-Date: Wed, 29 Jul 2026 11:58:20 +0200
-Subject: [PATCH b4 2/2] tests: cover scroll preservation across list
- rebuilds
+Subject: [PATCH b4 0/6] Keep the user's git config out of b4's scratch
+ worktrees
+Date: Wed, 29 Jul 2026 12:44:27 +0200
+Message-Id: <20260729-work-b4-scratch-worktrees-v1-0-e96995158d4a@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,212 +40,63 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260729-work-b4-tui-scroll-preserve-v1-2-42be22445eaf@kernel.org>
-References: <20260729-work-b4-tui-scroll-preserve-v1-0-42be22445eaf@kernel.org>
-In-Reply-To: <20260729-work-b4-tui-scroll-preserve-v1-0-42be22445eaf@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAIvZaWoC/yWMSw7CMAwFr1J5TaQShUK4CurCcV0SEC2yw0eqe
+ neSspzRe7OAsiRWODcLCL+TpnkqsN81QBGnK5s0FAbb2q49Wm8+s9xNcEZJMFPcOAuzmrHzNPD
+ JOvQHKP+n8Ji+W/sCwUH/d/oKN6Zco3UVUNkEwYliVQ/UzALr+gN3Bro3mgAAAA==
+X-Change-ID: 20260729-work-b4-scratch-worktrees-f69cde824a95
 To: "Kernel.org Tools" <tools@kernel.org>
-Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.16-dev-b7988
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7736; i=brauner@kernel.org;
- h=from:subject:message-id; bh=khVMnB77WHFxK2Qp/67KKzlaqpOrMpm7/bOVToCmQQ4=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRlnjtgsv0/K/cpRlcGL+tfPEqxrPnf11RUfrnOI8L6P
- o89JYqno5SFQYyLQVZMkcWh3SRcbjlPxWajTA2YOaxMIEMYuDgFYCJP2xh+szhvPJtb07hnc82n
- wnmsuzOc7+yRXcqw4aJ6/t/9s5zeb2Bk+B1ttlPvYefsKYfjrmwpqwzfytd/PHRnwfVkh7VRSx5
- kcwEA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2202; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=WOC61+N+yMSrSlWPKPV8LKR/+jQ4/U//mGLpeO+B6sc=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRl3pxw2aDD94Rn6BefmmnW87h8jpjb1ArdPGPGxhIzU
+ UZxyea3HaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABOZxs/IMMsovmFDqm++c73Q
+ LpZ3gqUn1nxzSZS5O7vX2uiPh0iwAcM/1VcqBWIJcceX78suuaD/+/6+BS0357TN2cTUcfaKjFc
+ qAwA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Drive the cursor mid-viewport, reload the way the apps do after an
-update, and assert the rebuilt list keeps the exact scroll offset,
-cursor index, scrollbar thumb position, and selection.
+With submodule.recurse=true in the user's config b4 cannot apply
+anything in a repo that carries submodules. The scratch worktree's
+sparse checkout recurses, looks for the per-worktree submodule clones a
+just-created worktree cannot have, and dies:
 
-The tracking test reloads via _load_series the way _on_update_complete
-does after 'u'.  The bugs test drives BugListApp against a stubbed
-repo (no git-bug or network) and reloads through the real
-load_bugs-worker path the way _check_cache_changed does.
+    fatal: not a git repository: ../../worktrees/b4-shazam-worktree/modules/ezgb
+    fatal: could not reset submodule index
 
-The cursor deliberately sits mid-viewport rather than at the bottom
-edge: a plain rebuild's minimal scroll-into-view happens to reproduce
-the bottom-edge offset exactly, which would let the test pass without
-the fix.
+That takes review-branch creation, b4 shazam and the TUI's test applies
+with it. The b4 repo itself is affected through its vendored
+patatt/liblore/ezgb submodules.
+
+Everything b4 does in those worktrees is thrown away when the call
+returns, so they can run with overrides of their own: no submodule
+recursion and no gpg signing. SCRATCH_GIT_OPTS carries both, since each
+is inert where the other matters, and every scratch worktree switches
+over to it: the shazam apply, the TUI's five hand-rolled test applies,
+the fake-am staging worktree and the sent-tag worktree in b4 send. The
+commits that outlive their worktree keep the user's signing config.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/tests/test_tui_bugs.py     | 72 +++++++++++++++++++++++++++++++++++++++---
- src/tests/test_tui_tracking.py | 53 +++++++++++++++++++++++++++++++
- 2 files changed, 120 insertions(+), 5 deletions(-)
+Christian Brauner (6):
+      git_run_command: look past -c overrides for the subcommand
+      shazam: ignore the user's submodule.recurse in the scratch worktree
+      review-tui: use the shared scratch-worktree overrides for test applies
+      fake-am: use the scratch-worktree overrides in the staging worktree
+      send: use the scratch-worktree overrides when tagging a sent series
+      tests: exercise the scratch worktrees under submodule.recurse
 
-diff --git a/src/tests/test_tui_bugs.py b/src/tests/test_tui_bugs.py
-index c93dd94..c00b394 100644
---- a/src/tests/test_tui_bugs.py
-+++ b/src/tests/test_tui_bugs.py
-@@ -6,11 +6,13 @@
- """Unit tests for b4 bugs helpers.
- 
- Tests the pure-logic functions in _import.py and _tui.py that don't
--need Textual, git-bug, or network access.
-+need Textual, git-bug, or network access, plus one Textual-driven
-+test of bug-list scroll preservation (with a stubbed repo, so still
-+no git-bug or network).
- """
- 
--from datetime import datetime, timezone
--from typing import Set
-+from datetime import datetime, timedelta, timezone
-+from typing import Set, cast
- from unittest import mock
- 
- import pytest
-@@ -33,7 +35,7 @@ from b4.bugs._tui import (
-     build_label_text,
-     label_color,
- )
--from ezgb import Bug, BugSummary, Comment, Identity, Status
-+from ezgb import Bug, BugSummary, Comment, GitBugRepo, Identity, Status
- 
- # ---------------------------------------------------------------------------
- # Helpers -- factory functions for real Bug and BugSummary objects
-@@ -82,9 +84,10 @@ def make_summary(
-     title: str = '',
-     comment_count: int = 0,
-     author_name: str = '',
-+    bug_id: str | None = None,
- ) -> BugSummary:
-     return BugSummary(
--        id='deadbeef' * 8,
-+        id=bug_id or 'deadbeef' * 8,
-         title=title,
-         status=status,
-         creator_id='test',
-@@ -534,3 +537,62 @@ class TestQuitBindings:
-         assert bmap['Q'].action == 'quit'
-         assert bmap['q'].action == 'quit_hint'
-         assert bmap['q'].show is False
-+
-+
-+class TestRefreshScrollPreservation:
-+    """The bug list is rebuilt wholesale on refresh; the viewport must stay put."""
-+
-+    @pytest.mark.asyncio
-+    async def test_refresh_preserves_scroll_position(self) -> None:
-+        from textual.widgets import ListView
-+
-+        many = [
-+            make_summary(
-+                bug_id=f'{i:064x}',
-+                title=f'bug {i:02d}',
-+                edited_at=_EPOCH + timedelta(hours=40 - i),
-+            )
-+            for i in range(40)
-+        ]
-+        repo = mock.Mock()
-+        repo._repo = '/nonexistent/bugs-repo'
-+        repo.list_bug_summaries.return_value = many
-+
-+        app = BugListApp(cast(GitBugRepo, repo))
-+        async with app.run_test(size=(120, 30)) as pilot:
-+            await app.workers.wait_for_complete()
-+            await pilot.pause()
-+            await pilot.pause()
-+            lv = app.query_one('#bug-list', ListView)
-+            # Move deep enough into the list that the view scrolls down,
-+            # then back up a bit so the cursor sits mid-viewport rather
-+            # than at the bottom edge (which a minimal scroll-into-view
-+            # after the rebuild would happen to reproduce).
-+            lv.index = 30
-+            await pilot.pause()
-+            await pilot.pause()
-+            lv.index = 26
-+            await pilot.pause()
-+            await pilot.pause()
-+            scroll_before = round(lv.scroll_y)
-+            assert scroll_before > 0
-+            selected = app._get_selected_bug()
-+            assert selected is not None
-+            bug_id = selected.id
-+
-+            # Reload the same way _check_cache_changed does
-+            app._save_focus()
-+            app.run_worker(app._load_bugs, name='load_bugs', thread=True)
-+            await app.workers.wait_for_complete()
-+            await pilot.pause()
-+            await pilot.pause()
-+            await pilot.pause()
-+
-+            new_lv = app.query_one('#bug-list', ListView)
-+            assert new_lv is not lv
-+            assert new_lv.index == 26
-+            assert round(new_lv.scroll_y) == scroll_before
-+            assert round(new_lv.vertical_scrollbar.position) == scroll_before
-+            selected = app._get_selected_bug()
-+            assert selected is not None
-+            assert selected.id == bug_id
-diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
-index b4db46b..90c29b2 100644
---- a/src/tests/test_tui_tracking.py
-+++ b/src/tests/test_tui_tracking.py
-@@ -320,6 +320,59 @@ class TestTrackingNavigation:
-             await pilot.pause()
-             assert lv.index == 1
- 
-+    @pytest.mark.asyncio
-+    async def test_refresh_preserves_scroll_position(
-+        self, tmp_path: pathlib.Path
-+    ) -> None:
-+        """A list rebuild (e.g. after 'u') must not scroll the viewport."""
-+        many = [
-+            {
-+                'change_id': f'test-change-{i:02d}',
-+                'subject': f'[PATCH] series {i:02d}',
-+                'sender_name': f'Author {i:02d}',
-+                'sender_email': f'a{i:02d}@example.com',
-+                'sent_at': f'2026-03-{(i % 27) + 1:02d}T10:00:00+00:00',
-+                'message_id': f'series-{i:02d}-v1@example.com',
-+            }
-+            for i in range(40)
-+        ]
-+        _seed_db('test-scroll', many)
-+
-+        app = TrackingApp('test-scroll')
-+        async with app.run_test(size=(120, 30)) as pilot:
-+            await pilot.pause()
-+            lv = app.query_one('#tracking-list', ListView)
-+            # Move deep enough into the list that the view scrolls down,
-+            # then back up a bit so the cursor sits mid-viewport rather
-+            # than at the bottom edge (which a minimal scroll-into-view
-+            # after the rebuild would happen to reproduce).
-+            lv.index = 30
-+            await pilot.pause()
-+            await pilot.pause()
-+            lv.index = 26
-+            await pilot.pause()
-+            await pilot.pause()
-+            scroll_before = round(lv.scroll_y)
-+            assert scroll_before > 0
-+            assert app._selected_series is not None
-+            change_id = app._selected_series['change_id']
-+
-+            # Reload the same way _on_update_complete does after 'u'
-+            app._focus_change_id = change_id
-+            app._invalidate_caches()
-+            app._load_series()
-+            await pilot.pause()
-+            await pilot.pause()
-+            await pilot.pause()
-+
-+            new_lv = app.query_one('#tracking-list', ListView)
-+            assert new_lv is not lv
-+            assert new_lv.index == 26
-+            assert round(new_lv.scroll_y) == scroll_before
-+            assert round(new_lv.vertical_scrollbar.position) == scroll_before
-+            assert app._selected_series is not None
-+            assert app._selected_series['change_id'] == change_id
-+
-     @pytest.mark.asyncio
-     async def test_help_opens_and_closes(self, tmp_path: pathlib.Path) -> None:
-         _seed_db('test-help', SAMPLE_SERIES)
-
--- 
-2.53.0
+ src/b4/__init__.py                 |  43 +++++++++--
+ src/b4/ez.py                       |   8 +-
+ src/b4/review_tui/_modals.py       |  44 +++++++----
+ src/b4/review_tui/_tracking_app.py |  11 ++-
+ src/tests/conftest.py              |  52 ++++++++++++-
+ src/tests/test___init__.py         |  15 ++++
+ src/tests/test_ez.py               |  45 +++++++++++-
+ src/tests/test_tui_tracking.py     | 146 ++++++++++++++++++++++++++++++++++++-
+ 8 files changed, 332 insertions(+), 32 deletions(-)
+---
+base-commit: 99fe195c0aa5a88be5033f87cad22bc32d27cbfe
+change-id: 20260729-work-b4-scratch-worktrees-f69cde824a95
 
