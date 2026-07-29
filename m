@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8AF3806BD
-	for <tools@linux.kernel.org>; Wed, 29 Jul 2026 08:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B028043E4BE
+	for <tools@linux.kernel.org>; Wed, 29 Jul 2026 08:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785315512; cv=none; b=R6tn/xJBkDiY+MujkzRpwnvTPfvgfQBaE+mPwoOi2ON/DWgjhjWwpznV6CT59S3NwTh0GDcLu8dHrdhDtGyVzUuEeW+gmp+HefHuhEdR3Br4HshH7HtQ8GlgkXd3/0XedxpBPrxRCoYceSY7eiwJKEROCGtj3nQCJ5jDz2lMW6g=
+	t=1785315517; cv=none; b=R42U6ULFN6A8jFrRbknyFlZmkOjaa5TEy8zm2MupZ+o1HUdJ45gS6IaVrrXbWn5UFW0NhuGD3Z0rKM2KtcQeIrS910e3gtH4MP0zv6geC2pLLmOhHe2mjqVuhF+h+9/QlFPIOSLGmWo7UuRYAOIppZEMsMZlWdr8pzj5ggAMxK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785315512; c=relaxed/simple;
-	bh=bZxf/je6EObZyojoZByVf0OkguEA18mw8V8J8jpGysQ=;
+	s=arc-20240116; t=1785315517; c=relaxed/simple;
+	bh=eB70VBQQfwzUsmoOqPGgR9zpuEAEVor5qRFwDOwjdAo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WeU2994q6yRrdEv1or4CMdpGc2jsDNwFJMDzqb2obHGSpPvLjXTHYUQ44YyZRG5r02rYwDXOQgiye5q+mhEhT65yOOu8A9A7EZhqP7K4vl1okEpkFNgXDJ/1Nz0n2vt8EY3SyWg3uripTzP9OyKZ/CUTbNVsfKQ+5e5x3jAVa/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R7alAiBV; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=NUg2LghlyUMQsYEP6JRKDJYIIdVDxE9LsdxZXfqHcaVNPxFl29nil0rpfcj6D7BMrRbEUwimCwELAVRWOtFYDZSpkuDIKEhDrr2aVveN28nai6blhgbJ5CB8s7+kK07/VlnkwP4cF2iqOTRi1+YDe25zcweBeIHnOFeWHbrAhpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AV01APga; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R7alAiBV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AV01APga"
 Received: by smtp.kernel.org (Postfix)
-	id 8E0BF1F00A3A; Wed, 29 Jul 2026 08:58:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94501F000E9;
-	Wed, 29 Jul 2026 08:58:29 +0000 (UTC)
+	id D07F61F00A3D; Wed, 29 Jul 2026 08:58:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0A41F000E9;
+	Wed, 29 Jul 2026 08:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785315510;
-	bh=yPOvkV98ReHgo/drukYtd9oWb2FjmzjDL7eab5wYcrA=;
+	s=k20260515; t=1785315511;
+	bh=+x+qZ89/1AMvjUpwz3fN6s/jTqwalWPpRSD/n4IOy+M=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=R7alAiBVO/etIhruTtsORYnClrLNRmeRG+9BV26J9gIPC2g3afYiV3T8d+ntqIOTV
-	 TFmej6Po9SqW/nbZjcnxevM+J5lSHaa1JtO7S+vl3VTDMwV2BysQ2FlfwqvrIRr0iS
-	 991xf8oLT3X2QWRvJrYOshDrVUGgDlTin1ubYugxlVMM5SNo6FXLfrttIShVNTOEvM
-	 A5KzzEed0r81wVQdObBrprBnQueI4Tc6UordWo4vcInyfQup+k9JaKiVIrnmKuVWNf
-	 xHEIcIt89l25DqCQZZ6QlibhvuyUkc0NWxylXDg2L7N2PauTpWEzJH7qrogY7Ploqx
-	 29lKHsVgvOLIw==
+	b=AV01APgaJdn3XOSqNOA68+iReY4tGFiBO8in985VwC3WYNCeLWcuSoQZyaTO2n10n
+	 9pkYvnCIT4/fTXnQ788OpkcqVgp7S04akpw0LF9uE+CgOTbWwEqMV3LoWEAUaULsOE
+	 nD3htlvi8g27A8bDS0WmMKqRK6BAgEV6RItgkM6SkgDFw1Ik8fgjG0i0Fwl/pSudUz
+	 /uvF6lG1D9Q+nZtB3Jo7OkWvVetKvsvMjbzRVEP3lqOa5b/duhAZhAJZJPw/5B3L6l
+	 dmS3A1Ci6JZJdUv689C8VsU7Rf2UaHsysnP+IKiz0658cBXKdJaZSuzPxeppVNtQJN
+	 /675pduVmYRqg==
 From: Christian Brauner <brauner@kernel.org>
-Date: Wed, 29 Jul 2026 10:58:17 +0200
-Subject: [PATCH b4 1/2] b4 review: identify updated revisions by their
- cover letter too
+Date: Wed, 29 Jul 2026 10:58:18 +0200
+Subject: [PATCH b4 2/2] b4 review: test cover-letter titling on the update
+ path
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,224 +39,413 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260729-work-b4-cover-subject-v1-1-718507ed317b@kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260729-work-b4-cover-subject-v1-2-718507ed317b@kernel.org>
 References: <20260729-work-b4-cover-subject-v1-0-718507ed317b@kernel.org>
 In-Reply-To: <20260729-work-b4-cover-subject-v1-0-718507ed317b@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.16-dev-99fe1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9579; i=brauner@kernel.org;
- h=from:subject:message-id; bh=bZxf/je6EObZyojoZByVf0OkguEA18mw8V8J8jpGysQ=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRlHthy03LuWY0qrgkiS5a3sSkYLIwwtVfNKzCKWLZ+m
- 1tycGJmRykLgxgXg6yYIotDu0m43HKeis1GmRowc1iZQIYwcHEKwESMtBj+SpU3XUrs/f3oxjsJ
- Pb0FeTENOrLh0tKuae+kH816fu2pNMN/x7OyZjMbg47/iVp8UCtM0OHPD63LVtP+nCxp+Tb3Ko8
- iLwA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=15243; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=eB70VBQQfwzUsmoOqPGgR9zpuEAEVor5qRFwDOwjdAo=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRlHtjCFntg+o/Ml0+f/Hb5+HWWTBprv8Gr9VHrb3TEz
+ mzeso+Vs6OUhUGMi0FWTJHFod0kXG45T8Vmo0wNmDmsTCBDGLg4BWAiN+IZ/pmFBXp7G3o8Dr97
+ L1zVam9/GM95Vb72uVrnr0zZoagzaTvD/+DH2tv/Mwdrmz4WD9ZmDT9+PfbH6+/PcrT/aa/vren
+ P4AEA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Commit 83551c65f68d ("review: identify discovered revisions by their
-cover letter") fixed revision identification in
-_record_discovered_revisions(), but update_series_tracking() carries a
-hand-rolled copy of the same loop, and that copy is what pressing 'u'
-in the tracking TUI runs. The fix never reached the path that matters.
+Cover the second revision-identification path, which had no tests of
+its own: update_series_tracking() must name a newly discovered
+revision after its cover letter, and must repair a series row that an
+upgrade left titled after patch 1/N.
 
-The mechanism is the same: LoreMailbox files cover letters into its
-parse-time covers dict and only get_series() injects one into
-patches[0]. update_series_tracking() runs get_series() for the tracked
-revision alone, so every other discovered revision is a raw LoreSeries
-whose patches[0] is None, and picking the first present patch lands on
-patch 1/N. That subject is what gets stored, what an upgrade carries
-into the series row, and what the series list shows -- upgrading a
-series re-titles it after its first patch.
+The integration tests drive the real code with real messages instead
+of a mocked LoreMailbox -- a mock cannot tell a raw LoreSeries from a
+get_series()'d one, and that distinction is the bug. Split a
+_series_msgs() helper out of _build_lmbx() so the same series shape
+feeds both a mailbox and a plain message list.
 
-Route the loop through _record_discovered_revisions() so both paths
-identify a revision the same way. The shared helper also stores the
-content fingerprint and keeps the sticky rethread flag intact; the
-hand-rolled copy did neither.
+The unit tests pin realign_series_subject() to the contract that makes
+it safe to run on every update: re-title from a cover letter, leave a
+prefix-only formatting difference alone, and never write back the
+first-patch fallback when the fetched thread has no cover -- that
+would mis-title every coverless series.
 
-That alone does not repair an already-upgraded series. The revisions
-catalog heals on every re-add, but series.subject is only written when
-a series is tracked or upgraded, so a row that took its title from
-patch 1/N keeps it forever. Re-derive it on update via
-realign_series_subject(), and only ever write back a cover-derived
-title: the first-patch fallback is no better than what is already
-stored, and would mis-title every correctly titled row whose cover
-letter is missing from the fetched thread, coverless series first
-among them.
+At the TUI layer, assert the upgrade dialog shows and stores the
+resolved series' own title rather than the stale catalog subject, and
+falls back to the catalog when the resolved series never learned its
+title and reports '(untitled)'.
 
-The upgrade path stops taking the title from the catalog entirely: by
-the time the base selection dialog opens it holds the resolved
-LoreSeries, which knows its own title, so use that for the dialog
-heading and the stored subject. The exception is a series that saw
-neither its cover nor patch 1 and is stuck with the '(untitled)'
-placeholder -- get_am_ready() skips missing patches, so such a series
-still am-preps. Keep the catalog title there.
-
-Fixes: 83551c65f68d ("review: identify discovered revisions by their cover letter")
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review/_review.py           | 35 +++++++++++++--------------------
- src/b4/review/tracking.py          | 40 ++++++++++++++++++++++++++++++++++++++
- src/b4/review_tui/_tracking_app.py |  9 +++++++++
- src/tests/test_tui_tracking.py     | 15 +++++++++-----
- 4 files changed, 72 insertions(+), 27 deletions(-)
+ src/tests/test_review_tracking.py | 204 ++++++++++++++++++++++++++++++++++++--
+ src/tests/test_tui_tracking.py    |  91 ++++++++++++++++-
+ 2 files changed, 284 insertions(+), 11 deletions(-)
 
-diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index 147d56d..da11773 100644
---- a/src/b4/review/_review.py
-+++ b/src/b4/review/_review.py
-@@ -2284,32 +2284,23 @@ def update_series_tracking(
-         att = check_series_attestation(lser_att)
-         b4.review.tracking.update_attestation(identifier, change_id, current_rev, att)
+diff --git a/src/tests/test_review_tracking.py b/src/tests/test_review_tracking.py
+index 1eeb41e..ae6a732 100644
+--- a/src/tests/test_review_tracking.py
++++ b/src/tests/test_review_tracking.py
+@@ -2623,8 +2623,10 @@ class TestUpdateSeriesTrackingCounts:
+         v1_mock = mock.Mock()
+         v1_mock.revision = 1
+         v1_mock.patches = [v1_patch, None, None, None]
++        v1_mock.fingerprint = None
+         mock_lmbx = mock.Mock()
+         mock_lmbx.series = {1: v1_mock}
++        mock_lmbx.covers = {}
+         mock_lmbx.get_series.return_value = None
  
--    # Record all discovered revisions in SQLite, keeping track of what
--    # was already known so we can distinguish genuinely new versions.
--    previously_known: Set[int] = set()
-+    # Record all discovered revisions in SQLite through the shared helper, so
-+    # a revision is identified by its cover letter when the author sent one.
-+    # Recording them here by hand picked the first present patch of the raw,
-+    # never-get_series()'d LoreSeries — which has no cover injected into
-+    # patches[0] — and left the series titled after patch 1/N (bug 8bb6e4c).
-     try:
-         conn = b4.review.tracking.get_db(identifier)
--        previously_known = set(
--            r['revision'] for r in b4.review.tracking.get_revisions(conn, change_id)
-+        new_revs = b4.review.tracking._record_discovered_revisions(
-+            conn, change_id, lmbx, str(linkmask)
-         )
--        for v in sorted(lmbx.series.keys()):
--            v_ser = lmbx.series[v]
--            v_msgid = ''
--            v_subject = ''
--            if hasattr(v_ser, 'patches') and v_ser.patches:
--                for p in v_ser.patches:
--                    if p is not None:
--                        v_msgid = p.msgid
--                        v_subject = getattr(p, 'full_subject', '') or getattr(
--                            p, 'subject', ''
--                        )
--                        break
--            v_link = (linkmask % v_msgid) if v_msgid and '%s' in str(linkmask) else ''
--            b4.review.tracking.add_revision(
--                conn, change_id, v, v_msgid, v_subject, v_link
-+        result['new_revisions'] = len(new_revs)
-+        try:
-+            b4.review.tracking.realign_series_subject(
-+                conn, change_id, current_rev, lmbx
-             )
--            if v not in previously_known:
--                result['new_revisions'] += 1
-+        except Exception as ex:
-+            logger.warning('Could not realign series subject: %s', ex)
-         conn.close()
-     except Exception as ex:
-         logger.warning('Could not record revisions: %s', ex)
-diff --git a/src/b4/review/tracking.py b/src/b4/review/tracking.py
-index a503f4b..41004d8 100644
---- a/src/b4/review/tracking.py
-+++ b/src/b4/review/tracking.py
-@@ -1624,6 +1624,46 @@ def update_series_revision(
-     conn.commit()
+         series_dict: Dict[str, Any] = {
+@@ -3514,16 +3516,11 @@ def _pos_diff(n: int) -> str:
+     )
  
  
-+def realign_series_subject(
-+    conn: sqlite3.Connection,
-+    change_id: str,
-+    revision: int,
-+    lmbx: 'b4.LoreMailbox',
-+) -> bool:
-+    """Re-title a tracked series from *lmbx*'s cover letter for *revision*.
+-def _build_lmbx(
++def _series_msgs(
+     base: str, author: str, rev: int, n: int, cover: bool = False
+-) -> 'b4.LoreMailbox':
+-    """Build a LoreMailbox holding one n-patch series at the given revision.
+-
+-    With *cover*, a 0/n cover letter is included; it lands in the mailbox's
+-    parse-time ``covers`` dict (never injected into the series, since these
+-    tests do not run ``get_series()``).
+-    """
+-    lmbx = b4.LoreMailbox()
++) -> list[EmailMessage]:
++    """Return the messages making up an n-patch series at the given revision."""
++    msgs: list[EmailMessage] = []
+     if cover:
+         msg = EmailMessage()
+         msg['Subject'] = f'[PATCH v{rev} 0/{n}] {base}: do things better'
+@@ -3531,7 +3528,7 @@ def _build_lmbx(
+         msg['Date'] = 'Thu, 19 Mar 2026 08:51:10 +0530'
+         msg['Message-Id'] = f'<{base}-v{rev}-p0@example.com>'
+         msg.set_payload('This series makes things better.\n')
+-        lmbx.add_message(msg)
++        msgs.append(msg)
+     for i in range(1, n + 1):
+         msg = EmailMessage()
+         msg['Subject'] = f'[PATCH v{rev} {i}/{n}] {base}: part {i}'
+@@ -3539,6 +3536,21 @@ def _build_lmbx(
+         msg['Date'] = 'Thu, 19 Mar 2026 08:51:12 +0530'
+         msg['Message-Id'] = f'<{base}-v{rev}-p{i}@example.com>'
+         msg.set_payload(_pos_diff(i))
++        msgs.append(msg)
++    return msgs
 +
-+    ``series.subject`` is only ever written when a series is first tracked or
-+    upgraded, so a row that took its title from the first patch before the
-+    cover letter was seen (bug 8bb6e4c) keeps showing it forever — unlike the
-+    revisions catalog, which heals itself on every re-add (see
-+    :func:`add_revision`).
 +
-+    Only a cover-derived title is trusted: with nothing but a first-patch
-+    fallback in hand there is nothing better than what is already stored, and
-+    writing it back would corrupt a correctly titled row.  The bare titles are
-+    what get compared, since the tracking and upgrade paths format the
-+    ``[PATCH vN x/y]`` prefix differently and neither is wrong.  Returns True
-+    if the row was re-titled.
++def _build_lmbx(
++    base: str, author: str, rev: int, n: int, cover: bool = False
++) -> 'b4.LoreMailbox':
++    """Build a LoreMailbox holding one n-patch series at the given revision.
++
++    With *cover*, a 0/n cover letter is included; it lands in the mailbox's
++    parse-time ``covers`` dict (never injected into the series, since these
++    tests do not run ``get_series()``).
 +    """
-+    _msgid, subject, from_cover = _raw_revision_ref(lmbx, revision)
-+    if not from_cover or not subject:
-+        return False
-+    row = conn.execute(
-+        'SELECT subject FROM series WHERE change_id = ? AND revision = ?',
-+        (change_id, revision),
-+    ).fetchone()
-+    if row is None:
-+        return False
-+    if b4.LoreSubject(str(row[0] or '')).subject == b4.LoreSubject(subject).subject:
-+        return False
-+    conn.execute(
-+        'UPDATE series SET subject = ? WHERE change_id = ? AND revision = ?',
-+        (subject, change_id, revision),
-+    )
-+    conn.commit()
-+    return True
++    lmbx = b4.LoreMailbox()
++    for msg in _series_msgs(base, author, rev, n, cover=cover):
+         lmbx.add_message(msg)
+     return lmbx
+ 
+@@ -3750,6 +3762,178 @@ class TestRecordDiscoveredCoverSubject:
+         assert r6['subject'] == 'Manually linked subject'
+ 
+ 
++class TestUpdateSeriesTrackingCoverSubject:
++    """[u]pdate discovers revisions too, and must name them the same way.
++
++    update_series_tracking() recorded them by hand instead of going through
++    _record_discovered_revisions(), so it kept picking the first present patch
++    of a raw LoreSeries (bug 8bb6e4c).  That is the path the TUI actually runs,
++    so an upgrade re-titled the series after patch 1/N.
++    """
++
++    def _update(
++        self, identifier: str, change_id: str, revision: int, msgs: list[EmailMessage]
++    ) -> Dict[str, Any]:
++        series: Dict[str, Any] = {
++            'change_id': change_id,
++            'revision': revision,
++            'status': 'new',
++            'message_id': f'thing-v{revision}-p0@example.com',
++        }
++        with (
++            mock.patch('b4.review._review.retrieve_series_messages', return_value=msgs),
++            mock.patch('b4.review._review.check_series_attestation', return_value=None),
++        ):
++            return b4.review.update_series_tracking(
++                series, identifier, 'https://example.com/%s'
++            )
++
++    def test_discovered_revision_named_after_cover(
++        self, tmp_path: pytest.TempPathFactory
++    ) -> None:
++        identifier = 'ust-cover'
++        change_id = 'cid-U'
++        conn = review_tracking.init_db(identifier)
++        review_tracking.add_series_to_db(
++            conn,
++            change_id,
++            1,
++            'thing: do things better',
++            'Author',
++            'author@example.com',
++            '2026-03-19T08:51:10+00:00',
++            'thing-v1-p0@example.com',
++            3,
++        )
++        review_tracking.add_revision(
++            conn,
++            change_id,
++            1,
++            'thing-v1-p0@example.com',
++            subject='[PATCH v1 0/3] thing: do things better',
++        )
++        conn.close()
++
++        msgs = _series_msgs('thing', _AUTHOR, 1, 3, cover=True)
++        msgs += _series_msgs('thing', _AUTHOR, 2, 3, cover=True)
++        result = self._update(identifier, change_id, 1, msgs)
++
++        assert result['error'] is None
++        assert result['new_revisions'] == 1
++        conn = review_tracking.get_db(identifier)
++        revs = review_tracking.get_revisions(conn, change_id)
++        conn.close()
++        r2 = next(r for r in revs if r['revision'] == 2)
++        assert r2['subject'] == '[PATCH v2 0/3] thing: do things better'
++        assert r2['message_id'] == 'thing-v2-p0@example.com'
++
++    def test_stale_series_title_is_realigned(
++        self, tmp_path: pytest.TempPathFactory
++    ) -> None:
++        """A series an upgrade left titled after patch 1/N heals on update."""
++        identifier = 'ust-realign'
++        change_id = 'cid-V'
++        conn = review_tracking.init_db(identifier)
++        review_tracking.add_series_to_db(
++            conn,
++            change_id,
++            2,
++            '[PATCH v2 1/3] thing: part 1',
++            'Author',
++            'author@example.com',
++            '2026-03-19T08:51:12+00:00',
++            'thing-v2-p1@example.com',
++            3,
++        )
++        review_tracking.add_revision(
++            conn,
++            change_id,
++            2,
++            'thing-v2-p1@example.com',
++            subject='[PATCH v2 1/3] thing: part 1',
++        )
++        conn.close()
++
++        msgs = _series_msgs('thing', _AUTHOR, 2, 3, cover=True)
++        result = self._update(identifier, change_id, 2, msgs)
++
++        assert result['error'] is None
++        conn = review_tracking.get_db(identifier)
++        row = conn.execute(
++            'SELECT subject FROM series WHERE change_id = ? AND revision = ?',
++            (change_id, 2),
++        ).fetchone()
++        conn.close()
++        assert row['subject'] == '[PATCH v2 0/3] thing: do things better'
 +
 +
- def snooze_series(
-     conn: sqlite3.Connection,
-     change_id: str,
-diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index 2b29dc1..7ca5d2f 100644
---- a/src/b4/review_tui/_tracking_app.py
-+++ b/src/b4/review_tui/_tracking_app.py
-@@ -4187,6 +4187,15 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
- 
-         lser, ambytes, initial_base, base_hint, num_am = result
- 
-+        # The resolved series knows its own title — its cover letter's when it
-+        # has one.  Prefer it over the catalog's, which may predate the cover
-+        # being seen and name patch 1/N instead (bug 8bb6e4c).  A thread
-+        # missing both cover and patch 1 still am-preps but leaves LoreSeries'
-+        # '(untitled)' placeholder — the catalog title beats that.
-+        lser_subject = getattr(lser, 'subject', '') or ''
-+        if lser_subject and lser_subject != '(untitled)':
-+            target_subject = lser_subject
++class TestRealignSeriesSubject:
++    """realign_series_subject() re-titles only from an actual cover letter."""
 +
-         base_suggestions = _build_base_suggestions()
++    def _seed(self, identifier: str, series_subject: str) -> None:
++        conn = review_tracking.init_db(identifier)
++        review_tracking.add_series_to_db(
++            conn,
++            'cid-A',
++            3,
++            series_subject,
++            'Author',
++            'author@example.com',
++            '2026-03-19T08:51:10+00:00',
++            'thing-v3-p1@example.com',
++            2,
++        )
++        conn.close()
++
++    def _realign(self, identifier: str, cover: bool) -> bool:
++        lmbx = _build_lmbx('thing', _AUTHOR, 3, 2, cover=cover)
++        conn = review_tracking.get_db(identifier)
++        ret = review_tracking.realign_series_subject(conn, 'cid-A', 3, lmbx)
++        conn.close()
++        return ret
++
++    def _subject(self, identifier: str) -> str:
++        conn = review_tracking.get_db(identifier)
++        row = conn.execute(
++            "SELECT subject FROM series WHERE change_id = 'cid-A'"
++        ).fetchone()
++        conn.close()
++        return str(row['subject'])
++
++    def test_realigns_first_patch_title(self, tmp_path: pytest.TempPathFactory) -> None:
++        self._seed('rsj-fix', '[PATCH v3 1/2] thing: part 1')
++        assert self._realign('rsj-fix', cover=True) is True
++        assert self._subject('rsj-fix') == '[PATCH v3 0/2] thing: do things better'
++
++    def test_prefix_only_difference_is_left_alone(
++        self, tmp_path: pytest.TempPathFactory
++    ) -> None:
++        """The track and upgrade paths format the prefix differently."""
++        self._seed('rsj-pfx', 'thing: do things better')
++        assert self._realign('rsj-pfx', cover=True) is False
++        assert self._subject('rsj-pfx') == 'thing: do things better'
++
++    def test_coverless_thread_never_overwrites(
++        self, tmp_path: pytest.TempPathFactory
++    ) -> None:
++        """Without a cover there is nothing better than what is stored.
++
++        Re-titling from the first-patch fallback would corrupt every correctly
++        titled row whose cover letter is not in the fetched thread.
++        """
++        self._seed('rsj-nocover', 'thing: do things better')
++        assert self._realign('rsj-nocover', cover=False) is False
++        assert self._subject('rsj-nocover') == 'thing: do things better'
++
++    def test_missing_series_row_is_a_noop(
++        self, tmp_path: pytest.TempPathFactory
++    ) -> None:
++        conn = review_tracking.init_db('rsj-none')
++        lmbx = _build_lmbx('thing', _AUTHOR, 3, 2, cover=True)
++        assert review_tracking.realign_series_subject(conn, 'cid-A', 3, lmbx) is False
++        conn.close()
++
++
+ class TestCmdTrackRethreadUpgrade:
+     """Layer 2 (integration): rethreaded vN+1 links onto a tracked vN."""
  
-         self.push_screen(
 diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
-index b4db46b..8df38db 100644
+index 8df38db..cd41d69 100644
 --- a/src/tests/test_tui_tracking.py
 +++ b/src/tests/test_tui_tracking.py
-@@ -2824,18 +2824,23 @@ class TestSeriesLifecycle:
-         v1_mock.fromname = 'Test Author'
-         v1_mock.fromemail = 'author@example.com'
-         v1_mock.subject = '[PATCH 0/3] a three-patch series'
-+        v1_mock.fingerprint = None
+@@ -3363,7 +3363,10 @@ class TestDetectInitialBase:
  
--        # v2 mock: needs a patch with msgid so add_revision can record it
--        v2_patch = mock.Mock()
--        v2_patch.msgid = 'cover-v2@example.com'
--        v2_patch.full_subject = '[PATCH v2 0/3] a three-patch series'
-+        # v2 mock: needs a cover with msgid so add_revision can record it
-+        v2_cover = mock.Mock()
-+        v2_cover.msgid = 'cover-v2@example.com'
-+        v2_cover.full_subject = '[PATCH v2 0/3] a three-patch series'
-         v2_mock = mock.Mock()
-         v2_mock.revision = 2
-         v2_mock.change_id = change_id
--        v2_mock.patches = [v2_patch, None, None, None]
-+        v2_mock.patches = [None, None, None, None]
-+        v2_mock.fingerprint = None
  
-         mock_lmbx = mock.Mock()
-         mock_lmbx.series = {1: v1_mock, 2: v2_mock}
-+        # Cover letters live in the mailbox's parse-time covers dict, never in
-+        # a raw series' patches[0] — that only happens in get_series().
-+        mock_lmbx.covers = {2: v2_cover}
-         mock_lmbx.get_series.return_value = v1_mock
+ def _make_mock_lser(
+-    revision: int = 2, expected: int = 1, complete: bool = False
++    revision: int = 2,
++    expected: int = 1,
++    complete: bool = False,
++    subject: str = '(untitled)',
+ ) -> b4.LoreSeries:
+     """Build a minimal LoreSeries usable by _on_update_* callbacks.
  
-         series_dict = {
+@@ -3374,6 +3377,7 @@ def _make_mock_lser(
+ 
+     lser = b4.LoreSeries(revision, expected)
+     lser.complete = complete
++    lser.subject = subject
+     lser.fromname = 'Test Author'
+     lser.fromemail = 'test@example.com'
+     mock_patch = MagicMock()
+@@ -3538,6 +3542,91 @@ class TestUpdateRevisionWorkflow:
+ 
+             assert isinstance(app.screen, BaseSelectionScreen)
+ 
++    @pytest.mark.asyncio
++    async def test_prepared_prefers_series_own_title(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """The fetched series' title wins over a stale catalog subject.
++
++        Regression (bug 8bb6e4c): the catalog may name patch 1/N when the
++        revision was recorded before its cover letter was seen, and the
++        upgrade carried that through to the series list.
++        """
++        identifier = 'test-update-title'
++        _seed_db(
++            identifier,
++            [
++                {
++                    'change_id': 'title-1',
++                    'subject': 'thing: do things better',
++                    'message_id': 'v1@ex.com',
++                }
++            ],
++        )
++        lser = _make_mock_lser(subject='thing: do things better')
++        result = (lser, b'fake mbox', 'abc123456789', '', 1)
++
++        app = TrackingApp(identifier)
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            app._on_update_prepared(
++                result,
++                'title-1',
++                1,
++                2,
++                'v2@ex.com',
++                '[PATCH v2 1/3] thing: part 1',
++                'b4/review/title-1',
++            )
++            await pilot.pause()
++            from b4.review_tui._modals import BaseSelectionScreen
++
++            assert isinstance(app.screen, BaseSelectionScreen)
++            assert app.screen._subject == 'thing: do things better'
++
++    @pytest.mark.asyncio
++    async def test_prepared_untitled_series_keeps_catalog_title(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """A series that never learned its title must not beat the catalog.
++
++        LoreSeries carries an '(untitled)' placeholder until its cover or
++        patch 1 is seen; a thread missing both still am-preps (get_am_ready()
++        skips absent patches), and storing the placeholder would clobber a
++        good catalog subject.
++        """
++        identifier = 'test-update-untitled'
++        _seed_db(
++            identifier,
++            [
++                {
++                    'change_id': 'title-2',
++                    'subject': 'thing: do things better',
++                    'message_id': 'v1@ex.com',
++                }
++            ],
++        )
++        lser = _make_mock_lser(subject='(untitled)')
++        result = (lser, b'fake mbox', 'abc123456789', '', 1)
++
++        app = TrackingApp(identifier)
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            app._on_update_prepared(
++                result,
++                'title-2',
++                1,
++                2,
++                'v2@ex.com',
++                '[PATCH v2 0/3] thing: do things better',
++                'b4/review/title-2',
++            )
++            await pilot.pause()
++            from b4.review_tui._modals import BaseSelectionScreen
++
++            assert isinstance(app.screen, BaseSelectionScreen)
++            assert app.screen._subject == '[PATCH v2 0/3] thing: do things better'
++
+     # --- Phase 3: _on_update_base_selected (apply + swap) ----------------
+ 
+     @pytest.mark.asyncio
 
 -- 
 2.53.0
