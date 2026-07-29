@@ -1,94 +1,94 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6982621ABAA
-	for <tools@linux.kernel.org>; Wed, 29 Jul 2026 04:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FBC3CF208
+	for <tools@linux.kernel.org>; Wed, 29 Jul 2026 08:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785299899; cv=none; b=JUNuTzBJja/rvJ0+0vfRz2ZJK2PAwXDiMgfcffOkcuvb/NzgJnHAq8YpOZIZ/dYsjoIXd70SFhrIQp7emMNSXcBgJMsZwmA70oEhKGfnqJBvuHSF3o2JQdkgxB6MziXeRE8ucoaln9uQob7YRE1Rt5UAi+9NdKgoji9H46/pFLs=
+	t=1785315510; cv=none; b=DrFen3xZIJoeJSJ+RZSPGlgOumBVjQ6T9ERcYJb3QNfmY8GedT4VLoGBM8JGcBNA2IF8TOjncE+FcYQ6rqbTMd2DE63mF3keOV18ZpW5tT4ZkDnFyPDoDuJr5Ize54ccaKBylW1W14WJOwi29PYEtkpIX7R+nnPdS7+b/ALvxCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785299899; c=relaxed/simple;
-	bh=uI0OZThkwuVtDs4O3xUJBPyfYlkmzfOMmGUy2FLPs6k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dkLfazUSj61xiekhiBhkmIZqphDB0/HZU9VT04FW9I89LAYY2m8PlysM8kH7Xsxatx6DyH1FUSE3684a7x2gY8DCY+TBA23VS9zyk8lTcm3swdoVJ5RMB4G8AFbtsJZkSMEWefbPkSgc1hc/PySpP8z3bpAkPoyKE0HFecWKvZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cL6GaYCy; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785315510; c=relaxed/simple;
+	bh=NFDmKWYpKLdx5whHiUW5A0sZu6b5mycNipK+S9Q4hdU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=e2x4HL/stctCV5unrIhFIU3ivAaiuyTQgj2HYAxGpn65/4OXzwirPw5escJ98XCC0MDhM9v74TLrLaUPfJlzGOKlRJLjR/7F5f92lAlF16GHvTqc26gkhpaWNq+4xMYWAxCOgz1eB/WIdHjddFjpuT3Ps89MnpPOowZWfrjWAw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fBO24aDo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cL6GaYCy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fBO24aDo"
 Received: by smtp.kernel.org (Postfix)
-	id E36221F00A3D; Wed, 29 Jul 2026 04:38:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D4F1F000E9;
-	Wed, 29 Jul 2026 04:38:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785299897;
-	bh=L/xlPMU6LobLj2sIG7E4k6Wdvo3MMTW5jGPmoLqhl7A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=cL6GaYCyX4ndSmy5QVLCJPOVFRMle+jOGjU4/pfMOG+D+B24rDBmjGF+nz7b4jJ/Y
-	 1NkqDb89whH8HlnbG0XMUYj4DPjI1hs6f6D80hC217832rXoXQ8aEHZ97Sn+/7vbVd
-	 FAvMLxpsPumHa3qhKgDfFtjsuNQW6sWpG0hyPZmc=
-Date: Wed, 29 Jul 2026 00:38:16 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Matthieu Baerts <matttbe@kernel.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Subject: Re: b4 review tui: too smart reply features?
-Message-ID: <20260729-pig-of-lucky-economy-3a5ace@meerkat>
-References: <c281cf50-7935-488c-8429-03eac9b8902e@kernel.org>
- <20260610-psychedelic-encouraging-quoll-c7b949@lemur>
- <b2c44799-85a9-4576-9aae-b43eb1092315@kernel.org>
+	id 5C95C1F00A3D; Wed, 29 Jul 2026 08:58:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAEE1F00A3A;
+	Wed, 29 Jul 2026 08:58:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785315509;
+	bh=DI2X0A9n2lXs0EGjoV5rWmQBaj1Sl1Q6HwvgzFtSVyU=;
+	h=From:Subject:Date:To:Cc;
+	b=fBO24aDoHCUn6vICB2Z9lS14KGKu/iq6cVE+B9riA4/Hqhh/wgjfXqDXd6lstgO3H
+	 vnexAAo+lXrXwoDSEHpVgJ9SE6TKl6Cjqb/+QY4myO2rFXAaLrwywgnjo8GsruhAWB
+	 Qy5HoBQowGgyQ7JqBt7xff/VsGKWiES4e3Ltq3xxyEvG0AVJ2S2NNo7lRtOVwrT4oX
+	 ij3/nWS4DJnVlBc7jjUr2B1TGqYbHEkPlcCgBRa3fc9kq3nob4VaPDHOn/bjHIaAsB
+	 C3MDbNTUk0pZo4Rjv7CiHTWHnHjxTPC0IYy1SMwzKUNZYI6j3mS31RRTjQeV3Lu6JM
+	 DGKXKfqWVfI4w==
+From: Christian Brauner <brauner@kernel.org>
+Subject: [PATCH b4 0/2] b4 review: cover-letter titling on the update path
+Date: Wed, 29 Jul 2026 10:58:16 +0200
+Message-Id: <20260729-work-b4-cover-subject-v1-0-718507ed317b@kernel.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <b2c44799-85a9-4576-9aae-b43eb1092315@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKjAaWoC/y2MQQ7CMAwEv1L5jEUIFVX4CuohDqY1iAQ5pSBV/
+ TsJcJzR7C6QWYUzHJsFlGfJkmKB3aaBMPo4MMq5MFhjD6azDl9Jb0gthjSzYn7SlcOELnhDgff
+ UeQdl+1C+yPv7ewJqof+5f14Pa0U+M5L6GMaqksogcXv3eWKFdf0AVXOEqJ0AAAA=
+X-Change-ID: 20260729-work-b4-cover-subject-9ca0bce3b7a9
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ "Christian Brauner (Amutable)" <brauner@kernel.org>
+X-Mailer: b4 0.16-dev-99fe1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1708; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=NFDmKWYpKLdx5whHiUW5A0sZu6b5mycNipK+S9Q4hdU=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRlHtjSpijoryfZauFsZLhitfSRf/OmyM9eoPP4TIfYy
+ 9n6ugfjOkpZGMS4GGTFFFkc2k3C5ZbzVGw2ytSAmcPKBDKEgYtTACZS9ouR4cQeZ8u+fz7BnB89
+ YhK7eKV858ldzlCLebhRe2OaefSr44wMk/9kbd9178rh5RbnNfY62jnrLVBjaj3GknZfiiO96uF
+ udgA=
+X-Developer-Key: i=brauner@kernel.org; a=openpgp;
+ fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-On Tue, Jun 30, 2026 at 12:55:25PM +0200, Matthieu Baerts wrote:
-> I just retried, and it is indeed much better now! Yet, I still have an
-> issue with trailers, e.g.
-> 
->   Please add a Fixes tag. Here I guess it should be:
-> 
->   Fixes: (...)
-> 
-> The Review view then correctly showed my comment with the Fixes tag, but
-> *I think* the Fixes tag was not visible in green at the bottom left (not
-> sure, because I also added a Reviewed-by tag after the reply). When
-> looking at the 'email mode' view, the Fixes tag got dropped, leaving 2
-> empty lines around.
+Commit 83551c65f68d ("review: identify discovered revisions by their
+cover letter") fixed how discovered revisions are identified, but the
+copy of the recording loop in update_series_tracking() -- what
+pressing 'u' in the tracking TUI runs -- was left as is. Newly
+discovered revisions were still identified by their first present
+patch, so upgrading a series re-titled it after patch 1/N, and since
+series.subject is only written on track or upgrade, the row kept that
+title forever.
 
-This turned out to be two separate bugs, thanks for the detailed description!
+Patch 1 routes the update path through the shared helper, re-derives a
+stale series title from the cover letter on update (never from the
+first-patch fallback, which would mis-title coverless series), and
+makes the upgrade dialog use the resolved series' own title instead of
+the catalog's.
 
-There's an attempted fix in the current master: the trailer menu now only ever
-touches its own trailer types (Acked-by, Reviewed-by, Tested-by, NACKed-by).
-Anything else you type into the reply -- Fixes:, Cc:, Suggested-by:, whatever
--- is treated as your content and is never moved or removed.
+Patch 2 adds the missing coverage: integration tests driving real
+messages through a real LoreMailbox, unit tests pinning
+realign_series_subject() to its narrow contract, and TUI tests for the
+upgrade dialog title.
 
-Removing a trailer via the menu should also no longer leave a doubled blank
-line behind.
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+---
+Christian Brauner (2):
+      b4 review: identify updated revisions by their cover letter too
+      b4 review: test cover-letter titling on the update path
 
-> Back to the 'reply' view, vim showed all lines ending with ^M, and the line
-> starting with 'Fixes:' was no longer there. Adding it back re-added it to
-> the other views, and the Fixes tag was also listed at the bottom left in the
-> 'review' view, but I could see extra new lines due to all these \r.
-> Stripping them from the 'reply' view fixes all the issues, and I was able to
-> send the reply with both my Fixes and Reviewed-by tags.
-> 
-> Any idea was caused that? :)
+ src/b4/review/_review.py           |  35 +++----
+ src/b4/review/tracking.py          |  40 ++++++++
+ src/b4/review_tui/_tracking_app.py |   9 ++
+ src/tests/test_review_tracking.py  | 204 +++++++++++++++++++++++++++++++++++--
+ src/tests/test_tui_tracking.py     | 106 +++++++++++++++++--
+ 5 files changed, 356 insertions(+), 38 deletions(-)
+---
+base-commit: 99fe195c0aa5a88be5033f87cad22bc32d27cbfe
+change-id: 20260729-work-b4-cover-subject-9ca0bce3b7a9
 
-That was bug number two, also with a fix on mater: b4 now normalizes
-line endings on every editor round-trip, whatever your editor decides to
-write, and previously stored buffers get cleaned up the next time they're
-touched.
-
-Try them out!
-
-> BTW, after having sent a reply, it appears a few seconds later as unread in
-> my inbox. I guess only a filter on the inbox side can help to mark them as
-> read, right?
-
-This annoys me, too, so I'll think of a way to handle this.
-
-Thanks again,
--K
