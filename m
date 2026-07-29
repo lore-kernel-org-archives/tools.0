@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3A6425CF0
-	for <tools@linux.kernel.org>; Wed, 29 Jul 2026 09:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A485448B82
+	for <tools@linux.kernel.org>; Wed, 29 Jul 2026 09:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785319108; cv=none; b=b8rXzyd19vIMicpZDLNSoOZbR9RbrgDY/A5ljpE2NUoTHLOzFZEIgtAo+EjtnsZVbWpBA9U102hMoD8offWq51OHCgB/pXcmCkTnOCbTS1JVLgYtHjHFVFzNRTG7EmGe7B/k1NmI5SlMVTGUOn1BrPyKstS/hL+hw+MHVTeDZCY=
+	t=1785319109; cv=none; b=FHwaN0ecL9TaDQ0I0/ZdQj5TDdoqdt5g+FSFUs/s342VFXrsjGdGZxcbCHdLIEvPSyB7zoyaBgikUlthkHSiqJcMHkXRHMhXQbZfax440A9l0XOtbZ0ua5JHMskn37LLNbObLbLVtiU/eoK24NoiPf1yDiIOOepweYW7CfzRAcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785319108; c=relaxed/simple;
-	bh=kx+51QBxzf6ba8tQKcUjLaogXsijo9RseqTEfxNUcfM=;
+	s=arc-20240116; t=1785319109; c=relaxed/simple;
+	bh=khVMnB77WHFxK2Qp/67KKzlaqpOrMpm7/bOVToCmQQ4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XfF8Q0TDLDo9zBBIf+cDYGAQMaNdNIaCFgihcLaHtRMUCd3DcRiLOxmj4080EN4YN/EEWC5q+CUwNU6eDkN6984o2zBuSDDBXwbvBJDXc/+GBqvBDpqSt79muFnXx+eahJ3Ci2SLGrO4FxV6KCMQzRloXqqJt2ocfZBdC0KNOXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D+bCd9o7; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=k1dMN+3HTnLj+XQatVsVrYWtowf9r/oCHxzg/psAyVZBIuXPrpWOIVJO3B2cz3bGwnSaZcqkRV2NNMh+pXScIxI5U6/bC6px1fBdTtH+iqm03OZfEKXxl5ATKw4YU5kDH7xoG5vsj6c9E+tT6CQrqApkJzsHweB2JeIw9OARBpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OsNTPSmU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D+bCd9o7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OsNTPSmU"
 Received: by smtp.kernel.org (Postfix)
-	id E1D381F00A3D; Wed, 29 Jul 2026 09:58:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D9F1F000E9;
-	Wed, 29 Jul 2026 09:58:25 +0000 (UTC)
+	id 3237D1F00A3A; Wed, 29 Jul 2026 09:58:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3BB1F000E9;
+	Wed, 29 Jul 2026 09:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785319106;
-	bh=ePzfel1b3W3qTLuM26XRoeDORcxtIO7jfmmtUJOJ3C8=;
+	s=k20260515; t=1785319108;
+	bh=KD/3HOT6RZiHrwwXZPLF6LVL8d6w7YkoldHEhq02TII=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=D+bCd9o7dUyDu0rGgdD1HmQtZsJ0kw2tJWlGdrFw98bR3X6ru0i/v6THS07ZLANT0
-	 Ar/Ei3+WwL3bzSbiGNCXOlfXOIprscA1YTkfCwWsnUTlcpTgqKOD0gR8djAZfkhZAg
-	 xoKpUKVhc9Q/hCTAu4TxQl+5As2uCmeZHL9BMV+u0eqcMkg2z5G8ma9TvyanFJphj4
-	 A3JIhEc7ulLE4J45pb7Bnu0yDJTIQkC4/7zJ5SedZ1zSx7h5tCibN53e5JbnmAV0ZX
-	 iyD6EVAXM730SVAPiRuo1PGz8LW3BMuBxY1dIERMbR+7DqFYNkcX4FYUenLKFLJMf1
-	 I4GCQTfnaprOw==
+	b=OsNTPSmU3lJn3BI9CRrEhfhMpHbrDPBQaOf7O2GsfyXKIuQVtXaBfjzCR4rlML4ZT
+	 sGNGILxQGuIsDJzvL5XIEVCVyfdeAR9lGhgSq159KzjgFR89MRflx20WgGrEUwWOWQ
+	 Fi/NhoeutJKOYz36QFSW0tutMgVlfWoAatuqdboZCyXeJHnD+wrI61WWlp27KHMu0i
+	 MuxJ2eEHo3/ti7YmUNfPMTt96EMDy/BMeWyrdOfkE2+Bv9ZF1ypF6q9eGA94U7jNrN
+	 MD1plpDJY6apMHqKUI548nJ2iBjO0BLKz+usuXRaxYHwyjGSxM7LTzVSIlZ002v5Uh
+	 0mCwjlGyQvosA==
 From: Christian Brauner <brauner@kernel.org>
-Date: Wed, 29 Jul 2026 11:58:19 +0200
-Subject: [PATCH b4 1/2] b4 tui: preserve list scroll position across
- ListView rebuilds
+Date: Wed, 29 Jul 2026 11:58:20 +0200
+Subject: [PATCH b4 2/2] tests: cover scroll preservation across list
+ rebuilds
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,268 +39,212 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260729-work-b4-tui-scroll-preserve-v1-1-42be22445eaf@kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260729-work-b4-tui-scroll-preserve-v1-2-42be22445eaf@kernel.org>
 References: <20260729-work-b4-tui-scroll-preserve-v1-0-42be22445eaf@kernel.org>
 In-Reply-To: <20260729-work-b4-tui-scroll-preserve-v1-0-42be22445eaf@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-b7988
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10415; i=brauner@kernel.org;
- h=from:subject:message-id; bh=kx+51QBxzf6ba8tQKcUjLaogXsijo9RseqTEfxNUcfM=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRlnjvQkJVqWjr19SUT9xUXrmh5xu8MLorbbhBusnjLz
- l2bWF4YdJSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzER43hf5T47WdNP0+9mG+c
- Met1qxrn6SnRVrd0FU5ssd6852ph/x1GhgNbJ39qV1A3mCC77kOu36L7ET9UVGbFmX/cqXMpoLt
- BjwkA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7736; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=khVMnB77WHFxK2Qp/67KKzlaqpOrMpm7/bOVToCmQQ4=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRlnjtgsv0/K/cpRlcGL+tfPEqxrPnf11RUfrnOI8L6P
+ o89JYqno5SFQYyLQVZMkcWh3SRcbjlPxWajTA2YOaxMIEMYuDgFYCJP2xh+szhvPJtb07hnc82n
+ wnmsuzOc7+yRXcqw4aJ6/t/9s5zeb2Bk+B1ttlPvYefsKYfjrmwpqwzfytd/PHRnwfVkh7VRSx5
+ kcwEA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-The tracking and bugs TUIs rebuild their list wholesale on every
-refresh. The old ListView is removed and a freshly constructed one is
-created so the scroll position dies with the old widget.  Restoring
-the cursor index alone only scrolls the minimum needed to reveal that
-row and so after every rebuild (updating a series with 'u', a status
-change, the db-mtime poll) the viewport visibly jumped towards the top
-while the cursor stayed on the right entry.
+Drive the cursor mid-viewport, reload the way the apps do after an
+update, and assert the rebuilt list keeps the exact scroll offset,
+cursor index, scrollbar thumb position, and selection.
 
-Add ReplacementListView to b4.tui and use it for both tracker-style
-lists.  It captures the predecessor's scroll offset and seeds the
-replacement's scroll state on mount, before the first paint, so the
-swap is invisible:
+The tracking test reloads via _load_series the way _on_update_complete
+does after 'u'.  The bugs test drives BugListApp against a stubbed
+repo (no git-bug or network) and reloads through the real
+load_bugs-worker path the way _check_cache_changed does.
 
-- set_scroll() seeds scroll_y: scroll_to() would clamp against the
-  zero virtual size of the not-yet-laid-out widget.  The first reflow
-  re-validates the value, clamping it if the new list is shorter.
-
-- scroll_target_y is seeded as well: wheel and page scrolling compute
-  from it, so leaving it at 0 would snap the view back to the top on
-  the first scroll tick.
-
-- The scrollbar thumb is positioned manually: nothing syncs it when
-  the first reflow's re-validation does not change scroll_y.
-
-There is deliberately no initial_index. ListView's default of 0
-schedules a scroll-into-view for row 0 on mount, which would fire
-after the restore and undo it.  The index is assigned explicitly after
-mounting instead.  That schedules a minimal scroll-into-view which is
-a no-op when the restored offset already shows the row, and otherwise
-keeps the cursor visible (e.g. after a re-sort moved it).
-
-The patchwork and lite lists rebuild without any cursor restore, and
-the bug-detail comment list jumps to the top or end by design, so
-those keep constructing plain ListViews.
+The cursor deliberately sits mid-viewport rather than at the bottom
+edge: a plain rebuild's minimal scroll-into-view happens to reproduce
+the bottom-edge offset exactly, which would let the test pass without
+the fix.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/bugs/_tui.py                | 11 ++++++--
- src/b4/review_tui/_common.py       |  3 +++
- src/b4/review_tui/_tracking_app.py |  9 +++++--
- src/b4/tui/__init__.py             |  3 +++
- src/b4/tui/_common.py              | 55 +++++++++++++++++++++++++++++++++++++-
- 5 files changed, 76 insertions(+), 5 deletions(-)
+ src/tests/test_tui_bugs.py     | 72 +++++++++++++++++++++++++++++++++++++++---
+ src/tests/test_tui_tracking.py | 53 +++++++++++++++++++++++++++++++
+ 2 files changed, 120 insertions(+), 5 deletions(-)
 
-diff --git a/src/b4/bugs/_tui.py b/src/b4/bugs/_tui.py
-index c383e94..c301af7 100644
---- a/src/b4/bugs/_tui.py
-+++ b/src/b4/bugs/_tui.py
-@@ -42,6 +42,7 @@ from b4.tui import (
-     ConfirmScreen,
-     JKListNavMixin,
-     LimitScreen,
-+    ReplacementListView,
-     SeparatedFooter,
-     _quiet_worker,
-     _wait_for_enter,
-@@ -2038,7 +2039,11 @@ class BugListApp(JKListNavMixin, App[None]):
-             seen = self._seen_counts.get(bug.id, count)
-             unseen = max(0, count - seen)
-             items.append(BugListItem(bug, unseen=unseen))
--        lv = ListView(*items, id='bug-list')
-+        lv = ReplacementListView(
-+            *items,
-+            id='bug-list',
-+            scroll_y=ReplacementListView.capture_scroll(self, '#bug-list'),
-+        )
+diff --git a/src/tests/test_tui_bugs.py b/src/tests/test_tui_bugs.py
+index c93dd94..c00b394 100644
+--- a/src/tests/test_tui_bugs.py
++++ b/src/tests/test_tui_bugs.py
+@@ -6,11 +6,13 @@
+ """Unit tests for b4 bugs helpers.
  
-         with self.app.batch_update():
-             old_lv = self.query_one('#bug-list', ListView)
-@@ -2046,12 +2051,14 @@ class BugListApp(JKListNavMixin, App[None]):
-             await self.mount(lv, before=self.query_one('#details-panel', Vertical))
+ Tests the pure-logic functions in _import.py and _tui.py that don't
+-need Textual, git-bug, or network access.
++need Textual, git-bug, or network access, plus one Textual-driven
++test of bug-list scroll preservation (with a stubbed repo, so still
++no git-bug or network).
+ """
  
-         # Restore cursor to previously focused bug
-+        new_index = 0
-         if self._focus_bug_id:
-             for idx, item in enumerate(items):
-                 if item.bug.id == self._focus_bug_id:
--                    lv.index = idx
-+                    new_index = idx
-                     self._focus_bug_id = None
-                     break
-+        lv.index = new_index
-         lv.focus()
+-from datetime import datetime, timezone
+-from typing import Set
++from datetime import datetime, timedelta, timezone
++from typing import Set, cast
+ from unittest import mock
  
-     async def on_worker_state_changed(self, event: Worker.StateChanged) -> None:
-diff --git a/src/b4/review_tui/_common.py b/src/b4/review_tui/_common.py
-index 873681b..935f553 100644
---- a/src/b4/review_tui/_common.py
-+++ b/src/b4/review_tui/_common.py
-@@ -46,6 +46,9 @@ from b4.tui._common import (
- from b4.tui._common import (
-     JKListNavMixin as JKListNavMixin,
+ import pytest
+@@ -33,7 +35,7 @@ from b4.bugs._tui import (
+     build_label_text,
+     label_color,
  )
-+from b4.tui._common import (
-+    ReplacementListView as ReplacementListView,
-+)
- from b4.tui._common import (
-     SeparatedFooter as SeparatedFooter,
- )
-diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index 2b29dc1..59c52e9 100644
---- a/src/b4/review_tui/_tracking_app.py
-+++ b/src/b4/review_tui/_tracking_app.py
-@@ -43,6 +43,7 @@ from b4.review_tui._common import (
-     QUIT_BINDINGS,
-     CheckRunnerMixin,
-     LoreNodeShutdownMixin,
-+    ReplacementListView,
-     SeparatedFooter,
-     _fix_ansi_theme,
-     _quiet_worker,
-@@ -1276,6 +1277,8 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             title_text += f' (limit: {self._limit_pattern})'
-         left.update(title_text)
+-from ezgb import Bug, BugSummary, Comment, Identity, Status
++from ezgb import Bug, BugSummary, Comment, GitBugRepo, Identity, Status
  
-+        scroll_y = ReplacementListView.capture_scroll(self, '#tracking-list')
+ # ---------------------------------------------------------------------------
+ # Helpers -- factory functions for real Bug and BugSummary objects
+@@ -82,9 +84,10 @@ def make_summary(
+     title: str = '',
+     comment_count: int = 0,
+     author_name: str = '',
++    bug_id: str | None = None,
+ ) -> BugSummary:
+     return BugSummary(
+-        id='deadbeef' * 8,
++        id=bug_id or 'deadbeef' * 8,
+         title=title,
+         status=status,
+         creator_id='test',
+@@ -534,3 +537,62 @@ class TestQuitBindings:
+         assert bmap['Q'].action == 'quit'
+         assert bmap['q'].action == 'quit_hint'
+         assert bmap['q'].show is False
 +
-         # Suppress rendering while we swap old widgets for new ones.
-         # Without this, the remove-then-mount sequence can produce a
-         # single intermediate frame showing only the title bar before
-@@ -1299,19 +1302,21 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             header = Static(header_text, id='tracking-header')
- 
-             list_items: List[ListItem] = [TrackedSeriesItem(s) for s in display_series]
--            lv = ListView(*list_items, id='tracking-list')
-+            lv = ReplacementListView(*list_items, id='tracking-list', scroll_y=scroll_y)
-             await self.mount(header, before=self.query_one(Footer))
-             await self.mount(lv, before=self.query_one(Footer))
- 
-+        new_index = 0
-         if self._focus_change_id:
-             for idx, item in enumerate(list_items):
-                 if (
-                     isinstance(item, TrackedSeriesItem)
-                     and item.series.get('change_id') == self._focus_change_id
-                 ):
--                    lv.index = idx
-+                    new_index = idx
-                     break
-             self._focus_change_id = None
-+        lv.index = new_index
-         lv.focus()
- 
-         # Populate the details panel for the highlighted item now that
-diff --git a/src/b4/tui/__init__.py b/src/b4/tui/__init__.py
-index 82ae122..ab9186e 100644
---- a/src/b4/tui/__init__.py
-+++ b/src/b4/tui/__init__.py
-@@ -15,6 +15,7 @@ if TYPE_CHECKING:
-     from b4.tui._common import (
-         QUIT_BINDINGS,
-         JKListNavMixin,
-+        ReplacementListView,
-         SeparatedFooter,
-         _addrs_to_lines,
-         _fix_ansi_theme,
-@@ -48,6 +49,7 @@ __all__ = [
-     'ConfirmScreen',
-     'JKListNavMixin',
-     'LimitScreen',
-+    'ReplacementListView',
-     'SeparatedFooter',
-     'ToCcScreen',
-     '_addrs_to_lines',
-@@ -71,6 +73,7 @@ __all__ = [
- _LAZY_ATTRS: dict[str, str] = {
-     'QUIT_BINDINGS': '_common',
-     'JKListNavMixin': '_common',
-+    'ReplacementListView': '_common',
-     'SeparatedFooter': '_common',
-     '_addrs_to_lines': '_common',
-     '_fix_ansi_theme': '_common',
-diff --git a/src/b4/tui/_common.py b/src/b4/tui/_common.py
-index 5b68ee8..48052d5 100644
---- a/src/b4/tui/_common.py
-+++ b/src/b4/tui/_common.py
-@@ -14,7 +14,9 @@ from typing import Any, Dict, List, Optional, Protocol
- 
- from textual.app import App, ComposeResult
- from textual.binding import Binding
--from textual.widgets import Footer, ListView
-+from textual.css.query import NoMatches
-+from textual.dom import DOMNode
-+from textual.widgets import Footer, ListItem, ListView
- from textual.widgets._footer import FooterKey
- from textual.worker import NoActiveWorker, get_current_worker
- 
-@@ -267,6 +269,57 @@ def _validate_addrs(text: str) -> Optional[str]:
-     return None
- 
- 
-+class ReplacementListView(ListView):
-+    """A ListView that replaces a predecessor without moving the viewport.
 +
-+    The tracker-style screens rebuild their ListView wholesale on every
-+    refresh, so the scroll position dies with the old widget.  Restoring
-+    the cursor index alone only scrolls the minimum needed to reveal
-+    that row, which made the viewport visibly jump towards the top on
-+    every refresh.  Capture the predecessor's offset with
-+    :meth:`capture_scroll` before removing it, pass it as *scroll_y*,
-+    and the replacement seeds its scroll state on mount, before the
-+    first paint.
++class TestRefreshScrollPreservation:
++    """The bug list is rebuilt wholesale on refresh; the viewport must stay put."""
 +
-+    There is deliberately no ``initial_index``: ListView's default of 0
-+    schedules a scroll-into-view for row 0 on mount, which would fire
-+    after the restore and undo it.  Assign ``index`` explicitly after
-+    mounting instead — that schedules a minimal scroll-into-view which
-+    is a no-op when the restored offset already shows the row, and
-+    otherwise keeps the cursor visible (e.g. after a re-sort moved it).
-+    """
++    @pytest.mark.asyncio
++    async def test_refresh_preserves_scroll_position(self) -> None:
++        from textual.widgets import ListView
 +
-+    def __init__(
-+        self, *children: ListItem, scroll_y: float = 0.0, id: Optional[str] = None
++        many = [
++            make_summary(
++                bug_id=f'{i:064x}',
++                title=f'bug {i:02d}',
++                edited_at=_EPOCH + timedelta(hours=40 - i),
++            )
++            for i in range(40)
++        ]
++        repo = mock.Mock()
++        repo._repo = '/nonexistent/bugs-repo'
++        repo.list_bug_summaries.return_value = many
++
++        app = BugListApp(cast(GitBugRepo, repo))
++        async with app.run_test(size=(120, 30)) as pilot:
++            await app.workers.wait_for_complete()
++            await pilot.pause()
++            await pilot.pause()
++            lv = app.query_one('#bug-list', ListView)
++            # Move deep enough into the list that the view scrolls down,
++            # then back up a bit so the cursor sits mid-viewport rather
++            # than at the bottom edge (which a minimal scroll-into-view
++            # after the rebuild would happen to reproduce).
++            lv.index = 30
++            await pilot.pause()
++            await pilot.pause()
++            lv.index = 26
++            await pilot.pause()
++            await pilot.pause()
++            scroll_before = round(lv.scroll_y)
++            assert scroll_before > 0
++            selected = app._get_selected_bug()
++            assert selected is not None
++            bug_id = selected.id
++
++            # Reload the same way _check_cache_changed does
++            app._save_focus()
++            app.run_worker(app._load_bugs, name='load_bugs', thread=True)
++            await app.workers.wait_for_complete()
++            await pilot.pause()
++            await pilot.pause()
++            await pilot.pause()
++
++            new_lv = app.query_one('#bug-list', ListView)
++            assert new_lv is not lv
++            assert new_lv.index == 26
++            assert round(new_lv.scroll_y) == scroll_before
++            assert round(new_lv.vertical_scrollbar.position) == scroll_before
++            selected = app._get_selected_bug()
++            assert selected is not None
++            assert selected.id == bug_id
+diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
+index b4db46b..90c29b2 100644
+--- a/src/tests/test_tui_tracking.py
++++ b/src/tests/test_tui_tracking.py
+@@ -320,6 +320,59 @@ class TestTrackingNavigation:
+             await pilot.pause()
+             assert lv.index == 1
+ 
++    @pytest.mark.asyncio
++    async def test_refresh_preserves_scroll_position(
++        self, tmp_path: pathlib.Path
 +    ) -> None:
-+        super().__init__(*children, initial_index=None, id=id)
-+        self._replaced_scroll_y = scroll_y
++        """A list rebuild (e.g. after 'u') must not scroll the viewport."""
++        many = [
++            {
++                'change_id': f'test-change-{i:02d}',
++                'subject': f'[PATCH] series {i:02d}',
++                'sender_name': f'Author {i:02d}',
++                'sender_email': f'a{i:02d}@example.com',
++                'sent_at': f'2026-03-{(i % 27) + 1:02d}T10:00:00+00:00',
++                'message_id': f'series-{i:02d}-v1@example.com',
++            }
++            for i in range(40)
++        ]
++        _seed_db('test-scroll', many)
 +
-+    @staticmethod
-+    def capture_scroll(node: DOMNode, selector: str) -> float:
-+        """Return the scroll offset of *selector*'s ListView, or 0.0."""
-+        try:
-+            return node.query_one(selector, ListView).scroll_y
-+        except NoMatches:
-+            return 0.0
++        app = TrackingApp('test-scroll')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            lv = app.query_one('#tracking-list', ListView)
++            # Move deep enough into the list that the view scrolls down,
++            # then back up a bit so the cursor sits mid-viewport rather
++            # than at the bottom edge (which a minimal scroll-into-view
++            # after the rebuild would happen to reproduce).
++            lv.index = 30
++            await pilot.pause()
++            await pilot.pause()
++            lv.index = 26
++            await pilot.pause()
++            await pilot.pause()
++            scroll_before = round(lv.scroll_y)
++            assert scroll_before > 0
++            assert app._selected_series is not None
++            change_id = app._selected_series['change_id']
 +
-+    def on_mount(self) -> None:
-+        if not self._replaced_scroll_y:
-+            return
-+        # scroll_to() cannot seed the position here: layout hasn't run
-+        # yet, so it would clamp against a zero virtual size.  The first
-+        # reflow re-validates these values against the real size, which
-+        # clamps them if the new list is shorter.  scroll_target_y feeds
-+        # wheel/page scrolling, and nothing syncs the scrollbar thumb
-+        # when that re-validation is a no-op, so seed both as well.
-+        self.set_scroll(None, self._replaced_scroll_y)
-+        self.set_reactive(
-+            ListView.scroll_target_y,  # pyright: ignore[reportArgumentType] # cannot pick Reactive's class-access __get__ overload
-+            float(round(self._replaced_scroll_y)),
-+        )
-+        self.vertical_scrollbar.position = round(self._replaced_scroll_y)
++            # Reload the same way _on_update_complete does after 'u'
++            app._focus_change_id = change_id
++            app._invalidate_caches()
++            app._load_series()
++            await pilot.pause()
++            await pilot.pause()
++            await pilot.pause()
 +
++            new_lv = app.query_one('#tracking-list', ListView)
++            assert new_lv is not lv
++            assert new_lv.index == 26
++            assert round(new_lv.scroll_y) == scroll_before
++            assert round(new_lv.vertical_scrollbar.position) == scroll_before
++            assert app._selected_series is not None
++            assert app._selected_series['change_id'] == change_id
 +
- class _ListViewHost(Protocol):
-     _list_id: str
- 
+     @pytest.mark.asyncio
+     async def test_help_opens_and_closes(self, tmp_path: pathlib.Path) -> None:
+         _seed_db('test-help', SAMPLE_SERIES)
 
 -- 
 2.53.0
