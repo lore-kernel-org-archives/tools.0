@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E9237E302
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DA61A6800
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785535176; cv=none; b=Cb7myIuYj4AH9sw+3MdGZaOM+6kjJZtmZ1Z40BdcgrXS2cOpDUQqGi79n0Dk+G23CKJ69+tjZKUgGQjtvqVwvPa8QhF98sv5zRgbnbZ+CvtjmlPuxur8edIz6UeaTtBuDf4F81mKdRVEtzGjVaT/srlbROUWfKqJ+Mub8NYSAKI=
+	t=1785535178; cv=none; b=OuyPWPW+vtF+ZuxmB2K1Q3nD6gIef1iUq1LbOw3Pra7UVmLHWQFV4JIvkVJMZCeVEQSV9tlYWuTca75SSn22QVOSB3zZFLnG9oilmOMK3zP7bWYVVpj3DmUd7ZuCAnrjr+xhs66fNYnhhu5gvxOkMual5uzJEySOo6qnXpBYSbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785535176; c=relaxed/simple;
-	bh=bahuyIcqU7764cYtkvG9Z9iRZmhr2aF6nXkFMGZivsg=;
+	s=arc-20240116; t=1785535178; c=relaxed/simple;
+	bh=+hqJjkW/QNRz1pY1pnu0d2ehRFf7LqUuW+4ZnsbdDWo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aUQoIGrS/sVVr93EG2SmPiAB+FbQoxISKJppAkPgaoXTk0rYK3aZtOCfgIMvEsmebraq+8CN8Q2dbTC0qpIl+LAuvQzk0sXbG5t2cbVpVSYE74y+MLmRxLWbstPZOBsAF9+ME41oL/yveNgM0Y2jdZbLkwSoJuRf0nVptu6Sh+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FCbr1CU2; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=LYKT2MVFy+bokRMswv+CvrOhlvEYbESgwHlfsn6vtZy5uhCWNwdZRoDbQY9mSls2iHzVYNWO1EAPYY24jFHok/cpvjSL8weWjiyY7we06qmAcAVViXoiQlREQm6niX/qhfxs1yEOjE33JooMEKqxmtkNudytP2y/Ftn+3mfqUEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TSv6b4OE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FCbr1CU2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TSv6b4OE"
 Received: by smtp.kernel.org (Postfix)
-	id A42AC1F00ACF; Fri, 31 Jul 2026 21:59:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51C11F00AC4;
-	Fri, 31 Jul 2026 21:59:33 +0000 (UTC)
+	id 1F9EA1F00ACF; Fri, 31 Jul 2026 21:59:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507C21F00AC4;
+	Fri, 31 Jul 2026 21:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785535174;
-	bh=g2kcJtIbs37Viw5MsWRrHWBqpPHv3Hs6VEVc26MiTc4=;
+	s=k20260515; t=1785535177;
+	bh=BWn1PVGpKmylNwiEOyeEC+C6BmX6TN9Z8u+iEUfzO30=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=FCbr1CU2OoDBnGNpsrmFzULWXQr9uFXD1DfTY6LKmqNmywTDcab5FbhE1Xm58GxL2
-	 efY+RX495A/Zp4LDA+J6gV2+mx3+0mtDxwi2Od3WAKhsIpmtAttFG8IodrZQTrwD9s
-	 3SpSjMB34C0op6XppPRwO6Nyv89oCLWhOUtN3POgkrGmCpfhyfDV3MuNKTZ+wpn6/y
-	 LiXurmtqoHTWGfE64exiPvSoAuX3V6TDKvCSZ4bHP9drjL5PMfzezihpaQcB2bXI+O
-	 KXInQ8//lQw4/iSfRZLPXWtGCDC2c6xCrjylweq0PMnqw3oje4aSGY+VKvsq/XlLhs
-	 nSslNhLeWiiVg==
+	b=TSv6b4OEpQqMUGduiile6zxnem26Gz0VJHWDmh57f9YE35p6abc8jc1ewgFDc63Iu
+	 eOGqSH+0+Rg6nM0gqYAcHh11Sl7khR8xTRHAGPjJgIkl1lKL26Osy2zgJq3hzLXO0P
+	 3ryiMAArPY5C0SJ5zJevsMeHiiRHopBGNl8L/Mvn4Ns2VJpdDiRYAOPZMFIO5Bv9hl
+	 Y69bw3492RKFHgc2iTCjDWQRq+7h5hFGpIHRBkQV0wH5sf/n8Xi9Wmvj2qsAxYQCg+
+	 HjgtbmECBdlx3IoM7QTSgBAYSPnnqgKv5MgSxcadkWw3v52x+EMwgTEZyRSPAZRkJo
+	 jQ5LXPu0egzPQ==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 23:59:15 +0200
-Subject: [PATCH b4 v2 34/44] review-tui: put the branch back after a
- revision upgrade
+Date: Fri, 31 Jul 2026 23:59:17 +0200
+Subject: [PATCH b4 v2 36/44] review-tui: restore the original branch
+ however the tracking loop ends
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,182 +40,229 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v2-34-243fd19d322d@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v2-36-243fd19d322d@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8127; i=brauner@kernel.org;
- h=from:subject:message-id; bh=bahuyIcqU7764cYtkvG9Z9iRZmhr2aF6nXkFMGZivsg=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs3Zv22li2GRnZnmSZOFUZ73jm5rmhhWZiGxXIOHQ
- Ynj/tHQjlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIl8kWD477C5lzNDlmmC+MfH
- 4c4/5YU0RY1Ss35E6Lt2Jn1b48txk5HhA+9EMQHxsjf8zFFz4i/qrpwqtr39hu/hB4FrI54Y2V5
- gAgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9730; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=+hqJjkW/QNRz1pY1pnu0d2ehRFf7LqUuW+4ZnsbdDWo=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs0x78m4rvtXv4JRoGw618s/Bnftt2XLdsy1sL57e
+ 47XUe5NHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABOR3M/wP7T1fvtNCVEpS+ne
+ con/Ei6nHigaK0537v5elv6vyojpJcNf4SmLr6Zc155ULbhmnTJbxu+N3q+U7Be7LV1YOK1nteV
+ ZbgA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-A revision upgrade builds a temporary branch and renames it onto the
-review branch, and HEAD follows the rename. Nothing put it back, so
-the worktree was left on the review branch whether the upgrade
-finished or not. Restore on every exit path with a context manager
-that takes git_head_restore_args(), like the rebase action beside it.
-
-The error path could not run at all: create_review_branch() exits
-rather than raises, and SystemExit is not an Exception, so a failed
-apply left the half-built branch behind and unwound into the UI.
-Catch it, delete the branch once HEAD is off it, and report "see
-above" since the reason is already on screen. The conflict-resolve
-path now falls through to the same create call and the same handler.
+The restore sat at the tail of the loop body, so quitting the tracking
+list skipped it. That started to matter when the list grew actions
+that move HEAD, like the revision upgrade. Lift the restore into a
+helper and run it in a finally.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review_tui/_tracking_app.py | 107 ++++++++++++++++++++++++-------------
- 1 file changed, 70 insertions(+), 37 deletions(-)
+ src/b4/review_tui/_entry.py | 174 +++++++++++++++++++++++---------------------
+ 1 file changed, 92 insertions(+), 82 deletions(-)
 
-diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index cc845df..c547d7c 100644
---- a/src/b4/review_tui/_tracking_app.py
-+++ b/src/b4/review_tui/_tracking_app.py
-@@ -319,6 +319,34 @@ class _TakeWorktree:
-         self._keep = True
+diff --git a/src/b4/review_tui/_entry.py b/src/b4/review_tui/_entry.py
+index ab68ca4..31c6257 100644
+--- a/src/b4/review_tui/_entry.py
++++ b/src/b4/review_tui/_entry.py
+@@ -74,6 +74,28 @@ def run_tracking_tui(
+     original_branch = b4.git_get_current_branch(topdir)
+     original_head = b4.git_head_restore_args(topdir)
  
- 
-+@contextlib.contextmanager
-+def _keep_current_branch(topdir: str) -> Generator[Callable[[], None], None, None]:
-+    """Put HEAD back where it was when the block started.
++    def restore_original_head() -> None:
++        """Put HEAD back where we found it on the user's behalf.
 +
-+    Tracking-list actions run with the UI suspended, and some of them check
-+    out a branch of their own to get their work done. The list comes back up
-+    when they return, so the branch they moved to must not outlive them: the
-+    worktree is the user's, shared with their other terminals, and they never
-+    asked to be moved. Restores however the block ends, including when the
-+    action bails out early or something under it raises.
-+
-+    Yields the restore itself, for the callers that need to be off the branch
-+    before the block ends -- deleting it, say, which git refuses while it is
-+    checked out. Calling it early is safe: the one on the way out then has
-+    nothing left to do.
-+    """
-+    start_head = b4.git_head_restore_args(topdir)
-+
-+    def restore() -> None:
-+        if start_head and b4.git_head_restore_args(topdir) != start_head:
-+            b4.git_run_command(topdir, start_head, logstderr=True)
-+
-+    try:
-+        yield restore
-+    finally:
-+        restore()
-+
-+
- @contextlib.contextmanager
- def _take_worktree(
-     topdir: str, target_branch: str
-@@ -4256,13 +4284,16 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
- 
-         upgrade_branch = f'b4/review/_tmp-{change_id}-v{target_rev}-upgrade'
- 
--        with self.suspend():
--            topdir = b4.git_get_toplevel()
--            if not topdir:
--                logger.critical('Not in a git repository')
--                _wait_for_enter()
--                return
-+        topdir = b4.git_get_toplevel()
-+        if not topdir:
-+            self.notify('Not in a git repository', severity='error')
++        Only a review branch is ours to undo, since that is the only kind
++        either app checks out.  Anything else means the user moved HEAD
++        themselves -- possibly hours ago, from another terminal sharing this
++        worktree -- and the position recorded when we started is stale, not
++        something to check back out.
++        """
++        if not original_head or not topdir:
 +            return
++        current = b4.git_get_current_branch(topdir)
++        if (
++            current
++            and current != original_branch
++            and current.startswith(b4.review.REVIEW_BRANCH_PREFIX)
++        ):
++            logger.info('Checking out %s...', original_head[-1])
++            ecode, _out = b4.git_run_command(topdir, original_head, logstderr=True)
++            if ecode != 0:
++                logger.warning('Could not restore %s', original_head[-1])
++
+     # Check if we're already on a review branch
+     if original_branch and original_branch.startswith(b4.review.REVIEW_BRANCH_PREFIX):
+         # Go directly to ReviewApp and exit when done
+@@ -103,93 +125,81 @@ def run_tracking_tui(
+             )
+         return
  
-+        # The apply below checks out the upgrade branch and renames it onto the
-+        # review branch, so HEAD ends up there whether the upgrade succeeds or
-+        # not. The tracking list comes back up when this returns; leaving the
-+        # worktree moved strands the user on the review branch when they quit.
-+        with self.suspend(), _keep_current_branch(topdir) as restore_branch:
-             # --- 1. Save maintainer review data keyed by patch-id ---
-             logger.info('Saving review data from v%d...', current_rev)
-             patch_ids = b4.review.get_review_branch_patch_ids(topdir, review_branch)
-@@ -4348,37 +4379,33 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             # Use the target revision's own rethread state, not the currently
-             # tracked revision's — they can differ across an upgrade.
-             _is_rt = bool(target_is_rethreaded)
-+            # create_review_branch() reports failure by exiting rather than
-+            # raising, and SystemExit is not an Exception, so catch it too --
-+            # letting it out of here skips the cleanup below and unwinds
-+            # straight through the suspend and into the UI.
-             try:
-                 logger.info('Base: %s', base_sha)
--                b4.git_fetch_am_into_repo(
--                    topdir,
--                    ambytes=ambytes,
--                    at_base=base_sha,
--                    origin=linkurl,
--                    am_flags=['-3'],
--                    resolve=True,
+-    # Normal tracking mode - loop between TrackingApp and ReviewApp
++    # Normal tracking mode - loop between TrackingApp and ReviewApp.
++    # The restore runs in a finally: the tracking list has actions of its own
++    # that leave HEAD on a review branch -- upgrading a series to a newer
++    # revision is one -- and quitting from there must not strand the user on
++    # it.  Restoring only after a ReviewApp pass misses every such path.
+     focus_change_id: Optional[str] = None
+-    while True:
+-        app = TrackingApp(
+-            identifier,
+-            original_branch,
+-            focus_change_id=focus_change_id,
+-            email_dryrun=email_dryrun,
+-            patatt_sign=patatt_sign,
+-        )
+-        focus_change_id = None
+-        branch_name = app.run(mouse=use_mouse)
++    try:
++        while True:
++            app = TrackingApp(
++                identifier,
++                original_branch,
++                focus_change_id=focus_change_id,
++                email_dryrun=email_dryrun,
++                patatt_sign=patatt_sign,
++            )
++            focus_change_id = None
++            branch_name = app.run(mouse=use_mouse)
+ 
+-        if not branch_name:
+-            # User quit - exit the loop
+-            break
++            if not branch_name:
++                # User quit - exit the loop
++                break
+ 
+-        if branch_name == TrackingApp.PATCHWORK_SENTINEL:
+-            # User pressed [p]atchwork — run PwApp and loop back
+-            config = b4.get_main_config()
+-            pwkey = str(config.get('pw-key', ''))
+-            pwurl = str(config.get('pw-url', ''))
+-            pwproj = str(config.get('pw-project', ''))
+-            if pwkey and pwurl and pwproj:
+-                run_pw_tui(
+-                    pwkey,
+-                    pwurl,
+-                    pwproj,
+-                    email_dryrun=email_dryrun,
+-                    patatt_sign=patatt_sign,
 -                )
--                b4.review.create_review_branch(
--                    topdir,
--                    upgrade_branch,
--                    base_sha,
--                    lser,
--                    linkurl,
--                    linkmask,
--                    num_prereqs=0,
--                    identifier=self._identifier,
--                    status='reviewing',
--                    is_rethreaded=_is_rt,
--                )
--                logger.info('Upgrade branch created: %s', upgrade_branch)
--            except b4.AmConflictError as cex:
--                if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
--                    # User aborted — clean up upgrade branch if it was
--                    # partially created before the conflict
--                    if b4.git_branch_exists(topdir, upgrade_branch):
--                        b4.git_run_command(topdir, ['branch', '-D', upgrade_branch])
--                    _wait_for_enter()
--                    return
-+                try:
-+                    b4.git_fetch_am_into_repo(
-+                        topdir,
-+                        ambytes=ambytes,
-+                        at_base=base_sha,
-+                        origin=linkurl,
-+                        am_flags=['-3'],
-+                        resolve=True,
+-            continue
++            if branch_name == TrackingApp.PATCHWORK_SENTINEL:
++                # User pressed [p]atchwork — run PwApp and loop back
++                config = b4.get_main_config()
++                pwkey = str(config.get('pw-key', ''))
++                pwurl = str(config.get('pw-url', ''))
++                pwproj = str(config.get('pw-project', ''))
++                if pwkey and pwurl and pwproj:
++                    run_pw_tui(
++                        pwkey,
++                        pwurl,
++                        pwproj,
++                        email_dryrun=email_dryrun,
++                        patatt_sign=patatt_sign,
 +                    )
-+                except b4.AmConflictError as cex:
-+                    if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
-+                        # User aborted.  Nothing this run made is left -- the
-+                        # upgrade branch is not created until the am lands --
-+                        # but the name is derived from the change-id and the
-+                        # revision, so an earlier attempt that ended somewhere
-+                        # without cleanup left one sitting on it.  Take it with
-+                        # us rather than let it fail the next attempt.
-+                        if b4.git_branch_exists(topdir, upgrade_branch):
-+                            b4.git_run_command(topdir, ['branch', '-D', upgrade_branch])
-+                        _wait_for_enter()
-+                        return
-                 b4.review.create_review_branch(
-                     topdir,
-                     upgrade_branch,
-@@ -4392,8 +4419,14 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                     is_rethreaded=_is_rt,
-                 )
-                 logger.info('Upgrade branch created: %s', upgrade_branch)
--            except Exception as ex:
--                logger.critical('Error creating review branch: %s', ex)
-+            except (Exception, SystemExit) as ex:
-+                # SystemExit only carries the exit code; create_review_branch()
-+                # has already said why on its way out.
-+                reason = 'see above' if isinstance(ex, SystemExit) else str(ex)
-+                logger.critical('Error creating review branch: %s', reason)
-+                # Off the half-built branch before dropping it: git refuses to
-+                # delete the branch it has checked out.
-+                restore_branch()
-                 if b4.git_branch_exists(topdir, upgrade_branch):
-                     b4.git_run_command(topdir, ['branch', '-D', upgrade_branch])
-                 _wait_for_enter()
++                continue
+ 
+-        # User selected a branch to review - prepare session and run ReviewApp
+-        cmdargs = argparse.Namespace(branch=branch_name)
+-        try:
+-            session = b4.review._prepare_review_session(cmdargs)
+-        except SystemExit:
+-            # Session prep failed (e.g., branch doesn't exist)
+-            logger.warning(
+-                'Could not prepare review session for branch: %s', branch_name
+-            )
+-            continue
++            # User selected a branch to review - prepare session and run ReviewApp
++            cmdargs = argparse.Namespace(branch=branch_name)
++            try:
++                session = b4.review._prepare_review_session(cmdargs)
++            except SystemExit:
++                # Session prep failed (e.g., branch doesn't exist)
++                logger.warning(
++                    'Could not prepare review session for branch: %s', branch_name
++                )
++                continue
+ 
+-        session['email_dryrun'] = email_dryrun
+-        session['patatt_sign'] = patatt_sign
+-        review_app = ReviewApp(session)
+-        review_app.run(mouse=use_mouse)
++            session['email_dryrun'] = email_dryrun
++            session['patatt_sign'] = patatt_sign
++            review_app = ReviewApp(session)
++            review_app.run(mouse=use_mouse)
+ 
+-        # Remember which series was just reviewed so the tracking list
+-        # can position the cursor on it.
+-        focus_change_id = branch_name.removeprefix(b4.review.REVIEW_BRANCH_PREFIX)
++            # Remember which series was just reviewed so the tracking list
++            # can position the cursor on it.
++            focus_change_id = branch_name.removeprefix(b4.review.REVIEW_BRANCH_PREFIX)
+ 
+-        # Sync status from tracking commit to DB.  The ReviewApp writes
+-        # status changes (e.g. 'replied') into the tracking commit JSON,
+-        # so we read it back here and propagate to the SQLite database.
+-        try:
+-            _cover_text, tracking = b4.review.load_tracking(topdir, branch_name)
+-            tracking_status = tracking.get('series', {}).get('status')
+-            revision = session['series'].get('revision')
+-            if tracking_status and focus_change_id:
+-                conn = b4.review.tracking.get_db(identifier)
+-                b4.review.tracking.update_series_status(
+-                    conn, focus_change_id, tracking_status, revision=revision
+-                )
+-                conn.close()
+-        except Exception as ex:
+-            logger.warning('Could not sync tracking status: %s', ex)
++            # Sync status from tracking commit to DB.  The ReviewApp writes
++            # status changes (e.g. 'replied') into the tracking commit JSON,
++            # so we read it back here and propagate to the SQLite database.
++            try:
++                _cover_text, tracking = b4.review.load_tracking(topdir, branch_name)
++                tracking_status = tracking.get('series', {}).get('status')
++                revision = session['series'].get('revision')
++                if tracking_status and focus_change_id:
++                    conn = b4.review.tracking.get_db(identifier)
++                    b4.review.tracking.update_series_status(
++                        conn, focus_change_id, tracking_status, revision=revision
++                    )
++                    conn.close()
++            except Exception as ex:
++                logger.warning('Could not sync tracking status: %s', ex)
+ 
+-        # Restore original branch if we're no longer on it.
+-        # This covers two cases:
+-        # - ReviewApp checked out the review branch (shell suspend/agent)
+-        # - TrackingApp checked out a new series via create_review_branch
+-        # Both land on a review branch, and that is the only case we may undo.
+-        # Anything else means the user moved HEAD themselves -- possibly hours
+-        # ago, from another terminal sharing this worktree -- and the branch
+-        # recorded when we started is stale, not something to check back out.
+-        if original_head:
+-            current = b4.git_get_current_branch(topdir)
+-            if (
+-                current
+-                and current != original_branch
+-                and current.startswith(b4.review.REVIEW_BRANCH_PREFIX)
+-            ):
+-                logger.info(
+-                    'Checking out %s and starting tracking UI...', original_head[-1]
+-                )
+-                ecode, _out = b4.git_run_command(topdir, original_head, logstderr=True)
+-                if ecode != 0:
+-                    logger.warning('Could not restore %s', original_head[-1])
++            # Put the user back before the tracking list comes up again.
++            restore_original_head()
++    finally:
++        restore_original_head()
 
 -- 
 2.53.0
