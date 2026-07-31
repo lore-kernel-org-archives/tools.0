@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54014351C04
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EAA36197F
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785535139; cv=none; b=MZCGx5E30c2xUYhR5DBHik4OHOpUDh8CWKrWQDq4EzzwczeqQFokMUNGRnlPO+jxAYS04GmGNrm2AUpMkrfBY3daho6aoN8p2JNPAyMnShkgtjOa6icNmMyMfS/KYwuzGo5e0+iLcfy9nQ7bxGJS2qNMT4DgccWTRmp2OFxIIFU=
+	t=1785535140; cv=none; b=bsROaM72wl0bpHHmNkdzC+4LSRh0K6Vu5j3OuCQvnoR7CPL0tUzaKex7BwL8Jc8fcUMHG5OoOW5ELSzY4f5qQtBzInY5zLlaFtD1GoGe2vss573ZHYLoRGumqLzb5JQAaQnC+6zO8SeyOIaWnCDE5qri0gXSkw8Pyw4d9LcmWrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785535139; c=relaxed/simple;
-	bh=24k9Rhw7/20YsUwBDzx/ftIg0Xha835FewP3z1mM6Q0=;
+	s=arc-20240116; t=1785535140; c=relaxed/simple;
+	bh=XaJzqnLR64LeBUC9x3KCHkCRmna+zixjbvALxK00mG0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WR44RmZlNWmr4t0jFK5wBPm7/4UcQq/zZrzGkGc6Uqb3g4K0lDvfL07cG4CPQWBEpdGNcK5R14F52QtsTPIZbsmOVLVkbJA9lUu9PD0QTWhzZEqIAJnP50P/R0tB/zG7c73MgprhGdKwzlKyxpHKMMVl0rv1eW9sx010+b2RFYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TLAuoldx; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=eEUL7X/N1tsYhnpC2ymvG4Ny11B2ZKvrkINssjDXE2wV5K8blp4J7oOj9CXmrIadhzhQB6oJlr7XEqGSUnySFnh6XL+y8H+WCy9aeq8nhBnxKPbyE7dfIvQbEhCuxkwX5XFwquxF3nBO8r3oYIOKevA+Miz8gSBKy7rDhM5Xlec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQfrNEtV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TLAuoldx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQfrNEtV"
 Received: by smtp.kernel.org (Postfix)
-	id 0C6281F00ACA; Fri, 31 Jul 2026 21:58:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDC71F00AC4;
-	Fri, 31 Jul 2026 21:58:57 +0000 (UTC)
+	id 3696F1F00ACF; Fri, 31 Jul 2026 21:58:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681D81F00AC4;
+	Fri, 31 Jul 2026 21:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785535138;
-	bh=GV5D0hDhICIBclWDmKTGkrp5IRWqQsJ9ud9eUdr1LWE=;
+	s=k20260515; t=1785535139;
+	bh=ByuEmgx6nKaEmL1C1vzu/7rLCPw92jc5wk3wgAGgAzM=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=TLAuoldxnJ6KUJuQDzXtoUcwRmg/xmlhlhpXfVMY4X5bvGEslmPKrdni4MkTcZwA1
-	 53qdeFZPtySYIlCWImt8ACA0xoKwkX77LbvJ03sZozCOCdFWT2HEbefNZ63evoDIgs
-	 8tCiiDCd5kuJUk9T/H/t/GYDa1LbIRCV8xaTpp0pQR4P19eKxyI/aCApnHl6GuvxNr
-	 5fYc2JXflxqpy5xSxZcrg0A06ZUgevXhXhfKFL7fzrgHm9awy/lNt/cwkIANZT0bWY
-	 7eGUDlJ6PNiwzfbfxcBT1m8PNiCsaC7RVcSyq86dmOlIQRpewRITcXLc0E5QBzBQoV
-	 gaagH0MPwPFWw==
+	b=GQfrNEtV65YZRx33i6sNu5wzoBnk14al1K7OH5BaypOn3vbFyy7zZWBgWhqrIM/9X
+	 NRUGm9VdAe2rlJ78AEQhimETbmeXk90c5+bm9jQfGJBZv5TieaAAGYnVAdjewqq2N5
+	 H7/EWpXjllNa4A8GILbYMnpL87d8iCgXVsTMD5hEuw2ia8jWggj/eiipUU9FZl14Mv
+	 bbjddrH/UJzgA+iAwirfds3oWWCy+JkU0yUcAeBsz5wMTUT59Muw89CInAIfSX8jZM
+	 uE/7QS4PqjeIysAatpPKdDQTS37fHhD8q4F1qjA8QqWbA6JHquuec09vChx9gYFx0c
+	 3jG7Iax04rEJw==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 23:58:44 +0200
-Subject: [PATCH b4 v2 03/44] review: close the messages database when
- auto-marking fails
+Date: Fri, 31 Jul 2026 23:58:45 +0200
+Subject: [PATCH b4 v2 04/44] review: use the same busy timeout for both
+ review databases
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,57 +40,47 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v2-3-243fd19d322d@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v2-4-243fd19d322d@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1401; i=brauner@kernel.org;
- h=from:subject:message-id; bh=24k9Rhw7/20YsUwBDzx/ftIg0Xha835FewP3z1mM6Q0=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs06Nu3akfPbZr//tffUf4mXCU4N9x6unbyIK26qL
- 5uRpblUcEcpC4MYF4OsmCKLQ7tJuNxynorNRpkaMHNYmUCGMHBxCsBEntszMnw01D33ebPQKsPy
- 4pgUNte9e34cXnf35Z7ryY/67R83L2Jg+O+8rvtNdtXxF+ZrpT2+3brnUlKyqoZT556D8LQ6cZ7
- tvxgA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1088; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=XaJzqnLR64LeBUC9x3KCHkCRmna+zixjbvALxK00mG0=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs1yaTN0+bTt8xl2rTfRW5rq2Hj6OZOsO18kXRaoW
+ /Do87TujhIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgImEazJ8r7q9+HWU69SSg5U/
+ 68/9XGf17YtsU1PvIZn2b1Lf6qc1MDLsFjxy4VryjoCWWRP75syMexKlumjzBJPFj/raX7vufVf
+ KBAA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-The auto-mark block closes the messages database in the last statement
-of the try, so anything raising before that leaks the connection. This
-runs once per tracked series per refresh in a process that stays
-around. Close it in a finally.
+The messages database uses a 5s busy timeout, the tracking database
+next to it 15s, with the same two writers. There is no reason for them
+to differ. Use the same value for both.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review/_review.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ src/b4/review/messages.py | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index cba3a0f..da20fc4 100644
---- a/src/b4/review/_review.py
-+++ b/src/b4/review/_review.py
-@@ -2596,6 +2596,7 @@ def update_series_tracking(
-     # so the unread badge below never lights up for them.
-     seen_bump = 0
-     if thread_msgs and change_id:
-+        mconn = None
-         try:
-             from b4.review import messages
- 
-@@ -2619,9 +2620,11 @@ def update_series_tracking(
-                         for mid in new_msgids
-                         if 'Seen' in flags_map.get(mid, '').split()
-                     )
--            mconn.close()
-         except Exception as ex:
-             logger.debug('Could not auto-mark own messages as read: %s', ex)
-+        finally:
-+            if mconn is not None:
-+                mconn.close()
- 
-     # Update message count and thread blob from the already-fetched
-     # thread messages.  No status filtering here: the thread is already
+diff --git a/src/b4/review/messages.py b/src/b4/review/messages.py
+index a3a2d53..a73e986 100644
+--- a/src/b4/review/messages.py
++++ b/src/b4/review/messages.py
+@@ -44,8 +44,9 @@ def get_db() -> sqlite3.Connection:
+     is_new = not os.path.exists(db_path)
+     conn = sqlite3.connect(db_path)
+     conn.row_factory = sqlite3.Row
+-    # Both the TUI and 'b4 review cron' may write concurrently
+-    conn.execute('PRAGMA busy_timeout = 5000')
++    # Both the TUI and 'b4 review cron' may write concurrently; same
++    # generous timeout the tracking database uses, for the same reason
++    conn.execute('PRAGMA busy_timeout = 15000')
+     if is_new:
+         conn.executescript(SCHEMA_SQL)
+         conn.execute(
 
 -- 
 2.53.0
