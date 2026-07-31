@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE93E37FF50
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F2237FF7F
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785535183; cv=none; b=MziG43BDTD9r9QZ435665QhB9smW4gOaUmFi0z1xFuxpxlkXvA+Oy6dzpHJ1YQh3+jDJyt/x0Ros6c3+1x+ZK1H/QSHEfUB5GptRxqAcsP7JCRxo4PpZf9bJ3jcomvOAwjPpv9l/oM4JFVIlkJm53gJc+6NU8rNotRbsPIIxt6I=
+	t=1785535184; cv=none; b=RSz011J6m1YsEMw+0TYUawZxSxYQEiE3uLEEhVUSJJ86tmWtoFtTxFbYke/kJ/LM0GTQKyBbwGw46iVKB2TIoEzSqOPKtVa0mrtTXrO7xMw0o1Lb8YOfVKB0SDpl4nqYE1WnrRf+970PkuF+IE3DoVAHHYwpVDIxnOWjEYV1ML8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785535183; c=relaxed/simple;
-	bh=iwZKkd98qT9tzCW358jy8OAqnrbe3DjpHgNCwUHE87o=;
+	s=arc-20240116; t=1785535184; c=relaxed/simple;
+	bh=pVGfcYcAVrSgjUcNwlnvA6sWe8+2hBiVzowcP/KXUhY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BA0Ra6Y7XvqXu0V9s/jzBdRfI5erZpyPT6eF3UCSgLXWVzE7tdZpJsSBpZ0qLMTqB5mnsPKe2ufLQwEKTUT3nlqACK3RjexCWA5RZqBe9cvxrbSWme9RVZw1J+C9L3fraDTydudfgiLEOrlcOftaooAxq0dn2ncjBeUPRFHfuWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MeV484cQ; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=KgYXWSu27jumfTSVt2OmFW/BGAHYR0BtAyUyxZSaLnbtNDvLRR0IATP0k31EATD5ipjJFCKl1w+YxX69KGSy0WUWpsBYOtFFW1+QZoDU3ipYvrksGijk8Ky1zcGx+yxQH72RvFdc9ctj8wFaS76Dn7ZDcCByz0bOju4L5o6HsII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F4fT3yhb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MeV484cQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F4fT3yhb"
 Received: by smtp.kernel.org (Postfix)
-	id DAE131F00ACA; Fri, 31 Jul 2026 21:59:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D061F00AC4;
-	Fri, 31 Jul 2026 21:59:40 +0000 (UTC)
+	id 1E5FD1F00ACA; Fri, 31 Jul 2026 21:59:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411EF1F00AC4;
+	Fri, 31 Jul 2026 21:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785535181;
-	bh=YLyK0umeVqbCyTJ23vzmkHaLWTG5mI5aYUYYCfzwnrA=;
+	s=k20260515; t=1785535183;
+	bh=EJ7YwE6PNQIsr34Osq2s0wxGGroswV8Us1AVDCwJYTA=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=MeV484cQiw8omxYmS/z9Rd1Kid/4cNZWMVr8PMsG+Wr5CCPsD++dJE1YSkIUy60kP
-	 S7aWJ5AcJvqQGnDMgQI/YmDVXAOa3SGuINDSV3sAilhPgw6pLU6PUQdCWJe3I5gf41
-	 SF1pHtb4Ef4VLqkbeY+8UJp95+5CXGSHz443vVBvMgaVPr9cvVcgKXcHR0374ZP72Q
-	 2lPTvWnjT71yMJb5ojZfgB5cLXfSmRJYKpM77lSQ+FJBMsn3D3kUfO22TbZa54lcx3
-	 bgvOncvPSZuR1W8fZagm/lTzAaCTyna1LRhDnOR569ud+f8W+/W5qtDx+QP24iabMh
-	 ve6kcNc3eSZLQ==
+	b=F4fT3yhbHJLtCe3YTks/q4iR6wePsZZde+gjwjkkm0xWSvf9us5V6x+nVS1JcypKr
+	 psrEPGtvxxb3EhzVmtCOSfWta330CqrNoGkdJSxLq9BEskUsnmVFr1kz9xtgY0bz18
+	 TwTA+b6+EC2jqTgGY+7Au9KsiShms/cpKS4bbELT2bCiL1SNZ+IcrK3XpFRxstA3Dg
+	 n2I5MkVJh+MDfkNW8/qvmEwtxpmC4Ryx6OR87D0KTy4S8u90TOZJLC4h+1AkFWvCiL
+	 KaLzucvC0G2rc+QPck4tS3fWJKu9zKdmoS659DY9g+6oMz0wHf7w/30vqB5QRyL+Xs
+	 xVjlS9ymg/WJw==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 23:59:21 +0200
-Subject: [PATCH b4 v2 40/44] tests: cover the status sync closing its
- database
+Date: Fri, 31 Jul 2026 23:59:22 +0200
+Subject: [PATCH b4 v2 41/44] review-tui: catch the exit a failed checkout
+ reports itself with
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,96 +40,113 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v2-40-243fd19d322d@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v2-41-243fd19d322d@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2823; i=brauner@kernel.org;
- h=from:subject:message-id; bh=iwZKkd98qT9tzCW358jy8OAqnrbe3DjpHgNCwUHE87o=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs1Vfu3RnnAkr3SamE/MFafJ8S78K57mf9q/wiZCT
- O6GkrdHRykLgxgXg6yYIotDu0m43HKeis1GmRowc1iZQIYwcHEKwEQuFzEy7Nn3VY+j2aXk3/r9
- ropfeRZEvDlkdDMx4sCm1hNvNrgfs2FkuL7sqemkUKGtsTMXepZm9YRbieSYhG5stj9cEBK9Z8p
- nBgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4396; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=pVGfcYcAVrSgjUcNwlnvA6sWe8+2hBiVzowcP/KXUhY=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs2VnOr0jelPlcnuhxeaHRtO7OaxZ7V+e0/6YKj6L
+ N8pki+XdpSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzE8R8jw7Gn4SYLZizZ+H/L
+ DMMVDzbLvzr348m5L1YvL75askm6MS+akWH+Ss8pz9u/7Zl54WLKw36t6Us5Nm5676c/Z5uP9G2
+ bTD5uAA==
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-A write that raises must leave the connection closed anyway.
+create_review_branch() exits rather than raises, and SystemExit is
+not an Exception, so a failed checkout unwound past the handler and
+took the session down. This is the path every series enters review
+through. Catch the exit and report "see above"; the reason is already
+on the screen we are suspended into.
+
+The conflict handler also created the branch a second time from
+inside the except block, out of reach of the handler beside it. Move
+the resolve around the am alone; the create is then written once and
+covered.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/tests/test_tui_tracking.py | 52 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
+ src/b4/review_tui/_tracking_app.py | 55 ++++++++++++++++++--------------------
+ 1 file changed, 26 insertions(+), 29 deletions(-)
 
-diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
-index ef79aeb..25bf13a 100644
---- a/src/tests/test_tui_tracking.py
-+++ b/src/tests/test_tui_tracking.py
-@@ -15,6 +15,7 @@ import datetime
- import email.message
- import os
- import pathlib
-+import sqlite3
- from typing import Any, Callable, Dict, List, Optional, Tuple
- from unittest.mock import patch
+diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
+index c547d7c..ac3a575 100644
+--- a/src/b4/review_tui/_tracking_app.py
++++ b/src/b4/review_tui/_tracking_app.py
+@@ -1918,16 +1918,29 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                         )
  
-@@ -5470,3 +5471,54 @@ class TestTrackingEntryBranchRestore:
-             _entry.run_tracking_tui('test-entry-syncfail')
+             _is_rt = bool(series.get('is_rethreaded'))
++            # create_review_branch() reports failure by exiting rather than
++            # raising, and SystemExit is not an Exception, so catch it too --
++            # letting it out of here unwinds straight through the suspend and
++            # takes the session down over one series that would not apply.
+             try:
+                 logger.info('Base: %s', base_commit)
+-                b4.git_fetch_am_into_repo(
+-                    topdir,
+-                    ambytes=ambytes,
+-                    at_base=base_commit,
+-                    origin=linkurl,
+-                    am_flags=['-3'],
+-                    resolve=True,
+-                )
++                # Only the am can conflict, and it runs before anything is
++                # created, so the resolve belongs around it rather than around
++                # the whole block: creating the branch is then written once and
++                # covered by the handler below on both routes to it.
++                try:
++                    b4.git_fetch_am_into_repo(
++                        topdir,
++                        ambytes=ambytes,
++                        at_base=base_commit,
++                        origin=linkurl,
++                        am_flags=['-3'],
++                        resolve=True,
++                    )
++                except b4.AmConflictError as cex:
++                    if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
++                        _wait_for_enter()
++                        return
  
-         assert b4.git_get_current_branch(gitdir) == 'work'
-+
-+    def test_a_failed_status_sync_closes_the_database(self, gitdir: str) -> None:
-+        """The connection is opened inside the guard that swallows the
-+        failure, so a write that raises used to skip the close and leave it
-+        open for the rest of the session."""
-+        ecode, _out = b4.git_run_command(gitdir, ['checkout', '-q', '-b', 'work'])
-+        assert ecode == 0
-+        review_branch = 'b4/review/entry-dbclose-1'
-+        runs = {'n': 0}
-+        closed: List[bool] = []
-+
-+        class _Conn:
-+            def close(self) -> None:
-+                closed.append(True)
-+
-+        class _ReviewsThenQuits:
-+            PATCHWORK_SENTINEL = TrackingApp.PATCHWORK_SENTINEL
-+
-+            def __init__(
-+                self, identifier: str, original_branch: Optional[str], **kw: Any
-+            ) -> None:
-+                pass
-+
-+            def run(self, mouse: bool = True) -> Optional[str]:
-+                runs['n'] += 1
-+                if runs['n'] > 1:
-+                    return None
-+                return review_branch
-+
-+        def _boom(*args: Any, **kwargs: Any) -> None:
-+            raise sqlite3.OperationalError('database is locked')
-+
-+        with (
-+            patch.object(_entry, 'TrackingApp', _ReviewsThenQuits),
-+            patch.object(_entry, 'ReviewApp'),
-+            patch.object(
-+                b4.review,
-+                '_prepare_review_session',
-+                return_value={'series': {'revision': 1}},
-+            ),
-+            patch.object(
-+                b4.review,
-+                'load_tracking',
-+                return_value=('', {'series': {'status': 'replied'}}),
-+            ),
-+            patch.object(tracking, 'get_db', return_value=_Conn()),
-+            patch.object(tracking, 'update_series_status', side_effect=_boom),
-+        ):
-+            _entry.run_tracking_tui('test-entry-dbclose')
-+
-+        assert closed == [True]
+                 # Create the review branch
+                 b4.review.create_review_branch(
+@@ -1944,27 +1957,11 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 )
+                 logger.info('Review branch created: %s', branch_name)
+                 checkout_success = True
+-            except b4.AmConflictError as cex:
+-                if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
+-                    _wait_for_enter()
+-                    return
+-                # Create the review branch from resolved result
+-                b4.review.create_review_branch(
+-                    topdir,
+-                    branch_name,
+-                    base_commit,
+-                    lser,
+-                    linkurl,
+-                    linkmask,
+-                    num_prereqs=0,
+-                    identifier=self._identifier,
+-                    status='reviewing',
+-                    is_rethreaded=_is_rt,
+-                )
+-                logger.info('Review branch created: %s', branch_name)
+-                checkout_success = True
+-            except Exception as ex:
+-                logger.critical('Error creating review branch: %s', ex)
++            except (Exception, SystemExit) as ex:
++                # SystemExit only carries the exit code; create_review_branch()
++                # has already said why on its way out.
++                reason = 'see above' if isinstance(ex, SystemExit) else str(ex)
++                logger.critical('Error creating review branch: %s', reason)
+                 _wait_for_enter()
+ 
+         if not checkout_success:
 
 -- 
 2.53.0
