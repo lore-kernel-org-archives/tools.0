@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F543358AD
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010EB351C04
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785535137; cv=none; b=gJNXKrnq8IKDdXEY229w1INu7GmPLl8pyAP0mBiv2CXMN3qo5ikD/mkA0qdTF/2PtHOjz8ljvflb358a7UvjqeYM+fD8u+plsCTRH2SYiJfncKS5s8ysoi9kD4IZNfod/rxPVeDT6tyqqVbtF4HDlo3b2aeNbedr+PxL+SrHagI=
+	t=1785535138; cv=none; b=YyUbK+DZLqCos0x5vR5boiFjsZbcCm36gHj6kDnny7bluRUGrl97m3g6lozu9bJ8hvxi3Fx4tecMDDA7rXfA+FG3Hfn7NpKMI8o1MgDRfableD61ZQjRvrixmo/rdHT3qE+jLn/z6iaDCKVHn17KlK0v1r5d5OuXt2Tl7bnjFP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785535137; c=relaxed/simple;
-	bh=SUEaOKxf8Ex6N5s655Gdo/dpZKB/v/RIesRM8HMdbbg=;
+	s=arc-20240116; t=1785535138; c=relaxed/simple;
+	bh=wE/K8c0iQ0TWr7RXrUh4EtD78KStZp7eVvHAP/M+N78=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lhI9BAXus8QVP9ITB5puhwhEAIfUcB97QVthF5YFhvt1w/LSXm+mV4miAbXoIX1R/W1iYjduHUQaB339Ov956ZgNDUJ1BVmEpQCc9L0OJ75UdMr84FpjJgKzISh5ZsuHQ5+fTeHd2sELOpHsKgUcTdG8dwf8Nj24zbrTOpfBG8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZmVioxGz; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=scvSL48FHjwdAmb40Pl08qTw/7hc6HdH+WK7CNaK03i5V5/3NIX8QGB89LkkzfIG8iiq37lpSskZrDRB3kCtvvAvt/9Wd2UlVWgQ73Z2blIV6NXz1T4bM2cbLoh+fPgD9wIy361b7lZD3OEoqsLerCnwdskbW28Khtd9lQ4qL0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eNY2YOGj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZmVioxGz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eNY2YOGj"
 Received: by smtp.kernel.org (Postfix)
-	id AE8DF1F00ACA; Fri, 31 Jul 2026 21:58:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9A41F00AC4;
-	Fri, 31 Jul 2026 21:58:54 +0000 (UTC)
+	id D6BF31F00ADB; Fri, 31 Jul 2026 21:58:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1514B1F00AC4;
+	Fri, 31 Jul 2026 21:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785535135;
-	bh=ojh9achdysMY9hfadijYZXr9h9gyfRYXsoqaERrXxqQ=;
+	s=k20260515; t=1785535136;
+	bh=0kzGclNEsqIsUSeOHBuhW615WcFZEHnWhE/EyVHttXg=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=ZmVioxGzGgjJEYbtCFCsm01RIbIPoDeIPyYC3e1+GABkFYEsblWnZofzCN1Vpn7g/
-	 ruAkvnHhbkMvwxaCmLtV1E4dD3IM/QNtFlqghA0Eh9nnQ++LsRZtKvJrAzMeTz1+fN
-	 mt1alTobOrF5SQkTPbaqluz1K05jYixlqxWQlafZqCLpulWNaUb7uZiGTGzoo+9XFC
-	 Stb7Cs8HHqMDBtJN0V+g4hCsphZ++eD0RlnQl6XBPpbZe4eQ/H/LqXjLizozZu4rJ5
-	 Xyewi/4TVrCJnYSz9Y/wBB4vFu6zeZce/zNNb5SoSxszL5U2Ypy18ooUlZ6wSu79oG
-	 +2S9DUh/QodHQ==
+	b=eNY2YOGjXdx5MoppOj6ESFmUwT5/x8VkBA2OlTPFLLFCM8WtDaVQYfiVp6QceLwjQ
+	 rMzn63I/EMrBwIbbVltFdcledksKm5wdRgDa3ydng9dgokLCXGJGZ7xYIrq7c0LBY4
+	 GN5e8x0vvqjO84kSDF5QowMWNGmU7dD8EJOH7LkNhH+iwKTqTBq/dcEsgRDBR5p8Tc
+	 Sg/nj/Ia4TO8LRKEnprlasaOAIJ0ePrJc6O/+0f7c1ySX2lJi/1NaxuOdLZ3wp3F7X
+	 4RPuU8JHZKV+YnnEu1a2CEAbKNEXIyYElmmv9kIKFB3STL+0AoFcI1bUPm+wGBOjTO
+	 TPdagZfEGqWjA==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 23:58:42 +0200
-Subject: [PATCH b4 v2 01/44] review-tui: mark all outgoing mail as read,
- not just review replies
+Date: Fri, 31 Jul 2026 23:58:43 +0200
+Subject: [PATCH b4 v2 02/44] tests: cover the shared outgoing-seen helper
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,141 +39,88 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v2-1-243fd19d322d@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v2-2-243fd19d322d@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5034; i=brauner@kernel.org;
- h=from:subject:message-id; bh=SUEaOKxf8Ex6N5s655Gdo/dpZKB/v/RIesRM8HMdbbg=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs3aYp+2u9GwaNmPU5odN+x2z2hjnu9RGdvv7eam0
- Pd3G8uujlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIlM62b4K5iWv+jPxOq9H2PC
- p/vNTDwsV78i/NWBy8mX7ugc1TgoxcLwP1Uvaf1LmTe/9+fXCRtEbWtxezib8+8rdxcfsft2tRw
- vuAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2603; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=wE/K8c0iQ0TWr7RXrUh4EtD78KStZp7eVvHAP/M+N78=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs36J7da4Uune8WfmLslPSKLRKzehF68WWy8rel7c
+ PRh59vXOkpZGMS4GGTFFFkc2k3C5ZbzVGw2ytSAmcPKBDKEgYtTACZiKsnI8N6D3W/J0nf3P82c
+ tiCyuf9okrPfnYm2HyLX7L76eolDcBvDPzvRaflamslrlr//eO8i7zPJjnWWrIn2PYmRHi7qC/7
+ acAMA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Only review replies were marked as read at send time. The thank-you
-note and the lite viewer's follow-up reply relied on matching the
-sender address on the next fetch, which fails when the mail goes out
-from another address such as b4.thanks-from-email. The message then
-comes back from the list and lights up the unread badge.
-
-Add a shared helper that marks outgoing mail as read at send time. It
-respects --email-dry-run and never raises. Use it for the follow-up
-reply; the thank-you path follows in a later patch.
+The helper records the message, writes nothing on a dry run, and does
+not let a failure escape into the send path.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review_tui/_common.py     | 23 +++++++++++++++++++++++
- src/b4/review_tui/_lite_app.py   |  2 ++
- src/b4/review_tui/_review_app.py | 16 +++-------------
- 3 files changed, 28 insertions(+), 13 deletions(-)
+ src/tests/test_messages.py | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/src/b4/review_tui/_common.py b/src/b4/review_tui/_common.py
-index 935f553..33ab7ea 100644
---- a/src/b4/review_tui/_common.py
-+++ b/src/b4/review_tui/_common.py
-@@ -114,6 +114,29 @@ _CallFromThreadReturn = TypeVar('_CallFromThreadReturn')
- _WorkerResult = TypeVar('_WorkerResult')
+diff --git a/src/tests/test_messages.py b/src/tests/test_messages.py
+index 1dfcc82..904776d 100644
+--- a/src/tests/test_messages.py
++++ b/src/tests/test_messages.py
+@@ -1,6 +1,7 @@
+ import datetime
+ import email.message
+ import os
++import sqlite3
+ from typing import Dict, List, Optional
  
- 
-+def mark_outgoing_seen(
-+    msgs: List[email.message.EmailMessage], dryrun: bool = False
-+) -> None:
-+    """Flag messages b4 just sent as read, before the list echoes them back.
-+
-+    Every send path that puts a message into a tracked thread wants this:
-+    a reply, a follow-up, a thank-you note.  Without it the maintainer's
-+    own mail comes back a few minutes later and lights up the series'
-+    unread badge.
-+
-+    Never raises: the message is already gone, so a bookkeeping failure
-+    here must not be reported to the caller as a failure to send.
-+    """
-+    if dryrun:
-+        return
-+    try:
-+        from b4.review import messages
-+
-+        messages.mark_outgoing_seen(msgs)
-+    except Exception as ex:
-+        logger.debug('Could not mark sent messages as seen: %s', ex)
+ import pytest
+@@ -318,3 +319,45 @@ class TestMarkOutgoingSeen:
+         count = conn.execute('SELECT COUNT(*) FROM messages').fetchone()[0]
+         assert count == 0
+         conn.close()
 +
 +
- def get_thread_msgs(
-     topdir: str,
-     message_id: str,
-diff --git a/src/b4/review_tui/_lite_app.py b/src/b4/review_tui/_lite_app.py
-index 9c418ad..86a201e 100644
---- a/src/b4/review_tui/_lite_app.py
-+++ b/src/b4/review_tui/_lite_app.py
-@@ -26,6 +26,7 @@ from b4.review_tui._common import (
-     _quiet_worker,
-     _write_diff_line,
-     display_width,
-+    mark_outgoing_seen,
-     pad_display,
-     resolve_styles,
-     run_lore_worker,
-@@ -816,6 +817,7 @@ class LiteThreadScreen(ModalScreen[None]):
-                 self.app.notify(f'Dry-run: reply to {lmsg.fromemail} logged, not sent')
-                 self._mark_answered(node)
-             else:
-+                mark_outgoing_seen([msg], dryrun=self._email_dryrun)
-                 self.app.notify(f'Reply sent to {lmsg.fromemail}')
-                 self._mark_answered(node)
-         except Exception as ex:
-diff --git a/src/b4/review_tui/_review_app.py b/src/b4/review_tui/_review_app.py
-index 81c3890..8139518 100644
---- a/src/b4/review_tui/_review_app.py
-+++ b/src/b4/review_tui/_review_app.py
-@@ -48,6 +48,7 @@ from b4.review_tui._common import (
-     _write_followup_trailers,
-     get_thread_msgs,
-     logger,
-+    mark_outgoing_seen,
-     notify_quit_hint,
-     resolve_styles,
-     reviewer_colours,
-@@ -1664,7 +1665,7 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-                             review['sent-revision'] = current_rev
-                     self._save_tracking()
-                     self._mark_patches_answered(msgs)
--                    self._mark_outgoing_seen(msgs)
-+                    mark_outgoing_seen(msgs, dryrun=self._email_dryrun)
-                     self.notify(f'Sent {sent} review email(s).')
-             except Exception as ex:
-                 self.notify(f'Send failed: {ex}', severity='error')
-@@ -1746,7 +1747,7 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-             elif self._email_dryrun:
-                 self.notify(f'Dry-run: reply to {entry["fromemail"]} logged, not sent')
-             else:
--                self._mark_outgoing_seen([msg])
-+                mark_outgoing_seen([msg], dryrun=self._email_dryrun)
-                 self.notify(f'Reply sent to {entry["fromemail"]}')
-         except Exception as ex:
-             self.notify(f'Send failed: {ex}', severity='error')
-@@ -2063,17 +2064,6 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-         except Exception:
-             pass
- 
--    def _mark_outgoing_seen(self, msgs: List[Any]) -> None:
--        """Mark just-sent messages as Seen so they never show up as unread."""
--        if self._email_dryrun:
--            return
--        try:
--            from b4.review import messages
--
--            messages.mark_outgoing_seen(msgs)
--        except Exception:
--            pass
--
-     def _mark_patches_answered(self, msgs: List[Any]) -> None:
-         """Mark the original patches as Answered based on In-Reply-To."""
-         entries = []
++class TestMarkOutgoingSeenHelper:
++    """The TUI wrapper every send path funnels through."""
++
++    @staticmethod
++    def _make_msg(msgid: str) -> 'email.message.EmailMessage':
++        msg = email.message.EmailMessage()
++        msg['Subject'] = 'Test'
++        msg['Message-Id'] = f'<{msgid}>'
++        return msg
++
++    def test_records_the_message(self, tmp_path: pytest.TempPathFactory) -> None:
++        from b4.review_tui._common import mark_outgoing_seen
++
++        mark_outgoing_seen([self._make_msg('helper1@example.com')])
++        conn = messages.get_db()
++        assert 'Seen' in messages.get_flags(conn, 'helper1@example.com')
++        conn.close()
++
++    def test_dryrun_records_nothing(self, tmp_path: pytest.TempPathFactory) -> None:
++        """A dry run never puts the message on the list, so there is nothing
++        coming back that would need to be already read."""
++        from b4.review_tui._common import mark_outgoing_seen
++
++        mark_outgoing_seen([self._make_msg('helper2@example.com')], dryrun=True)
++        conn = messages.get_db()
++        assert messages.get_flags(conn, 'helper2@example.com') == ''
++        conn.close()
++
++    def test_never_raises(
++        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
++    ) -> None:
++        """It runs after the message is already gone, so a bookkeeping
++        failure must not reach the caller as a failure to send."""
++        from b4.review_tui._common import mark_outgoing_seen
++
++        def boom(msgs: object) -> None:
++            raise sqlite3.OperationalError('database is locked')
++
++        monkeypatch.setattr(messages, 'mark_outgoing_seen', boom)
++        mark_outgoing_seen([self._make_msg('helper3@example.com')])
 
 -- 
 2.53.0
