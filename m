@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986B630C158
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7A030C158
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785489693; cv=none; b=PDx6a3Z0EdCSjgBNkRNlBa+c/XpxMhtxnrNHl2heie79wgoMRiKI6tB1gHl1h2bUq3nki9VzQssCzWp74m5dLRONrHLg2vuvzBWRIDSNI3NVP7ZKwOMklMz+loXpn3TGb6g1xHkGiMKzFwSYeEFf5as7TWi8fLg2NPki5dKSREY=
+	t=1785489695; cv=none; b=ZTBSjJL7i2abEsdD0HwYa1Dh3Dj/rg8s07ZfaeESIJW6PfpPlkfdze3Oe4Cfl2iYX1kkTkT769QurV3UW9340pWLJsJlVaKAuwV8QwSZ/2DMgKx/w8mqz4vrz6Rccbyq7eDyg5bqET2e6mJKQIV05VKk5Ff7BnhUB8ldMTLnvDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785489693; c=relaxed/simple;
-	bh=x/WFamEqQD4RkyLfS84OHni/OF8R7fH61tfinoOGXbE=;
+	s=arc-20240116; t=1785489695; c=relaxed/simple;
+	bh=su0IRGgrOg5ig4uNW/lcynLjguacCinuqIs4pDshBkI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lcVlMtOZzoxW8r87o37A0kSAcAGdC7Wsoxf2zHhrNckWYVUrMEwXK7m3+3xLtjut6iIYsBeCyp8SrrAm0/jUHLu97W2Rook0rbETF1HD66WGYI47vj/ZivciJP5qfUhzOsleo+d7TMnVqpTmBK6OY93I8hlRBmGjrXK+lf+xajs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o1Wm6+IJ; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=fj+S69kT3x1cQwP9W/lRe+5B6QxAhQswJVMUn1kQYyRi2huGnr/QQ9cIaMIp2Tz8PM90miAY3+mUYV36phdskctWyIZLsGBAlVZEdDvOyvHWZwszuL5on0mGs1Qjsh4fL9+0tpI+gi03rHRANE+8hrRHdMEiqLhw7HOOswciu48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X7MRQUyp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o1Wm6+IJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X7MRQUyp"
 Received: by smtp.kernel.org (Postfix)
-	id 96C3B1F00A3A; Fri, 31 Jul 2026 09:21:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D271F000E9;
-	Fri, 31 Jul 2026 09:21:31 +0000 (UTC)
+	id BE89B1F00A3A; Fri, 31 Jul 2026 09:21:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10921F000E9;
+	Fri, 31 Jul 2026 09:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785489692;
-	bh=eIo9r9jT7QBPTnlk/OUfJ+muWX0oT8z3OgQ7CyZtBrs=;
+	s=k20260515; t=1785489693;
+	bh=Gwx70h7uwzskpEYh/7L8f0LAVUeBcVtmTYKpdBKsXNQ=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=o1Wm6+IJJESPTikh3F+/3DzDKOlNYciEYEhAAGgtjsFlZIRqGUL+5ttBHcUT367jF
-	 moXb0lV3tiLLrTyXnUjRjCw0boZQziIPncpQe3PI+TeJWGtWeqMHRW44NK9e0mXJFC
-	 0DWn73GpOrg3dihUUGZSDXgxljAxmxepTw/gav4Oee3LVFNWG1t6pxtt8yO1LvYHq3
-	 3NexlmRZufJmLo6UO58OdjujGuL8Nu2hp2RTX/W3IeuSm025K4mWvz6mr6q5K1WY9R
-	 rEeZH1kH+qyfZOCpLuOhoA/s13TLkaPjJo12OwkpBWpbrcpoaZHfiwfvW7w7aY2pwV
-	 KL0WhR+ADMydA==
+	b=X7MRQUypySDYPO8wuQnBSuo9VpDsuRRAfJ2Pp/vwKNkd2EtqH+7zJLSnsR0v4Vefr
+	 5IBO91uL3Or1aggfodOXnuoOTcThcisnOPpEwXnR++d2dJtbjAnkDgG0uk4UaZoPz/
+	 kIssCTbqbPmXJIVoMFvnHsOZFJ1hJ9OiCY/1V39ZWPPYig7LaDz+ORGlZ4sIduhcVB
+	 jGD3KAY+xhBt6Al6ALlWN4wihcYNP+vJyHNuv28uNVwtuOxO8JyIgXOCN7DuVaWGH4
+	 97PaMT6evjbF/MbuMCc8mqSLaRAjemJWEMOzGu8ySMi1+P0u7/Tp5zDT0kyPyqlMbA
+	 72Yt9frggTrpg==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 11:21:03 +0200
-Subject: [PATCH b4 04/27] review: use the same busy timeout for both review
- databases
+Date: Fri, 31 Jul 2026 11:21:04 +0200
+Subject: [PATCH b4 05/27] review: drop the unused return value from
+ set_flags_bulk()
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,52 +40,136 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v1-4-de68a7c8e4cb@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v1-5-de68a7c8e4cb@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1360; i=brauner@kernel.org;
- h=from:subject:message-id; bh=x/WFamEqQD4RkyLfS84OHni/OF8R7fH61tfinoOGXbE=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIoGPdqUuVTxY5aPqB1XTvmzk1O0r877+qma77rLx
- n12z2Y/6ihlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZjIXTeG/yWcLdtsUrwXHPlj
- 9e3Kip4b6/ZtjZuxL59N4POK6V4umVIM/ww/HF0055zZdqfPLBcazu34oxUx7eT7tddKBe7ManB
- fbcwLAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4626; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=su0IRGgrOg5ig4uNW/lcynLjguacCinuqIs4pDshBkI=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIrekUq7PT/33+5JEaKHz7/cf3Km5rTzhW3KE7jPf
+ ufzyONo7ihlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZiIVwbDXxGxJ5VPWJQdFdvE
+ sowkiw2F/QNer95yV+LO8lvnkxMv/Gf4p2Q1e+KUCQuUDLmmvIw5P1dVOEe1KmnG5+cmCo2vMnj
+ X8gIA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-The messages database got a busy_timeout of 5s when it grew concurrent
-writers. The tracking database sitting next to it uses 15s and has the
-same two writers, the TUI and a "b4 review cron" sweep, doing the same
-short write transactions.
+set_flags_bulk() returns the number of messages that didn't already
+carry the flag. Nothing uses it. The unread badge accounting it was
+added for ended up taking its count from get_flags_bulk() instead, over
+the messages that are new to the thread, which is a different number.
 
-There is no reason for the two to differ. All it means is that the flags
-database is the first to give up with "database is locked" when a cron
-sweep and an interactive session overlap. Use the same value.
+An unused return value still reads like a contract callers may rely on
+and the next person has to work out that none do. Take it back out. Keep
+the early continue it brought with it. A row the INSERT just created
+already carries exactly this flag, so there is nothing for the
+read-modify-write below to do.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review/messages.py | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ src/b4/review/messages.py  |  8 ++------
+ src/tests/test_messages.py | 44 --------------------------------------------
+ 2 files changed, 2 insertions(+), 50 deletions(-)
 
 diff --git a/src/b4/review/messages.py b/src/b4/review/messages.py
-index a3a2d53..a73e986 100644
+index a73e986..b388d93 100644
 --- a/src/b4/review/messages.py
 +++ b/src/b4/review/messages.py
-@@ -44,8 +44,9 @@ def get_db() -> sqlite3.Connection:
-     is_new = not os.path.exists(db_path)
-     conn = sqlite3.connect(db_path)
-     conn.row_factory = sqlite3.Row
--    # Both the TUI and 'b4 review cron' may write concurrently
--    conn.execute('PRAGMA busy_timeout = 5000')
-+    # Both the TUI and 'b4 review cron' may write concurrently; same
-+    # generous timeout the tracking database uses, for the same reason
-+    conn.execute('PRAGMA busy_timeout = 15000')
-     if is_new:
-         conn.executescript(SCHEMA_SQL)
-         conn.execute(
+@@ -102,13 +102,11 @@ def set_flag(
+ 
+ def set_flags_bulk(
+     conn: sqlite3.Connection, entries: List[Dict[str, Optional[str]]], flag: str
+-) -> int:
++) -> None:
+     """Add *flag* to multiple messages in one transaction.
+ 
+     Each entry in *entries* is ``{'msgid': ..., 'msg_date': ...}``.
+-    Returns the number of messages that did not have *flag* before.
+     """
+-    newly_flagged = 0
+     for entry in entries:
+         msgid = entry.get('msgid', '')
+         msg_date = entry.get('msg_date')
+@@ -121,7 +119,7 @@ def set_flags_bulk(
+             (msgid, msg_date, flag),
+         )
+         if cursor.rowcount > 0:
+-            newly_flagged += 1
++            # Row created carrying exactly this flag; nothing to merge
+             continue
+         row = conn.execute(
+             'SELECT flags FROM messages WHERE msgid = ?', (msgid,)
+@@ -130,13 +128,11 @@ def set_flags_bulk(
+             existing = set(row[0].split())
+             if flag not in existing:
+                 existing.add(flag)
+-                newly_flagged += 1
+                 conn.execute(
+                     'UPDATE messages SET flags = ? WHERE msgid = ?',
+                     (' '.join(sorted(existing)), msgid),
+                 )
+     conn.commit()
+-    return newly_flagged
+ 
+ 
+ def remove_flag(conn: sqlite3.Connection, msgid: str, flag: str) -> None:
+diff --git a/src/tests/test_messages.py b/src/tests/test_messages.py
+index 904776d..14e1743 100644
+--- a/src/tests/test_messages.py
++++ b/src/tests/test_messages.py
+@@ -222,50 +222,6 @@ class TestCleanupOld:
+         conn.close()
+ 
+ 
+-class TestSetFlagsBulkReturnValue:
+-    """Tests for the newly-flagged count returned by set_flags_bulk()."""
+-
+-    def test_counts_new_rows(self, tmp_path: pytest.TempPathFactory) -> None:
+-        conn = messages.get_db()
+-        entries: List[Dict[str, Optional[str]]] = [
+-            {'msgid': 'n1@example.com', 'msg_date': None},
+-            {'msgid': 'n2@example.com', 'msg_date': None},
+-        ]
+-        assert messages.set_flags_bulk(conn, entries, 'Seen') == 2
+-        conn.close()
+-
+-    def test_repeat_is_zero(self, tmp_path: pytest.TempPathFactory) -> None:
+-        conn = messages.get_db()
+-        entries: List[Dict[str, Optional[str]]] = [
+-            {'msgid': 'r1@example.com', 'msg_date': None},
+-        ]
+-        messages.set_flags_bulk(conn, entries, 'Seen')
+-        assert messages.set_flags_bulk(conn, entries, 'Seen') == 0
+-        conn.close()
+-
+-    def test_mixed_new_and_existing(self, tmp_path: pytest.TempPathFactory) -> None:
+-        conn = messages.get_db()
+-        first: List[Dict[str, Optional[str]]] = [
+-            {'msgid': 'm1@example.com', 'msg_date': None},
+-        ]
+-        messages.set_flags_bulk(conn, first, 'Seen')
+-        both: List[Dict[str, Optional[str]]] = [
+-            {'msgid': 'm1@example.com', 'msg_date': None},
+-            {'msgid': 'm2@example.com', 'msg_date': None},
+-        ]
+-        assert messages.set_flags_bulk(conn, both, 'Seen') == 1
+-        conn.close()
+-
+-    def test_new_flag_on_existing_row(self, tmp_path: pytest.TempPathFactory) -> None:
+-        conn = messages.get_db()
+-        entries: List[Dict[str, Optional[str]]] = [
+-            {'msgid': 'f1@example.com', 'msg_date': None},
+-        ]
+-        messages.set_flags_bulk(conn, entries, 'Seen')
+-        assert messages.set_flags_bulk(conn, entries, 'Answered') == 1
+-        conn.close()
+-
+-
+ class TestMarkOutgoingSeen:
+     """Tests for mark_outgoing_seen()."""
+ 
 
 -- 
 2.53.0
