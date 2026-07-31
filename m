@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80453B1016
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1F43B38AE
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785489709; cv=none; b=h8l6fF2PZv+PbFVyVdO88mdM/rXnp2P7K4Wz0is2T/7LIGUA6FtD5lo4aclNC/i5RSZVoC77HBGPTjeu6/GklS5VMmSsScJPhwVsVrW/TEAS/eeFuYUOf0JHtbB/XhJaJ24BhSHiwf6CuK4U2obhl6larD1wZFfIuSZ7CcI3fak=
+	t=1785489710; cv=none; b=uujFb36UTU94Tv1vQv0fVkTChgZK9lvWh0uUmEwL4Ute+/iCgmX7Qn+I05i2Sj/FjZnnXAjP2fUc+SnJB1CYWRCCWnVsFFf00HhE+KaNg8GWjEtPBPF83vWatGEi2GDK9H+ueHI/gznbzO8chEuldoqeHCLD2ApMXolnGEwjL0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785489709; c=relaxed/simple;
-	bh=f3aDPUOG1rlrB2RMykJ1KEEUQwxUfV6MqR7d3dOUo9U=;
+	s=arc-20240116; t=1785489710; c=relaxed/simple;
+	bh=3Ur+dd9D/BCIz17/7jkRiGDdBQt9lr8m0nu0VewqzZc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mDpyAN/vVbQtZAuTooYNJwnD3PTDQDIsQZM9e2i9e+dvndxsAnVLUDiKj3UaxSxAW62A/hCzxlzqVrJHPsHDs1idBk6r4prOlP8RWoqtzvvO3dj4INDT7W23mXfynf9eOWcOs25NO/cUSTlsCMUPDRDkachbObTF48TZvTa59Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jEHMgIQc; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=HL7WB1OyXf2pFNCsXkfzofqd1WXkAjmpbZcfJycVyc0z3mUQ4ujxWw7V0ekP21iFa0u/J607NWi8+0Saw2MfArLV7Wwwn8Cpj+4NUQHjIiixfMhNDKle0SDo9rZtaSRLTuMpfm7JpGspFo6MKVosUJx3NyPVAKawUYf36EPhI8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ggzjJcdd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jEHMgIQc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ggzjJcdd"
 Received: by smtp.kernel.org (Postfix)
-	id B68151F00A3A; Fri, 31 Jul 2026 09:21:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86141F000E9;
-	Fri, 31 Jul 2026 09:21:46 +0000 (UTC)
+	id DE6411F00A3D; Fri, 31 Jul 2026 09:21:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD8A1F000E9;
+	Fri, 31 Jul 2026 09:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785489707;
-	bh=ni6vi9OqeL2jA7GyCD0gAZ2nVAX4JzzpfYKoEaQ8keM=;
+	s=k20260515; t=1785489708;
+	bh=eLZOwaAqiLTrCO7a2S8t4MLLG7+mb4szzgOKwesUHV8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=jEHMgIQcIQtwfslEPOoBwY3vHEjVBRv73LjqgtiRNMVWdrrmneoAU0gwCMWSvwnMA
-	 4n2KdzG3lQCeiq28QrxRGPjxjMUBNcrS3oV5FouLHA9emO6z6tG3FwkRZt1g5gQB9M
-	 fj4ARxyOGh4MSbQ+dF6l4ZzIR3LboxI80db0NlVZ7uNn7nT1PSHBsVBiU+ScFk9wwl
-	 5OTDTAkJN22/bV8isTF+tYAo8cZuiIDahfX9CNqB4+btL6MWBMbWY2g8DYCbgM2243
-	 tlnod0736Y//0uCZDRvREqxU91eA/9yHW8/exJv5pnsyX4w7H/9HwbYFBd07+RjlrP
-	 tHkqfaMvkdMgw==
+	b=ggzjJcdd34GJr/AhEMFfP4B2hGvCFC5oy1ibqd5YJHGyLaVs4vm5uvUmHHass/XZ7
+	 Iyj8GvN+gNNYECeKyiuuIB9vO1F0thme13YOD9b1rsizRkbGo0r9cBcbLCR/Xwdne4
+	 k9sZ5GVrX4ecek3hm33Wnlo7EhnWcOyhiOlyWJ28QcJCTZKh6Isg6vfhOtMlL7/xN5
+	 UkGwBZNredy1mJ3O6gIHEqJK//mXnheJHPO3s/ATMPRWTwPvMGopZqD8OLWnT9MtUN
+	 csUgYg1tw122aYuedUM45PYoFtPVsP5+a1ta5qet4yHHN1WRj9iedBrma9iV5nPzEX
+	 ee7rixcnvBDIQ==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 11:21:16 +0200
-Subject: [PATCH b4 17/27] edit_in_editor: work in the tree the caller names
+Date: Fri, 31 Jul 2026 11:21:17 +0200
+Subject: [PATCH b4 18/27] tests: cover edit_in_editor working in the
+ caller's tree
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,158 +40,93 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v1-17-de68a7c8e4cb@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v1-18-de68a7c8e4cb@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6377; i=brauner@kernel.org;
- h=from:subject:message-id; bh=f3aDPUOG1rlrB2RMykJ1KEEUQwxUfV6MqR7d3dOUo9U=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIo9soyM7nYSKDwjK7yV9aW3TP8U3U8HdG931i3IX
- cpjEszXUcrCIMbFICumyOLQbhIut5ynYrNRpgbMHFYmkCEMXJwCMJGpuQz/1MS2ZTmIPbp9PPPu
- 806RdTHS7+yWK1+w1Lq5+fBJQfUzjxj+8BUdWLRwxo8Jm1kfBsXrLpVZbD/D+f2XpxbiXz9Pnxo
- RyQcA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3075; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=3Ur+dd9D/BCIz17/7jkRiGDdBQt9lr8m0nu0VewqzZc=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIq9vhd7rD5CoDhp7re/BhuCDoT78E9VZRS5Z5C68
+ rz5RemfHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABPpUmRkWH9FZWv5x++/1ofP
+ WlKW51xzTO9MZ/pD98LEFvng50IxeYwMr+d+XLfw0L998x7ZztppsaRzn2K4y8MZU2M0b0pfiVn
+ 3iAkA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-The scratch file and the branch lookup both came from git_get_toplevel()
-and git_get_current_branch() without an argument, so from wherever the
-process happens to be sitting. That is fine for the b4 prep commands,
-which are cwd-relative anyway. The review TUI is not: it scopes every
-other git call to session['topdir'], and this was the one place left
-where the tree it operates on was implied rather than named.
-
-The two agree today -- session['topdir'] is git_get_toplevel() of the
-cwd and b4 deliberately never chdirs -- so this is an assumption being
-removed rather than a bug being fixed. It does change one thing: the
-core.editor lookup moves to the named tree, so a repository-local
-setting is the one belonging to the branch being edited.
-
-Add a topdir argument for the tree the edit belongs to, use it for the
-scratch directory, the HEAD reads and the config lookup, and have the
-review TUI pass the one it already tracks.
+Runs against a linked worktree sitting on a different branch than the
+cwd, which is the case the argument was added for, and checks that
+core.editor is read from that tree too.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/__init__.py               | 26 ++++++++++++++++++--------
- src/b4/review_tui/_review_app.py | 12 +++++++++---
- src/tests/test_tui_review.py     |  2 +-
- 3 files changed, 28 insertions(+), 12 deletions(-)
+ src/tests/test___init__.py | 54 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index 3d22c89..a22c28d 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -6176,10 +6176,17 @@ def edit_in_editor(
-     bdata: bytes,
-     filehint: str = 'COMMIT_EDITMSG',
-     *,
-+    topdir: Optional[str] = None,
-     guard_branch: bool = False,
- ) -> bytes:
-     """Open the user's editor on bdata and return what they saved.
- 
-+    topdir is the working tree the edit belongs to: the scratch file is
-+    created there, and it is the tree HEAD is read from.  It defaults to the
-+    working tree of the current directory, which is only right for callers
-+    that operate on the process cwd -- anything driving a specific worktree
-+    (the TUIs) must pass it explicitly.
+diff --git a/src/tests/test___init__.py b/src/tests/test___init__.py
+index d9addac..9433606 100644
+--- a/src/tests/test___init__.py
++++ b/src/tests/test___init__.py
+@@ -1298,3 +1298,57 @@ def test_edit_in_editor_guard_covers_a_detached_head(
+         assert saved.read_bytes() == b'my trailers\n'
+     finally:
+         saved.unlink()
 +
-     guard_branch opts into a collision check, and only callers that store
-     the result into whatever branch HEAD happens to point at may set it
-     (b4 prep keeps the cover letter in the current branch's tracking commit,
-@@ -6191,12 +6198,16 @@ def edit_in_editor(
-     where their data lands, so refusing the edit would throw away the user's
-     work to prevent a collision that cannot happen.
-     """
--    # Read before the edit and compare after, so this can never end up
--    # comparing two different points in time.  A detached HEAD reads as None
--    # and still guards: None is not a branch we started on, so checking one
--    # out mid-edit is caught like any other switch.
--    read_branch = git_get_current_branch() if guard_branch else None
--    corecfg = get_config_from_git(r'core\..*')
-+    if topdir is None:
-+        topdir = git_get_toplevel()
-+    # Read before the edit and compare after, both in topdir, so this can
-+    # never end up comparing two different repositories' HEADs.  A detached
-+    # HEAD reads as None and still guards: None is not a branch we started
-+    # on, so checking one out mid-edit is caught like any other switch.
-+    read_branch = git_get_current_branch(topdir) if guard_branch else None
-+    # core.editor comes from the same tree as everything else here, so a
-+    # repository-local setting is the one belonging to the edited branch.
-+    corecfg = get_config_from_git(r'core\..*', gitdir=topdir)
-     editor = (
-         os.environ.get('GIT_EDITOR')
-         or corecfg.get('editor')
-@@ -6206,7 +6217,6 @@ def edit_in_editor(
-     )
-     logger.debug('editor=%s', editor)
- 
--    topdir = git_get_toplevel()
-     if topdir is not None:
-         p = Path(topdir)
-     else:
-@@ -6233,7 +6243,7 @@ def edit_in_editor(
-     bdata = bdata.replace(b'\r\n', b'\n').replace(b'\r', b'\n')
- 
-     if guard_branch:
--        write_branch = git_get_current_branch()
-+        write_branch = git_get_current_branch(topdir)
-         if write_branch != read_branch:
-             with tempfile.NamedTemporaryFile(
-                 mode='wb',
-diff --git a/src/b4/review_tui/_review_app.py b/src/b4/review_tui/_review_app.py
-index 8139518..74f6aa0 100644
---- a/src/b4/review_tui/_review_app.py
-+++ b/src/b4/review_tui/_review_app.py
-@@ -1329,7 +1329,9 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
- 
-         with self.suspend():
-             result = b4.edit_in_editor(
--                editor_text.encode(), filehint='reply.b4-review.eml'
-+                editor_text.encode(),
-+                filehint='reply.b4-review.eml',
-+                topdir=self._topdir,
-             )
- 
-         if not result:
-@@ -1449,7 +1451,9 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-         """Launch $EDITOR for the maintainer's note on *target*."""
-         editor_text = existing + self._NOTE_FOOTER
-         with self.suspend():
--            result = b4.edit_in_editor(editor_text.encode(), filehint='note.txt')
-+            result = b4.edit_in_editor(
-+                editor_text.encode(), filehint='note.txt', topdir=self._topdir
-+            )
- 
-         if not result:
-             self.notify('Editor returned no content')
-@@ -1713,7 +1717,9 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-             editor_text = f'On {orig_date}, {orig_author} wrote:\n{quoted}\n\n'
- 
-         with self.suspend():
--            result = b4.edit_in_editor(editor_text.encode(), filehint='reply.eml')
-+            result = b4.edit_in_editor(
-+                editor_text.encode(), filehint='reply.eml', topdir=self._topdir
-+            )
-         reply_text = result.decode(errors='replace')
-         if reply_text == editor_text:
-             self.notify('No changes made')
-diff --git a/src/tests/test_tui_review.py b/src/tests/test_tui_review.py
-index 7387bd2..b19e3f9 100644
---- a/src/tests/test_tui_review.py
-+++ b/src/tests/test_tui_review.py
-@@ -260,7 +260,7 @@ class TestReplyVerbatim:
-         )
-         seen: List[str] = []
- 
--        def fake_editor(data: bytes, filehint: str = '') -> bytes:
-+        def fake_editor(data: bytes, filehint: str = '', **kwargs: Any) -> bytes:
-             seen.append(data.decode())
-             return buffer.encode()
- 
++
++def test_edit_in_editor_follows_the_topdir_it_is_given(
++    gitdir: str, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
++) -> None:
++    """topdir, not the process cwd, decides where the scratch file lands and
++    which HEAD the guard reads.
++
++    The TUIs may be driven from a different worktree than the one holding the
++    branch they operate on, so cwd is the wrong repository to ask."""
++    linked = str(tmp_path / 'linked')
++    ecode, out = b4.git_run_command(
++        gitdir, ['worktree', 'add', '-b', 'elsewhere', linked], logstderr=True
++    )
++    assert ecode == 0, out
++    seen = tmp_path / 'editor-argv1'
++    # Move the *cwd* repository's HEAD while the editor is open. The guard is
++    # on, so if it were reading cwd rather than topdir this would refuse.
++    monkeypatch.setenv(
++        'GIT_EDITOR',
++        _fake_editor(
++            tmp_path, f'printf %s "$1" > {seen}; git -C "{gitdir}" checkout -q -b side'
++        ),
++    )
++
++    # cwd is still on master; only the linked worktree is on 'elsewhere'.
++    assert b4.git_get_current_branch(gitdir) == 'master'
++    edited = b4.edit_in_editor(
++        b'note\n', filehint='note.txt', topdir=linked, guard_branch=True
++    )
++    assert edited == b'note\n'
++    assert seen.read_text().startswith(linked + os.sep)
++    assert b4.git_get_current_branch(gitdir) == 'side'
++    assert b4.git_get_current_branch(linked) == 'elsewhere'
++
++
++def test_edit_in_editor_reads_core_editor_from_topdir(
++    gitdir: str, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
++) -> None:
++    """core.editor is read from the named tree too, so a repository-local
++    setting is the one belonging to the branch being edited."""
++    other = str(tmp_path / 'other')
++    ecode, out = b4.git_run_command(None, ['init', '-b', 'master', other])
++    assert ecode == 0, out
++    seen = tmp_path / 'which-editor'
++    b4.git_set_config(
++        other, 'core.editor', _fake_editor(tmp_path, f'printf topdir > {seen}')
++    )
++    b4.git_set_config(gitdir, 'core.editor', 'false')
++    for var in ('GIT_EDITOR', 'VISUAL', 'EDITOR'):
++        monkeypatch.delenv(var, raising=False)
++
++    assert b4.edit_in_editor(b'note\n', filehint='note.txt', topdir=other) == b'note\n'
++    assert seen.read_text() == 'topdir'
 
 -- 
 2.53.0
