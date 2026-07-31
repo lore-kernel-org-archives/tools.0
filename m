@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C2A3B2D06
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A123B2FF8
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785489703; cv=none; b=kS/icUqwtct9/47dHBBVzExGZ63PWvHRELhWStPL6wxIEftNQ0QvnFs8up3GMCL1bgBItoO3mbZOih/x7JuPDnb0gBARSjUAcGXtne4NDNmb2WBml9/u7aRZFnWevGlRusHwyq9zg6WAQdO+fowNVwnBbt6EEUg5zou+TJVazSI=
+	t=1785489704; cv=none; b=aDkS4IjzE9joiJh3B1G2BiBFc80eXXay0O94422qtS/Sq82mWwebfDRk95C3MFbcQ1O9CqVee8e8v26RghVOa0C6f67Smw9+6zmtPhJ1bLS1pZ2imrd5olHDHnLwM51zIdh5RWavW0fPdSqBsveWyjAqjayO5nJ/dOVzizpffFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785489703; c=relaxed/simple;
-	bh=ShfcES0/0F4oGtr7YEgFe2qpvp4mpIRt91F3LzSSBj8=;
+	s=arc-20240116; t=1785489704; c=relaxed/simple;
+	bh=rxOGHCm/+L5h8Six9lToiBVvjKIv3DMKv5JjgAdfd3I=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WYhVsltzb+SKgMAaBL2Me/zuPNzsEyZnmIpwn+S7UzToMaRdYbvQCOdaG0SHcQa4O9nZTXHguDosmcJZ6ZfuahhMLXuPfRu0ehIRO2JYQPBY8fvec/PEPmvwWVr4YCwYa+2XqBxhUJs28Y6wuqtq+vnnujohTNRrZVFkdaC90UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z7q4DC33; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=IJqrWAKfh0/2x+BTU7CqXaLk6Tub3uJg/fGk7xPwOch6xliWjVNyECH+gBFsaWnTiPYDn8BKG8z4J67Dl9DSveFnsrnJhCmuiIyw0uocHb5kJnwDPqsZg7ZQoqLO2+JXKSx3GG60ss3xdGqK0/rH4zjp2K0iV1ccYRL9rAcPqY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lSkQTvAf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z7q4DC33"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lSkQTvAf"
 Received: by smtp.kernel.org (Postfix)
-	id E10211F00A3D; Fri, 31 Jul 2026 09:21:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAD01F000E9;
-	Fri, 31 Jul 2026 09:21:40 +0000 (UTC)
+	id 154E51F00A3A; Fri, 31 Jul 2026 09:21:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475391F000E9;
+	Fri, 31 Jul 2026 09:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785489701;
-	bh=pGiIQuJ+Og0uFb1nJrRgkMdWRhrgvmsfzS9yMCpsAxQ=;
+	s=k20260515; t=1785489703;
+	bh=bcN7dV8w+rcM+ACJqPKl9IXowkVX4edE4ceG+Tb7+zs=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=Z7q4DC33cmD1HB6iMW4L2TJoeL9VhZEj0MqonC+LOOczl6ruSRD5f2jQArRcH6T0H
-	 yBco0yGbN1cDaHv5MAdwTsTwY6ZhAuGiVGUVP/0m2//L7iuDTcF9nVhQG1OEFripVh
-	 Z5c1dGWKGiOAIFG8hzqGoIra1NIv4PkSFMNDAXSHCTP2ybT3ldHapEp/y+zMsCjOCi
-	 bu3T/zfXghZlxBYb5P7C4Ioo208L8viYE/OcyIu8jnnTIFJodcPSSO5QiVc7TH9ovD
-	 0h6f3N5D1UGWksnTdh6zdzAC0WcnTnmq/nM8Z4q5FU+tzXcr2rPu0Az06BdmvI1wXV
-	 1W4svA7eQH83A==
+	b=lSkQTvAfiiNbmO8k28tnDryggYoKHTtdxkyKXBN6ao+Q/GkveJFDyKlu8zyx9veMg
+	 stBgCsBA1+hpwyXoTPoS4/Pg3TXTTMTQQ1ee24JWrerde89gA9ipozvkMBz5BEYpdI
+	 aXTFxJ+nv9Rg/HkGT4Lxysb1tHTKBRFT2k8Cxe8vUPH79ZaognKfsLnolsaTJO/pKG
+	 FmImCcM7kYYkZ/8eD1cCJUo8dGrJtT/wZ5fNZ8ZUGBaAQ+KYcXWjOEhTrkJPPC7LEx
+	 S/j8t+OTirslueOh1EcEsdJPPnGj8JyBGiR8MFUEo3pMmHIMY10Lj4bfTn/nkcCYC4
+	 oTn9/356jNd+A==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 11:21:11 +0200
-Subject: [PATCH b4 12/27] review-tui: use the shared helper to delete a
- review branch
+Date: Fri, 31 Jul 2026 11:21:12 +0200
+Subject: [PATCH b4 13/27] ty: check reachability in the repository the
+ commit landed in
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,88 +39,220 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v1-12-de68a7c8e4cb@kernel.org>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260731-work-b4-editor-branch-guard-v1-13-de68a7c8e4cb@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2834; i=brauner@kernel.org;
- h=from:subject:message-id; bh=ShfcES0/0F4oGtr7YEgFe2qpvp4mpIRt91F3LzSSBj8=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIpKJZyw+qW/L6b5We7WDY/flxq1C73/KKaaeO3Rq
- 6tm+4TndJSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzkSBsjw9yzfjwxc9g4Szlu
- 7HA1mng8KnaVSk9sbXT74xrG4080nBj+l/g13bv5/8gmp48n+n91SrDk+v9rY7/LvvXo/yNzNpV
- 7cAAA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8441; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=rxOGHCm/+L5h8Six9lToiBVvjKIv3DMKv5JjgAdfd3I=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIqK3Ge6VV0ZltrssPShaseRKI/97AnMd4rMbm8y2
+ Zhz4MuljlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIk4OjL8L17Pvv8uvy6jf5AP
+ V5j229X2zL4XGPoyIx+8eL0kS/bfHkaGG57K584s1Gn5mPHPRKFG9KTS7+xHc1ofHxS5cTX70LR
+ ibgA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Archiving a series moved into b4.review.archive_series() and took the
-branch deletion with it as delete_review_branch(). The tracking UI kept
-its own copy for the abandon path, so the same three steps exist twice
-and differ only in whether a failure comes back as a notification or as
-a string.
+The publish check for a queued thank-you asks the remote what it
+advertises and then works out locally whether the commit is an ancestor
+of one of those tips. The local half, cat-file and rev-list, runs
+against the process cwd.
 
-Make the one in the TUI a wrapper that turns the string into a
-notification. It is interactive, so it passes allow_switch. Detaching to
-get off the branch is what the abandon dialog already asked about.
+That was fine while the check only ever ran from inside the repository
+we are thanking for. "b4 review cron" broke the assumption. It resolves
+a topdir per project and passes it to everything else but never chdirs,
+so a sweep over several projects, or a timer whose working directory is
+wherever the scheduler put it, computes ancestry against some other
+repository or against none at all. The commit looks unreachable and the
+thanks waits forever.
+
+Take the repository as an argument and pass the topdir the queue sweep
+already has. Pass it to ls-remote too, so a repository-local http.* or
+url.*.insteadOf applies the same way it would if the check were run by
+hand from that tree.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review_tui/_tracking_app.py | 36 +++++++++---------------------------
- 1 file changed, 9 insertions(+), 27 deletions(-)
+ src/b4/ty.py         | 32 +++++++++++++++++++++++---------
+ src/tests/test_ty.py | 28 +++++++++++++++++++++-------
+ 2 files changed, 44 insertions(+), 16 deletions(-)
 
-diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index 7572a95..99964d0 100644
---- a/src/b4/review_tui/_tracking_app.py
-+++ b/src/b4/review_tui/_tracking_app.py
-@@ -3781,36 +3781,18 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-     ) -> bool:
-         """Delete a review branch, switching away if currently on it.
+diff --git a/src/b4/ty.py b/src/b4/ty.py
+index 9fe5f40..5e225a7 100644
+--- a/src/b4/ty.py
++++ b/src/b4/ty.py
+@@ -1050,7 +1050,7 @@ def get_check_repo_for_branch(
  
-+        Thin TUI wrapper around b4.review.delete_review_branch() that turns
-+        its error string into a notification.  Interactive, so detaching HEAD
-+        to get off the branch is fine here.
+ 
+ def commit_reachable_on_remote(
+-    commit: str, repo_url: str, branch: str = ''
++    commit: str, repo_url: str, branch: str = '', gitdir: Optional[str] = None
+ ) -> Optional[bool]:
+     """Check if a commit is reachable from a branch advertised by repo_url.
+ 
+@@ -1066,8 +1066,14 @@ def commit_reachable_on_remote(
+     deleted), any advertised branch is accepted as before.
+ 
+     Ancestry is computed locally against the advertised tips, so tips we
+-    do not have objects for are ignored. Returns True/False, or None if
+-    the state could not be determined (e.g. the remote is unreachable).
++    do not have objects for are ignored.  That happens in *gitdir* — the
++    repository the commit was applied in.  It defaults to the process
++    cwd, which is only right for callers that operate on it; a queue
++    sweep covering several projects must name the tree each message
++    belongs to.
 +
-         Returns True on success, False on failure.
-         """
--        if b4.git_get_current_branch(topdir) == review_branch:
--            ecode, out = b4.git_run_command(
--                topdir, ['rev-parse', f'{review_branch}~1'], logstderr=True
--            )
--            if ecode > 0:
--                if notify:
--                    self.notify('Could not determine parent commit', severity='error')
--                return False
--            parent = out.strip()
--            ecode, out = b4.git_run_command(
--                topdir, ['checkout', parent], logstderr=True
--            )
--            if ecode > 0:
--                if notify:
--                    self.notify(
--                        f'Could not switch away from {review_branch}', severity='error'
--                    )
--                return False
--        ecode, out = b4.git_run_command(
--            topdir, ['branch', '-D', review_branch], logstderr=True
-+        ok, err = b4.review.delete_review_branch(
-+            topdir, review_branch, allow_switch=True
-         )
--        if ecode > 0:
--            if notify:
--                self.notify(
--                    f'Failed to delete branch {review_branch}', severity='error'
--                )
--            return False
--        return True
-+        if not ok and notify:
-+            self.notify(err, severity='error')
-+        return ok
++    Returns True/False, or None if the state could not be determined
++    (e.g. the remote is unreachable).
+     """
+     gitargs = [
+         '-c',
+@@ -1078,7 +1084,7 @@ def commit_reachable_on_remote(
+         '--heads',
+         repo_url,
+     ]
+-    ecode, out = b4.git_run_command(None, gitargs)
++    ecode, out = b4.git_run_command(gitdir, gitargs)
+     if ecode > 0:
+         logger.debug('ls-remote failed for %s (exit code %s)', repo_url, ecode)
+         return None
+@@ -1104,7 +1110,7 @@ def commit_reachable_on_remote(
+     # for them, so treat them as not containing the commit
+     stdin = ('\n'.join(sorted(tips)) + '\n').encode()
+     _ecode, out = b4.git_run_command(
+-        None, ['cat-file', '--batch-check=%(objectname) %(objecttype)'], stdin=stdin
++        gitdir, ['cat-file', '--batch-check=%(objectname) %(objecttype)'], stdin=stdin
+     )
+     known: List[str] = []
+     for line in out.splitlines():
+@@ -1116,7 +1122,7 @@ def commit_reachable_on_remote(
+         return False
+     # Empty output means every commit reachable from ours is also
+     # reachable from one of the known tips, i.e. ours is published
+-    ecode, out = b4.git_run_command(None, ['rev-list', '-1', commit, '--not', *known])
++    ecode, out = b4.git_run_command(gitdir, ['rev-list', '-1', commit, '--not', *known])
+     if ecode > 0:
+         logger.debug('rev-list failed for %s (exit code %s)', commit, ecode)
+         return None
+@@ -1124,7 +1130,11 @@ def commit_reachable_on_remote(
  
-     def action_abandon(self) -> None:
-         """Abandon the selected series."""
+ 
+ def _check_published(
+-    checkurl: str, checkcommit: str, checkrepo: str, checkbranch: str = ''
++    checkurl: str,
++    checkcommit: str,
++    checkrepo: str,
++    checkbranch: str = '',
++    gitdir: Optional[str] = None,
+ ) -> Optional[bool]:
+     """Tri-state publish check for a queued thanks message.
+ 
+@@ -1140,7 +1150,9 @@ def _check_published(
+     if checkurl and not checkrepo:
+         checkrepo = _get_check_repo(checkurl) or ''
+     if checkcommit and checkrepo:
+-        return commit_reachable_on_remote(checkcommit, checkrepo, branch=checkbranch)
++        return commit_reachable_on_remote(
++            checkcommit, checkrepo, branch=checkbranch, gitdir=gitdir
++        )
+     if not checkurl:
+         return True
+     try:
+@@ -1453,7 +1465,9 @@ def _process_queue_locked(
+ 
+         # Check if the commit is publicly visible
+         if not dryrun and (checkurl or (checkcommit and checkrepo)):
+-            published = _check_published(checkurl, checkcommit, checkrepo, checkbranch)
++            published = _check_published(
++                checkurl, checkcommit, checkrepo, checkbranch, gitdir=topdir
++            )
+             if published is None:
+                 still_pending += 1
+                 if progress_cb:
+diff --git a/src/tests/test_ty.py b/src/tests/test_ty.py
+index 54fa6d4..610e5af 100644
+--- a/src/tests/test_ty.py
++++ b/src/tests/test_ty.py
+@@ -503,7 +503,9 @@ def test_process_queue_passes_branch(
+ 
+     calls: List[Tuple[str, str, str]] = []
+ 
+-    def fake_reachable(commit: str, repo_url: str, branch: str = '') -> Optional[bool]:
++    def fake_reachable(
++        commit: str, repo_url: str, branch: str = '', gitdir: Optional[str] = None
++    ) -> Optional[bool]:
+         calls.append((commit, repo_url, branch))
+         return False
+ 
+@@ -530,7 +532,9 @@ def test_process_queue_holds_unpublished(
+ 
+     calls: List[Tuple[str, str]] = []
+ 
+-    def fake_reachable(commit: str, repo_url: str, branch: str = '') -> Optional[bool]:
++    def fake_reachable(
++        commit: str, repo_url: str, branch: str = '', gitdir: Optional[str] = None
++    ) -> Optional[bool]:
+         calls.append((commit, repo_url))
+         return False
+ 
+@@ -580,7 +584,9 @@ def test_process_queue_lock_held(
+     monkeypatch.chdir(repo)
+     _queue_test_message()
+     monkeypatch.setattr(
+-        b4.ty, 'commit_reachable_on_remote', lambda commit, repo_url, branch='': False
++        b4.ty,
++        'commit_reachable_on_remote',
++        lambda commit, repo_url, branch='', gitdir=None: False,
+     )
+     with b4.lockfile_nb(b4.ty._get_queue_lock_path()):
+         with pytest.raises(b4.LockHeldError):
+@@ -599,7 +605,9 @@ def test_process_queue_check_only(
+     monkeypatch.chdir(repo)
+     _queue_test_message()
+     monkeypatch.setattr(
+-        b4.ty, 'commit_reachable_on_remote', lambda commit, repo_url, branch='': True
++        b4.ty,
++        'commit_reachable_on_remote',
++        lambda commit, repo_url, branch='', gitdir=None: True,
+     )
+ 
+     def _no_send(dryrun: bool = False) -> Tuple[None, str]:
+@@ -627,7 +635,9 @@ def test_process_queue_explicit_topdir(
+     monkeypatch.chdir(repo)
+     _queue_test_message()
+     monkeypatch.setattr(
+-        b4.ty, 'commit_reachable_on_remote', lambda commit, repo_url, branch='': True
++        b4.ty,
++        'commit_reachable_on_remote',
++        lambda commit, repo_url, branch='', gitdir=None: True,
+     )
+     outside = tmp_path / 'elsewhere'
+     outside.mkdir()
+@@ -665,7 +675,9 @@ def test_process_queue_finalizes_thanked(
+ 
+     _queue_test_message()
+     monkeypatch.setattr(
+-        b4.ty, 'commit_reachable_on_remote', lambda commit, repo_url, branch='': True
++        b4.ty,
++        'commit_reachable_on_remote',
++        lambda commit, repo_url, branch='', gitdir=None: True,
+     )
+     monkeypatch.setattr(b4, 'get_smtp', lambda dryrun=False: (None, 't@example.com'))
+     monkeypatch.setattr(b4, 'send_mail', lambda *args, **kwargs: 1)
+@@ -738,7 +750,9 @@ def _series_status(identifier: str, change_id: str = 'test-change-id') -> str:
+ 
+ def _mock_delivery(monkeypatch: pytest.MonkeyPatch) -> None:
+     monkeypatch.setattr(
+-        b4.ty, 'commit_reachable_on_remote', lambda commit, repo_url, branch='': True
++        b4.ty,
++        'commit_reachable_on_remote',
++        lambda commit, repo_url, branch='', gitdir=None: True,
+     )
+     monkeypatch.setattr(b4, 'get_smtp', lambda dryrun=False: (None, 't@example.com'))
+     monkeypatch.setattr(b4, 'send_mail', lambda *args, **kwargs: 1)
 
 -- 
 2.53.0
