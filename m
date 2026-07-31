@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F2237FF7F
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914C137F8D7
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785535184; cv=none; b=RSz011J6m1YsEMw+0TYUawZxSxYQEiE3uLEEhVUSJJ86tmWtoFtTxFbYke/kJ/LM0GTQKyBbwGw46iVKB2TIoEzSqOPKtVa0mrtTXrO7xMw0o1Lb8YOfVKB0SDpl4nqYE1WnrRf+970PkuF+IE3DoVAHHYwpVDIxnOWjEYV1ML8=
+	t=1785535186; cv=none; b=ZRgRy2HBCN9EuKX2NU1QkW7NOdd3RB5dWVu/qtifwscFESWslEvviuQFZVuHy56r5S5nDfQdHQt8Kr9O/BO1Snlp8uSkDDZYbMjgWpQjD3LCkmz6qR+DpXLUa8aTKW2z+SyOnTSl9IaG9WHVPhnf20d+CNi9PYZlRWVK+RWJOEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785535184; c=relaxed/simple;
-	bh=pVGfcYcAVrSgjUcNwlnvA6sWe8+2hBiVzowcP/KXUhY=;
+	s=arc-20240116; t=1785535186; c=relaxed/simple;
+	bh=phQjxerczIJ6XzLmxR35HKb+Yy6UHEnjjBR95TlEyA0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KgYXWSu27jumfTSVt2OmFW/BGAHYR0BtAyUyxZSaLnbtNDvLRR0IATP0k31EATD5ipjJFCKl1w+YxX69KGSy0WUWpsBYOtFFW1+QZoDU3ipYvrksGijk8Ky1zcGx+yxQH72RvFdc9ctj8wFaS76Dn7ZDcCByz0bOju4L5o6HsII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F4fT3yhb; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=jZxrsMYiINPukPyQAt/xAfyXicuZZGwTwWGXOODxIbRJNGVG7Ti8wCIcQbkKrjxy2TeNbCKH34MElOfE7euj/nWeNDOMHQUtrt/rKq6/Bg49DgsjrKbUKtIP6d+DEvOyj6ODadvfuUs6kiuVsJ6ehUtOnC0A0EzohQYQxhgs95A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=emEWg6/q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F4fT3yhb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="emEWg6/q"
 Received: by smtp.kernel.org (Postfix)
-	id 1E5FD1F00ACA; Fri, 31 Jul 2026 21:59:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411EF1F00AC4;
-	Fri, 31 Jul 2026 21:59:42 +0000 (UTC)
+	id 8BC0D1F00ACF; Fri, 31 Jul 2026 21:59:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFAC1F00AC4;
+	Fri, 31 Jul 2026 21:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785535183;
-	bh=EJ7YwE6PNQIsr34Osq2s0wxGGroswV8Us1AVDCwJYTA=;
+	s=k20260515; t=1785535185;
+	bh=KwBaa0f/nXb7T+JAIADOqu/WrdxjeZXyI5ToPDSQDeI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=F4fT3yhbHJLtCe3YTks/q4iR6wePsZZde+gjwjkkm0xWSvf9us5V6x+nVS1JcypKr
-	 psrEPGtvxxb3EhzVmtCOSfWta330CqrNoGkdJSxLq9BEskUsnmVFr1kz9xtgY0bz18
-	 TwTA+b6+EC2jqTgGY+7Au9KsiShms/cpKS4bbELT2bCiL1SNZ+IcrK3XpFRxstA3Dg
-	 n2I5MkVJh+MDfkNW8/qvmEwtxpmC4Ryx6OR87D0KTy4S8u90TOZJLC4h+1AkFWvCiL
-	 KaLzucvC0G2rc+QPck4tS3fWJKu9zKdmoS659DY9g+6oMz0wHf7w/30vqB5QRyL+Xs
-	 xVjlS9ymg/WJw==
+	b=emEWg6/qu5CdBbS8+qEDDAWyS8ntS63ryHESmS0czUaU7k2YDLOpK/2UNDGBYI5UJ
+	 LaAmexTZzdXHrJZr5U2QMvzTfbYPhb0tAeIv8G/+HtrHITFS/G14ezeqgLtFJHH73L
+	 wlMer4Iw0Ua0loasouefZmz5CGN8aPg4mkTjq4Eh4j5Y1LJVQaNX6kHXy5+cwbfvBW
+	 Tq01hG/DQAX3QKK9q2U50fQsi5GLMb3Lu7yAVbsSfVDJtHHQPEiRgXU1Ria1Ilx0+P
+	 Vw99vIxHAT6qzpnpHR2tTx0ts6bzzPAzQLTkLwt1iYWaXfVWGWT4Jrar9zCnTuPHNG
+	 EAX1sJTqRbLYg==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 23:59:22 +0200
-Subject: [PATCH b4 v2 41/44] review-tui: catch the exit a failed checkout
- reports itself with
+Date: Fri, 31 Jul 2026 23:59:24 +0200
+Subject: [PATCH b4 v2 43/44] review-tui: put the user back when the branch
+ they are on is deleted
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,113 +40,148 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v2-41-243fd19d322d@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v2-43-243fd19d322d@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4396; i=brauner@kernel.org;
- h=from:subject:message-id; bh=pVGfcYcAVrSgjUcNwlnvA6sWe8+2hBiVzowcP/KXUhY=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs2VnOr0jelPlcnuhxeaHRtO7OaxZ7V+e0/6YKj6L
- N8pki+XdpSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzE8R8jw7Gn4SYLZizZ+H/L
- DMMVDzbLvzr348m5L1YvL75askm6MS+akWH+Ss8pz9u/7Zl54WLKw36t6Us5Nm5676c/Z5uP9G2
- bTD5uAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5574; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=phQjxerczIJ6XzLmxR35HKb+Yy6UHEnjjBR95TlEyA0=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs01OnJnatob4+zEONHdTZt7j7hH5tye7LZt0mx9i
+ dCjjuInOkpZGMS4GGTFFFkc2k3C5ZbzVGw2ytSAmcPKBDKEgYtTACZy+hLD/8iQqSceC+3q8Un/
+ qhAsfKQhcqn+74mur68lKWzwYsp+U8bwv8x9j63H6Rfb/vaeZ07gFrU87+bBXixybIeUQM+15/L
+ xHAA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-create_review_branch() exits rather than raises, and SystemExit is
-not an Exception, so a failed checkout unwound past the handler and
-took the session down. This is the path every series enters review
-through. Catch the exit and report "see above"; the reason is already
-on the screen we are suspended into.
+Deleting the branch HEAD sits on detaches to its parent commit, the
+only destination delete_review_branch() can name without knowing the
+caller. The exit restore leaves a detached HEAD alone by design, so
+abandoning or archiving a series parked the user on a commit they
+never asked for.
 
-The conflict handler also created the branch a second time from
-inside the except block, out of reach of the handler beside it. Move
-the resolve around the am alone; the create is then written once and
-covered.
+We know where the session started. Put the user back there, at the
+two places that ask for the detaching.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review_tui/_tracking_app.py | 55 ++++++++++++++++++--------------------
- 1 file changed, 26 insertions(+), 29 deletions(-)
+ src/b4/review_tui/_entry.py        |  1 +
+ src/b4/review_tui/_tracking_app.py | 60 ++++++++++++++++++++++++++++++--------
+ 2 files changed, 49 insertions(+), 12 deletions(-)
 
+diff --git a/src/b4/review_tui/_entry.py b/src/b4/review_tui/_entry.py
+index f085cb4..700c5ea 100644
+--- a/src/b4/review_tui/_entry.py
++++ b/src/b4/review_tui/_entry.py
+@@ -139,6 +139,7 @@ def run_tracking_tui(
+                 focus_change_id=focus_change_id,
+                 email_dryrun=email_dryrun,
+                 patatt_sign=patatt_sign,
++                original_head=original_head,
+             )
+             focus_change_id = None
+             branch_name = app.run(mouse=use_mouse)
 diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index c547d7c..ac3a575 100644
+index ac3a575..ac2ffcf 100644
 --- a/src/b4/review_tui/_tracking_app.py
 +++ b/src/b4/review_tui/_tracking_app.py
-@@ -1918,16 +1918,29 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                         )
+@@ -347,6 +347,31 @@ def _keep_current_branch(topdir: str) -> Generator[Callable[[], None], None, Non
+         restore()
  
-             _is_rt = bool(series.get('is_rethreaded'))
-+            # create_review_branch() reports failure by exiting rather than
-+            # raising, and SystemExit is not an Exception, so catch it too --
-+            # letting it out of here unwinds straight through the suspend and
-+            # takes the session down over one series that would not apply.
-             try:
-                 logger.info('Base: %s', base_commit)
--                b4.git_fetch_am_into_repo(
--                    topdir,
--                    ambytes=ambytes,
--                    at_base=base_commit,
--                    origin=linkurl,
--                    am_flags=['-3'],
--                    resolve=True,
--                )
-+                # Only the am can conflict, and it runs before anything is
-+                # created, so the resolve belongs around it rather than around
-+                # the whole block: creating the branch is then written once and
-+                # covered by the handler below on both routes to it.
-+                try:
-+                    b4.git_fetch_am_into_repo(
-+                        topdir,
-+                        ambytes=ambytes,
-+                        at_base=base_commit,
-+                        origin=linkurl,
-+                        am_flags=['-3'],
-+                        resolve=True,
-+                    )
-+                except b4.AmConflictError as cex:
-+                    if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
-+                        _wait_for_enter()
-+                        return
  
-                 # Create the review branch
-                 b4.review.create_review_branch(
-@@ -1944,27 +1957,11 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                 )
-                 logger.info('Review branch created: %s', branch_name)
-                 checkout_success = True
--            except b4.AmConflictError as cex:
--                if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
--                    _wait_for_enter()
--                    return
--                # Create the review branch from resolved result
--                b4.review.create_review_branch(
--                    topdir,
--                    branch_name,
--                    base_commit,
--                    lser,
--                    linkurl,
--                    linkmask,
--                    num_prereqs=0,
--                    identifier=self._identifier,
--                    status='reviewing',
--                    is_rethreaded=_is_rt,
--                )
--                logger.info('Review branch created: %s', branch_name)
--                checkout_success = True
--            except Exception as ex:
--                logger.critical('Error creating review branch: %s', ex)
-+            except (Exception, SystemExit) as ex:
-+                # SystemExit only carries the exit code; create_review_branch()
-+                # has already said why on its way out.
-+                reason = 'see above' if isinstance(ex, SystemExit) else str(ex)
-+                logger.critical('Error creating review branch: %s', reason)
-                 _wait_for_enter()
++@contextlib.contextmanager
++def _land_off_deleted_branch(
++    topdir: str, branch: str, fallback: List[str]
++) -> Generator[None, None, None]:
++    """Land HEAD back on *fallback* if *branch* is deleted out from under it.
++
++    Deleting the branch HEAD is on means getting off it first, and git can
++    only be pointed at the parent commit: it does not know where the user
++    was before they came here. We do, so put them back where the session
++    started rather than leave the worktree detached at a commit for them to
++    find later.  *fallback* is git-checkout args, so a session that started
++    on a detached HEAD lands back on its own commit and not on this one.
++
++    Does nothing unless HEAD was on *branch* going in and is detached
++    coming out, which only the deletion can have done -- nothing in
++    between suspends the UI, so the user cannot have moved it themselves.
++    """
++    on_branch = b4.git_get_current_branch(topdir) == branch
++    try:
++        yield
++    finally:
++        if on_branch and fallback and b4.git_get_current_branch(topdir) is None:
++            b4.git_run_command(topdir, fallback, logstderr=True)
++
++
+ @contextlib.contextmanager
+ def _take_worktree(
+     topdir: str, target_branch: str
+@@ -921,10 +946,16 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         focus_change_id: Optional[str] = None,
+         email_dryrun: bool = False,
+         patatt_sign: bool = True,
++        original_head: Optional[List[str]] = None,
+     ) -> None:
+         super().__init__()
+         self._identifier = identifier
+         self._original_branch = original_branch
++        # Where to put HEAD back when an action detaches it.  A caller that
++        # only named a branch gets that branch back.
++        self._original_head: List[str] = original_head or (
++            ['checkout', original_branch] if original_branch else []
++        )
+         self._focus_change_id = focus_change_id
+         self._email_dryrun = email_dryrun
+         self._patatt_sign = patatt_sign
+@@ -3819,13 +3850,15 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
  
-         if not checkout_success:
+         Thin TUI wrapper around b4.review.delete_review_branch() that turns
+         its error string into a notification.  Interactive, so detaching HEAD
+-        to get off the branch is fine here.
++        to get off the branch is fine here -- as long as we do not leave it
++        that way.
+ 
+         Returns True on success, False on failure.
+         """
+-        ok, err = b4.review.delete_review_branch(
+-            topdir, review_branch, allow_switch=True
+-        )
++        with _land_off_deleted_branch(topdir, review_branch, self._original_head):
++            ok, err = b4.review.delete_review_branch(
++                topdir, review_branch, allow_switch=True
++            )
+         if not ok and notify:
+             self.notify(err, severity='error')
+         return ok
+@@ -4744,14 +4777,17 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 self.notify('Not in a git repository', severity='error')
+             return False
+ 
+-        ok, detail = b4.review.archive_series(
+-            topdir,
+-            self._identifier,
+-            change_id,
+-            revision=revision,
+-            pw_series_id=pw_series_id,
+-            allow_switch=True,
+-        )
++        # Archiving deletes the branch, so it detaches HEAD to get off it the
++        # same way an outright delete does.
++        with _land_off_deleted_branch(topdir, review_branch, self._original_head):
++            ok, detail = b4.review.archive_series(
++                topdir,
++                self._identifier,
++                change_id,
++                revision=revision,
++                pw_series_id=pw_series_id,
++                allow_switch=True,
++            )
+         if not ok:
+             if notify:
+                 self.notify(detail, severity='error')
 
 -- 
 2.53.0
