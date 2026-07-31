@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A123B2FF8
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2903B0AFA
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785489704; cv=none; b=aDkS4IjzE9joiJh3B1G2BiBFc80eXXay0O94422qtS/Sq82mWwebfDRk95C3MFbcQ1O9CqVee8e8v26RghVOa0C6f67Smw9+6zmtPhJ1bLS1pZ2imrd5olHDHnLwM51zIdh5RWavW0fPdSqBsveWyjAqjayO5nJ/dOVzizpffFo=
+	t=1785489705; cv=none; b=jcD1bhZuil5e+hyr7Z5jyWcqufGpTlP10FHa95fA0WaNvDQTZl8jL/4LrZ9iLF2KvniYWH518HQhauMKLhFDtBiWcNoGvd3ca13haqKYbE2paQGSDYE/aT/4bEVUQ0GYuQagFP3kc+SK24/t8ljmR3f6gL/dAJQMopDCEazCFeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785489704; c=relaxed/simple;
-	bh=rxOGHCm/+L5h8Six9lToiBVvjKIv3DMKv5JjgAdfd3I=;
+	s=arc-20240116; t=1785489705; c=relaxed/simple;
+	bh=Q6bGROAGnjYdgNMfIQusAWibvJQPNUxgR/q6CJOd8wE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IJqrWAKfh0/2x+BTU7CqXaLk6Tub3uJg/fGk7xPwOch6xliWjVNyECH+gBFsaWnTiPYDn8BKG8z4J67Dl9DSveFnsrnJhCmuiIyw0uocHb5kJnwDPqsZg7ZQoqLO2+JXKSx3GG60ss3xdGqK0/rH4zjp2K0iV1ccYRL9rAcPqY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lSkQTvAf; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=CcfmvB+L2ybIkmzMtNjZSN9NUxPVtnNLBbd4DKIXlKkvb5DVgivwoKSVDQAtoazIDqC6s3EbhTyZF97p8CRrJdgmu1+PKPr84TAldY2Q7N6ycY5szs/m93coQB4rVbcJ7Bj9gNhi7r0LwQASSQ0K0oQB16SNHYeU6E3zJ6fFBxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KbTwgkiI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lSkQTvAf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KbTwgkiI"
 Received: by smtp.kernel.org (Postfix)
-	id 154E51F00A3A; Fri, 31 Jul 2026 09:21:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475391F000E9;
-	Fri, 31 Jul 2026 09:21:42 +0000 (UTC)
+	id 3D2C11F000E9; Fri, 31 Jul 2026 09:21:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB2B1F00A3D;
+	Fri, 31 Jul 2026 09:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785489703;
-	bh=bcN7dV8w+rcM+ACJqPKl9IXowkVX4edE4ceG+Tb7+zs=;
+	s=k20260515; t=1785489704;
+	bh=fMHz63GM6S+yvSD4t0TQMUoYFQN6kCOj/n3CspqZtnw=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=lSkQTvAfiiNbmO8k28tnDryggYoKHTtdxkyKXBN6ao+Q/GkveJFDyKlu8zyx9veMg
-	 stBgCsBA1+hpwyXoTPoS4/Pg3TXTTMTQQ1ee24JWrerde89gA9ipozvkMBz5BEYpdI
-	 aXTFxJ+nv9Rg/HkGT4Lxysb1tHTKBRFT2k8Cxe8vUPH79ZaognKfsLnolsaTJO/pKG
-	 FmImCcM7kYYkZ/8eD1cCJUo8dGrJtT/wZ5fNZ8ZUGBaAQ+KYcXWjOEhTrkJPPC7LEx
-	 S/j8t+OTirslueOh1EcEsdJPPnGj8JyBGiR8MFUEo3pMmHIMY10Lj4bfTn/nkcCYC4
-	 oTn9/356jNd+A==
+	b=KbTwgkiIjrc2Aekv6ILd7CAj+GfDopqU91t1psEfMN5HTERfHqpBBMdVZmA204dyg
+	 5ah9okt+frBemyJd6YrQ/85fhveJoMLfpVnJItDhpBPcf2bVcRKcZgqY0eRQGogmL5
+	 wOdVx4sE2Lc+mhDyHbbmS85AGjsiMaKmsgR6Lzov+SV8zYIsVxJPdtnrDNOs0me3kS
+	 kSaNh3Bzvg/k0A/5xAVj75Ctm24Fab/FedEPzN/YwcV/oz4N+w+xUB0Q1n8ZCPmtwK
+	 Y+bGDucUyKXRuhuZmOhIsXEqjjaQhafKA/aQR3L6WNk8dmLeWZLjmh/70PV/DU/YL6
+	 2e5Ckp/OSdakw==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 11:21:12 +0200
-Subject: [PATCH b4 13/27] ty: check reachability in the repository the
- commit landed in
+Date: Fri, 31 Jul 2026 11:21:13 +0200
+Subject: [PATCH b4 14/27] tests: cover the publish check using the
+ repository it is given
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,220 +39,72 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v1-13-de68a7c8e4cb@kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260731-work-b4-editor-branch-guard-v1-14-de68a7c8e4cb@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8441; i=brauner@kernel.org;
- h=from:subject:message-id; bh=rxOGHCm/+L5h8Six9lToiBVvjKIv3DMKv5JjgAdfd3I=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIqK3Ge6VV0ZltrssPShaseRKI/97AnMd4rMbm8y2
- Zhz4MuljlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIk4OjL8L17Pvv8uvy6jf5AP
- V5j229X2zL4XGPoyIx+8eL0kS/bfHkaGG57K584s1Gn5mPHPRKFG9KTS7+xHc1ofHxS5cTX70LR
- ibgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2008; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=Q6bGROAGnjYdgNMfIQusAWibvJQPNUxgR/q6CJOd8wE=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIpJvDT1kTspWHrQqlYoMiMzPMlFge1cykXxQ9u7N
+ q08mDKlo5SFQYyLQVZMkcWh3SRcbjlPxWajTA2YOaxMIEMYuDgFYCImWxgZDh19K5Epy/Fv/jT3
+ Txqb6w9mG9zrXSvXmRkbdPiEvNP/TkaGOYsnVOSUVvEUt081PV2yMWBPpXCQPVfGvYC0qm07QqL
+ ZAQ==
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-The publish check for a queued thank-you asks the remote what it
-advertises and then works out locally whether the commit is an ancestor
-of one of those tips. The local half, cat-file and rev-list, runs
-against the process cwd.
-
-That was fine while the check only ever ran from inside the repository
-we are thanking for. "b4 review cron" broke the assumption. It resolves
-a topdir per project and passes it to everything else but never chdirs,
-so a sweep over several projects, or a timer whose working directory is
-wherever the scheduler put it, computes ancestry against some other
-repository or against none at all. The commit looks unreachable and the
-thanks waits forever.
-
-Take the repository as an argument and pass the topdir the queue sweep
-already has. Pass it to ls-remote too, so a repository-local http.* or
-url.*.insteadOf applies the same way it would if the check were run by
-hand from that tree.
+Run it from a directory that is a git repository but not the one the
+commit was pushed from, which is what a multi-project cron sweep looks
+like, and check that naming the right tree is what makes the answer come
+out.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/ty.py         | 32 +++++++++++++++++++++++---------
- src/tests/test_ty.py | 28 +++++++++++++++++++++-------
- 2 files changed, 44 insertions(+), 16 deletions(-)
+ src/tests/test_ty.py | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/src/b4/ty.py b/src/b4/ty.py
-index 9fe5f40..5e225a7 100644
---- a/src/b4/ty.py
-+++ b/src/b4/ty.py
-@@ -1050,7 +1050,7 @@ def get_check_repo_for_branch(
- 
- 
- def commit_reachable_on_remote(
--    commit: str, repo_url: str, branch: str = ''
-+    commit: str, repo_url: str, branch: str = '', gitdir: Optional[str] = None
- ) -> Optional[bool]:
-     """Check if a commit is reachable from a branch advertised by repo_url.
- 
-@@ -1066,8 +1066,14 @@ def commit_reachable_on_remote(
-     deleted), any advertised branch is accepted as before.
- 
-     Ancestry is computed locally against the advertised tips, so tips we
--    do not have objects for are ignored. Returns True/False, or None if
--    the state could not be determined (e.g. the remote is unreachable).
-+    do not have objects for are ignored.  That happens in *gitdir* — the
-+    repository the commit was applied in.  It defaults to the process
-+    cwd, which is only right for callers that operate on it; a queue
-+    sweep covering several projects must name the tree each message
-+    belongs to.
-+
-+    Returns True/False, or None if the state could not be determined
-+    (e.g. the remote is unreachable).
-     """
-     gitargs = [
-         '-c',
-@@ -1078,7 +1084,7 @@ def commit_reachable_on_remote(
-         '--heads',
-         repo_url,
-     ]
--    ecode, out = b4.git_run_command(None, gitargs)
-+    ecode, out = b4.git_run_command(gitdir, gitargs)
-     if ecode > 0:
-         logger.debug('ls-remote failed for %s (exit code %s)', repo_url, ecode)
-         return None
-@@ -1104,7 +1110,7 @@ def commit_reachable_on_remote(
-     # for them, so treat them as not containing the commit
-     stdin = ('\n'.join(sorted(tips)) + '\n').encode()
-     _ecode, out = b4.git_run_command(
--        None, ['cat-file', '--batch-check=%(objectname) %(objecttype)'], stdin=stdin
-+        gitdir, ['cat-file', '--batch-check=%(objectname) %(objecttype)'], stdin=stdin
-     )
-     known: List[str] = []
-     for line in out.splitlines():
-@@ -1116,7 +1122,7 @@ def commit_reachable_on_remote(
-         return False
-     # Empty output means every commit reachable from ours is also
-     # reachable from one of the known tips, i.e. ours is published
--    ecode, out = b4.git_run_command(None, ['rev-list', '-1', commit, '--not', *known])
-+    ecode, out = b4.git_run_command(gitdir, ['rev-list', '-1', commit, '--not', *known])
-     if ecode > 0:
-         logger.debug('rev-list failed for %s (exit code %s)', commit, ecode)
-         return None
-@@ -1124,7 +1130,11 @@ def commit_reachable_on_remote(
- 
- 
- def _check_published(
--    checkurl: str, checkcommit: str, checkrepo: str, checkbranch: str = ''
-+    checkurl: str,
-+    checkcommit: str,
-+    checkrepo: str,
-+    checkbranch: str = '',
-+    gitdir: Optional[str] = None,
- ) -> Optional[bool]:
-     """Tri-state publish check for a queued thanks message.
- 
-@@ -1140,7 +1150,9 @@ def _check_published(
-     if checkurl and not checkrepo:
-         checkrepo = _get_check_repo(checkurl) or ''
-     if checkcommit and checkrepo:
--        return commit_reachable_on_remote(checkcommit, checkrepo, branch=checkbranch)
-+        return commit_reachable_on_remote(
-+            checkcommit, checkrepo, branch=checkbranch, gitdir=gitdir
-+        )
-     if not checkurl:
-         return True
-     try:
-@@ -1453,7 +1465,9 @@ def _process_queue_locked(
- 
-         # Check if the commit is publicly visible
-         if not dryrun and (checkurl or (checkcommit and checkrepo)):
--            published = _check_published(checkurl, checkcommit, checkrepo, checkbranch)
-+            published = _check_published(
-+                checkurl, checkcommit, checkrepo, checkbranch, gitdir=topdir
-+            )
-             if published is None:
-                 still_pending += 1
-                 if progress_cb:
 diff --git a/src/tests/test_ty.py b/src/tests/test_ty.py
-index 54fa6d4..610e5af 100644
+index 610e5af..ddf3d7e 100644
 --- a/src/tests/test_ty.py
 +++ b/src/tests/test_ty.py
-@@ -503,7 +503,9 @@ def test_process_queue_passes_branch(
+@@ -364,6 +364,34 @@ def test_commit_reachable_branch_filter(
+     assert b4.ty.commit_reachable_on_remote(c2, pub, branch='gone') is True
  
-     calls: List[Tuple[str, str, str]] = []
  
--    def fake_reachable(commit: str, repo_url: str, branch: str = '') -> Optional[bool]:
-+    def fake_reachable(
-+        commit: str, repo_url: str, branch: str = '', gitdir: Optional[str] = None
-+    ) -> Optional[bool]:
-         calls.append((commit, repo_url, branch))
-         return False
- 
-@@ -530,7 +532,9 @@ def test_process_queue_holds_unpublished(
- 
-     calls: List[Tuple[str, str]] = []
- 
--    def fake_reachable(commit: str, repo_url: str, branch: str = '') -> Optional[bool]:
-+    def fake_reachable(
-+        commit: str, repo_url: str, branch: str = '', gitdir: Optional[str] = None
-+    ) -> Optional[bool]:
-         calls.append((commit, repo_url))
-         return False
- 
-@@ -580,7 +584,9 @@ def test_process_queue_lock_held(
-     monkeypatch.chdir(repo)
-     _queue_test_message()
-     monkeypatch.setattr(
--        b4.ty, 'commit_reachable_on_remote', lambda commit, repo_url, branch='': False
-+        b4.ty,
-+        'commit_reachable_on_remote',
-+        lambda commit, repo_url, branch='', gitdir=None: False,
-     )
-     with b4.lockfile_nb(b4.ty._get_queue_lock_path()):
-         with pytest.raises(b4.LockHeldError):
-@@ -599,7 +605,9 @@ def test_process_queue_check_only(
-     monkeypatch.chdir(repo)
-     _queue_test_message()
-     monkeypatch.setattr(
--        b4.ty, 'commit_reachable_on_remote', lambda commit, repo_url, branch='': True
-+        b4.ty,
-+        'commit_reachable_on_remote',
-+        lambda commit, repo_url, branch='', gitdir=None: True,
-     )
- 
-     def _no_send(dryrun: bool = False) -> Tuple[None, str]:
-@@ -627,7 +635,9 @@ def test_process_queue_explicit_topdir(
-     monkeypatch.chdir(repo)
-     _queue_test_message()
-     monkeypatch.setattr(
--        b4.ty, 'commit_reachable_on_remote', lambda commit, repo_url, branch='': True
-+        b4.ty,
-+        'commit_reachable_on_remote',
-+        lambda commit, repo_url, branch='', gitdir=None: True,
-     )
-     outside = tmp_path / 'elsewhere'
-     outside.mkdir()
-@@ -665,7 +675,9 @@ def test_process_queue_finalizes_thanked(
- 
-     _queue_test_message()
-     monkeypatch.setattr(
--        b4.ty, 'commit_reachable_on_remote', lambda commit, repo_url, branch='': True
-+        b4.ty,
-+        'commit_reachable_on_remote',
-+        lambda commit, repo_url, branch='', gitdir=None: True,
-     )
-     monkeypatch.setattr(b4, 'get_smtp', lambda dryrun=False: (None, 't@example.com'))
-     monkeypatch.setattr(b4, 'send_mail', lambda *args, **kwargs: 1)
-@@ -738,7 +750,9 @@ def _series_status(identifier: str, change_id: str = 'test-change-id') -> str:
- 
- def _mock_delivery(monkeypatch: pytest.MonkeyPatch) -> None:
-     monkeypatch.setattr(
--        b4.ty, 'commit_reachable_on_remote', lambda commit, repo_url, branch='': True
-+        b4.ty,
-+        'commit_reachable_on_remote',
-+        lambda commit, repo_url, branch='', gitdir=None: True,
-     )
-     monkeypatch.setattr(b4, 'get_smtp', lambda dryrun=False: (None, 't@example.com'))
-     monkeypatch.setattr(b4, 'send_mail', lambda *args, **kwargs: 1)
++def test_commit_reachable_uses_the_gitdir_it_is_given(
++    monkeypatch: pytest.MonkeyPatch, tmp_path: pathlib.Path
++) -> None:
++    """Ancestry is computed in the named repository, not the process cwd.
++
++    'b4 review cron' sweeps several projects from whatever directory the
++    scheduler happened to start it in, so the cwd is nobody's repository."""
++    local = str(tmp_path / 'local')
++    pub = str(tmp_path / 'pub')
++    elsewhere = str(tmp_path / 'elsewhere')
++    _init_repo(local)
++    _init_repo(elsewhere)
++    ecode, out = b4.git_run_command(None, ['init', '--bare', pub])
++    assert ecode == 0, out
++    monkeypatch.chdir(local)
++    c1 = _commit_empty('c1')
++    ecode, out = b4.git_run_command(None, ['push', pub, 'HEAD:refs/heads/master'])
++    assert ecode == 0, out
++
++    # An unrelated cwd knows none of the advertised tips, so on its own it
++    # cannot see the commit -- the objects live in 'local'.
++    monkeypatch.chdir(elsewhere)
++    assert b4.ty.commit_reachable_on_remote(c1, pub, branch='master') is not True
++    assert (
++        b4.ty.commit_reachable_on_remote(c1, pub, branch='master', gitdir=local) is True
++    )
++
++
+ def test_get_check_repo_for_branch_priority(
+     monkeypatch: pytest.MonkeyPatch, tmp_path: pathlib.Path
+ ) -> None:
 
 -- 
 2.53.0
