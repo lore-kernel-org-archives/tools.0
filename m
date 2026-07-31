@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B5637E302
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEED1A6800
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785535173; cv=none; b=TgLHC1/BSmU9CKGo5jwtMWgwaCzwtFz6H5ITK6/fgH3SlB9CwZb8aU7zJcp2Y31GJ4iZZDOGOcgGm/X/8TxDpklc9vyG6+A2nDIprcoRdfZ7R3YdDIxyoRuR26UNYQUmPOSjH6vb7+M/XTPV8Ba1SnaM9kj75bWUJ8joA2sLfoU=
+	t=1785535174; cv=none; b=QACF0ltaVL0Bk6gPHrjnozj4Ir6eYEk7UEt3hqL684HLoRd3fkGAPbwscPSi/4SFTT+6LOVLBVksNy/QS5TG5ejQwqcXhdDSMWwvDKZbh39C1ACyb2bHAOmxnqh73AQRh3rabn7N5itkMWyEaJBCHLZLsN+auYodidHlCm0oLU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785535173; c=relaxed/simple;
-	bh=dogCkoywW3pVzL97Hf1S5MLi2wShbbOgLaGIoGrpJr0=;
+	s=arc-20240116; t=1785535174; c=relaxed/simple;
+	bh=1TBXUbSoOGpOW6hIkHWX8FyHts5sI7d93EPVBKhEuPg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NVdClLCf+DeKPsFH7LSsM3kH36wP67xajIjgtyY41F5t0aVXmjxrbwY5nGz+4lAwHvlMMNycUkCMa+qM1ajniimC6p2jKFcQ/r8jBIrUS857AsjEIKgtz3+mIEFmPv1s3fkvOVkrvUN8/aEFe+oSPHn4xRvkZV9BE69Xp0pFLik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XAEmSQfN; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=d6RyybplacURwafvVERMANYGo4vklUUhUDeW8uozsVRQKflZ6eUHBtCBJxbetwBxsrH6Harw4ESXoRshcz4fcLc9oOjeF4Y/Q4UTel4mTxYpk09aE3HLOYpj5O9zwjBKzpxvglY1NFwsL2y/2QYOu87lL5agVFk+5xrhDFYJRW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jlcjj2sS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XAEmSQfN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jlcjj2sS"
 Received: by smtp.kernel.org (Postfix)
-	id 506561F00ACA; Fri, 31 Jul 2026 21:59:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8242D1F00AC4;
-	Fri, 31 Jul 2026 21:59:31 +0000 (UTC)
+	id 7A6851F00ACA; Fri, 31 Jul 2026 21:59:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3741F00AC4;
+	Fri, 31 Jul 2026 21:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785535172;
-	bh=EoiakkI7oKvNH9+3fSpxq6hGwIjIa7Z1UjWRHhvHHzo=;
+	s=k20260515; t=1785535173;
+	bh=pjJX2UnDtaVtaX9eCgAzG02zX9PrwYRlhvBrDtueCbA=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=XAEmSQfN0SJ313DQdeMTaoYz0f9+r2kCzg85xPsBrzGKJ+FIoih//drTKxcoeS/gL
-	 4tOn4RDW6cHvGMJBsNmVR6wYWIzrj9R0zsjLaFryeA3hPOXJZTv1RqCHcI27FJgl4D
-	 ohhDbiKk+wGgm8VkntJJNX9s7TowFBUBoWWlhKi4jRQ5ObiJXpn/giRefTWK3IV1GL
-	 WhMh1EFFXdRxvSj07fb6Fu+NO+dXOnRmbFFxL2NmxI19kdpCKjatEZXrDgW1vY1QEa
-	 wrSPBXAVIwi3YsQihek9fkt5SEaufxzGd56desiBUX17BP2eajYGCCJivE1SOhj7N6
-	 r7X5qWCw1Tg2Q==
+	b=Jlcjj2sSeZPO8F+XcqPN6OFbTOft3VIrpOoGzpz6zQ03Vun5gm2bpMtSNz6GBgaAO
+	 fMD53wk2H3sAV8EzD9dBpkFw/aerw5tOn/iTm2iRo+9GUcbxXKOotnGXcIBG3fqe8t
+	 CYXDnLixRsd2Ktdm9Sn1V1p88dXOrFReBY7naELaRGtAobwZ8JCY8/J3RjuFyzRtf4
+	 SV0vuS5P5vkklb0JVTIg30wJ5+ksCtaOFLEiLGYJxmgcCU3Ydm/J+eOeUeN0Xcc84+
+	 UZ3fgng9+5UUmepjE/8dsJKVhs9CJ32IrKXdfX48TfGCzevVtJVbH9Oo3jI6Cia0W1
+	 yPWr5zTeyZ4zg==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 23:59:13 +0200
-Subject: [PATCH b4 v2 32/44] review: clean up a review branch that cannot
- be finished
+Date: Fri, 31 Jul 2026 23:59:14 +0200
+Subject: [PATCH b4 v2 33/44] tests: cover create_review_branch cleaning up
+ a half-built branch
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,97 +40,138 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v2-32-243fd19d322d@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v2-33-243fd19d322d@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3447; i=brauner@kernel.org;
- h=from:subject:message-id; bh=dogCkoywW3pVzL97Hf1S5MLi2wShbbOgLaGIoGrpJr0=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs1p9tjO+n5nxPtZ7NtEfr697dTNvzLs7PbZgpYTL
- q15+XzW1Y5SFgYxLgZZMUUWh3aTcLnlPBWbjTI1YOawMoEMYeDiFICJlLxn+B/pVfM9McvoiNja
- MyeOT+F1zljwooHtTcs/D2OPkkUN/u6MDCfjFLY9NJz5f3krj82pBe4p7w4XG9u5flD1WV+6e2d
- CAQ8A
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5174; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=1TBXUbSoOGpOW6hIkHWX8FyHts5sI7d93EPVBKhEuPg=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs1x5Ou6P+lVittZCQ//Na/elxxlC/Q4P0n0684d4
+ ovTFH39O0pZGMS4GGTFFFkc2k3C5ZbzVGw2ytSAmcPKBDKEgYtTACYyR57hv2fwgumLLNsOKYg/
+ OHeZ7/Z6ng83Mq08/PSb01dZxoinT2P4K3Puj8qLqUn7Akru2pvzpac2/c58x3pz86PTjR9SXhw
+ qZwQA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-create_review_branch() checks the new branch out before building it.
-Two of the three failures after that point put the caller back and
-delete the branch; the one that cannot read the patch range just
-exits. A detached start got no cleanup at all, and the leftover branch
-made the next attempt fail with "Branch already exists".
-
-Route all three through one cleanup helper that restores via
-git_head_restore_args(), so a detached start has somewhere to go back
-to.
+Both starting points with the patch range failing to read: from a
+branch and from a detached HEAD. The detached case starts at the tip
+rather than the base, so restoring to the base would not pass.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review/_review.py | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ src/tests/test_review.py | 92 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 92 insertions(+)
 
-diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index c3aa8e9..5a9f0d1 100644
---- a/src/b4/review/_review.py
-+++ b/src/b4/review/_review.py
-@@ -283,11 +283,16 @@ def create_review_branch(
-         logger.critical('Branch %s already exists', branch_name)
-         sys.exit(1)
+diff --git a/src/tests/test_review.py b/src/tests/test_review.py
+index 5fdb608..4f56689 100644
+--- a/src/tests/test_review.py
++++ b/src/tests/test_review.py
+@@ -3,6 +3,7 @@ import email.message
+ import importlib.util
+ import json
+ import logging
++import os
+ from typing import Any, Dict, Iterator, List, Optional, Tuple, Union
+ from unittest import mock
  
--    # Save current branch for potential restore on error
--    current_branch: Optional[str] = None
--    ecode, out = b4.git_run_command(topdir, ['symbolic-ref', '--short', 'HEAD'])
--    if ecode == 0:
--        current_branch = out.strip()
-+    # Save the current position for potential restore on error: everything
-+    # past the checkout below runs on the new branch, and git refuses to
-+    # delete the branch HEAD is sitting on.
-+    restore_head = b4.git_head_restore_args(topdir)
+@@ -4763,3 +4764,94 @@ class TestArchiveSeries:
+         # Nothing was destroyed, so the maintainer can simply retry
+         assert b4.git_branch_exists(repo, branch)
+         assert self._db_status() == 'accepted'
 +
-+    def drop_half_built_branch() -> None:
-+        """Put the caller back and take the unfinished branch with us."""
-+        if restore_head:
-+            b4.git_run_command(topdir, restore_head, logstderr=True)
-+        b4.git_run_command(topdir, ['branch', '-D', branch_name], logstderr=True)
- 
-     # Resolve base_commit to a concrete hash before checkout changes HEAD
-     ecode, out = b4.git_run_command(
-@@ -316,10 +321,7 @@ def create_review_branch(
-         logger.critical(out.strip())
-         # Abort the cherry-pick if in progress
-         b4.git_run_command(topdir, ['cherry-pick', '--abort'], logstderr=True)
--        # Restore previous branch
--        if current_branch:
--            b4.git_run_command(topdir, ['checkout', current_branch], logstderr=True)
--        b4.git_run_command(topdir, ['branch', '-D', branch_name], logstderr=True)
-+        drop_half_built_branch()
-         sys.exit(1)
- 
-     # Record the first patch commit (the one right after base)
-@@ -328,6 +330,9 @@ def create_review_branch(
-     )
-     if ecode > 0 or not out.strip():
-         logger.critical('Unable to determine first patch commit')
-+        # HEAD is on a branch that was never finished, as in the other two
-+        # post-checkout failures around this one.
-+        drop_half_built_branch()
-         sys.exit(1)
-     all_commits = out.strip().splitlines()
-     prereq_commits = all_commits[:num_prereqs]
-@@ -420,10 +425,7 @@ def create_review_branch(
-     if ecode > 0:
-         logger.critical('Unable to create tracking commit')
-         logger.critical(out.strip())
--        # Restore previous branch
--        if current_branch:
--            b4.git_run_command(topdir, ['checkout', current_branch], logstderr=True)
--        b4.git_run_command(topdir, ['branch', '-D', branch_name], logstderr=True)
-+        drop_half_built_branch()
-         sys.exit(1)
- 
-     # Mark cover + patch messages as Seen in the messages DB
++
++class TestCreateReviewBranchCleanup:
++    """A branch that cannot be finished is not left checked out."""
++
++    @staticmethod
++    def _seed_fetch_head(gitdir: str) -> Tuple[str, str]:
++        """Leave a commit for the cherry-pick to land, as FETCH_HEAD.
++
++        Returns (base, tip): the commit to build the review branch on, and
++        the one waiting in FETCH_HEAD.
++        """
++        ecode, base = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
++        assert ecode == 0
++        base = base.strip()
++
++        with open(os.path.join(gitdir, 'file1.txt'), 'a') as fh:
++            fh.write('review branch cleanup\n')
++        b4.git_run_command(gitdir, ['add', 'file1.txt'])
++        ecode, _out = b4.git_run_command(gitdir, ['commit', '-m', 'cleanup test'])
++        assert ecode == 0
++        ecode, tip = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
++        assert ecode == 0
++        tip = tip.strip()
++        with open(os.path.join(gitdir, '.git', 'FETCH_HEAD'), 'w') as fh:
++            fh.write(f'{tip}\t\tbranch\n')
++        ecode, _out = b4.git_run_command(gitdir, ['reset', '--hard', base])
++        assert ecode == 0
++        return base, tip
++
++    @staticmethod
++    def _create_with_unreadable_range(gitdir: str, branch: str, base: str) -> None:
++        """Run create_review_branch() with the patch range failing to read."""
++        real_run = b4.git_run_command
++
++        def _fail_revlist(
++            topdir: Any, args: List[str], *a: Any, **kw: Any
++        ) -> Tuple[int, Union[str, bytes]]:
++            if args[:2] == ['rev-list', '--reverse']:
++                return 1, ''
++            return real_run(topdir, args, *a, **kw)
++
++        with mock.patch.object(b4, 'git_run_command', side_effect=_fail_revlist):
++            with pytest.raises(SystemExit):
++                review.create_review_branch(
++                    gitdir,
++                    branch,
++                    base,
++                    b4.LoreSeries(1, 1),
++                    'https://example.com/x',
++                    'https://example.com/%s',
++                )
++
++    def test_cleans_up_when_the_patch_range_cannot_be_read(self, gitdir: str) -> None:
++        """Everything between the checkout and the tracking commit runs with
++        HEAD already on the new branch.  Bailing out there without restoring
++        leaves the caller standing on a branch that was never finished, which
++        the two neighbouring failures below it already knew to avoid."""
++        ecode, _out = b4.git_run_command(gitdir, ['checkout', '-q', '-b', 'work'])
++        assert ecode == 0
++        base, _tip = self._seed_fetch_head(gitdir)
++
++        branch = 'b4/review/cleanup-test'
++        self._create_with_unreadable_range(gitdir, branch, base)
++
++        assert b4.git_get_current_branch(gitdir) == 'work'
++        assert not b4.git_branch_exists(gitdir, branch)
++
++    def test_cleans_up_from_a_detached_head(self, gitdir: str) -> None:
++        """A detached HEAD has no branch name to go back to, and skipping the
++        restore on that account costs both halves of the cleanup: git refuses
++        to delete the branch HEAD is standing on, so the caller keeps the
++        stranding *and* the leftover.  The name comes from the change-id, so
++        the next attempt at that series then walks into 'already exists'.
++
++        Detached at the FETCH_HEAD tip rather than at the base, so restoring
++        to the base the branch was created at does not pass for remembering
++        where HEAD actually was.
++        """
++        base, tip = self._seed_fetch_head(gitdir)
++        ecode, _out = b4.git_run_command(gitdir, ['checkout', '-q', '--detach', tip])
++        assert ecode == 0
++
++        branch = 'b4/review/cleanup-detached'
++        self._create_with_unreadable_range(gitdir, branch, base)
++
++        assert b4.git_get_current_branch(gitdir) is None
++        ecode, head = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
++        assert ecode == 0
++        assert head.strip() == tip
++        assert not b4.git_branch_exists(gitdir, branch)
 
 -- 
 2.53.0
