@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75533314B9
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4593351C04
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785535148; cv=none; b=prOjX6v8M7emV+o9QMcnZJ4yX91baa8web0/IRDGCsLwMQP82mIqMFyXNkFHfQYzNugt4M5aBMRzyaJ0ajqByp1Gc5DyfFJuUoqBhhH4E6G9ziUhHMsK4MCHfLrNf1Gmru+ocTlxofRkHWSfqdwQdznvMsxbGUs0XYcZ+l9aE9Y=
+	t=1785535149; cv=none; b=UKlQCiGQx/MqYcehJQewtUst+7rKlxWLqz22t9ViQ24eqNF5YODVGAXBvDzUTCx13xQkB50lCDoMYg4G9TBLTdiXwghA4rVLI79MWXCztA9zKVrmKXcEWjbVpXjnZoj8DNme64Jh5PXnoK8xhsxNCIX8+C9DETJJrMM/bz5XrNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785535148; c=relaxed/simple;
-	bh=TPC7SniXJnJ3cQGa0GGb7xmngfGBwImdEoUGihHyG2Y=;
+	s=arc-20240116; t=1785535149; c=relaxed/simple;
+	bh=CH1YlxK7r8m3w/8wh8Yj2rM89h9SoHCVVBhtTTfAOnc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=C2tx/sJt16axw0gvTEWCzNOw2uh8623NHfBhPF8tF89LFGG5PI7FnmJVmKp5X6EzAUyK4CBJRjrEp0LLGyHgAxYKR+HMVyfN0h4AstAi7oD8lGMzaZEo+yzGKeFRghZuxRhNxKOolSPu6vz35SM+bNwaFgmAPTc+cTtcReYOxF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QZWXvBen; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=fuNN6Q0pvUm6ngk7q2VXemCn1ja8SiAvJTj3JMhkisSv1tXx0Bij3KG0ONjNyRayX0j/+aRAwe1aaM807ytwozo//AmkFcuwJinAJcZ1EB5tV4xpxLeIMuNo3EVd5djqq0uStj1D8A515m1oI/mlXIGtyZjftoNJPsyDmXkhEzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bCUChm+w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QZWXvBen"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bCUChm+w"
 Received: by smtp.kernel.org (Postfix)
-	id 7A2BD1F00ADB; Fri, 31 Jul 2026 21:59:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6411F00AC4;
-	Fri, 31 Jul 2026 21:59:06 +0000 (UTC)
+	id A30961F00ACA; Fri, 31 Jul 2026 21:59:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D495D1F00AC4;
+	Fri, 31 Jul 2026 21:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785535147;
-	bh=zE4+JliTor1TTSVmSI5D2s981oCRS/S9zxFWWWMV8wI=;
+	s=k20260515; t=1785535148;
+	bh=ZLg6PS35a1GcjQJQj1pu9c+JjGqgq4L/aHDiSfLH/ns=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=QZWXvBenB56puoPuhwRC6Z5OWVONX5WRYNY0XKwBZk7beiP9lmUeqtrDrGj5Hn2z/
-	 QxSQ0WlsrlCCJn6QxwWQEnn9m40FYuud5TR3zwsVa9f+cIZ0Triv6+hlp8xIZPSw7V
-	 BL0qc3nubbypRd87ftXJkNdX9aHsr7S6vY+FdUdMwcrUGAWs3dRgVVv/YtTr4mEBIc
-	 3fH9W5GYNg3REaU2JuiL6YF5EPy8PRgJv1E8JWXSrONEf/3pNC6Iruv5eOPAlu9d4x
-	 CIyZFXkSZckxFwBtRNrgZuOJusrSYMF6ioV3gALAtDuTP9pzo/3tHDbkfi/6od9L+Z
-	 MqtJGSIxYL8jw==
+	b=bCUChm+wqelEiJzENn7EOPxWxsCLopQNjtQNwALpxCf32VUE8ItFu30sQM4Re8Xyx
+	 Txp7zhPNFzCM8NsDHiErHit9+8zx41CEvYNLWqDCUeDXd5ggvbmSQDh334VbydEAuk
+	 O2L5MvK8I+S7Hgou5kSONyrnxWHMkP72pbV8Lb98DDPyvNPL5ep6d1wDKyBQAkym4L
+	 8jU5EDmw7mDx/F7TsZv1wyGn6Dotm85J0Yt49oyD+TkJ1iYs/8XeRyZAIa6VyX54jq
+	 Ka6r9B3z4P3QhQzZTq34Mnjf2hav4QmtH5oHbFbK8y7CjtkdEKNaaec8O0zuRCbw0b
+	 h6bIdJz5SwW7w==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 23:58:52 +0200
-Subject: [PATCH b4 v2 11/44] tests: cover the take statuses in the
- thank-and-archive chain
+Date: Fri, 31 Jul 2026 23:58:53 +0200
+Subject: [PATCH b4 v2 12/44] review-tui: use the shared helper to delete a
+ review branch
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,114 +40,81 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v2-11-243fd19d322d@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v2-12-243fd19d322d@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4400; i=brauner@kernel.org;
- h=from:subject:message-id; bh=TPC7SniXJnJ3cQGa0GGb7xmngfGBwImdEoUGihHyG2Y=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs0+vFXQmMdyVts1IceyY1enHg2J33X/hES49Hzuh
- d0i+gtFOkpZGMS4GGTFFFkc2k3C5ZbzVGw2ytSAmcPKBDKEgYtTACayIoqRYUrmQtvJTyvDxZbI
- TDrTsiUsn3Ob7VLW279Ego6U7N/Mks3wT3d21qb06wFPVrtM41R8G1yx0U3I9d0rl6uLtO4u6Fc
- +zgsA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2516; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=CH1YlxK7r8m3w/8wh8Yj2rM89h9SoHCVVBhtTTfAOnc=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs3eN99p24l3X91FAqzP3r2fc8j+0uot68QEfH10D
+ 5S3RTD/6yhlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZjILHaGf1ZzJRiiTJ27dQ6/
+ 55l0/SEz31oOs5mc86+aVoa+Xnfr4WZGhvvz/t/tmxHptlTxrMa00+zzf1he5om2bfwmm8P34Ni
+ tFnYA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Add the two cases that used to come back as None: accept unchecked in
-the dialog, and a take whose tracking data could not be read back. The
-unrecorded status must not reach the status column.
+The tracking UI kept its own copy of the branch deletion that moved
+into b4.review as delete_review_branch(). Make the TUI copy a wrapper
+that turns the error string into a notification.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/tests/test_tui_tracking.py | 50 +++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 47 insertions(+), 3 deletions(-)
+ src/b4/review_tui/_tracking_app.py | 36 +++++++++---------------------------
+ 1 file changed, 9 insertions(+), 27 deletions(-)
 
-diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
-index 6a3f2f8..09d1fea 100644
---- a/src/tests/test_tui_tracking.py
-+++ b/src/tests/test_tui_tracking.py
-@@ -2674,6 +2674,34 @@ class TestSeriesLifecycle:
-         assert all(p.get('taken') for p in patches), 'all patches should be taken'
-         assert updated['series']['status'] == 'accepted'
+diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
+index 83e33c7..a20eaa4 100644
+--- a/src/b4/review_tui/_tracking_app.py
++++ b/src/b4/review_tui/_tracking_app.py
+@@ -3791,36 +3791,18 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+     ) -> bool:
+         """Delete a review branch, switching away if currently on it.
  
-+    def test_record_take_metadata_unreadable_tracking(self, gitdir: str) -> None:
-+        """The patches are applied by the time this runs, so a tracking commit
-+        that cannot be read is a missing record and not a take that never
-+        happened.  Saying None for both leaves the caller unable to tell them
-+        apart, and 'unrecorded' must not reach the status column either."""
-+        change_id = 'take-unrecorded-1'
-+        branch_name = _create_review_branch(
-+            gitdir, change_id, identifier='test-unrecorded', status='reviewing'
-+        )
-+        app = TrackingApp.__new__(TrackingApp)
-+        app._identifier = 'test-unrecorded'
-+        app._selected_series = None
++        Thin TUI wrapper around b4.review.delete_review_branch() that turns
++        its error string into a notification.  Interactive, so detaching HEAD
++        to get off the branch is fine here.
 +
-+        with patch.object(b4.review, 'load_tracking', side_effect=SystemExit(1)):
-+            result = app._record_take_metadata(
-+                gitdir, branch_name, 'master', ['abc'], accepted=True
-+            )
-+        assert result == 'unrecorded'
-+
-+        statuses: List[str] = []
-+        with patch.object(
-+            tracking,
-+            'update_series_status',
-+            lambda conn, cid, status, revision=None: statuses.append(status),
-+        ):
-+            app._finalize_take(gitdir, 'master', change_id, {'revision': 1}, result)
-+        assert not statuses
-+
-     def test_record_take_metadata_branch_tip_is_target_not_head(
-         self, gitdir: str
-     ) -> None:
-@@ -4421,7 +4449,10 @@ class TestTakeThankArchiveChain:
-     flow only when the take leaves the series fully accepted."""
- 
-     def _run_take_final(
--        self, take_status: Optional[str], thank_and_archive: bool
-+        self,
-+        take_status: Optional[str],
-+        thank_and_archive: bool,
-+        accept_series: bool = True,
-     ) -> Tuple[List[Tuple[Dict[str, Any], bool]], List[str]]:
-         """Drive _on_take_final with a mocked take returning *take_status*.
- 
-@@ -4434,9 +4465,9 @@ class TestTakeThankArchiveChain:
-         notices: List[str] = []
-         app = TrackingApp.__new__(TrackingApp)
-         take_screen: Any = SimpleNamespace(
--            accept_series=True, thank_and_archive=thank_and_archive
-+            accept_series=accept_series, thank_and_archive=thank_and_archive
+         Returns True on success, False on failure.
+         """
+-        if b4.git_get_current_branch(topdir) == review_branch:
+-            ecode, out = b4.git_run_command(
+-                topdir, ['rev-parse', f'{review_branch}~1'], logstderr=True
+-            )
+-            if ecode > 0:
+-                if notify:
+-                    self.notify('Could not determine parent commit', severity='error')
+-                return False
+-            parent = out.strip()
+-            ecode, out = b4.git_run_command(
+-                topdir, ['checkout', parent], logstderr=True
+-            )
+-            if ecode > 0:
+-                if notify:
+-                    self.notify(
+-                        f'Could not switch away from {review_branch}', severity='error'
+-                    )
+-                return False
+-        ecode, out = b4.git_run_command(
+-            topdir, ['branch', '-D', review_branch], logstderr=True
++        ok, err = b4.review.delete_review_branch(
++            topdir, review_branch, allow_switch=True
          )
--        confirm_screen: Any = SimpleNamespace(accept_series=True)
-+        confirm_screen: Any = SimpleNamespace(accept_series=accept_series)
-         series = {'change_id': 'chain-1', 'subject': 'x', 'status': 'reviewing'}
-         with (
-             patch.object(TrackingApp, 'suspend', lambda self: contextlib.nullcontext()),
-@@ -4491,6 +4522,19 @@ class TestTakeThankArchiveChain:
-         assert not thanks
-         assert any('take did not complete' in n for n in notices)
+-        if ecode > 0:
+-            if notify:
+-                self.notify(
+-                    f'Failed to delete branch {review_branch}', severity='error'
+-                )
+-            return False
+-        return True
++        if not ok and notify:
++            self.notify(err, severity='error')
++        return ok
  
-+    def test_unaccepted_take_does_not_chain(self) -> None:
-+        thanks, notices = self._run_take_final(None, True, accept_series=False)
-+        assert not thanks
-+        assert any('not marked accepted' in n for n in notices)
-+
-+    def test_unrecorded_take_says_so(self) -> None:
-+        """The patches went in but the tracking data could not be read, so
-+        there is no coverage to chain on -- and 'did not complete' would send
-+        the maintainer looking for an apply that did happen."""
-+        thanks, notices = self._run_take_final('unrecorded', True)
-+        assert not thanks
-+        assert any('was not recorded' in n for n in notices)
-+
-     def test_unchecked_box_never_chains(self) -> None:
-         thanks, notices = self._run_take_final('accepted', False)
-         assert not thanks
+     def action_abandon(self) -> None:
+         """Abandon the selected series."""
 
 -- 
 2.53.0
