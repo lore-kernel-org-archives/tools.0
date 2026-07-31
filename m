@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBCE3B42D1
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278653B42D7
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785489717; cv=none; b=eFuvegMfAgtLVV7F8Uuv86hNMRxJM7VyG0T0GTMbqmW8c9tKvmQ5lP2ZWhl22o99v4WQBHlkG/0+Rimq5d9z+UIAOuJSF27lvWgu/anKizfSKK0AWUnW/cF5k2PSQRjUQoIJB7m1Z8LviRX76qzn78YQDIwFnnlZq194mem0lCk=
+	t=1785489718; cv=none; b=cGgiSLCNFwQvKQP+4iSR6Fm4vO7uXBIi1R36Ixk6v+jiNQ0DNJo+/ps7/DFvSegSqk2V0u+cRp+fqrx7vbD75dYAahqmJKfVSH+GH1siKtTw/h724UnJ43ayUgmm7YpeTD8Ydxaeu62FodDgqhBbA8uDZTkFT3bG6uGbjmjh6yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785489717; c=relaxed/simple;
-	bh=CCmn99yqEmaBo0333/3D2ER5nh+vpk57DK1IPCxnHlc=;
+	s=arc-20240116; t=1785489718; c=relaxed/simple;
+	bh=5qWQOCBieFXmuGRfNOZcpE6u7Y2P2g+YtX7m7hTiR7w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jk0Zv+1dUNvP6fH1dGVpFcqFOuvWR0CGEB11I3Q9kDLXSsJGABKBmFuBuBXin9sw9NHgSy7AGfbozsHKsnL03MyvTrxxw/cPfgiQ7X9gT1hFJW0oYy0DEFhD7bAVo/KfMLss364kom9oaVVnKzzZR5BoVFTxnMqntMW4FA+rKE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cPjadHyw; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=JZq0ULyqsqMtV0lw8xX0dUwov5ICzvF0RBD/m9bKIZ3OsmngCrK2ELtcnQ2S5CfOroX8Hq7u5ZW2OxGYhHD1e4PnR3pIJwnzgJP6LCPE5WzjAsYZC7T71vWqB756pictMEBILsNgbSe+Wdu8TkKW+u5lF5QiFgYRIzrYsk0NcKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mmg1UJYE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cPjadHyw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mmg1UJYE"
 Received: by smtp.kernel.org (Postfix)
-	id DD99A1F00A3D; Fri, 31 Jul 2026 09:21:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5281F000E9;
-	Fri, 31 Jul 2026 09:21:54 +0000 (UTC)
+	id 124D61F00A3A; Fri, 31 Jul 2026 09:21:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BA81F000E9;
+	Fri, 31 Jul 2026 09:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785489715;
-	bh=0gGnvK4RrV7XspYhqHEVrH8ehI2GRgFZBUAhIhS3/ko=;
+	s=k20260515; t=1785489717;
+	bh=HTDJLulko+kxRAre33wgJypWk0jiJ6AKJFY9JFQaJPk=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=cPjadHywZuLAlpJ0zEvndl1eOjdSk59w1B3jaap0vcTjmTGmE9KXgaIe5WN85jSex
-	 fomJ8jRcg/HGpNPfDu90ylwASZWZrr2+NySyv8HUj7adyP1zyXz4D+tMKYO/fMbmME
-	 TEuSzUdGdTfApuZAD/SAPGuVYJ0WPtFoxHqBlIJ1FZ8bBmn3kAPRVOzQAny6rlCsWC
-	 EQYIfnNLJ9N0YQy2ipKStVwdNKXNPwhf2MlG65fKomcjkihV59i45J1IVJegPB6AyH
-	 yvbJwWJnQkTkZSRh3THv5+cQ4KsJWKqw4E1t7LN7VB4E01jXSk60PUz7Qi7plANRNj
-	 MOsTviTjEytLw==
+	b=Mmg1UJYE0vQW2aitsR1EMALtP/+Da/Ejc11MjjyM2J9+jd9x6vqsQpuA8n1qzy12N
+	 gahO5iaBC5S2q+SopU2l/qH+tZ3IyzQjNtSuBO3wSm5sBNf44Owsej9efox9SnNEAI
+	 gbLn+U7U5AXsP/sVXwsH7xRoyRVU0E/HK/ONLVfW042hDkh7zJDvDKw3ete+f8bpje
+	 tQ61/s/MLrhobDpVUmQeySdxmLRv0onDSUPleU3J+jLqSjqMCfdbWpiiGOtQsdPVOq
+	 xXwto7msBIBTS8YmWvsWqpDV8f9tpLG5ZrFwOL6INxm2CbsNnOFOBMUNzztuux8jsg
+	 gRb+QtUZorzow==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 11:21:23 +0200
-Subject: [PATCH b4 24/27] ty: an unknown remote tip is undetermined, not
- unpublished
+Date: Fri, 31 Jul 2026 11:21:24 +0200
+Subject: [PATCH b4 25/27] review-tui: keep post-send bookkeeping out of the
+ review send error path
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,122 +40,186 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v1-24-de68a7c8e4cb@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v1-25-de68a7c8e4cb@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4786; i=brauner@kernel.org;
- h=from:subject:message-id; bh=CCmn99yqEmaBo0333/3D2ER5nh+vpk57DK1IPCxnHlc=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIrJNXzdLLrwpZSuYdq+lSdPGvZGsfpWnzX6K97Mv
- nPOV23zjlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIncL2dk2LTm+8F86eZN6ibB
- yka1qam3nH480zmiKHq3+odSmErma4b/5Z471P8x+78p5Hz4cWW8veiOif9DW9xW8QVkXOe7H1/
- BAQA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8593; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=5qWQOCBieFXmuGRfNOZcpE6u7Y2P2g+YtX7m7hTiR7w=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIqZdS3/Myttzo5PqndXCTlunr3ZybvXuaIhNmeqg
+ V/RW/c5HaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABNxYWJkmPWJRYOdTXvb1E2X
+ r+/13Se1vl55579jtdoBb9gFJ7x468rIcHppqManuy8lY1QTVqwR/J+1ddYXuVv3a1iW7G2MPz6
+ /lhkA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-When none of the tips a remote advertises exist in the local repository
-there is nothing to compute ancestry against, and the publish check
-returned False for "not yet visible". We can't see the commit either
-way, so that is not something we know.
+The same shape the thank-you path just lost. action_send() does the SMTP
+handoff and everything after it -- the tracking write, the Answered
+flags, the outgoing-seen record -- inside one try whose handler reports
+"Send failed". The reviews are on the list at that point and we would be
+telling the maintainer to send them again.
 
-The queue keeps the message waiting either way, and so far the cron
-report has kept quiet either way. "Not yet visible" is normal operation
-and "Check failed" is deliberately grouped with it, because a remote we
-could not reach is a transient that must not mail the maintainer on
-every sweep. So a repository that is stale, or simply not the one the
-series was applied in, waits forever without ever saying anything.
+Here the bookkeeping mostly swallows its own failures, and that turns out
+to be the worse half of the problem. _save_tracking() drops the bool
+save_tracking_ref() hands back, so a tracking write that does not land is
+reported as nothing at all. The next session reads the branch without a
+sent-revision on any review, offers all of them as unsent, and the
+maintainer sends the series twice.
 
-Make the tri-state honest, so that "b4 review cron --dry-run" and the
-queue delivery modal name a failed check rather than normal waiting.
-Then say the one thing we can positively identify: we have the remote's
-answer, and none of it is in this repository. That is a standing
-misconfiguration and not a transient, so it warns instead of debugging,
-which is the level a delivery sweep lets through.
+Split the two. Only the SMTP call keeps that handler; once send_mail()
+has returned we report the outcome and run the rest under its own, which
+has to catch rather than propagate because this is a screen callback.
+Pass _save_tracking()'s answer up and say so when it is False.
 
-Narrowing the check to the branch named in the thanks message made this
-easier to hit. The old check had every advertised head to look for and
-now there is often exactly one.
+The two quick-reply paths get the same treatment. Nothing after the send
+can raise there today, but a tight try is what keeps that true, and it
+lets the branch that has already tested --email-dry-run stop passing it
+on to a helper that would test it again.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/ty.py         | 18 +++++++++++++++---
- src/tests/test_ty.py |  9 +++++----
- 2 files changed, 20 insertions(+), 7 deletions(-)
+ src/b4/review_tui/_lite_app.py   | 19 ++++++-----
+ src/b4/review_tui/_review_app.py | 74 ++++++++++++++++++++++++----------------
+ 2 files changed, 55 insertions(+), 38 deletions(-)
 
-diff --git a/src/b4/ty.py b/src/b4/ty.py
-index 5e225a7..650ec84 100644
---- a/src/b4/ty.py
-+++ b/src/b4/ty.py
-@@ -1073,7 +1073,8 @@ def commit_reachable_on_remote(
-     belongs to.
+diff --git a/src/b4/review_tui/_lite_app.py b/src/b4/review_tui/_lite_app.py
+index 951057f..51e1437 100644
+--- a/src/b4/review_tui/_lite_app.py
++++ b/src/b4/review_tui/_lite_app.py
+@@ -813,17 +813,18 @@ class LiteThreadScreen(ModalScreen[None]):
+                     output_dir=None,
+                     reflect=False,
+                 )
+-            if sent is None:
+-                self.app.notify('Failed to send reply.', severity='error')
+-            elif self._email_dryrun:
+-                self.app.notify(f'Dry-run: reply to {lmsg.fromemail} logged, not sent')
+-                self._mark_answered(node)
+-            else:
+-                mark_outgoing_seen([msg], dryrun=self._email_dryrun)
+-                self.app.notify(f'Reply sent to {lmsg.fromemail}')
+-                self._mark_answered(node)
+         except Exception as ex:
+             self.app.notify(f'Send failed: {ex}', severity='error')
++            return
++        if sent is None:
++            self.app.notify('Failed to send reply.', severity='error')
++            return
++        if self._email_dryrun:
++            self.app.notify(f'Dry-run: reply to {lmsg.fromemail} logged, not sent')
++        else:
++            mark_outgoing_seen([msg])
++            self.app.notify(f'Reply sent to {lmsg.fromemail}')
++        self._mark_answered(node)
  
-     Returns True/False, or None if the state could not be determined
--    (e.g. the remote is unreachable).
-+    (e.g. the remote is unreachable, or none of the advertised tips are
-+    in the local repository).
-     """
-     gitargs = [
-         '-c',
-@@ -1118,8 +1119,19 @@ def commit_reachable_on_remote(
-         if len(chunks) == 2 and chunks[1] == 'commit':
-             known.append(chunks[0])
-     if not known:
--        logger.debug('No advertised heads of %s exist locally', repo_url)
--        return False
-+        # Undetermined, not unpublished: without the objects we cannot
-+        # say anything about the commit, and reporting "not yet visible"
-+        # would hide a stale (or simply wrong) local repository behind
-+        # what looks like normal waiting.  Warn rather than debug: a cron
-+        # sweep silences narration but keeps warnings, and this one is a
-+        # standing misconfiguration that would otherwise wait forever.
-+        logger.warning(
-+            'None of the heads advertised by %s exist in %s; cannot tell '
-+            'whether the commit is published',
-+            repo_url,
-+            gitdir or os.getcwd(),
-+        )
-+        return None
-     # Empty output means every commit reachable from ours is also
-     # reachable from one of the known tips, i.e. ours is published
-     ecode, out = b4.git_run_command(gitdir, ['rev-list', '-1', commit, '--not', *known])
-diff --git a/src/tests/test_ty.py b/src/tests/test_ty.py
-index 5b08587..f4537ba 100644
---- a/src/tests/test_ty.py
-+++ b/src/tests/test_ty.py
-@@ -311,7 +311,8 @@ def test_commit_reachable_unknown_tips(
-     monkeypatch: pytest.MonkeyPatch, tmp_path: pathlib.Path
- ) -> None:
-     """Advertised tips we have no objects for cannot prove anything, so
--    the check stays conservative (pending) until the next fetch."""
-+    the answer is 'don't know' -- which keeps the message queued, but
-+    reports a failed check rather than normal waiting."""
-     local = str(tmp_path / 'local')
-     pub = str(tmp_path / 'pub')
-     other = str(tmp_path / 'other')
-@@ -336,7 +337,7 @@ def test_commit_reachable_unknown_tips(
-     assert ecode == 0, out
-     monkeypatch.chdir(local)
-     # c1 is actually published, but the only advertised tip is unknown here
--    assert b4.ty.commit_reachable_on_remote(c1, pub) is False
-+    assert b4.ty.commit_reachable_on_remote(c1, pub) is None
+     def action_back(self) -> None:
+         if self._thread_nodes:
+diff --git a/src/b4/review_tui/_review_app.py b/src/b4/review_tui/_review_app.py
+index 0982f55..1f38325 100644
+--- a/src/b4/review_tui/_review_app.py
++++ b/src/b4/review_tui/_review_app.py
+@@ -1654,27 +1654,42 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
+                         output_dir=None,
+                         reflect=False,
+                     )
+-                if sent is None:
+-                    self.notify('Failed to send review emails.', severity='error')
+-                else:
+-                    self._reply_sent = True
+-                    self._tracking['series']['status'] = 'replied'
+-                    # Stamp sent-revision on every non-skip review so that
+-                    # if this series is later upgraded to a newer revision,
+-                    # the upgrade step can detect which reviews were already
+-                    # sent and auto-skip the unchanged patches.
+-                    my_email = str(self._usercfg.get('email', 'unknown@example.com'))
+-                    current_rev = int(self._series.get('revision', 1))
+-                    for target in [self._series] + list(self._patches):
+-                        review = target.get('reviews', {}).get(my_email, {})
+-                        if review and review.get('patch-state') != 'skip':
+-                            review['sent-revision'] = current_rev
+-                    self._save_tracking()
+-                    self._mark_patches_answered(msgs)
+-                    mark_outgoing_seen(msgs, dryrun=self._email_dryrun)
+-                    self.notify(f'Sent {sent} review email(s).')
+             except Exception as ex:
+                 self.notify(f'Send failed: {ex}', severity='error')
++                return
++            if sent is None:
++                self.notify('Failed to send review emails.', severity='error')
++                return
++            self.notify(f'Sent {sent} review email(s).')
++
++            # The mail is out; everything below only records that. It gets its
++            # own handler so a bookkeeping failure is never reported as a send
++            # failure, and never escapes this screen callback.
++            try:
++                self._reply_sent = True
++                self._tracking['series']['status'] = 'replied'
++                # Stamp sent-revision on every non-skip review so that
++                # if this series is later upgraded to a newer revision,
++                # the upgrade step can detect which reviews were already
++                # sent and auto-skip the unchanged patches.
++                my_email = str(self._usercfg.get('email', 'unknown@example.com'))
++                current_rev = int(self._series.get('revision', 1))
++                for target in [self._series] + list(self._patches):
++                    review = target.get('reviews', {}).get(my_email, {})
++                    if review and review.get('patch-state') != 'skip':
++                        review['sent-revision'] = current_rev
++                if not self._save_tracking():
++                    # Silence here means the next session offers these reviews
++                    # as unsent and the maintainer sends them twice.
++                    self.notify(
++                        f'Sent, but could not record it on {self._branch}',
++                        severity='warning',
++                    )
++                self._mark_patches_answered(msgs)
++                mark_outgoing_seen(msgs, dryrun=self._email_dryrun)
++            except Exception as ex:
++                logger.debug('Post-send bookkeeping failed: %s', ex, exc_info=True)
++                self.notify(f'Sent, but recording it failed: {ex}', severity='warning')
  
+         self.push_screen(SendScreen(msgs), _on_send_confirmed)
  
- def test_commit_reachable_branch_filter(
-@@ -387,9 +388,9 @@ def test_commit_reachable_uses_the_gitdir_it_is_given(
-     assert ecode == 0, out
+@@ -1751,15 +1766,16 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
+                     output_dir=None,
+                     reflect=False,
+                 )
+-            if sent is None:
+-                self.notify('Failed to send reply.', severity='error')
+-            elif self._email_dryrun:
+-                self.notify(f'Dry-run: reply to {entry["fromemail"]} logged, not sent')
+-            else:
+-                mark_outgoing_seen([msg], dryrun=self._email_dryrun)
+-                self.notify(f'Reply sent to {entry["fromemail"]}')
+         except Exception as ex:
+             self.notify(f'Send failed: {ex}', severity='error')
++            return
++        if sent is None:
++            self.notify('Failed to send reply.', severity='error')
++        elif self._email_dryrun:
++            self.notify(f'Dry-run: reply to {entry["fromemail"]} logged, not sent')
++        else:
++            mark_outgoing_seen([msg])
++            self.notify(f'Reply sent to {entry["fromemail"]}')
  
-     # An unrelated cwd knows none of the advertised tips, so on its own it
--    # cannot see the commit -- the objects live in 'local'.
-+    # cannot answer -- the objects live in 'local'.
-     monkeypatch.chdir(elsewhere)
--    assert b4.ty.commit_reachable_on_remote(c1, pub, branch='master') is not True
-+    assert b4.ty.commit_reachable_on_remote(c1, pub, branch='master') is None
-     assert (
-         b4.ty.commit_reachable_on_remote(c1, pub, branch='master', gitdir=local) is True
-     )
+     def _load_followup_msgs(self, msgs: List[Any]) -> None:
+         """Parse msgs into follow-up comments and refresh the display."""
+@@ -2240,9 +2256,9 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
+             self.notify('Agent review data loaded')
+         self._restore_original_branch()
+ 
+-    def _save_tracking(self) -> None:
+-        """Save tracking data to the review branch."""
+-        b4.review.save_tracking_ref(
++    def _save_tracking(self) -> bool:
++        """Save tracking data to the review branch.  True if it landed."""
++        return b4.review.save_tracking_ref(
+             self._topdir, self._branch, self._cover_text, self._tracking
+         )
+ 
 
 -- 
 2.53.0
