@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7A030C158
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC243ACA45
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 09:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785489695; cv=none; b=ZTBSjJL7i2abEsdD0HwYa1Dh3Dj/rg8s07ZfaeESIJW6PfpPlkfdze3Oe4Cfl2iYX1kkTkT769QurV3UW9340pWLJsJlVaKAuwV8QwSZ/2DMgKx/w8mqz4vrz6Rccbyq7eDyg5bqET2e6mJKQIV05VKk5Ff7BnhUB8ldMTLnvDo=
+	t=1785489696; cv=none; b=koh4h+KfDpwA/b5Ec1wOrnsqAT5IQpzN5Ya8O+IqWFhSIBIa3kdnlJVx0xobC4wf79xqkavuNF8S05kI71G3J3u+t5y5Q69PMg7E48/E0cH6pYKaHgIpOBN5uFHlvZedJG5uoz57khT4/30O8JXWLCSK3LjnUNyBh1ORRy79aL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785489695; c=relaxed/simple;
-	bh=su0IRGgrOg5ig4uNW/lcynLjguacCinuqIs4pDshBkI=;
+	s=arc-20240116; t=1785489696; c=relaxed/simple;
+	bh=oeULdeKXCkUu4/JYqyizzTImVp1UcjtLltFBGJj8950=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fj+S69kT3x1cQwP9W/lRe+5B6QxAhQswJVMUn1kQYyRi2huGnr/QQ9cIaMIp2Tz8PM90miAY3+mUYV36phdskctWyIZLsGBAlVZEdDvOyvHWZwszuL5on0mGs1Qjsh4fL9+0tpI+gi03rHRANE+8hrRHdMEiqLhw7HOOswciu48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X7MRQUyp; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=Ik0sk4vsVYgliEXvOcIeHSFB2esngDEOIB7dfXBGg7D+Hq1G5TGiRsTdZLqisEUPcKJQDSpsgmdJtG3tVAJmbLxFXOxV3HyTq2Umf6x/J5bkC6KGd828Jlk6+E8WeLqaj2N/+ffESB++8SFDv6pZSfQC0YfX9dAw/IMFbgr5gDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gHE8qVgp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X7MRQUyp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gHE8qVgp"
 Received: by smtp.kernel.org (Postfix)
-	id BE89B1F00A3A; Fri, 31 Jul 2026 09:21:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10921F000E9;
-	Fri, 31 Jul 2026 09:21:32 +0000 (UTC)
+	id E9B9F1F00A3D; Fri, 31 Jul 2026 09:21:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D851F000E9;
+	Fri, 31 Jul 2026 09:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785489693;
-	bh=Gwx70h7uwzskpEYh/7L8f0LAVUeBcVtmTYKpdBKsXNQ=;
+	s=k20260515; t=1785489694;
+	bh=zq5Kt/c0rt9Snfj93uGYS4xa2aEvyBfoXpYWQPuZPYA=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=X7MRQUypySDYPO8wuQnBSuo9VpDsuRRAfJ2Pp/vwKNkd2EtqH+7zJLSnsR0v4Vefr
-	 5IBO91uL3Or1aggfodOXnuoOTcThcisnOPpEwXnR++d2dJtbjAnkDgG0uk4UaZoPz/
-	 kIssCTbqbPmXJIVoMFvnHsOZFJ1hJ9OiCY/1V39ZWPPYig7LaDz+ORGlZ4sIduhcVB
-	 jGD3KAY+xhBt6Al6ALlWN4wihcYNP+vJyHNuv28uNVwtuOxO8JyIgXOCN7DuVaWGH4
-	 97PaMT6evjbF/MbuMCc8mqSLaRAjemJWEMOzGu8ySMi1+P0u7/Tp5zDT0kyPyqlMbA
-	 72Yt9frggTrpg==
+	b=gHE8qVgpDxfvLDPZ1k1/3+av6AmZ3EynVSwTd/5xZTGw5gj6JN/kkQPTEgeJzofVV
+	 IvFfZz3DTXIJs1tJYhdB2Dcz3upwMWU6y3xqyaKaw3k7gGfsv8ydB0HLCJ/u7fPigT
+	 5ecqoPwaJhLBaWYTmJ0QG+eZTooEZGvn5AOOntnjfexEKH9QBiU8B+Ts/t+zdY9oGs
+	 l3RjeHohWOn461aBNPI2G65+4/PwFLw1PL86C0Ek3dOvrDL58bv+3AJyogE7jGeUiW
+	 ekGO48h4NwEyZtUg3IpdfQ+jNuR6fJD2FaN9xXD2VfBJBf2ZleUFW/6Jmn8IHCTIUR
+	 r5R9Y5zNCBr9w==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 11:21:04 +0200
-Subject: [PATCH b4 05/27] review: drop the unused return value from
- set_flags_bulk()
+Date: Fri, 31 Jul 2026 11:21:05 +0200
+Subject: [PATCH b4 06/27] review: don't let archiving a series raise
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,135 +39,142 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v1-5-de68a7c8e4cb@kernel.org>
+Message-Id: <20260731-work-b4-editor-branch-guard-v1-6-de68a7c8e4cb@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v1-0-de68a7c8e4cb@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4626; i=brauner@kernel.org;
- h=from:subject:message-id; bh=su0IRGgrOg5ig4uNW/lcynLjguacCinuqIs4pDshBkI=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIrekUq7PT/33+5JEaKHz7/cf3Km5rTzhW3KE7jPf
- ufzyONo7ihlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZiIVwbDXxGxJ5VPWJQdFdvE
- sowkiw2F/QNer95yV+LO8lvnkxMv/Gf4p2Q1e+KUCQuUDLmmvIw5P1dVOEe1KmnG5+cmCo2vMnj
- X8gIA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5710; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=oeULdeKXCkUu4/JYqyizzTImVp1UcjtLltFBGJj8950=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlZIoytu921vs/RTaPWfAtx07Vn3/fzuqSa/7LUHlQx
+ Zv7rC9bRykLgxgXg6yYIotDu0m43HKeis1GmRowc1iZQIYwcHEKwEQ6SxgZdst0TdGY1DT56oH3
+ yz7Ofy16dIm4Rx1Ta19Pc5T0Qc8zDxj+xy3vs20pvMMpeaQ1ye/hh2TNaw+mWzUYSy5lm7E2M3w
+ PCwA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-set_flags_bulk() returns the number of messages that didn't already
-carry the flag. Nothing uses it. The unread badge accounting it was
-added for ended up taking its count from get_flags_bulk() instead, over
-the messages that are new to the thread, which is a different number.
+archive_series() builds a tarball and writes it into the data directory
+without guarding any of it, so ENOSPC, a permission problem or a missing
+object comes back to the caller as an exception.
 
-An unused return value still reads like a contract callers may rely on
-and the next person has to work out that none do. Take it back out. Keep
-the early continue it brought with it. A row the INSERT just created
-already carries exactly this flag, so there is nothing for the
-read-modify-write below to do.
+Both callers archive a series that has just been thanked, the tracking
+UI right after the SMTP handoff and queue delivery right after the
+message goes out. The mail is gone by then. An exception unwinding
+through the send path is reported as a failure to send, which tells the
+maintainer to send a note that is already on the list, or it escapes the
+screen callback and takes the rest of the TUI session with it.
+
+Report the write failure as (False, detail) like every other failure
+here. Nothing has been destroyed at that point so the archive can be
+retried. Do the same for the Patchwork update, except that it comes
+last. The local archive is done and can't be retried, so a Patchwork
+hiccup is a warning and not a failed archive.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review/messages.py  |  8 ++------
- src/tests/test_messages.py | 44 --------------------------------------------
- 2 files changed, 2 insertions(+), 50 deletions(-)
+ src/b4/review/_review.py | 70 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 41 insertions(+), 29 deletions(-)
 
-diff --git a/src/b4/review/messages.py b/src/b4/review/messages.py
-index a73e986..b388d93 100644
---- a/src/b4/review/messages.py
-+++ b/src/b4/review/messages.py
-@@ -102,13 +102,11 @@ def set_flag(
+diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
+index da20fc4..4c67387 100644
+--- a/src/b4/review/_review.py
++++ b/src/b4/review/_review.py
+@@ -809,6 +809,8 @@ def archive_series(
  
- def set_flags_bulk(
-     conn: sqlite3.Connection, entries: List[Dict[str, Optional[str]]], flag: str
--) -> int:
-+) -> None:
-     """Add *flag* to multiple messages in one transaction.
- 
-     Each entry in *entries* is ``{'msgid': ..., 'msg_date': ...}``.
--    Returns the number of messages that did not have *flag* before.
+     Returns (success, detail): detail is the archive tarball path on
+     success (empty for a database-only archive), or an error message.
++    Never raises: callers archive *after* a thank-you has gone out, and a
++    failure here must not be mistaken for a failure to deliver it.
      """
--    newly_flagged = 0
-     for entry in entries:
-         msgid = entry.get('msgid', '')
-         msg_date = entry.get('msg_date')
-@@ -121,7 +119,7 @@ def set_flags_bulk(
-             (msgid, msg_date, flag),
-         )
-         if cursor.rowcount > 0:
--            newly_flagged += 1
-+            # Row created carrying exactly this flag; nothing to merge
-             continue
-         row = conn.execute(
-             'SELECT flags FROM messages WHERE msgid = ?', (msgid,)
-@@ -130,13 +128,11 @@ def set_flags_bulk(
-             existing = set(row[0].split())
-             if flag not in existing:
-                 existing.add(flag)
--                newly_flagged += 1
-                 conn.execute(
-                     'UPDATE messages SET flags = ? WHERE msgid = ?',
-                     (' '.join(sorted(existing)), msgid),
-                 )
-     conn.commit()
--    return newly_flagged
+     # Imported here: the tarball machinery is only needed when archiving.
+     # b4.review.tracking is re-imported alongside b4.ez because a local
+@@ -833,36 +835,40 @@ def archive_series(
+         if not first_patch:
+             return False, 'No patch commits found in tracking data'
  
+-        tio = io.BytesIO()
+-        mnow = int(time.time())
+-        with tarfile.open(fileobj=tio, mode='w:gz') as tfh:
+-            # Add cover letter
+-            ifh = io.BytesIO()
+-            ifh.write(cover_text.encode())
+-            b4.ez.write_to_tar(tfh, f'{change_id}/cover.txt', mnow, ifh)
+-            ifh.close()
+-            # Add tracking metadata
+-            ifh = io.BytesIO()
+-            ifh.write(make_review_magic_json(tracking).encode())
+-            b4.ez.write_to_tar(tfh, f'{change_id}/tracking.js', mnow, ifh)
+-            ifh.close()
+-            # Add patches as mbox
+-            patches = b4.git_range_to_patches(
+-                topdir, f'{first_patch}~1', f'{review_branch}~1'
+-            )
+-            if patches:
++        try:
++            tio = io.BytesIO()
++            mnow = int(time.time())
++            with tarfile.open(fileobj=tio, mode='w:gz') as tfh:
++                # Add cover letter
+                 ifh = io.BytesIO()
+-                b4.save_git_am_mbox([patch[1] for patch in patches], ifh)
+-                b4.ez.write_to_tar(tfh, f'{change_id}/patches.mbx', mnow, ifh)
++                ifh.write(cover_text.encode())
++                b4.ez.write_to_tar(tfh, f'{change_id}/cover.txt', mnow, ifh)
+                 ifh.close()
++                # Add tracking metadata
++                ifh = io.BytesIO()
++                ifh.write(make_review_magic_json(tracking).encode())
++                b4.ez.write_to_tar(tfh, f'{change_id}/tracking.js', mnow, ifh)
++                ifh.close()
++                # Add patches as mbox
++                patches = b4.git_range_to_patches(
++                    topdir, f'{first_patch}~1', f'{review_branch}~1'
++                )
++                if patches:
++                    ifh = io.BytesIO()
++                    b4.save_git_am_mbox([patch[1] for patch in patches], ifh)
++                    b4.ez.write_to_tar(tfh, f'{change_id}/patches.mbx', mnow, ifh)
++                    ifh.close()
  
- def remove_flag(conn: sqlite3.Connection, msgid: str, flag: str) -> None:
-diff --git a/src/tests/test_messages.py b/src/tests/test_messages.py
-index 904776d..14e1743 100644
---- a/src/tests/test_messages.py
-+++ b/src/tests/test_messages.py
-@@ -222,50 +222,6 @@ class TestCleanupOld:
-         conn.close()
+-        # Write archive to data directory
+-        datadir = b4.get_data_dir()
+-        archpath = os.path.join(datadir, 'review-archived')
+-        os.makedirs(archpath, exist_ok=True)
+-        tarpath = os.path.join(archpath, f'{change_id}.tar.gz')
+-        with open(tarpath, mode='wb') as tout:
+-            tout.write(tio.getvalue())
++            # Write archive to data directory
++            datadir = b4.get_data_dir()
++            archpath = os.path.join(datadir, 'review-archived')
++            os.makedirs(archpath, exist_ok=True)
++            tarpath = os.path.join(archpath, f'{change_id}.tar.gz')
++            with open(tarpath, mode='wb') as tout:
++                tout.write(tio.getvalue())
++        except Exception as ex:
++            # The branch is still intact, so this is safe to retry
++            return False, f'Could not write archive for {change_id}: {ex}'
  
+         ok, err = delete_review_branch(topdir, review_branch, allow_switch=allow_switch)
+         if not ok:
+@@ -878,9 +884,15 @@ def archive_series(
+     except Exception as ex:
+         return False, f'DB error: {ex}'
  
--class TestSetFlagsBulkReturnValue:
--    """Tests for the newly-flagged count returned by set_flags_bulk()."""
--
--    def test_counts_new_rows(self, tmp_path: pytest.TempPathFactory) -> None:
--        conn = messages.get_db()
--        entries: List[Dict[str, Optional[str]]] = [
--            {'msgid': 'n1@example.com', 'msg_date': None},
--            {'msgid': 'n2@example.com', 'msg_date': None},
--        ]
--        assert messages.set_flags_bulk(conn, entries, 'Seen') == 2
--        conn.close()
--
--    def test_repeat_is_zero(self, tmp_path: pytest.TempPathFactory) -> None:
--        conn = messages.get_db()
--        entries: List[Dict[str, Optional[str]]] = [
--            {'msgid': 'r1@example.com', 'msg_date': None},
--        ]
--        messages.set_flags_bulk(conn, entries, 'Seen')
--        assert messages.set_flags_bulk(conn, entries, 'Seen') == 0
--        conn.close()
--
--    def test_mixed_new_and_existing(self, tmp_path: pytest.TempPathFactory) -> None:
--        conn = messages.get_db()
--        first: List[Dict[str, Optional[str]]] = [
--            {'msgid': 'm1@example.com', 'msg_date': None},
--        ]
--        messages.set_flags_bulk(conn, first, 'Seen')
--        both: List[Dict[str, Optional[str]]] = [
--            {'msgid': 'm1@example.com', 'msg_date': None},
--            {'msgid': 'm2@example.com', 'msg_date': None},
--        ]
--        assert messages.set_flags_bulk(conn, both, 'Seen') == 1
--        conn.close()
--
--    def test_new_flag_on_existing_row(self, tmp_path: pytest.TempPathFactory) -> None:
--        conn = messages.get_db()
--        entries: List[Dict[str, Optional[str]]] = [
--            {'msgid': 'f1@example.com', 'msg_date': None},
--        ]
--        messages.set_flags_bulk(conn, entries, 'Seen')
--        assert messages.set_flags_bulk(conn, entries, 'Answered') == 1
--        conn.close()
--
--
- class TestMarkOutgoingSeen:
-     """Tests for mark_outgoing_seen()."""
+-    # Mark as archived in Patchwork
++    # Mark as archived in Patchwork.  The local archive is already done and
++    # cannot be retried, so a Patchwork hiccup is a warning, not a failure.
+     if pw_series_id:
+-        pw_update_series_state(pw_series_id, 'accepted', archived=True)
++        try:
++            pw_update_series_state(pw_series_id, 'accepted', archived=True)
++        except Exception as ex:
++            logger.warning(
++                'Could not archive series %s in Patchwork: %s', change_id, ex
++            )
+ 
+     return True, tarpath
  
 
 -- 
