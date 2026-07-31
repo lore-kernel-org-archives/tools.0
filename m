@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEED1A6800
-	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E9237E302
+	for <tools@linux.kernel.org>; Fri, 31 Jul 2026 21:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785535174; cv=none; b=QACF0ltaVL0Bk6gPHrjnozj4Ir6eYEk7UEt3hqL684HLoRd3fkGAPbwscPSi/4SFTT+6LOVLBVksNy/QS5TG5ejQwqcXhdDSMWwvDKZbh39C1ACyb2bHAOmxnqh73AQRh3rabn7N5itkMWyEaJBCHLZLsN+auYodidHlCm0oLU8=
+	t=1785535176; cv=none; b=Cb7myIuYj4AH9sw+3MdGZaOM+6kjJZtmZ1Z40BdcgrXS2cOpDUQqGi79n0Dk+G23CKJ69+tjZKUgGQjtvqVwvPa8QhF98sv5zRgbnbZ+CvtjmlPuxur8edIz6UeaTtBuDf4F81mKdRVEtzGjVaT/srlbROUWfKqJ+Mub8NYSAKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785535174; c=relaxed/simple;
-	bh=1TBXUbSoOGpOW6hIkHWX8FyHts5sI7d93EPVBKhEuPg=;
+	s=arc-20240116; t=1785535176; c=relaxed/simple;
+	bh=bahuyIcqU7764cYtkvG9Z9iRZmhr2aF6nXkFMGZivsg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=d6RyybplacURwafvVERMANYGo4vklUUhUDeW8uozsVRQKflZ6eUHBtCBJxbetwBxsrH6Harw4ESXoRshcz4fcLc9oOjeF4Y/Q4UTel4mTxYpk09aE3HLOYpj5O9zwjBKzpxvglY1NFwsL2y/2QYOu87lL5agVFk+5xrhDFYJRW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jlcjj2sS; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=aUQoIGrS/sVVr93EG2SmPiAB+FbQoxISKJppAkPgaoXTk0rYK3aZtOCfgIMvEsmebraq+8CN8Q2dbTC0qpIl+LAuvQzk0sXbG5t2cbVpVSYE74y+MLmRxLWbstPZOBsAF9+ME41oL/yveNgM0Y2jdZbLkwSoJuRf0nVptu6Sh+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FCbr1CU2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jlcjj2sS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FCbr1CU2"
 Received: by smtp.kernel.org (Postfix)
-	id 7A6851F00ACA; Fri, 31 Jul 2026 21:59:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3741F00AC4;
-	Fri, 31 Jul 2026 21:59:32 +0000 (UTC)
+	id A42AC1F00ACF; Fri, 31 Jul 2026 21:59:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51C11F00AC4;
+	Fri, 31 Jul 2026 21:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785535173;
-	bh=pjJX2UnDtaVtaX9eCgAzG02zX9PrwYRlhvBrDtueCbA=;
+	s=k20260515; t=1785535174;
+	bh=g2kcJtIbs37Viw5MsWRrHWBqpPHv3Hs6VEVc26MiTc4=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=Jlcjj2sSeZPO8F+XcqPN6OFbTOft3VIrpOoGzpz6zQ03Vun5gm2bpMtSNz6GBgaAO
-	 fMD53wk2H3sAV8EzD9dBpkFw/aerw5tOn/iTm2iRo+9GUcbxXKOotnGXcIBG3fqe8t
-	 CYXDnLixRsd2Ktdm9Sn1V1p88dXOrFReBY7naELaRGtAobwZ8JCY8/J3RjuFyzRtf4
-	 SV0vuS5P5vkklb0JVTIg30wJ5+ksCtaOFLEiLGYJxmgcCU3Ydm/J+eOeUeN0Xcc84+
-	 UZ3fgng9+5UUmepjE/8dsJKVhs9CJ32IrKXdfX48TfGCzevVtJVbH9Oo3jI6Cia0W1
-	 yPWr5zTeyZ4zg==
+	b=FCbr1CU2OoDBnGNpsrmFzULWXQr9uFXD1DfTY6LKmqNmywTDcab5FbhE1Xm58GxL2
+	 efY+RX495A/Zp4LDA+J6gV2+mx3+0mtDxwi2Od3WAKhsIpmtAttFG8IodrZQTrwD9s
+	 3SpSjMB34C0op6XppPRwO6Nyv89oCLWhOUtN3POgkrGmCpfhyfDV3MuNKTZ+wpn6/y
+	 LiXurmtqoHTWGfE64exiPvSoAuX3V6TDKvCSZ4bHP9drjL5PMfzezihpaQcB2bXI+O
+	 KXInQ8//lQw4/iSfRZLPXWtGCDC2c6xCrjylweq0PMnqw3oje4aSGY+VKvsq/XlLhs
+	 nSslNhLeWiiVg==
 From: Christian Brauner <brauner@kernel.org>
-Date: Fri, 31 Jul 2026 23:59:14 +0200
-Subject: [PATCH b4 v2 33/44] tests: cover create_review_branch cleaning up
- a half-built branch
+Date: Fri, 31 Jul 2026 23:59:15 +0200
+Subject: [PATCH b4 v2 34/44] review-tui: put the branch back after a
+ revision upgrade
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,139 +39,183 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-work-b4-editor-branch-guard-v2-33-243fd19d322d@kernel.org>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260731-work-b4-editor-branch-guard-v2-34-243fd19d322d@kernel.org>
 References: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 In-Reply-To: <20260731-work-b4-editor-branch-guard-v2-0-243fd19d322d@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: "Christian Brauner (Amutable)" <brauner@kernel.org>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.16-dev-af865
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5174; i=brauner@kernel.org;
- h=from:subject:message-id; bh=1TBXUbSoOGpOW6hIkHWX8FyHts5sI7d93EPVBKhEuPg=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs1x5Ou6P+lVittZCQ//Na/elxxlC/Q4P0n0684d4
- ovTFH39O0pZGMS4GGTFFFkc2k3C5ZbzVGw2ytSAmcPKBDKEgYtTACYyR57hv2fwgumLLNsOKYg/
- OHeZ7/Z6ng83Mq08/PSb01dZxoinT2P4K3Puj8qLqUn7Akru2pvzpac2/c58x3pz86PTjR9SXhw
- qZwQA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8127; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=bahuyIcqU7764cYtkvG9Z9iRZmhr2aF6nXkFMGZivsg=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTlSs3Zv22li2GRnZnmSZOFUZ73jm5rmhhWZiGxXIOHQ
+ Ynj/tHQjlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIl8kWD477C5lzNDlmmC+MfH
+ 4c4/5YU0RY1Ss35E6Lt2Jn1b48txk5HhA+9EMQHxsjf8zFFz4i/qrpwqtr39hu/hB4FrI54Y2V5
+ gAgA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Both starting points with the patch range failing to read: from a
-branch and from a detached HEAD. The detached case starts at the tip
-rather than the base, so restoring to the base would not pass.
+A revision upgrade builds a temporary branch and renames it onto the
+review branch, and HEAD follows the rename. Nothing put it back, so
+the worktree was left on the review branch whether the upgrade
+finished or not. Restore on every exit path with a context manager
+that takes git_head_restore_args(), like the rebase action beside it.
+
+The error path could not run at all: create_review_branch() exits
+rather than raises, and SystemExit is not an Exception, so a failed
+apply left the half-built branch behind and unwound into the UI.
+Catch it, delete the branch once HEAD is off it, and report "see
+above" since the reason is already on screen. The conflict-resolve
+path now falls through to the same create call and the same handler.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/tests/test_review.py | 92 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
+ src/b4/review_tui/_tracking_app.py | 107 ++++++++++++++++++++++++-------------
+ 1 file changed, 70 insertions(+), 37 deletions(-)
 
-diff --git a/src/tests/test_review.py b/src/tests/test_review.py
-index 5fdb608..4f56689 100644
---- a/src/tests/test_review.py
-+++ b/src/tests/test_review.py
-@@ -3,6 +3,7 @@ import email.message
- import importlib.util
- import json
- import logging
-+import os
- from typing import Any, Dict, Iterator, List, Optional, Tuple, Union
- from unittest import mock
+diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
+index cc845df..c547d7c 100644
+--- a/src/b4/review_tui/_tracking_app.py
++++ b/src/b4/review_tui/_tracking_app.py
+@@ -319,6 +319,34 @@ class _TakeWorktree:
+         self._keep = True
  
-@@ -4763,3 +4764,94 @@ class TestArchiveSeries:
-         # Nothing was destroyed, so the maintainer can simply retry
-         assert b4.git_branch_exists(repo, branch)
-         assert self._db_status() == 'accepted'
+ 
++@contextlib.contextmanager
++def _keep_current_branch(topdir: str) -> Generator[Callable[[], None], None, None]:
++    """Put HEAD back where it was when the block started.
++
++    Tracking-list actions run with the UI suspended, and some of them check
++    out a branch of their own to get their work done. The list comes back up
++    when they return, so the branch they moved to must not outlive them: the
++    worktree is the user's, shared with their other terminals, and they never
++    asked to be moved. Restores however the block ends, including when the
++    action bails out early or something under it raises.
++
++    Yields the restore itself, for the callers that need to be off the branch
++    before the block ends -- deleting it, say, which git refuses while it is
++    checked out. Calling it early is safe: the one on the way out then has
++    nothing left to do.
++    """
++    start_head = b4.git_head_restore_args(topdir)
++
++    def restore() -> None:
++        if start_head and b4.git_head_restore_args(topdir) != start_head:
++            b4.git_run_command(topdir, start_head, logstderr=True)
++
++    try:
++        yield restore
++    finally:
++        restore()
 +
 +
-+class TestCreateReviewBranchCleanup:
-+    """A branch that cannot be finished is not left checked out."""
-+
-+    @staticmethod
-+    def _seed_fetch_head(gitdir: str) -> Tuple[str, str]:
-+        """Leave a commit for the cherry-pick to land, as FETCH_HEAD.
-+
-+        Returns (base, tip): the commit to build the review branch on, and
-+        the one waiting in FETCH_HEAD.
-+        """
-+        ecode, base = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
-+        assert ecode == 0
-+        base = base.strip()
-+
-+        with open(os.path.join(gitdir, 'file1.txt'), 'a') as fh:
-+            fh.write('review branch cleanup\n')
-+        b4.git_run_command(gitdir, ['add', 'file1.txt'])
-+        ecode, _out = b4.git_run_command(gitdir, ['commit', '-m', 'cleanup test'])
-+        assert ecode == 0
-+        ecode, tip = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
-+        assert ecode == 0
-+        tip = tip.strip()
-+        with open(os.path.join(gitdir, '.git', 'FETCH_HEAD'), 'w') as fh:
-+            fh.write(f'{tip}\t\tbranch\n')
-+        ecode, _out = b4.git_run_command(gitdir, ['reset', '--hard', base])
-+        assert ecode == 0
-+        return base, tip
-+
-+    @staticmethod
-+    def _create_with_unreadable_range(gitdir: str, branch: str, base: str) -> None:
-+        """Run create_review_branch() with the patch range failing to read."""
-+        real_run = b4.git_run_command
-+
-+        def _fail_revlist(
-+            topdir: Any, args: List[str], *a: Any, **kw: Any
-+        ) -> Tuple[int, Union[str, bytes]]:
-+            if args[:2] == ['rev-list', '--reverse']:
-+                return 1, ''
-+            return real_run(topdir, args, *a, **kw)
-+
-+        with mock.patch.object(b4, 'git_run_command', side_effect=_fail_revlist):
-+            with pytest.raises(SystemExit):
-+                review.create_review_branch(
-+                    gitdir,
-+                    branch,
-+                    base,
-+                    b4.LoreSeries(1, 1),
-+                    'https://example.com/x',
-+                    'https://example.com/%s',
-+                )
-+
-+    def test_cleans_up_when_the_patch_range_cannot_be_read(self, gitdir: str) -> None:
-+        """Everything between the checkout and the tracking commit runs with
-+        HEAD already on the new branch.  Bailing out there without restoring
-+        leaves the caller standing on a branch that was never finished, which
-+        the two neighbouring failures below it already knew to avoid."""
-+        ecode, _out = b4.git_run_command(gitdir, ['checkout', '-q', '-b', 'work'])
-+        assert ecode == 0
-+        base, _tip = self._seed_fetch_head(gitdir)
-+
-+        branch = 'b4/review/cleanup-test'
-+        self._create_with_unreadable_range(gitdir, branch, base)
-+
-+        assert b4.git_get_current_branch(gitdir) == 'work'
-+        assert not b4.git_branch_exists(gitdir, branch)
-+
-+    def test_cleans_up_from_a_detached_head(self, gitdir: str) -> None:
-+        """A detached HEAD has no branch name to go back to, and skipping the
-+        restore on that account costs both halves of the cleanup: git refuses
-+        to delete the branch HEAD is standing on, so the caller keeps the
-+        stranding *and* the leftover.  The name comes from the change-id, so
-+        the next attempt at that series then walks into 'already exists'.
-+
-+        Detached at the FETCH_HEAD tip rather than at the base, so restoring
-+        to the base the branch was created at does not pass for remembering
-+        where HEAD actually was.
-+        """
-+        base, tip = self._seed_fetch_head(gitdir)
-+        ecode, _out = b4.git_run_command(gitdir, ['checkout', '-q', '--detach', tip])
-+        assert ecode == 0
-+
-+        branch = 'b4/review/cleanup-detached'
-+        self._create_with_unreadable_range(gitdir, branch, base)
-+
-+        assert b4.git_get_current_branch(gitdir) is None
-+        ecode, head = b4.git_run_command(gitdir, ['rev-parse', 'HEAD'])
-+        assert ecode == 0
-+        assert head.strip() == tip
-+        assert not b4.git_branch_exists(gitdir, branch)
+ @contextlib.contextmanager
+ def _take_worktree(
+     topdir: str, target_branch: str
+@@ -4256,13 +4284,16 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+ 
+         upgrade_branch = f'b4/review/_tmp-{change_id}-v{target_rev}-upgrade'
+ 
+-        with self.suspend():
+-            topdir = b4.git_get_toplevel()
+-            if not topdir:
+-                logger.critical('Not in a git repository')
+-                _wait_for_enter()
+-                return
++        topdir = b4.git_get_toplevel()
++        if not topdir:
++            self.notify('Not in a git repository', severity='error')
++            return
+ 
++        # The apply below checks out the upgrade branch and renames it onto the
++        # review branch, so HEAD ends up there whether the upgrade succeeds or
++        # not. The tracking list comes back up when this returns; leaving the
++        # worktree moved strands the user on the review branch when they quit.
++        with self.suspend(), _keep_current_branch(topdir) as restore_branch:
+             # --- 1. Save maintainer review data keyed by patch-id ---
+             logger.info('Saving review data from v%d...', current_rev)
+             patch_ids = b4.review.get_review_branch_patch_ids(topdir, review_branch)
+@@ -4348,37 +4379,33 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             # Use the target revision's own rethread state, not the currently
+             # tracked revision's — they can differ across an upgrade.
+             _is_rt = bool(target_is_rethreaded)
++            # create_review_branch() reports failure by exiting rather than
++            # raising, and SystemExit is not an Exception, so catch it too --
++            # letting it out of here skips the cleanup below and unwinds
++            # straight through the suspend and into the UI.
+             try:
+                 logger.info('Base: %s', base_sha)
+-                b4.git_fetch_am_into_repo(
+-                    topdir,
+-                    ambytes=ambytes,
+-                    at_base=base_sha,
+-                    origin=linkurl,
+-                    am_flags=['-3'],
+-                    resolve=True,
+-                )
+-                b4.review.create_review_branch(
+-                    topdir,
+-                    upgrade_branch,
+-                    base_sha,
+-                    lser,
+-                    linkurl,
+-                    linkmask,
+-                    num_prereqs=0,
+-                    identifier=self._identifier,
+-                    status='reviewing',
+-                    is_rethreaded=_is_rt,
+-                )
+-                logger.info('Upgrade branch created: %s', upgrade_branch)
+-            except b4.AmConflictError as cex:
+-                if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
+-                    # User aborted — clean up upgrade branch if it was
+-                    # partially created before the conflict
+-                    if b4.git_branch_exists(topdir, upgrade_branch):
+-                        b4.git_run_command(topdir, ['branch', '-D', upgrade_branch])
+-                    _wait_for_enter()
+-                    return
++                try:
++                    b4.git_fetch_am_into_repo(
++                        topdir,
++                        ambytes=ambytes,
++                        at_base=base_sha,
++                        origin=linkurl,
++                        am_flags=['-3'],
++                        resolve=True,
++                    )
++                except b4.AmConflictError as cex:
++                    if not b4.resolve_am_conflict_in_shell(topdir, cex, origin=linkurl):
++                        # User aborted.  Nothing this run made is left -- the
++                        # upgrade branch is not created until the am lands --
++                        # but the name is derived from the change-id and the
++                        # revision, so an earlier attempt that ended somewhere
++                        # without cleanup left one sitting on it.  Take it with
++                        # us rather than let it fail the next attempt.
++                        if b4.git_branch_exists(topdir, upgrade_branch):
++                            b4.git_run_command(topdir, ['branch', '-D', upgrade_branch])
++                        _wait_for_enter()
++                        return
+                 b4.review.create_review_branch(
+                     topdir,
+                     upgrade_branch,
+@@ -4392,8 +4419,14 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                     is_rethreaded=_is_rt,
+                 )
+                 logger.info('Upgrade branch created: %s', upgrade_branch)
+-            except Exception as ex:
+-                logger.critical('Error creating review branch: %s', ex)
++            except (Exception, SystemExit) as ex:
++                # SystemExit only carries the exit code; create_review_branch()
++                # has already said why on its way out.
++                reason = 'see above' if isinstance(ex, SystemExit) else str(ex)
++                logger.critical('Error creating review branch: %s', reason)
++                # Off the half-built branch before dropping it: git refuses to
++                # delete the branch it has checked out.
++                restore_branch()
+                 if b4.git_branch_exists(topdir, upgrade_branch):
+                     b4.git_run_command(topdir, ['branch', '-D', upgrade_branch])
+                 _wait_for_enter()
 
 -- 
 2.53.0
