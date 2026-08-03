@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCB630F924
-	for <tools@linux.kernel.org>; Mon,  3 Aug 2026 15:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AC031F98B
+	for <tools@linux.kernel.org>; Mon,  3 Aug 2026 15:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
 ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785771317; cv=pass; b=J+AJ4OBvOx2ydAP05d1voipvLrBST5x1hxIOHU37DpbL2jaq+MJD8BGSucWXm42piBGyr/DFMcz5fyvdJozBwq6j9JI+KEMMidYxldwjozJKJhWvd7c4vWcPMZW4JqZz3wAo7WkkYHlDHF7CsgxbYw8Op/OX4YEAwX0fB6tgLXc=
+	t=1785771603; cv=pass; b=WuvEA0xGwddfvCTirxEe3jj3ibbFI7LOejL7mAvr2tWOwuMO7cUZRsv/3EZ2EItoiMwK2u2R2AolcST1V2npaQajpWpdzXdHTaPkXDnFpCm+4bCHcYbX0ERvor+nex3JFvhzngd4+G28TNDna39p39E5G/mZDJp32xjp+Ke0mhw=
 ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785771317; c=relaxed/simple;
-	bh=yoLldfP2TeZXJF1vELk/27IWTxkcD5odcBxqez8H/YY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChNpUvIptG0AhrjNr2OTNV8oVG/3MCGlsidT3DODrWfRAZYydKTsT9yYwl8lYUTuluiLSg03/ZGcePM45ORI8zovdQz7MAXVy0fkpVvOSD0axxTKBf+i9Isiy7UMfbSax+tQGJ9d49aqWYB+Lj/dNTR8S+K1ecd5CFlKH0iVxHY=
-ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b=ZrEo5RGB; arc=pass smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785771603; c=relaxed/simple;
+	bh=okAEhpuwBNgHXmCtd9uWnG+1I9A7tq66CDUVkXXblEU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
+	 References:In-Reply-To; b=D3xrD+m3+Jo9UVj7cK1E9ZbWXQiWvbpbWz2KypVTPp3SdzX3vdiJWrxbJ0JOR7Ze7nv2FxjHK25CknSQRUVimPV707wZb1zSwGNjdBruTMeMYSYwM2LQx5CfLBchsNYHSVyqVsStpEIKRD15YIP0M3AsYHFTsVvTSOge5DtvScE=
+ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b=QHDPjxZC; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b="ZrEo5RGB"
+	dkim=pass (1024-bit key) header.d=ritovision.com header.i=rito@ritovision.com header.b="QHDPjxZC"
 Received: by smtp.kernel.org (Postfix)
-	id 049001F000E9; Mon,  3 Aug 2026 15:35:16 +0000 (UTC)
+	id 04D251F00A3A; Mon,  3 Aug 2026 15:40:02 +0000 (UTC)
 Authentication-Results: smtp.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=136.143.188.15
 ARC-Seal: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=pass;
-	t=1785771315;
-	b=hjbk6roqqGKJRW+D6yM8eqN+JIeW7N6C8kcYfEQl8Y6zDSnUgtabHGqRmc6jti+8iGvQ
-	 8LxHilcgKSoPd09sBnmAGXgY+m/54Omf4H2Ah4VcnI68KN6gRYNaqlqWpdXi0vzE9yZg/
-	 CegP5McUWA5V8/uwFj8T4YpOhijWvfUKJvY1goXrT97yK7/MCr3gCU/O5EHLMQ9uBxFVt
-	 TGWwF2tiG/Aq/XaB0v9V6Qrrr6jy1G0JsMW2LlEtGgoaTvFUCTaYGoOvlqc4bVEG/q2/L
-	 RPBEKCME86eMjzTKzlNDTib4V52v2ObslNH9xaauxFyEV00htuSNHzpFSt4bOHutm2g==
+	t=1785771601;
+	b=egFv5gaz2LslO+D07lpTBpkvsTYVoCKzP5mfQP39UGrha2HfOjeZ1kqCCk6bCqSdCtfU
+	 /TYxI/NO8SIFIPyKjuj1QRfg+b0G42U3kQXIv3IP/8HOi44V3yFcfT62rm25e98873j5/
+	 DVRkjKifLaMoUuTOLn4Eie5xiBcF5E98+zFQlytU7nqyNkFdHXnBf/+YaGuirp66xoIxk
+	 KExnrOsWVnSJBpkGkveDO9X36tVm4oNOFpXWKWzQUiZgZSGW6sW0F2WdjpBixDfHnOlho
+	 qef4rfTeIWKz7elEAKMvWUU8Hmqt3yGWonv1w5OIc4Gq951GW+WGETHYc3iSXmg5lWw==
 ARC-Message-Signature: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1785771315;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-ZohoMailClient;
-	bh=DrKdgLnN0Wgu43uNuo/KtvDlB3Mtr0I8cWstTG0n1h0=;
-	b=fR/7+hjW3FeGFV7hW5bBs4p1bMDcoP1mGfxC4N5amwKpUSdCOXqqccZ5DTGHM1BsOwLd
-	 QcTHQJ0ZUL3PbUvhWh9jPfQF3W+RFXrDVYZnCVn5WXrzmQy207E+fOyI2xeJY4ot1LD/I
-	 +P0sie9cyBkp1b3tRn0HCoAuWmQLTzccCE6+K0OsPJKYJBbSdj0YfB0+8lFlJzSRhuqs4
-	 wX8ywFWNVqQs9/Xkl4nCUIYvHDcsNoSieFDvvNltHfcleB+vQTEngdjsXVHhekDDDwxKS
-	 dHVQqW1S9DmiMVc6DbgXgkt2PfiIPKyOTQh7IOuA9C7t/aUvt7PWhazvdJrKo2OE4Tg==
-ARC-Authentication-Results: i=2; smtp.kernel.org; dkim=pass header.d=ritovision.com header.i=rito@ritovision.com header.a=rsa-sha256 header.s=zmail header.b=ZrEo5RGB;
+	c=relaxed/relaxed; t=1785771601;
+	h=DMARC-Filter:DKIM-Signature:Received:Mime-Version:
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Subject:Cc:
+	 From:To:X-Mailer:References:In-Reply-To:X-ZohoMailClient;
+	bh=okAEhpuwBNgHXmCtd9uWnG+1I9A7tq66CDUVkXXblEU=;
+	b=KHJBSWyNamF+MJnavQ2fke9G+GMW8L6TspnmH4IWQJ+7EjtqST73IWhRpXcLwJntkOOn
+	 f48DkfVZOYcyc2aCaealhj9yPSMvps2VGdn9rpe493iYcZsENe71A9Y0Z1ezj7QYGoKrC
+	 SMtrpULLs8pFsbEpm003YtaSq2w9Lh3Bp5ThH+3QeaOUiDeCmDZY2/+aJDpG5kQ38UJwI
+	 arJkT50VDaP7+MqQgEJFHRgVzQh+LQgVQsC/cYpr9ORxfRSI5hkG5UFPoIQWpRYkfjpkA
+	 T/QqDevMVzvp1G9NJzv4EkRWtKrWLiN9AqhrM/1xLQgYA+Yq4qB5fnKSJIsOk68NZ+A==
+ARC-Authentication-Results: i=2; smtp.kernel.org; dkim=pass header.d=ritovision.com header.i=rito@ritovision.com header.a=rsa-sha256 header.s=zmail header.b=QHDPjxZC;
 	dmarc=pass header.from=ritovision.com;
 	spf=pass smtp.mailfrom=ritovision.com;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=136.143.188.15
@@ -43,98 +43,60 @@ Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15]
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 4AA671F00A3D;
-	Mon,  3 Aug 2026 15:35:15 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 51F2F1F000E9;
+	Mon,  3 Aug 2026 15:40:01 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=ritovision.com header.i=rito@ritovision.com header.a=rsa-sha256 header.s=zmail header.b=ZrEo5RGB
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 4AA671F00A3D
+	dkim=pass (1024-bit key, unprotected) header.d=ritovision.com header.i=rito@ritovision.com header.a=rsa-sha256 header.s=zmail header.b=QHDPjxZC
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 51F2F1F000E9
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=ritovision.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ritovision.com
-ARC-Seal: i=1; a=rsa-sha256; t=1785771312; cv=none; 
+ARC-Seal: i=1; a=rsa-sha256; t=1785771599; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=Oeg439BDBvzWx5nfyzUfO0tbJuIcrBdzIVZ1mQhcgnFuxydUlDl3mekg2vR1wn71KTm3bmWHj+qKf/reHymOKwG0LxgOzI22N4Z1VqmtnI+kD+/tWfujADSHmotwrmaTc6SQLYx7LoQYwtkdv6xzu8zIWGuEx9yZVh6YC4KKQyY=
+	b=aQV6tLoy3+4AQ12gDIC9ht83am4YGwwYP4FWOxBjzrwtgZKtQH47FMgkPwSoMMUbjxkn7NMU4+BeV1yNHFOHf7UOAFTNCoHjbBrECn7KKT67uBa9vL98V/4K+V7i7dnfbJAlKS53iX28L/QF+kCSb37MzOm61yT9MurXyzvUipg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1785771312; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=DrKdgLnN0Wgu43uNuo/KtvDlB3Mtr0I8cWstTG0n1h0=; 
-	b=cXWBHXUKjN+dGy/URRzE3MTDOvGGGfc7v46wX8hlatPRuLtQWFo9AekPvOfS715w5XPhQZIGEwLRvBC3qezYWeaiDg7ieP0dHL2giVFOsCUODpJ0WWvG50a/BErKQCAsXdyZYr+qeyWQ9bD8AM09a1T7TplXmC/YrRXK/+Z/ZpA=
+	t=1785771599; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=okAEhpuwBNgHXmCtd9uWnG+1I9A7tq66CDUVkXXblEU=; 
+	b=hax7ufyrnsvxIfZjjD+pC2CX2TGXgWOlnjGeZ3DXsyetEJrI/lKC22LQmgjYwH1AGxcmehIGmdilUobGk1o80sZVu83VQA+HQ1IQSaEpGbbkBO04Ffoc+a3DPqB3Ed83V5lKc9PHhh2dic7NRIf17i84mOVpPf6wbGWf6qzFB2M=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=ritovision.com;
 	spf=pass  smtp.mailfrom=rito@ritovision.com;
 	dmarc=pass header.from=<rito@ritovision.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1785771312;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1785771599;
 	s=zmail; d=ritovision.com; i=rito@ritovision.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=DrKdgLnN0Wgu43uNuo/KtvDlB3Mtr0I8cWstTG0n1h0=;
-	b=ZrEo5RGBn3A1jUaFlXwcmCtryECGsLjkycJp/mmkOYCSj5V+G3fdNvnoN1GQ4X8m
-	liuE6zfBxW6tzsZmXqO7CSg2wJPmwhvpJsXGGcapHKwcfWbIjeQpkGearuSenrSAGnl
-	8vIQ2oDDbafnjXuq5yaOqbiWK10VoeHbKOonuKXU=
-Received: by mx.zohomail.com with SMTPS id 1785771309393743.220309992302;
-	Mon, 3 Aug 2026 08:35:09 -0700 (PDT)
-From: Rito Rhymes <rito@ritovision.com>
-To: tools@kernel.org
-Cc: Konstantin Ryabitsev <mricon@kernel.org>,
-	Rito Rhymes <rito@ritovision.com>
-Subject: [PATCH v1 2/2] drop mobile banner rules made unreachable by the drawer
-Date: Mon,  3 Aug 2026 11:35:02 -0400
-Message-ID: <20260803153502.32096-2-rito@ritovision.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260803153502.32096-1-rito@ritovision.com>
-References: <20260803153502.32096-1-rito@ritovision.com>
+	h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Date:Message-Id:Message-Id:Subject:Subject:Cc:Cc:From:From:To:To:In-Reply-To:Reply-To;
+	bh=okAEhpuwBNgHXmCtd9uWnG+1I9A7tq66CDUVkXXblEU=;
+	b=QHDPjxZCi0xxJEi2Wpvg+RfRRKLjwBw5NVT/ZYCwfhrZYW3sppfDAbRL9ayga9gd
+	mDF6OpdxAW1FmnZWcqPHIyel8TPDFr89eQhN298skaQ79EeoTF9Dh6RfyUDASlqYIWB
+	CinkLakZOnE+35AKSF/XCj83WJKGh6Y5zr22JIfk=
+Received: by mx.zohomail.com with SMTPS id 1785771596843496.0018130931162;
+	Mon, 3 Aug 2026 08:39:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 03 Aug 2026 11:39:54 -0400
+Message-Id: <DKFF75A32GET.6XEQPMNNROK7@ritovision.com>
+Subject: Re: [PATCH v1 0/6] Allow site layouts to render properly on mobile
+ devices
+Cc: <tools@kernel.org>
+From: "Rito Rhymes" <rito@ritovision.com>
+To: "Konstantin Ryabitsev" <mricon@kernel.org>, "Rito Rhymes"
+ <rito@ritovision.com>
+X-Mailer: aerc 0.21.0
+References: <20260316180036.71949-1-rito@ritovision.com>
+ <20260803-inscrutable-graceful-bullfrog-df737b@meerkat>
+In-Reply-To: <20260803-inscrutable-graceful-bullfrog-df737b@meerkat>
 X-ZohoMailClient: External
 
-The previous patch hides #banner below 848px, so the rules that shrank
-it there no longer apply. This includes the #banner ul clearance from
-commit 6898150 ("Fix mobile series follow-ups to preserve desktop
-layout").
+I'm glad to see the series in action! And thanks for the follow up fix.
 
-No rendering change.
+I just sent a follow-on two-patch series adding drawer navigation for
+mobile, to round out the mobile experience. The second patch removes the
+banner rules that become unreachable once the drawer hides #banner at
+that breakpoint, including the nav clearance from your fix.
 
-Signed-off-by: Rito Rhymes <rito@ritovision.com>
-Assisted-by: LLM [codegen, review]
----
- korgi/static/css/main.css | 22 ----------------------
- 1 file changed, 22 deletions(-)
-
-diff --git a/korgi/static/css/main.css b/korgi/static/css/main.css
-index 60538d9..d6fb3f9 100644
---- a/korgi/static/css/main.css
-+++ b/korgi/static/css/main.css
-@@ -504,28 +504,6 @@ dt {
-         }
-     }
- 
--    #banner {
--        width: auto;
--        margin: 0;
--        border-radius: 0;
--        border-left: none;
--        border-right: none;
--        border-top: none;
--    }
--    #banner h1 {
--        font-size: 2em;
--        margin: 0.5em 0;
--    }
--    #tux-gear {
--        width: 4em;
--        height: 5em;
--    }
--    #banner ul {
--        margin: 0 4em 0 0;
--    }
--    #banner li {
--        padding: 0 0.5em;
--    }
-     h1, h2, h3, h4, h5, h6 {
-         line-height: 1.1;
-     }
--- 
-2.51.0
-
+Rito
