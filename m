@@ -1,68 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D75843D4FD
-	for <tools@linux.kernel.org>; Tue,  4 Aug 2026 18:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB95B3B8930
+	for <tools@linux.kernel.org>; Tue,  4 Aug 2026 19:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785866678; cv=none; b=atvEof/iVUGIqo25oKjCEgBzN2r9soOipos3rlwvh4MFKNnria8Mpm3QNo6PhhBLhLu25kKAsDUsfRiSuCxMCQkxw2BY0l22IRTO2pXx1/SynB4vb/NTWQlKn0I1TWDFmcZZUb+uL6o9scDAqaPRSIqf9rTh4sbIUbDlLPlLTKQ=
+	t=1785871563; cv=none; b=HX4E9x5mk8/CA0BE352y13GWzX60iYt+Tn0WfyRjlBMaIcV//2VHA/TLOme6tCJ5PUQgBl+gzwviUIisy6JqRozLNEoMifKJSLnFm2n8uESG+osmlQDKnY0ZC8xAp8Xw90rdtfh2IvCroPmMUQPbgYj40ZjbGgiMvVk6WJ5RWG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785866678; c=relaxed/simple;
-	bh=e5GYz+La5KHxQO+PRL1lUJDXEUMi5XjhKVF7anl5myQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=g7q3RsUNRW4Ls05sROWzloEnLskj/q2uRGrKhNaQ6aCBoRkGmRkQwYiIqs1lvsyIhqnwKHOiDWfq+odGw/GRqZay0PwYe0bF1KO4DGwRqkpOaQrp4QPHJzHUG+5qNFBJSxIAOI0ok4xfILxTMyUGxXN7f+M1OYeMylp6JrtzpPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TR0qvTFp; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785871563; c=relaxed/simple;
+	bh=pi4Aj64KhTNIr3KzTfcIar4zvZTjcwjIypeCaVPFC2s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ttv6ps+lNb3MpiDz5CbqWO45asVRnkac+RVB5iBMrzNo6PmDvyIeLcAn3Jhe08aYzIBikrNCKZYGhRIzdx0UJo44S5lkKJLttjja5xsHUQrb27Jj7FN2PMF8sJxJAFFuKjmqV+yJ1I6EPh8gTNcFamR1h3ptM4hmQbxjZiLFYi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O4svM1GS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TR0qvTFp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O4svM1GS"
 Received: by smtp.kernel.org (Postfix)
-	id DF5681F000E9; Tue,  4 Aug 2026 18:04:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874251F00A3A;
-	Tue,  4 Aug 2026 18:04:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785866676;
-	bh=mAGxLKjOZbVdD5jJaa8HJowaEnsh0Vultxrovyh4Ymk=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=TR0qvTFpvplvnEMzDuePdfB4j5FRuhm68w6dlONVZBJ3WR8/6NQk3gaeHaOQ+F+wk
-	 xFnZJbEnyXH2tMftVC//ucRxFOYp54ERX50Y7YC7GOlWNXoOKryyxAkDl0GNi4f21g
-	 2F8eF7RnbiC2YHep4FkKtzXIQdCFPH2HZHyuHwn8=
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Kernel.org Tools" <tools@kernel.org>, Breno Leitao <leitao@debian.org>
-Cc: kernel-team@meta.com
-In-Reply-To: <20260804-cleanup-v2-1-8c8df5d66e8f@debian.org>
-References: <20260804-cleanup-v2-1-8c8df5d66e8f@debian.org>
-Subject: Re: [PATCH b4 v2] prep: add --cleanup-older-than option to clean
- up stale branches
-Message-Id: <178586666863.477202.11203726898393614561.b4-ty@b4>
-Date: Tue, 04 Aug 2026 18:04:28 +0000
+	id 35A361F00A3A; Tue,  4 Aug 2026 19:26:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC95D1F000E9;
+	Tue,  4 Aug 2026 19:26:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785871561;
+	bh=gkAruPXw/6bW4XbY9hFDTyXPgYGUQpwiHKVheUfVh0w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=O4svM1GSM/prQWJ7n8973zQyO7O1idZ60e64nRtWkD9sdmPRFtxEd3HpMQyT1kgx5
+	 5282ZH5HoVg7Vzy048zfDPmaqB+n16agjub1sPnsmMaqENnnb6Ycq1Z6Ld9pGGFD5u
+	 zVm0gNGx+iBeJcIbrnagnacCXn4mHWDNkVpAuU4PeKUTgNkyljVT1zKNM6vrHZDqIP
+	 MhZzipTFVjAXjum9Xr+sA5CfAdjYi6Sj7eufDlelXq3cMe++EySI5B64WJtvx0gkWX
+	 UWCcm9uedBNxn82MqxYKX8dNOV5nNhX5igrWPkkUm+yrDZ3LQXFzXyFkZLGUuRas/4
+	 eBPQL94cJGMew==
+Date: Tue, 4 Aug 2026 15:25:59 -0400
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Rito Rhymes <rito@ritovision.com>
+Cc: tools@kernel.org
+Subject: Re: [PATCH v1 1/2] add mobile drawer navigation with a compact
+ sticky top bar
+Message-ID: <20260804-generous-godlike-muskox-c3df49@meerkat>
+References: <20260803153502.32096-1-rito@ritovision.com>
+ <20260803-curly-sly-guan-18e09a@meerkat>
+ <DKFH8OBQKN6F.1SOFYEYNCJC5H@ritovision.com>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=352;
- i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=feqY3d8xV4yO9iUmwESPzGMIGBH4Ze0MVHiHvmjuyHw=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGLKKNDdcaCvfVLg2hHmGU/8dI47/3Sti/y6SO8j0Mzn0s
- Ik4V2NaRykLgxgXg6yYIkvZvthNQYUPPeTSe0xh5rAygQxh4OIUgImwvGdk+NCYlfvs0hMN5sfW
- 4aw/Dp+T5PPsyHic/n/WoouPr0vZhTP8lbzy+ClP5bKPn2crc/2dsaKnsK+QLfPDxr1BZgc9p0y
- J4AQA
-X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
- fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <DKFH8OBQKN6F.1SOFYEYNCJC5H@ritovision.com>
 
+On Mon, Aug 03, 2026 at 01:15:56PM -0400, Rito Rhymes wrote:
+> Really? It tested well for me on Chrome Desktop on Windows before
+> I submitted it, across both desktop and mobile viewport sizes.
+> 
+> What problems did you see?
 
-On Tue, 04 Aug 2026 05:24:58 -0700, Breno Leitao wrote:
-> prep: add --cleanup-older-than option to clean up stale branches
+Okay, I actually chased this down to stale cache on Fastly, so I reapplied it
+again and it seems to be working well now. Sorry for the false alert.
 
-Applied, thanks!
+Thanks for your help and your patience, again!
 
-[1/1] prep: add --cleanup-older-than option to clean up stale branches
-      commit: 69f3df3954f387b408bab999d36452cafcc5120d
-
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
+-K
