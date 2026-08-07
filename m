@@ -1,534 +1,218 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3275530E0F2
-	for <tools@linux.kernel.org>; Fri,  7 Aug 2026 18:08:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786126117; cv=none; b=FNaxX2c9/ZVbj3n5H8nnuaEI1yNrzutfsewNN3Bb3rQNGIkF1Wl5DXWvNiGnwMp0IQzKsfBIuu4gFwtkpRFc9NZL0/+pAFMXsl9fgVYHKjPf97q9wc6gUdoMa/rNqVSyFf5cP0xBYEWGyXgIvPCF1PeS7NLsopWaRA+DXyG83n8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786126117; c=relaxed/simple;
-	bh=baGkcqwq5gsyWY9YpHxNp/9WErsLwMEZFZSf4165c0w=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rUeVFlCbLPJLEd640UyIUNmENPPx6lcIW6c/1LnZvISRR7IQKcnzbledx1svXwXqeu2K6lRKEj3pIpCs0bqr1tWdBpFPU38ffonfB0i2hCzYpVj5bOzEE7vqUfg5lZWPslP8FWi7X3/4X8p8esR8V8Bz9fJBvb72krIn1IdWEJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pz5XRyOb; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5272B640
+	for <tools@linux.kernel.org>; Fri,  7 Aug 2026 23:17:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=100.103.45.18
+ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786144660; cv=fail; b=ICbph3HVv+OrD0xQyklyUn+7ULuM0Gx6GHnruKPioqDBpYHcYWL3P6dbUuyKcFedlQnADFRpEK0ZcNVc29Ia+3/2immLgB8DAFfToT/BioZWHMZtMnzM+nzigalK2QTBMKoc3tw5s2iqLZpxsKt5iXgfp9WdKrpXzbhEvPFoqeI=
+ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786144660; c=relaxed/simple;
+	bh=OdyElhBchJKaMTX/bNJqY5V50hsB1OyXC0cSXeLibGA=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=pncycoWeXonubvkVAV6R2Lj02OSxHZKqbWCLwJa3uLkSG2L8zLrZY7NZNLAyAuB95IvT1m/ZSqE6whULuEHV9QxlaqUnY0b3Ws9b5Kla5PwHetHl9rvMGdfuX4+RPcZie1RmxhVzbvCWCz0WBu05dypxs2Jy19fKSOEt7vZagkE=
+ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=IQx7a+6Y; arc=fail smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pz5XRyOb"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="IQx7a+6Y"
 Received: by smtp.kernel.org (Postfix)
-	id E121D1F00A3A; Fri,  7 Aug 2026 18:08:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C962D1F000E9;
-	Fri,  7 Aug 2026 18:08:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786126112;
-	bh=h36kjrzVKq2uFAm8ejakfXzDO+jOqR91WBmMaTpJBRI=;
-	h=From:To:Cc:Subject:Date;
-	b=Pz5XRyObvo3zeaVUwhSm908eUEq7MRboPJDpUW+/BkMQpQbmlk9h4YTgeV9uqq+K7
-	 GFrkmSMQ962QW01OoRQkq2JM0bDA2vjYiHFw7HlDOs15hkrek9+FItcwDYcxstdERp
-	 hsg/ZXkNHiKRgYHItN4aO4wktz0mnLX5HAmWqRJhJZgZgSHgkL3zgqSYJ5CKF5TDo6
-	 ATuf7v6R1OmebdTQqXgrtjjEWruhYvmamrcbojAoJfR8l/wezJy3xyENSO/3WAEfx/
-	 k6qVw8NbX7MH5WIe2mtCRAipdEH1OnEMyXbG3JBfVd2wR04EJEM+mMMMqEFbvNK77E
-	 Npp+pf56Qk7fA==
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH] review-tui: Provide progress indications when upgrading a series
-Date: Fri,  7 Aug 2026 19:02:09 +0100
-Message-ID: <20260807180213.599509-1-broonie@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	id 66F561F00A3A; Fri,  7 Aug 2026 23:17:39 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.57.47
+ARC-Seal: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=pass;
+	t=1786144659;
+	b=Xju3AjETP6np6edC3JQoE4GJynnJujWeXBSom4uhrDKho6U7ak2mzGuEpuBIKNtSwOVH
+	 R+74euccyXWhhD/R6e9FAJhxyGOC1uKCctJt+Yfq4au9LBnSw0vgnHVxryTm0YleW4OjX
+	 tWXBROb0GA1FyAFCMNjWS1Xz7UNuvUv0Y+5mDBbGHHGb3TgUeXckRGe3eKtp+dUpAqYst
+	 1XxJwb52+amP5am/nmx9En2ponhavuED7FePlzHUZUt60cK/venS5X+2wFyDcf3JJdCrx
+	 NfF/lPrimPpmq27D9SafsZucRnQW0AbNN5BTEkDQROwPBMocfY1yUbiA3MO/9RtREUg==
+ARC-Message-Signature: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1786144659;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Subject:Date:
+	 Message-ID:Content-Transfer-Encoding:Content-Type:X-ClientProxiedBy:
+	 MIME-Version:X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=5/o4q2H+PNaCP4BtMD0LIT6YInll0hwely1s7xDwEJM=;
+	b=02u4NmoTxw6ZrRZgYnvfoBVzsr63m0NtawkAcPjmz849QwBa903F5tHZViY2A+R6DeR4
+	 QeXfE2tdigfy2u/VCvYRfaD6RFxGPopzF/PxCkAj8cF+pe9gSOBl1UZZwWiBkOOTduC0v
+	 acvAyDDL9oGxgHvO0YiW6+M180KwlOwKfAfLohUJRj8JOfj+LU2o+inEICbYWnctuxWA8
+	 mPb7xHMH6OfSIuoPIiZsVqhHUGBywy2TCh0tWRQw4RJtrQV+c7sob2J2bYXty3zToMj/Q
+	 qpBhFbBBKxs+W++aKdmJA5iBsXVNqLm5Ty2Pgfi2cR1Z9jg31x1NpfFq7+BoUFppmEg==
+ARC-Authentication-Results: i=2; smtp.kernel.org; dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=IQx7a+6Y;
+	dmarc=fail header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.57.47
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011047.outbound.protection.outlook.com [52.101.57.47])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id A767D1F000E9
+	for <tools@kernel.org>; Fri,  7 Aug 2026 23:17:38 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=IQx7a+6Y
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org A767D1F000E9
+Authentication-Results: smtp.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=scIr5QFlf3JifBZwKKiFql2rjB6H3rNsMqlgby8LOa3o+Nk54YhpBysalsSYfodYTznwkiMVWOvGXNId7S8FB/WqSPPMyROz+yqyxwwxFnwAVm86hAWu+Y6gQTgecmrue2NWe0PwiL8Sq/3NIqt6IWhhWRHWBr5DeIUdhAG+Ci3GIxDLCnMxrkNnk+Sa+2mWA6Na1yTLa0/DYrVdglyCrRN4548g0PjC/fnbUPzM+5hd/PGYJ21cnyzFnUmKn4aFug+JWP/s9neprksDS22/BmFDI4Y3lbrwQmCendjtTR58l0MVoYQ0yfsA0wNc3zRumeh+OCSm19eiS/qDQwgCZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5/o4q2H+PNaCP4BtMD0LIT6YInll0hwely1s7xDwEJM=;
+ b=n6C2hXByWXqEymLkyM34d9Si6GA0u05tbewYcTOgajr3ShPzT+wFk5l5Jc/DLh3Y1zls6yS3dUnZSuA+25j1TMlwOfU/BZvoLRwgDkPBwFZmZYPbanE+D9uEOUZT1P7Q0gw0flHSBKf5ivMRuZ6AVjWQ/YOcuGkJMTG870kcQOAPGaPa2DvFk7vEkh6kC64dpB4K4jVTQTnLECt+o6Rj1xLSdFyOB/BbaW56zg+KiP50f17qSbEFfLekTW/pi8ijvMtaMVhPdX6RlAZm0beeauI1j0pYNDCJXzz3Nh2xZ3DTvTcRZohGb1E2IMnjt4SP+nhUIo+8OLkVLJLhR2ZZdQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5/o4q2H+PNaCP4BtMD0LIT6YInll0hwely1s7xDwEJM=;
+ b=IQx7a+6YnZVxBTiZ3uT/K4atr1S1H77+UsMzOxQtThQst/X33J54OivBIZuOW28YaRp8Gglq+DCrzZ4y2M5TbRgcf23/0adP7nM6QTmc13aXBpBRnKXur+aVnx0Ta4pC2VzJHUuzuGG03xX8y0+PFZUvoELIFoKt8aLl+aLAgLVLKtBgCio9J7TY5FWP2yvdQbpPy89+Zggb8vEm9QW+RcimVcFhv9bll99YgiwQU+YOE7a5N19Xgs6yBm8tFntR0vPrBnoBqcRtRA9lIHDydkQny/6yIfGRA390lI0bHCuASgQ4hKC/ukPpNPJ3GgBsRf1HOW0VND2/Z8CNbBrawA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by DS7PR12MB8229.namprd12.prod.outlook.com (2603:10b6:8:ea::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.23; Fri, 7 Aug
+ 2026 23:17:34 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0292.022; Fri, 7 Aug 2026
+ 23:17:34 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: tools@kernel.org
+Subject: [PATCH b4] Support python argcomplete
+Date: Fri,  7 Aug 2026 20:17:32 -0300
+Message-ID: <0-v1-fa59fc5072f8+1cf9c-argcomplete_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: YT1PR01CA0056.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:2e::25) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS7PR12MB8229:EE_
+X-MS-Office365-Filtering-Correlation-Id: 595b7fd8-64e2-4593-9a27-08def4da0fc5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|56012099006|11063799006|10067099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	/Arb6/yqMoCjwLJ/CUYCkwiKKtOUcl0XaL9VZBxC9r58bb+5oN3racuKJv2BddKR7nnJUcKCINzPzpYMHfDBtZzsM8kZRu5n6uyZ0iqCl8HDGbU7ifnQiFwTmBnS8580sHZ0teZjqeIzkguEe6E4/Bf+fGDHlYVMBK2w9NA+1BenLIZo/9ejmE1NmG5bMO83ljomg36FiQCa/6qB3Zz2+5Z0lH07Mh1Ntmbdl+8LRQnAoydULA88h2YgX4jcw+kHDb8gpos7jB1ANrP89b4jOPopOknFOLf81ZmjEWPbK1KWHpOy0l08MdAB+Lryiuxi90XT65R+GYQU9W2eVu+VS6Df9UHQhscbuFd5xKfhWyeiVtWnwrQtFHCm2B5UTG4DQR8PCctJ8ly18VsJ0vsFG6ZRImXYUCMG6wtD12pfuYjIH7JXpdXOdG9sR32rvIbajpWwuHVA4uTG5F6xEcz5XhYvE4RQC2UqfVnTUTs15kfOZ0j6hUaYK5duCaMO+ZRJ05K8bi0NLd76nJKXMppa/DAfBWAD9N2Zr/zTvokgqBL4vP5OvQ3lAF7/2KLlyuwHrkcJafE4Se9Zti7Qd5Fd4Id+NkvL90dPtqQMwTfOBCcFsz8WPJt03NXqAKk0jXIB2a0w7a55/enYP8iNdnn+Ygc8c11B3Y5sgSxDNV58v5E=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(56012099006)(11063799006)(10067099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?swTK+NutcoXAqLQwi8go4i7qzmjTrN83UuPltZGHD4v8K2wb4phH5vZ884mW?=
+ =?us-ascii?Q?6NldjqJeFNUGr92Q+ptgwlo6A59cCNzKlpRupFw+dOH/Ja8FeCeE3FK5gAyy?=
+ =?us-ascii?Q?ZBc0UsuvDJ4/ezSZI1hDN2+SAQe6XiU/uITxw24FLKwG6AuSFdpIRGx7TSSF?=
+ =?us-ascii?Q?OPjvbsYFJ3Z48NmWodkliEBN9BCbe8KficGF2Ee0f41mh9t+7jLggZ6LEQRq?=
+ =?us-ascii?Q?8ntI7BSH2hCA+PXoBS0lCHdJM6OdJXBK9DozW5/HBmkr2uybpjSxRecodEGz?=
+ =?us-ascii?Q?RGzbLYU5ddgOe+lotTahJsGmWtPbllqqBv4RS6YIyh8ouRe1c3pLbpIUwMWQ?=
+ =?us-ascii?Q?whI72ZQ8tcp8qNyHWlC+YCoi89coABpYclWJByKY5DBdC/2oKoddfEASMK++?=
+ =?us-ascii?Q?erHEemgLKT4EUxNmkldV+fFej/L6r4NNcN/IERGHlVtqDhNOaMeGHv/E6ciD?=
+ =?us-ascii?Q?rmyiFW0BKWmT3176jxN8ztJxzPS0aAPmjoRjD1EZYF8WM1IB6NqKRQA8avId?=
+ =?us-ascii?Q?XuklOstTXZEEU2cgkobaXywgWzsXOc5g3nZ99PdYfvcjBh7YWR/eSTLg5o2j?=
+ =?us-ascii?Q?aVhvKKUyvCU1vgOMPolhHxVkDSXSCKPwtg0Qxo1Z944Ys6jUlXPKB5sIIuCZ?=
+ =?us-ascii?Q?7Y7jOLiVXJydlja3R/vf5mhJXhCz/oRaja0QTjQWhWNRMeBpO+k4zI4spWTh?=
+ =?us-ascii?Q?CkzUMiwwQekfBpJiwbeXj+/LHP/2KoNopIvU938H9fC9b+qoZFtEwMXHtMPS?=
+ =?us-ascii?Q?qf/9FIz9sKh9KgQRn01GomXh4tueKxFz4Rb4Yck0LkiamGzdFsOV0bb3E4Ft?=
+ =?us-ascii?Q?7sSs5wAdEjJaofie2IktSqESZYnuza7qiFbCKQLUe2IvjcCFvbgYSuLJ1OMc?=
+ =?us-ascii?Q?CkOxTmyXCM3TC0WEffS9w0TRjSbH3CE4hqSlqJq6UH036mZfHCN8nFf4pdoo?=
+ =?us-ascii?Q?epW6zP9mKs52N7d8BNcI24RrtVS5k27x/WAwDTK1UoF/O8rv1VIQDI3ylP5Z?=
+ =?us-ascii?Q?tdpH94PknbwblyAfCo+xxKQLU53mvf0nPSrgMF35BFauBA6R49/gb6pTmjMt?=
+ =?us-ascii?Q?/R1nvqEXHsvsUetP4+Fr290rGz2kV7ZJgUfmLyb49XkP/HMjJGBsLajxtVWq?=
+ =?us-ascii?Q?KGV0AiNqZADXW4yo13T8Fsu16FPZaLYp+Qa7U9Yuy3vVV2B4U1/nwNjJEeE+?=
+ =?us-ascii?Q?j8w0NU0lk49nAV26P8PiUv1HmPq04yC7yLwR10pXzQgYi7v0YfxptwrGvJhb?=
+ =?us-ascii?Q?hxNOoBUUAE6iy0pvvRAqNJviVERrrNHWw+Fmrh1EUYbGJvSscHSZWs1hgLV/?=
+ =?us-ascii?Q?iBmMQ35JaKsA+UJf0XpUyhDnNmxzNqEPlzZeOx0bJ4fRss9SBf4ANM8eb/OH?=
+ =?us-ascii?Q?47AhcfNzwUKXRZIMclPNml2hiFrQk+5kfLBKBaNjY4z2w0nBvvShVCNiGSqI?=
+ =?us-ascii?Q?8GQMZYzzqsraJSRNoyzHWrXsnzZBOFclybo+bNItTcU4yly4Fqv5nUlxJP0B?=
+ =?us-ascii?Q?SKmCbfEomYenlaXseEH03xZzYxoHaRcctYYyYkabCSKCyXR32qXtWuzYlrbS?=
+ =?us-ascii?Q?veWDnW0vj54jUUplR8+UGxfK2xdzIZ1rGsZL7GcGQXYODJ8i8GzMF5g+/QNi?=
+ =?us-ascii?Q?jPO/fjwkw4rU9oRSeaJJkakJbv9dJvs82qNLI8o0vefIlZVgBguFIBwH0LrK?=
+ =?us-ascii?Q?sHwxnlT3I40LxsBAtAFrTihJ1/Sxk2verKdQ3Mq/5BT/KcAu?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 595b7fd8-64e2-4593-9a27-08def4da0fc5
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2026 23:17:33.9414
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9p1HbcJ5elHeMpBt80JDlMKeWfvEZ+uzTa9O8zcjQYMTbrd/C6SPVMBGhvnkReLA
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8229
 
-Upgrading a series, especially a large series, can sometimes be a slow
-operation. It can take a while to figure out the base commit to use, and
-network operations can be slow. At the moment we just have a "Fetching new
-revision" interstitial which can be displayed for many tens of seconds with
-no indication as to what it's actually doing.
+argcomplete is a alternative to shtab. While shtab provides an option to
+generate unique matching patterns for each program, argcomplete has a
+general completion hook that identifies compatible programs and
+dynamically pulls the completion out of the program itself.
 
-Add progress messages to the interstitial indicating what is currently
-happening, helping reassure users that progress is being made and providing
-hints about the source of any problems that are seen.
+This means that once argcomplete is enabled in the shell every compatible
+program automatically and effortlessly gets full shell completions that
+are perfectly up to date with the active version. When running out of a
+git check out this is a big improvement over shtab since completions Just
+Work with no need to specially manage the shtab files.
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The boilerplate is setup so the argcomplete module is optional, if the
+user has it installed (and presumably enabled it for their shell) then it
+is activated.
+
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- src/b4/__init__.py                 | 29 +++++++---
- src/b4/review/_review.py           | 19 ++++--
- src/b4/review_tui/_modals.py       | 16 +++++-
- src/b4/review_tui/_tracking_app.py | 29 +++++++++-
- src/tests/test_rethread.py         | 35 ++++++++++++
- src/tests/test_review_tracking.py  | 48 +++++++++++++++-
- src/tests/test_tui_modals.py       | 17 ++++++
- src/tests/test_tui_tracking.py     | 92 ++++++++++++++++++++++++++++++
- 8 files changed, 266 insertions(+), 19 deletions(-)
+ b4.sh             | 1 +
+ src/b4/command.py | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index a52b001..f34638a 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -37,6 +37,7 @@ from pathlib import Path
- from typing import (
-     Any,
-     BinaryIO,
-+    Callable,
-     Dict,
-     Generator,
-     Iterator,
-@@ -5533,28 +5534,38 @@ def discover_rethread_series(msgid: str, nocache: bool = False) -> List[str]:
+diff --git a/b4.sh b/b4.sh
+index e3fbb100be0f98..e47c5b68dbe6da 100755
+--- a/b4.sh
++++ b/b4.sh
+@@ -1,4 +1,5 @@
+ #!/usr/bin/env bash
++# PYTHON_ARGCOMPLETE_OK
+ #
+ # Run b4 from a git checkout.
+ #
+diff --git a/src/b4/command.py b/src/b4/command.py
+index 8a8c96f635af67..803ed333346372 100644
+--- a/src/b4/command.py
++++ b/src/b4/command.py
+@@ -1,4 +1,5 @@
+ #!/usr/bin/env python3
++# PYTHON_ARGCOMPLETE_OK
+ # -*- coding: utf-8 -*-
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ # Copyright (C) 2020 by the Linux Foundation
+@@ -1331,6 +1332,12 @@ def setup_parser() -> argparse.ArgumentParser:
  
- 
- def fetch_rethread_messages(
--    msgids: List[str], nocache: bool = False
-+    msgids: List[str],
-+    nocache: bool = False,
-+    progress_cb: Optional[Callable[[int, int], None]] = None,
- ) -> Tuple[List[str], List[EmailMessage]]:
-     """Fetch messages for multiple msgids, deduplicating across threads.
- 
-     Returns (msgids, all_msgs) where msgids is the input list (for
-     pipeline use) and all_msgs contains all fetched messages with
--    duplicates removed.
-+    duplicates removed.  *progress_cb*, when provided, is called as
-+    ``progress_cb(completed, total)`` before the first request and after
-+    every message-id has been attempted.
-     """
-     all_msgs: List[EmailMessage] = []
-     seen: Set[str] = set()
-+    total = len(msgids)
- 
--    for msgid in msgids:
-+    if progress_cb is not None:
-+        progress_cb(0, total)
+ def cmd() -> None:
+     parser = setup_parser()
++    try:
++        import argcomplete
++        argcomplete.autocomplete(parser)
++    except ImportError:
++        pass
 +
-+    for completed, msgid in enumerate(msgids, 1):
-         logger.info('Retrieving series: %s', msgid)
-         thread_msgs = get_pi_thread_by_msgid(msgid, nocache=nocache)
-         if not thread_msgs:
-             logger.warning('Could not retrieve %s, skipping', msgid)
--            continue
--        for msg in thread_msgs:
--            c_msgid = LoreMessage.get_clean_msgid(msg)
--            if c_msgid and c_msgid not in seen:
--                all_msgs.append(msg)
--                seen.add(c_msgid)
-+        else:
-+            for msg in thread_msgs:
-+                c_msgid = LoreMessage.get_clean_msgid(msg)
-+                if c_msgid and c_msgid not in seen:
-+                    all_msgs.append(msg)
-+                    seen.add(c_msgid)
-+        if progress_cb is not None:
-+            progress_cb(completed, total)
+     cmdargs = parser.parse_args()
+     logger.setLevel(logging.DEBUG)
  
-     if not all_msgs:
-         raise LookupError('Could not retrieve any of the specified messages')
-diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index 5fa4d2a..7fe746b 100644
---- a/src/b4/review/_review.py
-+++ b/src/b4/review/_review.py
-@@ -184,13 +184,17 @@ def _retrieve_messages(message_id: str) -> List[email.message.EmailMessage]:
- 
- 
- def retrieve_series_messages(
--    series: Dict[str, Any], identifier: str
-+    series: Dict[str, Any],
-+    identifier: str,
-+    progress_cb: Optional[Callable[[int, int], None]] = None,
- ) -> List[email.message.EmailMessage]:
-     """Fetch messages for a tracked series, using stored patch info when available.
- 
-     For rethreaded series, reads the series_patches table to fetch each
-     patch individually and runs the rethread pipeline. For normal series,
--    falls back to the standard single-msgid retrieval.
-+    falls back to the standard single-msgid retrieval.  *progress_cb*, when
-+    provided, reports completed and total thread fetches; the normal path is
-+    a single request, while rethreaded series can report each patch thread.
-     """
-     change_id = series.get('change_id', '')
-     revision = series.get('revision')
-@@ -205,7 +209,9 @@ def retrieve_series_messages(
-         if patches:
-             msgids = [p['message_id'] for p in patches if p['position'] > 0]
-             if len(msgids) >= 2:
--                _msgids, all_msgs = b4.fetch_rethread_messages(msgids, nocache=True)
-+                _msgids, all_msgs = b4.fetch_rethread_messages(
-+                    msgids, nocache=True, progress_cb=progress_cb
-+                )
-                 _cover_msgid, msgs = b4.LoreSeries.rethread_series(msgids, all_msgs)
-                 if not msgs:
-                     raise LookupError(
-@@ -215,7 +221,12 @@ def retrieve_series_messages(
- 
-     if not message_id:
-         raise LookupError('No message-id for this series')
--    return _retrieve_messages(message_id)
-+    if progress_cb is not None:
-+        progress_cb(0, 1)
-+    msgs = _retrieve_messages(message_id)
-+    if progress_cb is not None:
-+        progress_cb(1, 1)
-+    return msgs
- 
- 
- def _get_lore_series(
-diff --git a/src/b4/review_tui/_modals.py b/src/b4/review_tui/_modals.py
-index 4acfd0d..fb3f229 100644
---- a/src/b4/review_tui/_modals.py
-+++ b/src/b4/review_tui/_modals.py
-@@ -1575,7 +1575,8 @@ class WorkerScreen(ModalScreen[Any]):
-     """Generic modal that runs a callable in a worker thread.
- 
-     Shows a loading indicator while the callable runs.  Dismisses with
--    the return value on success or None on error/cancel.
-+    the return value on success or None on error/cancel.  Pass *status* to
-+    add a progress line that callers can refresh with :meth:`update_status`.
- 
-     Usage::
- 
-@@ -1609,18 +1610,29 @@ class WorkerScreen(ModalScreen[Any]):
-         text-style: bold;
-         margin-bottom: 1;
-     }
-+    #ws-status {
-+        margin-bottom: 1;
-+    }
-     """
- 
--    def __init__(self, title: str, fn: Any) -> None:
-+    def __init__(self, title: str, fn: Any, status: str = '') -> None:
-         super().__init__()
-         self._title = title
-         self._fn = fn
-+        self._status = status
- 
-     def compose(self) -> ComposeResult:
-         with Vertical(id='ws-dialog'):
-             yield Static(self._title, id='ws-title', markup=False)
-+            if self._status:
-+                yield Static(self._status, id='ws-status', markup=False)
-             yield LoadingIndicator()
- 
-+    def update_status(self, text: str) -> None:
-+        """Update the optional progress text from the UI thread."""
-+        if self.is_attached:
-+            self.query_one('#ws-status', Static).update(text)
-+
-     def on_mount(self) -> None:
-         # run_lore_worker() sheds any stale cancel flag before the fetch and
-         # runs with exit_on_error=False, so a fetch failure surfaces through
-diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index 5b7a756..b02fb5a 100644
---- a/src/b4/review_tui/_tracking_app.py
-+++ b/src/b4/review_tui/_tracking_app.py
-@@ -4069,6 +4069,17 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             return
- 
-         # Phase 1: fetch series and compute base in a worker thread
-+        worker_screen: WorkerScreen
-+
-+        def _set_fetch_status(status: str) -> None:
-+            self.call_from_thread(worker_screen.update_status, status)
-+
-+        def _fetch_progress(completed: int, total: int) -> None:
-+            if total > 1:
-+                _set_fetch_status(
-+                    f'Fetching patch threads {completed}/{total}\N{HORIZONTAL ELLIPSIS}'
-+                )
-+
-         def _fetch_update() -> Tuple[b4.LoreSeries, bytes, str, str, int]:
-             with _quiet_worker():
-                 target_series = dict(self._selected_series or {})
-@@ -4076,10 +4087,18 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                 target_series['revision'] = target_rev
-                 target_series['is_rethreaded'] = target_is_rethreaded
-                 msgs = b4.review.retrieve_series_messages(
--                    target_series, self._identifier
-+                    target_series,
-+                    self._identifier,
-+                    progress_cb=_fetch_progress,
-                 )
-                 lser = b4.review._get_lore_series(msgs)
- 
-+                patch_count = sum(patch is not None for patch in lser.patches[1:])
-+                patch_label = 'patch' if patch_count == 1 else 'patches'
-+                _set_fetch_status(
-+                    f'Preparing {patch_count} {patch_label}\N{HORIZONTAL ELLIPSIS}'
-+                )
-+
-                 am_msgs = lser.get_am_ready(
-                     noaddtrailers=True,
-                     addmysob=False,
-@@ -4097,13 +4116,19 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                 ambytes = ifh.getvalue()
- 
-                 # Determine best base: configured, series-specified or guessed
-+                _set_fetch_status('Finding base commit\N{HORIZONTAL ELLIPSIS}')
-                 topdir = b4.git_get_toplevel()
-                 initial_base, base_hint = _detect_initial_base(lser, topdir)
- 
-                 return lser, ambytes, initial_base, base_hint, len(am_msgs)
- 
-+        worker_screen = WorkerScreen(
-+            'Fetching new revision\u2026',
-+            _fetch_update,
-+            status=f'Fetching v{target_rev} from lore\u2026',
-+        )
-         self.push_screen(
--            WorkerScreen('Fetching new revision\u2026', _fetch_update),
-+            worker_screen,
-             callback=lambda result: self._on_update_prepared(
-                 result,
-                 change_id,
-diff --git a/src/tests/test_rethread.py b/src/tests/test_rethread.py
-index 8c9888a..2e44fe2 100644
---- a/src/tests/test_rethread.py
-+++ b/src/tests/test_rethread.py
-@@ -570,6 +570,41 @@ class TestDiscoverRethreadSeries:
-         assert result == ['p1@x']
- 
- 
-+# ===========================================================================
-+# fetch_rethread_messages progress tests
-+# ===========================================================================
-+class TestFetchRethreadMessagesProgress:
-+    def test_reports_every_attempted_thread(self) -> None:
-+        """Progress includes the initial state and failed thread fetches."""
-+        p1 = _make_msg('p1@x', '[PATCH 1/2] First fix')
-+        p3 = _make_msg('p3@x', '[PATCH 2/2] Second fix')
-+        threads = {
-+            'p1@x': [p1],
-+            'missing@x': [],
-+            'p3@x': [p3],
-+        }
-+        progress: List[Tuple[int, int]] = []
-+
-+        with mock.patch(
-+            'b4.get_pi_thread_by_msgid',
-+            side_effect=lambda msgid, **_kwargs: threads[msgid],
-+        ):
-+            returned_ids, msgs = b4.fetch_rethread_messages(
-+                list(threads),
-+                nocache=True,
-+                progress_cb=lambda completed, total: progress.append(
-+                    (completed, total)
-+                ),
-+            )
-+
-+        assert returned_ids == ['p1@x', 'missing@x', 'p3@x']
-+        assert [b4.LoreMessage.get_clean_msgid(msg) for msg in msgs] == [
-+            'p1@x',
-+            'p3@x',
-+        ]
-+        assert progress == [(0, 3), (1, 3), (2, 3), (3, 3)]
-+
-+
- # ===========================================================================
- # Prefer a properly-threaded resend over stitched patches
- # (feature/rethread-upgrade-compose)
-diff --git a/src/tests/test_review_tracking.py b/src/tests/test_review_tracking.py
-index 64778be..79fc2cc 100644
---- a/src/tests/test_review_tracking.py
-+++ b/src/tests/test_review_tracking.py
-@@ -4124,18 +4124,62 @@ class TestRetrieveSeriesMessagesRethreadSeam:
-         }
- 
-         reassembled = [mock.Mock(), mock.Mock(), mock.Mock()]
-+        forwarded_callback: list[Any] = []
-+
-+        def _fetch_rethread_messages(
-+            msgids: list[str], nocache: bool = False, progress_cb: Any = None
-+        ) -> tuple[list[str], list[Any]]:
-+            assert nocache is True
-+            forwarded_callback.append(progress_cb)
-+            return msgids, reassembled
-+
-+        progress_cb = mock.Mock()
-         with (
-             mock.patch(
-                 'b4.fetch_rethread_messages',
--                return_value=(['p1@q', 'p2@q', 'p3@q'], reassembled),
-+                side_effect=_fetch_rethread_messages,
-             ),
-             mock.patch(
-                 'b4.LoreSeries.rethread_series',
-                 return_value=('p1@q', reassembled),
-             ),
-         ):
--            out = b4.review.retrieve_series_messages(series, 'rt-up-seam')
-+            out = b4.review.retrieve_series_messages(
-+                series, 'rt-up-seam', progress_cb=progress_cb
-+            )
-         assert out == reassembled
-+        assert forwarded_callback == [progress_cb]
-+
-+    def test_normal_fetch_reports_single_step_progress(self) -> None:
-+        """A normal single-thread fetch reports its start and completion."""
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 6,
-+            'message_id': 'v6-root@example.com',
-+            'is_rethreaded': False,
-+        }
-+        msgs = [mock.Mock()]
-+        events: list[Any] = []
-+
-+        def _retrieve(message_id: str) -> list[Any]:
-+            events.append(('fetch', message_id))
-+            return msgs
-+
-+        with mock.patch('b4.review._review._retrieve_messages', side_effect=_retrieve):
-+            out = b4.review.retrieve_series_messages(
-+                series,
-+                'rt-up-seam-normal',
-+                progress_cb=lambda completed, total: events.append(
-+                    ('progress', completed, total)
-+                ),
-+            )
-+
-+        assert out == msgs
-+        assert events == [
-+            ('progress', 0, 1),
-+            ('fetch', 'v6-root@example.com'),
-+            ('progress', 1, 1),
-+        ]
- 
- 
- class TestRethreadFlagCarriedOnLink:
-diff --git a/src/tests/test_tui_modals.py b/src/tests/test_tui_modals.py
-index 5a19cdd..e66d43e 100644
---- a/src/tests/test_tui_modals.py
-+++ b/src/tests/test_tui_modals.py
-@@ -1262,6 +1262,23 @@ class TestWorkerScreen:
-     (msgid 21fe13c1-5c9a-4a47-b97b-251da4748aea@sirena.org.uk).
-     """
- 
-+    @pytest.mark.asyncio
-+    async def test_status_line_can_be_updated(self) -> None:
-+        """The optional status line is visible and can be refreshed."""
-+        app = ModalTestApp()
-+        screen = WorkerScreen('Working…', lambda: 'done', status='Fetching 0/2…')
-+        with mock.patch('b4.review_tui._modals.run_lore_worker'):
-+            async with app.run_test() as pilot:
-+                app.push_screen(screen)
-+                await pilot.pause()
-+
-+                status = screen.query_one('#ws-status', Static)
-+                assert _static_text(status) == 'Fetching 0/2…'
-+
-+                screen.update_status('Fetching 1/2…')
-+                await pilot.pause()
-+                assert _static_text(status) == 'Fetching 1/2…'
-+
-     @pytest.mark.asyncio
-     async def test_on_mount_resets_cancel_flag(self) -> None:
-         """A fetch must clear any stale cancel flag before it runs."""
-diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
-index 5ee2a24..e2cd31d 100644
---- a/src/tests/test_tui_tracking.py
-+++ b/src/tests/test_tui_tracking.py
-@@ -3806,6 +3806,98 @@ class TestUpdateRevisionWorkflow:
-                 ).WorkerScreen,
-             )
- 
-+    def test_fetch_worker_reports_progress(self, tmp_path: pathlib.Path) -> None:
-+        """Fetching an upgrade should describe each potentially slow step."""
-+        identifier = 'test-update-progress'
-+        change_id = 'update-progress-1'
-+        _seed_db(
-+            identifier,
-+            [
-+                {
-+                    'change_id': change_id,
-+                    'subject': '[PATCH v1] progress test',
-+                    'status': 'reviewing',
-+                    'message_id': 'v1@ex.com',
-+                }
-+            ],
-+        )
-+        conn = tracking.get_db(identifier)
-+        tracking.add_revision(
-+            conn,
-+            change_id,
-+            2,
-+            'v2@ex.com',
-+            subject='[PATCH v2] progress test',
-+            is_rethreaded=True,
-+        )
-+        conn.close()
-+
-+        captured: Dict[str, Any] = {}
-+        statuses: List[str] = []
-+
-+        def _retrieve(
-+            series: Dict[str, Any],
-+            project: str,
-+            progress_cb: Optional[Callable[[int, int], None]] = None,
-+        ) -> List[email.message.EmailMessage]:
-+            captured['series'] = series
-+            captured['project'] = project
-+            captured['progress_cb'] = progress_cb
-+            assert progress_cb is not None
-+            progress_cb(0, 3)
-+            progress_cb(1, 3)
-+            progress_cb(3, 3)
-+            return [email.message.EmailMessage()]
-+
-+        lser = _make_mock_lser(expected=3)
-+        mock_patch = lser.patches[0]
-+        assert mock_patch is not None
-+        lser.patches = [None, mock_patch, mock_patch, mock_patch]
-+        am_msgs = [email.message.EmailMessage() for _ in range(3)]
-+
-+        app = TrackingApp(identifier)
-+        with (
-+            patch.object(app, 'push_screen') as push_screen,
-+            patch.object(
-+                app,
-+                'call_from_thread',
-+                side_effect=lambda _update, status: statuses.append(status),
-+            ),
-+            patch(
-+                'b4.review.retrieve_series_messages',
-+                side_effect=_retrieve,
-+            ),
-+            patch('b4.review._get_lore_series', return_value=lser),
-+            patch.object(lser, 'get_am_ready', return_value=am_msgs),
-+            patch(
-+                'b4.save_git_am_mbox',
-+                side_effect=lambda _msgs, dest: dest.write(b'mbox'),
-+            ),
-+            patch('b4.git_get_toplevel', return_value='/repo'),
-+            patch(
-+                'b4.review_tui._tracking_app._detect_initial_base',
-+                return_value=('base-sha', 'base hint'),
-+            ),
-+        ):
-+            app._do_update_revision(change_id, 1, 2)
-+            worker_screen = push_screen.call_args.args[0]
-+
-+            assert worker_screen._status == 'Fetching v2 from lore…'
-+            result = worker_screen._fn()
-+
-+        assert captured['project'] == identifier
-+        assert captured['series']['revision'] == 2
-+        assert captured['series']['is_rethreaded'] is True
-+        assert callable(captured['progress_cb'])
-+        assert statuses == [
-+            'Fetching patch threads 0/3…',
-+            'Fetching patch threads 1/3…',
-+            'Fetching patch threads 3/3…',
-+            'Preparing 3 patches…',
-+            'Finding base commit…',
-+        ]
-+        assert result[-1] == 3
-+
-     # --- Phase 2: _on_update_prepared (base selection screen) ------------
- 
-     @pytest.mark.asyncio
+
+base-commit: 362b87aa4d036884c36e4bfb9cdbdee626aba3bf
 -- 
-2.47.3
+2.43.0
 
