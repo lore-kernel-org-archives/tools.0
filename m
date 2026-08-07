@@ -1,161 +1,534 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFA4470439
-	for <tools@linux.kernel.org>; Wed,  5 Aug 2026 17:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3275530E0F2
+	for <tools@linux.kernel.org>; Fri,  7 Aug 2026 18:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785949638; cv=none; b=s2rI+p6nq8eAoQphfXMDi+zFRtbRHNdmf5KY6EmQVq1jLfxChjccz1yefq+QbD3IMOzqbsK/6ycvSixivBO5k5iRXNbzLbINTQ9HSLJ006HlWhshTCLqsIndrjZnAw5NYyTdygTP4qwGWuT2WHOK2Ofa59kUYsbIW/SRgFLT19M=
+	t=1786126117; cv=none; b=FNaxX2c9/ZVbj3n5H8nnuaEI1yNrzutfsewNN3Bb3rQNGIkF1Wl5DXWvNiGnwMp0IQzKsfBIuu4gFwtkpRFc9NZL0/+pAFMXsl9fgVYHKjPf97q9wc6gUdoMa/rNqVSyFf5cP0xBYEWGyXgIvPCF1PeS7NLsopWaRA+DXyG83n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785949638; c=relaxed/simple;
-	bh=3ZSt7R6xTpEjJKHhTFp0ZzzzqADsJWQajiZmdsT23Ag=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HVm02tlbu4cIGTQemi9THongTf0J4Gh+A/P6BhaABr7qPG+7k3htqSuETDqt0Gx5MBa+GaKf3ma4KLeG5o9/5qPSvUK9DkIA2IRpmSBT5h/njHYZ1IZv7yZuXbx0f9/sC7CHGOjvhCQgdNSyQEfLX6OdE2ugFGm8UQOTEoabrTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KB22ViKB; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786126117; c=relaxed/simple;
+	bh=baGkcqwq5gsyWY9YpHxNp/9WErsLwMEZFZSf4165c0w=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rUeVFlCbLPJLEd640UyIUNmENPPx6lcIW6c/1LnZvISRR7IQKcnzbledx1svXwXqeu2K6lRKEj3pIpCs0bqr1tWdBpFPU38ffonfB0i2hCzYpVj5bOzEE7vqUfg5lZWPslP8FWi7X3/4X8p8esR8V8Bz9fJBvb72krIn1IdWEJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pz5XRyOb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KB22ViKB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pz5XRyOb"
 Received: by smtp.kernel.org (Postfix)
-	id EDDB41F00A3F; Wed,  5 Aug 2026 17:07:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268661F00A3E;
-	Wed,  5 Aug 2026 17:07:15 +0000 (UTC)
+	id E121D1F00A3A; Fri,  7 Aug 2026 18:08:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C962D1F000E9;
+	Fri,  7 Aug 2026 18:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785949636;
-	bh=sTElYPzRlUya61d8Z8rHgsDuaxSDv04XW5T5BgB1ye0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=KB22ViKBXtAhIL91+yQrsUOAK6VMkzWj8u0E8aJOYNg0ZdVN623GkckzIoxh3Jktv
-	 icrykrW3xIHulDcOeReLCopBoLLkZkea5br6bdx9wHQVfGZcwAdtdTMh0VpBz95Le0
-	 Y5Q+4fPT/2IBe7YNw3c1eoeQIWZaeEQB2Jm7bixa+BblxZMBDkvXRcqs+VTSpse4oo
-	 IO3QI1UAomgyF1dd1jrTTu/6TlRg6JmIZl02Ptj1TF4wKKeD73/QTSolWJZvxH3IyZ
-	 9JgO69bB3wvAGKYXuspiWnKX9li4HG+G7+QYCK5kdtx2O95Ti6cROstqmhsyrEeSKY
-	 vUrtgpakMduNA==
-Message-ID: <876c0cb2-8cfb-4254-9868-afa4efb292f2@kernel.org>
-Date: Wed, 5 Aug 2026 19:07:13 +0200
+	s=k20260515; t=1786126112;
+	bh=h36kjrzVKq2uFAm8ejakfXzDO+jOqR91WBmMaTpJBRI=;
+	h=From:To:Cc:Subject:Date;
+	b=Pz5XRyObvo3zeaVUwhSm908eUEq7MRboPJDpUW+/BkMQpQbmlk9h4YTgeV9uqq+K7
+	 GFrkmSMQ962QW01OoRQkq2JM0bDA2vjYiHFw7HlDOs15hkrek9+FItcwDYcxstdERp
+	 hsg/ZXkNHiKRgYHItN4aO4wktz0mnLX5HAmWqRJhJZgZgSHgkL3zgqSYJ5CKF5TDo6
+	 ATuf7v6R1OmebdTQqXgrtjjEWruhYvmamrcbojAoJfR8l/wezJy3xyENSO/3WAEfx/
+	 k6qVw8NbX7MH5WIe2mtCRAipdEH1OnEMyXbG3JBfVd2wR04EJEM+mMMMqEFbvNK77E
+	 Npp+pf56Qk7fA==
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH] review-tui: Provide progress indications when upgrading a series
+Date: Fri,  7 Aug 2026 19:02:09 +0100
+Message-ID: <20260807180213.599509-1-broonie@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: b4 review tui: too smart reply features?
-Content-Language: fr
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-References: <c281cf50-7935-488c-8429-03eac9b8902e@kernel.org>
- <20260610-psychedelic-encouraging-quoll-c7b949@lemur>
- <b2c44799-85a9-4576-9aae-b43eb1092315@kernel.org>
- <20260729-pig-of-lucky-economy-3a5ace@meerkat>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- xsFNBFXj+ekBEADxVr99p2guPcqHFeI/JcFxls6KibzyZD5TQTyfuYlzEp7C7A9swoK5iCvf
- YBNdx5Xl74NLSgx6y/1NiMQGuKeu+2BmtnkiGxBNanfXcnl4L4Lzz+iXBvvbtCbynnnqDDqU
- c7SPFMpMesgpcu1xFt0F6bcxE+0ojRtSCZ5HDElKlHJNYtD1uwY4UYVGWUGCF/+cY1YLmtfb
- WdNb/SFo+Mp0HItfBC12qtDIXYvbfNUGVnA5jXeWMEyYhSNktLnpDL2gBUCsdbkov5VjiOX7
- CRTkX0UgNWRjyFZwThaZADEvAOo12M5uSBk7h07yJ97gqvBtcx45IsJwfUJE4hy8qZqsA62A
- nTRflBvp647IXAiCcwWsEgE5AXKwA3aL6dcpVR17JXJ6nwHHnslVi8WesiqzUI9sbO/hXeXw
- TDSB+YhErbNOxvHqCzZEnGAAFf6ges26fRVyuU119AzO40sjdLV0l6LE7GshddyazWZf0iac
- nEhX9NKxGnuhMu5SXmo2poIQttJuYAvTVUNwQVEx/0yY5xmiuyqvXa+XT7NKJkOZSiAPlNt6
- VffjgOP62S7M9wDShUghN3F7CPOrrRsOHWO/l6I/qJdUMW+MHSFYPfYiFXoLUZyPvNVCYSgs
- 3oQaFhHapq1f345XBtfG3fOYp1K2wTXd4ThFraTLl8PHxCn4ywARAQABzSRNYXR0aGlldSBC
- YWVydHMgPG1hdHR0YmVAa2VybmVsLm9yZz7CwZEEEwEIADsCGwMFCwkIBwIGFQoJCAsCBBYC
- AwECHgECF4AWIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZUDpDAIZAQAKCRD2t4JPQmmgcz33
- EACjROM3nj9FGclR5AlyPUbAq/txEX7E0EFQCDtdLPrjBcLAoaYJIQUV8IDCcPjZMJy2ADp7
- /zSwYba2rE2C9vRgjXZJNt21mySvKnnkPbNQGkNRl3TZAinO1Ddq3fp2c/GmYaW1NWFSfOmw
- MvB5CJaN0UK5l0/drnaA6Hxsu62V5UnpvxWgexqDuo0wfpEeP1PEqMNzyiVPvJ8bJxgM8qoC
- cpXLp1Rq/jq7pbUycY8GeYw2j+FVZJHlhL0w0Zm9CFHThHxRAm1tsIPc+oTorx7haXP+nN0J
- iqBXVAxLK2KxrHtMygim50xk2QpUotWYfZpRRv8dMygEPIB3f1Vi5JMwP4M47NZNdpqVkHrm
- jvcNuLfDgf/vqUvuXs2eA2/BkIHcOuAAbsvreX1WX1rTHmx5ud3OhsWQQRVL2rt+0p1DpROI
- 3Ob8F78W5rKr4HYvjX2Inpy3WahAm7FzUY184OyfPO/2zadKCqg8n01mWA9PXxs84bFEV2mP
- VzC5j6K8U3RNA6cb9bpE5bzXut6T2gxj6j+7TsgMQFhbyH/tZgpDjWvAiPZHb3sV29t8XaOF
- BwzqiI2AEkiWMySiHwCCMsIH9WUH7r7vpwROko89Tk+InpEbiphPjd7qAkyJ+tNIEWd1+MlX
- ZPtOaFLVHhLQ3PLFLkrU3+Yi3tXqpvLE3gO3LM7BTQRV4/npARAA5+u/Sx1n9anIqcgHpA7l
- 5SUCP1e/qF7n5DK8LiM10gYglgY0XHOBi0S7vHppH8hrtpizx+7t5DBdPJgVtR6SilyK0/mp
- 9nWHDhc9rwU3KmHYgFFsnX58eEmZxz2qsIY8juFor5r7kpcM5dRR9aB+HjlOOJJgyDxcJTwM
- 1ey4L/79P72wuXRhMibN14SX6TZzf+/XIOrM6TsULVJEIv1+NdczQbs6pBTpEK/G2apME7vf
- mjTsZU26Ezn+LDMX16lHTmIJi7Hlh7eifCGGM+g/AlDV6aWKFS+sBbwy+YoS0Zc3Yz8zrdbi
- Kzn3kbKd+99//mysSVsHaekQYyVvO0KD2KPKBs1S/ImrBb6XecqxGy/y/3HWHdngGEY2v2IP
- Qox7mAPznyKyXEfG+0rrVseZSEssKmY01IsgwwbmN9ZcqUKYNhjv67WMX7tNwiVbSrGLZoqf
- Xlgw4aAdnIMQyTW8nE6hH/Iwqay4S2str4HZtWwyWLitk7N+e+vxuK5qto4AxtB7VdimvKUs
- x6kQO5F3YWcC3vCXCgPwyV8133+fIR2L81R1L1q3swaEuh95vWj6iskxeNWSTyFAVKYYVskG
- V+OTtB71P1XCnb6AJCW9cKpC25+zxQqD2Zy0dK3u2RuKErajKBa/YWzuSaKAOkneFxG3LJIv
- Hl7iqPF+JDCjB5sAEQEAAcLBXwQYAQIACQUCVeP56QIbDAAKCRD2t4JPQmmgc5VnD/9YgbCr
- HR1FbMbm7td54UrYvZV/i7m3dIQNXK2e+Cbv5PXf19ce3XluaE+wA8D+vnIW5mbAAiojt3Mb
- 6p0WJS3QzbObzHNgAp3zy/L4lXwc6WW5vnpWAzqXFHP8D9PTpqvBALbXqL06smP47JqbyQxj
- Xf7D2rrPeIqbYmVY9da1KzMOVf3gReazYa89zZSdVkMojfWsbq05zwYU+SCWS3NiyF6QghbW
- voxbFwX1i/0xRwJiX9NNbRj1huVKQuS4W7rbWA87TrVQPXUAdkyd7FRYICNW+0gddysIwPoa
- KrLfx3Ba6Rpx0JznbrVOtXlihjl4KV8mtOPjYDY9u+8x412xXnlGl6AC4HLu2F3ECkamY4G6
- UxejX+E6vW6Xe4n7H+rEX5UFgPRdYkS1TA/X3nMen9bouxNsvIJv7C6adZmMHqu/2azX7S7I
- vrxxySzOw9GxjoVTuzWMKWpDGP8n71IFeOot8JuPZtJ8omz+DZel+WCNZMVdVNLPOd5frqOv
- mpz0VhFAlNTjU1Vy0CnuxX3AM51J8dpdNyG0S8rADh6C8AKCDOfUstpq28/6oTaQv7QZdge0
- JY6dglzGKnCi/zsmp2+1w559frz4+IC7j/igvJGX4KDDKUs0mlld8J2u2sBXv7CGxdzQoHaz
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <20260729-pig-of-lucky-economy-3a5ace@meerkat>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Konstantin,
+Upgrading a series, especially a large series, can sometimes be a slow
+operation. It can take a while to figure out the base commit to use, and
+network operations can be slow. At the moment we just have a "Fetching new
+revision" interstitial which can be displayed for many tens of seconds with
+no indication as to what it's actually doing.
 
-On 29/07/2026 06:38, Konstantin Ryabitsev wrote:
-> On Tue, Jun 30, 2026 at 12:55:25PM +0200, Matthieu Baerts wrote:
->> I just retried, and it is indeed much better now! Yet, I still have an
->> issue with trailers, e.g.
->>
->>   Please add a Fixes tag. Here I guess it should be:
->>
->>   Fixes: (...)
->>
->> The Review view then correctly showed my comment with the Fixes tag, but
->> *I think* the Fixes tag was not visible in green at the bottom left (not
->> sure, because I also added a Reviewed-by tag after the reply). When
->> looking at the 'email mode' view, the Fixes tag got dropped, leaving 2
->> empty lines around.
-> 
-> This turned out to be two separate bugs, thanks for the detailed description!
-> 
-> There's an attempted fix in the current master: the trailer menu now only ever
-> touches its own trailer types (Acked-by, Reviewed-by, Tested-by, NACKed-by).
-> Anything else you type into the reply -- Fixes:, Cc:, Suggested-by:, whatever
-> -- is treated as your content and is never moved or removed.
-> 
-> Removing a trailer via the menu should also no longer leave a doubled blank
-> line behind.
-> 
->> Back to the 'reply' view, vim showed all lines ending with ^M, and the line
->> starting with 'Fixes:' was no longer there. Adding it back re-added it to
->> the other views, and the Fixes tag was also listed at the bottom left in the
->> 'review' view, but I could see extra new lines due to all these \r.
->> Stripping them from the 'reply' view fixes all the issues, and I was able to
->> send the reply with both my Fixes and Reviewed-by tags.
->>
->> Any idea was caused that? :)
-> 
-> That was bug number two, also with a fix on mater: b4 now normalizes
-> line endings on every editor round-trip, whatever your editor decides to
-> write, and previously stored buffers get cleaned up the next time they're
-> touched.
-> 
-> Try them out!
+Add progress messages to the interstitial indicating what is currently
+happening, helping reassure users that progress is being made and providing
+hints about the source of any problems that are seen.
 
-Thank you, I re-tried today (after I saw all boxes were checked for
-v0.16), and it is smoother indeed!
+Signed-off-by: Mark Brown <broonie@kernel.org>
+---
+ src/b4/__init__.py                 | 29 +++++++---
+ src/b4/review/_review.py           | 19 ++++--
+ src/b4/review_tui/_modals.py       | 16 +++++-
+ src/b4/review_tui/_tracking_app.py | 29 +++++++++-
+ src/tests/test_rethread.py         | 35 ++++++++++++
+ src/tests/test_review_tracking.py  | 48 +++++++++++++++-
+ src/tests/test_tui_modals.py       | 17 ++++++
+ src/tests/test_tui_tracking.py     | 92 ++++++++++++++++++++++++++++++
+ 8 files changed, 266 insertions(+), 19 deletions(-)
 
-BTW, thank you for the v0.16!
-
->> BTW, after having sent a reply, it appears a few seconds later as unread in
->> my inbox. I guess only a filter on the inbox side can help to mark them as
->> read, right?
-> 
-> This annoys me, too, so I'll think of a way to handle this.
-
-If it could also mark the patch I'm replying too as read, that would be
-even better! But I guess it is not planned to give IMAP access :)
-I guess yet another filter on the mail side could help, but maybe
-trickier (or simply "ignoring" all patches that are supposed to be
-handled by b4 by moving them to a different folder).
-
-Cheers,
-Matt
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index a52b001..f34638a 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -37,6 +37,7 @@ from pathlib import Path
+ from typing import (
+     Any,
+     BinaryIO,
++    Callable,
+     Dict,
+     Generator,
+     Iterator,
+@@ -5533,28 +5534,38 @@ def discover_rethread_series(msgid: str, nocache: bool = False) -> List[str]:
+ 
+ 
+ def fetch_rethread_messages(
+-    msgids: List[str], nocache: bool = False
++    msgids: List[str],
++    nocache: bool = False,
++    progress_cb: Optional[Callable[[int, int], None]] = None,
+ ) -> Tuple[List[str], List[EmailMessage]]:
+     """Fetch messages for multiple msgids, deduplicating across threads.
+ 
+     Returns (msgids, all_msgs) where msgids is the input list (for
+     pipeline use) and all_msgs contains all fetched messages with
+-    duplicates removed.
++    duplicates removed.  *progress_cb*, when provided, is called as
++    ``progress_cb(completed, total)`` before the first request and after
++    every message-id has been attempted.
+     """
+     all_msgs: List[EmailMessage] = []
+     seen: Set[str] = set()
++    total = len(msgids)
+ 
+-    for msgid in msgids:
++    if progress_cb is not None:
++        progress_cb(0, total)
++
++    for completed, msgid in enumerate(msgids, 1):
+         logger.info('Retrieving series: %s', msgid)
+         thread_msgs = get_pi_thread_by_msgid(msgid, nocache=nocache)
+         if not thread_msgs:
+             logger.warning('Could not retrieve %s, skipping', msgid)
+-            continue
+-        for msg in thread_msgs:
+-            c_msgid = LoreMessage.get_clean_msgid(msg)
+-            if c_msgid and c_msgid not in seen:
+-                all_msgs.append(msg)
+-                seen.add(c_msgid)
++        else:
++            for msg in thread_msgs:
++                c_msgid = LoreMessage.get_clean_msgid(msg)
++                if c_msgid and c_msgid not in seen:
++                    all_msgs.append(msg)
++                    seen.add(c_msgid)
++        if progress_cb is not None:
++            progress_cb(completed, total)
+ 
+     if not all_msgs:
+         raise LookupError('Could not retrieve any of the specified messages')
+diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
+index 5fa4d2a..7fe746b 100644
+--- a/src/b4/review/_review.py
++++ b/src/b4/review/_review.py
+@@ -184,13 +184,17 @@ def _retrieve_messages(message_id: str) -> List[email.message.EmailMessage]:
+ 
+ 
+ def retrieve_series_messages(
+-    series: Dict[str, Any], identifier: str
++    series: Dict[str, Any],
++    identifier: str,
++    progress_cb: Optional[Callable[[int, int], None]] = None,
+ ) -> List[email.message.EmailMessage]:
+     """Fetch messages for a tracked series, using stored patch info when available.
+ 
+     For rethreaded series, reads the series_patches table to fetch each
+     patch individually and runs the rethread pipeline. For normal series,
+-    falls back to the standard single-msgid retrieval.
++    falls back to the standard single-msgid retrieval.  *progress_cb*, when
++    provided, reports completed and total thread fetches; the normal path is
++    a single request, while rethreaded series can report each patch thread.
+     """
+     change_id = series.get('change_id', '')
+     revision = series.get('revision')
+@@ -205,7 +209,9 @@ def retrieve_series_messages(
+         if patches:
+             msgids = [p['message_id'] for p in patches if p['position'] > 0]
+             if len(msgids) >= 2:
+-                _msgids, all_msgs = b4.fetch_rethread_messages(msgids, nocache=True)
++                _msgids, all_msgs = b4.fetch_rethread_messages(
++                    msgids, nocache=True, progress_cb=progress_cb
++                )
+                 _cover_msgid, msgs = b4.LoreSeries.rethread_series(msgids, all_msgs)
+                 if not msgs:
+                     raise LookupError(
+@@ -215,7 +221,12 @@ def retrieve_series_messages(
+ 
+     if not message_id:
+         raise LookupError('No message-id for this series')
+-    return _retrieve_messages(message_id)
++    if progress_cb is not None:
++        progress_cb(0, 1)
++    msgs = _retrieve_messages(message_id)
++    if progress_cb is not None:
++        progress_cb(1, 1)
++    return msgs
+ 
+ 
+ def _get_lore_series(
+diff --git a/src/b4/review_tui/_modals.py b/src/b4/review_tui/_modals.py
+index 4acfd0d..fb3f229 100644
+--- a/src/b4/review_tui/_modals.py
++++ b/src/b4/review_tui/_modals.py
+@@ -1575,7 +1575,8 @@ class WorkerScreen(ModalScreen[Any]):
+     """Generic modal that runs a callable in a worker thread.
+ 
+     Shows a loading indicator while the callable runs.  Dismisses with
+-    the return value on success or None on error/cancel.
++    the return value on success or None on error/cancel.  Pass *status* to
++    add a progress line that callers can refresh with :meth:`update_status`.
+ 
+     Usage::
+ 
+@@ -1609,18 +1610,29 @@ class WorkerScreen(ModalScreen[Any]):
+         text-style: bold;
+         margin-bottom: 1;
+     }
++    #ws-status {
++        margin-bottom: 1;
++    }
+     """
+ 
+-    def __init__(self, title: str, fn: Any) -> None:
++    def __init__(self, title: str, fn: Any, status: str = '') -> None:
+         super().__init__()
+         self._title = title
+         self._fn = fn
++        self._status = status
+ 
+     def compose(self) -> ComposeResult:
+         with Vertical(id='ws-dialog'):
+             yield Static(self._title, id='ws-title', markup=False)
++            if self._status:
++                yield Static(self._status, id='ws-status', markup=False)
+             yield LoadingIndicator()
+ 
++    def update_status(self, text: str) -> None:
++        """Update the optional progress text from the UI thread."""
++        if self.is_attached:
++            self.query_one('#ws-status', Static).update(text)
++
+     def on_mount(self) -> None:
+         # run_lore_worker() sheds any stale cancel flag before the fetch and
+         # runs with exit_on_error=False, so a fetch failure surfaces through
+diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
+index 5b7a756..b02fb5a 100644
+--- a/src/b4/review_tui/_tracking_app.py
++++ b/src/b4/review_tui/_tracking_app.py
+@@ -4069,6 +4069,17 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             return
+ 
+         # Phase 1: fetch series and compute base in a worker thread
++        worker_screen: WorkerScreen
++
++        def _set_fetch_status(status: str) -> None:
++            self.call_from_thread(worker_screen.update_status, status)
++
++        def _fetch_progress(completed: int, total: int) -> None:
++            if total > 1:
++                _set_fetch_status(
++                    f'Fetching patch threads {completed}/{total}\N{HORIZONTAL ELLIPSIS}'
++                )
++
+         def _fetch_update() -> Tuple[b4.LoreSeries, bytes, str, str, int]:
+             with _quiet_worker():
+                 target_series = dict(self._selected_series or {})
+@@ -4076,10 +4087,18 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 target_series['revision'] = target_rev
+                 target_series['is_rethreaded'] = target_is_rethreaded
+                 msgs = b4.review.retrieve_series_messages(
+-                    target_series, self._identifier
++                    target_series,
++                    self._identifier,
++                    progress_cb=_fetch_progress,
+                 )
+                 lser = b4.review._get_lore_series(msgs)
+ 
++                patch_count = sum(patch is not None for patch in lser.patches[1:])
++                patch_label = 'patch' if patch_count == 1 else 'patches'
++                _set_fetch_status(
++                    f'Preparing {patch_count} {patch_label}\N{HORIZONTAL ELLIPSIS}'
++                )
++
+                 am_msgs = lser.get_am_ready(
+                     noaddtrailers=True,
+                     addmysob=False,
+@@ -4097,13 +4116,19 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 ambytes = ifh.getvalue()
+ 
+                 # Determine best base: configured, series-specified or guessed
++                _set_fetch_status('Finding base commit\N{HORIZONTAL ELLIPSIS}')
+                 topdir = b4.git_get_toplevel()
+                 initial_base, base_hint = _detect_initial_base(lser, topdir)
+ 
+                 return lser, ambytes, initial_base, base_hint, len(am_msgs)
+ 
++        worker_screen = WorkerScreen(
++            'Fetching new revision\u2026',
++            _fetch_update,
++            status=f'Fetching v{target_rev} from lore\u2026',
++        )
+         self.push_screen(
+-            WorkerScreen('Fetching new revision\u2026', _fetch_update),
++            worker_screen,
+             callback=lambda result: self._on_update_prepared(
+                 result,
+                 change_id,
+diff --git a/src/tests/test_rethread.py b/src/tests/test_rethread.py
+index 8c9888a..2e44fe2 100644
+--- a/src/tests/test_rethread.py
++++ b/src/tests/test_rethread.py
+@@ -570,6 +570,41 @@ class TestDiscoverRethreadSeries:
+         assert result == ['p1@x']
+ 
+ 
++# ===========================================================================
++# fetch_rethread_messages progress tests
++# ===========================================================================
++class TestFetchRethreadMessagesProgress:
++    def test_reports_every_attempted_thread(self) -> None:
++        """Progress includes the initial state and failed thread fetches."""
++        p1 = _make_msg('p1@x', '[PATCH 1/2] First fix')
++        p3 = _make_msg('p3@x', '[PATCH 2/2] Second fix')
++        threads = {
++            'p1@x': [p1],
++            'missing@x': [],
++            'p3@x': [p3],
++        }
++        progress: List[Tuple[int, int]] = []
++
++        with mock.patch(
++            'b4.get_pi_thread_by_msgid',
++            side_effect=lambda msgid, **_kwargs: threads[msgid],
++        ):
++            returned_ids, msgs = b4.fetch_rethread_messages(
++                list(threads),
++                nocache=True,
++                progress_cb=lambda completed, total: progress.append(
++                    (completed, total)
++                ),
++            )
++
++        assert returned_ids == ['p1@x', 'missing@x', 'p3@x']
++        assert [b4.LoreMessage.get_clean_msgid(msg) for msg in msgs] == [
++            'p1@x',
++            'p3@x',
++        ]
++        assert progress == [(0, 3), (1, 3), (2, 3), (3, 3)]
++
++
+ # ===========================================================================
+ # Prefer a properly-threaded resend over stitched patches
+ # (feature/rethread-upgrade-compose)
+diff --git a/src/tests/test_review_tracking.py b/src/tests/test_review_tracking.py
+index 64778be..79fc2cc 100644
+--- a/src/tests/test_review_tracking.py
++++ b/src/tests/test_review_tracking.py
+@@ -4124,18 +4124,62 @@ class TestRetrieveSeriesMessagesRethreadSeam:
+         }
+ 
+         reassembled = [mock.Mock(), mock.Mock(), mock.Mock()]
++        forwarded_callback: list[Any] = []
++
++        def _fetch_rethread_messages(
++            msgids: list[str], nocache: bool = False, progress_cb: Any = None
++        ) -> tuple[list[str], list[Any]]:
++            assert nocache is True
++            forwarded_callback.append(progress_cb)
++            return msgids, reassembled
++
++        progress_cb = mock.Mock()
+         with (
+             mock.patch(
+                 'b4.fetch_rethread_messages',
+-                return_value=(['p1@q', 'p2@q', 'p3@q'], reassembled),
++                side_effect=_fetch_rethread_messages,
+             ),
+             mock.patch(
+                 'b4.LoreSeries.rethread_series',
+                 return_value=('p1@q', reassembled),
+             ),
+         ):
+-            out = b4.review.retrieve_series_messages(series, 'rt-up-seam')
++            out = b4.review.retrieve_series_messages(
++                series, 'rt-up-seam', progress_cb=progress_cb
++            )
+         assert out == reassembled
++        assert forwarded_callback == [progress_cb]
++
++    def test_normal_fetch_reports_single_step_progress(self) -> None:
++        """A normal single-thread fetch reports its start and completion."""
++        series = {
++            'change_id': 'cid',
++            'revision': 6,
++            'message_id': 'v6-root@example.com',
++            'is_rethreaded': False,
++        }
++        msgs = [mock.Mock()]
++        events: list[Any] = []
++
++        def _retrieve(message_id: str) -> list[Any]:
++            events.append(('fetch', message_id))
++            return msgs
++
++        with mock.patch('b4.review._review._retrieve_messages', side_effect=_retrieve):
++            out = b4.review.retrieve_series_messages(
++                series,
++                'rt-up-seam-normal',
++                progress_cb=lambda completed, total: events.append(
++                    ('progress', completed, total)
++                ),
++            )
++
++        assert out == msgs
++        assert events == [
++            ('progress', 0, 1),
++            ('fetch', 'v6-root@example.com'),
++            ('progress', 1, 1),
++        ]
+ 
+ 
+ class TestRethreadFlagCarriedOnLink:
+diff --git a/src/tests/test_tui_modals.py b/src/tests/test_tui_modals.py
+index 5a19cdd..e66d43e 100644
+--- a/src/tests/test_tui_modals.py
++++ b/src/tests/test_tui_modals.py
+@@ -1262,6 +1262,23 @@ class TestWorkerScreen:
+     (msgid 21fe13c1-5c9a-4a47-b97b-251da4748aea@sirena.org.uk).
+     """
+ 
++    @pytest.mark.asyncio
++    async def test_status_line_can_be_updated(self) -> None:
++        """The optional status line is visible and can be refreshed."""
++        app = ModalTestApp()
++        screen = WorkerScreen('Working…', lambda: 'done', status='Fetching 0/2…')
++        with mock.patch('b4.review_tui._modals.run_lore_worker'):
++            async with app.run_test() as pilot:
++                app.push_screen(screen)
++                await pilot.pause()
++
++                status = screen.query_one('#ws-status', Static)
++                assert _static_text(status) == 'Fetching 0/2…'
++
++                screen.update_status('Fetching 1/2…')
++                await pilot.pause()
++                assert _static_text(status) == 'Fetching 1/2…'
++
+     @pytest.mark.asyncio
+     async def test_on_mount_resets_cancel_flag(self) -> None:
+         """A fetch must clear any stale cancel flag before it runs."""
+diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
+index 5ee2a24..e2cd31d 100644
+--- a/src/tests/test_tui_tracking.py
++++ b/src/tests/test_tui_tracking.py
+@@ -3806,6 +3806,98 @@ class TestUpdateRevisionWorkflow:
+                 ).WorkerScreen,
+             )
+ 
++    def test_fetch_worker_reports_progress(self, tmp_path: pathlib.Path) -> None:
++        """Fetching an upgrade should describe each potentially slow step."""
++        identifier = 'test-update-progress'
++        change_id = 'update-progress-1'
++        _seed_db(
++            identifier,
++            [
++                {
++                    'change_id': change_id,
++                    'subject': '[PATCH v1] progress test',
++                    'status': 'reviewing',
++                    'message_id': 'v1@ex.com',
++                }
++            ],
++        )
++        conn = tracking.get_db(identifier)
++        tracking.add_revision(
++            conn,
++            change_id,
++            2,
++            'v2@ex.com',
++            subject='[PATCH v2] progress test',
++            is_rethreaded=True,
++        )
++        conn.close()
++
++        captured: Dict[str, Any] = {}
++        statuses: List[str] = []
++
++        def _retrieve(
++            series: Dict[str, Any],
++            project: str,
++            progress_cb: Optional[Callable[[int, int], None]] = None,
++        ) -> List[email.message.EmailMessage]:
++            captured['series'] = series
++            captured['project'] = project
++            captured['progress_cb'] = progress_cb
++            assert progress_cb is not None
++            progress_cb(0, 3)
++            progress_cb(1, 3)
++            progress_cb(3, 3)
++            return [email.message.EmailMessage()]
++
++        lser = _make_mock_lser(expected=3)
++        mock_patch = lser.patches[0]
++        assert mock_patch is not None
++        lser.patches = [None, mock_patch, mock_patch, mock_patch]
++        am_msgs = [email.message.EmailMessage() for _ in range(3)]
++
++        app = TrackingApp(identifier)
++        with (
++            patch.object(app, 'push_screen') as push_screen,
++            patch.object(
++                app,
++                'call_from_thread',
++                side_effect=lambda _update, status: statuses.append(status),
++            ),
++            patch(
++                'b4.review.retrieve_series_messages',
++                side_effect=_retrieve,
++            ),
++            patch('b4.review._get_lore_series', return_value=lser),
++            patch.object(lser, 'get_am_ready', return_value=am_msgs),
++            patch(
++                'b4.save_git_am_mbox',
++                side_effect=lambda _msgs, dest: dest.write(b'mbox'),
++            ),
++            patch('b4.git_get_toplevel', return_value='/repo'),
++            patch(
++                'b4.review_tui._tracking_app._detect_initial_base',
++                return_value=('base-sha', 'base hint'),
++            ),
++        ):
++            app._do_update_revision(change_id, 1, 2)
++            worker_screen = push_screen.call_args.args[0]
++
++            assert worker_screen._status == 'Fetching v2 from lore…'
++            result = worker_screen._fn()
++
++        assert captured['project'] == identifier
++        assert captured['series']['revision'] == 2
++        assert captured['series']['is_rethreaded'] is True
++        assert callable(captured['progress_cb'])
++        assert statuses == [
++            'Fetching patch threads 0/3…',
++            'Fetching patch threads 1/3…',
++            'Fetching patch threads 3/3…',
++            'Preparing 3 patches…',
++            'Finding base commit…',
++        ]
++        assert result[-1] == 3
++
+     # --- Phase 2: _on_update_prepared (base selection screen) ------------
+ 
+     @pytest.mark.asyncio
 -- 
-Sponsored by the NGI0 Core fund.
+2.47.3
 
