@@ -1,82 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EDA30C147
-	for <tools@linux.kernel.org>; Tue, 11 Aug 2026 23:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1167C35676A
+	for <tools@linux.kernel.org>; Tue, 11 Aug 2026 23:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786489288; cv=none; b=GrV8qdov/FcJcHz1m7YzCJi7eNX9Cn3lV30Gyp+oFTwt2v5h6+Zpso4/mA88yav+qkjYZNn4pILYXqSUlvkbhRNCmM83vFqofFt5NUe8XSIabS1bPY0nTMMBSiJODSpWERGmO33v+dYTfQtqhUsGx8YmiMiFIfggUoreC2oxTmo=
+	t=1786490466; cv=none; b=bz2Bz4rbXxSuXirzu23f8ngrGWcoIJ9kUTNtmCHo+gFLS5Kag0mjvtcnH2tGtW/7qVUH2jCwzVU37reVWVrpkLL2TcfMPJ8eB1DbD7Zkz72sVYMSvPy2O7QGKUDmG4fdZzxSkICtMZ3JlRJVvF8EJaM9eExqk0JFd01TJi+Pna4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786489288; c=relaxed/simple;
-	bh=oKTkD7k/OmVMYC6QGDl1G08NwEJItuzdQVg3pLw97yg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e+axkW6LBApU4g3Lrp7AbHq0UpMeDlAqvjEyYj9N3ddlRwAMIHQ49R5PbnWl1C+lKnq6dBFQHRDWmWG94vTcV1TyT2jW0q+LgBrrI+kgsHiyFWtv98vrrD0gs6SbYKCeRzKlb+gzueZ8KeS9oz8uVrwnMtndLYmRwdHBxEprU7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WyrKvP+v; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786490466; c=relaxed/simple;
+	bh=wwn4f03YHYksUngoqT7DghB/7eUrZF21c1EHf5/V7JM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=fsWgRwHuAZKidAZ4FYzLjFu8fQqr6LzvfBeflr/0SlhOscZ8+AjcFNKXpHp4swFhmQzmCRzK2AT3kxZiQ0aiuCMSjsb/KdDtvLjEvS35PEiQliz9fgbqXwi6ShSWOPcKaQt+HDkTATggtXcPIQR4sH0RcSsamEjMYbtW35YWV6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqEgLBNL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WyrKvP+v"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqEgLBNL"
 Received: by smtp.kernel.org (Postfix)
-	id B1BA41F00ACA; Tue, 11 Aug 2026 23:01:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A191F000E9;
-	Tue, 11 Aug 2026 23:01:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786489286;
-	bh=FeV0k62/mpnJ6VJ9GI5IffO1V7QQd/8uA8y1iY3oRzQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=WyrKvP+vOMmEQL2E4667OuKIizJVPjqSFzrW8YdeeOsVvZfJyidHozqlRMS9OqwLi
-	 xbOtHL/tZ+W7jSO7hxyBJ+c16Eu18eJcmK60jJIBU2eHonQ8tqLrVh0v733chQoubG
-	 zA2OTcoKBl5aFPoV4TYu49S/jX5r0FHd2LVhyLh43y7U235PxkSl54XM9ITz6OR7Ck
-	 rFSodhtsTTGqwDVD5MSZzRN0dVHTKkfXo1Eq9u7VEwufLCYpHO4s0oYMX9saj3ZgjQ
-	 Sf/KoOGilmi/tGGzYFbhckffV5U04llUCqhKlw0KxjDMIDQWOUSFvZA9AvEJKzJbE/
-	 61Zp2ryn3iUpw==
-Date: Tue, 11 Aug 2026 19:01:23 -0400
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Cc: Francis Laniel <laniel_francis@privacyrequired.com>, 
-	Michal Wilczynski <m.wilczynski@samsung.com>, Miguel Ojeda <ojeda@kernel.org>, 
-	Benno Lossin <lossin@kernel.org>, Gary Guo <gary@garyguo.net>, 
-	Alexandre Courbot <acourbot@nvidia.com>, Boqun Feng <boqun@kernel.org>, 
-	=?utf-8?B?QmrDtnJu?= Roy Baron <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, linux-pwm@vger.kernel.org, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, tools@kernel.org
-Subject: Re: [PATCH v3] rust: pwm: replace `core::mem::zeroed` with
- `pin_init::zeroed`
-Message-ID: <20260811-small-ubiquitous-caracal-ebb9cb@meerkat>
-References: <20260603160910.159307-1-laniel_francis@privacyrequired.com>
- <anqsTVj5QGYGiEQ9@monoceros>
- <20260811-garrulous-serpent-of-agreement-cf9b19@meerkat>
- <anunw_qC23XMqye8@monoceros>
+	id A06151F00A3A; Tue, 11 Aug 2026 23:21:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E18D1F000E9;
+	Tue, 11 Aug 2026 23:21:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1786490464;
+	bh=ryoBYCt7V/DyI5pHBE7pZpolq3O9GU96h2SKQzIztTQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=sqEgLBNLmNCmJX5t3q0ZsMTArybbVQsMxhhU5COEa5fa74aXFkOjpVIL+feGYcGoB
+	 HTSo2FjAreWb8nKTUUWW9tb+ky02JkPpef13rMICCSDIC9jBPXOCWIVOxZEs6s683x
+	 qrP0cWwsU0q0zCnVc/dGRlPvBEdX1jNbUxO2gZx0=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@kernel.org
+In-Reply-To: <20260807180213.599509-1-broonie@kernel.org>
+References: <20260807180213.599509-1-broonie@kernel.org>
+Subject: Re: [PATCH] review-tui: Provide progress indications when
+ upgrading a series
+Message-Id: <178649046119.9692.18438835558342605129.b4-ty@b4>
+Date: Tue, 11 Aug 2026 23:21:01 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <anunw_qC23XMqye8@monoceros>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=350;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=tJoycq+xI6e9iIIBbIbaz2HRCM8aGKl2DC80TqGqVUU=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLKq18U/fHWk6mn+hr2ZJzVLWvrvxZ89FbnVzujaauWjr
+ unH50WbdpSyMIhxMciKKbKU7YvdFFT40EMuvccUZg4rE8gQBi5OAZjIEzaGX8y5Zi1563a8s/Fj
+ e/D0hFOLe5PSw2fpiUZNvv/D9eMaHRgZ3huJXbJV23mMN76d02GK4dQgnSvirVOsIiR63nSbc5e
+ xAwA=
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On Wed, Aug 12, 2026 at 12:56:05AM +0200, Uwe Kleine-König wrote:
-> On Tue, Aug 11, 2026 at 04:54:47PM -0400, Konstantin Ryabitsev wrote:
-> > On Tue, Aug 11, 2026 at 07:04:49AM +0200, Uwe Kleine-König wrote:
-> > > I didn't research what went wrong there and the trailer made it into the
-> > > patch anyhow and adding -S doesn't change the patch. I added the
-> > > tools@k.o mailing list to Cc:, maybe someone there wants to debug that.
-> > 
-> > It was just Miguel responding with a suggestion how to better reorder
-> > trailers. Since we can't tell this case from the case when someone actually
-> > replies with a follow-up trailer, hence the error.
-> 
-> The strange thing from my POV is that before your mail Miguel didn't
-> participate in that thread according to
-> https://patch.msgid.link/20260603160910.159307-1-laniel_francis@privacyrequired.com .
-> I'm confused.
 
-It came from v2 of the series and was carried over because the patch-id hasn't
-changed (meaning it's the same patch, so any code review trailers still apply).
+On Fri, 07 Aug 2026 19:02:09 +0100, Mark Brown wrote:
+> review-tui: Provide progress indications when upgrading a series
 
-https://lore.kernel.org/all/CANiq72n+tyDcabpwZOR1gHb4mycbpTQbzr0QNgi9c48cSnrZ8w@mail.gmail.com/
+Applied, thanks!
 
--K
+[1/1] review-tui: Provide progress indications when upgrading a series
+      commit: cde64701deebd7a60af31ce44d322ce402937bdd
+
+Best regards,
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
