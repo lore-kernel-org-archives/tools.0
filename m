@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B563E406261
-	for <tools@linux.kernel.org>; Wed, 12 Aug 2026 21:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B00406261
+	for <tools@linux.kernel.org>; Wed, 12 Aug 2026 21:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786571261; cv=none; b=gdbHndBPoNXTUL3Cb9CevWi5aE7zli7DKqBrTHSx0ZTXiYjYcruAnbbLURtd3RktaWFSJoEENAQy+kZTrpCjHk2d3b3Bt1miwXU6PnhB83DpCtjE6ugGlmEpf++9FWYy38Kjmu3zPoHMlp/HY32d199bUryif2xpewZ2pA3owx0=
+	t=1786571265; cv=none; b=lYGq/u0JEWqdCvyJvdi9AQPyuHTqzmTMPINoXONYa3zRZpieoVtU/Lvna9IzPNDwflZWatV4H3C27KJ/BsrSBKlzEp17rkTn9N3T5hEiPLF3RaUhk5RtT6acH2UVicwECMjrZfD5KEncBYqk28iJ8rqjuknSLFOBDRoS5DLL1Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786571261; c=relaxed/simple;
-	bh=s1MDzFo6whMx5aTttg0U831s6iYYBbFBnFZxiRuB+qM=;
+	s=arc-20240116; t=1786571265; c=relaxed/simple;
+	bh=AvnpGCFcN/IOLXqadfnoBqd12rpVU+s9eOB+pzsDkG8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XFJL1crUB5HL65EUo7Vr2KXhWqaONxEDQQq7f5z+OdRD7wM/Zabuw9nUBGNZQW8avdHxR4w5mAgeyhM3drEuPYTS7sE6fUrlcKR3XSg4q2bA5dYO48QG4ScG9tvt9mPbwlLiw50dMKJKIJ0nNqxRkgLSYob5bvh2PHA8M6HdhTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TYZQ8p78; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=eKmn3nlEk8qwm3bCGIkdosZknIki66v7FWgAOfLY3X4fHxm0C5tIGKtaJOcH+dBIrRMmGEttO5mMuGpAhPEtPXIs1ZlK98yretjSI0C/2NH1rS2h45ltzt/nD5rer+t4hhVitq23Gz1qy14Ge9Vb81eIJQlu+lWphxX3AsBszGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ECxmLiRK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TYZQ8p78"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ECxmLiRK"
 Received: by smtp.kernel.org (Postfix)
-	id B100E1F00A3A; Wed, 12 Aug 2026 21:47:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B961F000E9;
-	Wed, 12 Aug 2026 21:47:36 +0000 (UTC)
+	id 9CE191F00A3A; Wed, 12 Aug 2026 21:47:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909CC1F000E9;
+	Wed, 12 Aug 2026 21:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786571257;
-	bh=aBUe8iaGldw7rZq90UlqRqZkl2TO1Lf8Jv5YvVgLtsU=;
+	s=k20260515; t=1786571261;
+	bh=2x47lwq087Qo4Mj/6I10xomDdsvmcpBVooix0N7D6YU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=TYZQ8p78mU21d6aQIaU2P5HUZhkspG9MECaUzgcrt5i3dJ0wJ6f9/LEkGq/KRnnUC
-	 GR7NW76QJsTB4di9dtqdCLacuBRBKbIzl/+hV3Ru5/PYV6dnB3agcnxq7Grd9VcXqu
-	 T1fX3Vx+CrsVdBxDLgl+v0uEyrn/GOGUQgBMQgrBH/QA6Uhwn9yi2C2OCBPoPCDuXi
-	 xHhywQ8g25YgqlK1eBlD3b0d94xwWcWeuC2MuZ/TTNw/D5FmJMPaF33jJHhhDksTR3
-	 +5iv+qWklRFp+YYPnSjky54oqO1Ew/O6dT7Mn9Xmg7lJwh3UPz9subqv+oiUjXWJqG
-	 YkeMCFGYv7YYg==
+	b=ECxmLiRK5fwUHFlHU5ROJcZWnHjdaWqt0VmCb2M6kakMuiBrCAqWU6Nb7miY0sdFN
+	 Z2OIl5wYh15EjgD9NPo21nx2zeoM16re6fBcbPwdDwnkzglO/E9x7FVMtqSn3lY/MR
+	 HKx2drT9b2VStLhNLPH+6XWZl2IAXetNBbf2pkMrIhjx3/yB8FIaNrYofNDYS95TtQ
+	 pIznC5TF2jv5q8B8Mtcc4n0WkCvIam+x79PKUhC7jfpYXY9Igu9r3FIW3WS/dGMmf0
+	 yUrADNN51Hcun67ar7PIFqVvFTdw5dK6kEkW964tOmcaECjXR/UYTWv1XPVkWbFvr+
+	 a7EyvXNuvk00Q==
 From: Christian Brauner <brauner@kernel.org>
-Date: Wed, 12 Aug 2026 23:47:02 +0200
-Subject: [PATCH RFC v2 21/25] review: test the catalog mirror, stray
- matching and backward discovery
+Date: Wed, 12 Aug 2026 23:47:05 +0200
+Subject: [PATCH RFC v2 24/25] review-tui: expand tracked series into
+ per-version rows
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,1900 +40,1409 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260812-work-b4-multiver-rows-v2-21-305d53cd723a@kernel.org>
+Message-Id: <20260812-work-b4-multiver-rows-v2-24-305d53cd723a@kernel.org>
 References: <20260812-work-b4-multiver-rows-v2-0-305d53cd723a@kernel.org>
 In-Reply-To: <20260812-work-b4-multiver-rows-v2-0-305d53cd723a@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.17-dev-362b8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=77445; i=brauner@kernel.org;
- h=from:subject:message-id; bh=s1MDzFo6whMx5aTttg0U831s6iYYBbFBnFZxiRuB+qM=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTVvLx9uvzajAN9v+eWPjAPN38cXjGzqG3Bm8ePP4o9y
- uGWWDC7v6OUhUGMi0FWTJHFod0kXG45T8Vmo0wNmDmsTCBDGLg4BWAiHqyMDOsXqKVs9t0el7w4
- 7URfK8fJtVb+KVN2Xcs1tz8c+T1IYi0jw5di0+tTt+rea/WPOb+h4vJqfY4FSe4dxZ1HJbZ5rDu
- /iQ8A
+X-Developer-Signature: v=1; a=openpgp-sha256; l=68699; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=AvnpGCFcN/IOLXqadfnoBqd12rpVU+s9eOB+pzsDkG8=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTVvLy9epHzSQamo8W3t6onzU7SM8la+JYpnZfp0nstr
+ vjoreVuHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABMRm8nwV+5zzunNX/1etjRE
+ lUyX51jSq2p/893hf1wMrybcVX1dPYORYf8xd4M7+8t3zkhYmBw0JWob/yOX6AUidlkTlhWe+BO
+ awgUA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Cover the catalog-sync watermark answering "already current" without
-touching git, and a catalog write breaking it.  Cover stray matching by
-message-id, a fingerprint that drifted, a catalog-only stray, and an
-all-archived owner left alone.  Cover discover_older_revisions(): every
-previous version recorded with an explicit wantvers, revisions dated from
-their own posting, the one-shot latch, offline, the v1 no-op, conflicts
-reported rather than absorbed, and the budget the follow-up poll runs
-inside.
+Series with more than one known version become expandable.  'x' unfolds
+indented child rows, one per catalog revision with the tracked one
+starred, showing per-version unread badges and activity dates; 'X'
+toggles every series at once.  Enter or 'e' on a child opens that
+revision's thread with revision-correct seen syncing, 'd' range-diffs it
+against the tracked revision directly, and every other action keeps
+operating on the parent series.  Expansion state and the
+(change_id, revision) cursor position survive the periodic DB-mtime
+reloads and limit filtering.
 
-Also the branch sha recorded once per change_id, the force flag bypassing
-the minimum-age skip, and the catalog thread snapshot advancing while the
-tracking ref is frozen.
+Focusing a series for the next rebuild goes through a helper that also
+clears the stashed version.  The stash outlives a screen that closed
+without rebuilding the list, so a plain _focus_change_id assignment would
+drop the cursor onto a child row nobody selected, and it is that row the
+thread and range-diff actions read.
+
+has_multiple_revisions loses its last reader here.  It counts raw catalog
+rows, which miss a tracked revision the catalog never recorded.  The bulk
+revision-count query goes with it: the remaining caller needs the grouped
+rows anyway, so counting them is a dict lookup rather than a second pass
+over the table.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/tests/test_review.py          |  133 +++
- src/tests/test_review_tracking.py | 1612 +++++++++++++++++++++++++++++++++++++
- src/tests/test_tui_tracking.py    |   47 ++
- 3 files changed, 1792 insertions(+)
+ docs/maintainer/review.rst         |  40 ++
+ src/b4/review/tracking.py          |   8 -
+ src/b4/review_tui/_modals.py       |   7 +
+ src/b4/review_tui/_tracking_app.py | 743 +++++++++++++++++++++++++++++++------
+ src/tests/test_review_tracking.py  |  11 -
+ src/tests/test_tui_tracking.py     |  27 +-
+ 6 files changed, 707 insertions(+), 129 deletions(-)
 
-diff --git a/src/tests/test_review.py b/src/tests/test_review.py
-index f3adcb5a..a40b9af6 100644
---- a/src/tests/test_review.py
-+++ b/src/tests/test_review.py
-@@ -5544,3 +5544,136 @@ class TestExplicitUpdateReachesASnoozedSeries:
-         the cron sweep's lore budget.
-         """
-         assert self._run('snooze-sweep', monkeypatch, forced=False) == []
+diff --git a/docs/maintainer/review.rst b/docs/maintainer/review.rst
+index 5ddd9dd2..8c04e7c1 100644
+--- a/docs/maintainer/review.rst
++++ b/docs/maintainer/review.rst
+@@ -188,12 +188,17 @@ Key           Action
+ ``e``         Thread — open the lite thread viewer (see below)
+ ``a``         Action menu — context-sensitive actions (see below)
+ ``d``         Range-diff between revisions
++``x``         Expand or collapse the per-version rows of a series marked
++              with ``▸`` (see :ref:`version_rows`)
+ ``u``         Update — fetch latest trailers and check for newer
+               revisions for the selected series; press ``Escape`` or
+               ``q`` to cancel
+ ``U``         Update all — same as ``u`` but for all tracked series
+               (skipping snoozed); press ``Escape`` or ``q`` to cancel
+               mid-run — series already updated are saved
++``X``         Expand or collapse the version rows of every multi-version
++              series in the current list at once (so a ``l`` limit scopes
++              it, in both directions)
+ ``l``         Limit — filter the list of displayed series. Plain text
+               matches subjects and submitters; ``s:<status>`` filters
+               by status, ``t:<target-branch>`` by target branch, and
+@@ -328,6 +333,41 @@ the tracking database and displayed without re-checking on subsequent
+ views. The attestation check honours the :term:`b4.attestation-policy`
+ and :term:`b4.attestation-staleness-days` configuration options.
+ 
++.. _version_rows:
++
++Version rows
++~~~~~~~~~~~~
++
++A series whose catalog holds more than one known version is marked with
++a ``▸`` before its subject. Press ``x`` to expand it into one child row
++per version (``X`` expands or collapses every such series at once). An
++asterisk marks the version the series currently tracks:
++
++.. code-block:: none
++
++   ▾ [PATCH v3,00/12] introduce the frobnicator
++     ├─ v1   12 Mar    4      introduce the frobnicator
++     ├─ v2   02 Apr    9 (3)  introduce the frobnicator
++     └─ v3*  28 Apr   15      introduce the frobnicator
++
++Each row carries that version's own message count and unread badge, so
++follow-up mail arriving on an older version's thread is still visible.
++On a version row, ``Enter`` or ``e`` opens that version's thread and
++``d`` range-diffs it against the tracked revision, skipping the revision
++picker. Every other key still acts on the parent series, except the four
++actions that drive the review branch: ``r`` (review), and **Take**,
++**Rebase** and **Upgrade** in the ``a`` action menu. That branch always
++holds the revision the series tracks, so on any other version's row ``r``
++is greyed out and the three menu entries are not offered.
++
++Update sweeps poll a few non-tracked versions of each series for new
++mail, least-recently-checked first, so a series with many versions
++fills in over successive sweeps and then keeps cycling through them —
++a late reply to an old version is noticed however many versions there
++are. Every version is browsable on demand regardless.
++
++.. versionadded:: v0.17
++
+ Lite thread viewer
+ ~~~~~~~~~~~~~~~~~~
+ Pressing ``e`` on any series opens a mutt-style thread viewer that
+diff --git a/src/b4/review/tracking.py b/src/b4/review/tracking.py
+index 843808c4..7f08258e 100644
+--- a/src/b4/review/tracking.py
++++ b/src/b4/review/tracking.py
+@@ -2551,14 +2551,6 @@ def get_all_newest_revisions(conn: sqlite3.Connection) -> dict[str, int]:
+     return {row[0]: int(row[1]) for row in cursor.fetchall()}
+ 
+ 
+-def get_all_revision_counts(conn: sqlite3.Connection) -> dict[str, int]:
+-    """Return {change_id: revision_count} for all change_ids."""
+-    cursor = conn.execute(
+-        'SELECT change_id, COUNT(*) FROM revisions GROUP BY change_id'
+-    )
+-    return {row[0]: int(row[1]) for row in cursor.fetchall()}
+-
+-
+ def get_all_revisions_grouped(
+     conn: sqlite3.Connection,
+ ) -> dict[str, list[dict[str, Any]]]:
+diff --git a/src/b4/review_tui/_modals.py b/src/b4/review_tui/_modals.py
+index 23d5f566..8be61319 100644
+--- a/src/b4/review_tui/_modals.py
++++ b/src/b4/review_tui/_modals.py
+@@ -328,9 +328,16 @@ TRACKING_HELP_LINES = [
+     '  [bold]d[/bold]         Range-diff between revisions\n',
+     '  [bold]a[/bold]         Open action menu (take, rebase, etc.)\n',
+     '  [bold]u[/bold]         Update selected series\n',
++    '  [bold]x[/bold]         Expand/collapse the version rows of a ▸ series\n',
++    '\n',
++    '[bold]Version rows[/bold]\n',
++    '  v2*           Asterisk marks the revision the series tracks\n',
++    '  [bold]Enter[/bold] / [bold]e[/bold] View the thread of that version\n',
++    '  [bold]d[/bold]         Range-diff that version against the tracked one\n',
+     '\n',
+     '[bold]App[/bold]\n',
+     '  [bold]U[/bold]         Update all tracked series\n',
++    '  [bold]X[/bold]         Expand/collapse all multi-version series\n',
+     '  [bold]l[/bold]         Filter series by pattern\n',
+     '  [bold]s[/bold]         Suspend to shell\n',
+     '  [bold]p[/bold]         Switch to Patchwork TUI\n',
+diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
+index 37377758..e4a64b6e 100644
+--- a/src/b4/review_tui/_tracking_app.py
++++ b/src/b4/review_tui/_tracking_app.py
+@@ -28,6 +28,7 @@ from typing import (
+     List,
+     Literal,
+     Optional,
++    Set,
+     Tuple,
+     Union,
+ )
+@@ -544,6 +545,46 @@ def _conflicts_notice(conflicts: List[int]) -> str:
+     )
+ 
+ 
++def _local_stamp(stamp: Optional[str], fmt: str) -> str:
++    """Render a stored UTC timestamp in local time, or '' if unusable.
++
++    Every date the app shows is local, and these columns hold UTC, so
++    slicing the ISO string instead puts a version up to a day out from the
++    Date: header the thread viewer displays for the very same message --
++    and out of step with the version row rendering the same value.
++    """
++    if not stamp:
++        return ''
++    try:
++        return datetime.datetime.fromisoformat(stamp).astimezone().strftime(fmt)
++    except (ValueError, TypeError):
++        return ''
 +
 +
-+class TestCatalogMirrorSkipsABranchlessSeries:
-+    """The sweep enumerates the review branches once; asking again is waste.
++def _format_version(rev: Dict[str, Any], series: Dict[str, Any]) -> str:
++    """Summarize one known version of *series* for the details panel."""
++    revision = rev.get('revision', 1)
++    out = f'v{revision}'
++    if revision == series.get('revision', 1):
++        out += ' (tracked)'
++    count = rev.get('message_count')
++    if count is None:
++        out += ' — - msgs (- unseen)'
++    else:
++        unseen = _unseen_delta(count, rev.get('seen_message_count'))
++        out += f' — {count} msgs ({unseen} unseen)'
++    # 'posted', not 'found': discovery dates a revision from its own Date:
++    # header, so the column holds when the version went out rather than when
++    # b4 noticed it (see add_revision).
++    posted = _local_stamp(rev.get('found_at'), '%Y-%m-%d')
++    if posted:
++        out += f', posted {posted}'
++    last_mail = _local_stamp(rev.get('last_mail_at'), '%Y-%m-%d')
++    if last_mail:
++        out += f', last activity {last_mail}'
++    return out
 +
-+    Every status outside BRANCH_UPDATE_STATUSES falls through to the
-+    mirror below the branch save, and a series that has never been checked
-+    out has nothing to mirror onto -- but the sync only learns that by
-+    opening the database and spending a rev-parse, once per series, every
-+    sweep.  A tracking list is mostly 'new' series.
++
+ def _format_snooze_until(value: str) -> str:
+     """Format a snoozed_until value for display.
+ 
+@@ -793,7 +834,23 @@ def _append_msgs(
+     label.append(f'{badge:<4s}', style=badge_style)
+ 
+ 
+-class TrackedSeriesItem(ListItem):
++class TrackingListItem(ListItem):
++    """A row of the tracking list: a series, or one version of one.
++
++    Carrying ``rev`` on both kinds is what lets every handler ask "which
++    series and which version is the cursor on?" once, instead of each one
++    re-deriving it from the row's type.
 +    """
 +
++    series: Dict[str, Any]
++    rev: Optional[Dict[str, Any]] = None
++
++    @property
++    def selection(self) -> Tuple[Dict[str, Any], Optional[Dict[str, Any]]]:
++        return self.series, self.rev
++
++
++class TrackedSeriesItem(TrackingListItem):
+     """A single tracked series entry in the listing."""
+ 
+     DEFAULT_CSS = """
+@@ -805,9 +862,18 @@ class TrackedSeriesItem(ListItem):
+     }
+     """
+ 
+-    def __init__(self, series: Dict[str, Any]) -> None:
++    def __init__(
++        self,
++        series: Dict[str, Any],
++        expanded: bool = False,
++        has_versions: bool = False,
++        has_unseen_versions: bool = False,
++    ) -> None:
+         super().__init__()
+         self.series = series
++        self.expanded = expanded
++        self.has_versions = has_versions
++        self.has_unseen_versions = has_unseen_versions
+         status = series.get('status', 'new')
+         if _effective_tier(series) >= 2:
+             self.add_class('non-actionable')
+@@ -843,6 +909,11 @@ class TrackedSeriesItem(ListItem):
+         width = len(str(num_patches)) if num_patches > 0 else 1
+         parts = extras + [f'v{revision}', f'{"0" * width}/{num_patches:0{width}d}']
+         subject_display = f'[{",".join(parts)}] {ls.subject}'
++        # Series with more than one known version can be expanded with [x]
++        marker = ''
++        if self.has_versions:
++            # U+25BE black down-pointing / U+25B8 black right-pointing triangle
++            marker = '▾' if self.expanded else '▸'
+         if display_width(submitter) > 20:
+             while display_width(submitter) > 19:
+                 submitter = submitter[:-1]
+@@ -865,7 +936,99 @@ class TrackedSeriesItem(ListItem):
+             self.series.get('message_count'),
+             self.series.get('seen_message_count'),
+         )
+-        label.append(f'  {symbol}{flag}  {subject_display}')
++        # The expander shares the 4-wide status field with the status
++        # symbol and the suffix flag rather than taking a column of its
++        # own: appended after it, the Subject column would sit two to the
++        # right on multi-version series only, leaving the list ragged and
++        # every row out of step with the header.
++        label.append(f'  {symbol}{flag}')
++        if marker:
++            # Accented when a version other than the tracked one has unread
++            # mail: the Msgs column above covers the tracked revision only,
++            # so without this the row is identical whether or not an older
++            # version just received a reply.
++            marker_style = ''
++            if self.has_unseen_versions:
++                marker_style = f'bold {resolve_styles(self.app)["warning"]}'
++            label.append(marker, style=marker_style)
++        else:
++            label.append(' ')
++        label.append(' ')
++        label.append(subject_display)
++        yield Label(label, markup=False)
++
++
++class TrackedRevisionItem(TrackingListItem):
++    """A single known version of an expanded series.
++
++    Rendered as a child row underneath its TrackedSeriesItem, with the
++    submitter column replaced by a tree glyph and the version number.
++    """
++
++    DEFAULT_CSS = """
++    TrackedRevisionItem Label {
++        text-style: dim;
++    }
++    """
++
++    # Narrowed from the base, which allows None for series rows: a version
++    # row always has one, and callers read it without a None check.
++    rev: Dict[str, Any]
++
++    def __init__(
++        self,
++        series: Dict[str, Any],
++        rev: Dict[str, Any],
++        is_tracked: bool,
++        is_last: bool,
++    ) -> None:
++        super().__init__()
++        self.series = series
++        # pyright anchors the narrowing above to this assignment, and rejects
++        # it because a mutable attribute's type is invariant.
++        self.rev = rev  # pyright: ignore[reportIncompatibleVariableOverride]
++        self.is_tracked = is_tracked
++        self.is_last = is_last
++
++    def compose(self) -> ComposeResult:
++        # U+2514/U+251C box drawings light up-and-right / vertical-and-right
++        tree = '└─' if self.is_last else '├─'
++        mark = '*' if self.is_tracked else ''
++        version = f'  {tree} v{self.rev.get("revision", 1)}{mark}'
++        # Date of the last known activity, falling back to when the revision
++        # was posted.  It shares the 20-wide submitter field with the version
++        # number rather than taking the parent's status columns: those carry
++        # the status symbol and the expander, and a date under a header that
++        # reads 'S' describes neither.  There is room here -- the deepest
++        # version label is nine columns of a twenty-column field.
++        date_str = _local_stamp(
++            self.rev.get('last_mail_at') or self.rev.get('found_at'), '%d %b'
++        )
++        # Show each version's own title, prefix-stripped -- the version
++        # column already carries the vN part.  Fall back to the series
++        # subject when the catalog has none.
++        rev_subject = self.rev.get('subject') or self.series.get('subject') or ''
++        if rev_subject:
++            rev_subject = b4.LoreSubject(rev_subject).subject
++        label = RichText(no_wrap=True, overflow='ellipsis')
++        # Version left, date right, both inside the submitter field.  The
++        # date is truncated rather than padded, so a locale whose abbreviated
++        # month runs long cannot push the field wide and shift the columns
++        # after it.
++        label.append(pad_display(f'{version:<10s}{date_str:.9s}', 20))
++        # Attestation (1), separator (1) and A·R·T (7) stay blank
++        label.append(' ' * 9)
++        _append_msgs(
++            label,
++            self.app,
++            self.rev.get('message_count'),
++            self.rev.get('seen_message_count'),
++        )
++        # The six the parent spends on status, expander and marker, so
++        # Subject starts at the same column on both -- and on the header.
++        label.append(' ' * 6)
++        if rev_subject:
++            label.append(rev_subject)
+         yield Label(label, markup=False)
+ 
+ 
+@@ -967,10 +1130,12 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         'check': 'Series',
+         'thread': 'Series',
+         'range_diff': 'Series',
++        'toggle_expand': 'Series',
+         'action': 'Series',
+         'update_one': 'Series',
+         'target_branch': 'Series',
+         'update_all': 'App',
++        'expand_all': 'App',
+         'process_queue': 'App',
+         'limit': 'App',
+         'suspend': 'App',
+@@ -992,7 +1157,9 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         Binding('a', 'action', 'action'),
+         Binding('u', 'update_one', 'update'),
+         Binding('d', 'range_diff', 'range-diff'),
++        Binding('x', 'toggle_expand', 'versions'),
+         # App-global actions
++        Binding('X', 'expand_all', 'Expand all', key_display='X'),
+         Binding('l', 'limit', 'limit'),
+         Binding('s', 'suspend', 'shell'),
+         Binding('p', 'patchwork', 'patchwork'),
+@@ -1024,6 +1191,15 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         self._patatt_sign = patatt_sign
+         self._all_series: List[Dict[str, Any]] = []
+         self._selected_series: Optional[Dict[str, Any]] = None
++        # Rows showing per-version child rows, and the child row (if any) the
++        # cursor is on — both survive a list rebuild.  Keyed by (change_id,
++        # tracked revision), not change_id alone: rescan_branches can leave a
++        # change_id with more than one live series row and the list renders
++        # each separately, so a bare change_id expands both at once.
++        self._expanded_rows: set[Tuple[str, int]] = set()
++        self._selected_revision: Optional[Dict[str, Any]] = None
++        self._focus_series_revision: Optional[int] = None
++        self._focus_revision: Optional[int] = None
+         self._limit_pattern: str = ''
+         self._db_mtime: float = 0.0
+         # Detect patchwork configuration
+@@ -1048,7 +1224,6 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         # when u/U update runs or actions change tracking data.
+         self._cached_branch_tips: Optional[Dict[str, str]] = None
+         self._cached_newest_revisions: Optional[Dict[str, int]] = None
+-        self._cached_revision_counts: Optional[Dict[str, int]] = None
+         self._cached_revisions: Optional[Dict[str, List[Dict[str, Any]]]] = None
+         # A None value is a branch whose tip carries no tracking trailer
+         # block; cached as a miss so the refill below converges.
+@@ -1059,22 +1234,98 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+     def _invalidate_caches(self, change_id: Optional[str] = None) -> None:
+         """Drop cached data so the next _load_series re-fetches.
+ 
+-        If change_id is given, only evict that series from the ART
+-        cache (branch tips and revision data are cheap dict lookups
+-        and get rebuilt from the bulk query anyway).  Without
+-        change_id, drop everything.
++        If change_id is given, evict just that series from the ART cache
++        and drop the rest; without change_id, drop the ART cache wholesale
++        too.  Keeping the other series' ART entries is the point of the
++        targeted form: recomputing one is a `git cat-file` per branch.
++
++        The revision caches have to go even for a targeted invalidation:
++        _load_series only refills them when _cached_newest_revisions is
++        None, so leaving them in place pins the version rows, the expander
++        marker and both revision-count gates to pre-action data -- and
++        _check_db_changed cannot heal it, because the caller re-stamps the
++        DB mtime on the way through.
+         """
+         if change_id is not None:
+             branch_name = f'b4/review/{change_id}'
+             if self._cached_art_counts and branch_name in self._cached_art_counts:
+                 del self._cached_art_counts[branch_name]
++            # Re-resolved: an upgrade renames a branch onto this one and the
++            # batch trusts the SHA it is handed.  Dropped rather than
++            # refetched here: _load_series refills a None dict with the same
++            # `git for-each-ref`, so resolving it inline only moves that
++            # subprocess onto the message pump -- and every handler that
++            # invalidates without reloading pays for a batch it never reads.
++            self._cached_branch_tips = None
++            self._cached_newest_revisions = None
++            self._cached_revisions = None
+             return
+         self._cached_branch_tips = None
+         self._cached_newest_revisions = None
+-        self._cached_revision_counts = None
+         self._cached_revisions = None
+         self._cached_art_counts = None
+ 
++    def _focus_series(self, change_id: str, keep_version: bool = False) -> None:
++        """Focus a series row on the next rebuild, not one of its versions.
++
++        Clearing the stashed version matters: it outlives a screen that
++        closed without rebuilding the list, and would otherwise drop the
++        cursor onto a child row nobody selected.
++
++        *keep_version* holds the cursor where it already is, for an action
++        that changes the series' status and nothing about which versions it
++        has.  Without it, snoozing from a version row bounced the cursor up
++        to the parent while setting a target branch from the same row left
++        it alone -- two status-only actions disagreeing about where the
++        cursor belongs.  It stays off for the actions that repoint the
++        series at another revision, where the stashed version names a row
++        that may no longer exist.
++        """
++        self._focus_change_id = change_id
++        # Left unset otherwise: the action that focuses a series may be the
++        # one that moved it to another revision, so only the change_id is
++        # reliable.
++        self._focus_series_revision = None
++        self._focus_revision = None
++        if not keep_version:
++            return
++        series = self._selected_series
++        if series is None or series.get('change_id') != change_id:
++            return
++        self._focus_series_revision = series.get('revision')
++        if self._selected_revision is not None:
++            self._focus_revision = self._selected_revision.get('revision')
++
 +    @staticmethod
-+    def _run(
-+        monkeypatch: pytest.MonkeyPatch, identifier: str, **kwargs: Any
-+    ) -> List[str]:
-+        change_id = f'{identifier}-cid'
-+        conn = b4.review.tracking.init_db(identifier)
-+        b4.review.tracking.add_series_to_db(
-+            conn,
-+            change_id,
-+            1,
-+            'Subject',
-+            'Author',
-+            'a@example.com',
-+            '2024-01-15T10:00:00+00:00',
-+            'cover@example.com',
-+            2,
-+        )
-+        conn.close()
-+        synced: List[str] = []
-+        monkeypatch.setattr(
-+            b4.review.tracking,
-+            'sync_revisions_catalog_to_branch',
-+            lambda topdir, ident, cid: synced.append(cid),
-+        )
-+        monkeypatch.setattr(b4, 'git_worktree_busy', lambda topdir, branch: False)
-+        monkeypatch.setattr(
-+            b4.review.tracking, 'store_revision_thread_blob', lambda *a, **kw: None
-+        )
-+        monkeypatch.setattr(
-+            b4.review.tracking, '_store_thread_blob', lambda *a, **kw: None
++    def _row_key(series: Dict[str, Any]) -> Tuple[str, int]:
++        """Identity of a list row: a change_id can own more than one."""
++        return (series.get('change_id', ''), series.get('revision', 1))
++
++    def _stash_focus(self) -> None:
++        """Remember the highlighted row so the next _refresh_list restores it.
++
++        Falls back to the row under the cursor when nothing is selected:
++        [escape] clears the selection without moving the cursor, and the
++        list-wide actions that follow ([X]) need no selection at all.  With
++        no hint, _refresh_list restores by absolute index -- into a list
++        whose length [X] has just changed.
++        """
++        series = self._selected_series
++        if series is None:
++            try:
++                item = self.query_one('#tracking-list', ListView).highlighted_child
++            except NoMatches:
++                item = None
++            if isinstance(item, TrackingListItem):
++                series = item.series
++        if series:
++            self._focus_change_id, self._focus_series_revision = self._row_key(series)
++        self._focus_revision = (
++            self._selected_revision.get('revision')
++            if self._selected_revision is not None
++            else None
 +        )
 +
-+        msg = email.message.EmailMessage()
-+        msg['Message-Id'] = f'<{change_id}-r1@example.com>'
-+        msg['Date'] = 'Mon, 27 Jul 2026 10:00:00 +0000'
-+        mock_lmbx = mock.Mock()
-+        mock_lmbx.series = {}
-+        mock_lmbx.covers = {}
-+        mock_lmbx.get_series.return_value = None
-+        series_dict: Dict[str, Any] = {
-+            'change_id': change_id,
-+            'revision': 1,
-+            'status': 'new',
-+            'message_id': 'cover@example.com',
-+        }
-+        with (
-+            mock.patch(
-+                'b4.review._review.retrieve_series_messages', return_value=[msg]
-+            ),
-+            mock.patch('b4.LoreMailbox', return_value=mock_lmbx),
-+        ):
-+            review.update_series_tracking(
-+                series_dict,
-+                identifier,
-+                'https://example.com/%s',
-+                topdir='/nonexistent',
-+                **kwargs,
+     def _refresh_msg_count(self, series: Dict[str, Any], total_messages: int) -> None:
+         """Opportunistically refresh message count after fetching messages."""
+         if not self._identifier:
+@@ -1118,6 +1369,9 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             with Horizontal(classes='details-row', id='detail-revisions-row'):
+                 yield Static('Revisions:', classes='details-label')
+                 yield Static('', id='detail-revisions', markup=False)
++            with Horizontal(classes='details-row', id='detail-version-row'):
++                yield Static('Version:', classes='details-label')
++                yield Static('', id='detail-version', markup=False)
+             with Horizontal(classes='details-row', id='detail-branch-row'):
+                 yield Static('Branch:', classes='details-label')
+                 yield Static('', id='detail-branch', markup=False)
+@@ -1169,10 +1423,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                     # Reload so the new revisions show up right away; if a
+                     # modal is up, the DB mtime poll picks it up instead.
+                     if len(self.app.screen_stack) == 1:
+-                        if self._selected_series:
+-                            self._focus_change_id = self._selected_series.get(
+-                                'change_id'
+-                            )
++                        self._stash_focus()
+                         self._invalidate_caches()
+                         self._load_series()
+                 elif not conflicts:
+@@ -1204,8 +1455,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 # pick up the change once the modal closes.
+                 if len(self.app.screen_stack) > 1:
+                     return
+-                if self._selected_series:
+-                    self._focus_change_id = self._selected_series.get('change_id')
++                self._stash_focus()
+                 self._invalidate_caches()
+                 self._load_series()
+ 
+@@ -1239,24 +1489,30 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         except Exception:
+             conn = None
+         if self._cached_newest_revisions is None and conn:
++            # Both land together or neither: the guard tests the first, so
++            # a partial fill would never be retried and the version rows
++            # would stay gone for the rest of the session.
+             try:
+-                self._cached_newest_revisions = (
+-                    b4.review.tracking.get_all_newest_revisions(conn)
+-                )
+-                self._cached_revision_counts = (
+-                    b4.review.tracking.get_all_revision_counts(conn)
+-                )
+-                self._cached_revisions = b4.review.tracking.get_all_revisions_grouped(
+-                    conn
+-                )
++                all_newest = b4.review.tracking.get_all_newest_revisions(conn)
++                all_grouped = b4.review.tracking.get_all_revisions_grouped(conn)
+             except Exception:
+                 pass
++            else:
++                self._cached_newest_revisions = all_newest
++                self._cached_revisions = all_grouped
+         newest_revisions = self._cached_newest_revisions or {}
+-        revision_counts = self._cached_revision_counts or {}
+         all_revisions = self._cached_revisions or {}
+         if conn:
+             conn.close()
+ 
++        # Live rows grouped by change_id, so version merging sees every
++        # revision a sibling row tracks -- the same rule
++        # get_revisions_with_tracked applies on the DB side.  _all_series
++        # is already archive-free.
++        live_rows: Dict[str, List[Dict[str, Any]]] = {}
++        for series in self._all_series:
++            live_rows.setdefault(series.get('change_id', ''), []).append(series)
++
+         # --- First pass: branch existence + revision flags ---
+         art_branches: Dict[str, str] = {}
+         for series in self._all_series:
+@@ -1271,17 +1527,21 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             newest = newest_revisions.get(change_id)
+             if newest is not None and newest > current_rev:
+                 series['has_newer'] = True
+-            rev_count = revision_counts.get(change_id, 0)
+-            if rev_count > 1:
+-                series['has_multiple_revisions'] = True
+-            if rev_count == 0 and series.get('status') not in (
+-                'new',
+-                'gone',
+-                'snoozed',
+-            ):
+-                series['needs_update'] = True
+             # Stash revisions list for the detail panel
+             series['_revisions'] = all_revisions.get(change_id, [])
++            series['_sibling_rows'] = live_rows.get(change_id) or [series]
++            # Whether revision data was ever fetched.  The v11 backfill gives
++            # every series row a catalog entry, so discount the one mirroring
++            # this row and fall back to the sweep watermark.
++            rev_count = len(series['_revisions'])
++            if any(r.get('revision') == current_rev for r in series['_revisions']):
++                rev_count -= 1
++            if (
++                rev_count <= 0
++                and not series.get('last_update_check')
++                and series.get('status') not in ('new', 'gone', 'snoozed')
++            ):
++                series['needs_update'] = True
+ 
+             # Collect branches needing ART counts
+             if topdir and series.get('status') in (
+@@ -1327,6 +1587,25 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             if branch_name in art_map:
+                 series['art'] = art_map[branch_name]
+ 
++        # _row_key carries the tracked revision, so an upgrade moves a row out
++        # from under its key and silently collapses it.  Migrated only for a
++        # change_id owning one row, the only unambiguous successor.
++        if self._expanded_rows:
++            live: Dict[str, set[int]] = {}
++            for series in self._all_series:
++                cid, rev = self._row_key(series)
++                live.setdefault(cid, set()).add(rev)
++            kept: set[Tuple[str, int]] = set()
++            for cid, rev in self._expanded_rows:
++                revs = live.get(cid)
++                if not revs:
++                    continue
++                if rev in revs:
++                    kept.add((cid, rev))
++                elif len(revs) == 1:
++                    kept.add((cid, next(iter(revs))))
++            self._expanded_rows = kept
++
+         # Tag accepted series that have a queued thank-you letter.
+         # This is a display-only pseudo-state, not stored in the DB.
+         queued_cids = b4.ty.get_queued_change_ids(dryrun=self._email_dryrun)
+@@ -1358,8 +1637,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         except OSError:
+             return
+         if mtime != self._db_mtime:
+-            if self._selected_series:
+-                self._focus_change_id = self._selected_series.get('change_id')
++            self._stash_focus()
+             self._invalidate_caches()
+             self._load_series()
+ 
+@@ -1396,12 +1674,16 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                     return False
+         return True
+ 
++    def _displayed_series(self) -> List[Dict[str, Any]]:
++        """The series the list is currently showing, limit filter applied."""
++        if not self._limit_pattern:
++            return self._all_series
++        return [
++            s for s in self._all_series if self._matches_limit(s, self._limit_pattern)
++        ]
++
+     async def _refresh_list(self) -> None:
+-        display_series = self._all_series
+-        if self._limit_pattern:
+-            display_series = [
+-                s for s in display_series if self._matches_limit(s, self._limit_pattern)
+-            ]
++        display_series = self._displayed_series()
+ 
+         try:
+             left = self.query_one('#title-left', Static)
+@@ -1419,6 +1701,15 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         left.update(title_text)
+ 
+         scroll_y = ReplacementListView.capture_scroll(self, '#tracking-list')
++        # Where the cursor already is, as the fallback for when no focus
++        # hint is stashed.  An expand queues _refresh_list directly rather
++        # than through _load_series, so two can land in one message-pump
++        # batch and the second would otherwise find the hint consumed and
++        # send the cursor to the top.
++        try:
++            prev_index = self.query_one('#tracking-list', ListView).index or 0
++        except NoMatches:
++            prev_index = 0
+ 
+         # Suppress rendering while we swap old widgets for new ones.
+         # Without this, the remove-then-mount sequence can produce a
+@@ -1437,27 +1728,95 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                     id='tracking-empty',
+                 )
+                 await self.mount(empty, before=self.query_one(Footer))
++                # Nothing is highlighted and this returns above the block that
++                # re-derives the selection, so a stale one would keep acting on
++                # a hidden series.  The focus hint stays: it is only a hint.
++                self._selected_series = None
++                self._selected_revision = None
++                self.refresh_bindings()
+                 return
+ 
+             header_text = f'{"Submitter":<20s}{"A":>1s} {"A·R·T":>7s}  {"Msgs":<8s}{"S":<6s}{"Subject"}'
+             header = Static(header_text, id='tracking-header')
+ 
+-            list_items: List[ListItem] = [TrackedSeriesItem(s) for s in display_series]
++            # Revisions another live row of the same change_id tracks and
++            # badges itself.  From every live row, not the filtered view: a
++            # sibling the limit hides still owns its revision.
++            tracked_elsewhere: Dict[str, Set[int]] = {}
++            for other in self._all_series:
++                tracked_elsewhere.setdefault(other.get('change_id', ''), set()).add(
++                    other.get('revision', 1)
++                )
++
++            list_items: List[ListItem] = []
++            for series in display_series:
++                revs = self._merge_tracked_revision(series)
++                has_versions = len(revs) > 1
++                tracked = series.get('revision', 1)
++                expanded = has_versions and self._row_key(series) in self._expanded_rows
++                mine = tracked_elsewhere.get(series.get('change_id', ''), set()) - {
++                    tracked
++                }
++                list_items.append(
++                    TrackedSeriesItem(
++                        series,
++                        expanded=expanded,
++                        has_versions=has_versions,
++                        has_unseen_versions=any(
++                            _unseen_delta(
++                                rev.get('message_count'),
++                                rev.get('seen_message_count'),
++                            )
++                            > 0
++                            for rev in revs
++                            if rev.get('revision') != tracked
++                            and rev.get('revision') not in mine
++                        ),
++                    )
++                )
++                if not expanded:
++                    continue
++                for idx, rev in enumerate(revs):
++                    list_items.append(
++                        TrackedRevisionItem(
++                            series,
++                            rev,
++                            is_tracked=rev.get('revision') == tracked,
++                            is_last=idx == len(revs) - 1,
++                        )
++                    )
+             lv = ReplacementListView(*list_items, id='tracking-list', scroll_y=scroll_y)
+             await self.mount(header, before=self.query_one(Footer))
+             await self.mount(lv, before=self.query_one(Footer))
+ 
+-        new_index = 0
++        new_index = min(prev_index, len(list_items) - 1) if list_items else 0
+         if self._focus_change_id:
+-            for idx, item in enumerate(list_items):
+-                if (
+-                    isinstance(item, TrackedSeriesItem)
+-                    and item.series.get('change_id') == self._focus_change_id
+-                ):
+-                    new_index = idx
+-                    break
++            parents = [
++                (idx, item)
++                for idx, item in enumerate(list_items)
++                if isinstance(item, TrackedSeriesItem)
++                and item.series.get('change_id') == self._focus_change_id
++            ]
++            # A change_id can own more than one live row.  Prefer the one whose
++            # revision was stashed, and fall back to the first: an upgrade
++            # moves the row's revision out from under the stash, and
++            # _focus_series() deliberately stashes no revision at all.
++            chosen = next(
++                (
++                    idx
++                    for idx, item in parents
++                    if item.series.get('revision') == self._focus_series_revision
++                ),
++                parents[0][0] if parents else None,
 +            )
-+        return synced
++            if chosen is not None:
++                new_index = chosen
++                if self._focus_revision is not None:
++                    new_index = self._find_focus_child(list_items, chosen)
+             self._focus_change_id = None
++            self._focus_series_revision = None
+         lv.index = new_index
++        self._focus_revision = None
+         lv.focus()
+ 
+         # Populate the details panel for the highlighted item now that
+@@ -1466,10 +1825,29 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         # Also sync _selected_series here so action_action() reads fresh
+         # status without waiting for the async Highlighted message to
+         # be processed from the queue.
+-        highlighted = lv.highlighted_child
+-        if isinstance(highlighted, TrackedSeriesItem):
+-            self._selected_series = highlighted.series
+-            self._show_details(highlighted.series)
++        self._select(lv.highlighted_child)
 +
-+    def test_a_branchless_series_is_not_mirrored(
-+        self, monkeypatch: pytest.MonkeyPatch
++    def _select(self, item: Optional[ListItem]) -> None:
++        """Make *item* the selection and mirror it into the details panel."""
++        if not isinstance(item, TrackingListItem):
++            return
++        self._selected_series, self._selected_revision = item.selection
++        self._show_details(self._selected_series, rev=self._selected_revision)
++
++    def _find_focus_child(self, list_items: List[ListItem], parent_idx: int) -> int:
++        """Index of the _focus_revision child row below *parent_idx*.
++
++        Falls back to the parent index when that version is no longer
++        listed — it may have gone away, or the series may have been
++        collapsed since the focus was stashed.
++        """
++        for idx in range(parent_idx + 1, len(list_items)):
++            item = list_items[idx]
++            if not isinstance(item, TrackedRevisionItem):
++                break
++            if item.rev.get('revision') == self._focus_revision:
++                return idx
++        return parent_idx
+ 
+     def action_limit(self) -> None:
+         self.push_screen(
+@@ -1484,8 +1862,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         if result is None:
+             return
+         self._limit_pattern = result
+-        if self._selected_series:
+-            self._focus_change_id = self._selected_series.get('change_id')
++        self._stash_focus()
+         self._load_series()
+ 
+     def action_cursor_down(self) -> None:
+@@ -1500,17 +1877,55 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         except Exception:
+             pass
+ 
++    def action_toggle_expand(self) -> None:
++        """Show or hide the version rows of the selected series."""
++        series = self._selected_series
++        if not series or len(self._merge_tracked_revision(series)) < 2:
++            return
++        key = self._row_key(series)
++        if key in self._expanded_rows:
++            self._expanded_rows.discard(key)
++            # The highlighted version row is about to go away
++            self._selected_revision = None
++        else:
++            self._expanded_rows.add(key)
++        self._stash_focus()
++        self.call_later(self._refresh_list)
++
++    def action_expand_all(self) -> None:
++        """Expand every multi-version series, or collapse them all."""
++        # Scoped to what the limit filter is showing: judging "are they all
++        # expanded already?" against hidden rows makes the first press
++        # expand nothing the maintainer can see.
++        expandable = {
++            self._row_key(s)
++            for s in self._displayed_series()
++            if len(self._merge_tracked_revision(s)) > 1
++        }
++        if not expandable:
++            return
++        if expandable - self._expanded_rows:
++            self._expanded_rows |= expandable
++        else:
++            # Collapsing is scoped the same way, or a series the filter
++            # hides silently folds back up.
++            self._expanded_rows -= expandable
++            self._selected_revision = None
++        self._stash_focus()
++        self.call_later(self._refresh_list)
++
+     def on_list_view_highlighted(self, event: ListView.Highlighted) -> None:
+         if event.list_view.id != 'tracking-list':
+             return
+-        item = event.item
+-        if isinstance(item, TrackedSeriesItem):
+-            self._selected_series = item.series
+-            self._show_details(item.series)
++        self._select(event.item)
+         self.refresh_bindings()
+ 
+     def on_list_view_selected(self, event: ListView.Selected) -> None:
+         if event.list_view.id == 'tracking-list':
++            # A version row opens that version's thread
++            if isinstance(event.item, TrackedRevisionItem):
++                self.action_thread()
++                return
+             if not self._selected_series:
+                 return
+             status = self._selected_series.get('status', 'new')
+@@ -1568,12 +1983,35 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         'snoozed': frozenset(
+             {'review', 'range_diff', 'unsnooze', 'abandon', 'target_branch'}
+         ),
+-        'thanked': frozenset({'review', 'archive'}),
+-        'gone': frozenset({'abandon', 'review'}),
++        # range_diff is available wherever version rows are: [x] expands a
++        # series in any state, and 'd' on a child row is documented to work.
++        # It needs no branch -- compute_range_diff reconstructs both sides
++        # from the catalog.
++        'thanked': frozenset({'review', 'range_diff', 'archive'}),
++        'gone': frozenset({'abandon', 'review', 'range_diff'}),
+     }
+     # All state-gated actions (union of all per-state sets)
+     _GATED_ACTIONS = frozenset().union(*_STATE_ACTIONS.values())
+ 
++    # Acts on the revision the series tracks, not the row under the cursor:
++    # refused on another version's row by both the key and the action menu.
++    # 'review' checks the review branch out; 'take' and 'rebase' operate on
++    # that same branch, built from the tracked revision; 'upgrade' archives
++    # it, applies the newer revision and renames the result back.  All four
++    # would otherwise run against a version the cursor is not on.
++    #
++    # 'upgrade' is also gated in check_action directly, which returns for it
++    # before this frozenset is consulted; this entry covers the action menu.
++    _TRACKED_ONLY_ACTIONS = frozenset({'review', 'take', 'rebase', 'upgrade'})
++
++    def _on_other_version(self) -> bool:
++        """Whether the cursor is on a version row that is not the tracked one."""
++        if self._selected_revision is None or self._selected_series is None:
++            return False
++        return self._selected_revision.get('revision') != self._selected_series.get(
++            'revision'
++        )
++
+     def check_action(self, action: str, parameters: Tuple[Any, ...]) -> Optional[bool]:
+         """Hide status-specific actions based on the selected series."""
+         if action == 'process_queue':
+@@ -1588,8 +2026,20 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             # any state that can hold one (including accepted/thanked, e.g. a
+             # series kept back from auto-archiving because a newer revision
+             # appeared), not only a checked-out 'reviewing' branch.
++            #
++            # It still moves the review branch, though -- archive, git am,
++            # rename -- against the revision the series tracks, so it is
++            # refused on another version's row for the same reason review,
++            # take and rebase are.  It cannot go in _TRACKED_ONLY_ACTIONS:
++            # this branch returns before that check is reached.
++            return (
++                bool(self._selected_series and self._selected_series.get('has_newer'))
++                and not self._on_other_version()
++            )
++        if action == 'toggle_expand':
+             return bool(
+-                self._selected_series and self._selected_series.get('has_newer')
++                self._selected_series
++                and len(self._merge_tracked_revision(self._selected_series)) > 1
+             )
+         if action in self._GATED_ACTIONS:
+             if not self._selected_series:
+@@ -1597,8 +2047,18 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             status = self._selected_series.get('status', 'new')
+             if action not in self._STATE_ACTIONS.get(status, frozenset()):
+                 return False
++            if action in self._TRACKED_ONLY_ACTIONS and self._on_other_version():
++                # These act on the review branch, which holds the revision
++                # the series tracks and not the one the cursor is sitting
++                # on.  Every other key acting on the parent is harmless;
++                # these build or move a branch, so they are greyed out
++                # rather than quietly doing that for a different version.
++                return False
+             if action == 'range_diff':
+-                return bool(self._selected_series.get('has_multiple_revisions'))
++                # Same predicate as toggle_expand: a raw catalog count
++                # misses a tracked revision the catalog never recorded,
++                # leaving an expanded version row with 'd' disabled.
++                return len(self._merge_tracked_revision(self._selected_series)) > 1
+             if action == 'target_branch':
+                 return self._has_target_branches
+             return True
+@@ -1657,6 +2117,13 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             if status != 'thanked':
+                 actions.append(('abandon', 'Abandon series'))
+             actions.append(('archive', 'Archive series'))
++        if self._on_other_version():
++            # _on_action_selected dispatches directly, so Textual never
++            # consults check_action for a menu pick.  Only this rule, though:
++            # the menu deliberately offers actions no key binds.
++            actions = [
++                entry for entry in actions if entry[0] not in self._TRACKED_ONLY_ACTIONS
++            ]
+         self.push_screen(
+             ActionScreen(actions, shortcuts=_ACTION_SHORTCUTS),
+             callback=self._on_action_selected,
+@@ -1822,10 +2289,19 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         self._checkout_new_series()
+ 
+     def action_thread(self) -> None:
+-        """View a series thread in the lite thread viewer."""
++        """View a series thread in the lite thread viewer.
++
++        A highlighted version row views that version's thread; otherwise
++        the thread of the revision the series tracks.
++        """
+         if not self._selected_series:
+             return
+-        message_id = self._selected_series.get('message_id', '')
++        source = (
++            self._selected_revision
++            if self._selected_revision is not None
++            else self._selected_series
++        )
++        message_id = source.get('message_id', '')
+         if not message_id:
+             self.notify('No message-id available for this series', severity='error')
+             return
+@@ -1834,10 +2310,16 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             tracking_info = {
+                 'identifier': self._identifier,
+                 'change_id': self._selected_series.get('change_id', ''),
+-                'revision': self._selected_series.get('revision', 1),
+-                'is_rethreaded': bool(self._selected_series.get('is_rethreaded')),
++                'revision': source.get('revision', 1),
++                'is_rethreaded': bool(source.get('is_rethreaded')),
+             }
+-        self._focus_change_id = self._selected_series.get('change_id')
++        # No _stash_focus() here.  Viewing a thread rebuilds nothing by
++        # itself -- re-reading an already-read thread writes nothing, so the
++        # DB-mtime poll does not fire -- and the hint would then outlive the
++        # screen and be spent by whatever reloads next, parking the cursor
++        # on this series' version row from an unrelated action.  The only
++        # rebuild that can follow is _check_db_changed's, which stashes for
++        # itself.
+         from b4.review_tui._lite_app import LiteThreadScreen
+ 
+         self.push_screen(
+@@ -2225,8 +2707,17 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         # Exit to review mode
+         self.exit(branch_name)
+ 
+-    def _show_details(self, series: Dict[str, Any]) -> None:
++    def _show_details(
++        self, series: Dict[str, Any], rev: Optional[Dict[str, Any]] = None
 +    ) -> None:
-+        assert self._run(monkeypatch, 'mirror-none', review_branches=set()) == []
++        """Fill the details panel for *series*, or for one of its versions.
+ 
++        With *rev* given the version-specific fields (subject, link) come
++        from that revision instead of the tracked one.  Fields the catalog
++        does not carry per revision -- the patch count and the sent date --
++        are suppressed rather than filled in from the tracked revision,
++        which would attribute another version's numbers to this one.
++        """
+         try:
+             panel = self.query_one('#details-panel', Vertical)
+         except NoMatches:
+@@ -2234,11 +2725,17 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+ 
+         raw_subject = series.get('subject', '(no subject)')
+         revision = series.get('revision', 1)
++        other_version = rev is not None and rev.get('revision') != revision
++        if rev is not None:
++            raw_subject = rev.get('subject') or raw_subject
++            revision = rev.get('revision', revision)
+         num_patches = series.get('num_patches', 0) or 0
+         ls = b4.LoreSubject(raw_subject)
+         extras = ls.get_extra_prefixes(exclude=['patch'])
+         width = len(str(num_patches)) if num_patches > 0 else 1
+-        parts = extras + [f'v{revision}', f'{"0" * width}/{num_patches:0{width}d}']
++        parts = extras + [f'v{revision}']
++        if not other_version:
++            parts.append(f'{"0" * width}/{num_patches:0{width}d}')
+         subject = f'[{",".join(parts)}] {ls.subject}'
+ 
+         sender_name = series.get('sender_name', 'Unknown')
+@@ -2249,15 +2746,21 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+ 
+         # Create link URL from message-id using linkmask
+         link_url = ''
+-        if message_id:
++        if rev is not None:
++            link_url = rev.get('link') or ''
++            message_id = rev.get('message_id', '')
++        if not link_url and message_id:
+             config = b4.get_main_config()
+             linkmask = config.get('linkmask', b4.LOREADDR + '/%s')
+             if isinstance(linkmask, str) and '%s' in linkmask:
+                 link_url = linkmask % message_id
+ 
+-        # Convert ISO date to RFC 822 in local timezone
++        # Convert ISO date to RFC 822 in local timezone.  Only the tracked
++        # revision has a recorded send date; for the others the Version:
++        # row below reports what the catalog does know (first seen, last
++        # activity).
+         sent_str = 'Unknown'
+-        sent_at = series.get('sent_at', '')
++        sent_at = '' if other_version else series.get('sent_at', '')
+         if sent_at:
+             try:
+                 dt = datetime.datetime.fromisoformat(sent_at)
+@@ -2282,11 +2785,15 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         self.query_one('#detail-changeid', Static).update(change_id)
+         self.query_one('#detail-link', Static).update(link_url)
+ 
+-        # Attestation row
+-        att = series.get('attestation') or ''
++        # Attestation row.  Stored per series row, so it describes the
++        # tracked revision only -- showing it beside another version's
++        # subject would report that version as signed and verified.
++        att = '' if other_version else (series.get('attestation') or '')
+         att_row = self.query_one('#detail-attestation-row', Horizontal)
+         att_widget = self.query_one('#detail-attestation', Static)
+-        if att == 'pending' or att == '':
++        if other_version:
++            att_row.display = False
++        elif att == 'pending' or att == '':
+             att_widget.update(RichText('pending (run [u]pdate)', style='dim'))
+             att_row.display = True
+         elif att == 'none':
+@@ -2300,12 +2807,21 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             else:
+                 att_row.display = False
+ 
+-        # Show known revisions (precomputed in _load_series)
++        # Show known revisions (precomputed in _load_series).  Merged the
++        # same way the version rows are, so the list cannot disagree with
++        # the rows displayed directly above it.
+         revisions_row = self.query_one('#detail-revisions-row', Horizontal)
+-        revs = series.get('_revisions', [])
+-        if revs:
++        revs = self._merge_tracked_revision(series)
++        rev_widget = self.query_one('#detail-revisions', Static)
++        if series.get('needs_update'):
++            # Checked before the list, not after: the merged list always
++            # carries at least the tracked revision, so an `if revs:` would
++            # shadow this hint and leave the row's '*' flag unexplained.
++            rev_widget.add_class('has-upgrade')
++            rev_widget.update('run [u]pdate to load revision data')
++            revisions_row.display = True
++        elif revs:
+             rev_str = ', '.join(f'v{r["revision"]}' for r in revs)
+-            rev_widget = self.query_one('#detail-revisions', Static)
+             if series.get('has_newer'):
+                 newest = max(r['revision'] for r in revs)
+                 rev_str += f' (v{newest} available — upgrade with [a]ction)'
+@@ -2315,13 +2831,17 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             rev_widget.update(rev_str)
+             revisions_row.display = True
+         else:
+-            if series.get('needs_update'):
+-                rev_widget = self.query_one('#detail-revisions', Static)
+-                rev_widget.add_class('has-upgrade')
+-                rev_widget.update('run [u]pdate to load revision data')
+-                revisions_row.display = True
+-            else:
+-                revisions_row.display = False
++            revisions_row.display = False
 +
-+    def test_a_series_with_a_branch_still_is(
-+        self, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        assert self._run(
-+            monkeypatch,
-+            'mirror-some',
-+            review_branches={'b4/review/mirror-some-cid'},
-+        ) == ['mirror-some-cid']
++        # Describe the highlighted version row, if any
++        version_row = self.query_one('#detail-version-row', Horizontal)
++        if rev is not None:
++            self.query_one('#detail-version', Static).update(
++                _format_version(rev, series)
++            )
++            version_row.display = True
++        else:
++            version_row.display = False
+ 
+         # Show branch name for series with a review branch
+         status = series.get('status', 'new')
+@@ -2485,8 +3005,11 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         else:
+             self.notify('Target branch cleared')
+ 
+-        # Refresh details panel
+-        self._show_details(series)
++        # Refresh details panel, for the row the cursor is actually on:
++        # dropping the version here reverts the panel to the tracked
++        # revision's subject and attestation while a version row is still
++        # highlighted.
++        self._show_details(series, rev=self._selected_revision)
+ 
+     def action_update_one(self) -> None:
+         """Fetch thread and update revisions/trailers for the selected series."""
+@@ -2498,7 +3021,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         linkmask = str(config.get('linkmask', 'https://lore.kernel.org/r/%s'))
+         topdir = b4.git_get_toplevel()
+ 
+-        self._focus_change_id = self._selected_series.get('change_id')
++        self._stash_focus()
+         self.push_screen(
+             UpdateAllScreen(
+                 [self._selected_series],
+@@ -2523,8 +3046,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         # Skip snoozed series during update-all
+         update_list = [s for s in self._all_series if s.get('status') != 'snoozed']
+ 
+-        if self._selected_series:
+-            self._focus_change_id = self._selected_series.get('change_id')
++        self._stash_focus()
+         self.push_screen(
+             UpdateAllScreen(update_list, self._identifier, linkmask, topdir),
+             callback=self._on_update_complete,
+@@ -2579,6 +3101,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         if self._selected_series is not None:
+             panel.styles.height = 0
+             self._selected_series = None
++            self._selected_revision = None
+ 
+     def action_take(self) -> None:
+         """Show take options dialog for the selected series."""
+@@ -2856,7 +3379,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         if not confirmed:
+             return
+         take_screen.accept_series = confirm_screen.accept_series
+-        self._focus_change_id = change_id
++        self._focus_series(change_id)
+         self._invalidate_caches(change_id)
+         if method == 'merge':
+             with self.suspend():
+@@ -3844,9 +4367,22 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         change_id = self._selected_series.get('change_id', '')
+         current_rev = self._selected_series.get('revision', 1)
+ 
++        # A highlighted version row already names the other side of the
++        # diff, so skip the picker.
++        if self._selected_revision is not None:
++            other_rev = self._selected_revision.get('revision')
++            if other_rev is not None and other_rev != current_rev:
++                with self.suspend():
++                    self._do_range_diff(change_id, current_rev, other_rev)
++                return
 +
-+    def test_not_knowing_falls_back_to_asking(
-+        self, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """A rescan that could not run must not mute the mirror."""
-+        assert self._run(monkeypatch, 'mirror-unknown') == ['mirror-unknown-cid']
-+
-+
-+def test_update_all_tracking_forwards_the_branch_set(
-+    monkeypatch: pytest.MonkeyPatch,
-+) -> None:
-+    """One enumeration at the top of the sweep, not one git call per series."""
-+    seen: List[Any] = []
-+    monkeypatch.setattr(
-+        b4.review.tracking,
-+        'rescan_branches',
-+        lambda identifier, topdir: {
-+            'gone': 0,
-+            'changed': 0,
-+            'branches': {'b4/review/a'},
-+        },
-+    )
-+    monkeypatch.setattr(
-+        b4.review.tracking,
-+        'get_all_tracked_series',
-+        lambda identifier: [
-+            {'change_id': 'a', 'subject': 's', 'status': 'new', 'sender_name': 'A'}
-+        ],
-+    )
-+
-+    def _fake(
-+        one: Dict[str, Any],
-+        identifier: str,
-+        linkmask: str,
-+        topdir: Optional[str] = None,
-+        **kw: Any,
-+    ) -> Dict[str, Any]:
-+        seen.append(kw.get('review_branches'))
-+        return {'new_revisions': 0, 'new_trailers': 0, 'error': None}
-+
-+    monkeypatch.setattr(review, 'update_series_tracking', _fake)
-+    monkeypatch.setattr(
-+        b4.review.tracking, 'update_revision_message_counts', lambda *a, **kw: {}
-+    )
-+    review.update_all_tracking(
-+        'fwd-branches', 'https://lore.example/r/%s', topdir='/nonexistent'
-+    )
-+    assert seen == [{'b4/review/a'}]
+         try:
+             conn = b4.review.tracking.get_db(self._identifier)
+-            revisions = b4.review.tracking.get_revisions(conn, change_id)
++            # The same set the [d] gate counts and compute_range_diff
++            # resolves against: a raw catalog read misses a revision only a
++            # sibling series row names, and offers a picker with nothing in
++            # it on a row the binding was enabled for.
++            revisions = b4.review.tracking.get_revisions_with_tracked(conn, change_id)
+             conn.close()
+         except Exception as ex:
+             self.notify(f'Could not load revisions: {ex}', severity='error')
+@@ -4190,7 +4726,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             self.notify(f'Linked v{rev} (absorbed a duplicate)')
+         else:
+             self.notify(f'Linked v{rev}')
+-        self._focus_change_id = change_id
++        self._focus_series(change_id)
+         self._invalidate_caches(change_id)
+         self._load_series()
+ 
+@@ -4214,7 +4750,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             self.notify(f'Could not update revision: {ex}', severity='error')
+             return
+         self.notify(f'Now tracking v{target_rev}')
+-        self._focus_change_id = change_id
++        self._focus_series(change_id)
+         self._invalidate_caches(change_id)
+         self._load_series()
+ 
+@@ -4695,7 +5231,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             _wait_for_enter()
+ 
+         # Return to the tracking list with the upgraded series focused
+-        self._focus_change_id = change_id
++        self._focus_series(change_id)
+         self._invalidate_caches(change_id)
+         self._load_series()
+ 
+@@ -4722,7 +5258,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             branch_name = f'b4/review/{change_id}'
+             b4.review.update_tracking_status(topdir, branch_name, 'waiting')
+         self.notify('Series moved to waiting')
+-        self._focus_change_id = change_id
++        self._focus_series(change_id, keep_version=True)
+         self._invalidate_caches(change_id)
+         self._load_series()
+ 
+@@ -4788,7 +5324,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+         self._last_snooze_input = result.get('input', '')
+ 
+         self.notify(f'Snoozed, {_format_snooze_until(until_value)}')
+-        self._focus_change_id = change_id
++        self._focus_series(change_id, keep_version=True)
+         self._invalidate_caches(change_id)
+         self._load_series()
+ 
+@@ -4825,7 +5361,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             return
+ 
+         self.notify(f'Unsnoozed, restored to {previous_status}')
+-        self._focus_change_id = change_id
++        self._focus_series(change_id, keep_version=True)
+         self._invalidate_caches(change_id)
+         self._load_series()
+ 
+@@ -5205,7 +5741,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                     b4.review.update_tracking_status(topdir, review_branch, 'thanked')
+             if archive_after:
+                 self._archive_after_thanks(series)
+-            self._focus_change_id = change_id
++            self._focus_series(change_id, keep_version=True)
+             self._invalidate_caches(change_id)
+             self._load_series()
+         except Exception as ex:
+@@ -5293,8 +5829,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             self.notify(', '.join(parts) if parts else 'Queue empty')
+             self._refresh_queue_indicator()
+             if delivered_series:
+-                if self._selected_series:
+-                    self._focus_change_id = self._selected_series.get('change_id')
++                self._stash_focus()
+                 self._load_series()
+ 
+         self.push_screen(
 diff --git a/src/tests/test_review_tracking.py b/src/tests/test_review_tracking.py
-index 145fac8f..532c65c9 100644
+index 532c65c9..03aa3407 100644
 --- a/src/tests/test_review_tracking.py
 +++ b/src/tests/test_review_tracking.py
-@@ -15,6 +15,7 @@ import pytest
- pytest.importorskip('textual')
- 
- import b4
-+import b4.mbox
- import b4.review
- import liblore
- from b4.review import tracking as review_tracking
-@@ -1589,6 +1590,61 @@ class TestRescanBranches:
-         assert row['status'] == 'replied'
+@@ -1068,17 +1068,6 @@ class TestRevisions:
+         assert review_tracking.get_all_newest_revisions(conn) == {}
          conn.close()
  
-+    def test_rescan_records_one_branch_sha_per_change_id(self, gitdir: str) -> None:
-+        """A change_id's branch sha is one fact, however many rows it has.
-+
-+        rescan_branches and the catalog-sync fast path both read it, and
-+        while it lived on `series` they had to agree on which of a
-+        change_id's rows to believe -- a stale copy on a higher-revision
-+        row vouched for a watermark the branch move had just invalidated,
-+        and an external branch reset then never re-mirrored the catalog.
-+        On `changes` there is nothing to pick between.
-+        """
-+        identifier = 'rescan-onesha'
-+        conn = review_tracking.init_db(identifier)
-+        # A leftover row at a higher revision than the branch tracks,
-+        # carrying the pre-move sha.
-+        review_tracking.add_series_to_db(
-+            conn,
-+            'multi-change',
-+            revision=3,
-+            subject='Test series v3',
-+            sender_name='Test Author',
-+            sender_email='author@example.com',
-+            sent_at='2024-01-15T10:00:00+00:00',
-+            message_id='multi-change-v3@example.com',
-+            num_patches=3,
-+        )
-+        review_tracking.set_branch_sha(conn, 'multi-change', 'stale-sha')
-+        conn.close()
-+
-+        tracking_data = self._make_tracking_data('multi-change', identifier=identifier)
-+        branch = _create_review_branch(gitdir, 'multi-change', tracking_data)
-+        ecode, sha_out = b4.git_run_command(gitdir, ['rev-parse', branch])
-+        assert ecode == 0
-+        current_sha = sha_out.strip()
-+
-+        review_tracking.rescan_branches(identifier, gitdir, branch=branch)
-+
-+        conn = review_tracking.get_db(identifier)
-+        revisions = [
-+            r['revision']
-+            for r in conn.execute(
-+                "SELECT revision FROM series WHERE change_id = 'multi-change'"
-+                ' ORDER BY revision'
-+            )
-+        ]
-+        stored = review_tracking.get_branch_sha(conn, 'multi-change')
-+        rows = conn.execute(
-+            "SELECT COUNT(*) FROM changes WHERE change_id = 'multi-change'"
-+        ).fetchone()[0]
-+        conn.close()
-+        # The branch's tracking commit names v1, and the leftover v3 row
-+        # is untouched by the rescan -- yet there is still exactly one sha.
-+        assert revisions == [1, 3]
-+        assert rows == 1
-+        assert stored == current_sha
-+
- 
- class TestFollowupCounts:
-     """Tests for message_count / seen_message_count tracking."""
-@@ -3697,6 +3753,109 @@ class TestRecordLinkedRevision:
-         assert review_tracking.get_revisions(conn, 'series-B') == []
-         conn.close()
- 
-+    def test_link_absorbs_a_stray_whose_fingerprint_drifted(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """The message-id is what discover_older_revisions matched on.
-+
-+        A fingerprint hashes only the patches present, so a stray recorded
-+        from a partial fetch does not match the one computed here -- and the
-+        conflict notice sends the maintainer to [l] precisely then.  Matching
-+        on fingerprint alone recorded a second copy of the same posting
-+        instead of absorbing it.
-+        """
-+        conn = review_tracking.init_db('mrl-link-absorb-msgid')
-+        _seed_target(conn, 'series-A', 1)
-+        lser = _build_series(
-+            '[PATCH v2] foo: fix bar', _AUTHOR, 2, msgid='<shared-v2@example.com>'
-+        )
-+        _seed_stray_series(conn, 'series-B', 2, 'a-stale-fingerprint')
-+        conn.execute(
-+            "UPDATE revisions SET message_id = 'shared-v2@example.com'"
-+            " WHERE change_id = 'series-B'"
-+        )
-+        conn.commit()
-+
-+        result = review_tracking.record_linked_revision(conn, 'series-A', lser)
-+
-+        assert result['absorbed'] is True
-+        assert review_tracking.get_revisions(conn, 'series-B') == []
-+        conn.close()
-+
-+    def test_link_leaves_an_all_archived_stray_alone(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """Absorbing deletes a series wholesale, records and all.
-+
-+        The v11 migration gave archived series rows catalog entries, which
-+        put them in reach of the stray match for the first time.  They are
-+        invisible in the tracking list, so absorbing one destroys a series
-+        the maintainer never saw and could not have been asked about --
-+        which is why discover_older_revisions will not even report them.
-+        """
-+        conn = review_tracking.init_db('mrl-link-archived-stray')
-+        _seed_target(conn, 'series-A', 1)
-+        lser = _build_series('[PATCH v2] foo: fix bar', _AUTHOR, 2)
-+        _seed_stray_series(conn, 'series-B', 2, lser.fingerprint)
-+        conn.execute(
-+            "UPDATE series SET status = 'archived' WHERE change_id = 'series-B'"
-+        )
-+        conn.commit()
-+
-+        result = review_tracking.record_linked_revision(conn, 'series-A', lser)
-+
-+        assert result['status'] == 'linked'
-+        assert result['absorbed'] is False
-+        # The revision is recorded on the target...
-+        revs = review_tracking.get_revisions(conn, 'series-A')
-+        assert [r['revision'] for r in revs] == [1, 2]
-+        # ...and the archived series still exists.
-+        assert (
-+            conn.execute(
-+                "SELECT COUNT(*) FROM series WHERE change_id = 'series-B'"
-+            ).fetchone()[0]
-+            == 1
-+        )
-+        conn.close()
-+
-+    def test_link_absorbs_a_catalog_only_stray(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """A catalog row with no series row behind it is still absorbable.
-+
-+        An upgraded stray keeps the version it left behind exactly that
-+        way, and refusing it there records the same message-id under two
-+        change_ids -- which then resolves by table order.
-+        """
-+        conn = review_tracking.init_db('mrl-link-catalog-only-stray')
-+        _seed_target(conn, 'series-A', 1)
-+        lser = _build_series(
-+            '[PATCH v2] foo: fix bar', _AUTHOR, 2, msgid='<catalog-only@test.com>'
-+        )
-+        # A catalogued posting with no series row of its own.
-+        review_tracking.add_revision(
-+            conn,
-+            'series-B',
-+            2,
-+            'catalog-only@test.com',
-+            subject='[PATCH v2] foo: fix bar',
-+            fingerprint=lser.fingerprint,
-+        )
-+
-+        result = review_tracking.record_linked_revision(conn, 'series-A', lser)
-+
-+        revs = review_tracking.get_revisions(conn, 'series-A')
-+        owners = conn.execute(
-+            'SELECT change_id FROM revisions WHERE message_id = ?',
-+            ('catalog-only@test.com',),
-+        ).fetchall()
-+        conn.close()
-+        assert result['status'] == 'linked'
-+        assert result['absorbed'] is True
-+        assert [r['revision'] for r in revs] == [1, 2]
-+        # One owner, so find_revision_by_message_id has nothing to pick between.
-+        assert [r[0] for r in owners] == ['series-A']
-+
- 
- class TestUnlinkRevision:
-     """Tier 5: unlink_revision() undoes a manual link only."""
-@@ -4625,6 +4784,138 @@ class TestSyncRevisionsCatalogToBranch:
-         _cover, tracking = b4.review.load_tracking(gitdir, 'b4/review/cid-A')
-         assert tracking.get('known-revisions', []) == []
- 
-+    def test_steady_state_answers_without_git(
-+        self, gitdir: str, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """The every-sweep no-op must not cost subprocesses.
-+
-+        The update sweep lands here each pass for every series outside the
-+        four statuses whose branch save mirrors the catalog itself --
-+        accepted and thanked included -- so "already current" has to come
-+        from the catalog_synced watermark, not from three git reads.
-+
-+        The watermark is only half the answer: it names the branch sha the
-+        mirror was made against, and only rescan_branches can say the
-+        database has actually imported that sha.  So the sweep order is the
-+        precondition -- rescan first, then this -- and the fast path stays
-+        shut until it holds.
-+        """
-+        identifier = 'rt-port-sync-fast'
-+        _make_review_branch_with_catalog(gitdir, identifier, 'cid-A', 5, [])
-+        conn = review_tracking.init_db(identifier)
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='cid-A',
-+            revision=5,
-+            subject='s',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='v5@example.com',
-+            num_patches=1,
-+        )
-+        conn.close()
-+        assert (
-+            review_tracking.sync_revisions_catalog_to_branch(
-+                gitdir, identifier, 'cid-A'
-+            )
-+            is True
-+        )
-+        # As update_all_tracking does at the top of every sweep.
-+        review_tracking.rescan_branches(identifier, gitdir)
-+        monkeypatch.setattr(
-+            b4,
-+            'git_run_command',
-+            lambda *a, **kw: pytest.fail('steady-state sync must not touch git'),
-+        )
-+        monkeypatch.setattr(
-+            b4,
-+            'git_worktree_busy',
-+            lambda *a, **kw: pytest.fail('steady-state sync must not touch git'),
-+        )
-+        assert (
-+            review_tracking.sync_revisions_catalog_to_branch(
-+                gitdir, identifier, 'cid-A'
-+            )
-+            is False
-+        )
-+
-+    def test_a_catalog_write_breaks_the_watermark(self, gitdir: str) -> None:
-+        identifier = 'rt-port-sync-dirty'
-+        _make_review_branch_with_catalog(gitdir, identifier, 'cid-A', 5, [])
-+        conn = review_tracking.init_db(identifier)
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='cid-A',
-+            revision=5,
-+            subject='s',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='v5@example.com',
-+            num_patches=1,
-+        )
-+        conn.close()
-+        assert review_tracking.sync_revisions_catalog_to_branch(
-+            gitdir, identifier, 'cid-A'
-+        )
-+        conn = review_tracking.get_db(identifier)
-+        review_tracking.add_revision(conn, 'cid-A', 6, 'v6@example.com')
-+        conn.close()
-+        assert review_tracking.sync_revisions_catalog_to_branch(
-+            gitdir, identifier, 'cid-A'
-+        )
-+        _cover, tracking = b4.review.load_tracking(gitdir, 'b4/review/cid-A')
-+        known = {e['revision'] for e in tracking.get('known-revisions', [])}
-+        assert known == {5, 6}
-+
-+    def test_migration_adds_the_watermark_column(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        _make_legacy_v10_db('sync-mig-watermark')
-+        conn = review_tracking.get_db('sync-mig-watermark')
-+        cols = {row[1] for row in conn.execute('PRAGMA table_info(changes)')}
-+        version = conn.execute('SELECT version FROM schema_version').fetchone()[0]
-+        conn.close()
-+        assert 'catalog_synced' in cols
-+        assert version == review_tracking.SCHEMA_VERSION
-+
-+    def test_the_mirror_does_not_vouch_for_an_unimported_branch(
-+        self, gitdir: str
-+    ) -> None:
-+        """branch_sha means "imported", and only rescan_branches can say it.
-+
-+        The mirror reads a branch and may move it; it never imports its
-+        tracking commit.  Recording the sha it saw as though it had made
-+        rescan_branches skip that branch for ever -- so a status and a
-+        known-revisions block pushed from another machine were silently
-+        never replayed.
-+        """
-+        identifier = 'sync-no-vouch'
-+        _make_review_branch_with_catalog(gitdir, identifier, 'cid-A', 5, [])
-+        conn = review_tracking.init_db(identifier)
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='cid-A',
-+            revision=5,
-+            subject='s',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='v5@example.com',
-+            num_patches=1,
-+        )
-+        conn.close()
-+        # The mirror runs against a branch the database has never imported.
-+        review_tracking.sync_revisions_catalog_to_branch(gitdir, identifier, 'cid-A')
-+        conn = review_tracking.get_db(identifier)
-+        vouched = review_tracking.get_branch_sha(conn, 'cid-A')
-+        conn.close()
-+        assert vouched is None
-+        # ...so the rescan still reads it.
-+        result = review_tracking.rescan_branches(identifier, gitdir)
-+        assert result['changed'] == 1
-+
- 
- class TestKnownProjects:
-     """Tests for the identifier→repository reverse mapping."""
-@@ -4768,6 +5059,40 @@ class TestUpdateMessageCountSeenBump:
-         assert self._get_counts(conn) == (3, 3)
-         conn.close()
- 
-+    def test_the_catalog_snapshot_advances_on_every_counted_fetch(
-+        self, monkeypatch: pytest.MonkeyPatch, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """The catalog copy is written whatever the tracking commit does.
-+
-+        seen_bump is derived from the previous thread snapshot, so a
-+        snapshot that stops advancing while a branch is checked out
-+        re-counts the same read messages as new on every sweep -- the
-+        badge is then silently cleared for mail never opened.  The
-+        catalog row's copy must therefore keep advancing regardless.
-+        """
-+        conn = self._setup_series('bump-frozen')
-+        ref_saves: list[int] = []
-+        cat_saves: list[int] = []
-+        monkeypatch.setattr(
-+            review_tracking,
-+            '_store_thread_blob',
-+            lambda topdir, cid, msgs, blob_sha=None: ref_saves.append(len(msgs)),
-+        )
-+        monkeypatch.setattr(
-+            review_tracking,
-+            'store_revision_thread_blob',
-+            lambda conn, topdir, change_id, revision, msgs: cat_saves.append(len(msgs)),
-+        )
-+        review_tracking.update_message_count_from_msgs(
-+            conn, 'bump-cid', 1, self._make_msgs(3), topdir='/nonexistent'
-+        )
-+        assert (cat_saves, ref_saves) == ([3], [3])
-+        review_tracking.update_message_count_from_msgs(
-+            conn, 'bump-cid', 1, self._make_msgs(5), topdir='/nonexistent'
-+        )
-+        assert (cat_saves, ref_saves) == ([3, 5], [3, 5])
-+        conn.close()
-+
- 
- class TestFindTrackedChangeId:
-     """Tests for find_tracked_change_id()."""
-@@ -6392,6 +6717,44 @@ class TestUpdateRevisionMessageCounts:
-         assert mbox is not None
-         assert b'm-0@example.com' in mbox
- 
-+    def test_force_bypasses_the_minimum_age_skip(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """An explicit refresh polls versions the schedule would skip.
-+
-+        The poller's minimum-age gate exists for unattended sweeps; on a
-+        user-initiated update a recently checked version being skipped
-+        silently reads as the update not working.
-+        """
-+        now = datetime.datetime.now(datetime.timezone.utc).isoformat()
-+        conn = review_tracking.init_db('poll-force')
-+        review_tracking.add_revision(conn, 'cid', 1, 'v1@x')
-+        conn.execute(
-+            'UPDATE revisions SET message_count = 5, seen_message_count = 5,'
-+            ' last_update_check = ?, last_mail_at = ?'
-+            " WHERE change_id = 'cid' AND revision = 1",
-+            (now, now),
-+        )
-+        conn.commit()
-+        conn.close()
-+        monkeypatch.setattr(
-+            review_tracking,
-+            '_fetch_revision_thread_msgs',
-+            lambda identifier, conn, change_id, rev: _thread_msgs(7),
-+        )
-+        quiet = review_tracking.update_revision_message_counts(
-+            'poll-force', [_poller_series('cid', 2, 'v2@x')]
-+        )
-+        assert quiet['polled'] == 0
-+        forced = review_tracking.update_revision_message_counts(
-+            'poll-force', [_poller_series('cid', 2, 'v2@x')], force=True
-+        )
-+        assert forced['polled'] == 1
-+        conn = review_tracking.get_db('poll-force')
-+        revs = {r['revision']: r for r in review_tracking.get_revisions(conn, 'cid')}
-+        conn.close()
-+        assert revs[1]['message_count'] == 7
-+
- 
- class TestRevisionAwareSyncHelpers:
-     """refresh_message_count / sync_seen fall back to the catalog."""
-@@ -8457,3 +8820,1252 @@ class TestMergeTrackedRevisionsHelper:
-         # No read state: the entry supplies a message-id, not a badge.
-         assert synth['message_count'] is None
-         assert synth['seen_message_count'] is None
-+
-+
-+class TestDiscoveredRevisionsAreDatedFromTheirPosting:
-+    """found_at is the version's own Date:, not the moment it was recorded.
-+
-+    The backward search records versions posted long before the series was
-+    tracked, and the version rows fall back to found_at whenever the
-+    follow-up poll could not fill last_activity_at -- so dating them "now"
-+    reported a year-old posting as found today and sorted the oldest
-+    version after the newest.
-+    """
-+
-+    def test_cover_date_is_used(self, tmp_path: pytest.TempPathFactory) -> None:
-+        conn = review_tracking.init_db('rt-found-cover')
-+        lmbx = _build_lmbx('thing', _AUTHOR, 2, 2, cover=True)
-+        review_tracking._record_discovered_revisions(conn, 'cid-D', lmbx, '')
-+        revs = review_tracking.get_revisions(conn, 'cid-D')
-+        conn.close()
-+        # 08:51:10 +0530 == 03:21:10 UTC
-+        assert revs[0]['found_at'] == '2026-03-19T03:21:10+00:00'
-+
-+    def test_first_patch_date_is_used_without_a_cover(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        conn = review_tracking.init_db('rt-found-patch')
-+        lmbx = _build_lmbx('thing', _AUTHOR, 2, 2)
-+        review_tracking._record_discovered_revisions(conn, 'cid-E', lmbx, '')
-+        revs = review_tracking.get_revisions(conn, 'cid-E')
-+        conn.close()
-+        assert revs[0]['found_at'] == '2026-03-19T03:21:12+00:00'
-+
-+
-+class TestDiscoverOlderRevisions:
-+    """The backward lore search records all previous versions."""
-+
-+    def test_records_all_previous_versions(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        conn = review_tracking.init_db('disc-all')
-+        review_tracking.add_revision(conn, 'cid', 3, 'thing-v3-p1@example.com')
-+        conn.close()
-+        monkeypatch.setattr(b4, 'can_network', True)
-+        base_msgs = _series_msgs('thing', _AUTHOR, 3, 2)
-+        monkeypatch.setattr(
-+            review_tracking, '_fetch_thread_msgs', lambda msgid: list(base_msgs)
-+        )
-+        seen_calls: list[tuple[int, Any]] = []
-+
-+        def _fake_extra(
-+            msgs: list[EmailMessage],
-+            direction: int = 1,
-+            wantvers: Any = None,
-+            nocache: bool = False,
-+        ) -> list[EmailMessage]:
-+            seen_calls.append((direction, wantvers))
-+            return (
-+                list(msgs)
-+                + _series_msgs('thing', _AUTHOR, 2, 2)
-+                + _series_msgs('thing', _AUTHOR, 1, 2)
-+            )
-+
-+        monkeypatch.setattr(b4.mbox, 'get_extra_series', _fake_extra)
-+        polled: list[tuple[str, Any]] = []
-+        monkeypatch.setattr(
-+            review_tracking,
-+            'update_revision_message_counts',
-+            lambda identifier, series_list, topdir=None, max_revisions_per_series=None, cancel_cb=None, only_revisions=None: (
-+                polled.append((series_list[0]['change_id'], only_revisions))
-+            ),
-+        )
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 3,
-+            'message_id': 'thing-v3-p1@example.com',
-+            'status': 'new',
-+        }
-+        result = review_tracking.discover_older_revisions('disc-all', series, '')
-+        assert result == {
-+            'found': 2,
-+            'revisions': [1, 2],
-+            'conflicts': [],
-+            'error': None,
-+        }
-+        assert seen_calls == [(-1, [1, 2])]
-+        # Named outright: the two revisions just recorded, not a budget
-+        # any other uncounted revision could spend.
-+        assert polled == [('cid', {1, 2})]
-+        conn = review_tracking.get_db('disc-all')
-+        revs = {r['revision'] for r in review_tracking.get_revisions(conn, 'cid')}
-+        conn.close()
-+        assert revs == {1, 2, 3}
-+
-+    def test_rethreaded_series_is_reassembled_before_searching(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """A rethreaded seed is one patch's thread, which finds nothing.
-+
-+        get_extra_series() skips any patch numbered above 1 and gives up
-+        without issuing a query when that leaves no base message, so
-+        seeding from the recorded message-id alone can search for nothing
-+        at all.  Reassemble from the member patches first, exactly as the
-+        per-revision poller does.
-+        """
-+        conn = review_tracking.init_db('disc-rethreaded')
-+        # The recorded message-id is patch 2's: the seed thread for it holds
-+        # no cover and no 1/N, which is what defeats the backward search.
-+        review_tracking.add_revision(
-+            conn, 'cid', 3, 'thing-v3-p2@example.com', is_rethreaded=True
-+        )
-+        _insert_patches(
-+            conn,
-+            'cid',
-+            3,
-+            ['thing-v3-p1@example.com', 'thing-v3-p2@example.com'],
-+        )
-+        conn.close()
-+        monkeypatch.setattr(b4, 'can_network', True)
-+
-+        def _no_plain_fetch(msgid: str) -> list[EmailMessage]:
-+            raise AssertionError('must reassemble, not fetch one patch thread')
-+
-+        monkeypatch.setattr(review_tracking, '_fetch_thread_msgs', _no_plain_fetch)
-+        seen_series: list[dict[str, Any]] = []
-+
-+        def _reassemble(series: dict[str, Any], identifier: str) -> list[EmailMessage]:
-+            seen_series.append(series)
-+            return _series_msgs('thing', _AUTHOR, 3, 2)
-+
-+        monkeypatch.setattr(b4.review, 'retrieve_series_messages', _reassemble)
-+        seen_calls: list[tuple[int, Any]] = []
-+
-+        def _fake_extra(
-+            msgs: list[EmailMessage],
-+            direction: int = 1,
-+            wantvers: Any = None,
-+            nocache: bool = False,
-+        ) -> list[EmailMessage]:
-+            seen_calls.append((direction, wantvers))
-+            return list(msgs) + _series_msgs('thing', _AUTHOR, 2, 2)
-+
-+        monkeypatch.setattr(b4.mbox, 'get_extra_series', _fake_extra)
-+        monkeypatch.setattr(
-+            review_tracking,
-+            'update_revision_message_counts',
-+            lambda *a, **kw: {'updated': 0, 'new_mail': 0, 'errors': 0, 'polled': 0},
-+        )
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 3,
-+            'message_id': 'thing-v3-p2@example.com',
-+            'is_rethreaded': True,
-+            'status': 'new',
-+        }
-+        result = review_tracking.discover_older_revisions('disc-rethreaded', series, '')
-+
-+        assert seen_series and seen_series[0]['is_rethreaded'] is True
-+        assert seen_calls == [(-1, [1, 2])]
-+        assert result['found'] == 1
-+        assert result['revisions'] == [2]
-+
-+    def test_tracked_revision_is_not_reported_as_found(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """The seed thread is v3's, so v3 is always in the mailbox.
-+
-+        With no catalog row for it -- the case the whole tracked-revision
-+        synthesis exists for -- it counted as newly discovered, and the
-+        search reported the version the maintainer is already on.
-+        """
-+        review_tracking.init_db('disc-tracked').close()
-+        monkeypatch.setattr(b4, 'can_network', True)
-+        base_msgs = _series_msgs('thing', _AUTHOR, 3, 2)
-+        monkeypatch.setattr(
-+            review_tracking, '_fetch_thread_msgs', lambda msgid: list(base_msgs)
-+        )
-+        monkeypatch.setattr(
-+            b4.mbox,
-+            'get_extra_series',
-+            lambda msgs, direction=1, wantvers=None, nocache=False: (
-+                list(msgs) + _series_msgs('thing', _AUTHOR, 2, 2)
-+            ),
-+        )
-+        monkeypatch.setattr(
-+            review_tracking,
-+            'update_revision_message_counts',
-+            lambda *a, **kw: None,
-+        )
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 3,
-+            'message_id': 'thing-v3-p1@example.com',
-+            'status': 'new',
-+        }
-+        result = review_tracking.discover_older_revisions('disc-tracked', series, '')
-+        assert result == {
-+            'found': 1,
-+            'revisions': [2],
-+            'conflicts': [],
-+            'error': None,
-+        }
-+        # v3 is still recorded, just not announced as a find.
-+        conn = review_tracking.get_db('disc-tracked')
-+        revs = {r['revision'] for r in review_tracking.get_revisions(conn, 'cid')}
-+        conn.close()
-+        assert revs == {2, 3}
-+
-+    def test_offline_reports_error(self, tmp_path: pytest.TempPathFactory) -> None:
-+        review_tracking.init_db('disc-off').close()
-+        series = {'change_id': 'cid', 'revision': 3, 'message_id': 'v3@x'}
-+        result = review_tracking.discover_older_revisions('disc-off', series, '')
-+        assert result == {
-+            'found': 0,
-+            'revisions': [],
-+            'conflicts': [],
-+            'error': 'offline',
-+        }
-+
-+    def test_v1_is_noop(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        review_tracking.init_db('disc-v1').close()
-+
-+        def _boom(msgid: str) -> list[EmailMessage]:
-+            raise AssertionError('must not fetch for v1')
-+
-+        monkeypatch.setattr(review_tracking, '_fetch_thread_msgs', _boom)
-+        series = {'change_id': 'cid', 'revision': 1, 'message_id': 'v1@x'}
-+        result = review_tracking.discover_older_revisions('disc-v1', series, '')
-+        assert result == {
-+            'found': 0,
-+            'revisions': [],
-+            'conflicts': [],
-+            'error': None,
-+        }
-+
-+    def test_nothing_new_found(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        conn = review_tracking.init_db('disc-none')
-+        review_tracking.add_revision(conn, 'cid', 3, 'thing-v3-p1@example.com')
-+        conn.close()
-+        monkeypatch.setattr(b4, 'can_network', True)
-+        base_msgs = _series_msgs('thing', _AUTHOR, 3, 2)
-+        monkeypatch.setattr(
-+            review_tracking, '_fetch_thread_msgs', lambda msgid: list(base_msgs)
-+        )
-+        monkeypatch.setattr(
-+            b4.mbox,
-+            'get_extra_series',
-+            lambda msgs, direction=1, wantvers=None, nocache=False: list(msgs),
-+        )
-+
-+        def _no_poll(*args: Any, **kw: Any) -> None:
-+            raise AssertionError('poller must not run when nothing was found')
-+
-+        monkeypatch.setattr(review_tracking, 'update_revision_message_counts', _no_poll)
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 3,
-+            'message_id': 'thing-v3-p1@example.com',
-+        }
-+        result = review_tracking.discover_older_revisions('disc-none', series, '')
-+        assert result == {
-+            'found': 0,
-+            'revisions': [],
-+            'conflicts': [],
-+            'error': None,
-+        }
-+
-+
-+class TestBackwardSearchOneShot:
-+    """The sweep's backward search runs once per series, then latches.
-+
-+    The catalog alone cannot carry the latch -- the v11 backfill gives
-+    every series row an entry -- and revision provenance cannot either:
-+    offline tracking and manual linking both stamp a source with no
-+    search behind it.  A dedicated series.back_searched column records
-+    that the search ran, found older versions or not.
-+    """
-+
-+    @staticmethod
-+    def _sweep(
-+        identifier: str,
-+        monkeypatch: pytest.MonkeyPatch,
-+        backward: list[list[int]],
-+        online: bool = True,
-+    ) -> None:
-+        monkeypatch.setattr(b4, 'can_network', online)
-+
-+        def _fake_extra(
-+            msgs: list[EmailMessage],
-+            direction: int = 1,
-+            wantvers: Any = None,
-+            nocache: bool = False,
-+        ) -> list[EmailMessage]:
-+            if direction == -1:
-+                backward.append(list(wantvers or []))
-+            return list(msgs)
-+
-+        monkeypatch.setattr(b4.mbox, 'get_extra_series', _fake_extra)
-+        monkeypatch.setattr(
-+            'b4.review._review.retrieve_series_messages',
-+            lambda series, identifier: _series_msgs('thing', _AUTHOR, 3, 1),
-+        )
-+        series = {
-+            'change_id': 'os-cid',
-+            'revision': 3,
-+            'status': 'new',
-+            'message_id': 'thing-v3-p1@example.com',
-+        }
-+        result = b4.review.update_series_tracking(
-+            series, identifier, 'https://l.example/%s'
-+        )
-+        assert result.get('error') is None
-+
-+    @staticmethod
-+    def _seed(identifier: str) -> None:
-+        conn = review_tracking.init_db(identifier)
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='os-cid',
-+            revision=3,
-+            subject='thing',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='thing-v3-p1@example.com',
-+            num_patches=1,
-+        )
-+        conn.close()
-+
-+    def test_finding_nothing_still_latches(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """A v3 whose v1/v2 are not on lore must not be re-searched forever.
-+
-+        The subject+sender query behind the backward search is the
-+        expensive kind, and 'found nothing' records no catalog row -- so a
-+        guard reading only the revision set re-fired it on every 'u', 'U'
-+        and cron pass for the lifetime of the series.
-+        """
-+        self._seed('oneshot-dry')
-+        backward: list[list[int]] = []
-+        self._sweep('oneshot-dry', monkeypatch, backward)
-+        assert backward == [[1, 2]]
-+        conn = review_tracking.get_db('oneshot-dry')
-+        revs = {r['revision']: r for r in review_tracking.get_revisions(conn, 'os-cid')}
-+        assert review_tracking.is_back_searched(conn, 'os-cid')
-+        conn.close()
-+        assert revs[3]['source'] == 'discovered'
-+        self._sweep('oneshot-dry', monkeypatch, backward)
-+        assert backward == [[1, 2]]
-+
-+    def test_an_offline_sweep_does_not_latch(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """Recording a cached thread proves nothing about lore."""
-+        self._seed('oneshot-offline')
-+        backward: list[list[int]] = []
-+        self._sweep('oneshot-offline', monkeypatch, backward, online=False)
-+        assert backward == []
-+        self._sweep('oneshot-offline', monkeypatch, backward)
-+        assert backward == [[1, 2]]
-+
-+    def test_a_manual_link_does_not_latch(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """Relinking the tracked revision proves nothing about lore.
-+
-+        [l] and absorb promote the tracked revision's row to 'manual'
-+        through add_revision's rank upgrade.  The old provenance latch
-+        read any rank above 'heuristic' as "search already ran", so a
-+        relinked series never had its older versions looked for.
-+        """
-+        self._seed('oneshot-manual')
-+        conn = review_tracking.get_db('oneshot-manual')
-+        review_tracking.add_revision(
-+            conn, 'os-cid', 3, 'thing-v3-p1@example.com', source='manual'
-+        )
-+        conn.close()
-+        backward: list[list[int]] = []
-+        self._sweep('oneshot-manual', monkeypatch, backward)
-+        assert backward == [[1, 2]]
-+
-+
-+class TestDiscoverOlderConflicts:
-+    def test_stray_tracked_version_is_reported_not_duplicated(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """v1 tracked under its own change_id must not become a second row."""
-+        conn = review_tracking.init_db('disc-conflict')
-+        monkeypatch.setattr(b4, 'can_network', True)
-+        base_msgs = _series_msgs('thing', _AUTHOR, 3, 2)
-+        older = _series_msgs('thing', _AUTHOR, 1, 2)
-+        # Record v1 under a different change_id, by its own fingerprint.
-+        lmbx = b4.LoreMailbox()
-+        for msg in older:
-+            lmbx.add_message(msg)
-+        review_tracking.add_revision(
-+            conn,
-+            'stray-cid',
-+            1,
-+            'thing-v1-p1@example.com',
-+            fingerprint=lmbx.series[1].fingerprint,
-+        )
-+        review_tracking.add_revision(conn, 'cid', 3, 'thing-v3-p1@example.com')
-+        conn.commit()
-+        conn.close()
-+        monkeypatch.setattr(
-+            review_tracking, '_fetch_thread_msgs', lambda msgid: list(base_msgs)
-+        )
-+        monkeypatch.setattr(
-+            b4.mbox,
-+            'get_extra_series',
-+            lambda msgs, direction=1, wantvers=None, nocache=False: list(msgs) + older,
-+        )
-+        monkeypatch.setattr(
-+            review_tracking,
-+            'update_revision_message_counts',
-+            lambda *a, **kw: {'updated': 0, 'new_mail': 0, 'errors': 0, 'polled': 0},
-+        )
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 3,
-+            'message_id': 'thing-v3-p1@example.com',
-+        }
-+        result = review_tracking.discover_older_revisions('disc-conflict', series, '')
-+        assert result['conflicts'] == [1]
-+        assert result['found'] == 0
-+        conn = review_tracking.get_db('disc-conflict')
-+        revs = {r['revision'] for r in review_tracking.get_revisions(conn, 'cid')}
-+        conn.close()
-+        assert revs == {3}
-+
-+    def test_a_version_we_already_catalog_is_not_a_conflict(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """Nothing to link, so nothing to report.
-+
-+        A series without a change-id trailer gets one synthesized per
-+        posting, so tracking three versions of it makes three change_ids
-+        that each catalog the same history.  Every version then matches a
-+        stray, and the report sent the maintainer to [l] for versions the
-+        series already held -- where absorbing would not change the row
-+        (add_revision is first-wins on message_id) and would only delete
-+        the series that owned the other copy.
-+        """
-+        conn = review_tracking.init_db('disc-conflict-own')
-+        monkeypatch.setattr(b4, 'can_network', True)
-+        base_msgs = _series_msgs('thing', _AUTHOR, 3, 2)
-+        older = _series_msgs('thing', _AUTHOR, 1, 2)
-+        lmbx = b4.LoreMailbox()
-+        for msg in older:
-+            lmbx.add_message(msg)
-+        # A live series elsewhere owns v1 ...
-+        review_tracking.add_revision(
-+            conn,
-+            'stray-cid',
-+            1,
-+            'thing-v1-p1@example.com',
-+            fingerprint=lmbx.series[1].fingerprint,
-+        )
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='stray-cid',
-+            revision=1,
-+            subject='[PATCH] thing',
-+            sender_name='S',
-+            sender_email='s@e.com',
-+            sent_at='2026-01-01T00:00:00+00:00',
-+            message_id='thing-v1-p1@example.com',
-+            num_patches=2,
-+        )
-+        # ... and so do we, already.
-+        review_tracking.add_revision(conn, 'cid', 1, 'thing-v1-p1@example.com')
-+        review_tracking.add_revision(conn, 'cid', 3, 'thing-v3-p1@example.com')
-+        conn.commit()
-+        conn.close()
-+        monkeypatch.setattr(
-+            review_tracking, '_fetch_thread_msgs', lambda msgid: list(base_msgs)
-+        )
-+        monkeypatch.setattr(
-+            b4.mbox,
-+            'get_extra_series',
-+            lambda msgs, direction=1, wantvers=None, nocache=False: list(msgs) + older,
-+        )
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 3,
-+            'message_id': 'thing-v3-p1@example.com',
-+        }
-+        result = review_tracking.discover_older_revisions(
-+            'disc-conflict-own', series, ''
-+        )
-+        assert result['conflicts'] == []
-+        assert result['found'] == 0
-+        # and the stray series is still there, untouched
-+        conn = review_tracking.get_db('disc-conflict-own')
-+        assert (
-+            conn.execute(
-+                "SELECT COUNT(*) FROM series WHERE change_id = 'stray-cid'"
-+            ).fetchone()[0]
-+            == 1
-+        )
-+        conn.close()
-+
-+    def test_partially_retrieved_stray_is_still_caught(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """A fingerprint hashes only the patches present.
-+
-+        The backward search routinely returns an older version short a
-+        patch, so its recomputed fingerprint need not match the one stored
-+        when that version was tracked standalone.  The message-id does not
-+        move, and catching the stray by that is what keeps one posting from
-+        landing under two change_ids.
-+        """
-+        conn = review_tracking.init_db('disc-conflict-partial')
-+        monkeypatch.setattr(b4, 'can_network', True)
-+        base_msgs = _series_msgs('thing', _AUTHOR, 3, 2)
-+        older = _series_msgs('thing', _AUTHOR, 1, 2)
-+        # The stray was recorded from the whole v1; the search below returns
-+        # it one patch short, so the fingerprints cannot agree.
-+        lmbx = b4.LoreMailbox()
-+        for msg in older:
-+            lmbx.add_message(msg)
-+        full_fingerprint = lmbx.series[1].fingerprint
-+        review_tracking.add_revision(
-+            conn,
-+            'stray-cid',
-+            1,
-+            'thing-v1-p1@example.com',
-+            fingerprint=full_fingerprint,
-+        )
-+        review_tracking.add_revision(conn, 'cid', 3, 'thing-v3-p1@example.com')
-+        conn.commit()
-+        conn.close()
-+        partial = [m for m in older if 'p2' not in str(m['Message-Id'])]
-+        plmbx = b4.LoreMailbox()
-+        for msg in partial:
-+            plmbx.add_message(msg)
-+        assert plmbx.series[1].fingerprint != full_fingerprint
-+
-+        monkeypatch.setattr(
-+            review_tracking, '_fetch_thread_msgs', lambda msgid: list(base_msgs)
-+        )
-+        monkeypatch.setattr(
-+            b4.mbox,
-+            'get_extra_series',
-+            lambda msgs, direction=1, wantvers=None, nocache=False: (
-+                list(msgs) + partial
-+            ),
-+        )
-+        monkeypatch.setattr(
-+            review_tracking,
-+            'update_revision_message_counts',
-+            lambda *a, **kw: {'updated': 0, 'new_mail': 0, 'errors': 0, 'polled': 0},
-+        )
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 3,
-+            'message_id': 'thing-v3-p1@example.com',
-+        }
-+        result = review_tracking.discover_older_revisions(
-+            'disc-conflict-partial', series, ''
-+        )
-+        assert result['conflicts'] == [1]
-+        assert result['found'] == 0
-+        conn = review_tracking.get_db('disc-conflict-partial')
-+        rows = conn.execute(
-+            "SELECT change_id FROM revisions WHERE message_id = 'thing-v1-p1@example.com'"
-+        ).fetchall()
-+        conn.close()
-+        # One posting, one catalog row.
-+        assert [r[0] for r in rows] == ['stray-cid']
-+
-+    def test_the_tracked_revision_is_never_a_conflict(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """The seed thread is the tracked revision's, so lmbx always holds it.
-+
-+        A stray duplicate of that same posting matches the stray lookup like
-+        any other, and reporting it sends the maintainer to [l] to link the
-+        version they are already sitting on.  The search is for *older*
-+        revisions; its report is about those.
-+        """
-+        conn = review_tracking.init_db('disc-self-conflict')
-+        monkeypatch.setattr(b4, 'can_network', True)
-+        v2 = _series_msgs('thing', _AUTHOR, 2, 2)
-+        # another change_id already owns the very posting 'cid' tracks
-+        review_tracking.add_revision(conn, 'dup-cid', 2, 'thing-v2-p1@example.com')
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='dup-cid',
-+            revision=2,
-+            subject='[PATCH v2] thing',
-+            sender_name='S',
-+            sender_email='s@e.com',
-+            sent_at='2026-01-01T00:00:00+00:00',
-+            message_id='thing-v2-p1@example.com',
-+            num_patches=2,
-+        )
-+        review_tracking.add_revision(conn, 'cid', 2, 'thing-v2-p1@example.com')
-+        conn.commit()
-+        conn.close()
-+        monkeypatch.setattr(
-+            review_tracking, '_fetch_thread_msgs', lambda msgid: list(v2)
-+        )
-+        monkeypatch.setattr(
-+            b4.mbox,
-+            'get_extra_series',
-+            lambda msgs, direction=1, wantvers=None, nocache=False: list(msgs),
-+        )
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 2,
-+            'message_id': 'thing-v2-p1@example.com',
-+        }
-+        result = review_tracking.discover_older_revisions(
-+            'disc-self-conflict', series, ''
-+        )
-+        assert result['conflicts'] == []
-+        assert result['found'] == 0
-+
-+
-+class TestDiscoverIgnoresArchivedStrays:
-+    def test_an_archived_only_stray_is_not_a_conflict(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """The v11 migration gave archived series rows catalog entries too.
-+
-+        Reporting one sends the maintainer after a series the tracking list
-+        does not show and [l] cannot reach.
-+        """
-+        conn = review_tracking.init_db('disc-archived')
-+        monkeypatch.setattr(b4, 'can_network', True)
-+        base_msgs = _series_msgs('thing', _AUTHOR, 3, 2)
-+        older = _series_msgs('thing', _AUTHOR, 1, 2)
-+        lmbx = b4.LoreMailbox()
-+        for msg in older:
-+            lmbx.add_message(msg)
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='stray-cid',
-+            revision=1,
-+            subject='[PATCH] thing',
-+            sender_name='S',
-+            sender_email='s@e.com',
-+            sent_at='2026-01-01T00:00:00+00:00',
-+            message_id='thing-v1-p1@example.com',
-+            num_patches=2,
-+        )
-+        review_tracking.add_revision(
-+            conn,
-+            'stray-cid',
-+            1,
-+            'thing-v1-p1@example.com',
-+            fingerprint=lmbx.series[1].fingerprint,
-+        )
-+        review_tracking.update_series_status(conn, 'stray-cid', 'archived', revision=1)
-+        review_tracking.add_revision(conn, 'cid', 3, 'thing-v3-p1@example.com')
-+        conn.commit()
-+        conn.close()
-+        monkeypatch.setattr(
-+            review_tracking, '_fetch_thread_msgs', lambda msgid: list(base_msgs)
-+        )
-+        monkeypatch.setattr(
-+            b4.mbox,
-+            'get_extra_series',
-+            lambda msgs, direction=1, wantvers=None, nocache=False: list(msgs) + older,
-+        )
-+        monkeypatch.setattr(
-+            review_tracking,
-+            'update_revision_message_counts',
-+            lambda *a, **kw: {'updated': 0, 'new_mail': 0, 'errors': 0, 'polled': 0},
-+        )
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 3,
-+            'message_id': 'thing-v3-p1@example.com',
-+        }
-+        result = review_tracking.discover_older_revisions('disc-archived', series, '')
-+        assert result['conflicts'] == []
-+        assert result['found'] == 1
-+        conn = review_tracking.get_db('disc-archived')
-+        revs = {r['revision'] for r in review_tracking.get_revisions(conn, 'cid')}
-+        conn.close()
-+        assert revs == {1, 3}
-+
-+
-+class TestAbsorbIsRevisionScoped:
-+    """Absorbing one version must not delete a stray's other postings."""
-+
-+    @staticmethod
-+    def _seed(identifier: str) -> sqlite3.Connection:
-+        conn = review_tracking.init_db(identifier)
-+        _seed_target(conn, 'target', 3)
-+        for rev in (1, 2, 3):
-+            review_tracking.add_series_to_db(
-+                conn,
-+                change_id='stray',
-+                revision=rev,
-+                subject=f'[PATCH v{rev}] s',
-+                sender_name='n',
-+                sender_email='e@x',
-+                sent_at='2026-06-01T00:00:00+00:00',
-+                message_id=f'stray-v{rev}@x',
-+                num_patches=1,
-+            )
-+            review_tracking.add_revision(
-+                conn, 'stray', rev, f'stray-v{rev}@x', source='manual'
-+            )
-+            _insert_patches(conn, 'stray', rev, [f'stray-v{rev}-p1@x'])
-+        conn.commit()
-+        return conn
-+
-+    def test_other_versions_survive(self, tmp_path: pytest.TempPathFactory) -> None:
-+        """Their per-patch message-ids cannot be re-derived from the list."""
-+        conn = self._seed('absorb-scope')
-+        assert review_tracking.absorb_series_as_revision(
-+            conn, 'target', 'stray', 2, stray_revision=2
-+        )
-+        left = [
-+            r[0]
-+            for r in conn.execute(
-+                "SELECT revision FROM series WHERE change_id = 'stray'"
-+                ' ORDER BY revision'
-+            )
-+        ]
-+        patches = conn.execute(
-+            "SELECT COUNT(*) FROM series_patches WHERE change_id = 'stray'"
-+        ).fetchone()[0]
-+        conn.close()
-+        assert left == [1, 3]
-+        assert patches == 2
-+
-+    def test_the_last_version_takes_the_leftovers(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """Nothing reaches a change_id with no series row left."""
-+        conn = review_tracking.init_db('absorb-last')
-+        _seed_target(conn, 'target', 2)
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='stray',
-+            revision=1,
-+            subject='[PATCH] s',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='stray-v1@x',
-+            num_patches=1,
-+        )
-+        review_tracking.add_revision(conn, 'stray', 1, 'stray-v1@x')
-+        _insert_patches(conn, 'stray', 1, ['stray-v1-p1@x'])
-+        conn.commit()
-+        assert review_tracking.absorb_series_as_revision(
-+            conn, 'target', 'stray', 1, stray_revision=1
-+        )
-+        rows = [
-+            conn.execute(
-+                f"SELECT COUNT(*) FROM {t} WHERE change_id = 'stray'"
-+            ).fetchone()[0]
-+            for t in ('series', 'revisions', 'series_patches')
-+        ]
-+        conn.close()
-+        assert rows == [0, 0, 0]
-+
-+    def test_an_absorb_merges_read_state_instead_of_dropping_it(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """Totals take the larger side, seen the smaller, stamps the newer.
-+
-+        The stray is where the maintainer was actually reading, and its
-+        rows are deleted by the absorb -- a copy gated on the target being
-+        blank threw that read state away whenever the forward sweep had
-+        first-fetched the same posting under the target (seen = count),
-+        rendering genuinely unread mail read.  A false badge from the
-+        conservative merge clears on open; a suppressed one never comes
-+        back.
-+        """
-+        conn = self._seed('absorb-readstate')
-+        # Already catalogued and first-fetched under the target, which is
-+        # what the forward sweep plus the poller leave behind.
-+        review_tracking.add_revision(conn, 'target', 2, 'target-v2@x')
-+        conn.execute(
-+            'UPDATE revisions SET message_count = 30, seen_message_count = 30,'
-+            " last_update_check = '2026-01-01T00:00:00+00:00'"
-+            " WHERE change_id = 'target' AND revision = 2"
-+        )
-+        conn.execute(
-+            'UPDATE revisions SET message_count = 4, seen_message_count = 1,'
-+            " last_update_check = '2026-06-01T00:00:00+00:00',"
-+            " last_mail_at = '2026-05-30T00:00:00+00:00'"
-+            " WHERE change_id = 'stray' AND revision = 2"
-+        )
-+        conn.commit()
-+        review_tracking.absorb_series_as_revision(
-+            conn, 'target', 'stray', 2, stray_revision=2
-+        )
-+        row = conn.execute(
-+            'SELECT message_count, seen_message_count, last_update_check,'
-+            ' last_mail_at FROM revisions'
-+            " WHERE change_id = 'target' AND revision = 2"
-+        ).fetchone()
-+        conn.close()
-+        assert (row[0], row[1]) == (30, 1)
-+        assert row[2] == '2026-06-01T00:00:00+00:00'
-+        assert row[3] == '2026-05-30T00:00:00+00:00'
-+
-+
-+class TestStrayMatchingIsOneRule:
-+    """[l]'s preview, the absorb it performs and [o]'s conflicts agree."""
-+
-+    def test_message_id_beats_a_stale_fingerprint(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """A revision recorded from a partial fetch hashes differently."""
-+        conn = review_tracking.init_db('stray-msgid')
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='owner',
-+            revision=2,
-+            subject='s',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='v2@x',
-+            num_patches=1,
-+        )
-+        review_tracking.add_revision(
-+            conn, 'owner', 2, 'v2@x', fingerprint='partial-hash'
-+        )
-+        conn.commit()
-+        found = review_tracking.find_stray_revision(
-+            conn, 'other', 'v2@x', 'complete-hash'
-+        )
-+        conn.close()
-+        assert found is not None
-+        assert found['change_id'] == 'owner'
-+
-+    def test_an_all_archived_owner_is_not_a_match(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """It is invisible in the tracking list, so it cannot be acted on."""
-+        conn = review_tracking.init_db('stray-archived')
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='owner',
-+            revision=2,
-+            subject='s',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='v2@x',
-+            num_patches=1,
-+        )
-+        review_tracking.add_revision(conn, 'owner', 2, 'v2@x', fingerprint='fp')
-+        review_tracking.update_series_status(conn, 'owner', 'archived')
-+        conn.commit()
-+        found = review_tracking.find_stray_revision(conn, 'other', 'v2@x', 'fp')
-+        conn.close()
-+        assert found is None
-+
-+    def test_the_owning_series_itself_is_not_a_stray(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        conn = review_tracking.init_db('stray-self')
-+        review_tracking.add_revision(conn, 'mine', 2, 'v2@x', fingerprint='fp')
-+        conn.commit()
-+        found = review_tracking.find_stray_revision(conn, 'mine', 'v2@x', 'fp')
-+        conn.close()
-+        assert found is None
-+
-+    def test_the_target_holding_the_msgid_does_not_hide_the_stray(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """Nothing constrains a message-id to one change_id.
-+
-+        Auto-discovery records the posting under the link target, then the
-+        maintainer links it: two catalog rows for one message-id.  Taking
-+        the first row back answers with the target whenever it sorts first
-+        -- 'aaa' before 'zzz' -- so [l] reported no stray and duplicated
-+        the series instead of absorbing it.
-+        """
-+        conn = review_tracking.init_db('stray-shadowed')
-+        # 'aaa' is the link target and sorts first.
-+        review_tracking.add_revision(conn, 'aaa', 2, 'v2@x', fingerprint='fp')
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='zzz',
-+            revision=2,
-+            subject='s',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='v2@x',
-+            num_patches=1,
-+        )
-+        review_tracking.add_revision(conn, 'zzz', 2, 'v2@x', fingerprint='fp')
-+        conn.commit()
-+        found = review_tracking.find_stray_revision(conn, 'aaa', 'v2@x', 'fp')
-+        conn.close()
-+        assert found is not None
-+        assert found['change_id'] == 'zzz'
-+
-+    def test_an_archived_owner_does_not_hide_a_live_one(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """Same walk, one row further: 'aaa' is archived, 'zzz' is not."""
-+        conn = review_tracking.init_db('stray-archived-first')
-+        for cid in ('aaa', 'zzz'):
-+            review_tracking.add_series_to_db(
-+                conn,
-+                change_id=cid,
-+                revision=2,
-+                subject='s',
-+                sender_name='n',
-+                sender_email='e@x',
-+                sent_at='2026-06-01T00:00:00+00:00',
-+                message_id='v2@x',
-+                num_patches=1,
-+            )
-+            review_tracking.add_revision(conn, cid, 2, 'v2@x', fingerprint='fp')
-+        review_tracking.update_series_status(conn, 'aaa', 'archived')
-+        conn.commit()
-+        found = review_tracking.find_stray_revision(conn, 'other', 'v2@x', 'fp')
-+        conn.close()
-+        assert found is not None
-+        assert found['change_id'] == 'zzz'
-+
-+
-+class TestMarkingReadNeverUnreads:
-+    """A monotonic writer must not lower the catalog's seen count."""
-+
-+    def test_mark_all_seen_only_raises_the_catalog(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """The catalog can legitimately hold the larger fully-read pair."""
-+        conn = review_tracking.init_db('seen-floor')
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='cid',
-+            revision=2,
-+            subject='s',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='v2@x',
-+            num_patches=1,
-+        )
-+        review_tracking.add_revision(conn, 'cid', 2, 'v2@x')
-+        conn.execute(
-+            'UPDATE revisions SET message_count = 20, seen_message_count = 18'
-+            " WHERE change_id = 'cid' AND revision = 2"
-+        )
-+        conn.execute(
-+            'UPDATE revisions SET message_count = 25, seen_message_count = 25'
-+            " WHERE change_id = 'cid' AND revision = 2"
-+        )
-+        conn.commit()
-+        review_tracking.mark_all_messages_seen(conn, 'cid', 2)
-+        row = conn.execute(
-+            'SELECT message_count, seen_message_count FROM revisions'
-+            " WHERE change_id = 'cid' AND revision = 2"
-+        ).fetchone()
-+        conn.close()
-+        assert (row[0], row[1]) == (25, 25)
-+
-+    def test_a_drifted_catalog_is_repaired_without_a_series_move(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """The sync is the only writer that brings the copy back into line."""
-+        identifier = 'seen-repair'
-+        conn = review_tracking.init_db(identifier)
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='cid',
-+            revision=2,
-+            subject='s',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='v2@x',
-+            num_patches=1,
-+        )
-+        review_tracking.add_revision(conn, 'cid', 2, 'v2@x')
-+        conn.execute(
-+            'UPDATE revisions SET message_count = 10, seen_message_count = 8'
-+            " WHERE change_id = 'cid' AND revision = 2"
-+        )
-+        conn.execute(
-+            'UPDATE revisions SET message_count = 10, seen_message_count = 3'
-+            " WHERE change_id = 'cid' AND revision = 2"
-+        )
-+        conn.commit()
-+        conn.close()
-+        # The series row already reads 8, so it does not move; only the
-+        # catalog does, and the early return used to skip it entirely.
-+        assert review_tracking.sync_seen_from_unseen_count(identifier, 'cid', 2, 2)
-+        conn = review_tracking.get_db(identifier)
-+        row = conn.execute(
-+            'SELECT seen_message_count FROM revisions'
-+            " WHERE change_id = 'cid' AND revision = 2"
-+        ).fetchone()
-+        conn.close()
-+        assert row[0] == 8
-+
-+
-+class TestRevisionActivityIsForwardOnly:
-+    """A poll must not walk a version's activity date backwards."""
-+
-+    def test_a_thread_that_lost_a_member_cannot_rewind_the_date(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """A rethreaded member whose thread will not fetch drops its newest
-+        reply from the union while the others still raise the total."""
-+        conn = review_tracking.init_db('activity-back')
-+        review_tracking.add_revision(conn, 'cid', 1, 'v1@x')
-+        conn.execute(
-+            'UPDATE revisions SET message_count = 5, seen_message_count = 5,'
-+            " last_mail_at = '2026-06-01T00:00:00+00:00'"
-+            " WHERE change_id = 'cid' AND revision = 1"
-+        )
-+        conn.commit()
-+        conn.close()
-+        monkeypatch.setattr(b4, 'can_network', True)
-+        monkeypatch.setattr(
-+            review_tracking,
-+            '_fetch_revision_thread_msgs',
-+            lambda identifier, conn, change_id, rev: _thread_msgs(6),
-+        )
-+        monkeypatch.setattr(
-+            review_tracking,
-+            '_latest_date_from_msgs',
-+            lambda msgs: '2024-01-01T00:00:00+00:00',
-+        )
-+        review_tracking.update_revision_message_counts(
-+            'activity-back', [_poller_series('cid', 2, 'v2@x')]
-+        )
-+        conn = review_tracking.get_db('activity-back')
-+        row = conn.execute(
-+            'SELECT message_count, last_mail_at FROM revisions'
-+            " WHERE change_id = 'cid' AND revision = 1"
-+        ).fetchone()
-+        conn.close()
-+        assert row[0] == 6
-+        assert row[1] == '2026-06-01T00:00:00+00:00'
-+
-+
-+class TestParkingDoesNotLeakMaintainerActions:
-+    """last_activity_at doubles as an action stamp on `series` only."""
-+
-+    @staticmethod
-+    def _seed(identifier: str) -> sqlite3.Connection:
-+        conn = review_tracking.init_db(identifier)
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='cid',
-+            revision=2,
-+            subject='s',
-+            sender_name='n',
-+            sender_email='e@x',
-+            sent_at='2026-06-01T00:00:00+00:00',
-+            message_id='v2@x',
-+            num_patches=1,
-+        )
-+        conn.execute(
-+            'UPDATE revisions SET message_count = 5, seen_message_count = 5'
-+            " WHERE change_id = 'cid' AND revision = 2"
-+        )
-+        conn.commit()
-+        return conn
-+
-+    def test_a_snooze_is_not_that_versions_newest_mail(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """The poller writes the date with its watermark, so a value newer
-+        than that watermark cannot have come from a Date: header."""
-+        conn = self._seed('park-snooze')
-+        review_tracking.update_series_status(conn, 'cid', 'snoozed', revision=2)
-+        review_tracking.update_series_revision(conn, 'cid', 2, 3, 'v3@x')
-+        revs = {r['revision']: r for r in review_tracking.get_revisions(conn, 'cid')}
-+        conn.close()
-+        assert revs[2]['last_mail_at'] is None
-+
-+    def test_a_polled_date_is_still_carried(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """Refusing every series value would lose real thread activity."""
-+        conn = self._seed('park-polled')
-+        conn.execute(
-+            "UPDATE revisions SET last_update_check = '2026-06-05T00:00:00+00:00',"
-+            " last_mail_at = '2026-06-04T00:00:00+00:00'"
-+            " WHERE change_id = 'cid' AND revision = 2"
-+        )
-+        conn.commit()
-+        review_tracking.update_series_revision(conn, 'cid', 2, 3, 'v3@x')
-+        revs = {r['revision']: r for r in review_tracking.get_revisions(conn, 'cid')}
-+        conn.close()
-+        assert revs[2]['last_mail_at'] == '2026-06-04T00:00:00+00:00'
-+
-+
-+class TestDiscoveryRespectsThePollBudget:
-+    """The poll cap applies to what a backward search just turned up too."""
-+
-+    @staticmethod
-+    def _stub_search(monkeypatch: pytest.MonkeyPatch) -> None:
-+        monkeypatch.setattr(b4, 'can_network', True)
-+        base_msgs = _series_msgs('thing', _AUTHOR, 3, 2)
-+        monkeypatch.setattr(
-+            review_tracking, '_fetch_thread_msgs', lambda msgid: list(base_msgs)
-+        )
-+        monkeypatch.setattr(
-+            b4.mbox,
-+            'get_extra_series',
-+            lambda msgs, direction=1, wantvers=None, nocache=False: (
-+                list(msgs)
-+                + _series_msgs('thing', _AUTHOR, 2, 2)
-+                + _series_msgs('thing', _AUTHOR, 1, 2)
-+            ),
-+        )
-+
-+    def _run(
-+        self, identifier: str, monkeypatch: pytest.MonkeyPatch, limit: int
-+    ) -> list[dict[str, Any]]:
-+        conn = review_tracking.init_db(identifier)
-+        review_tracking.add_revision(conn, 'cid', 3, 'thing-v3-p1@example.com')
-+        conn.close()
-+        self._stub_search(monkeypatch)
-+        seen: list[dict[str, Any]] = []
-+
-+        def _record(
-+            _ident: str, _series_list: list[dict[str, Any]], **kw: Any
-+        ) -> dict[str, int]:
-+            seen.append(kw)
-+            return {'updated': 0, 'new_mail': 0, 'errors': 0, 'polled': 0}
-+
-+        monkeypatch.setattr(review_tracking, 'REVISION_POLL_LIMIT', limit)
-+        monkeypatch.setattr(review_tracking, 'update_revision_message_counts', _record)
-+        series = {
-+            'change_id': 'cid',
-+            'revision': 3,
-+            'message_id': 'thing-v3-p1@example.com',
-+            'status': 'new',
-+        }
-+        review_tracking.discover_older_revisions(identifier, series, '')
-+        return seen
-+
-+    def test_the_cap_and_a_cancel_hook_are_passed_through(
-+        self, tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
-+    ) -> None:
-+        """Uncapped, one [o] press on a v20 series is 19 lore round-trips."""
-+        seen = self._run('disc-budget-cap', monkeypatch, 2)
-+        assert len(seen) == 1
-+        assert seen[0]['max_revisions_per_series'] == 2
-+        assert seen[0]['only_revisions'] == {1, 2}
-+
-+
-+class TestChangeStateIsForgotten:
-+    """`changes` outlives `series` on its own -- nothing joins them.
-+
-+    A change_id that stops existing must not leave a row behind: its
-+    back_searched latch would skip the one-shot backward search for ever
-+    on a re-track, and its branch sha would make rescan_branches skip a
-+    resurrected branch it had never imported.
-+    """
-+
-+    @staticmethod
-+    def _seed(identifier: str, change_id: str, revision: int = 1) -> None:
-+        conn = review_tracking.init_db(identifier)
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id=change_id,
-+            revision=revision,
-+            subject='[PATCH] s',
-+            sender_name='S',
-+            sender_email='s@e.com',
-+            sent_at='2026-01-01T00:00:00+00:00',
-+            message_id=f'{change_id}-v{revision}@x',
-+            num_patches=1,
-+        )
-+        review_tracking.set_back_searched(conn, change_id)
-+        review_tracking.set_branch_sha(conn, change_id, 'deadbeef')
-+        conn.close()
-+
-+    def _rows(self, identifier: str, change_id: str) -> int:
-+        conn = review_tracking.get_db(identifier)
-+        n = conn.execute(
-+            'SELECT COUNT(*) FROM changes WHERE change_id = ?', (change_id,)
-+        ).fetchone()[0]
-+        conn.close()
-+        return int(n)
-+
-+    def test_deleting_the_last_revision_forgets_it(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        self._seed('forget-lastrev', 'cid')
-+        conn = review_tracking.get_db('forget-lastrev')
-+        review_tracking.delete_series(conn, 'cid', revision=1)
-+        conn.close()
-+        assert self._rows('forget-lastrev', 'cid') == 0
-+
-+    def test_deleting_one_of_several_keeps_it(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """The other revisions still share the branch and the latch."""
-+        self._seed('forget-onerev', 'cid', revision=1)
-+        conn = review_tracking.get_db('forget-onerev')
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='cid',
-+            revision=2,
-+            subject='[PATCH v2] s',
-+            sender_name='S',
-+            sender_email='s@e.com',
-+            sent_at='2026-01-02T00:00:00+00:00',
-+            message_id='cid-v2@x',
-+            num_patches=1,
-+        )
-+        review_tracking.delete_series(conn, 'cid', revision=1)
-+        conn.close()
-+        assert self._rows('forget-onerev', 'cid') == 1
-+        conn = review_tracking.get_db('forget-onerev')
-+        assert review_tracking.is_back_searched(conn, 'cid') is True
-+        conn.close()
-+
-+    def test_absorbing_the_last_row_forgets_the_stray(
-+        self, tmp_path: pytest.TempPathFactory
-+    ) -> None:
-+        """Absorb deletes the stray's change_id; its state must go too."""
-+        self._seed('forget-absorb', 'stray')
-+        conn = review_tracking.get_db('forget-absorb')
-+        review_tracking.add_series_to_db(
-+            conn,
-+            change_id='target',
-+            revision=2,
-+            subject='[PATCH v2] s',
-+            sender_name='S',
-+            sender_email='s@e.com',
-+            sent_at='2026-01-02T00:00:00+00:00',
-+            message_id='target-v2@x',
-+            num_patches=1,
-+        )
-+        review_tracking.absorb_series_as_revision(
-+            conn, 'target', 'stray', 1, stray_revision=1
-+        )
-+        conn.close()
-+        assert self._rows('forget-absorb', 'stray') == 0
+-    def test_get_all_revision_counts(self, tmp_path: pytest.TempPathFactory) -> None:
+-        """Verify bulk revision-count query returns correct counts."""
+-        conn = review_tracking.init_db('rev-bulk-count-test')
+-        review_tracking.add_revision(conn, 'change-a', 1, 'a-v1@example.com')
+-        review_tracking.add_revision(conn, 'change-a', 2, 'a-v2@example.com')
+-        review_tracking.add_revision(conn, 'change-a', 3, 'a-v3@example.com')
+-        review_tracking.add_revision(conn, 'change-b', 1, 'b-v1@example.com')
+-        result = review_tracking.get_all_revision_counts(conn)
+-        assert result == {'change-a': 3, 'change-b': 1}
+-        conn.close()
+-
+     def test_get_all_revisions_grouped(self, tmp_path: pytest.TempPathFactory) -> None:
+         """Verify bulk grouped revisions returns correct per-change-id lists."""
+         conn = review_tracking.init_db('rev-bulk-grouped-test')
 diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
-index 2803bf3d..d6233afe 100644
+index d6233afe..7ba2443e 100644
 --- a/src/tests/test_tui_tracking.py
 +++ b/src/tests/test_tui_tracking.py
-@@ -6030,3 +6030,50 @@ class TestUpdateAllDoesNotForceThePoll:
-         assert len(seen) == 2
-         assert seen[0]._force_revision_poll is True
-         assert seen[1]._force_revision_poll is False
+@@ -4663,7 +4663,7 @@ class TestLoadSeriesCaching:
+             await pilot.pause()
+             assert app._cached_branch_tips is not None
+             assert app._cached_newest_revisions is not None
+-            assert app._cached_revision_counts is not None
++            assert app._cached_revisions is not None
+ 
+     @pytest.mark.asyncio
+     async def test_caches_survive_db_poll_no_change(
+@@ -4697,14 +4697,26 @@ class TestLoadSeriesCaching:
+             # https://github.com/python/mypy/issues/9457:
+             # app._cached_branch_tips is stale-narrowed across a method call.
+             assert app._cached_newest_revisions is None  # type: ignore[unreachable]
+-            assert app._cached_revision_counts is None
++            assert app._cached_revisions is None
+             assert app._cached_art_counts is None
+ 
+     @pytest.mark.asyncio
+     async def test_selective_invalidation_keeps_other_caches(
+         self, tmp_path: pathlib.Path
+     ) -> None:
+-        """_invalidate_caches(change_id) only evicts that ART entry."""
++        """_invalidate_caches(change_id) evicts one ART entry and the revisions.
 +
++        The revision caches have to go: _load_series only refills them when
++        _cached_newest_revisions is None, so keeping them pins the version
++        rows and both revision-count gates to pre-action data.
 +
-+class TestDiscoverOlderAction:
-+    """The 'Find older revisions' action wires into the discovery seam."""
-+
-+    @pytest.mark.asyncio
-+    async def test_action_menu_offers_discover(self, tmp_path: pathlib.Path) -> None:
-+        _seed_db(
-+            'test-discover-menu',
-+            [{'change_id': 'cid-d', 'revision': 3, 'status': 'new'}],
-+        )
-+        app = TrackingApp('test-discover-menu')
-+        async with app.run_test(size=(120, 30)) as pilot:
-+            await pilot.pause()
-+            await pilot.press('a')
-+            await pilot.pause()
-+            keys = [key for key, _label in getattr(app.screen, '_actions')]
-+            assert 'discover' in keys
-+
-+    @pytest.mark.asyncio
-+    async def test_action_runs_discovery(self, tmp_path: pathlib.Path) -> None:
-+        _seed_db(
-+            'test-discover-run',
-+            [{'change_id': 'cid-d', 'revision': 3, 'status': 'new'}],
-+        )
-+        calls: List[Tuple[str, Optional[str]]] = []
-+
-+        def _fake_discover(
-+            identifier: str,
-+            series: Dict[str, Any],
-+            linkmask: str,
-+            topdir: Optional[str] = None,
-+            cancel_cb: Optional[Callable[[], bool]] = None,
-+        ) -> Dict[str, Any]:
-+            calls.append((identifier, series.get('change_id')))
-+            # Wired, or the run is interruptible only by tearing down the TUI.
-+            assert cancel_cb is not None
-+            return {'found': 2, 'revisions': [1, 2], 'error': None}
-+
-+        app = TrackingApp('test-discover-run')
-+        with patch.object(tracking, 'discover_older_revisions', _fake_discover):
-+            async with app.run_test(size=(120, 30)) as pilot:
-+                await pilot.pause()
-+                app.action_discover_older()
-+                await app.workers.wait_for_complete()
-+                await pilot.pause()
-+        assert calls == [('test-discover-run', 'cid-d')]
++        What the targeted form protects is the *other* series' ART entries,
++        each of which costs a `git cat-file` to rebuild.  The branch tips
++        are one `git for-each-ref` for all of them, and _load_series already
++        refills a None dict with it -- resolving them here instead only put
++        that subprocess on the message pump, in a handler that may never
++        reload at all.
++        """
+         _seed_db('cache-sel-inv', SAMPLE_SERIES)
+ 
+         app = TrackingApp('cache-sel-inv')
+@@ -4719,9 +4731,12 @@ class TestLoadSeriesCaching:
+             # Alpha evicted, bravo still there
+             assert 'b4/review/test-change-alpha' not in app._cached_art_counts
+             assert 'b4/review/test-change-bravo' in app._cached_art_counts
+-            # Other caches untouched
+-            assert app._cached_branch_tips is not None
+-            assert app._cached_newest_revisions is not None
++            # Branch tips are dropped, not re-resolved inline: one
++            # for-each-ref refills them, and _load_series already runs it.
++            assert app._cached_branch_tips is None
++            # Revision data is dropped so the next load re-reads it
++            assert app._cached_newest_revisions is None
++            assert app._cached_revisions is None
+ 
+     @pytest.mark.asyncio
+     async def test_revisions_stashed_in_series(self, tmp_path: pathlib.Path) -> None:
 
 -- 
 2.53.0
