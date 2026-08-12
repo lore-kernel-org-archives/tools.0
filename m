@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B00406261
-	for <tools@linux.kernel.org>; Wed, 12 Aug 2026 21:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E313EFD24
+	for <tools@linux.kernel.org>; Wed, 12 Aug 2026 21:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786571265; cv=none; b=lYGq/u0JEWqdCvyJvdi9AQPyuHTqzmTMPINoXONYa3zRZpieoVtU/Lvna9IzPNDwflZWatV4H3C27KJ/BsrSBKlzEp17rkTn9N3T5hEiPLF3RaUhk5RtT6acH2UVicwECMjrZfD5KEncBYqk28iJ8rqjuknSLFOBDRoS5DLL1Ik=
+	t=1786571266; cv=none; b=etkLvfRnd9EZ7A7WVfbi8UcFXuX/oR+nMatCMsR02RqyrPL+GKwQ00dH1/7Cs/KVEoLA4SEQcYssbw9LUJCns5E7RuaRiLkTZXBSFtjEA4FcU4MP88BruA+1c6xJ7sBjT4myp0xdiDxW6u6x9eLKaT6CAGSvJk5F7gm2fp+s3As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786571265; c=relaxed/simple;
-	bh=AvnpGCFcN/IOLXqadfnoBqd12rpVU+s9eOB+pzsDkG8=;
+	s=arc-20240116; t=1786571266; c=relaxed/simple;
+	bh=T2+aZ9Y/74LFJm24vkXE2JwakN5ojcL5g0BVwIaxd/c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eKmn3nlEk8qwm3bCGIkdosZknIki66v7FWgAOfLY3X4fHxm0C5tIGKtaJOcH+dBIrRMmGEttO5mMuGpAhPEtPXIs1ZlK98yretjSI0C/2NH1rS2h45ltzt/nD5rer+t4hhVitq23Gz1qy14Ge9Vb81eIJQlu+lWphxX3AsBszGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ECxmLiRK; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=kGnIdND8NxvNzGnpwSVcwstkedSe3nSi50Byo0ZS76r7b64gc4yTg8PWT+Z64Mcmt9PNSJjCOnEcVK+DKGBAAwjvGrqzoMjqaa+nk9xOtFnxcGe1iVVy/mC+mKkZBjihOZ8vjojzBBs+nsJQVmmzUJiaaMsSXxE2QFefzrOCv28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U8Tur6mo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ECxmLiRK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U8Tur6mo"
 Received: by smtp.kernel.org (Postfix)
-	id 9CE191F00A3A; Wed, 12 Aug 2026 21:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909CC1F000E9;
-	Wed, 12 Aug 2026 21:47:40 +0000 (UTC)
+	id 272CA1F00A3D; Wed, 12 Aug 2026 21:47:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083071F000E9;
+	Wed, 12 Aug 2026 21:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786571261;
-	bh=2x47lwq087Qo4Mj/6I10xomDdsvmcpBVooix0N7D6YU=;
+	s=k20260515; t=1786571263;
+	bh=BImLEIIOCH9fT231mcyCHxyVlWaikdx0G3VUGnfFpyE=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=ECxmLiRK5fwUHFlHU5ROJcZWnHjdaWqt0VmCb2M6kakMuiBrCAqWU6Nb7miY0sdFN
-	 Z2OIl5wYh15EjgD9NPo21nx2zeoM16re6fBcbPwdDwnkzglO/E9x7FVMtqSn3lY/MR
-	 HKx2drT9b2VStLhNLPH+6XWZl2IAXetNBbf2pkMrIhjx3/yB8FIaNrYofNDYS95TtQ
-	 pIznC5TF2jv5q8B8Mtcc4n0WkCvIam+x79PKUhC7jfpYXY9Igu9r3FIW3WS/dGMmf0
-	 yUrADNN51Hcun67ar7PIFqVvFTdw5dK6kEkW964tOmcaECjXR/UYTWv1XPVkWbFvr+
-	 a7EyvXNuvk00Q==
+	b=U8Tur6moeXp16n6YlcaNUXBsaVme9gcPa/HcGPMeDf8wEXpBO/Lpvzc0RWsl59sbY
+	 JO+Bci+pMyv5JA+rgythdDie2TFkdY8zcsaHs0e6NAbHU8n54ftPbJsHC6mjAGQR/M
+	 58jPZkU2GqwzDsN0sJf7gdpHAx/JsiVAdxeDyR73z6lyyThzjEUn/GYxfrU5Yxb9FS
+	 p373dNp7JJju4Ik7OctLK2WD/H44LkqDoUpa3mEI/Kfq8L4xRyg7GGhxB8x/Kbjklp
+	 7DwnkipBvfIic2VgIualLXGE9GvslXzMnsl0eRbtyhPyZOGXh5qQ5SXSwdjTDLzgOX
+	 pmpLFFJBCJeug==
 From: Christian Brauner <brauner@kernel.org>
-Date: Wed, 12 Aug 2026 23:47:05 +0200
-Subject: [PATCH RFC v2 24/25] review-tui: expand tracked series into
- per-version rows
+Date: Wed, 12 Aug 2026 23:47:06 +0200
+Subject: [PATCH RFC v2 25/25] review-tui: test per-version tracker rows
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,1409 +39,1735 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260812-work-b4-multiver-rows-v2-24-305d53cd723a@kernel.org>
+Message-Id: <20260812-work-b4-multiver-rows-v2-25-305d53cd723a@kernel.org>
 References: <20260812-work-b4-multiver-rows-v2-0-305d53cd723a@kernel.org>
 In-Reply-To: <20260812-work-b4-multiver-rows-v2-0-305d53cd723a@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.17-dev-362b8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=68699; i=brauner@kernel.org;
- h=from:subject:message-id; bh=AvnpGCFcN/IOLXqadfnoBqd12rpVU+s9eOB+pzsDkG8=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTVvLy9epHzSQamo8W3t6onzU7SM8la+JYpnZfp0nstr
- vjoreVuHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABMRm8nwV+5zzunNX/1etjRE
- lUyX51jSq2p/893hf1wMrybcVX1dPYORYf8xd4M7+8t3zkhYmBw0JWob/yOX6AUidlkTlhWe+BO
- awgUA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=70246; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=T2+aZ9Y/74LFJm24vkXE2JwakN5ojcL5g0BVwIaxd/c=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTVvLx9Y+7WXZd3nImduKL/iW5bWxbD6nuJUzN5L7/0e
+ cli3nfzXkcpC4MYF4OsmCKLQ7tJuNxynorNRpkaMHNYmUCGMHBxCsBEFOYx/NMs2m2VFJi5LUJk
+ bVHmo4Kr/M+fV5fOPvFpz85uTT3RKT8Z/pm3Zzi1V4c8FLYwjN7G+tQufIfjl6OuV/Ktn898vUV
+ /PgcA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Series with more than one known version become expandable.  'x' unfolds
-indented child rows, one per catalog revision with the tracked one
-starred, showing per-version unread badges and activity dates; 'X'
-toggles every series at once.  Enter or 'e' on a child opens that
-revision's thread with revision-correct seen syncing, 'd' range-diffs it
-against the tracked revision directly, and every other action keeps
-operating on the parent series.  Expansion state and the
-(change_id, revision) cursor position survive the periodic DB-mtime
-reloads and limit filtering.
-
-Focusing a series for the next rebuild goes through a helper that also
-clears the stashed version.  The stash outlives a screen that closed
-without rebuilding the list, so a plain _focus_change_id assignment would
-drop the cursor onto a child row nobody selected, and it is that row the
-thread and range-diff actions read.
-
-has_multiple_revisions loses its last reader here.  It counts raw catalog
-rows, which miss a tracked revision the catalog never recorded.  The bulk
-revision-count query goes with it: the remaining caller needs the grouped
-rows anyway, so counting them is a dict lookup rather than a second pass
-over the table.
+Cover the expansion affordance and toggling, tracked-revision marking,
+child-row selection state, survival of expansion and cursor position
+across DB reloads and limit filtering, child-row thread opening with the
+right revision, direct child range-diff, expand-all, the details-panel
+version row, and NULL-count rendering.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- docs/maintainer/review.rst         |  40 ++
- src/b4/review/tracking.py          |   8 -
- src/b4/review_tui/_modals.py       |   7 +
- src/b4/review_tui/_tracking_app.py | 743 +++++++++++++++++++++++++++++++------
- src/tests/test_review_tracking.py  |  11 -
- src/tests/test_tui_tracking.py     |  27 +-
- 6 files changed, 707 insertions(+), 129 deletions(-)
+ src/tests/test_tui_tracking.py | 1629 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 1626 insertions(+), 3 deletions(-)
 
-diff --git a/docs/maintainer/review.rst b/docs/maintainer/review.rst
-index 5ddd9dd2..8c04e7c1 100644
---- a/docs/maintainer/review.rst
-+++ b/docs/maintainer/review.rst
-@@ -188,12 +188,17 @@ Key           Action
- ``e``         Thread — open the lite thread viewer (see below)
- ``a``         Action menu — context-sensitive actions (see below)
- ``d``         Range-diff between revisions
-+``x``         Expand or collapse the per-version rows of a series marked
-+              with ``▸`` (see :ref:`version_rows`)
- ``u``         Update — fetch latest trailers and check for newer
-               revisions for the selected series; press ``Escape`` or
-               ``q`` to cancel
- ``U``         Update all — same as ``u`` but for all tracked series
-               (skipping snoozed); press ``Escape`` or ``q`` to cancel
-               mid-run — series already updated are saved
-+``X``         Expand or collapse the version rows of every multi-version
-+              series in the current list at once (so a ``l`` limit scopes
-+              it, in both directions)
- ``l``         Limit — filter the list of displayed series. Plain text
-               matches subjects and submitters; ``s:<status>`` filters
-               by status, ``t:<target-branch>`` by target branch, and
-@@ -328,6 +333,41 @@ the tracking database and displayed without re-checking on subsequent
- views. The attestation check honours the :term:`b4.attestation-policy`
- and :term:`b4.attestation-staleness-days` configuration options.
- 
-+.. _version_rows:
-+
-+Version rows
-+~~~~~~~~~~~~
-+
-+A series whose catalog holds more than one known version is marked with
-+a ``▸`` before its subject. Press ``x`` to expand it into one child row
-+per version (``X`` expands or collapses every such series at once). An
-+asterisk marks the version the series currently tracks:
-+
-+.. code-block:: none
-+
-+   ▾ [PATCH v3,00/12] introduce the frobnicator
-+     ├─ v1   12 Mar    4      introduce the frobnicator
-+     ├─ v2   02 Apr    9 (3)  introduce the frobnicator
-+     └─ v3*  28 Apr   15      introduce the frobnicator
-+
-+Each row carries that version's own message count and unread badge, so
-+follow-up mail arriving on an older version's thread is still visible.
-+On a version row, ``Enter`` or ``e`` opens that version's thread and
-+``d`` range-diffs it against the tracked revision, skipping the revision
-+picker. Every other key still acts on the parent series, except the four
-+actions that drive the review branch: ``r`` (review), and **Take**,
-+**Rebase** and **Upgrade** in the ``a`` action menu. That branch always
-+holds the revision the series tracks, so on any other version's row ``r``
-+is greyed out and the three menu entries are not offered.
-+
-+Update sweeps poll a few non-tracked versions of each series for new
-+mail, least-recently-checked first, so a series with many versions
-+fills in over successive sweeps and then keeps cycling through them —
-+a late reply to an old version is noticed however many versions there
-+are. Every version is browsable on demand regardless.
-+
-+.. versionadded:: v0.17
-+
- Lite thread viewer
- ~~~~~~~~~~~~~~~~~~
- Pressing ``e`` on any series opens a mutt-style thread viewer that
-diff --git a/src/b4/review/tracking.py b/src/b4/review/tracking.py
-index 843808c4..7f08258e 100644
---- a/src/b4/review/tracking.py
-+++ b/src/b4/review/tracking.py
-@@ -2551,14 +2551,6 @@ def get_all_newest_revisions(conn: sqlite3.Connection) -> dict[str, int]:
-     return {row[0]: int(row[1]) for row in cursor.fetchall()}
- 
- 
--def get_all_revision_counts(conn: sqlite3.Connection) -> dict[str, int]:
--    """Return {change_id: revision_count} for all change_ids."""
--    cursor = conn.execute(
--        'SELECT change_id, COUNT(*) FROM revisions GROUP BY change_id'
--    )
--    return {row[0]: int(row[1]) for row in cursor.fetchall()}
--
--
- def get_all_revisions_grouped(
-     conn: sqlite3.Connection,
- ) -> dict[str, list[dict[str, Any]]]:
-diff --git a/src/b4/review_tui/_modals.py b/src/b4/review_tui/_modals.py
-index 23d5f566..8be61319 100644
---- a/src/b4/review_tui/_modals.py
-+++ b/src/b4/review_tui/_modals.py
-@@ -328,9 +328,16 @@ TRACKING_HELP_LINES = [
-     '  [bold]d[/bold]         Range-diff between revisions\n',
-     '  [bold]a[/bold]         Open action menu (take, rebase, etc.)\n',
-     '  [bold]u[/bold]         Update selected series\n',
-+    '  [bold]x[/bold]         Expand/collapse the version rows of a ▸ series\n',
-+    '\n',
-+    '[bold]Version rows[/bold]\n',
-+    '  v2*           Asterisk marks the revision the series tracks\n',
-+    '  [bold]Enter[/bold] / [bold]e[/bold] View the thread of that version\n',
-+    '  [bold]d[/bold]         Range-diff that version against the tracked one\n',
-     '\n',
-     '[bold]App[/bold]\n',
-     '  [bold]U[/bold]         Update all tracked series\n',
-+    '  [bold]X[/bold]         Expand/collapse all multi-version series\n',
-     '  [bold]l[/bold]         Filter series by pattern\n',
-     '  [bold]s[/bold]         Suspend to shell\n',
-     '  [bold]p[/bold]         Switch to Patchwork TUI\n',
-diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index 37377758..e4a64b6e 100644
---- a/src/b4/review_tui/_tracking_app.py
-+++ b/src/b4/review_tui/_tracking_app.py
-@@ -28,6 +28,7 @@ from typing import (
-     List,
-     Literal,
-     Optional,
-+    Set,
-     Tuple,
-     Union,
- )
-@@ -544,6 +545,46 @@ def _conflicts_notice(conflicts: List[int]) -> str:
-     )
- 
- 
-+def _local_stamp(stamp: Optional[str], fmt: str) -> str:
-+    """Render a stored UTC timestamp in local time, or '' if unusable.
-+
-+    Every date the app shows is local, and these columns hold UTC, so
-+    slicing the ISO string instead puts a version up to a day out from the
-+    Date: header the thread viewer displays for the very same message --
-+    and out of step with the version row rendering the same value.
-+    """
-+    if not stamp:
-+        return ''
-+    try:
-+        return datetime.datetime.fromisoformat(stamp).astimezone().strftime(fmt)
-+    except (ValueError, TypeError):
-+        return ''
-+
-+
-+def _format_version(rev: Dict[str, Any], series: Dict[str, Any]) -> str:
-+    """Summarize one known version of *series* for the details panel."""
-+    revision = rev.get('revision', 1)
-+    out = f'v{revision}'
-+    if revision == series.get('revision', 1):
-+        out += ' (tracked)'
-+    count = rev.get('message_count')
-+    if count is None:
-+        out += ' — - msgs (- unseen)'
-+    else:
-+        unseen = _unseen_delta(count, rev.get('seen_message_count'))
-+        out += f' — {count} msgs ({unseen} unseen)'
-+    # 'posted', not 'found': discovery dates a revision from its own Date:
-+    # header, so the column holds when the version went out rather than when
-+    # b4 noticed it (see add_revision).
-+    posted = _local_stamp(rev.get('found_at'), '%Y-%m-%d')
-+    if posted:
-+        out += f', posted {posted}'
-+    last_mail = _local_stamp(rev.get('last_mail_at'), '%Y-%m-%d')
-+    if last_mail:
-+        out += f', last activity {last_mail}'
-+    return out
-+
-+
- def _format_snooze_until(value: str) -> str:
-     """Format a snoozed_until value for display.
- 
-@@ -793,7 +834,23 @@ def _append_msgs(
-     label.append(f'{badge:<4s}', style=badge_style)
- 
- 
--class TrackedSeriesItem(ListItem):
-+class TrackingListItem(ListItem):
-+    """A row of the tracking list: a series, or one version of one.
-+
-+    Carrying ``rev`` on both kinds is what lets every handler ask "which
-+    series and which version is the cursor on?" once, instead of each one
-+    re-deriving it from the row's type.
-+    """
-+
-+    series: Dict[str, Any]
-+    rev: Optional[Dict[str, Any]] = None
-+
-+    @property
-+    def selection(self) -> Tuple[Dict[str, Any], Optional[Dict[str, Any]]]:
-+        return self.series, self.rev
-+
-+
-+class TrackedSeriesItem(TrackingListItem):
-     """A single tracked series entry in the listing."""
- 
-     DEFAULT_CSS = """
-@@ -805,9 +862,18 @@ class TrackedSeriesItem(ListItem):
-     }
-     """
- 
--    def __init__(self, series: Dict[str, Any]) -> None:
-+    def __init__(
-+        self,
-+        series: Dict[str, Any],
-+        expanded: bool = False,
-+        has_versions: bool = False,
-+        has_unseen_versions: bool = False,
-+    ) -> None:
-         super().__init__()
-         self.series = series
-+        self.expanded = expanded
-+        self.has_versions = has_versions
-+        self.has_unseen_versions = has_unseen_versions
-         status = series.get('status', 'new')
-         if _effective_tier(series) >= 2:
-             self.add_class('non-actionable')
-@@ -843,6 +909,11 @@ class TrackedSeriesItem(ListItem):
-         width = len(str(num_patches)) if num_patches > 0 else 1
-         parts = extras + [f'v{revision}', f'{"0" * width}/{num_patches:0{width}d}']
-         subject_display = f'[{",".join(parts)}] {ls.subject}'
-+        # Series with more than one known version can be expanded with [x]
-+        marker = ''
-+        if self.has_versions:
-+            # U+25BE black down-pointing / U+25B8 black right-pointing triangle
-+            marker = '▾' if self.expanded else '▸'
-         if display_width(submitter) > 20:
-             while display_width(submitter) > 19:
-                 submitter = submitter[:-1]
-@@ -865,7 +936,99 @@ class TrackedSeriesItem(ListItem):
-             self.series.get('message_count'),
-             self.series.get('seen_message_count'),
-         )
--        label.append(f'  {symbol}{flag}  {subject_display}')
-+        # The expander shares the 4-wide status field with the status
-+        # symbol and the suffix flag rather than taking a column of its
-+        # own: appended after it, the Subject column would sit two to the
-+        # right on multi-version series only, leaving the list ragged and
-+        # every row out of step with the header.
-+        label.append(f'  {symbol}{flag}')
-+        if marker:
-+            # Accented when a version other than the tracked one has unread
-+            # mail: the Msgs column above covers the tracked revision only,
-+            # so without this the row is identical whether or not an older
-+            # version just received a reply.
-+            marker_style = ''
-+            if self.has_unseen_versions:
-+                marker_style = f'bold {resolve_styles(self.app)["warning"]}'
-+            label.append(marker, style=marker_style)
-+        else:
-+            label.append(' ')
-+        label.append(' ')
-+        label.append(subject_display)
-+        yield Label(label, markup=False)
-+
-+
-+class TrackedRevisionItem(TrackingListItem):
-+    """A single known version of an expanded series.
-+
-+    Rendered as a child row underneath its TrackedSeriesItem, with the
-+    submitter column replaced by a tree glyph and the version number.
-+    """
-+
-+    DEFAULT_CSS = """
-+    TrackedRevisionItem Label {
-+        text-style: dim;
-+    }
-+    """
-+
-+    # Narrowed from the base, which allows None for series rows: a version
-+    # row always has one, and callers read it without a None check.
-+    rev: Dict[str, Any]
-+
-+    def __init__(
-+        self,
-+        series: Dict[str, Any],
-+        rev: Dict[str, Any],
-+        is_tracked: bool,
-+        is_last: bool,
-+    ) -> None:
-+        super().__init__()
-+        self.series = series
-+        # pyright anchors the narrowing above to this assignment, and rejects
-+        # it because a mutable attribute's type is invariant.
-+        self.rev = rev  # pyright: ignore[reportIncompatibleVariableOverride]
-+        self.is_tracked = is_tracked
-+        self.is_last = is_last
-+
-+    def compose(self) -> ComposeResult:
-+        # U+2514/U+251C box drawings light up-and-right / vertical-and-right
-+        tree = '└─' if self.is_last else '├─'
-+        mark = '*' if self.is_tracked else ''
-+        version = f'  {tree} v{self.rev.get("revision", 1)}{mark}'
-+        # Date of the last known activity, falling back to when the revision
-+        # was posted.  It shares the 20-wide submitter field with the version
-+        # number rather than taking the parent's status columns: those carry
-+        # the status symbol and the expander, and a date under a header that
-+        # reads 'S' describes neither.  There is room here -- the deepest
-+        # version label is nine columns of a twenty-column field.
-+        date_str = _local_stamp(
-+            self.rev.get('last_mail_at') or self.rev.get('found_at'), '%d %b'
-+        )
-+        # Show each version's own title, prefix-stripped -- the version
-+        # column already carries the vN part.  Fall back to the series
-+        # subject when the catalog has none.
-+        rev_subject = self.rev.get('subject') or self.series.get('subject') or ''
-+        if rev_subject:
-+            rev_subject = b4.LoreSubject(rev_subject).subject
-+        label = RichText(no_wrap=True, overflow='ellipsis')
-+        # Version left, date right, both inside the submitter field.  The
-+        # date is truncated rather than padded, so a locale whose abbreviated
-+        # month runs long cannot push the field wide and shift the columns
-+        # after it.
-+        label.append(pad_display(f'{version:<10s}{date_str:.9s}', 20))
-+        # Attestation (1), separator (1) and A·R·T (7) stay blank
-+        label.append(' ' * 9)
-+        _append_msgs(
-+            label,
-+            self.app,
-+            self.rev.get('message_count'),
-+            self.rev.get('seen_message_count'),
-+        )
-+        # The six the parent spends on status, expander and marker, so
-+        # Subject starts at the same column on both -- and on the header.
-+        label.append(' ' * 6)
-+        if rev_subject:
-+            label.append(rev_subject)
-         yield Label(label, markup=False)
- 
- 
-@@ -967,10 +1130,12 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         'check': 'Series',
-         'thread': 'Series',
-         'range_diff': 'Series',
-+        'toggle_expand': 'Series',
-         'action': 'Series',
-         'update_one': 'Series',
-         'target_branch': 'Series',
-         'update_all': 'App',
-+        'expand_all': 'App',
-         'process_queue': 'App',
-         'limit': 'App',
-         'suspend': 'App',
-@@ -992,7 +1157,9 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         Binding('a', 'action', 'action'),
-         Binding('u', 'update_one', 'update'),
-         Binding('d', 'range_diff', 'range-diff'),
-+        Binding('x', 'toggle_expand', 'versions'),
-         # App-global actions
-+        Binding('X', 'expand_all', 'Expand all', key_display='X'),
-         Binding('l', 'limit', 'limit'),
-         Binding('s', 'suspend', 'shell'),
-         Binding('p', 'patchwork', 'patchwork'),
-@@ -1024,6 +1191,15 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         self._patatt_sign = patatt_sign
-         self._all_series: List[Dict[str, Any]] = []
-         self._selected_series: Optional[Dict[str, Any]] = None
-+        # Rows showing per-version child rows, and the child row (if any) the
-+        # cursor is on — both survive a list rebuild.  Keyed by (change_id,
-+        # tracked revision), not change_id alone: rescan_branches can leave a
-+        # change_id with more than one live series row and the list renders
-+        # each separately, so a bare change_id expands both at once.
-+        self._expanded_rows: set[Tuple[str, int]] = set()
-+        self._selected_revision: Optional[Dict[str, Any]] = None
-+        self._focus_series_revision: Optional[int] = None
-+        self._focus_revision: Optional[int] = None
-         self._limit_pattern: str = ''
-         self._db_mtime: float = 0.0
-         # Detect patchwork configuration
-@@ -1048,7 +1224,6 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         # when u/U update runs or actions change tracking data.
-         self._cached_branch_tips: Optional[Dict[str, str]] = None
-         self._cached_newest_revisions: Optional[Dict[str, int]] = None
--        self._cached_revision_counts: Optional[Dict[str, int]] = None
-         self._cached_revisions: Optional[Dict[str, List[Dict[str, Any]]]] = None
-         # A None value is a branch whose tip carries no tracking trailer
-         # block; cached as a miss so the refill below converges.
-@@ -1059,22 +1234,98 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-     def _invalidate_caches(self, change_id: Optional[str] = None) -> None:
-         """Drop cached data so the next _load_series re-fetches.
- 
--        If change_id is given, only evict that series from the ART
--        cache (branch tips and revision data are cheap dict lookups
--        and get rebuilt from the bulk query anyway).  Without
--        change_id, drop everything.
-+        If change_id is given, evict just that series from the ART cache
-+        and drop the rest; without change_id, drop the ART cache wholesale
-+        too.  Keeping the other series' ART entries is the point of the
-+        targeted form: recomputing one is a `git cat-file` per branch.
-+
-+        The revision caches have to go even for a targeted invalidation:
-+        _load_series only refills them when _cached_newest_revisions is
-+        None, so leaving them in place pins the version rows, the expander
-+        marker and both revision-count gates to pre-action data -- and
-+        _check_db_changed cannot heal it, because the caller re-stamps the
-+        DB mtime on the way through.
-         """
-         if change_id is not None:
-             branch_name = f'b4/review/{change_id}'
-             if self._cached_art_counts and branch_name in self._cached_art_counts:
-                 del self._cached_art_counts[branch_name]
-+            # Re-resolved: an upgrade renames a branch onto this one and the
-+            # batch trusts the SHA it is handed.  Dropped rather than
-+            # refetched here: _load_series refills a None dict with the same
-+            # `git for-each-ref`, so resolving it inline only moves that
-+            # subprocess onto the message pump -- and every handler that
-+            # invalidates without reloading pays for a batch it never reads.
-+            self._cached_branch_tips = None
-+            self._cached_newest_revisions = None
-+            self._cached_revisions = None
-             return
-         self._cached_branch_tips = None
-         self._cached_newest_revisions = None
--        self._cached_revision_counts = None
-         self._cached_revisions = None
-         self._cached_art_counts = None
- 
-+    def _focus_series(self, change_id: str, keep_version: bool = False) -> None:
-+        """Focus a series row on the next rebuild, not one of its versions.
-+
-+        Clearing the stashed version matters: it outlives a screen that
-+        closed without rebuilding the list, and would otherwise drop the
-+        cursor onto a child row nobody selected.
-+
-+        *keep_version* holds the cursor where it already is, for an action
-+        that changes the series' status and nothing about which versions it
-+        has.  Without it, snoozing from a version row bounced the cursor up
-+        to the parent while setting a target branch from the same row left
-+        it alone -- two status-only actions disagreeing about where the
-+        cursor belongs.  It stays off for the actions that repoint the
-+        series at another revision, where the stashed version names a row
-+        that may no longer exist.
-+        """
-+        self._focus_change_id = change_id
-+        # Left unset otherwise: the action that focuses a series may be the
-+        # one that moved it to another revision, so only the change_id is
-+        # reliable.
-+        self._focus_series_revision = None
-+        self._focus_revision = None
-+        if not keep_version:
-+            return
-+        series = self._selected_series
-+        if series is None or series.get('change_id') != change_id:
-+            return
-+        self._focus_series_revision = series.get('revision')
-+        if self._selected_revision is not None:
-+            self._focus_revision = self._selected_revision.get('revision')
-+
-+    @staticmethod
-+    def _row_key(series: Dict[str, Any]) -> Tuple[str, int]:
-+        """Identity of a list row: a change_id can own more than one."""
-+        return (series.get('change_id', ''), series.get('revision', 1))
-+
-+    def _stash_focus(self) -> None:
-+        """Remember the highlighted row so the next _refresh_list restores it.
-+
-+        Falls back to the row under the cursor when nothing is selected:
-+        [escape] clears the selection without moving the cursor, and the
-+        list-wide actions that follow ([X]) need no selection at all.  With
-+        no hint, _refresh_list restores by absolute index -- into a list
-+        whose length [X] has just changed.
-+        """
-+        series = self._selected_series
-+        if series is None:
-+            try:
-+                item = self.query_one('#tracking-list', ListView).highlighted_child
-+            except NoMatches:
-+                item = None
-+            if isinstance(item, TrackingListItem):
-+                series = item.series
-+        if series:
-+            self._focus_change_id, self._focus_series_revision = self._row_key(series)
-+        self._focus_revision = (
-+            self._selected_revision.get('revision')
-+            if self._selected_revision is not None
-+            else None
-+        )
-+
-     def _refresh_msg_count(self, series: Dict[str, Any], total_messages: int) -> None:
-         """Opportunistically refresh message count after fetching messages."""
-         if not self._identifier:
-@@ -1118,6 +1369,9 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             with Horizontal(classes='details-row', id='detail-revisions-row'):
-                 yield Static('Revisions:', classes='details-label')
-                 yield Static('', id='detail-revisions', markup=False)
-+            with Horizontal(classes='details-row', id='detail-version-row'):
-+                yield Static('Version:', classes='details-label')
-+                yield Static('', id='detail-version', markup=False)
-             with Horizontal(classes='details-row', id='detail-branch-row'):
-                 yield Static('Branch:', classes='details-label')
-                 yield Static('', id='detail-branch', markup=False)
-@@ -1169,10 +1423,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                     # Reload so the new revisions show up right away; if a
-                     # modal is up, the DB mtime poll picks it up instead.
-                     if len(self.app.screen_stack) == 1:
--                        if self._selected_series:
--                            self._focus_change_id = self._selected_series.get(
--                                'change_id'
--                            )
-+                        self._stash_focus()
-                         self._invalidate_caches()
-                         self._load_series()
-                 elif not conflicts:
-@@ -1204,8 +1455,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                 # pick up the change once the modal closes.
-                 if len(self.app.screen_stack) > 1:
-                     return
--                if self._selected_series:
--                    self._focus_change_id = self._selected_series.get('change_id')
-+                self._stash_focus()
-                 self._invalidate_caches()
-                 self._load_series()
- 
-@@ -1239,24 +1489,30 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         except Exception:
-             conn = None
-         if self._cached_newest_revisions is None and conn:
-+            # Both land together or neither: the guard tests the first, so
-+            # a partial fill would never be retried and the version rows
-+            # would stay gone for the rest of the session.
-             try:
--                self._cached_newest_revisions = (
--                    b4.review.tracking.get_all_newest_revisions(conn)
--                )
--                self._cached_revision_counts = (
--                    b4.review.tracking.get_all_revision_counts(conn)
--                )
--                self._cached_revisions = b4.review.tracking.get_all_revisions_grouped(
--                    conn
--                )
-+                all_newest = b4.review.tracking.get_all_newest_revisions(conn)
-+                all_grouped = b4.review.tracking.get_all_revisions_grouped(conn)
-             except Exception:
-                 pass
-+            else:
-+                self._cached_newest_revisions = all_newest
-+                self._cached_revisions = all_grouped
-         newest_revisions = self._cached_newest_revisions or {}
--        revision_counts = self._cached_revision_counts or {}
-         all_revisions = self._cached_revisions or {}
-         if conn:
-             conn.close()
- 
-+        # Live rows grouped by change_id, so version merging sees every
-+        # revision a sibling row tracks -- the same rule
-+        # get_revisions_with_tracked applies on the DB side.  _all_series
-+        # is already archive-free.
-+        live_rows: Dict[str, List[Dict[str, Any]]] = {}
-+        for series in self._all_series:
-+            live_rows.setdefault(series.get('change_id', ''), []).append(series)
-+
-         # --- First pass: branch existence + revision flags ---
-         art_branches: Dict[str, str] = {}
-         for series in self._all_series:
-@@ -1271,17 +1527,21 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             newest = newest_revisions.get(change_id)
-             if newest is not None and newest > current_rev:
-                 series['has_newer'] = True
--            rev_count = revision_counts.get(change_id, 0)
--            if rev_count > 1:
--                series['has_multiple_revisions'] = True
--            if rev_count == 0 and series.get('status') not in (
--                'new',
--                'gone',
--                'snoozed',
--            ):
--                series['needs_update'] = True
-             # Stash revisions list for the detail panel
-             series['_revisions'] = all_revisions.get(change_id, [])
-+            series['_sibling_rows'] = live_rows.get(change_id) or [series]
-+            # Whether revision data was ever fetched.  The v11 backfill gives
-+            # every series row a catalog entry, so discount the one mirroring
-+            # this row and fall back to the sweep watermark.
-+            rev_count = len(series['_revisions'])
-+            if any(r.get('revision') == current_rev for r in series['_revisions']):
-+                rev_count -= 1
-+            if (
-+                rev_count <= 0
-+                and not series.get('last_update_check')
-+                and series.get('status') not in ('new', 'gone', 'snoozed')
-+            ):
-+                series['needs_update'] = True
- 
-             # Collect branches needing ART counts
-             if topdir and series.get('status') in (
-@@ -1327,6 +1587,25 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             if branch_name in art_map:
-                 series['art'] = art_map[branch_name]
- 
-+        # _row_key carries the tracked revision, so an upgrade moves a row out
-+        # from under its key and silently collapses it.  Migrated only for a
-+        # change_id owning one row, the only unambiguous successor.
-+        if self._expanded_rows:
-+            live: Dict[str, set[int]] = {}
-+            for series in self._all_series:
-+                cid, rev = self._row_key(series)
-+                live.setdefault(cid, set()).add(rev)
-+            kept: set[Tuple[str, int]] = set()
-+            for cid, rev in self._expanded_rows:
-+                revs = live.get(cid)
-+                if not revs:
-+                    continue
-+                if rev in revs:
-+                    kept.add((cid, rev))
-+                elif len(revs) == 1:
-+                    kept.add((cid, next(iter(revs))))
-+            self._expanded_rows = kept
-+
-         # Tag accepted series that have a queued thank-you letter.
-         # This is a display-only pseudo-state, not stored in the DB.
-         queued_cids = b4.ty.get_queued_change_ids(dryrun=self._email_dryrun)
-@@ -1358,8 +1637,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         except OSError:
-             return
-         if mtime != self._db_mtime:
--            if self._selected_series:
--                self._focus_change_id = self._selected_series.get('change_id')
-+            self._stash_focus()
-             self._invalidate_caches()
-             self._load_series()
- 
-@@ -1396,12 +1674,16 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                     return False
-         return True
- 
-+    def _displayed_series(self) -> List[Dict[str, Any]]:
-+        """The series the list is currently showing, limit filter applied."""
-+        if not self._limit_pattern:
-+            return self._all_series
-+        return [
-+            s for s in self._all_series if self._matches_limit(s, self._limit_pattern)
-+        ]
-+
-     async def _refresh_list(self) -> None:
--        display_series = self._all_series
--        if self._limit_pattern:
--            display_series = [
--                s for s in display_series if self._matches_limit(s, self._limit_pattern)
--            ]
-+        display_series = self._displayed_series()
- 
-         try:
-             left = self.query_one('#title-left', Static)
-@@ -1419,6 +1701,15 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         left.update(title_text)
- 
-         scroll_y = ReplacementListView.capture_scroll(self, '#tracking-list')
-+        # Where the cursor already is, as the fallback for when no focus
-+        # hint is stashed.  An expand queues _refresh_list directly rather
-+        # than through _load_series, so two can land in one message-pump
-+        # batch and the second would otherwise find the hint consumed and
-+        # send the cursor to the top.
-+        try:
-+            prev_index = self.query_one('#tracking-list', ListView).index or 0
-+        except NoMatches:
-+            prev_index = 0
- 
-         # Suppress rendering while we swap old widgets for new ones.
-         # Without this, the remove-then-mount sequence can produce a
-@@ -1437,27 +1728,95 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                     id='tracking-empty',
-                 )
-                 await self.mount(empty, before=self.query_one(Footer))
-+                # Nothing is highlighted and this returns above the block that
-+                # re-derives the selection, so a stale one would keep acting on
-+                # a hidden series.  The focus hint stays: it is only a hint.
-+                self._selected_series = None
-+                self._selected_revision = None
-+                self.refresh_bindings()
-                 return
- 
-             header_text = f'{"Submitter":<20s}{"A":>1s} {"A·R·T":>7s}  {"Msgs":<8s}{"S":<6s}{"Subject"}'
-             header = Static(header_text, id='tracking-header')
- 
--            list_items: List[ListItem] = [TrackedSeriesItem(s) for s in display_series]
-+            # Revisions another live row of the same change_id tracks and
-+            # badges itself.  From every live row, not the filtered view: a
-+            # sibling the limit hides still owns its revision.
-+            tracked_elsewhere: Dict[str, Set[int]] = {}
-+            for other in self._all_series:
-+                tracked_elsewhere.setdefault(other.get('change_id', ''), set()).add(
-+                    other.get('revision', 1)
-+                )
-+
-+            list_items: List[ListItem] = []
-+            for series in display_series:
-+                revs = self._merge_tracked_revision(series)
-+                has_versions = len(revs) > 1
-+                tracked = series.get('revision', 1)
-+                expanded = has_versions and self._row_key(series) in self._expanded_rows
-+                mine = tracked_elsewhere.get(series.get('change_id', ''), set()) - {
-+                    tracked
-+                }
-+                list_items.append(
-+                    TrackedSeriesItem(
-+                        series,
-+                        expanded=expanded,
-+                        has_versions=has_versions,
-+                        has_unseen_versions=any(
-+                            _unseen_delta(
-+                                rev.get('message_count'),
-+                                rev.get('seen_message_count'),
-+                            )
-+                            > 0
-+                            for rev in revs
-+                            if rev.get('revision') != tracked
-+                            and rev.get('revision') not in mine
-+                        ),
-+                    )
-+                )
-+                if not expanded:
-+                    continue
-+                for idx, rev in enumerate(revs):
-+                    list_items.append(
-+                        TrackedRevisionItem(
-+                            series,
-+                            rev,
-+                            is_tracked=rev.get('revision') == tracked,
-+                            is_last=idx == len(revs) - 1,
-+                        )
-+                    )
-             lv = ReplacementListView(*list_items, id='tracking-list', scroll_y=scroll_y)
-             await self.mount(header, before=self.query_one(Footer))
-             await self.mount(lv, before=self.query_one(Footer))
- 
--        new_index = 0
-+        new_index = min(prev_index, len(list_items) - 1) if list_items else 0
-         if self._focus_change_id:
--            for idx, item in enumerate(list_items):
--                if (
--                    isinstance(item, TrackedSeriesItem)
--                    and item.series.get('change_id') == self._focus_change_id
--                ):
--                    new_index = idx
--                    break
-+            parents = [
-+                (idx, item)
-+                for idx, item in enumerate(list_items)
-+                if isinstance(item, TrackedSeriesItem)
-+                and item.series.get('change_id') == self._focus_change_id
-+            ]
-+            # A change_id can own more than one live row.  Prefer the one whose
-+            # revision was stashed, and fall back to the first: an upgrade
-+            # moves the row's revision out from under the stash, and
-+            # _focus_series() deliberately stashes no revision at all.
-+            chosen = next(
-+                (
-+                    idx
-+                    for idx, item in parents
-+                    if item.series.get('revision') == self._focus_series_revision
-+                ),
-+                parents[0][0] if parents else None,
-+            )
-+            if chosen is not None:
-+                new_index = chosen
-+                if self._focus_revision is not None:
-+                    new_index = self._find_focus_child(list_items, chosen)
-             self._focus_change_id = None
-+            self._focus_series_revision = None
-         lv.index = new_index
-+        self._focus_revision = None
-         lv.focus()
- 
-         # Populate the details panel for the highlighted item now that
-@@ -1466,10 +1825,29 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         # Also sync _selected_series here so action_action() reads fresh
-         # status without waiting for the async Highlighted message to
-         # be processed from the queue.
--        highlighted = lv.highlighted_child
--        if isinstance(highlighted, TrackedSeriesItem):
--            self._selected_series = highlighted.series
--            self._show_details(highlighted.series)
-+        self._select(lv.highlighted_child)
-+
-+    def _select(self, item: Optional[ListItem]) -> None:
-+        """Make *item* the selection and mirror it into the details panel."""
-+        if not isinstance(item, TrackingListItem):
-+            return
-+        self._selected_series, self._selected_revision = item.selection
-+        self._show_details(self._selected_series, rev=self._selected_revision)
-+
-+    def _find_focus_child(self, list_items: List[ListItem], parent_idx: int) -> int:
-+        """Index of the _focus_revision child row below *parent_idx*.
-+
-+        Falls back to the parent index when that version is no longer
-+        listed — it may have gone away, or the series may have been
-+        collapsed since the focus was stashed.
-+        """
-+        for idx in range(parent_idx + 1, len(list_items)):
-+            item = list_items[idx]
-+            if not isinstance(item, TrackedRevisionItem):
-+                break
-+            if item.rev.get('revision') == self._focus_revision:
-+                return idx
-+        return parent_idx
- 
-     def action_limit(self) -> None:
-         self.push_screen(
-@@ -1484,8 +1862,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         if result is None:
-             return
-         self._limit_pattern = result
--        if self._selected_series:
--            self._focus_change_id = self._selected_series.get('change_id')
-+        self._stash_focus()
-         self._load_series()
- 
-     def action_cursor_down(self) -> None:
-@@ -1500,17 +1877,55 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         except Exception:
-             pass
- 
-+    def action_toggle_expand(self) -> None:
-+        """Show or hide the version rows of the selected series."""
-+        series = self._selected_series
-+        if not series or len(self._merge_tracked_revision(series)) < 2:
-+            return
-+        key = self._row_key(series)
-+        if key in self._expanded_rows:
-+            self._expanded_rows.discard(key)
-+            # The highlighted version row is about to go away
-+            self._selected_revision = None
-+        else:
-+            self._expanded_rows.add(key)
-+        self._stash_focus()
-+        self.call_later(self._refresh_list)
-+
-+    def action_expand_all(self) -> None:
-+        """Expand every multi-version series, or collapse them all."""
-+        # Scoped to what the limit filter is showing: judging "are they all
-+        # expanded already?" against hidden rows makes the first press
-+        # expand nothing the maintainer can see.
-+        expandable = {
-+            self._row_key(s)
-+            for s in self._displayed_series()
-+            if len(self._merge_tracked_revision(s)) > 1
-+        }
-+        if not expandable:
-+            return
-+        if expandable - self._expanded_rows:
-+            self._expanded_rows |= expandable
-+        else:
-+            # Collapsing is scoped the same way, or a series the filter
-+            # hides silently folds back up.
-+            self._expanded_rows -= expandable
-+            self._selected_revision = None
-+        self._stash_focus()
-+        self.call_later(self._refresh_list)
-+
-     def on_list_view_highlighted(self, event: ListView.Highlighted) -> None:
-         if event.list_view.id != 'tracking-list':
-             return
--        item = event.item
--        if isinstance(item, TrackedSeriesItem):
--            self._selected_series = item.series
--            self._show_details(item.series)
-+        self._select(event.item)
-         self.refresh_bindings()
- 
-     def on_list_view_selected(self, event: ListView.Selected) -> None:
-         if event.list_view.id == 'tracking-list':
-+            # A version row opens that version's thread
-+            if isinstance(event.item, TrackedRevisionItem):
-+                self.action_thread()
-+                return
-             if not self._selected_series:
-                 return
-             status = self._selected_series.get('status', 'new')
-@@ -1568,12 +1983,35 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         'snoozed': frozenset(
-             {'review', 'range_diff', 'unsnooze', 'abandon', 'target_branch'}
-         ),
--        'thanked': frozenset({'review', 'archive'}),
--        'gone': frozenset({'abandon', 'review'}),
-+        # range_diff is available wherever version rows are: [x] expands a
-+        # series in any state, and 'd' on a child row is documented to work.
-+        # It needs no branch -- compute_range_diff reconstructs both sides
-+        # from the catalog.
-+        'thanked': frozenset({'review', 'range_diff', 'archive'}),
-+        'gone': frozenset({'abandon', 'review', 'range_diff'}),
-     }
-     # All state-gated actions (union of all per-state sets)
-     _GATED_ACTIONS = frozenset().union(*_STATE_ACTIONS.values())
- 
-+    # Acts on the revision the series tracks, not the row under the cursor:
-+    # refused on another version's row by both the key and the action menu.
-+    # 'review' checks the review branch out; 'take' and 'rebase' operate on
-+    # that same branch, built from the tracked revision; 'upgrade' archives
-+    # it, applies the newer revision and renames the result back.  All four
-+    # would otherwise run against a version the cursor is not on.
-+    #
-+    # 'upgrade' is also gated in check_action directly, which returns for it
-+    # before this frozenset is consulted; this entry covers the action menu.
-+    _TRACKED_ONLY_ACTIONS = frozenset({'review', 'take', 'rebase', 'upgrade'})
-+
-+    def _on_other_version(self) -> bool:
-+        """Whether the cursor is on a version row that is not the tracked one."""
-+        if self._selected_revision is None or self._selected_series is None:
-+            return False
-+        return self._selected_revision.get('revision') != self._selected_series.get(
-+            'revision'
-+        )
-+
-     def check_action(self, action: str, parameters: Tuple[Any, ...]) -> Optional[bool]:
-         """Hide status-specific actions based on the selected series."""
-         if action == 'process_queue':
-@@ -1588,8 +2026,20 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             # any state that can hold one (including accepted/thanked, e.g. a
-             # series kept back from auto-archiving because a newer revision
-             # appeared), not only a checked-out 'reviewing' branch.
-+            #
-+            # It still moves the review branch, though -- archive, git am,
-+            # rename -- against the revision the series tracks, so it is
-+            # refused on another version's row for the same reason review,
-+            # take and rebase are.  It cannot go in _TRACKED_ONLY_ACTIONS:
-+            # this branch returns before that check is reached.
-+            return (
-+                bool(self._selected_series and self._selected_series.get('has_newer'))
-+                and not self._on_other_version()
-+            )
-+        if action == 'toggle_expand':
-             return bool(
--                self._selected_series and self._selected_series.get('has_newer')
-+                self._selected_series
-+                and len(self._merge_tracked_revision(self._selected_series)) > 1
-             )
-         if action in self._GATED_ACTIONS:
-             if not self._selected_series:
-@@ -1597,8 +2047,18 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             status = self._selected_series.get('status', 'new')
-             if action not in self._STATE_ACTIONS.get(status, frozenset()):
-                 return False
-+            if action in self._TRACKED_ONLY_ACTIONS and self._on_other_version():
-+                # These act on the review branch, which holds the revision
-+                # the series tracks and not the one the cursor is sitting
-+                # on.  Every other key acting on the parent is harmless;
-+                # these build or move a branch, so they are greyed out
-+                # rather than quietly doing that for a different version.
-+                return False
-             if action == 'range_diff':
--                return bool(self._selected_series.get('has_multiple_revisions'))
-+                # Same predicate as toggle_expand: a raw catalog count
-+                # misses a tracked revision the catalog never recorded,
-+                # leaving an expanded version row with 'd' disabled.
-+                return len(self._merge_tracked_revision(self._selected_series)) > 1
-             if action == 'target_branch':
-                 return self._has_target_branches
-             return True
-@@ -1657,6 +2117,13 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             if status != 'thanked':
-                 actions.append(('abandon', 'Abandon series'))
-             actions.append(('archive', 'Archive series'))
-+        if self._on_other_version():
-+            # _on_action_selected dispatches directly, so Textual never
-+            # consults check_action for a menu pick.  Only this rule, though:
-+            # the menu deliberately offers actions no key binds.
-+            actions = [
-+                entry for entry in actions if entry[0] not in self._TRACKED_ONLY_ACTIONS
-+            ]
-         self.push_screen(
-             ActionScreen(actions, shortcuts=_ACTION_SHORTCUTS),
-             callback=self._on_action_selected,
-@@ -1822,10 +2289,19 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         self._checkout_new_series()
- 
-     def action_thread(self) -> None:
--        """View a series thread in the lite thread viewer."""
-+        """View a series thread in the lite thread viewer.
-+
-+        A highlighted version row views that version's thread; otherwise
-+        the thread of the revision the series tracks.
-+        """
-         if not self._selected_series:
-             return
--        message_id = self._selected_series.get('message_id', '')
-+        source = (
-+            self._selected_revision
-+            if self._selected_revision is not None
-+            else self._selected_series
-+        )
-+        message_id = source.get('message_id', '')
-         if not message_id:
-             self.notify('No message-id available for this series', severity='error')
-             return
-@@ -1834,10 +2310,16 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             tracking_info = {
-                 'identifier': self._identifier,
-                 'change_id': self._selected_series.get('change_id', ''),
--                'revision': self._selected_series.get('revision', 1),
--                'is_rethreaded': bool(self._selected_series.get('is_rethreaded')),
-+                'revision': source.get('revision', 1),
-+                'is_rethreaded': bool(source.get('is_rethreaded')),
-             }
--        self._focus_change_id = self._selected_series.get('change_id')
-+        # No _stash_focus() here.  Viewing a thread rebuilds nothing by
-+        # itself -- re-reading an already-read thread writes nothing, so the
-+        # DB-mtime poll does not fire -- and the hint would then outlive the
-+        # screen and be spent by whatever reloads next, parking the cursor
-+        # on this series' version row from an unrelated action.  The only
-+        # rebuild that can follow is _check_db_changed's, which stashes for
-+        # itself.
-         from b4.review_tui._lite_app import LiteThreadScreen
- 
-         self.push_screen(
-@@ -2225,8 +2707,17 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         # Exit to review mode
-         self.exit(branch_name)
- 
--    def _show_details(self, series: Dict[str, Any]) -> None:
-+    def _show_details(
-+        self, series: Dict[str, Any], rev: Optional[Dict[str, Any]] = None
-+    ) -> None:
-+        """Fill the details panel for *series*, or for one of its versions.
- 
-+        With *rev* given the version-specific fields (subject, link) come
-+        from that revision instead of the tracked one.  Fields the catalog
-+        does not carry per revision -- the patch count and the sent date --
-+        are suppressed rather than filled in from the tracked revision,
-+        which would attribute another version's numbers to this one.
-+        """
-         try:
-             panel = self.query_one('#details-panel', Vertical)
-         except NoMatches:
-@@ -2234,11 +2725,17 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
- 
-         raw_subject = series.get('subject', '(no subject)')
-         revision = series.get('revision', 1)
-+        other_version = rev is not None and rev.get('revision') != revision
-+        if rev is not None:
-+            raw_subject = rev.get('subject') or raw_subject
-+            revision = rev.get('revision', revision)
-         num_patches = series.get('num_patches', 0) or 0
-         ls = b4.LoreSubject(raw_subject)
-         extras = ls.get_extra_prefixes(exclude=['patch'])
-         width = len(str(num_patches)) if num_patches > 0 else 1
--        parts = extras + [f'v{revision}', f'{"0" * width}/{num_patches:0{width}d}']
-+        parts = extras + [f'v{revision}']
-+        if not other_version:
-+            parts.append(f'{"0" * width}/{num_patches:0{width}d}')
-         subject = f'[{",".join(parts)}] {ls.subject}'
- 
-         sender_name = series.get('sender_name', 'Unknown')
-@@ -2249,15 +2746,21 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
- 
-         # Create link URL from message-id using linkmask
-         link_url = ''
--        if message_id:
-+        if rev is not None:
-+            link_url = rev.get('link') or ''
-+            message_id = rev.get('message_id', '')
-+        if not link_url and message_id:
-             config = b4.get_main_config()
-             linkmask = config.get('linkmask', b4.LOREADDR + '/%s')
-             if isinstance(linkmask, str) and '%s' in linkmask:
-                 link_url = linkmask % message_id
- 
--        # Convert ISO date to RFC 822 in local timezone
-+        # Convert ISO date to RFC 822 in local timezone.  Only the tracked
-+        # revision has a recorded send date; for the others the Version:
-+        # row below reports what the catalog does know (first seen, last
-+        # activity).
-         sent_str = 'Unknown'
--        sent_at = series.get('sent_at', '')
-+        sent_at = '' if other_version else series.get('sent_at', '')
-         if sent_at:
-             try:
-                 dt = datetime.datetime.fromisoformat(sent_at)
-@@ -2282,11 +2785,15 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         self.query_one('#detail-changeid', Static).update(change_id)
-         self.query_one('#detail-link', Static).update(link_url)
- 
--        # Attestation row
--        att = series.get('attestation') or ''
-+        # Attestation row.  Stored per series row, so it describes the
-+        # tracked revision only -- showing it beside another version's
-+        # subject would report that version as signed and verified.
-+        att = '' if other_version else (series.get('attestation') or '')
-         att_row = self.query_one('#detail-attestation-row', Horizontal)
-         att_widget = self.query_one('#detail-attestation', Static)
--        if att == 'pending' or att == '':
-+        if other_version:
-+            att_row.display = False
-+        elif att == 'pending' or att == '':
-             att_widget.update(RichText('pending (run [u]pdate)', style='dim'))
-             att_row.display = True
-         elif att == 'none':
-@@ -2300,12 +2807,21 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             else:
-                 att_row.display = False
- 
--        # Show known revisions (precomputed in _load_series)
-+        # Show known revisions (precomputed in _load_series).  Merged the
-+        # same way the version rows are, so the list cannot disagree with
-+        # the rows displayed directly above it.
-         revisions_row = self.query_one('#detail-revisions-row', Horizontal)
--        revs = series.get('_revisions', [])
--        if revs:
-+        revs = self._merge_tracked_revision(series)
-+        rev_widget = self.query_one('#detail-revisions', Static)
-+        if series.get('needs_update'):
-+            # Checked before the list, not after: the merged list always
-+            # carries at least the tracked revision, so an `if revs:` would
-+            # shadow this hint and leave the row's '*' flag unexplained.
-+            rev_widget.add_class('has-upgrade')
-+            rev_widget.update('run [u]pdate to load revision data')
-+            revisions_row.display = True
-+        elif revs:
-             rev_str = ', '.join(f'v{r["revision"]}' for r in revs)
--            rev_widget = self.query_one('#detail-revisions', Static)
-             if series.get('has_newer'):
-                 newest = max(r['revision'] for r in revs)
-                 rev_str += f' (v{newest} available — upgrade with [a]ction)'
-@@ -2315,13 +2831,17 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             rev_widget.update(rev_str)
-             revisions_row.display = True
-         else:
--            if series.get('needs_update'):
--                rev_widget = self.query_one('#detail-revisions', Static)
--                rev_widget.add_class('has-upgrade')
--                rev_widget.update('run [u]pdate to load revision data')
--                revisions_row.display = True
--            else:
--                revisions_row.display = False
-+            revisions_row.display = False
-+
-+        # Describe the highlighted version row, if any
-+        version_row = self.query_one('#detail-version-row', Horizontal)
-+        if rev is not None:
-+            self.query_one('#detail-version', Static).update(
-+                _format_version(rev, series)
-+            )
-+            version_row.display = True
-+        else:
-+            version_row.display = False
- 
-         # Show branch name for series with a review branch
-         status = series.get('status', 'new')
-@@ -2485,8 +3005,11 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         else:
-             self.notify('Target branch cleared')
- 
--        # Refresh details panel
--        self._show_details(series)
-+        # Refresh details panel, for the row the cursor is actually on:
-+        # dropping the version here reverts the panel to the tracked
-+        # revision's subject and attestation while a version row is still
-+        # highlighted.
-+        self._show_details(series, rev=self._selected_revision)
- 
-     def action_update_one(self) -> None:
-         """Fetch thread and update revisions/trailers for the selected series."""
-@@ -2498,7 +3021,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         linkmask = str(config.get('linkmask', 'https://lore.kernel.org/r/%s'))
-         topdir = b4.git_get_toplevel()
- 
--        self._focus_change_id = self._selected_series.get('change_id')
-+        self._stash_focus()
-         self.push_screen(
-             UpdateAllScreen(
-                 [self._selected_series],
-@@ -2523,8 +3046,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         # Skip snoozed series during update-all
-         update_list = [s for s in self._all_series if s.get('status') != 'snoozed']
- 
--        if self._selected_series:
--            self._focus_change_id = self._selected_series.get('change_id')
-+        self._stash_focus()
-         self.push_screen(
-             UpdateAllScreen(update_list, self._identifier, linkmask, topdir),
-             callback=self._on_update_complete,
-@@ -2579,6 +3101,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         if self._selected_series is not None:
-             panel.styles.height = 0
-             self._selected_series = None
-+            self._selected_revision = None
- 
-     def action_take(self) -> None:
-         """Show take options dialog for the selected series."""
-@@ -2856,7 +3379,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         if not confirmed:
-             return
-         take_screen.accept_series = confirm_screen.accept_series
--        self._focus_change_id = change_id
-+        self._focus_series(change_id)
-         self._invalidate_caches(change_id)
-         if method == 'merge':
-             with self.suspend():
-@@ -3844,9 +4367,22 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         change_id = self._selected_series.get('change_id', '')
-         current_rev = self._selected_series.get('revision', 1)
- 
-+        # A highlighted version row already names the other side of the
-+        # diff, so skip the picker.
-+        if self._selected_revision is not None:
-+            other_rev = self._selected_revision.get('revision')
-+            if other_rev is not None and other_rev != current_rev:
-+                with self.suspend():
-+                    self._do_range_diff(change_id, current_rev, other_rev)
-+                return
-+
-         try:
-             conn = b4.review.tracking.get_db(self._identifier)
--            revisions = b4.review.tracking.get_revisions(conn, change_id)
-+            # The same set the [d] gate counts and compute_range_diff
-+            # resolves against: a raw catalog read misses a revision only a
-+            # sibling series row names, and offers a picker with nothing in
-+            # it on a row the binding was enabled for.
-+            revisions = b4.review.tracking.get_revisions_with_tracked(conn, change_id)
-             conn.close()
-         except Exception as ex:
-             self.notify(f'Could not load revisions: {ex}', severity='error')
-@@ -4190,7 +4726,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             self.notify(f'Linked v{rev} (absorbed a duplicate)')
-         else:
-             self.notify(f'Linked v{rev}')
--        self._focus_change_id = change_id
-+        self._focus_series(change_id)
-         self._invalidate_caches(change_id)
-         self._load_series()
- 
-@@ -4214,7 +4750,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             self.notify(f'Could not update revision: {ex}', severity='error')
-             return
-         self.notify(f'Now tracking v{target_rev}')
--        self._focus_change_id = change_id
-+        self._focus_series(change_id)
-         self._invalidate_caches(change_id)
-         self._load_series()
- 
-@@ -4695,7 +5231,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             _wait_for_enter()
- 
-         # Return to the tracking list with the upgraded series focused
--        self._focus_change_id = change_id
-+        self._focus_series(change_id)
-         self._invalidate_caches(change_id)
-         self._load_series()
- 
-@@ -4722,7 +5258,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             branch_name = f'b4/review/{change_id}'
-             b4.review.update_tracking_status(topdir, branch_name, 'waiting')
-         self.notify('Series moved to waiting')
--        self._focus_change_id = change_id
-+        self._focus_series(change_id, keep_version=True)
-         self._invalidate_caches(change_id)
-         self._load_series()
- 
-@@ -4788,7 +5324,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         self._last_snooze_input = result.get('input', '')
- 
-         self.notify(f'Snoozed, {_format_snooze_until(until_value)}')
--        self._focus_change_id = change_id
-+        self._focus_series(change_id, keep_version=True)
-         self._invalidate_caches(change_id)
-         self._load_series()
- 
-@@ -4825,7 +5361,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             return
- 
-         self.notify(f'Unsnoozed, restored to {previous_status}')
--        self._focus_change_id = change_id
-+        self._focus_series(change_id, keep_version=True)
-         self._invalidate_caches(change_id)
-         self._load_series()
- 
-@@ -5205,7 +5741,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-                     b4.review.update_tracking_status(topdir, review_branch, 'thanked')
-             if archive_after:
-                 self._archive_after_thanks(series)
--            self._focus_change_id = change_id
-+            self._focus_series(change_id, keep_version=True)
-             self._invalidate_caches(change_id)
-             self._load_series()
-         except Exception as ex:
-@@ -5293,8 +5829,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-             self.notify(', '.join(parts) if parts else 'Queue empty')
-             self._refresh_queue_indicator()
-             if delivered_series:
--                if self._selected_series:
--                    self._focus_change_id = self._selected_series.get('change_id')
-+                self._stash_focus()
-                 self._load_series()
- 
-         self.push_screen(
-diff --git a/src/tests/test_review_tracking.py b/src/tests/test_review_tracking.py
-index 532c65c9..03aa3407 100644
---- a/src/tests/test_review_tracking.py
-+++ b/src/tests/test_review_tracking.py
-@@ -1068,17 +1068,6 @@ class TestRevisions:
-         assert review_tracking.get_all_newest_revisions(conn) == {}
-         conn.close()
- 
--    def test_get_all_revision_counts(self, tmp_path: pytest.TempPathFactory) -> None:
--        """Verify bulk revision-count query returns correct counts."""
--        conn = review_tracking.init_db('rev-bulk-count-test')
--        review_tracking.add_revision(conn, 'change-a', 1, 'a-v1@example.com')
--        review_tracking.add_revision(conn, 'change-a', 2, 'a-v2@example.com')
--        review_tracking.add_revision(conn, 'change-a', 3, 'a-v3@example.com')
--        review_tracking.add_revision(conn, 'change-b', 1, 'b-v1@example.com')
--        result = review_tracking.get_all_revision_counts(conn)
--        assert result == {'change-a': 3, 'change-b': 1}
--        conn.close()
--
-     def test_get_all_revisions_grouped(self, tmp_path: pytest.TempPathFactory) -> None:
-         """Verify bulk grouped revisions returns correct per-change-id lists."""
-         conn = review_tracking.init_db('rev-bulk-grouped-test')
 diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
-index d6233afe..7ba2443e 100644
+index 7ba2443e..17cdf41a 100644
 --- a/src/tests/test_tui_tracking.py
 +++ b/src/tests/test_tui_tracking.py
-@@ -4663,7 +4663,7 @@ class TestLoadSeriesCaching:
-             await pilot.pause()
-             assert app._cached_branch_tips is not None
-             assert app._cached_newest_revisions is not None
--            assert app._cached_revision_counts is not None
-+            assert app._cached_revisions is not None
+@@ -11,11 +11,14 @@ core user workflows: series listing, navigation, filtering,
+ status transitions, and modal interactions.
+ """
  
-     @pytest.mark.asyncio
-     async def test_caches_survive_db_poll_no_change(
-@@ -4697,14 +4697,26 @@ class TestLoadSeriesCaching:
-             # https://github.com/python/mypy/issues/9457:
-             # app._cached_branch_tips is stale-narrowed across a method call.
-             assert app._cached_newest_revisions is None  # type: ignore[unreachable]
--            assert app._cached_revision_counts is None
-+            assert app._cached_revisions is None
-             assert app._cached_art_counts is None
++import contextlib
+ import datetime
+ import email.message
+ import os
+ import pathlib
++import re
+ import sqlite3
++import time
+ from typing import Any, Callable, Dict, List, Optional, Tuple
+ from unittest.mock import patch
  
-     @pytest.mark.asyncio
-     async def test_selective_invalidation_keeps_other_caches(
+@@ -23,7 +26,7 @@ import pytest
+ 
+ pytest.importorskip('textual')
+ 
+-from textual.widgets import Input, ListView, Static
++from textual.widgets import Input, Label, ListView, Static
+ 
+ import b4
+ import b4.review
+@@ -36,6 +39,7 @@ from b4 import (
+     _worktree_inprogress_op,
+     _worktree_merge_in_progress,
+ )
++from b4.review_tui._lite_app import LiteThreadScreen
+ from b4.review_tui._modals import (
+     ActionItem,
+     ActionScreen,
+@@ -45,17 +49,21 @@ from b4.review_tui._modals import (
+     HelpScreen,
+     LimitScreen,
+     LinkRevisionScreen,
++    RangeDiffScreen,
+     RebaseScreen,
+     SnoozeScreen,
+     TakeConfirmScreen,
+     TargetBranchScreen,
+ )
+ from b4.review_tui._tracking_app import (
++    TrackedRevisionItem,
+     TrackedSeriesItem,
+     TrackingApp,
+     _build_base_suggestions,
+     _detect_initial_base,
+     _effective_tier,
++    _format_version,
++    _msgs_fields,
+     _resolve_worktree_take_conflict,
+     _shazam_merge_flags,
+     _take_worktree,
+@@ -5995,8 +6003,6 @@ class TestRethreadFlagReachesTheThreadFetch:
          self, tmp_path: pathlib.Path
      ) -> None:
--        """_invalidate_caches(change_id) only evicts that ART entry."""
-+        """_invalidate_caches(change_id) evicts one ART entry and the revisions.
+         """The viewer's series dict is what selects the reassembly path."""
+-        from b4.review_tui._lite_app import LiteThreadScreen
+-
+         seen: Dict[str, Any] = {}
+ 
+         def _capture(series: Dict[str, Any], identifier: str) -> List[Any]:
+@@ -6017,6 +6023,27 @@ class TestRethreadFlagReachesTheThreadFetch:
+         assert seen['is_rethreaded'] is True
+         assert seen['revision'] == 2
+ 
++    @pytest.mark.asyncio
++    async def test_a_plain_version_row_reports_its_own_flag(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """v1 is not rethreaded, so its row must not inherit v2's flag."""
++        self._seed_rethreaded('rt-child')
 +
-+        The revision caches have to go: _load_series only refills them when
-+        _cached_newest_revisions is None, so keeping them pins the version
-+        rows and both revision-count gates to pre-action data.
++        app = TrackingApp('rt-child')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.pause()
++            with patch.object(app, 'push_screen') as mock_push:
++                await pilot.press('e')
++                await pilot.pause()
++            screen = mock_push.call_args[0][0]
++            assert screen._tracking_info['revision'] == 1
++            assert screen._tracking_info['is_rethreaded'] is False
 +
-+        What the targeted form protects is the *other* series' ART entries,
-+        each of which costs a `git cat-file` to rebuild.  The branch tips
-+        are one `git for-each-ref` for all of them, and _load_series already
-+        refills a None dict with it -- resolving them here instead only put
-+        that subprocess on the message pump, in a handler that may never
-+        reload at all.
+ 
+ class TestUpdateAllDoesNotForceThePoll:
+     """'u' asks about one series; 'U' must not force the schedule everywhere.
+@@ -6064,6 +6091,45 @@ class TestDiscoverOlderAction:
+             keys = [key for key, _label in getattr(app.screen, '_actions')]
+             assert 'discover' in keys
+ 
++    @pytest.mark.asyncio
++    async def test_conflicts_suppress_the_nothing_found_notice(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """A run that skipped every version it found reports 0 found.
++
++        Saying "No older revisions found" and then listing four of them is
++        two notifications contradicting each other in the same toast stack.
 +        """
-         _seed_db('cache-sel-inv', SAMPLE_SERIES)
- 
-         app = TrackingApp('cache-sel-inv')
-@@ -4719,9 +4731,12 @@ class TestLoadSeriesCaching:
-             # Alpha evicted, bravo still there
-             assert 'b4/review/test-change-alpha' not in app._cached_art_counts
-             assert 'b4/review/test-change-bravo' in app._cached_art_counts
--            # Other caches untouched
--            assert app._cached_branch_tips is not None
--            assert app._cached_newest_revisions is not None
-+            # Branch tips are dropped, not re-resolved inline: one
-+            # for-each-ref refills them, and _load_series already runs it.
-+            assert app._cached_branch_tips is None
-+            # Revision data is dropped so the next load re-reads it
-+            assert app._cached_newest_revisions is None
-+            assert app._cached_revisions is None
- 
++        _seed_db(
++            'test-discover-both',
++            [{'change_id': 'cid-d', 'revision': 5, 'status': 'new'}],
++        )
++        notices: List[str] = []
++
++        app = TrackingApp('test-discover-both')
++        with patch.object(
++            tracking,
++            'discover_older_revisions',
++            lambda *a, **kw: {
++                'found': 0,
++                'revisions': [],
++                'conflicts': [1, 2],
++                'error': None,
++            },
++        ):
++            async with app.run_test(size=(120, 30)) as pilot:
++                await pilot.pause()
++                with patch.object(
++                    TrackingApp,
++                    'notify',
++                    lambda self, msg, **kw: notices.append(str(msg)),
++                ):
++                    app.action_discover_older()
++                    await app.workers.wait_for_complete()
++                    await pilot.pause()
++        assert not any('No older revisions found' in n for n in notices), notices
++        assert any('v1, v2' in n for n in notices), notices
++
      @pytest.mark.asyncio
-     async def test_revisions_stashed_in_series(self, tmp_path: pathlib.Path) -> None:
+     async def test_action_runs_discovery(self, tmp_path: pathlib.Path) -> None:
+         _seed_db(
+@@ -6092,3 +6158,1560 @@ class TestDiscoverOlderAction:
+                 await app.workers.wait_for_complete()
+                 await pilot.pause()
+         assert calls == [('test-discover-run', 'cid-d')]
++
++
++def _seed_multiver(
++    identifier: str,
++    change_id: str = 'multi-1',
++    tracked: int = 2,
++    revisions: Optional[List[int]] = None,
++) -> None:
++    """Seed a series tracking v*tracked* with *revisions* in the catalog.
++
++    The tracked revision has message counts (5 total, 2 unseen); the
++    other revisions were never fetched, so their counts stay NULL.
++    """
++    conn = tracking.init_db(identifier)
++    tracking.add_series_to_db(
++        conn,
++        change_id=change_id,
++        revision=tracked,
++        subject=f'[PATCH v{tracked} 0/2] multi: test series',
++        sender_name='Vera Version',
++        sender_email='vera@example.com',
++        sent_at='2026-03-10T10:00:00+00:00',
++        message_id=f'{change_id}-v{tracked}@example.com',
++        num_patches=2,
++    )
++    conn.execute(
++        'UPDATE revisions SET message_count = 5, seen_message_count = 3'
++        ' WHERE change_id = ? AND revision = ?',
++        (change_id, tracked),
++    )
++    conn.commit()
++    for rev in [1, 2, 3] if revisions is None else revisions:
++        tracking.add_revision(
++            conn,
++            change_id,
++            rev,
++            f'{change_id}-v{rev}@example.com',
++            subject=f'[PATCH v{rev} 0/2] multi: test series',
++        )
++    conn.close()
++
++
++def _selected_rev(app: TrackingApp) -> Optional[Any]:
++    """Read _selected_revision without narrowing it for the rest of the test."""
++    return app._selected_revision
++
++
++def _version_row_shown(app: TrackingApp) -> bool:
++    """Whether the details panel's Version: row is currently displayed."""
++    return bool(app.query_one('#detail-version-row').display)
++
++
++def _list_items(app: TrackingApp) -> List[Any]:
++    """Every row currently in the tracking list, parents and children."""
++    return list(app.query_one('#tracking-list', ListView).children)
++
++
++def _row_text(item: Any) -> str:
++    """The rendered text of a single tracking list row."""
++    return _static_text(item.query_one(Label))
++
++
++def _msgs_column(text: str) -> str:
++    """The Msgs column of a rendered row (total + unseen badge).
++
++    Fixed offset: 20 (submitter) + 1 (attestation) + 1 + 7 (A·R·T) = 29,
++    then 5 for the total, a separator and 4 for the badge.  Slicing it
++    asserts that parent and child rows agree on the column layout.
++    """
++    return text[29:39].strip()
++
++
++class TestVersionExpansion:
++    """Tests for expanding a series into per-version child rows."""
++
++    @pytest.mark.asyncio
++    async def test_affordance_only_with_multiple_versions(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """Only a series with more than one known version gets the marker."""
++        _seed_multiver('expand-affordance')
++        conn = tracking.get_db('expand-affordance')
++        tracking.add_series_to_db(
++            conn,
++            change_id='single-1',
++            revision=1,
++            subject='[PATCH] single: just one version',
++            sender_name='Sam Single',
++            sender_email='sam@example.com',
++            sent_at='2026-03-11T10:00:00+00:00',
++            message_id='single-v1@example.com',
++            num_patches=1,
++        )
++        tracking.add_revision(conn, 'single-1', 1, 'single-v1@example.com')
++        conn.close()
++
++        app = TrackingApp('expand-affordance')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            rows = {i.series['change_id']: _row_text(i) for i in _list_items(app)}
++            assert '▸' in rows['multi-1']
++            assert '▸' not in rows['single-1']
++
++    @pytest.mark.asyncio
++    async def test_x_expands_into_child_rows(self, tmp_path: pathlib.Path) -> None:
++        """x adds one child row per known version, oldest first."""
++        _seed_multiver('expand-toggle')
++
++        app = TrackingApp('expand-toggle')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert len(_list_items(app)) == 1
++
++            await pilot.press('x')
++            await pilot.pause()
++            items = _list_items(app)
++            assert len(items) == 4
++            assert isinstance(items[0], TrackedSeriesItem)
++            assert items[0].expanded
++            assert '▾' in _row_text(items[0])
++            children = items[1:]
++            assert all(isinstance(c, TrackedRevisionItem) for c in children)
++            assert [c.rev['revision'] for c in children] == [1, 2, 3]
++
++    @pytest.mark.asyncio
++    async def test_x_collapses_again(self, tmp_path: pathlib.Path) -> None:
++        """A second x hides the child rows and restores the parent cursor."""
++        _seed_multiver('expand-collapse')
++
++        app = TrackingApp('expand-collapse')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            # Collapse from a child row — focus must return to the parent
++            await pilot.press('j')
++            await pilot.pause()
++            assert app._selected_revision is not None
++
++            await pilot.press('x')
++            await pilot.pause()
++            items = _list_items(app)
++            assert len(items) == 1
++            assert '▸' in _row_text(items[0])
++            assert _selected_rev(app) is None
++            assert app.query_one('#tracking-list', ListView).index == 0
++
++    @pytest.mark.asyncio
++    async def test_tracked_version_is_marked(self, tmp_path: pathlib.Path) -> None:
++        """The child row for the tracked revision carries an asterisk."""
++        _seed_multiver('expand-marker')
++
++        app = TrackingApp('expand-marker')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            children = _list_items(app)[1:]
++            marked = [c for c in children if c.is_tracked]
++            assert len(marked) == 1
++            assert marked[0].rev['revision'] == 2
++            assert 'v2*' in _row_text(marked[0])
++            assert 'v1*' not in _row_text(children[0])
++            assert 'v3*' not in _row_text(children[2])
++
++    @pytest.mark.asyncio
++    async def test_highlighting_child_keeps_parent_series(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """A child row selects its version, but the series stays the parent."""
++        _seed_multiver('expand-select')
++
++        app = TrackingApp('expand-select')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++
++            await pilot.press('j')
++            await pilot.pause()
++            sel_rev = _selected_rev(app)
++            assert sel_rev is not None
++            assert sel_rev['revision'] == 1
++            assert app._selected_series is not None
++            assert app._selected_series['change_id'] == 'multi-1'
++
++            # Back on the parent row the version selection is cleared
++            await pilot.press('k')
++            await pilot.pause()
++            assert _selected_rev(app) is None
++            assert app._selected_series is not None
++            assert app._selected_series['change_id'] == 'multi-1'
++
++    @pytest.mark.asyncio
++    async def test_expansion_and_cursor_survive_db_reload(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """An external DB change rebuilds the list without losing the child."""
++        _seed_multiver('expand-reload')
++
++        app = TrackingApp('expand-reload')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.press('j')
++            await pilot.pause()
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == 2
++
++            # Bump the mtime the way another b4 process writing the DB would
++            db_path = tracking.get_db_path('expand-reload')
++            stamp = os.path.getmtime(db_path) + 10
++            os.utime(db_path, (stamp, stamp))
++            app._check_db_changed()
++            await pilot.pause()
++
++            items = _list_items(app)
++            assert len(items) == 4
++            assert isinstance(items[2], TrackedRevisionItem)
++            assert app.query_one('#tracking-list', ListView).index == 2
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == 2
++
++    @pytest.mark.asyncio
++    async def test_x_is_noop_on_single_version_series(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """A series with only the tracked version has nothing to expand."""
++        _seed_db('expand-single', [SAMPLE_SERIES[1]])
++
++        app = TrackingApp('expand-single')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            assert len(_list_items(app)) == 1
++            assert not app._expanded_rows
++
++    @pytest.mark.asyncio
++    async def test_expansion_survives_limit_filter(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """Setting and clearing a limit keeps the series expanded."""
++        _seed_multiver('expand-limit')
++
++        app = TrackingApp('expand-limit')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            assert len(_list_items(app)) == 4
++
++            await pilot.press('l')
++            await pilot.pause()
++            app.screen.query_one('#limit-input', Input).value = 'multi'
++            await pilot.press('enter')
++            await pilot.pause()
++            assert len(_list_items(app)) == 4
++
++            await pilot.press('l')
++            await pilot.pause()
++            app.screen.query_one('#limit-input', Input).value = ''
++            await pilot.press('enter')
++            await pilot.pause()
++            assert len(_list_items(app)) == 4
++
++    @pytest.mark.asyncio
++    async def test_filtering_everything_away_drops_the_selection(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """An empty list must not leave a version row selected.
++
++        The empty-list branch returns above the block that re-derives the
++        selection from the cursor, so the stale pair kept every series
++        action enabled -- and on a version row 'd' skips the picker and
++        range-diffs a series the list is no longer showing.
++        """
++        _seed_multiver('expand-empty')
++
++        app = TrackingApp('expand-empty')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.pause()
++            # Bound to a local: asserting on the attribute narrows it for
++            # the rest of the function, and mypy then calls the checks
++            # below unreachable.
++            on_child = app._selected_revision
++            assert on_child is not None
++
++            await pilot.press('l')
++            await pilot.pause()
++            app.screen.query_one('#limit-input', Input).value = 'nomatch-xyzzy'
++            await pilot.press('enter')
++            await pilot.pause()
++            assert len(app.query('#tracking-list')) == 0
++            assert app.query_one('#tracking-empty', Static)
++            assert app._selected_revision is None
++            assert app._selected_series is None
++            assert app.check_action('range_diff', ()) is False
++            # 'thread' is ungated and self-guards instead; with nothing
++            # selected it must open no screen.
++            depth = len(app.screen_stack)
++            app.action_thread()
++            await pilot.pause()
++            assert len(app.screen_stack) == depth
++
++    @pytest.mark.asyncio
++    async def test_expand_all_toggles_every_series(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """X expands all multi-version series, then collapses them."""
++        _seed_multiver('expand-all', change_id='multi-a')
++        _seed_multiver('expand-all', change_id='multi-b')
++
++        app = TrackingApp('expand-all')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert len(_list_items(app)) == 2
++
++            await pilot.press('X')
++            await pilot.pause()
++            assert len(_list_items(app)) == 8  # 2 parents + 3 versions each
++            assert app._expanded_rows == {('multi-a', 2), ('multi-b', 2)}
++
++            await pilot.press('X')
++            await pilot.pause()
++            assert len(_list_items(app)) == 2
++            assert not app._expanded_rows
++
++            # A partially expanded list expands the rest before collapsing
++            await pilot.press('x')
++            await pilot.pause()
++            assert len(_list_items(app)) == 5
++            await pilot.press('X')
++            await pilot.pause()
++            assert len(_list_items(app)) == 8
++
++    @pytest.mark.asyncio
++    async def test_child_msgs_column(self, tmp_path: pathlib.Path) -> None:
++        """Child counts render like the parent, with '-' when never fetched."""
++        _seed_multiver('expand-msgs')
++
++        app = TrackingApp('expand-msgs')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            items = _list_items(app)
++            # v1 was never fetched, v2 is tracked (5 messages, 2 unseen)
++            assert items[1].rev['message_count'] is None
++            assert _msgs_column(_row_text(items[1])) == '-'
++            assert _msgs_column(_row_text(items[2])) == '5 (2)'
++            assert _msgs_column(_row_text(items[0])) == '5 (2)'
++
++    def test_missing_seen_count_reads_the_same_both_ways(self) -> None:
++        """A pre-v11 row can arrive with a total but no seen count.
++
++        The Msgs column and the details panel one line below it must not
++        answer that differently.
++        """
++        assert _msgs_fields(5, None) == ('5', '', False)
++        assert '5 msgs (0 unseen)' in _format_version(
++            {'revision': 2, 'message_count': 5, 'seen_message_count': None},
++            {'revision': 3},
++        )
++
++    @pytest.mark.asyncio
++    async def test_child_rows_show_subjects(self, tmp_path: pathlib.Path) -> None:
++        """Every version row carries its own prefix-stripped title."""
++        _seed_multiver('expand-subject', revisions=[1, 2])
++        conn = tracking.get_db('expand-subject')
++        tracking.add_revision(
++            conn,
++            'multi-1',
++            3,
++            'multi-1-v3@example.com',
++            subject='[PATCH v3 0/2] multi: renamed after review',
++        )
++        conn.close()
++
++        app = TrackingApp('expand-subject')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            items = _list_items(app)
++            # Versions keeping the series title still show it -- an empty
++            # subject cell reads as missing data.
++            assert 'multi: test series' in _row_text(items[1])
++            assert 'multi: test series' in _row_text(items[2])
++            # A retitled version shows its own title, prefix-stripped.
++            assert 'multi: renamed after review' in _row_text(items[3])
++            assert '[PATCH v3' not in _row_text(items[3])
++
++    @pytest.mark.asyncio
++    async def test_details_panel_version_row(self, tmp_path: pathlib.Path) -> None:
++        """The Version row describes the highlighted child, and hides for parents."""
++        _seed_multiver('expand-details')
++
++        app = TrackingApp('expand-details')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert not _version_row_shown(app)
++
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.press('j')
++            await pilot.pause()
++            assert _version_row_shown(app)
++            text = _static_text(app.query_one('#detail-version', Static))
++            assert text.startswith('v2 (tracked)')
++            assert '5 msgs (2 unseen)' in text
++            assert ', posted ' in text
++
++            # A version that was never fetched has no counts to show
++            await pilot.press('k')
++            await pilot.pause()
++            text = _static_text(app.query_one('#detail-version', Static))
++            assert text.startswith('v1')
++            assert '(tracked)' not in text
++            assert '- msgs (- unseen)' in text
++
++            # The catalog knows no patch count or send date per revision, so
++            # neither is filled in from the tracked revision.
++            subj = _static_text(app.query_one('#detail-subject', Static))
++            assert subj.startswith('[v1] ')
++            assert _static_text(app.query_one('#detail-sent', Static)) == 'Unknown'
++
++            # Back on the parent row the version detail disappears
++            await pilot.press('k')
++            await pilot.pause()
++            assert not _version_row_shown(app)
++
++
++class TestChildRowActions:
++    """Tests for actions taken while a version row is highlighted."""
++
++    @pytest.mark.asyncio
++    async def test_e_opens_that_version_thread(self, tmp_path: pathlib.Path) -> None:
++        """e on a child views the child's thread, not the tracked one."""
++        _seed_multiver('child-thread')
++
++        app = TrackingApp('child-thread')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.pause()
++
++            with patch.object(app, 'push_screen') as mock_push:
++                await pilot.press('e')
++                await pilot.pause()
++
++            assert mock_push.call_count == 1
++            screen = mock_push.call_args[0][0]
++            assert isinstance(screen, LiteThreadScreen)
++            assert screen._message_id == 'multi-1-v1@example.com'
++            assert screen._tracking_info is not None
++            assert screen._tracking_info['change_id'] == 'multi-1'
++            assert screen._tracking_info['revision'] == 1
++
++    @pytest.mark.asyncio
++    async def test_enter_opens_that_version_thread(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """Enter on a child opens the thread instead of the action menu."""
++        _seed_multiver('child-enter')
++
++        app = TrackingApp('child-enter')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            for _ in range(3):
++                await pilot.press('j')
++            await pilot.pause()
++
++            with patch.object(app, 'push_screen') as mock_push:
++                await pilot.press('enter')
++                await pilot.pause()
++
++            assert mock_push.call_count == 1
++            screen = mock_push.call_args[0][0]
++            assert isinstance(screen, LiteThreadScreen)
++            assert screen._message_id == 'multi-1-v3@example.com'
++            assert screen._tracking_info is not None
++            assert screen._tracking_info['revision'] == 3
++
++    @pytest.mark.asyncio
++    async def test_e_on_parent_still_opens_tracked_thread(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """With no child highlighted, e views the tracked revision's thread."""
++        _seed_multiver('child-parent-thread')
++
++        app = TrackingApp('child-parent-thread')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++
++            with patch.object(app, 'push_screen') as mock_push:
++                await pilot.press('e')
++                await pilot.pause()
++
++            screen = mock_push.call_args[0][0]
++            assert screen._message_id == 'multi-1-v2@example.com'
++            assert screen._tracking_info['revision'] == 2
++
++    @pytest.mark.asyncio
++    async def test_d_range_diffs_child_against_tracked(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """d on a child diffs it against the tracked revision, no picker."""
++        _seed_multiver('child-rangediff')
++
++        app = TrackingApp('child-rangediff')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            for _ in range(3):
++                await pilot.press('j')
++            await pilot.pause()
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == 3
++
++            with (
++                patch.object(app, '_do_range_diff') as mock_diff,
++                patch.object(app, 'suspend', return_value=contextlib.nullcontext()),
++            ):
++                await pilot.press('d')
++                await pilot.pause()
++
++            mock_diff.assert_called_once_with('multi-1', 2, 3)
++            assert not isinstance(app.screen, RangeDiffScreen)
++
++    @pytest.mark.asyncio
++    async def test_d_enabled_when_only_synthesized_row_makes_two(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """Both gates count the tracked revision the same way.
++
++        Gating d on a raw catalog count once left an expanded version row
++        with d disabled.  Tracking a series now catalogues the revision it
++        tracks, so the two counts agree by construction rather than by the
++        merge helper patching one of them up.
++        """
++        _seed_multiver('child-rangediff-gate', tracked=2, revisions=[3])
++
++        app = TrackingApp('child-rangediff-gate')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            sel = app._selected_series
++            assert sel is not None
++            assert len(sel.get('_revisions') or []) == 2
++            assert len(app._merge_tracked_revision(sel)) == 2
++            assert app.check_action('toggle_expand', ()) is True
++            assert app.check_action('range_diff', ()) is True
++
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.press('j')
++            await pilot.pause()
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == 3
++
++            with (
++                patch.object(app, '_do_range_diff') as mock_diff,
++                patch.object(app, 'suspend', return_value=contextlib.nullcontext()),
++            ):
++                await pilot.press('d')
++                await pilot.pause()
++            mock_diff.assert_called_once_with('multi-1', 2, 3)
++
++    @pytest.mark.asyncio
++    async def test_d_on_tracked_child_shows_picker(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """The tracked version has no implied other side — pick one."""
++        _seed_multiver('child-rangediff-self')
++
++        app = TrackingApp('child-rangediff-self')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.press('j')
++            await pilot.pause()
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == 2
++
++            with patch.object(app, '_do_range_diff') as mock_diff:
++                await pilot.press('d')
++                await pilot.pause()
++                assert isinstance(app.screen, RangeDiffScreen)
++                await pilot.press('escape')
++                await pilot.pause()
++
++            mock_diff.assert_not_called()
++
++    @pytest.mark.asyncio
++    async def test_series_actions_use_parent_from_child_row(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """The action menu on a child row acts on the parent series."""
++        _seed_multiver('child-action')
++
++        app = TrackingApp('child-action')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.pause()
++
++            await pilot.press('a')
++            await pilot.pause()
++            assert isinstance(app.screen, ActionScreen)
++            lv = app.screen.query_one('#action-list', ListView)
++            actions = [c.key for c in lv.children if isinstance(c, ActionItem)]
++            assert 'abandon' in actions
++            # 'r' is greyed out on another version's row because it checks out
++            # the *tracked* revision; the menu has to refuse it too, or the
++            # checkout the guard declines is one extra keystroke away.
++            assert 'review' not in actions
++            await pilot.press('escape')
++            await pilot.pause()
++            assert app._selected_series is not None
++            assert app._selected_series['change_id'] == 'multi-1'
++
++
++class TestUnseenVersionSignal:
++    """The collapsed row has to show that a non-tracked version has mail."""
++
++    @staticmethod
++    def _set_counts(identifier: str, rev: int, total: int, seen: int) -> None:
++        conn = tracking.get_db(identifier)
++        conn.execute(
++            'UPDATE revisions SET message_count = ?, seen_message_count = ?'
++            ' WHERE change_id = ? AND revision = ?',
++            (total, seen, 'multi-1', rev),
++        )
++        conn.commit()
++        conn.close()
++
++    @pytest.mark.asyncio
++    async def test_marker_flags_unread_on_an_older_version(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        _seed_multiver('unseen-child')
++        # v1 has 3 unread; the tracked v2 has none of its own.
++        self._set_counts('unseen-child', 1, 7, 4)
++
++        app = TrackingApp('unseen-child')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            item = _list_items(app)[0]
++            assert isinstance(item, TrackedSeriesItem)
++            assert item.has_unseen_versions
++            assert '▸' in _row_text(item)
++
++    @pytest.mark.asyncio
++    async def test_tracked_revisions_own_unread_does_not_flag_it(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """The Msgs column already carries the tracked revision's badge."""
++        _seed_multiver('unseen-tracked-only')
++        # Only the tracked v2 has an unread delta (5 total, 3 seen).
++        for rev in (1, 3):
++            self._set_counts('unseen-tracked-only', rev, 4, 4)
++
++        app = TrackingApp('unseen-tracked-only')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            item = _list_items(app)[0]
++            assert isinstance(item, TrackedSeriesItem)
++            assert not item.has_unseen_versions
++
++    @pytest.mark.asyncio
++    async def test_never_counted_versions_do_not_flag_it(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """A NULL count is "unknown", not "all unread"."""
++        _seed_multiver('unseen-null')
++
++        app = TrackingApp('unseen-null')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            item = _list_items(app)[0]
++            assert isinstance(item, TrackedSeriesItem)
++            assert not item.has_unseen_versions
++
++
++class TestVersionRowDetails:
++    @pytest.mark.asyncio
++    async def test_attestation_is_not_shown_for_another_version(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """Attestation is stored per series row, so it describes v2 only."""
++        _seed_multiver('att-version')
++        conn = tracking.get_db('att-version')
++        conn.execute(
++            "UPDATE series SET attestation = 'signed:dkim/example.com'"
++            " WHERE change_id = 'multi-1'"
++        )
++        conn.commit()
++        conn.close()
++
++        app = TrackingApp('att-version')
++
++        def att_shown() -> bool:
++            return bool(app.query_one('#detail-attestation-row').display)
++
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert att_shown()
++
++            # Move onto a child row for a different version.
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.pause()
++            sel = _selected_rev(app)
++            assert sel is not None and sel['revision'] == 1
++            assert not att_shown()
++
++            # ...and back on the tracked version's own row it returns.
++            await pilot.press('k')
++            await pilot.pause()
++            assert att_shown()
++
++
++class TestNeedsUpdateHintSurvivesTheMergedList:
++    @pytest.mark.asyncio
++    async def test_hint_is_shown_when_the_catalog_is_empty(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """The row's '*' flag and the panel have to agree.
++
++        The merged version list always carries the tracked revision, so the
++        panel started rendering 'Revisions: v1' for a series with no catalog
++        data at all -- contradicting the '*' the same row was flying, and
++        leaving the documented "tracking data needs a refresh" hint
++        unreachable.
++        """
++        _seed_db(
++            'needs-update-hint',
++            [
++                {
++                    'change_id': 'no-cat',
++                    'revision': 1,
++                    'subject': '[PATCH] thing: do it',
++                    # Not one of the branch-backed states, or the startup
++                    # rescan marks it gone and the flag is suppressed.
++                    'status': 'accepted',
++                }
++            ],
++        )
++
++        app = TrackingApp('needs-update-hint')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert app._all_series[0].get('needs_update')
++            row = app.query_one('#detail-revisions-row')
++            assert row.display
++            assert 'run [u]pdate' in _static_text(
++                app.query_one('#detail-revisions', Static)
++            )
++
++    @pytest.mark.asyncio
++    async def test_hint_survives_the_v11_catalog_backfill(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """A migrated database must not lose the hint on the way in.
++
++        Schema v11 backfills a catalog row for every series row, so a
++        never-swept series stopped looking any different from one that was
++        swept and found nothing: counting catalog rows put the '*' flag and
++        the panel hint permanently out of reach for every upgrading user.
++        """
++        _seed_db(
++            'needs-update-migrated',
++            [
++                {
++                    'change_id': 'migrated',
++                    'revision': 2,
++                    'subject': '[PATCH v2] thing: do it',
++                    'status': 'accepted',
++                }
++            ],
++        )
++        conn = tracking.get_db('needs-update-migrated')
++        # Exactly what the migration leaves behind: an entry mirroring the
++        # tracked revision, and no watermark, because no sweep has run.
++        tracking.add_revision(conn, 'migrated', 2, 'migrated-v2@example.com')
++        conn.execute('UPDATE revisions SET last_update_check = NULL')
++        conn.commit()
++        conn.close()
++
++        app = TrackingApp('needs-update-migrated')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert app._all_series[0].get('needs_update')
++            assert 'run [u]pdate' in _static_text(
++                app.query_one('#detail-revisions', Static)
++            )
++
++    @pytest.mark.asyncio
++    async def test_no_hint_once_a_sweep_has_run(self, tmp_path: pathlib.Path) -> None:
++        """A v1 series has no other version to find, and must not nag."""
++        _seed_db(
++            'needs-update-swept',
++            [
++                {
++                    'change_id': 'swept',
++                    'revision': 1,
++                    'subject': '[PATCH] thing: do it',
++                    'status': 'accepted',
++                }
++            ],
++        )
++        conn = tracking.get_db('needs-update-swept')
++        tracking.add_revision(conn, 'swept', 1, 'swept-v1@example.com')
++        conn.execute(
++            "UPDATE revisions SET last_update_check = '2026-03-10T10:00:00+00:00'"
++        )
++        conn.commit()
++        conn.close()
++
++        app = TrackingApp('needs-update-swept')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert not app._all_series[0].get('needs_update')
++
++
++class TestVersionRowDates:
++    def test_panel_dates_are_local_not_a_utc_slice(self) -> None:
++        """The details panel and the version row must not disagree by a day.
++
++        The row converts to local time on purpose; the panel used to slice
++        the stored ISO string, so within the local offset of midnight the
++        two rendered different dates for the same revision.
++        """
++        old_tz = os.environ.get('TZ')
++        os.environ['TZ'] = 'Australia/Sydney'
++        time.tzset()
++        try:
++            stamp = '2026-03-12T23:30:00+00:00'
++            out = _tracking_app._format_version(
++                {
++                    'revision': 1,
++                    'message_count': 4,
++                    'seen_message_count': 4,
++                    'found_at': stamp,
++                    'last_mail_at': stamp,
++                },
++                {'revision': 2},
++            )
++            # 23:30 UTC is already the 13th in Sydney; the ISO slice says 12th.
++            assert ', posted 2026-03-13' in out
++            assert ', last activity 2026-03-13' in out
++            assert _tracking_app._local_stamp(stamp, '%d %b') == '13 Mar'
++        finally:
++            if old_tz is None:
++                os.environ.pop('TZ', None)
++            else:
++                os.environ['TZ'] = old_tz
++            time.tzset()
++
++    def test_unparseable_stamp_renders_empty(self) -> None:
++        assert _tracking_app._local_stamp('not a date', '%d %b') == ''
++        assert _tracking_app._local_stamp(None, '%d %b') == ''
++
++
++class TestDuplicateChangeIdRows:
++    """rescan_branches can leave one change_id with two live series rows."""
++
++    @staticmethod
++    def _seed(identifier: str) -> None:
++        conn = tracking.init_db(identifier)
++        for rev, added in ((2, '2026-03-01T00:00:00+00:00'), (5, '2026-03-02')):
++            conn.execute(
++                'INSERT INTO series (change_id, revision, message_id, subject,'
++                ' sender_name, sender_email, sent_at, added_at, status,'
++                " num_patches) VALUES ('dup',?,?,?,'Dee','dee@example.com',"
++                "?,?,'new',2)",
++                (
++                    rev,
++                    f'dup-v{rev}@example.com',
++                    f'[PATCH v{rev} 0/2] dup: a series',
++                    added,
++                    added,
++                ),
++            )
++        for rev in (1, 2, 5):
++            tracking.add_revision(conn, 'dup', rev, f'dup-v{rev}@example.com')
++        conn.commit()
++        conn.close()
++
++    @pytest.mark.asyncio
++    async def test_expanding_one_row_leaves_its_twin_collapsed(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """Expansion is per row, not per change_id.
++
++        Both rows are rendered separately and carry different tracked
++        revisions, so keying the expansion on the change_id alone unfolded
++        the pair together and gave each an identical set of child rows.
++        """
++        self._seed('dup-expand')
++
++        app = TrackingApp('dup-expand')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            items = _list_items(app)
++            assert len(items) == 2
++            first_rev = items[0].series['revision']
++
++            await pilot.press('x')
++            await pilot.pause()
++            items = _list_items(app)
++            # One parent grew three children; the other is untouched.
++            assert len(items) == 5
++            assert app._expanded_rows == {('dup', first_rev)}
++            parents = [i for i in items if isinstance(i, TrackedSeriesItem)]
++            assert [p.expanded for p in parents] == [True, False]
++
++    @pytest.mark.asyncio
++    async def test_unread_on_a_twins_revision_is_not_this_rows_badge(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """Another live row's revision is that row's business, not this one's.
++
++        Its counts are badged in its own Msgs column; accenting this row's
++        expander for them reports "an older version of this series has new
++        mail" about a version this series never tracked.
++        """
++        self._seed('dup-badge')
++        conn = tracking.get_db('dup-badge')
++        # Unread mail on v5 -- which the other live row tracks.
++        conn.execute(
++            'UPDATE revisions SET message_count = 9, seen_message_count = 4'
++            " WHERE change_id = 'dup' AND revision = 5"
++        )
++        conn.commit()
++        conn.close()
++
++        app = TrackingApp('dup-badge')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            by_rev = {
++                i.series['revision']: i
++                for i in _list_items(app)
++                if isinstance(i, TrackedSeriesItem)
++            }
++            # v5 is the other row's own tracked revision...
++            assert by_rev[2].has_unseen_versions is False
++            # ...and v5's row does not badge itself for it either.
++            assert by_rev[5].has_unseen_versions is False
++
++
++class TestLimitCursorRestore:
++    @pytest.mark.asyncio
++    async def test_cursor_returns_after_a_limit_matched_nothing(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """Clearing the selection must not also drop the restore hint.
++
++        The empty branch has to forget what is selected, or every action
++        stays enabled against a row the list no longer shows -- but the
++        stashed focus is only a hint, and dropping it lands the cursor at
++        the top once the filter is cleared again.
++        """
++        _seed_db('limit-empty', [SAMPLE_SERIES[0], SAMPLE_SERIES[1]])
++
++        app = TrackingApp('limit-empty')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.pause()
++            selected = app._selected_series
++            assert selected is not None
++            target = selected['change_id']
++
++            app._limit_pattern = 'nothing-matches-this'
++            app._stash_focus()
++            await app._refresh_list()
++            await pilot.pause()
++            while_empty = app._selected_series
++            assert while_empty is None
++
++            app._limit_pattern = ''
++            await app._refresh_list()
++            await pilot.pause()
++            restored = app._selected_series
++            assert restored is not None
++            assert restored['change_id'] == target
++
++
++class TestExpandAllScope:
++    @pytest.mark.asyncio
++    async def test_expand_all_ignores_filtered_out_series(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """[X] judged "already expanded?" against rows the filter hides."""
++        _seed_multiver('expand-scope', change_id='multi-1')
++        conn = tracking.get_db('expand-scope')
++        tracking.add_series_to_db(
++            conn,
++            change_id='other-1',
++            revision=2,
++            subject='[PATCH v2 0/2] other: hidden series',
++            sender_name='Hidden Hank',
++            sender_email='hank@example.com',
++            sent_at='2026-03-11T10:00:00+00:00',
++            message_id='other-1-v2@example.com',
++            num_patches=2,
++        )
++        for rev in (1, 2):
++            tracking.add_revision(conn, 'other-1', rev, f'other-1-v{rev}@example.com')
++        conn.close()
++
++        app = TrackingApp('expand-scope')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            # Hide 'other-1' behind the limit filter.
++            app._limit_pattern = 'multi'
++            await app._refresh_list()
++            await pilot.pause()
++            assert len(_list_items(app)) == 1
++
++            app.action_expand_all()
++            await pilot.pause()
++            # The visible series expanded, and the hidden one was not
++            # counted when deciding expand-vs-collapse.
++            assert app._expanded_rows == {('multi-1', 2)}
++            assert len(_list_items(app)) == 4
++
++    @pytest.mark.asyncio
++    async def test_expand_all_collapse_leaves_hidden_series_alone(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """[X] collapsing must not fold up what the filter is hiding."""
++        _seed_multiver('collapse-scope', change_id='multi-1')
++        conn = tracking.get_db('collapse-scope')
++        tracking.add_series_to_db(
++            conn,
++            change_id='other-1',
++            revision=2,
++            subject='[PATCH v2 0/2] other: hidden series',
++            sender_name='Hidden Hank',
++            sender_email='hank@example.com',
++            sent_at='2026-03-11T10:00:00+00:00',
++            message_id='other-1-v2@example.com',
++            num_patches=2,
++        )
++        for rev in (1, 2):
++            tracking.add_revision(conn, 'other-1', rev, f'other-1-v{rev}@example.com')
++        conn.close()
++
++        app = TrackingApp('collapse-scope')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            # Expand both, then hide one behind the limit filter.
++            app.action_expand_all()
++            await pilot.pause()
++            assert app._expanded_rows == {('multi-1', 2), ('other-1', 2)}
++            app._limit_pattern = 'multi'
++            await app._refresh_list()
++            await pilot.pause()
++
++            app.action_expand_all()
++            await pilot.pause()
++            # Only the displayed series collapsed.
++            assert app._expanded_rows == {('other-1', 2)}
++
++
++class TestUnseenVersionMarkerRendering:
++    """The computed flag has to reach the glyph, not just the attribute."""
++
++    @pytest.mark.asyncio
++    async def test_the_marker_is_accented_when_an_older_version_has_mail(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        _seed_multiver('unseen-style')
++        conn = tracking.get_db('unseen-style')
++        conn.execute(
++            'UPDATE revisions SET message_count = 7, seen_message_count = 4'
++            " WHERE change_id = 'multi-1' AND revision = 1"
++        )
++        conn.commit()
++        conn.close()
++
++        app = TrackingApp('unseen-style')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            label = _list_items(app)[0].query_one(Label)
++            marker_spans = [
++                span
++                for span in label.content.spans
++                if label.content.plain[span.start : span.end] == '▸'
++            ]
++            assert marker_spans, 'the ▸ marker carries no style'
++            assert 'bold' in str(marker_spans[0].style)
++
++    @pytest.mark.asyncio
++    async def test_the_marker_is_plain_when_nothing_is_unread(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        _seed_multiver('unseen-style-none')
++
++        app = TrackingApp('unseen-style-none')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            label = _list_items(app)[0].query_one(Label)
++            marker_spans = [
++                span
++                for span in label.content.spans
++                if label.content.plain[span.start : span.end] == '▸'
++            ]
++            assert marker_spans == []
++
++
++class TestStatusActionsKeepTheVersionRow:
++    @pytest.mark.asyncio
++    async def test_waiting_from_a_version_row_stays_there(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """A status change says nothing about which versions the series has.
++
++        Setting a target branch already left the cursor alone; snooze,
++        unsnooze, waiting and thank bounced it up to the parent, so two
++        status-only actions taken from the same row disagreed about where
++        the cursor belonged afterwards.
++        """
++        _seed_multiver('status-keeps-row')
++        app = TrackingApp('status-keeps-row')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')  # onto the first version row
++            await pilot.pause()
++            before = app.query_one('#tracking-list', ListView).index
++            assert isinstance(_list_items(app)[before], TrackedRevisionItem)
++            picked = _list_items(app)[before].rev['revision']
++
++            app.action_waiting()
++            await pilot.pause()
++            await pilot.pause()
++
++            item = _list_items(app)[
++                app.query_one('#tracking-list', ListView).index or 0
++            ]
++            assert isinstance(item, TrackedRevisionItem)
++            assert item.rev['revision'] == picked
++            assert app._selected_revision is not None
++            assert app._selected_revision['revision'] == picked
++
++
++class TestVersionRowDateIsLocal:
++    @pytest.mark.asyncio
++    async def test_the_date_is_rendered_in_local_time(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """The column stores UTC; showing it raw puts a row a day out.
++
++        23:00 UTC is the next day in any eastward zone, which is exactly
++        when a maintainer notices the version row and the thread viewer
++        disagreeing about the same message.
++
++        Plain environ save/restore, not monkeypatch.setenv: the fixture
++        undoes its env change after this method's finally block, so the
++        last tzset() here would run with TZ unset and leave libc's cached
++        zone disagreeing with os.environ for the rest of the process.
++        """
++        old_tz = os.environ.get('TZ')
++        os.environ['TZ'] = 'Australia/Sydney'
++        time.tzset()
++        try:
++            _seed_multiver('rowdate-local')
++            conn = tracking.get_db('rowdate-local')
++            conn.execute(
++                "UPDATE revisions SET last_mail_at = '2026-03-11T23:30:00+00:00'"
++                " WHERE change_id = 'multi-1' AND revision = 1"
++            )
++            conn.commit()
++            conn.close()
++
++            app = TrackingApp('rowdate-local')
++            async with app.run_test(size=(120, 30)) as pilot:
++                await pilot.pause()
++                await pilot.press('x')
++                await pilot.pause()
++                child = _list_items(app)[1]
++                assert isinstance(child, TrackedRevisionItem)
++                assert '12 Mar' in _row_text(child)
++        finally:
++            if old_tz is None:
++                os.environ.pop('TZ', None)
++            else:
++                os.environ['TZ'] = old_tz
++            time.tzset()
++
++    @pytest.mark.asyncio
++    async def test_the_date_touches_neither_neighbour(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """The date shares the submitter field with the version label.
++
++        Both are variable width, so the check is that blanks separate the
++        date from the version beside it and from the counts after it, and
++        that Subject still starts on the same column as the parent row's --
++        which is the column the header describes.
++        """
++        _seed_multiver('rowdate-gap')
++        conn = tracking.get_db('rowdate-gap')
++        conn.execute(
++            "UPDATE revisions SET last_mail_at = '2026-03-11T10:00:00+00:00'"
++            " WHERE change_id = 'multi-1' AND revision = 1"
++        )
++        conn.commit()
++        conn.close()
++
++        app = TrackingApp('rowdate-gap')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            items = _list_items(app)
++            child = items[1]
++            assert isinstance(child, TrackedRevisionItem)
++            text = _row_text(child)
++            assert 'multi: test series' in text
++            # Blank on both sides of the date, whatever it renders as.
++            assert re.search(r'v1 +11 Mar +', text)
++            # Subject starts where the parent's does, and the header says so.
++            assert text.index('multi: test series') == _row_text(items[0]).index('[v2,')
++
++
++class TestConflictNoticeKeepsItsKeyHint:
++    def test_the_link_key_survives_markup_rendering(self) -> None:
++        """notify() renders Rich markup, so a bare [l] is eaten as a tag."""
++        from textual.content import Content
++
++        from b4.review_tui._tracking_app import _conflicts_notice
++
++        notice = _conflicts_notice([2, 3])
++        rendered = Content.from_markup(notice).plain
++        assert 'v2, v3' in rendered
++        assert '[l]' in rendered
++        # ...and nothing was mistaken for a style along the way.
++        assert Content.from_markup(notice).spans == []
++
++
++class TestDiscoveryErrorSurvivesMarkupRendering:
++    """A lore exception is arbitrary text, and notify() parses markup."""
++
++    def test_a_bracketed_subject_is_not_swallowed(self) -> None:
++        """Lowercase-initial brackets parse as a style tag and vanish."""
++        from textual.content import Content
++
++        from b4.review_tui._tracking_app import _discovery_error_notice
++
++        notice = _discovery_error_notice('no match for [patch v2 1/3] foo: fix')
++        rendered = Content.from_markup(notice).plain
++        assert '[patch v2 1/3] foo: fix' in rendered
++        assert Content.from_markup(notice).spans == []
++
++    def test_a_closing_tag_does_not_raise(self) -> None:
++        """An unbalanced '[/...]' raises MarkupError inside the toast."""
++        from textual.content import Content
++
++        from b4.review_tui._tracking_app import _discovery_error_notice
++
++        notice = _discovery_error_notice('cannot read [/var/tmp/x] while fetching')
++        rendered = Content.from_markup(notice).plain
++        assert '[/var/tmp/x]' in rendered
++
++
++class TestVersionRowActionGating:
++    @pytest.mark.asyncio
++    async def test_range_diff_is_offered_on_a_thanked_series(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """[x] expands in every state, and the docs promise 'd' on a child."""
++        _seed_multiver('gate-thanked')
++        conn = tracking.get_db('gate-thanked')
++        tracking.update_series_status(conn, 'multi-1', 'thanked', revision=2)
++        conn.close()
++
++        app = TrackingApp('gate-thanked')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert app.check_action('toggle_expand', ()) is True
++            assert app.check_action('range_diff', ()) is True
++
++    @pytest.mark.asyncio
++    async def test_review_is_disabled_on_another_version(
++        self, tmp_path: pathlib.Path
++    ) -> None:
++        """'r' checks out the tracked revision, not the highlighted one."""
++        _seed_multiver('gate-review')
++        app = TrackingApp('gate-review')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert app.check_action('review', ()) is True
++            await pilot.press('x')
++            await pilot.pause()
++            # Cursor onto v1 -- not the tracked v2.
++            await pilot.press('j')
++            await pilot.pause()
++            assert _selected_rev(app) is not None
++            assert app.check_action('review', ()) is False
++            # ...and on the tracked revision's own row it is fine again.
++            await pilot.press('j')
++            await pilot.pause()
++            assert _selected_rev(app) is not None
++            assert app.check_action('review', ()) is True
++
++    @pytest.mark.asyncio
++    async def test_take_and_rebase_are_disabled_on_another_version(
++        self, gitdir: str
++    ) -> None:
++        """Both act on the review branch, which holds the tracked revision.
++
++        'r' was greyed out for that reason from the start; these two build
++        and move the very same branch, so offering them on a v1 row runs
++        them against v2 while every label on screen says v1.
++        """
++        # A real branch, or the startup rescan turns 'reviewing' into 'gone'
++        # and neither action is offered in any case.
++        _create_review_branch(gitdir, 'multi-1', identifier='gate-take', revision=2)
++        _seed_multiver('gate-take')
++        conn = tracking.get_db('gate-take')
++        tracking.update_series_status(conn, 'multi-1', 'reviewing', revision=2)
++        conn.close()
++
++        app = TrackingApp('gate-take')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert app.check_action('take', ()) is True
++            assert app.check_action('rebase', ()) is True
++            await pilot.press('x')
++            await pilot.pause()
++            # Cursor onto v1 -- not the tracked v2.
++            await pilot.press('j')
++            await pilot.pause()
++            assert _selected_rev(app) is not None
++            assert app.check_action('take', ()) is False
++            assert app.check_action('rebase', ()) is False
++            # ...and the action menu drops them for the same row.
++            await pilot.press('a')
++            await pilot.pause()
++            assert isinstance(app.screen, ActionScreen)
++            lv = app.screen.query_one('#action-list', ListView)
++            from b4.review_tui._modals import ActionItem
++
++            offered = [c.key for c in lv.children if isinstance(c, ActionItem)]
++            assert 'take' not in offered
++            assert 'rebase' not in offered
++            # An action that does not touch the branch is still there.
++            assert 'snooze' in offered
++            await pilot.press('escape')
++
++
++class TestThreadViewLeavesNoStaleFocus:
++    """Viewing a version's thread must not capture a later reload.
++
++    _stash_focus() is a hint for the *next* _refresh_list(), and every
++    other caller reloads immediately.  action_thread() instead pushes a
++    screen and returns, so the hint outlives the action -- and re-reading
++    an already-read thread writes nothing, leaving the DB mtime alone and
++    _check_db_changed() asleep, so nothing consumes it either.  The next
++    reload from an unrelated action then parks the cursor on the version
++    row the maintainer looked at, arming _selected_revision behind their
++    back.
++    """
++
++    @pytest.mark.asyncio
++    async def test_a_viewed_version_does_not_capture_a_later_reload(
++        self, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
++    ) -> None:
++        from textual.screen import ModalScreen
++
++        class _StubThreadScreen(ModalScreen[None]):
++            """Stands in for LiteThreadScreen: pushes and pops, no fetch."""
++
++            def __init__(self, *args: Any, **kwargs: Any) -> None:
++                super().__init__()
++
++        monkeypatch.setattr(
++            'b4.review_tui._lite_app.LiteThreadScreen', _StubThreadScreen
++        )
++        # Re-reading a thread whose counts have not moved writes nothing, so
++        # in the real flow the mtime poller stays asleep and never reloads.
++        # The startup rescan does touch the DB here, so pin the poller off
++        # rather than race its one-second timer.
++        monkeypatch.setattr(TrackingApp, '_check_db_changed', lambda self: None)
++
++        # Seeded oldest-first: the list sorts newest-tracked first, so
++        # 'multi-b' heads the list and 'multi-a' follows it.
++        _seed_multiver('thread-focus', change_id='multi-a')
++        _seed_multiver('thread-focus', change_id='multi-b')
++
++        app = TrackingApp('thread-focus')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            items = _list_items(app)
++            assert [i.series['change_id'] for i in items] == ['multi-b', 'multi-a']
++
++            # Expand 'multi-a' and put the cursor on its v1 row.
++            await pilot.press('j')
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.pause()
++            on_child = app._selected_revision
++            assert on_child is not None
++            assert on_child['revision'] == 1
++
++            # View that version's thread and come back.  Nothing about the
++            # thread changed, so no reload happens on the way out.
++            depth = len(app.screen_stack)
++            app.action_thread()
++            await pilot.pause()
++            assert len(app.screen_stack) == depth + 1
++            app.pop_screen()
++            await pilot.pause()
++
++            # The hint must not outlive the action that set it.
++            assert app._focus_change_id is None
++            assert app._focus_revision is None
++
++            # Navigate back up to 'multi-b' and abandon it -- a reload that
++            # deliberately does not stash a focus of its own.
++            await pilot.press('k')
++            await pilot.press('k')
++            await pilot.pause()
++            selected = app._selected_series
++            assert selected is not None
++            assert selected['change_id'] == 'multi-b'
++
++            app._on_abandon_confirmed(True, 'multi-b', 'b4/review/multi-b', False)
++            await pilot.pause()
++
++            # The cursor lands on a series row, not on the version row that
++            # was looked at three actions ago.
++            lv = app.query_one('#tracking-list', ListView)
++            landed = lv.highlighted_child
++            assert isinstance(landed, TrackedSeriesItem)
++            assert app._selected_revision is None
++
++
++class TestExpandAllWithoutASelection:
++    """[X] needs no selection, so it must not restore by row index.
++
++    _stash_focus() records a hint only when something is selected, and
++    expanding is precisely the operation that inserts rows above the
++    cursor -- so the index fallback lands somewhere unrelated.
++    """
++
++    @pytest.mark.asyncio
++    async def test_expand_all_keeps_the_highlighted_series(
++        self, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
++    ) -> None:
++        # The mtime poller re-stashes and reloads on its own timer; pin it
++        # off so this exercises [X]'s restore and not a race with it.
++        monkeypatch.setattr(TrackingApp, '_check_db_changed', lambda self: None)
++
++        # Display order is newest-tracked first: multi-c, multi-b, multi-a.
++        for change_id in ('multi-a', 'multi-b', 'multi-c'):
++            _seed_multiver('expand-nosel', change_id=change_id)
++
++        app = TrackingApp('expand-nosel')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            assert [i.series['change_id'] for i in _list_items(app)] == [
++                'multi-c',
++                'multi-b',
++                'multi-a',
++            ]
++
++            # Put the cursor on the last row, away from index 0.
++            await pilot.press('j')
++            await pilot.press('j')
++            await pilot.pause()
++            selected = app._selected_series
++            assert selected is not None
++            target = selected['change_id']
++            assert target == 'multi-a'
++
++            # Close the details panel: the selection goes, the cursor stays.
++            await pilot.press('escape')
++            await pilot.pause()
++            assert app._selected_series is None
++
++            await pilot.press('X')
++            await pilot.pause()
++            assert len(_list_items(app)) == 12  # 3 parents + 3 versions each
++
++            # Still the same series, and still its parent row.
++            lv = app.query_one('#tracking-list', ListView)
++            landed = lv.highlighted_child
++            assert isinstance(landed, TrackedSeriesItem)
++            assert landed.series['change_id'] == target
++            assert app._selected_revision is None
++
++
++class TestTargetBranchKeepsTheVersionRow:
++    """Setting a target branch must not repaint the panel for another row.
++
++    [t] acts on the series whichever row the cursor is on, which is fine
++    -- but its callback refreshes the details panel without saying which
++    version the cursor is sitting on, so the panel silently reverts to
++    the tracked revision while the cursor visibly stays on the child row.
++    """
++
++    @pytest.mark.asyncio
++    async def test_setting_a_target_keeps_the_panel_on_the_version_row(
++        self, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
++    ) -> None:
++        # The mtime poller would reload and repaint on its own timer; pin
++        # it off so this pins the callback's own behaviour.
++        monkeypatch.setattr(TrackingApp, '_check_db_changed', lambda self: None)
++        _seed_multiver('target-version-row')
++
++        app = TrackingApp('target-version-row')
++        async with app.run_test(size=(120, 30)) as pilot:
++            await pilot.pause()
++            await pilot.press('x')
++            await pilot.pause()
++            await pilot.press('j')
++            await pilot.pause()
++            on_child = app._selected_revision
++            assert on_child is not None
++            assert on_child['revision'] == 1
++            assert _version_row_shown(app)
++
++            app._on_target_branch_set('sound/for-next')
++            await pilot.pause()
++
++            # The cursor never moved, so the panel must still describe the
++            # version it is on.
++            still_on = app._selected_revision
++            assert still_on is not None
++            assert still_on['revision'] == 1
++            assert _version_row_shown(app)
 
 -- 
 2.53.0
