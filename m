@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BA7403E97
-	for <tools@linux.kernel.org>; Wed, 12 Aug 2026 21:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED5B3EFD24
+	for <tools@linux.kernel.org>; Wed, 12 Aug 2026 21:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786571256; cv=none; b=GZWpeB3XRgrKKjKd0x+rv0/iFY0nXZMjEYixUUD3xwJz19ot/3X8erPAa1Z9jSdRdO2DET3sBD1Jk3hBy5JONaYr8gFCIrrhGGwEmduTu/jo0qyHdMa5fywXjeKq2jN7cz7h68ZBa8LIz5FE4L77XxJntKUyJkDoL+/pHaxt3cQ=
+	t=1786571257; cv=none; b=IaiZLjtZaikI8j1rANKkv4GMNeew2w/gWobxf0Wp7tq5C8EESRMvTrUgXyX7xmlkNS/UeNszv9C1ojkbACbZC/V9HzSK/8//Qeo0+BeFZIW8QSzinRjo3tqPrAmPyCy9+Qm1VzXEH5pKZXyE/x1uUZ81aOyEp9hhLsNdCaJ7HmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786571256; c=relaxed/simple;
-	bh=BzCjqN4lSxnZaXEMmDP3MPM7TonnqSVELNVvPa7WaHU=;
+	s=arc-20240116; t=1786571257; c=relaxed/simple;
+	bh=p+ylV5S0hn32Gg2HExIJTbWq7VQpVaOPuBqPGmJKE4I=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=s2i0MAxe6dlLoJzKdTjhanANkXMDFP/RB19/eC0xOE+JeW+8x3NbXsdoCPDL8pzi6Qk8ShB1AIppeVkU4PMNURZ6F2yH9Aeq9eSUyBEBR7ua1n85W6oLYpV5cJ3mLpI0aReiRlnjHrG8o+ZaLTMOSwkts++d4WuBALpJN/fTFKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O9cQFNXL; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=PRvxl+zoT5yyeQPCfdyNTz+vNEEOu4DnMo4OU+R7I98bFOzcKT0OtuSsux//RfqUUIvMVQFwAlj5IR2r58wS+ZSqVVpBYTo8PpleBNEvrlO5FLkpVK9Y3PKZZbwzPgHmt8KvprIAnUTzw0VqRSRHh5PCrQc9Pp4i+ltLXNmaN14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OWhkokmx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O9cQFNXL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OWhkokmx"
 Received: by smtp.kernel.org (Postfix)
-	id D48F01F00A3A; Wed, 12 Aug 2026 21:47:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED981F000E9;
-	Wed, 12 Aug 2026 21:47:33 +0000 (UTC)
+	id 2D1AF1F00A3D; Wed, 12 Aug 2026 21:47:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533531F000E9;
+	Wed, 12 Aug 2026 21:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786571254;
-	bh=k+5QmNuLVzAuQESwkDoA5HDdyMgR6btFR3LiamvGa/A=;
+	s=k20260515; t=1786571256;
+	bh=dCwbZiZhhOook74OfPWNNyvg7z9eJX3YnWTTeencIWM=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=O9cQFNXLotpIADtk/QG8yy6uh7ps5qh//wtRd9nOmb+SSjHLwS2fOGTCdbrJJ4dTI
-	 yECfKCs7GAFFnwum4oukJdQCrDwdSYRBou9vVUK5wkSMdL34Dp0fPRyg/iAPRAvZwB
-	 l9QNxMc05QPPbwiXNwX8FHq8GI9h1vhalM0FBXa2DTdW7qvrvKUMXLicaYjkx8/4+y
-	 sH6YKQaZ0z6RGVvDd/nZ36Rwe5BvUiJTHpwquIHOYYpZc9lEnDXpLPGSDF9DEXd61n
-	 S4pVDxOHt2Zzt6YY11wb65SZo8hZuVCmRv+IQjl8Ahvyok31qouxLkPGuWdD+0R0sr
-	 6pPDxmjWgTMCA==
+	b=OWhkokmxVtLqoZgJHKV+xIC/JxOti0+OuVCy6VCmg71hg/cLVRp4g+6GdByGz0yL3
+	 4fXRq9wp7X4DQZt+tYl1II18npn9nTzDfFuEwenoVV7Z5OObRdPyqRLG4eL6wPdihk
+	 H5t4bYKVC9AE6T33q+81FRP9BPfSFcTJhagdGmnkohzWnFAZJrBBh/1dbg7CDKJ20t
+	 iXcGziofHVprTGN5I+m359jQir2sPWzJrL98y21nzfBPg7iLqny2F11/dsfvilNKhv
+	 hLIEaKyYcwa8JPJ/sGleF/3Stk7g0bTpQElXgcW8tGKikMt231EB16kZVcaZrLWn5i
+	 6CFhZqs0xkK0A==
 From: Christian Brauner <brauner@kernel.org>
-Date: Wed, 12 Aug 2026 23:47:00 +0200
-Subject: [PATCH RFC v2 19/25] review: add backward discovery of older
- series revisions
+Date: Wed, 12 Aug 2026 23:47:01 +0200
+Subject: [PATCH RFC v2 20/25] review-tui: add a "Find older revisions"
+ action
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,460 +40,248 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260812-work-b4-multiver-rows-v2-19-305d53cd723a@kernel.org>
+Message-Id: <20260812-work-b4-multiver-rows-v2-20-305d53cd723a@kernel.org>
 References: <20260812-work-b4-multiver-rows-v2-0-305d53cd723a@kernel.org>
 In-Reply-To: <20260812-work-b4-multiver-rows-v2-0-305d53cd723a@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.17-dev-362b8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=20182; i=brauner@kernel.org;
- h=from:subject:message-id; bh=BzCjqN4lSxnZaXEMmDP3MPM7TonnqSVELNVvPa7WaHU=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTVvLxttzhr5a79YvrfvV48m1M7YbZPX92Urgv3N0iKL
- dz/ak+XSkcpC4MYF4OsmCKLQ7tJuNxynorNRpkaMHNYmUCGMHBxCsBEGvUY/vu+mGC2PjBoDvP0
- ldYRLtP6jC67LVFa+Xi96XGOUytbU1Yx/C/eeCosJE64R3/r5xbzmFVnPTtlK0MjlXYVfyyN3rG
- 9nwMA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10519; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=p+ylV5S0hn32Gg2HExIJTbWq7VQpVaOPuBqPGmJKE4I=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTVvLy9+b1NwMN3oVsrHkauXpe+7dLmJY5ptV9EXUSfi
+ Ea+fP75XkcpC4MYF4OsmCKLQ7tJuNxynorNRpkaMHNYmUCGMHBxCsBEbDcy/E/u6AyZfpr/yafN
+ Dx6/fXQujfVLqWX0Sv79qTcXnjc/fmMhI8OlGy3xqa4bumVXG1a7f/ddZf9t76nVy9L9+R3drv3
+ ef48XAA==
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Auto-discovery only looks forward, so versions posted before a series was
-tracked never enter the revisions catalog unless they shared the seed
-thread.
+Offer discover_older_revisions() from the tracker's action menu, wherever
+manual revision linking is offered.  The search runs in a lore worker; on
+success the list reloads, deferring to the DB mtime poll when a modal is
+up.
 
-Add discover_older_revisions().  It fetches the tracked thread and runs
-the same get_extra_series() machinery b4 am/mbox uses to pull other
-revisions, with an explicit wantvers covering every previous version,
-since the backward search otherwise fetches only latest-1.  Newly
-recorded revisions are polled immediately so they arrive with counts and
-cached thread blobs.
-
-The update sweep runs the same backward search once per series, latched
-in a dedicated back_searched column.  Neither the catalog nor revision
-provenance can record that a search ran and found nothing: the v11
-backfill gives every series row a catalog entry, and offline tracking and
-manual linking both stamp a source with no search behind them.
+The documentation also gains the "Link a revision" line the partial block
+never listed, although that action has been offered for partial series
+all along.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- src/b4/review/_review.py  |  45 +++++---
- src/b4/review/tracking.py | 263 +++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 293 insertions(+), 15 deletions(-)
+ docs/maintainer/review.rst         |  9 ++++
+ src/b4/review_tui/_tracking_app.py | 96 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 105 insertions(+)
 
-diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index 68b5a7a0..2ed7c340 100644
---- a/src/b4/review/_review.py
-+++ b/src/b4/review/_review.py
-@@ -2497,22 +2497,38 @@ def update_series_tracking(
-     if b4.can_network:
-         try:
-             _conn = b4.review.tracking.get_db(identifier)
--            _known = set(
--                r['revision']
--                for r in b4.review.tracking.get_revisions(_conn, change_id)
--            )
--            _conn.close()
-+            try:
-+                _rows = b4.review.tracking.get_revisions(_conn, change_id)
-+                _searched = b4.review.tracking.is_back_searched(_conn, change_id)
-+            finally:
-+                _conn.close()
-         except Exception:
--            _known = set()
-+            _rows = []
-+            _searched = False
-+        _known = {r['revision'] for r in _rows}
+diff --git a/docs/maintainer/review.rst b/docs/maintainer/review.rst
+index ca063269..5ddd9dd2 100644
+--- a/docs/maintainer/review.rst
++++ b/docs/maintainer/review.rst
+@@ -252,6 +252,8 @@ actions depend on the series status:
+ * ``[s]`` **Snooze** — defer until a date, duration, or git tag
+ * ``[U]`` **Upgrade** — switch to a newer revision (when available)
+ * ``[l]`` **Link a revision** — manually associate a revision by message-id
++* ``[o]`` **Find older revisions** — search lore for versions posted before
++  the series was tracked
+ * ``[A]`` **Abandon** / ``[x]`` **Archive**
  
-         msgs = b4.mbox.get_extra_series(msgs, direction=1, nocache=True)
--        # Discount the tracked revision's own entry.  The v11 backfill gives
--        # every series row one, so a plain "is the catalog empty?" test is
--        # never true again and this one-shot search stopped running at all.
--        if current_rev > 1 and not (_known - {current_rev}):
-+        # One-shot, latched on changes.back_searched.  The catalog alone
-+        # cannot carry the latch: the v11 backfill gives every series row
-+        # an entry, so "is the catalog empty?" is never true again, and
-+        # discounting just the tracked revision re-ran this uncached
-+        # subject+sender search on every sweep, forever, for any series
-+        # whose older versions cannot be found.  Revision provenance
-+        # cannot carry it either: offline tracking and manual linking
-+        # both stamp a source with no search behind it, and a manual
-+        # stamp can never be overwritten to record a later real search.
-+        if current_rev > 1 and not _searched and not (_known - {current_rev}):
-             msgs = b4.mbox.get_extra_series(
-                 msgs, direction=-1, wantvers=list(range(1, current_rev)), nocache=True
-             )
-+            try:
-+                _conn = b4.review.tracking.get_db(identifier)
-+                try:
-+                    b4.review.tracking.set_back_searched(_conn, change_id)
-+                finally:
-+                    _conn.close()
-+            except Exception as ex:
-+                logger.debug('Could not latch the backward search: %s', ex)
+ **Partial** (some patches applied, remainder still in review):
+@@ -262,6 +264,9 @@ actions depend on the series status:
+ * ``[w]`` **Mark as waiting** — waiting on a new revision
+ * ``[s]`` **Snooze** — defer until later
+ * ``[U]`` **Upgrade** — switch to a newer revision (when available)
++* ``[l]`` **Link a revision** — manually associate a revision by message-id
++* ``[o]`` **Find older revisions** — search lore for versions posted before
++  the series was tracked
+ * ``[A]`` **Abandon** / ``[x]`` **Archive**
  
-     lmbx = b4.LoreMailbox()
-     for msg in msgs:
-@@ -2562,7 +2578,13 @@ def update_series_tracking(
-     try:
-         conn = b4.review.tracking.get_db(identifier)
-         new_revs = b4.review.tracking._record_discovered_revisions(
--            conn, change_id, lmbx, str(linkmask)
-+            conn,
-+            change_id,
-+            lmbx,
-+            str(linkmask),
-+            # Offline the lmbx is just the cached thread with no search
-+            # behind it; 'heuristic' keeps that provenance honest.
-+            source='discovered' if b4.can_network else 'heuristic',
-         )
-         result['new_revisions'] = len(new_revs)
-         try:
-@@ -2684,7 +2706,6 @@ def update_series_tracking(
-         if not save_tracking_ref(topdir, branch, cover_text, tracking):
-             result['error'] = 'Error saving tracking data'
-             return result
--
-     elif topdir and has_review_branch:
-         # The block above mirrors the catalog as part of its save, but it
-         # only runs for four statuses.  Every other one still holds
-diff --git a/src/b4/review/tracking.py b/src/b4/review/tracking.py
-index 6662cd9e..843808c4 100644
---- a/src/b4/review/tracking.py
-+++ b/src/b4/review/tracking.py
-@@ -922,8 +922,19 @@ def cmd_track(cmdargs: argparse.Namespace) -> None:
-         # Already tracked: fold any newly discovered revisions into the
-         # existing series instead of creating a duplicate (bug 70fe607).
-         new_revs = _record_discovered_revisions(
--            conn, existing_change_id, lmbx, linkmask, rethreaded_revs=rethreaded_revs
-+            conn,
-+            existing_change_id,
-+            lmbx,
-+            linkmask,
-+            rethreaded_revs=rethreaded_revs,
-+            # Offline the lmbx is just the fetched thread with no search
-+            # behind it; 'heuristic' keeps that provenance honest.
-+            source='discovered' if b4.can_network else 'heuristic',
-         )
-+        if b4.can_network and wanted_ver > 1:
-+            # The backward search above covered the older versions; the
-+            # update sweep's one-shot pass need not repeat it.
-+            set_back_searched(conn, existing_change_id)
-         srow = conn.execute(
-             'SELECT status, revision FROM series WHERE change_id = ?',
-             (existing_change_id,),
-@@ -990,8 +1001,19 @@ def cmd_track(cmdargs: argparse.Namespace) -> None:
-     )
-     add_series_patches(conn, change_id, revision, lser)
-     _record_discovered_revisions(
--        conn, change_id, lmbx, linkmask, rethreaded_revs=rethreaded_revs
-+        conn,
-+        change_id,
-+        lmbx,
-+        linkmask,
-+        rethreaded_revs=rethreaded_revs,
-+        # Offline the lmbx is just the fetched thread with no search
-+        # behind it; 'heuristic' keeps that provenance honest.
-+        source='discovered' if b4.can_network else 'heuristic',
-     )
-+    if b4.can_network and wanted_ver > 1:
-+        # The backward search above covered the older versions; the update
-+        # sweep's one-shot pass need not repeat it.
-+        set_back_searched(conn, change_id)
-     conn.close()
-     # Mirror the catalog onto the review branch when one already exists (a
-     # fresh track usually has none yet — this is then a harmless no-op).
-@@ -1205,7 +1227,10 @@ def get_all_tracked_series(identifier: str) -> list[dict[str, Any]]:
+ **New / gone:**
+@@ -270,6 +275,8 @@ actions depend on the series status:
+ * ``[U]`` **Upgrade** — switch to a newer revision (new only, when available)
+ * ``[s]`` **Snooze** — defer until later (new only)
+ * ``[l]`` **Link a revision** — manually associate a revision by message-id (new only)
++* ``[o]`` **Find older revisions** — search lore for versions posted before
++  the series was tracked (new only)
+ * ``[A]`` **Abandon**
  
- # Provenance ranking for a revision's `source`.  A higher rank wins: a manual
- # link must override, and never be downgraded by, automated discovery.
--_SOURCE_RANK = {'heuristic': 0, 'auto-consume': 0, 'manual': 1}
-+# 'discovered' sits in between: unlike 'heuristic' (a row seeded from a series
-+# row by backfill) it proves a discovery pass actually processed the series,
-+# which is what the update sweep's one-shot backward search latches on.
-+_SOURCE_RANK = {'heuristic': 0, 'auto-consume': 0, 'discovered': 1, 'manual': 2}
+ **Waiting:**
+@@ -277,6 +284,8 @@ actions depend on the series status:
+ * ``[U]`` **Upgrade** — switch to the newer revision (when available)
+ * ``[r]`` **Review** — return to reviewing
+ * ``[l]`` **Link a revision** — manually associate a revision by message-id
++* ``[o]`` **Find older revisions** — search lore for versions posted before
++  the series was tracked
+ * ``[A]`` **Abandon** / ``[x]`` **Archive**
+ 
+ **Snoozed:**
+diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
+index f0ad512a..999513ca 100644
+--- a/src/b4/review_tui/_tracking_app.py
++++ b/src/b4/review_tui/_tracking_app.py
+@@ -32,6 +32,7 @@ from typing import (
+     Union,
+ )
+ 
++from rich.markup import escape
+ from rich.text import Text as RichText
+ from textual.app import App, ComposeResult
+ from textual.binding import Binding
+@@ -45,6 +46,7 @@ import b4.mbox
+ import b4.review
+ import b4.review.tracking
+ import b4.ty
++import liblore
+ from b4.review._review import NO_COVER_NOTE
+ from b4.review_tui._common import (
+     QUIT_BINDINGS,
+@@ -65,6 +67,7 @@ from b4.review_tui._common import (
+     resolve_styles,
+     run_lore_worker,
+     suspend_and_edit,
++    worker_cancelled,
+ )
+ from b4.review_tui._modals import (
+     QUEUE_BUSY,
+@@ -105,6 +108,7 @@ _ACTION_SHORTCUTS: Dict[str, str] = {
+     'unsnooze': 'u',
+     'upgrade': 'U',
+     'link': 'l',
++    'discover': 'o',
+     'thank': 't',
+     'abandon': 'A',
+     'archive': 'x',
+@@ -514,6 +518,32 @@ def _resolve_worktree_take_conflict(
+     return True
  
  
- def _source_rank(source: Optional[str]) -> int:
-@@ -1588,6 +1613,25 @@ def _store_catalog_synced(
-     _set_change_state(conn, change_id, catalog_synced=f'{branch_sha}:{catalog_sha}')
- 
- 
-+def set_back_searched(conn: sqlite3.Connection, change_id: str) -> None:
-+    """Latch "the backward revision search ran" for a change_id.
++def _discovery_error_notice(error: str) -> str:
++    """Message for a discovery run that came back with an error.
 +
-+    A dedicated stamp rather than an inference from revision provenance:
-+    offline tracking and manual linking both write sources with no search
-+    behind them, and a search that finds nothing writes no revision rows
-+    at all.  Set once the search has run, found something or not.
++    *error* is a lore exception's text, so it is escaped rather than
++    trusted: notify() renders Rich markup, and an unescaped bracket in it
++    is either swallowed as a style tag -- taking the diagnostic the message
++    exists to carry -- or, when the text holds a '[/...]' path fragment,
++    raises MarkupError inside the toast render.  See _conflicts_notice.
 +    """
-+    _set_change_state(conn, change_id, back_searched=1)
++    return f'Older-revision search failed: {escape(error)}'
 +
 +
-+def is_back_searched(conn: sqlite3.Connection, change_id: str) -> bool:
-+    """Whether the one-shot backward revision search already ran."""
-+    row = conn.execute(
-+        'SELECT back_searched FROM changes WHERE change_id = ?', (change_id,)
-+    ).fetchone()
-+    return bool(row and row[0])
++def _conflicts_notice(conflicts: List[int]) -> str:
++    """Message for versions a discovery run found another series tracking.
 +
-+
- def sync_revisions_catalog_to_branch(
-     topdir: Optional[str], identifier: str, change_id: str
- ) -> bool:
-@@ -1994,12 +2038,33 @@ def _raw_revision_ref(
-     return '', '', False
- 
- 
-+def _revision_posted_at(lmbx: 'b4.LoreMailbox', revision: int) -> Optional[str]:
-+    """When a discovered revision was posted, from its own Date: header.
-+
-+    The backward search records versions posted long before the series was
-+    tracked, so dating them "now" would sort the oldest version after the
-+    newest and report a year-old posting as found today.
++    The ``[l]`` is escaped because notify() renders Rich markup: unescaped
++    it is parsed as a style tag, and the one key the message exists to name
++    is dropped from what the maintainer actually reads.
 +    """
-+    msg = lmbx.covers.get(revision)
-+    if msg is None:
-+        for p in getattr(lmbx.series.get(revision), 'patches', None) or []:
-+            if p is not None:
-+                msg = p
-+                break
-+    date = getattr(msg, 'date', None)
-+    if not isinstance(date, datetime.datetime):
-+        return None
-+    return date.astimezone(datetime.timezone.utc).isoformat()
++    clist = ', '.join(f'v{r}' for r in conflicts)
++    return (
++        f'{clist} already tracked as a separate series'
++        f' — use {escape("[l]")} to link and absorb'
++    )
 +
 +
- def _record_discovered_revisions(
-     conn: sqlite3.Connection,
-     change_id: str,
-     lmbx: 'b4.LoreMailbox',
-     linkmask: str,
-     rethreaded_revs: Optional[Set[int]] = None,
-+    source: str = 'discovered',
-+    skip_revs: Optional[Set[int]] = None,
- ) -> List[int]:
-     """Record every revision discovered in *lmbx* under *change_id*.
+ def _format_snooze_until(value: str) -> str:
+     """Format a snoozed_until value for display.
  
-@@ -2014,12 +2079,30 @@ def _record_discovered_revisions(
-     their member patch message-ids are recorded — fetching the recorded
-     message-id alone would not reconstitute the series, so retrieval must read
-     the stored patches instead.
-+
-+    *source* defaults to ``'discovered'``, the rank for versions a live
-+    lore search turned up.  A caller recording from a cached thread with
-+    no search behind it passes ``'heuristic'``, so a later real discovery
-+    or manual link still outranks those rows.  Whether the one-shot
-+    backward search has run is deliberately not inferred from here -- see
-+    :func:`set_back_searched`.
-+
-+    Revisions in *skip_revs* are left out, for a caller that has decided
-+    some of what it found is not its to record -- see
-+    :func:`discover_older_revisions` and the strays it reports rather than
-+    absorbs.  A parameter rather than the caller deleting entries from
-+    *lmbx*: that mailbox is the caller's fetch, not a scratch buffer, and
-+    a reader of it after this call should still see what came back.
-     """
-     if rethreaded_revs is None:
-         rethreaded_revs = set()
-+    if skip_revs is None:
-+        skip_revs = set()
-     known = {r['revision'] for r in get_revisions(conn, change_id)}
-     new_revs: List[int] = []
-     for v in sorted(lmbx.series.keys()):
-+        if v in skip_revs:
-+            continue
-         v_ser = lmbx.series[v]
-         is_rt = v in rethreaded_revs
-         v_msgid, v_subject, from_cover = _raw_revision_ref(lmbx, v, rethreaded=is_rt)
-@@ -2034,8 +2117,10 @@ def _record_discovered_revisions(
-             v_subject,
-             v_link,
-             fingerprint=getattr(v_ser, 'fingerprint', None),
-+            source=source,
-             is_rethreaded=is_rt,
-             subject_from_cover=from_cover,
-+            found_at=_revision_posted_at(lmbx, v),
+@@ -1089,6 +1119,44 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             elif event.state == WorkerState.ERROR:
+                 self.notify('Could not fetch series', severity='error')
+             return
++        if event.worker.name == '_discover_older':
++            if event.state == WorkerState.SUCCESS:
++                result = event.worker.result or {}
++                error = result.get('error')
++                found = result.get('found', 0)
++                conflicts = result.get('conflicts') or []
++                if error == 'offline':
++                    # Not a failure, just nothing to search with.
++                    self.notify('Offline — cannot search for older revisions')
++                elif error:
++                    self.notify(_discovery_error_notice(str(error)), severity='error')
++                elif found:
++                    # found is len(revisions), so the list is never empty here.
++                    rlist = ', '.join(f'v{r}' for r in result.get('revisions') or [])
++                    self.notify(f'Found and added: {rlist}')
++                    # Reload so the new revisions show up right away; if a
++                    # modal is up, the DB mtime poll picks it up instead.
++                    if len(self.app.screen_stack) == 1:
++                        if self._selected_series:
++                            self._focus_change_id = self._selected_series.get(
++                                'change_id'
++                            )
++                        self._invalidate_caches()
++                        self._load_series()
++                elif not conflicts:
++                    # Only when there is nothing else to say.  A run that
++                    # found versions and skipped every one of them as a
++                    # conflict reports 0 found, and saying "none found"
++                    # ahead of the list of them contradicts itself.
++                    self.notify('No older revisions found')
++                if conflicts:
++                    self.notify(_conflicts_notice(conflicts), severity='warning')
++            elif event.state == WorkerState.ERROR:
++                if isinstance(event.worker.error, liblore.OperationCancelledError):
++                    # Shutting down or navigating away, not a failure.
++                    return
++                self.notify('Older-revision search failed', severity='error')
++            return
+         if event.worker.name != '_startup_rescan':
+             return
+         if event.state == WorkerState.SUCCESS:
+@@ -1516,6 +1584,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 actions.append(('upgrade', 'Upgrade to newer revision'))
+             if status == 'new':
+                 actions.append(('link', 'Manually link a revision'))
++                actions.append(('discover', 'Find older revisions'))
+             actions.append(('abandon', 'Abandon series'))
+             if status == 'new':
+                 actions.append(('waiting', 'Mark as waiting on new revision'))
+@@ -1548,6 +1617,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 actions.append(('thank', 'Send thank-you'))
+             if status in ('reviewing', 'replied', 'partial', 'waiting'):
+                 actions.append(('link', 'Manually link a revision'))
++                actions.append(('discover', 'Find older revisions'))
+             # 'Return to reviewing' sits just above the abandon/archive block
+             # rather than at the top of the menu.
+             if status in ('accepted', 'partial', 'thanked'):
+@@ -1572,6 +1642,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             'thank': self.action_thank,
+             'upgrade': self.action_update_revision,
+             'link': self.action_link_revision,
++            'discover': self.action_discover_older,
+             'archive': self.action_archive,
+             'waiting': self.action_waiting,
+             'snooze': self.action_snooze,
+@@ -3957,6 +4028,31 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+             ),
          )
-         if is_rt:
-             add_series_patches(conn, change_id, v, v_ser)
-@@ -4241,6 +4326,178 @@ def _is_archived_only(conn: sqlite3.Connection, change_id: str) -> bool:
-     return not (row[1] or 0)
  
++    def action_discover_older(self) -> None:
++        """Search lore for older revisions of the selected series."""
++        if not self._selected_series or not self._identifier:
++            return
++        series = dict(self._selected_series)
++        config = b4.get_main_config()
++        linkmask = str(config.get('linkmask', ''))
++        topdir = b4.git_get_toplevel()
++        identifier = self._identifier
++        self.notify('Searching lore for older revisions…')
++
++        def _discover() -> Dict[str, Any]:
++            # The search machinery logs to the console; keep it from
++            # scribbling over the TUI.
++            with _quiet_worker():
++                return b4.review.tracking.discover_older_revisions(
++                    identifier,
++                    series,
++                    linkmask,
++                    topdir=topdir,
++                    cancel_cb=worker_cancelled,
++                )
++
++        run_lore_worker(self, _discover, name='_discover_older')
++
+     def action_link_revision(self) -> None:
+         """Manually link another revision to the selected series by msgid.
  
-+def discover_older_revisions(
-+    identifier: str,
-+    series: Dict[str, Any],
-+    linkmask: str,
-+    topdir: Optional[str] = None,
-+    cancel_cb: Optional[Callable[[], bool]] = None,
-+) -> Dict[str, Any]:
-+    """Search lore for revisions older than the tracked one and record them.
-+
-+    Auto-discovery only looks forward, so versions posted before a series
-+    was tracked never enter the catalog unless they happened to share the
-+    seed thread.  This fetches the tracked revision's thread, runs the
-+    backward lore search (change-id query when the cover carries one,
-+    subject+sender otherwise, capped roughly a year back), records every
-+    previously unknown revision, and immediately polls the series so the
-+    new revisions get counts and cached thread blobs.
-+
-+    A rethreaded series is reassembled from its member patches before the
-+    search runs.  Its recorded message-id is one patch's, so seeding from
-+    that patch's thread alone hands :func:`b4.mbox.get_extra_series` a
-+    mailbox with no cover in it -- and a patch numbered above 1 is skipped
-+    outright there, leaving no base message and no query issued at all.
-+
-+    The search returns whole revisions, not per-patch threads, so an older
-+    version that was posted with broken threading is recorded as a plain
-+    revision: viewing it shows the thread of the message-id that was
-+    matched rather than the reassembled series.  Rethreading a version
-+    still has to go through a manual link.
-+
-+    A version that is already tracked as its own stray series is reported
-+    rather than recorded -- see the ``conflicts`` key below.
-+
-+    Returns ``{'found': n, 'revisions': [..], 'conflicts': [..],
-+    'error': str-or-None}`` where *found* counts genuinely new catalog
-+    entries, *revisions* lists their version numbers, and *conflicts*
-+    lists versions skipped because another series already tracks them.
-+    """
-+
-+    def nothing(error: Optional[str] = None) -> Dict[str, Any]:
-+        return {'found': 0, 'revisions': [], 'conflicts': [], 'error': error}
-+
-+    change_id = series.get('change_id', '')
-+    message_id = series.get('message_id', '')
-+    if not change_id or not message_id:
-+        return nothing('no message-id for this series')
-+    tracked_rev = int(series.get('revision') or 1)
-+    if tracked_rev <= 1:
-+        return nothing()
-+    if not b4.can_network:
-+        return nothing('offline')
-+
-+    # Same seed the per-revision poller uses, so a rethreaded series arrives
-+    # reassembled from its member patches rather than as one patch's thread.
-+    # Falls back to the plain fetch whenever the patch list cannot supply a
-+    # series, which is what a non-rethreaded revision always does.
-+    seed_conn = get_db(identifier)
-+    try:
-+        msgs = _fetch_revision_thread_msgs(
-+            identifier,
-+            seed_conn,
-+            change_id,
-+            {
-+                'revision': tracked_rev,
-+                'message_id': message_id,
-+                'is_rethreaded': bool(series.get('is_rethreaded')),
-+            },
-+        )
-+    finally:
-+        seed_conn.close()
-+    if not msgs:
-+        return nothing(f'could not fetch thread for {message_id}')
-+    # Same machinery b4 am/mbox uses to pull other revisions of a series,
-+    # except we ask for every previous version at once — without an
-+    # explicit wantvers the backward search only fetches latest-1.
-+    wantvers = list(range(1, tracked_rev))
-+    try:
-+        msgs = b4.mbox.get_extra_series(
-+            msgs, direction=-1, wantvers=wantvers, nocache=True
-+        )
-+    except liblore.OperationCancelledError:
-+        raise
-+    except Exception as ex:
-+        return nothing(str(ex))
-+
-+    lmbx = b4.LoreMailbox()
-+    for msg in msgs:
-+        lmbx.add_message(msg)
-+    if not lmbx.series:
-+        return nothing()
-+
-+    conn = get_db(identifier)
-+    try:
-+        # The backward search just ran; the update sweep's one-shot pass
-+        # need not repeat it.
-+        set_back_searched(conn, change_id)
-+        # Absorbing a stray removes that revision from the series that owns
-+        # it, which a search action should not do unprompted: skip and
-+        # report, [l] absorbs.
-+        #
-+        # Only for versions this change_id does not already have.  A series
-+        # whose catalog already covers what the search turned up has nothing
-+        # to link: [l] would absorb a posting it already holds, and since
-+        # add_revision() is first-wins on message_id it would not even change
-+        # the row -- it would only delete the series that owned the other
-+        # copy.  A change_id synthesized per posting (the author sends no
-+        # change-id trailer, so date+slug+fingerprint differ every version)
-+        # puts every one of its versions in that state at once, which is how
-+        # this came to report four conflicts on a series that had already
-+        # catalogued all of them.
-+        own = {r['revision'] for r in get_revisions(conn, change_id)}
-+        conflicts = set()
-+        for v in sorted(lmbx.series.keys()):
-+            if v in own:
-+                continue
-+            if v == tracked_rev:
-+                # The seed thread is the tracked revision's, so lmbx always
-+                # holds it, and a stray duplicate of it matches here like any
-+                # other.  Reporting it would send the maintainer to [l] to
-+                # link the version they are already on.  Same reason
-+                # new_revs below drops it.
-+                #
-+                # Only that one revision, not everything from it up: a newer
-+                # version can ride along in the seed thread (an author
-+                # posting vN+1 as a reply), and skipping the check for it
-+                # would record a posting another series already owns without
-+                # anyone being told.
-+                continue
-+            v_msgid, _, _ = _raw_revision_ref(lmbx, v)
-+            fingerprint = getattr(lmbx.series[v], 'fingerprint', None)
-+            if find_stray_revision(conn, change_id, v_msgid, fingerprint) is not None:
-+                conflicts.add(v)
-+        recorded = _record_discovered_revisions(
-+            conn, change_id, lmbx, linkmask, skip_revs=conflicts
-+        )
-+    finally:
-+        conn.close()
-+
-+    # The seed thread is the tracked revision's, so lmbx always holds it
-+    # too, and it counts as new whenever the catalog had no row for it.
-+    # Recording that row is worth having; reporting the version the
-+    # maintainer is already on as an older one found is not.
-+    new_revs = [v for v in recorded if v < tracked_rev]
-+
-+    if recorded:
-+        # Mirror the new entries into the review branch's tracking commit,
-+        # as every other _record_discovered_revisions caller does, so they
-+        # travel with the branch on push.
-+        if topdir:
-+            sync_revisions_catalog_to_branch(topdir, identifier, change_id)
-+    # Named outright so other revisions awaiting a first fetch cannot spend
-+    # the budget on these -- but still inside it, or one [o] press on a v20
-+    # series answers with 19 round-trips.
-+    if new_revs:
-+        try:
-+            update_revision_message_counts(
-+                identifier,
-+                [series],
-+                topdir=topdir,
-+                only_revisions=set(new_revs),
-+                max_revisions_per_series=REVISION_POLL_LIMIT,
-+                cancel_cb=cancel_cb,
-+            )
-+        except liblore.OperationCancelledError:
-+            pass
-+    return {
-+        'conflicts': sorted(conflicts),
-+        'found': len(new_revs),
-+        'revisions': sorted(new_revs),
-+        'error': None,
-+    }
-+
-+
- def mark_all_messages_seen(
-     conn: sqlite3.Connection, change_id: str, revision: int
- ) -> None:
 
 -- 
 2.53.0
