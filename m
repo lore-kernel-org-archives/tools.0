@@ -1,85 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD6F3BF676
-	for <tools@linux.kernel.org>; Sat, 15 Aug 2026 07:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FFD345EBA
+	for <tools@linux.kernel.org>; Sat, 15 Aug 2026 07:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786778090; cv=pass; b=Eq9//1cQj/aTMJICE2JiBHKexKvZaJG30QPSwN8RGQTk+BatFYx9DGJQbfJy++7EZueXBlLBgUwD1tra8Is2MBNWKTfPBrEiSMKZFXj5D03X3dbuziaBjskABhBODkueCQcHlfT6ffKtVqr0WHWBqW1IXSSzSb39C6VkhlicnMA=
+	t=1786779206; cv=pass; b=X7MqxI4Kk+8A4UcU7R7wKO7ojnXU1S/aAGKTQXzcUJHjn9vHBONHr9ydQ0jRPjbd+6NYz0bweznqXnnoQK6md5MeFcvnsvItX+Iwqn/DSifER+X8pTtS3LbQ/MKQjqmVBdfF0V0aCc5TXbUjvlqCs7HfR7W1MsejEt/9a7inhSM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786778090; c=relaxed/simple;
+	s=arc-20240116; t=1786779206; c=relaxed/simple;
 	bh=Ettouu41544xanEl70Ol36vWBCwBm35kr0VaENjlNdQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=UV2IcI6XpjF+0yKf3XPrmVowXBUrlME3yz8hYGQBiIN+mTqRw7DLb88FIbk/9l7cJWTeXqMyiMe0yyuLqUd+CCvSTxWjNAJXsgZVewENROdD5Bx6kD7uMECPSpYzBGhW+zrGiJ7/U9DLxa57QZFzzF/wK6BLIyD5agPEA8g+ruo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=odazpESA; arc=pass smtp.client-ip=100.103.45.18
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NjcngAx/Gqhm1PR05KuFftWzAiABjtsluLBwB6sBUGzFLL3XeuhGamOXMzIVGHAUVgex4E3o32aDjtTqIHY96nssrhXjRM+DUoBJCU30gNyCjEWQkWePZBzdXTascDWq8UruwMp7J9carg5XUmKJsT293l2f2zvgSjPdYdDTcks=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=Jm0PqCuU; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="odazpESA"
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="Jm0PqCuU"
 Received: by smtp.kernel.org (Postfix)
-	id 5C4B21F00A3A; Sat, 15 Aug 2026 07:14:48 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=91.218.175.245
+	id 48D401F00A3A; Sat, 15 Aug 2026 07:33:24 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=91.218.175.25
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1786778088;
-	b=zupuwvRzdHqk7+lWfJdzX5hxYA9ZbLce6uGRhSJ4VNdr3g4AOIyPw1tsYU6GP3hS8cJr
-	 GJs3CS2gSuZ3thBTisRHQKee+BbQR/5+ure5IOCwTKAhGt1kYLMbKpSfz/aPDfw9y/CHb
-	 nxkIHd55oF4k3efuHPyMV5wrfmzB+vDpbm4nEc7/ZHKZxfNhHilDqNinRj+jWgApwVYzQ
-	 1SP49JcIasd5mN3Zd8iol1hLiU1SGcgqwEu0Fj4Kh7B8jDvz/6shJBRTSNi0COnkoUC3Q
-	 SjqmlIpOs5XGt9l3rsuJPQHPlkbO8L7bRBYAP/JntfVIzF/vJxNV+wxsQn7MuhzJEqQ==
+	t=1786779204;
+	b=gOEGSGnT7man9VepPnBZ3LHGzToFG3rvAiT3mteQb6BWTwET1xwwXDuq6LODdj8RKFj0
+	 HSPDSBunSa3GJ61QPFc8OOckouc9lIMsAD6wo6J5mnfvlaaMYLZrbP+pSg7fVEIPyC1sN
+	 NmtlkB7P7HS9E7WmQnt5lOHTUrf+hm+VH3hnNKPJm4tlPEcp3BXbwDMV+lr3NwhyCUoBI
+	 esHQ54t7Z3RvKl4Bh1kmHpervJ478UUv7/lyzRAKMpqz51sozvqzVSPPijry8VUJLDBXE
+	 jRG97QNsMIb2uRTKErpNvzl61r/6YkwjaQDe/eMKLNIFyNpv2/Ss15msKuYFxoOwxyQ==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1786778088;
+	c=relaxed/relaxed; t=1786779204;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:MIME-Version:
-	 Content-Type:Content-Disposition;
+	 X-Migadu-Flow:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
 	bh=tPpMzOdnabh92CZb//7qBUD2S2Eq0dpISXjYHviI/8g=;
-	b=hqWZ3HvT21fMKlrZzawjuEjqfyXoFisF2s5TCxZkaJ0dIBmu6rJ73/3oqXtrJYrFnQ+6
-	 0ujupmNK/taC4vBeEULpjxBwNS122pKFWsgy17ggMXrpitNo5JlNMy5MmnGFvwNWYXSCF
-	 CWn6C+aNEaFzw6wRvRH/eeUtPxLG/h5AWlDDDOC/V/FZnzIlPVibazRXcBbDXg8dWq1NA
-	 FXGhABuKemZJd9q37V+HhWlGd7zlS+WJYJmdYbdQoW0TFuqcTJHTCxIWgWQGKaWuC6Ys8
-	 yIymSFMzNRPKHJfYR78IrNP5yxsxpla9kemgluh9YN8ROl8ZzkJGiRAw2y+H/Rx2TXw==
-ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=wyuan.org header.i=@wyuan.org header.a=rsa-sha256 header.s=key1 header.b=odazpESA;
+	b=g36NVazHkqFcsd9zN6YoFlSWQYzvS77Ou2MgMbMG/KcB5PXv9CzAxfI/B/PC8T3UULod
+	 9RJ7kEPQ4AaVMxFSf0ezVqd4xXFWHPnbJjgcWFKgPNDeGkOS53Mmmx4ngwFC5nbGrEIrH
+	 2M03RVV+0i2CPNVN/ydzVD3kaDujov9nubS9nQowuo5NPqhYujotbgRm52+prkUqI6uAL
+	 SyOcks9K3n5IOW5jCUlKRku+yTzcTdtF5VM17l3u9C7PDy6nNmWaWzQn1aiLi9CUVjH+5
+	 pRDL7BUAq5NYSae/+4XMtQt0tw8Ea+fkwX4aJthveOOnijSMuRprUw/C5rae1rksLyA==
+ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=wyuan.org header.i=@wyuan.org header.a=rsa-sha256 header.s=key1 header.b=Jm0PqCuU;
 	dmarc=pass header.from=wyuan.org;
 	spf=pass smtp.mailfrom=wyuan.org;
-	arc=none smtp.remote-ip=91.218.175.245
-Received: from mta0.migadu.com (out-245.mta0.migadu.com [91.218.175.245])
+	arc=none smtp.remote-ip=91.218.175.25
+Received: from mta0.migadu.com (out-25.mta0.migadu.com [91.218.175.25])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id B5BCD1F000E9
-	for <tools@kernel.org>; Sat, 15 Aug 2026 07:14:46 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id E911D1F000E9
+	for <tools@kernel.org>; Sat, 15 Aug 2026 07:33:22 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=wyuan.org header.i=@wyuan.org header.a=rsa-sha256 header.s=key1 header.b=odazpESA
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org B5BCD1F000E9
+	dkim=pass (2048-bit key, unprotected) header.d=wyuan.org header.i=@wyuan.org header.a=rsa-sha256 header.s=key1 header.b=Jm0PqCuU
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org E911D1F000E9
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=wyuan.org
 X-Envelope-To: tools@kernel.org
 DKIM-Signature: a=rsa-sha256; bh=Ettouu41544xanEl70Ol36vWBCwBm35kr0VaENjlNdQ=;
  c=simple/simple; d=wyuan.org;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786778084; v=1; x=1787382884;
- b=odazpESAKVj0xT7hzCIbUxtIXKqXoJla9gJslVnamuBvG+aKtxrJz1suGwihhVVjmeNZVEvP
- +aBRdNLunba9oiVoUkhXd5DWRBIzw8z/oS//b/nGy1TY55Z+7989NdIm32cGBaAtK7C1AUuwjYf
- xAl+EBWu6Z2wFhpCm247eEQxRL+m8e8EtymXaIQdA9qGaD2uXBRo+utYaKmVfahuR/LnvJVNSup
- 946qYRa7LTkHgz57mElBYT1fMqyTiBrjzD7XXGV61gbR+NgB9nkRj6ZJR9i3PvnFXg4Brhff5RH
- FDiqk8+vs5RL86EPJbPQRH5AxWCGDf2oQeKRxZbSkDdCQ==
+ t=1786779200; v=1; x=1787384000;
+ b=Jm0PqCuU7/Dsk2fJoDHmw5h7qqvdvX0kX0vO4ZN6TKMrysS9PKHRQV2yx9D1stevM6lNKj7k
+ O7a/syvoc4WgHWfnfre//vTEKICHWaogx7MZPp+cIvTXXuGqkLwzwGEvfu366g/Bq5wugmKXq/E
+ 4ZG0Qvjr5sXd92kbqbXLML5uxhXDZCfvSKydeUsWxYzuufw+YNpAIwpyQCNPGsrRO8vk7M+P8Dt
+ NAC5kKp0apoqGv/eaZdvWfhy0o9w71y37jWLvYOTTUJiPQuYzzfRDsXwqinx7ea11DYWo09qHMs
+ GLFYjmimCAs7NWTBLJvQBBLvjqBewN2mgotcWa77m4o3w==
 X-Envelope-To: tools@kernel.org
-Received: from localhost (117.176.242.163)
-	by smtp.migadu.com with ESMTPS id e33e3eb86315d554;
-	Sat, 15 Aug 2026 07:14:44 +0000
+Received: from mbp.wyuan.org (117.176.242.163)
+	by smtp.migadu.com with ESMTPS id 57901b8edebf61ff;
+	Sat, 15 Aug 2026 07:33:10 +0000
 X-Migadu-Flow: FLOW_OUT
-Date: Sat, 15 Aug 2026 15:14:38 +0800
 From: Weijie Yuan <wy@wyuan.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
+Cc: Weijie Yuan <wy@wyuan.org>,
+	tools@kernel.org
 Subject: [PATCH b4] send: honor excluded addresses in per-patch Cc summary
+Date: Sat, 15 Aug 2026 15:32:54 +0800
 Message-ID: <36067800fe19dba18dc4874edfae524346b4ed1d.1786777097.git.wy@wyuan.org>
+X-Mailer: git-send-email 2.55.0.717.g61afef3e370b
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Message-ID: <20260815071438.9YzZPtzz3ULiJUmonAF0hHp9rwNLdFBUsS5bf5g0Fmk@z>
+Content-Transfer-Encoding: 8bit
+Message-ID: <20260815073254.S5ffVZo-GJdw79bgmrkrIxa4hk3P3JqnJsZwwSh-83E@z>
 
 When --not-me-too or b4.send-me-too=no is used, the sender's address is
 added to the exclusion list and removed from the final To/Cc headers.
