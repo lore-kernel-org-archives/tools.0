@@ -1,119 +1,121 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA5D352034
-	for <tools@linux.kernel.org>; Fri, 14 Aug 2026 12:31:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786710669; cv=none; b=QfUqLv2BB/VHlBPFaJFDDleNfkOwmZ8tozFFD32vgZAUQYi0Ncr1LcD7oxEKR2t+rv1Ie/TSkekFM/a+tk+eBzVnyzVCcIisin4KSJJFi4Swx6BVlaW8SgdCJKxI6o0vCj/CjQAFQaQ/JW2EHGSGjHCJC1wkTWYsXqTQOM+69Fo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786710669; c=relaxed/simple;
-	bh=oHMEdoZnrW57SPXiKshlCPR8WcXYvrY4mwElYe0o4f0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PKQe2frhBdN3j+cldtRs9XO5pRRR6cN+snkxNmF3EBiXnLFc5fhxldB0IbXI7pYp88+pvJKoZu2F6FhgxTgrKLCfYWn/wLnxxz3iX2kTHV8X3JdyeV6PG82mD54FINYXlgl4M2VYBfW7ReyTe4vSAwUo1d7qnBJcMyO1shKh2I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lyxb1CE1; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E213F88B9
+	for <tools@linux.kernel.org>; Sat, 15 Aug 2026 07:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786777228; cv=pass; b=hYhjmC+/gxfKSo3/xWFGK/RNlDDAUeF5zSnnix7eVIYxbsUzb4ixJdL0/qOjBbjJVs7v9aCDogRprmkvjRNCDjcxa0oYbo+jQHBajGnoZiU/l3Yo9D6GPkH1VlwvKmvkgay6y6DTM6TijRnLusie7hextMpF96M49FnMoUSZmZg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786777228; c=relaxed/simple;
+	bh=Ettouu41544xanEl70Ol36vWBCwBm35kr0VaENjlNdQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=MwAriHqdM1m2bWBX0fR/5mVRX/vQMKxt9Qak5w/89quSvs8lEL5zQheRJxvGEYH/MVSRogUTcxoV9Nh14NIXIXctM/xEBjz0l279/ROwjD8MFBxswcvkRMlMoINbxRae0UHh4CPioeyCYLhQT2xSnSIklLo8JM93J7NvxyeUE+4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=GVkTo3O/; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lyxb1CE1"
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="GVkTo3O/"
 Received: by smtp.kernel.org (Postfix)
-	id 5A01E1F00A3E; Fri, 14 Aug 2026 12:31:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA23B1F000E9;
-	Fri, 14 Aug 2026 12:31:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786710668;
-	bh=Gvi567RD25FkV7RuapiM5X6v0JqGWM0KzNyPjcFUwfQ=;
-	h=From:To:Cc:Subject:Date;
-	b=Lyxb1CE1Up0nT9JA7CRCbqRn4HsgXGz5Iv2wdHDu/VoJ7aPJz0B8oEypt1S79Z9/5
-	 Z8FBXllcaNbUNDnvsx999jPVk07c42MuN9J/71XpgGVp75/D3OFUkGVy/Bw7T0NASq
-	 E8dV+spDvYVAHfS//aXWTB9TKJgVfEbwsCDZzCKDdLNTtAh1ikjj/c0r7HIPDyUiYW
-	 wIA3tVpFv+FmjOlgnUEd9ZcBWDpMuS4rvRxa0I3M/jk4xMsbxYmNCgJ/Gt4CAaEbFL
-	 2DcN6zaIflgYdA4nWAkCUWgL7U6oEoVvY4gaQ2z+Wabg9dmzcnj3CzSqPZkVtFPmZG
-	 lXAezWl9sddrw==
-From: Maxime Ripard <mripard@kernel.org>
-To: tools@kernel.org
-Cc: Konstantin Ryabitsev <mricon@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>
-Subject: [PATCH] ezgb: Drop shebang lines from library modules
-Date: Fri, 14 Aug 2026 14:31:04 +0200
-Message-ID: <20260814123104.1616487-1-mripard@kernel.org>
-X-Mailer: git-send-email 2.55.0
+	id C96151F00A3A; Sat, 15 Aug 2026 07:00:21 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=95.215.58.100
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1786777221;
+	b=JB7CWWiAk/UHH3xw3i/BNwMT9rUI6ACvWWBjBF1aeD/1NpYXqYneLvtsWn/H6Jt43vh1
+	 5JswIPdEKYb5P18yMqJZSN+DxxOYLaW6it7gIjjTp4HMPZzXfC+Ine2fyYUT1CTr9WtAQ
+	 x1XgPrZDNsKvug8VqRqzdvtHAHAzZaJUV64mKFfCESyxQt46xWHVlEhWAgycuY8aoVODo
+	 +wPi6sS1ZnzbUJsCPNv5oS2sIVNjm7BAw6oTsE96my6W1d4ynyf/QxQbliyxhBP5UE1t5
+	 GFutEWulMVfpOLB+DyOHA4zMemAFsDK6uQP9w/cslW8kMSLi1h84BfBpwpiAGP0zETg==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1786777221;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:MIME-Version:
+	 Content-Type:Content-Disposition;
+	bh=tPpMzOdnabh92CZb//7qBUD2S2Eq0dpISXjYHviI/8g=;
+	b=pfccFrck+sZ+gipKSuZMCjLftDza6JeOnGMdJVpuoedo/ESraiRukYlrAHojcFL/Rx5W
+	 hoauXxscX4lmGg9fYAk/8o0Qqr+Bz/jOmfsyPO08b+WdX89W0+UxwfIPfo7lW/STSIbgw
+	 zGo4eg0F+LAa0BSLysH7SiY3wGpAcRlT51OkRgydOWSIKw3bzWBT1bQEXialG92Kal7O3
+	 auzVdrzablEfBf3ggWx1BH2TemGYj4D1bm2+pUE9wVPQnCILIuPLq9R6rz8zw9ThESe07
+	 rYsA17mjecQgX+0+hmQFuUeGNM+5Jte1/AGdoJD5WpFvFXO71nuKMum5Yxp6A0Qft6Q==
+ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=wyuan.org header.i=@wyuan.org header.a=rsa-sha256 header.s=key1 header.b="GVkTo3O/";
+	dmarc=pass header.from=wyuan.org;
+	spf=pass smtp.mailfrom=wyuan.org;
+	arc=none smtp.remote-ip=95.215.58.100
+Received: from mta1.migadu.com (out-100.mta1.migadu.com [95.215.58.100])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 32DAF1F000E9
+	for <tools@kernel.org>; Sat, 15 Aug 2026 07:00:19 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=wyuan.org header.i=@wyuan.org header.a=rsa-sha256 header.s=key1 header.b=GVkTo3O/
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 32DAF1F000E9
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=wyuan.org
+X-Envelope-To: tools@kernel.org
+DKIM-Signature: a=rsa-sha256; bh=Ettouu41544xanEl70Ol36vWBCwBm35kr0VaENjlNdQ=;
+ c=simple/simple; d=wyuan.org;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1786777217; v=1; x=1787382017;
+ b=GVkTo3O/8eGaENE9Hdy7johzue/tcpJB3BsEeAL78JEkIQW+62D/nLXSyBn3kcMOjMNMnlvm
+ aYPbyxl0JjwgO3nZBeUDnhII1G29PvC+qToyOoPl2i+C3CAgr/vmo0Q+jVA6Q1bWoDHmOu7wbqE
+ 9Cy6c5ONSFYn+KcblBi057YEcuwFQLVHppyRmjsYxFdB+9rB5aJweQsA/ZIUzxytFTy1t9KFl4G
+ u0p0rlzkh+dL9ZOfOqXyw5KzBHhQdHpH/KHyU/rgW/tAJgyCbM1Qi/FZeQZfSfC4mpGGuXfH6pM
+ DXCm7ZDIV7oUhwXvZ24xoS5YWIy6jWj6cE+r4LlJQfOyg==
+X-Envelope-To: tools@kernel.org
+Received: from localhost (117.176.242.163)
+	by smtp.migadu.com with ESMTPS id 8033a9466581c360;
+	Sat, 15 Aug 2026 07:00:07 +0000
+X-Migadu-Flow: FLOW_OUT
+Date: Sat, 15 Aug 2026 14:59:58 +0800
+From: Weijie Yuan <wy@wyuan.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org
+Subject: [PATCH b4] send: honor excluded addresses in per-patch Cc summary
+Message-ID: <36067800fe19dba18dc4874edfae524346b4ed1d.1786777097.git.wy@wyuan.org>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-rpmlint reports non-executable-script errors on all ezgb Python
-modules. These files are installed as regular library modules with
-0644 permissions, so the shebang line is unnecessary and triggers the
-diagnostic.
+When --not-me-too or b4.send-me-too=no is used, the sender's address is
+added to the exclusion list and removed from the final To/Cc headers.
+However, the pre-send summary prints per-patch Cc candidates without
+applying the same exclusion.
 
-Remove the shebang from all five modules.
+This can result in output such as:
 
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+  [PATCH ...] ...
+    +Cc: User <user@example.com>
+
+even though the generated message does not actually Cc that address.
+
+Filter the per-patch Cc summary through cleanup_email_addrs() with the
+same exclusion set used by the actual send path, so that the displayed
+recipients match the recipients that will be used.
+
+Signed-off-by: Weijie Yuan <wy@wyuan.org>
 ---
- src/ezgb/__init__.py | 1 -
- src/ezgb/_git.py     | 1 -
- src/ezgb/_models.py  | 1 -
- src/ezgb/_reader.py  | 1 -
- src/ezgb/_writer.py  | 1 -
- 5 files changed, 5 deletions(-)
+ src/b4/ez.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/src/ezgb/__init__.py b/src/ezgb/__init__.py
-index 31867fdbe39e..d78d18fb47b8 100644
---- a/src/ezgb/__init__.py
-+++ b/src/ezgb/__init__.py
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python3
- # -*- coding: utf-8 -*-
- # SPDX-License-Identifier: GPL-2.0-or-later
- # Copyright (C) 2024 by the Linux Foundation
- """ezgb: a standalone Python library for git-bug repositories."""
+diff --git a/src/b4/ez.py b/src/b4/ez.py
+index 79a630471f32..020d06def8cf 100644
+--- a/src/b4/ez.py
++++ b/src/b4/ez.py
+@@ -3046,7 +3046,9 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
+                     if pair[1] not in seen:
+                         extracc.append(pair)
+                 if extracc:
+-                    b4.print_pretty_addrs(extracc, '    +Cc')
++                    extracc = b4.cleanup_email_addrs(extracc, excludes, None)
++                    if extracc:
++                        b4.print_pretty_addrs(extracc, '    +Cc')
  
-diff --git a/src/ezgb/_git.py b/src/ezgb/_git.py
-index c1c326bd6020..f91e517aa00d 100644
---- a/src/ezgb/_git.py
-+++ b/src/ezgb/_git.py
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python3
- # -*- coding: utf-8 -*-
- # SPDX-License-Identifier: GPL-2.0-or-later
- # Copyright (C) 2024 by the Linux Foundation
- """Thin git subprocess helpers for ezgb."""
- 
-diff --git a/src/ezgb/_models.py b/src/ezgb/_models.py
-index 72eb75959d77..d5d7976ac4d0 100644
---- a/src/ezgb/_models.py
-+++ b/src/ezgb/_models.py
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python3
- # -*- coding: utf-8 -*-
- # SPDX-License-Identifier: GPL-2.0-or-later
- # Copyright (C) 2024 by the Linux Foundation
- """Data models, enums, exceptions, and constants for ezgb."""
- 
-diff --git a/src/ezgb/_reader.py b/src/ezgb/_reader.py
-index cfd752816ac7..aa2a744bc174 100644
---- a/src/ezgb/_reader.py
-+++ b/src/ezgb/_reader.py
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python3
- # -*- coding: utf-8 -*-
- # SPDX-License-Identifier: GPL-2.0-or-later
- # Copyright (C) 2024 by the Linux Foundation
- """Git object reading, operation pack replay, and caching for ezgb."""
- 
-diff --git a/src/ezgb/_writer.py b/src/ezgb/_writer.py
-index adacfa153f32..7e75fe5e9a17 100644
---- a/src/ezgb/_writer.py
-+++ b/src/ezgb/_writer.py
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python3
- # -*- coding: utf-8 -*-
- # SPDX-License-Identifier: GPL-2.0-or-later
- # Copyright (C) 2024 by the Linux Foundation
- """CLI wrappers for git-bug write operations."""
- 
+         logger.info('---')
+         usercfg = b4.get_user_config()
 -- 
-2.55.0
+2.55.0.717.g61afef3e370b
 
