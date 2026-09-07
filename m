@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BAD3F1653
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6B440F730
 	for <tools@linux.kernel.org>; Mon,  7 Sep 2026 19:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=100.103.45.18
 ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788808982; cv=fail; b=DeCIHOij65u7BEm+Y65fh/1OAIi//yIYPqfX9K8syiijAK64Xt6/N+x2sXrB0CWS1w2hGAdNz5x0U7+O6JKspRo1X7UECrYW06ywh6LQ4fbw88Gs0JFpdT4EMyWw/qJhxAfPp3S0UYj1EmZ3fBpBQY2vJ3QH+NYbNaQDYdD4XB0=
+	t=1788808983; cv=fail; b=aRw+hADPSt16YPDKx5r8Npl+H1iCN2DmwsplzM/y4z5zZZyysrTlAb0pZG0Gr/mPrQulfo0LlBnx5a/1TvrWEZ0F2gHDSJpuTuGwKQnILLCUARGcqFIZQtCq0NiKT7nqmzPn3p47NVFyjDdXzdkW/vmM0G8ZBNA3gxNu1ggen7g=
 ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788808982; c=relaxed/simple;
-	bh=mCSg1Aw6llbhVYgrTw/xIqY6y7H6Z6G+f+XZyeydsVg=;
+	s=arc-20240116; t=1788808983; c=relaxed/simple;
+	bh=GTzyJASEa40PX1kZPSu2SQoOguJRtNLyVibGznpGLUo=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=jRiwgW2s2H0NMydjHUxnJfLIPJUGUOvIiSFi31U0M3EWlXL+gKZg26umQNpHKS58oMDUBAxzZNqD8Lpd7meksC2cvc0XCmTaTda0bBIfuW4VMbKeYI4tmcTW2iOuMAsQlYntryCeU0A1Wziib7JF+UHIIfDFKCdGEQonYQQE+ks=
-ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=QY9dLd1m; arc=fail smtp.client-ip=100.103.45.18
+	 Content-Type:MIME-Version; b=hmRnDjht8PMzIRfv25FUugryZ7qNqZO/ocs0xk8H/V+z+OwKeI8dWjT5To4Z+M2FKtEcwTVMGdwbde2brWfm+N/lo0tdGVX4XA8PDSYe/rhXi6toAYg5v+FEOLJImZtIHxFV7SMnrbkaCLDMw/uQSUlw6alhDblrxI+8IFBuliA=
+ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=aGvSuT7H; arc=fail smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="QY9dLd1m"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="aGvSuT7H"
 Received: by smtp.kernel.org (Postfix)
-	id 14B1C1F00A3F; Mon,  7 Sep 2026 19:23:01 +0000 (UTC)
+	id CBFDC1F00A3D; Mon,  7 Sep 2026 19:23:01 +0000 (UTC)
 Authentication-Results: smtp.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.23
 ARC-Seal: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=pass;
 	t=1788808981;
-	b=cnlmnqi95/Vjeu45r2ulTrp+3KRdHSGN36w/zC0C1vLuy3RdBWdknVdYOYocvsDtxCEY
-	 tTA5tFs5qYQ35d6HoXBTQM70Tjn/aOEojtN/IjiuFVzKsx5lulvRrvQDDmwT91T4ZJVx5
-	 uwdF8VK3UMjs9/efkg9PdYAm3Zph8uYF5qZ82A3dFMAmUuh//Cil11RCA/PcNVPahkNyj
-	 UOu7ncGFxLCs1qzttjcxBRa55Ax8nAFGQLmZGdyJ/8JCFoCHY51yOvZjlP5a5QNSDavkN
-	 xLJCwttKRCmm7FtvfH789V0FHgHw9nLE+uP+OP7e8wrN6OOD3BfnWNGcnklavVwhbow==
+	b=duT8/pxCvgptAjZ085YmBAhxNmCUI91rcuVpKtgXp97gn8hwXZhpNO+djCRKGEr2feIY
+	 yFFUD1N9LLy2wCheMA+ft2LTm8QcMUNKBfMMreyPmTDdcplQLBCdRNWIKHkg/nBRKFL8Q
+	 E9JbtiN8MmBnL+/SgzGUVtg8flenqpT1prU+t92wW28DRbCaEIJQc/9DWPnlHV1pTWCAh
+	 agY6NQrno/23qALsDyxm4kXTcIM3czOtFg3potzWEXYYUi4u2LM1k1ZSkXey2Lf/dAasu
+	 sNMuJqBvPTfqt938oByyaimoKc5oEKR27UyFGzvH2rKb+uoCncpgmHMJzkVbISLkkNA==
 ARC-Message-Signature: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256;
 	c=relaxed/relaxed; t=1788808981;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Subject:Date:
@@ -42,13 +42,13 @@ ARC-Message-Signature: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=K8MktOqC4quToPqgHS5VdjWP2yYxOCPNOSqaM8E4rf8=;
-	b=A0Fes2fQFKBqzzWkgxmv5TsNVtgiBP0eeHQJ+FUW7qzoWDb/LU9hBxif6KT69QIt9yY0
-	 cjxTJIuBTu/3D9xXmpU8syaRGIpopIgfs+6yplVHaCi+tSwTkE1cROpnwb0SsMqumLfrv
-	 5LeBh+EazHS3ptCZg4tZUpoBos7hOEIp1yYNOt8t6dRd05aTH40MO3a+9R5f8o7pLNBhY
-	 zIBgRDty+gYoC80kpwt6zfnv6tSWyF3LH5nkEi10uYaHqfm25MwtuHDRzt/9jWpVbOgd2
-	 3vphsf+/DjFyU5bwcoQsrWNxzdMtoK1KFzc6/xn/j5XXHYr7ZMG9pNYJUYBQD8vmiJQ==
-ARC-Authentication-Results: i=2; smtp.kernel.org; dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=QY9dLd1m;
+	bh=waXthDRexDpF8PA950Dkfsfs8f3hSVvXSHXj7+yvFU4=;
+	b=THtygo024wpRvbp4TWxCIMXrMh+KNNLXIqqrpH9upxAY+5YTxWypVzhoUv7U2oGFetIw
+	 gnactVS8li0upMB4KGnGKeFD3X/HBroAM2HrIWIegK8JkN7hbWAvVkjD00kQdNaW1YAAu
+	 ncnOTkbmMHXz+PIaPC8TSJgRZN21NJnldu/yn/eUzbvyUA3Fexk1TxH+Pdpw+S9/zuVnC
+	 OO74YqlF4iFfBW5PsgXdiEDlmVby3GNaUgt00DX/X7sQtGyNrN4gOExFkK3aeV3wPxRzn
+	 Q5IslXd04i12z0abIGbWlg+LVDjv6WS8fmzSdS8QROp2Q5NOmf3yGxifqnAODK/h4jg==
+ARC-Authentication-Results: i=2; smtp.kernel.org; dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=aGvSuT7H;
 	dmarc=fail header.from=nvidia.com;
 	spf=fail smtp.mailfrom=nvidia.com;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.23
@@ -56,50 +56,50 @@ Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentral
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 5AEFA1F00A3A
-	for <tools@kernel.org>; Mon,  7 Sep 2026 19:23:00 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 2C64C1F00A3A
+	for <tools@kernel.org>; Mon,  7 Sep 2026 19:23:01 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=QY9dLd1m
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 5AEFA1F00A3A
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=aGvSuT7H
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 2C64C1F00A3A
 Authentication-Results: smtp.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QkUw0m39ePBORUSRMF7yTYfw6e3unC0GE+0mWE1e7IMPuER2li89hzLHQyVPWB2tefInMKslrqCoewWx7NFnqjpsDeJ+fa1T+Fk3WuxLW+mviWGZ/CRRREkAHKkOTf27UWRnGWfS9+C9n2HzbtKuBQ+vwpBLGEJ7/sL09m9eSJog5WHH2i5XLKuSK2AcPtrJHUs+qa3w5g5dVjT+JxLUhN8jEsW8sUs14GNtnmEnzkB70iGXup0grkKIvyTZLqWThW9j5RktCptPkUq/1g2S1WfyFPZ79P4LNusoS1dxgZMouhGlu4WoPGbPQM5XLVZyEEwF+GxkAAJXmKfyxOpJvA==
+ b=bzqWVp8pi/aH+tjuf448ipYt7Ll4qHiIgHYoucbgPIFZxgathmN6L79iQnV0SP3s61wEj1ooyeU5O9IqKXZelWErajqhw8vvVyhTl5gsZTY5SqwgW25H1pLaye1QLew35aNCoMBA2abxzzv2H4QFxl45qX8uAoREvsrANSPjYp+cabDY9lFqKQVj2a1Xw8Esjxj6mzfZUAHd/FLCUWtxQQcWQxo82C4NEQ5cP5Ulj+tIMShpBvpcDayQOllrBSPWbWcMdUyqWllXomGomPMr5r+/TCtKvnyEOCYn4X1xUYaqb9CY1um73Vh6qm8MHiZsr4FirK/5i31KiYX/3obyyg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=K8MktOqC4quToPqgHS5VdjWP2yYxOCPNOSqaM8E4rf8=;
- b=WeDI93loiGDHW2nY6yEuKSvxE9NYqfGP/oqbfjhzE2JLmTTVFs3vnn6YAeheTBM7FH7tc39bStuGnR4HeHG0chV3GQwLhSybdde1QrgsXX2yGHaFme3dafdPzI/FeeR6FXW/lr4LM5Hd/xlnzVKkSkVE5dRswY7+mC8Cf/bOuj/e52AiuwvlWOxy7CFIy8cDCjdjruWlTdQl/86YLwwOHV2L+MkC5IrSSHxENtVOA46uqS2PQ9ZQOMjgHknioDY1q3lTroE3+sdjUrD+HC4y3KuM/hXIaK2UNxgHm8xScQzR6TklDXDa+R5aXEcNYCUy139zcy3DVkmxilW6Zk70aA==
+ bh=waXthDRexDpF8PA950Dkfsfs8f3hSVvXSHXj7+yvFU4=;
+ b=ODinY9QPcB7muQRsIyOi3h407YesHnRuYDBX80c0Iz5zHKoHe7cEAHIBnL2oxaFFzJJtm7Ac1YMsuDQGn205DBQj7uTpdwoShLUKrDWYCU0Cvv/fp107qtn0NhcZwyoJUSlWIkN30YGp2Uvt3P+Sy1gcgv9DGkFTaZqQLmy+JRZgI26JW0yvcUdAg5+Nk8s1oCSU5iYCys5bMzo2AX/pACIsO40jr+E6nQAUn6LhBFFa9y8Zg2ir7mJ3tswl/0Ncc5FOQ+WyMCGXdgwEyJcMkBWq+zc58Aqh2e8tHHl1FKWXjo/IUo3NGodIvcKcBFaCAfNtmvEJvqecLXoX6ZZDLw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K8MktOqC4quToPqgHS5VdjWP2yYxOCPNOSqaM8E4rf8=;
- b=QY9dLd1mp0kU9b4ojwLfOWE++t1N+nAo7+hs227riVohQSaLLDSryEFj2hdb0F+rngISOhNHbNDOL8ozr+r/QTP5mpckdsODoonnPmuCjS7vxDzQ6nrmtb0fofW/boNt+A+R59yJUJ0nw3OOVzE+WGUrNIfBkU+xBbR+foRIqoe5RQww19UwanTYmPEBvYUv8OT9wJFXsxQdHkFmr/6RgRGQ96+q16b2bSybjvUoNBUlztK0hcJ93PQNam17WhqMJ9GV89BSBInECR2euZYG5O1btriFVyKVEGvX1NZu9wvFwpox/VZmBXBJMuh1viiosswItAQXHSt5IMRRosnxkg==
+ bh=waXthDRexDpF8PA950Dkfsfs8f3hSVvXSHXj7+yvFU4=;
+ b=aGvSuT7HNnBWUNYqyJUS6hyJcyL9WzPXJp+2H8rwqmOeeMlMHREKdM8SYwIGEU+NnPDdOQxjEwZm3LuZJkh9e3NIj9DBp5vyTIMNxHynOjs6q84O3R3ShbCm8bs3TLPbnJc8isJE6p5opA+W9rlZBqxq1tAICeSQYpRLBMl8HOZvnm3A/Q2Aif3xqpYs3fAl8QuegWMxegdya/suzjKBGDWxQ9GVqU8Jk67UZfnB7raV37/C5/qG8nq4XHYDRUV4mAlEa79HGRTNUiz7YGeZXKK6NTyOQV1xWr3/z2dI/k/tiU0BXUmWTjKMnmU2Y/lxMP4gYkYFdDfIcxsUbFFt8g==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
  by DM4PR12MB5844.namprd12.prod.outlook.com (2603:10b6:8:67::15) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Mon, 7 Sep
- 2026 19:22:56 +0000
+ 2026 19:22:57 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0382.014; Mon, 7 Sep 2026
- 19:22:56 +0000
+ 19:22:57 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: tools@kernel.org
-Subject: [PATCH b4 v2 2/4] review: discard blank lines between | and > quotes when trimming
-Date: Mon,  7 Sep 2026 16:22:52 -0300
-Message-ID: <2-v2-de162fd5fc4a+2b7-trimming_jgg@nvidia.com>
+Subject: [PATCH b4 v2 4/4] review: emacs: highlighting and keystroke for >--cut--
+Date: Mon,  7 Sep 2026 16:22:54 -0300
+Message-ID: <4-v2-de162fd5fc4a+2b7-trimming_jgg@nvidia.com>
 In-Reply-To: <0-v2-de162fd5fc4a+2b7-trimming_jgg@nvidia.com>
 References:
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: YT4PR01CA0006.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:d1::8) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: YT4PR01CA0012.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:d1::13) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
@@ -109,191 +109,152 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM4PR12MB5844:EE_
-X-MS-Office365-Filtering-Correlation-Id: 51b5f0ba-c222-45ad-5014-08df0d156b46
+X-MS-Office365-Filtering-Correlation-Id: 49a5a86f-fba0-4302-90fa-08df0d156be2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|3023799007|10067099003|5023799004|56012099006|11063799006|22082099003|18002099003;
+	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|3023799007|10067099003|56012099006|11063799006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	s9J+Q9Fsqub68jWxFeR8lgMriJePN4a7wFipPCJOWB+IrbDeB1rETHTXBUSpbjgs7s9mBsWoVxBbaq2F8XfS+c9D22ZUXMSc3vEw91IcYdvIOK/+S5UpVWJUbX6Kt+y4XlwYy8P9ZeSdIqzPP4anTkisOYNHaq0jmnLOvgO9VskSRkKRmgsaAfUEH+F7GIdqhd8UpeZgzzdVeoF1YQUo4Zqn6mwMA8TWar1rJgdxH/Y3mpc0JYvvSmSSNL26ivWu+Kh3PzXlvkBcxWiag0nvw6jKXw7Tug1lconDdOc49uVJzfIhKhqUjf0c5Mfe3yvXPkiOBltcOJzj6992SmWxWlBSv/YdKO6Wn7ctkbM+hHVn4UmwkOWUQYv5saLpk3lUoNfuzn/rcx6Yy93NSx2KjmzLoKrho++0Bf11NuGZNlGeAG/qMzGbKQPAReb1dsF+iffMyfGRAtdlU9/lfOGC9HhQThJyHLHwNd3pDHePboozhLks/dtYq1mexVXau5sQ36SXlCgujLvKQm3+rQ8r+N+066HR/8uZOt3t3aV1e3owjMgvg4GaY0/Z1wQDrEkmihtOlIlkmMIZ/Os70J2VnKElZQWcPs4/+/670nCqKOU=
+	PjsGrBMqiufH6xbBi4dCKCadJBWScoLBfsHEE2PCs2s5fFhFhCWwwH1tIIjjsN/2i0Um/lEE4+uIfyQOC/RJMZvh5CHPgGwRYxD3nJQlZx7GWr8yLG2nqvFOF/1Anpm1ancuyzbpn97AG9JrN+WG8IvYRBNRxQm5cGQhQpP2jqPM6zvSwCM60dxZJU7KJE2vqm7HEZfVuGeCfxVF3gdOgrUyhXqWqgjFML5HKtviJlLKGs8J/o089mVLkVkOzI3ZCDPWric9v73VbB/L7ClV56VGFRENgkB31k2G+3yXfH+rGfYDGqtN13wnqP5zNi0SsAKtc554u2tvm6gcY/O0qvlH2/+1sWtA+Am5gXDAmVDpYkToW3yoOHRORTk3nCZ8yHP1PqOfpHOwjXNhK0pN2GwdcaLJHycf7cr84PXTBx5tseL5JV2nbKdwx+eNhAAX0dx6b9MtawskbuuHam0vFrrcyWksNx+gt4SmM7ZaKuj66VjZYY+YDarOpJvbFAnSJKweCX6Mbe9S9KmTAQ5c6VbJLKOo/EcdSJ1joJlryauUtCE2Gdc5KJ5IQmt416e2Lhuz01jTyXbj2z7Vfg0jga6cS/WgW2wRaip6Q/AD62EFbfuprqma+igNHPvgZ7jVc3BGWAYOxhW+zeuFgSKAsAa1NkD2Mbi1unuYdbp9OTY=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(3023799007)(10067099003)(5023799004)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(3023799007)(10067099003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZFAwZ1NWV0xES0krMEU3UExHVkVaRzdweC9zcEt1RUFrcmNYTnRQYXZsTGZn?=
- =?utf-8?B?eDhvOGxuQTFXVlE0Wkx4bnNzN0FLRm1ocGdYUExvRVlXVzE3YkVCMVNHY0Zr?=
- =?utf-8?B?Q0lxWkYza3VidUY4T3pOMmdJSm5jS1RNcldqNys3amhGRjBpS2crSnJoQ1E4?=
- =?utf-8?B?WnFzZTNGa3lYNm5CVWxMaEsvTVBKakJxcVc4Vlo4d2pRblphUlpMSFdMaEh3?=
- =?utf-8?B?eE54ZkN4eEJnRnNXKzVrV2NZczZMeW03aVltRHF3ZXhGM2RneGZtdExJVGNM?=
- =?utf-8?B?b0szWUZ3N0lKV3IzSVo2a3hZSk52RDcwSVNERm1nR0d5YktwMVdnbHVzOCt5?=
- =?utf-8?B?TnNrNitKdkhOUDZQMXlybmtkZ2JHV20rV3pVTGFESWRnbEpNNDFOeGFPSzZL?=
- =?utf-8?B?Y0lZbnZ2amJ3b3ZkZTlNQThtTHhRMVcyVE0weEJzZFc4SXpYb3k5Q1VNb2lY?=
- =?utf-8?B?eWdPUTlYWitzenh6dTVEV2dVK1VyN0R4RjltL1dtS2FNLzBHdlJVNWQ2WjFs?=
- =?utf-8?B?dHNIUVZ2ZlVCTjZFb0FFS0pMbXQ2QTV6S1hGWkh2R2I4YW9odDF6L3dTTWhG?=
- =?utf-8?B?WXRrcEd6L0x5NDMrVnQyenZDZmprS3N3ZExUR1FDaTdkYzJxTFZnelB1VGZR?=
- =?utf-8?B?ZHhFNHZGQjFCSnRTM1V0NnQxZXVyWkFDOWVCNEpHQWtreTlFaUdpUCswVk9Z?=
- =?utf-8?B?T1JoVlBNUmdpRStHbEFoNGIxNDNSbnd5MkU3VlU1dVQ2UGFIdnJiM2FLb1Zw?=
- =?utf-8?B?bU05TGN2cWN1YW93S2grdWdYNjdkSU5ZdC9JTXpwaFRGV0pDYzRRZ2VGWi9L?=
- =?utf-8?B?bnNvV3BHdzlDWWNvTC9rTzRmS28wMnBVR1gxL1FlTkdSNW9XaktHeFd5V3dV?=
- =?utf-8?B?d1NtQ2JPSE9pV2lzcGtzL1hnN0NhdUI4S0VvS2F0R1VmYlZSTVNTd3Z5TUpX?=
- =?utf-8?B?dFhYaGdDSzhJeEdzbkU0cUtndkV2Q0JVSnpFTjZMR2poVDNndmNTdW9BR2U5?=
- =?utf-8?B?NzA0YmlUM2wxR1lTV21RbzdOcjdRa3hERXc1cWtrbHhoMlBJNWw5eWlyNERt?=
- =?utf-8?B?Q2x5Yjl3SHBpVTNXK1FXbTVoOU02bnlJcS9aVWdhYVBLRE9qVkFMam9OWVQ1?=
- =?utf-8?B?Um9ZM3dHNlhsWnd2L1EwOXlWZ0JKcGc4SUJ1emkwaGxjbEpFRzNnaERiN0dB?=
- =?utf-8?B?azV4RGhVSEZ6bVBQRVRJYXkvZlQ4dFhTY1dPbUpvN3lXYXdFZythd1JlT0hD?=
- =?utf-8?B?NDVGUkVJVENxaW5SRUxidTJZWUdEdExzUWJrQVhOYzZDYTh6dWpMdVhwa245?=
- =?utf-8?B?N0JtckxuWjVuZ0loUll6Sk5xVy9aSE5zUUxXZzhRdWFybEowT1c3RTRiRldE?=
- =?utf-8?B?OUhKNHFyakNJbmpFZUFpZ0tvczRjZWxscklzNjFUWXdILzAyKy81VTUyeGpx?=
- =?utf-8?B?bmdSVnpyRU12WlFrbEdIeUpPa1FmdTAxR21Pa0FzRDBKRDZaZVM2d0VOMGxv?=
- =?utf-8?B?dXRZRjE4SWJEL2E5VUNPVGcxN0tUa200SGhoUUFFRVBua05VbFEzR3diMU9T?=
- =?utf-8?B?ZXZWbGx5S1ZkNVBQOFFzS1JPREFiVWlOZGJSei9YOTRoM2t5YllOQ2RFOFFV?=
- =?utf-8?B?Tmt3anpmRnZHckZnM3hSdUxkbXNkSHR3UVBUWlBoNnNHaG56eUNOa3hZUGFK?=
- =?utf-8?B?bldxWUd4dGd1QWNlemY2ZWJMaEFqMUo3Q3NxWGRZbjNqTE9tWE81eUZoOVpx?=
- =?utf-8?B?TFY5U01ldk02d1NVUTdqYTZIb2cvMjNWQjNxZnF6RGg0VXMvUk42WVVockd1?=
- =?utf-8?B?RlBua3B3SFlicmlVSUNTN1FRUUNzMnRRbjFXRGZVV2k1a2V0a3lMZEtMekhW?=
- =?utf-8?B?NStCZDF0TWJUU3hmUlk4QmpxanpXV3JLK0RJTUdZbUZrUEY5ZnR4MlZXd0lG?=
- =?utf-8?B?THh2M3l1ekYyeVVTWGxEditQYzdVbzNzRUFDcWY2enRlOHRBa1BPYUNGbDc2?=
- =?utf-8?B?Q21tZ0MxZ0xrdGthbUdvT1hJSEIwczlncE81a25ycjBaY2ZmSHcySmRhTkhX?=
- =?utf-8?B?WlpqbE9aZ2lkZk9VaFZQWC9vb1JGVVRFbnlQeXVheFhoTTV4TnI1Q2I2KzdT?=
- =?utf-8?B?Q2tiUTZpRllublFmU3ZscXRjTFhNdlVkSFFUbnhnUVVEMUl1RXYzaERrQmJr?=
- =?utf-8?B?aFV4cnRMdjJTKzV1b2xNcTJaeGRwWWhIcG8yOWxGNEtONDY5ek11T01DYXcw?=
- =?utf-8?B?cTRkRk1GWWFPZTk2b2o4TVB6NTluUnZyMXQyUm9WMmRMUXl6RXlyS0ZIWjkw?=
- =?utf-8?Q?YrR8L8t9wa3oNvmaqe?=
+	=?utf-8?B?UVkvN1dBRVpXV0VPTFhYMWNlSE9oSmczbzdBSmJaZ1JxOHJ3aDlsUThVbWgz?=
+ =?utf-8?B?RHIwZlBMNTFOY0lZWU9OWVp2Mktubm1scE5waVR6czFZRWZBU3JGWDdEYkoz?=
+ =?utf-8?B?RStSbXpobmxsbCtzSnVEREZaTnBJQXhsNEF5cnpkbWJxTlQ5VGR0akpqYXVw?=
+ =?utf-8?B?YTFMNldLOUR1R1VGTWtkU1MzTWQ3SnhGeTd5aXBOdEF2aGlNU1dZbUJQUis3?=
+ =?utf-8?B?Y1hrWFk0akMwNEtLTVBod3RNRC9lMFJDWGwzaGttQ0daVlN5RzRucGNXSVBJ?=
+ =?utf-8?B?NEMxT2lyeHZJeUlabEFxTDd6QXBNMG53b3FJdzNhNk1lRzFCcjg4NFBNbjBh?=
+ =?utf-8?B?eG5qY1BpZ2NXM2lvSmFHOGhlNHRDYVNhTFNPQlBHNmYxN1BpWHRZODhjN2o1?=
+ =?utf-8?B?VWJNS3NkSWJmdy9yc3dxY1RJT2ttSFIxNlhjL3Z2T3JFTHFIWExYZEZLQ3Nk?=
+ =?utf-8?B?TDhMcklJSitmcFVQbTJtM2NsU3lxbFlpVzc0N09Hc2NWcG5SR29VdTFMclY5?=
+ =?utf-8?B?Q1crS2xJWFVtU01aRHdTNldYNWZ0MXRBRUFxMkdxSW52VHdLeldUc2FQaHQ1?=
+ =?utf-8?B?K2Y0OG1lZEFQekczQlNGOVI3c3pjRlMveFBKV0FLTlVsOTBKZm5wVlFXQXhu?=
+ =?utf-8?B?ZjRCSnYycm5QMmlRQ2JJdE1VdHdPWTNRNGNMaHp1TUo1N2VFSFBkTjdGRHU4?=
+ =?utf-8?B?emcySk9teGx0VTFDaHFQY245M3pPR1lMZmJqYkdxaHpIdkdHb3o3OTNwSHZE?=
+ =?utf-8?B?N3drRXBHYmM4RS82bm15ajFOajN4cXVsa2tNamFMVGRlTDVNcU9rQlVsdU8z?=
+ =?utf-8?B?R3VsU283S05EOEw2MDlka3Vud0xHbVdERXVJK0lIUGdiM0dDajZxYXpmSUJj?=
+ =?utf-8?B?dnFnbVp0SGVqai9iY2VtcE5WME03TVQyTmZHRmxrbklCRzRrZWYyRXZ1ZEl0?=
+ =?utf-8?B?SDBIOWQrbEt3Qm0wSVJKcEVaZkhSL0NrOVQxazJVNHUzMmpMM2NodzFMOWkw?=
+ =?utf-8?B?SHN1YWJKK2tZbXROMFQ3VnNmSWRtMEF2ei9NdnhoMHhlbE8vdVU3MlJwWkV3?=
+ =?utf-8?B?RFpwTVAzcFk4ZzdETFErSkJxbzBONkc1MHBvTjR5eTlzQktwV2ZnajErRklJ?=
+ =?utf-8?B?eGVJdDliQ3ZlSHVWWTRKc2dsNGs4RmU4eHM1VkR3UVRYVXg4bnh2SXM4djIw?=
+ =?utf-8?B?b3VRZEUrVkU0dXppNjFjYVh5emZzQUxMY1FBcWFzNGF4NW55ellZem5nTVdj?=
+ =?utf-8?B?OHBnMUE4eUZuamtGakxiSnViSVdpSHdaQ0pXRm9IVUg1MDdDTUVQS2tQLzU2?=
+ =?utf-8?B?SXZnK2JDVTUzekxjRWwzY1UvWEpWV3UxUnlJWG50QkxQcGdmZCs3dld4RFIr?=
+ =?utf-8?B?dUwySlVTbExFbWRNZCtKY2w2OGFsRm1RTEFTdHdUTVhhamRTZ2xrVFJ0anQz?=
+ =?utf-8?B?NjJlSUlLaTlGNjVqdHZnaFJFa01TYTFjN3ptS2c3OHhLNjMzU1NKbnI3MDBa?=
+ =?utf-8?B?YnM0alJGQUl6aDhjRXRSZDZEL1RnVmNDbWVZQjVOMVJtVlJML0pSazlUcTB0?=
+ =?utf-8?B?MDdHOTNXbVdlVHNsR2VEVVBCa1VmRlVHZHVQZFd2alVXRlZLaitBbi9KemNp?=
+ =?utf-8?B?ZHBCbEVQSTB0QkMrSmRmakloOXdrelJZTFF3U0VHdHkzL1NhRDl3cENmU0Jy?=
+ =?utf-8?B?T01NR3dhTXVFQjNPN2JxZElVc0VPSG5vbVpoU09jbjh3b0MybW9VN1ZaMDFw?=
+ =?utf-8?B?OTdkTGZiUkdVblMwclc4WldRcXczTExRaUQwWnZzRHhaa2lNekROVGVJdk52?=
+ =?utf-8?B?RHVTRUM5SDRRZ2xRQjB6d0RvMTU5cFk1QnpjRDZmclVwSGZDUm1EVGx1L0l0?=
+ =?utf-8?B?NVMyQmdlNHg0KzdVb2NMSVNRc1FWT0d0STJkOUMwdVBvdlNwdTZEVG1yME8v?=
+ =?utf-8?B?Q0pMK3VNdTFIWEtVSm9OUTlWVVNuSXFwaHR1VGg4cklLRnBEckNvaU9qNXpF?=
+ =?utf-8?B?U1IwMDYzeGFrbllNbFhxZk9obHlURzd5S0VKaDRGQVFRNFB0SkFGL0JxamhJ?=
+ =?utf-8?B?K3g4OTR3YlM5UUM0MWQyR2swTHpPcjdXQTdpWmZWRE52ZHM1akczWkd6SUtx?=
+ =?utf-8?B?L295OFhVcDZJYlF5cU9ETnJMMjJXenN0cUgwSlNzSXlzYXF4R0Y3VjVkenAz?=
+ =?utf-8?B?eGF4U2wwcThzcEpxd2RjbXdKNHg2cUlORlFMbEhZdUNGb09LREZib0VwQyt4?=
+ =?utf-8?B?MFB1RWRoRmc5VHpnQTVnZUVXNzJvTWdWYlBVZ3d6bEg4UHRrcE5qbHQ0U2pF?=
+ =?utf-8?Q?bZwI+b3nO9GlyU5hlK?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 51b5f0ba-c222-45ad-5014-08df0d156b46
+X-MS-Exchange-CrossTenant-Network-Message-Id: 49a5a86f-fba0-4302-90fa-08df0d156be2
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 19:22:55.8116
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 19:22:56.6613
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: NqjXkoEwl27XAB4GPD4jVB4K/OG5jvRFNKxF7gh/jnMI7v7X8B8FaK4NyKJ20wBL
+X-MS-Exchange-CrossTenant-UserPrincipalName: L8tWB01cvKAOnKf6Ulm4XKZYXHuM9N2VB22FFvPDyC4EkTXoUy6pQfgvGwDPzJsS
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5844
 
-When b4 constructs the email to respond to it inserts the | quoted (eg
-sashiko) text in the > flow with blank lines between sections. When it
-generates the final email it strips the | quoted text but retains the
-blank lines it added. Thus the email ends up with random blank lines
-inside the quoted text blocks.
+Add a default highlighting in yellow for the cut marker and bind an
+automatic insertion to C-c C-x.
 
-Remove the blank lines along with the | blocks, being careful not to
-disturb user text.
-
-Assisted-by: LLM
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- src/b4/review/_review.py | 52 +++++++++++++++++++++++++++++++++++++---
- src/tests/test_review.py | 26 ++++++++++++++++++++
- 2 files changed, 75 insertions(+), 3 deletions(-)
+ misc/emacs/b4-review-mode.el | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index 96f3e5bbd54130..054be896053e87 100644
---- a/src/b4/review/_review.py
-+++ b/src/b4/review/_review.py
-@@ -3383,6 +3383,54 @@ def _sync_reply_trailers(reply_text: str, selected: List[str], identity: str) ->
-     return reply_text
+diff --git a/misc/emacs/b4-review-mode.el b/misc/emacs/b4-review-mode.el
+index c2342ff29bdf4b..81b49079efd630 100644
+--- a/misc/emacs/b4-review-mode.el
++++ b/misc/emacs/b4-review-mode.el
+@@ -111,6 +111,11 @@ whole-line deletion worth a breadcrumb.")
+   "Face for instruction lines (# ...)."
+   :group 'b4-review)
  
++(defface b4-review-cut-marker
++  '((t :foreground "yellow" :weight bold))
++  "Face for a \">--cut--\" snip marker line."
++  :group 'b4-review)
++
+ (defface b4-review-quote-background
+   '((t :inherit default :extend t))
+   "Background face for prefixed lines (`> ' quotes, `| ' external comments,
+@@ -125,6 +130,17 @@ on every line — without it, the fill stops at the last character."
+   "Background face for the reviewer's own, unprefixed comment lines."
+   :group 'b4-review)
  
-+def _strip_external_reviewer_lines(lines: List[str]) -> List[str]:
-+    """Remove read-only external-review blocks without leaving quote gaps.
++(defface b4-review-cut-background
++  '((t :inherit default :extend t))
++  "Background face for a \">--cut--\" snip marker line.
++Applied the same way as `b4-review-quote-background' /
++`b4-review-own-background' so the marker line can be set off with its own
++background, e.g.:
 +
-+    Rendering puts bare blank separators around ``|``-prefixed external
-+    comments.  When both sides of a separator are quoted diff, it belongs to
-+    that presentation block and must leave with the comment.  A separator
-+    after maintainer text is retained exactly, since it is part of their reply
-+    layout rather than the external review's quote padding.
-+    """
-+    result: List[str] = []
-+    index = 0
-+    while index < len(lines):
-+        if not lines[index].startswith('|'):
-+            result.append(lines[index])
-+            index += 1
-+            continue
++  (custom-set-faces
++   \\='(b4-review-cut-background ((t :background \"dark red\"))))"
++  :group 'b4-review)
 +
-+        # A leading separator belongs to an external block only when it
-+        # separates that block from quoted diff.  Do not alter the same blank
-+        # after the maintainer's own text.
-+        previous = len(result) - 1
-+        while previous >= 0 and not result[previous].strip():
-+            previous -= 1
-+        if previous >= 0 and result[previous].startswith('>'):
-+            del result[previous + 1 :]
-+
-+        # Treat adjacent external blocks as one block.  Their intervening
-+        # blanks are presentation padding too.
-+        while index < len(lines) and lines[index].startswith('|'):
-+            index += 1
-+            blank_end = index
-+            while blank_end < len(lines) and not lines[blank_end].strip():
-+                blank_end += 1
-+            if blank_end < len(lines) and lines[blank_end].startswith('|'):
-+                index = blank_end
-+                continue
-+            if blank_end < len(lines) and lines[blank_end].startswith('>'):
-+                # The following quoted context is already separated by its
-+                # quote prefix; do not leave the external block's gap behind.
-+                index = blank_end
-+            else:
-+                result.extend(lines[index:blank_end])
-+                index = blank_end
-+            break
-+
-+    return result
-+
-+
- def _trim_quoted_reply(buffer: str) -> str:
-     """Prepare a hand-edited reply buffer for sending.
+ (defvar b4-review-font-lock-keywords
+   `(
+     ;; Order matters — earlier rules take priority in Emacs font-lock
+@@ -153,6 +169,10 @@ on every line — without it, the fill stops at the last character."
+      (2 'b4-review-diff-file)
+      (3 'b4-review-diff-file))
  
-@@ -3395,9 +3443,7 @@ def _trim_quoted_reply(buffer: str) -> str:
-     maintainer left in place anywhere above their final comment is kept
-     exactly as written; nothing is collapsed, reordered, or relocated.
-     """
--    lines = [
--        line for line in _strip_instruction_header(buffer) if not line.startswith('|')
--    ]
-+    lines = _strip_external_reviewer_lines(_strip_instruction_header(buffer))
-     # Drop the trailing quoted/blank run below the maintainer's last comment.
-     end = len(lines)
-     while end > 0 and (lines[end - 1].startswith('>') or not lines[end - 1].strip()):
-diff --git a/src/tests/test_review.py b/src/tests/test_review.py
-index eb7e36c52eeebb..a2c8703024674c 100644
---- a/src/tests/test_review.py
-+++ b/src/tests/test_review.py
-@@ -861,6 +861,32 @@ class TestTrimQuotedReply:
-     def test_empty_buffer(self) -> None:
-         assert review._trim_quoted_reply('') == ''
- 
-+    def test_removes_external_gaps_inside_quoted_diff(self) -> None:
-+        buffer = (
-+            '> first quoted line\n'
-+            '\n'
-+            '| sashiko.dev <sashiko@sashiko.dev>:\n'
-+            '|\n'
-+            '| An external finding.\n'
-+            '|\n'
-+            '| via: https://sashiko.dev/#/message/example\n'
-+            '\n'
-+            '> second quoted line\n'
-+            '\n'
-+            '| another reviewer <reviewer@example.com>:\n'
-+            '|\n'
-+            '| Another external finding.\n'
-+            '\n'
-+            '> third quoted line\n'
-+            'My maintainer comment.\n'
-+        )
-+        assert review._trim_quoted_reply(buffer) == (
-+            '> first quoted line\n'
-+            '> second quoted line\n'
-+            '> third quoted line\n'
-+            'My maintainer comment.'
-+        )
++    ;; Snip marker, quoted or bare — checked before the plain-quoted catch-all
++    ;; below so it isn't swallowed by that more general rule.
++    ("^\\(?:> \\)?>--cut--[ \t]*$" (0 'b4-review-cut-marker))
 +
+     ;; Plain quoted lines (catch-all for > lines not matched above)
+     ("^\\(> \\)\\(.*\\)$"
+      (1 'b4-review-quote-prefix)
+@@ -173,6 +193,9 @@ on every line — without it, the fill stops at the last character."
+     ;; itself, and `:extend t' on these two faces (see their defface above)
+     ;; is what makes the display fill the rest of the line's width with that
+     ;; face's background instead of stopping at the last glyph.
++    ;; Checked ahead of the general quote-background rule below so its
++    ;; :background wins over `b4-review-quote-background' on the marker line.
++    ("^\\(?:> \\)?>--cut--[ \t]*\n?" (0 'b4-review-cut-background append))
+     ("^>.*\n?" (0 'b4-review-quote-background append))
+     ("^|.*\n?" (0 'b4-review-quote-background append))
+     ("^#.*\n?" (0 'b4-review-quote-background append))
+@@ -419,11 +442,20 @@ the comment text in place under the same diff line, ready to edit."
+       (when lines
+         (insert (mapconcat #'identity lines "\n") "\n")))))
  
- class TestParseReplyTrailers:
-     """Tests for _parse_reply_trailers() — derived trailer display index."""
++(defun b4-review-add-cut ()
++  "Insert a cut marker that will remove itself and everything
++before until the previous user comment. The current line is
++placed in the removed area before the cut marker."
++  (interactive)
++  (end-of-line)
++  (insert "\n>--cut--"))
++
+ (defvar b4-review-mode-map
+   (let ((map (make-sparse-keymap)))
+     (define-key map (kbd "C-c C-k") #'b4-review-delete-hunk)
+     (define-key map (kbd "C-c C-b") #'b4-review-delete-hunks-before)
+     (define-key map (kbd "C-c C-a") #'b4-review-adopt-comment)
++    (define-key map (kbd "C-c C-x") #'b4-review-add-cut)
+     map)
+   "Keymap for `b4-review-mode'.")
+ 
 -- 
 2.43.0
 
