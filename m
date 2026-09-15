@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902B14AF682
-	for <tools@linux.kernel.org>; Tue, 15 Sep 2026 15:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E993DCD80
+	for <tools@linux.kernel.org>; Tue, 15 Sep 2026 15:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789487089; cv=none; b=lVW0l2scOlBS/7QMFHGTX085UMhWpTP/uW082Dexo+a3iIpLgDwQJ79F3lcHyEyDMekhacKntCSo9Aa85CDavJ57j+hGFZb/yDuNPvOeOMzFqFOmli++dLQ4azID+a0BEtJSGlwOrbYBbcYQALJeudo/Ax2pcuLVX6tg9QeOubI=
+	t=1789487904; cv=none; b=jj/PfGwR1hAS0huuhqLIvjHgz5fCxNq7zSAng9u7a0pa6dODgUE0UE+MD+aOFME6KTAxgJ8m+DT+bEyoriS8fNWnPWTn0hlzap/H/xFcBxZihd7DLbPV/ZagHvCrqTHjqdGbBBJSYUQ9paOE2htTXIJwlvja3yR43q44nO9jUwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789487089; c=relaxed/simple;
-	bh=HOQJIzpaIx5qxiZ/Rcpq7dvXDBRJ8FWRPlTIvR24xvQ=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=sa1yDuYhRtVYivHnayMjJu0mGFpZxZNwK08eVgqEIjdScsx6V6a7JxJfdqFXWOuKDXWf4Xvc2hpE3k9gX0WboXqv0EtLb6N1NnauXvnkCofRNgHggL+RGL4xPdyU8hidq4A20kifHT0JhWI+b6gbevfCaFoAR92cTSWvaB023K8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HawXpn51; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789487904; c=relaxed/simple;
+	bh=1TQOvhzGqfrxvl8HLc/4r42Hwnp5s6B/UqADy/NFMgQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Pl0Vrb/XAuLF+hrmq9bymB5eJPVEvX32/Gd/WxtFc7J/xioK/0UkbnW/I9O/tAPPOB18F/I78kCund/YrnLCeJwm5no659XoGNQdIiP3/eus6oo5uV5UkQidwTfSR3qK9ofvxSYPQI0j2fU7JcT6CpsFxdA38nF8h+x0rgt36Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+7McsJ8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HawXpn51"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+7McsJ8"
 Received: by smtp.kernel.org (Postfix)
-	id BF5A61F00898; Tue, 15 Sep 2026 15:44:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DC71F00893;
-	Tue, 15 Sep 2026 15:44:46 +0000 (UTC)
+	id 3993E1F00893; Tue, 15 Sep 2026 15:58:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D757F1F000FF;
+	Tue, 15 Sep 2026 15:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789487086;
-	bh=tH3JtUaNP/HDdYilY2tmj6thmnvU7HMOTm5AbS4K/Zg=;
-	h=From:To:In-Reply-To:References:Subject:Date;
-	b=HawXpn51a4zqhvt6gAdV91dtbyfIF6Z+i24nO/Z1RQLpclYD/INJ1qYfDmOjoNNYC
-	 saG9C034ILHgc87ogo0il4ZzFPWm6dyS1lYpzx6zehVsbx9HnwB6PFOCISxwSYv5BL
-	 zhlLjC/uN0ZT7yehxeRNAqybQPQwUzcEM/oZIC0o=
+	s=korg; t=1789487903;
+	bh=TzSUD0Wno38G7Xv5U9X9vDDmAtAHOtjpwJUAzzNBFOA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=1+7McsJ8mIMynKJRbphWn5UWEQQyTAhLDPfqWJDioiyeFKYVZHq6HDdQX6HbdGixg
+	 I/LcsU8b3AwSivdB74JCKNkSRLBvE6R+KhkxaQk+dacr+k/UmxEN9HH7JMsl+H/L3o
+	 KVN8mUqQ0noZzpMtjKV3mzbsWx9sgPnlIj4kRD6c=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@kernel.org, Jason Gunthorpe <jgg@nvidia.com>
-In-Reply-To: <0-v2-de162fd5fc4a+2b7-trimming_jgg@nvidia.com>
-References: <0-v2-de162fd5fc4a+2b7-trimming_jgg@nvidia.com>
-Subject: Re: [PATCH b4 v2 0/4] Improve email quote trimming
-Message-Id: <178948708311.2456.12034064638475907201.b4-ty@b4>
-Date: Tue, 15 Sep 2026 15:44:43 +0000
+To: Konstantin Ryabitsev <mricon@kernel.org>, 
+ Mark Brown <broonie@kernel.org>
+Cc: tools@kernel.org
+In-Reply-To: <20260831202823.577965-1-broonie@kernel.org>
+References: <20260831202823.577965-1-broonie@kernel.org>
+Subject: Re: [PATCH] review: Add a 'cleanup' command
+Message-Id: <178948789946.2456.4297622164413359167.b4-ty@b4>
+Date: Tue, 15 Sep 2026 15:58:19 +0000
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -41,40 +43,24 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1014;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=284;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=gLt/dX2c3sTUnLit9HoTLhfvOzFNCvkREwLRtzNTAbc=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGLJWpr/VtjodEfTDvvbZuY2cyRILnk/XLGX4xPlQI/Ty4
- S8S/9nzOkpZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAExE/B8jw6WLNss25KSvC122
- 2I//A1dWr4Xv3Kqj+x4o2Jbxm15Nj2T4X8d1TvRu4v31QasKJgYst3bV2s53j0/m1yZOBwbnB7e
- 9uQE=
+ bh=J85HmA5rM2Er+ZQvibrsk/yWnmIG7MCK3R/TiN6Ab0g=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLJWZsvefiC8hDc7w9JkSV4Y892Up++iDtw3nS5RLt01b
+ bfS7VkrOkpZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAExkex/D/xCp3T0+dkZHitZ+
+ ivw/cQ8/V+/TQr8VrgVc+Sc3Pn1zdhcjw6rwKzzypzs6jefyvLx/QXjRBZZzDB8dM7f3vpr9+pL
+ UF0YA
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
 
-On Mon, 07 Sep 2026 16:22:50 -0300, Jason Gunthorpe wrote:
-> Improve email quote trimming
-> 
-> Patches to make the automatic trimming more versatile and work in
-> more cases.
-> 
-> I would, broadly, like to edit the messages without editing or removing
-> any of the existing quoting. This is because I tend to make a few passes
-> at things and once quoted text is deleted it is a huge PITA to bring it
-> back.
-> 
-> [...]
+On Mon, 31 Aug 2026 21:28:23 +0100, Mark Brown wrote:
+> review: Add a 'cleanup' command
 
 Applied, thanks!
 
-[1/4] review: trim trailing quoted when adding a tag
-      commit: e00132591ea197066d91ba5c544d13b74e130131
-[2/4] review: discard blank lines between | and > quotes when trimming
-      commit: edc429c7b94a0c2f8df29cfcc00cf098d1761e55
-[3/4] review: add >--cut-- inline marker to snip quoted reply context
-      commit: 2a08c80c79db82a195ec88481a2ca9ff93f1e810
-[4/4] review: emacs: highlighting and keystroke for >--cut--
-      commit: 3386befc548a13bbe4b743b7d831267f5569cfd4
+[1/1] review: Add a 'cleanup' command
+      commit: 1536a974c8328dd2fcd4c51dd1fb1bbf53be57a6
 
 Best regards,
 -- 
