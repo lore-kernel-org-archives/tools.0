@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E84C547042
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E0A274670
 	for <tools@linux.kernel.org>; Fri, 18 Sep 2026 22:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789769018; cv=none; b=ppFyxtfFp1Q9eJMWWKkI/RDxjUk2UXAbEUwh3DdIi3NngLfFvAxIHTRzjuYUpGYbRpkNco4HPDb0085aUXSc8eVcMicgjpNI70bABG7FIFiIg9Oco3Z/6tTt2Gf6iSSjFAB+fAUp5OmwQT55a6C5/FUzygl0Nj7gFvFZplKyjMc=
+	t=1789769019; cv=none; b=a1Lu7vAmW6/LchnqeRslxh6IjUYjcqoVOzrA33CZKrU/phFv77QPKAOBlnZVPjk7+PqZs/aAfqRT1oP2dxBupC3ZnMyINbwbM/r6c4MGvRjXq2EHs62CkuZgAguJgtGnzLqAESZ9gCFxCBq8KkzYwBpvQr2ijOzrIV4klfeqs3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789769018; c=relaxed/simple;
-	bh=L8RBm9YQQKAAgZH4g9Te3KoOHlN9BFsGXGszAr5moqc=;
+	s=arc-20240116; t=1789769019; c=relaxed/simple;
+	bh=qAoUFvRRngO7bGpLFBjqXKLo28TTe9TDtyzPfF3DDCw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XYvZIG7PPf5//gUkOf6XHTSmFvO72+x6ck0fXqleU+BnGeWh1bIJ5D5GDVJpmJmmYpukvKGh1gwxrG7jzKe8cD/86X5kLOfaG95UGpacXfSS0zC8qy59b8t126DQPm67NNnp63OnhqOe144cQCM17mI7IbGvRMnrbniXpxsJE0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RkQpesCT; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=iOSGDeKVb0kHhokqhRhVJYT+2fCSdrCMuZi9rxD+k0hOBQ9ZQNx2vj5Wcz5nucaM0qq1rUWPwE7To+jrItEP4+od/hyxkTWnrJ44uspPKIPu6HwUId30jRUR8VmNjIZCqG9wEot3DjYKrz/8VXWgetH4wtw30vX45ta5ufos65g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eOdVSrbM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RkQpesCT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eOdVSrbM"
 Received: by smtp.kernel.org (Postfix)
-	id F2CEB1F00898; Fri, 18 Sep 2026 22:03:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361CA1F0089A;
-	Fri, 18 Sep 2026 22:03:36 +0000 (UTC)
+	id A4A1C1F00899; Fri, 18 Sep 2026 22:03:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E0F1F0089B;
+	Fri, 18 Sep 2026 22:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789769016;
-	bh=2+nAUWzoPmJosiBAByNjISnaRsUq1i+cYtu6U6wLwuE=;
+	s=k20260515; t=1789769017;
+	bh=BlgHIw4XMlTN2W5fEVgdp4RXqA45rPeXMFLZ3W4zWXQ=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=RkQpesCTD8DxOeaxzzpzcOnBoWaZ/g5mY1YxxPn4n0URnZeL3YO6iXPFavNgZM70R
-	 ZCm2tave6oFN4bWX+POlresdRkBYjRN/GusRDM5UiCCAAtN4g1EX0ZOOsC4CTGEv8w
-	 4QwtadZXS3fmKqJf8ALHOwEDT5Eodp0xeWzMpSaSKxsQ4c6IJ5xYcJpjQUiN1xVsV3
-	 RYDDarAi3ZEgv5Lb1q5OCDhR1Zyn+0O8y4I7FdaBneFRiIU/GAW27lQ2EMnlZd5uH7
-	 KrD7hR7iGmu2WRaE+FfBiu4tj0QOBaESTiHw8YGRkSjgOFZLxIB0rAf9jqrVKJCtNg
-	 +KnJf65u75SRQ==
+	b=eOdVSrbM2yEM5SgTZt8zCiqOJXgqpI/8VvhXhEVH61KO4lh28gm8+rd9ekbbRRGsv
+	 dYKmosvGPOwPGqCThGoNZJEzFaw3jMrSFtebupM1uKmyqha9TnMzC7OhJxv/Hv7tUq
+	 lvt3LnyVeBw/0s2tiwLWPnEsXe9VGLm4Wj2FjD/uWqdT2Cf4fpwcSkfL8Mj/KcFwiv
+	 Pe627il5OEa99USs3lBrIX7povc8vKGsJ1shqXYKqsYjXLKk538xINCJSsKHv3vur6
+	 jXJJjZuVTXHwN8xMTDgemdTKHzwowSxdEtxKCWsND2iTI4Pc8DPcL+ZkNP+/sb+BlD
+	 K72Ik17iFxXGw==
 From: Tamir Duberstein <tamird@kernel.org>
-Date: Fri, 18 Sep 2026 18:03:22 -0400
-Subject: [PATCH ezgb v2 2/3] Enable strict pyright source checks
+Date: Fri, 18 Sep 2026 18:03:23 -0400
+Subject: [PATCH ezgb v2 3/3] Document local CI checks
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,176 +39,91 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260918-stronger-type-checking-v2-2-3ddc31ba2616@kernel.org>
+Message-Id: <20260918-stronger-type-checking-v2-3-3ddc31ba2616@kernel.org>
 References: <20260918-stronger-type-checking-v2-0-3ddc31ba2616@kernel.org>
 In-Reply-To: <20260918-stronger-type-checking-v2-0-3ddc31ba2616@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Tamir Duberstein <tamird@kernel.org>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5429; i=tamird@kernel.org;
- h=from:subject:message-id; bh=L8RBm9YQQKAAgZH4g9Te3KoOHlN9BFsGXGszAr5moqc=;
- b=owGbwMvMwCV2wYdPVfy60HTG02pJDFlrtxpWVVp4CTjL9Vf2NOSHGfvMbl7WMvl0S8odJ9drs
- /Yb/93UMZGFQYyLwVJMkSVR9NDe9NTbe2Qz3x2HmcPKBDJEWqSBAQhYGPhyE/NKjXSM9Ey1DfUM
- jXQMdIwZuDgFYKo5/jAyfJhTEvhiQb/Y/o16PqJ/1lpllLY/zfvDf/1ti0Yud9WVRkaGdz6+j7e
- fao0J77okVaoq9yR+w73jhxudii745Jy9d2MPGwA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2281; i=tamird@kernel.org;
+ h=from:subject:message-id; bh=qAoUFvRRngO7bGpLFBjqXKLo28TTe9TDtyzPfF3DDCw=;
+ b=owGbwMvMwCV2wYdPVfy60HTG02pJDFlrtxpt9HtyTjjg3hnzQy9y7h2ZYOyqFMrAtyO8I9boe
+ XShJ6tmx0QWBjEuBksxRZZE0UN701Nv75HNfHccZg4rE8gQaZEGBiBgYeDLTcwrNdIx0jPVNtQz
+ NNIx0DFm4OIUgKnmXsLwP8K7eL8Gb+2MCcrGGycnq124UlPDmu76QS/L9cP8FZN3zWD4X/dlgSF
+ zX9XOjd7KUSf8bjn6es1Q37PoReip2/tec3C5cAEA
 X-Developer-Key: i=tamird@kernel.org; a=openpgp;
  fpr=5A6714204D41EC844C50273C19D6FF6092365380
 
-Remove the blanket unknown-type and private-usage exemptions now that
-JSON and git objects are narrowed before use. Limit the private-usage
-exception to tests, which intentionally exercise internal helpers.
-
-Move the shared date parser to module scope so GitBugRepo no longer
-calls a private BugReader method, and give dataclass factories explicit
-element types.
+Development dependencies are now a dependency group, so the documented
+.[dev] extra no longer installs them. Document uv sync and ci.sh in the
+README and contributor guide so local checks include all linters, type
+checkers and tests.
 
 Signed-off-by: Tamir Duberstein <tamird@kernel.org>
 Assisted-by: LLM
 ---
- pyproject.toml       | 13 +++----------
- src/ezgb/__init__.py |  8 +++-----
- src/ezgb/_models.py  |  4 ++--
- src/ezgb/_reader.py  | 40 ++++++++++++++++++++--------------------
- 4 files changed, 28 insertions(+), 37 deletions(-)
+ CONTRIBUTING.md | 15 ++++++++-------
+ README.md       | 13 +++++++------
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/pyproject.toml b/pyproject.toml
-index 3f2ddb9..28289fe 100644
---- a/pyproject.toml
-+++ b/pyproject.toml
-@@ -61,16 +61,9 @@ quote-style = "single"
- # pyright tries to type-check every package in each one).
- exclude = [".venv", ".venv-*"]
- typeCheckingMode = "strict"
--
--# pygit2 ships no type information, so member/variable/argument types coming
--# out of it resolve to Unknown. Relax the strict "unknown type" reports
--# rather than sprinkling casts across every git-object access site.
--reportUnknownArgumentType = false
--reportUnknownMemberType = false
--reportUnknownVariableType = false
--
--# False positives caused by underscore-prefixed helpers used across modules.
--reportPrivateUsage = false
-+executionEnvironments = [
-+    { root = "tests", reportPrivateUsage = false },
-+]
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index ac70676..0a6a0b7 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -28,16 +28,17 @@ contributor guide has a good overview:
  
- [tool.ty.rules]
- all = "error"
-diff --git a/src/ezgb/__init__.py b/src/ezgb/__init__.py
-index eb65cfc..1f7d0ab 100644
---- a/src/ezgb/__init__.py
-+++ b/src/ezgb/__init__.py
-@@ -23,7 +23,7 @@ from ezgb._models import (
-     Status,
-     UnsupportedFormatError,
- )
--from ezgb._reader import BugReader
-+from ezgb._reader import BugReader, parse_since
- from ezgb._types import JsonValue
- from ezgb._writer import BugWriter
+ - Python 3.10+, `from __future__ import annotations` in every module.
+ - `%`-style string formatting to match the existing code.
+-- Run `ruff check` and `mypy --strict` before submitting.
++- Run `./ci.sh` before submitting.
  
-@@ -77,9 +77,7 @@ class GitBugRepo:
-                 since = since.replace(tzinfo=timezone.utc)
-             return int(since.timestamp())
-         # str -- delegate to the reader's parser
--        from ezgb._reader import BugReader
--
--        return BugReader._parse_since(since)
-+        return parse_since(since)
+-## Running tests
++## Development checks
  
-     def list_bugs(
-         self,
-@@ -207,7 +205,7 @@ class GitBugRepo:
-             author_id = author.get('id', '') if isinstance(author, dict) else ''
-             raw_labels = raw.get('labels') or []
-             if isinstance(raw_labels, list):
--                labels = frozenset(str(lb) for lb in raw_labels)
-+                labels: frozenset[str] = frozenset(str(lb) for lb in raw_labels)
-             else:
-                 labels = frozenset()
-             comment_count = raw.get('comments', 0)
-diff --git a/src/ezgb/_models.py b/src/ezgb/_models.py
-index 72eb759..426895a 100644
---- a/src/ezgb/_models.py
-+++ b/src/ezgb/_models.py
-@@ -96,7 +96,7 @@ class Comment:
-     text: str
-     created_at: datetime
-     count: int
--    attachment_ids: list[str] = field(default_factory=list)
-+    attachment_ids: list[str] = field(default_factory=list[str])
+-    pip install -e '.[dev]'
+-    python -m pytest
++    uv sync --all-groups
++    ./ci.sh
  
+-The test suite includes unit tests (using real git objects in temporary
+-repos via pygit2) and integration tests that exercise the full stack
+-including the `git-bug` binary.
++The CI script runs Ruff, ty, mypy, pyright, and pytest. The test suite
++includes unit tests (using real git objects in temporary repos via
++pygit2) and integration tests that exercise the full stack including the
++`git-bug` binary.
  
- @dataclass
-@@ -110,7 +110,7 @@ class Bug:
-     created_at: datetime
-     labels: set[str]
-     comments: list[Comment]
--    metadata: dict[str, str] = field(default_factory=dict)
-+    metadata: dict[str, str] = field(default_factory=dict[str, str])
+ ## Licensing
  
+diff --git a/README.md b/README.md
+index 3ee811e..4d9042d 100644
+--- a/README.md
++++ b/README.md
+@@ -59,16 +59,17 @@ make -C docs html
  
- @dataclass(frozen=True)
-diff --git a/src/ezgb/_reader.py b/src/ezgb/_reader.py
-index fe918ec..769604d 100644
---- a/src/ezgb/_reader.py
-+++ b/src/ezgb/_reader.py
-@@ -56,6 +56,26 @@ def _is_dict_values(value: dict[_K, _T], value_ty: type[_U]) -> TypeGuard[dict[_
-     return all(isinstance(value, value_ty) for value in value.values())
+ Then open `docs/_build/html/index.html` in your browser.
  
+-## Running tests
++## Development checks
  
-+def parse_since(since: str) -> int:
-+    """Parse a datetime string to a unix timestamp.
-+
-+    Accepts ISO-8601 variants and ``YYYYMMDDHHMMSS``.
-+    """
-+    since = since.strip()
-+    for fmt in (
-+        '%Y-%m-%d %H:%M:%S',
-+        '%Y%m%d%H%M%S',
-+        '%Y-%m-%dT%H:%M:%SZ',
-+        '%Y-%m-%dT%H:%M:%S',
-+    ):
-+        try:
-+            dt = datetime.strptime(since, fmt).replace(tzinfo=timezone.utc)
-+            return int(dt.timestamp())
-+        except ValueError:
-+            continue
-+    raise ValueError('cannot parse since=%s' % since)
-+
-+
- def _combine_ids(primary: str, secondary: str) -> str:
-     """Interleave primary and secondary IDs into a CombinedId.
+ ```bash
+-pip install -e '.[dev]'
+-python -m pytest
++uv sync --all-groups
++./ci.sh
+ ```
  
-@@ -412,26 +432,6 @@ class BugReader:
-         """Convert a unix timestamp to a timezone-aware datetime."""
-         return datetime.fromtimestamp(unix_ts, tz=timezone.utc)
+-The test suite includes unit tests (using real git objects in temporary
+-repos via pygit2) and integration tests that exercise the full stack
+-including the `git-bug` binary.
++The CI script runs Ruff, ty, mypy, pyright, and pytest. The test suite
++includes unit tests (using real git objects in temporary repos via
++pygit2) and integration tests that exercise the full stack including the
++`git-bug` binary.
  
--    @staticmethod
--    def _parse_since(since: str) -> int:
--        """Parse a datetime string to a unix timestamp.
--
--        Accepts ISO-8601 variants and ``YYYYMMDDHHMMSS``.
--        """
--        since = since.strip()
--        for fmt in (
--            '%Y-%m-%d %H:%M:%S',
--            '%Y%m%d%H%M%S',
--            '%Y-%m-%dT%H:%M:%SZ',
--            '%Y-%m-%dT%H:%M:%S',
--        ):
--            try:
--                dt = datetime.strptime(since, fmt).replace(tzinfo=timezone.utc)
--                return int(dt.timestamp())
--            except ValueError:
--                continue
--        raise ValueError('cannot parse since=%s' % since)
--
-     def build_bug(
-         self,
-         bid: str,
+ ## Contributing
+ 
 
 -- 
 2.56.0.rc0.692.g34fd115c35.frankengit
