@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608804749EF
-	for <tools@linux.kernel.org>; Fri, 18 Sep 2026 19:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C441D495045
+	for <tools@linux.kernel.org>; Fri, 18 Sep 2026 19:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789758204; cv=none; b=fB8H9qR8DsnwOm+occ5SEgO+74mohd5cq7qUro24E65TpbnWg9SygRuidk+/pmuqZmPXVv2OE3JChr6msyAyKyLCJWO92D3ue8EzdikuxbsXAIIheCX/uEYnPZr3H/AFpd6czdh5MntwFvX2qXGi4Sx4xvdLUifZSJOiib4o6Us=
+	t=1789758207; cv=none; b=TbUbr+hHfKVsOafo2mDim5qBzR8V58dDw8TXZ3Rl5VxL/W7iLS2Mw+XRyYyc3rF7B79CneEZUwHfZrXySSmETwwVxjvlP76HqsN4tOxsVerTj8NjUWJpGcSwGZOxWzVUq26V3aPn67y32FpfP45OC35SgX9mQtMjqxGpl/BxCd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789758204; c=relaxed/simple;
-	bh=xo8GTwtgom40Gg7TBiTOwbt3KiFIuCgLkUS0/xyV08k=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=U+xainlGTBXdxYLuFHp3pquMMt1Qm9tduCipqdPBcC2X8gI8GjzuilYH7md+9E1sXcrKvs6ryTG38joXjNuvmMxSzL2AB1HduCHRvQRw1oDzuS0KhxZigThQzzLLsTavd4AQU9gvMqJngw8XnHh9TISiow7PgxYm/0B8p3Mqs3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C4bTsHVn; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789758207; c=relaxed/simple;
+	bh=2yh34JyO7F1l3VRkjBaEHbs3iohvjpmWVU1sG3Gs/5Y=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=M1S9KKUe+vNQWOqaXNNnWuIXrHG1MbKbRVBK0uXEIorLBBNiwzfbqaRf3IWmmdPvqnQk/O0wskCe6Ns3Al+m/NjdUVvfUTnzolk+sq+kcwIfTyRQFEGzYH8bdC5sYtcwQvWd+Qd7e4ua2qXL7uYPOmLF8x9qdLH+sgU70yDEgHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RShEOW7M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C4bTsHVn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RShEOW7M"
 Received: by smtp.kernel.org (Postfix)
-	id 4D9151F00898; Fri, 18 Sep 2026 19:03:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA9A1F000FF;
-	Fri, 18 Sep 2026 19:03:08 +0000 (UTC)
+	id 799501F0089C; Fri, 18 Sep 2026 19:03:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1421D1F00899;
+	Fri, 18 Sep 2026 19:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789758189;
-	bh=eZHDiMG5N+aqMDWakYhDgjEZ5zUL76SHtZD/EvAhU44=;
-	h=From:Subject:Date:To:Cc;
-	b=C4bTsHVnoehX7LwUnBeh7d7cDbhxfVCFq37UVcl0edEee4WOQvwqwT3WQQ8gv50M9
-	 6e/Zrz6g//sbeNm+aA0ElKqr/J7Zht6hvzpuRJacvzcG/eHAA9R2u6Ac2ZNwDFhKHF
-	 Mz//XIzQfbOM8Vy/hY+nIakoo06A4ZVYYXtBtHSRoV9tHP9AKrkiwr/uvD8AAEOD6N
-	 udILPG8FYvUmA/v+li6rZjOQHfE7C0ww7Qi61i2OTdiGtvWkze7CaF0Z4i7+CN/RKf
-	 MAEFWU+mlSp0Vt4TntomN/ylkO3IFIt5ANX3PdsJaYGlEpbFT3hZbsFTyvllOUbqEz
-	 xyr6w4Gw5EPiw==
+	s=k20260515; t=1789758191;
+	bh=sPYMwJzM6gjLZrtVevUHoimin1GE9YKzQhSLX0pWMm4=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=RShEOW7MsBBGX3Kv83gwePmKISADiqh5SY1i5iqh0jGrx4N9VCTFtv+rKoxyGa103
+	 946iYiBQ3sE8mP02T3+Hb42rmN6L5LBxI+so5VXt7PHtDQt7fPm1TW02zuEFtd4kRw
+	 MI51WtAqOYX/t76A4Y5oSK2BTjR0e9uur6n58KCHAsMOYBA4g8q2WFFItFHJ/BQdtv
+	 VLADtOKLtTYhjLbOnBpoMbW51OQfo95aBfbhsEybwmY6Qex2d5QWLi6J6BqN9vfJNQ
+	 qrr0I0+4tLZYCK58Zo4K4tl/kwDsuF4/5vldW0X7rpJujsQSftB9iVQlevLxS2MIJa
+	 Xx8aqJvtRLmoQ==
 From: Tamir Duberstein <tamird@kernel.org>
-Subject: [PATCH patatt v2 0/4] Harden local checks
-Date: Fri, 18 Sep 2026 15:02:51 -0400
-Message-Id: <20260918-stronger-type-checking-v2-0-37de1d8a6c86@kernel.org>
+Date: Fri, 18 Sep 2026 15:02:54 -0400
+Subject: [PATCH patatt v2 3/4] Reduce dictionary lookups
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -39,68 +39,57 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WOTQ6CMBCFr0Jm7Zi2goAr72FYlDJC1bRkWomEc
- HcLHsDl+/L+FgjElgJcsgWYJhusd0moQwZm0K4ntF3SoIQ6i1zWGCL7hBnjPBKagczTuh5PpVB
- FUWvT6hpSeGS6289efINRRx0jND8e3u2DTNxaN+dgQ/Q87w8mufv/jU0SBRZGikrkVadMeX0SO
- 3odPffQrOv6Bfm5GnnXAAAA
-X-Change-ID: 20260419-stronger-type-checking-3702559acba9
+Message-Id: <20260918-stronger-type-checking-v2-3-37de1d8a6c86@kernel.org>
+References: <20260918-stronger-type-checking-v2-0-37de1d8a6c86@kernel.org>
+In-Reply-To: <20260918-stronger-type-checking-v2-0-37de1d8a6c86@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Tamir Duberstein <tamird@kernel.org>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2062; i=tamird@kernel.org;
- h=from:subject:message-id; bh=xo8GTwtgom40Gg7TBiTOwbt3KiFIuCgLkUS0/xyV08k=;
- b=owGbwMvMwCV2wYdPVfy60HTG02pJDFlru57EcH3IuiOWdizn94KrbEWbd1q/UbBU95mtdLcyb
- tYPPneJjoksDGJcDJZiiiyJoof2pqfe3iOb+e44zBxWJpAh0iINDEDAwsCXm5hXaqRjpGeqbahn
- aKRjoGPMwMUpAFMdPpXhf9kM45s5Vgtm7RD4ssJATnH+0Vk7HsW+9WBhWPM1i3vTgkSG/5FnEiy
- W8FopeZ3NCjwQ9+Zf+0SnCT/ZJM1VJqffMXq8jg0A
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1354; i=tamird@kernel.org;
+ h=from:subject:message-id; bh=2yh34JyO7F1l3VRkjBaEHbs3iohvjpmWVU1sG3Gs/5Y=;
+ b=owGbwMvMwCV2wYdPVfy60HTG02pJDFlru15u7+uZZ9/7/PLD8N035ibUbq/8M9OT6dhMPgYWp
+ q09JRJ5HRNZGMS4GCzFFFkSRQ/tTU+9vUc2891xmDmsTCBDpEUaGICAhYEvNzGv1EjHSM9U21DP
+ 0EjHQMeYgYtTAKa6xYqR4ZFA5YLIffobLiSw/N33geOx0keF3YYxdaKf2lwaeA1DTjAybN4Z9ed
+ mmXfj4uVPMwX9lGQsRdLrJsuF71cMq2t9scSCDwA=
 X-Developer-Key: i=tamird@kernel.org; a=openpgp;
  fpr=5A6714204D41EC844C50273C19D6FF6092365380
 
-The CI and checker setup proposed in v1 is now largely covered by
-05c5bbb0b00e ("Add CI helper scripts and stricter type/lint gates").
-This revision builds on that work, retaining the remaining typing and
-cleanup changes and adding a lockfile for reproducible checks.
+Use dict.get instead of separate membership checks and lookups when
+reading XDG_DATA_HOME and cached identity keys.
 
 Signed-off-by: Tamir Duberstein <tamird@kernel.org>
+Assisted-by: LLM
 ---
-Changes in v2:
-- Rebase onto 0.8.0 and drop the superseded CI, Ruff import/format, and
-  ty setup patches.
-- Add uv.lock in a separate first patch, then upgrade Ruff and ty
-  alongside the corresponding lint and type fixes.
-- Adapt the remaining typing changes to the upstream configuration,
-  removing unknown-type exemptions and precisely typing the key cache.
-- Fix Python 3.8 packaging and test-collection failures and add
-  regression coverage for cache reuse and missing-key validation.
-- Retain the dictionary-lookup and unconditional PyNaCl-import cleanups,
-  adjusted for upstream changes.
-- Link to v1: https://patch.msgid.link/20260419-stronger-type-checking-v1-0-5c108048d2c7@kernel.org
+ src/patatt/__init__.py | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
----
-Tamir Duberstein (4):
-      Track uv.lock for reproducible checks
-      Tighten local type and lint checks
-      Reduce dictionary lookups
-      Import PyNaCl unconditionally
+diff --git a/src/patatt/__init__.py b/src/patatt/__init__.py
+index d33ff68..7254fcc 100644
+--- a/src/patatt/__init__.py
++++ b/src/patatt/__init__.py
+@@ -1037,8 +1037,8 @@ def get_data_dir() -> Path:
+     Returns:
+         Path to $XDG_DATA_HOME/patatt or ~/.local/share/patatt.
+     """
+-    if 'XDG_DATA_HOME' in os.environ:
+-        datahome = Path(os.environ['XDG_DATA_HOME'])
++    if (xdg_data_home := os.environ.get('XDG_DATA_HOME')) is not None:
++        datahome = Path(xdg_data_home)
+     else:
+         datahome = Path.home() / '.local' / 'share'
+     datadir = datahome / 'patatt'
+@@ -1454,8 +1454,7 @@ def get_algo_keydata(config: GitConfigType) -> tuple[str, str]:
+             f'Identity must be a string, got {type(identity).__name__}'
+         )
+ 
+-    if identity in KEYCACHE:
+-        cached = KEYCACHE[identity]
++    if (cached := KEYCACHE.get(identity)) is not None:
+         assert isinstance(cached, tuple)
+         algo, keydata = cached
+         assert isinstance(algo, str)
 
- .gitignore                             |    1 -
- docs/conf.py                           |    2 +-
- pyproject.toml                         |   20 +-
- src/patatt/__init__.py                 |  373 ++++----
- tests/conftest.py                      |   12 +-
- tests/test_validation.py               |   19 +-
- tests/unit/test_devsig_header.py       |   17 +-
- tests/unit/test_get_config_from_git.py |    2 +
- tests/unit/test_patatt_message.py      |    4 +-
- tests/unit/test_run_command.py         |    5 +-
- uv.lock                                | 1515 ++++++++++++++++++++++++++++++++
- 11 files changed, 1753 insertions(+), 217 deletions(-)
----
-base-commit: 274198d9d5cc315c9588bf84cc7b53a7261726e4
-change-id: 20260419-stronger-type-checking-3702559acba9
-
-Best regards,
---  
-Tamir Duberstein <tamird@kernel.org>
+-- 
+2.56.0.rc0.682.g1951b10616.frankengit
 
