@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4AB2E1EE0
-	for <tools@linux.kernel.org>; Thu, 24 Sep 2026 12:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B3C25B2F4
+	for <tools@linux.kernel.org>; Thu, 24 Sep 2026 12:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790254348; cv=none; b=qAUugI+t+n/1SBLyyFEq1yh9U95qZ+wwKjB96IRSROxTz9wmtAqJSM7sI7Ix1sRpXAonwBkuwePNYqdkKq91xRvU6nhfCsQ4vudd+hCfWb9R5GMFJv+pdZxA/hvBxtNdKu9G3W4r6VT0JuZnYt6W2GeluzD4CqCSVv6wYJKzv8E=
+	t=1790254418; cv=none; b=NV64QLY9INZqejldaAsXlUDuoU7Y15lBonRwf2iynTlGhXtzz81QZmIe8csy3VCrB9J62ul6tiG39KDYI9fZaVElCl+tM83K+kKMhPL+s0McIxgfarmmis5qsVuzfLKgko1/mGqa4TwMk1bV+1r58wNUhll+IrIyJPml1acpqTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790254348; c=relaxed/simple;
-	bh=5WiHQnO43E4jdP25PVxw+S0oVBCmTZbeCAK4JPj2UkU=;
-	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=MOTfYZM1XgSlEebiDNuFw6XsNU0FspgycSrGzXA6JjRUOwxqle8siNjy3reuhmzPJZpgTfwvNAVLg1lebt7iYOI3t6dJ5RGree8WYhNr2ChIVsumkgl6UKYddE5J2OESmL75r3s3Upc8EiI3LJBhzHbQHaksMTqJOC1O2YKUPO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZxmOilFT; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790254418; c=relaxed/simple;
+	bh=sdi2QAHLTs2w7j6+bhnkRXMuZpqtEim8ZBNFwKoA3qw=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=InSRY1ZhNUtAc0TN0hAaFG2iikSFKyBmx+ZdzGz6jTPvZZMB5dG0jyszhBOe3Hf93joYCjC7rpx4UB6utUAvCFVpypzRQxmyYsuhVeZXkBQWWBwXi1C+aozhc0ilTD8Fc6UMQp2WV+TfICahzmjhFU81XTBrwIdtnlr04lOccq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fU5XANsx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZxmOilFT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fU5XANsx"
 Received: by smtp.kernel.org (Postfix)
-	id A00451F00893; Thu, 24 Sep 2026 12:52:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BDD1F000FF;
-	Thu, 24 Sep 2026 12:52:21 +0000 (UTC)
+	id 1F3CF1F000FF; Thu, 24 Sep 2026 12:53:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA961F00893;
+	Thu, 24 Sep 2026 12:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790254345;
-	bh=O1I35wUWyf807kkDRODBdP8qDooGrmNIFF3EhFnyzsQ=;
-	h=Date:From:To:Cc:Subject;
-	b=ZxmOilFTpEcwwafMoYMNukaiAMh1Y8j61yRXobgwlDuvIhtHZGYV88nUonnZzUwv6
-	 iH6QgUvLKdG71kqTB8Unnc2BQtiI84JOr4BC9d9oBA0OLLx+ohtBTBEoGlk1mtQVYs
-	 u9D+N/2eORJap3Z3P8BYfm7MwLDoJzjFNhPyxGcWxjis9Ja9NsRftIBJMH1iXaLg+Y
-	 TdD4besvlClvhghs3gFpHEUJ1yMrIm2c9piukufKFjCAG0Zm78jvbpUvr01mvmI7aW
-	 XfXbL5XuzB9453eiIikRd5g0kV8wb3LcoE6ONf/Bzg0SAABdUgs90ktedUW4KGXPJI
-	 Xqo9A0JZNqSbQ==
-Message-ID: <643cb7a7-d817-441b-913f-7f78e7710e5c@kernel.org>
-Date: Thu, 24 Sep 2026 14:52:19 +0200
+	s=k20260515; t=1790254415;
+	bh=P6YHYJbyRi8EleAGD0wttGhUXSoUEKQC0tXQkGvstKE=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To;
+	b=fU5XANsx+X9R9J74gqH68eVJOq9M3rIC0MpZ1Xye7xsEoMbSTFKlgs+snNuCMKr07
+	 V747J9sTJdDUg33iSKiARvGbk0yDALBqLsZFxffVkefmQMlbAqZ4l8K4HrKeTlKjyS
+	 RMZ2rrQKWsoxne0w/Dk2akIOmpC6fAVkqPC2I/hYezUKZSwlnG3kA3Z0mEQmgS6vHM
+	 8pUQVGzGqvbNgkV7gKHmYTKEGAHukIasbf4H3Fne7ss3gI8TGt9pNZBzbbOheUINTv
+	 uKZcccdtWViu5ibVCPnk7sw46NQ1/kJbdvSXXK2gzhS9cDQzUxata1qY26VoqMrWUx
+	 nnP4gL4xHA/Ew==
+Message-ID: <4d64b396-3d06-4356-b5f6-1599e9e3f4f0@kernel.org>
+Date: Thu, 24 Sep 2026 14:53:31 +0200
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -36,12 +37,13 @@ List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: review-tui: Handle different Patchwork current statuses
 From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
  Rob Herring <robh@kernel.org>, Conor Dooley <conor@kernel.org>
-Subject: review-tui: Handle different Patchwork current statuses
+References: <643cb7a7-d817-441b-913f-7f78e7710e5c@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -85,39 +87,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
+In-Reply-To: <643cb7a7-d817-441b-913f-7f78e7710e5c@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hey,
+On 24/09/2026 14:52, Krzysztof Kozlowski wrote:
+> Hey,
+> 
+> I am trying to adapt b4 review to DT workflow with DT patchwork and I
+> think interpretation of current patch status needs customization. I have
+> in .gitconfig:
+> 
+> [b4]
+> 	pw-review-state = needs-ack
+> 	pw-accept-state = not-applicable
+> 	pw-discard-state = changes-requested
+> 
+> But b4 review tui in Patchwork status does not show any patches under
+> Needs ACK.
+> 
+> https://patchwork.kernel.org/project/devicetree/list/
+> 
+> To recap, our statuses are used like:
+> 0. "New": not processed by any automation
+> 1. "Under Review": being processed by automation
+> 2. "Needs ACK": Actually waiting for our review or being reviewed. This
+> is what we want to see in list of patches.
+> 3. "Changes requested": Patch rejected with changes needed
+> 4. "Not applicable": Patch was reviewed but handled elsewhere as most of
+> work is like that.
+> 
+> Either I miss some .gitconfig options or b4 is missing such
+> customization. If the latter, can you add a feature-request for this? I
+> would like to adopt b4 and move away from our internal scripting...
+> 
 
-I am trying to adapt b4 review to DT workflow with DT patchwork and I
-think interpretation of current patch status needs customization. I have
-in .gitconfig:
-
-[b4]
-	pw-review-state = needs-ack
-	pw-accept-state = not-applicable
-	pw-discard-state = changes-requested
-
-But b4 review tui in Patchwork status does not show any patches under
-Needs ACK.
-
-https://patchwork.kernel.org/project/devicetree/list/
-
-To recap, our statuses are used like:
-0. "New": not processed by any automation
-1. "Under Review": being processed by automation
-2. "Needs ACK": Actually waiting for our review or being reviewed. This
-is what we want to see in list of patches.
-3. "Changes requested": Patch rejected with changes needed
-4. "Not applicable": Patch was reviewed but handled elsewhere as most of
-work is like that.
-
-Either I miss some .gitconfig options or b4 is missing such
-customization. If the latter, can you add a feature-request for this? I
-would like to adopt b4 and move away from our internal scripting...
-
+Ah, and if that matters: b4 v0.16.0
 
 Best regards,
 Krzysztof
-
