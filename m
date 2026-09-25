@@ -1,103 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF273494829
-	for <tools@linux.kernel.org>; Fri, 25 Sep 2026 10:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E986F33B6DA
+	for <tools@linux.kernel.org>; Fri, 25 Sep 2026 10:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790332218; cv=pass; b=XsEb8GFAUhnQzj9BuQpa7P1ga5Bpb7EsABVdvuVXyaktFU7k+d0kysj00ObBJL6KhYCn/hbnK6oJM81KJEznp+mYRPnx9B0sv4uWjjD2FJOnrVzYRXVC0n29Vh+sqWXpnC7n9tdhVzx4nFqPrehf4zGiCnJRlwPzysm0dKUQKcM=
+	t=1790332224; cv=pass; b=JY/mKO2NUUFTtbnmIx1fI+HsrTpY0OjO8IKc8QfOUSpON4R2odb4mket59J4eH9NR0BTgdGEO4uKAxu2krSXGGXE+jYk/npCDvC11Pc9Z1ij0Yw4ZckWG5p+qDMoktyyLbpU6IbIT3hmSBpaKV0Xq+vZGRgErznBpv+CKb1AIyY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790332218; c=relaxed/simple;
-	bh=3BuksN1Yf2k8G7J+TpGPM0C3hQpSLuhbC11WCjvKcuo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DIKBYbYsyfXt7MwupndI8kqo9PMqGJbBHpU4UGrSsRUBYJ8fYI+Mf7tjkb/LxKAWkJ+A3O1zWII3rrhbHMLa8wIzFbGHA6HwsZqQZ+5Sa6bEDz7YySUI5ZGlkAVNjj3rKWAPZvjdTdSKIUqQY8uCJpLFvPq9gBM+g4L7yP3PrEY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=a5Fo26p9; arc=pass smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790332224; c=relaxed/simple;
+	bh=T6yTTVzLq31pW3DeBUPa309cReovHqR/imOl4uMEXv4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=kPTavWfCdXoOuN8JKArz5MOQSrmZKWUAMl9H6hIUkV7pie2CWVgE/NW9m4E/zeRzpU6lOKmDQFhyxTOPv4QW7JL8xA6zxY8yFQB+Qbo+giB9CVIUX8sCcQ7+qxJdW1hnlhMvhbPUhqjmjSq8YoMN+/zxAmbO0znPfC2bnpwALoU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=OuBmzTFu; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="a5Fo26p9"
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="OuBmzTFu"
 Received: by smtp.kernel.org (Postfix)
-	id AEA101F00893; Fri, 25 Sep 2026 10:30:16 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=74.125.225.76
+	id D6B901F00899; Fri, 25 Sep 2026 10:30:22 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=74.125.225.99
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1790332216;
-	b=ygW5ibVxS5pL4LPGdvh3jQGbFUCB1ucHeYvdQEblBY9i2K/Fj6A0smPqja061otgQcF/
-	 IEhvEvN5fRRNyFA/viBH9NqX3NYGsvRSKWdK/8Iyb1s9frmfg3COyqevdxNM2yzQxUR82
-	 Zyi3oWAZnat+nmW97jEkpV72oO2xIedNxHxhPWHy4+Oi+CYbbAiU/XLrDVwX6Av2xt0DW
-	 leAGaR7XA6MjDFGCGSlkt4LEVMGtmVCAdtI6ET593OV+Mg54AAJAzba5mgpmVOg5aZTuR
-	 KhaIc9McquWXLvYP6JCTOMcHbsDs6YspVmXdQMB2H+pK3UZNwwWfe37ogyzcCv2qbnA==
+	t=1790332222;
+	b=i3yobQ245Lrzz6jfIbjsMsK3EIHVErjd8puuH2lEAQI2e2qF3m3ZOzLXArf3kpboBQaQ
+	 ZxwmE8uI6xX3AQ3qlK7WUmA95s2mdpej8qcpn4v6N6T5vt7MGv5rxIJlAKcMFhn2hTjYO
+	 QR0848mlrQNAOpcJ9CXL3M3HzjHA5Ss5NAxFxi+HGve6MjD4o2zQxPZKFaVP1dCUQMRuc
+	 p9eLt0UR752CfphA5u9IFxjI8EaO89Fg1HbWmayjCojVNARy7glU1zSrZWkarG8uKgrJO
+	 G9XlwWMINb8FKzjfygFDvHS66XCUsRY1Pnj72b96qjxCMhkex9GcWOtn4F4jdm4aMvg==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1790332216;
+	c=relaxed/relaxed; t=1790332222;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
-	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=1TPCZuo5fzPyQ58T1Ti1NKn2WRSs3Fy+AWGlAD+WBko=;
-	b=dQciJiaaqLdQPQQdHyC8RaVC3mkyWkNQLyNZizVjfO2MJi+SFu8WBnIbgvgnFZkywzlP
-	 cJ324K5Bq/87swe1571A4VtctDYabebQPzuleL6ZwNW29bQgZUAsaj1Q8yI6uZQIZ7nsL
-	 9XsaSf7T+ZAdajYuIrao5IJ5ttDZYRPA1ygvi8Y36+8raSBUAm2lhZ6WjiiehpKuO7vaG
-	 5gljkhLpKL02JVTA86rAhRfByfITa7ACz9M7WTVVq+VuioO6XgnrZf/cTLk/GbclYd3BJ
-	 Y/UjOwqtYBuhOxcfjLwyfkMK94begD3iyA4t30d4CdU7AQ68ia6oBXoSKCUNsabLjEw==
-ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=a5Fo26p9;
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 References:In-Reply-To:To:Cc:X-Mailer;
+	bh=Zafh/GlxwstjDLr2m3UhXUMwRxhZSLjuz2xeGEICu4U=;
+	b=fW9u4rtYNMbAy6Y9WrlTwgaPTq8irBMTwGI48a/avxxCcYDjB1t64ADvY51DMzNRpvdR
+	 gWRTMt9fziuykQEvpLop3rpYu1HtLZfyyxwsd0doxARD8BiCKmS7aA3mew7NQnYGiQCMC
+	 czKmztIbJ79XxneMI/Ub/cl1jZNdHsZkwfK4PERcMFjWVLEcz6KHGVuadqtjEQhns79ZD
+	 sJ34+Nk4q7mGIWkqt11gYpQ5Brjia7ekYahOsFZZ0UN8NUh3U3Yhe+Q0JTlOlUsvFbVtQ
+	 rOeX82AXjSRu1oO5ebjAhFYI0wYaZG7RW8RgPMitfqKGE6OVP/SKlbLpy+ZDO3dQ/NA==
+ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=OuBmzTFu;
 	dmarc=none header.from=baylibre.com;
 	spf=pass smtp.mailfrom=baylibre.com;
-	arc=none smtp.remote-ip=74.125.225.76
-Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
+	arc=none smtp.remote-ip=74.125.225.99
+Received: from mail-wr2-f35.google.com (mail-wr2-f35.google.com [74.125.225.99])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 7B6EB1F00898
-	for <tools@kernel.org>; Fri, 25 Sep 2026 10:30:15 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 52A191F000FF
+	for <tools@kernel.org>; Fri, 25 Sep 2026 10:30:16 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=a5Fo26p9
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 7B6EB1F00898
+	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=OuBmzTFu
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 52A191F000FF
 Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-482f6350f89so447637f8f.3
-        for <tools@kernel.org>; Fri, 25 Sep 2026 03:30:15 -0700 (PDT)
+Received: by mail-wr2-f35.google.com with SMTP id ffacd0b85a97d-4888129c46eso195063f8f.1
+        for <tools@kernel.org>; Fri, 25 Sep 2026 03:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1790332214; x=1790937014; darn=kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=1TPCZuo5fzPyQ58T1Ti1NKn2WRSs3Fy+AWGlAD+WBko=;
-        b=a5Fo26p9MHbQkaWNCx95HyrPJffePeLsDmo0sNqsL6wDIw0vKkNeQDt9FUXDeOqWLT
-         NA2Fy3DUydKysoTaLkjz1vd5xHBTOjp85KIPE8EH8X2k30kb6zoj/V0GgBu80yZDmU8e
-         YSToW6pZQIdgyWT+kFBbTdkvhzCntc7tSkuDhYPIO6Pccy+0us38S/9uD4XavojX1JC0
-         ihGHsXOGqiJgKUSLQRl+MKn6i2m4nBFA8Dy/I5To0o7ysuIr5lIw7+SNIJQ+oYVtFnnC
-         xHseJo3otWadY7UL+3ar9Jnjk9QSBhmmrrinYTs+jUuD3V1Ima8zcloHcn63tgJgIb+c
-         4oMg==
+        d=baylibre.com; s=google; t=1790332215; x=1790937015; darn=kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Zafh/GlxwstjDLr2m3UhXUMwRxhZSLjuz2xeGEICu4U=;
+        b=OuBmzTFuY/H/JZlSnSvaA1Jt84MZitGU2lxyv8gvA2D6c48kccYmqkYCraGQNJW1rO
+         sTlS6DL9awrI0WE6XOl160cKUO2pLpLpmtXO/JIhfcLfg9z8epJw7gITJ15xnKvk5Yc+
+         RSHirLXRzR7mNDWQIUkgNT6NsvVeiLwgYb7bamgNUzuodN8x3qFgX78mx9KHHpxMaT3g
+         7zXdBQcJ1BERmWuESsvyavZ8k8qQg1wJMGy427QXHyGXIvdT+jABj38RxP8baQBOdAFd
+         /QO8QZQTg6Xhs8looxFYj3/rmd7kvzmixw0FU5YH/zeOLSyola4Zrk4NNDAUbFH7bO/J
+         /0hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790332214; x=1790937014;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=1TPCZuo5fzPyQ58T1Ti1NKn2WRSs3Fy+AWGlAD+WBko=;
-        b=jLIKp4e0+ykdFNTELK9akofTUpKs0DKfTW/VacxFsio4GVvY7iuVZ4VJHysdTQWNpZ
-         3E8s0JtsWmLbsutjMzmewQVjMH6lq8WRyIyEPFUk5fsYNJAfqgXEMoydOlP9uJiSwmgd
-         tS/RAZy0Bn2A09Zsj9azDhLcw8Sjp2uNtVJRprUB131STyHIGwnL/dIdy5dKOL1SlDLj
-         BVjFjMVkdA2Zv5BE0x+KnCwiW3WXulnvetByXu4X6WA4EiwCuQTjkJrZI59gZcU54Tyk
-         5QEqiWau4TZ5aTB3eoH4H0BK2b4K6AUgpWFd226KIBfpQb60zuA063X3R7HyA3VUdtM1
-         GdSw==
-X-Gm-Message-State: AFuF++ldAMO52zFnilIq6XFwvq0Dtpch3cPDoVUTQJcpR5ShVhKfW6o4
-	ow2LP4E9rqzgLQAlnCDatLw4XmigsDErmFQuP/cbpSJMMYuU60X0vAI9RemwqugSiS4yLUDYmaa
-	Wicca
-X-Gm-Gg: AYBFou1z/PaAqoR9B3XXLV/uYad5WOxt2HJFdy6InY4LsrZK/M4UtCcD3zhfUqrNBdA
-	22/NTDxXVvn+CWd2mWXfloR4hK2Qi2GD9obd81p2rtnCPl6CvJ/EXkfoWr0B+6G16HX2N1kxl/h
-	A0gaS2n07irlzj7do8lsrV9MhgvPxCwJJaKxLTsNeX5ySQZR13cpQj1wRJaBaSW/BZBZEW2c/KL
-	cHe7dFgBhHbzb5KI3igYBuMuo/i8Ob+srifh6we12+13zKFCi7T+JDbgRwa6aGdebaLfeQbISsb
-	wA+AhSFQblu1z0JBHbuWgbyAdYoYpj4qKC2vSQOertP+favUCSJbM3WoySb4id5JWejr9Kt0T8A
-	MSxQ/I/52oaUmnDlNi1C8gwORqH/SXMgFF7VQ2nMj078zdLC8A+3ukUoZXBBjJnnGM2JpM6cSEO
-	/0oqD/WPY4H/hujhwWR8EUDZxUQ4D8XezPynjl8yF4NDBwtCzIWGDWl1zDAK5d9JLaQLCInqSAk
-	WQu72FLLZb/tUeE/mv+CaufjFT+YM4=
-X-Received: by 2002:a05:600c:3107:b0:49c:cee2:1697 with SMTP id 5b1f17b1804b1-49ff06e502dmr32260865e9.16.1790332213728;
-        Fri, 25 Sep 2026 03:30:13 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1790332215; x=1790937015;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Zafh/GlxwstjDLr2m3UhXUMwRxhZSLjuz2xeGEICu4U=;
+        b=EmapmL5t+puKOUksJgac7r1VpKL793t/cCvl+oJ0Oavc36XPSXZyIpwaGF78LtyTOs
+         dUUOBhy8Ezxc8pARrUMv1lOog1yVlhke0G9evNbSxvTrceMhAMQoUyBvtJ2NUbBIIBic
+         yTuJpRJVMfVDn/ooFwpsC95Amg14NO+c6QxgewGjvZDrONjdB7GF8T6bsD5EV6p2cAHy
+         rOeimm7L58GSq4PjDeeykSb8H21Qr6dh4aaL8n8IpPWxMQ6Lcb1nC9fjNM01HnE+mlGR
+         K7hU4mjtwXXkquTzKg30+qBni8FOm/J/Z5ta4p8pOsxQA5mhqwcySzL116B3Mq1YLZSh
+         4KUw==
+X-Gm-Message-State: AFuF++mCMWgWgBSmQuwh3DxYr8crYOth1JISv+QIqVD75vYJljv/RWT5
+	tEZU28v+o+7zdH5Lwtt7wFQgBGeGhHLx1pMRPU/xwx0M7WD06vq5gN9FNcQW/pnmLfw=
+X-Gm-Gg: AYBFou2SAYNMt/3yG9f932qUlkLYUZRph2nIhaDKAMsIbrnJTQ60Ipf+esgktGCD8Uc
+	LbMgd8teiZ41hQtN0dkrBUFMcHjnpE791VUhYv3pRoJnDzJYTdR/zJZcToca1NcRiUBZVHZcJZB
+	Rg6myGslEzEbMMqGipxlo5O3taLpgs8kXPq7lRSxD5G/RBkzfBVLwAONPC2HRM9ven3OQOuGTYz
+	g3f2M06lnaix9dRxj3bmgNm6CqGgdN32gRdNFckvnsfNHSuO5Tu4pUXsqIzXQCZ3LO1895+UAm0
+	4FQ8QiibbZFgbPsqX8vNKL43oZnkQ8bJ/Uk1eAbKxWbh7groug9Ct7o1Vauops8Ulo6+4U2gJO1
+	BrMvLpdJFMjcal/DX2ZyK6eU0/t1n6IMWce9iI4AAgo8hmZQTpxiSUTGgZjAsSuuhHDSpp1zhb7
+	D+bOpieUjNMEYz5KSkPD0KvdO8gV9nwmfipTAZruwbTyhX4QLK7mlvSXeCFUcRt1+5PVDZfRJpw
+	n2Xv5zTpj044N+Vw7un
+X-Received: by 2002:a05:600d:8643:10b0:49f:bb8a:b4ce with SMTP id 5b1f17b1804b1-49fe67bc26fmr66150825e9.28.1790332214514;
+        Fri, 25 Sep 2026 03:30:14 -0700 (PDT)
 Received: from localhost (140.30.66.37.rev.sfr.net. [37.66.30.140])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fef60da94sm40706185e9.4.2026.09.25.03.30.13
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49ff065873csm49117815e9.2.2026.09.25.03.30.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2026 03:30:13 -0700 (PDT)
+        Fri, 25 Sep 2026 03:30:14 -0700 (PDT)
 From: =?utf-8?q?Cl=C3=A9ment_Le_Goffic?= <clegoffic@baylibre.com>
-Subject: [PATCH kgl 0/2] Fix mail addresses parsing from `L:` entries in
- MAINTAINER file
-Date: Fri, 25 Sep 2026 12:30:10 +0200
-Message-Id: <20260925-fix-list-comment-v1-0-0c4c9599d3e4@baylibre.com>
+Date: Fri, 25 Sep 2026 12:30:11 +0200
+Subject: [PATCH kgl 1/2] Drop the comment from a MAINTAINERS L: line before
+ querying lei
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -106,41 +106,126 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIADJNtmoC/yWM0Q6CMBAEf4Xss5fUQgX9FeODlBNPoZBeMSaEf
- 7fq42x2ZoVyFFacihWRX6IyhQz7XQF/v4aeSbrMsMYezNE6usmbBtFEfhpHDolMU5d156qqbRy
- yNkfOn1/yjGc/4PIfdWkf7NM3hm37ACsaRct5AAAA
-X-Change-ID: 20260925-fix-list-comment-08737d544b85
+Message-Id: <20260925-fix-list-comment-v1-1-0c4c9599d3e4@baylibre.com>
+References: <20260925-fix-list-comment-v1-0-0c4c9599d3e4@baylibre.com>
+In-Reply-To: <20260925-fix-list-comment-v1-0-0c4c9599d3e4@baylibre.com>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  =?utf-8?q?Cl=C3=A9ment_Le_Goffic?= <clegoffic@baylibre.com>
 X-Mailer: b4 0.17-dev
 
-While testing the new maintainer container[1] tool, I subscribed to my
-prefered mailing list but I ended up not having the same mails as in my
-local inbox folder.
-After investigating a little bit with an LLM tool, it found an issue in
-the MAINTAINER file entry parsing.
+An L: line may carry a comment after the address, and most infradead
+lists do:
+'linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)'
+The value was stored as written and turned into a lei term by replacing the `@',
+so the query became:
 
-Patch 1: Fix the parsing issue
-Patch 2: Refactor the code path
+    l:linux-arm-kernel.lists.infradead.org (moderated for non-subscribers)
 
-[1]: https://llore.docs.kernel.org/en/latest/
+which asks for messages on the list that also contain those words.
 
+Parse L: through extract_email() the way M: and R: already are.
+parseaddr treats the parenthesised text as an RFC 822 comment and returns the
+bare address for every form the current MAINTAINERS uses.
+
+Assisted-by: LLM [analysis, codegen, tests]
 Signed-off-by: Clément Le Goffic <clegoffic@baylibre.com>
 ---
-Clément Le Goffic (2):
-      Drop the comment from a MAINTAINERS L: line before querying lei
-      Fold the M:, R: and L: branches into one table lookup
+ CHANGELOG                    |  7 +++++++
+ src/korgalore/maintainers.py |  7 +++++--
+ tests/test_maintainers.py    | 23 +++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 2 deletions(-)
 
- CHANGELOG                    | 10 ++++++++
- src/korgalore/maintainers.py | 24 ++++++++++++-------
- tests/test_maintainers.py    | 56 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 81 insertions(+), 9 deletions(-)
----
-base-commit: 29151623085919f57710589efdde80cb5115baa3
-change-id: 20260925-fix-list-comment-08737d544b85
+diff --git a/CHANGELOG b/CHANGELOG
+index 859a70684c99..fe96273605eb 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -99,6 +99,13 @@ Refactoring
+ Bug Fixes
+ ~~~~~~~~~
+ 
++* A comment on a MAINTAINERS ``L:`` line, such as ``(moderated for
++  non-subscribers)``, is no longer passed to lei as search terms. Every
++  list carrying one was reduced to the few threads that happened to
++  contain those words instead of the whole list. ``main.catchall_lists``
++  is now matched against the bare address too, so an entry written with
++  the comment no longer matches.
++
+ * A Message-ID with a trailing comment no longer defeats duplicate
+   detection
+ 
+diff --git a/src/korgalore/maintainers.py b/src/korgalore/maintainers.py
+index 28b9eca3c6cb..69d3e2e09a73 100644
+--- a/src/korgalore/maintainers.py
++++ b/src/korgalore/maintainers.py
+@@ -97,12 +97,13 @@ def normalize_subsystem_name(name: str) -> str:
+ 
+ 
+ def extract_email(line: str) -> Optional[str]:
+-    """Extract email address from a maintainer/reviewer line.
++    """Extract email address from a maintainer, reviewer or list line.
+ 
+     Handles formats like:
+         'Full Name <email@domain.com>'
+         '"Full Name" <email@domain.com>'
+         'email@domain.com'
++        'list@domain.org (moderated for non-subscribers)'
+     """
+     _, email = parseaddr(line)
+     return email if email else None
+@@ -194,7 +195,9 @@ def parse_maintainers(path: Path) -> Dict[str, SubsystemEntry]:
+                         if email:
+                             current_entry.reviewers.append(email)
+                     elif prefix == 'L':
+-                        current_entry.mailing_lists.append(value)
++                        email = extract_email(value)
++                        if email:
++                            current_entry.mailing_lists.append(email)
+                     elif prefix == 'F':
+                         current_entry.files.append(value)
+                     elif prefix == 'X':
+diff --git a/tests/test_maintainers.py b/tests/test_maintainers.py
+index 217cb1b3fbd7..8926009be90c 100644
+--- a/tests/test_maintainers.py
++++ b/tests/test_maintainers.py
+@@ -63,6 +63,10 @@ class TestExtractEmail:
+         """Extracts email when name is quoted."""
+         assert extract_email('"John Doe" <john@example.com>') == 'john@example.com'
+ 
++    def test_list_with_comment(self) -> None:
++        """Drops the comment MAINTAINERS puts after a list address."""
++        assert extract_email('list@domain.org (moderated for non-subscribers)') == 'list@domain.org'
++
+     def test_bare_email(self) -> None:
+         """Handles bare email addresses without angle brackets."""
+         assert extract_email('john@example.com') == 'john@example.com'
+@@ -562,6 +566,25 @@ F:\tnet/9p/
+         assert 'fs/9p/' in entry.files
+         assert 'net/9p/' in entry.files
+ 
++    def test_parse_list_with_comment(self, tmp_path: Path) -> None:
++        """A comment after an L: address is dropped, not searched for."""
++        maintainers = tmp_path / 'MAINTAINERS'
++        maintainers.write_text("""
++ARM SUB-ARCHITECTURES
++M:\tArnd Bergmann <arnd@arndb.de>
++L:\tlinux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
++L:\tpvrusb2@isely.net\t(subscribers-only)
++S:\tMaintained
++F:\tarch/arm/mach-*/
++""")
++        entry = parse_maintainers(maintainers)['ARM SUB-ARCHITECTURES']
++        assert entry.mailing_lists == [
++            'linux-arm-kernel@lists.infradead.org',
++            'pvrusb2@isely.net',
++        ]
++        query, _ = build_mailinglist_query(entry, '30.days.ago')
++        assert query == '(l:linux-arm-kernel.lists.infradead.org OR l:pvrusb2.isely.net) AND d:30.days.ago..'
++
+     def test_parse_multiple_subsystems(self, tmp_path: Path) -> None:
+         """Parse multiple subsystem entries."""
+         maintainers = tmp_path / 'MAINTAINERS'
 
-Best regards,
---  
-Clément Le Goffic <clegoffic@baylibre.com>
+-- 
+2.55.0
 
