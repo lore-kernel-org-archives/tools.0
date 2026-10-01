@@ -1,73 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A144C33FA
-	for <tools@linux.kernel.org>; Thu,  1 Oct 2026 08:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09F03CEB83
+	for <tools@linux.kernel.org>; Thu,  1 Oct 2026 11:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790842964; cv=none; b=f5e2olcqwJbm0zGBgV9vlfrxqhL+mNJPKhUpRVz0nOrWXz+TTj8BNrkALtxMTVERpBdudAwyKbJj3G1mvRV4F6j1tF+NkeeJopaA2dLn2V3/Srg5svjPc7FsydbIcvSTJTM0ngVopPgOywWQlPpsI0WgMJCpqVh9VQnCRVmiB9s=
+	t=1790854265; cv=none; b=FQzZ7VSV9W4zS/G5conqvX/hvW3qV1R7vSEAenka+x6+6orSjO+nxlTq51BNQ+rIMtU2IzFkOzzapk+3Y9G/HdPRRUo4+iaiF6nDs/2whspQ+Moq7C/kwE3cScCCHWvbWgPhTLNN09ljpHheMIaOnPQLOU3Al/ZS8JGzT7SZzv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790842964; c=relaxed/simple;
-	bh=EGueo0YC58ayKMhAoUzVjwwQGOFaBxm7Rs/XlNH1pc0=;
+	s=arc-20240116; t=1790854265; c=relaxed/simple;
+	bh=Vh7tLa7OM/xyAoep8/KpiBP6f1uUXPaOCRTRGvpJcGk=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=LJ8OidNVDpbmLqaT44YE+k9vakUszRtL48JulXITkQ6M461DEnb/EQtKsszbUhBooIZzAv+c3GisC+czw4A/PZvvRsoc3f60iAlljsoG+Z6TkXC206n8S0Ph07MFnJdq6NnqCf4a0ECM9bZpsG/9hrxqHQUDsdFgZk6p7fwEZzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEMyEoRq; arc=none smtp.client-ip=100.103.45.18
+	 Content-Disposition; b=E3JL5XU9wf4bsU8poBvHeCLcB5HJOlb8cwnEQgHQZGZuMK0dlqUv41g0Z9dssA+Vui9oC4MBFQNKlWIlNqiIlM/A6w7IemhHw4dFKDegl35GkI8GZ7jxHuLobkRPFmEX8iTgAulB0DoGqkDrlNTBoMMsGOj2UthxW1gkSv/zTHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VuMtUoJn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEMyEoRq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VuMtUoJn"
 Received: by smtp.kernel.org (Postfix)
-	id C38CF1F0089C; Thu,  1 Oct 2026 08:22:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C55E1F000FF;
-	Thu,  1 Oct 2026 08:22:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790842958;
-	bh=NHAkIZJArzpCAVwG82XQpbFua3euyFuQXgTHr7Bhfh8=;
+	id 3DDC61F00898; Thu,  1 Oct 2026 11:30:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758791F00899;
+	Thu,  1 Oct 2026 11:30:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790854257;
+	bh=ZaazqkWCcoE/4W0TVXf+JDYKObtcVApGoH+T588QpZc=;
 	h=Date:From:To:Cc:Subject;
-	b=eEMyEoRqxqp3fcVYxPScgsw+Po7App+A7JBdAhHrnXtm9N/OGoXBVudkKsusZhaC1
-	 RrvyGVI2CmEGyOKCfd79KKZdhEDgJ6Htn1tz26A0zXR83CER4vFfyNDZnri73cPolc
-	 prmDwq3P+Ik+3r29PiUn7dejhyybatS2Oz6K2G0U=
-Date: Thu, 1 Oct 2026 10:22:32 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
+	b=VuMtUoJnpDfL5sNNwnirYb2n2QkbJDZgd6vw3gPWHE70XxgcBNn6MjXO3gdLzMdT8
+	 i9Zm2tZQw+1ayQa04gmnpNZhO3FLmqfr+ET7Xis8i/1WAnGeCD2EEhE6reSFXEeIfV
+	 cTW8VD9b0krMqcL4HaFEsPmdFOvGg+CL/ctd42+gbJOFZgJhv1C5aE5h/77hUZUE4M
+	 GARqUVPTUqmWkJVMyjlPrr85JYviE1YksdAv9kdqKClcyMm4jAsTl8BLT4osmX69iu
+	 SISALIcXxaKRYPmGgsvplw3dp8ptpY0pwYzrxCCHQrxh3B4PjMcw1hhdbpDXpefEfq
+	 RWxvlnjRwSBxQ==
+Date: Thu, 1 Oct 2026 12:30:53 +0100
+From: Mark Brown <broonie@kernel.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Subject: b4 getting confused about lots of versions for a single patch
-Message-ID: <2026100127-diving-unbundle-fb1c@gregkh>
+Cc: tools@kernel.org
+Subject: b4 series tracking - one thread two serieses
+Message-ID: <92ffae6e-2c12-4622-9482-35b76f3fa0bd@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6mDwVBFcjcoPks2e"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+X-Cookie: Double!
 
-Running the git version of b4 seems to pick the "wrong" patch in this
-series:
-	https://lore.kernel.org/r/20260915110637.17658-1-jiazi.liu1984@gmail.com
-it grabs the "v3 version" despite it saying it picked the v4 version,
-when really the v5 version is the "right" one:
 
-	Looking up 20260915110637.17658-1-jiazi.liu1984@gmail.com
-	Analyzing 16 messages in the thread
-	Assuming new revision: v5 ([PATCH v3] usb: dwc3: gadget: fix IRQ storm on invalid event buffer count)
-	Looking for additional code-review trailers on lore.kernel.org
-	Analyzing 5 code-review messages
-	Will use the latest revision: v4
-	You can pick other revisions using the -vN flag
-	Checking attestation on all messages, may take a moment...
-	---
-	  ✗ [PATCH v4] usb: dwc3: gadget: fix IRQ storm on invalid event buffer count
-	    + Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com> (✓ DKIM/synopsys.com)
-	  ---
-	  ✗ BADSIG: DKIM/gmail.com
-	---
-	Total patches: 1
-	---
-	 Link: https://patch.msgid.link/20260907073756.22329-1-jiazi.liu1984@gmail.com
-	Applying: usb: dwc3: gadget: fix IRQ storm on invalid event buffer count
+--6mDwVBFcjcoPks2e
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Any ideas?
+Hi,
 
-thanks,
+Fun case for b4's series identification and tracking:
 
-greg k-h
+   https://lore.kernel.org/r/20261001024049.93-1-shenghao-ding@ti.com
+   https://lore.kernel.org/r/20261001024049.93-2-shenghao-ding@ti.com
+
+are threaded together but not a series.  b4 seems to think they are
+different revisions of one series, and with b4 review I can't see a way
+to break them apart other than to deal with one, forget it and then deal
+with the other.
+
+Thanks,
+Mark
+
+--6mDwVBFcjcoPks2e
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmq+RG0ACgkQJNaLcl1U
+h9CmDQf/WW97Hhd0UCEfCji2nT2yT98QT+1Q7f1UqRYXE/c1Xhki6xYV+qnhzlyZ
+FVkOX/HBOFGmIZPreGIGS3fKAc/pFniK7bhpW8ZK8P2rxlybng23zWd7llJEB14i
+RCZaywEvl5u5Gw6ZPwue6ooa3++yxvDkZ3MPs3i6eRbD5lgFGHtbmQD9Dp87ysn9
+DvxbWWJwvvJA0sSvtgApcq3I0ZjzoN7THmaupwUaeHGDI/nPQkhdVkY1Cmk89Eh8
+hVaHtoxBFXO1dPcRuIjSAwr2CyceAB6nOCzlP7Pok6pFbb33FSKuJq2ALMcOprbJ
+nxjvLy2F1JEEIOl5eqES5hyDwmv88A==
+=Q2mr
+-----END PGP SIGNATURE-----
+
+--6mDwVBFcjcoPks2e--
