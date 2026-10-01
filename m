@@ -1,85 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360E34A7C86
-	for <tools@linux.kernel.org>; Mon, 28 Sep 2026 11:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A144C33FA
+	for <tools@linux.kernel.org>; Thu,  1 Oct 2026 08:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790595093; cv=none; b=Oymjcy5HvLkrvBuLmxT9e00+zMk04JCycBoHjsJhfeYx0PCxJxaT88EsjDmESv0xmcQ1t0Y7Mc1EkAUwTE1TjI+TsHWDquap2ZJGGC/ZLLWnoSCgEtE/iEzbRrKBHuwlw/URd5ioVfoiMcirEknvi4jYhhVyS68/A9bOg/uPYR0=
+	t=1790842964; cv=none; b=f5e2olcqwJbm0zGBgV9vlfrxqhL+mNJPKhUpRVz0nOrWXz+TTj8BNrkALtxMTVERpBdudAwyKbJj3G1mvRV4F6j1tF+NkeeJopaA2dLn2V3/Srg5svjPc7FsydbIcvSTJTM0ngVopPgOywWQlPpsI0WgMJCpqVh9VQnCRVmiB9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790595093; c=relaxed/simple;
-	bh=vHRCKQ1sZaDTfItkggzq/CcYPNeunavz/TZ72i4sgys=;
+	s=arc-20240116; t=1790842964; c=relaxed/simple;
+	bh=EGueo0YC58ayKMhAoUzVjwwQGOFaBxm7Rs/XlNH1pc0=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=PHTAI7R9H9rmbWHVQ8Wm3HNci3tjCEW7SIquNZUbnFelGpkZgdqQibr8CLztUHogY/YVJ+RHiEl66BkCIuzJ7QAmNAiNF+t+chaztwU/UnnV0CkXM9yI1jaLq20Mr5HdATvpNUrf5QWA1jv/xWNXj9iWdMDq3yPXgDK8YbhEYEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z+aQCI2/; arc=none smtp.client-ip=100.103.45.18
+	 Content-Disposition; b=LJ8OidNVDpbmLqaT44YE+k9vakUszRtL48JulXITkQ6M461DEnb/EQtKsszbUhBooIZzAv+c3GisC+czw4A/PZvvRsoc3f60iAlljsoG+Z6TkXC206n8S0Ph07MFnJdq6NnqCf4a0ECM9bZpsG/9hrxqHQUDsdFgZk6p7fwEZzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEMyEoRq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z+aQCI2/"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEMyEoRq"
 Received: by smtp.kernel.org (Postfix)
-	id 318A71F00893; Mon, 28 Sep 2026 11:31:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9DE1F000FF;
-	Mon, 28 Sep 2026 11:31:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790595092;
-	bh=Xi6QjiGdr5qXnE/PFkLqCW7csfBErl+86EXaeMd2F5Y=;
+	id C38CF1F0089C; Thu,  1 Oct 2026 08:22:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C55E1F000FF;
+	Thu,  1 Oct 2026 08:22:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1790842958;
+	bh=NHAkIZJArzpCAVwG82XQpbFua3euyFuQXgTHr7Bhfh8=;
 	h=Date:From:To:Cc:Subject;
-	b=Z+aQCI2/ed+bDzzaY5j06VR9fZk0y5iVbd/ckxslwqNBVk7AHP3RDUYEx5lMLgFss
-	 gKX463B++IzKH2DkvWmh7jCYnDLFbC1HO+WXUx4QvPcM9FvR6f+9tmaIyhoieIMmKp
-	 9OWH6YeYnEr5FUaby6kiIC7l9sl41sH0G2R/To0m/otDNdIC8oCn7ztws2MBhznQUf
-	 8xnnzEPgHhOWTfZd5NoK2t2xrad6lYUS5DXNuwLNuXeSg0AATP3g6srwwDDDO80KRS
-	 e2nYFjrwcz1BRv9bjsIsgo+PbxSW1l58TVOUl+dp7fsdO8kFU44IMI7KHWKxARus61
-	 8XoER3TTv18zA==
-Date: Mon, 28 Sep 2026 12:31:29 +0100
-From: Mark Brown <broonie@kernel.org>
+	b=eEMyEoRqxqp3fcVYxPScgsw+Po7App+A7JBdAhHrnXtm9N/OGoXBVudkKsusZhaC1
+	 RrvyGVI2CmEGyOKCfd79KKZdhEDgJ6Htn1tz26A0zXR83CER4vFfyNDZnri73cPolc
+	 prmDwq3P+Ik+3r29PiUn7dejhyybatS2Oz6K2G0U=
+Date: Thu, 1 Oct 2026 10:22:32 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
 To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: No way to link loose messages after a revision is imported
-Message-ID: <a5774f23-3e8d-4ef1-97ad-6514bcc26251@sirena.org.uk>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: b4 getting confused about lots of versions for a single patch
+Message-ID: <2026100127-diving-unbundle-fb1c@gregkh>
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="GqCTcmZkYy84tnSJ"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-Cookie: Here there be tygers.
+Content-Transfer-Encoding: 8bit
 
+Running the git version of b4 seems to pick the "wrong" patch in this
+series:
+	https://lore.kernel.org/r/20260915110637.17658-1-jiazi.liu1984@gmail.com
+it grabs the "v3 version" despite it saying it picked the v4 version,
+when really the v5 version is the "right" one:
 
---GqCTcmZkYy84tnSJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+	Looking up 20260915110637.17658-1-jiazi.liu1984@gmail.com
+	Analyzing 16 messages in the thread
+	Assuming new revision: v5 ([PATCH v3] usb: dwc3: gadget: fix IRQ storm on invalid event buffer count)
+	Looking for additional code-review trailers on lore.kernel.org
+	Analyzing 5 code-review messages
+	Will use the latest revision: v4
+	You can pick other revisions using the -vN flag
+	Checking attestation on all messages, may take a moment...
+	---
+	  ✗ [PATCH v4] usb: dwc3: gadget: fix IRQ storm on invalid event buffer count
+	    + Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com> (✓ DKIM/synopsys.com)
+	  ---
+	  ✗ BADSIG: DKIM/gmail.com
+	---
+	Total patches: 1
+	---
+	 Link: https://patch.msgid.link/20260907073756.22329-1-jiazi.liu1984@gmail.com
+	Applying: usb: dwc3: gadget: fix IRQ storm on invalid event buffer count
 
-Hi,
+Any ideas?
 
-If I upgrade a series in the b4 review tui but later discover that not
-all messages were imported there appears to be no way to later attach
-additional messages, on the command line we have b4 review track
---rethread but this doesn't work when the revision is already tracked
-unless you abandon the series.
+thanks,
 
-This affects:
-
-   20260928061149.1844121-1-shengjiu.wang@oss.nxp.com
-   20260928061727.1844167-1-shengjiu.wang@oss.nxp.com
-   20260928061756.1844185-1-shengjiu.wang@oss.nxp.com
-
-Thanks,
-Mark
-
---GqCTcmZkYy84tnSJ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmq6UBAACgkQJNaLcl1U
-h9DkCgf/bZNZeF60eghuqEII7tgMA6VcEyh2BiUIRnhWedxO3vTTFksXCgtevFuF
-LdvCEiNM3HFslVRFHHQi5IZIDZZBJrpNTxrJTecgwNQAu4RTacUidIghqvEKMT2M
-9Z/gm7S9jvM952AdMz6B/mxnbUiZpMSIQqjHVYrAMmZQ0u6Sw4KTd/tjNZiKC5iw
-usK9l72bzXSx6H7u1aQMuAfRpflP1UpHzU4Q9ofhefZIiHSYa4P1NulJ/GpBwFfx
-rV+v4RNXobDd1QnneyrsUMiTKWDCmtIfBPkJVmmW4vImnIRiPrjg0SDZgnfOQ+mI
-V1o9WPwsVUmo44LlqAQLXSoiuBh4lQ==
-=7lVF
------END PGP SIGNATURE-----
-
---GqCTcmZkYy84tnSJ--
+greg k-h
