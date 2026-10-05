@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3083640DB31
-	for <tools@linux.kernel.org>; Mon,  5 Oct 2026 09:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFC147255F
+	for <tools@linux.kernel.org>; Mon,  5 Oct 2026 10:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791192616; cv=none; b=U47CxPSgdCFozQ9Xi1YTi8OII13R08nUqbB3dN0T7j4mGJjYZrH37DejWD261x5i3A7LXun4sL44lGaFtN2Fl1WRmW04D9ju7vAZxIP54nfD/gHyBXeT8pVCLjiNuvTwahxQOpVtJwELx4Z98sbE33ICJlMX4fiiuI1nOhh8e1c=
+	t=1791195004; cv=none; b=RyVh7/o/+PJZUUoa1dCUx16jooIaIyk7qBky4NYF7qIOUHtuZyDcNwcWAMo6p4h+IP34FWQHn6ObI2C0ZXgZxeVRYwPTgs0Ew83AnJojlbOHT7uWjAkHr2sqsXEaIhKppAiqyFKB2zSCXCkXrvDUgBktI3n9ZdJA//l6I/0KRc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791192616; c=relaxed/simple;
-	bh=bSecpeAjzHk+Gb7ldBn/i2NsPA3BrmS+tlS3NSeEPcc=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=tRQVBUzbkTpiDxWkC+bHNRMmFZJdATEQ0siYAoNqROcrboDgCYzWIiuGQ+GlFUpABE24CMdbT7q3kfNyrl+aX0/Hgeq9jSCT/Ki8Ibk6jxM/C7kexd+uxdb4SiOSuN6DvVbzSbnZT6M4o1GjDzSd6vTl2gXm5x6rTgcfxopBimA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wD2LcPbr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791195004; c=relaxed/simple;
+	bh=20Bs1o7Bx0FBoxYzD+tKesLx9+13EZW1Iqt4mmh3CMU=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=GI7jREzI9sUvW0uh56VMw8mZofbMk/YvZbp0UI5a9bHDM1GW2ytA5PCE97kgUzR+gfDwfeaZx2NwMaoOTGGl9Rx5YgrJqJrU3u25xfwCf3bNFs4m3Wji4aCDa3v1CLm/8ihbNH9dzPMUk3RII1LqfbcUT5E8hpbtnNv7Vq9bmZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LASWEirB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wD2LcPbr"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LASWEirB"
 Received: by smtp.kernel.org (Postfix)
-	id EC4581F00893; Mon,  5 Oct 2026 09:30:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81CD1F000FF;
-	Mon,  5 Oct 2026 09:30:14 +0000 (UTC)
+	id CB68B1F00893; Mon,  5 Oct 2026 10:10:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4A61F000FF;
+	Mon,  5 Oct 2026 10:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791192614;
-	bh=4xCw/DSnHQF4ksjjkG0sKX5K7uSwrk4phIhfAfHMeys=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=wD2LcPbrHYXFbd0YCudb7050rIwnrSRflwaWCTQmjLSAjkNeM+eJhv9pMOylQM/Rd
-	 HdZJePEnrfwQlr+PPl7rEwmYCimMjqzA7uHZN8bHH5UTsa/wohAlOuuzt+bUbVALLh
-	 rXaswLfsg7Jukvw2BxPIKYIcXNrwDS477D/ynjFY=
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: tools@kernel.org
-In-Reply-To: <20260928070252.3678339-1-arighi@nvidia.com>
-References: <20260928070252.3678339-1-arighi@nvidia.com>
-Subject: Re: [PATCH] mbox: add option to save all series revisions
-Message-Id: <179119260745.1730306.337828617136114554.b4-ty@b4>
-Date: Mon, 05 Oct 2026 09:30:07 +0000
+	s=korg; t=1791195001;
+	bh=rSFUfMq0q2HfCpkVq+UJNxQzeeBP1M0JIu/Fxf4CpFk=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=LASWEirBTm7rbobmKc+M9e8HaFvY+cJ4ClwU7ILVd65n9E4r5Z6LjJVGMm/ncwqxi
+	 OJHfAdkYu82e1fB17bkyO14fNmoXC9Oo2xJFkwrywmyA7dtBT9gUjbyO+MjFM1DNf3
+	 rfqCKZ85rphOdHKntf3djzmEyUm+h3qP0/WDKDgc=
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -41,27 +33,41 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH b4 0/3] lore: three fixes between a posted serie and
+ the reader
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: =?utf-8?q?Cl=C3=A9ment_Le_Goffic?= <clegoffic@baylibre.com>
+Cc: "Kernel.org Tools" <tools@kernel.org>, 
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+In-Reply-To: <20260925-b4-lore-fixes-v1-0-103fd9507e67@baylibre.com>
+References: <20260925-b4-lore-fixes-v1-0-103fd9507e67@baylibre.com>
+Date: Mon, 05 Oct 2026 10:09:49 +0000
+Message-Id: <179119498922.1802901.2100520727149449122.b4-review@b4>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=314;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=713;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=HC+LZLgwSDE39ByQqkAp8PcFhySSvW5P3YUZetmIi0g=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGLIO56lE7eYK+yh302l95LVc0/z12ycd9bVtZW3+6Jpxc
- 9L5opVrOkpZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAEzEVYuRYVWnxqspR9ZrdmxV
- /HTNZ/O/BRvNzTQez5i0/ATvLvtDFekM/wwOnSoL27Qzpdp3Lvu0b9pnuJ6anOPQf5JdcrJlW18
- 9Ex8A
+ bh=20Bs1o7Bx0FBoxYzD+tKesLx9+13EZW1Iqt4mmh3CMU=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLIOlxfcSb0wU0cgnZfF7fR+mQu8+yxE/vn/ddxmfHTHo
+ nfJ01VtOkpZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAEzkrAUjw8vPxz8pvFDr+5uq
+ 2MiVXVArzHvdi3HXQeuFS6Z2FUvt5mH4X8n0TlbvZZ2LVMlH/+jmYyqhNhVbBOV081bf+GzPbz2
+ PBwA=
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
+> I'm using b4 in other projects and this allow to catch some issues.
+> I used an LLM to find where does those come from and fix them.
+> 
+> Here is a serie with three independant fixes.
+> The first two are linked and come from the diff parsing:
+> - a prior parsed file mode is kept and not cleaned
+> - a commit diff with a submodule mode didn't allow fake-am
+> 
+> The last one is fixing some pager issues with less that is leaving the
+> window mode when the content fits the screen.
+> It was causing tui range-diff issues on my end.
 
-On Mon, 28 Sep 2026 09:02:52 +0200, Andrea Righi wrote:
-> mbox: add option to save all series revisions
+I'll take the first two, but I think the 3rd one needs more work, if
+only because it fails ci.sh runs.
 
-Applied, thanks!
-
-[1/1] mbox: add option to save all series revisions
-      commit: 7dc527669f9cc8dbd11a993fccd0bbcad36d5cdb
-
-Best regards,
 -- 
 Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
