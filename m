@@ -1,229 +1,252 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48616480DC7
-	for <tools@linux.kernel.org>; Mon,  5 Oct 2026 13:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=100.103.45.18
-ARC-Seal:i=4; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791205732; cv=fail; b=heuOiAn2zkl4YBG2ZhERmZ7g1HrmT/m9KirdxAKgQDXuDX2KoROv8VYFahpVL3IvmzgrDw9RjVUAPPWvg9Cb7lpgnndbFOqRxaIGtwuHLdOY455iVDlzcWL95UWYaiOAGiUhpLWCfftEnU6SE0Zzzn7txRc7rNjGpD4B4EuELcE=
-ARC-Message-Signature:i=4; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791205732; c=relaxed/simple;
-	bh=Qf6TwLv2faufhaRpyE9shChVSH9ASD7n/PrYy9EYbQA=;
-	h=Message-ID:Date:To:From:Subject:Content-Type:MIME-Version; b=WeoZWVIea1N6k7MAn2OaVgrZ6ptCXaEbmHXMhJfVTvcjfztSP5Ig23U4YQbjJhItqItygaSoJWRQMlxcktZK64flnBU0vQUcl7TyN/LMttD6CMiShVtvbO0hcKEZlzhziK6m6tKEapYIA3s0t0wzFqUFAIT54TS+wFV5YgQVcck=
-ARC-Authentication-Results:i=4; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Z9NRP5h8; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Z9NRP5h8; arc=fail smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC864AB1A6
+	for <tools@linux.kernel.org>; Mon,  5 Oct 2026 14:47:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791211643; cv=pass; b=OKqoihguypzUE3Y8IzKkdRbxe/ZybBhsc9Fa5Zj8U8CtgOE3ZpQ+glpboM0/C9OCa/AYeUiEpJIMWpzr8g8EOIQvE9Nc8i11Ux6XdsI0fqvesReNVu9jbdzpOQR4HR08DZsoSExCc3Tu4X2hhkuxkB71wv4s9+pIxKtJOokKL74=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791211643; c=relaxed/simple;
+	bh=XVXye1TMppbDofcFNbZcyW2X5ZiLSbOn8rppUXOEYyc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=GkEoZ/HInkQohLsPCKpwunxDchCMr/SA+yPvPuXoqLhfoWvw83w7KTbonVnugOSi5IzANK6BRk05aUhyBJAvm6O9FjhCuMoLYcv5bN8E7PjlBKuR06sUrcHnUzAH2r5dGza6isxIL/JvqM5KqbIik3uwnZJnLF2zibqBg+h143I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=i+XGKs6h; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Z9NRP5h8";
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Z9NRP5h8"
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="i+XGKs6h"
 Received: by smtp.kernel.org (Postfix)
-	id 0C4141F00893; Mon,  5 Oct 2026 13:08:51 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=pass header.oldest-pass=2 smtp.remote-ip=52.101.72.48
-ARC-Seal: i=3; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=pass;
-	t=1791205730;
-	b=qyHoxFJyLjFuALoJlYRFg2o6D+xWk2DLutB86MRHlaS8uwbVs7T12llsj2ok4UYXUlr3
-	 t8f+7Q08IT3yWIBJBxdm4crPhYL5xOIxJVkcnP9BdZ5n2HV+T/GylrrTl+4qGi0BcyhjA
-	 csSM8Fi+CFLWmYKe/qzlAK3Te/PXDeoztbmxGc/c6XeKkQ59nXQn7uAA6fIDg59XdrpII
-	 axbK04I1MMM/anl/EFHiY5axnAm20ydgjskMAdThOS4Udue+t96gpfpflwzEvTYDxtxnd
-	 qKqel2qZUKTfNAKQmVaM1qNcE2g72wG292OihqRLf+Z+iibjy3FVgNyjAjIHy8JPc0g==
-ARC-Message-Signature: i=3; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1791205730;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:
-	 DKIM-Signature:Authentication-Results-Original:Received:Received:
-	 Message-ID:Date:User-Agent:To:Content-Language:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 x-checkrecipientrouted:NoDisclaimer:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam-Untrusted:
-	 X-Microsoft-Antispam-Message-Info-Original:
-	 X-Forefront-Antispam-Report-Untrusted:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:
-	 X-EOPAttributedMessage:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStripped:
-	 X-MS-PublicTrafficType:X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=Qf6TwLv2faufhaRpyE9shChVSH9ASD7n/PrYy9EYbQA=;
-	b=tMO5Pwu/k601DLdDoCcpC3RvTMIFLvCKUaPMc9+wM5lUBa7MfD3Kb89nn+aBlZI4hoD/
-	 uisOs6NF4Wg2k/0rFkeY7/NxIoT23CrycdRS/OnNCrdx0YY/SE0D2mhevCDTBOrNUdoI0
-	 sWcwog9MuL0bdoxCZ/iHjj/nqS6Zy4gwHlVJYzIk/o9rL2sgoGSfhF6+RSjfkPl/K5sqC
-	 UNcj2mk0Vkx+FO/+0l6d3Rdomtt8XX3FZu5MT3OrMu0UyObj52mgqmR0YJz2PLcBe4X9I
-	 MrnEeQhSbkS7rw8rZpO0EOKVN8hNbeUmPjBrzfVR/sdjxmcVdSdnpuK9YTbNdJrYi4Q==
-ARC-Authentication-Results: i=3; smtp.kernel.org; dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=selector1 header.b=Z9NRP5h8;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=selector1 header.b=Z9NRP5h8;
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	arc=pass header.oldest-pass=2 smtp.remote-ip=52.101.72.48
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013048.outbound.protection.outlook.com [52.101.72.48])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	id B98191F00898; Mon,  5 Oct 2026 14:47:17 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.128.54
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1791211637;
+	b=gQx2TXTMmPJmyYKbu/kx/+340vbcSXDyVboQzw0gqN/Z6oxPay/5cflO3NYOepVhBbhm
+	 KbAu2lYI6fcRizkiCbRJ45eDdgZCmO8xoS469SesuxY9p8fxtGGrUXSF6CugVaGs3r31P
+	 gFj4OggFQCxDXLMo/IuFGsq8EQovjZkVjB325l/D5j2W1GMC/VG8y3PKHCx/K6LDpajvI
+	 jJ+E75lukyu4qyNGN77UOC27JwIKQH+veXLipUEU9rqF5tPU8Y754fWs9XlpyfB1baoiE
+	 esnUcqG12mQt8SEpnIMGxVDLx3PMej5jZiOOH4VCZHtMz9G6y3+Mi+J7atOo8qnlRrA==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1791211637;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=waG2gJVIBZUoUqrXWgGuY8fW/13uwwV7DB03P2cI7zY=;
+	b=cfHua5u2HJOHYO4LTmm//yx1j+YT0DDFDVG37ND+sLpDryRnoov7wyBb9SRdI0zfc7bY
+	 LtJ80Yj8lVPk/oKsb4hBUFfyuozWlPr4rVF6OYkVvhojkARxYkMwX0LdetvKdMTqHJdN1
+	 JEr6O0C7jz1F0BqOh3p9t0Z9k5RDPOBMqkoGkPSxd17FUbvCsyeZFLyaCJkBluURoDiOe
+	 pt1/CsXn8tH6ELuSC1mHZaFxFNFtClOGDZIDIiiRKLyxzP0/aQbzsy32nqS/ElOUwSsmX
+	 m4EN5tCn0sMGoka1ZYwXULq2bXdKHIwLpw9FTZ42koeZVHQii+dEPdrWSl/nSvKETdg==
+ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=i+XGKs6h;
+	dmarc=none header.from=baylibre.com;
+	spf=pass smtp.mailfrom=baylibre.com;
+	arc=none smtp.remote-ip=209.85.128.54
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 9453B1F000FF
-	for <tools@kernel.org>; Mon,  5 Oct 2026 13:08:49 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 5A9701F0089B
+	for <tools@kernel.org>; Mon,  5 Oct 2026 14:47:16 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=selector1 header.b=Z9NRP5h8;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=selector1 header.b=Z9NRP5h8
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 9453B1F000FF
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=arm.com
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=cfSkcCxSBfXBdRDz2qi+i2iUbVSp0tbfKdsLsJnqOMh7nV24zqpltDKg1r6LplKfrED0FYH6PMFgv5a/l05NiP6F5vd1m3yZlQRfes6GWgF0XJLVcyKoyGLossFKUKWUra8uH3HKCo/64fmN1045I/fuw2Xv2XEmmjOQMwUqxFcIdiNjn+sL89fyhXNEvtue4ZrYd4bwZYTMRM2P619cZh7jwtpEGunx0YvpJtKoyq3zGGe0D+z4Jj2TTNysxgOHXUIM5GGg5eVeK9+nltou3/f/CjC7A4C26h6v3pzT9Ai/rnE99TmyZgDg4NMP4LViCHKkhvma7nWNu5BE654dwA==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Qf6TwLv2faufhaRpyE9shChVSH9ASD7n/PrYy9EYbQA=;
- b=YA+IBHU3NA9kds1JbxTIx5VKH+2nOwU8yfPw1nrRneUOsKLtiUvIarzqfA36VLrsvvE7UnGbkQygzWSJR2foos/NcQSWyH7SiRFfSZ6/GhJG8znHstu53esajTRHKPPuYlR/WmEKDjxCDyyhcvgxvTaqa/jOl6Lv0UIoSVuyAW5zAKLEPF/QZBONKQc7jhlhOqB6nRXGOFQD2onQoUxBn8z9ThkfthlftaufswvzQzyfc9CK2tCGEYTR0TnGlDjOsOpl5JzMEXwErS0irmKkVg3mUSkZrf9XuviYpnAhJ+fVsvHL4RIksAno2iPaGk59tmQVbwsXYaPO0fXCcDmEDQ==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 4.158.2.129) smtp.rcpttodomain=kernel.org smtp.mailfrom=arm.com; dmarc=pass
- (p=none sp=none pct=100) action=none header.from=arm.com; dkim=pass
- (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
- dmarc=[1,1,header.from=arm.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Qf6TwLv2faufhaRpyE9shChVSH9ASD7n/PrYy9EYbQA=;
- b=Z9NRP5h8mxyYjdBR3p4KnRM4T54DBSIMpAMEHXKxAaRJEEtrGXf09nEoAiajcUi/sv3s7NXKovR0MRobmh/u2Q0PM7S/FOu/dqr1NoycoDKtq5JXAnPmyfL1ZDVpuQR8YNe9H8u11Ce4QmpAGU+2Frh7GeUTPh7cUU71XiY/zfs=
-Received: from AS4P189CA0004.EURP189.PROD.OUTLOOK.COM (2603:10a6:20b:5d7::7)
- by BR0PR08MB197270.eurprd08.prod.outlook.com (2603:10a6:2c8:45::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.14; Mon, 5 Oct
- 2026 13:08:46 +0000
-Received: from AMS0EPF0000056D.eurprd02.prod.outlook.com
- (2603:10a6:20b:5d7:cafe::62) by AS4P189CA0004.outlook.office365.com
- (2603:10a6:20b:5d7::7) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.20 via Frontend Transport; Mon, 5
- Oct 2026 13:08:46 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 4.158.2.129) smtp.mailfrom=arm.com; dkim=pass (signature was verified)
- header.d=arm.com;dmarc=pass action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
- client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
-Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
- AMS0EPF0000056D.mail.protection.outlook.com (10.167.242.123) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.14
- via Frontend Transport; Mon, 5 Oct 2026 13:08:44 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NUTrsFvNvRgBxob+moaOzBiCz4eoqbvWn44TqImNgPz+f/g/TajycnsuCkp2+Vdz5cviIZSiiy7tsivFhBV2tZOlykaGzBhgF2xf/j2eM5u5rqHdW/LmgFiV3Yfjv6CHn6lo9NuLsTUn7SpsPskzNCcPeZSeZKRn4dIT5xKoCvVvzNjdQMG2CWOOZAC8KhNqFChczEQCfx8wqGfUXOWB/fCHwsm8ypVxrsfIN/bI2evLe/tfjJkgNAY4qC9uuuc2BFerZPZZRHBXoEQAZIjj5XcdWAOWyLNcZfrkwB41XRMAnagPmQl3njqNMhhzVChP4Uc9YPdO9Y3YENPxqJTmuQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Qf6TwLv2faufhaRpyE9shChVSH9ASD7n/PrYy9EYbQA=;
- b=YuOx3VcX8Xr9fj52j2KsSFGGVAF99nWsRg0mGGHe8lrTXT1QfmovnPG/u6roLFnamw64LQJwMvHoizRR7L1TKPi9G4MXCBChl/xtGKBj0dipxd9uXbLD9xfCwwYzYg1+LgiJ/BhL+YKEYf06NWOw8ha+xu67//Kcjp+qzUFVMf4HZtc2sZc9V9olbTyXJn/w64+HH8c1PckVsxQk6gEkENguEaIci3es6BzniDKHoV5I90DVa9j5mmAkfIXTBjJYcSiEHkbjSBwhBNfmzbNKBm21ar+lyv8egRJhXjKgBb9MXez2TONkAHWJrGnpJLCA885LbhUKgDeIqvyaTiIzGQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Qf6TwLv2faufhaRpyE9shChVSH9ASD7n/PrYy9EYbQA=;
- b=Z9NRP5h8mxyYjdBR3p4KnRM4T54DBSIMpAMEHXKxAaRJEEtrGXf09nEoAiajcUi/sv3s7NXKovR0MRobmh/u2Q0PM7S/FOu/dqr1NoycoDKtq5JXAnPmyfL1ZDVpuQR8YNe9H8u11Ce4QmpAGU+2Frh7GeUTPh7cUU71XiY/zfs=
-Authentication-Results-Original: mx.microsoft.com 1; dkim=none (message not
- signed) header.d=none;dmarc=none action=none header.from=arm.com;
-Received: from GV1PR08MB10455.eurprd08.prod.outlook.com
- (2603:10a6:150:16f::10) by VI1PR08MB9982.eurprd08.prod.outlook.com
- (2603:10a6:800:1c4::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.14; Mon, 5 Oct
- 2026 13:08:11 +0000
-Received: from GV1PR08MB10455.eurprd08.prod.outlook.com
- ([fe80::af66:6019:a08:d04]) by GV1PR08MB10455.eurprd08.prod.outlook.com
- ([fe80::af66:6019:a08:d04%5]) with mapi id 15.21.0496.010; Mon, 5 Oct 2026
- 13:08:11 +0000
-Message-ID: <a7c5f068-be55-4df4-a7f2-5a4e44957b3c@arm.com>
-Date: Mon, 5 Oct 2026 15:08:09 +0200
-User-Agent: Mozilla Thunderbird
-To: tools@kernel.org
-Content-Language: en-US
-From: =?UTF-8?B?QmVuY2UgQ3PDs2vDoXM=?= <bence.csokas@arm.com>
-Subject: [Q] Release calendar archives, EOL calendar?
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: LO4P123CA0223.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:1a6::12) To GV1PR08MB10455.eurprd08.prod.outlook.com
- (2603:10a6:150:16f::10)
+	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=i+XGKs6h
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 5A9701F0089B
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-49d05d51553so13590865e9.2
+        for <tools@kernel.org>; Mon, 05 Oct 2026 07:47:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1791211635; x=1791816435; darn=kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=waG2gJVIBZUoUqrXWgGuY8fW/13uwwV7DB03P2cI7zY=;
+        b=i+XGKs6hFCctAUtmpBEbFOkK3G2aimwY7VJ6kH6t88OgdVxP9z6Hj93084R8yk4MVQ
+         8AayZPNEiWTNTUoAo6E/my0V/G9zmqOJgY5IcYe+66ywzCK5NH2NiCxoSztfqih4SYSD
+         DjMLnh3vsFXTT1T5aA9ZoRgI9L9R0FxIk+gQQtinlDcS4LrT0LSMIxI8AMwnx7IyxRx6
+         yuh1cigKexKIE2DYbrj7NG7oHT6Aqx9deFavUlv8eAZahxNuactjXXARdSmX+oGlZ98R
+         19WcblhdNlniZWncKKHN46m8vRLprH3/0H8ffWgrjv+k1z8dY0t/gDT225FbSPIM9AQ9
+         1Rxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791211635; x=1791816435;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=waG2gJVIBZUoUqrXWgGuY8fW/13uwwV7DB03P2cI7zY=;
+        b=kO7Gt2O/Pibyt869d06JI1o++wy8HQV9YTY4kLcnMkwWBUbfqvmANRm9CyFiK1b1yd
+         UADpVlQbUQ9Gdl7VAAGn/GvYXpYX5xjeF469ZBEEfcoB6dPhBSV3GPIR2oG1HdFF/3wc
+         cOUIDf+0p2bHzE3h6DOuU1P/H3CYmGDoyjn84qRIw/oEvkAP2piwfb9C8zfhMdvILfsj
+         2WyK9O47fyfDf2Ysdq4TTJ3TgFAvMyhZqRLaAMW3L5rcfcNu4UAqUEP7xugRurqT+p7+
+         S1VcbyTHKMQmQqG/R/7BA3pYrk/2uaOKaYp6vnpcQg7w+HN9ZCc1blj8o/i02NzmSUnf
+         tcNA==
+X-Gm-Message-State: AFuF++lOb0ltePdNMARdc3AsmgENiSoJRSj81kZKGGXxtMDiw86+2vQf
+	eOKWpDzf4AXhJeY3u1OMNYLQDipGtLcOARhhJcymcCUwhucvd19uP16/Sdx6oMFIK3I=
+X-Gm-Gg: AYBFou1QLM90xb39YdVG6iEQzxB+k2eJecv4xhFlViDgajzpjIqIj1kzgxR8BrYEx38
+	KPhXfn8YMuCdTwUlPj+8jOecjQJfFwMcrupMBj4T4cpT8UY7MlTbFc6P9bvLDq0NrfcBhxtNnde
+	CW78BmNOg0R3xnl1N5K6msbADOQUxSaJ+TAJJGn8X/MlYnMgqr/K4YBAnTLOBEOSHXSq9kK5l6n
+	CldhsSIqjnFapghr8j0YMf2WBobR5h0D/R907CL22jW4V4P3yl9xd8xlwVWcUq1avoq0bubhfWr
+	ZL9DBF02hnH6cSgw+GPzy/CJwCeZE6KvifxC1OsUmQFdM6xVGPzhohydVCcnauOLa/Bu+tSbkSS
+	g+v9KReubu5o6r9OB4ch8jhJ/aWoq1b38UZBXeO5lWYexjSooTOStfEGNFXB66Igc3wd9/IO1qa
+	J9UtrvEIGAOb+MK47CFqSj0YsNolmzs5tB5IchNOVAvqGv3mQiTThobf34R/vmbE9Yf+IZaFk/G
+	CF0zyjS4WP9JkF2hQLf
+X-Received: by 2002:a05:600c:4e13:b0:4a1:7367:5395 with SMTP id 5b1f17b1804b1-4a173675558mr38667885e9.2.1791211634617;
+        Mon, 05 Oct 2026 07:47:14 -0700 (PDT)
+Received: from localhost (140.30.66.37.rev.sfr.net. [37.66.30.140])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0280bfafasm371089105e9.8.2026.10.05.07.47.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Oct 2026 07:47:14 -0700 (PDT)
+From: =?utf-8?q?Cl=C3=A9ment_Le_Goffic?= <clegoffic@baylibre.com>
+Date: Mon, 05 Oct 2026 16:47:06 +0200
+Subject: [PATCH b4 v2] lore: stop a less pager quitting on output that fits
+ one screen
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Subscribe: <mailto:tools+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-MS-TrafficTypeDiagnostic:
-	GV1PR08MB10455:EE_|VI1PR08MB9982:EE_|AMS0EPF0000056D:EE_|BR0PR08MB197270:EE_
-X-MS-Office365-Filtering-Correlation-Id: ce8178a9-1b50-4d9c-ed55-08df22e1c94b
-x-checkrecipientrouted: true
-NoDisclaimer: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted:
- BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|11063799006|56012099006|10067099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info-Original:
- 6gXfiacoSGpxajykzC16qa40cfsLm7DgaQFkA3abCRB/6UjTDwcB6CO2gD2FP0UGa2IBwexkZYr/Ii1B5hyJ0n2j6ht3Hlys5elJ41TnLY5aLr6KM4UZ3XU2A20FZuhQXS4igJU5PNx25lY12Kb6VqYDype347ewLFiicis8XwsCmdB1sCR85/VIx5eVbJ/iWCLTmu9iFXm1qXGzSng9OIZ9EpPEP5NttZfOV9GAWHSYxAjP3jOaJgv2Ci0I8SW2GiKjKnJVch0FrJm2/CAa12HDlXbVxtguKqlvP/uL608mBu7yRd65TKxiJ6y/gQUQN0pqZatcPOwatK4SuqOBLPtLVXYH3u+H9uxrXII2JFTmnkjL3w1eqEfvXyQnHJ+uV7z6EeCFF0vWhknpVo6ZXHIzjnd1jrctC7Zdco+hf1RD0rbE6i6/aw1Xi/ACfu+4bO0e6qrzHgHPVxBtIlX3sSI0Cmzag/xSMWwIoeao09RqRmZdWcO2LwJWYka3NKLMBwNcfLtZNRMFAGZWOezgnM4ZgZFPkzSpDBzH05I5iS7LmoNm/2mBl08znhn75e7ZJiwjVa8pi/ytNE1VIneRvW6tw1tUOyYiXfFnz8LPypI=
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV1PR08MB10455.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(11063799006)(56012099006)(10067099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
-X-Exchange-RoutingPolicyChecked:
- K7unQ3Im9R4HQ0mO5UTHZEzt/zuVQ9J1rcgGvRfeTlrQXU2A4pvVa+yFoF5kkVdUex7dJtbk79vsgZ4K0Qfkq++QuTNB58wiwhtah7Wb2xvugsySYq6rc/loVXoX5GJZ5gGuOYLFxBuZoWT/MUQy96et+Zj97pVSpawXQ4WltieQPOL/uc4n3frtkS21Tp1aa0MnfpH+3+n8LjJtumSynuosqEiWAho0tFoT54ERXej+6TecrpPPEl9I56xLMCyj+zlfus+W+c3gkiWFO8gFLGkjG8TVAUkllihJZvqKwL2V1idnLx2RKaA8WLtrH0fnfKYdJBC64P2Ie+oWbhhaFg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR08MB9982
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- AMS0EPF0000056D.eurprd02.prod.outlook.com
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	7e65671f-97e3-48c1-6d61-08df22e1b51b
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|82310400026|35042699022|36860700016|23010399003|14060799003|10067099003|56012099006|11063799006|6133799003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	to00+GB6eho/DanpqaVRiPkR2z2fE4P57pUu2zQnmbAWE24jH8DPfwEYGPSTaxPnOLJ+jVBP6c+mORmLBuBYrmZWwAF49WxwnEW16N1g58Gc4IbFJmXMC8EHwArmmbOll1pHMLDZYv/0jqhOMZ+nU8DeNCbG1RxlTUxZOZ9GHoWFjywbXM9oiudPzgQzhYM9TuiYVxkZ77jcyfnv5X7l3ZuD37bhekx3zu0JD/u21fVq5u6Qo2x1M/s/7IAFu040ln5ZaM59NJ9Nboi/VHLnqx9NANVAsSzx1vY6AGpzDaQ8TGoEHkzaxF/rUCZD7weQWHIbxptDv1vf7g6QW98dDN94de1rxTLnDxjitZnmrylFmzPlixwWA/bv0n4qZVHMHEMpuUef1nz/EQk9W7yvDmveRP8Z071BSQPyFkbBZ4Oy2YMUFnWJtUBzJJbaOw8Ofw1DFgxeFHbdqiOC8QcIkHqIGhol4Rob/zdw4C84kXkH+gUAoDN6EuMzk+qQgH66hsKZvBatblIamFqr8/ssQMPoa5HXVAGdWsEFu74ZAl6qel6oud9Al1jVoSc8AdD5848cqumQHhSJuwhbtvoIZ4VEly9CVUvTGMh407/3E87bvISS1regd6lDUUeglsjWm6whWwzVoxWdkOEzJRNwhw==
-X-Forefront-Antispam-Report:
-	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(1800799024)(82310400026)(35042699022)(36860700016)(23010399003)(14060799003)(10067099003)(56012099006)(11063799006)(6133799003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	MqTJfFGbSzslWHpsLDDy8IFSB/Dd+W/n4lRv6HM9AY4fougytwBUYQSeO/diiclpqPFsvRqFHDIRgCj4WKPdeZMMWJFxTls49FdPuxyOBmRWsK6ML/y+FU4NltpZ9oBELp/Pd848mmHohPhgqLfFH0u8jgfiqY0s0FbySuG4Ikf/OML80cQL0IxyWMZaSQSO/PEH66dhuoZBKcVqOWqfeF4ke8HTWMCk68aYEVVqEhTTkTZDVNd4WRw5b49TL/wCJ7l7W93YUUTtqjKHcxBqsVvqore/CAWCID9eu6WpPf9RLQuWl3eJs+0wo0IwAMu8uRXnVZDhB2EoMesY8ItdKE1qw/+y1R2YUbb6yqaGAnLG+tkMxXwrbjrCRqht2aKEK0odtpJvDBHRZsLRxk6RGi+/RefK67wolxGiKAgPzRjCHK4kNvaNse0vTN9CI1dP
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 13:08:44.9747
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ce8178a9-1b50-4d9c-ed55-08df22e1c94b
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	AMS0EPF0000056D.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BR0PR08MB197270
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261005-b4-lore-fixes-v2-1-1872d60e13af@baylibre.com>
+X-B4-Tracking: v=1; b=H4sIAGm4w2oC/3WNwQ6CMBBEf4Xs2TVtoSCc/A/DgcIia5CaFomE9
+ N8tePY4M29mNvDkmDxUyQaOFvZspyjUKYF2aKY7IXdRgxIqF6XSaDIcrSPs+UMeU6k7Tfoiyya
+ F2Hk5OoJYuYHJoP55/m0e1M770E4N7Gfr1uN0kQf7Z3+RKFCKtO9KLQrKi6tp1pGNo3Nrn1CHE
+ L5IqQlmwwAAAA==
+X-Change-ID: 20260925-b4-lore-fixes-315d5e5819a3
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ =?utf-8?q?Cl=C3=A9ment_Le_Goffic?= <clegoffic@baylibre.com>
+X-Mailer: b4 0.17-dev
 
-Hi,
+view_in_pager() strips F from LESS so the pager stays open on output
+that fits one screen, but a core.pager of "less -FRSX" carries the flag
+on the command line, so short output still flashed past.  less(1) says:
 
-not sure if this is the right ML, so do tell me off if not...
+    The environment variable is parsed before the command line, so
+    command line options override the LESS environment variable.  If an
+    option appears in the LESS variable, it can be reset to its default
+    value on the command line by beginning the command line option with
+    "-+".
 
-I'm a big fan of the Linux releases calendar [1], I've been using it for
-close to two years, and have it added to most of my Thunderbird instances.
+So append -+F to the command line when the pager is less.
 
-[1] https://www.kernel.org/releases-calendar.ics
+Assisted-by: LLM [analysis, codegen, tests]
+Signed-off-by: Clément Le Goffic <clegoffic@baylibre.com>
+---
+I'm using b4 in other projects and this allows me to catch some issues.
 
-However, I've noticed that after a while, past events are deleted. So I
-was wondering if there is a calendar with the historical data, i.e. the
-actual release, -rc, MW etc. dates.
+v1 had three independent fixes and the first two are applied, so this is
+the one that is left.  view_in_pager() stripped F from LESS so the pager
+stays open on output that fits one screen, but a core.pager of
+"less -FRSX" carries the flag on the command line, where it beats the
+environment.  It was causing TUI range-diff issues on my end.
+---
+Changes in v2:
+- Dropped patches 1 and 2, which are applied.
+- Reduced to one change: append -+F when the pager is less.
+- Fix the ci.sh issue by importing subprocess directly
+- Link to v1: https://patch.msgid.link/20260925-b4-lore-fixes-v1-0-103fd9507e67@baylibre.com
 
-Another thing that would've come in handy is a calendar with the
-projected (or past) EOL dates.
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+---
+ src/b4/__init__.py         |  5 ++++-
+ src/tests/test___init__.py | 56 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 60 insertions(+), 1 deletion(-)
 
-I know this sort of info is readily available on the Web (I, for one,
-have been referring to Wikipedia [2]) and on Git and the LKML, but in
-certain occasions (e.g. bugging managers by copying calendar items to
-them), it would come in handy if it were available in iCal format as
-well. Does such a thing exist?
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index c482f46471e4..58725eba42df 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -7411,7 +7411,10 @@ def view_in_pager(bdata: bytes, filehint: str = 'b4-view.txt') -> None:
+         else:
+             sp = shlex.shlex(pager, posix=True)
+             sp.whitespace_split = True
+-            cmdargs = list(sp) + [temp_fpath]
++            cmdargs = list(sp)
++            if cmdargs and os.path.basename(cmdargs[0]) == 'less':
++                cmdargs.append('-+F')
++            cmdargs.append(temp_fpath)
+             logger.debug('Running %s', ' '.join(cmdargs))
+             spop = subprocess.Popen(cmdargs, env=env)
+         spop.wait()
+diff --git a/src/tests/test___init__.py b/src/tests/test___init__.py
+index 96bea894a2d0..fe2dfb35a9e6 100644
+--- a/src/tests/test___init__.py
++++ b/src/tests/test___init__.py
+@@ -10,6 +10,7 @@ import os
+ import pathlib
+ import smtplib
+ import socket
++import subprocess
+ import sys
+ from typing import Any, Callable, Dict, List, Literal, Optional, Set, Tuple, Union
+ 
+@@ -2503,6 +2504,61 @@ def test_git_head_restore_args_round_trip(gitdir: str) -> None:
+     assert b4.git_head_restore_args(gitdir) == restore
+ 
+ 
++class TestViewInPagerLessFlags:
++    """A less pager is told -+F, so short output does not flash past.
++
++    view_in_pager() strips F from LESS, but a core.pager such as
++    "less -FRSX" carries it on the command line, which less parses after
++    LESS.  A trailing -+F resets it there, and is a no-op where F is unset.
++    """
++
++    class _Spawned:
++        """Stands in for the pager process."""
++
++        def wait(self) -> int:
++            return 0
++
++    @classmethod
++    def _argv(cls, monkeypatch: pytest.MonkeyPatch, pager: str) -> List[str]:
++        """Return the argv view_in_pager() would run, minus the file."""
++        seen: List[List[str]] = list()
++        real_popen = subprocess.Popen
++
++        def fake_popen(args: Any, **kwargs: Any) -> Any:
++            # b4 reads its config through Popen too; those calls capture
++            # stdout, the pager's does not.
++            if kwargs.get('stdout') is not None:
++                return real_popen(args, **kwargs)
++            seen.append(list(args))
++            return cls._Spawned()
++
++        monkeypatch.setenv('GIT_PAGER', pager)
++        monkeypatch.setattr(subprocess, 'Popen', fake_popen)
++        b4.view_in_pager(b'short enough to fit one screen\n')
++        assert len(seen) == 1
++        assert seen[0][-1].endswith('b4-view.txt')
++        return seen[0][:-1]
++
++    @pytest.mark.parametrize(
++        'pager,expected',
++        [
++            ('less -FRSX', ['less', '-FRSX', '-+F']),
++            ('less', ['less', '-+F']),
++            ('/usr/bin/less -F', ['/usr/bin/less', '-F', '-+F']),
++            # Only less is told.
++            ('most -F', ['most', '-F']),
++        ],
++    )
++    def test_less_is_told_to_reset_f(
++        self,
++        gitdir: str,
++        monkeypatch: pytest.MonkeyPatch,
++        pager: str,
++        expected: List[str],
++    ) -> None:
++        assert self._argv(monkeypatch, pager) == expected
++
++
+ class TestUnicodeControlChars:
+     """The Cf-character guard in get_am_message() must raise BadCharsError
+     instead of calling sys.exit(), so that interactive front-ends (the
 
-[2] https://en.wikipedia.org/wiki/Linux_kernel_version_history
+---
+base-commit: fde280870f9a212df1317b35df19e80bfda32a57
+change-id: 20260925-b4-lore-fixes-315d5e5819a3
 
-Bence
-IMPORTANT NOTICE: The contents of this email and any attachments are confid=
-ential and may also be privileged. If you are not the intended recipient, p=
-lease notify the sender immediately and do not disclose the contents to any=
- other person, use it for any purpose, or store or copy the information in =
-any medium. Thank you.
+Best regards,
+--  
+Clément Le Goffic <clegoffic@baylibre.com>
+
