@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93988547061
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED424846A
 	for <tools@linux.kernel.org>; Thu, 15 Oct 2026 00:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792022658; cv=none; b=GYecwM+7Cou+i9W7r/ewlqeg53XpMHTgW7ADfIVrEqkk2xchJB8o6OIbCXcJl/6CLorfM2DPKvuAcBLW1OZxsZJlhf6TS7lJF3sCy0bRPUcBiAA9FQzNoOAAx+2uMRj3PgBPhoejm1btVlPtjQ5qI6p70avgnoK/0n/6mHtunoQ=
+	t=1792022659; cv=none; b=VY4ODAcsSa8mj1vGpS5NTBbSZIAsPI6KbbFvRZSeZxfYX14fWJahpGbjbA0E0k0aTJiM5b6xCQotqWVG2rpdD8S6hAK5SPlsqWhx72Ur2hYVNfUVAoNcoPCq81aC9ubXhbVV+v/5vXfiQeH96tBNbzkYmK0hOYUbtMXP9H3VmGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792022658; c=relaxed/simple;
-	bh=nDKHYjD5YJSxMjdLK5N1tvdSpH8wCZCO/4fT+ZorsK8=;
+	s=arc-20240116; t=1792022659; c=relaxed/simple;
+	bh=mprqDaFS1F13rVcy9hOcOo0zI3LQnfFVV3SDbTZGVcQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YvDs2dfop7Nug705blS4BKwN/eRRVXko8YGno8AXPAFWIGUXwfjddHq3Q/IgnhOdIsy5Z6ouA2k0dUOkiwIDQ1R9TaG1IzKUmFHMC5ddQ9cBqRa00v12m9aCRXfGuZ0Qk9CN7+lfxWBqqUGjSKatOPg7DwNsmzlTxYy1Nlx0H0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jNuw4V5U; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=A4Va6qAvruFOGHlG8yy8s0dvf7q2WvrSBBOBZLc+Wrmul4sHwSPNR/KV5pOroviKNCoDQSLrWQZ+8CcV7eBwT3lPnTm4usbxpTJ3u/5a/qvvHmfmGD1W5f7QIr7/fPOEdb27x0mVdopwyjB/PCGgMTxGGVzjEv5TbyZZh6K9LIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mSz1hyz3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jNuw4V5U"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mSz1hyz3"
 Received: by smtp.kernel.org (Postfix)
-	id 4674B1F000C6; Thu, 15 Oct 2026 00:04:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68C21F000C8;
-	Thu, 15 Oct 2026 00:04:16 +0000 (UTC)
+	id E85491F000C7; Thu, 15 Oct 2026 00:04:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F4FC1F000C4;
+	Thu, 15 Oct 2026 00:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1792022657;
-	bh=Yl5j018/ufBtWx7qFv0/Pkb4fT/ibK4hN8PbOtgIFcc=;
+	bh=3xALOqVUzevUHi92qVSj/oSsaa1fhazQ2XA6KkkCpO8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=jNuw4V5UmUq4qpji1GBI8bj+yOHpUoH3ZwS8j5e75KvJqJ2isjfW3vth8TdAmAuM+
-	 xSRRLy0D6ZJaPVA5tLx6s+dyBGk0/uHlnpxt9+M6XVwc8aOyCZYdHfyq8ACOW/I7Ka
-	 aBKL9XWwT8CVm38F8EJLHwe0mAjU9sH15MDBnCjWpADzKCJGbPrde5HF7Z2tLd36tQ
-	 9e4WkhAh1OQ4f3/MgMSxnuyKXGt9jZeB5LazEyRbLxPDCt7Lshof918tYTQNe/Vy3f
-	 KoZjJqQ4xS4do6YyUCihGyaYCb1faokOBvVgYb+Kig5a9Je1RYyKEQSL5UewNQq6+g
-	 +G6HBOFJmEZag==
+	b=mSz1hyz3FdPREAfj04SC+pWcbQAA/Ddwhj0QYoY1UKlIAml12pakxr9X6/hR/06kF
+	 mO4Zlw5dCiO3FzLikY4wakl4XRIpHPLrN43wUd8z9tjdfvFjESzZf7gyQBgy5xYqvC
+	 X0Z4fq6XDGCaqLsMCXV/LdqBrnojc7e8Rku4IwzCG40TKaP2w5pqhhCFlwJ/ZQDRMI
+	 K9WjW2E6vAIkeW6A+7F8OOY5S1N6/E2XMxmS4Oj9EeA45ZPruTRA/VB1d8+XDcHP8m
+	 daqE7s7y+Odr8ugMBmxBpTHj5DCDhTSvXdiN42skfyBRi409v6SMz2cY+EjsOcGJWR
+	 eL+LU5a7gqThw==
 From: Brian Masney <masneyb@kernel.org>
-Date: Wed, 14 Oct 2026 20:03:39 -0400
-Subject: [PATCH b4 2/4] review-tui: let ApplyStateModal update other patch
- fields
+Date: Wed, 14 Oct 2026 20:03:40 -0400
+Subject: [PATCH b4 3/4] review: add pw_fetch_maintainers()
 Precedence: bulk
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
@@ -40,79 +39,179 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261014-pw-delegate-v1-2-a393ae92152a@kernel.org>
+Message-Id: <20261014-pw-delegate-v1-3-a393ae92152a@kernel.org>
 References: <20261014-pw-delegate-v1-0-a393ae92152a@kernel.org>
 In-Reply-To: <20261014-pw-delegate-v1-0-a393ae92152a@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Jerome Brunet <jbrunet@baylibre.com>, Brian Masney <masneyb@kernel.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2499; i=masneyb@kernel.org;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6599; i=masneyb@kernel.org;
  s=20250903; h=from:subject:message-id;
- bh=nDKHYjD5YJSxMjdLK5N1tvdSpH8wCZCO/4fT+ZorsK8=;
- b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLIuSNQ089T38u39eP2m6q++J4dkdI5um/Z9e+WJSgsNU
- b7tj+c0dZSyMIhxMciKKbIsyTUqiEhdZXvvjiYLzBxWJpAhDFycAjCRdDZGhl/Lolf4H5qaxWJi
- /HLl3TD+jBbW1/munyZdVvso8kq1tp7hf9kS7zU7tztz/F0YuNc2RyW/bE4nn9CEgq2y39nkDx/
- bwQ4A
+ bh=mprqDaFS1F13rVcy9hOcOo0zI3LQnfFVV3SDbTZGVcQ=;
+ b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLIuSNRyPcnZcr5SLrL6kfUjkUw+y0L+PR1zrHmP6W5l1
+ Lh8OoKro5SFQYyLQVZMkWVJrlFBROoq23t3NFlg5rAygQxh4OIUgImE32P4p/qrTHaT5UqP6jx1
+ r7fhGau79Rkf7gnXVb25i+nwBKvfMxn+2bOv2KGmUG04n+G/QW5qznQXEXYP8TM1x+bcPO68PF6
+ FCwA=
 X-Developer-Key: i=masneyb@kernel.org; a=openpgp;
  fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
 
-ApplyStateModal is the progress dialog for PATCHing Patchwork patches
-one at a time, with Esc to stop and a result that says which patches
-were done. The only thing tying it to state changes is the title and
-the fields it sends. Move those into _title() and _payload(), so a
-subclass can reuse the rest to change a different field, such as the
-delegate. There is no change in behavior.
+Patchwork only accepts a project maintainer as a patch delegate, so the
+project's maintainers are the users that a delegate picker should offer.
+Add a helper that reads them from the project endpoint.
 
 Assisted-by: LLM
 Signed-off-by: Brian Masney <masneyb@kernel.org>
 ---
- src/b4/review_tui/_modals.py | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ src/b4/review/_review.py | 57 +++++++++++++++++++++++++++++++++++++++
+ src/tests/test_tui_pw.py | 69 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 126 insertions(+)
 
-diff --git a/src/b4/review_tui/_modals.py b/src/b4/review_tui/_modals.py
-index d1b878870b92..bcdbba2250cc 100644
---- a/src/b4/review_tui/_modals.py
-+++ b/src/b4/review_tui/_modals.py
-@@ -2758,6 +2758,9 @@ class ApplyStateModal(ModalScreen[ApplyStateResult]):
-     Esc stops the run after the request that is in flight. The result
-     lists the patch ids that were updated, so the caller can tell which
-     series were finished and which were not.
-+
-+    Subclasses can change other patch fields by overriding :meth:`_title`
-+    and :meth:`_payload`.
-     """
+diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
+index b69a7f094bc7..a65b6a4f549b 100644
+--- a/src/b4/review/_review.py
++++ b/src/b4/review/_review.py
+@@ -4152,6 +4152,63 @@ def pw_fetch_states(pwkey: str, pwurl: str, pwproj: str) -> List[Dict[str, Any]]
+     return [{'slug': s, 'name': s.replace('-', ' ').title()} for s in default_slugs]
  
-     BINDINGS = [
-@@ -2813,9 +2816,15 @@ class ApplyStateModal(ModalScreen[ApplyStateResult]):
-         self._error = ''
-         self._cancelled = False
  
-+    def _title(self) -> str:
-+        return f'Setting state to: {self._new_state}'
++def _pw_lookup_user_id(
++    pses: requests.Session, api_url: str, username: str
++) -> Optional[int]:
++    """Return the Patchwork User id for *username*, or None if not found.
 +
-+    def _payload(self) -> Dict[str, Any]:
-+        return {'state': self._new_state, 'archived': self._archived}
++    The users endpoint searches username, names and email by substring, so
++    pick out the exact username match.
++    """
++    users_url = '/'.join((api_url, 'users', ''))
++    resp = pses.get(users_url, params={'q': username})
++    if resp.status_code != 200:
++        raise RuntimeError(f'Patchwork API error: {resp.status_code} {resp.reason}')
++    for u in resp.json():
++        if u.get('username') == username and u.get('id'):
++            return int(u['id'])
++    return None
 +
-     def compose(self) -> ComposeResult:
-         with Vertical(id='apply-dialog'):
--            yield Label(f'Setting state to: {self._new_state}', id='apply-title')
-+            yield Label(self._title(), id='apply-title', markup=False)
-             yield Label(self._series_name, id='apply-series', markup=False)
-             yield Label(
-                 f'Processing 0/{len(self._patch_ids)} patches...', id='apply-status'
-@@ -2858,10 +2867,7 @@ class ApplyStateModal(ModalScreen[ApplyStateResult]):
-                 if self._cancelled or worker_cancelled():
-                     break
-                 patchid_url = '/'.join((patches_url, str(patch_id), ''))
--                data = {
--                    'state': self._new_state,
--                    'archived': self._archived,
--                }
-+                data = self._payload()
-                 try:
-                     rsp = pses.patch(
-                         patchid_url,
++
++def pw_fetch_maintainers(pwkey: str, pwurl: str, pwproj: str) -> List[Dict[str, Any]]:
++    """Return the maintainers of a Patchwork project.
++
++    Patchwork only accepts a project maintainer as a patch delegate, so
++    this is the list of users a patch can be delegated to.
++
++    Returns a list of user dicts with 'id', 'username', 'name' and 'email'
++    keys, sorted by username.  The 'id' is the User id that a patch's
++    delegate field takes.
++    """
++    pses, api_url = b4.get_patchwork_session(pwkey, pwurl)
++    # The projects endpoint accepts the project linkname in place of its id.
++    project_url = '/'.join((api_url, 'projects', pwproj, ''))
++    resp = pses.get(project_url)
++    if resp.status_code != 200:
++        raise RuntimeError(f'Patchwork API error: {resp.status_code} {resp.reason}')
++    users: List[Dict[str, Any]] = []
++    for m in resp.json().get('maintainers', []):
++        username = m.get('username')
++        if not username:
++            continue
++        # The maintainers list carries UserProfile ids, not the User ids
++        # that the delegate field expects, so resolve each one by username.
++        user_id = _pw_lookup_user_id(pses, api_url, username)
++        if user_id is None:
++            logger.debug('Could not find Patchwork user %s', username)
++            continue
++        name = ' '.join(p for p in (m.get('first_name'), m.get('last_name')) if p)
++        users.append(
++            {
++                'id': user_id,
++                'username': username,
++                'name': name,
++                'email': m.get('email') or '',
++            }
++        )
++    return sorted(users, key=lambda u: u['username'].lower())
++
++
+ def pw_fetch_checks(
+     pwkey: str, pwurl: str, patch_ids: List[int]
+ ) -> List[Dict[str, Any]]:
+diff --git a/src/tests/test_tui_pw.py b/src/tests/test_tui_pw.py
+index c7af958e895f..1d7f62681f26 100644
+--- a/src/tests/test_tui_pw.py
++++ b/src/tests/test_tui_pw.py
+@@ -930,3 +930,72 @@ class TestPwApplyErrorText:
+             assert (
+                 '0 updated, 2 failed: state: Object with slug=reviewing does not exist.'
+             ) in notices
++
++
++# ---------------------------------------------------------------------------
++# Changing the delegate
++# ---------------------------------------------------------------------------
++
++
++class TestPwFetchMaintainers:
++    """pw_fetch_maintainers reads the project's maintainers list."""
++
++    def test_resolves_user_ids(self, monkeypatch: pytest.MonkeyPatch) -> None:
++        """The maintainers list carries UserProfile ids; the delegate field
++        wants User ids, so each maintainer is looked up by username."""
++
++        class _Resp:
++            status_code = 200
++            reason = 'OK'
++
++            def __init__(self, body: Any) -> None:
++                self._body = body
++
++            def json(self) -> Any:
++                return self._body
++
++        # Users endpoint search is a substring match across several fields.
++        users_db: List[Dict[str, Any]] = [
++            {'id': 101, 'username': 'zed'},
++            {'id': 102, 'username': 'amy'},
++            {'id': 103, 'username': 'amyx'},
++        ]
++
++        class _Session:
++            def __init__(self) -> None:
++                self.calls: List[Any] = []
++
++            def get(self, url: str, params: Optional[Dict[str, str]] = None) -> _Resp:
++                self.calls.append((url, params))
++                if url.endswith('/projects/proj/'):
++                    return _Resp(
++                        {
++                            'maintainers': [
++                                {
++                                    'id': 2,
++                                    'username': 'zed',
++                                    'first_name': 'Zed',
++                                    'last_name': 'Zee',
++                                    'email': 'z@x',
++                                },
++                                {'id': 1, 'username': 'amy', 'email': 'a@x'},
++                                {'id': 3, 'username': 'ghost', 'email': 'g@x'},
++                            ]
++                        }
++                    )
++                assert url.endswith('/users/')
++                assert params is not None
++                q = params['q']
++                return _Resp([u for u in users_db if q in u['username']])
++
++        sess = _Session()
++        monkeypatch.setattr(
++            b4, 'get_patchwork_session', lambda key, url: (sess, 'https://pw/api/1.2')
++        )
++        users = b4.review.pw_fetch_maintainers('k', 'https://pw', 'proj')
++        assert sess.calls[0] == ('https://pw/api/1.2/projects/proj/', None)
++        # 'ghost' has no matching user and is left out.
++        assert users == [
++            {'id': 102, 'username': 'amy', 'name': '', 'email': 'a@x'},
++            {'id': 101, 'username': 'zed', 'name': 'Zed Zee', 'email': 'z@x'},
++        ]
 
 -- 
 2.55.0
