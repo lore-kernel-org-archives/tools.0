@@ -1,139 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=3 smtp.remote-ip=10.30.226.211
-ARC-Seal: i=4; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792422089;
-	b=VycSQcLOsLoF5v7rspr9f+1OFch+nWULU6QoXf1c5HoNL7p0BjtpHZjbsY+fw4ki37p0
-	 4lbWXS0uQlGz4pe1ZMaqZ/IQWGXs14NlB57vaogZ+yekhXMhjKka/Cn3AV3lbWBwkaAuJ
-	 iZEyopbBxI5oNBU0eBSuY8QYr5u9izyjivHEm2wKuvkyJsBaiqzoPcwlc8oBXBTnWy87L
-	 mfH1W2ncif3LdVmurLjwX/KLlgcx/hOm1uwZItaOC2m9Wh8JhGpBF1dyyaUuTtWZ471H4
-	 sLEifRy/cR1oKl6FlSsRLwGjw+z9Atz+xnoeZQgXrZinTI2buoF64LCTryw43g5wY3g==
-ARC-Message-Signature: i=4; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792422089;
-	h=Received:Received:Delivered-To:Received:DMARC-Filter:Received:
-	 DKIM-Signature:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=7qAKq0mfh8qC1H4A586pUcpXoHLD4uB3J5dj8twRldE=;
-	b=rR87f94NMSD/ZiPBWyl/7hX5yaBbSuIBOpR5Q14umaIJHEquE0MrNIKb+ssgXTqTKzS/
-	 FIBLmhV1t38yfzqgoXXmHWZrR4v4WBY9Tjb/gAc25BxWJHc5yGwQYwK4hVYJEHGoY59vU
-	 Drakj3LbTMf6COXgYlFS83o7RN7alBkB4idWheyY6qJ2cuIbMyZFi4LMHCqzIK7E88tts
-	 GaTdp4pLwXGiT9gGvuUPyw5E79uzREwQt7RmBzVaYWfvRp5rPU02WJ/tCHMhIZcCA3qM4
-	 wsfXLUX0YscxNwOfV8ioT/MYlndum5c8lIIV4GVPTR34TH/VyTCDuvoudBnjfqQG8tQ==
-ARC-Authentication-Results: i=4; smtp.subspace.kernel.org; 
-	dkim=pass header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=Y82mefJk;
-	arc=pass header.oldest-pass=3 smtp.remote-ip=10.30.226.211
-Received: from aws-us-west-2-korg-listserv-1.web.codeaurora.org (ip-10-30-226-211.us-west-2.compute.internal [10.30.226.211])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7811607AF16
-	for <tools.linux.kernel.org@localhost.mlmmj>; Mon, 19 Oct 2026 15:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=Y82mefJk
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665CE353A72
-	for <tools@linux.kernel.org>; Mon, 19 Oct 2026 15:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
-ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792422088; cv=pass; b=BcgMvO4d2EphMcODIygUC+A4opo4ahmHkJCzy8dChBj/w23zoiOTyhXipm7Z0YP8EayHPjPsTMDRDOm697G1hwRi+lS8uP7XZsX3T+XQlSsFQfsrfGynOdJBLZ5m3P07swak0PH2oy4+hR8/tMhyMCpBlfmyKAhAj9CZAssZyos=
-ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792422088; c=relaxed/simple;
-	bh=982mvNVo9u1riE9+3KjkIGS7/JX1V70640aBDeBg07g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FNbTDgsqBYk95eeIo+5R3vV3sEIJaYhFx43sK8sNvX3RnRAZ2nkFM8LccdjvqMsXcx3UQoaI8JjP4Q0jEHGo3Pci2w+mnr7QqUN+4QrzkvLfzPnhJ4+CWoUIUDUAAP0/6B2KVBqfBp7fHajnN31C6D7PXa5agFLMzW1xt4BE3bg=
-ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=pengutronix.de header.i=@pengutronix.de header.b=Y82mefJk; arc=pass smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix)
-	id 591681F000C6; Mon, 19 Oct 2026 15:01:27 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=185.203.200.13
-ARC-Seal: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=pass;
-	t=1792422087;
-	b=Dx86pmRnJsWatdSPB3ejAlOp5XNnaqDeXHEPtEf747dujmn/MPbOi/yR+Ex/SLaQgLAq
-	 NjuUzbnWl8P+5c1YiTlwYf33tNfnk1G+uQLPMOBImpjboXYEfTYQIF+Ojg5p44mJjoKx9
-	 RMboDNpWZs8KWWUcqVbHCCk4YApsBup5ex8YUbYcG57DxxznzbH2qACEx2/RanfSRG22N
-	 BZXSK7+dOJVWTDzGWsBzbXIpLUQ3r1BRyUU9/DP1VmdkrVv9TtsQXxJkK4Rz+oVEEMVRz
-	 bkZYdzQIqtkmCG+ersWO93ViFciwznSUFVV3bjlV2/KrlYXO7vbYAeIYizhyTl9Kzag==
-ARC-Message-Signature: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1792422087;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Date:From:To:
-	 Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=7qAKq0mfh8qC1H4A586pUcpXoHLD4uB3J5dj8twRldE=;
-	b=egeTkwqM6aORxioYo8XLdtunNGfBJAbzBa+x4kQ5+4g8zIfr3ayQCV8Znpmn9R6t+VYe
-	 tQDpH1ieY2Jl6p9LNzzDRWjfgezufyHCOwvB9Eo1CloOKeMfp96lQb4QHudJhNIHu6Hrd
-	 VhLwJYmhHAjdrX4G26U3xbjbWQjV0nuc8rDJodB1P1/MQQWb6b2YLhy2mwLsFaJlk+TTf
-	 QWX+XKuslkI0CpSjlYUbsHumT/EJ2QFQ2hQXTLN5bPl0A8LBqg7ThMuzVWIx0/1o4FBw7
-	 +sBO57tUn++6AF1Y/KKDQHgLmvTa5CpjV2sNzRutG81oP+WDvKTIrwInPmnbwR2OwOQ==
-ARC-Authentication-Results: i=2; smtp.kernel.org; 
-	dkim=pass header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=Y82mefJk;
-	dmarc=none header.from=pengutronix.de;
-	spf=pass smtp.mailfrom=pengutronix.de;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=185.203.200.13
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792430944;
+	b=XvTXx88e+rSoCc3xqFWSlj+xEOpq3vV895K9gQvjXgwBTTomQ2PdGn+kIEhy1p/nTxVm
+	 gJ3/+IjKBWicVUvxi5FXGF9aZR4mkehVBi0q4Q/ILjZwp3yFgSQDSognBwL162cXHwpGS
+	 JGwkI/Bsh32bx9HwjkPTQFSMaVAReNdoVSUrTsbbj/J79IvYOqKu/6QeGUcVL3JU0pI+v
+	 JasnFbwjShmZ8gbL+lpP0FmjaoU5avU1nThJvH3pZybpeA1O3+HmHTjoQ+f7C4kVwwoFn
+	 85o1maml7J563VGC6wpu6JtaMZmqXHvUhu9N1d/FBEp/PRQuMfWRy9hgj7/TTBRtfnA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792430944;
+	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
+	 X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=SLzTFm5FwBqQoSxlDRKPjATQ3+VUfcoMTka+6oIj/mM=;
+	b=zuN0kA+H+6GOT109RN8yxai1gKfoW1TvFsQCqOohNOVdG0tQVZKHIah+85DhKNfohUHI
+	 nLPkc2e6PUGoID70wQX3zZuFcCuJKUopGW93JUimFcvYv1Hr0RihHTeHmvxl6M4t+391p
+	 pH+n6hLu4YGsRgHFMvkWYO1o3IXAbRYMDOrxmJZoof27tBBbiZSZrl9Uj3ySrExoWSCEz
+	 NAjLe58Mfo/HjbO/Mu+IWYMPyqu87CfL4TizURmW+raCcKRAUFIUgdoC3XYf/LxGqIJwN
+	 YBetca86+BhF76irCpwIFoa9haowQ3HDwFrF8z4wQ2BekIw8dzcmb+UXspKfBgGjBWQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=HjNnR00Z;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6732606A324
+	for <tools@linux.kernel.org>; Mon, 19 Oct 2026 17:29:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=HjNnR00Z
+Received: by smtp.kernel.org (Postfix)
+	id 49B9D1F000C5; Mon, 19 Oct 2026 17:29:03 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=74.125.82.172
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1792430943;
+	b=xaogv/miaiN5HJY4VOo6ZhYiVkLwB59qz0RsbzHq5GAerHjknDnQhNH7FujJdur43WyW
+	 fuC4AQ6aCJBNL/eTGtKd1d57uXaqdwXcCewjoR+ncjT5KUVxfNb/uAEs5IVjXTJTllNvK
+	 O1ftuuTe4SQLODZHmpFechSVdD53FTAMFO0q2jLOcQ2gHH/AhBJl5n/TluXoaKpCXoEtK
+	 kBRQxmilUNuUSVeWbHi6+SKjQkpIg7ULe31CapUBZ1V4Pd0D5c22VKi+uBJ3Ea2jJV2Ss
+	 my4sm/3iwRK0bca3JH0lGdUYIV4pOhEJ365o425hYPYPXImYPD5IWBC6VEMzpsnL+gw==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1792430943;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=SLzTFm5FwBqQoSxlDRKPjATQ3+VUfcoMTka+6oIj/mM=;
+	b=rlyGbpItbs6/eX2Sv/2U9UqIWwb8vBvuovcjF+NyCjXmrzeipipnehKUf4/WK3JXnHy6
+	 L8d7ZCmOVT9asyd/MSZ7ZIdp391+WKkDEjW+DfuGtQBciaGIiiSIMur+5x4hTyO+swVdr
+	 pIeSLbIGmOGhgLvvMLEa9CZs7VNnY2lrbg3zbbIhdryh1T6nRkd1i6OiXp2AlznRP/EGQ
+	 2FkG+yVNWUCzPGu2JUmo/9ukNjl59ZUN4UIkCGSSCUpe5uIvupSxOmlJLpSgqUZVZ4Jmx
+	 MhzfN6e5GJG/2LHx3vMb3hOR3fr/RcdubSxgeqCCJmzaxmrOGfNcVrUR8psqX+54Lig==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=HjNnR00Z;
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=74.125.82.172
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id BD1D41F000C4;
-	Mon, 19 Oct 2026 15:01:25 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 6CAD31F000C4
+	for <tools@kernel.org>; Mon, 19 Oct 2026 17:29:02 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=Y82mefJk
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org BD1D41F000C4
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
-	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 03CF420283B;
-	Mon, 19 Oct 2026 17:01:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
-	s=20260414; t=1792422084;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7qAKq0mfh8qC1H4A586pUcpXoHLD4uB3J5dj8twRldE=;
-	b=Y82mefJkfiyZzBmEKgGRpO7r2NkKU2eN1BL9ta2+tbGJ7XjNgF/xelFCdorLtPRPZggulu
-	nxc+QTH4Z3+lpU+5SoChSM/E/wSvyYAlR4Gx/q17ifTTlmVLkMOtuwQMR8GogQFV/okQLK
-	qYWBJexV02FNcoazli5cQ0TlbXSZgjer50+y7iXqUcRcBZpNObNWF+dyngpKucaan9jqCO
-	uZk9e6nDCt2ujmG2bZ3qYaNozYJDzWVelG9qrcHGkodJtYfDCDE6kR4U5P3wTHuWKJPMul
-	hBl47D/T7EHo2fsiYtyXV+Wco/eZF9GJ3y1pGZxdSR+JFLLbySUCB3HJdSYnew==
-ARC-Seal: i=1; s=20260414; d=pengutronix.de; t=1792422084; a=rsa-sha256;
-	cv=none;
-	b=dZhmAMurHMEbQc/60m6Fu5EQBJ80dACR2UBhwSlCOalZ/WAF/SH9qDoLuHYCanDM1npfsc
-	/pJKS5DW39SOKzj8qyPCKotBZrVNFdAoupei1cAx/ZBoi0xGh8sLI0Uke8Cdt2hRmqMeuh
-	1ymJIaEfebRAbv6wsGETH16uKRwqHgU2yBrr5fyKq0ZsufuBvVss5GoQtyWnFsJNsvvOPc
-	gBOhSR3aeW1MhagEQiTPJxCrQXZaFeJNLHhBG+MQFM2a56HWqqPtP2j2ErN1PVzArD0oAO
-	7Fee+uhpDjxT6qGEUeM2j1PkcLMaB9nVYn2NvXL/n+3G1twe2pbii+rlczY3wA==
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=relay-from-drehscheibe.grey.stw.pengutronix.de smtp.mailfrom=mkl@pengutronix.de
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
-	s=20260414; t=1792422084;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7qAKq0mfh8qC1H4A586pUcpXoHLD4uB3J5dj8twRldE=;
-	b=SSlcVjTq9+u3uH9soYh6sZXFFCLB+fVr6PRc9ftSr6I9g6XreYqT4VXQgqpKK65KsWZbHI
-	a8i3h8u7NQXXl+jRMdRsNDPOTmuWvKscuGhbv49KKGKaJoqb7A2XxV7lEfgYZWdI0Ewpwn
-	dyjJPBMA+qKd/QoJR42C5p4v7DNO516tuQU21o51V5jHalnkZLahalriq/CPUN2yYyvYxl
-	7f2RwJs887mrBp/l5OPqCpD+27OifXtllQJ7zjzGDGrP+P8fWyFnCsJKRclC1VuKG68LcT
-	JiY7Z7Hmu2raEmDXhSc7G6PIc/PtUY6nJod0zJYTYMhNck/6I1BJ2rTzLTqWkw==
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1xIorb-000Erx-2w;
-	Mon, 19 Oct 2026 17:01:23 +0200
-Received: from pengutronix.de (p4ffb23c7.dip0.t-ipconnect.de [79.251.35.199])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id A0E2B5C9355;
-	Mon, 19 Oct 2026 15:01:23 +0000 (UTC)
-Date: Mon, 19 Oct 2026 17:01:23 +0200
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Brian Masney <bmasney@redhat.com>
-Cc: mricon@kernel.org, tools@kernel.org, users@kernel.org
-Subject: Re: b4: retrieve API key(s) via git credential mechanism [feature
- request]
-Message-ID: <20261019-fantastic-wine-kittiwake-14132f-mkl@pengutronix.de>
-References: <20261016-tiny-labrador-of-serenity-28c5fd-mkl@pengutronix.de>
- <atYgJxjTgToh1Jn1@redhat.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=HjNnR00Z
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 6CAD31F000C4
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-35c76e9614aso4539010eec.0
+        for <tools@kernel.org>; Mon, 19 Oct 2026 10:29:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792430941; x=1793035741; darn=kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=SLzTFm5FwBqQoSxlDRKPjATQ3+VUfcoMTka+6oIj/mM=;
+        b=HjNnR00ZYMQoCK+F0X0tL5TsNQw/l5TwUSXtNld/zYR1ICickePwHZ5rAD8f8la0RY
+         vyeAzI1W0caXjbnBaM+OJYkmNs/vyCM0ZEtIHlWl6z6U1Y3CbDAjARakCueas10+M5BT
+         tZeeXIVLGkbGmiTeh3b4BMt9xWKZHZKmHXkuV6/BBV/Uiqway8Ox/GLnBxuWi0DqCRNu
+         +jOSQYpEhfHFwcoGiyYq2M+Lrdk1BqRMsPIHgAKJhyBrJWyJWrPQUAwOz02AjuOrBET6
+         8wcgwjhZw5iA/TPWwtUU5SLDJFP13yKmB+W4XZdUR3wMYE/93HcHKotsuC04S3aWmUKM
+         gIow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792430941; x=1793035741;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=SLzTFm5FwBqQoSxlDRKPjATQ3+VUfcoMTka+6oIj/mM=;
+        b=g5CYxzWBz7LjWqNjH3BMU7u5roX3ZS6WHj+LitmEmCtEsHBLJkTkNGNmfsuRkOjg3P
+         taS8RxHku/8VkdU5h57Hh2R2p1p2TZbRgAS0g7XrwX1cFe1NBVv/4IWwnC1UD6xdrh6u
+         uW9Z49zJjQopdLy4D27D9CeHQpJePz5fmvk73Xn+E6ClzENeBR3Ke9IuhL1lVALP7muD
+         aGYE5xc4d2RXVQkGcliQDFC0sVcYZu3YJ2jqVkrnkdkQ2trvRmQ9dHIsV8L+nJP6DjDR
+         wVHX60lIXaRUZJmD3utfPYJLW7fC2knrdp6zop2ZJksNolLo3zkDs+T2qs1FVQ6fH3B6
+         H7cw==
+X-Gm-Message-State: AFq9FYJY/DpTVRgqLxmaQjEFE+5bWkQI+dPC609IcZKr7sVujeuMP4ZE
+	Gcs9NSd+tPkuMjfgNCrejs8s5YNVrvPeYyQ5LrxT+X9tzsnGLOPbb+Zn
+X-Gm-Gg: AYBFou0qSN8Qedgp+Yks4YbSRKE9Sc70NAvy9Un+Ft9exI4hc4c0VhzF/8zbo/4s7Di
+	QqpLhYbZQ0PwzCepKltk1IrA9E1an+n9+R9crqvGEfJf9VplKL/8M7Cy7YN4hiovMjG5H360qq7
+	21yQWytyULnSFYDyDJZLIVlfPcKoSUNreZPT5O0C/dkWnzMFujRhyKPT3igy8f//iKPs+mmVy1M
+	UiP7plhr2wYLHiv7LZGvQE4NxSKHnSdZ9MX3MGQexCrrUDD9rPu5tDt4C1DuwS66ThAAsBjOMb+
+	MW5uxH+OfmtUkSnUtwTWyqyYV0T2xr/7avWYlYKs0ILcTrNbhf0Njhf7DuIJZ7p4b4AFw6icXSF
+	4OstCGJ2vIvD9c07KtbbQZZHN2IjYmcjEfjHgY1PEy/WL0zo26lzzQJz6uZ0o5BNTsEHK6WrFbK
+	PMwqEd9xdfQEn21VWzq6ZUDjAgAO7aR5hP+rYbNb1mYIAOCpNE8uMJt1Ut1Knli5uc9acKjwu7S
+	NClfGgAygC4dCUf9Rl37OvCNo/+3OnMvdOkqG7p+y0Fl3YZhkM=
+X-Received: by 2002:a05:7300:42d7:b0:365:9e3c:4ab2 with SMTP id 5a478bee46e88-3659e3c6d4emr1060998eec.41.1792430941345;
+        Mon, 19 Oct 2026 10:29:01 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2ebe:8:13c6:2555:87ee:fe93])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36083283478sm32288450eec.29.2026.10.19.10.28.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Oct 2026 10:28:59 -0700 (PDT)
+Date: Mon, 19 Oct 2026 10:28:56 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Brian Masney <masneyb@kernel.org>
+Cc: "Kernel.org Tools" <tools@kernel.org>, 
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, Jerome Brunet <jbrunet@baylibre.com>
+Subject: Re: [PATCH b4 0/3] review: add support for b4.pw-key-command
+Message-ID: <atZSkl1BseYzIHtM@google.com>
+References: <20261015-pw-key-command-v1-0-6daa9b8cee2a@kernel.org>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -143,54 +127,19 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qzretrquopovo2oj"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <atYgJxjTgToh1Jn1@redhat.com>
+In-Reply-To: <20261015-pw-key-command-v1-0-6daa9b8cee2a@kernel.org>
 
+On Thu, Oct 15, 2026 at 10:08:40AM -0400, Brian Masney wrote:
+> Currently the patchwork token needs to be stored plaintext in your git
+> configuration. This series adds support for b4.pw-key-command so that
+> the token can be stored in a password manager.
 
---qzretrquopovo2oj
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: b4: retrieve API key(s) via git credential mechanism [feature
- request]
-MIME-Version: 1.0
+I wonder if this should be done through "git credential", the same way
+smtp password is handled.
 
-On 19.10.2026 09:50:31, Brian Masney wrote:
-> On Fri, Oct 16, 2026 at 11:36:10AM +0200, Marc Kleine-Budde wrote:
-> > I don't like the idea of storing my patchwork API key in plain text on
-> > my system (which uses encrypted storage, though) and my dotfiles repo.
-> > Can you use the git credential mechanism to retrieve API key(s)?
->
-> I posted a patch series to b4 last week to do that. Please give it a try.
->
-> https://lore.kernel.org/tools/20261015-pw-key-command-v1-0-6daa9b8cee2a@k=
-ernel.org/T/#m1ba5c2cd1c5924dc293be4c1969a509278a8bdf0
+Thanks.
 
-Thanks, works for me!
-
-Using git credentials is probably more work, but IMHO integrated better
-into the git ecosystem.
-
-regards,
-Marc
-
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
-
---qzretrquopovo2oj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSl+MghEFFAdY3pYJLMOmT6rpmt0gUCatYwwAAKCRDMOmT6rpmt
-0vjFAP9Cwd76ZcyajSOg14s2uLxZ6KWaWopZYcbZJs9Q3FaxFQEA6ZAfT+DTF+/c
-Ur/p+hIERirTp4TXIHNqBlWTTSbAnQI=
-=UF4M
------END PGP SIGNATURE-----
-
---qzretrquopovo2oj--
+-- 
+Dmitry
