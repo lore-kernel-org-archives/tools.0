@@ -1,88 +1,89 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792488534;
-	b=WhQJAm918c08IC6wy44hYhAXRIexHCdSxQfWvgr2KM/ZrDPlOmS+00BQU8dTfMVsIDQG
-	 XylnfJEUe0D2s0EZtg6UiZJGdEKcD152V9SebsD8w6mrc7vtOIPQt7assCPEwx4YmsxNb
-	 H+ShKRfA92iqQmPz0xNbaJbEVo5MjuBnrchmOgrFJmdXzUsw1PSMphMo+j/CdacZX455I
-	 6re+H0+zYTiDAgO6iLbm+wCrmikW5wXAN2Y+QPhDAETpZw7P+AJ49cv3XdxeigZ99ZoVj
-	 NtZOloZUnaI2YETPtBhVOj8RRrceFwzlviuhb+AFpqUz2FxGKAgClBctfn4ijIshyFw==
+	t=1792490208;
+	b=rBwTiIw/5XrXVC7FDjsXBWlXS5kPLKiJeiCRO8SfLAJZRQsc4W3MgcTS1tRqRv86YN0R
+	 LoSuI0jSUCILXspXe6L/zOqE/i/vHwREkXXblFYppkMN71PGGe05xRzRFHOFklX9O3iUA
+	 iO6UKa+gtoR3LEulFx9SbWvtJE2btL4vvyw5nbuUTMK6YAUCwVB9ba9wPjvQ1m0UnlwTv
+	 dK2ZL+jLZlRU9du6Xjf5LIHWaH+vKRGtl8dA3GWn84chNuyeFCJFOmV7Sr69hgM0HNBBJ
+	 nT+K+9xFqxPblYD2Mde9auaLR4NOFeOHGDZanz5rdsiTjtymK2n3O2uBTUPTsiM2IDA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792488534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792490208;
 	h=Received:Delivered-To:Received:DMARC-Filter:X-Envelope-To:
 	 DKIM-Signature:X-Envelope-To:Received:X-Mizu-Trace-ID:X-Migadu-Flow:
 	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
-	bh=D55GOAldVYu3XOZq/zg9jwLI5SEsXpwoU4XEaiWG1es=;
-	b=yA5HwKaH4f6NI845+btAfLVWvHY+O57tEwb2n/I6FJrPyZtLdgrOJA8WDvf8yoovWkjP
-	 4DN8FfJ6dmVJF6PGSaNlsePYiY6nEvr/L2k3n34tqDRZx8nFbOmTAwMFJC+YK38LvR9HJ
-	 jIaEHONSM63wdTmVQUbzPTXDJhGQB/AOjVu5/JyhrkSWcysqA18xnCspAbdols0UtpA4G
-	 eSuGSzGpnqwxgdCCao0eoiBNrVX/gxnUcpcxu1/KEmW3nanSmKYOQVYryzFf08HXsFend
-	 lih+eh44OA0O4qTh95EnlD9Lp18BZ+abEmOONk576rLlDWyc4RbQSLqf1YzrdNKC8rA==
+	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=i5xd568iE37IVMtWN2DYTcniLSLMVeKfrb6iFCD0Osk=;
+	b=YNO6abcvR8tUdHJzvcw6WZV9DADuJKYuqrGtyHm1Hd3NL8zcGOYDHw/j/Angrgc+ijhU
+	 p2gP1zH+Pdduad1Oqeuwp2JRoJ+h2B66WjcBHCkh+4oJR3ATRegtey8YlAbazXktl1g0j
+	 MWArrwPFPLtbIGM5KJH4ao/be620eGHTI2hwwaZ/DWdjJG7U2JSjW2lslaAAQc0fBP+kR
+	 Ts/ZnS4mUlMeq8sVgarONTzRNnzUFTmX6eVDidrH+3f7U+bkyI2o4WsS0ImoY32sje3Fd
+	 aHCfdkaTaLP6A0XcibfJWSgEc/T7lDkucNvd4JUVa+GshbUtIpKMnxzXSryTjaQpc9A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=puCOW8xK;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="VJ/6Lpmk";
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A085C606A319
-	for <tools@linux.kernel.org>; Tue, 20 Oct 2026 09:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C15606A31D
+	for <tools@linux.kernel.org>; Tue, 20 Oct 2026 09:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=puCOW8xK
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=VJ/6Lpmk
 Received: by smtp.kernel.org (Postfix)
-	id 647501F000D0; Tue, 20 Oct 2026 09:28:53 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=95.215.58.103
+	id 057071F000C4; Tue, 20 Oct 2026 09:56:48 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=95.215.58.67
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1792488533;
-	b=RG/nWG4xeKwzP8Pk73ZenH/5SO5RDXOfnhzqpeWmnqXbTZBZmh665FmxphZvhrjrTSBN
-	 HWi2b782Slah/SlGCLHtamSxC/CbTsblpvg5W+U9X0UY9x9OUpCnfAf3irNq0qXTJ8GLX
-	 0iXm8R5Uh8AU9BAnu+imsaVucu4+YukGoxqTxBujjGoBCeXDc66havuMAFlS+yTA3nYyj
-	 v3VqIlVZqEZ2tothIvKN5O3DWtr9NZlOUNauWofdbRHTXf+wenSe/lbcGtWkmEp3vqsli
-	 MWLOxb6syn28lTx6AVGNMjU5lAunaAmriFLvLyaRRAnxq+F7peWm4kAQSjk9ElNB8pA==
+	t=1792490207;
+	b=ihLwsD6JnD3rgLnCH7UdQg/rFi7Zz5xQ+jwyFbtfMYvKndoM8SyzQ1aXGoq94idnKLiH
+	 MsSpf/tUJYZPl3xWQFDyU/0MlZ4+zVD1cgn99efmEfDE0t2bQk2zik3G+hIemDd2cbgxN
+	 LrK/JNwggoF8saxvaYjniCsVKeEjwcgUNqY4lYHFPa+PtNKZ092y86ycapi+8l4hNYvMW
+	 X3qvuD2XXVyicySmy4iioHZXT5KL7Y5rTQM09TgyUDNy8p5BW8HCGCM8gD1fNyjs4SeVP
+	 ocevB/ysGtp7OLAb27Eo/YrEN9yZGL1Yg+JFKbSeq4ZcIb9kqadBI8NiDHAGXRI4loQ==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1792488533;
+	c=relaxed/relaxed; t=1792490207;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:From:Date:Subject:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
-	 In-Reply-To:To:Cc:X-Mailer;
-	bh=D55GOAldVYu3XOZq/zg9jwLI5SEsXpwoU4XEaiWG1es=;
-	b=Ttj6Ml+rSC5VWUyaMc2YveaORtxDZiy80Gau/LNiYJZ7Pad3kCIlu2nkiHUmn9fVUPew
-	 U3ynLolv0Lv9+9/iChpknheXGPxXRey032IB8lTd+MpZXJgXonIazRGmpmlaJlyBzqZsJ
-	 kY4KeE69CggWDRPGGJ6Y8CpT+UDqaDT/yyLlQ8BPEJcNpm4dgi+hZoQAQabpz7bq+PZg+
-	 UUQZdmV/4Afc8tJBOqutMbEX0+5pnUgnHQFRjw8wv4uTwvFxfgKDFGcT/4oT0IwcrWLAy
-	 NBr2FLJqLee3HsSMiZH/hyTOI5IlTTCCbZNtz8IxwhpsSb5RDeTLgQYnmDVjq/kbaZQ==
+	 Content-Type:Content-Transfer-Encoding:Message-Id:X-B4-Tracking:
+	 X-Change-ID:To:Cc:X-Mailer;
+	bh=i5xd568iE37IVMtWN2DYTcniLSLMVeKfrb6iFCD0Osk=;
+	b=2jDA8IIc85U7dlsbGmD/Y5+MLZxUfVxNA5fmus0BqtzBDEubAOgNih5b8RbEL6/GhQKH
+	 KDOsFDzW8QiMzYcX9Ps4jmYzx0fTFiRWw8I6dlisHbyK9gcFK+1bl6+0nh5+Veo/p4Qde
+	 2ZaIqEWSLw1QXhuVtiMBd0xmhprZK9VXEBP/IqTJBP+yaQWE8tX1GhRGU4DIUTO/EisCL
+	 OmSW6dNexGF/11+o6aoezSDKxu0p8iXc5ceY9LvJDmm+ZGk6D3G7VWoVKuyRmA+kmUXs9
+	 KUNrF/7VAnFDg9EAN6bfYwI7n3/efQUM93ru3oX+2ikxiwBcL9vzZlz/G5IjKcNSPQw==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=puCOW8xK;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="VJ/6Lpmk";
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	arc=none smtp.remote-ip=95.215.58.103
-Received: from mta1.migadu.com (out-103.mta1.migadu.com [95.215.58.103])
+	arc=none smtp.remote-ip=95.215.58.67
+Received: from mta1.migadu.com (out-67.mta1.migadu.com [95.215.58.67])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 843231F000CF
-	for <tools@kernel.org>; Tue, 20 Oct 2026 09:28:52 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id DF50E1F000C7
+	for <tools@kernel.org>; Tue, 20 Oct 2026 09:56:46 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=puCOW8xK
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 843231F000CF
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=VJ/6Lpmk
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org DF50E1F000C7
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linux.dev
 X-Envelope-To: tools@kernel.org
-DKIM-Signature: a=rsa-sha256; bh=8zg1vDkZdk89vKtdzWqYNNBlnWYAQIzT6BYiqXtwtvE=;
+DKIM-Signature: a=rsa-sha256; bh=x+C0QqcDfapiL021DPjsyla8cxpQ12983HJCrS6pvak=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792488530; v=1; x=1793093330;
- b=puCOW8xKmUIqjXNO+lNbMAKv88BKb65p9MhOHgFUO1CPQjGz/sYk67FFNbbTIWEwSX6SU2wd
- FI+XYCE5auzf58QbYR/y0J0PagocyH84l4MF3Mz92oMusnr1JHOoTlhgtP8SEDKDvPcOGerpg/1
- DvnxRjIGGZQHIQkZT0fXqXr4=
+ t=1792490205; v=1; x=1793095005;
+ b=VJ/6Lpmk64aHW8dujjpHUeZJhXyzHawHrulhXeXUW20audMj292v6LWZO5wE0Hs8zvxKV4qJ
+ oA7ip8AoAEowe/iOa+UsPyAlngwibdoIPxYYH4LGoRHmVISIohjDbCLQVnSIdg9V/fKQpHouLph
+ j9yzpf0zn0Z4G7N5J8WQ7t/A=
 X-Envelope-To: tools@kernel.org
-Received: by mta12.migadu.com with ESMTPS id 6cccb140262aad9f;
-	Tue, 20 Oct 2026 09:28:50 +0000
-X-Mizu-Trace-ID: 6cccb140262aad9f
+Received: by mta11.migadu.com with ESMTPS id 2b4d5000a6ed5f77;
+	Tue, 20 Oct 2026 09:56:44 +0000
+X-Mizu-Trace-ID: 2b4d5000a6ed5f77
 X-Migadu-Flow: FLOW_OUT
 From: Hangbin Liu <hangbin.liu@linux.dev>
-Date: Tue, 20 Oct 2026 17:28:32 +0800
-Subject: [PATCH b4 2/2] ez: exit cleanly when prep tracking data is missing
+Date: Tue, 20 Oct 2026 17:56:30 +0800
+Subject: [PATCH b4] tests: pin scratch repos to master regardless of
+ init.defaultBranch
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -94,9 +95,11 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261020-b4_mailmap-v1-2-55965f9201bd@kylinos.cn>
-References: <20261020-b4_mailmap-v1-0-55965f9201bd@kylinos.cn>
-In-Reply-To: <20261020-b4_mailmap-v1-0-55965f9201bd@kylinos.cn>
+Message-Id: <20261020-test_base_commit-v1-1-083fa909c424@kylinos.cn>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMQQrCMBQFr1Le2kASoqhXESlJ+tQvtJX8KELp3
+ Y26nIGZBcoiVBy7BYUvUZmnBm7TId/idKWRoTG89TtnvTWVWvsUlX2ex1GqGfx2z+CyPYSIlj0
+ KL/L+LU9IAee/02e6M9fvC+v6AR7BwL94AAAA
+X-Change-ID: 20261020-test_base_commit-d258e41c094a
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Hangbin Liu <hangbin.liu@linux.dev>, 
  Hangbin Liu <liuhangbin@kylinos.cn>
@@ -104,80 +107,43 @@ X-Mailer: b4 0.16.0
 
 From: Hangbin Liu <liuhangbin@kylinos.cn>
 
-get_prep_branch_as_patches() indexed tracking['series'] without
-checking that any tracking was loaded at all, so every caller arriving
-without a cover letter died with a bare KeyError traceback. The most
-visible path is `b4 prep --auto-to-cc` on a branch b4 does not manage.
+_init_repo() ran a plain "git init", so the scratch repo's initial
+branch followed the developer's init.defaultBranch. On a machine
+configured with init.defaultBranch=main (increasingly the norm), the
+repos come up on main, and test_base_commit_in_remote_tree then fails
+at its "git checkout master".
 
-Let is_prep_branch(mustbe=True) deliver that diagnosis before the
-series is assembled, and exit with a clear message if the branch is
-managed but its tracking is unusable anyway.
+Pins -b master on the local side so the suite passes regardless of the
+developer's default-branch configuration.
 
-To reproduce this issue: on a branch that was never set up with
-`b4 prep -n`, run:
-
-  b4 prep --auto-to-cc
-
-Without this change it dies with:
-
-  Traceback (most recent call last):
-    ...
-    prefixes.extend(tracking['series'].get('prefixes', list()))
-  KeyError: 'series'
-
-With this change it exits with:
-
-  CRITICAL: This is not a prep-managed branch or it was created by someone else.
-
-Assisted-by: LLM [analysis, codegen, tests]
-Fixes: 940469727b11 ("ez: refactor single-patch-series code")
+Assisted-by: LLM [analysis, codegen]
+Fixes: 4ee47be995f2 ("ty: verify queued-thanks commits by ref reachability, not HTTP status")
 Signed-off-by: Hangbin Liu <liuhangbin@kylinos.cn>
 ---
- src/b4/ez.py         |  7 +++++++
- src/tests/test_ez.py | 11 +++++++++++
- 2 files changed, 18 insertions(+)
+ src/tests/test_ty.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/src/b4/ez.py b/src/b4/ez.py
-index c1e964b2a013..7929234f8b3d 100644
---- a/src/b4/ez.py
-+++ b/src/b4/ez.py
-@@ -2826,6 +2826,13 @@ def get_prep_branch_as_patches(
- ]:
-     cover, tracking = load_cover(strip_comments=True, usebranch=usebranch)
- 
-+    if 'series' not in tracking:
-+        # No tracking at all means the cover letter could not be found; let
-+        # is_prep_branch() exit with the real diagnosis instead of a KeyError.
-+        is_prep_branch(mustbe=True, usebranch=usebranch)
-+        logger.critical('CRITICAL: No usable b4 prep tracking data found.')
-+        sys.exit(1)
-+
-     if prefixes is None:
-         prefixes = list()
-     prefixes.extend(tracking['series'].get('prefixes', list()))
-diff --git a/src/tests/test_ez.py b/src/tests/test_ez.py
-index 71dd71637448..b2ddb8569d5e 100644
---- a/src/tests/test_ez.py
-+++ b/src/tests/test_ez.py
-@@ -1404,6 +1404,17 @@ def test_claim_under_mailmap_recognizes_own_commits(
-     assert b4.git_revparse_obj('HEAD') == head
+diff --git a/src/tests/test_ty.py b/src/tests/test_ty.py
+index 269ce021306f..2901f053f0f5 100644
+--- a/src/tests/test_ty.py
++++ b/src/tests/test_ty.py
+@@ -401,7 +401,9 @@ def test_get_check_repo_config_override(monkeypatch: pytest.MonkeyPatch) -> None
  
  
-+def test_auto_to_cc_unmanaged_branch_exits_cleanly(
-+    gitdir: str, caplog: pytest.LogCaptureFixture
-+) -> None:
-+    """auto-to-cc on a branch with no cover letter must exit with the
-+    not-a-prep-managed-branch diagnostic instead of a KeyError traceback."""
-+    with caplog.at_level(logging.CRITICAL, logger='b4'):
-+        with pytest.raises(SystemExit):
-+            _run_prep('--auto-to-cc')
-+    assert 'not a prep-managed branch' in caplog.text
-+
-+
- def test_claim_branch_description_restamps_series(prepdir: str) -> None:
-     """branch-description keeps no cover commit, but --claim still re-stamps
-     the series patches (fork-point..HEAD) under the current identity."""
+ def _init_repo(path: str) -> None:
+-    ecode, out = b4.git_run_command(None, ['init', path])
++    # -b master: some tests check out "master" by name, and an
++    # init.defaultBranch of 'main' would leave no such branch to find.
++    ecode, out = b4.git_run_command(None, ['init', '-b', 'master', path])
+     assert ecode == 0, out
+     b4.git_set_config(path, 'user.name', 'Test')
+     b4.git_set_config(path, 'user.email', 'test@example.com')
 
--- 
-2.55.0
+---
+base-commit: 6be7c6139d7734d84afddf989fa2874935b6d85b
+change-id: 20261020-test_base_commit-d258e41c094a
+
+Best regards,
+--  
+Hangbin Liu <liuhangbin@kylinos.cn>
 
