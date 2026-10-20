@@ -1,89 +1,88 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792488532;
-	b=V0UxvcH6eYVU00Imnt0AexMZXMaj2eOrcSpX/tSTu8tIvcj3UpWs+Ebzz6TkTr8bQ8xK
-	 NZbxSbkuj8Qz2ci6gS2MX79HxvDOvC8WitGWlHVK0oq6Kx2hS0K/88RR3SJbl/L23P3X9
-	 TritHZMWot0PJwGQsZT6S0PBhK63sT+0wnWGDEXLg44/VgMwPWs99xJFk3Yr9cVfb2v9F
-	 gLkL2q/wO4GGQHalzJAspawwgleGzCREDnjkR3PRjABAd0aI6l0BaZkYIyGyM0JxoL90R
-	 sYBMYR7xa1uI0r1WTW9nWPlVQ2pBT/TUR/pjIr++F48ldV1EgUO+j51kzISWyIOoZUA==
+	t=1792488534;
+	b=WhQJAm918c08IC6wy44hYhAXRIexHCdSxQfWvgr2KM/ZrDPlOmS+00BQU8dTfMVsIDQG
+	 XylnfJEUe0D2s0EZtg6UiZJGdEKcD152V9SebsD8w6mrc7vtOIPQt7assCPEwx4YmsxNb
+	 H+ShKRfA92iqQmPz0xNbaJbEVo5MjuBnrchmOgrFJmdXzUsw1PSMphMo+j/CdacZX455I
+	 6re+H0+zYTiDAgO6iLbm+wCrmikW5wXAN2Y+QPhDAETpZw7P+AJ49cv3XdxeigZ99ZoVj
+	 NtZOloZUnaI2YETPtBhVOj8RRrceFwzlviuhb+AFpqUz2FxGKAgClBctfn4ijIshyFw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792488532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792488534;
 	h=Received:Delivered-To:Received:DMARC-Filter:X-Envelope-To:
 	 DKIM-Signature:X-Envelope-To:Received:X-Mizu-Trace-ID:X-Migadu-Flow:
 	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
-	bh=fVb4O3iYYaIUWPvFsUVOvHuuOHj5FQtilPYlTiLxDw4=;
-	b=g3EPjYUvbckYwof7/+eLx1zb/P2g4ccN02Ul3Mho7JlF8JYW4L+2kxQV1GLYimmYHnh2
-	 46I6BuseXusDciPu6ErhnDeQlxoWjhy5RPcLPaVYgvP9Yb0/sci1t57wrGdwyH1Ab25zK
-	 z1mGzzOiKeL2OQ0vQsjePYd9kak9Q22Zlyqwv1OgDkmiq+nNeGRuhBbol4OGEY8Z9/NBa
-	 DV1cIM0OAb1nnXi5fQSU4W0YTdtQZsr7BlhODZUTsme2/0l9ZVa2Z9JQDislJ82jq8+M3
-	 u4bnsH7anjwzRbh08POsnmsUY/U/JKOkzHhtuaFcMp1oJzo2fsIM4teLLq2lXKluCMw==
+	bh=D55GOAldVYu3XOZq/zg9jwLI5SEsXpwoU4XEaiWG1es=;
+	b=yA5HwKaH4f6NI845+btAfLVWvHY+O57tEwb2n/I6FJrPyZtLdgrOJA8WDvf8yoovWkjP
+	 4DN8FfJ6dmVJF6PGSaNlsePYiY6nEvr/L2k3n34tqDRZx8nFbOmTAwMFJC+YK38LvR9HJ
+	 jIaEHONSM63wdTmVQUbzPTXDJhGQB/AOjVu5/JyhrkSWcysqA18xnCspAbdols0UtpA4G
+	 eSuGSzGpnqwxgdCCao0eoiBNrVX/gxnUcpcxu1/KEmW3nanSmKYOQVYryzFf08HXsFend
+	 lih+eh44OA0O4qTh95EnlD9Lp18BZ+abEmOONk576rLlDWyc4RbQSLqf1YzrdNKC8rA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=MDJ6NGdE;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=puCOW8xK;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D68B606A319
-	for <tools@linux.kernel.org>; Tue, 20 Oct 2026 09:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A085C606A319
+	for <tools@linux.kernel.org>; Tue, 20 Oct 2026 09:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=MDJ6NGdE
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=puCOW8xK
 Received: by smtp.kernel.org (Postfix)
-	id 4A8A81F000C6; Tue, 20 Oct 2026 09:28:51 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=91.218.175.33
+	id 647501F000D0; Tue, 20 Oct 2026 09:28:53 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=95.215.58.103
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1792488531;
-	b=yCl1bZ1dpPK+qsSk2V33OPzkKc3X7ERX6+riFgQcL6nnE8o0F5EK+S+4cgrmuZt5zf5K
-	 unzjPIIcT2nEBFVn7d66h465k2WcazjFNRA8rRd0Zt+irlIZ1eHj1E3/tlhpA5T5cycbQ
-	 PZ8bJiMy362cY3p2kKEKzNdEldhIawy6D3LUIJAQjwyU+MqkFIIbW0dgWdz5ACn8UbETE
-	 i0a1a3y1962oqs/tf2r+cyljYxAAUYTM1qsjWtiUsDuxDz0CT1FfivqeQ0dt3nThB8E82
-	 UaL7uFE5d4L8ogB79fIjc1M3X0s55gt7v8x1/X2rrd+fh8I1VmoRkXJIwl52VL/6RXA==
+	t=1792488533;
+	b=RG/nWG4xeKwzP8Pk73ZenH/5SO5RDXOfnhzqpeWmnqXbTZBZmh665FmxphZvhrjrTSBN
+	 HWi2b782Slah/SlGCLHtamSxC/CbTsblpvg5W+U9X0UY9x9OUpCnfAf3irNq0qXTJ8GLX
+	 0iXm8R5Uh8AU9BAnu+imsaVucu4+YukGoxqTxBujjGoBCeXDc66havuMAFlS+yTA3nYyj
+	 v3VqIlVZqEZ2tothIvKN5O3DWtr9NZlOUNauWofdbRHTXf+wenSe/lbcGtWkmEp3vqsli
+	 MWLOxb6syn28lTx6AVGNMjU5lAunaAmriFLvLyaRRAnxq+F7peWm4kAQSjk9ElNB8pA==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1792488531;
+	c=relaxed/relaxed; t=1792488533;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:From:Date:Subject:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
 	 In-Reply-To:To:Cc:X-Mailer;
-	bh=fVb4O3iYYaIUWPvFsUVOvHuuOHj5FQtilPYlTiLxDw4=;
-	b=X569YZcW3G/tNwF0ZGNYW7IS2quLr+KnktrCznqGbFsFB1KSgDePgkj4+4qOvzIak2zu
-	 BTOq9Gr/xTdEP6hhJ/+3OfQnCUHSCG4c44D8EV4AV4O92etS0H3luHLWucOC3GP3UBLCb
-	 Pfn958uco8VGS8XY7KNDRkYj52mZcGga6Iq/yWUAElA/t9KUx7z4kahSU9a1maJJ+ELEF
-	 qvD8kAerI/ZkeBrYoWp6ikDOKFJRiPI+qVrLjpymfdn0GNNEC6MfwQoZ74Q91TYwaH8/j
-	 NH9eVZrPVMj8SdIeT4r5TQvnbbuidagFDn48d9eHDJUdIYh2DN2oTjOW2+5IY0LXFOQ==
+	bh=D55GOAldVYu3XOZq/zg9jwLI5SEsXpwoU4XEaiWG1es=;
+	b=Ttj6Ml+rSC5VWUyaMc2YveaORtxDZiy80Gau/LNiYJZ7Pad3kCIlu2nkiHUmn9fVUPew
+	 U3ynLolv0Lv9+9/iChpknheXGPxXRey032IB8lTd+MpZXJgXonIazRGmpmlaJlyBzqZsJ
+	 kY4KeE69CggWDRPGGJ6Y8CpT+UDqaDT/yyLlQ8BPEJcNpm4dgi+hZoQAQabpz7bq+PZg+
+	 UUQZdmV/4Afc8tJBOqutMbEX0+5pnUgnHQFRjw8wv4uTwvFxfgKDFGcT/4oT0IwcrWLAy
+	 NBr2FLJqLee3HsSMiZH/hyTOI5IlTTCCbZNtz8IxwhpsSb5RDeTLgQYnmDVjq/kbaZQ==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=MDJ6NGdE;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=puCOW8xK;
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	arc=none smtp.remote-ip=91.218.175.33
-Received: from mta0.migadu.com (out-33.mta0.migadu.com [91.218.175.33])
+	arc=none smtp.remote-ip=95.215.58.103
+Received: from mta1.migadu.com (out-103.mta1.migadu.com [95.215.58.103])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 6DF401F000C8
-	for <tools@kernel.org>; Tue, 20 Oct 2026 09:28:49 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 843231F000CF
+	for <tools@kernel.org>; Tue, 20 Oct 2026 09:28:52 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=MDJ6NGdE
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 6DF401F000C8
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=puCOW8xK
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 843231F000CF
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linux.dev
 X-Envelope-To: tools@kernel.org
-DKIM-Signature: a=rsa-sha256; bh=KQ/wC3dDIdKOHPkHn82qhPur+sRxll9IQGe3Ydu5iM4=;
+DKIM-Signature: a=rsa-sha256; bh=8zg1vDkZdk89vKtdzWqYNNBlnWYAQIzT6BYiqXtwtvE=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792488528; v=1; x=1793093328;
- b=MDJ6NGdEH02ZNgxs1lNEz9IWQ4/TEUa56jyTpw1675ggnesMopK8QtLhJp02zf06H4R27GIt
- LEvYHs8j8AWYaMXovmG+SNH+l6ImWy7DqT11IM9wIhiJ7rBfvkLo08a8HZmi7q/MXVXVdGLg/M0
- B/8o7GM8KuTTtAj8BisbF3O8=
+ t=1792488530; v=1; x=1793093330;
+ b=puCOW8xKmUIqjXNO+lNbMAKv88BKb65p9MhOHgFUO1CPQjGz/sYk67FFNbbTIWEwSX6SU2wd
+ FI+XYCE5auzf58QbYR/y0J0PagocyH84l4MF3Mz92oMusnr1JHOoTlhgtP8SEDKDvPcOGerpg/1
+ DvnxRjIGGZQHIQkZT0fXqXr4=
 X-Envelope-To: tools@kernel.org
-Received: by mta12.migadu.com with ESMTPS id 4581eb6912871af4;
-	Tue, 20 Oct 2026 09:28:48 +0000
-X-Mizu-Trace-ID: 4581eb6912871af4
+Received: by mta12.migadu.com with ESMTPS id 6cccb140262aad9f;
+	Tue, 20 Oct 2026 09:28:50 +0000
+X-Mizu-Trace-ID: 6cccb140262aad9f
 X-Migadu-Flow: FLOW_OUT
 From: Hangbin Liu <hangbin.liu@linux.dev>
-Date: Tue, 20 Oct 2026 17:28:31 +0800
-Subject: [PATCH b4 1/2] ez: use raw committer emails for identity checks
- and diagnostics
+Date: Tue, 20 Oct 2026 17:28:32 +0800
+Subject: [PATCH b4 2/2] ez: exit cleanly when prep tracking data is missing
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -95,7 +94,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261020-b4_mailmap-v1-1-55965f9201bd@kylinos.cn>
+Message-Id: <20261020-b4_mailmap-v1-2-55965f9201bd@kylinos.cn>
 References: <20261020-b4_mailmap-v1-0-55965f9201bd@kylinos.cn>
 In-Reply-To: <20261020-b4_mailmap-v1-0-55965f9201bd@kylinos.cn>
 To: "Kernel.org Tools" <tools@kernel.org>
@@ -105,106 +104,74 @@ X-Mailer: b4 0.16.0
 
 From: Hangbin Liu <liuhangbin@kylinos.cn>
 
-git log matches --committer against the mailmap-canonicalized
-committer identity (log.mailmap defaults to true), and the %cE format
-placeholder returns the canonical email even when --no-mailmap is
-passed. So as soon as a tree's .mailmap gains an alias for the
-developer's own address, the prep identity logic starts comparing
-against the wrong value:
+get_prep_branch_as_patches() indexed tracking['series'] without
+checking that any tracking was loaded at all, so every caller arriving
+without a cover letter died with a bare KeyError traceback. The most
+visible path is `b4 prep --auto-to-cc` on a branch b4 does not manage.
 
-Use %ce in both places, and add tests covering a prep branch with an
-active .mailmap alias over the developer's own address.
+Let is_prep_branch(mustbe=True) deliver that diagnosis before the
+series is assembled, and exit with a clear message if the branch is
+managed but its tracking is unusable anyway.
 
-To reproduce the --claim variant, on a branch managed with `b4 prep -n`:
+To reproduce this issue: on a branch that was never set up with
+`b4 prep -n`, run:
 
-  echo "Your Name <canonical@example.com> <$(git config user.email)>" > .mailmap
-  b4 --no-interactive prep --claim
+  b4 prep --auto-to-cc
 
-Without this change b4 treats the series as someone else's work. With this
-change it will leave the branch untouched.
+Without this change it dies with:
+
+  Traceback (most recent call last):
+    ...
+    prefixes.extend(tracking['series'].get('prefixes', list()))
+  KeyError: 'series'
+
+With this change it exits with:
+
+  CRITICAL: This is not a prep-managed branch or it was created by someone else.
 
 Assisted-by: LLM [analysis, codegen, tests]
-Fixes: 99a5be103419 ("prep: recover a branch whose cover commit was committed under another email")
+Fixes: 940469727b11 ("ez: refactor single-patch-series code")
 Signed-off-by: Hangbin Liu <liuhangbin@kylinos.cn>
 ---
- src/b4/ez.py         |  4 ++--
- src/tests/test_ez.py | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+), 2 deletions(-)
+ src/b4/ez.py         |  7 +++++++
+ src/tests/test_ez.py | 11 +++++++++++
+ 2 files changed, 18 insertions(+)
 
 diff --git a/src/b4/ez.py b/src/b4/ez.py
-index 2441badbb288..c1e964b2a013 100644
+index c1e964b2a013..7929234f8b3d 100644
 --- a/src/b4/ez.py
 +++ b/src/b4/ez.py
-@@ -945,7 +945,7 @@ def find_cover_commits(usebranch: Optional[str] = None) -> List[Tuple[str, str]]
-         '--grep',
-         MAGIC_MARKER,
-         '-F',
--        '--pretty=format:%H %cE',
-+        '--pretty=format:%H %ce',
-         '--since=1.year',
-         '--no-mailmap',
-         usebranch,
-@@ -1126,7 +1126,7 @@ def claim_prep_branch(branch: Optional[str], no_interactive: bool = False) -> No
-         start = series_start
+@@ -2826,6 +2826,13 @@ def get_prep_branch_as_patches(
+ ]:
+     cover, tracking = load_cover(strip_comments=True, usebranch=usebranch)
  
-     lines = b4.git_get_command_lines(
--        None, ['log', '--format=%h %cE %s', f'{start}..HEAD']
-+        None, ['log', '--format=%h %ce %s', f'{start}..HEAD']
-     )
-     if not lines:
-         logger.critical('CRITICAL: no commits found between %s and %s', start, mybranch)
++    if 'series' not in tracking:
++        # No tracking at all means the cover letter could not be found; let
++        # is_prep_branch() exit with the real diagnosis instead of a KeyError.
++        is_prep_branch(mustbe=True, usebranch=usebranch)
++        logger.critical('CRITICAL: No usable b4 prep tracking data found.')
++        sys.exit(1)
++
+     if prefixes is None:
+         prefixes = list()
+     prefixes.extend(tracking['series'].get('prefixes', list()))
 diff --git a/src/tests/test_ez.py b/src/tests/test_ez.py
-index 13c960babd89..71dd71637448 100644
+index 71dd71637448..b2ddb8569d5e 100644
 --- a/src/tests/test_ez.py
 +++ b/src/tests/test_ez.py
-@@ -1358,6 +1358,52 @@ def test_rewrite_series_commits_explains_thirdparty(
-     assert 'b4 prep --claim' in caplog.text
+@@ -1404,6 +1404,17 @@ def test_claim_under_mailmap_recognizes_own_commits(
+     assert b4.git_revparse_obj('HEAD') == head
  
  
-+# -- .mailmap gotcha (bugzilla 220695) ----------------------------------------
-+
-+
-+def test_prep_survives_mailmap_alias(prepdir_commit: str) -> None:
-+    """A .mailmap entry aliasing your own address must not hide the cover
-+    commit from the committer-restricted search: git log matches --committer
-+    against the mailmap-canonicalized identity unless --no-mailmap is given."""
-+    pathlib.Path('series.patch').write_text('A change in the series.\n')
-+    ecode, out = b4.git_run_command(None, ['add', 'series.patch'])
-+    assert ecode == 0, out
-+    ecode, out = b4.git_run_command(None, ['commit', '-m', 'series patch one'])
-+    assert ecode == 0, out
-+    orig_email = b4.USER_CONFIG['email']
-+    assert isinstance(orig_email, str)
-+    assert b4.ez.is_prep_branch() is True
-+
-+    # Alias our own address to a canonical one, as contributors do in trees
-+    # that carry a .mailmap (e.g. the kernel).
-+    pathlib.Path('.mailmap').write_text(
-+        f'Canonical User <canonical@example.com> <{orig_email}>\n'
-+    )
-+    assert b4.ez.find_cover_commit() is not None
-+    b4.ez.is_prep_branch(mustbe=True)  # `b4 prep --check` must not exit
-+    _tos, _ccs, _tag, patches = b4.ez.get_prep_branch_as_patches()
-+    assert len(patches) == 1
-+
-+
-+def test_claim_under_mailmap_recognizes_own_commits(
-+    prepdir_commit: str, caplog: pytest.LogCaptureFixture
++def test_auto_to_cc_unmanaged_branch_exits_cleanly(
++    gitdir: str, caplog: pytest.LogCaptureFixture
 +) -> None:
-+    """With an active .mailmap, `prep --claim` must still recognize the
-+    series as our own: the comparison uses the raw committer email, not the
-+    canonical alias %cE would report."""
-+    _stack_empty_patches(['series patch one'])
-+    orig_email = b4.USER_CONFIG['email']
-+    assert isinstance(orig_email, str)
-+    pathlib.Path('.mailmap').write_text(
-+        f'Canonical User <canonical@example.com> <{orig_email}>\n'
-+    )
-+    head = b4.git_revparse_obj('HEAD')
-+    with caplog.at_level(logging.INFO, logger='b4'):
-+        _run_prep('--claim')
-+    assert 'nothing to claim' in caplog.text
-+    assert b4.git_revparse_obj('HEAD') == head
++    """auto-to-cc on a branch with no cover letter must exit with the
++    not-a-prep-managed-branch diagnostic instead of a KeyError traceback."""
++    with caplog.at_level(logging.CRITICAL, logger='b4'):
++        with pytest.raises(SystemExit):
++            _run_prep('--auto-to-cc')
++    assert 'not a prep-managed branch' in caplog.text
 +
 +
  def test_claim_branch_description_restamps_series(prepdir: str) -> None:
