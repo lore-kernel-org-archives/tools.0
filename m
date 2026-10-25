@@ -1,109 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792769252;
-	b=sIJxaFfjfBusVKycdV9kUcWKy+hxxYZ1jANES5fHWzxvpDlTQr+C1d7qbRAs2tMBB7o7
-	 oZjd4U/QuBhVJw/VNf3S0xkM++Nd3U6OpGVqw+n6dHytKo8yq7AVNi5Y9yESD0+avx4g7
-	 E9lxLWIMjx4jfq61eAt9ftpRa2OERNvYmLaLXHbm3CTUtiurKN1N/KG/aUp0907PvOyQ2
-	 BFbT3sxXyf9PoYa55eQRq6N6DpahuOrJIJorQ1N4gEoxqN4SkdwfTAu3B0uCpRpZpE6bf
-	 MfLcZDCEhouk/GsVgbEbuLu7WaNs8lWY20dNWZqNhjsE8HMJBRVaO0b50weaJ7JqN5A==
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1792953785;
+	b=Fo3IVNkR3FcawdqcR1pjtjAj1BA9ZFX/gTyOqOvs3Ty1dUNWYzjPFh0ecaFDvZwIAhv8
+	 BIEGnAqI7OzkyJiVCUIz8AGlIU5SFvEwIJGRAzvWdYCfH8tQNCmXinlT+mWsyi4cBCZEn
+	 HjhEdZtNppgBvd68rHLe88X/dNukzHLlM8BtTOTdPyIb0CQSMGO0kpqsjUoIjqY36gPoN
+	 60DlXFFahsUrYjeJsK12GSngJnwgdjkwd+BxB7naFQiPZvsOh5gMUKOwk7nD5aI9md7LB
+	 oh+EjrrHI3NRNZAwhdcIV/9G3hx4bQ9+785mPlt83haJYBKgBVks18R62PNpXMDErFw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792769252;
-	h=Received:Delivered-To:Received:DMARC-Filter:DKIM-Signature:Received:
-	 X-Zone-Loop:x-campaign-type:x-transaction-id:x-swg-uid:X-Mailer:
-	 Message-ID:x-swg-bid:Feedback-ID:x-campaign-id:x-client-id:
-	 X-Originating-IP:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:
-	 X-Developer-Signature:X-Developer-Key:X-Bm-Milter-Handled:
-	 X-Bm-Transport-Timestamp;
-	bh=P/RLiHXMBlJYirhHO8F9Ebq9hhowcm31EGJVZf7sAGw=;
-	b=wxfnXMQtNcCKwDY9hGiAx1ybI8am4+oHP7cBvv8EU1j3hCXe9VrOtUdxMgcNGcU4tKE7
-	 D6L7vIOeNc1wVt1B1ok7kVZWZwK6kDG41uBlVlbTOOFYLHdNG5fU2Jg9kq8VKgvukmR1m
-	 vQAfM1hnEjIGo5FKkgnaxwroiete1Li3y4JxwFI8soei3ryR/YF/OnoaueCNT5jStepKN
-	 8Q9ncwPROJp0niVnWz05SK2hC4AdhBYSijZz4dALiZpfXYtfQLxiy7U5fLIQwwD9DFaU7
-	 9/OiEGIeYpV81tmaKk5XRIxneG+FBl3U3H8EQuqb7kiYDTaPJUr45DHJQ0LQyaOqerA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792953785;
+	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
+	 X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:
+	 X-Mailer;
+	bh=Gn+Yl+0RnRqOKnBOhbDi8NXQmjsnG393oVpvLnPerUE=;
+	b=GzDHMUZbPWxFH7FI4iVskK6fiAixAEhAmpy6yviESy0Ar7nefDLbdR+aqWVNPi6aUaZ3
+	 baUJDCtpRqGPJ64hGELk8kthnqqebqvhD7KAVXqUjFQ/arB8VV9XOeKzJ65lgYBBJwDs6
+	 36xKoyQEC0lLAqA4mODmnuLPHGPJM5/3P/jkP5ds4y136MrFlMoXgWBgZ5K3QaeEphEFW
+	 PyK0pGc8evu/u+gZ99MzGrt42PjSQD6bJDzJquBMsacuT0kv2bjyITyO+AHf+Rz4lAFTC
+	 GnnkP+arf4TxvVptsiMqBE3yZCeMPzh6dWTe1JBtvMF6iIjofAdYJFIW91DLsi1Ma+g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=vates.tech header.i=@vates.tech header.a=rsa-sha256 header.s=selector1 header.b=QfuhEHFN;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SCPHtbMD;
+	arc=fail smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A12B606A31A
-	for <tools@linux.kernel.org>; Fri, 23 Oct 2026 15:27:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=vates.tech header.i=@vates.tech header.a=rsa-sha256 header.s=selector1 header.b=QfuhEHFN
-Received: by smtp.kernel.org (Postfix)
-	id 10F301F01828; Fri, 23 Oct 2026 15:27:31 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=185.255.28.34
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1792769251;
-	b=xNaXhxEL8sw+jUEuNj3Bvc/YW25itiQ88k542zJH5+8jOxva4jwW9VVQ7TXA5n4LTh4r
-	 0TbFh29J1AbgyaGunMH/jz+n49V9+sVONOLCrs6eseEubpnNuRhliM3ZGoA+DUy7Izhpz
-	 +tw9F1GqJF8xGYHJAhAETVov79dhx02u9lQOHs58R7mQT1gb3hWVk1s5XEdJftC3vI/Yg
-	 DGGaDR1QTwjIL7LrQV5v0REWd2lFYzUImxPU0ZuZrN9lqSi8ZtH3mQlwIURY2mpHSXGAV
-	 mpmak8GTVcDR/iZi5ipue393h3lPsAZNUWxuiqngqvohq7waJ0DhlXtyfKJDcEwzuSg==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1792769251;
-	h=DMARC-Filter:DKIM-Signature:Received:X-Zone-Loop:x-campaign-type:
-	 x-transaction-id:x-swg-uid:X-Mailer:Message-ID:x-swg-bid:Feedback-ID:
-	 x-campaign-id:x-client-id:X-Originating-IP:Received:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:X-B4-Tracking:
-	 X-Change-ID:To:Cc:X-Developer-Signature:X-Developer-Key:
-	 X-Bm-Milter-Handled:X-Bm-Transport-Timestamp;
-	bh=P/RLiHXMBlJYirhHO8F9Ebq9hhowcm31EGJVZf7sAGw=;
-	b=eFZaVQO0LzvRR2RDK+ilbBeDtG0spRho9dyPYcKc7zaDXmX+a3fdIClDX/1LD9VhhLEL
-	 qb/jvVSZbnepZ5AD1982WXHYyC4CM+X3We+j/fu5TZrW0m4V5d/iPdYsgwPwGGSBbubRS
-	 0zulAlx8URms/es7XeiVHi7tvaSpw9FrU5OZIHfg8rnu2hKiN3IrXvtjkV4zCLWHaYsX1
-	 lGf3+/x5VnmkuL5V3rJGg9w2QPBbLZukyz7japFMNS5oQFaSjK2ew6WvKx4TJgx/8nkoq
-	 +S6sjB7D6WNNaRd/vYsRWSwqAPrTd2r7x/4KrTRTtqdGzHkFi9w5gPujKJOFFAWQhAw==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=vates.tech header.i=@vates.tech header.a=rsa-sha256 header.s=selector1 header.b=QfuhEHFN;
-	dmarc=pass header.from=vates.tech;
-	spf=pass smtp.mailfrom=swg.vates.tech;
-	arc=none smtp.remote-ip=185.255.28.34
-Received: from prod-mta-13-01.swg-srv.net (prod-mta-13-01.swg-srv.net [185.255.28.34])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id BDC031F01825
-	for <tools@kernel.org>; Fri, 23 Oct 2026 15:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C991606A31A
+	for <tools@linux.kernel.org>; Sun, 25 Oct 2026 18:43:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SCPHtbMD
+Received: by smtp.kernel.org (Postfix)
+	id AD3B21F01825; Sun, 25 Oct 2026 18:43:04 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.210.51
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1792953784;
+	b=vq/eeJh9bHZa59pRpIi0TOziih4J1mpFa81w1t4PaashVLHkvRANydwSMWMzq6Zd1riR
+	 bQpte2Zas+RiTa0IYO2+94/aNKSJRyT1p4QgAWYD/5WNwdiFPYhEjQ8072GGvTxTPcFAS
+	 4amjets0LCZgXpgulkKLugX+pGi8tRymW8q2Pvz8VSY/3j+41mEw9xJ8LFdOTljuby8yk
+	 3TAl5UCxSmDuhc92OG08xMmk5RImx/y/49ELuWoACx6FDYwAnNki9CXqdlOSTJ4bSWARp
+	 KsP/Ruw6KrNo7Wfwkfa59Xggw1hM2D4SYKpMetvmsdgammgOz/ULq/Kiqwm7B+w5eAA==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1792953784;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=Gn+Yl+0RnRqOKnBOhbDi8NXQmjsnG393oVpvLnPerUE=;
+	b=QdwC5ztwd0TZFV+UaYj8gyYJ5/mY4HE7RwfF5+i91QfKTxUefyjcF1XjfJeFCtIDwhuK
+	 XE+WR5Pmmyy3utlJaYbBRkomYdhm+TxyvTuMOUEPWfpAbzRVdvIgoRmXI+hmigo0Acl/z
+	 qLMJQu8JIraPupEZAWL7IuRs0CUTVO8lxczHDvRClbyxpmxzdTqY0GwuY43xuv//nDNYs
+	 oSQoCEO1KyFxMsdTg7nizX2EMnI20k3QxgLwMDJYkdyA6p7oqHhlIivSjyH9g2egedphA
+	 YPeSFBniuuVTBDSGPO8xb7f/Nw0s/RLMTBz7Ak7loL3Y4OUWgbitQc0Fs8z9CLGMLUA==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SCPHtbMD;
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=209.85.210.51
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 68E2D1F031E1
+	for <tools@kernel.org>; Sun, 25 Oct 2026 18:43:03 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=vates.tech header.i=@vates.tech header.a=rsa-sha256 header.s=selector1 header.b=QfuhEHFN
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org BDC031F01825
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=vates.tech
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=swg.vates.tech
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech;
- q=dns/txt; s=selector1; bh=P/RLiHXMBlJYirhHO8F9Ebq9hhowcm31EGJVZf7sAGw=;
- h=from:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:feedback-id;
- b=QfuhEHFNNJmmM6ZAGuQu4Cb9ZDGatOJNnMY/UN+7FBfzKr3iiBeKwCdeVm6Ymo+t8S1+1I0FV
- Inx1VNlEjYbyCzYOZhzJEGGyaZaXkW3bs7vnvy5gf4xW1ZAPHagw/GAmlKkHC0to2Ar28Uj1kZB
- 5FYHtV1Mt759iYmxloYGK73v3M5aCXLJLZFg/p37yY+swLSF5NkThvbstxhul9U+z+iWD9LNWAN
- JV1KC1ZHL8Xvz8YqADIjKYdxZrfOjq4JCx55K9lvQNcS3yCUJPv584cb0ogkML797lfmg6KaFRu
- vaCGwUaCaxvFcuoJA0jyWKQkr51WQ//kKmeJh826rfRQ==
-Received: from mail2.vates.fr ([37.26.189.201] mail2.vates.fr)
- (Authenticated sender: 8631fc262581453bbf619ec5b2062170/smtp/7773de5a-2839-4720-82ee-e06722ae1d3e)
- by prod-mta-13-01.swg-srv.net (ZoneMTA - prod-mta-13) with ESMTPSA id 1a1695fb28e000f79f.001
- for <tools@kernel.org>
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
- Fri, 23 Oct 2026 15:27:21 +0000
-X-Zone-Loop: c5c9c36f900edb9971423e3ba75807573aa879e1b10a
-x-campaign-type: default
-x-transaction-id: 00a3e38b-d917-457f-9372-3f2e4a003dd7
-x-swg-uid: 01-a726fe79-e6d2-44b4-90b1-1cec61742cc9
-X-Mailer: Sweego
-Message-ID:
- <1792769241.8631fc262581453bbf619ec5b2062170.1a1695fb28e000f79f@vates.tech>
-x-swg-bid: 1792769241.8631fc262581453bbf619ec5b2062170.1a1695fb28e000f79f
-Feedback-ID: default:8631fc262581453bbf619ec5b2062170:Sweego
-x-campaign-id: default
-x-client-id: 8631fc262581453bbf619ec5b2062170
-Received: from [192.168.1.37] (lfbn-gre-1-371-96.w90-112.abo.wanadoo.fr [90.112.87.96])
-	(Authenticated sender: baptiste.le-duc)
-	by mail2.vates.fr (Postfix) with ESMTPSA id CCEB6800CF;
-	Fri, 23 Oct 2026 17:27:20 +0200 (CEST)
-From: Baptiste Le Duc <baptiste.le-duc@vates.tech>
-Date: Fri, 23 Oct 2026 17:27:10 +0200
-Subject: [PATCH b4] review: send what was added since the last review send
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SCPHtbMD
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 68E2D1F031E1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7f84a55cc06so1437145a34.2
+        for <tools@kernel.org>; Sun, 25 Oct 2026 11:43:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792953782; x=1793558582; darn=kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=Gn+Yl+0RnRqOKnBOhbDi8NXQmjsnG393oVpvLnPerUE=;
+        b=SCPHtbMDAqS+VRSQxCYOKFYmovW+kNNSYZ0rLCNCSYM6/oTcPZOZlo1qHosK7d7sQh
+         rQoLwlpbhviF6lFAz7N6VKCPYwn7/FHt/6QBV61ly/3vF2Lmqw8pTNoYee2e73phOuZO
+         TrW7qh3bYFXTXtEWUj33xZ61x/Q6tHk27euCB7LhK9U/VYK3Yxvkq0WPO1Th983DU9Fd
+         2bijZzlpV5mZ3bm4P8NqE4wMLqc4EgZlmzphlE1nmdN7S5pyPeO+HwyRKTd3Q+4VhGnb
+         7kXjMXv8bZzwMj6AxEkIcpvzkqn29+MiixFOSnXP1l1AdBU8RP0niCBFeioSC0999iQ2
+         qHjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792953782; x=1793558582;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=Gn+Yl+0RnRqOKnBOhbDi8NXQmjsnG393oVpvLnPerUE=;
+        b=HvUJiQkxecPfnR4GH2Zc1qF9MwQxN8bAvF0pk8ysFAgV+xSJjx4zwJzOPjp+yKFsux
+         skpJhT+u0wIahDb3KmM31IZ2rnrtnNhPWZGHXeM14aD5dG4q+A/CPOkPa3S5cMldJUIP
+         WVE6F72PXDh6TzQMGuYGqtivcXNkrISI9UQ0d2QW9No0edMG+1bSaAgLvgU+J7qXbBis
+         PqJxip+l/Fhz6DksxdOB/JBTjHgw1aAPylbhp+WUlF7abeg7p5UC3x+ljP4+PJScq1MC
+         PBTJ0glP37ZSkZnYssbntlt8zjgNZB+iD6DR5k93aYESU0rHhvb8wXdV96XsTxEb2Pk8
+         gvjQ==
+X-Gm-Message-State: AFq9FYK9w6kJjvuEMJhKtUCp6LAA/DgFqNyb5yXTP1uc7BFg46Atit3g
+	XNOLqyDxV7Nba0Hh3IxwxEJ0H4MPSoDPXkT0xYVc8fKc6cSLpfZ7LW2J
+X-Gm-Gg: AYBFou1Hs7fzsJFeP5/HnTQ10OVFnR8xMJOntcpwsu7s5O9Q6QK0MUmF7toeu4EeH+w
+	iAqY4V5FBEPm0fmaMIT1TiB1lxk97zMhC7I1eQYGSsHHSBLdFJhnDVkpiQxuaioMt1Xo8DLVkhT
+	37IE9Ri7umQXex6j3ZD5eXQQfUxteukBB1P+uEgO5euLzlSEzCPhbgxSaeVUPb9OIRa4C4Cvlxe
+	9nHVd1StDFJnt8nqbHawQjscvg0llic1tEkUIb2eq3Xo9orNNUXBpCKeKqVXY/skyLUZig+fYw9
+	QGKLGSvGgJhKQVrAXd/fu5j86Cki4pABFnjuKjOzvfGMKm+szWoBPplVPRNqgrZYXZzPx4qrVI/
+	zzRKRHF5as6226yQ0E/ghvBVpa1ApbVIuYnXlPkS9FW56Td/SrMwdGE0u16QpMz4bs5JnmUA6wA
+	FrrJrK4AD+ce6eE++swJ1cnbrkicS284x23YVYpcazTcYps8oZM4E4ngVCjY8jO2sxOxCsqYdRG
+	CeEiVoTpuhMypp2pcKtCHgl4IvHPqoNyQNWVyrmw4ZFxCidC5XSF6us/jSW9Jnt/PUNFJhTkolV
+	eVgmTroehAPGUljs+Gdgxa/GWBHXo1pVGnm2jlR6tq+GoljQk7KwnCB7zIuQLszeVuubiX9InLz
+	JZXhIWUpSorCCLJRrKSGrCrCM4FboFBO71rmHvOGjmrRE/Sa4uGmaz4f0wLOyQCzfCcpSt8C9y+
+	mYmB8gxdjjXh4ZLMfmCLgsea3w
+X-Received: by 2002:a05:6830:6ecc:b0:845:8d86:9f7f with SMTP id 46e09a7af769-850fda46f4cmr3053619a34.8.1792953782180;
+        Sun, 25 Oct 2026 11:43:02 -0700 (PDT)
+Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-850fbb25f59sm5433787a34.20.2026.10.25.11.43.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Oct 2026 11:43:01 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Sun, 25 Oct 2026 12:42:50 -0600
+Subject: [PATCH kgl] Preserve original dates when importing messages over
+ IMAP
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -114,420 +127,245 @@ List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/zWMywqDMBAAf0X23FATRWx/pXjIY9UtNSm79gHiv
- zdp6XGGYTYQZEKBc7UB45OEUsygDxX42cYJFYXMYGrT6do0qkT4UoIxqJHTom5W1r/tQ6v1qfc
- Ouwby4s440vu7v4BrYfg5ebgr+rV8S+WsoHJso5+LSkwTxeOSv8iw7x+UBKkJpAAAAA==
-X-Change-ID: 20261023-review-send-from-last-review-8d41198cbe63
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261025-submit-imap-preserve-date-v1-v1-1-91ac2f5b502e@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMwQrCMBAE0F8pc3ahWUxBf0U8xHZTV20tSQxC6
+ b+76nGGmbciS1LJODYrklTN+pwtuF2D/hrmUUgHy+CWO9eyp/y6TFpIp7DQksTuVWgIRag6ip6
+ D59h5PuxhhA2ivn/8CffxgfO/NOQmffnC2LYPrp25f4UAAAA=
+X-Change-ID: 20261025-submit-imap-preserve-date-v1-f52a52f65294
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Baptiste Le Duc <baptiste.le-duc@vates.tech>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792769235; l=17380;
- i=baptiste.le-duc@vates.tech; s=20260810; h=from:subject:message-id;
- bh=SnNxtIZiW6ofMXVjoP+MkRL2W8pQthJEl+V1FaBVEoA=;
- b=nEP0yile6TgdF3UMUohuIcEGLIsxTyPFrZZnrLz31kjsn90gbY9zs6HVqAdBFkoG2zDKIeF7P
- TWoD96ZAWmkBtdsrG2O+lRwTPR74amyhASzTUljmevD8gYw4iGvOf89
-X-Developer-Key: i=baptiste.le-duc@vates.tech; a=ed25519;
- pk=N+BbdvMXRzrCuX/ieh4RWodiAKcLNvI+KjflcZ0oXCo=
-X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
-X-Bm-Transport-Timestamp: 1792769240917
+ James Hilliard <james.hilliard1@gmail.com>
+X-Mailer: b4 0.15.2
 
-Once a review was sent, every review in the series was stamped with
-sent-revision and collect_review_emails() skipped it for good. A
-comment or trailer added afterwards on the same revision was kept in
-the tracking data but never sent, and the TUI only said "No review
-data to send.", so there was no way to follow up on a patch.
+IMAP APPEND currently omits its optional timestamp, so the server assigns
+the import time even when the message has a valid Date header. Archived
+messages consequently appear as newly received in clients that sort by
+INTERNALDATE, including the Gmail web interface.
 
-Record what each send carried in a 'sent' entry, reuse sent-revision,
-and make _build_review_email() send only the trailers and comments
-added since.
+Supply the timestamp from Date, falling back to the first parseable
+Received timestamp in header order and then Delivery-date. Interpret dates
+without a known timezone as UTC, consistently with the digest parser.
+Retain the server-time fallback when none of these headers is usable.
+Leave mbox separator dates out because public-inbox exports may use a
+synthetic epoch timestamp.
 
-The reply buffer is sent exactly as written, so it cannot be cut down
-to what is new. Instead, move a sent reply out of the review into
-sent['replies']: the next edit then starts from a fresh buffer, where
-the comments already sent are shown read-only like other reviewers'
-ones, and only what is typed now is sent. The sent comments and
-trailers are kept in the review, and the sent replies still show in
-the prior review context built on upgrade.
+Add regression coverage for header precedence, timezone offsets, folded
+headers, malformed dates, fallback selection and synthetic mbox separators.
+Check that choosing an APPEND date leaves the delivered message unchanged.
 
-A review sent by an older b4 has sent-revision but no sent entry, so
-what went out is unknown: keep skipping it. On send, the TUI says so in
-place of "No review data to send." when nothing else is left, or warns
-that those reviews are not resent alongside the others.
-
-Update unit tests accordingly: TestCollectReviewEmails mocks
-_build_review_email(), which now holds the filtering, so make the mock run
-_review_to_send() for the existing sent-revision tests to still check that
-sent reviews are skipped. Add tests checking that a comment added after a
-send goes out alone, and that a reply edited after a send only carries
-the new comment.
-
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Baptiste Le Duc <baptiste.le-duc@vates.tech>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
- src/b4/review/__init__.py        |  6 ++++
- src/b4/review/_review.py         | 72 +++++++++++++++++++++++++++++++++++-----
- src/b4/review/tracking.py        |  3 +-
- src/b4/review_tui/_review_app.py | 46 +++++++++++++++++--------
- src/tests/test_review.py         | 63 +++++++++++++++++++++++++++++++++--
- 5 files changed, 164 insertions(+), 26 deletions(-)
+ src/korgalore/imap_target.py |  35 +++++++++++++-
+ tests/test_imap_target.py    | 112 ++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 144 insertions(+), 3 deletions(-)
 
-diff --git a/src/b4/review/__init__.py b/src/b4/review/__init__.py
-index 5da89d4..63de534 100644
---- a/src/b4/review/__init__.py
-+++ b/src/b4/review/__init__.py
-@@ -20,6 +20,8 @@ from b4.review._review import (
-     _integrate_agent_reviews,
-     _integrate_followup_inline_comments,
-     _integrate_sashiko_reviews,
-+    _mark_review_sent,
-+    _merge_sent,
-     _normalize_line_endings,
-     _parse_reply_trailers,
-     _prepare_review_session,
-@@ -28,6 +30,7 @@ from b4.review._review import (
-     _resolve_comment_positions,
-     _resolve_message_positions,
-     _retrieve_messages,
-+    _review_to_send,
-     _set_patch_state,
-     _strip_note_footer,
-     _strip_subject,
-@@ -67,6 +70,9 @@ __all__ = [
-     '_sync_reply_trailers',
-     'TRAILER_MENU_NAMES',
-     '_build_review_email',
-+    '_review_to_send',
-+    '_mark_review_sent',
-+    '_merge_sent',
-     '_integrate_agent_reviews',
-     '_extract_comments_from_quoted_reply',
-     '_integrate_sashiko_reviews',
-diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index b69a7f0..147ed2c 100644
---- a/src/b4/review/_review.py
-+++ b/src/b4/review/_review.py
-@@ -6,6 +6,7 @@
- __author__ = 'Konstantin Ryabitsev <konstantin@linuxfoundation.org>'
+diff --git a/src/korgalore/imap_target.py b/src/korgalore/imap_target.py
+index ec645e8..9065512 100644
+--- a/src/korgalore/imap_target.py
++++ b/src/korgalore/imap_target.py
+@@ -2,6 +2,8 @@
  
- import argparse
-+import copy
- import datetime
- import email.message
- import email.utils
-@@ -1051,7 +1052,11 @@ def _get_patch_state(target: Dict[str, Any], usercfg: b4.ConfigDictT) -> str:
-         return 'draft'
-     if trailer_keys & _APPROVAL_TRAILER_KEYS:
-         return 'done'
--    if review.get('comments') or review.get('reply', ''):
-+    if (
-+        review.get('comments')
-+        or review.get('reply', '')
-+        or review.get('sent', {}).get('replies')
-+    ):
-         return 'draft'
-     my_email = str(usercfg.get('email', ''))
-     # Auto-detect a review I already sent to the list before tracking this
-@@ -2090,8 +2095,10 @@ def _render_quoted_diff_with_comments(
-     # External comments: (text, attribution, provenance) — rendered with | prefix.
-     entries: List[Tuple[Dict[str, Any], str, str]] = []
-     if my_email in all_reviews:
-+        sent = all_reviews[my_email].get('sent', {}).get('comments', [])
-         for c in all_reviews[my_email].get('comments', []):
--            entries.append((c, '', ''))
-+            # Already sent: show it read-only so it is not sent again
-+            entries.append((c, f'<{my_email}> (sent)' if c in sent else '', ''))
-     for addr in sorted(all_reviews):
-         if addr == my_email:
-             continue
-@@ -3746,6 +3753,10 @@ def _build_review_email(
+ import imaplib
+ import logging
++from datetime import UTC
++from email.utils import parsedate_to_datetime
+ from pathlib import Path
+ from typing import Any, cast
  
-     Returns None if there is nothing to send.
-     """
-+    to_send = _review_to_send(review)
-+    if to_send is None:
-+        return None
-+    review = to_send
-     trailers = review.get('trailers', [])
-     reply_text = review.get('reply', '')
-     comments = review.get('comments', [])
-@@ -3905,6 +3916,55 @@ def _build_review_email(
-     return msg
+@@ -12,6 +14,32 @@ from korgalore.oauth2_imap import DEFAULT_CLIENT_ID, ImapOAuth2Authenticator
+ logger = logging.getLogger('korgalore')
  
  
-+def _review_to_send(review: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-+    """Return what of *review* is left to send, or None if it was sent.
-+
-+    ``sent`` holds what earlier sends carried, so only the trailers and
-+    comments added since are returned; with no ``sent``, the whole review
-+    is.  A sent reply is moved out of the review, so any reply left is new.
-+    """
-+    if 'sent' not in review and review.get('sent-revision'):
-+        # Sent by a b4 that did not record what went out
-+        return None
-+    sent = review.get('sent', {})
-+    to_send = dict(review)
-+    to_send['trailers'] = [
-+        t for t in review.get('trailers', []) if t not in sent.get('trailers', [])
-+    ]
-+    to_send['comments'] = [
-+        c for c in review.get('comments', []) if c not in sent.get('comments', [])
-+    ]
-+    return to_send
-+
-+
-+def _mark_review_sent(review: Dict[str, Any], revision: int) -> None:
-+    """Record what a send of *review* carried, see _review_to_send().
-+
-+    The reply is moved to ``sent``, so that the next edit starts from a
-+    fresh buffer and does not send the same text again.
-+    """
-+    review['sent-revision'] = revision
-+    replies = review.get('sent', {}).get('replies', [])
-+    replies = replies + [r for r in [review.pop('reply', '')] if r]
-+    review['sent'] = copy.deepcopy(
-+        {
-+            'trailers': review.get('trailers', []),
-+            'comments': review.get('comments', []),
-+            'replies': replies,
-+        }
-+    )
-+
-+
-+def _merge_sent(review: Dict[str, Any], key: str, items: List[Any]) -> List[Any]:
-+    """Return the sent *key* items of *review* followed by the new *items*.
-+
-+    A reply buffer edited after a send only holds what is new, so this
-+    keeps the sent trailers or comments in the review.
-+    """
-+    sent: List[Any] = review.get('sent', {}).get(key, [])
-+    return sent + [i for i in items if i not in sent]
-+
-+
- def collect_review_emails(
-     series: Dict[str, Any],
-     patches: List[Dict[str, Any]],
-@@ -3923,11 +3983,7 @@ def collect_review_emails(
- 
-     # Cover letter review (maintainer only)
-     cover_review = series.get('reviews', {}).get(my_email, {})
--    if (
--        cover_review
--        and cover_review.get('patch-state') != 'skip'
--        and cover_review.get('sent-revision') is None
--    ):
-+    if cover_review and cover_review.get('patch-state') != 'skip':
-         msg = _build_review_email(series, None, cover_review, cover_text, topdir, None)
-         if msg is not None:
-             msgs.append(msg)
-@@ -3937,8 +3993,6 @@ def collect_review_emails(
-         patch_review = patch_meta.get('reviews', {}).get(my_email, {})
-         if not patch_review or patch_review.get('patch-state') == 'skip':
-             continue
--        if patch_review.get('sent-revision') is not None:
--            continue
-         commit_sha = commit_shas[idx] if idx < len(commit_shas) else None
-         msg = _build_review_email(
-             series, patch_meta, patch_review, cover_text, topdir, commit_sha
-diff --git a/src/b4/review/tracking.py b/src/b4/review/tracking.py
-index 57fd141..e186a67 100644
---- a/src/b4/review/tracking.py
-+++ b/src/b4/review/tracking.py
-@@ -2918,7 +2918,8 @@ def render_prior_review_context(
-         """Render a single reviewer's feedback for one patch or cover letter."""
-         out: List[str] = []
-         note = review.get('note', '').strip()
--        reply = review.get('reply', '').strip()
-+        replies = review.get('sent', {}).get('replies', []) + [review.get('reply', '')]
-+        reply = '\n\n'.join(r.strip() for r in replies if r.strip())
-         trailers: List[Any] = review.get('trailers', [])
-         comments: List[Any] = review.get('comments', [])
-         if note:
-diff --git a/src/b4/review_tui/_review_app.py b/src/b4/review_tui/_review_app.py
-index 1e70bc6..643fa77 100644
---- a/src/b4/review_tui/_review_app.py
-+++ b/src/b4/review_tui/_review_app.py
-@@ -873,6 +873,7 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-                 )
-             return
- 
-+        review = b4.review._review_to_send(review) or {}
-         if not review or not (
-             review.get('trailers') or review.get('reply', '') or review.get('comments')
-         ):
-@@ -1208,7 +1209,9 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-                     reply_text, result, self._default_identity
-                 )
-                 review['reply'] = reply_text
--                trailers_now = b4.review._parse_reply_trailers(reply_text)
-+                trailers_now = b4.review._merge_sent(
-+                    review, 'trailers', b4.review._parse_reply_trailers(reply_text)
-+                )
-                 if trailers_now:
-                     review['trailers'] = trailers_now
-                 else:
-@@ -1415,18 +1418,24 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-         #
-         # _extract_editor_comments strips | lines (unadopted external
-         # comments) before parsing, so only adopted ones are kept.
--        new_comments = b4.review._extract_editor_comments(
--            reply_text,
--            diff_text=real_diff,
--            message_text=message_text,
--            basement_text=basement_text,
-+        new_comments = b4.review._merge_sent(
-+            review,
-+            'comments',
-+            b4.review._extract_editor_comments(
-+                reply_text,
-+                diff_text=real_diff,
-+                message_text=message_text,
-+                basement_text=basement_text,
-+            ),
-         )
-         if new_comments:
-             review['comments'] = new_comments
-         else:
-             review.pop('comments', None)
- 
--        trailer_strs = b4.review._parse_reply_trailers(reply_text)
-+        trailer_strs = b4.review._merge_sent(
-+            review, 'trailers', b4.review._parse_reply_trailers(reply_text)
-+        )
-         if trailer_strs:
-             review['trailers'] = trailer_strs
-         else:
-@@ -1766,9 +1775,22 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-             self._topdir,
-             self._commit_shas,
-         )
-+        legacy = None
-+        for target in [self._series] + list(self._patches):
-+            review = b4.review._get_my_review(target, self._usercfg)
-+            if review.get('patch-state') == 'skip':
++def _get_internaldate(msg: RawMessage) -> str:
++    """Choose an APPEND date from message headers, or leave it to the server."""
++    headers = list(msg.parsed.raw_items())
++    for field in ('date', 'received', 'delivery-date'):
++        for name, value in headers:
++            if name.lower() != field:
 +                continue
-+            if b4.review._review_to_send(review) is None:
-+                legacy = 'sent by an older b4 that did not record their content'
-+                break
-         if not msgs:
--            self.notify('No review data to send.')
-+            if legacy:
-+                self.notify(f'Nothing new to send: reviews were {legacy}.')
-+            else:
-+                self.notify('No review data to send.')
-             return
-+        if legacy:
-+            self.notify(f'Not resending reviews {legacy}.', severity='warning')
++            date_value = value
++            if field == 'received':
++                # Received headers are newest first; the date follows the last ';'.
++                _, separator, date_value = value.rpartition(';')
++                if not separator:
++                    continue
++            try:
++                date = parsedate_to_datetime(date_value)
++                # Treat dates without a known timezone as UTC, as in digests.
++                if date.tzinfo is None:
++                    date = date.replace(tzinfo=UTC)
++                return imaplib.Time2Internaldate(date)
++            except (OverflowError, TypeError, ValueError):
++                continue
++    # Public-inbox mbox separators can carry a dummy epoch date, not a receipt time.
++    logger.debug('No usable message date, using server time for IMAP APPEND')
++    return ''
++
++
+ class ImapTarget:
+     """Target for delivering messages to IMAP mail servers."""
  
-         def _on_send_confirmed(confirmed: Optional[bool]) -> None:
-             if not confirmed:
-@@ -1805,16 +1827,14 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
+@@ -283,10 +311,13 @@ class ImapTarget:
+             logger.debug('Skipping import: message %s already in folder %s', msg.message_id, effective_folder)
+             return {'skipped': True}
+ 
++        # Preserve the message date instead of sorting archived mail by import time.
++        date_time = _get_internaldate(msg)
++
+         try:
+             # Append message to folder
+             # flags: empty string = no flags set (message will be unread)
+-            # date_time: empty string = use current time (imaplib doesn't accept None)
++            # date_time: empty string falls back to server time
              try:
-                 self._reply_sent = True
-                 self._tracking['series']['status'] = 'replied'
--                # Stamp sent-revision on every non-skip review so that
--                # if this series is later upgraded to a newer revision,
--                # the upgrade step can detect which reviews were already
--                # sent and auto-skip the unchanged patches.
-+                # Record what every non-skip review carried, so that the
-+                # next send only carries what is added since.
-                 my_email = str(self._usercfg.get('email', 'unknown@example.com'))
-                 current_rev = int(self._series.get('revision', 1))
-                 for target in [self._series] + list(self._patches):
-                     review = target.get('reviews', {}).get(my_email, {})
-                     if review and review.get('patch-state') != 'skip':
--                        review['sent-revision'] = current_rev
-+                        b4.review._mark_review_sent(review, current_rev)
-                 if not self._save_tracking():
-                     # Silence here means the next session offers these reviews
-                     # as unsent and the maintainer sends them twice.
-diff --git a/src/tests/test_review.py b/src/tests/test_review.py
-index e40dd35..f29ec58 100644
---- a/src/tests/test_review.py
-+++ b/src/tests/test_review.py
-@@ -4146,9 +4146,15 @@ class TestGetLoreSeriesVersionMismatch:
- # -- Tests for collect_review_emails() ----------------------------------------
+                 # imaplib type stubs are incomplete - append returns (str, list[Any])
+                 typ, data = cast(
+@@ -294,7 +325,7 @@ class ImapTarget:
+                     imap.append(
+                         effective_folder,
+                         '',  # No flags (empty string)
+-                        '',  # Use current time (empty string for default)
++                        date_time,
+                         msg.as_bytes(feed_name, delivery_name),
+                     ),
+                 )
+diff --git a/tests/test_imap_target.py b/tests/test_imap_target.py
+index cd886f6..f32dcf7 100644
+--- a/tests/test_imap_target.py
++++ b/tests/test_imap_target.py
+@@ -229,7 +229,7 @@ class TestImapTargetImportMessage:
+             mock_imap.append.assert_not_called()
  
- 
--@mock.patch(
--    'b4.review._review._build_review_email', return_value=mock.sentinel.email_msg
--)
-+def _fake_review_email(_series: Any, _patch: Any, rev: Dict[str, Any], *_: Any) -> Any:
-+    """Stand in for _build_review_email(), keeping its filtering of what was sent."""
-+    to_send = review._review_to_send(rev)
-+    if to_send and (to_send['trailers'] or to_send['comments']):
-+        return mock.sentinel.email_msg
-+    return None
-+
-+
-+@mock.patch('b4.review._review._build_review_email', side_effect=_fake_review_email)
- @mock.patch(
-     'b4.get_user_config',
-     return_value={'name': 'Maintainer', 'email': 'maintainer@example.com'},
-@@ -4269,6 +4275,57 @@ class TestCollectReviewEmails:
+     def test_import_success(self, connected: tuple[ImapTarget, MagicMock]) -> None:
+-        """Message is appended with no flags, current time and normalized line endings."""
++        """A message without Date uses server time and normalized line endings."""
+         target, mock_imap = connected
+         mock_imap.append.return_value = ('OK', [b'[APPENDUID 1234 5678]'])
+         raw_message = b'From: test@example.com\nSubject: Test\n\nBody'
+@@ -247,6 +247,116 @@ class TestImapTargetImportMessage:
+             RawMessage(raw_message).as_bytes(),
          )
-         assert len(msgs) == 1
  
-+    def test_sends_only_comments_added_after_send(
-+        self, _cfg: mock.Mock, _build: mock.Mock
++    @pytest.mark.parametrize(
++        ('date_header', 'internaldate'),
++        [
++            ('Sun, 25 Oct 2026 05:10:03 +0000 (GMT)', '"25-Oct-2026 05:10:03 +0000"'),
++            ('Sun, 25 Oct 2026 10:40:03 +0530', '"25-Oct-2026 10:40:03 +0530"'),
++            ('Sat, 24 Oct 2026 22:10:03 -0700', '"24-Oct-2026 22:10:03 -0700"'),
++            ('Sun, 25 Oct 2026\n 05:10:03 +0000', '"25-Oct-2026 05:10:03 +0000"'),
++            ('Sun, 25 Oct 2026 05:10:03 -0000', '"25-Oct-2026 05:10:03 +0000"'),
++            ('Sun, 25 Oct 2026 05:10:03', '"25-Oct-2026 05:10:03 +0000"'),
++        ],
++        ids=['utc-comment', 'positive-offset', 'negative-offset', 'folded', 'unknown-zone', 'no-zone'],
++    )
++    def test_import_preserves_message_date(
++        self, connected: tuple[ImapTarget, MagicMock], date_header: str, internaldate: str
 +    ) -> None:
-+        """A comment added after a send goes out alone in a second email."""
-+        old = {'path': 'a.c', 'line': 1, 'text': 'old'}
-+        new = {'path': 'a.c', 'line': 2, 'text': 'new'}
-+        my_review = self._review(comments=[old])
-+        review._mark_review_sent(my_review, 1)
-+        series = self._make_series()
-+        patch = self._make_patch({self.MY_EMAIL: my_review})
-+        assert (
-+            review.collect_review_emails(series, [patch], 'cover', '', ['sha1']) == []
-+        )
-+        my_review['comments'].append(new)
-+        msgs = review.collect_review_emails(series, [patch], 'cover', '', ['sha1'])
-+        assert len(msgs) == 1
-+        to_send = review._review_to_send(my_review)
-+        assert to_send is not None
-+        assert to_send['comments'] == [new]
-+        assert to_send['trailers'] == []
++        """Date takes precedence over receipt time without rewriting the message."""
++        target, mock_imap = connected
++        raw_message = (
++            'From: test@example.com\n'
++            'Received: by mx.example.com; Sun, 25 Oct 2026 05:10:06 +0000\n'
++            f'Date: {date_header}\n'
++            'Delivery-date: Sun, 25 Oct 2026 05:10:10 +0000\n\nBody'
++        ).encode()
 +
-+    def test_reply_edited_after_send_carries_only_new_text(
-+        self, _cfg: mock.Mock, _build: mock.Mock
++        target.import_message(raw_message, [])
++
++        mock_imap.append.assert_called_once_with('INBOX', '', internaldate, RawMessage(raw_message).as_bytes())
++
++    @pytest.mark.parametrize(
++        'date_header',
++        [
++            '',
++            'not a date',
++            'Sun, 32 Oct 2026 05:10:03 +0000',
++            'Sun, 25 Oct 2026 25:10:03 +0000',
++            'Sun, 25 Oct 2026 05:10:03 +2500',
++            'Sun, 25 Oct 2026 05:10:03 +99999999999999999999',
++        ],
++        ids=['empty', 'malformed', 'invalid-day', 'invalid-hour', 'invalid-offset', 'overflow'],
++    )
++    @pytest.mark.parametrize('has_received', [False, True], ids=['server-time', 'received-time'])
++    def test_import_invalid_date_falls_back(
++        self, connected: tuple[ImapTarget, MagicMock], date_header: str, has_received: bool
 +    ) -> None:
-+        """A sent reply is not sent again when the buffer is edited later."""
-+        diff = (
-+            'diff --git a/a.c b/a.c\n'
-+            '--- a/a.c\n'
-+            '+++ b/a.c\n'
-+            '@@ -1,2 +1,2 @@\n'
-+            '+one\n'
-+            '+two\n'
++        """An unusable Date header must not prevent message delivery."""
++        target, mock_imap = connected
++        raw_message = f'From: test@example.com\nDate: {date_header}\n'.encode()
++        if has_received:
++            raw_message += b'Received: by mx.example.com; Sun, 25 Oct 2026 05:10:06 +0000\n'
++        raw_message += b'\nBody'
++
++        target.import_message(raw_message, [])
++
++        expected = '"25-Oct-2026 05:10:06 +0000"' if has_received else ''
++        mock_imap.append.assert_called_once_with('INBOX', '', expected, RawMessage(raw_message).as_bytes())
++
++    @pytest.mark.parametrize(
++        ('received_headers', 'internaldate'),
++        [
++            (
++                'Received: by last.example.com; Sun, 25 Oct 2026 05:10:06 +0000\n'
++                'Received: by first.example.com; Sun, 25 Oct 2026 05:10:04 +0000\n',
++                '"25-Oct-2026 05:10:06 +0000"',
++            ),
++            (
++                'Received: by last.example.com; invalid\n'
++                'Received: by first.example.com; Sun, 25 Oct 2026 05:10:04 +0000\n',
++                '"25-Oct-2026 05:10:04 +0000"',
++            ),
++            (
++                'Received: from sender.example.com\n by mx.example.com;\n Sun, 25 Oct 2026 10:40:06 +0530\n',
++                '"25-Oct-2026 10:40:06 +0530"',
++            ),
++            (
++                'Received: Sun, 25 Oct 2026 05:10:06 +0000\n',
++                '"25-Oct-2026 05:10:10 +0000"',
++            ),
++            ('Received: by mx.example.com; invalid\n', '"25-Oct-2026 05:10:10 +0000"'),
++            ('', '"25-Oct-2026 05:10:10 +0000"'),
++        ],
++        ids=['latest-received', 'skip-invalid-received', 'folded', 'no-semicolon', 'invalid', 'absent'],
++    )
++    def test_import_receipt_date_fallbacks(
++        self, connected: tuple[ImapTarget, MagicMock], received_headers: str, internaldate: str
++    ) -> None:
++        """Use the first valid Received timestamp before trying Delivery-date."""
++        target, mock_imap = connected
++        raw_message = (
++            f'From: test@example.com\nDelivery-date: Sun, 25 Oct 2026 05:10:10 +0000\n{received_headers}\nBody'
++        ).encode()
++
++        target.import_message(raw_message, [])
++
++        mock_imap.append.assert_called_once_with('INBOX', '', internaldate, RawMessage(raw_message).as_bytes())
++
++    def test_import_ignores_dummy_mbox_date(self, connected: tuple[ImapTarget, MagicMock]) -> None:
++        """The archive's synthetic mbox separator is not a fallback date."""
++        target, mock_imap = connected
++        raw_message = (
++            b'From mboxrd@z Thu Jan  1 00:00:00 1970\n'
++            b'From: test@example.com\n'
++            b'Date: invalid\n'
++            b'Received: by mx.example.com; invalid\n'
++            b'Delivery-date: invalid\n\nBody'
 +        )
-+        old = {'path': 'b/a.c', 'line': 1, 'text': 'old'}
-+        my_review = self._review(comments=[old], reply='> +one\n\nold\n')
-+        review._mark_review_sent(my_review, 1)
-+        assert 'reply' not in my_review
-+        assert my_review['sent']['replies'] == ['> +one\n\nold\n']
 +
-+        reviews = {self.MY_EMAIL: my_review}
-+        text = review._render_quoted_diff_with_comments(diff, reviews, self.MY_EMAIL)
-+        assert '| old' in text
-+        text = text.replace('> +two\n', '> +two\n\nnew\n')
-+        new = review._extract_editor_comments(text, diff_text=diff)
-+        assert [c['text'] for c in new] == ['new']
-+        my_review['comments'] = review._merge_sent(my_review, 'comments', new)
-+        assert [c['text'] for c in my_review['comments']] == ['old', 'new']
-+        to_send = review._review_to_send(my_review)
-+        assert to_send is not None
-+        assert [c['text'] for c in to_send['comments']] == ['new']
++        target.import_message(raw_message, [])
 +
- 
- def _cron_args(**kwargs: Any) -> argparse.Namespace:
-     defaults: Dict[str, Any] = {
++        mock_imap.append.assert_called_once_with('INBOX', '', '', RawMessage(raw_message).as_bytes())
++
+     @pytest.mark.parametrize(
+         ('folder', 'subfolder', 'expected'),
+         [
 
 ---
-base-commit: ce4c1158edb292caca0ce4a6087e5edecc1b0371
-change-id: 20261023-review-send-from-last-review-8d41198cbe63
+base-commit: ea22e7c8701e566328f197c748718cd689f9ea28
+change-id: 20261025-submit-imap-preserve-date-v1-f52a52f65294
 
 Best regards,
 --  
-Baptiste Le Duc <baptiste.le-duc@vates.tech>
+James Hilliard <james.hilliard1@gmail.com>
 
