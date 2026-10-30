@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793368068;
-	b=vvy+WF0tfDlHqdGbNjIjAS1QbTNf8C6qfY+NIj7q6AlGj5i1TE0hcIrHE67Ql0VI2esb
-	 WV8o6zCDg5AwPbt8hCly5bmhjs9GLwTUZNxryBTHU1echzu3e7i3s/NIHm9r64oWuuw63
-	 PuPVLEMyhvSYXYOaj8nyi/aNjdZOLTQQtM32YCrBQAh7xPl0DKOE+03qmAN3/FvZhtQgR
-	 wlM8SfAKYhbjI9187Ae5bSgeYfQEW/w6YnPHCq7Cu/5I3yzpAfN2W9QWxeUP4b97q7/51
-	 Zv4ZuxQ9ThI3tnLGN2S8Z6e9riGCSLTyTYlFKypEPlIkof97X+SoBli35GNrm6rfnXg==
+	b=pL/OPx1ywDstBAC0W4FXxwQEyWk10vxK542ZzYWkcmjXI0+YH+6AUl3BTKwJbg6Sd3Y2
+	 /Zdz7zykRTix8UHEefVtd9yd6yji7bRlGsrLv2jTrE46q7dwBvH5CNwj2dHVPuTQcXtkg
+	 krv1gQY1aU39K2W0eRMR4yFCJwUPDkgOygoaLOJDOIyhVihtOQ9JrR3JwAGJy+0AZ+GaL
+	 EfyfM7vi82AwXtj9LN1QfBxHuiZbK6rfhNMpXieUHCjCMBOKnVK2YEzHXZspiIBkSBs1C
+	 jzd/pFn7Q1MAVPFcNzcCW+O2otSFTxVIUrJRz7FmvuwTBySMoybI+IKH6LZ3WnEqA/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793368068;
 	h=Received:Delivered-To:Received:DKIM-Signature:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=NtR5jR3EiQfUEaYLcYkOXYr7FrcOJqZ9iBSHcP4AWSQ=;
-	b=pK8CLXoU/Q586tPSHG1OrYW3PCLPHMpIwfZmB6HH0svYAw+Lh5E1Bbx/xInl9BSJDr/z
-	 FcLsk63Cx2WzmEySt6GtNUWsm5eZwY9e7SJwC8RKfkMnoPQ0nsI5Kv7KLeBAmx4pRt9jE
-	 D3CO+5uGYumrnLyXaW6Bqf1V3N56DSJD1FcBvuyH1iQAlfaBWajic+2L0OPDNB21gNOhp
-	 dGjhAAeoVeOzLuWgbHoHk/WrIG+nGwTGLe/DHb7HfQt1Ndy2G1iP0oQNWlX0jlKbUaIr0
-	 jTn2ftKpDik/44BLJESwmr7QFbWc7s7htlUZ0iCpfTgngJ3f2RQZYvgDSnAJRKznd4g==
+	bh=gSyoQRVRWq3nJPZlOOvIXW35/8rRdHczQvRCI5n++Rc=;
+	b=vv3TdMIe0Zlwjcwk722oh+Sc2h0X0ZjEQffLMbPSwu2SQp7U0X04yhLYdcIAn87D/8fx
+	 L+q4nJdAmaYCxuT3EE5d1YbzEJpdGJu6zjyufABlLiohtTbq7yqiFtmObdtRaY2tdDlaX
+	 s4z4ZSy++S5DPtGzxeQlKS+x3KZn2GlRKP3sbyT84mbooJsnAUZGj1FwLTLKLJeHvoSkb
+	 +tCXjI3HrVit9m7cEMvYOLrz2o9V7SMknTx9J/weIrFb8ChbS8yruRhFW/oq+KD+SX4u0
+	 1zvcXiXKyQ2/IXsa4RMMqY4hxy284bk8EitGAm+xhepY8R/yXa0z6z4CXs86XahlOXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KGQlJWmJ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=osyLmZ2l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C3D606A31C
-	for <tools@linux.kernel.org>; Fri, 30 Oct 2026 13:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343F3606A31C
+	for <tools@linux.kernel.org>; Fri, 30 Oct 2026 13:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KGQlJWmJ
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=osyLmZ2l
 Received: by smtp.kernel.org (Postfix)
-	id 6CA721F00A02; Fri, 30 Oct 2026 13:47:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68EB1F0093A;
-	Fri, 30 Oct 2026 13:47:46 +0000 (UTC)
+	id 26E8F1F00A02; Fri, 30 Oct 2026 13:47:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944BE1F0093A;
+	Fri, 30 Oct 2026 13:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793368067;
-	bh=NtR5jR3EiQfUEaYLcYkOXYr7FrcOJqZ9iBSHcP4AWSQ=;
+	s=k20260515; t=1793368068;
+	bh=gSyoQRVRWq3nJPZlOOvIXW35/8rRdHczQvRCI5n++Rc=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=KGQlJWmJUxL/rMl3pjM6yH3v1W8dg/gx9iqg4NhyWuNd8xMqPL9NMkwimqbuwhu1J
-	 A7bwjs5B8lEfbETzlqG5fydgILWyRtgQiuoAwgRgkEOH148wRjxpn0KN96dl0uKykk
-	 R6JGmy+jfuhN9F+98IvfhUkXU5NuF5vtJuJRrIEyyLcWICru6hlFogVd7rwicMtgaq
-	 thBrzAKYH8w8PvQL19q5PqpjvIe1aqwlCvxpH6W+hGqNQdwpRIcLXA6J1cc+HmRd4q
-	 hqcbfnMbWZ/dMVLGChBFK73e9ZTaYm6EV4SZ1IQjLyWSVEDiDHIy2kcs+MhVdfoY5C
-	 HidSo/MbCR5Yw==
+	b=osyLmZ2lNzJr5EZac15591BcPcSh5WxvhaAOI5Stph99B5ZDKkXR7A4Kt33u7z3HF
+	 yEzq422N9E1QmDMAlTugro7M5NVzTnkj+RcauG+qpyzrTOWPhNHXveNNDwklaLAPWl
+	 ahGMeOACIByn8ts8ZxHrAD62N5G0vLeAO2QSyEuJcg6ZqLV900e9eYs4T/OYX6YvRt
+	 RSm9Du0Q+VqnLH/RfMeYVXhCZUSXh5Q8LOQ8ZzE/D2hCC4NXo1vXPEawysx3UPCT9J
+	 HRfXYne2V/9loJAH3mFtJfz8TNU93X9VeFPCB+o/9+9xN17LXyqZ+QeqzTZ4i+6cYB
+	 DzRSWLCtuf8QQ==
 From: Brian Masney <masneyb@kernel.org>
-Date: Fri, 30 Oct 2026 09:47:28 -0400
-Subject: [PATCH b4 v2 1/3] review: centralize lookup of patchwork key in
- one place
+Date: Fri, 30 Oct 2026 09:47:29 -0400
+Subject: [PATCH b4 v2 2/3] review: add support for fetching patchwork key
+ via git credentials
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -57,8 +57,8 @@ List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20261030-pw-key-command-v2-1-95fb0f822834@kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261030-pw-key-command-v2-2-95fb0f822834@kernel.org>
 References: <20261030-pw-key-command-v2-0-95fb0f822834@kernel.org>
 In-Reply-To: <20261030-pw-key-command-v2-0-95fb0f822834@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
@@ -67,130 +67,150 @@ Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
  Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
  Brian Masney <masneyb@kernel.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4941; i=masneyb@kernel.org;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5230; i=masneyb@kernel.org;
  s=20250903; h=from:subject:message-id;
- bh=z8SzmV0QpkEiCkBymzcjLgLwOfYZbxnvxwqL3JR+N3U=;
- b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLKezP+/q2zzvqdniyPqt0kc0mj3KW0KXVz+7qTNH825d
- qXC/9fu6ShlYRDjYpAVU2RZkmtUEJG6yvbeHU0WmDmsTCBDGLg4BWAiYXMZ/ikonyrc+uTZc70/
- CnVl7ZLndyW5rLylGvtoW7wHg4b07OuMDOfZD9QaOrmdmb/4ysGJZ+t15L8Z7LY5wDo3wS7lz1X
- R2bwA
+ bh=0WBFYAdOXspLUme8tnOpu0hSWAK0Yt8I5TobPGP7sJk=;
+ b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLKeLGCY+7V177Lthgfv7Ts6kzXYufTeS87YdaVTmubkL
+ +QV+6Bi0lHKwiDGxSArpsiyJNeoICJ1le29O5osMHNYmUCGMHBxCsBErh5k+F+cer5iQeOvd4ox
+ uoX/jOO13V3dsrxNe6R3fCieduJAsBvD/1gZ42uLW/OE0gOmzdgzQTLSatLe2dOm+E3fcjho7wM
+ XDyYA
 X-Developer-Key: i=masneyb@kernel.org; a=openpgp;
  fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
 
-Introduce get_pw_key() so that the patchwork key lookup is done in one
-place. This is in preparation for adding a pw-key-command configuration
-option.
+Introduce a b4.pw-user and support for fetching the patchwork key via
+git credentials.
 
 Assisted-by: LLM
 Signed-off-by: Brian Masney <masneyb@kernel.org>
 ---
- src/b4/__init__.py                 | 14 ++++++++++++--
- src/b4/review/_review.py           |  4 ++--
- src/b4/review_tui/_common.py       |  2 +-
- src/b4/review_tui/_entry.py        |  2 +-
- src/b4/review_tui/_tracking_app.py |  2 +-
- 5 files changed, 17 insertions(+), 7 deletions(-)
+ docs/config.rst    | 29 +++++++++++++++++++++++++++++
+ src/b4/__init__.py | 48 +++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 74 insertions(+), 3 deletions(-)
 
+diff --git a/docs/config.rst b/docs/config.rst
+index 593129e8ae70..7087883c0a22 100644
+--- a/docs/config.rst
++++ b/docs/config.rst
+@@ -1022,6 +1022,35 @@ integrate your b4 workflow with patchwork.
+ 
+      Default: ``None``
+ 
++   :term:`b4.pw-user`
++     Your username on the patchwork server. When this is set and
++     :term:`b4.pw-key` is not, b4 asks your git credential helpers for the
++     password of this user on the :term:`b4.pw-url` host, and uses it as
++     the API key. This lets you keep the key in a password manager instead
++     of storing it in plain text in your git config. b4 asks at most once
++     per invocation. For example::
++
++         pw-url = https://patchwork.kernel.org/
++         pw-user = jdoe
++
++     To store the key with a credential helper that supports it::
++
++         printf 'protocol=https\nhost=patchwork.kernel.org\nusername=jdoe\npassword=%s\n' \
++             "$PW_API_KEY" | git credential approve
++
++     You can also inject the key via a password manager by placing the following
++     in your .gitconfig:
++
++        [credential "https://user@patchwork.kernel.org"]
++        helper = "!f() { echo password=$(pass korg-patchwork-token); }; f"
++
++     If no helper returns a password, git may prompt for one on the
++     terminal. This setting is ignored in the in-tree ``.b4-config`` file.
++
++     Default: ``None``
++
++     .. versionadded:: v0.17
++
+ .. _contributor_settings:
+ 
+ Contributor-oriented settings
 diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index eb04a2af55ee..16b7208f0b09 100644
+index 16b7208f0b09..045e5f6e7b08 100644
 --- a/src/b4/__init__.py
 +++ b/src/b4/__init__.py
-@@ -2504,7 +2504,7 @@ class LoreMessage:
-     @staticmethod
-     def get_patchwork_data_by_msgid(msgid: str) -> Dict[str, str]:
+@@ -392,6 +392,8 @@ LORENODE: Optional[liblore.LoreNode] = None
+ URL_SERVERS: Dict[str, Tuple[str, bool]] = dict()
+ # Indicates that we've cleaned cache already
+ _CACHE_CLEANED = False
++# Patchwork API keys returned by git credential helpers, keyed by (url, user)
++_PW_KEY_CACHE: Dict[Tuple[str, str], str] = dict()
+ # DNS answers for the life of the process (see _setup_dns_resolver)
+ _DNS_CACHE = dns.resolver.LRUCache()
+ # Used to track send-email alias replacements
+@@ -5000,6 +5002,11 @@ def _setup_main_config(
+         'trailer*',
+         'pw-*',
+     ]
++    # Never take these from an in-tree .b4-config: they are personal and
++    # they make b4 ask git credential helpers for a secret.
++    wtdeny = [
++        'pw-user',
++    ]
+     multivals = [
+         'keyringsrc',
+         'am-perpatch-check-cmd',
+@@ -5015,6 +5022,9 @@ def _setup_main_config(
+             wtconfig = get_config_from_git(r'b4\..*', multivals=multivals, source=wtcfg)
+             logger.debug('wtcfg=%s', wtconfig)
+             for key, val in wtconfig.items():
++                if key in wtdeny:
++                    logger.debug('wtcfg: ignoring %s', key)
++                    continue
+                 if key in multivals:
+                     val = [_val_to_path(topdir, x) for x in val]
+                 else:
+@@ -6403,13 +6413,45 @@ def get_smtp(
+ 
+ 
+ def get_pw_key(config: Optional[ConfigDictT] = None) -> str:
+-    """Return the Patchwork API key from b4.pw-key.
++    """Return the Patchwork API key.
+ 
+-    Returns an empty string when no key is configured.
++    Use b4.pw-key when it is set.  Otherwise, if b4.pw-user is set, ask the
++    git credential helpers for the password of that user on the b4.pw-url
++    host, so the key can live in a password manager instead of the git
++    config.  The result is cached for the life of the process, so the
++    helpers are asked at most once.  Returns an empty string when no key is
++    configured or the lookup fails.
+     """
+     if config is None:
          config = get_main_config()
--        pwkey = str(config.get('pw-key', ''))
-+        pwkey = get_pw_key(config)
-         pwurl = str(config.get('pw-url', ''))
-         pwproj = str(config.get('pw-project', ''))
-         if not (pwkey and pwurl and pwproj):
-@@ -6402,6 +6402,16 @@ def get_smtp(
-     return SMTPConnector(_connect), fromaddr
+-    return str(config.get('pw-key', '') or '')
++    pwkey = str(config.get('pw-key', '') or '')
++    pwuser = str(config.get('pw-user', '') or '')
++    pwurl = str(config.get('pw-url', '') or '')
++    if pwkey or not (pwuser and pwurl):
++        return pwkey
++
++    cachekey = (pwurl, pwuser)
++    if cachekey in _PW_KEY_CACHE:
++        return _PW_KEY_CACHE[cachekey]
++
++    parsed = urllib.parse.urlparse(pwurl)
++    if parsed.scheme and parsed.netloc:
++        logger.debug('Asking git credential helpers for the patchwork key')
++        gc_pass = git_credential_fill(
++            None, protocol=parsed.scheme, host=parsed.netloc, username=pwuser
++        )
++        pwkey = gc_pass or ''
++        if not pwkey:
++            logger.critical(
++                'No patchwork key for %s@%s from git credential helpers',
++                pwuser,
++                parsed.netloc,
++            )
++    else:
++        logger.critical('Could not parse pw-url: %s', pwurl)
++
++    _PW_KEY_CACHE[cachekey] = pwkey
++    return pwkey
  
  
-+def get_pw_key(config: Optional[ConfigDictT] = None) -> str:
-+    """Return the Patchwork API key from b4.pw-key.
-+
-+    Returns an empty string when no key is configured.
-+    """
-+    if config is None:
-+        config = get_main_config()
-+    return str(config.get('pw-key', '') or '')
-+
-+
  def get_patchwork_session(pwkey: str, pwurl: str) -> Tuple[requests.Session, str]:
-     session = requests.session()
-     session.headers.update(
-@@ -6418,7 +6428,7 @@ def get_patchwork_session(pwkey: str, pwurl: str) -> Tuple[requests.Session, str
- def patchwork_set_state(msgids: List[str], state: str) -> None:
-     # Do we have a pw-key defined in config?
-     config = get_main_config()
--    pwkey = str(config.get('pw-key', ''))
-+    pwkey = get_pw_key(config)
-     pwurl = str(config.get('pw-url', ''))
-     pwproj = str(config.get('pw-project', ''))
-     if not (pwkey and pwurl and pwproj):
-diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index b69a7f094bc7..c5e4289ea930 100644
---- a/src/b4/review/_review.py
-+++ b/src/b4/review/_review.py
-@@ -4232,7 +4232,7 @@ def pw_update_series_state(
-     Patchwork is not configured), False on failure.
-     """
-     config = b4.get_main_config()
--    pwkey = str(config.get('pw-key', ''))
-+    pwkey = b4.get_pw_key(config)
-     pwurl = str(config.get('pw-url', ''))
-     if not (pwkey and pwurl):
-         # Patchwork not configured, nothing to do
-@@ -4270,7 +4270,7 @@ def pw_lookup_series_id(msgid: str) -> Optional[int]:
-     configured or does not know the message.
-     """
-     config = b4.get_main_config()
--    pwkey = str(config.get('pw-key', ''))
-+    pwkey = b4.get_pw_key(config)
-     pwurl = str(config.get('pw-url', ''))
-     pwproj = str(config.get('pw-project', ''))
-     if not (pwkey and pwurl and pwproj):
-diff --git a/src/b4/review_tui/_common.py b/src/b4/review_tui/_common.py
-index 43db8c9358bf..205762956517 100644
---- a/src/b4/review_tui/_common.py
-+++ b/src/b4/review_tui/_common.py
-@@ -361,7 +361,7 @@ class CheckRunnerMixin:
- 
-         # Patchwork config for _builtin_patchwork
-         config = b4.get_main_config()
--        pwkey = str(config.get('pw-key', ''))
-+        pwkey = b4.get_pw_key(config)
-         pwurl = str(config.get('pw-url', ''))
- 
-         # Dump tracking data to a temp file for external scripts.  This is
-diff --git a/src/b4/review_tui/_entry.py b/src/b4/review_tui/_entry.py
-index 700c5eae0e6a..275d6703949f 100644
---- a/src/b4/review_tui/_entry.py
-+++ b/src/b4/review_tui/_entry.py
-@@ -151,7 +151,7 @@ def run_tracking_tui(
-             if branch_name == TrackingApp.PATCHWORK_SENTINEL:
-                 # User pressed [p]atchwork — run PwApp and loop back
-                 config = b4.get_main_config()
--                pwkey = str(config.get('pw-key', ''))
-+                pwkey = b4.get_pw_key(config)
-                 pwurl = str(config.get('pw-url', ''))
-                 pwproj = str(config.get('pw-project', ''))
-                 if pwkey and pwurl and pwproj:
-diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index 4ae826ee5b9e..75d652149e29 100644
---- a/src/b4/review_tui/_tracking_app.py
-+++ b/src/b4/review_tui/_tracking_app.py
-@@ -1159,7 +1159,7 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         self._db_mtime: float = 0.0
-         # Detect patchwork configuration
-         config = b4.get_main_config()
--        self._pwkey = str(config.get('pw-key', ''))
-+        self._pwkey = b4.get_pw_key(config)
-         self._pwurl = str(config.get('pw-url', ''))
-         self._pwproj = str(config.get('pw-project', ''))
-         # Remember last snooze choices within the session
 
 -- 
 2.56.0
