@@ -1,94 +1,93 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
 	t=1793356937;
-	b=Bg491O5oElN0bvSuLraFj1caMJl3Cogo2H2VsJPrl5LJRuzY7HSohlBb8iDPkhJChwE+
-	 vfj/PsUYlpjEUmj4rgMNGy/jLeCNDaWRb7gT3Bh/bwMwj1FuwVOBhA03l4IcNp0JrNN+w
-	 3jZxYXJLQs9dAgSTHaqvMp38U/7iAzlj7QK/twKUykRXIDv31bzC9CYl2bYQOLwFwhPL6
-	 b3BXIJ6Il31znMgYeKRGqyriOJeIHy9P0FMrjFcE9vBrnKoLnFc+2PhOIT6d2ssRdJX80
-	 h8TWFS9sIyHdyYc4Ajlf0k+6JqCvrkTAJhWqQjcvnkMtYPJoGVVt7wY6iyLtfv+ZzVQ==
+	b=qAUTQco0Q2Z+UB76zZOr2cjdTvzDBYdyYv/6n2oHCSCqBwq/6RSEUaQfIiUOROsIs9kQ
+	 wssb4Zu2HDvA7Cn/vRNoDbEE7/yO3fX3uvV4LMTwuip5QrtYtdHaMxXwZWVBrM6tZDEx+
+	 Ohf4wxqduF/876j4uXN+Pd/WHunFDnIx9tBy7Dubp4ZywAYe3AUONnRUnrgIIsV3r4Vuz
+	 v3lIdkMjFpxl9Za+QG6hTEixzJtzghYZ8c+FUTN5Dgh1RnAh5aYAI7QvJGHcfSp3Wgyyp
+	 A+qjvV3KFWqnjR1qdOV8F15iJ7qYC64MEk9XTmL/balQGpZmwJh9BaL9oxAy9eXgr+g==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793356937;
 	h=Received:Delivered-To:Received:DMARC-Filter:Received:Received:
-	 Received:DKIM-Signature:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
-	 Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:
+	 Received:DKIM-Signature:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+	 X-Mailer:X-Developer-Signature:X-Developer-Key:
 	 X-Last-TLS-Session-Version;
-	bh=VPRAP6AStjiZ+oIuMhoIcfdl3DGEjkWvBcSq10MJrfg=;
-	b=gB/TO/m56Nap3WI9wmFQTQpsEruyrG51tHIrDAIF2pCz6KydnyN1bXiuP/vsDBFI2o4q
-	 3mla13M+CLZGc0EKCu53AaxPzVwfn/T8++MZi7RSSARwaeV6BR7JITihsQuEOlBdLm3JS
-	 UG12pdmkGA4GgpMUnpqg5sOXqeWuJZpLF35mKP+xplCIEJjyguQQWN7UUJbNM55dwBZ6+
-	 dGjdlSZIh+ioUu/LQx2pRUwmQ29+88qujYhJw927z17FbccBlcPrAySjRG2Y9YoUWo446
-	 SR6LQFibJDIRsRH8FJ+PFFEri7l8W786QH0Wgn7hMRonLusew9pollVweq2reYS8JGg==
+	bh=PLE4eIIBe581feNGJrz4DrNwBqCGQ0/wkG/nFAQ8ERU=;
+	b=DneKZfSCM+h4smyhDsBb7NZn5Rgr8X5G4lH0SBtq7UV2udfPLCuFETrMhTfM4dJvIOO+
+	 e2iiGEiv5jCfIboRsh+/+N/j2Mg6a6Nx/LhXlf6yF4imMIX3B7qhOiIETKbRxmFPEI9C9
+	 kndIXVeSVY0VSSuSHtcWSAkgSPA/GVKoGkZrFov7bN+XYbjdoq+W4liEkwxWtiZfhCX/+
+	 Sh3fwxgsPBKy/GhHbUt/qDHhfGEaik4MJyauTG0ED/LkuVeZ23Vj1D12+1rb1MQvXg094
+	 CxfDtrNQcjpkQr5CnjGWKsAh9uB93F21abshT+RtTLpXbZv1jxNKk2Hd8GbroOmJA9w==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=GQUcnKv6;
+	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=C3Njmjw+;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755AA606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7564B606A31D
 	for <tools@linux.kernel.org>; Fri, 30 Oct 2026 10:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=GQUcnKv6
+	dkim=pass (2048-bit key, unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=C3Njmjw+
 Received: by smtp.kernel.org (Postfix)
-	id 229821F0093A; Fri, 30 Oct 2026 10:42:16 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=185.246.85.4
+	id 369C71F000C1; Fri, 30 Oct 2026 10:42:16 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=185.171.202.116
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
 	t=1793356936;
-	b=LRfcqe315P2hXN9JnG9e/WWYtSM2PBqC+vwCSbk2fyHTycWUYlfAoyNCD0IV4jWr7fvF
-	 lqHm5um/Zz+0uKVmSt9ruqMQaCbEkTUXO0/8yAUKzzLXXuNCmjKpcy70CUcNKQMXpRdoE
-	 jFknoXhjNJxQJOh+SfN7GvxjO9qncB4ZxXuolnTVRN6uuyGrg67iy2ExDisVKoBcvckZj
-	 kI7rGl58MgFw6iMHmh0dYGAdgZZO0seJiKW3+0vfChLWY7BaGMm4zlvDov6s9yfgFq0ZE
-	 5n4MtMAcOATNtUIc98b7fTf+yRMOg2IsSfMHDjLnvV+5EFR6W7qoPNEF87gUK3+7QKg==
+	b=rSKfNMVPmzo0fXT5x97XI2nHh8XLygkgRGtO5TyDfhBTnl7qkkDm/MbrIQrdH0VyTQH9
+	 J9GMC3bEeguiQdeQbMJdUCgletfynWOcsntZkzWjul2QXTTgGuZ3wilreP5oQCkufahHV
+	 DG/ILtFhtJut9JvwMK4HPq0RPsTNQgg0DFsgMjeei37IpPyMEbVBwrD+tptuOTANlEkeb
+	 zPaD0lAsU5ks8kcq5L6916WAdlD9g4V3S8zIPPUXXsSlsac/3f+RMuu7Rd1qJDN8L9ONG
+	 KBN9+7eRPIGn2rhbWOHfoRHd7SGhKzYYRQQHK40vG65QIeRX7K3S0JgYcCf9XsVNjzQ==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
 	c=relaxed/relaxed; t=1793356936;
-	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:Subject:
-	 Date:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
-	 X-Developer-Key:X-Last-TLS-Session-Version;
-	bh=VPRAP6AStjiZ+oIuMhoIcfdl3DGEjkWvBcSq10MJrfg=;
-	b=tkf+iJKvgXfAxHtnSdMlN1XWUB4oNImUBp13tS3PZ85ZAymQFj5iK0vfhxBlZ/P8kHlT
-	 gCjkL5p6JMF4Bvn0KRmCxPFC6k5Yor9ZjLHQHHeZ/SAbFrM/AnNIgSuYtBvZppSis+S80
-	 eon7ct0FjgprjtOI1P76J+EqPaMK/Uxdpg+h2KYVUQFrjL5o2E6JoWhioe8Dixu2fPXg6
-	 jCFywe/2ezK8CfBEqxC9Mbt9bM7fNvEZB5WmlTrJKX2ZiyRTRpoZoSrdlZhypM5uS/3yo
-	 7e9I/fbot2RbffTJkSvzaVuvOHVHfBHYiZIwlnv8TBsHzktOOJPfIVxDLIRIsRmn3+A==
+	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:Date:
+	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Last-TLS-Session-Version;
+	bh=PLE4eIIBe581feNGJrz4DrNwBqCGQ0/wkG/nFAQ8ERU=;
+	b=23tuMD813ChfoPqJpsk+SeNYLeNmsjOq3YjUn6i6gbfkdj7/MBCsHGHKNKTVaNyUsm+K
+	 hiHyGOJy3rWscFIcfda4ACDYJ6mwxZlU8EsWQzKTnw7lIliKQkR+m5rQu/NEjcbll48nq
+	 sb3t1os30+qop6LXG4CGhMPMnnaHC0rIPRhLTZH0wiZ1+pp9NB8vvj7pe0XEoqskz6oJ5
+	 StY31U+H/ZrI+u2qVx9gU8dpsU5LRAMsf1LSzO9fdT+ohbzkqtkhMVDMm/Tx1gZJ8gzrc
+	 aqVzJ4BJLQ45yVqU2j9or15XkVRD14j70YoMxXOJX7m+kqM9EKh51urxQVb64/d3IQw==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=GQUcnKv6;
+	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=C3Njmjw+;
 	dmarc=pass header.from=bootlin.com;
 	spf=pass smtp.mailfrom=bootlin.com;
-	arc=none smtp.remote-ip=185.246.85.4
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+	arc=none smtp.remote-ip=185.171.202.116
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 200D51F000C1
-	for <tools@kernel.org>; Fri, 30 Oct 2026 10:42:13 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 59AB11F00A02
+	for <tools@kernel.org>; Fri, 30 Oct 2026 10:42:15 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=GQUcnKv6
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 200D51F000C1
+	dkim=pass (2048-bit key, unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=C3Njmjw+
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 59AB11F00A02
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 26DE44E4139E
-	for <tools@kernel.org>; Fri, 30 Oct 2026 10:42:12 +0000 (UTC)
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 5B061C49F5E
+	for <tools@kernel.org>; Fri, 30 Oct 2026 10:43:16 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id E90DB603C2;
-	Fri, 30 Oct 2026 10:42:11 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C317810328EFA;
-	Fri, 30 Oct 2026 11:42:10 +0100 (CET)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 87FC6603C2;
+	Fri, 30 Oct 2026 10:42:13 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8CDFA1032909B;
+	Fri, 30 Oct 2026 11:42:12 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1793356931; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding; bh=VPRAP6AStjiZ+oIuMhoIcfdl3DGEjkWvBcSq10MJrfg=;
-	b=GQUcnKv65zaslGiE7oJtegC2qzYsU+pNxoJoYdM03P2ncKitwjOXFp4xvgVnmlQ+a31UUY
-	xXqTrgKn2TMgFXnyzo22GBJNJ38Ir2sQ9D8XtunMCeyoJ8zX0LnRBSaiXvaaGph6T36xLi
-	Dfivld0HSNiedEFnadmvQwL6FKpsdLoytv2msF/ifgq2To8JJFPl1yqtaE2nO5FRRXG3dE
-	/UZvz2ynic27AQ0LD3f7paaPBTo11bZ8R4PxxESi7+UEsTBsb66+ZQ4Pfmhjfnnu61ZvWu
-	FpF6SNPpe3ZJhnYGUotZt1+lJ/TKnTMu0iJBfmpOJNehtDNWl2w3XeFnHn/T5w==
+	t=1793356933; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=PLE4eIIBe581feNGJrz4DrNwBqCGQ0/wkG/nFAQ8ERU=;
+	b=C3Njmjw+/TxcGhniIhqdGKnBQ15M44ObAtzctI6Ao3aLV7P2jhPfpds/dndqx/2DUHH/FC
+	Oik/L/v3Pr+WqAX77Rr+L4ueFxYwmtfdFXTy+HK4eyrbm0cTqv2LBP/je1nwQOkZEjqL0q
+	YWRkQuc/ninONAvGE/r4Z5JZadg5wt6evwiBy0QgC8udGhEzzhIjBM4oliO9MXKzRbu+jI
+	ybvymQA6qZmnb8namvMvZwZfmZAOIEW+JtfMWscrvHiPzAtHwotado3NFLloS2nAyCVfyh
+	ry1MnZ8SeMOqmu8I/gve/usQ5+Y1z4zb9em08IRMzLVxVNhv7vNYfDZDcADa/g==
 From: Antonin Godard <antonin.godard@bootlin.com>
-Subject: [PATCH b4 0/2] shazam: pass series URL in env variable for git
- hooks
-Date: Fri, 30 Oct 2026 11:41:57 +0100
-Message-Id: <20261030-am-env-vars-v1-0-ddaa12797156@bootlin.com>
+Date: Fri, 30 Oct 2026 11:41:59 +0100
+Subject: [PATCH b4 2/2] shazam: pass series URL to git am as env variable
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -100,75 +99,128 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMzQrCMBAGX6V8Zxea0L/4KuIhbTftCkbJ1iCUv
- rtRjzMws0M5CSvO1Y7EWVQesYA5VZhWHxcmmQvD1rYztXXk78QxU/ZJqTNDH1rnm8AOpXgmDvL
- +3S4YG1z/Tl/jjaftu8FxfABqB2HmcwAAAA==
-X-Change-ID: 20261029-am-env-vars-6187f59a4fe9
+Message-Id: <20261030-am-env-vars-v1-2-ddaa12797156@bootlin.com>
+References: <20261030-am-env-vars-v1-0-ddaa12797156@bootlin.com>
+In-Reply-To: <20261030-am-env-vars-v1-0-ddaa12797156@bootlin.com>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
  Antonin Godard <antonin.godard@bootlin.com>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1511;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3574;
  i=antonin.godard@bootlin.com; h=from:subject:message-id;
- bh=hZ57T8fh2khLNK+c4tXuioH0uPVQOrRW1spCFWZS5lw=;
- b=owEBbQKS/ZANAwAKAdGAQUApo6g2AcsmYgBq5HR6x8uoBi/7qFPX9V4jQNEuyubTiC4reXrLm
- WG7PPe/+lSJAjMEAAEKAB0WIQSGSHJRiN1AG7mg0//RgEFAKaOoNgUCauR0egAKCRDRgEFAKaOo
- Nn8bD/9QVr/59eiqZGmQuzYAbPxnn48OlmxdF3m9w8ecREYawRddNisimczSoweXztw1IvPJ1CA
- IdmXSgaM+ayXYfFyH2Et9bgMr4G9LDU+/FiQt1N59o8jFHopeIMVbAEziJo6cV04xLwqCQYg4Gb
- JHd/ohXjRdsLlnxg3ETPlEzvlhlZ8bjuqDWESftQvwuP8TuGgLUiLGWn9+WClU7WHXZZonturhR
- yN/qxfoIZeHyRD+0i7xVYx6ZiUXFSajMv8EvmKNmfrB/tOx3A0wyVnGUqzwrsZ8LAzuzwybnJGx
- lNGhx1xZq/ubW8+obq3vYHN5NsA+Cf//wgtpv1WMdfdIhNDR3K+naYEqskjzEvy2+M01kt9/sZX
- b9y+ErFO+p9LLnLEGohi3ssP6fmE+WXiTgOWC7Z4qpF/ilJUtwQOS2MGVnPk3xNbK2Ej47xBhDZ
- 30n2EhmADqiagobMLLyohgbSznEowRGngCPC7uJWkY1HbGQMZVQbPWB7uP0G0crQSEknHuKobvq
- 28AQcQVLR62LLNuOKYTyom2iqLppwzXZ3awbxZULV6ebVvjY+rmvze/+moSnSXbQfUrpQD2YnbP
- FO9t76uW/RvPg191ioWj2llL5vL3t2tnQyDJ/NstM8KAQaVeZYMRVadON3uSJAryv5Kh6PapnAi
- 3npIxIl428pKgWA==
+ bh=7fZp+QxN7ueqG0Pk6p/gKGI/nL3Zzy99fC3lXwi4cuM=;
+ b=owEBbQKS/ZANAwAKAdGAQUApo6g2AcsmYgBq5HR7ifqKk1sIZjI0YT64L2y4KSHx6yREXuOnF
+ KKAmkaJO9qJAjMEAAEKAB0WIQSGSHJRiN1AG7mg0//RgEFAKaOoNgUCauR0ewAKCRDRgEFAKaOo
+ NlyoEACPUpi6c66Vk+nLThZNae/wlsDyBQJ1AwcG01r2hNDBZGfbJejqLPbk4DXR3DLNc0zD1+1
+ I4Ogkfu5aKHXSKbCwE+mrQXEzGFstWEYmHwCNUQcBKAQy8xe9m6vrbamPJS2J9U72BXdYuF2ZMw
+ qE1R/H6yps9TnZ2qQsezfFvLZug6erWLohefK3wToBmFr5RWmuo/Af843RSZf6O4rMvM/aUHN2w
+ +AN1yfcG+R7/tZ/XrJD76/Wxxy1Y/NdB+38f7fHcGWZkwQxrQRVCXP4GS5McH7Rz1fCebSjqU9z
+ Uo95f9uwZ01kW9J+suY/Js913skTbZPbujdLUSla4VwYGO62rst99CDn4OcKAyG07FjaeOdloiA
+ jcCV72ytrQFJT3s83CgUHKfYVwBClbdkJyr0ZepVOXVUzxQc57W+Xto2ovDu4lXAZ3blsPa9de8
+ s3XHq3HL0T3rcbRiPmi6/ZbVTOIRKwM8cJSZ1h7jP+bg2Na4FCns9ymXZCWKBXCZbfTiaL0tXyV
+ +qIUCXumCYfyD4RaFZ6v751SE2DS+dv+2+dp7ueUHceKBTaI1CPTq/LDkk/HO5lJJ/AXjqPF83H
+ kYoWo9tCYFWyOnO8GIphTfr/F46Q0KID6qguPHzYI/2Z0kAVwNww+deO0TpHjCQT91ev1qi7g9d
+ JdznF0k8cNqfsZg==
 X-Developer-Key: i=antonin.godard@bootlin.com; a=openpgp;
  fpr=8648725188DD401BB9A0D3FFD180414029A3A836
 X-Last-TLS-Session-Version: TLSv1.3
 
-This series adds support for passing extra environment variables to git
-commands run with git_run_command(), and uses that to pass the series URL
-to 'git am' when using shazam.
-
-The rationale behind this addition is that some project do not condone
-the usage of Link: trailers in their commits. Having this kind of
-information stored in the environment allows using it in other custom
-ways, such as a local git note.
-
-For example, the series URL can be used as follows in a repository:
-
-.git/config:
-
-  [hook "b4-post-applypatch"]
-    event = post-applypatch
-    command = ~/.local/bin/b4-post-applypatch
-
-~/.local/bin/b4-post-applypatch:
-
-  #!/usr/bin/env sh
-
-  git notes add HEAD -m "Link: $B4_SERIES_URL"
-
-Which will create a note with the series URL for each commit applied
-with 'git am'.
-
-For now, only B4_SERIES_URL is passed when using shazam (documentation
-added in this series) - other pieces of information could be added as
-time goes.
+When applying patches when shazam, store the series URL in
+the B4_SERIES_LINK environment variable, which is then available to any
+git-am hooks.
 
 Signed-off-by: Antonin Godard <antonin.godard@bootlin.com>
 ---
-Antonin Godard (2):
-      b4: support passing extra env variables to git commands
-      shazam: pass series URL to git am as env variable
-
  docs/maintainer/am-shazam.rst | 32 ++++++++++++++++++++++++++++++++
- src/b4/__init__.py            | 13 +++++++++++--
  src/b4/mbox.py                |  9 ++++++---
- 3 files changed, 49 insertions(+), 5 deletions(-)
----
-base-commit: ce4c1158edb292caca0ce4a6087e5edecc1b0371
-change-id: 20261029-am-env-vars-6187f59a4fe9
+ 2 files changed, 38 insertions(+), 3 deletions(-)
+
+diff --git a/docs/maintainer/am-shazam.rst b/docs/maintainer/am-shazam.rst
+index f63cf3b..c4d9ffc 100644
+--- a/docs/maintainer/am-shazam.rst
++++ b/docs/maintainer/am-shazam.rst
+@@ -370,6 +370,38 @@ of using some other base.
+    The default merge base is now the nearest annotated tag, not the
+    ``base-commit:`` of the series.
+ 
++.. _shazam_env_variables:
++
++Environment variables available to git hooks
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++When applying patches, some environment variables are available to git hooks:
++
++.. glossary::
++   :sorted:
++
++   :term:`B4_SERIES_URL`
++     The patch/series URL rendered from :term:`b4.linkmask`.
++
++This information can then be used in git hooks. For example, to create a git
++note containing :term:`B4_SERIES_URL` for each applied commits:
++
++.. code-block:: none
++   :caption: Snippet from ``.git/config``
++
++   [hook "b4-post-applypatch"]
++     event = post-applypatch
++     command = ~/.local/bin/b4-post-applypatch
++
++.. code-block:: sh
++   :caption: Content of ``~/.local/bin/b4-post-applypatch``
++
++   #!/usr/bin/env sh
++
++   git notes add HEAD --message "Link: $B4_SERIES_URL"
++
++.. versionadded:: v0.17
++
+ .. _shazam_conflict_resolution:
+ 
+ Dealing with patches that don't apply cleanly
+diff --git a/src/b4/mbox.py b/src/b4/mbox.py
+index 817d617..5211128 100644
+--- a/src/b4/mbox.py
++++ b/src/b4/mbox.py
+@@ -425,6 +425,8 @@ def make_am(msgs: List[EmailMessage], cmdargs: argparse.Namespace, msgid: str) -
+         logger.critical('ERROR: linkmask must contain %s for the message-id')
+         sys.exit(1)
+ 
++    linkurl = linkmask % top_msgid
++
+     if cmdargs.subcmd == 'am':
+         wantname = cmdargs.wantname
+         if cmdargs.maildir or config.get('save-maildirs', 'no') == 'yes':
+@@ -464,7 +466,6 @@ def make_am(msgs: List[EmailMessage], cmdargs: argparse.Namespace, msgid: str) -
+         if am_cover and lser.has_cover and not cmdargs.nocover:
+             lser.save_cover(am_cover)
+ 
+-        linkurl = linkmask % top_msgid
+         if cmdargs.quiltready:
+             q_dirname = os.path.join(outdir, f'{slug}.patches')
+             save_as_quilt(am_msgs, q_dirname)
+@@ -515,7 +516,10 @@ def make_am(msgs: List[EmailMessage], cmdargs: argparse.Namespace, msgid: str) -
+             sp.whitespace_split = True
+             amargs = list(sp) + ['--patch-format=mboxrd']
+             ecode, out = b4.git_run_command(
+-                topdir, ['am'] + amargs, stdin=ambytes, logstderr=True, rundir=topdir
++                topdir, ['am'] + amargs, stdin=ambytes, logstderr=True, rundir=topdir,
++                extra_env={
++                    'B4_SERIES_URL': linkurl,
++                }
+             )
+             logger.info(out.strip())
+             if ecode == 0:
+@@ -523,7 +527,6 @@ def make_am(msgs: List[EmailMessage], cmdargs: argparse.Namespace, msgid: str) -
+             sys.exit(ecode)
+ 
+         base_commit = get_merge_base(topdir, first_body, lser, cmdargs)
+-        linkurl = linkmask % top_msgid
+ 
+         merge_template = DEFAULT_MERGE_TEMPLATE
+         if config.get('shazam-merge-template'):
+
+-- 
+2.55.0
 
