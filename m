@@ -1,51 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793368069;
-	b=BldCjRp0gfCeoyn3w6MrlQLQ0njhh3UTeECID9zTzduM9pFUMfIe84zfMz9PkDictIR/
-	 ToRnD4htKNWy4fwN8y6bjDVN2zfBBG2EMWXHaLyeCYHa1qhJJ3/WnlJczTpx6TLT9jzMQ
-	 BAS7jKDIHGF/LPsR2yczX6gIkhuLCOBEr+bcDu0w3qNZ//7d5j2rkSmbPSfEl3ofAP+nc
-	 nFN3HbMgKHU8O6EQD41uSf5zCRi1Gm+b9ikT3unz4O/GCPLBEIUh9GXCfoQUI2G6LNK6u
-	 LDwFAZPPATsQ4xU0zxB5+clWSkTQy2TEDg+UjdLz92TIOTbP3ltOh6k3C2ruqRATmcA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793368069;
-	h=Received:Delivered-To:Received:DKIM-Signature:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
-	 X-Developer-Key;
-	bh=VhyVIvhP+I57EiJsaIO67oKgqnEOLFVZ2zuSKSjzhkk=;
-	b=nxgFqSyPqkOInZKHZNIqMaInPaJVEQkU4qLR/xJr6J6WHJWqba19ESOCZ1M5KDr8CH2Z
-	 mtn+X4lPiHINPvlS4fXRi/3R9M3uwy7YJ8V2KZ0wz8u9yaUmH+9h8WcI6SvZTHIZ/5awj
-	 d1r4xHNOaOhSpJ9e0WgwwFNMP3TUScsgWfwNXhUr/4cUJcuKpzCWPbuFRPJnyIEHFHqcB
-	 CwDELQsIKJF8jA1auwIAIOpJduwoBVp5V+C6CfJm/pa8/EWjZtCaIAu+jaShPFKeJtUI+
-	 5We3ZyNAd+O94JuyMrOjSjO9W9iFyrnJhVkxJxFkAqbED9QkUeeatMz9zjWSU7rAcFg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KJPdL27e;
-	arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793536676;
+	b=qjEbFYeJhosrgCg4e4pC4HYsY9GxWyAWRFBaI5ckRwiSIaQ6t4Z9JIsqAyzXfxigUzTO
+	 yacj0H4+lnO7VaGSs8FCcLxdPb37FaaZnhl3q8izV3IXrCNBxZf13uzQHCFEoqP5mtuz1
+	 mapiNmPQvF+2JNok4ceOoFeDV12xPX+msHX7FexrMLASZV0q+RQMNtPumYc2WM8nGD7xA
+	 PQrNldGd0VgfZZfpnC9IXwz73BQD7hetEEnHiAdxVRxGmnyAmAtngumg53RMitgu98Dze
+	 N7RbaXFjcZDkDaU8HN1EtoKoQN0OzK0J3970qVB79m//GhRMOy0VKaVfrt16S8Og7Pg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793536676;
+	h=Received:Delivered-To:Received:DMARC-Filter:DKIM-Signature:
+	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:To:
+	 Content-Language:Cc:From:Subject:Content-Type:
+	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
+	bh=9VTWMtfi/UqBqDsCr5D4xfOEpOxSpxbyyjdA+6dozfA=;
+	b=Wwt7FlLQAJEum+UYXA4NyRqWI8gt2J6NrTFjzoq7W86wVPK6C4ZxjXp8Q7kZEsY8cR2o
+	 0+Z6AUWg6zA7Q/9SHP4ncsgpr0e567o1U9du0vD4NFxTlFg9RNPNlP6nunwPLZmSmPQQJ
+	 eD85ZoEHp+rMrQSFerkBNCAXg0h7d4sfE7okob3n8eoUaVZc/x9uMM6bpQBPn5cGXOC3o
+	 CS4oAZ+5pBqwp4MYlEpT4JcHtzxQj04t0Y6Xx4Zq8D3fP8CTl9xCsEdCEh8/a9otAwijP
+	 GP5RXizKGQuip0yYtHnzAUedp3BneoxRcCQvz9hRjX1Zpu4MpsW9/IAsavn4DzbCfqQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=b7dIqWdm;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E7D606A31C
-	for <tools@linux.kernel.org>; Fri, 30 Oct 2026 13:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB84606A324
+	for <tools@linux.kernel.org>; Sun,  1 Nov 2026 12:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KJPdL27e
+	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=b7dIqWdm
 Received: by smtp.kernel.org (Postfix)
-	id D91FB1F00A27; Fri, 30 Oct 2026 13:47:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0191F00A21;
-	Fri, 30 Oct 2026 13:47:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793368068;
-	bh=VhyVIvhP+I57EiJsaIO67oKgqnEOLFVZ2zuSKSjzhkk=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=KJPdL27eXFLZ1fa2fXWZqHiELaJXhSKQeaI65WZ+7iB1RvhzyHEN6IgURbwqDcNP4
-	 t9Fvd8bGQmZ8b4s83UHzIQ3ai6d0Hslg2YMQiDRNxTkyjwT2OMUxOISX2Arsobt9HX
-	 ITiDvSxQP3PCRrvwnjNGSPm+BRmFytJyouxEQ6+Wi80llzFn6Vka2naJmSlJ+SeBPH
-	 /QUu1/NZhj4gPh16I5kxDPFeNvCcZeKAwG5LW1c0J6Jz4nMkflG4OytCqiIbNdub9R
-	 elLY02G6Nvp+zqVmtcoxVfXyExQRwhIELLMJNRP6dCj1j1iipNxqs31JZfJanRMNVH
-	 cabuZ/EVJWN9w==
-From: Brian Masney <masneyb@kernel.org>
-Date: Fri, 30 Oct 2026 09:47:30 -0400
-Subject: [PATCH b4 v2 3/3] review: tests: add tests for the patchwork key
+	id B630B1F00919; Sun,  1 Nov 2026 12:37:55 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=217.72.192.78
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1793536675;
+	b=lk2h8/bGBg4XW2VwNKNKjJaeTJ67wwjTmFeACfx2I/X9Gqy2x8at5yZbB9wGGlTQHxxD
+	 DBzPikyUyB02456eILdrY0S/TZ2xfY2dy/9e7vVLtsTC8nltKnjBdHBbZJWQuQUm5tvrc
+	 IxPHQ0rrsEs4TBrxqRenoDq08+hc3wiCkCb52i1AS8aXGeAh9vzm5/xsFXQlhg/qwTX4c
+	 OXELvufgABYPTSjXWBPGuZR8ifXB9akMGNDoeN66LEtzZY1UxYFzutKHHj5a3g535NVLx
+	 EwvjHXFSCMcfAlhIbQkoYxgCkBnj3qxUx01IfOJmh7mIeO9QLryzGAHrNKw5Osy5ArQ==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1793536675;
+	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:To:Content-Language:Cc:From:Subject:
+	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
+	 UI-OutboundReport;
+	bh=9VTWMtfi/UqBqDsCr5D4xfOEpOxSpxbyyjdA+6dozfA=;
+	b=ffOrStBzODcLA7WBcXts7EMgr9LsKxRg6x/bMNm/8WOqVUB/CKF3VU9Wt8ZrpGhSMouC
+	 17ahy0bcurpMyO1R4lQZehbF26y8Kmep/rMO/9r/guzZuwwT+5mpxHsBE2AM/5Xm7ystW
+	 hF0iCBZjNeIXabB3p0btGMVhwUXXuj73kT1upuvnVtAKyxP1EWFSIFn3Fpjqj2Dz9WzN0
+	 OslDe+gjUec9oC9OVfM9HSYjkqJljTGX8dbKoQL9QhqaO6g/BRk4rbs1ockP+n8oqVS1C
+	 WQKcG19jm3Lt83lw+4u5T2fm6bvGybdiu64jWerDG6O5ep2KL2LkrplTiRO/zJfKTiA==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=b7dIqWdm;
+	dmarc=pass header.from=web.de;
+	spf=pass smtp.mailfrom=web.de;
+	arc=none smtp.remote-ip=217.72.192.78
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 7F2EC1F000C1
+	for <tools@kernel.org>; Sun,  1 Nov 2026 12:37:54 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=b7dIqWdm
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 7F2EC1F000C1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1793536656; x=1794141456; i=markus.elfring@web.de;
+	bh=9VTWMtfi/UqBqDsCr5D4xfOEpOxSpxbyyjdA+6dozfA=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:From:
+	 Subject:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=b7dIqWdm7ekJJFRBL9f+uE4siLcVYtIcU+PreGZHU9mWXaeEhG5a1gaP9oZ+d4lv
+	 0EGI6HYYedGJdKeBaj8siEoLbMLb1FNlhctIUKb3mnLxkudQVtV5ytDcMKLzz7JRf
+	 xRi7MneCtXM8HHO1u1ju3rbwTU/ebjkr92M0+2cEAlBnlLXYNwQvmZHdCP27G37G9
+	 mGgaNJi//LoxEe1WsndWbBPSsce9WNlmS0q6u0JXZcLD+0VaX4k2sNorlZ8a46ILK
+	 bvrxJyR3/I73+LAn5kMAUI37mnZg3q0Um9M/PWSEVIbKJINXrFPb+KRojxR3UlRoS
+	 hcPJX4Mwtvp1neik0w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MBSB3-1xEwud0KFz-004ilP; Sun, 01
+ Nov 2026 13:37:36 +0100
+Message-ID: <aefccf2d-3ca6-4d15-9026-649fb0a0f63c@web.de>
+Date: Sun, 1 Nov 2026 13:37:24 +0100
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -55,158 +95,132 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+To: cocci@inria.fr, tools@kernel.org
+Content-Language: en-GB, de-DE
+Cc: kernel-janitors@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: [RFC] Distributed data processing for SmPL scripts
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261030-pw-key-command-v2-3-95fb0f822834@kernel.org>
-References: <20261030-pw-key-command-v2-0-95fb0f822834@kernel.org>
-In-Reply-To: <20261030-pw-key-command-v2-0-95fb0f822834@kernel.org>
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Jerome Brunet <jbrunet@baylibre.com>, 
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Brian Masney <masneyb@kernel.org>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5587; i=masneyb@kernel.org;
- s=20250903; h=from:subject:message-id;
- bh=OWaX9zsTdcyHU3dyJ9s2Er3vS3/JXVUxuLN2IA5VdVY=;
- b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLKeLGCcfdg4YRXbzXT+2+fCvito795cLPX09N6dzzhTo
- yzr1FQ9OkpZGMS4GGTFFFmW5BoVRKSusr13R5MFZg4rE8gQBi5OAZgIvw0jw+0OEZPfnS3hc39t
- 49RnYvoS/mJ5P5P1qzRuQb0rk05fq2FkOCgUkiSVYDNlwq+IGdqe9648OZad8WLyoZI6DaYZL64
- WsgEA
-X-Developer-Key: i=masneyb@kernel.org; a=openpgp;
- fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
+X-Provags-ID: V03:K1:m+7tLzsQ+G+cZPc4vpMIyKdMtcZ7b5n7qbZQvw/JWFtnAwPKsNU
+ 8cQTtntTCX32iPUEWIrvLiL2YFnVLRROUeJeDrQeSSScy7AVbe25MEExhLzM1gFE9ZaExJa
+ ucD79Jq9Fz46ryBU4kWSzx83Xq45xF+ob4F36Sx0byR1nDhRcLqh84e/jEVrDvhjdgU6eur
+ mM0ADAZbWM/icBDsuem+g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:SKDKEpuY8ps=;4F5RdN+8ZPGHA1WCmHwQXbI4zWN
+ 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
 
-Add tests for the various ways that the patchwork key can be provided.
+Hello,
 
-Assisted-by: LLM
-Signed-off-by: Brian Masney <masneyb@kernel.org>
----
- src/tests/test___init__.py | 114 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 114 insertions(+)
+Some developers got used to tools which support distributed data processing
+for compilation tasks.
 
-diff --git a/src/tests/test___init__.py b/src/tests/test___init__.py
-index 764829d7e756..5d5c9dd3836b 100644
---- a/src/tests/test___init__.py
-+++ b/src/tests/test___init__.py
-@@ -2924,3 +2924,117 @@ class TestGetAmMessageFromLines:
-         lines = payload.decode().splitlines()
-         assert 'From the manual, bar() must be called here.' in lines
-         assert '>From an old thread.' in lines
-+
-+
-+class TestGetPwKey:
-+    """b4.pw-user fetches the Patchwork key from git credential helpers."""
-+
-+    @pytest.fixture(autouse=True)
-+    def _clear_cache(self, monkeypatch: pytest.MonkeyPatch) -> None:
-+        monkeypatch.setattr(b4, '_PW_KEY_CACHE', {})
-+        # Never fall back to prompting on the terminal
-+        monkeypatch.setenv('GIT_TERMINAL_PROMPT', '0')
-+        monkeypatch.delenv('GIT_ASKPASS', raising=False)
-+        monkeypatch.delenv('SSH_ASKPASS', raising=False)
-+
-+    @staticmethod
-+    def _set_helper(
-+        monkeypatch: pytest.MonkeyPatch, tmp_path: pathlib.Path, body: str
-+    ) -> pathlib.Path:
-+        """Replace all credential helpers with a script that runs body."""
-+        helper = tmp_path / 'helper.sh'
-+        helper.write_text(f'#!/bin/sh\necho "$@" >> {tmp_path}/calls\n{body}\n')
-+        helper.chmod(0o755)
-+        count = int(os.environ.get('GIT_CONFIG_COUNT', '0'))
-+        # An empty value resets any helpers from the user's own config
-+        for i, val in enumerate(('', f'!{helper}')):
-+            monkeypatch.setenv(f'GIT_CONFIG_KEY_{count + i}', 'credential.helper')
-+            monkeypatch.setenv(f'GIT_CONFIG_VALUE_{count + i}', val)
-+        monkeypatch.setenv('GIT_CONFIG_COUNT', str(count + 2))
-+        return tmp_path / 'calls'
-+
-+    def test_plain_key(self) -> None:
-+        assert b4.get_pw_key({'pw-key': 'secret'}) == 'secret'
-+
-+    def test_unset(self) -> None:
-+        assert b4.get_pw_key({}) == ''
-+
-+    def test_no_user(
-+        self, monkeypatch: pytest.MonkeyPatch, tmp_path: pathlib.Path
-+    ) -> None:
-+        """Without pw-user, credential helpers are never asked."""
-+        calls = self._set_helper(monkeypatch, tmp_path, 'echo password=nope')
-+        assert b4.get_pw_key({'pw-url': 'https://pw.example.org/'}) == ''
-+        assert not calls.exists()
-+
-+    def test_key_wins(
-+        self, monkeypatch: pytest.MonkeyPatch, tmp_path: pathlib.Path
-+    ) -> None:
-+        calls = self._set_helper(monkeypatch, tmp_path, 'echo password=nope')
-+        config: b4.ConfigDictT = {
-+            'pw-key': 'secret',
-+            'pw-user': 'me',
-+            'pw-url': 'https://pw.example.org/',
-+        }
-+        assert b4.get_pw_key(config) == 'secret'
-+        assert not calls.exists()
-+
-+    def test_credential_helper(
-+        self, monkeypatch: pytest.MonkeyPatch, tmp_path: pathlib.Path
-+    ) -> None:
-+        req = tmp_path / 'request'
-+        self._set_helper(
-+            monkeypatch, tmp_path, f'cat > {req}\necho password=fromhelper'
-+        )
-+        config: b4.ConfigDictT = {
-+            'pw-user': 'me',
-+            'pw-url': 'https://pw.example.org:8443/',
-+        }
-+        assert b4.get_pw_key(config) == 'fromhelper'
-+        request = req.read_text().splitlines()
-+        assert 'protocol=https' in request
-+        assert 'host=pw.example.org:8443' in request
-+        assert 'username=me' in request
-+
-+    def test_credential_helper_runs_once(
-+        self, monkeypatch: pytest.MonkeyPatch, tmp_path: pathlib.Path
-+    ) -> None:
-+        calls = self._set_helper(monkeypatch, tmp_path, 'echo password=key')
-+        config: b4.ConfigDictT = {
-+            'pw-user': 'me',
-+            'pw-url': 'https://pw.example.org/',
-+        }
-+        assert b4.get_pw_key(config) == 'key'
-+        assert b4.get_pw_key(config) == 'key'
-+        assert calls.read_text().count('get') == 1
-+
-+    def test_credential_helper_empty(
-+        self,
-+        monkeypatch: pytest.MonkeyPatch,
-+        tmp_path: pathlib.Path,
-+        caplog: pytest.LogCaptureFixture,
-+    ) -> None:
-+        self._set_helper(monkeypatch, tmp_path, 'true')
-+        config: b4.ConfigDictT = {
-+            'pw-user': 'me',
-+            'pw-url': 'https://pw.example.org/',
-+        }
-+        with caplog.at_level(logging.CRITICAL, logger='b4'):
-+            assert b4.get_pw_key(config) == ''
-+        assert 'No patchwork key for me@pw.example.org' in caplog.text
-+
-+    def test_bad_url(self, caplog: pytest.LogCaptureFixture) -> None:
-+        config: b4.ConfigDictT = {'pw-user': 'me', 'pw-url': 'pw.example.org'}
-+        with caplog.at_level(logging.CRITICAL, logger='b4'):
-+            assert b4.get_pw_key(config) == ''
-+        assert 'Could not parse pw-url' in caplog.text
-+
-+    def test_ignored_in_worktree_config(self, gitdir: str) -> None:
-+        """A cloned tree's .b4-config must not get to ask for credentials."""
-+        wtcfg = pathlib.Path(gitdir) / '.b4-config'
-+        wtcfg.write_text(
-+            '[b4]\n\tpw-user = stolen\n\tpw-url = https://pw.example.org\n'
-+        )
-+        b4._setup_main_config(topdir=gitdir)
-+        assert b4.MAIN_CONFIG.get('pw-url') == 'https://pw.example.org'
-+        assert b4.MAIN_CONFIG.get('pw-user') is None
+Examples:
+https://www.distcc.org/
+https://github.com/icecc/icecream
 
--- 
-2.56.0
 
+Would you be looking for similar needs also according to source code analyses
+and transformations?
+
+Regards,
+Markus
