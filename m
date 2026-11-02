@@ -1,94 +1,93 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793594996;
-	b=bjDyksxiMIddh+xmBmuvqoxQXuRk3pZ/3HUvqh+gwccuY9inHHLrq6qXw1hkbU9HAVfj
-	 PBbEMHKByeJsbVqT4KgbgP9PNspRblqspiICZ1f/Ai7v8IXiZtTL4U5cziEQQiOLY55Cg
-	 fI7VeuAOO4RXHb93BfM7/b7MxoupB9xxwzF+HeQjq49a2gqc7DzHWiCkQemc+UF7QmaAG
-	 D6/PAikCFcb7JNPEHGp/oxfpc27hOZxrGU6k6gtBDd8d3aPee4BavXI8AHiXe8SJa0TRB
-	 HT8P2WuKUdzf5PChr+IjLVqnRcqnAOemi8kGturI57gPS369PYqHCwJWW0LOKFlg59g==
+	t=1793612060;
+	b=YH5a20Z4SFICiYnrVzAkqbJ9ToWry+/99qGUXRq7Tg6rHs6zfagLQ30A348bBhpTZEoP
+	 8Mb1qnHylSCC+h6H8qeR6zxaK00e0K0ho+F/1Lb3rV/zQMIu+YL1ucatrhfpIsbfo6VK7
+	 tKfkoymcSbjhF9x1uNOU09i9gjkEsg/54FcVXLweJTaFHnFekvcNO3kCs6wWrt4YoeMYd
+	 P1t745KUfc1BElXVB+6Lx3OPfy6q76o+a93gXQiZxZSM/vIlVg+d7IH+wfmVcDAlLQKEk
+	 qBof19FAQCcgwfXIgHuPT9nF/lOyrvqCGEGDuzHcpYJI06XbgdIGfzYxRljabUUmvvA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793594996;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793612060;
 	h=Received:Delivered-To:Received:DMARC-Filter:DKIM-Signature:
-	 DKIM-Signature:From:To:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Message-ID:Date:Feedback-ID:X-SES-Outgoing;
-	bh=yrloVf2Wg2u1zsnTtuKaV0OAULFddWjZxICNVk8CXDU=;
-	b=Iimiii1F+9Va1jVaK/WjYelsJLVFYPfZA+Xbjyt2wg8mVJZl8dB7etxV8Ubd09IXMfiz
-	 UkblXxc58glvHN6+ET1KlZ4hjLNDTprb/SozM0WlvG+0/zyB/R8v4rTAECThCqU/BSspf
-	 57UJqP1PxB/OndjVDPTRhJUC1o4tcUNoDe4nFymuoi0h/v2XVkYSG8Q222Jb1wTtDrwYb
-	 dZ+2haB5FeWw5igQg118UZfqFVoRJ2LikrAEX0mVjfGtDgwCslDi5Ew6sKUFyQyqoju45
-	 +VyYKzi47wCEKvp1jeFN+jW8Dn+vWCV27i8JF7C+YHr2DlNooIRQq0wGHKcCLZUfo4w==
+	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
+	 UI-OutboundReport;
+	bh=ns1CwBUJxze9256gcbwyclT1GC4r57u33UNeieRrAs4=;
+	b=xU1K0oHjVOqYV0q6Dd6iaCj5jrIA2VZLQOmn60nIcSASXbUnQKfQE1kRQfGzNvtGWu11
+	 6VbKuRlngWJdVxWzOM21m6FYnpZ8v2O+uooNwjoKggIASB6JcwtC8SLjESujtuC+M/a9g
+	 O3RH8ODCPwP+bxGA1aSHhJXm0tVHX5BDNwoHX/SIqKgoeGS5SAkHhOtcG+hBQ4sUEc6xi
+	 E++M4DmXSv4za8qBHTzZudAofehqNu09Rhhp2+wue2o3VuI7moRxtTa/jUv+XTEkzzSqC
+	 QrkpERUZYQ0SJbdzzdeDd2aSu0exaqWC6ZAfmAi1R9fKQiKKOc+p4jiVxW21bkx4lLA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=claveprep.com header.i=@claveprep.com header.a=rsa-sha256 header.s=6ohuwtltwzyfgohqnu2v4u7h24opqzz6 header.b=1mUWMR6E;
-	dkim=pass header.d=amazonses.com header.i=@amazonses.com header.a=rsa-sha256 header.s=rlntogby6xsxlfnvyxwnvvhttakdsqto header.b=U5MsSq8c;
+	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=VrL+BxmJ;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D91606A326
-	for <tools@linux.kernel.org>; Mon,  2 Nov 2026 04:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D17F606A334
+	for <tools@linux.kernel.org>; Mon,  2 Nov 2026 09:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=claveprep.com header.i=@claveprep.com header.a=rsa-sha256 header.s=6ohuwtltwzyfgohqnu2v4u7h24opqzz6 header.b=1mUWMR6E;
-	dkim=pass (1024-bit key, unprotected) header.d=amazonses.com header.i=@amazonses.com header.a=rsa-sha256 header.s=rlntogby6xsxlfnvyxwnvvhttakdsqto header.b=U5MsSq8c
+	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=VrL+BxmJ
 Received: by smtp.kernel.org (Postfix)
-	id 18FEC1F00A16; Mon,  2 Nov 2026 04:49:56 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=76.223.180.15
+	id ED3D61F00A1A; Mon,  2 Nov 2026 09:34:19 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=217.72.192.78
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1793594996;
-	b=FH6kfKD7q85kF+QsjPTe1s0OX77BGnYGw3jDLAzzOj8Pl2Gg3uLWnJatgc2ODcUkV9yD
-	 qPBNAjHHDmG5EDNFZSJJm0w+eVIphwnXl+N984yuSj7DufiyzouBBsv4Kj+mCEi3nXgfU
-	 QwGDSNiO5XzKdowxTr7nwEl0hVKwWVjo5yOIEp4cj6xrGnvYT7h7Je4tie/H2/nMu8AlP
-	 K9H1P4j6LXpqzGajZyJT3R58VM6Xen2KPzZKIiKXz2z8UxQvapm0mUV/OKgZCZyNvl4IV
-	 fLcDhqHRZy5qBIDL2Sjx5iUC8OBv7CvH32ObYczEk8xQZcZrSX4itsG1aAOBxGeie+Q==
+	t=1793612059;
+	b=mzG5Nyr8jz9SJwpj8mC9sNSUAzFHvxHdR7XhsJHsif8QhfkKU7BAJ+kfmU4PGgk/kC8z
+	 eMKLh9e0091pkVIjFD/Tx/SI6r4IQJhP6seDTYQD7OJCPrxDFRwiXta0i010oUEMQNGsP
+	 2JkmKjAE3os7R3P7tMIXiQ9nL/WG49hGljEAma2n5K89sgSYeMGBdMQCIlJsXIyP+oeBh
+	 FymjlOzfgGqAdaN8FiI8390LNd51LCWVv3UDGLLO7m9zi3iOeXQgP70t6iDPOiLylUyFK
+	 Mc+us6fAUs8hxu25R5eqPi54Ty5O1Iqyw4Wy29YRzp0F+1+RMQCWnpuaJWZczYsaSsA==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1793594996;
-	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:From:To:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date:
-	 Feedback-ID:X-SES-Outgoing;
-	bh=yrloVf2Wg2u1zsnTtuKaV0OAULFddWjZxICNVk8CXDU=;
-	b=jyv7K+S2ytQ2lUbl5qAJpckQk5W0hGy6jHPkJfcrZEypyH96HuLwE9HZOz9rir+TXKkz
-	 iaz6jWjAMSKWG5DeYrKJjNOn9A7/nM2cOzNnj+s/+9GTOcbRP/HxDDTuVhvvuK514riea
-	 S9qDsUmKK1Qmopz6b8sITlrpK8KwqHCzoXG6Du2jtgOSWY5hx35LYXmc/WVKkyG68IGrm
-	 3x7W2zJlFq3pK3r9fvDZlwU7xT6OtDX1Ww9lrhg1DTOinfW51ZR39tNBcusCDW9AAM+Dz
-	 z/zJcci38nfC/oRWKmnCtGdq1lj0en7rSVH/H8e66DalORr9bOSoNkQKLkPop8iawiw==
+	c=relaxed/relaxed; t=1793612059;
+	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
+	bh=ns1CwBUJxze9256gcbwyclT1GC4r57u33UNeieRrAs4=;
+	b=eD1GFVKllRIDekXQpyiN3kuMtIeAvGULEf5FJwBwyATFNGuryyQkuxI3UquENjKQyJzf
+	 rKHE3kyc+7+BhKOAMRynt2fwX5RD3pDvFeZsdBcHynHuOkjclSEitz5rtV8TF+Kmnk81d
+	 F160XXzESeC3EMs0vvmBD6fi8F9eXyIMTzbrOYH3xLjqGr32F0PCTe4js1h4CG9F3wwIw
+	 lBRH4pHkXgRxkffvo4f+gyRyATYVT3khNncAhCQzXY7VIYdGHnuaQ3EccQZgo0hayv9pW
+	 5lubtJdsh/IbMHkaz/lTmdrcw3aBJG/lJLMc1xAMwANu34IRbLH5J8RqN5z1Y42ncVA==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=claveprep.com header.i=@claveprep.com header.a=rsa-sha256 header.s=6ohuwtltwzyfgohqnu2v4u7h24opqzz6 header.b=1mUWMR6E;
-	dkim=pass header.d=amazonses.com header.i=@amazonses.com header.a=rsa-sha256 header.s=rlntogby6xsxlfnvyxwnvvhttakdsqto header.b=U5MsSq8c;
-	dmarc=pass header.from=claveprep.com;
-	spf=pass smtp.mailfrom=a1.claveprep.com;
-	arc=none smtp.remote-ip=76.223.180.15
-Received: from c180-15.smtp-out.ap-south-1.amazonses.com (c180-15.smtp-out.ap-south-1.amazonses.com [76.223.180.15])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=VrL+BxmJ;
+	dmarc=pass header.from=web.de;
+	spf=pass smtp.mailfrom=web.de;
+	arc=none smtp.remote-ip=217.72.192.78
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id E43481F0093A
-	for <tools@kernel.org>; Mon,  2 Nov 2026 04:49:54 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 9A9801F00A02
+	for <tools@kernel.org>; Mon,  2 Nov 2026 09:34:18 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=claveprep.com header.i=@claveprep.com header.a=rsa-sha256 header.s=6ohuwtltwzyfgohqnu2v4u7h24opqzz6 header.b=1mUWMR6E;
-	dkim=pass (1024-bit key, unprotected) header.d=amazonses.com header.i=@amazonses.com header.a=rsa-sha256 header.s=rlntogby6xsxlfnvyxwnvvhttakdsqto header.b=U5MsSq8c
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org E43481F0093A
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=claveprep.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=a1.claveprep.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=6ohuwtltwzyfgohqnu2v4u7h24opqzz6; d=claveprep.com; t=1793594992;
-	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date;
-	bh=yrloVf2Wg2u1zsnTtuKaV0OAULFddWjZxICNVk8CXDU=;
-	b=1mUWMR6E1qpKRgmL3+rAKpTgUxYtZM23ANi6hqTWSPPUO64Kk7Wle5VoBASTdICe
-	6vrk8FbBGQJW5VamO+8AABztqVqQ0ebcOe+dlh/FeJ1rq4KQAHmGw+WgVmZjQkEKm82
-	6POh8laLaxLoaAxbov4653P3SvJ0MVlcIcTTLuaUWLWoEjLBdQweYGbsGK7sv42+V1V
-	cTl72pzayyZTrYQgFY19KLMnO7KuhFxV9UZERJFcKx/5fljtYvgHeQeaiu0XC+DZw7Q
-	IXwVC8vEf2pmCnoPofMADLY78mfqbx1xdJD9cchj1/P0bU8AWbNemaOLiALO2eiDleN
-	4HGLcM8HhA==
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=rlntogby6xsxlfnvyxwnvvhttakdsqto; d=amazonses.com; t=1793594992;
-	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date:Feedback-ID;
-	bh=yrloVf2Wg2u1zsnTtuKaV0OAULFddWjZxICNVk8CXDU=;
-	b=U5MsSq8c2ol+wd57BsHstRoULe33vCRmUn2JGxuq8ACW+KBr9HOG7mlHSiJgZnCX
-	zIp+Clg3IVGxMrnuFgPCJLnVd5vJ7eM8fJ6Lb3stVT6zrViYdbfO0wlV1Q10uLBvEYQ
-	iXT7AqGcRCpbRudEgDwr0b2Pin9RKguQiRfm850c=
-From: Clave AI <contact@claveprep.com>
-To: tools@kernel.org
-Subject: Practice interviews built from job descriptions
+	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=VrL+BxmJ
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 9A9801F00A02
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1793612052; x=1794216852; i=markus.elfring@web.de;
+	bh=ns1CwBUJxze9256gcbwyclT1GC4r57u33UNeieRrAs4=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=VrL+BxmJ6nt9iPOXpYErOQr9BBrIZZZ8WLQguLUvV3y9AoBIEr0VTGodFO1iwDdE
+	 wd08/Y2lOkIETGykGX453/JTGo69wmjKLZW+PEa708i1oBDA6TmOIDIEF0www/din
+	 +8iZPbQsFkKo3X/7nP6F3ICubr2t+T4AbCo1fmp/vSEmTOJqouMrDEh4DFItJB137
+	 vteugKldZUFJXU7UeNWhOXZ8382myZKwX/c0juBz7JKcYXcs8jAnZ4pe0aPpjiPkl
+	 JL1BvniUdPF14fQ/OTsg5UKBCtgP3U65wUHbNOq0CtGiyIjdwKW/RmIjKyH/OvKWc
+	 wp0ZyOgMf+VmLOAwaQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Melf5-1wq8Ag3y6v-00pYmJ; Mon, 02
+ Nov 2026 10:34:12 +0100
+Message-ID: <7a14fdbc-fefe-4c7e-8b57-3c42b5d1a453@web.de>
+Date: Mon, 2 Nov 2026 10:34:02 +0100
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -98,25 +97,156 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] Distributed data processing for SmPL scripts
+To: Julia Lawall <julia.lawall@inria.fr>, cocci@inria.fr, tools@kernel.org
+Cc: kernel-janitors@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+References: <aefccf2d-3ca6-4d15-9026-649fb0a0f63c@web.de>
+ <b55ad049-86e0-f737-a96a-f3151db5012@inria.fr>
+Content-Language: en-GB, de-DE
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <b55ad049-86e0-f737-a96a-f3151db5012@inria.fr>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Message-ID: <010901a19a97a779-c3d02fb3-d9d8-44f2-902f-6c07e11325e2-000000@ap-south-1.amazonses.com>
-Date: Mon, 2 Nov 2026 04:49:52 +0000
-Feedback-ID: ::1.ap-south-1.8Atk+svbcKJTuJIedclVTSOIyvsx+AWPIh/q3FIlq6E=:AmazonSES
-X-SES-Outgoing: 2026.11.02-76.223.180.15
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:QWbbZ5y+Q0skZNLqWL1P+CN2/LAG52/P/lCgURyNxWbgfJoqkKi
+ X/RdhdOOWQdjthUQCh17gqF191hm+/HQo3PrT1JT6UQHpzJ53UtNYWlgYQuNCgDFhiR/km5
+ Z9fD9DVPwWoxbzYhR4HpqT5Gw1RIIXg1JWLOb6PwaGPXCvz9bpBW26T9rNCbN3TlpbQsB/F
+ FNcZwFX9a2PEs8cpBWapA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:hBeRhHUrv3A=;f1btxB4m5cVqyQjTOFT9Rcitv85
+ OFHV5ca3G7EyyDMSITJxIY88xv//a7bYcoYwjxudy5ZDWVmYtrFRCIKj8oMS/vIRdFK5WdmP3
+ uT0QVf2O2Mq640j2o4HEyFNJQUTUYt2IkLM50cQX/kh2UegJecMhmhKI5NN7BccjQfhuOVlCx
+ xH9/8CC8eNJweDxSfvDFGiAxbp/IxrVSSj3TpC1kr9GfuPnMtKeBTmTlYtOo+V9sBWuCdvdxy
+ riLPjgrGA2fcY34cFr/B6yGFNh511BIEOmwmgo+ofGkXLf/2WgANWT8BaXJSeI/hoIUAEIHxF
+ iQgp8y5rcxwz7L1fOqlvHvJEo5/5DicjZlWOVBfdmLGEdOVXjxsPpyv7pXaP/+bF2mJRtsIh8
+ 4ZRR+1WvfTnVEb95JUqtQN1fUXCJIYXCRCG6wc/82UftYswjYplD2i1DGYPHZg2Pql6+61KJo
+ X+gXzpNiPbIv9r4a26vkB3M8SeQ9Sk9O7/ZPGdV3zhO+rjbmoYzozbVQR9FLl2LrNcBCTlpOD
+ bYTIdMusey8zXlUF0haOHxKtJmaWNzIEiiFVIHlZyF6nM6ikA8lL9xPg7dlLhKBJ1tR7tSVrN
+ ifP6vqP4XaRkNWU055b6bvqUE9B9qABtvXFT3Xx2ZLqFw559yJ7JlGlvSVJEnLP0bbdeLTm1Z
+ bDEDulG9Vo6qIyeOr9vgFQURSq1yncTXC9CkHnmt9WEefHLgxF6Y9aAw3bJ96HGRjt97+dgPM
+ fJM4PV/mPhOkgHWj4n8Q5f8RzUTSs5esFTD5qKpm2+gakZSn7ik7YuZZKQNwzGisA9O/zrVNc
+ WM3OI+MlXiJs5/S4weW6jn7Dde3cF2vSIGpUszXJRZJHrFNhmIlYWevjX0pKBSewbI+8QVe3+
+ kgYMv6qmlOW1lN5fuf106x5xRGT2oZMpJC0jGdEhfQ2GNNzSUMdbfxeKx+hp5Cd0N1kpaEVhB
+ txh1ImwIICTObl1H4e1z9aGFgGYROXRUh4ElBSkG/tc6aPpTIsbmHJwBdaglJSxEKArh9oG/u
+ pLwoU1X1naeMyOS2Exy6NWUap9Bmw31H+5iGqkj1BDtVMYZyKTbQ9tCuG5AsGA5MouQeRAEwW
+ vga3Te6aeCKq4npFH6IY3m5EscyYEfX/HCUyRTEbwOPB7cPJ3M18VTRmyyhhnevkdzN0czki3
+ ISZ5rYyHleCVNp3fjRHu3Q44gAkBEo5XNX4xbf9lvNHXYCBpf9Owq/gMAsSu9XKz/EpMTtBx6
+ PfhTyltucCj75Hwe7a0Y6STKTR9js4knXFEGzQuYHVfceoPeJGKVcM2TDCIEJyPgB+/Hm3Gch
+ oqeMqCXgfEUzByc3cwsP7Z0n41XHrLRTR74MfYVo6wTHCssOncS4cHOuvj4XhticsFlJGWau+
+ Dj0RM3CLeVVurhU//1Ih9reonFL8TEpEKH5K1VfwALj8X09IWJHl12zmkbLEJiAeFchsCjiaN
+ Wd9hoj2clypMkSE8F2RkluvJhYau5wvwN1Am5m306vprdLhRueVt40OKKCY3P8CVN6HdcTqS8
+ mdHWNq+jz+LCZbZlIA/ycRaI/4iq1SGuiN4sIJUgpgmfP0WUS7ATYPkT9t6/CA518Tb1zN5XQ
+ GyuayGE1FdoGt8REiFkkJt/WWhmt+eQmdvE+JF5Og9f2QlESV3ZpVGCLsv5whlxAvF0phcwLX
+ npEk3aJzXeFbpRYUtVJYKapHFbK/I/oYNpjb11ucccOu/exp608W5ch1ShwJxRYqql08LfF3y
+ 2YVL+Nurtc3KYRdDHLb9GSHcRpwPe5wSBJi8TFRpFTPtE2VV5R66cX3uFOs7Bl13er8/mt9r6
+ jb5RPaMAplZJrCiYtJCJcjw4rrChSVTx6iD5yaWe/fOPwWEr+5KgpGXNCQTNZdpNDlaPjwyYp
+ VkBnxDdWanYZyWW7ZbdmBH7F/A4omfcvWrKw88NpKJt/cchqPjC658+maqq6LEPx53uZVa32t
+ a6Qutuy5jhh4lJLQ3CTH4azyCSypEyYOF2Q0mfrPsB6MnSNbIA+sMcQKdYjSy3SDkjSWKyN00
+ E+M7xjKFucM9jjVF82CTgYWKjTdhicZSDvV+okYVJLvYeBdzK3eobqoLvdVjr4x3pxOGW6Pb+
+ DJFxp/pvl/DRsHU8pV3wbyNNw3rE+IXxnNbIsv/0XLICXge4bmTWgfm9rd8K4clOcQQgoPRcW
+ RceQ1FgfRJDZyxTVPJ/E30uuLC96+w0VRjEYt64StRu9pjN0hB3WrEhtveCeOv1GGRw7eZtmX
+ X8qQ5A2/PU7pNiZTVKhRIR0HTBI3WFjSOdieVJVC7mX9jZSgdRzFgiGz4Zw3cJkEG/AweBDyh
+ Y/V/b4LTZwDCN7dTgeTm2OiT8DawT5WN+obqN4WBw4/lcWJTD6agt1NRIiSYqXScpQa1NR/sT
+ Nsp+gGz1fqjbj0bybVpqRkWw7tZc43ZB7pfJNR48QFOTRG2ozDCUQsbxv2G0U5V4bNaQXj4Cw
+ DHRB5dvJwMu72UlDZYdDLmYDjAUuC8MulUtAcag4MCFEbRPImAcfT3WxCyj2I28vS0BmfzDdv
+ 2AmKoZT02d6JUQLIc0bERZrrR0Vdx3KPCIaGc7c7ePQRzESeED4jBq4wLlZpqh5b/ve90hltG
+ xxm4Y0JLYC9v8autAoRYJF6/qdG9X6rloicxHWXGKJVKMFs+6PZrVtrpHzEuzay7VfUFxdYHm
+ +2H352XFrG8Vqhr70i2CIBfMkeJEWjIMEdpNalXmUj52q5lG4iPSt3AStGEheyWyuOT/pPRI/
+ O2oy4qvUZShWy046zllPS8e/4g6TlgCudnGVxCEOaJMDH8FDFDkkQxs29O82UOoAZKDDQDoJE
+ EjS5Wwr7yOfDL33bFXJGTCQ2wz8vgT+3QExX75eVKkm1Aeg7E79+U2r7pwdVKOxbCJn7xYW7u
+ f0i3Gjdt9mXIrH7qOdnSgl2xYy7zaCj8z1+YmXlK9/7dHDP39shPAGcUqoWwqsQ2E12O5AkCM
+ 0z7Uc8HmjNGIzTYJ/JMvtlG/y9/J066AeUae45oaTaWq8VUOvdiNOiWPCQAgGzvloOPJSM1sd
+ tVt0aDB/0dUGDaHyFd+YjE299sfZzjj1iMc5+CxLw1tl+Dob/4eUKKTP/k+7Nif40fZf8CGNc
+ PSNqELB1TBU3RJOzFR2h2TLymiwBzR7nA0kmgCVGO1f3pPeXGoHJWhVZGrxAFgdJm5xU+bLcs
+ a9uNYmE+JZDAeVbOWu8xw7VH4TNNyEzkX2mLU57gnhuP5i6nq7ehAsh0P7X+PnEedigosyBnD
+ qexwHbB735chLZ29dysJFVByegEyso6JNS5k8YOcTK2FPr+/X9uXOsAtTWKC32kb1S3gmymTt
+ yH/sAXEcC8oa1HPwA/7MRkvn/oagrIXRBdpDdfMXdGDqAiikHdtCXMJz2MhzrESK7oj49nz+Y
+ wjGL7q1zvxu7OJtN/1bUWB5lkHSqnErLcuFd7Bqlz5eXjcmBFLtW5ccGuXkEfOIQmd3Y0q39M
+ cX6XTL8bwpRVnq5chC1TRa/zBD+NVp2e6D7Gc+Wx6YyKYe+L8lgL6LkyLc/kWQV8zgQ/wUDcG
+ OXi5gCjWF8CXwW8VBqIPHgvuAp4+kzf8PP5WlIC4y/kgct9/D+1JqdmKKSzuq1zoXHXEYgOSD
+ FJMrimrI67qxJs1sVh7t5/fidVoqxKgBXXriXKOuCSiLUmxqroU8d/PX9FVAwmA3U8yyvydna
+ UzmrDBHCNXh+AzfszdlrIcKAZsypkgA6CNfDwFbppuS5z627MvLa0Q58AFy41IjBEigDbLZLA
+ k/OX1J5D3h86TVb0m2q81z2PQcc2QY1IIxxtZe63JvgFUk3fC1JvkxyyzaDEAvs5CfSdVEFCA
+ eeEZ7i/bi2nvg+AC1fsYxChQ61tRjlYXY/AU6gj66dcNhPDbMGzTzkGzKdYN6d7D0w4GKRK5v
+ ThqjYF5ZBDLPfWE1JP5ZmmqbWVXOfdN8cgBE2ThYaUUkfyUBsMd7FurmwnpMlNHGqt27y2WA1
+ btGmQe8bRmig7rcCZjzMrSOFF/tEm8Q7tPv+E4VkmdG9eXG+NT1Cw2BZzpy0grUH49qLvT2iF
+ 8hm2lgNuhcPD0+TwiKFJ2xqXIbIPBX9TA/XDRDzUg8X5MXnxJcHuZXKrq5BvorIhL98TvHJjD
+ tnajPSDqgGa0S1tDyRaEGkuDGlO0j8e1LUTHOlLooNkPoBwRpNWiGqFe+z8RW63ZK27LzPrGB
+ TNdax26BYxjnstr/beazqoH+4zNfGtNGhNPi0eAEda7AN/HjwIdWJ1lyhSsMHq1AENpEHBwtp
+ qeuhfOI+jGeyfFkVUsHiGmyFjWHwj7+1zf+fVLGWkFXtSCcNKkJvT0FA+Kz0pQmqCzhy0ldlo
+ j42MPpdW9KSNRi9DJnMNOoZLiC5Mhssc1Mxsu3OPvefZjJz+AA4IPkSVg7OiEQC+tHmHz9hvD
+ LFUIjpfZ8a4S1htIsUrlSIbpP+BC53dwbl4TiuQxOBqAcJ8CIuzNi+3Hzrrvuv7I55SDciXxa
+ w0mQUZoJ5jwlCjU7UkG3svRqVb6yQJN9RX/rpFMoGSpFp85O5wKfJyPErI9jS98IDXSj46M4J
+ 0/bMIUYO5Rt54ZwCZdnxpUgxiZp4KnpQoQ9UPjrS72p9qtKm+QXrKc6SpCsx9ydda3XIN1vTN
+ AUkE2zhhAxuo4kjgeXZzrsMcg6heI7HODjgti/+cBIbHyWrQTKDUV/LMn95Xp/VvinZjFQxBI
+ TQ5HrjBqrnnvCNKVf8Un7qtF2YKXX5jyfaHbqaLbQRgeuQdMa9NxBShxewrADa8yaQdc8OObZ
+ amzGNU+hWcVDMAziu92H5KRlS72KmQh8RBNlWKEVoeNV7PeRb0eLXzayp6EVQxlWgrjIWp9Hk
+ ad+ThQiWziOEPvWRek81DQOUPlm+azp0e0gR57tZmD0bHNLw72LkGrl6gmhj7ydigscKlkIhm
+ v9S8Yz5awP5MRaxV1XIhKdSdvz9o+ntDhyIdoG9NtPdi6fyX4ExDFMx56zUMMhdplAdpm8nxR
+ yT6e9YcDe9+XyO0q28kiaKdj3YnMvvLJXqZZUPsyPXqiVr5R9svzldkwUNiSjeAyK/meb+FBE
+ JwUOoNm2EJsmN8HYQ3UXP+ixVHPzSxeYVdoBCTf4McUvnmnxEqD/Uvgc6pdlQrh0dYSarCYTG
+ CgzBIwCZIcqYPUp7ySXgsJjlK9zyC/eUe6tb+vUPPTEPg2HJuqJ/3aAa7OQg6H9p6aLH4+nF7
+ WZzpWfsziDLPk1t67lw9xQWHNS7kW/iqMfLrdPyXoc6ta6BPCo2a8icCoGqSLczexrufB6L40
+ YoMEswznBD3Dqp63rIHOKFpHPlWSqNNiTTniP2xer1+dUtmWpsVQ9frYPID7xxWTBsUkdTdgY
+ eg8WrROrp24AnPWoDrInZIX4iYqpnoyA6Uz09TItUECRL8mVwJij0LWx1bxzFunp/NK4U2mIy
+ PID0OVB2wUg4iUDbuq8B2Gk1Of/BwvHupI1MFG3oAh/5KH4Y0LNjBp/FAfi9NXaBM+mf61QHc
+ BVH3BIUVREIUxhXgzmw71Uzq9/8+PeGQZa4wGoLCUigYIuGvFZqaCYlkBayx5m/JUFBeVFmqO
+ raD0HGKl3avrMtbsD9IjqzAEMTIU3rO0ghAG4ddHSurrbDUDjkx9W4aBgV/49yi7txc6u9oHK
+ xHuynbnUw+5cBjgPRj2hCCkak4OEn1DKHHbTVhaEZ4/FdXziu/KWRf6ly7gQW3zieAmLdoFZ2
+ JpEFpsS8MY/DGgki1TyVxPYTklOk7h0QlfbS93lYLHRszyy0T8kOa+Egeeat4LUVm7dv1Hr9v
+ IEzsI9FJSv9FiZ523ZpU0WK9Xja7dbuNsDXYkR3QWvsko1jT0JcME3MqGC1G655w1ERipqKys
+ 6faTJiYzw5lalwGKuKRQpAws50pBIZK85t6kIKzNCsHb/0G+rUO0y74QGGYDhwUa7wyOMdbZF
+ VnVHLVcRa5cVPBU9322UwceM31/Idhiq4bSqiroRlzb3+8KnWaiQnFR/4m1Z+aC8ahq/K7m/1
+ m5M+2LewYG+n3XxOPnS5L6FWqyygpfegwLaJT6wRd6l1cEeRKfwHfCpsrJplPj1qSMjXjnKpz
+ TczGC8qD7fPQYS1cKeNV7UlRmGjvFImxTz7IOS5i6eRQl88CPro/3rkOg8SIg91hnntrSbR5C
+ jjj+QywiTxpZhHfUr34Qn/lOBgaGkVcOgr5z36ZxN3EfUdZAo9LvfPXR2XCNTm0NVE9TLMMGr
+ 7blt+r5mOCIQDvYzfxPxc5iAirzfzB40wo+B9aMr0p221zCnkvwdp4gZB3hwAtdcXHaQ3w1rA
+ TxCzSFUAatVoVYgUTrS9oxqn5PxpvDg1ZbMk5t6pt8V7dEaNjah0ulmegDrNXgRsc7BIAGru3
+ WH+ipgQArraR6L4Cbe1UGRzeTFfWTVsG1H6IaeESqHSFJi9mJ/Oq1zpCZU3PQy5Y89urRYBNs
+ Yy9lNJaGseEniWCJGI7cHPB2ljxzm5P0fF3x2MPwD8SIh+wZ0DWwFPlgxpVoqPjEVZRP6juen
+ Gqz7/hmIEctTnD3kMiRNlTA8viXqbzNuMpcP+klkEVtmPAbCM8vsA4/Ci4ZEQASFMTwkdSpt0
+ QgFB2BlLv86HE0BGcxQH0KibKoFAMBpFkNVJmCyL1kWYnmuXLDz9Jgdr2r24DzQ4IlO5Tsmjy
+ Y/rPfPwEJ5bdzsOKWzzOjr8FXjWFKzuFop3D/MlhSiYXhVHCgrAw8ANjkuRFOvMLpSX3xg1tb
+ iW8h+bJNmAxaJJE9ZZrWQqNjvc4aMsdQ4/OJEEvAxT8nCpdM3tTny2qxdMFmy4DmPv6hO++/t
+ suZmZD2b2VJdHpjeH6YMJEghmGvX3jOgR24reUUjj5KyZi8Qyr4mA7mKRPbYBNYzXIenwxbK3
+ slwJmjyiaaVrxU9iyiSFVvGRRor/8fsWtVtvL4RGay3cR3LfnAR2PCBmbwiCqaWR+dZy5FWJw
+ bTkYGid7bPpRxb99N0Q7XG97kF3oX/iPVE03n46Q9GbFHEUk8giFUwAiBwbljWrajInjJvEJl
+ 9/X8p0b4g46YF3wZ/3U1aDBOvC6BhAI8rjFgW9ew17mVy+xFw4WeCKq/vyc0lnJLoEBOAdVHi
+ UvbnlS4u4XuuQPJH2CqtsPd8LUjBf0LB+tM7Ns4zAxM51jmnXArm5EeNcbrh9A97z3KLDAKPw
+ AZdDArDeLkLiaOFkkMAGvX7fUYqe0sDnwcVcMtj5gCXX8S5wLRyI8ogxJuqb1R+g==
 
-Hi there,
+>> Some developers got used to tools which support distributed data proces=
+sing
+>> for compilation tasks.
+>>
+>> Examples:
+>> https://www.distcc.org/
+>> https://github.com/icecc/icecream
+>=20
+> Maybe such things can just be used off the shelf, since Coccinelle can b=
+e
+> invoked from make.
 
-Saw you're open to new roles, so here's a tool to help practice for your interviews: https://www.claveprep.com/app
+Did you notice how such development tools were implemented?
 
-Rehearsing answers in your head usually feels fine until you're sitting in the actual interview trying to say them out loud. The words just don't flow the same way.
+How would you distinguish single programs from a service-oriented architec=
+ture?
 
-We built ClavePrep to make that part easier. You save a job posting you're applying for, and it generates interview questions tailored to that exact role. Then you can practice answering out loud with an AI interviewer and get clear feedback on what landed well and where to improve.
 
-If that sounds useful, you can take a look here: https://www.claveprep.com/app
+> In any case, I have no intention of working on this.
 
-Either way, good luck with your search. Looking for a new role takes a lot of energy, and we're rooting for you.
+Under which circumstances would you become more interested in related topi=
+cs?
 
-Best,
-The ClavePrep Team
-https://www.claveprep.com
+How many components can eventually be extracted from the OCaml (and Rust)
+implementation for better reuse with other programming languages?
+
+
+>                                                       If you want to
+> contribute something, please go ahead.
+
+I would appreciate additional development resources also for advanced
+source code analyses and transformations.
+
+Regards,
+Markus
