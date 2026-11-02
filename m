@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793654124;
-	b=VJZqP6GZDDJpSZX9sTsXg+F5kCu0oUrVxki7AZSEoNXpipmZysFWYPUfq3oUPjL6r/MN
-	 iR4CxRgO4S9f/tqt6AiUnk/42EpdNdw7yZX72dxzTQB8UTPGthigr4QVtkoDv6uIaNcf1
-	 ZT/DWhpZtaFb3vswo2SMOT2fdenRmZOZrJ3undnwRrpfxvKn7XEAE+URBg7GDgbw0eljD
-	 k2dSkEqvL64fOp3pmM9ljq+XAfzUuwv2alCtGwTZbrFY9fWsA7wJUMey0/k6vHIQ1BOT6
-	 GyEC3caNJFUJfjgUysO7zTqaBOAyel0iX3LETfgX1GRwVvdWdrzem6hvG+aJJmrUHag==
+	t=1793654125;
+	b=bPRKIUCs4L/p7W0pun1S9x56aCLHPpr1psxgFBlvWPl+Ju+gVbr4FACJUtQcrIgjyu0f
+	 LEGPfpH0mGw4lhXocT+6fSVoAd9+yshYdDb7KDm9pr3yh2C7xCtZg8aRBBMvfa+W0i0YR
+	 Otc8JKRjtL4a7YwdqZQ3kU3tMzDQgXe6Wn2Bn+eqO9rmCnFl+d7F186fNx94EUmt7gLpF
+	 LkFQtiZgA2/GN34Ewy5wz3gVrgtxLlKr7l3oa4lh9rWV8XsGt1jHqT5DtIn4BaYOMADoW
+	 CYCSOrzvUCZBxD48s/z0neFw7ZqI+CMJkzrAPJsduu1720PpKBDxUvDA8Ic4T/1cPsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793654124;
-	h=Received:Delivered-To:Received:DKIM-Signature:From:Subject:Date:
-	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
+	a=rsa-sha256; c=relaxed/relaxed; t=1793654125;
+	h=Received:Delivered-To:Received:DKIM-Signature:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=sT2HMHdYH7BhaioLT/7fvN7hQuj4aII0OBMGpCgKfNc=;
-	b=Z5+nqfvD1hSoAnaOHxNQ8akAgujzAUSbsVBvQs2+D8Q6V4A5qXPyIJiIQS3vnUn4HZpt
-	 8qOzJTkZ00KP7MJypkX0zY8E/vGOOczUVlB4oFpdwMvuoLYmE+r1ek1cJsBedCNgax5fi
-	 3OpL/viP5GWbbxTvMZSc4P5Sd8FP0NFurUQ/h2CfaT2gUWOgj9rMRm5od1cKQuKa9ftPZ
-	 CIjiCgRsPgmfFYt36VQ9Jo8qDM96bm022i2lYXVOqH2fY1eC2Wbb17ZBUCeZCIDnREy+p
-	 PPoIlOyGF8xCqVLuB1EVdj4E0hbV75qv7i3rdvm5TOSM/AwiK0zBue9xovpzZs1OPyA==
+	bh=xKbcLfcqTowvGYcfShlYqFfh0n5vqWAn1cXXiBRQiEs=;
+	b=rcWDB/TnZ44mKeJJMNrT1dC9MT1gZugqqx1gANe9W+H/lY9PFulNGVVY5/bItBoV/p2L
+	 aj6h9jeSOHocqEmc2w08MTMKGfzhWYgLP4uISQ2Hc6ZYKoKJUt1+kfy4nSdqulTf5qifU
+	 /gXCeGVQBdKFbz5seaUT1NUOEJsEpojwcbTEAXtA/8Hql+GHjFvZXg3MevwRPwwqtBiOw
+	 /zKDwxx0jfmZZPKhPxzaUvovO0xQTepicfp1tZuu7FcMM+YBNuvH0/vJ9WHXimwosnIqF
+	 31iIcBKJgOwcJUYmAnwqG6KgxooLrcQB2TZM6NQPueTWon5Qiuqfi1MP8pW1WzXK1RQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lXtywapg;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dVekz09v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBD6606A331
-	for <tools@linux.kernel.org>; Mon,  2 Nov 2026 21:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2B4606A334
+	for <tools@linux.kernel.org>; Mon,  2 Nov 2026 21:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lXtywapg
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dVekz09v
 Received: by smtp.kernel.org (Postfix)
-	id A70841F00A17; Mon,  2 Nov 2026 21:15:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2341F00A16;
-	Mon,  2 Nov 2026 21:15:22 +0000 (UTC)
+	id 075521F00A17; Mon,  2 Nov 2026 21:15:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97E81F00A16;
+	Mon,  2 Nov 2026 21:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793654123;
-	bh=sT2HMHdYH7BhaioLT/7fvN7hQuj4aII0OBMGpCgKfNc=;
-	h=From:Subject:Date:To:Cc;
-	b=lXtywapggN+5PBxHtrI6lUwUVoWkMK/9iwaJfaQiOEvhEZZ65zeGCmxbfNhAXyQEU
-	 LIlQci+NEQ+KcqqbeFiov397JBb2DvLG3OMkxI02xhGeJQUsxZ8qyZ2bKPps+aslMy
-	 xAuCWA5iM75VdMp+nzHXLjfHvp6lr5u414BrM/lfZdejRZj/jvju8614rB1+Px/0y6
-	 82qtMl/drLKvlABDJ4ag3VhEz3AhEPxPxO3gu2Z4p/TN/Dnx9E8C79vjFvRIu7ktqH
-	 dPSa5mrcfPlH9gkWmd4IsfPd8apqY+4NaCW+HAcHJcrkdzlx/LtI3beaHXq0/Z7VMB
-	 gR6SuVuHK316g==
+	s=k20260515; t=1793654124;
+	bh=xKbcLfcqTowvGYcfShlYqFfh0n5vqWAn1cXXiBRQiEs=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=dVekz09vu3mcpPaRa6ZenrkT0E1Qy3n1UH9CDXfQ/50XjJZzGqmvWQTp+0yOrINDs
+	 GuOiG8Fy76HGyqvb927CLjTZ+m7thrjI3uaQ/stc/4o8UpDLDUwB7tvDwQMhy8LAWv
+	 hi6Gu4/e2cKV1+D07GHN65MJLRVfqY1xpJH5KQCKGksVd7hlRwzzIfSB67Lsrf8rrq
+	 5acULlsvzzQ+u/XZzBcmxWD6SMpvTJnAR1gQjrYtNIcK9uGjP4N61Sm55QGcVf4G4v
+	 zUfeFl60FrJ3X0qdf8Br4pkJ2dVx9hQOQfm/WV43w+N/3r7KLqzuJzsN1BNjO2XxlK
+	 Jm+XOCwqv52ZA==
 From: Brian Masney <masneyb@kernel.org>
-Subject: [PATCH b4 0/2] review: fix agent review so that it works properly
- with git worktrees
-Date: Mon, 02 Nov 2026 16:15:15 -0500
-Message-Id: <20261102-b4-review-tui-git-worktree-v1-0-35a925d92023@kernel.org>
+Date: Mon, 02 Nov 2026 16:15:16 -0500
+Subject: [PATCH b4 1/2] review: look up git directory using
+ b4.git_get_common_dir()
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -59,42 +58,65 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMUQrCMBCE4auUfXYhCbGgVxEfzDqtq9DKJrVC6
- d1N7eM/DN9CGabIdG4WMnw06zjU8IeG5HEberDea1NwofXeBU6Rtx9mLpNyr4Xn0V7FAJaTTxL
- FofNHqsDb0On3j18oRbruW57SE1I2ldb1B/pAuL6CAAAA
-X-Change-ID: 20261102-b4-review-tui-git-worktree-c91bc4c0ef15
+Message-Id: <20261102-b4-review-tui-git-worktree-v1-1-35a925d92023@kernel.org>
+References: <20261102-b4-review-tui-git-worktree-v1-0-35a925d92023@kernel.org>
+In-Reply-To: <20261102-b4-review-tui-git-worktree-v1-0-35a925d92023@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Jerome Brunet <jbrunet@baylibre.com>, Maxime Ripard <mripard@kernel.org>, 
  Brian Masney <masneyb@kernel.org>
 X-Mailer: b4 0.17-dev-7426f
-X-Developer-Signature: v=1; a=openpgp-sha256; l=645; i=masneyb@kernel.org;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1569; i=masneyb@kernel.org;
  s=20250903; h=from:subject:message-id;
- bh=tQ08iWJO252KXeAXib6zdL5lB1hYIaiYFybhaStFaQI=;
- b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLJe/E0N1LtxWzlhjvrGR8yH+xJDhPhezq6tOMcUfDa7r
- J1Nf7JpRykLgxgXg6yYIsuSXKOCiNRVtvfuaLLAzGFlAhnCwMUpABNRqmX4H1ewc+5DvVXnWKzW
- 5EzUvnfPoXD7xUwvtfv/WzZrxRYusmVk+OaiyWXH8DGWWePo/0NPbeccTYzerzJ3SuaMzO/SS7i
- lOQE=
+ bh=qVHLdyUUQNMVo7CjUbasoVJCtfjOtaFzhwj6+E5aN3Q=;
+ b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLJe/E1b/nT27z8ML//o2B1Ou1fpduXQg+/2v7wEee9fL
+ +/f0eHxqKOUhUGMi0FWTJFlSa5RQUTqKtt7dzRZYOawMoEMYeDiFICJzLNgZHgozPjXb/uhW/x7
+ AuXUEh36G8qm7vCKDjq00d576VfviX0M/9RjXcsfhzL47DgccTaLZctTvvu7v1ou5W4TMZKPaXn
+ qwgMA
 X-Developer-Key: i=masneyb@kernel.org; a=openpgp;
  fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
 
-Here's a minor cleanup that fixes it so that the agent review works
-properly with git worktrees.
+The agent review code currently looks for a hardcoded .git directory in
+the current tree, however that's not valid when a git worktree is used
+since .git is a file. The current behavior will perform the agent
+review, however the results of the agent review never make it's way back
+to b4.
 
+Let's change this code to use b4.git_get_common_dir() like the other
+parts of this codebase.
+
+Assisted-by: LLM
 Signed-off-by: Brian Masney <masneyb@kernel.org>
 ---
-Brian Masney (2):
-      review: look up git directory using b4.git_get_common_dir()
-      review: update agent-reviewer.md to take into account git worktrees
+ src/b4/review/_review.py | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
- misc/agent-reviewer.md   | 22 +++++++++++++++-------
- src/b4/review/_review.py |  7 +++++--
- 2 files changed, 20 insertions(+), 9 deletions(-)
----
-base-commit: 6be7c6139d7734d84afddf989fa2874935b6d85b
-change-id: 20261102-b4-review-tui-git-worktree-c91bc4c0ef15
+diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
+index b69a7f094bc7..8bb537fb291e 100644
+--- a/src/b4/review/_review.py
++++ b/src/b4/review/_review.py
+@@ -1396,7 +1396,7 @@ def _integrate_agent_reviews(
+     patches: List[Dict[str, Any]],
+     branch: Optional[str] = None,
+ ) -> bool:
+-    """Read review files from .git/b4-review/<tip-sha>/ and merge into tracking.
++    """Read review files from <git-common-dir>/b4-review/<tip-sha>/ and merge into tracking.
+ 
+     The directory-based layout uses:
+     - ``identity.txt`` for reviewer attribution (``Name <email>``)
+@@ -1417,7 +1417,10 @@ def _integrate_agent_reviews(
+         return False
+     head_sha = out.strip()
+ 
+-    review_dir = os.path.join(topdir, '.git', 'b4-review', head_sha)
++    gitdir = b4.git_get_common_dir(topdir)
++    if not gitdir:
++        return False
++    review_dir = os.path.join(gitdir, 'b4-review', head_sha)
+     if not os.path.isdir(review_dir):
+         return False
+ 
 
-Best regards,
---  
-Brian Masney <masneyb@kernel.org>
+-- 
+2.56.0
 
