@@ -1,122 +1,122 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793716190;
-	b=nGCYgIXQ0J4uSOw13dyylqGXkinDp7Us0Ht5wiCCXj3St6EXS8B8gSZUiqUi/m90fJkn
-	 oHygBtNKNbzMmBREk0Km2EyaJxtQ6RQDuieuITYObLxlvh9MMFg5FEwx1MRe7hlKLYJ7a
-	 3FbKQxw6R7ru2o2SPdSN/AT5IQvP5wDdhFMdpaqwkQENPYvdFiwEd0ENWNqxvGrTH/tkt
-	 rri2iUTLRkdOHDOsliEs7grF085rv/hodyzKjz4bBxVYEDcgrzhDV72Se03nQBQhJRtyN
-	 3XLp5UhM5YfJ6Snr/c9XgPiDpPniStcjSpgWqysh+AS1PtoOuJKfQiXKeRzwwCQgK1g==
+	t=1793716191;
+	b=GA0OI5PxpdV432nL/DfFaD6AL4oYDtpvZibD3YoaD24FyL+MeVZDzewX4cn3Yqp3JXys
+	 v3Qql+TxcZsOGkU9b+pntJp8JXkRKecjbswXOciUOXZismbjRfDmWShyBJA9Psm6RABqr
+	 a482qbgg/NF9Om102MIg3WA/TmIZWvK2JR4jmsAfF1aCKp3n4IYdthy+fqLxXRVwabxZa
+	 NWOEuL2M/7Ct3QLW869CztzZCKHugrGt4d5FiKqxAcnuRKo0K+ycEOXbP0dvqrNSSlvlP
+	 rkRpnUoazLebkPjLozHMlI/8+fWcVw0E3DsQBGoSMhTvCvABCfx0Z1VM8H140qdC5rw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793716190;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793716191;
 	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
 	 X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=/XTVW+QspNBUo8ftt3fK5+ngUwmq3JjZpipDWuzoaXk=;
-	b=BcJTLqBCzcdgqwMzAq4ox3/l46cIc2BP4CpESOb7jweRCkklZDE9PWVGXb3HS88z8pFJ
-	 MwAkbgm4eXJoiRC4iMpNs9M0RYPSB0tf/gFHyyQVAxb+TMoMl7FqJ9o31MzhSS97KXLt1
-	 ez6X/N7BargNe109pCpK7hsobXpb5IVgY+bQvh6xmiTOl+Xyux26Pyv5kkWbCMY7KzIAA
-	 E+Q8uWYi49AqOn3WqO0zFAWIVh+wSPp+OZ6p+uEfkVhVBpKLhDcp0bUHwOoZahBAuuHu1
-	 4Er2U4eQJrrMyzTKOiJNK+B+e1kjq8uUnJctp6wL2h53VdSeoezYjPxo0nPgU2VQGzA==
+	bh=WorAsYr4QsIIiULJvg9FetO/HnSimRJ32o/Ac3sAbkI=;
+	b=33q1Tjzk0+YdRfaZ832SZYelBERJyusADisBuCtYsUEI+F55QtJKGqDyx40lihtz/RPj
+	 3DJlmqsng4bcTYPy2vw14bnJhgCbWcqCHRxSj8z2ClnZwZNB2P6BKJUDGGWdqye1+zljU
+	 ZKH9x5et7iI/l1h3Ks5XlfvIFbaw8EWxXB3e0s12LI9hMy1stit2phaI2mcblG82joYKR
+	 suvRTuzpn8j6E+f3HIov78wXe38eC1lczuOa3drxlIMQV3L+uHgjXc7IkuHsasM8Qx3MK
+	 Hbg4GYquLT/myfV2UHPUm3c3FWs5NbBT6/PHpPHU47dCtWrxFVQjOGUCs3nvoux0/Cw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sUSKjLin;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y8KDKqpc;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07813606A326
-	for <tools@linux.kernel.org>; Tue,  3 Nov 2026 14:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C89606A32C
+	for <tools@linux.kernel.org>; Tue,  3 Nov 2026 14:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sUSKjLin
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y8KDKqpc
 Received: by smtp.kernel.org (Postfix)
-	id EDC6A1F00919; Tue,  3 Nov 2026 14:29:49 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.128.45
+	id 1F4FA1F00A23; Tue,  3 Nov 2026 14:29:51 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.128.54
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1793716189;
-	b=KwMPYPEepeo/nJwNmtUeH81GGoXwVCRBiPh4M5vDvXzSlvg6NjZjUxPR8axAMqkuxu4P
-	 PeRPJbC0/E8cJEZq++3gr2Z2hmPPxkJ8E/PDVwFo+rLxZH1TcB10tzeaY/FCv0dN6gVp0
-	 7Q3tw+XVLJzPYsWb7bUdWpBuYhmNXQTBOzVZwU8qBpJuIrcsId0Nf/N26Cu289aND8zaA
-	 7jB+HqwXagX8xJEPatgjaXtYwfLfdHfFMQ6ffnNVXpCQPPUyUvGhwwwy6bwcedg9aP9p7
-	 TigTapPyIBaEcmyl7EC/4Sr2ttYN4Cw12Gjo7xQMtPUDWxrs7AHpaL9aQpHTOHIfMZQ==
+	t=1793716191;
+	b=M20Iv2CL+JOxgD4xhvCZ0bfeOLr1rbZ9AUGVWxavzQMjg/174bUHRIGETflbhOSzcomK
+	 nG+EoaShKxD1jS/Z62G5daWmY9oijEv6sIiKPDvj7kHP74/DdxeIMTDHp92/J199WUw8P
+	 fMyqHXVeFK6NH6aU8eRpxdk2s2kRIS37gAQeyGTKKOcDbcZxus2vLA898IWiU5vB+FW6a
+	 4E4Btr2+xYXprlwPw4gH0jJvOUGPja6R7+Fy6OYr7S4RomFpBrLHhVpvyLMsVOFazOgQT
+	 saexshbV/x87JBslN3k1wfm7thdSnuDs/zDbzwvriHNOuMmz5PQtHeFZNcy1sEFzXXQ==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1793716189;
+	c=relaxed/relaxed; t=1793716191;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=/XTVW+QspNBUo8ftt3fK5+ngUwmq3JjZpipDWuzoaXk=;
-	b=Kq/BNldYmmToCA0h4Amp3XQK4rnRtDpJfTngBX336X3G36MotsdRjpK53B7xLkahNW16
-	 TlWLmO+u+SN1bZKVzhZSdh/WzhRalfddF+Gv4ozuj4fz9kwxvkaC/lUgQ/xn3CRfamQ6a
-	 FHRCnfYlbrLEp3p2nZfXIyTr7gLJRV69ti5XXiQsZEffNNPRaHoXC/GGsSRABWxBBHrI4
-	 4IYy9b2tVWPbJ90Tud46eoQg+LpBG0xDfTc/pxGN3YybmRuRkutKev8ZN9NdzhFBWmlvL
-	 QdxWXnlZpAO80H466g456sCwpa4SWNV84eQmC4BJgs3Wq8AiUx0GO/LLQtIACTlojHA==
+	bh=WorAsYr4QsIIiULJvg9FetO/HnSimRJ32o/Ac3sAbkI=;
+	b=pb7RQfr9qKp9xl9Op0z5umQVHzlU1GH0dUCsCJNSp7eGwEgosgrUF/UE1EHshe/bTXPL
+	 5LCmLp/WgDmhmZNHERGomw8zlmo5dRbs9Xh+WDtqUMqEpzU7uJLt/nUd4Hy41bPt6DBof
+	 9505OzsQ2VBUizGtZG1W7bEl0Ah/PJ2e3PIMP64lbKp9rW9ZA52Q8YF/V1bKMBf9eCkSS
+	 +F8DliPCkd68bcfLTkTikbpNSGIGlZ1NZaIvkfPnv2NuYZQrUjKWztvj4rI+oSxxjTYhZ
+	 MGf9+IYTutDZKTPcb5kg/rx/Sy53TW2KpFxRum1gjdlanIZkGuut8xiGDhPpQEtWN2w==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sUSKjLin;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y8KDKqpc;
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	arc=none smtp.remote-ip=209.85.128.45
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	arc=none smtp.remote-ip=209.85.128.54
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 232BE1F00A1C
-	for <tools@kernel.org>; Tue,  3 Nov 2026 14:29:49 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 558541F00A02
+	for <tools@kernel.org>; Tue,  3 Nov 2026 14:29:50 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sUSKjLin
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 232BE1F00A1C
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y8KDKqpc
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 558541F00A02
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a60f9474c4so43155785e9.0
-        for <tools@kernel.org>; Tue, 03 Nov 2026 06:29:48 -0800 (PST)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a59100fa83so38271185e9.0
+        for <tools@kernel.org>; Tue, 03 Nov 2026 06:29:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793716187; x=1794320987; darn=kernel.org;
+        d=gmail.com; s=20260707; t=1793716188; x=1794320988; darn=kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=/XTVW+QspNBUo8ftt3fK5+ngUwmq3JjZpipDWuzoaXk=;
-        b=sUSKjLinGS3lYWDPBP3eTObb47PPyQ+rUIMyDHwwVvxmeg2s11XTOog35KjqEqaRag
-         SvQf6V1mwZE+7C9pjOxkKfsKjqWDcGLiB45noA4Hbr4vHrl5wz/3Ee7NwdCuIITALpUW
-         TBbt0tTI2T6CyL3+h4WTGk4C+4OwaB76ZMkoCP0PJaCOmiUTk3wWtsOGF1qBeq4W3sYc
-         YEXSqZ+BwrYo7xS7bHnn/0gUFN5pdZdg8i7du7gXEuOUNZ9qco3EUng4sdXMlSQLZxV/
-         pcxz6yNxuPzelBpG04pmewBOZhVJa8pXEsTM25WUfHHw70t5FZEvqV7N4PXR/QVCWTZ7
-         /WXw==
+        bh=WorAsYr4QsIIiULJvg9FetO/HnSimRJ32o/Ac3sAbkI=;
+        b=Y8KDKqpcztQQSvTKENeM9qWkHNmTtIXwkAbKyS6OGAA1EaQQK0unl3RPSxoxnW39YS
+         9bWv0otJdGITBip+3ChAxMU5UbMWkFRklqvdL8j41EX6d3Z8YAbDecYARQnnoXj3Dhi6
+         yrnWpPn04tEhohyWEB1DdqeCnGIszJ44lW/oZWFGhdLOfGktS3+OC6Vy3Tk3+rhEE6Pp
+         55LKPegj36cpYWkd6RNdGeJBiP823CO8Z87dICC5HAc3OtL+D2p8SkTuC9EqJJ3y+Ho/
+         uFCU/xxEJdCe8Xard6s67tf00wdwX9ppUxFVVbk9/zzyNYaXgu3KVzDxo6cCgf9dJq8D
+         Ornw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793716187; x=1794320987;
+        d=1e100.net; s=20260707; t=1793716188; x=1794320988;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/XTVW+QspNBUo8ftt3fK5+ngUwmq3JjZpipDWuzoaXk=;
-        b=vg9+/3Zpw7jT8CDiXRdjcTxt6kb6qXInvB3pXdhmjHFCn1QY13sAcy1w2A7kF2xu6p
-         7RlqmZYNkPCkBJiV3oSa9S6Jte8W/irC+nR8RSyR06gZ1OKt8NaoJxBWyNJ46gcmCrUp
-         bhkqY8LDofN3EpUy3soN/J8rf+sW8y6CNnpNDv6eBvQW0V4HNLEbv7ONGZll+c5twLDz
-         IpFc+JHYYQIusMqSb5bGuPkcuIh0OUbQDBukyClilgU9OmCNaJWd59v+LTurSmx0mgQH
-         KZDVvyjNcXD4lCe4STtTvOH3VFdMpuYxcqTP5uyUVQGnRChH0MUvB/s5h69K5wYJi7r5
-         aERA==
-X-Gm-Message-State: APuU4Z8SpU4yktQjam9CuVV9ybUw4mfEPoymSWqoaME8UqTVM2cdGDdv
-	5fbzzu3Vf9NuSE06JSFp3mkO7rAP6HKdinP3F6KgfKLzD2Y+CZXye5KO2uVlgyAs
-X-Gm-Gg: AYBFou1e1NA5+lY84NBNi4W84hD4mCOHsllmj0/VrHdGq8WJUwFia9eqT/aG5FwEw7F
-	1rENsg3HX60W6ZIiiiHjNwAA8Glk20rhaFDagqCA7WtRyLg1OgEj3E/bm5pkT+YvfwsvG78kfIg
-	hxu5G/7zZQMXArDZqoTY9rcNBwTTeVK04hPSl/1FpOsv7bs5/emcWTeuh5elD4rKn6yVmjWL+ma
-	0z9CH+B6Da2p2QWAihocEusESaQiaxY0d88W5EXF2OVT/rNYrnT/wQ98S75kUso+p9ib2tz91G2
-	Je/7lyFMFvV5nmGNoVgr9RF68snjZrzbGEqD+lIVFsysDbnWcu1VenKB6fN5KugGRTJq9UcQbDu
-	X2M2h1upSa+Fd4qp4FP84HKoiwllcL5VoIzKNNravMoaBV4/mWLu4nEfg1auVn5mbdJvQUl1jOI
-	w0LNPkP640HIKNt/ie0vF4EWFhfQ75zinTGRSF07a71HnVN3s0vzbVskVCTMyYWE1ohgGbhWcUY
-	Us8kZH7GB6bSobK6dpVuOAIRIn7vvCNzG0DAbBkUNtHmeLXVRkeSXt+DXXocGTElk5rNOnGzzu2
-	k1kHBiPr7/qqPsBCSdIeGdhsRXZ+ENReDALDKM+P+Jk5ttXvUdaabsNNiHYWOmSSXnk=
-X-Received: by 2002:a05:600c:6087:b0:4a1:fe26:24f0 with SMTP id 5b1f17b1804b1-4ac1765ce52mr293072815e9.20.1793716187251;
-        Tue, 03 Nov 2026 06:29:47 -0800 (PST)
+        bh=WorAsYr4QsIIiULJvg9FetO/HnSimRJ32o/Ac3sAbkI=;
+        b=Thzmap/tCSO+qSOYz9z4v4TDtvJCg8K/PysrhPG5OoIA16kr+BdIJALMilLLeVh5MJ
+         SG6ceownH4nhSX1BI4ElKExm6sLD8JJRD2FBD2lzVg9MBpS64hWCYZ2XZ5mwA61sjlTm
+         DvmsmORh5eaTSDFk0XpZDOKv4S5tUrAsO7u5qOUDJakwuKSUKBJNBxThK3OPw9Zq+bzL
+         9zrkBJdtlNSEWVieipqMnw6sDA/viUgevgssOFdScq/OZYQ9SXz3TeT42oQlK850pn1o
+         eW+hJ06vxM3rvJCg3kd07LHPO4nKySaloy3LowsjSLNvyNGJncP31hddLdsQe86CZz2l
+         TZdg==
+X-Gm-Message-State: APuU4Z8bH4m+b3b4D6BrSoQETMzAbPX3a4Q+9bxHJhEz9UffHmzTmjCg
+	Hs0d7PcxTQPHmNpoenfadMC7U0Eco8Rq+2Yz1EalJXGRTwGg9xS00G/TO8VhCQFc
+X-Gm-Gg: AYBFou3jKwFK2W+kTI9PQkEGNXe+vZmviGbjlvHTfhFqeXiLiA7qOi4NKSIwiOLNWe8
+	XHWOZYDCTHhKHM4k/7j4UAj3yj/4Ru59M1fFzrjtnna/UlqeVgFob/bfvjjnvRrbVIYpxIhkkDG
+	EQ/K8yOQoncRnpMS0wA+ti/XTk4qxW/oMt5l0wMaBMs2Tj1DEysW0JGC8UEc5UqC7ALlzS+LzsC
+	DiIOx26GIvy6kgkYfcYjmnoK2eimu8NoKYLrzuj11caujaeD7qpnl/wflfKAiaG8uvgMO2PM4Dp
+	AQvNnWVZxszU16yuA5tLfRWRZBGGf4iUoq5bv1rpcLNztERfpZBTH5ZF8L8i8kLXOWP2NbCYDRf
+	QqkjK2sff9CNLAA+RZPYadwaAuBmAptWPSy8w6Eh4nH37FNtDAmFp1Ihre2oIxxj07rFX4tEczt
+	fi/XRMFtwoiNFji8RPmH5OzmUs7b6zGtvn8pGt82jp9yNzH+ltu2ntVGZHbqzZODzL51vqsrYph
+	TkzENxCTtBNopvj3V4vPTPmRQknTTAGi7GT1jhaGQLYTOahUducGq0PVl8HxQM15Vp2k1lkQW2Q
+	Tn592mneRkn2X28GltNbnn9UP6y/Uj++U5u3fHsQEg1tNvh8C4NdeTROyIsCRZiNa3o=
+X-Received: by 2002:a05:600c:8b4c:b0:4a5:1cf1:b7b8 with SMTP id 5b1f17b1804b1-4ac17b2cf8amr304556815e9.28.1793716188554;
+        Tue, 03 Nov 2026 06:29:48 -0800 (PST)
 Received: from 990pro.localdomain ([185.68.248.203])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2a96fc933sm65290805e9.11.2026.11.03.06.29.46
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2a96fc933sm65290805e9.11.2026.11.03.06.29.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2026 06:29:46 -0800 (PST)
+        Tue, 03 Nov 2026 06:29:47 -0800 (PST)
 From: Bernhard Kaindl <bernhardkaindl7@gmail.com>
-Date: Tue, 03 Nov 2026 15:29:36 +0100
-Subject: [PATCH b4 3/5] review: Add shared tracking using
- track_series_from_msgid()
+Date: Tue, 03 Nov 2026 15:29:37 +0100
+Subject: [PATCH b4 4/5] get_pi_search_results(): Add flag to raise errors
+ during search
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -128,192 +128,88 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261103-browse-and-track-series-v1-3-d9c9306f4033@gmail.com>
+Message-Id: <20261103-browse-and-track-series-v1-4-d9c9306f4033@gmail.com>
 References: <20261103-browse-and-track-series-v1-0-d9c9306f4033@gmail.com>
 In-Reply-To: <20261103-browse-and-track-series-v1-0-d9c9306f4033@gmail.com>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Bernhard Kaindl <bernhardkaindl7@gmail.com>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793716179; l=6670;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793716179; l=2769;
  i=bernhardkaindl7@gmail.com; s=20261024; h=from:subject:message-id;
- bh=gV8UvDW+O5zaUdt6u1rAiRbdZwj4x+JDnNockiobT98=;
- b=JvO0CJLieNMPcXndlE88L1xVnq7NLFqkSKQ0MDnfqwXZQybslUBucY3o50Fo4c1YHY8FQcTto
- EMrY82J/89DD4+lahU/RraKLEQ0kWSibHiacVvwvv/u3UbLiduY8WQs
+ bh=V9IA7noXmc8+a5eH9DJ++of2Jt/J/sC0rHVty7afN8Q=;
+ b=Y/ib7bpoQgOUC0XEl17nUyqvV0QIHvHeWdtd6I5EnCkbh4kEGoh3tDdu/LacQnPEx6eIbFPg/
+ SD3wXPm+5SoB6Hv62KG7bxM4DGw2qqqSTIHebJYotsH8r6qXAwGT7C2
 X-Developer-Key: i=bernhardkaindl7@gmail.com; a=ed25519;
  pk=oIjnI/us0Uh5d/WP18V5IQq/FrLPUp+W0JAhJ9QCQIs=
 
-Add track_series_from_msgid() to wrap track_series_from_mailbox()
-
-Assisted-by: LLM [codegen, tests]
 Signed-off-by: Bernhard Kaindl <bernhardkaindl7@gmail.com>
 ---
- src/b4/review/tracking.py         | 47 ++++++++++++++++++++++++++--
- src/tests/test_review_tracking.py | 66 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 111 insertions(+), 2 deletions(-)
+ src/b4/__init__.py         | 11 +++++++++++
+ src/tests/test___init__.py | 13 +++++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/src/b4/review/tracking.py b/src/b4/review/tracking.py
-index 61f7330..d4d2f51 100644
---- a/src/b4/review/tracking.py
-+++ b/src/b4/review/tracking.py
-@@ -686,13 +686,53 @@ def cmd_track(cmdargs: argparse.Namespace) -> None:
-         sys.exit(1)
- 
- 
-+def track_series_from_msgid(
-+    identifier: str, message_id: str, topdir: Optional[str] = None
-+) -> Dict[str, str]:
-+    """Retrieve and track a series without installing command-line signal handlers."""
-+    cmdargs = argparse.Namespace(
-+        msgid=message_id,
-+        no_stdin=True,
-+        localmbox=None,
-+        nocache=True,
-+        noparent=False,
-+        wantname=None,
-+        wantver=None,
-+    )
-+    _, msgs = b4.retrieve_messages(cmdargs)
-+    if not msgs:
-+        raise LookupError(f'Could not retrieve series: {message_id}')
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 704ddec..a254a2f 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -5427,7 +5427,14 @@ def get_pi_search_results(
+     message: Optional[str] = None,
+     full_threads: bool = True,
+     local_sufficient: bool = False,
++    raise_errors: bool = False,
+ ) -> Optional[List[EmailMessage]]:
++    """Fetch and deduplicate messages matching a public-inbox query.
 +
-+    lmbx = b4.LoreMailbox()
-+    for msg in msgs:
-+        lmbx.add_message(msg)
-+    if not lmbx.series:
-+        raise LookupError('No series found in retrieved messages')
-+    wanted_ver = max(lmbx.series)
-+
-+    if b4.can_network:
-+        msgs = b4.mbox.get_extra_series(msgs, direction=1, nocache=True)
-+        if wanted_ver > 1:
-+            msgs = b4.mbox.get_extra_series(
-+                msgs, direction=-1, wantvers=list(range(1, wanted_ver)), nocache=True
-+            )
-+        lmbx = b4.LoreMailbox()
-+        for msg in msgs:
-+            lmbx.add_message(msg)
-+
-+    return track_series_from_mailbox(
-+        identifier, lmbx, wanted_ver, topdir, allow_existing=True
-+    )
-+
-+
- def track_series_from_mailbox(
-     identifier: str,
-     lmbx: 'b4.LoreMailbox',
-     wanted_ver: int,
-     topdir: Optional[str] = None,
-     was_rethreaded: bool = False,
--) -> None:
-+    allow_existing: bool = False,
-+) -> Dict[str, str]:
-     """Track a series from a LoreMailbox, given the desired version and project identifier."""
-     lser = lmbx.get_series(wanted_ver, sloppytrailers=False, codereview_trailers=False)
-     if not lser:
-@@ -803,7 +843,9 @@ def track_series_from_mailbox(
-                 logger.info(
-                     '  Upgrade the series in the review TUI to the new version.'
-                 )
--            return
-+            return {'status': 'updated', 'change_id': existing_change_id}
-+        if allow_existing:
-+            return {'status': 'already-tracked', 'change_id': existing_change_id}
-         raise LookupError(
-             f'This series is already tracked (status: {status_str}, v{cur_rev})'
-             f' as {existing_change_id}.\n'
-@@ -859,6 +901,7 @@ def track_series_from_mailbox(
-             num_patches,
-             ', '.join(missing),
++    Return None when there are no matches. With *raise_errors*, propagate
++    archive failures other than the 404 used to report an empty result;
++    otherwise log those failures and return None as well.
++    """
+     node = get_lore_node()
+     if message is not None and len(message):
+         logger.info(message, node.hostname)
+@@ -5441,6 +5448,8 @@ def get_pi_search_results(
+             local_sufficient=local_sufficient,
          )
-+    return {'status': 'tracked', 'change_id': change_id}
+     except liblore.NotOnMirrorError as ex:
++        if raise_errors:
++            raise
+         logger.info('%s', ex)
+         return None
+     except liblore.RemoteError as ex:
+@@ -5448,6 +5457,8 @@ def get_pi_search_results(
+         if ex.status_code == 404:
+             logger.info('No messages found for that query')
+         else:
++            if raise_errors:
++                raise
+             logger.info('Could not search %s: %s', node.hostname, ex)
+         return None
+     if not t_mbox:
+diff --git a/src/tests/test___init__.py b/src/tests/test___init__.py
+index 764829d..5e654b9 100644
+--- a/src/tests/test___init__.py
++++ b/src/tests/test___init__.py
+@@ -1644,6 +1644,19 @@ class TestLoreFetchMessages:
+         assert line in self._messages(caplog, logging.DEBUG)
+         assert line not in self._messages(caplog, logging.INFO)
  
- 
- def cmd_forget(cmdargs: argparse.Namespace) -> None:
-diff --git a/src/tests/test_review_tracking.py b/src/tests/test_review_tracking.py
-index 349b89d..ab1f3d3 100644
---- a/src/tests/test_review_tracking.py
-+++ b/src/tests/test_review_tracking.py
-@@ -685,6 +685,52 @@ class TestCmdTrack:
-         assert row[column] == expected
-         assert row['revision'] == 1
- 
-+    @mock.patch('b4.retrieve_messages')
-+    @mock.patch('b4.LoreMailbox')
-+    def test_track_series_from_msgid_uses_shared_tracking_logic(
-+        self,
-+        mock_mailbox_class: mock.Mock,
-+        mock_retrieve: mock.Mock,
-+        gitdir: str,
-+        monkeypatch: pytest.MonkeyPatch,
-+    ) -> None:
-+        """Verify track_series_from_msgid() provides shared tracking logic."""
-+        cmdargs_enroll = argparse.Namespace(
-+            repo_path=gitdir, identifier='track-msgid-test'
-+        )
-+        review_tracking.cmd_enroll(cmdargs_enroll)
-+        monkeypatch.setattr(b4, 'can_network', False)
-+        mock_retrieve.return_value = ('cover@example.com', [mock.Mock()])
++    @pytest.mark.parametrize('status_code', [None, 503, 404])
++    def test_search_can_propagate_failures(self, node: Any, status_code: Any) -> None:
++        import liblore
 +
-+        lser = self._make_mock_lore_series(
-+            expected=1,
-+            all_patches_present=True,
-+            cover_msgid='cover@example.com',
-+            first_patch_msgid='patch@example.com',
++        node.get_mbox_by_query.side_effect = liblore.RemoteError(
++            'search failed', status_code=status_code
 +        )
-+        mailbox = mock.Mock()
-+        mailbox.series = {1: lser}
-+        mailbox.get_series.return_value = lser
-+        mock_mailbox_class.return_value = mailbox
++        if status_code == 404:
++            assert b4.get_pi_search_results('s:thing', raise_errors=True) is None
++        else:
++            with pytest.raises(liblore.RemoteError, match='search failed'):
++                b4.get_pi_search_results('s:thing', raise_errors=True)
 +
-+        result = review_tracking.track_series_from_msgid(
-+            'track-msgid-test', 'cover@example.com', gitdir
-+        )
-+
-+        assert result['status'] == 'tracked'
-+        assert result['change_id'] == 'test-change-id'
-+        retrieve_args = mock_retrieve.call_args.args[0]
-+        assert retrieve_args.msgid == 'cover@example.com'
-+        conn = review_tracking.get_db('track-msgid-test')
-+        row = conn.execute('SELECT message_id, revision FROM series').fetchone()
-+        conn.close()
-+        assert row['message_id'] == 'cover@example.com'
-+        assert row['revision'] == 1
-+        again = review_tracking.track_series_from_msgid(
-+            'track-msgid-test', 'cover@example.com', gitdir
-+        )
-+        assert again == {'status': 'already-tracked', 'change_id': 'test-change-id'}
-+
-     @pytest.mark.parametrize(
-         'all_present,expect_warning',
-         [
-@@ -829,6 +875,26 @@ class TestCmdTrack:
-         conn.close()
-         assert revs == {2, 3}, f'expected v2+v3 under one change-id, got {revs}'
- 
-+        v4 = self._make_mock_lore_series(
-+            revision=4, change_id=None, cover_msgid='v4-cover@example.com'
-+        )
-+        v4.fingerprint = 'c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3'
-+        mbx_v4 = mock.Mock()
-+        mbx_v4.series = {2: v2, 3: v3, 4: v4}
-+        mbx_v4.get_series.return_value = v4
-+        mock_mailbox_class.return_value = mbx_v4
-+
-+        result = review_tracking.track_series_from_msgid(
-+            'upgrade-test', 'v4-cover@example.com', gitdir
-+        )
-+        assert result == {'status': 'updated', 'change_id': change_id}
-+        conn = review_tracking.get_db('upgrade-test')
-+        revs = {
-+            row['revision'] for row in review_tracking.get_revisions(conn, change_id)
-+        }
-+        conn.close()
-+        assert revs == {2, 3, 4}
-+
-     def _track(self, series_id: str, identifier: str) -> None:
-         review_tracking.cmd_track(
-             argparse.Namespace(
+     @pytest.mark.parametrize('quiet', [False, True], ids=['loud', 'quiet'])
+     def test_tracker_sees_upstream_thread(self, node: Any, quiet: bool) -> None:
+         import liblore
 
 -- 
 2.43.0
