@@ -1,95 +1,93 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793723906;
-	b=nSm0lLprKZ+112GQbEju10qkvz3uRar79Skv3VNBmRIQjhQAP1ZJTm8RRBGKErT0A/52
-	 U4LD06lHLULJrHptZtwta1j77T0Lne5Yp0KifsCHZMusz2xx9lFQkynX7apSYpmi/clLq
-	 0AFQDBMxT8T9x0KCsj7bPW5UUtsrHVdoAvFb1DaoyU5oDb5UzhDMBRukwGQ+0RzYQc4tz
-	 HwF/9ISvko1Qq6izA0OldNBuelw/LKUGjUrDUpj5okdZdPR1zABCJSn4pTy6w3VGZHFhy
-	 QtYPzxszwRQKlJtPLe1QnytGj/tKRKYtFwykMH//H85yLGsQl63tKOX3TyNMPoVzTew==
+	t=1793728094;
+	b=18i4bypAxsfsUR6FcvEZ5Y1tzRcts2kdGtaJt1o7mXCdtOvzl/noEl+pVhu3Mr99Nj5w
+	 6MlJDS89aojW3w+FQ00aurYlsZPNSDrMwLQSweLO8ng1iNJsNW1UegOURg+eEKg2Nq9HE
+	 KiuR/b0X8lClK2WpZpRjkmenROT5VCr0SQ/N+cFXfgLLx3KH19tSjG1jHxmWhJ6WMGUal
+	 lPnojMqWl1CSK3Qg18na0rhFryBt3RamQOZzTvAOBlPP5tXhRA/hAu4zvm41PQunqthQp
+	 wUHUIY4AzJgybZpCrQImPr2ORgjnfYmXpJThIn6h0A1dxZs+1T0390yMR3+jz0JbYlg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793723906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793728094;
 	h=Received:Delivered-To:Received:DMARC-Filter:DKIM-Signature:
-	 X-CSE-ConnectionGUID:X-CSE-MsgGUID:X-IronPort-AV:Received:Date:From:
-	 To:cc:Subject:In-Reply-To:Message-ID:References:MIME-Version:
-	 Content-Type:Content-ID;
-	bh=HY4Dd0Zbou7obxIpf8q47+lTpf0BW1FP4z2nkWOCkl8=;
-	b=2HUEYil0u6eyrvIbptbUJoxMKK4iCY6Y7MLuYYqEnwph875fN9K1kZZEVoCfYrV0gHKS
-	 of72HiYo1cbz6FMz52n5z5Tj4ZyBfy4LTydjy1YJyznxDhauARPTPUvBuOOzk9TV6hj8M
-	 rLUQGainvjdc3VCzkGa0qN9JQJlBIXDlkDDoiLSAqX33eFO2CV2rIGfyXnOqluFUV9agv
-	 DJZ4Ct8kDt/YJKfzYnY9jqEGbWuxipxxcLvTMvVso6t62TwFsA5jdDI5NEL9oq2tC6CiB
-	 L82+3omuv39OjAakTHFZwTjlaOW+KnHZdmUbe6xjYTlrHDRPtm3zKAEpncBNv5TS19Q==
+	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
+	 UI-OutboundReport;
+	bh=taOA9UbDWUlC58AOCilW4/hn1kzjX1JE47yYJ1jUDdw=;
+	b=XR4ZXiWdQgWHn7o6lDD1BwHDERian/RrAiee/+/TCfN1J/CITEV6VtJslSD3JZ+uo9qW
+	 J4abtvzfAl6uNXVkw8awBMGNrmR34dLlr40LQoED24vwbV3dbP8T0NaqzYAjQDjoDAk9L
+	 D1FtI+cUJJPxqS9wtMa1c/mu3meGmUG4hq+yt+6hBbpOXBIwgqqQY7mv/BeyysZv9eEbV
+	 ocrW1QWugUHlfojVHYarr2GZedPeTrX0wAIfd/y9KuRTgxkjI9bokvQCHgzGnKUgWEqUg
+	 nMNUuibdwVG2ULaXXPiUR+zjtSADa1k8/lo3+eyxVmNxUxwLeYQEy7/okGmt9ZTsFuQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=inria.fr header.i=@inria.fr header.a=rsa-sha256 header.s=dc header.b=JmkENaVU;
+	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=exSJ7rC3;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25862606A324
-	for <tools@linux.kernel.org>; Tue,  3 Nov 2026 16:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D414606A31B
+	for <tools@linux.kernel.org>; Tue,  3 Nov 2026 17:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=inria.fr header.i=@inria.fr header.a=rsa-sha256 header.s=dc header.b=JmkENaVU
+	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=exSJ7rC3
 Received: by smtp.kernel.org (Postfix)
-	id D13B11F00919; Tue,  3 Nov 2026 16:38:25 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=192.134.164.104
+	id E4A7C1F0093A; Tue,  3 Nov 2026 17:48:13 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=212.227.17.12
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1793723905;
-	b=QcpfmsmzNBYvWyqhVpOYmvAM5ufZE1iLldQ9wEil7mH+1lZgPfwZLGFHkTcBmxQ8RXU+
-	 3YDXKpweQstb/YiMw6hbtrVg6/tP/AsnVs82RN56UzXzem3+aJWAcayqWildYrAw4QesP
-	 qKxsAsSG7gjuW04c8t23Qs949EUQ/ntb89LwyP9G/zcLe4lXi8pwRS440xu6otkBpNTA2
-	 FHA+Yga3AFv5tJRpQPXyVEALIA2c73o47j6AaWNidoOxBKUTb30NbvW8qyp4hyM75mf02
-	 1dAjkEO9jzSRHMcjlUc4fT6p6x8AW5om38CyMbVlcxrSlnq3MYtirguukhp4Wcqnh4Q==
+	t=1793728093;
+	b=gvCVyGf4Y6bmJ4wd/kamI1fXxGs1ToUGSDCpgKjfXFi16erREwXuS4SaCcKg/HgR1C3k
+	 HKCXbEyIqEmBrXb7kJNhfwfl2GUkhotihYHfuhayZUKMeZKnKA0cGKEyYUJ6O+ZFOjPZF
+	 CL7hVIXzw015QDenqz4G8fn4P9/vWnrlep9LfEisBscOtOKshNWy/c+Z2D6zuNzwZK52m
+	 +a+MDsnELPaHGhaNmqYPhtHKxzioY6srxpqY/6S+On1Ix6Hpi4cP3HBl9bDHMwWYWputP
+	 g3B22yGMMNLSRGX+utDRzQNffBLU6YF9eVFDK9biSh192SFbKJ8flbWUbSAPgr1Q/tw==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1793723905;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:Received:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-ID;
-	bh=HY4Dd0Zbou7obxIpf8q47+lTpf0BW1FP4z2nkWOCkl8=;
-	b=1hXnOLaImlSjKelRIZiaRQb3L1zdkaCPLJfGDOPLitgIgOnIieaNkflNB5l2cqq4PF2A
-	 9lCBM0bfYguvFwgPs7Dpqf51dGiBwbCZorobv1TVd7v4jz3emwsQboIVM/38rSjR5kp/K
-	 NZade466oyWP+MmZkrwiK85dokw4IREzksXW276II8RPAEtvjd1ib/QKE7J8ad5m/DWRx
-	 juAPWNYfccmMsNP9408YU7GpKKlfISaSwUQ/B0Rt/anboxQCnuY3sPfKTjxKI48hdaYzE
-	 vmhkRFalov0oBF8tGuCurzuBHkG4kTeK4n6Pfnw8W/wBOIVuialY6bq8DWVwKHUJwyw==
+	c=relaxed/relaxed; t=1793728093;
+	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
+	bh=taOA9UbDWUlC58AOCilW4/hn1kzjX1JE47yYJ1jUDdw=;
+	b=drTEbyoN1C8eMg2HIfdm+ivGlvVBRIt82wMImK3X/9ioF/Ggv8tH+hRGE9/U01F0mMMB
+	 a4bVbBpH+8nU1wp0UKrk52JpUPn9GleUmzLhP6iZAcQnwToCFQiyJOKnWMkgzAPIaifVN
+	 zrkaaeCDHJxYLWTP9+CSvOuLDaejZZyhhIT3VN+mcYfpnOdSb8mEamTRIQuj/ApzE2feM
+	 2FqCDW9s6UM/Rr0RlxZX7hxRV2GzF7bWhLIpfAdvYJkBsmAHmiXHeveZXTq687E6BksA4
+	 niLlISW1IoILv0ElhX22oLos+IkiSYobpIL8bUUCO0rSytaYZi/XPaLLlRqlulNlBug==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=inria.fr header.i=@inria.fr header.a=rsa-sha256 header.s=dc header.b=JmkENaVU;
-	dmarc=pass header.from=inria.fr;
-	spf=pass smtp.mailfrom=inria.fr;
-	arc=none smtp.remote-ip=192.134.164.104
-Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=exSJ7rC3;
+	dmarc=pass header.from=web.de;
+	spf=pass smtp.mailfrom=web.de;
+	arc=none smtp.remote-ip=212.227.17.12
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id E9D7F1F000C1
-	for <tools@kernel.org>; Tue,  3 Nov 2026 16:38:23 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id A94341F000C1
+	for <tools@kernel.org>; Tue,  3 Nov 2026 17:48:12 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=inria.fr header.i=@inria.fr header.a=rsa-sha256 header.s=dc header.b=JmkENaVU
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org E9D7F1F000C1
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=inria.fr
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=inria.fr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=inria.fr; s=dc;
-  h=date:from:to:cc:subject:in-reply-to:message-id:
-   references:mime-version:content-id;
-  bh=HY4Dd0Zbou7obxIpf8q47+lTpf0BW1FP4z2nkWOCkl8=;
-  b=JmkENaVULp79A4IA//PvHHncEPCo3gjPpWx1T0OwcZckxWgZXDADpLwU
-   JghimYRMpYedMV4uF/XRiFZ0IUACwkwwsgtFv65bUD6TqRPJBAb6pXt9e
-   0C2FvgyLNki47STtrDoqcC4tl9EIF3USRc7qrHeS/UtDMl/vwwlbTLack
-   o=;
-X-CSE-ConnectionGUID: +EappCgOQEWmrcq4ShxV2A==
-X-CSE-MsgGUID: z9Yaetg/SMCm4g20GmXW3w==
-Authentication-Results: mail3-relais-sop.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=julia.lawall@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
-X-IronPort-AV: E=Sophos;i="6.27,193,1787004000"; 
-   d="scan'208";a="161648430"
-Received: from dt-lawall.paris.inria.fr ([128.93.67.65])
-  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 17:38:22 +0100
-Date: Tue, 3 Nov 2026 17:38:20 +0100 (CET)
-From: Julia Lawall <julia.lawall@inria.fr>
-To: Markus Elfring <Markus.Elfring@web.de>
-cc: cocci@inria.fr, tools@kernel.org, kernel-janitors@vger.kernel.org, 
-    LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [RFC] Replacing special goto statements by direct returns?
-In-Reply-To: <52418f50-b3ff-461d-8e66-c10f70e35b2a@web.de>
-Message-ID: <161f567a-f33-7865-8787-844a299ef9c1@inria.fr>
-References: <52418f50-b3ff-461d-8e66-c10f70e35b2a@web.de>
+	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=exSJ7rC3
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org A94341F000C1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1793728089; x=1794332889; i=markus.elfring@web.de;
+	bh=taOA9UbDWUlC58AOCilW4/hn1kzjX1JE47yYJ1jUDdw=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=exSJ7rC34/st85E7GY6MCIZUVb72cKgwihHbxBgIrArhXZAJbWzm7fiYbXFFHuhr
+	 WFwMyxrCWTtje1vAflw9KOP7Iypc7vKIR/AMdTvh52BMYXXdClXQAC/KmvUn6xEL3
+	 7FiNSEs0/or5FDb2Skevqgdo0AvXv0Mj7IIQM1h9108gZ875FASkqTImhMQjd8hoo
+	 kMy+e8e7cW86NEUPiTM66CsUFOBrFb81pXsphzWKj7bug/QdksRso6g7oaR1fUVkK
+	 H0nKSz/SolXMYD6M6NEUBIL5mXnU/u6rqoQUoChh/baQq72VDV+s9qyY3HYnN5DbD
+	 jDsMXvI5FcQ7EhKmYQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mvsq5-1wYWqM3Cdz-016gEz; Tue, 03
+ Nov 2026 18:48:09 +0100
+Message-ID: <aa076739-d573-43b7-85ad-d2a6e88db1e9@web.de>
+Date: Tue, 3 Nov 2026 18:48:06 +0100
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -99,120 +97,193 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-489044682-1793723734=:3641"
-Content-ID: <791c737b-3292-d1ac-a25-2578cac8bd7@inria.fr>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] Replacing special goto statements by direct returns?
+To: Julia Lawall <julia.lawall@inria.fr>, cocci@inria.fr
+Cc: tools@kernel.org, kernel-janitors@vger.kernel.org,
+ LKML <linux-kernel@vger.kernel.org>
+References: <52418f50-b3ff-461d-8e66-c10f70e35b2a@web.de>
+ <161f567a-f33-7865-8787-844a299ef9c1@inria.fr>
+Content-Language: en-GB, de-DE
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <161f567a-f33-7865-8787-844a299ef9c1@inria.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:+FmgXsgMq0TU4TV2pE/6jopS+3uxk/uaDUQq+AYZy9SgckjsTNB
+ MEvDA/iKTB+6LPMZ1723ydpv0wLIcUFVEX9G3SuoMshdJ+LmnfLlbaP0D/xokFnAWcwUcbQ
+ mEuWRIyOHr/zr0UdtowxRpxsg8dLXAnO4OwmWP+h5gorPiEbJx7EqkHf1gRhcGCb7AMqwGT
+ riGfOXDR6aoLGxbkYBGWg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:LcFd1KGuBpw=;tkx6WxeHQdRAOHR26JoCGZJbbeW
+ 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
+ 1JXlDAzspepc=
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-489044682-1793723734=:3641
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: 8BIT
-Content-ID: <d52ad096-714-ddd1-6ad5-f1ea219fc09a@inria.fr>
-
-
-
-On Tue, 3 Nov 2026, Markus Elfring wrote:
-
-> Hello,
->
-> The documentation for the Linux coding style contains the following information.
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/coding-style.rst?h=v7.4-rc1#n526
->
-> “…
-> The goto statement comes in handy when a function exits from multiple
-> locations and some common work such as cleanup has to be done.  If there is no
-> cleanup needed then just return directly.
-> …”
->
->
-> Thus it seems that the following script for the semantic patch language
-> can work to some degree.
->
->
-> @replacement exists@
-> identifier label, var;
+> I think you can do:
+>=20
+> @useful@
+> statement S;
+> expression error;
+> identifier error0;
+> position p;
 > @@
-> -goto label;
-> +return var;
->  ...
-> -label:
->  return var;
->
->
->
-> Unfortunately, patches would be generated then by such a simple SmPL code
-> which would still preserve return statements that became unreachable.
->
-> Test result example:
-> Markus_Elfring@Sonne:…/Projekte/Linux/next-analyses> time spatch --allow-inconsistent-paths fs/xfs/libxfs/xfs_btree.c …/Projekte/Coccinelle/janitor/replace_goto_by_return2.cocci
-> …
-> @@ -1735,7 +1735,7 @@ xfs_btree_increment(
->                 --lev;
->                 error = xfs_btree_read_buf_block(cur, ptrp, 0, &block, &bp);
->                 if (error)
-> -                       goto error0;
-> +                       return error;
->
->                 xfs_btree_setbuf(cur, lev, bp);
->                 cur->bc_levels[lev].ptr = 1;
-> @@ -1747,8 +1747,6 @@ out1:
->  out0:
->         *stat = 0;
->         return 0;
-> -
-> -error0:
->         return error;
->  }
+>=20
+> S
+> error0:@p
+>   return error;
+>=20
+> @useless@
+> position p1 !=3D useful.p;
+> expression error;
+> identifier error0;
+> @@
+>=20
+> f(...) {
+> (
+> <...
+> - goto error0;
+> + return error;
+> ...>
+> &
+> ...
+> error0:@p1
+>   return error;
+> )
+> }
+>=20
+> I have not tested this.
 
-I think you can do:
-
-@useful@
-statement S;
-expression error;
-identifier error0;
-position p;
-@@
-
-S
-error0:@p
-  return error;
-
-@useless@
-position p1 != useful.p;
-expression error;
-identifier error0;
-@@
-
-f(...) {
-(
-<...
-- goto error0;
-+ return error;
-...>
-&
-...
-error0:@p1
-  return error;
-)
-}
-
-I have not tested this.  It might not work, or it might be very slow.
-
-julia
+This is a pity.
 
 
-> …
-> real    0m1,074s
-> user    0m0,995s
-> sys     0m0,071s
->
->
->
-> How should such a source code transformation approach be improved accordingly?
->
-> Regards,
-> Markus
->
->
---8323329-489044682-1793723734=:3641--
+> It might not work,
+
+I got corresponding development concerns.
+
+* You proposed to use a statement variable in the SmPL rule =E2=80=9Cusefu=
+l=E2=80=9D.
+  How safe is the control flow connection to the subsequent code?
+
+* Another metavariable declaration is probably helpful for =E2=80=9Cf=E2=
+=80=9D in the SmPL rule =E2=80=9Cuseless=E2=80=9D.
+
+
+Questionable test result:
+Markus_Elfring@Sonne:=E2=80=A6/Projekte/Coccinelle/janitor> spatch --parse=
+-cocci replace_goto_by_return-Julia.cocci
+=E2=80=A6
+minus: parse error:=20
+  File "replace_goto_by_return-Julia.cocci", line 25, column 2, charpos =
+=3D 400
+  around =3D '...',
+  whole content =3D & ...
+
+
+Would you be looking for a better SmPL conjunction?
+
+
+> or it might be very slow.
+
+I hope that experiences can grow also for more desirable software run time=
+ characteristics.
+
+Regards,
+Markus
