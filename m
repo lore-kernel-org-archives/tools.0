@@ -1,91 +1,121 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793715850;
-	b=Pu9mrfQxMKaf1faFiLyR/ALr9U3NyVR6VtJdGLGmFMk1/hn6rc8zmplQGf1WXUd9m8q6
-	 YGNZFPuccpevbNwbjpi8Qybv0+YXEeYfxSNhhttOKx0nh/QGoetVj5VNH38Cc0nUPGxcj
-	 +zvIDLWKZQOmuf5Th24rLGF+/se+ay38RNecp7NAlFtNq5A0lbx19zYaB4qsOoAW9xQLW
-	 Cq32gdO+AFvLCPts+ZmVUyFS+qsU5VC1AbAqQV6GmOH0qVW5IjrGDyXYoRrRTjGpqxy5m
-	 xgcaxqYPiYLC8UcHopKRn4/+d8U2anqVs1YEI0/GROJh38bMzYPfZGL7/rbHfLNXQSA==
+	t=1793716186;
+	b=J+qGZxekeUkY5K5lRLNmM7KY1h/eDemQkKLjf4SIBCkFR94Lilbqj637lMx5vyI1XPqH
+	 UtBZfJ2qNvew3hANboj9q7C8i/NXdjzhOnarJLoTttMbHzaowyfxvhE7WW9GSgaLnyQaq
+	 eFkLjDP/cKDL6Txjbs3JlpzUebb73xuhkmEJdY+hxWibxQU4Pgo770N2c6n2IqUZhigtg
+	 U/1y2qYfII2X5ro20i+w/2vRyI4OTz+K42m3r9F9Tx786aPO/n2VFLAMGONrmPays8CJ9
+	 pRNTilNL38+TywmkqnpjvQ+/P9cOMNCEPsKHe4qoSE56k149jINJPknQHkE75wNONTg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793715850;
-	h=Received:Delivered-To:Received:DMARC-Filter:DKIM-Signature:
-	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:To:
-	 Content-Language:Cc:From:Subject:Content-Type:
-	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
-	bh=nie98FWDqN9gi2xgJoMHipVQYiig9NK4TUDtric5vU4=;
-	b=KO7Mn7uz6jJ9KYXqoZJHS1dysRkL+BuThj4EatEZtKNK9fkGjQdbZkjxB+QQC8m8ag0h
-	 OyTSo0RGBz3CVx3yANc2ynIHYSw3QFaeidGxChWSNq5NpO2Wle6Tglxg2GK+3jpauSJin
-	 NEZROEISVPwKbiOf1YUb1PtGVJ94SNe2fXAdKkXKzg/Nn6JctQiXmVEEDUdj3qYhqo1XG
-	 HvtCGBByOLKUMJf/of7sWbb5aSc2lSQ3vwzCgBEP3u02I8bYH3GKVbUpL2hsfZQ7qXwCc
-	 +D5511GSiALMANetksMsy3dAE/Oy1agpbvSv4Gc7mI+fY3oqfG8+x0x5+SiCmJ4nbqg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793716186;
+	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
+	 X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 Received:From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key;
+	bh=n5P8SumX85pmAMFmpfCcv2dwvbiFnhS/33NEAUkzoto=;
+	b=Ohc0RdmXJz5etqQuyHxBW71m/xTXgHC5QY7V53dpGBAwCaVxEbkhhmvHpZNnv6+FJEUb
+	 yJ+Vy2FRRIWIYKecPyXNz2ogbPIvgwBM2mKFAODIO+XjtgkuxpDZTis1iNV4YkAxMfq6T
+	 PulQznPT8auawgp+ASXjazko4XFEt0ECzyky015EzCgl2nQpmKdT14KDGNRBakdgjW+1W
+	 juzgd6ZKPhET4vzfwbVQEzbH+BrQxdd5Vb/CJAWcw+823blj6KDT6ebJaKUlyIKdWfOMQ
+	 BTwC6aKe6jZbgraTLE7IhRHPVcjP1G4qrYStE6GmnEog8UgZ6d5qkj3kRcZENfkxQbw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=rYRwbvgX;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WVurpPB2;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525D0606A326
-	for <tools@linux.kernel.org>; Tue,  3 Nov 2026 14:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A70606A32D
+	for <tools@linux.kernel.org>; Tue,  3 Nov 2026 14:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=rYRwbvgX
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WVurpPB2
 Received: by smtp.kernel.org (Postfix)
-	id EB0B21F000C1; Tue,  3 Nov 2026 14:24:09 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=212.227.17.11
+	id 7AECD1F00919; Tue,  3 Nov 2026 14:29:45 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.128.47
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1793715849;
-	b=2wnPk821exczy4G78sKnElrrhYzJvFXpBg3rvoNkAjnJO/ucfoBl/ueEaEY8f3g3AckR
-	 ZxgvbTXTVcWE8i81iPgJ9pP7z5cKYUIlPAVglcevotcgDbC12kF6gQqNZWiKCahu6hd35
-	 yvv0gInBiHF1t6ZBmldMxAkxBzDo5Ie4B9l01EETLy4v4b/mvqCn4G7/SGGwpohV4ufzw
-	 7f4sYrr+v9FLyN0RM13YHcyT3Zz9IuRtDwTCGFOUYTPRbTocB5A1MKqpztZgOX+ZD0h+8
-	 EoGRpAT9cMnIRSu2q+OL+qRra3D4mOW563Nex5YpPfgJnfEawB0v/I0OlbugTu/sS1g==
+	t=1793716185;
+	b=xdvXcy4Is2bC+XgMB5AImfQIzS1OWJy7bqEm7dxtBODcWF87wxWKvAV1DfF+EYwjK4g7
+	 5g7x2zFU4cOoB8MWq5Bg5eR/SWSNL07/w9Xk+jGdBW9SdE4GiQq37LGCAuRWX6bN3r5jQ
+	 plYj+JHC4liDsK6N+4lyagvvOT+txhId8d/lr/JS8sgjIUkXxxJTXpfFjw2NMnSiEzyLB
+	 ppZTYUYyp16uRENm1YGlr9JxcmCRMSqL9Mw7a60mJXuxDQsxreNSPNPDgGnXEK7xR0qgQ
+	 kA75ue7rVm9mp/R69a0c8WHHU4vBIZaTLg2VA03wAmzpW9V/TQFxxrPq4H4HSl3mqeA==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1793715849;
-	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:To:Content-Language:Cc:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
-	 UI-OutboundReport;
-	bh=nie98FWDqN9gi2xgJoMHipVQYiig9NK4TUDtric5vU4=;
-	b=xzLkBc7hhBTFSDKYwfiFLGPPbCGY79BRTKrPBLsq55qifrSjYX3UTTPyIszcHUe2PM1W
-	 kBdYyt5x/W6wqmBb2cZEdG9VPSsI4U72qZPSqvYYNy9lWf9gi0YfEEeTVRMjRtdzLBL0r
-	 jat6BwiRYRqL8CXbcp3cqMvfdEhxWVPFdZHILaX5L62VcLNqiNRT79C8YswBPe9bli2Ji
-	 3MrRoTrHB7Uvmxsc6CFvncJ0UQllsxnEpfERw9aT/2KgNs6ITzuqBMjJqPSMd32if2mS8
-	 +q801mOR2YngezU8tR/k94dAL+/mfsfjEBPgWR9n5K28QTtWddU+B3jbcLm7vBK8Y6w==
+	c=relaxed/relaxed; t=1793716185;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
+	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key;
+	bh=n5P8SumX85pmAMFmpfCcv2dwvbiFnhS/33NEAUkzoto=;
+	b=bJk6CATbXjo93KDyZK4WS5/4Ac3hnu+2Y5zJoau2uNBNxUx2hGUtRyQAoiB3AV6GDblv
+	 bXnqEzPN8e36ggk98xa1EMU5/o/3FifDfzgQ6D0sRIc45BbjWRpz56FN7bQRlKLee4OdM
+	 QiS5SVlhMRFw0urRBQ9HEgchO6SQFU9MA49TCBig1YEcaOE0Oon3aTGqfuiZm6gGBD/wL
+	 LbVft/scHWng67ncS0ROyxFEBVb2Mphz0DqBLy1mY7moCOkkTY05bhZAEjOWCiTGQU7zJ
+	 kvFwbCx+ZTg72sAI20Ps5+ZmUGN8eBmN0CSLKVne5d3zk6R+sRDWd5FsLR3AycYxA8A==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=rYRwbvgX;
-	dmarc=pass header.from=web.de;
-	spf=pass smtp.mailfrom=web.de;
-	arc=none smtp.remote-ip=212.227.17.11
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WVurpPB2;
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=209.85.128.47
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 9DE3D1F0093A
-	for <tools@kernel.org>; Tue,  3 Nov 2026 14:24:08 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id DF4041F000C1
+	for <tools@kernel.org>; Tue,  3 Nov 2026 14:29:44 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=rYRwbvgX
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 9DE3D1F0093A
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1793715846; x=1794320646; i=markus.elfring@web.de;
-	bh=nie98FWDqN9gi2xgJoMHipVQYiig9NK4TUDtric5vU4=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:From:
-	 Subject:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=rYRwbvgX4eXolKA3aOgFge3taQDY/3pUsVLkVXk/Ufqsv7/j/i0EVMlYYGky2TQZ
-	 jWzS+nni+PfKB5Xh1WoCo5rKwTzbd1NEASQjpO2Xv11LrodRz2RGxW+xzBsLuDMKU
-	 4s4yGsMwPFrfIxTwLUk9dIZD3KOFdw3gjmHZgtAzgix6wWxsZhcQvSYYxH+wqaej/
-	 524wA7XJn4a8w+QDYKDguy/3AMn/llDvuaj9py8grvz6GciySwTXGYAHV/seF0cMq
-	 rtxb52tXJLEePyrYuf9aBh5+z/8VNRLpzE7qKprgQ9lWRUFMQvtYXcYsdHVbyVpuQ
-	 /2ij17NbfT9h4KqtBA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MLifq-1x6a3S1ALA-00Yila; Tue, 03
- Nov 2026 15:24:06 +0100
-Message-ID: <52418f50-b3ff-461d-8e66-c10f70e35b2a@web.de>
-Date: Tue, 3 Nov 2026 15:23:23 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WVurpPB2
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org DF4041F000C1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a20a37703bso33911095e9.1
+        for <tools@kernel.org>; Tue, 03 Nov 2026 06:29:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793716183; x=1794320983; darn=kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=n5P8SumX85pmAMFmpfCcv2dwvbiFnhS/33NEAUkzoto=;
+        b=WVurpPB2kopmhMDvFQ88BkTSrip8zmLo1y/FWe4F0eYab8wTnEdD8k9tQsaPzhCuv1
+         zLyWShZ0El/MEdy7F18bVT/AUA25Zz/ViwBW1dVpTif6wGjecEhR5BwD4Y1SkvpCo24J
+         mhuqWhk4LkOvsVw7WTtnA4OAumFGmO/yKAPMx+xhvAUAVus2ZVcVpGt795B6iuEBAsjm
+         Mk/XRh5xRzxS6rErZVet9sOzhBqWSGylSiHAs6X2UC2BO+FJX+bZBfBahfYi8p2ij+zT
+         mVgqcaCF3JlRvPAtjeu5pQ4JeABlTimz+vQwEDDC/6a7svzgXTypWm+BKvFtIni2gIvI
+         hzIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793716183; x=1794320983;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=n5P8SumX85pmAMFmpfCcv2dwvbiFnhS/33NEAUkzoto=;
+        b=YM2IHfH3KcsJQjnRuCs6EPOpsPyp0tGwIF5VU/r3Xzj7Mwm8cRvMQa+tNq13TqP/Fu
+         XBFrca4kXBTH71jRjbD8u3N8Rbj3R1K+my/JhvPO4SzBlTORWmW/CiTjAe7ByO1t6Kqn
+         vlZtF4VwIkpQJNHJLpVt/oOc9xvW8kM8wkdGLQPi5XlEcEP3s2aUHES3BkYxqCpIpN/4
+         8L4b8EoLpi7/MtpechJoWpucSiv3BtDXkMsk7eyeFpDgcYpTXXdmf3j0aqsogOhdEnBC
+         0J3ISt83rjdfkOr6lTura58Awps3ywvvHKyDjtHz+VZC5uhxBoPL4LIUPjqQv1uJE0d1
+         /mgQ==
+X-Gm-Message-State: APuU4Z9IyyEQzSZHEAFVgnmRt1INT/6WRcHfo/5irABWHlYy3VFhWzmD
+	i0e//MvPlBmg/nIlRl7fBRVTvEfqDvSTon1lp6qakg+w10LURnjNITZh
+X-Gm-Gg: AYBFou3lRgHCXmb8LoxxVKPqi3mgesz8xGhab/j5cFx6fAvtFS4I9fpWxhxAnWSCnJg
+	W0e/YAziwHjaUp3XP8r5YK5sx/jyb6phY5SZMlnbWmSejZz/KbwrsWW6WYpnq68wRA4m7399sgd
+	FNWwN5WNWqKyUchAmosla8Bq3fS19Dq8pQwZOL6wQRParkAcw+sF7WxK+zykCXyDi4/m8IiMIBf
+	j8GmjWEFkk95dGd0/hQYwKMOOw8smsMz182h21oSvdahaaWxYt+yY7HVMYB5D2QvPsLHJWwokTY
+	nNE9LDuUeUqIVIuPeYxVnPFnFvEZv/Ng5lTWTop3R8h+o9lSqV5beL8vTzx+vsQ/1HTo5D54Nsp
+	ck14eWxore9t86NI4dhtBz+dNI0jBfoKMPOvQjZIIESgQ/xAvRbo9EuIsjLYYqRouKg/5qwGlIA
+	+IudX1bT5ZHRmMWSrXE3OddaTfRIT3+UOINXXM8r5Vcd0pd7QOQevCluIsovVJwlMms9c9YZP8b
+	o2YWCqpNUd4ExK5fF0FSY775nGMSmhsm5SDYkx8u4Ix/oRb1CWOxfed9Yhr94ikExw7t5lm1lpv
+	IGbE46sCJj58K9Jxpw7GIViE7a6Lqv/YaC3nmBSGLkaVJg==
+X-Received: by 2002:a05:600c:e552:b0:4b1:4da2:ca99 with SMTP id 5b1f17b1804b1-4b14da2cb6fmr97803735e9.10.1793716182891;
+        Tue, 03 Nov 2026 06:29:42 -0800 (PST)
+Received: from 990pro.localdomain ([185.68.248.203])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2a96fc933sm65290805e9.11.2026.11.03.06.29.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Nov 2026 06:29:41 -0800 (PST)
+From: Bernhard Kaindl <bernhardkaindl7@gmail.com>
+Subject: [PATCH b4 0/5] review: edit tracked series in the TUI
+Date: Tue, 03 Nov 2026 15:29:33 +0100
+Message-Id: <20261103-browse-and-track-series-v1-0-d9c9306f4033@gmail.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -95,181 +125,55 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: cocci@inria.fr, tools@kernel.org
-Content-Language: en-GB, de-DE
-Cc: kernel-janitors@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: [RFC] Replacing special goto statements by direct returns?
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:2LDeXWUFgmyKDJfO8OLnATJI3uY/MdjXzbdTUQUD1ESqsxzPDLB
- HhGh5mPTlDPi+3HVD1f33JyC09RbvOtRw3JqJqzySsmNlwxN8jRG6qC0hI3PdGkGSDBwQkG
- TawUY9dGytJWEZOnDnjU0nb/GU+/6H3OYZyDYUeuZNHaEbkNRFlRIHWFGqmRi88kc2bxSt1
- iRbx5D5dyAofIHew9kx1Q==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:SiR72DuQUQQ=;CkNSSXQGasztztB6fglZ2qbVUSE
- 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
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAM3v6WoC/yXMywrCQAyF4VcpWRtoQlHxVcRFZiZqFKaS1AuUv
+ rujXf4HzjdDqJsGHLoZXF8WNtYWtOkgX6VeFK20Bu55S9QzJh/foSi14OSS77gCqDJo2RHTXhj
+ a++F6ts9fPkIa4LRu8Uw3zdOPhGX5ArdELzJ/AAAA
+X-Change-ID: 20261102-browse-and-track-series-ea4ed71218a2
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Bernhard Kaindl <bernhardkaindl7@gmail.com>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793716179; l=1510;
+ i=bernhardkaindl7@gmail.com; s=20261024; h=from:subject:message-id;
+ bh=ckWtPMNAK0sOz72AxbTFSwBg1ktxBk7OV7BtuGztumw=;
+ b=3VDovJKMhmtyQg5z9c7k441I/EylIhgSdJENrleZizsB/CsgKx1+tcm0Qywfe6/J8XXTOdB8Z
+ o6V96DHOXQyAXw8LHgMr0Y2hF9Cgv6vhKh6WqgC3T/NRLc7lWbR9zoK
+X-Developer-Key: i=bernhardkaindl7@gmail.com; a=ed25519;
+ pk=oIjnI/us0Uh5d/WP18V5IQq/FrLPUp+W0JAhJ9QCQIs=
 
-Hello,
+Adding submissions to the tracking list requires leaving the TUI and
+running 'b4 review track' with a message ID. Reviewers may also want
+to abandon several tracked series together when cleaning up the list.
 
-The documentation for the Linux coding style contains the following inform=
-ation.
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
-cumentation/process/coding-style.rst?h=3Dv7.4-rc1#n526
+Add an edit screen, available with the E key, where reviewers
+can browse Lore submissions, select series to track, and abandon
+multiple tracked series in one operation without leaving the TUI.
 
-=E2=80=9C=E2=80=A6
-The goto statement comes in handy when a function exits from multiple
-locations and some common work such as cleanup has to be done.  If there i=
-s no
-cleanup needed then just return directly.
-=E2=80=A6=E2=80=9D
+Signed-off-by: Bernhard Kaindl <bernhardkaindl7@gmail.com>
+---
+Bernhard Kaindl (5):
+      review: Split track_series_from_mailbox() from cmd_track()
+      review: Convert track_series_from_mailbox() to use LookupError()
+      review: Add shared tracking using track_series_from_msgid()
+      get_pi_search_results(): Add flag to raise errors during search
+      review: Edit tracked series in the TUI using the E key
 
+ docs/maintainer/review.rst         |   17 +
+ src/b4/__init__.py                 |   11 +
+ src/b4/review/tracking.py          |   78 ++-
+ src/b4/review_tui/_modals.py       |  889 ++++++++++++++++++++++++-
+ src/b4/review_tui/_tracking_app.py |   48 +-
+ src/tests/test___init__.py         |   14 +
+ src/tests/test_review_tracking.py  |   66 ++
+ src/tests/test_tui_tracking.py     | 1267 +++++++++++++++++++++++++++++++++++-
+ 8 files changed, 2374 insertions(+), 16 deletions(-)
+---
+base-commit: ce4c1158edb292caca0ce4a6087e5edecc1b0371
+change-id: 20261102-browse-and-track-series-ea4ed71218a2
 
-Thus it seems that the following script for the semantic patch language
-can work to some degree.
+Best regards,
+--  
+Bernhard Kaindl <bernhardkaindl7@gmail.com>
 
-
-@replacement exists@
-identifier label, var;
-@@
--goto label;
-+return var;
- ...
--label:
- return var;
-
-
-
-Unfortunately, patches would be generated then by such a simple SmPL code
-which would still preserve return statements that became unreachable.
-
-Test result example:
-Markus_Elfring@Sonne:=E2=80=A6/Projekte/Linux/next-analyses> time spatch -=
--allow-inconsistent-paths fs/xfs/libxfs/xfs_btree.c =E2=80=A6/Projekte/Coc=
-cinelle/janitor/replace_goto_by_return2.cocci
-=E2=80=A6
-@@ -1735,7 +1735,7 @@ xfs_btree_increment(
-                --lev;
-                error =3D xfs_btree_read_buf_block(cur, ptrp, 0, &block, &=
-bp);
-                if (error)
--                       goto error0;
-+                       return error;
-=20
-                xfs_btree_setbuf(cur, lev, bp);
-                cur->bc_levels[lev].ptr =3D 1;
-@@ -1747,8 +1747,6 @@ out1:
- out0:
-        *stat =3D 0;
-        return 0;
--
--error0:
-        return error;
- }
-=E2=80=A6
-real    0m1,074s
-user    0m0,995s
-sys     0m0,071s
-
-
-
-How should such a source code transformation approach be improved accordin=
-gly?
-
-Regards,
-Markus
