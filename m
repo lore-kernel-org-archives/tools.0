@@ -1,150 +1,91 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793713220;
-	b=cErNshPFILT5Flp9vQpx1QZqxXn2J4ASu35eJGyfgq+9wJ4lbuSgYqq/RLgy+8gNQDjH
-	 KRWq8ES1qfeZiQZyvDHYYWJbLmbL+H7OBGCz6ELXDgGoJ50W7rMmQ/JgAxdpvlJC2zIiI
-	 NeRVeU1tqgMvoiUVbQ+bdby0+UgDdDwWidA8SSUcawKVueP3jGi7GaBKDjDTpPBCcR7lV
-	 pfA5b7VgI1AQrSO4Cgc0svJMqJoyb/sYPTavNTTcuJUomtbq1vvSxtlpFZ2OQJ2m+jmpP
-	 itxVWYrhSou3GieKz8fyNDT85wugNLgh0iNYW8ofjozPj1G98dhu056rU5A88m5JUZA==
+	t=1793715850;
+	b=Pu9mrfQxMKaf1faFiLyR/ALr9U3NyVR6VtJdGLGmFMk1/hn6rc8zmplQGf1WXUd9m8q6
+	 YGNZFPuccpevbNwbjpi8Qybv0+YXEeYfxSNhhttOKx0nh/QGoetVj5VNH38Cc0nUPGxcj
+	 +zvIDLWKZQOmuf5Th24rLGF+/se+ay38RNecp7NAlFtNq5A0lbx19zYaB4qsOoAW9xQLW
+	 Cq32gdO+AFvLCPts+ZmVUyFS+qsU5VC1AbAqQV6GmOH0qVW5IjrGDyXYoRrRTjGpqxy5m
+	 xgcaxqYPiYLC8UcHopKRn4/+d8U2anqVs1YEI0/GROJh38bMzYPfZGL7/rbHfLNXQSA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793713220;
-	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
-	 Received:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:From:To:Cc:
-	 Subject:Date:Message-ID:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:X-Proofpoint-GUID:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=CdU/xZiE8GGmMNm4gWpBiWqp92ot09ZXqqgOBU1m13k=;
-	b=wvGXE7owJHX3TQZEf4rP5XO+TrT4MqDKXol+IeISzmtYerPUBAYHaXr/qS7cuBE6Pc31
-	 gRpU269IVm9+McPthA79UvDIBQQ6ZPdWfHaZFXHz55X1vtlwyEqbPqJ8nWbSKWyn8359T
-	 sL8HrhhpxwgjMoPg2bs/6ejKEXoeaZVQVtjBj9zVO4aaar4mSDyobgbwq4w5ZUw1+OjYd
-	 rTouqRYiysM85y7giU0nRevYKru3aBEvVeVGC6xWBAmcoN19AhsiYUwevJcdeBU5U+4gK
-	 K0VOtTN72U2BY2Bv0Bf3FH0v0kgiVYahq6fYe3u9e5+IAGRZD1NlrxnBPcpygwYGFYA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793715850;
+	h=Received:Delivered-To:Received:DMARC-Filter:DKIM-Signature:
+	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:To:
+	 Content-Language:Cc:From:Subject:Content-Type:
+	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
+	bh=nie98FWDqN9gi2xgJoMHipVQYiig9NK4TUDtric5vU4=;
+	b=KO7Mn7uz6jJ9KYXqoZJHS1dysRkL+BuThj4EatEZtKNK9fkGjQdbZkjxB+QQC8m8ag0h
+	 OyTSo0RGBz3CVx3yANc2ynIHYSw3QFaeidGxChWSNq5NpO2Wle6Tglxg2GK+3jpauSJin
+	 NEZROEISVPwKbiOf1YUb1PtGVJ94SNe2fXAdKkXKzg/Nn6JctQiXmVEEDUdj3qYhqo1XG
+	 HvtCGBByOLKUMJf/of7sWbb5aSc2lSQ3vwzCgBEP3u02I8bYH3GKVbUpL2hsfZQ7qXwCc
+	 +D5511GSiALMANetksMsy3dAE/Oy1agpbvSv4Gc7mI+fY3oqfG8+x0x5+SiCmJ4nbqg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Fj1Zxchw;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=TVfKdLH0;
+	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=rYRwbvgX;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C808606A326
-	for <tools@linux.kernel.org>; Tue,  3 Nov 2026 13:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525D0606A326
+	for <tools@linux.kernel.org>; Tue,  3 Nov 2026 14:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Fj1Zxchw;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=TVfKdLH0
+	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=rYRwbvgX
 Received: by smtp.kernel.org (Postfix)
-	id C34C31F00919; Tue,  3 Nov 2026 13:40:19 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=205.220.168.131
+	id EB0B21F000C1; Tue,  3 Nov 2026 14:24:09 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=212.227.17.11
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1793713219;
-	b=ngAcf6sqCgBAV1biBi4/jDM06JQuFOT9JlIYH6rDvLTGcrd1+sT5RT7BXwNXqr+IIKtw
-	 7GeZGr/HbOJuL5QKuQbewOSNTJ5I30XpPegpTkAumkoNW6PfCuMaoWYxVHKTkxr0S5ptW
-	 E2BbpSExnpkscRHE22zTPFBL4ZrE4JQOhLOhDIRjD6vr124h3luLNaXfG3YUM8ybjuUit
-	 P/NE2nnswJdf6Eiie+mCZAIfpH30wfOTdIZyq8Zhe5jzNUdbzogEjhI4CZ6QysyC3zrYh
-	 x7tYyTfpShxHxjueeH9ZTahs640chhi6tgdZBWMJy9/MbWqM6H/Ip7o3c1qdVdc4F/Q==
+	t=1793715849;
+	b=2wnPk821exczy4G78sKnElrrhYzJvFXpBg3rvoNkAjnJO/ucfoBl/ueEaEY8f3g3AckR
+	 ZxgvbTXTVcWE8i81iPgJ9pP7z5cKYUIlPAVglcevotcgDbC12kF6gQqNZWiKCahu6hd35
+	 yvv0gInBiHF1t6ZBmldMxAkxBzDo5Ie4B9l01EETLy4v4b/mvqCn4G7/SGGwpohV4ufzw
+	 7f4sYrr+v9FLyN0RM13YHcyT3Zz9IuRtDwTCGFOUYTPRbTocB5A1MKqpztZgOX+ZD0h+8
+	 EoGRpAT9cMnIRSu2q+OL+qRra3D4mOW563Nex5YpPfgJnfEawB0v/I0OlbugTu/sS1g==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1793713219;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
-	 X-Received:X-Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Details-Enc:
-	 X-Authority-Analysis:X-Proofpoint-GUID:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=CdU/xZiE8GGmMNm4gWpBiWqp92ot09ZXqqgOBU1m13k=;
-	b=Rb76Wi3b9w3gA3M1j4S7aGdcBEhNcv04bk1/82IfGhIlxaSy2I6FSHGEwEiuZRd3gP14
-	 KafyLD7yfFX3y+vfT6VLjL56TMP/WlG31eKTXQ9moo6M5/+aTZ88SUF4qSf8KMRoFs5zS
-	 gjs3lWP+f1E3Q6YmAfcBAdDnLMOsRVXpBt4f+Ni6mx2gh9LtpMcxaJMh7/Z3U4qNQObAU
-	 5oap1HKaLy93CSv92B1q0qtFLazCDKIbdx5GQp1f+3BEcMmioUJXm6TGv75C0aemhUk6+
-	 0BaPXIldGOYdMUFHpMgDNVcLFCrN2fNDmBj/FDy4KO4u4UBg5g6Xw4A0RLMrILcNLJw==
+	c=relaxed/relaxed; t=1793715849;
+	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:To:Content-Language:Cc:From:Subject:
+	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
+	 UI-OutboundReport;
+	bh=nie98FWDqN9gi2xgJoMHipVQYiig9NK4TUDtric5vU4=;
+	b=xzLkBc7hhBTFSDKYwfiFLGPPbCGY79BRTKrPBLsq55qifrSjYX3UTTPyIszcHUe2PM1W
+	 kBdYyt5x/W6wqmBb2cZEdG9VPSsI4U72qZPSqvYYNy9lWf9gi0YfEEeTVRMjRtdzLBL0r
+	 jat6BwiRYRqL8CXbcp3cqMvfdEhxWVPFdZHILaX5L62VcLNqiNRT79C8YswBPe9bli2Ji
+	 3MrRoTrHB7Uvmxsc6CFvncJ0UQllsxnEpfERw9aT/2KgNs6ITzuqBMjJqPSMd32if2mS8
+	 +q801mOR2YngezU8tR/k94dAL+/mfsfjEBPgWR9n5K28QTtWddU+B3jbcLm7vBK8Y6w==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Fj1Zxchw;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=TVfKdLH0;
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	arc=none smtp.remote-ip=205.220.168.131
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=rYRwbvgX;
+	dmarc=pass header.from=web.de;
+	spf=pass smtp.mailfrom=web.de;
+	arc=none smtp.remote-ip=212.227.17.11
+Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id A04931F000C1
-	for <tools@kernel.org>; Tue,  3 Nov 2026 13:40:18 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 9DE3D1F0093A
+	for <tools@kernel.org>; Tue,  3 Nov 2026 14:24:08 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Fj1Zxchw;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=TVfKdLH0
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org A04931F000C1
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6A3DZ8Tb3973655
-	for <tools@kernel.org>; Tue, 3 Nov 2026 13:40:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=CdU/xZiE8GGmMNm4gWpBiW
-	qp92ot09ZXqqgOBU1m13k=; b=Fj1Zxchw5+wbjZ+hm/vxt9LfxZGj05wmojJD33
-	O1rhltBXV5cTdpvAg+uNS/3WEQ1nPzjTX2oy8RVzvMW6LWvuhMAfhG7gS35Zd61e
-	PTo3DOivjPGceAd2DooOfCc4TYPTMwTqLakuk4i65CPAbE5DTfoDxREj+3EwljmW
-	HQgTznup8xQEYBsxd86GcuGiLnoS5VVwxT+ofbLRbQxUCLVUPK5yOVaWSrYM2CjB
-	U72goNFuLdQTip4nff6TGWEGi9/cqcoJd7sbIZpIs3qr16wQiXp+dQeS+Wqa8SAD
-	PA7q8r2a4YGXZNfvQQXSxeVeGJkaHdbjreKOG4aYmnHb8N5g==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hq3uy337r-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <tools@kernel.org>; Tue, 03 Nov 2026 13:40:17 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-53395d51187so48550781cf.1
-        for <tools@kernel.org>; Tue, 03 Nov 2026 05:40:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1793713217; x=1794318017; darn=kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CdU/xZiE8GGmMNm4gWpBiWqp92ot09ZXqqgOBU1m13k=;
-        b=TVfKdLH0rdJ5/KeMUVSHIxqt1RRHHSZznbXStzJES8h/mv0Mlj1iI3uhaTqfsG+A5e
-         aMjx92976KcNsCBwXYhpTUzAu15kTl+qdbS9Z6508lVbj/ww/MB3D9g/nDyl0/0hy28F
-         FZv0R9LcndnsuR/8NRGYu50sOEJZ0rlAuhuIApMbWoedJ+qbXDq53JhNql9aMko3evdC
-         htzFXEsimeqCzJ3KbpD3Dk0Bi9dc1iM21I7ZMwGg+zvoZAnTHsMrVoYvLqaz/bbOKvyr
-         oTZOWTwtY7oW4A24Zl8uqJZsHzwH4y98uBBxQMCQprZopvzvG0MMs38knUkwwnoimRHQ
-         0TMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793713217; x=1794318017;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=CdU/xZiE8GGmMNm4gWpBiWqp92ot09ZXqqgOBU1m13k=;
-        b=t8ybnMupu2zwugE/5qmCu+dZi0Df3GwXC2kBBh0FldSWw6XLbnmq1v2WL9g6lHjV9B
-         5V7vsACd0qPclaKCx+KJ9vymO9nhTc5ysYZ2Vx7FurCTJM0ky/b7vUb4yt+nky0V3Uio
-         xGUJbqmHEUA3Qhuf11PJFlw/71agiQMyul81uZoV8Ho/3yAv0qD2w4561jTjrYVSNPid
-         2NP/ixJfLTohbDrL123Sx7LgA8ic/7khPvGKTvhhCp7AZfQ+jD9giCiBZDp+mTz4Acan
-         efUjFJzw6SFjXGw7vD2R3J0ZCOAopctsCK0ZmMmgYqH/a133y9gqAMbMbg51+36qTnB1
-         R6xA==
-X-Gm-Message-State: APuU4Z/TwHO9y1Dcob5fKfxGop7Ss83+NXLP7GVlcADLmNVBH4kq3igr
-	aiPJyI00kOn9wkZYCjslqDWQD++m+jruJw06c25XxOABpgc9Cqv2Tkfuyn5IdC3KjDKtwtfAnzr
-	M2TpZF+EBnnRadT/j6mLLMuQkHz7a6QS5K8oLIUnBSHlURP286171uoeF/ls=
-X-Gm-Gg: AYBFou3QowRIQdHNl/2Onqq7ROnhY2UZpZbr3fqH94bYooSxf4cmpGTuSTcPXXlbBTQ
-	uGPTBpgtcYl1oPBdHiHlHRMmOcOyrzoGhlnNFqNyLzPBWTOpBJZFPK2/OwC3kDSfYDJvUfgBjGq
-	/ABeZJg7GhhGBT0+CUOvmdY/C2J52SQ4+3rN8DoSKys8vRvly9lA5RC8qqTOVyc4PZsSOpPNxlF
-	f5SE70TW52bjBWx3jwG6tFbACafNJgEjDQrEePNVe72n3KzIdDyfq7EV/E5Zv+j8p00JCM/4fnj
-	oSeeLZn3xhosn1WIbcvtyKiHbFtP02iLxFaTNLlw4+myeNFb7UiLZc5q8L7gojT5G4C3P2dHM/N
-	xH8udwCcT0Evncte6sLobdR7aMhNbFmp+igbZsORXS3WnDBfQBrLp89GtosbOUg==
-X-Received: by 2002:a05:620a:4626:b0:93e:942f:b8ae with SMTP id af79cd13be357-94421659fafmr2168718885a.26.1793713216679;
-        Tue, 03 Nov 2026 05:40:16 -0800 (PST)
-X-Received: by 2002:a05:620a:4626:b0:93e:942f:b8ae with SMTP id af79cd13be357-94421659fafmr2168713885a.26.1793713216121;
-        Tue, 03 Nov 2026 05:40:16 -0800 (PST)
-Received: from quoll ([178.197.218.7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2a82cf248sm87646195e9.2.2026.11.03.05.40.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2026 05:40:15 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-To: tools@kernel.org
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH b4 v2] trailers: Skip testing of Documentation
-Date: Tue,  3 Nov 2026 14:39:54 +0100
-Message-ID: <20261103133957.239398-1-krzysztof.kozlowski@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=rYRwbvgX
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 9DE3D1F0093A
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1793715846; x=1794320646; i=markus.elfring@web.de;
+	bh=nie98FWDqN9gi2xgJoMHipVQYiig9NK4TUDtric5vU4=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:From:
+	 Subject:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=rYRwbvgX4eXolKA3aOgFge3taQDY/3pUsVLkVXk/Ufqsv7/j/i0EVMlYYGky2TQZ
+	 jWzS+nni+PfKB5Xh1WoCo5rKwTzbd1NEASQjpO2Xv11LrodRz2RGxW+xzBsLuDMKU
+	 4s4yGsMwPFrfIxTwLUk9dIZD3KOFdw3gjmHZgtAzgix6wWxsZhcQvSYYxH+wqaej/
+	 524wA7XJn4a8w+QDYKDguy/3AMn/llDvuaj9py8grvz6GciySwTXGYAHV/seF0cMq
+	 rtxb52tXJLEePyrYuf9aBh5+z/8VNRLpzE7qKprgQ9lWRUFMQvtYXcYsdHVbyVpuQ
+	 /2ij17NbfT9h4KqtBA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MLifq-1x6a3S1ALA-00Yila; Tue, 03
+ Nov 2026 15:24:06 +0100
+Message-ID: <52418f50-b3ff-461d-8e66-c10f70e35b2a@web.de>
+Date: Tue, 3 Nov 2026 15:23:23 +0100
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -154,303 +95,181 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: cocci@inria.fr, tools@kernel.org
+Content-Language: en-GB, de-DE
+Cc: kernel-janitors@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: [RFC] Replacing special goto statements by direct returns?
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: xatqkI8EJX4QDTG1kH94ingUpxTO2SJ9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDA1NCBTYWx0ZWRfX3v5j/hJyMbNu
- 7J4wnR/t28PeGpDOrIHYhQ6AjE1/T345tsAAmvjPvnoohMXbO3DuadqfpZZlOxpuuvZjazcFwCH
- +nhd209pzk86RlTXbLM4RIYQTQh+9ZWOgAnvyz2IXtrsugiVjy6KwQzVowCMRbqNZgfJyhaiTvL
- EtkH2NivzHzONUuLkY7I+0Z3Vop9HXuNER0ztoS/MJHEE2xWmH1UmAKR+TD22vlGiGDsutyA91V
- H1ifUnjbrRDBZ6OWH0gCCqbIhYiS85WZhu54jWBXAUps65XRfYuVya6/mAtfjEybYy+GNs6vH34
- apDb5tiWTUU/5gwkDU7V3ppYRTm9twejZBIVF0CnogIvUAQ6tTCFlVKUuvdXFSMEKXA7W64tuQ+
- lDHGIpHip0pHSqWMTxfomoJ+NxgfF+JOv+Egm+TXT89PCP1NJg2XsWvCGYoLZ9hQBvj+OZoutLv
- FZeu5DryNvWWlWx0KYQ==
-X-Authority-Analysis: v=2.4 cv=VoG2kO2n c=1 sm=1 tr=0 ts=6ae9e441 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=uyPgTw0bjBTS2cVxpiNm5w==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=2V6DY6BgAAAA:8 a=A1X0JdhQAAAA:8 a=cTNnn_u2j2R5-SN4ySUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
- a=ldqKKs2zR4t-S6fqr-1n:22
-X-Proofpoint-GUID: xatqkI8EJX4QDTG1kH94ingUpxTO2SJ9
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDA1NCBTYWx0ZWRfX9BuXk10vJcoc
- 0tdSlEf88sae209R48oq/P1pOTlqeyMNJYs5UFF5EFIoM/250Pg6c4cNgluhKfOBA1mB7m5lWls
- V87uxjy2I8NxtN8RhH5kXzKEloDP6po=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-03_02,2026-11-03_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 spamscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 impostorscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
- definitions=main-2611030054
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:2LDeXWUFgmyKDJfO8OLnATJI3uY/MdjXzbdTUQUD1ESqsxzPDLB
+ HhGh5mPTlDPi+3HVD1f33JyC09RbvOtRw3JqJqzySsmNlwxN8jRG6qC0hI3PdGkGSDBwQkG
+ TawUY9dGytJWEZOnDnjU0nb/GU+/6H3OYZyDYUeuZNHaEbkNRFlRIHWFGqmRi88kc2bxSt1
+ iRbx5D5dyAofIHew9kx1Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:SiR72DuQUQQ=;CkNSSXQGasztztB6fglZ2qbVUSE
+ 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
 
-Documentation patches cannot be tested, at least in Linux kernel
-project, because that part of code is never executed.  Documentation
-can be build-time validated, e.g. Devicetree bindings can be checked
-with 'make dt_bindings_check, but this is not testing how Linux kernel
-understands the testing.  Just like build testing is not testing.
-Otherwise every bot should receive credits.  However people often give
-blanket tags on cover letter without understanding that it does not
-really apply.
+Hello,
 
-Drop the "Tested-by" trailer for patches which have "Documentation"
-path, to avoid misleading (or fake-crediting) testing annotations.
+The documentation for the Linux coding style contains the following inform=
+ation.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/coding-style.rst?h=3Dv7.4-rc1#n526
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+=E2=80=9C=E2=80=A6
+The goto statement comes in handy when a function exits from multiple
+locations and some common work such as cleanup has to be done.  If there i=
+s no
+cleanup needed then just return directly.
+=E2=80=A6=E2=80=9D
 
----
 
-Changes in v2:
-1. Rebase - previous code stopped working...
-2. Re-do and also apply this logic to `shazam`, not only `trailers`
+Thus it seems that the following script for the semantic patch language
+can work to some degree.
 
-This is vibe coded, and might be close to slop, but it seems it works
-and looks reasonable good to my (inexperienced in b4 codebase) eye.
----
- src/b4/__init__.py         |  28 +++++++
- src/b4/ez.py               |   3 +
- src/tests/test___init__.py | 159 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 190 insertions(+)
 
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index 704ddec9b5c6..fcf4e075c753 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -238,6 +238,8 @@ MERGE_BASE_TAG = '_tag'
- MERGE_BASE_SPECIFIED = '_specified'
- MERGE_BASE_GUESS = '_guess'
- MERGE_BASE_MARKERS = (MERGE_BASE_TAG, MERGE_BASE_SPECIFIED, MERGE_BASE_GUESS)
-+# Patches touching only these paths cannot be tested, so Tested-by is dropped
-+UNTESTABLE_PATHS_PREFIX = 'Documentation/devicetree/bindings/'
- DIFFSTAT_RE = re.compile(r'^\s*\d+ file.*\d+ (insertion|deletion)', flags=re.M | re.I)
- # Body lines that mboxrd escapes by adding one more '>'
- MBOXRD_FROM_RE = re.compile(rb'^(>*From )', flags=re.M)
-@@ -2180,6 +2182,25 @@ class LoreMessage:
-                 self._blob_indexes = set()
-         return self._blob_indexes
- 
-+    def is_untestable_trailer(self, ltr: 'LoreTrailer') -> bool:
-+        """Tell whether *ltr* is a Tested-by for a patch nothing can test.
-+
-+        Devicetree bindings are never executed, so a Tested-by on a patch
-+        touching only Documentation/devicetree/bindings/ credits testing
-+        that did not happen.  Such tags usually come from blanket
-+        Tested-by replies to the cover letter.
-+        """
-+        if ltr.lname != 'tested-by':
-+            return False
-+        paths = {
-+            path
-+            for oldpath, _ohash, newpath, _fmod in self.blob_indexes
-+            for path in (oldpath, newpath)
-+        }
-+        return bool(paths) and all(
-+            path.startswith(UNTESTABLE_PATHS_PREFIX) for path in paths
-+        )
-+
-     @property
-     def has_attestation_headers(self) -> bool:
-         """Tell whether :attr:`attestors` would have anything to check.
-@@ -3509,6 +3530,13 @@ class LoreMessage:
-         if extras:
-             new_trailers += extras
- 
-+        for ltr in list(new_trailers):
-+            if self.is_untestable_trailer(ltr):
-+                logger.info(
-+                    '    x %s (bindings-only patch)', ltr.as_string(omit_extinfo=True)
-+                )
-+                new_trailers.remove(ltr)
-+
-         if sobtr in new_trailers:
-             # Our own signoff always moves to the bottom of all trailers
-             new_trailers.remove(sobtr)
-diff --git a/src/b4/ez.py b/src/b4/ez.py
-index 2441badbb288..80ab142aef57 100644
---- a/src/b4/ez.py
-+++ b/src/b4/ez.py
-@@ -2420,6 +2420,9 @@ def update_trailers(cmdargs: argparse.Namespace) -> None:
-         parts = b4.LoreMessage.get_body_parts(lmsg.body)
-         midmask = str(config['midmask'])
-         for fltr in lmsg.followup_trailers:
-+            if lmsg.is_untestable_trailer(fltr):
-+                logger.debug('  - %s (bindings-only patch)', fltr.as_string())
-+                continue
-             if fltr not in parts[2]:
-                 rendered = fltr.as_string(omit_extinfo=True)
-                 via_msgid = fltr.lmsg.msgid if fltr.lmsg else ''
-diff --git a/src/tests/test___init__.py b/src/tests/test___init__.py
-index 764829d7e756..51db39ced370 100644
---- a/src/tests/test___init__.py
-+++ b/src/tests/test___init__.py
-@@ -900,6 +900,165 @@ def test_link_trailer_dedup(body_link: str, extra_link: str, expect_count: int)
-     assert len(link_trailers) == expect_count
- 
- 
-+def _make_diff(paths: List[str]) -> str:
-+    return '\n'.join(
-+        f'diff --git a/{path} b/{path}\n'
-+        'index 1111111..2222222 100644\n'
-+        f'--- a/{path}\n'
-+        f'+++ b/{path}\n'
-+        '@@ -1 +1 @@\n'
-+        '-old\n'
-+        '+new'
-+        for path in paths
-+    )
-+
-+
-+def _make_lmsg(paths: List[str], body_trailers: str = '') -> b4.LoreMessage:
-+    raw = (
-+        'From: Test Author <test@example.com>\n'
-+        'Subject: [PATCH] test\n'
-+        'Date: Mon, 1 Jan 2024 00:00:00 +0000\n'
-+        'Message-Id: <patch@example.com>\n'
-+        '\n'
-+        'Commit body here.\n'
-+        '\n'
-+        'Signed-off-by: Test Author <test@example.com>\n'
-+        f'{body_trailers}'
-+        '---\n'
-+        f'{_make_diff(paths)}\n'
-+    )
-+    msg = email.message_from_string(raw, policy=email.policy.EmailPolicy(utf8=True))
-+    return b4.LoreMessage(msg)
-+
-+
-+BINDING = 'Documentation/devicetree/bindings/foo/vendor,foo.yaml'
-+
-+
-+@pytest.mark.parametrize(
-+    'paths, trailer_name, expected',
-+    [
-+        ([BINDING], 'Tested-by', True),
-+        ([BINDING], 'tested-by', True),
-+        (
-+            [BINDING, 'Documentation/devicetree/bindings/bar/vendor,bar.yaml'],
-+            'Tested-by',
-+            True,
-+        ),
-+        ([BINDING], 'Reviewed-by', False),
-+        ([BINDING], 'Acked-by', False),
-+        # Other documentation is not bindings
-+        (['Documentation/process/foo.rst'], 'Tested-by', False),
-+        (['Documentation/devicetree/usage-model.rst'], 'Tested-by', False),
-+        # Code next to the binding can be tested
-+        ([BINDING, 'drivers/foo/foo.c'], 'Tested-by', False),
-+        (['arch/arm64/boot/dts/vendor/board.dts'], 'Tested-by', False),
-+        (['drivers/foo/foo.c'], 'Tested-by', False),
-+        # No diff at all: nothing to judge by
-+        ([], 'Tested-by', False),
-+    ],
-+)
-+def test_is_untestable_trailer(
-+    paths: List[str], trailer_name: str, expected: bool
-+) -> None:
-+    lmsg = _make_lmsg(paths)
-+    ltr = b4.LoreTrailer(name=trailer_name, value='Tester <tester@example.com>')
-+    assert lmsg.is_untestable_trailer(ltr) is expected
-+
-+
-+@pytest.mark.parametrize(
-+    'paths, kept',
-+    [
-+        ([BINDING], False),
-+        ([BINDING, 'drivers/foo/foo.c'], True),
-+    ],
-+)
-+def test_fix_trailers_drops_tested_by_on_bindings(
-+    paths: List[str], kept: bool
-+) -> None:
-+    lmsg = _make_lmsg(paths)
-+    tested = b4.LoreTrailer(name='Tested-by', value='Tester <tester@example.com>')
-+    reviewed = b4.LoreTrailer(
-+        name='Reviewed-by', value='Reviewer <reviewer@example.com>'
-+    )
-+    lmsg.followup_trailers = [tested, reviewed]
-+    lmsg.fix_trailers()
-+    _, _, trailers, _, _ = b4.LoreMessage.get_body_parts(lmsg.body)
-+    assert reviewed in trailers
-+    assert (tested in trailers) is kept
-+
-+
-+def test_fix_trailers_keeps_tested_by_already_in_bindings_patch() -> None:
-+    """Only new trailers are dropped; the patch's own ones stay."""
-+    lmsg = _make_lmsg(
-+        [BINDING], body_trailers='Tested-by: Tester <tester@example.com>\n'
-+    )
-+    lmsg.fix_trailers()
-+    _, _, trailers, _, _ = b4.LoreMessage.get_body_parts(lmsg.body)
-+    tested = b4.LoreTrailer(name='Tested-by', value='Tester <tester@example.com>')
-+    assert tested in trailers
-+
-+
-+def test_cover_tested_by_skips_bindings_patch() -> None:
-+    """A blanket Tested-by on the cover letter is not applied to a
-+    bindings-only patch, but still lands on the rest of the series."""
-+
-+    def _mkmsg(raw: str) -> email.message.EmailMessage:
-+        return email.message_from_string(
-+            raw, policy=email.policy.EmailPolicy(utf8=True)
-+        )
-+
-+    hdr = 'From: Test Author <test@example.com>\nDate: Mon, 1 Jan 2024 00:00:00 +0000\n'
-+    cover = _mkmsg(
-+        hdr + 'Subject: [PATCH 0/2] Add foo\nMessage-Id: <cover@example.com>\n'
-+        '\nThis adds foo.\n'
-+    )
-+    patches = []
-+    for counter, (subject, path) in enumerate(
-+        [('dt-bindings: add foo', BINDING), ('foo: add driver', 'drivers/foo/foo.c')],
-+        start=1,
-+    ):
-+        patches.append(
-+            _mkmsg(
-+                hdr + f'Subject: [PATCH {counter}/2] {subject}\n'
-+                f'Message-Id: <patch{counter}@example.com>\n'
-+                'In-Reply-To: <cover@example.com>\n'
-+                'References: <cover@example.com>\n'
-+                '\n'
-+                f'{subject}.\n'
-+                '\n'
-+                'Signed-off-by: Test Author <test@example.com>\n'
-+                '---\n'
-+                f'{_make_diff([path])}\n'
-+            )
-+        )
-+    reply = _mkmsg(
-+        'From: Tester <tester@example.com>\n'
-+        'Date: Mon, 1 Jan 2024 01:00:00 +0000\n'
-+        'Subject: Re: [PATCH 0/2] Add foo\n'
-+        'Message-Id: <reply@example.com>\n'
-+        'In-Reply-To: <cover@example.com>\n'
-+        'References: <cover@example.com>\n'
-+        '\n'
-+        '> This adds foo.\n'
-+        '\n'
-+        'Tested-by: Tester <tester@example.com>\n'
-+        'Reviewed-by: Tester <tester@example.com>\n'
-+    )
-+    lmbx = b4.LoreMailbox()
-+    for msg in [cover, *patches, reply]:
-+        lmbx.add_message(msg)
-+    lser = lmbx.get_series()
-+    assert lser is not None
-+
-+    am_msgs = lser.get_am_ready()
-+    assert len(am_msgs) == 2
-+    bodies = [b4.LoreMessage.get_payload(m)[0] for m in am_msgs]
-+    assert 'Reviewed-by: Tester <tester@example.com>' in bodies[0]
-+    assert 'Tested-by: Tester <tester@example.com>' not in bodies[0]
-+    assert 'Reviewed-by: Tester <tester@example.com>' in bodies[1]
-+    assert 'Tested-by: Tester <tester@example.com>' in bodies[1]
-+
-+
- class TestTakeFlow:
-     """Simulate the 'take' flow using the actual code path: build email
-     messages (as if fetched from lore), feed through LoreMailbox →
--- 
-2.53.0
+@replacement exists@
+identifier label, var;
+@@
+-goto label;
++return var;
+ ...
+-label:
+ return var;
 
+
+
+Unfortunately, patches would be generated then by such a simple SmPL code
+which would still preserve return statements that became unreachable.
+
+Test result example:
+Markus_Elfring@Sonne:=E2=80=A6/Projekte/Linux/next-analyses> time spatch -=
+-allow-inconsistent-paths fs/xfs/libxfs/xfs_btree.c =E2=80=A6/Projekte/Coc=
+cinelle/janitor/replace_goto_by_return2.cocci
+=E2=80=A6
+@@ -1735,7 +1735,7 @@ xfs_btree_increment(
+                --lev;
+                error =3D xfs_btree_read_buf_block(cur, ptrp, 0, &block, &=
+bp);
+                if (error)
+-                       goto error0;
++                       return error;
+=20
+                xfs_btree_setbuf(cur, lev, bp);
+                cur->bc_levels[lev].ptr =3D 1;
+@@ -1747,8 +1747,6 @@ out1:
+ out0:
+        *stat =3D 0;
+        return 0;
+-
+-error0:
+        return error;
+ }
+=E2=80=A6
+real    0m1,074s
+user    0m0,995s
+sys     0m0,071s
+
+
+
+How should such a source code transformation approach be improved accordin=
+gly?
+
+Regards,
+Markus
