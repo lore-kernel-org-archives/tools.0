@@ -1,122 +1,121 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793722882;
-	b=rBuizLe9oA0WVJjRC3Go+xm3CZosGkTW+H7YCF40ZwYHdfdNfZXwUiLE+Vl/oRe7DGyn
-	 77HvXGIkGWASGbZfBlzkumctF63yGyp3xnrGhQUZ2DJGmilewHG8GDcnphfN4Kae0KUjy
-	 MJrmJ++Rq7UzhPlzwLLaU7IpF7enFhDBHZmtPcWOPhhsLua8B0Tu5KtUo8Yu8mD6RQctI
-	 +V73B3hsqO/mrV5UT6Bs3KlRlVYumb5EC5WdIvVi2zSj2X38CfizAWvPYlcp7ncX+doKf
-	 Z0XVwmZcZ2No7T/O2o/Yd8++SWMkUqDxzFcmifaa0xmEMTc5Zs20nDj6PI6+GsRnOBw==
+	t=1793722886;
+	b=k6RW4wqz1kI1P7gpaTTO6scZi0LAUd1qS4vuP9wVicqLhHQhq2TvP+lFtZZnKaRxcsqN
+	 zEWYoRfAT6cl1TmKl7A3AIlCtX2glG+wSeez8HUkfzxen53qEbaOkCvqY0F50wsdqNIHt
+	 YAeqGoZ86rEuVCLStm/O1LzlPQZLr+xLYE0EjYcQwiz/7CWdnlCpwvrEBOFf+uxwjwi2q
+	 YfU1dUnzFDOvucfI96eg+X74OnGfNjFCVGwqC7wPN3b8+flL0pOskyMbyb7HUdhebv+5L
+	 RS6PnMiIcGQpxDpRlCrohhJOrUUZCafnJj1pdHMkINl/0xlGYGq9+QuaRkjHTrUS56Q==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793722882;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793722886;
 	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
 	 X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=9Lsu43DpXE3kVIp7HdGb+tQdqDY7wyldPr+YmJKGeLM=;
-	b=m8jAQLFZVlEDdAKc15/89MhczPmSoLTaosGb31yOpgNE9U8SS9ulJ1t2dFrj3FRrfJeH
-	 DWFlF2HF7wmV6iLS4UbIdc5gs8x+PbsqwJyqEObNPBQho0D4h/If6HQKhrWkjERvDMoBt
-	 povtoW6zHr/6T6PB0iOjKceFHZh0/eZvoznFHVmlZEAaYluMdCbsjqdRoy2FzbIojG8mv
-	 CpNMCjkUHc3XTLp+UY3szsAkH4VbyEdK4NOGdz0qOy4dacqPaTovTIPXTefjK+6VoJXbN
-	 IRAL6SsPjcQWRxIplnQqJKSIN7yVKNgkv4sP5w+OQuWDAuNWnvO/5F2UD+gaxWWCf4Q==
+	bh=DwhDVbhcBUSEtEbHxeGALtz6yeZcYK5jjpTuA0Uqmu4=;
+	b=VdmhbDAxvAgFWboJpOygWjAvbNhWiPH+pEJUSmLyD811h7//udGiYlLK6j9AdrSEvcdu
+	 yX9Tls93cpf6w54u+uMJ5+1i19w6dcJMWGGbvNmNmrJZu5l3+8z5gaFnzKuQgxQ+em5gi
+	 Mpkr9WCeFVFGoHH/hSnT8HHDhD/yAj3Gdk94dKAVCtmUyKXmOinXpYLcBhK8NRqswH3le
+	 iqdV9oMIUsvBW6v8/06diGk7eYwh8AgNgBxzYeKWqiYgjntsaXUk6bTuFSZtMftZELBDU
+	 De2kW3l6AcCf2YBGF7EAovxJCalFHZ/Sm3k8TEv6CBvtLuI+a0e6NGlibu8hEGbI0qg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o2ujFKRG;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xAj28Xkv;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619B0606A326
-	for <tools@linux.kernel.org>; Tue,  3 Nov 2026 16:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F728606A329
+	for <tools@linux.kernel.org>; Tue,  3 Nov 2026 16:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o2ujFKRG
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xAj28Xkv
 Received: by smtp.kernel.org (Postfix)
-	id 409231F00A17; Tue,  3 Nov 2026 16:21:22 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.128.47
+	id D54DC1F00A1E; Tue,  3 Nov 2026 16:21:25 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.128.52
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1793722882;
-	b=lezUY0u/BCn5RCyOqMJmvKV46NSm6or9Jg0nUqybf64kRpJm12J5grN3xcESUN1Fpq1v
-	 G4VdknnuUqNVA1EmGtKOpb3oVdw42Erf09kBQW2yYPyyJ/w1NuKeivs2CLzM/9rqG2f5O
-	 8GMC+l+XBB8/zLd58unKRlHXVUv1YQZLpZMgChDLnp3hu1gjJEMxuJAV4VDOK3J8YH/47
-	 jXnHypuNti7eHnvqV6WNJJ2CI3yYjQSqCbyYkv+s/+0cC3qfjYA9zL+NQalnk6i4vZ6YI
-	 4T6yJFfQPsWNZgJ2O6DDXa4nxn07r6dbIuiGbUVH39dwosgTct/Opt4C+EDOif8nq6g==
+	t=1793722885;
+	b=Mmcip1oLKn+Z6DFEg1Vi28FIh/Nf5QXqSEduQC2UvFYbz38stmd0kX1jg7+hrWU1CmU3
+	 iQgUjtbEqQKOudAEvF5KBLIfYyOCQ0Hq7pEEAnwKVUcIsa9H8n0j9AH1Qho52BKbkg7bx
+	 P7JN/2VLxwo2sQEQXmDhsOvoDu4wSUe6adETwI4B19INnQr8Vw5CCHRxHJdpfnAD8TO4i
+	 B6L2Jfd27FhUkXeHeI3VN23AeDmO9PmysVyYK2IQA3/oAVfBEVPevbFsazy+7Nolx2WLG
+	 aUvdTDPyb3eMmHXzGaeZmLtv+AAfLN6rtZKHc9a8GuXV9OLUo7H7Mk4KJ9bC/BY58AA==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1793722882;
+	c=relaxed/relaxed; t=1793722885;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=9Lsu43DpXE3kVIp7HdGb+tQdqDY7wyldPr+YmJKGeLM=;
-	b=mbYjXVDzZ8gbWPrNLUz3GEtxa4xQOkpCTQfu1oyqqzJe7Jtpx2LxGO2CbjaKO+xGhbnA
-	 DyDdAMO2Dmf8ZTprb5xaSrkRe8M2q6A3M+Ai3KC7d4Q9QS/xWpTgD42dGgSx5m2tjPMxK
-	 2ijQBeKRyol8pi0gI4oXw16zgbqPhy18y6RtE0xGvt05TIbMXGUT72YbNzIbWs6VoVxK5
-	 PAeDpISM5Kdh3BrMZzvva1EiDcce+a44vlmupz8O5yNpIaYK1NfCxjB/OUpthWierneaj
-	 vvR+7jyjg26bQKzAHHSVFJnxts6Bo0LCVqUExVm5Ma8Dp9cP6ka5AQPi4SVsdXFVhmQ==
+	bh=DwhDVbhcBUSEtEbHxeGALtz6yeZcYK5jjpTuA0Uqmu4=;
+	b=ZMSmkhrSjGsof6+foF1qWgVShbRKTigkYwucFUVSk/TVSluTu3wwoVtLr2QpwtNgK9LM
+	 6MTO79XHcxuvSycM4hS7625+t2i3KwKUykrjZ0gE40DfMIdYiDRFgo5FOQE5pn8OY32XM
+	 49fxJQ7ZXZ4AnTyPqpZqMHTbpEV7uo1L2qNLVcuzNHhRWLjok7dJhMKyvix6cVu4jdLL7
+	 ijtYhs3qLZ1vfp6RQTo7R4L/XmnOuJfWno9DW9D9QKVbO7c+//3SR6q2Hs8mjcN5ao1ah
+	 kYWuuizwFLWT+PKt1W1ODBM3k7mkdnVcFMfseFjHUz28Vdj9vgPSWDRv6ahJCxzDBow==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o2ujFKRG;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xAj28Xkv;
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	arc=none smtp.remote-ip=209.85.128.47
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	arc=none smtp.remote-ip=209.85.128.52
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 44A591F000C1
-	for <tools@kernel.org>; Tue,  3 Nov 2026 16:21:21 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 206EA1F00A1D
+	for <tools@kernel.org>; Tue,  3 Nov 2026 16:21:24 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o2ujFKRG
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 44A591F000C1
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xAj28Xkv
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 206EA1F00A1D
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a9a8d6cea8so11699365e9.1
-        for <tools@kernel.org>; Tue, 03 Nov 2026 08:21:21 -0800 (PST)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a2000d5fb1so30383955e9.1
+        for <tools@kernel.org>; Tue, 03 Nov 2026 08:21:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793722880; x=1794327680; darn=kernel.org;
+        d=gmail.com; s=20260707; t=1793722882; x=1794327682; darn=kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=9Lsu43DpXE3kVIp7HdGb+tQdqDY7wyldPr+YmJKGeLM=;
-        b=o2ujFKRGR/iux9qK0QscOVBg2l7aA6K96fQbB5gHerDMMFjXnH0yGwZckRLK+XAaI7
-         aXRBqDkID/p5iTwOmLdd7BbPFOjq7Vm7dYbmM4ilU3otQSVwB316NgIbHx9dAR8XSWJr
-         BvCpEFA+Nn+yovPYsYzDKyM+4SKuoY9PmIT4XY69SiQLx1gVVzKJx48j3pG46YS88qUR
-         Q7PxXkU2ZFq6ftbh+uWDi2XagEMgYXUv2IKDAqtnRE2b9+EeslAZ/YfbPxKyH2LNUZZm
-         5M+7XTUtGgq7+eeXRa+ncyI3uxOoUteaOjdtZ59H6JTwt3n3vNCyv/efEM6Ij2g+ILpW
-         cQcw==
+        bh=DwhDVbhcBUSEtEbHxeGALtz6yeZcYK5jjpTuA0Uqmu4=;
+        b=xAj28XkvgOADNU49+tlrnlLgWX3AVSTcUlUJSn6TbhKnSNvbRDxCVjs+1phbBu2PFN
+         nNqGxMz3g2fvjKCtrcq2ZM466zPVIjK3BooYmciLb6WNZPDAjBdfFL2+d922pm4pfBnF
+         k282tgtryb3V81RvdEyNH1JrHZkvlrqXfndxp6Ov9zu8xFKbNs1koHbUUagJsCf0tO4A
+         tJOM9og06ZSBWG95p+0JbFyLbTSlXbQl/E9H6CFteeqEGPerBOhMe+JagEhfoIWsRMt9
+         vSR5VcM8QjztpiAgGOh7oZq4/omOXrGOjJuYjxhI5NLl5N89R5rQo765dtgwkjAB8Ioa
+         fdPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793722880; x=1794327680;
+        d=1e100.net; s=20260707; t=1793722882; x=1794327682;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=9Lsu43DpXE3kVIp7HdGb+tQdqDY7wyldPr+YmJKGeLM=;
-        b=GjPFOvSYjQB9Sr0jCcfAmnQlOYmYuHvdezbCk37Q5JEObLn+KUpaJbNtegCS+5G06U
-         EI8zBHKwj8cxCSults1DEFFur13rGM7eF71wlZ3NNIOdQJHifAfr6yF5p1QLmDlErMfp
-         bfikJJzrs/j2525DFsSrKw62fNeQDRwun3UP498VU+Z1QGkoWCfcdvpi/BOo59ripJjs
-         2M7Lmg/M+pqRmdf+lPIUuQlD+eXr6n7lB308F6Io1Hoq3C8p6cXaGHMo5VSUMzzZJF7I
-         jqsFfpglD305wf5tMEtXYWNmeQelLPsadGUCUu4UpR737DInicZdmp/+kBjeykO49Lg4
-         hCWw==
-X-Gm-Message-State: APuU4Z/V9MZRwH3tbcoFGzCwyu2boLQ1Afn2zJQvXlNdhjHkPYHno7ri
-	NUhdT0K6eION7VoLSYpqerZ1XonihZKw1HiIMb2zXsFkXE9aLNfZOKre
-X-Gm-Gg: AYBFou084HGjaVH5/06VZc8g8UCUcwm8fpLl0ZiA9lVy9Jv34M31kTRATeCwBkwPF73
-	e+k72LauVeUwdey/ERQZNu9N553saZe7qzVN45AYh/9an6cOfnVZYGvLgZtqAUYjeslBPCIE2W/
-	MLqQgxq/sv+WPAvYc8j2V+//quLBXA2LWDCc2bS7+7JEMsZ3yZwENgQHrr07faFwXlZLfMIRWCQ
-	gLUFnsoiPSUpX6q2daxiueH4ZGCwNTIPdMQND9wlRS2EbsDeLR3GAt0/cxKuDLCyppbcVACJ9lm
-	v+y4Wk6xTc39gq1qowP6OCQxttpmumtmNns1V1vmVSqSHoAih27t50UA1V+NyV7J9vf6WJq5P0U
-	q3qEQ1d219GJ201Mf/A+l7MDhwwhlukXEajOU0a05hw+18NnJzKD1VglN5fKKApWLSqO7rQKfpY
-	x3zGC23kppMjJbcZeUF422Yg1XyuSgFFzPLqsG1v2RRJo0SmYZPL4MGz4R4vTJ063LJmoS86E7C
-	eHgKOlTwmrgMvQpUwVOx6e9nT1NGNSA9l/QlayhUsP6gO3R6xvkGUOh6XiYOnhD0MMoYAAcFEGM
-	E7066MehJsrv4Ds+uNTYVWv1asnjA3K2oChaIfCTltoKtQ==
-X-Received: by 2002:a05:600c:19d3:b0:4a2:526b:d40f with SMTP id 5b1f17b1804b1-4ac1209eafcmr312500415e9.0.1793722879388;
-        Tue, 03 Nov 2026 08:21:19 -0800 (PST)
+        bh=DwhDVbhcBUSEtEbHxeGALtz6yeZcYK5jjpTuA0Uqmu4=;
+        b=jbH3mjlJRLlh4pb7uj0EA1NSRFTNJ7Qnz5uaDl4kMzMxNKdwOJuK1s+5fTt+u4NCb4
+         LZF5+NtNx+j7JWbUVBqKQWFDOAfz6VRJGML07VOuAUtj92nAG09lZqFWHh2bkVAXEcd2
+         tmB3mJUWQvO4plluOTy0mNuyn3vqSrOIbM/eskbORD0yE7Ud1URO49Uf8/dTHS3HdtHn
+         usrDozO4awdgtc9mX8SuCfjzDteWo5l4Yite8117+tqjxsu0zJ7Vu440cC1ZM4rVn/hE
+         mwG4ng/yZVLAmzK9o720SP+7XfFAiW6eE/Pg/gB9G5BZS//xjG0GiZdMc/Qi9bV1NFE0
+         cB0A==
+X-Gm-Message-State: APuU4Z+oiDVpQ27LVvefoYNX5P61H++O8MhTcrDK317/+br0g8Uhwei6
+	hInkjzHl9kJ6AXxFIwdhmawnLOe295E9QEYDEwWX0sdvozrewHaCeurt
+X-Gm-Gg: AYBFou1u7tJGKac3D2jnV0PtIdUlOIiGBv+fXkE+QwF+Jo1vQJVootE/4XAzX0yb5Zi
+	ys3EnQKf43X2WxNS+oq+kOedu6QBjb4lYg4rqCPnwxHTVy8VHLXRpzI8Uqdk+A9dK1SyHixP3r5
+	8LtoD63yLNIT8MgmSDfLWGRiEqcPD3gNdqpoMl+1PHFsC2okirgRfxr+5FQqnUSV2W0WOzFZz8G
+	n90bIlSYOY5eAxVLtnntOUxXuYnSok7MeduCZE10csFm0Fw9wR9ojJgxsM/BLZT/gPUkn8b1Y6i
+	29RaM3Wh9fYe+WB+6f9ejvJ+HkCkSHY+eWeGq1/U04zpFx81gSC0AsHaU1Dc2dDpOq7v4mswM3f
+	/vLNSAhIQ/kESxKFoycrieWek4jJUwrJBUjQTrl9RUOxZMhTKdyCPI1TR4TmY6NgmTB3LZtDdAD
+	hoUr0I8hKNR1OJQfS/Q6zYszebafklXLej6488Ap1Yz2QgA6M6mX/Vch5UehbFIok+4BO/fZ3su
+	wEf0HQB2IxnPFnMuoQyix7eVbq3e2VO7ax7CrqZHR+AoQZ3dQHek8d4ncVtREeFEhkhEKF8IUkU
+	LM2dVvgVfHfpp1XPxiTZCM6V0QzHW1M=
+X-Received: by 2002:a05:600c:5246:b0:4a1:d459:db4b with SMTP id 5b1f17b1804b1-4ac1889c7bdmr313158985e9.24.1793722882366;
+        Tue, 03 Nov 2026 08:21:22 -0800 (PST)
 Received: from 990pro.localdomain ([185.68.248.203])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2aa481a45sm63661075e9.7.2026.11.03.08.21.18
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2aa481a45sm63661075e9.7.2026.11.03.08.21.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2026 08:21:18 -0800 (PST)
+        Tue, 03 Nov 2026 08:21:21 -0800 (PST)
 From: Bernhard Kaindl <bernhardkaindl7@gmail.com>
-Date: Tue, 03 Nov 2026 17:20:33 +0100
-Subject: [PATCH b4 1/3] review: prepare tracking storage for upstream merge
- matches
+Date: Tue, 03 Nov 2026 17:20:35 +0100
+Subject: [PATCH b4 3/3] review: allow configuring the upstream merge check
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -127,214 +126,417 @@ List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261103-detect-merged-v1-1-743a882c6127@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261103-detect-merged-v1-3-743a882c6127@gmail.com>
 References: <20261103-detect-merged-v1-0-743a882c6127@gmail.com>
 In-Reply-To: <20261103-detect-merged-v1-0-743a882c6127@gmail.com>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Bernhard Kaindl <bernhardkaindl7@gmail.com>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793722874; l=8131;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793722874; l=17496;
  i=bernhardkaindl7@gmail.com; s=20261024; h=from:subject:message-id;
- bh=c1GoCeMr3FxS8nL2S5/uFuzgpID758Uj4PzgGNO9M+M=;
- b=kpquFkjNooGzLUO1lQPODmEhUcgruTjmx0ZU9T+Ubb+AvT+X9NinzKcxadC/uMVoS3rKvI01f
- dNjx1zORDXFCkF4lwmV4HOX6QscK1zBTgioEN7wwiMx/+SyJWnJ7lf9
+ bh=ngBu0bvtK78Wo5bH6FqdSzUKWyaLljkyvGwaDvk7XkU=;
+ b=pukJTdqO31+9XMtGEDwKLrIe5I4q8LUiPrVO3Mcyp/RM6Gcy0Oe+Vyddk6gljXHyKV6rvkQjl
+ z4UNFT5hclkDF0shk82vPdLvM0LkK9gQLbW9xGHdM/gy9D/sWH+zZXK
 X-Developer-Key: i=bernhardkaindl7@gmail.com; a=ed25519;
  pk=oIjnI/us0Uh5d/WP18V5IQq/FrLPUp+W0JAhJ9QCQIs=
 
-Store per-patch upstream commit matches in the tracking database and
-preserve them when review branches are rescanned. Avoid rewriting a
-checked-out review branch when storing its thread.
+Allow selecting an upstream repository and branch when automatic
+discovery does not select the desired source. Pass the settings
+through the review TUI and document their defaults.
 
 Assisted-by: LLM [codegen, tests]
 Signed-off-by: Bernhard Kaindl <bernhardkaindl7@gmail.com>
 ---
- src/b4/review/tracking.py | 92 ++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 83 insertions(+), 9 deletions(-)
+ docs/config.rst                    | 31 +++++++++++++++++++
+ docs/maintainer/review.rst         |  4 +++
+ src/b4/__init__.py                 |  3 ++
+ src/b4/review/_review.py           | 29 ++++++++++++++----
+ src/b4/review_tui/_modals.py       |  6 ++++
+ src/b4/review_tui/_tracking_app.py |  8 +++++
+ src/tests/test___init__.py         | 19 ++++++++++++
+ src/tests/test_review.py           | 62 +++++++++++++++++++++++++++++++++-----
+ 8 files changed, 149 insertions(+), 13 deletions(-)
 
-diff --git a/src/b4/review/tracking.py b/src/b4/review/tracking.py
-index d4d2f51..b802ff1 100644
---- a/src/b4/review/tracking.py
-+++ b/src/b4/review/tracking.py
-@@ -28,7 +28,7 @@ logger = b4.logger
- REVIEW_METADATA_DIR = 'b4-review'
- REVIEW_METADATA_FILE = 'metadata.json'
+diff --git a/docs/config.rst b/docs/config.rst
+index 593129e..7c36ffe 100644
+--- a/docs/config.rst
++++ b/docs/config.rst
+@@ -52,6 +52,8 @@ unrestricted:
+ - ``*template*`` -- message templates
+ - ``trailer*`` -- trailer-handling options
+ - ``pw-*`` -- Patchwork integration options
++- ``upstream-repo`` -- the repository used to check merged patches during
++  an explicit review update
  
--SCHEMA_VERSION = 10
-+SCHEMA_VERSION = 11
+ The ``prep`` check and recipient-discovery commands are allowed because
+ they only run when you explicitly invoke a check or ``--auto-to-cc`` on a
+@@ -749,6 +751,35 @@ These settings control ``b4 review`` TUI behaviour.
+ .. glossary::
+    :sorted:
  
- SERIES_PATCHES_DDL = """
- CREATE TABLE IF NOT EXISTS series_patches (
-@@ -37,6 +37,8 @@ CREATE TABLE IF NOT EXISTS series_patches (
-     position   INTEGER NOT NULL,
-     message_id TEXT NOT NULL,
-     subject    TEXT,
-+    patch_id   TEXT,
-+    merged_commit TEXT,
-     PRIMARY KEY (change_id, revision, position)
- )"""
- 
-@@ -200,6 +202,13 @@ def _migrate_db_if_needed(conn: sqlite3.Connection) -> None:
-             conn.execute(
-                 'ALTER TABLE revisions ADD COLUMN is_rethreaded INTEGER DEFAULT 0'
-             )
-+    if version < 11:
-+        conn.execute(SERIES_PATCHES_DDL)
-+        existing = {row[1] for row in conn.execute('PRAGMA table_info(series_patches)')}
-+        if 'patch_id' not in existing:
-+            conn.execute('ALTER TABLE series_patches ADD COLUMN patch_id TEXT')
-+        if 'merged_commit' not in existing:
-+            conn.execute('ALTER TABLE series_patches ADD COLUMN merged_commit TEXT')
-     conn.execute('UPDATE schema_version SET version = ?', (SCHEMA_VERSION,))
-     conn.commit()
- 
-@@ -1218,7 +1227,8 @@ def get_all_tracked_series(identifier: str) -> list[dict[str, Any]]:
- 
-     Returns a list of dicts with keys: track_id, change_id, revision, subject,
-     sender_name, sender_email, sent_at, added_at, status, num_patches,
--    message_id, pw_series_id, message_count, seen_message_count.
-+    message_id, pw_series_id, message_count, seen_message_count,
-+    merged_patch_positions, merged_patch_count.
- 
-     The ``attestation`` field carries the live trust-on-first-use status
-     of each signature, and ``tofu`` its details (see
-@@ -1262,6 +1272,20 @@ def get_all_tracked_series(identifier: str) -> list[dict[str, Any]]:
-                     'snoozed_until': row[18],
-                 }
-             )
-+        merged_positions: Dict[Tuple[str, int], List[int]] = {}
-+        for change_id, revision, position in conn.execute(
-+            'SELECT change_id, revision, position FROM series_patches'
-+            ' WHERE position > 0 AND merged_commit IS NOT NULL'
-+        ):
-+            merged_positions.setdefault((change_id, int(revision)), []).append(
-+                int(position)
-+            )
-+        for entry in result:
-+            positions = merged_positions.get(
-+                (entry['change_id'], int(entry['revision'])), []
-+            )
-+            entry['merged_patch_positions'] = positions
-+            entry['merged_patch_count'] = len(positions)
-         try:
-             _resolve_attestation(conn, result)
-         except Exception as ex:
-@@ -1495,15 +1519,34 @@ def get_series_patches(
-     conn: sqlite3.Connection, change_id: str, revision: int
- ) -> List[Dict[str, Any]]:
-     """Return the stored patches for a series, ordered by position."""
--    cols = ('position', 'message_id', 'subject')
-+    cols = ('position', 'message_id', 'subject', 'patch_id', 'merged_commit')
-     cursor = conn.execute(
--        'SELECT position, message_id, subject FROM series_patches'
-+        'SELECT position, message_id, subject, patch_id, merged_commit'
-+        ' FROM series_patches'
-         ' WHERE change_id = ? AND revision = ? ORDER BY position ASC',
-         (change_id, revision),
-     )
-     return [dict(zip(cols, row)) for row in cursor.fetchall()]
- 
- 
-+def set_series_patch_merge_status(
-+    conn: sqlite3.Connection,
-+    change_id: str,
-+    revision: int,
-+    patch_status: Dict[int, Tuple[Optional[str], Optional[str]]],
-+) -> None:
-+    """Update patch IDs and upstream matches for identifiable positions."""
-+    conn.executemany(
-+        'UPDATE series_patches SET patch_id = ?, merged_commit = ?'
-+        ' WHERE change_id = ? AND revision = ? AND position = ?',
-+        [
-+            (patch_id, merged_commit, change_id, revision, position)
-+            for position, (patch_id, merged_commit) in patch_status.items()
-+        ],
-+    )
-+    conn.commit()
++   :term:`b4.upstream-repo`
++     Repository scanned for merged patches when ``b4 review`` updates a
++     tracked submission using ``u`` or ``U``. Specify a Git remote name
++     or a repository URL. Without this setting, b4 uses the ``upstream``
++     remote, or discovers the parent of a GitHub ``origin``.
++    Set it to ``none`` to disable upstream merge checks.
 +
++     The branch selected by :term:`b4.upstream-branch` is fetched into a
++     private ref, with history starting one year before the oldest selected
++     series. Existing Git remotes are not added or modified.
 +
- def build_known_revisions(
-     conn: sqlite3.Connection, change_id: str
- ) -> List[Dict[str, Any]]:
-@@ -2726,6 +2769,10 @@ def _store_thread_blob(topdir: str, change_id: str, msgs: List[Any]) -> Optional
- 
-     import b4.review as _b4_review
- 
-+    branch_name = f'b4/review/{change_id}'
-+    if b4.git_branch_checked_out(topdir, branch_name):
-+        return None
++     A failed lookup or fetch leaves the last recorded merge indicators
++     unchanged.
 +
-     buf = io.BytesIO()
-     b4.save_mboxrd_mbox(msgs, buf)
-     mbox_bytes = buf.getvalue()
-@@ -2741,7 +2788,6 @@ def _store_thread_blob(topdir: str, change_id: str, msgs: List[Any]) -> Optional
-         return None
-     blob_sha = out.strip()
++     Default: ``None``
++
++     .. versionadded:: v0.17
++
++   :term:`b4.upstream-branch`
++     Branch checked for upstream commits during review updates. Use
++     ``staging`` to detect patches accepted into an upstream staging branch.
++    When unset, b4 checks the selected repository for ``staging``,
++    then ``main``, then ``master``. If none exists, b4 fetches the
++    remote's ``HEAD``, which normally points to its default branch.
++
++     Default: ``None``
++
++     .. versionadded:: v0.17
++
+    :term:`b4.review-default-take-method`
+      The default take method to pre-select in the Take dialog. Valid
+      values are ``merge``, ``linear``, and ``cherry-pick``. If not set,
+diff --git a/docs/maintainer/review.rst b/docs/maintainer/review.rst
+index 6070aa0..dd645e0 100644
+--- a/docs/maintainer/review.rst
++++ b/docs/maintainer/review.rst
+@@ -912,6 +912,10 @@ B4 uses an ``upstream`` remote or discovers the parent of a GitHub
+ falling back to the remote's ``HEAD`` (normally its default branch). A
+ failed lookup or fetch leaves the previous indicators unchanged.
  
--    branch_name = f'b4/review/{change_id}'
-     if b4.git_branch_exists(topdir, branch_name):
-         try:
-             cover_text, tracking = _b4_review.load_tracking(topdir, branch_name)
-@@ -3256,7 +3302,7 @@ def rescan_branches(
++Set :term:`b4.upstream-repo` to choose a different repository, or to
++``none`` to disable upstream merge checks. Set :term:`b4.upstream-branch`
++to select a branch explicitly.
++
+ Upgrading itself is always an explicit action: open the action menu
+ (``a``) and select **Upgrade**. Availability depends only on a newer
+ revision being known — the series can be in reviewing, replied,
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 79bb209..6f82633 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -312,6 +312,8 @@ SCRATCH_GIT_OPTS: List[str] = [
+ DEFAULT_CONFIG: ConfigDictT = {
+     'midmask': LOREADDR + '/all/%s',
+     'linkmask': LINKADDR + '/%s',
++    'upstream-repo': None,
++    'upstream-branch': None,
+     # You can override the format for the Link: trailer, e.g.
+     # if you would rather use the Message-Id trailer. It takes the
+     # message-id as the expansion for %s
+@@ -5006,6 +5008,7 @@ def _setup_main_config(
+         '*template*',
+         'trailer*',
+         'pw-*',
++        'upstream-*',
+     ]
+     multivals = [
+         'keyringsrc',
+diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
+index 4cf4174..3cf2c61 100644
+--- a/src/b4/review/_review.py
++++ b/src/b4/review/_review.py
+@@ -3000,8 +3000,17 @@ def _get_update_lock_path(identifier: str) -> str:
+     return os.path.join(reviewdir, f'{identifier}.update.lock')
  
-         # Check the stored SHA for the most recent revision of this change_id.
-         stored = conn.execute(
--            'SELECT branch_sha FROM series WHERE change_id = ?'
-+            'SELECT branch_sha, status, revision FROM series WHERE change_id = ?'
-             ' ORDER BY revision DESC LIMIT 1',
-             (change_id_from_branch,),
-         ).fetchone()
-@@ -3293,6 +3339,24 @@ def rescan_branches(
-         scanned_change_ids.add(change_id)
-         status = series.get('status', 'reviewing')
-         revision = series.get('revision', 1)
-+        merged_commits = series.get('merged-commits', {})
-+        if (
-+            stored
-+            and stored['revision'] == revision
-+            and b4.git_branch_checked_out(topdir, br)
-+        ):
-+            if stored['status'] == 'merged' and status not in (
-+                'snoozed',
-+                'gone',
-+                'archived',
-+            ):
-+                status = 'merged'
-+            if not merged_commits:
-+                merged_commits = {
-+                    str(patch['position']): patch['merged_commit']
-+                    for patch in get_series_patches(conn, change_id, revision)
-+                    if patch['merged_commit'] is not None
-+                }
  
-         # Parse sent date from header-info
-         sent_at = None
-@@ -3335,11 +3399,21 @@ def rescan_branches(
-             for i, p in enumerate(tracking_patches, 1):
-                 p_msgid = p.get('header-info', {}).get('msgid', '')
-                 if p_msgid:
--                    rows.append((change_id, revision, i, p_msgid, p.get('title', '')))
-+                    rows.append(
-+                        (
-+                            change_id,
-+                            revision,
-+                            i,
-+                            p_msgid,
-+                            p.get('title', ''),
-+                            merged_commits.get(str(i)),
-+                        )
-+                    )
-             if rows:
-                 conn.executemany(
--                    'INSERT INTO series_patches (change_id, revision, position, message_id, subject)'
--                    ' VALUES (?, ?, ?, ?, ?)',
-+                    'INSERT INTO series_patches'
-+                    ' (change_id, revision, position, message_id, subject, merged_commit)'
-+                    ' VALUES (?, ?, ?, ?, ?, ?)',
-                     rows,
+-def _resolve_upstream_repository(topdir: str) -> str:
++def _resolve_upstream_repository(topdir: str, configured: Optional[str]) -> str:
+     """Resolve an upstream URL, remote name, or GitHub origin's parent URL."""
++    if configured:
++        remotes = b4.git_get_command_lines(topdir, ['remote'])
++        if configured in remotes:
++            ecode, url = b4.git_run_command(topdir, ['remote', 'get-url', configured])
++            if ecode != 0:
++                raise RuntimeError(f'Could not resolve remote {configured}')
++            return url.strip()
++        return configured
++
+     remotes = b4.git_get_command_lines(topdir, ['remote'])
+     if 'upstream' in remotes:
+         ecode, url = b4.git_run_command(topdir, ['remote', 'get-url', 'upstream'])
+@@ -3009,7 +3018,7 @@ def _resolve_upstream_repository(topdir: str) -> str:
+             return url.strip()
+ 
+     if 'origin' not in remotes:
+-        raise RuntimeError('No upstream remote or origin remote')
++        raise RuntimeError('No upstream-repo config, upstream remote, or origin remote')
+     ecode, origin = b4.git_run_command(topdir, ['remote', 'get-url', 'origin'])
+     if ecode != 0:
+         raise RuntimeError('Could not resolve origin remote')
+@@ -3031,8 +3040,13 @@ def _resolve_upstream_repository(topdir: str) -> str:
+     return f'https://github.com/{parent}.git'
+ 
+ 
+-def _resolve_upstream_branch(topdir: str, repository: str) -> str:
++def _resolve_upstream_branch(
++    topdir: str, repository: str, configured: Optional[str]
++) -> str:
+     """Resolve the branch to scan in the selected upstream repository."""
++    if configured:
++        return configured
++
+     ecode, output = b4.git_run_command(
+         topdir,
+         ['ls-remote', '--heads', repository, 'staging', 'main', 'master'],
+@@ -3099,6 +3113,8 @@ def update_all_tracking(
+     series_list: Optional[List[Dict[str, Any]]] = None,
+     progress_cb: Optional[Callable[[int, int, str], None]] = None,
+     cancel_cb: Optional[Callable[[], bool]] = None,
++    upstream_repo: Optional[str] = None,
++    upstream_branch: Optional[str] = None,
+ ) -> Dict[str, Any]:
+     """Rescan branches, then fetch threads and update all tracked series.
+ 
+@@ -3152,10 +3168,11 @@ def update_all_tracking(
+             ]
+ 
+         upstream_commits: Optional[Dict[str, List[UpstreamCommit]]] = None
+-        if topdir and series_list:
++        upstream_disabled = upstream_repo and upstream_repo.strip().lower() == 'none'
++        if topdir and series_list and not upstream_disabled:
+             try:
+-                repository = _resolve_upstream_repository(topdir)
+-                branch = _resolve_upstream_branch(topdir, repository)
++                repository = _resolve_upstream_repository(topdir, upstream_repo)
++                branch = _resolve_upstream_branch(topdir, repository, upstream_branch)
+                 oldest_sent = min(
+                     datetime.date.fromisoformat(
+                         str(series.get('sent_at') or '1970-01-01')[:10]
+diff --git a/src/b4/review_tui/_modals.py b/src/b4/review_tui/_modals.py
+index 32eccad..77bb5ad 100644
+--- a/src/b4/review_tui/_modals.py
++++ b/src/b4/review_tui/_modals.py
+@@ -3843,12 +3843,16 @@ class UpdateAllScreen(ModalScreen[Dict[str, Any]]):
+         identifier: str,
+         linkmask: str,
+         topdir: Optional[str] = None,
++        upstream_repo: Optional[str] = None,
++        upstream_branch: Optional[str] = None,
+     ) -> None:
+         super().__init__()
+         self._series_list = series_list
+         self._identifier = identifier
+         self._linkmask = linkmask
+         self._topdir = topdir
++        self._upstream_repo = upstream_repo
++        self._upstream_branch = upstream_branch
+         self._cancelled = False
+         self._result: Dict[str, Any] = {
+             'series_checked': 0,
+@@ -3897,6 +3901,8 @@ class UpdateAllScreen(ModalScreen[Dict[str, Any]]):
+                     series_list=self._series_list,
+                     progress_cb=_on_progress,
+                     cancel_cb=_should_cancel,
++                    upstream_repo=self._upstream_repo,
++                    upstream_branch=self._upstream_branch,
                  )
-                 conn.commit()
+             except b4.LockHeldError:
+                 self._result['busy'] = True
+diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
+index df8f08d..7b0e4d6 100644
+--- a/src/b4/review_tui/_tracking_app.py
++++ b/src/b4/review_tui/_tracking_app.py
+@@ -2715,6 +2715,8 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+ 
+         config = b4.get_main_config()
+         linkmask = str(config.get('linkmask', 'https://lore.kernel.org/r/%s'))
++        upstream_repo = config.get('upstream-repo')
++        upstream_branch = config.get('upstream-branch')
+         topdir = b4.git_get_toplevel()
+ 
+         self._focus_change_id = self._selected_series.get('change_id')
+@@ -2724,6 +2726,8 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 self._identifier,
+                 linkmask,
+                 topdir,
++                str(upstream_repo) if upstream_repo else None,
++                str(upstream_branch) if upstream_branch else None,
+             ),
+             callback=self._on_update_complete,
+         )
+@@ -2736,6 +2740,8 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+ 
+         config = b4.get_main_config()
+         linkmask = str(config.get('linkmask', 'https://lore.kernel.org/r/%s'))
++        upstream_repo = config.get('upstream-repo')
++        upstream_branch = config.get('upstream-branch')
+         topdir = b4.git_get_toplevel()
+ 
+         # Skip snoozed series during update-all
+@@ -2749,6 +2755,8 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
+                 self._identifier,
+                 linkmask,
+                 topdir,
++                str(upstream_repo) if upstream_repo else None,
++                str(upstream_branch) if upstream_branch else None,
+             ),
+             callback=self._on_update_complete,
+         )
+diff --git a/src/tests/test___init__.py b/src/tests/test___init__.py
+index 5bf5cf6..43c9e48 100644
+--- a/src/tests/test___init__.py
++++ b/src/tests/test___init__.py
+@@ -1830,6 +1830,25 @@ class TestDeprecatedConfig:
+         assert 'searchmask' not in caplog.text
+ 
+ 
++class TestProjectUpstreamConfig:
++    def test_upstream_repo_is_allowed_from_project_config(self, gitdir: str) -> None:
++        wtcfg = pathlib.Path(gitdir) / '.b4-config'
++        wtcfg.write_text(
++            '[b4]\n'
++            '  upstream-repo = https://github.com/xen-project/xen.git\n'
++            '  upstream-branch = staging\n'
++            '  untrusted-option = ignored\n'
++        )
++
++        b4._setup_main_config(topdir=gitdir)
++
++        assert b4.get_main_config()['upstream-repo'] == (
++            'https://github.com/xen-project/xen.git'
++        )
++        assert b4.get_main_config()['upstream-branch'] == 'staging'
++        assert 'untrusted-option' not in b4.get_main_config()
++
++
+ class _FakeClock:
+     """Stands in for the time module inside dns.resolver."""
+ 
+diff --git a/src/tests/test_review.py b/src/tests/test_review.py
+index ce658c2..871332a 100644
+--- a/src/tests/test_review.py
++++ b/src/tests/test_review.py
+@@ -4636,6 +4636,8 @@ def test_update_all_tracking_fetches_upstream_once(
+         'https://lore.example/r/%s',
+         topdir='/repo',
+         series_list=series,
++        upstream_repo='configured-upstream',
++        upstream_branch='staging',
+     )
+ 
+     fetch.assert_called_once_with('/repo', 'repo', '2025-03-01', 'staging')
+@@ -4659,7 +4661,20 @@ def test_resolve_upstream_branch_prefers_available_branch(
+             gitdir, ['update-ref', f'refs/heads/{branch}', 'HEAD']
+         )
+         assert ecode == 0
+-    assert _review._resolve_upstream_branch(gitdir, gitdir) == expected
++    assert _review._resolve_upstream_branch(gitdir, gitdir, None) == expected
++
++
++def test_resolve_upstream_branch_falls_back_to_remote_head(
++    gitdir: str, monkeypatch: pytest.MonkeyPatch
++) -> None:
++    git = mock.Mock(return_value=(0, ''))
++    monkeypatch.setattr(b4, 'git_run_command', git)
++    assert _review._resolve_upstream_branch(gitdir, 'selected-repo', None) == 'HEAD'
++    git.assert_called_once_with(
++        gitdir,
++        ['ls-remote', '--heads', 'selected-repo', 'staging', 'main', 'master'],
++        logstderr=True,
++    )
+ 
+ 
+ def test_upstream_head_fetches_remote_default_branch(gitdir: str) -> None:
+@@ -4671,18 +4686,39 @@ def test_upstream_head_fetches_remote_default_branch(gitdir: str) -> None:
+     assert ecode == 0
+     for branch in ('staging', 'main', 'master'):
+         b4.git_run_command(gitdir, ['update-ref', '-d', f'refs/heads/{branch}'])
+-    branch = _review._resolve_upstream_branch(gitdir, gitdir)
++    branch = _review._resolve_upstream_branch(gitdir, gitdir, None)
+     assert branch == 'HEAD'
+     assert _review._fetch_upstream_commits(gitdir, gitdir, '1970-01-01', branch)
+ 
+ 
+-def test_resolve_upstream_branch_reports_lookup_failure(
++def test_resolve_upstream_branch_explicit_and_failed_lookup(
+     gitdir: str, monkeypatch: pytest.MonkeyPatch
+ ) -> None:
+     git = mock.Mock(return_value=(1, 'repository unavailable'))
+     monkeypatch.setattr(b4, 'git_run_command', git)
++    assert _review._resolve_upstream_branch(gitdir, 'selected-repo', 'next') == 'next'
++    git.assert_not_called()
+     with pytest.raises(RuntimeError, match='repository unavailable'):
+-        _review._resolve_upstream_branch(gitdir, 'selected-repo')
++        _review._resolve_upstream_branch(gitdir, 'selected-repo', None)
++
++
++def test_update_all_tracking_can_disable_upstream_check(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    monkeypatch.setattr(b4.review.tracking, 'rescan_branches', lambda *args: {})
++    resolve = mock.Mock(side_effect=AssertionError('unexpected upstream lookup'))
++    monkeypatch.setattr(_review, '_resolve_upstream_repository', resolve)
++    monkeypatch.setattr(review, 'update_series_tracking', lambda *args, **kwargs: {})
++    result = review.update_all_tracking(
++        'upstream-disabled',
++        'https://example.com/%s',
++        topdir='/repo',
++        series_list=[{'change_id': 'a', 'subject': 'a'}],
++        upstream_repo='None',
++    )
++    resolve.assert_not_called()
++    assert result['upstream_merge_error'] is None
++    assert result['series_checked'] == 1
+ 
+ 
+ def test_update_all_tracking_continues_when_upstream_fetch_fails(
+@@ -4725,12 +4761,24 @@ def test_update_all_tracking_continues_when_upstream_fetch_fails(
+     assert result['series_checked'] == 1
+ 
+ 
++def test_resolve_upstream_repository_prefers_configured_remote(gitdir: str) -> None:
++    remote_url = 'https://example.com/project/upstream.git'
++    ecode, _out = b4.git_run_command(
++        gitdir, ['remote', 'add', 'project-upstream', remote_url]
++    )
++    assert ecode == 0
++
++    assert (
++        _review._resolve_upstream_repository(gitdir, 'project-upstream') == remote_url
++    )
++
++
+ def test_resolve_upstream_repository_uses_upstream_remote(gitdir: str) -> None:
+     remote_url = 'https://example.com/project/upstream.git'
+     ecode, _out = b4.git_run_command(gitdir, ['remote', 'add', 'upstream', remote_url])
+     assert ecode == 0
+ 
+-    assert _review._resolve_upstream_repository(gitdir) == remote_url
++    assert _review._resolve_upstream_repository(gitdir, None) == remote_url
+ 
+ 
+ def test_resolve_upstream_repository_discovers_github_parent(gitdir: str) -> None:
+@@ -4747,7 +4795,7 @@ def test_resolve_upstream_repository_discovers_github_parent(gitdir: str) -> Non
+         'get_requests_session',
+         return_value=mock.Mock(get=mock.Mock(return_value=response)),
+     ) as get_session:
+-        repository = _review._resolve_upstream_repository(gitdir)
++        repository = _review._resolve_upstream_repository(gitdir, None)
+ 
+     assert repository == 'https://github.com/project-org/project.git'
+     get_session.return_value.get.assert_called_once_with(
+@@ -4765,7 +4813,7 @@ def test_resolve_upstream_repository_uses_non_fork_github_origin(gitdir: str) ->
+     with mock.patch.object(
+         b4, 'get_requests_session', return_value=mock.Mock(get=mock.Mock(return_value=response))
+     ):
+-        assert _review._resolve_upstream_repository(gitdir) == origin
++        assert _review._resolve_upstream_repository(gitdir, None) == origin
+ 
+ 
+ def test_update_all_tracking_counts_upstream(
 
 -- 
 2.43.0
