@@ -1,95 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793797132;
-	b=DKixSbOO69MKC/AS8ZS+CRU41kExSZnacFRA7ZzPXT1Xx5Rc1CfUcehe86BMt00ImAjt
-	 UIXA1/qT6weTnYkPty45N4iH8XaD3PSoNq0v1GULovfHwILdCsF4sEMdnPFlo4ZFVF3xw
-	 ZVUntOBnUW+DBIUiVTYJGKpoS4uMJOo0JiHdw8amRNLW8WhXwI2zhVJDZLimwWQ3G50Wi
-	 0MVYxIfhPQ0aNiH11D/AkPmltb4aWT3OAwVHdQzDX9zeq07iX3wygjXstM+6TfkD+CrZK
-	 N15e97hTVAv8xzmD0/JF1GiwDWrLobWVfqPca783u+7+zxzUdSw/2AfZ6M3URjZziOw==
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793804828;
+	b=YUnaAQy43dT8Kkff2R+WCyAqAgj5YDkLmyaGwlqH8Dl8VJsiqiCi9SFYB6HlD3ulBdoX
+	 PRQ+wrN014IFbQxUCX3G7aguL6qp3GQuYGs9hUJ2VYMNWb5LTjqryVjnjPDtbSJdWgcKG
+	 EmhqFqOi5x6yv37UBIz0wF4JxqpSfCD1xX6ueh6hy1O11AcF5e5UazWQWX82IKxmR1TyH
+	 FYQ98xkKk+Z25fFVDZXtEIXOtrXPh2esAMbCfWMnHwBXeW3TAhyKQOrzMMlBncoE1fRxS
+	 z8na9WqWydLq8q87dnQErNxjKWInf1PqYIUdyaThE5YbVKCGnZg/M5WIL7bw+zQKckw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793797132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793804828;
 	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
-	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:Content-Transfer-Encoding:
-	 In-Reply-To;
-	bh=Egu91q9dU04uoNuu9WJS9CZKlSh0KIIUE3pyY4OkdX4=;
-	b=ojfimMBlr+5IJyuUeO/K3dbPkYMvsABcDkDQg5dKRZ6+ar+zuPeVcurC+HFmwZhS0/ZW
-	 T/vTDKjd/l1kNmf2qPfd77RxZj42DymF2g+vDgk9VnGdH54KGPw6i50ibzq/bA53YXAtK
-	 M1aSU7nqY147I+F7Dmt0nKkw8LaMo/bQrPaCNtA9EbeCfoQZht2HyUtj606lpnHN6YKSM
-	 Mz2wvWcP6gpZKEn9R6Qozq4BJvuSaWIyMHR2mTh4pppFNnGgQp/azC/5878TNSJgjY738
-	 UTT3SohMFk741Kfhqbg1kj2I9mpVKjGwW0/Z3gOvLWcrARAUpjesSuZeZslZVZcTvSg==
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding:X-Rspamd-Queue-Id;
+	bh=iW0lhBE/sLXWzKfCOMpEO8T7tWJJre+7qNevIwpb6Sk=;
+	b=sq/N05UbiK0Dwl53yYxEk5ImWZS1d0FQ4/3qCsKU+9bh/rGZg/06B1UKaM/Zw7+TXokf
+	 pgSAUomIAsBbKmlS3I0zYqrHahRjX6EqQOKaNd2MAqJt1iroUrFo87tkng5S/6u5/DBOo
+	 PHG5tPtBGlWLlM4TaYpTyWr9/hAGOAmb7ugfJ4tkpjvvPyZTwDnCLnSTdRv6oSa0uYj8x
+	 yAyx+jR73skRLFkoBBBN8c5MuMEdeK6W2/D6jZfsP6GWzucQG4Mxpq+UClgu+IbqSB7ZE
+	 7j+PLsZ15qsgjWQ+M8+xup2wX1fW2dbBNY59qsFYzjmWvAyc8nG5Pw6XuoUfAPpD23Q==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=mit.edu header.i=@mit.edu header.a=rsa-sha256 header.s=outgoing header.b=OUs8wh9K;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+	dkim=pass header.d=hsal.es header.i=@hsal.es header.a=rsa-sha256 header.s=MBO0001 header.b=vBHeN+49;
+	arc=fail smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C142E606A338
-	for <tools@linux.kernel.org>; Wed,  4 Nov 2026 12:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FDC606A33A
+	for <tools@linux.kernel.org>; Wed,  4 Nov 2026 15:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=mit.edu header.i=@mit.edu header.a=rsa-sha256 header.s=outgoing header.b=OUs8wh9K
+	dkim=pass (2048-bit key, unprotected) header.d=hsal.es header.i=@hsal.es header.a=rsa-sha256 header.s=MBO0001 header.b=vBHeN+49
 Received: by smtp.kernel.org (Postfix)
-	id 7CE4F1F00A1B; Wed,  4 Nov 2026 12:58:51 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=18.9.28.11
+	id CE2AB1F00A17; Wed,  4 Nov 2026 15:07:06 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=80.241.56.171
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1793797131;
-	b=JT46Km2rumZzdbJtuCmewXOeWF37LJE5k0LB6A3XaWHDASK3na78T/4j9koXS9sz3Pnf
-	 aFMO4qU+jN2ktTEcVZdsiZnYNAA9YBipVavn9x565b2m1p4c2n1/XdIbrVWCESNNNyCxO
-	 KnqQHB9vf6k0UbEt4IDbDgkfmJc+r9Ey6wHpDMydtrzIQxFG34WW/xGlSQ8vJjOxZUQOv
-	 gvKP3yC6A9QYhZpP/KY0sljRTNK7za/g2JSpQ6+fnkzhjjqYYyynl9jMA8x8x+T4TCkp3
-	 DratZxuPXI8a5sevWuEY0hdg4oigcNCE/0fo2gLlm4CJs9DRx1Uv1+jTz2Uf2gkIhcA==
+	t=1793804826;
+	b=oWV6r//RiI/ZKi5q5iwJv8fXTbcLNL+p0+hiUqNXWowsxUmxlh4jadnkUesNeDy8uvj4
+	 bmeNfi/UeknaHaeUX8F8z4lZtJjDXVvLQoSokwmkS4iTiECA4KTIIHDaWnLic4qNE6LLA
+	 VLTRK+Uz2SmWYVJnTH31IOODqHU+nb8IG8B/NoLv3wor2Wu5xMQvWBEoEIpjly7AfP1oC
+	 RoQD3+NYeSSqRya7uqLj7jdrdHgjBsm6tFEYlZX9wCnW09S0P6xteKym036gyaxKDDjjC
+	 g5QNME6XuSCrzbL/jVkPsJWxfNHv5KDZKBw9xxrqSLcB3DwkBAAJZP+2dIAe1HRIhgA==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1793797131;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=Egu91q9dU04uoNuu9WJS9CZKlSh0KIIUE3pyY4OkdX4=;
-	b=mpN59PM5kWQcPzj5Y38y6B0uCa5S231j86tvG577P+TLPPxbeLV3l9DLpwdKIg2A+U64
-	 mKmGU/krajsHbf4baIVmfvV/uW6KUIvBoZRjbHmw3TbBbWxfmPEDdRiiBx7bVwKB8oDEC
-	 dl4k+g0fvVIRifxIJxTm2aPTk5kTsQlU50uXo8nYLn9eLn+qKQqRNz5Z41VTZNrKAC7Et
-	 I3ZT6G25TRXUrL+28jbcbKMu8oIPDWAkbhZhBnCHVADlzWPb5V340Aje1Y+yQz91Lu1LY
-	 EwVU0WSxFQmg/MtTv4ErH3LJ1oCV5qFsqdsnNotm3ZIDdLa9DgklHGtKJ0Xa/mSJRBg==
+	c=relaxed/relaxed; t=1793804826;
+	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-Rspamd-Queue-Id;
+	bh=iW0lhBE/sLXWzKfCOMpEO8T7tWJJre+7qNevIwpb6Sk=;
+	b=UvElxCXkvV/KnLpmjTQS5idHyx4zxHb+EnscqRTsZ4cpfh58WqkGzydKiGcVIm9nah1q
+	 EwfWDAOTuZzVb6R/rwJkDcJoQWPFkqbUptnvxiUQyF+hZ0/91buAOgds8tRDWFvRZP8Mr
+	 hWE0+5bQzEgYPfBd3oW1vzXmJ2EZA7553oh8PD61pI0+AGwxrP6DmSKSyaHNfzOjjICX7
+	 YIWiTFO1tzzRPBHvcpklQVT480APHpeQCQjtayP74T/mmIb83cCOq2eV6hi5CmpxK6uzf
+	 nhv0EBllXuAWRBgzu5oLC6j+spY9Ka07n7ffHdDCtgFH33uXuVtRRUe5NZayJwO/qyw==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=mit.edu header.i=@mit.edu header.a=rsa-sha256 header.s=outgoing header.b=OUs8wh9K;
-	dmarc=pass header.from=mit.edu;
-	spf=pass smtp.mailfrom=mit.edu;
-	arc=none smtp.remote-ip=18.9.28.11
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=hsal.es header.i=@hsal.es header.a=rsa-sha256 header.s=MBO0001 header.b=vBHeN+49;
+	dmarc=pass header.from=hsal.es;
+	spf=pass smtp.mailfrom=hsal.es;
+	arc=none smtp.remote-ip=80.241.56.171
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 784141F000C1
-	for <tools@kernel.org>; Wed,  4 Nov 2026 12:58:50 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id D748D1F000C1
+	for <tools@kernel.org>; Wed,  4 Nov 2026 15:07:04 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=mit.edu header.i=@mit.edu header.a=rsa-sha256 header.s=outgoing header.b=OUs8wh9K
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 784141F000C1
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=mit.edu
-Received: from macsyma.thunk.org (pool-173-48-116-148.bstnma.fios.verizon.net [173.48.116.148])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 6A4CwbhS032333
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Nov 2026 07:58:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1793797121; bh=Egu91q9dU04uoNuu9WJS9CZKlSh0KIIUE3pyY4OkdX4=;
-	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
-	b=OUs8wh9KKUg7+SxydXoXfOJGoUaq6ntqze1koDf1tO/a3+JdxVimnbNE+joTKqEQv
-	 4Z7PcLlqNR67xF1Az9aFt5REhBjGjHs7sjsTy0JKibAdG9GYdJxDPd6lw+Dk4DVNxz
-	 xoaCGhpOLlqkpNdxPyiLg1z/rwo8QhZaXMNCDvcm+4uBhV7jBbamr+4oinQxcmNrGi
-	 LLmZafzFODALBwGI4UpWiYptMLVN+0Q1cf3j8ufXYQraiBNAFQ6z6TpKmTSjiGLh8L
-	 jxiClPFSaYLAnYNBw3Z7tyDuXkwfYq/IztP95AgCEZSgRsOz4rW393o+omQD4uAHng
-	 K51tCPtxIU4FQ==
-Received: by macsyma.thunk.org (Postfix, from userid 15806)
-	id 7CB22253005C; Wed,  4 Nov 2026 07:58:37 -0500 (EST)
-Date: Wed, 4 Nov 2026 07:58:37 -0500
-From: "Theodore Tso" <tytso@mit.edu>
-To: Markus Elfring <Markus.Elfring@web.de>
-Cc: cocci@inria.fr, tools@kernel.org, kernel-janitors@vger.kernel.org,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [RFC] Replacing special goto statements by direct returns?
-Message-ID: <ausnPnWk9qSCnWad@mit.edu>
-References: <52418f50-b3ff-461d-8e66-c10f70e35b2a@web.de>
+	dkim=pass (2048-bit key, unprotected) header.d=hsal.es header.i=@hsal.es header.a=rsa-sha256 header.s=MBO0001 header.b=vBHeN+49
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org D748D1F000C1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=hsal.es
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=hsal.es
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4jKTLZ5JZjzMllX;
+	Wed, 04 Nov 2026 16:07:02 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hsal.es; s=MBO0001;
+	t=1793804822;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=iW0lhBE/sLXWzKfCOMpEO8T7tWJJre+7qNevIwpb6Sk=;
+	b=vBHeN+49lKCkfU3kOV7J6FQ1z2lwX2FZlbLxyGCetLnS14nVVLrH5UKVJ4I3w/b82gavdw
+	kHkOy76EHIDdgKHAsbmFYfITAgMGkr3gnrTsjxBeM4ev+bivpJWPdhW8+Zcv4dqFf4IHv5
+	8me7Kpfuf4OnJTXKSDDRxw6ZGIg2mAtC/Ab8RLOI48YDkg2CTj6Dn79jkOQGpw2OA7gVab
+	5Fq+A1aeSYcGug13uT2ZWMhWU8jRxwS6gvC+vptzVfEwxMzGITTUyUsljj0UzutTiRrYj7
+	HtxjZeREDsyVTrc3qNr4t0+Mz7bZTcN2sdLEHBaysj3sBKwSBSAtLXl5pV54jw==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of hugo@hsal.es designates 2001:67c:2050:b231:465::2 as permitted sender) smtp.mailfrom=hugo@hsal.es
+From: Hugo Sales <hugo@hsal.es>
+To: tools@kernel.org
+Cc: konstantin@linuxfoundation.org,
+	Hugo Sales <hugo@hsal.es>
+Subject: [PATCH patatt] Keep identity lookups out of KEYCACHE
+Date: Wed,  4 Nov 2026 15:06:58 +0000
+Message-ID: <20261104150658.2189226-1-hugo@hsal.es>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -99,90 +102,139 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <52418f50-b3ff-461d-8e66-c10f70e35b2a@web.de>
+X-Rspamd-Queue-Id: 4jKTLZ5JZjzMllX
 
-On Tue, Nov 03, 2026 at 03:23:23PM -0500, Markus Elfring wrote:
-> 
-> The documentation for the Linux coding style contains the following information.
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/coding-style.rst?h=v7.4-rc1#n526
-> 
-> “…
-> The goto statement comes in handy when a function exits from multiple
-> locations and some common work such as cleanup has to be done.  If there is no
-> cleanup needed then just return directly.
-> …”
+get_algo_keydata() caches (algo, keydata) in KEYCACHE under the signer
+identity, and _sign_openpgp() caches the key's fingerprint in the same
+dict under the key ID. With user.signingkey set to the same string as
+user.email, which is a common way to name a GPG key, _sign_openpgp()
+finds the identity's tuple and takes it as the fingerprint. Signing the
+first message then fails, with a TypeError in 0.7.0 and on the
+isinstance assert on master
 
-I wonder if the churn in this sort of clean up is really worth it.
-There is a very large set of AI-generated fixes for AI-discovered
-security vulnerabilities, and so code churn that doesn't actually
-result in net benefit in terms of making the code more maintainable,
-or more testable, or addresses live security vulnerabilities may in
-fact just make maintainer's job more difficult.
+Cache identity lookups in their own dict, and add a test that a signing
+key spelled like the identity leaves nothing in KEYCACHE
 
-I will say at the moment, for me presonally, this kind of cleanup is
-very likely going to be significantly down-prioritized in terms of
-code acceptance because I'm really swamped with patches for ext4 and
-e2fsprogs --- patches which in my opinion are much higher priority.
+The asserts on a cache hit only narrowed KEYCACHE's union type for the
+type checkers. IDENTITYCACHE holds one type, so they go
 
-Cheers,
+Signed-off-by: Hugo Sales <hugo@hsal.es>
+---
+I hit this with user.signingkey = hugo@hsal.es, which gpg resolves to my
+key. Setting patatt.signingkey = openpgp:<keyid> works around it until a
+release has the fix
+---
+ src/patatt/__init__.py              | 18 +++++++----------
+ tests/unit/test_get_algo_keydata.py | 30 +++++++++++++++++++++++++----
+ 2 files changed, 33 insertions(+), 15 deletions(-)
 
-					- Ted
+diff --git a/src/patatt/__init__.py b/src/patatt/__init__.py
+index 0a430f4..1484be1 100644
+--- a/src/patatt/__init__.py
++++ b/src/patatt/__init__.py
+@@ -55,10 +55,10 @@ REQ_HDRS: list[bytes] = [b'from', b'subject']
+ OPT_HDRS: list[bytes] = [b'message-id']
+ 
+ # Quick cache for key info
+-KEYCACHE: dict[
+-    str | bytes,
+-    bytes | tuple[SigningKey, bytes] | tuple[str, str] | None,
+-] = {}
++KEYCACHE: dict[str | bytes, bytes | tuple[SigningKey, bytes] | None] = {}
++# Signing algorithm and key data per identity, kept apart from KEYCACHE
++# because an identity can be spelled like a key ID
++IDENTITYCACHE: dict[str, tuple[str, str]] = {}
+ # Quick cache for config settings
+ CONFIGCACHE: dict[str, GitConfigType] = {}
+ 
+@@ -1442,12 +1442,8 @@ def get_algo_keydata(config: GitConfigType) -> tuple[str, str]:
+             f'Identity must be a string, got {type(identity).__name__}'
+         )
+ 
+-    if (cached := KEYCACHE.get(identity)) is not None:
+-        assert isinstance(cached, tuple)
+-        algo, keydata = cached
+-        assert isinstance(algo, str)
+-        assert isinstance(keydata, str)
+-        return algo, keydata
++    if (cached := IDENTITYCACHE.get(identity)) is not None:
++        return cached
+ 
+     if not config.get('signingkey'):
+         user_signingkey = usercfg.get('signingkey')
+@@ -1507,7 +1503,7 @@ def get_algo_keydata(config: GitConfigType) -> tuple[str, str]:
+         logger.critical('E: Unknown key type: %s', sk)
+         raise ConfigurationError(f'Unknown key type: {sk}')
+ 
+-    KEYCACHE[identity] = (algo, keydata)
++    IDENTITYCACHE[identity] = (algo, keydata)
+     return algo, keydata
+ 
+ 
+diff --git a/tests/unit/test_get_algo_keydata.py b/tests/unit/test_get_algo_keydata.py
+index 4d9b7e6..d03da39 100644
+--- a/tests/unit/test_get_algo_keydata.py
++++ b/tests/unit/test_get_algo_keydata.py
+@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, patch
+ import pytest
+ 
+ from patatt import (
++    IDENTITYCACHE,
+     KEYCACHE,
+     GitConfigType,
+     NoKeyError,
+@@ -34,8 +35,9 @@ class TestGetAlgoKeydataSSHSigningKey:
+     """Tests for the user.signingkey + gpg.format detection in get_algo_keydata."""
+ 
+     def setup_method(self) -> None:
+-        """Clear KEYCACHE before each test to avoid cross-test pollution."""
++        """Clear the caches before each test to avoid cross-test pollution."""
+         KEYCACHE.clear()
++        IDENTITYCACHE.clear()
+ 
+     @patch('patatt.get_config_from_git')
+     def test_ssh_format_uses_openssh(self, mock_gcfg: MagicMock) -> None:
+@@ -125,9 +127,9 @@ class TestGetAlgoKeydataSSHSigningKey:
+         assert algo == 'openssh'
+ 
+     @patch('patatt.get_config_from_git')
+-    def test_keycache_hit_skips_lookup(self, mock_gcfg: MagicMock) -> None:
+-        """When identity is already in KEYCACHE, return cached result directly."""
+-        KEYCACHE['cached@example.com'] = ('openssh', '/cached/key')
++    def test_identitycache_hit_skips_lookup(self, mock_gcfg: MagicMock) -> None:
++        """When identity is already in IDENTITYCACHE, return cached result directly."""
++        IDENTITYCACHE['cached@example.com'] = ('openssh', '/cached/key')
+ 
+         mock_gcfg.side_effect = _make_mock_get_config(
+             usercfg={'email': 'cached@example.com'},
+@@ -139,6 +141,26 @@ class TestGetAlgoKeydataSSHSigningKey:
+         assert algo == 'openssh'
+         assert keydata == '/cached/key'
+ 
++    @patch('patatt.get_config_from_git')
++    def test_signingkey_equal_to_identity_stays_out_of_keycache(
++        self, mock_gcfg: MagicMock
++    ) -> None:
++        """A signing key spelled like the identity must not leave a tuple in KEYCACHE.
++
++        _sign_openpgp() caches fingerprints in KEYCACHE by key ID, so a tuple
++        stored there under the same string would come back as the fingerprint
++        """
++        mock_gcfg.side_effect = _make_mock_get_config(
++            usercfg={'email': 'test@example.com', 'signingkey': 'test@example.com'},
++            gpgcfg={},
++        )
++        config: GitConfigType = {'identity': 'test@example.com'}
++        algo, keydata = get_algo_keydata(config)
++
++        assert (algo, keydata) == ('openpgp', 'test@example.com')
++        assert 'test@example.com' not in KEYCACHE
++        assert IDENTITYCACHE['test@example.com'] == ('openpgp', 'test@example.com')
++
+     @patch('patatt.get_config_from_git')
+     def test_unknown_gpg_format_defaults_to_openpgp(self, mock_gcfg: MagicMock) -> None:
+         """An unrecognized gpg.format value should fall through to openpgp."""
+-- 
+2.56.0
 
-
-
-
-> 
-> 
-> Thus it seems that the following script for the semantic patch language
-> can work to some degree.
-> 
-> 
-> @replacement exists@
-> identifier label, var;
-> @@
-> -goto label;
-> +return var;
->  ...
-> -label:
->  return var;
-> 
-> 
-> 
-> Unfortunately, patches would be generated then by such a simple SmPL code
-> which would still preserve return statements that became unreachable.
-> 
-> Test result example:
-> Markus_Elfring@Sonne:…/Projekte/Linux/next-analyses> time spatch --allow-inconsistent-paths fs/xfs/libxfs/xfs_btree.c …/Projekte/Coccinelle/janitor/replace_goto_by_return2.cocci
-> …
-> @@ -1735,7 +1735,7 @@ xfs_btree_increment(
->                 --lev;
->                 error = xfs_btree_read_buf_block(cur, ptrp, 0, &block, &bp);
->                 if (error)
-> -                       goto error0;
-> +                       return error;
->  
->                 xfs_btree_setbuf(cur, lev, bp);
->                 cur->bc_levels[lev].ptr = 1;
-> @@ -1747,8 +1747,6 @@ out1:
->  out0:
->         *stat = 0;
->         return 0;
-> -
-> -error0:
->         return error;
->  }
-> …
-> real    0m1,074s
-> user    0m0,995s
-> sys     0m0,071s
-> 
-> 
-> 
-> How should such a source code transformation approach be improved accordingly?
-> 
-> Regards,
-> Markus
-> 
