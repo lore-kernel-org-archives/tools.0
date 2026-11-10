@@ -1,88 +1,73 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794314429;
-	b=Ip1j9XfUc2anKnz3nm62DoGYTcAP+pSv5YG9oPJg6XeeEzdl7BdlYX+9+1A3/dUU6870
-	 G8XDoDj3H6iGd7t4GH8wiXPqXpb+Gt+CfsYjSKEV/88qnxRr05JOhBCYRTY8XHOC9qog7
-	 tweJEgEnvIH9g9em4ZBtwg6Y1So3uJHxTgl6mqjwoAsECyKbZ8RrBhOr4r0iDb2uMwM2k
-	 T5hUqAPrZc0uTVcTPQpxNlnRNZDCj+/cL9QDm25Cc5SonZi8b3pz8M33QMRDRD8W8gNkh
-	 r+frVVhZFrsiYqvOHHjVJ6ofDvre0zHlTmNOwxhABIPkrPsgrbKIj1r6F96nCh4zsUw==
+	t=1794314459;
+	b=bYZDsgtH+9yjgtB26R/QWnUtAZfYfwrHJevGqxmUbR2kL2RoEmQMJwyC1VPIDpYXdYNV
+	 sI7ktDXvPlFZGUGI86ag46027TABXo7P4/OYLpaK+ItYoRBd9aIMz2YzLS+NwpS3R3r1R
+	 dgYDnnWIsFmwOMdaQPCsY/wL6t0arJ2UK3DZpD8LVwo9cKgFmI2wu1jVpLePA7nGutPL4
+	 8uRV5W3RZTZiVPdgQE9XEVSOYpNryQqbd15a5YDWbsCYpA5j2QbPtdWZ/sqMZAv/94p88
+	 P8RMONLsrlLvmaKzg2LilC5HC2GBqlrnWlqUH0xDHCTk9J8gmFQJRn8/rPe9XKHj4Bg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794314429;
-	h=Received:Delivered-To:Received:DMARC-Filter:DKIM-Signature:Received:
-	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key;
-	bh=J325x801hlZwHbRQbkQ7wgCif3ti4FPSglSOFKuA3ww=;
-	b=pa5308Kl45AplQnQne3O4zy4qmC5qhLhn6TXFSBmfk3ZtJw5XtfkUpucJlJ8CUGC+RAm
-	 O2R8RoMKzMcaAEY+PtoHSCcGNgLDf2NOPadNAFc6jxJtYlq5n+r1p+G5dHISCP6Af9dTs
-	 fxoHIBcRqmEoPpKzR8R4x4du5ier98o8B0PMJnqR1HVfp8JqR98QLJWHlzWrYLc5JVj26
-	 k2Y6qlgSxDowgA7akhU+x4BWkUJzCM/OZj9i6IFM4zaGQ8uABVl8CiK0pq4cUTYMHErqA
-	 mgFv4J58bxJ6Rqt9DygPgS+kidCEmxHLXHh+/rG5yf9nHoTGD1DDaHe7VoLFwd3u6og==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794314459;
+	h=Received:Delivered-To:Received:DMARC-Filter:Received:From:Subject:
+	 Date:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Bm-Milter-Handled:
+	 X-Bm-Transport-Timestamp;
+	bh=M4vB4fmGrRzvktTCaDDIcjaZFXqa+Ay80GRNdr30nDQ=;
+	b=FzN3/VDpqYAPRYP1Hk5VdpHOsRy1bj4XapEtKadhZVcuzi29/pHLukM2RliopkXTUNnh
+	 Fvw+TTfklKGwBAGIMRwomfKnMWPoAMvlxsJsGJPn/xQC3fNvQ1txwgMHhH5QuMBljwcch
+	 xMAn5QLPUq9miuoZQgql5ygZnpMYZSCeFNmBskQYHB6xx84ZyHbkWAM6ri3bc24/9CZly
+	 /txmQobQEiKpsiQQnktnu/nWjTaoR6c2UB+dCq3yhMlDKPdtBExkNU0VAJp2566b6TjDB
+	 873iiEyuzSehv9kuyafXoO/Xgdlr2BCv7yROa/0acRgIAwzo4KTelwHvY0zBqp5PQDQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=VrAaB6k4;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2576A60A3802
-	for <tools@linux.kernel.org>; Tue, 10 Nov 2026 12:40:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=VrAaB6k4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A8960A2606
+	for <tools@linux.kernel.org>; Tue, 10 Nov 2026 12:40:59 +0000 (UTC)
 Received: by smtp.kernel.org (Postfix)
-	id E02571F0089F; Tue, 10 Nov 2026 12:40:27 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=130.117.225.111
+	id E4DE81F008A5; Tue, 10 Nov 2026 12:40:58 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=94.136.29.106
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1794314427;
-	b=SOWP9r77K3nuHi2GkXVcAihw5Hwmny1Gs7BiWl7LQ1quVXRjRamjL1qfgghEbOLvAFCr
-	 8quCFcjv+2QcWExO0gU2FDTkhrtnORdCNzTdTa2wKF0wsZ8q+jMZ5fYCHhCOlhDtJLkhq
-	 bJX7woaVspR3DLVH8xs9+dvXFGW58rdGNBRH3hlp/AuczzKDVBex0hd68sjhssIZjRpRv
-	 ljOoUPEVOrPTsPRCcU5uoqC1+q5Vd5sH2ILjI2wAd1DfJ42WM3Q4gv2MqT0h/BdAoFb4/
-	 DcaFA/IokPB+HB6HzkRFrxP1EI50t+VM/4w1O9BkAqdN+fjA5MAzAP2OTh9Tr0ADWuA==
+	t=1794314458;
+	b=gNyhqX04cg5f11O/6zQAWXbqsfy+/O9O4wbAKWhH5BazqGXTxiQnb2CJI7PkquuSD0lB
+	 YtC/mTq6xQLsAzOtwjHHyTFQdGOGYFOytr7Z+EO0G6N8QloVyfORuCbxV3aBFH3uTH9EB
+	 IYh2sIYukLlXvJ+PRnZqz6N3jbbG673HSNTtPLRqEruasRBdZzSRwJUZWxAt0anBuV9hy
+	 BgjlYv8mRAE4v1tNAVDkxolnJA8p3i/sOZTFQvbTnMLnjiQU/l/CKZzNdjYBG1M+d91mw
+	 xHbtb0HeCe4ustRcJFeOPTW9Yaj7yaNxEBPqppnSBNFSMdewU0pTTGPGXa24VGgk0LQ==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1794314427;
-	h=DMARC-Filter:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
-	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=J325x801hlZwHbRQbkQ7wgCif3ti4FPSglSOFKuA3ww=;
-	b=Ln2SDiqZSIDnWO0CmYv4vWi3wpr1T9FlJStKuCcHCMXtLXjdGp2y7jYX6SPGzCYDLJSl
-	 /zJzsL1Gx84qBnX3sZ1P4MXjawmObMa3Lar1gyjcX51MM/qZPoJgl0IKio5Fk6Wc4e/0o
-	 TTuwjPeFlrAGL6UFv/5Fq5f5n8O/S6Mncg5Z2ss46Mf6BcCrN6BLtB0UVmG08JT9JzZln
-	 z8BGL3g6cPxthqnFU5QUSw+xy7QqrCyieBxazvqW1QmJSyN17yqpFsEzs5n2cgUjsspo1
-	 g5S25Y+3D+AQSKPLmHTAdGk6li0mFjoP/x1UJ+zX8cagJC1EAGYTZNHjcla07+kKK+g==
+	c=relaxed/relaxed; t=1794314458;
+	h=DMARC-Filter:Received:From:Subject:Date:Message-Id:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
+	 Cc:X-Mailer:X-Bm-Milter-Handled:X-Bm-Transport-Timestamp;
+	bh=M4vB4fmGrRzvktTCaDDIcjaZFXqa+Ay80GRNdr30nDQ=;
+	b=MPjctWMd1iBaRzdTaomsQgKhITkDKmu0yQhmzwsWD0JxJImOQA8jv2dv/BDa+HKlSUTj
+	 Wx9DTEs5FkS9JRYnuv+tBPLya1DjVuX1mq6c0/dklMpg8w7YCPkkc5oeoWjXNRISrU2RT
+	 GP+vxpdRcKIks7i2GVDrGEZv8luFi2M3wvnkdJdEFooJdcJym8HICaRBw788JvCRGvh6M
+	 +H8xMjoNM3JCKyNgVuYhIPei4S6eQU5nNmO3qFnGueu4gNApGw3vDg5VqnjnizaH0O+La
+	 NVRKkugcc2Py1xYE7cLIbBzi7jbzgTXKt8V9EcaLruIdEm/xCdCHOH995elN8FJcsAQ==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=VrAaB6k4;
-	dmarc=pass header.from=virtuozzo.com;
-	spf=pass smtp.mailfrom=virtuozzo.com;
-	arc=none smtp.remote-ip=130.117.225.111
-Received: from relay.virtuozzo.com (relay.virtuozzo.com [130.117.225.111])
+	dmarc=none header.from=proxmox.com;
+	spf=pass smtp.mailfrom=proxmox.com;
+	arc=none smtp.remote-ip=94.136.29.106
+Received: from proxmox-new.maurer-it.com (proxmox-new.maurer-it.com [94.136.29.106])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 8ECAE1F008A3
-	for <tools@kernel.org>; Tue, 10 Nov 2026 12:40:26 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=VrAaB6k4
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 8ECAE1F008A3
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=virtuozzo.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=virtuozzo.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=virtuozzo.com; s=relay; h=Message-Id:Content-Type:MIME-Version:Subject:Date
-	:From; bh=J325x801hlZwHbRQbkQ7wgCif3ti4FPSglSOFKuA3ww=; b=VrAaB6k4KMrBXCNrHj6
-	FGdda2/lsepwj275No35M9XumM1g6qrgUJ8wjbLDbD2rngf8dltyF/c22F9ctTY3WH83aC818wb6M
-	BLdO9iRYDV/p4ZjFXQOuU1gZlTFtaLg3zhNEDu/2TTr2nN/rWoRGYaatK4R14b2XU0KKoYadqHlax
-	fjknlCJWIuEebPbt+cQp9rAw5WqhXfRlYyorvHgOjvmmbNoowDjXOZSqvQ7GGK0suqsiBT8akQHKq
-	On0D8po9HRvay0OU/c+GRi9tC4rpd4WD11ydJXyTsV2R8RnmnTpETysXKO5xVIH1wfRLtDUQyWheO
-	sd1pD2dqBuoDkuA==;
-Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=f0.sw.ru)
-	by relay.virtuozzo.com with esmtp (Exim 4.96)
-	(envelope-from <khorenko@virtuozzo.com>)
-	id 1xQl52-00E82C-2d;
-	Tue, 10 Nov 2026 13:40:08 +0100
-From: Konstantin Khorenko <khorenko@virtuozzo.com>
-Date: Tue, 10 Nov 2026 13:40:12 +0100
-Subject: [PATCH b4 2/2] tests: cover review carry-over on a revision
- upgrade
+	by smtp.kernel.org (Postfix) with ESMTPS id 146671F0089F
+	for <tools@kernel.org>; Tue, 10 Nov 2026 12:40:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 146671F0089F
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=proxmox.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=proxmox.com
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+	by proxmox-new.maurer-it.com (Proxmox) with ESMTP id D1368481B1;
+	Tue, 10 Nov 2026 13:40:54 +0100 (CET)
+From: Gabriel Goller <g.goller@proxmox.com>
+Subject: [PATCH RFC b4 0/6] Initial support for b4 workflows on a detached
+ HEAD
+Date: Tue, 10 Nov 2026 13:40:46 +0100
+Message-Id: <20261110-editor_refuse_the-v1-0-4b6e52f326a9@proxmox.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -93,128 +78,76 @@ List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261110-b4-prep-khorenko-upgrade-skip-sent-reviews-v1-2-4533266d020f@virtuozzo.com>
-References: <20261110-b4-prep-khorenko-upgrade-skip-sent-reviews-v1-0-4533266d020f@virtuozzo.com>
-In-Reply-To: <20261110-b4-prep-khorenko-upgrade-skip-sent-reviews-v1-0-4533266d020f@virtuozzo.com>
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Konstantin Khorenko <khorenko@virtuozzo.com>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4113;
- i=khorenko@virtuozzo.com; h=from:subject:message-id;
- bh=k77/XCxJNpj9MpoEGvTht+wv0SAHD18lw8vQfdesMvM=;
- b=owEBbQKS/ZANAwAKAVGWCkf5YVwqAcsmYgBq8xCxLXEHaDIKMRtiVw66vyl+0zGuiw5JZnn5x
- VqGQtkRqeuJAjMEAAEKAB0WIQRWD23IPcXT0GO9CCxRlgpH+WFcKgUCavMQsQAKCRBRlgpH+WFc
- KnFwD/9qcaqU9U9d1lETQ+9NDwbAilfIFn9ppv9aIlzWczYu3+DDLsMpIcy/U+OhZ5QssvrFu81
- F6nCXq6AQLdCF0n8VbrslhuU/7GZZYRY52YEiyohKwhCrSR8H8K7HOCNJrWBT81M2eI8YbqsZEK
- iD06bDBrVaU+pyEFcDUzAebTYJOo8qYOMR4YqQeYEZNJP0LvGoXNoglLFDhe6kvMzItJdSq/IZx
- 9ZBDpqIpXADe+uWejJVtP0fayyMCECCOCvjP+ccigT253LxLAXTGrHdEzRaYEBNkivIpNWrHwcc
- FwDrGedy7iMDJmqFsQM32qO8J7lgedRfQX54JSnTkBNRbdGEiZkONWxprM4siOtvp7LCbZ/94lD
- 5Pj5NRyeG1z2LEyIOjdm+hcAfbq+vDLh7Q3g8P5PFRy0XAZeexV4JkCPrpa5l8omYdoaHuCknGW
- UR+LxduN6yxJqz+Qik/4hxvom0hCF0If6t9Ftz1sPMs04X4JbQBn+BOtzYjrXWXZFwCaIbyNaiD
- FE0731spMiP0WN7strCQ8IvnutqQgSYEBPbA3Bqd/lCO2b0t7v9SvXxXz1wf36zQ2g7j+EO//U/
- oL6aKV9wCETiLMdxHAV1LOyBDySs3a9C22yQ0OGeDGueTpofa8qx9TpkbpcodCMY91UCPrc8fT1
- 47Zfy/BvxYK7Cgg==
-X-Developer-Key: i=khorenko@virtuozzo.com; a=openpgp;
- fpr=560F6DC83DC5D3D063BD082C51960A47F9615C2A
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzNDQ0MD3dSUzJL8ovii1LTS4tT4koxUXQsjAwODpFQT00RDcyWgvgKgXGY
+ F2MxopSA3Z4UkE6VYiHhxaVJWanIJyECl2loArfMSeH0AAAA=
+X-Change-ID: 20261110-editor_refuse_the-82000be45a17
+To: tools@kernel.org
+Cc: Gabriel Goller <g.goller@proxmox.com>, 
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Gabriel Goller <hey@gabriels.computer>
+X-Mailer: b4 0.17-dev
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1794314453501
 
-The upgrade carries the maintainer's reviews of unchanged patches over
-when the series status is not "replied", e.g. after it was moved to
-"waiting".
+I'm using jj instead of git and want to use b4. The major difference and
+dealbreaker here is that jj is always on a detached HEAD and not on the
+latest commit or on a branch.
 
-Check both sides: a review that has sent-revision set is dropped, and a
-draft that was never sent is still carried over.
+This is a preliminary, basic implementation of detached-HEAD support
+in b4. The goal is to make b4 usable with tools such as jj, which leave
+HEAD detached, without having to create a Git branch.
 
-Signed-off-by: Konstantin Khorenko <khorenko@virtuozzo.com>
+It supports enrolling a series with an explicit base:
+
+  b4 prep -e origin/master
+
+The series can then be edited, checked, sent and updated with review
+trailers. Only the commit cover-letter strategy is supported. Rewrites
+keep HEAD detached and save the previous tip in a recovery ref. Branches
+and refs managed by other tools are left alone.
+
+Normal branch-based workflows are preserved, with added checks to refuse
+history changes during an in-progress Git operation or when the rewrite
+target has moved. On a detached HEAD, b4 trailers -u now requires an
+enrolled series.
+
+This is not full jj integration: b4 updates Git HEAD, but does not
+update jj’s state. Feedback on the approach and its limitations is
+welcome.
+
+Includes documentation and tests for detached workflows, recovery and linked worktrees.
+
+Let me know what you think and if this is somethingi that would be accepted.
+
+Signed-off-by: Gabriel Goller <g.goller@proxmox.com>
 ---
- src/tests/test_tui_tracking.py | 72 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+Gabriel Goller (6):
+      editor: refuse the edit when a detached HEAD moves
+      ez: refuse to rewrite history during an in-progress git operation
+      rewrite: keep a detached HEAD detached, never overwrite a moved ref
+      ez: work on a series at a detached HEAD
+      prep: enroll a detached HEAD without creating a branch
+      docs: prep: describe working on a detached HEAD
 
-diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
-index 88a8663..fb1a414 100644
---- a/src/tests/test_tui_tracking.py
-+++ b/src/tests/test_tui_tracking.py
-@@ -3449,6 +3449,78 @@ def _mock_archive_branch(
-         assert ecode == 0
-         assert head_sha == start_sha
- 
-+    @pytest.mark.asyncio
-+    @pytest.mark.parametrize(
-+        'sent,carried',
-+        [
-+            pytest.param(True, False, id='sent-review-dropped'),
-+            pytest.param(False, True, id='draft-carried'),
-+        ],
-+    )
-+    async def test_upgrade_carries_only_unsent_reviews(
-+        self, gitdir: str, sent: bool, carried: bool
-+    ) -> None:
-+        """A review sent before the series went to "waiting" is no draft."""
-+        identifier = 'test-update-carry'
-+        change_id = 'update-carry-1'
-+        review_branch = _setup_update_test(gitdir, identifier, change_id)
-+        my_email = str(b4.get_user_config().get('email'))
-+        my_review: Dict[str, Any] = {'name': 'Maintainer', 'reply': 'Please fix.'}
-+        if sent:
-+            my_review['sent-revision'] = 1
-+        old_tracking = {
-+            'series': {'status': 'waiting'},
-+            'patches': [{'reviews': {my_email: my_review}}],
-+        }
-+        new_tracking: Dict[str, Any] = {'series': {}, 'patches': [{}]}
-+        saved: List[Dict[str, Any]] = []
-+
-+        def _patch_ids(topdir: str, branch: str) -> List[Tuple[int, str, str]]:
-+            return [(0, f'sha-{branch}', 'unchanged-patch-id')]
-+
-+        def _load(topdir: str, branch: str) -> Tuple[str, Dict[str, Any]]:
-+            return '', old_tracking if branch == review_branch else new_tracking
-+
-+        def _save(topdir: str, branch: str, cover: str, trk: Dict[str, Any]) -> bool:
-+            saved.append(trk)
-+            return True
-+
-+        app = TrackingApp(identifier)
-+        async with app.run_test(size=(120, 30)) as pilot:
-+            await pilot.pause()
-+            with (
-+                patch.object(app, 'suspend', return_value=contextlib.nullcontext()),
-+                patch('b4.review_tui._tracking_app._wait_for_enter'),
-+                patch('b4.git_fetch_am_into_repo'),
-+                patch(
-+                    'b4.review.create_review_branch',
-+                    side_effect=_fake_create_review_branch(identifier),
-+                ),
-+                patch('b4.review.get_review_branch_patch_ids', side_effect=_patch_ids),
-+                patch('b4.review.load_tracking', side_effect=_load),
-+                patch('b4.review.reanchor_patch_comments'),
-+                patch('b4.review.save_tracking_ref', side_effect=_save),
-+                patch.object(TrackingApp, '_archive_branch', _mock_archive_branch),
-+            ):
-+                app._on_update_base_selected(
-+                    'HEAD',
-+                    _make_mock_lser(),
-+                    b'mbox',
-+                    1,
-+                    change_id,
-+                    1,
-+                    2,
-+                    'v2@ex.com',
-+                    '[PATCH v2] update test',
-+                    review_branch,
-+                )
-+            await pilot.pause()
-+
-+        assert saved
-+        reviews = saved[-1]['patches'][0]['reviews']
-+        assert ('reply' in reviews[my_email]) is carried
-+        assert reviews[my_email]['patch-state'] == 'unchanged'
-+
-     @pytest.mark.asyncio
-     async def test_apply_failure_restores_original_branch(self, gitdir: str) -> None:
-         """A create that moves HEAD and then fails leaves nothing behind.
+ docs/contributor/prep.rst     |  69 ++++-
+ docs/contributor/send.rst     |   5 +
+ src/b4/__init__.py            |  45 ++-
+ src/b4/_rewrite.py            | 135 +++++++--
+ src/b4/command.py             |   3 +-
+ src/b4/ez.py                  | 481 ++++++++++++++++++++++++-------
+ src/tests/test___init__.py    |  45 +++
+ src/tests/test_ez.py          | 127 ++++++++
+ src/tests/test_ez_detached.py | 657 ++++++++++++++++++++++++++++++++++++++++++
+ src/tests/test_rewrite.py     | 189 ++++++++++++
+ 10 files changed, 1619 insertions(+), 137 deletions(-)
+---
+base-commit: ce4c1158edb292caca0ce4a6087e5edecc1b0371
+change-id: 20261110-editor_refuse_the-82000be45a17
 
--- 
-2.43.0
+Best regards,
+--  
+Gabriel Goller <g.goller@proxmox.com>
+
 
