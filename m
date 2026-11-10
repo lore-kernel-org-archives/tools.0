@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794314459;
-	b=bYZDsgtH+9yjgtB26R/QWnUtAZfYfwrHJevGqxmUbR2kL2RoEmQMJwyC1VPIDpYXdYNV
-	 sI7ktDXvPlFZGUGI86ag46027TABXo7P4/OYLpaK+ItYoRBd9aIMz2YzLS+NwpS3R3r1R
-	 dgYDnnWIsFmwOMdaQPCsY/wL6t0arJ2UK3DZpD8LVwo9cKgFmI2wu1jVpLePA7nGutPL4
-	 8uRV5W3RZTZiVPdgQE9XEVSOYpNryQqbd15a5YDWbsCYpA5j2QbPtdWZ/sqMZAv/94p88
-	 P8RMONLsrlLvmaKzg2LilC5HC2GBqlrnWlqUH0xDHCTk9J8gmFQJRn8/rPe9XKHj4Bg==
+	t=1794314460;
+	b=ozQXPerRfzNciUtLjLoyIgOyZph5kRvqhV7tJj+RFIeibqLWjgRlDH5paEF6kpxc9/6g
+	 TAZeSq26bnKAz5zc6ZlwHpS8A40c/c7po2TSj1JfT9mxVwL94+ItQ7e8/Fx2mU21O1wBF
+	 PZy++a8WnX5R19O1Kxf3KIf8ujKeWQm5pfoMZiJi+zA1CIQFzAckFgKQSXJxpdD9OEfzI
+	 vAh3+HTHnZTgh/zYQSVd7Vg1cAIhdThit+Xoelcs+8hPdueTD6hOqVf6lSJ7XLQElzUnw
+	 tNbaY4OkqbiXejRQ4QK+Nu8og4sGp+a/+1CNLohoaznnQtYPmPqcFCcg8QHcMU5xEGg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794314459;
-	h=Received:Delivered-To:Received:DMARC-Filter:Received:From:Subject:
-	 Date:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Bm-Milter-Handled:
+	a=rsa-sha256; c=relaxed/relaxed; t=1794314460;
+	h=Received:Delivered-To:Received:DMARC-Filter:Received:From:Date:
+	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:X-Bm-Milter-Handled:
 	 X-Bm-Transport-Timestamp;
-	bh=M4vB4fmGrRzvktTCaDDIcjaZFXqa+Ay80GRNdr30nDQ=;
-	b=FzN3/VDpqYAPRYP1Hk5VdpHOsRy1bj4XapEtKadhZVcuzi29/pHLukM2RliopkXTUNnh
-	 Fvw+TTfklKGwBAGIMRwomfKnMWPoAMvlxsJsGJPn/xQC3fNvQ1txwgMHhH5QuMBljwcch
-	 xMAn5QLPUq9miuoZQgql5ygZnpMYZSCeFNmBskQYHB6xx84ZyHbkWAM6ri3bc24/9CZly
-	 /txmQobQEiKpsiQQnktnu/nWjTaoR6c2UB+dCq3yhMlDKPdtBExkNU0VAJp2566b6TjDB
-	 873iiEyuzSehv9kuyafXoO/Xgdlr2BCv7yROa/0acRgIAwzo4KTelwHvY0zBqp5PQDQ==
+	bh=rVL65aUKRqYQxF/9rRNWShtotyXZ6GtI6oOi+tdTSdE=;
+	b=wKcRGUQpsVLg8XVvRD1k+/w4tBt/zYFxBEMeEsswh0Qq5AP06cKhbVeIC/+xUBpWZV62
+	 Bl/b0LOpFdLdAkteLCcWnY8PukVidwJb6guyRbJV3Yp3UPeEZ6vOn0HXOozGTyl6oQbfa
+	 O8QU5zRQ4c4gEPKpzvdzoD69uES4WRcAGGZrE64l//QSDhHBmDGUdzmNjYEJi8CZAgua7
+	 Y6b+uaGK3NKzouTF8sTZtCw2QRZEU82w1y+IurD4aOoPNMZoMjqlzprjzSKE1VeXZu2pB
+	 wzjbX01kDmC2NDKhBnf3In9rGppRrE6/FQEn68Hw5MBmGrMv3gvlOQPbeCTe74eb2Ig==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A8960A2606
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A2360A2626
 	for <tools@linux.kernel.org>; Tue, 10 Nov 2026 12:40:59 +0000 (UTC)
 Received: by smtp.kernel.org (Postfix)
-	id E4DE81F008A5; Tue, 10 Nov 2026 12:40:58 +0000 (UTC)
+	id E55E61F008A6; Tue, 10 Nov 2026 12:40:58 +0000 (UTC)
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=94.136.29.106
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
 	t=1794314458;
-	b=gNyhqX04cg5f11O/6zQAWXbqsfy+/O9O4wbAKWhH5BazqGXTxiQnb2CJI7PkquuSD0lB
-	 YtC/mTq6xQLsAzOtwjHHyTFQdGOGYFOytr7Z+EO0G6N8QloVyfORuCbxV3aBFH3uTH9EB
-	 IYh2sIYukLlXvJ+PRnZqz6N3jbbG673HSNTtPLRqEruasRBdZzSRwJUZWxAt0anBuV9hy
-	 BgjlYv8mRAE4v1tNAVDkxolnJA8p3i/sOZTFQvbTnMLnjiQU/l/CKZzNdjYBG1M+d91mw
-	 xHbtb0HeCe4ustRcJFeOPTW9Yaj7yaNxEBPqppnSBNFSMdewU0pTTGPGXa24VGgk0LQ==
+	b=x4pxgmJWy5ArTVZE8l28ekiGOJgsiBWN1AqsRp2Tk+rYxGnnzPjOiEo/O8hUarSRjXDZ
+	 dY1DcK7jKngLILZc/dSHkDlFivaJMuu9sPzu5xk8ZeLzitwYjxPwd2+4JKtD7bMBA5jBM
+	 vXW2iVczg+8QVUutUwNgGDxW2pXyWqiLgSHmY4vozqkbpklNz0C6VLfIu7I8q0ZgnTcKu
+	 2Zt0UZ1lzLsNreZVPIL70VH22VLYS0YnkjKGqyOnEyS5EJekwfN4L6+StGnDWbYacEp4T
+	 7SzE+IB2lU+YVcddirww49XrqQVYOr7j/t7ppVbftxSzDrvtQ0px4whEzEknaTtX3zw==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
 	c=relaxed/relaxed; t=1794314458;
-	h=DMARC-Filter:Received:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
-	 Cc:X-Mailer:X-Bm-Milter-Handled:X-Bm-Transport-Timestamp;
-	bh=M4vB4fmGrRzvktTCaDDIcjaZFXqa+Ay80GRNdr30nDQ=;
-	b=MPjctWMd1iBaRzdTaomsQgKhITkDKmu0yQhmzwsWD0JxJImOQA8jv2dv/BDa+HKlSUTj
-	 Wx9DTEs5FkS9JRYnuv+tBPLya1DjVuX1mq6c0/dklMpg8w7YCPkkc5oeoWjXNRISrU2RT
-	 GP+vxpdRcKIks7i2GVDrGEZv8luFi2M3wvnkdJdEFooJdcJym8HICaRBw788JvCRGvh6M
-	 +H8xMjoNM3JCKyNgVuYhIPei4S6eQU5nNmO3qFnGueu4gNApGw3vDg5VqnjnizaH0O+La
-	 NVRKkugcc2Py1xYE7cLIbBzi7jbzgTXKt8V9EcaLruIdEm/xCdCHOH995elN8FJcsAQ==
+	h=DMARC-Filter:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+	 X-Mailer:X-Bm-Milter-Handled:X-Bm-Transport-Timestamp;
+	bh=rVL65aUKRqYQxF/9rRNWShtotyXZ6GtI6oOi+tdTSdE=;
+	b=GRDzlXMeOiMwud/K3JSy1ST9Bwo+WfJH6psNjGt6Fi87dEW77JwV8tDwte0OY2HtiXKL
+	 we1S2ne79HHpvl5GpvM8JExvPbnT/hk6itkZBvmh+Mogf/gBwZK6xQV8d68F+k5Knr0Aw
+	 XmQ8GIYLtoRSBeAz7ZhvwCGXqjlG+i74pn4ACaBMAEDm0/+YWdcw1CkGvyzhoo08Sr0ld
+	 IR97r2EMoTCkfbBS79cYvMgjNCQPG1v5MMQYr+OQdB9AMwcvcxFv/fLcFmap6wmx8B4/x
+	 QhdU735OULK7bO+0Zxpm743+2TPEFSTQcZvYmQ70Kf5R1bxhCMiVxMlo+vUgc2fWevA==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	dmarc=none header.from=proxmox.com;
 	spf=pass smtp.mailfrom=proxmox.com;
@@ -55,19 +55,18 @@ Received: from proxmox-new.maurer-it.com (proxmox-new.maurer-it.com [94.136.29.1
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 146671F0089F
-	for <tools@kernel.org>; Tue, 10 Nov 2026 12:40:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 146671F0089F
+	by smtp.kernel.org (Postfix) with ESMTPS id 162A71F008A1
+	for <tools@kernel.org>; Tue, 10 Nov 2026 12:40:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 162A71F008A1
 Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=proxmox.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=proxmox.com
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
-	by proxmox-new.maurer-it.com (Proxmox) with ESMTP id D1368481B1;
-	Tue, 10 Nov 2026 13:40:54 +0100 (CET)
+	by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 99914481B5;
+	Tue, 10 Nov 2026 13:40:55 +0100 (CET)
 From: Gabriel Goller <g.goller@proxmox.com>
-Subject: [PATCH RFC b4 0/6] Initial support for b4 workflows on a detached
- HEAD
-Date: Tue, 10 Nov 2026 13:40:46 +0100
-Message-Id: <20261110-editor_refuse_the-v1-0-4b6e52f326a9@proxmox.com>
+Date: Tue, 10 Nov 2026 13:40:47 +0100
+Subject: [PATCH RFC b4 1/6] editor: refuse the edit when a detached HEAD
+ moves
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -78,76 +77,171 @@ List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzNDQ0MD3dSUzJL8ovii1LTS4tT4koxUXQsjAwODpFQT00RDcyWgvgKgXGY
- F2MxopSA3Z4UkE6VYiHhxaVJWanIJyECl2loArfMSeH0AAAA=
-X-Change-ID: 20261110-editor_refuse_the-82000be45a17
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261110-editor_refuse_the-v1-1-4b6e52f326a9@proxmox.com>
+References: <20261110-editor_refuse_the-v1-0-4b6e52f326a9@proxmox.com>
+In-Reply-To: <20261110-editor_refuse_the-v1-0-4b6e52f326a9@proxmox.com>
 To: tools@kernel.org
 Cc: Gabriel Goller <g.goller@proxmox.com>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Gabriel Goller <hey@gabriels.computer>
 X-Mailer: b4 0.17-dev
 X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1794314453501
+X-Bm-Transport-Timestamp: 1794314453606
 
-I'm using jj instead of git and want to use b4. The major difference and
-dealbreaker here is that jj is always on a detached HEAD and not on the
-latest commit or on a branch.
+From: Gabriel Goller <hey@gabriels.computer>
 
-This is a preliminary, basic implementation of detached-HEAD support
-in b4. The goal is to make b4 usable with tools such as jj, which leave
-HEAD detached, without having to create a Git branch.
+b4 prep writes the edited cover letter and dependencies into whatever
+series HEAD points at, so edit_in_editor() refuses the edit when HEAD
+switches branches while the editor is open. A detached HEAD has no
+branch name to compare, so moving it to another commit went unnoticed,
+and the text would land in whatever series is checked out afterwards.
 
-It supports enrolling a series with an explicit base:
+When editing starts on a detached HEAD, compare the HEAD commit too.
+On a branch, keep comparing only the branch name, so committing to the
+branch while the editor is open stays allowed.
 
-  b4 prep -e origin/master
-
-The series can then be edited, checked, sent and updated with review
-trailers. Only the commit cover-letter strategy is supported. Rewrites
-keep HEAD detached and save the previous tip in a recovery ref. Branches
-and refs managed by other tools are left alone.
-
-Normal branch-based workflows are preserved, with added checks to refuse
-history changes during an in-progress Git operation or when the rewrite
-target has moved. On a detached HEAD, b4 trailers -u now requires an
-enrolled series.
-
-This is not full jj integration: b4 updates Git HEAD, but does not
-update jj’s state. Feedback on the approach and its limitations is
-welcome.
-
-Includes documentation and tests for detached workflows, recovery and linked worktrees.
-
-Let me know what you think and if this is somethingi that would be accepted.
-
-Signed-off-by: Gabriel Goller <g.goller@proxmox.com>
+Signed-off-by: Gabriel Goller <hey@gabriels.computer>
 ---
-Gabriel Goller (6):
-      editor: refuse the edit when a detached HEAD moves
-      ez: refuse to rewrite history during an in-progress git operation
-      rewrite: keep a detached HEAD detached, never overwrite a moved ref
-      ez: work on a series at a detached HEAD
-      prep: enroll a detached HEAD without creating a branch
-      docs: prep: describe working on a detached HEAD
+ src/b4/__init__.py         | 45 ++++++++++++++++++++++++++++++++++-----------
+ src/tests/test___init__.py | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 79 insertions(+), 11 deletions(-)
 
- docs/contributor/prep.rst     |  69 ++++-
- docs/contributor/send.rst     |   5 +
- src/b4/__init__.py            |  45 ++-
- src/b4/_rewrite.py            | 135 +++++++--
- src/b4/command.py             |   3 +-
- src/b4/ez.py                  | 481 ++++++++++++++++++++++++-------
- src/tests/test___init__.py    |  45 +++
- src/tests/test_ez.py          | 127 ++++++++
- src/tests/test_ez_detached.py | 657 ++++++++++++++++++++++++++++++++++++++++++
- src/tests/test_rewrite.py     | 189 ++++++++++++
- 10 files changed, 1619 insertions(+), 137 deletions(-)
----
-base-commit: ce4c1158edb292caca0ce4a6087e5edecc1b0371
-change-id: 20261110-editor_refuse_the-82000be45a17
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 704ddec9b5c6..dd4fa2d10864 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -7754,7 +7754,9 @@ def edit_in_editor(
+     (b4 prep keeps the cover letter in the current branch's tracking commit,
+     so a branch switch mid-edit would clobber an unrelated series).  HEAD is
+     read before and after the editor runs; if it moved, the text is saved to
+-    a temporary file and RuntimeError is raised.
++    a temporary file and RuntimeError is raised.  On a branch, only switching
++    to another branch counts as moving.  On a detached HEAD there is no
++    branch to tell series apart, so any change of the HEAD commit counts.
+ 
+     Callers that write to an explicit ref must leave it unset: HEAD is not
+     where their data lands, so refusing the edit would throw away the user's
+@@ -7767,6 +7769,10 @@ def edit_in_editor(
+     # HEAD reads as None and still guards: None is not a branch we started
+     # on, so checking one out mid-edit is caught like any other switch.
+     read_branch = git_get_current_branch(topdir) if guard_branch else None
++    read_head = None
++    if guard_branch and read_branch is None:
++        ecode, out = git_run_command(topdir, ['rev-parse', '-q', '--verify', 'HEAD'])
++        read_head = out.strip() if ecode == 0 else None
+     # core.editor comes from the same tree as everything else here, so a
+     # repository-local setting is the one belonging to the edited branch.
+     corecfg = get_config_from_git(r'core\..*', gitdir=topdir)
+@@ -7806,23 +7812,40 @@ def edit_in_editor(
+ 
+     if guard_branch:
+         write_branch = git_get_current_branch(topdir)
+-        if write_branch != read_branch:
++        write_head = None
++        if read_branch is None and write_branch is None:
++            ecode, out = git_run_command(
++                topdir, ['rev-parse', '-q', '--verify', 'HEAD']
++            )
++            write_head = out.strip() if ecode == 0 else None
++        if write_branch != read_branch or write_head != read_head:
++            if read_branch is not None:
++                prefix = f'old-{read_branch}'.replace('/', '-')
++            else:
++                prefix = f'old-detached-{(read_head or "")[:12]}-'
+             with tempfile.NamedTemporaryFile(
+-                mode='wb',
+-                prefix=f'old-{read_branch}'.replace('/', '-'),
+-                delete=False,
++                mode='wb', prefix=prefix, delete=False
+             ) as save_file:
+                 save_file.write(bdata)
+-                logger.critical(
+-                    'Editing started on branch %s, but current branch is %s.',
+-                    read_branch,
+-                    write_branch,
+-                )
++                if write_branch != read_branch:
++                    logger.critical(
++                        'Editing started on branch %s, but current branch is %s.',
++                        read_branch,
++                        write_branch,
++                    )
++                    reason = 'Branch changed'
++                else:
++                    logger.critical(
++                        'Editing started on detached HEAD at %.12s, but HEAD is now at %.12s.',
++                        read_head,
++                        write_head,
++                    )
++                    reason = 'Detached HEAD moved'
+                 logger.critical(
+                     'To avoid a collision, your text was saved in %s', save_file.name
+                 )
+             raise RuntimeError(
+-                f'Branch changed during file editing, the temporary file was saved at {save_file.name}'
++                f'{reason} during file editing, the temporary file was saved at {save_file.name}'
+             )
+     return bdata
+ 
+diff --git a/src/tests/test___init__.py b/src/tests/test___init__.py
+index 764829d7e756..58cbf4a8e35f 100644
+--- a/src/tests/test___init__.py
++++ b/src/tests/test___init__.py
+@@ -2534,6 +2534,51 @@ def test_edit_in_editor_guard_covers_a_detached_head(
+         saved.unlink()
+ 
+ 
++def test_edit_in_editor_guard_refuses_a_moved_detached_head(
++    gitdir: str, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
++) -> None:
++    """Without a branch, the HEAD commit is all that tells two series apart,
++    so moving a detached HEAD to another commit is refused too."""
++    ecode, out = b4.git_run_command(gitdir, ['checkout', '-q', '--detach'])
++    assert ecode == 0, out
++    monkeypatch.setenv(
++        'GIT_EDITOR',
++        _fake_editor(tmp_path, f'git -C "{gitdir}" checkout -q --detach HEAD~1'),
++    )
++    with pytest.raises(RuntimeError, match='Detached HEAD moved during file') as ex:
++        b4.edit_in_editor(b'my cover\n', guard_branch=True)
++
++    saved = pathlib.Path(str(ex.value).split(' saved at ')[-1])
++    try:
++        assert saved.read_bytes() == b'my cover\n'
++        assert saved.name.startswith('old-detached-')
++    finally:
++        saved.unlink()
++
++
++def test_edit_in_editor_guard_allows_a_detached_head_that_stays(
++    gitdir: str, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
++) -> None:
++    ecode, out = b4.git_run_command(gitdir, ['checkout', '-q', '--detach'])
++    assert ecode == 0, out
++    monkeypatch.setenv('GIT_EDITOR', _fake_editor(tmp_path, 'true'))
++    assert b4.edit_in_editor(b'my cover\n', guard_branch=True) == b'my cover\n'
++
++
++def test_edit_in_editor_guard_allows_commits_on_the_same_branch(
++    gitdir: str, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
++) -> None:
++    """On a branch, the branch name tells series apart, so committing to it
++    while the editor is open is not a collision."""
++    monkeypatch.setenv(
++        'GIT_EDITOR',
++        _fake_editor(
++            tmp_path, f'git -C "{gitdir}" commit -q -s --allow-empty -m mid-edit'
++        ),
++    )
++    assert b4.edit_in_editor(b'my cover\n', guard_branch=True) == b'my cover\n'
++
++
+ def test_edit_in_editor_follows_the_topdir_it_is_given(
+     gitdir: str, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
+ ) -> None:
 
-Best regards,
---  
-Gabriel Goller <g.goller@proxmox.com>
+-- 
+2.56.0
 
 
