@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
 	t=1794314460;
-	b=ozQXPerRfzNciUtLjLoyIgOyZph5kRvqhV7tJj+RFIeibqLWjgRlDH5paEF6kpxc9/6g
-	 TAZeSq26bnKAz5zc6ZlwHpS8A40c/c7po2TSj1JfT9mxVwL94+ItQ7e8/Fx2mU21O1wBF
-	 PZy++a8WnX5R19O1Kxf3KIf8ujKeWQm5pfoMZiJi+zA1CIQFzAckFgKQSXJxpdD9OEfzI
-	 vAh3+HTHnZTgh/zYQSVd7Vg1cAIhdThit+Xoelcs+8hPdueTD6hOqVf6lSJ7XLQElzUnw
-	 tNbaY4OkqbiXejRQ4QK+Nu8og4sGp+a/+1CNLohoaznnQtYPmPqcFCcg8QHcMU5xEGg==
+	b=AxSBohb/CfrAv4bfSF/vyAyhXHwb/CWwqnl9QhXc1sJW+jmhbmzAqcHZ4I/cae6oO8ld
+	 9skXG73JI4SnNY/y/2Bz4wWOhtf7xXVi2onk4NmNqaI7WW0yX3cWg87jMVfSXAnPy6oS+
+	 eTqB6dBc/PYKMYD1j06goIeCjNeYSY3k27cP39jzp+XJvGPOPSC1AsJ3MdAikxns+XPTs
+	 n4jgEr1OESt5a7vrA3YN7gQpwJUpV9yhFcowiTU0+Etod4huL/NBVHl0r6rvs7mDHmYwA
+	 9u4dNuwq0pv87W6Qt+ZUXB7w3a9FLVBStrgMOeNS+kbwh1KHm5BsEXSzmid6nDnAXfg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794314460;
 	h=Received:Delivered-To:Received:DMARC-Filter:Received:From:Date:
 	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:X-Bm-Milter-Handled:
 	 X-Bm-Transport-Timestamp;
-	bh=rVL65aUKRqYQxF/9rRNWShtotyXZ6GtI6oOi+tdTSdE=;
-	b=wKcRGUQpsVLg8XVvRD1k+/w4tBt/zYFxBEMeEsswh0Qq5AP06cKhbVeIC/+xUBpWZV62
-	 Bl/b0LOpFdLdAkteLCcWnY8PukVidwJb6guyRbJV3Yp3UPeEZ6vOn0HXOozGTyl6oQbfa
-	 O8QU5zRQ4c4gEPKpzvdzoD69uES4WRcAGGZrE64l//QSDhHBmDGUdzmNjYEJi8CZAgua7
-	 Y6b+uaGK3NKzouTF8sTZtCw2QRZEU82w1y+IurD4aOoPNMZoMjqlzprjzSKE1VeXZu2pB
-	 wzjbX01kDmC2NDKhBnf3In9rGppRrE6/FQEn68Hw5MBmGrMv3gvlOQPbeCTe74eb2Ig==
+	bh=jlNhGwcrsOs24dZ5COugW+8nAMWZeijK7sSKhmHxOfM=;
+	b=YsJ/oDAX/2aqtBQdPACUsEWJ6qEBCxBFKD0Rk6TpCvVRWcfs//SiXJrfrhyUUrW5dKkY
+	 weirbynMOxrT4X5MWT8hDLYHsm/gTUE5Zgtp/9W4cG+2m5a+uY4tNJ1OXXN53aWSxW7gR
+	 SZHuCH2dna0IzlOn/R6VsKlcKS8gtHzChbucG50/0dGaKDMe5mz7pmr8rt6vcg43sZvQp
+	 iQQ71tv7QsDMw8mfGsxo+g9+odEMQcmq3KbLvidaDGfm5RVLFz8UZnKGYn+MGRRiFUPvT
+	 2dzU0TsEJqptwWslLCUVMipZ2ttpDO4/K5rcfJLxXkhd/4Kpm0tKhvZi8hDJyS2rBzw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A2360A2626
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDC860A2606
 	for <tools@linux.kernel.org>; Tue, 10 Nov 2026 12:40:59 +0000 (UTC)
 Received: by smtp.kernel.org (Postfix)
-	id E55E61F008A6; Tue, 10 Nov 2026 12:40:58 +0000 (UTC)
+	id CFB441F0089F; Tue, 10 Nov 2026 12:40:59 +0000 (UTC)
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=94.136.29.106
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1794314458;
-	b=x4pxgmJWy5ArTVZE8l28ekiGOJgsiBWN1AqsRp2Tk+rYxGnnzPjOiEo/O8hUarSRjXDZ
-	 dY1DcK7jKngLILZc/dSHkDlFivaJMuu9sPzu5xk8ZeLzitwYjxPwd2+4JKtD7bMBA5jBM
-	 vXW2iVczg+8QVUutUwNgGDxW2pXyWqiLgSHmY4vozqkbpklNz0C6VLfIu7I8q0ZgnTcKu
-	 2Zt0UZ1lzLsNreZVPIL70VH22VLYS0YnkjKGqyOnEyS5EJekwfN4L6+StGnDWbYacEp4T
-	 7SzE+IB2lU+YVcddirww49XrqQVYOr7j/t7ppVbftxSzDrvtQ0px4whEzEknaTtX3zw==
+	t=1794314459;
+	b=NGCwbOUnVc8DpXF7YOrYgFczDY19rT8b6sV0GYSTcaIqKmJzMiJaHoc5PXaJEDBuPeMP
+	 SQ6gBFUnkE1HetPpRaCbosCEMoGAQN0pTBezG5FQkgwOaM3rA+uaBu5r5cd1Ryvcv1Cyj
+	 ADDBHIbbajnLGTPuM63UbKz7H3+EWmt7G6d1ViHNQ5CXfWu6OYTRkqAD1UsKYEMr+Ij9A
+	 tUoUraPNuQ71rPStzi06yUditkLvGUWbU4LF3aK3aVqtBB46yMca0c8fchcxTMY0OZUqO
+	 beuFOqQ5cBGGWeuXboLuNGpYm/J7wOt8ZL4dXxN9gpXBaRr31zv+kRdn8OW763+/aOg==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1794314458;
+	c=relaxed/relaxed; t=1794314459;
 	h=DMARC-Filter:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer:X-Bm-Milter-Handled:X-Bm-Transport-Timestamp;
-	bh=rVL65aUKRqYQxF/9rRNWShtotyXZ6GtI6oOi+tdTSdE=;
-	b=GRDzlXMeOiMwud/K3JSy1ST9Bwo+WfJH6psNjGt6Fi87dEW77JwV8tDwte0OY2HtiXKL
-	 we1S2ne79HHpvl5GpvM8JExvPbnT/hk6itkZBvmh+Mogf/gBwZK6xQV8d68F+k5Knr0Aw
-	 XmQ8GIYLtoRSBeAz7ZhvwCGXqjlG+i74pn4ACaBMAEDm0/+YWdcw1CkGvyzhoo08Sr0ld
-	 IR97r2EMoTCkfbBS79cYvMgjNCQPG1v5MMQYr+OQdB9AMwcvcxFv/fLcFmap6wmx8B4/x
-	 QhdU735OULK7bO+0Zxpm743+2TPEFSTQcZvYmQ70Kf5R1bxhCMiVxMlo+vUgc2fWevA==
+	bh=jlNhGwcrsOs24dZ5COugW+8nAMWZeijK7sSKhmHxOfM=;
+	b=yh23T4UWnPX/OCrti/AOJtmOUGYkvDuvI3fLUK3Sk66b8X6KwPBWaufoDbaTaX/DB8Jv
+	 SICupCity9MzPDVAwPCecno+8rxCGtDxK2hlr6yYCdcmmOFEMiLkyRykHa7nqI2wRYQYP
+	 0xQ1nl6/fp6hBVZBUmF8+tbHGvziJ/cNcPjnbmsZ3Avl9pyDu2S+/QMzjd6uRvzrlLFYE
+	 unglDGWO7X1fuWUevH/Vrgfn3FO4i28Hs6YWylLFJkSPF/a4j4ow9QrJA+1VOh3XnMAP0
+	 awSgmkWrWjrtj75hKwf9caoawRvW/sPwPg7N9evOjsnuZk7D1IXJ/5aksiY9z1O3DFg==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	dmarc=none header.from=proxmox.com;
 	spf=pass smtp.mailfrom=proxmox.com;
@@ -55,18 +55,18 @@ Received: from proxmox-new.maurer-it.com (proxmox-new.maurer-it.com [94.136.29.1
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 162A71F008A1
+	by smtp.kernel.org (Postfix) with ESMTPS id 9D4AC1F008A2
 	for <tools@kernel.org>; Tue, 10 Nov 2026 12:40:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 162A71F008A1
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 9D4AC1F008A2
 Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=proxmox.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=proxmox.com
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
-	by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 99914481B5;
-	Tue, 10 Nov 2026 13:40:55 +0100 (CET)
+	by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 3E5B848182;
+	Tue, 10 Nov 2026 13:40:56 +0100 (CET)
 From: Gabriel Goller <g.goller@proxmox.com>
-Date: Tue, 10 Nov 2026 13:40:47 +0100
-Subject: [PATCH RFC b4 1/6] editor: refuse the edit when a detached HEAD
- moves
+Date: Tue, 10 Nov 2026 13:40:48 +0100
+Subject: [PATCH RFC b4 2/6] ez: refuse to rewrite history during an
+ in-progress git operation
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -78,7 +78,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261110-editor_refuse_the-v1-1-4b6e52f326a9@proxmox.com>
+Message-Id: <20261110-editor_refuse_the-v1-2-4b6e52f326a9@proxmox.com>
 References: <20261110-editor_refuse_the-v1-0-4b6e52f326a9@proxmox.com>
 In-Reply-To: <20261110-editor_refuse_the-v1-0-4b6e52f326a9@proxmox.com>
 To: tools@kernel.org
@@ -87,159 +87,226 @@ Cc: Gabriel Goller <g.goller@proxmox.com>,
  Gabriel Goller <hey@gabriels.computer>
 X-Mailer: b4 0.17-dev
 X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1794314453606
+X-Bm-Transport-Timestamp: 1794314453716
 
 From: Gabriel Goller <hey@gabriels.computer>
 
-b4 prep writes the edited cover letter and dependencies into whatever
-series HEAD points at, so edit_in_editor() refuses the edit when HEAD
-switches branches while the editor is open. A detached HEAD has no
-branch name to compare, so moving it to another commit went unnoticed,
-and the text would land in whatever series is checked out afterwards.
+A rebase, merge, cherry-pick, revert or am that stopped between steps
+can leave a clean tree behind, so the clean-tree checks of b4 prep, b4
+trailers and b4 send do not catch it. Rewriting HEAD in that state
+pulls history out from under the operation, and continuing it
+afterwards replays the remaining steps onto the wrong commits.
 
-When editing starts on a detached HEAD, compare the HEAD commit too.
-On a branch, keep comparing only the branch name, so committing to the
-branch while the editor is open stays allowed.
+Check for an operation in progress wherever b4 rewrites history or
+moves HEAD. The check runs before the editor opens, and before b4 send
+sends a series that it rerolls afterwards, so a refusal never costs an
+edit or leaves a sent series without its tag. Commands that only read
+the series keep working. The state is read from the per-worktree git
+dir, so an operation stopped in one linked worktree does not block the
+others.
 
 Signed-off-by: Gabriel Goller <hey@gabriels.computer>
 ---
- src/b4/__init__.py         | 45 ++++++++++++++++++++++++++++++++++-----------
- src/tests/test___init__.py | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 79 insertions(+), 11 deletions(-)
+ src/b4/ez.py         | 35 +++++++++++++++++++++
+ src/tests/test_ez.py | 86 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 121 insertions(+)
 
-diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index 704ddec9b5c6..dd4fa2d10864 100644
---- a/src/b4/__init__.py
-+++ b/src/b4/__init__.py
-@@ -7754,7 +7754,9 @@ def edit_in_editor(
-     (b4 prep keeps the cover letter in the current branch's tracking commit,
-     so a branch switch mid-edit would clobber an unrelated series).  HEAD is
-     read before and after the editor runs; if it moved, the text is saved to
--    a temporary file and RuntimeError is raised.
-+    a temporary file and RuntimeError is raised.  On a branch, only switching
-+    to another branch counts as moving.  On a detached HEAD there is no
-+    branch to tell series apart, so any change of the HEAD commit counts.
- 
-     Callers that write to an explicit ref must leave it unset: HEAD is not
-     where their data lands, so refusing the edit would throw away the user's
-@@ -7767,6 +7769,10 @@ def edit_in_editor(
-     # HEAD reads as None and still guards: None is not a branch we started
-     # on, so checking one out mid-edit is caught like any other switch.
-     read_branch = git_get_current_branch(topdir) if guard_branch else None
-+    read_head = None
-+    if guard_branch and read_branch is None:
-+        ecode, out = git_run_command(topdir, ['rev-parse', '-q', '--verify', 'HEAD'])
-+        read_head = out.strip() if ecode == 0 else None
-     # core.editor comes from the same tree as everything else here, so a
-     # repository-local setting is the one belonging to the edited branch.
-     corecfg = get_config_from_git(r'core\..*', gitdir=topdir)
-@@ -7806,23 +7812,40 @@ def edit_in_editor(
- 
-     if guard_branch:
-         write_branch = git_get_current_branch(topdir)
--        if write_branch != read_branch:
-+        write_head = None
-+        if read_branch is None and write_branch is None:
-+            ecode, out = git_run_command(
-+                topdir, ['rev-parse', '-q', '--verify', 'HEAD']
-+            )
-+            write_head = out.strip() if ecode == 0 else None
-+        if write_branch != read_branch or write_head != read_head:
-+            if read_branch is not None:
-+                prefix = f'old-{read_branch}'.replace('/', '-')
-+            else:
-+                prefix = f'old-detached-{(read_head or "")[:12]}-'
-             with tempfile.NamedTemporaryFile(
--                mode='wb',
--                prefix=f'old-{read_branch}'.replace('/', '-'),
--                delete=False,
-+                mode='wb', prefix=prefix, delete=False
-             ) as save_file:
-                 save_file.write(bdata)
--                logger.critical(
--                    'Editing started on branch %s, but current branch is %s.',
--                    read_branch,
--                    write_branch,
--                )
-+                if write_branch != read_branch:
-+                    logger.critical(
-+                        'Editing started on branch %s, but current branch is %s.',
-+                        read_branch,
-+                        write_branch,
-+                    )
-+                    reason = 'Branch changed'
-+                else:
-+                    logger.critical(
-+                        'Editing started on detached HEAD at %.12s, but HEAD is now at %.12s.',
-+                        read_head,
-+                        write_head,
-+                    )
-+                    reason = 'Detached HEAD moved'
-                 logger.critical(
-                     'To avoid a collision, your text was saved in %s', save_file.name
-                 )
-             raise RuntimeError(
--                f'Branch changed during file editing, the temporary file was saved at {save_file.name}'
-+                f'{reason} during file editing, the temporary file was saved at {save_file.name}'
-             )
-     return bdata
- 
-diff --git a/src/tests/test___init__.py b/src/tests/test___init__.py
-index 764829d7e756..58cbf4a8e35f 100644
---- a/src/tests/test___init__.py
-+++ b/src/tests/test___init__.py
-@@ -2534,6 +2534,51 @@ def test_edit_in_editor_guard_covers_a_detached_head(
-         saved.unlink()
+diff --git a/src/b4/ez.py b/src/b4/ez.py
+index 2441badbb288..3a2594576f09 100644
+--- a/src/b4/ez.py
++++ b/src/b4/ez.py
+@@ -345,6 +345,7 @@ def get_base_forkpoint(basebranch: str, mybranch: Optional[str] = None) -> str:
  
  
-+def test_edit_in_editor_guard_refuses_a_moved_detached_head(
-+    gitdir: str, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
-+) -> None:
-+    """Without a branch, the HEAD commit is all that tells two series apart,
-+    so moving a detached HEAD to another commit is refused too."""
-+    ecode, out = b4.git_run_command(gitdir, ['checkout', '-q', '--detach'])
-+    assert ecode == 0, out
-+    monkeypatch.setenv(
-+        'GIT_EDITOR',
-+        _fake_editor(tmp_path, f'git -C "{gitdir}" checkout -q --detach HEAD~1'),
-+    )
-+    with pytest.raises(RuntimeError, match='Detached HEAD moved during file') as ex:
-+        b4.edit_in_editor(b'my cover\n', guard_branch=True)
+ def start_new_series(cmdargs: argparse.Namespace) -> None:
++    check_no_operation_in_progress()
+     usercfg = b4.get_user_config()
+     if 'name' not in usercfg or 'email' not in usercfg:
+         logger.critical(
+@@ -725,6 +726,22 @@ def start_new_series(cmdargs: argparse.Namespace) -> None:
+         )
+ 
+ 
++def check_no_operation_in_progress() -> None:
++    """Exit if a git operation stopped between steps in this worktree.
 +
-+    saved = pathlib.Path(str(ex.value).split(' saved at ')[-1])
-+    try:
-+        assert saved.read_bytes() == b'my cover\n'
-+        assert saved.name.startswith('old-detached-')
-+    finally:
-+        saved.unlink()
-+
-+
-+def test_edit_in_editor_guard_allows_a_detached_head_that_stays(
-+    gitdir: str, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
-+) -> None:
-+    ecode, out = b4.git_run_command(gitdir, ['checkout', '-q', '--detach'])
-+    assert ecode == 0, out
-+    monkeypatch.setenv('GIT_EDITOR', _fake_editor(tmp_path, 'true'))
-+    assert b4.edit_in_editor(b'my cover\n', guard_branch=True) == b'my cover\n'
++    A rebase, merge, cherry-pick, revert or am that stopped between steps
++    can leave a clean tree behind, with HEAD wherever the operation put it.
++    Rewriting history or moving HEAD then pulls it out from under that
++    operation. Commands that only read the series stay usable.
++    """
++    topdir = b4.git_get_toplevel()
++    inprogress = b4._worktree_inprogress_op(topdir) if topdir else None
++    if inprogress:
++        logger.critical('CRITICAL: A git %s is in progress.', inprogress)
++        logger.critical('          Finish or abort it first.')
++        sys.exit(1)
 +
 +
-+def test_edit_in_editor_guard_allows_commits_on_the_same_branch(
-+    gitdir: str, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
-+) -> None:
-+    """On a branch, the branch name tells series apart, so committing to it
-+    while the editor is open is not a collision."""
-+    monkeypatch.setenv(
-+        'GIT_EDITOR',
-+        _fake_editor(
-+            tmp_path, f'git -C "{gitdir}" commit -q -s --allow-empty -m mid-edit'
-+        ),
-+    )
-+    assert b4.edit_in_editor(b'my cover\n', guard_branch=True) == b'my cover\n'
+ def make_magic_json(data: Dict[str, Any]) -> str:
+     mj = (
+         f'{MAGIC_MARKER}\n'
+@@ -777,6 +794,7 @@ def load_cover(
+ 
+ 
+ def store_cover(content: str, tracking: Dict[str, Any], new: bool = False) -> None:
++    check_no_operation_in_progress()
+     strategy = get_cover_strategy()
+     if strategy in {'commit', 'tip-commit'}:
+         cover_message = content + '\n\n' + make_magic_json(tracking)
+@@ -1067,6 +1085,7 @@ def claim_prep_branch(branch: Optional[str], no_interactive: bool = False) -> No
+       pulled series); claiming makes them yours so the trailer/cover-update
+       rewrite is permitted instead of refused.
+     """
++    check_no_operation_in_progress()
+     mybranch = b4.git_get_current_branch()
+     if branch and branch != mybranch:
+         if not b4.git_branch_exists(None, branch):
+@@ -1599,6 +1618,8 @@ def deps_from_file(fpath: str) -> None:
+ 
+ 
+ def edit_cover() -> None:
++    # Before the editor runs, so that a refusal costs no edits
++    check_no_operation_in_progress()
+     is_prep_branch(mustbe=True)
+     cover, tracking = load_cover()
+     bcover = cover.encode()
+@@ -1618,6 +1639,8 @@ def edit_cover() -> None:
+ 
+ 
+ def edit_deps() -> None:
++    # Before the editor runs, so that a refusal costs no edits
++    check_no_operation_in_progress()
+     is_prep_branch(mustbe=True)
+     cover, tracking = load_cover()
+     prereqs = tracking['series'].get('prerequisites', list())
+@@ -2107,6 +2130,7 @@ def interactive_trailer_review(
+ 
+ 
+ def update_trailers(cmdargs: argparse.Namespace) -> None:
++    check_no_operation_in_progress()
+     if not b4.can_network and not cmdargs.localmbox:
+         logger.critical(
+             'CRITICAL: To work in offline mode you have to pass a local mailbox.'
+@@ -3224,6 +3248,16 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
+         auth_verify(cmdargs)
+         return
+ 
++    if not (
++        cmdargs.resend
++        or cmdargs.dryrun
++        or cmdargs.output_dir
++        or cmdargs.reflect
++        or cmdargs.preview_to
++    ):
++        # Refuse before sending anything rather than at the reroll after it
++        check_no_operation_in_progress()
 +
-+
- def test_edit_in_editor_follows_the_topdir_it_is_given(
-     gitdir: str, tmp_path: pathlib.Path, monkeypatch: pytest.MonkeyPatch
+     mybranch = b4.git_get_current_branch()
+     if mybranch is None:
+         logger.critical('CRITICAL: Not currently on a branch, unable to send')
+@@ -3764,6 +3798,7 @@ def get_sent_tagname(
+ def reroll(
+     mybranch: str, tag_msg: str, msgid: str, tagprefix: str = SENT_TAG_PREFIX
  ) -> None:
++    check_no_operation_in_progress()
+     # Remove signature
+     chunks = tag_msg.rsplit('\n-- \n')
+     if len(chunks) > 1:
+diff --git a/src/tests/test_ez.py b/src/tests/test_ez.py
+index 13c960babd89..266cea96fbde 100644
+--- a/src/tests/test_ez.py
++++ b/src/tests/test_ez.py
+@@ -1992,3 +1992,89 @@ def test_prep_cover_and_deps_flags_are_mutually_exclusive() -> None:
+         parser.parse_args(['prep', '--edit-cover', '--cover-from-file', '-'])
+     with pytest.raises(SystemExit):
+         parser.parse_args(['prep', '--show-deps', '--deps-from-file', '-'])
++
++
++# -- refusing to run during an in-progress git operation ----------------------
++
++
++def _stop_rebase(where: str) -> None:
++    """Leave a rebase stopped on a failed --exec, with a clean tree."""
++    ecode, out = b4.git_run_command(
++        where, ['rebase', '--exec', 'false', 'HEAD~1'], logstderr=True
++    )
++    assert ecode != 0, out
++    assert b4._worktree_inprogress_op(where) == 'rebase'
++    assert not b4.git_get_repo_status(where)
++
++
++def _stop_cherry_pick(where: str) -> None:
++    """Leave a cherry-pick stopped because it turned out empty."""
++    ecode, out = b4.git_run_command(where, ['cherry-pick', 'HEAD'], logstderr=True)
++    assert ecode != 0, out
++    assert b4._worktree_inprogress_op(where) == 'cherry-pick'
++    assert not b4.git_get_repo_status(where)
++
++
++@pytest.mark.parametrize(
++    'command, stop',
++    [
++        (['prep', '--edit-cover'], _stop_rebase),
++        (['prep', '--edit-cover'], _stop_cherry_pick),
++        # A rebase detaches HEAD, which is refused before the cover is stored
++        (['prep', '--set-prefixes', 'RFC'], _stop_cherry_pick),
++        (['trailers', '-u'], _stop_rebase),
++        (['trailers', '-u'], _stop_cherry_pick),
++        (['send', '--to', 'list@example.com'], _stop_rebase),
++        (['send', '--to', 'list@example.com'], _stop_cherry_pick),
++    ],
++)
++def test_refuses_in_progress_operation(
++    prepdir_commit: str,
++    stop: Callable[[str], None],
++    command: List[str],
++    caplog: pytest.LogCaptureFixture,
++) -> None:
++    """A clean tree is not enough: rewriting HEAD in the middle of a
++    rebase or cherry-pick would pull history out from under it."""
++    _add_series_commit(prepdir_commit)
++    stop(prepdir_commit)
++    head = b4.git_revparse_obj('HEAD')
++    parser = b4.command.setup_parser()
++    cmdargs = parser.parse_args(['--no-stdin', '--no-interactive', *command])
++    with caplog.at_level(logging.CRITICAL), pytest.raises(SystemExit) as exc:
++        cmdargs.func(cmdargs)
++    assert exc.value.code == 1
++    assert 'is in progress' in caplog.text
++    assert b4.git_revparse_obj('HEAD') == head
++
++
++def test_in_progress_operation_allows_reading(
++    prepdir_commit: str, capsys: pytest.CaptureFixture[str]
++) -> None:
++    """Only rewriting is refused; the series can still be looked at."""
++    _add_series_commit(prepdir_commit)
++    _stop_cherry_pick(prepdir_commit)
++    capsys.readouterr()
++    _run_prep('--show-cover')
++    assert 'EDITME: cover title for pytest' in capsys.readouterr().out
++
++
++def test_in_progress_check_is_per_worktree(
++    prepdir_commit: str, tmp_path: pathlib.Path, caplog: pytest.LogCaptureFixture
++) -> None:
++    """An operation stopped in a linked worktree blocks only that worktree."""
++    _add_series_commit(prepdir_commit)
++    linked = str(tmp_path / 'linked')
++    ecode, out = b4.git_run_command(
++        None, ['worktree', 'add', '--detach', linked, 'master'], logstderr=True
++    )
++    assert ecode == 0, out
++    _stop_cherry_pick(linked)
++
++    # The main worktree is unaffected...
++    b4.ez.check_no_operation_in_progress()
++    # ...while the linked one is refused.
++    os.chdir(linked)
++    with caplog.at_level(logging.CRITICAL), pytest.raises(SystemExit):
++        b4.ez.check_no_operation_in_progress()
++    assert 'A git cherry-pick is in progress' in caplog.text
 
 -- 
 2.56.0
