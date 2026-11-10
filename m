@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
 	t=1794314428;
-	b=1Msmgo1oyHjUugCZQB8Jf1lwldV3G/0mnZCOzin/F1R8drhN1QoXeJ9cMHUmKehJQgXt
-	 6eik48g9gyhuC5Lno5Gkcp6QN5EvkaGCaQpe2D3YHIE82XjQ9l8qvcRdamHVj1bd0TZNS
-	 Kzczrzcv0EmEwv0SYjsI8mfap83cgQWMd7K7n9xS4ZvawsX83iTAYS1w0K05jMgxB8eRU
-	 KXP7MfNbIr8ugIVWJuTfnNlhjHrSf7cvZ+BgV9PpDmhiy7x0fqQ14wNsx8h1SBADY98W+
-	 1HsNJuGHvIMjBZ+1MM9T3Xf5CV3VZ/a+leUIIP7bS8RXm7rN35cC5D47ub0pAS4ECFw==
+	b=E3ncgZs/+5UzLaV+qrdP99HzZ/2zTxssP+uT/qER6sa0a4lTBa3xGtH30+tqz70/3/BU
+	 +BiMLcEUJs2mscjSW8lD65dJ4aUkhyaGh7i7NJAPY+GksdpbTxmckNMAK+IZID7TKBFEN
+	 qQ5/Hlmv/fNnA+a0BVkdzH79m5kNR1qL2CUOXCnpgPV3ZIOzPuDkQML6QhYumqHPn7jF8
+	 wVhO/pbieMvCFxlj8PyrecDs1Pu7Z3B2dIklO8WGwULXO99we6KQqPDxBGjWllryb2De3
+	 22e5DuQRsh1PTdCjRS6src8R2rVz8YM1kaQCgAegWw8GiuGgtU2glZD+BtkJX0edc7Q==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794314428;
 	h=Received:Delivered-To:Received:DMARC-Filter:DKIM-Signature:Received:
-	 From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key;
-	bh=Bl4ryjB71+1WGMYQ4z+5m5IA13Tz9pjR28dDUrpuInU=;
-	b=yBMID0Me7Id54TUfzX6jyN74pk7TiJREaFO8qvMWy8TRVXyZqfaRV+SYvgT019AM1kbH
-	 8XSk5HXVm16VHlGOGX5HSpmX/0QdtCnyVC+WwWGhBQpGmfojIKrJ4V+Tb1HNBcYmZL4Gb
-	 UO/mXvSDnRasLgbLMfrohxFQphTfyY5TvZKEm90RRXKl6v1wcq7fN0EdpaYdCQs4zIi1w
-	 TjtVugiZxYT0Bni3lGeDIKfUTqtaFQYjnNJT/NUOmXV4ex/5jwLVeKrt5OuR039/gGtDK
-	 eIPV6LlXMjfvJQWQBNtortpm8EN1ThxPe258ETS5iLreFOZXfHyTu/VARv815KJLkJQ==
+	bh=y4+LAkoDDG/0aRf1jDXIL6Vx6WAXROFZANoOJPIMkH4=;
+	b=NvQzmwoR93QQRWkgdlbnV79aqdHyWzqF3oCkyxMB0oIgPj3w0/YALCx+TvQIoR0RDUo+
+	 6j+jH22WSCcfNACk6E8Nf3l26iTxfEHy3cjq65kVCj2SgjUZUkiWHUKgrZ+Z+AB20RRfM
+	 zeOfJjkr5zPopZC665j1phM1rnKI0wEiJ0bFEfEfifLj+QKrHPQajD0WeVLQVrX2vnmVl
+	 WsFtFIcXbHlAJ1rUOK/WM5LFQBF6MjZn63gsJGBnZTnhBXLyA2aSqFVEzQ4hpAOQhyLQG
+	 3pzEuGQachEDPYhRHzrinMrkKazTvuBb9rnb3EFghC5GRJ7jPJy5Uj8zJ5HjmlibABA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=O8pW1pYC;
+	dkim=pass header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=I9TwsIbS;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F51C60A2600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2579860A3803
 	for <tools@linux.kernel.org>; Tue, 10 Nov 2026 12:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=O8pW1pYC
+	dkim=pass (2048-bit key) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=I9TwsIbS
 Received: by smtp.kernel.org (Postfix)
-	id 51C9D1F008A7; Tue, 10 Nov 2026 12:40:27 +0000 (UTC)
+	id BA2941F008BD; Tue, 10 Nov 2026 12:40:27 +0000 (UTC)
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=130.117.225.111
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
 	t=1794314427;
-	b=nyGQ9t3JV32eQWDatnzeMCBwPGQbHveFWzph/4/y5lgmsk1CQqPSONHrixol0vPjr5+j
-	 BGwUianLRts/gByyd2XTRHfWg5Mg/FtUtkPzg6BTcqGV2NziXBeALUEkgOUHZmdo24d8o
-	 0QIbPdZn19Hn2Om2x0S8bvm+DW9c7wjSqL6e5zeIz+a0KysHRMw6PlJyuevlkKLmNtt8E
-	 M810T5bsENt2zxCUaHPmprV66AgMk7Rv6USle9l/Fjc7AGIJS5m60JmkEEhcKHWq+5jur
-	 xM+xJuNSqnP3E0ic0VU1qQ09UYyJrIlxSdhNhWPe1rWSvyHRaBsHHz0SiWvy5zr8BWQ==
+	b=ZxEEIa0H15ujNDE5wBESYgNHSiOn7OOKXdqrt1EdgFrvIB2yhK4ZmqZyjZpt1jHI059+
+	 162k7pcDR2/UFC9XZrMInyrVmKpD9kbIWGN2cPJicaunmpz87w8Ai2ROtzAi2c5mfb0vI
+	 OrB6HaGh68FEdZmueZJY7rQ2BQgFBzYKBvR7DgoEpqqvmEp78PQGkqJU3h9OY+PwuuSa2
+	 IMVJSNdN85kG8znBiQiqm2DSPle4rk7wxgVKKiKsgRUtD8Wrg/04fIpD69G+dbjx/Q2Uf
+	 QYHuGE51gINcjRZuw4KqXLE7DOo+JND445tPV7muBMfOLvWObYEbV35JeF6vx4Y7ugw==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
 	c=relaxed/relaxed; t=1794314427;
-	h=DMARC-Filter:DKIM-Signature:Received:From:Subject:Date:Message-Id:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:X-B4-Tracking:
-	 X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=Bl4ryjB71+1WGMYQ4z+5m5IA13Tz9pjR28dDUrpuInU=;
-	b=MQYoEg4Yp7XDeBL9ps1ohXCuB4M/YVgsCe4oDZxzPpHlMkT9AjX6Rt+1VAkj+cOc5eUk
-	 fTovqUqLNMVuvrfJxTdy+yjacnV8EWsHsN9KJt3hcwuPDzojZs8MeQhLj5JHYyEjN1if6
-	 WHORrJDvnxt4sykAHuw2RYunE7T9Hes9mlSb6EabZ6gnkUnWNAUV39kbN0LkRulHoMXYt
-	 DLwnS3RTOV64F+chsNFbbGbAF9RdHpOy71vOG3gsaS1gJ6RHNzL2BEnQnBnRow6Dx0DCG
-	 op5x4rgoh3rfQKfv5g2n1iFXIg+YOQm3Rjd22rZIGFPA3ESbt8oOyG1dbRz8IxTH9gw==
+	h=DMARC-Filter:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
+	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=y4+LAkoDDG/0aRf1jDXIL6Vx6WAXROFZANoOJPIMkH4=;
+	b=IhgyMKYGDfBTlswOzazP0XeWKgK2vkdX5VMoQPd/8pghTf1asPFtuj668Q5bJrm0+XrL
+	 NihnpsLaKTM+i6AYRyfB6M5hqIyFFvJG7jWlu4K7g35XmK9qriLMYCzSBL3QbCUuhb/ui
+	 PmidPGbYyDTzsRiXuquRWBUWJCKRgwu/eHq0KcwkmtfIGo4MT8HLHQrsVdM48hd7NgEDz
+	 QFu0JmBMQ72G6j/rUUnNjqY1dt7RSFXY84V2wBAaUTbtipgBzfZDfvgXKGWmuIzHqVHZR
+	 B3ejuByIX2Lw3Zh129L8Zd0rKnXG0oBlnQ4eoXWcExjIxUbJ9d+Kv4GVBSI65tbxksQ==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=O8pW1pYC;
+	dkim=pass header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=I9TwsIbS;
 	dmarc=pass header.from=virtuozzo.com;
 	spf=pass smtp.mailfrom=virtuozzo.com;
 	arc=none smtp.remote-ip=130.117.225.111
@@ -59,31 +59,30 @@ Received: from relay.virtuozzo.com (relay.virtuozzo.com [130.117.225.111])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 8EBDE1F0089F
-	for <tools@kernel.org>; Tue, 10 Nov 2026 12:40:26 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 293F31F008A4
+	for <tools@kernel.org>; Tue, 10 Nov 2026 12:40:27 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=O8pW1pYC
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 8EBDE1F0089F
+	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=relay header.b=I9TwsIbS
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 293F31F008A4
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=virtuozzo.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=virtuozzo.com
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=virtuozzo.com; s=relay; h=Content-Type:MIME-Version:Message-Id:Date:Subject
-	:From; bh=Bl4ryjB71+1WGMYQ4z+5m5IA13Tz9pjR28dDUrpuInU=; b=O8pW1pYCWPMM7RvOejz
-	ZArcZ7V9ws5Ttwn4s+3110QzFp3kc+SKyRiY1k7yMUynxWT1PiEvzpOMvqc5iLkKOKHYz3dGyAxuW
-	1J8J7YeBHoObGIpnP7P2hF1URWA857Guxd4J8iyJXDy98zceHpIyfww1q8Wjh9MVSr83EuwAYI9Ze
-	QG2gXasF3ILMainm1fqCDx02G2Ow5NNWneF+c4YvRbfkFpm+e97xNnsOf5AHBqbU240u88sFb2Bvb
-	ld77MLPJnHoMQazewyvRDu3oj8JJiiAW0zqVAmx/S5pOrusOynW56tV8Lk8bqjYRiYmn0ohRSndyY
-	Uy8EzgVF1UUvaOQ==;
+	d=virtuozzo.com; s=relay; h=Message-Id:Content-Type:MIME-Version:Subject:Date
+	:From; bh=y4+LAkoDDG/0aRf1jDXIL6Vx6WAXROFZANoOJPIMkH4=; b=I9TwsIbSczzazhZ4bnP
+	UaiMhivYQSLcJwzYPT1qNuAAvj6RRZ5RldLkPKtS3ABk65TcYdHWxPol/z+kVfHaMU3T2Y1/idrtJ
+	+bL8pNMrXcSjvH3JegMdL1puh2Sc6nssQwmB2TEvyROF59jMKUX9sboDawtw5pkaL5g9O2uYxYQTd
+	fkIA5GR+/Kidc56bqamZ/JRm+LW5fCNX8jPMOFxaMkjXDjNDLFCmAOF0Q92LmAyORCvTbpnoyC1uI
+	qqILj2xU8ZswkSrKW+RpMH117WUAsCXVW124DF1nYZ+2rfKn8CXDEVbVeJ7NG48uQ+ZS3CXZPnWaL
+	086ZGpVVdqXds/A==;
 Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=f0.sw.ru)
 	by relay.virtuozzo.com with esmtp (Exim 4.96)
 	(envelope-from <khorenko@virtuozzo.com>)
-	id 1xQl52-00E82C-1U;
+	id 1xQl52-00E82C-25;
 	Tue, 10 Nov 2026 13:40:08 +0100
 From: Konstantin Khorenko <khorenko@virtuozzo.com>
-Subject: [PATCH b4 0/2] review: do not carry sent reviews over a revision
+Date: Tue, 10 Nov 2026 13:40:11 +0100
+Subject: [PATCH b4 1/2] review: do not carry sent reviews over a revision
  upgrade
-Date: Tue, 10 Nov 2026 13:40:10 +0100
-Message-Id: <20261110-b4-prep-khorenko-upgrade-skip-sent-reviews-v1-0-4533266d020f@virtuozzo.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -95,67 +94,67 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKoQ82oC/yWNwQ6CMBBEf4Xs2Y0UUYy/Qjy0sMBKbJtdUBPCv
- 9vq8U1m3mygJEwKt2IDoRcrB5/AHAroJutHQu4TQ1VWF2NMia7GKBRxnoKQnwOucRTbE+rMEZX
- 8gtlDb0Xqic5DY4bTtYEkTLuBP7+zFlwN93+mq3tQt+SX3HJWCZ1Y3005CsIj++PT6kIC+/4Fy
- f6bn7IAAAA=
-X-Change-ID: 20261110-b4-prep-khorenko-upgrade-skip-sent-reviews-edee5f71f387
+Message-Id: <20261110-b4-prep-khorenko-upgrade-skip-sent-reviews-v1-1-4533266d020f@virtuozzo.com>
+References: <20261110-b4-prep-khorenko-upgrade-skip-sent-reviews-v1-0-4533266d020f@virtuozzo.com>
+In-Reply-To: <20261110-b4-prep-khorenko-upgrade-skip-sent-reviews-v1-0-4533266d020f@virtuozzo.com>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  Konstantin Khorenko <khorenko@virtuozzo.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1502;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1657;
  i=khorenko@virtuozzo.com; h=from:subject:message-id;
- bh=VoII/lkaItkWp0/ovNt/SnONelp7bXBVw91+4N+pg1Q=;
- b=owEBbQKS/ZANAwAKAVGWCkf5YVwqAcsmYgBq8xCxLv7BY2c6eVIk0CXsmJLo+pDz2vmKQccih
- nh70sIq7HWJAjMEAAEKAB0WIQRWD23IPcXT0GO9CCxRlgpH+WFcKgUCavMQsQAKCRBRlgpH+WFc
- KioqD/4pIW+EVB5TLlziRFFuy1+6mbfKLlu66TMtNRoTpFIQT8q9cE2fz3JxIDR1qv5cVwdQsnW
- KAox7ubzOEBp2hLXJRKv4KHOGl2/WtWMExWlpKFV+lEOOaYPnkyLzdp8DgT4oRa6MwHE7oV7ur9
- WNaZOYC3kHpxQskSjc7tIOUL3MRklKNgJ8owsE19qeXJM0qRuLZoyOPcYjku7UL3mjndIi3zDtQ
- 5kIh5bFhdZdL6jjOvzBSyTrFo1wCWyRNM3oT5piaEm79jmlCrisgNanN3Ki6aBINkbcIlTahCGS
- FU2smuMLX+4aLP55Rt8pji0BZjFAumyJ2U9LO2gCpRXxFexYqi94SjCDQAPcLqoYVKbRVaqjLe+
- d61tEVR/j8gvjWlO+HPSz5YV8Rx61ru5SxqR4jFpt0mZztSNqDN/twwB1lR02fDa8xwNfq7zUIQ
- URH1rKn5gE+vuwGHUGipC5ZZA91dNTWg9q1bjTkGoNlhv1yHjH9kqFkknnXzr+5396BZt10r02Y
- x0pE7wcDSU1whl9itv3iEZsgk9cjffblghCZpNEFpoxoUpBsbgf9B3l8tOZt8lVnsNxLTvtychT
- 1YJeyeCn/LLsqV851G54wRPVgZUDGtyCEy4lNoTSonNsCAlDhSk33ieX3BDhWaNo8+ej3EwcUG2
- Ws17ui+Dex3k4OA==
+ bh=2nSdOJW+kgtwtLnd/kzJvOB8bHsVBBt5Uejgbdv/3jM=;
+ b=owEBbQKS/ZANAwAKAVGWCkf5YVwqAcsmYgBq8xCx8AG57fkWd1ktqCCszweXgUxRdPgI5wIbn
+ cCW6XtrEqaJAjMEAAEKAB0WIQRWD23IPcXT0GO9CCxRlgpH+WFcKgUCavMQsQAKCRBRlgpH+WFc
+ KjxID/472i3tvEyKpwVJTbnHJEg2NC5gL+S2Ycjuk9gEsUdKBVNOpLPkToGyjywtAEKPOpuu0uo
+ MzvqN/VKR6UafLowblihjxm0P/UTG7rizwK8wOIjbRhfzfVPqF/Wb7EDiugrjtVdjG/64SwNS9Y
+ 6p9nEBloYrDNm+E5uz09oXmxZmDqH6D/WYKinhFliammK4g5O75uiwDl7d8C7730dj3HqZnleRL
+ Fhq7jkRP/CVjI6cCPRTJzuUsd2Vk+eL9kDcfsF+5Tvg4OMrQ6pZq7lfCxmQuSNovT+Z7wL5fU4q
+ YRJjzs9gMzQnzQpE3LEnOptIRih21xL2EBDw6UO5M6EfRyfIbcmcM/WG7kh1a7TPBtZmd07k85M
+ u9RTj/tl8U/HWkB+ppCu0+Ida8ufdMiOb6qBGRfaEnXqxPYCi5sci9VS9Om1pchuyTYsY55z7mI
+ iJxEstLF7q660QF9aI/pDA6dBuiN+kQPT/GEn0C4W/saswZP0/T+Tf7WeM5PqE0StdA6RV5ix86
+ Bhq+8fHKxkPfOMar9OCHvAYQWQqQ4xCDivekBRVfDfUwYYzDrDzUwI1BZruu7YlOlLN3vZdDOJT
+ DgQsoDkh3v/EpWoBiWLGAgY6kadGOJ7suWfjjeU8tVun6RWTR6Z78UZxdNZ9w6oRQYiX9orsUiu
+ P5WAZIN/J9auv+A==
 X-Developer-Key: i=khorenko@virtuozzo.com; a=openpgp;
  fpr=560F6DC83DC5D3D063BD082C51960A47F9615C2A
 
-A revision upgrade carries the maintainer's reviews of unchanged
-patches over unless the series status is "replied".
+On a revision upgrade the maintainer's reviews of patches whose
+patch-id did not change are carried over to the new revision, unless
+the series status is "replied".
 
-After a reply the series is often moved to "waiting", and then reviews
-that already went out come back as drafts. The next send refuses to go
-out until every such patch is marked done or skipped, and skipping also
-leaves the patch out of the take by default.
+The status only says whether the last action on the series was a send.
+A series moved to "waiting", or re-entered from it, is no longer
+"replied", so reviews that already went out come back as drafts.
 
-e4b0805 ("review: don't re-send reviews carried over from prior
-revision") marked such reviews skipped on upgrade. eb5a313 ("review: add
-visual cue for patches unchanged from prior revision") replaced that
-with the "unchanged" marker, and a64487d ("review: fix two bugs in
-series upgrade workflow") then stopped the carry-over only for a series
-in "replied", which a move to "waiting" gets around.
+The next send then refuses to go out until every such patch is marked
+done or skipped, and skipping also leaves the patch out of the take
+by default.
 
-- Patch 1 drops the maintainer's review when it has sent-revision set.
-- Patch 2 tests that, and that a draft that was never sent is still
-  carried over.
+Do not carry the maintainer's own review over when it has
+sent-revision set. Drafts that were never sent are still carried over.
 
-Assisted-by: LLM
+Signed-off-by: Konstantin Khorenko <khorenko@virtuozzo.com>
 ---
-Konstantin Khorenko (2):
-      review: do not carry sent reviews over a revision upgrade
-      tests: cover review carry-over on a revision upgrade
+ src/b4/review_tui/_tracking_app.py | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- src/b4/review_tui/_tracking_app.py |  4 +++
- src/tests/test_tui_tracking.py     | 72 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 76 insertions(+)
----
-base-commit: ce4c1158edb292caca0ce4a6087e5edecc1b0371
-change-id: 20261110-b4-prep-khorenko-upgrade-skip-sent-reviews-edee5f71f387
+diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
+index 714f215..5fa2b2a 100644
+--- a/src/b4/review_tui/_tracking_app.py
++++ b/src/b4/review_tui/_tracking_app.py
+@@ -4778,6 +4778,10 @@ _TOFU_NOTES: Dict[str, str] = {
+                 if carry_over_reviews and patch_id in saved_reviews:
+                     # Deepcopy so we don't mutate the saved review data
+                     reviews = copy.deepcopy(saved_reviews[patch_id]['reviews'])
++                    # A review already sent is no draft, whatever the status
++                    mine = reviews.get(my_email)
++                    if mine and mine.get('sent-revision') is not None:
++                        del reviews[my_email]
+                     restored += 1
+                 else:
+                     reviews = {}
 
-Best regards,
---  
-Konstantin Khorenko,
-Virtuozzo Linux Kernel Team
+-- 
+2.43.0
 
