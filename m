@@ -1,49 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794478669;
-	b=iZvAZg+qWJTUSXS/Vcz5fHD/PFHkM2HDKbrRK2N0t+u4KFGxGSWi3jYT6hvlBvJV11dB
-	 +seGzLph0zvO79HwQQ5yFiZx/sLvtYmd7zohH1jQ2WkGrVTbF93HC8aE8J8Dbf+B9ZieK
-	 0RLKYmu5GlTj5j02wb/rjMYsjX9br5d1Z6NdPfueheBfPunzYuLM+4CbsFSxPbXMHxklT
-	 fRy1J+yPAfdSpfFIlaK3FNmHlp1If4Xw2GwKFK5xN6qmDTy0Tafz/rbmJqVp9nhXPxgyr
-	 vtjqorlwwSq5ZsqLy42hsC+pXraRE19AbkXVShJ5bSfmP9UQ3K8u4WpMAFCilauDydA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794478669;
-	h=Received:Delivered-To:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:From:To:References:Content-Language:
-	 Autocrypt:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=D17BVBDEl/CW53HlxffIRILdKvGvROVJHIeDMkemT70=;
-	b=UFHFwvrhJqhUgy0rWTgNO9ZCI+s4e3HHeo6skktd25naMJLjuOgDjJrP/6mZ+aKmF3n6
-	 lL/37+t3Mr9Y/AtUhvd6aoNP+9NJUU0etR2KeHbkiiPeJPKr4lwFj8WESN6AAqsrNMXZh
-	 ef+ODNOxSf7oDL4P0d499H0+WMfQpADXRLrc2h+LYVwW8Szb/KkgAQVRcfvhjNd6WyAak
-	 TRo2+bOmFYTHD7Qhw0u5Vi26wWFqGKjP9yxQax0iBfTFwQU7zGlsoKK6AnDvhErYOCHHz
-	 lOqPc7HlRFfCPUt76Letx7TQgD6Kp1zE3YZLkJQI+7MnHAC6Zc2PAiTQeA325HlNfJw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kQtOO9Ta;
-	arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794510617;
+	b=5HMuCkuUzRNkt6evBQXgPkL+4T2G7K16bPNkB/31Ob1zI8pRkaXIqFB53nWGykmqclys
+	 ksYNNwiv2ZaVUJ3v5sbNk65PXtjXGste13G/nuAaM5xmrM40zJXYlAlHZEvTKmIGGBESl
+	 /hrln3CWXlmX1rIpE9L5S66Gg0p4n/9jGtNiZV+hTiE/X5Juw34ZR4WYtuKf3SaOmwC9Y
+	 9DZqYlrb2sl5kgbL8FIEbj3QwbGbrfBCIRKVS49qA/IpSgf8Xi2y2M/TjdNDdqs1uYUy7
+	 CMFPwE9mLrDe1vm/bMHMuvRty+z0UrqhheN847qT4XavlM5uacPymT8DQO991PqLE0Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794510617;
+	h=Received:Delivered-To:Received:DMARC-Filter:Received:X-ICL-RepId:
+	 Dkim-Signature:mail-alias-created-date:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-Proofpoint-Spam-Details-Enc:X-Authority-Info-Out:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
+	 X-JNJ;
+	bh=k4AgTlH12cGIxbFToWVnyH7PwB/waFZN/pLfxAxReJs=;
+	b=NP9rSy3XFxKBa68GPZHS0akbiyCXduBhPQn8qVqKq6CgepCwk+OaIqQ23zJDTvYUn1Jf
+	 RrF3NGtQJVvNkNVeVkgKQ/8gQj6titzjymq/nahO0DgS3x+AmmKCvfPWE2nw79j6VUgob
+	 228k+dk14RpX5SUPbkzrINWD1RRijtQCrTd5lYYP9Vrmy4S8VUKo82uV6FwsFOmrFnuUv
+	 D21NxETgJGjGvZMF4L9r2o5+a6UvgxCGjgBMIi+SRIhQ2yyJ5COyQF2XhqwP/IVZaCuTt
+	 kukl+N0+seFA+PqYOYd5i5eoQOmy2b0k10Tce1x7ZDsA3Ny5suNL1TTIFCCUylSLrHw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=bemoty.dev header.i=@bemoty.dev header.a=rsa-sha256 header.s=sig1 header.b=DW6uqJDE;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B71606A323
-	for <tools@linux.kernel.org>; Thu, 12 Nov 2026 10:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29D9606A333
+	for <tools@linux.kernel.org>; Thu, 12 Nov 2026 19:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kQtOO9Ta
+	dkim=pass (2048-bit key, unprotected) header.d=bemoty.dev header.i=@bemoty.dev header.a=rsa-sha256 header.s=sig1 header.b=DW6uqJDE
 Received: by smtp.kernel.org (Postfix)
-	id 633D31F00A06; Thu, 12 Nov 2026 10:17:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A5B1F00A05;
-	Thu, 12 Nov 2026 10:17:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794478669;
-	bh=D17BVBDEl/CW53HlxffIRILdKvGvROVJHIeDMkemT70=;
-	h=Date:Subject:From:To:References:In-Reply-To;
-	b=kQtOO9TaBaJEMgg41SsL/fdODYSkkx2ENpvEzJCjGEi7Sn5YmYs9BJo0RXMWkXjjR
-	 oCSPtIiDbDQkQvq0X24Td3tkEUak83R7kIgHCTNCwjDosn9NB8hIxRhmUHO/4bcKqu
-	 9vn8VibLNSb15EJAkg1Y/Kr/xdcr9ME0qFTfUWvR1TDNwDqK7lCxLDsMILf1bLxmtY
-	 0LtZfwbWkczhvuL7xZUjMUY7uRMGxEK71IE1mpm/XWKeuoCNFuuHr6FlhFLzXADpK9
-	 3YThFxSPgAbrEtb2BKayhSSCKX1elUDA6REX4CjRt7z5uB6XMd7ahqXeL7ALWtI+3m
-	 L4i37NUt+378A==
-Message-ID: <3aafe4ad-ce14-4ea7-8bd3-4a9484db6787@kernel.org>
-Date: Thu, 12 Nov 2026 11:17:45 +0100
+	id E42CD1F000C4; Thu, 12 Nov 2026 19:10:16 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=57.103.74.225
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1794510616;
+	b=waT3GmmCdpHxgGBHZzoAo2fI820Z1Lhza3r9z540KV4jea73LiPbIZQwXAc+rxdcNsEU
+	 U5WKMDyhHb+N0bENDQLaprUqAzaiLZVa3IfVIjo9H7lJlawpyd2unfpX2uehlir9nCczo
+	 dUZmUA88m5HzolTq5MUdkVrfU441tKKl5J1A9POSrECCG0vZY7ZkB0diCao1rpI0UuJbq
+	 uXdspTZ/irzoZpCyWx8ejBD8DjCg2WdTQRRHT/7YkAMBoMO/vllg494Vgy1deKGgAFwwK
+	 erIPABHY/P60q1ybFzEy/GReGR6KlcBsGqPjL3bqB3RTDXIdBVKXVDL2GmgX1bs7oHw==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1794510616;
+	h=DMARC-Filter:Received:X-ICL-RepId:Dkim-Signature:
+	 mail-alias-created-date:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-Proofpoint-Spam-Details-Enc:X-Authority-Info-Out:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
+	 X-JNJ;
+	bh=k4AgTlH12cGIxbFToWVnyH7PwB/waFZN/pLfxAxReJs=;
+	b=taKm4/Yf1zeqvkfbc3d0I50CQOVU/g15GmC9QzSLSNbHA3ywFjzb1/gRg1WwROOmnqqJ
+	 ajbFMWSnwn6qnpxIHzOeN40Hd0TvZEMqQhtx2oOl7yAMh00Jf8YcpH6NBYoqhNXOOBq+N
+	 3ZCQJEV3TtDPQarJBc14iu4jzB5HgNNuvVhYO6F4ql45JOu0qVUHuopkkziGdtqpfTZrL
+	 nlUx3wJ6lMS9uVoEHl6irLIvB0UrilCLOlmaWztP6/QKGMXB9q+SyVMm1E5NRjUoLKjEo
+	 6S1eJa82oCgMuR1sWMe6iUqDu5xWjujXx9YMc9sNsEq6qmq8wGq4uxNv8cT1g7iwxqQ==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	dkim=pass header.d=bemoty.dev header.i=@bemoty.dev header.a=rsa-sha256 header.s=sig1 header.b=DW6uqJDE;
+	dmarc=pass header.from=bemoty.dev;
+	spf=pass smtp.mailfrom=bemoty.dev;
+	arc=none smtp.remote-ip=57.103.74.225
+Received: from outbound.ms.icloud.com (ms-2004l-snip4-4.eps.apple.com [57.103.74.225])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 00EA61F000C5
+	for <tools@kernel.org>; Thu, 12 Nov 2026 19:10:15 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=bemoty.dev header.i=@bemoty.dev header.a=rsa-sha256 header.s=sig1 header.b=DW6uqJDE
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 00EA61F000C5
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=bemoty.dev
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bemoty.dev
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-west-3a-100-percent-5 (Postfix) with ESMTPS id 417DE1809FA5;
+	Thu, 12 Nov 2026 19:10:14 +0000 (UTC)
+X-ICL-RepId: 01a1d12a-eeaf-7683-99d2-b09693a21d12
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bemoty.dev; s=sig1; t=1794510615; x=1826046615; bh=k4AgTlH12cGIxbFToWVnyH7PwB/waFZN/pLfxAxReJs=; h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme; b=DW6uqJDEh7cFvbtE0x3mPnZ+XdELLcYQdstPcim2Ri5vjvKZ+vcQfoLHjQmNB7XkOpANVYECb8JcPkFG4Yxgct8TcaErB51GHd10RCIrp+zUEfVkY6HxRCNXGi0G00+bbDMRCil9ucvcSGDYyQPvX4b0ax6BAht+rMFe24D4w5nKsscYaeKKnO7MHdJinTsgtuxfpiVjRj49/LIczTOHXA9qZaHrqPbqb3Ou+BmOs0y8UB/RTo5LeZeFueCbY7tfgVc2LKnAY9e701YP2/E4b7WsOlkmArm6l//084VA+Seb1wtXm3hipvgOWZ2a2qs3QXvaKL+3jAysksDFithG0w==
+mail-alias-created-date: 1623092339287
+Received: from binatz.tail1d9057.ts.net (unknown [17.156.208.39])
+	by p00-icloudmta-asmtp-us-west-3a-100-percent-5 (Postfix) with ESMTPSA id 0971E180DF4A;
+	Thu, 12 Nov 2026 19:10:12 +0000 (UTC)
+From: Joshua Winkler <josh@bemoty.dev>
+To: tools@kernel.org
+Cc: Joshua Winkler <josh@bemoty.dev>
+Subject: [PATCH] Replace dead distro bug report links
+Date: Thu, 12 Nov 2026 20:10:00 +0100
+Message-ID: <20261112191000.162374-1-josh@bemoty.dev>
+X-Mailer: git-send-email 2.56.1
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -53,89 +96,71 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Should get_maintainer.pl ignore obsolete Qualcomm domains?
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, tools@kernel.org
-References: <342fd0c1-671b-4487-8a42-44adecda502c@oss.qualcomm.com>
- <b02133f8-4819-4615-b99d-3df8eb1aecb2@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <b02133f8-4819-4615-b99d-3df8eb1aecb2@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA3NiBTYWx0ZWRfX63U2461nYX3C
+ Y+RiPM4aj5liU0Hx5HMyPKRnGCQB1q34SCFLdhlanFKDEFKRmAfs8+rAEr3RpZMD8ZGrxYJ9KcV
+ tgeSlVfH+pVgojIAsM0LqQNZbtVNM+yQbkX9SUjC4IAkjtSL0dpoHTwpKGt7UmQfL8i/YLUy8Ca
+ mCmFhQkDU9YeCAPUdFy9WXWKIY9W5CSUDVBPElQzwHhgf25b74n1ResUpPxbWHXoVfG/JRtEVit
+ /tfgh3y057365gw4GZPeSCJTETzZVaNe2o6QlEg7frs7qWDUOPTjn2yykWa7NeVndCAlttT1Loh
+ bajg2yc4Ylx1DGJ2AsJxB2yHqbOM0wXpLl2vgxvGUGoWIJLMjawvSCE98p0OWc=
+X-Authority-Info-Out: v=2.4 cv=GuLXaU1C c=1 sm=1 tr=0 ts=6af60f16
+ cx=c_apl:c_pps:t_out a=kRaGL2Q7qLiahLf3O6OaIA==:117
+ a=kRaGL2Q7qLiahLf3O6OaIA==:17 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=HxOO8S7qDNDRVQTpMkN7:22 a=Da-wPGOzCPo0rgK0bsWi:22 a=fxJcL_dCAAAA:8
+ a=vTr9H3xdAAAA:8 a=Br9LfDWDAAAA:8 a=UApgNeDKAAAA:8 a=UXIAUNObAAAA:8
+ a=xNf9USuDAAAA:8 a=20KFwNOVAAAA:8 a=KSb9T-wMAAAA:8 a=OkVtsdzpwUsmm2wgkJsA:9
+ a=fasyu4nNmrhVRyehPdzp:22 a=a1s67YnXd6TbAZZNj1wK:22 a=KF4VuIdXkMyp4E_ug72i:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA3NiBTYWx0ZWRfX/6SpOhxg8bdy
+ PVNO1Wy5ein48hwy2F4M6e8B1yb9SwAszqTrrQuKG/mqN2WUnkJBpGC/SoHFrsDUqmDE6bBfU6D
+ Ui51iiGagTmsEKA5ssm0so49b2tKhgY=
+X-Proofpoint-ORIG-GUID: Gpw7db1rRoR5bURv1Lan_BeaKLbksauR
+X-Proofpoint-GUID: Gpw7db1rRoR5bURv1Lan_BeaKLbksauR
+X-JNJ: AAAAAAABPeBPw41/qnA1e7bMn26qj66QKrI8x2sNkQCfJ7VFjtePnysQhgNTWPnuGJMG2s
+ CnVpKyBhs81+oVXYrugyAWmC9UdgRPOZKmcR0TEFfrlzzL9Yw2jZdrKd31oDGz9SDa5I2A
+ XB2IU4Ef1Z8GMZ72TYe8VQ34j0epVKEE3TA8BuduDCIc+K+ZKHFedufp6OENPfXUNGYm+m
+ vZRlQRYH7kVGZch8YfmZKKRanYNwIvrIqkk0PhRRHjAxioDuryktuA27k+I12YcNS0d9uz
+ K8UyLXzL/yDcZ/TpNa6Yz+isVqOsDeL4RetIJ+HcgmVM9Ao8Dbux3YVHoZRQ/ZmcDyyD9C
+ ARYC7BG8Hj5a6qhLevic5VwE6Qa4IPELohLohSA3hOtdV0BsqWJfOVBBCL4g6Pdja+DXfz
+ Fbbc2VVyeARkd0lGndUZcBgCu4wgx/8fdxkHFjYTkw7oI3xVKPm8ZeM/on8uG5eXwSwZrA
+ tz7/TuTqNWfYVnS3UVUvipW6cyfLHQ8915b5nXaQgO/6f4bbDxdP0hOAbp3qKNkFG+6eXV
+ qIEy1LGQEgx3JiL9zc/A6iTfQ50vOsyLxUoC2j+qSFRJH1Mjsb+iyC8ofBTkbjv46S6vIl
+ KwQLMwXQGM6lEZ9WJNR+UlPxVopje2AOu0Y7BSUVJU2K8ZHgR/ffOdG7nb8nXd3u59sR76
+ ad/LfN518zMxhFz8a8rzZbvUyOwjFKT23mS11VMtp3Eqg6pkK7VxU1I6Yb1ZSodyC154Ta
+ ZEnk0IZ0Tr3MfB+kGVNEursfvaWE8La5Vj1SuF0fOH65N87Q7Ft/tSKbcj+9cLueuv8zwp
+ uu3D8bfklB59hytGf9SsF1KxczFogbt33lthDLGl3aZvneMpMPt4IkUF4p4woeFMXDo9SN
+ wxUJhNjVVdu0xs6vSdVMDNPD70A4Yk/8z27qeWWqIZkAF4Rr3F7vhNg9m1atgF+txQ8S+M
+ tcRA/QDCIjZkiC1q6ysP6KFm1xHVQh2vvt+PjfdNeFuHAkCgIQoR08JioLFciO3DY2E9Ju
+ 47DlePhd7pVJSAsiV1W5XI/YtiNVRjx9JC/3y+QcMygZ8MOBAjPH8Cp6vnu0j2goY3S/9c
+ RsgUTKSPIYol1rVkSxh3TOlpS+XTt3rbrFG20KA6vLqevhOik9IafiXo2SpQRntwLs9nz5
+ Yn3gpKz8hyO6/jCYM/lQ==
 
-On 12/11/2026 11:10, Krzysztof Kozlowski wrote:
-> On 10/11/2026 19:50, Jeff Johnson wrote:
->> Qualcomm employees have contributed to the Linux kernel from a variety of
->> domains. Current guidance is to use some form of *.qualcomm.com, with
->> oss.qualcomm.com being preferred. But prior guidance was to use codeaurora.org
->> (up until December 2021) and quicinc.com (up until March 2025).
->>
->> The current issue I see is that get_maintainer.pl can return codeaurora.org or
->> quicinc.com addresses in some cases (i.e. via --git-blame-signatures), and
->> codeaurora.org no longer accepts e-mails and quicinc.com cannot be accessed by
->> the engineers. And there are also cases where employees have left, and have
->> not established a new .mailmap entry.
->>
->> So I'm wondering if there should be a mechanism in get_maintainer.pl to avoid
->> reporting dead domains. Or should we just enter all of the obsolete addresses
->> to .get_maintainer.ignore.
-> 
-> --git-fallback takes addresses from the last year I think, so I believe
-> no codeaurora or quicinc woould appear thus .get_maintainer.ignore is
-> not a solution here. Addresses are printed (at least quicinc) because
-> they are listed as maintainers, e.g. for bindings or drivers (two cases
-> for maintainers). Obviously such bindings and drivers are abandoned,
-> which is a good thing to learn from the bounce.
-> 
+The Ubuntu help page returns 503, Arch moved to GitLab, and the old
+Linux Mint page doesn't resolve at all. The new links should give
+users a good place to start for bug reports.
 
-I think I missed partially your point - you do not refer to
---git-fallback, but blame for fixes. Well, yes, for that I would just
-drop entire @codeaurora domain. quicinc.com is still working so for me
-it is litmus test if maintainer is active.
+Signed-off-by: Joshua Winkler <josh@bemoty.dev>
+---
+ content/faq.rst | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Best regards,
-Krzysztof
+diff --git a/content/faq.rst b/content/faq.rst
+index 82753d2..1f16b13 100644
+--- a/content/faq.rst
++++ b/content/faq.rst
+@@ -118,10 +118,10 @@ If you are running a kernel that came with your Linux distribution, then
+ the right place to start is by reporting the problem through your
+ distribution support channels. Here are a few popular choices:
+ 
+-- `Ubuntu <https://help.ubuntu.com/stable/ubuntu-help/report-ubuntu-bug.html.en>`_
++- `Ubuntu <https://ubuntu.com/project/docs/contributors/qa-and-testing/report-a-bug/>`_
+ - `Fedora Project <https://docs.fedoraproject.org/en-US/quick-docs/howto-file-a-bug/>`_
+-- `Arch Linux <https://bugs.archlinux.org/>`_
+-- `Linux Mint <https://projects.linuxmint.com/reporting-an-issue.html>`_
++- `Arch Linux <https://wiki.archlinux.org/title/Bug_reporting_guidelines>`_
++- `Linux Mint <https://linuxmint-troubleshooting-guide.readthedocs.io/en/latest/>`_
+ - `Debian GNU/Linux <https://www.debian.org/Bugs/Reporting>`_
+ - `Red Hat <https://bugzilla.redhat.com/>`_
+ - `OpenSUSE <https://bugzilla.opensuse.org/>`_
+-- 
+2.56.1
+
