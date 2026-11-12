@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794516087;
-	b=wE3ExkumN5GKoFb30U5DMmAFzVmQFQ2aea65aWIK5eUNBcYdGsljLRsRIedMBTWd6Tbf
-	 DXTDhgavxeHSzUjdASyz8BQ0EmdhR5j5qQGyJuY0o9j7i+FXoQs4VXlFxfr/JvA7t9OZV
-	 vF7C5f06VdxfmhQ/tgqJUK1Xu8aBwqemZCbmgErzjl8kd9wiSkeLigl8/KzvVGSfqX/bW
-	 My2748UvbHeP36uRPrK9o5CUQir/IKyEQapoOIk3aCygklBMXCcYniVSUOFrzhHWrLDFE
-	 tLeGC1n5EPe0ksbuxuUvE0gJZJYHu4XSx562hE56dKOb3pnvH7AfN+/5en6dQVZy0pw==
+	t=1794516727;
+	b=GoOG2dW7zy2FRAZhFljVnowvcFYd9ydiUTOJM73SFUTxkDVlA7OxF6RcQCuz4TAFnEl+
+	 +DJ12mBbwiuXfUpQEUM9Sn1xr8Zj8nYZnlvsFQ+xD9+d78qWqTjWTirWTbyJ5BhTR5fj0
+	 WCZG6ljDBVY4HkTgJN3F5ZmC/2LflNfuf7+d4hw28Ngp6SFXgnExpQuGuLnm13wkiLmh2
+	 bykczL8f03gzBEn9ljmuE51Tho1wxeMT0COykSLlh6K+LhnZYgZ8KYRSJgsjUkH9xGJg9
+	 EtzQ3VJ5ak76GP1tHPCoJbDtMQYtLY5seWPdZzAw0IKIcw83vWkt9tPCqfBJIWJDdKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794516087;
-	h=Received:Delivered-To:Received:DKIM-Signature:From:To:In-Reply-To:
-	 References:Subject:Message-Id:Date:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Mailer:X-Developer-Signature:
-	 X-Developer-Key;
-	bh=Gwq6HVGBGXz+pX5CsrugYYAm0EQAgzMPtmKoCwi/zto=;
-	b=tqp1TllLzTrDaQYhpMFJM8GcgNfasMdhWDk6VdLx1DOlsxdxEsgTD78NTQW77+fCCPcT
-	 PdLdttQN1JSp/+jL/U+X29NbURAgoLQHAmPi1B/mWjwtJrXf1Ers4hmTP/Nv0oH8za6go
-	 W1GlguXWxYWXuMcf+ZNQ5YRgNjSA6hPXEtgX08vJlz2dNgBIGYprHZsBshlFwgE2ZxUXM
-	 M1GwudiL/0k0bmSUt+OuXL6b+xH61btZBwrvUfdAG4uQgN6ctaMz7ufWNfJhZ8VfxD7z/
-	 b2Y8d2ZvUT9PKHqIoUhLnxs8+o9f0y7ZlZ6zinfvq6SJSnrNFQAv49v7+oVCvgfCs9Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794516727;
+	h=Received:Delivered-To:Received:DKIM-Signature:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=hW5fh8+mI0rUNlCi8X4BLrcY1lmfAqd3Hhs0TyEAzlU=;
+	b=Xma8igWoxNBBWqku0R2FOjJ52MKB1KggZMNEzkboTjan6K9yDIKnY1VpXn4V1Nyp7zLg
+	 I6m6h5MfytByhoqYGd6eYDcdadzvo6u/fMs7yrvxdlPnH2A987SSnUvOr948Wf9I0W3+v
+	 V55BZrY8TNuOx5CNxyjS5G6SLuIjwphgjTsiSHEMbXcBke8zF9uzQvERRD6E1WnCJN+85
+	 UBwgpiAv5ONDOTYgFjdRLa0rDX7adXRM5crA/DRqTtrq67GnbxU4LZj5ea7J2nkamdObb
+	 exXvnnLDu+2Goa0vKD4DInb2XfWI8ix6qFeYkRvu2acWmgbF1l+kkX8vH/JaQR4YFvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MH9B0zGu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XxHPCNmj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01DC606A321
-	for <tools@linux.kernel.org>; Thu, 12 Nov 2026 20:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D1E606A323
+	for <tools@linux.kernel.org>; Thu, 12 Nov 2026 20:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MH9B0zGu
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XxHPCNmj
 Received: by smtp.kernel.org (Postfix)
-	id 4CB851F000C5; Thu, 12 Nov 2026 20:41:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082571F000C4;
-	Thu, 12 Nov 2026 20:41:26 +0000 (UTC)
+	id D1B131F000C5; Thu, 12 Nov 2026 20:52:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892081F000C4;
+	Thu, 12 Nov 2026 20:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794516087;
-	bh=Gwq6HVGBGXz+pX5CsrugYYAm0EQAgzMPtmKoCwi/zto=;
-	h=From:To:In-Reply-To:References:Subject:Date;
-	b=MH9B0zGutjdWqpIm/bfpkQURlOwvm/BuXC38Fn5dI74fEHWWE6R5/AgDLTCRNc5Hl
-	 4UsSqiQP0yqK4JF2NfbZIDuOf+/wAlsL4iK8mr2LPNdUqqvKyAyv6KoalvcsoNtME1
-	 jzJXb0JBcee7zHQZ1pEj6sPfqZcRf4cVo4f7kduc=
+	s=korg; t=1794516726;
+	bh=hW5fh8+mI0rUNlCi8X4BLrcY1lmfAqd3Hhs0TyEAzlU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=XxHPCNmjn8Jf+QTFV8ifuwFzhfMNhnfiFF5gngSXUecOXcZIDdb0FXRy0S+mDlpC+
+	 s3EroOZpdzZNHAx1kX26oF2Joj3pZi15FZ/mZVx6BueZ9S50jmcdLESzGlk/ehmkL/
+	 BXQ9Upgj+gAvAsEEx/D1hirzcixBl50K1QmqypdE=
+Date: Thu, 12 Nov 2026 15:52:05 -0500
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: tools@kernel.org, Hugo Sales <hugo@hsal.es>
-In-Reply-To: <20261104150658.2189226-1-hugo@hsal.es>
-References: <20261104150658.2189226-1-hugo@hsal.es>
-Subject: Re: [PATCH patatt] Keep identity lookups out of KEYCACHE
-Message-Id: <179451608286.1804535.7629333236650774873.b4-ty@b4>
-Date: Thu, 12 Nov 2026 20:41:22 +0000
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@kernel.org
+Subject: Re: b4 review hangs on failed patatt signatures
+Message-ID: <20261112-vivacious-oyster-of-stamina-254a6c@toolbx>
+References: <1a5ecca2-9e58-41de-947c-5600604dcc89@sirena.org.uk>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -56,29 +55,30 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=354;
- i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=UIvUx4zw9KxNAsKRhZx/jCGX8SBR48PhcV9rNYTr6og=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGLK+qZS6PS78YPFo8rMnjed23up1rV1adnfbtVlSyj0mr
- f8jb6Sd7ShhYRDjYpAVU2Qp2xe7KajwoYdceo8pzBxWJpAhDFycAjCRXUsYftxLUNgf/cD1q/ax
- s8WzZCy9F25odLq1WmDJw8Lc/O4vyowMO78enu6xZ/cE3YmPlsX6J/zgmHq5pOnefvXHxb1bk45
- 4MwMA
-X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
- fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1a5ecca2-9e58-41de-947c-5600604dcc89@sirena.org.uk>
 
+On Thu, Nov 05, 2026 at 05:26:38PM +0000, Mark Brown wrote:
+> Hi,
+> 
+> When signing an email it looks like if signing fails (for example,
+> because you mistyped your smartcard PIN) the UI hangs - at least, if
+> it's timing out it takes an unreasonably long time to do so.
 
-On Wed, 04 Nov 2026 15:06:58 +0000, Hugo Sales wrote:
-> Keep identity lookups out of KEYCACHE
+Mark:
 
-Applied, thanks!
+This sounds like a bug we fixed in patatt 0.8.0. Can you check which patatt
+version your b4 is actually using?
 
-[1/1] Keep identity lookups out of KEYCACHE
-      https://git.kernel.org/pub/scm/utils/patatt/patatt.git/commit/?id=7a5e62fe934aba9062c614a7042cabf4bbad503c
+  python3 -c 'import patatt; print(patatt.__version__)'
 
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+(run it with the same python that runs b4). We currently accept 0.7.x as well,
+since there are no incompatibilities between the two, but that's the version
+that has the hang.
 
+If you have 0.7.x, update your venv to pull in the latest released version.
+
+If you're already on 0.8.0 or later, then it's something else.
+
+-K
