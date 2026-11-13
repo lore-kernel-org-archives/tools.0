@@ -1,125 +1,121 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794535262;
-	b=RvCmaAKwFvifX6eiaZylntKhAZa2GnwhSCAcrp1ItnDU+qj6ZhG5Zf3j3eEYwGv5UK7z
-	 OaUn2tvxTnywXPtkxURMgnLWnWkoFZdBsxJfZDZn5dEt21AAbwGiZpnZYSA3lLPjX5FpV
-	 2tRGi/v5TE3MBEBG62ZVmPvoEW0NSg9MDKYDba0kRB6bjliIjsldSonCHVksR8YdsQ9fs
-	 SlMUm7E9nXM+c+aXxM0i47VB3pk3llhidkQAkhG3t0IXdrntWgYL0+5pAyXMywkWHOlMA
-	 iIxjTyj1Ba+Ox2VmrSFKTnqOjy+HBgur32RtyysT+dasFmqpeaycT/huDnrVUREeozQ==
+	t=1794600151;
+	b=Mg6pbRJCkqa9nso8ALomD8tCEAgLCKaftm8cHJxZP6wn3U4VkEHFd/TkTg4WuHJ7Ma/E
+	 fS3zmvV7uxNlmGFLcOWylKMtis+NByvKjVL2529cAqE3Zy8xYGAHTf4MZ4jJ4mrp0wr8N
+	 q9zS2FUAlAonNsJfzBuncBKtfF/9N1XY8uahZ5GjhoSEMFTAeXzfub5uFC5pAfF9Vdng0
+	 e7hxi/yS6KFpNQPCEIMRVAneMU68hDdtj9YskdJbelR3hkppIouD3D8a62Flim9YXGfRV
+	 KNyHD60d7uGbYdmtgMhgUSyWvVcx9z25jvXl/xRWfnuWDxbFYmDGo/61uSDRiEz3bIg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794535262;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794600151;
 	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
 	 X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 Received:Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Content-Disposition;
-	bh=gs0Hp5pRXiGWUmsnbgtjqMIBpCsRGLEZW3So2SiCoCQ=;
-	b=Cm4MJ8IziKdKL2H+TPFzFQwkhQ0hEsqueRvCb3L5KNBYOkN/z8+NmrRLs+hEwAy0iejM
-	 KNfk9U9Anv5i30IkbRjzvwr7qfpRMC7cPws11+y5T54DOL9xiEdXIH+rPLjailNPf0Ut+
-	 /Zs8fdiwIBR1AoZsp0lGtie6/HJhjzLy+ZqOT8axLxZXJMl8yjDZ71lV5aQwqc/aGzWDr
-	 SmSwlKmSUlR3D0ow0wY/TfgGOcdMM730FlowLX/YKrpWoiJbnlFOdrv0zl9cxYr3sJBXD
-	 gQBwklIzb/11k11lrBdkoUgRJ7t/YWRGDZlxR7SEsmfhPxqfkvIBJaeINKW/FchN02A==
+	 Received:From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=HAUsneGa0273pIqLa5Lu1xY5MvE7rrMRCm8aphQL03A=;
+	b=tI8/hEicoNWRcha2paO3OUhiqRmN/H8M3A+lBLMqeuwW7X//EChmIHlUJFkJHuB+236m
+	 ++2WrU82zfyF9SxCRB5t/wytUUOHqonwy9ieTb9YX5fUJMpFtlwP/U1SeH+5HLMnl0eEc
+	 UdF/2rMpfYIb8YAOF1X6Zk2NUtKCRlYnrhqpijP5EZL3Ro64Am36h3OGQ9C1067vy1biz
+	 S+KcCY9epJQ2Zcq4OReljlw9n/Xj3eSYgUgpmnJ2ppNT3TMFc2st4jSFdxZ/3IvvyYxJX
+	 X3Pgca9DZsTiIdwyo06jxeg1oH2mZCxOBSSzTWBAwColwNfFZ0JsbnY07ioFqWNQnrw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="Sn3ct/bb";
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d2ywlmv7;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2614606A31C
-	for <tools@linux.kernel.org>; Fri, 13 Nov 2026 02:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4BD606A333
+	for <tools@linux.kernel.org>; Fri, 13 Nov 2026 20:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Sn3ct/bb
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d2ywlmv7
 Received: by smtp.kernel.org (Postfix)
-	id 5DAF31F000C5; Fri, 13 Nov 2026 02:01:02 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=74.125.82.180
+	id 0A2301F000C6; Fri, 13 Nov 2026 20:02:31 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.161.44
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1794535262;
-	b=sb6oseJDl61tLhSwi647KKoObtSk8zhIyNA1yISrvAqvLn3TuyVKCUQieVzAK4zskwCs
-	 l+dvsddaBezRCh07qVb/uAeRB3P3HR+64VUbj8KM69rnU1KsePZCNw6ZYIvz3TIUHpMRY
-	 5EkiavdKIaLIFVLNAqXi+5Bp0XQUmCUz71sVR8Xc//hyTWeJs7a5/ptSpJucRiNCHZJBa
-	 77WC+Rvkx+jV7RLGVsttuvxTT0DNFQbGjVGC+EWVyzeZTDi1UePChOSJfTKwt2ctJ3IZO
-	 QODJ2ICOF+S+km0urakv/28WmP10XIx+q1jhDMiLVVW6RLs/l1Pa6P0sWj/LEGqSKGg==
+	t=1794600150;
+	b=lncwPGzRi3+XB6v3Kg/w9ZIgcByMWDmu7iO82EWjZop9FRzIZe4NUSFjZ+0zqDiYUYm5
+	 bycxUisz2rLB8sf9GDvYGpjnlKdDWwkuIwz6jMJwn5UD4U0iXu0HIpwEheWPNgryg9oVG
+	 cBxbErWbnawQ0uubBlxhL5IEdI6zbc0+xzXHEfOOj/yahOdrNJm8sf4NQDpGGajza94aO
+	 6Ot+KEQJSXMr9KRGJkqZJE2l+5bJ96Ez/4n8kG9yH8qp4JCgO0V65grlFhAv7YVBfq2t6
+	 vpABDLtkLo8umQeTNpNYvn0ejnWhP2eP7c02sBmDWRZdZ8RFYt4lJqPV6w4TUHS5LZA==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1794535262;
+	c=relaxed/relaxed; t=1794600150;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:Message-ID:From:
-	 To:Cc:Subject:In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Content-Disposition;
-	bh=gs0Hp5pRXiGWUmsnbgtjqMIBpCsRGLEZW3So2SiCoCQ=;
-	b=C/AnpTmbJ9XG38H2zG0OemFLMj0pCkuGLfWOj9dSVr1FUkPoFlz1/Y5sBC5adiUzy8tH
-	 3Z1VOJsoaMHpZmPo1V0FMx57jEfvvb6OUXgZCog4gUzmg2gafE942PZzUPVZhvKUsDHOT
-	 OtcBK8LMOO3iViegdTXIYFO301SyVbjxuUbgctj6BAl6r6k5MbLjcjf+EIZd/duoEdjJK
-	 e6LEFE+2n4LkExpJVDdHcQYKAavft56A+91PREEcytNPLGIhu9t6GxA42lenqAV7XDAHB
-	 GRZthiwWFdbnG8evKTNwhjMjc2zYOMXh5crfpw2XDf5P13+AliiFQcznjAbi08E+MOw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
+	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=HAUsneGa0273pIqLa5Lu1xY5MvE7rrMRCm8aphQL03A=;
+	b=lhmCRsy2RXvSREX6oQKThO4/7pl1YP861Qed7RzPHAtLPcU8ZLyRNRgkoaz0gw2OsKer
+	 GJ/Uhr/yynQPOnSaEAwRPe6uBL8gZDkaA+KgiNINVxCayUThuxYGGbIoZ0gh52zm1c8IQ
+	 s2Fq6CIO/H96sI0hge6mGbwiK3k/1YYikhqiXubTL5OYuJR1yPc0IsXFHUW/zkNSyG3y4
+	 RuKB+C8uz5BvWsw1qfxX/FfoLSkNR+M5C3te88T18UjFLRali/9YrBs4v+bQgVHaMigPF
+	 rFAHizmoNfm2uHq5ABIbiVf2XAJzAT1pVYeClzOU7epyfDZpmgkHAaibhXW3NLhDk8A==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="Sn3ct/bb";
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d2ywlmv7;
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	arc=none smtp.remote-ip=74.125.82.180
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+	arc=none smtp.remote-ip=209.85.161.44
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id C03171F000C4
-	for <tools@kernel.org>; Fri, 13 Nov 2026 02:01:01 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 7C9481F000C5
+	for <tools@kernel.org>; Fri, 13 Nov 2026 20:02:30 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Sn3ct/bb
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org C03171F000C4
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d2ywlmv7
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 7C9481F000C5
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-33bf40b0c8bso1073685eec.0
-        for <tools@kernel.org>; Thu, 12 Nov 2026 18:01:01 -0800 (PST)
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6df5e315bd1so1920339eaf.2
+        for <tools@kernel.org>; Fri, 13 Nov 2026 12:02:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794535261; x=1795140061; darn=kernel.org;
-        h=content-disposition:content-transfer-encoding:content-type
-         :mime-version:references:in-reply-to:subject:cc:to:from:message-id
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=gs0Hp5pRXiGWUmsnbgtjqMIBpCsRGLEZW3So2SiCoCQ=;
-        b=Sn3ct/bb7AKwhtVPAecy3cFwWUNgga14ZYlkwuWRRkl2DcqwH8VX9jomNSLhQ5jKct
-         0tFL/P04oC6BAAgOFxge+q2Cm0rqGDiGaYiis/nxpQrcN48W0vw8qWT/c/r/aDzupy6r
-         iHHrlBQA98kyeU/XG3DEcioPvqm7zg5ReHZIVK8j0qEzAe0QzMoUUkVErwDkt4LZAgI1
-         WOzNWytgT84pnWuia2waLqpvIEFcHSvY2xDgFfIVKrOHLW3KiLov1fg3r1z+PeC/LzQh
-         m8bjC6GlULhEM6wGARWb5j9sHtogJF/jr30h4QnRwlW16SM1ExSWdk41/O8hRFzjklDq
-         dZLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794535261; x=1795140061;
-        h=content-disposition:content-transfer-encoding:content-type
-         :mime-version:references:in-reply-to:subject:cc:to:from:message-id
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20260707; t=1794600149; x=1795204949; darn=kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=gs0Hp5pRXiGWUmsnbgtjqMIBpCsRGLEZW3So2SiCoCQ=;
-        b=w4Lpp4y1ZhY4IwWGdcStysBXh/A8Scw0zGNKPAI3FniX26+WCR5ycei1z3+UvCrm4a
-         7XoqCK3miUlJxfTf2sqpj9zaG0jIaPdrse+Jgvi3yEnZakXle9FsNIxOb4sKnxrpdIRT
-         h/5u7smAqEofiKAD+zbEAoifo4l7BU0MFo8LO0QUMGK8YUG9iIIASm6ynLAKULvaHhtj
-         awIam9JunA7pyqETjSZdYE8f334GflKe/kiJcKmUv978ibj1Fg341h5s8piHs0Hc6+0M
-         lniYDc1drzzYgiK7IKL2SRh9tyfoYqqc0tx8ldpM9FQ/QHP2xXMkc5V2hJObikCWTSYF
-         +EJw==
-X-Gm-Message-State: APuU4Z9jg3sYrggyOzm6tcihM+bQuTiGaPM5Mge2eKx/4x1O9u8d80Iq
-	IaLa4bcRI7oKljTTgYP5RT0DekXSglISFktC+GGNUqd+qf3wXcEyuJsb
-X-Gm-Gg: AYBFou3PcpELqC+0OKavFkRgzTpg0Zx3BU3YULspv9ETRmxBWHeinKWLVc92v/M9FHQ
-	Hb4BCsxuTWOZTI+Cwrf3p9MUKg5zPTRW+U2WSvZ+cPbREToCOXSIERc/4WHxSi0Y4j+tS1WtOm3
-	UowOL/IBYtoyu0n/pdR7sOI/X1v64s35GAY5B6hL95diZ5vm/ZzeLBcvjIUl0wIFAlu+xPAG8Jk
-	shNDXf6/7BJN2GYoBci3u74j9ixMyY83eEf2gndMC2zJfMF/1HJDIpyMJERJ2ett0uNUs2Wo1hX
-	2Uz94htSD15m2ZdOVpKS5EvbbBEMfA6zc3ArRGNmz+V4e/ZS2OMgECzyq0Dvo72eNocoOuRJsbL
-	aYaL+T7OVsphawkqEMGVA6bxgdQ8N/lSod9bvIKChADOaL2iY1y88bqFR0PDKZ0oJ/2Jxf5n8E3
-	J5YKnA8Y7fTECD7HuTwpGJKGZg86vnVoGCpQU0AihRLqRobD28wWQzAQ+Hpc0yusajL6At+H1pd
-	VDnr+ujH2uo6LHVc5PD7fBhdfbSYbAgl2jHel7kt3HbxHnc5eAEPc8Ve0wvli3AVJDoKhx9pIu6
-	K5r05YG6Yz5zmzXm4bIvURmavLuzcGTjCZbl4khhO90RUpAw6JxYFGcyPZfeS9dLcH0Ul8E=
-X-Received: by 2002:a05:7300:d18b:b0:36d:37c4:3759 with SMTP id 5a478bee46e88-37965f9d24cmr963828eec.18.1794535260505;
-        Thu, 12 Nov 2026 18:01:00 -0800 (PST)
-Received: from localhost ([2a00:79e0:2ebe:8:48f1:7a0b:9bfb:4205])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-379563e6b6dsm4698187eec.21.2026.11.12.18.00.59
+        bh=HAUsneGa0273pIqLa5Lu1xY5MvE7rrMRCm8aphQL03A=;
+        b=d2ywlmv7aMz4TdJpIDpWoUkw0+QSUS3zvYWEwnfxLqe+p76Rr5gj7wcXik1NqhmSvA
+         C6EmdpKgOFY5lZML3fOlGqfdmaQhlMm3qiQPI3woeD0oM7p7Lhj7dw/rhSJ3fzhs0Bzc
+         4Spvls98M7Fob7M3/rUNvRqafi058jfcQWgt8qLykI8wst2XzbRD6rT7+eMcsPEQlk3W
+         IVztvUyk0K/WmXbB1cTYF0wh45cvRdhqA8TqyXsLGbr97iE2X+VBZujqV8ip8jAtIN4g
+         dPs0v/ff16mxu87HnEBt6vPR8D5LeHAxkpcj6qQ5FlRsKq/yvOWTCtPI7CORcz7uGWPe
+         7HtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794600149; x=1795204949;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=HAUsneGa0273pIqLa5Lu1xY5MvE7rrMRCm8aphQL03A=;
+        b=PBLsX4tOLr07PfHLw0VqaBCVUOHaS+HyfzAHFjv5QmSB1DVn0eFm55GYiv+2T9h2QI
+         wLHn7t9+aY/Kyojh+nhjPiQmMeECphl4vX78a2GB9LzhOWJdrHygxL/ZoK/J9bKZHZC3
+         YQkPww6ygKSTj5dzxfYo0o+HfncALC3JTU3TdimMlCl9p0rZ1O5xUoLam+JU68v5sZVB
+         v9dOogsWS9fd3K9aediw3V5Tcdz9BEL9O0Bmkr9+lFxZLp+VKDKu7VO8VCZmYhBZ5MAs
+         sVa5D9VjsbdvjRSqIKytmhIVpsdpyktYXDsUg7dUWCHzM+nB6YbNcNfssZnOo6g7scqu
+         Eepw==
+X-Gm-Message-State: APuU4Z+/e/qJAzOMeFFUv+aJNUjYK0IYGNhbqACQAEse+GwGCJZjaenb
+	xPvO12uYLGttiO5oCEnfCK6XOHPFAXffoaATHwzI1hq9ESYTayg+0FYg
+X-Gm-Gg: AYBFou2ql2JniMdrsW0Ca+BLAu/Er4EPpkwunzuvDYtPu8cFXykGcCbpy5ROT5ZJhkj
+	531txafm9gFMp4EHJ6cRifzLz9KpcVIEB2xsooldIfBgzO6J3guMlBj8Z2ewhVRsofYHnwZec/d
+	5PnWf9Fs4+DpF51w+w4BXcfJswc/robOd1SNh8uOI6nU5+9Q7ihkCGDJmSWwXr7x3wzAE6NF8l8
+	dmGi+dx/1C0w4TL9/Uneuxni+VMkH0Dnz0V9gMJk/BK+g07zzje6k1yNfZS0ZDVf8njnijMssGH
+	xTjPl2VvMkL8TDCJF8Y1a4fRY5W4tAopt/v57jMBjpNsK8J+qpvapo4dkEP9hRWsagbkUwXWWwV
+	FOkNj/JIvC1lmIxetE+5s083QwbBn9wwt/rdr6oST5pNTtgo8n66qVxDAIIiym+dpnh+TWgEoB8
+	KJv19IsL1Ei4PZD0ttPOUUJQcx6KaWB8iU7w/Blmsg5zqZaEO3HFAZXX/Sue2QULOyref7n5B8V
+	Fy/hauAMO5Hk6AMMqPJl10N2zRYpw936L4VSvU7Qm9YXzplw0ji4P5uKIgvNg7ahNRaDYFGNHMQ
+	ri5PSmZRsA77IGIkx07t6xswkA1vkq61AMgtX99Uc5WoAfNozPA+P8DcRdmv+oKUKOQWoKPWk81
+	ae/AoAK/icDzTRKh2iNihNhnkjuCS34T4pR/QsQ3pBRCqH5GU94JiBsNK5wk3c8jg2gmZpcMHnC
+	BdXOZAN1cTm/lYoeJzcfMHLmyp+JxQxJHMptYqIlelvRk77OawFAbSYg==
+X-Received: by 2002:a05:6820:1ca4:b0:706:5b0b:4e8e with SMTP id 006d021491bc7-71ab51087d6mr2426936eaf.55.1794600149324;
+        Fri, 13 Nov 2026 12:02:29 -0800 (PST)
+Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-71ab43347b9sm2426192eaf.12.2026.11.13.12.02.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 18:00:59 -0800 (PST)
-Date: Thu, 12 Nov 2026 18:00:58 -0800
-Message-ID: <be4f7254e8873986fbd9dbf58f47de78@gmail.com>
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Subject: Re: [PATCH b4 v2 0/5] b4: Implement BCC support for patch submissions and review
-In-Reply-To: <20261011-send-series-bcc-v2-0-cd17584c40fb@gmail.com>
-References: <20261011-send-series-bcc-v2-0-cd17584c40fb@gmail.com>
+        Fri, 13 Nov 2026 12:02:27 -0800 (PST)
+From: James Hilliard <james.hilliard1@gmail.com>
+Subject: [PATCH b4 0/5] send: resume interrupted SMTP submissions
+Date: Fri, 13 Nov 2026 13:02:13 -0700
+Message-Id: <20261113-submit-b4-send-resume-v1-v1-0-af325aad1179@gmail.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -129,40 +125,66 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMQQ6CMBBFr0Jm7cQW0IVXMS46MMKYtJiZQkwId
+ 7fV5Xv57+9grMIGt2YH5U1MllTAnxoY5pAmRhkLQ+vaq/e+Q1spSkbq0TiNqGxrZNw89hScu3Q
+ jk3NQ8rfyUz6/6ztQD4+/K/2Lh1w/64qCMZKGNMxVLSqTpHMMllnhOL5zPR+XoAAAAA==
+X-Change-ID: 20261113-submit-b4-send-resume-v1-4ba0053deb00
+To: "Kernel.org Tools" <tools@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Gabriel Goller <g.goller@proxmox.com>, 
+ James Hilliard <james.hilliard1@gmail.com>
+X-Mailer: b4 0.15.2
 
-Hi Konstantin,
+SMTP failures partway through a series leave some messages delivered and
+others pending. Retrying the submission needs to preserve the original
+thread and avoid repeating messages or recipients that were already
+accepted.
 
-On Sun, Oct 11, 2026 at 10:58:25PM -0700, Dmitry Torokhov wrote:
-> This series implements support for sending patch series and review
-> replies to blind carbon copy (BCC) recipients.
->
-> The work is split into four parts:
-> 1. Server-side support in misc/send-receive.py to receive optional BCC
->    envelope destinations via the JSON submission payload and deliver
->    them over SMTP while enforcing anti-abuse limits (max-client-bcc)
->    and public mailing list destination checks (mustdest).
-> 2. Client-side support in b4 to inject series-wide BCC addresses
->    directly into envelope recipients (destaddrs) in send_mail() without
->    adding or stripping temporary Bcc: headers. This extends BCC
->    capability across sending tools (b4 send, b4 review, b4 ty) and
->    supports web endpoint submission.
-> 3. Per-message Bcc: header handling in send_mail() and the review/bugs
->    TUIs, extracting Bcc: headers into envelope recipients and stripping
->    them before signing and sending while rejecting them on the web
->    endpoint.
-> 4. Safety guardrails in ez.py to reject Bcc: trailers in patches and
->    cover letters so they are never treated as person trailers and
->    leaked into public Cc: headers.
+Save the signed messages and envelope before delivery, record acceptance
+per recipient, and add b4 send --resume to continue the saved submission.
+Explicit rejections can be retried immediately from an interactive prompt.
+Uncertain outcomes require reconciliation before another attempt.
 
-Gentle ping on this series. Have you had a chance to take a look or do
-you have any thoughts on this approach? Give a holler if you would like
-me to send a v3 rebased onto current master (no functional changes, just
-minor conflict resolutions in send-receive.py and ez.py).
+Delivery uses the saved submission independently of current branch or
+sender defaults. Sent-tag and revision bookkeeping happens afterward and
+can be recovered separately without repeating delivery. A changed branch
+is left untouched until its original state is restored for bookkeeping.
 
-Thanks.
+The message-preparation and bookkeeping changes overlap the pending BCC
+series [0] and detached-HEAD RFC [1], respectively.
 
--- 
-Dmitry
+[0] https://lore.kernel.org/r/20261011-send-series-bcc-v2-0-cd17584c40fb@gmail.com/
+[1] https://lore.kernel.org/r/20261110-editor_refuse_the-v1-0-4b6e52f326a9@proxmox.com/
+
+Assisted-by: Codex:gpt-6-astra
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+
+---
+James Hilliard (5):
+      send: report partially refused SMTP deliveries
+      send: separate message preparation from delivery
+      send: persist SMTP submission progress
+      send: resume interrupted SMTP submissions
+      send: offer interactive retry after known SMTP failures
+
+ docs/contributor/send.rst     |   86 ++-
+ src/b4/__init__.py            |   38 +-
+ src/b4/_send.py               |  322 +++++++++++
+ src/b4/command.py             |   10 +
+ src/b4/ez.py                  |  326 ++++++++++-
+ src/b4/man/b4.1               |   11 +
+ src/b4/man/b4.1.rst           |   11 +
+ src/tests/test___init__.py    |   27 +
+ src/tests/test_send_resume.py | 1212 +++++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 2028 insertions(+), 15 deletions(-)
+---
+base-commit: ce4c1158edb292caca0ce4a6087e5edecc1b0371
+change-id: 20261113-submit-b4-send-resume-v1-4ba0053deb00
+
+Best regards,
+--  
+James Hilliard <james.hilliard1@gmail.com>
+
