@@ -1,49 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794678037;
-	b=P1Lm/bWg3Uh7vKXGOZM1f3f1Bm0RF+xRyp89QRG0UTgLL36VVHJTwNVnlpjLfLzipJPX
-	 6X88XWEm8eqLtE29iWe76BSwlHvybz6JhWlDmliVy2pS6kQpCLQKTQ69uxHN4ONGJL35N
-	 gz247lwb7vfVzQ1RVyRo2y72WdLloEdqSiLajCboSDvmxMO8EC6sClgo70a3q7P1duhKl
-	 JctJyjCIH9vGdzCqaXg/oq+aB3XTaMsxx3x/eXxUpmoUVvKppMhnZYvUN4a6i7izKcOg0
-	 JobLKiadfryD+Y9FCcALc7+0/1+x7suCZ458h+NpxP78BUp+w8zEdGpzkmL4/siGBTQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794678037;
-	h=Received:Delivered-To:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:References:From:Content-Language:
-	 Autocrypt:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=de1BVdq+uFF1MFZfZwtp/0eQoxFpO+fwHIhoHnkagkg=;
-	b=o9qYEds/SdovLQJIQtnPNEwWYDTNKNFJzMCrbtxRBf6IG7ww8MTbpVWIL18h2qO/OasU
-	 bNHLr5i4uMoEadzKS8ZpPaOQ8hqGJjaVK6rSetccRnPrIkhC5U1bab3txZasFGyVidzik
-	 AUw2nKQNzRqgoRlHZmcsKXW7I3u32RnlmXG7fINldDFk087hMQQtVTuEeOiUl6PgVUWDG
-	 so28hFDQIwPpacTyKQay/GmSUlV4h8239K6vpFiaKGWP3Y2CiIOBZ9llc6LhcxOrGAQzz
-	 V+UHfgKh5pO6JZKdpMzZK678ag2m1NFuniX0R5VMDBMp6LVDSQmUbfHH4p4LJ2IK6MA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iVe9HSCP;
-	arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=3; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794692031;
+	b=J7QMLjIvoyemgRoLE7DVcL2EZIQqy/F9hWNNQju5dkDxjfwtdyuFrJXhYhCamZAWPbt6
+	 tRpwrjVBgLq1vBRbnM8TifJH2gKXKKFAzWK45L9y9L6iM9ja/Jq4GnDZ0+DAUeuyPYQ6Z
+	 XVT1z50r7FrV2YzLRLklk9ZOFQkfnqe/ZknMKnYntxoBCQL55FGCVG3yS2MdIbYPD/IC8
+	 +h8OmziyJgzHYAJ3Kw0UydEnC1W9zd0F8r9xX5L5XpkyymadYT49KtfF3Z1gOYzTRiGXK
+	 z/NdAI59DHOdoCYRErUDy266eC6e3k3JTqoqUpW9lpQW4BJE5t6ohja6gf0F2S4wGag==
+ARC-Message-Signature: i=3; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794692031;
+	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:MIME-Version:
+	 Content-Type:Content-Disposition;
+	bh=GK0iipRd6v1mj8e0nB9Jyu8LoAfqE5IQglpcl+2bDDU=;
+	b=u0G9m+rh8xtyWF/uP3mx+Gm0W4+GNBkaiS6BdomU2N2b6PZvG+3FT1oiyySb9o8PFudu
+	 e6e/c2fyQL6FkbDE+EineA1YkV9vm/xZo15c6nK3YKTxKgQwQa1zKtyjqELlgME6/JPXO
+	 rhueQ7D9dYsbSkEX9FVkldkIXPkXOGcLgtCbFSbahoE7j/gNEfFUYDcYqzgvzD5SJtwsp
+	 Q1pVoDj3wbhx7QibiT8rFNP833hVVDuDbPhX7oAK6lvnu5nTN8Y24947lSYNRjEwr85jH
+	 Y25tKyxQlxDjCkiR9zlA5c+rIKwAfgtu6ePXar4EhbosijceDfYQnyF6p197SU0147A==
+ARC-Authentication-Results: i=3; smtp.subspace.kernel.org; 
+	dkim=pass header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=Ekyc6hHa;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BAA606A323
-	for <tools@linux.kernel.org>; Sat, 14 Nov 2026 17:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A45606A323
+	for <tools@linux.kernel.org>; Sat, 14 Nov 2026 21:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iVe9HSCP
+	dkim=pass (2048-bit key) header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=Ekyc6hHa
 Received: by smtp.kernel.org (Postfix)
-	id 26FC71F000C5; Sat, 14 Nov 2026 17:40:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66A51F000C4;
-	Sat, 14 Nov 2026 17:40:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794678037;
-	bh=de1BVdq+uFF1MFZfZwtp/0eQoxFpO+fwHIhoHnkagkg=;
-	h=Date:Subject:To:References:From:In-Reply-To;
-	b=iVe9HSCPx0gmFIexheWD3GE8NXeXxW9pJ9bFw9aqcQ8oHKL+cZox+bXqDcqhr6Bym
-	 +tFZckhXafV5GtaFG6Pt4/OMefD0j8rrTgd80rvI6mLJqBpNxLgzsTxmgU8Q6KHrrb
-	 sF8JcD4z+KIemqEGZkxW6E3gO/cDDKGuJt6aEshT7IHoqpHohopspR0A3gT+36ygsI
-	 z2IpBql0lDdElx2p7zOhU+ukcqMbUDJDl0+I9CHD9FChgw2GdYagmduDHEGFsAqEzH
-	 beBwjx1B6+ovtkwmI6twzECqnXP0eK5RZlrHr0nTcypcAvlravHo4AJZY6WX2HKeef
-	 1bi6Ce5u0IDcA==
-Message-ID: <2b1da3e1-939f-4efd-afbb-628f7d6e7a63@kernel.org>
-Date: Sat, 14 Nov 2026 18:40:34 +0100
+	id 947501F000C5; Sat, 14 Nov 2026 21:33:51 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=185.203.200.13
+ARC-Seal: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=pass;
+	t=1794692031;
+	b=f2vhyl0p7HNfGX4gBOQQqDBfKvOjDNHFfeh0sz49X+P+X1/YvdKh69gc2B4iugxNr5EH
+	 /iiBx+rOXm6uj3yTRmrvaTmixdFMjtvdOqwfk4fSgOJdluoLPkzWsK1TpfEP2Uxksn6Fk
+	 hydQBqY50S1Mr0aJJ/47z9TNGbr/dAnVN3a9P8qeGBMK04uFGXZp/tlU3VBbzWOFWz7U1
+	 bSVRvU8ekM6ykbSHcwuydzNsJVmJOdyu46csBdldKWUGxJLbYY9bkQ8CbUByAZnPfzoj+
+	 SJeP0svBNk59VkjVkHGPwNdCIt+02YVjg3HyXyu7goavcGdivFmpMcph4SPKHaCp2fA==
+ARC-Message-Signature: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1794692031;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Date:From:To:
+	 Cc:Subject:Message-ID:MIME-Version:Content-Type:Content-Disposition;
+	bh=GK0iipRd6v1mj8e0nB9Jyu8LoAfqE5IQglpcl+2bDDU=;
+	b=MrVcBm1fVoSwhgYy3Cj/bKfeHMOzOrR+RpIpSV9aJAxmxRIZEH0N9dlYeZpY2RKzzsGr
+	 xqPpEw+nbfF8baasmqK0QbMzAz83+KYflUwftD7nZxtAVJpg2xo5TxiH9Ul680bD6nDo8
+	 c8qSRkH9dGNIXuFvmTS0dHoWCwohnGN4jAA4zM5ktaMXmGUYx2eJQF2AKvX1fGfrLSQnc
+	 aU55MFGeArpdDY606tXs5xL+aHC6nJaoob79Pblhy+IYeCt8rXnl340y6W5tm790rMgzn
+	 oxej+D6IUnX+8cw07PyUOGG6Uccxzcf44OrAZFJ0SLFWnlKa5BgeZPbuD3PuqvpahaQ==
+ARC-Authentication-Results: i=2; smtp.kernel.org; 
+	dkim=pass header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=Ekyc6hHa;
+	dmarc=none header.from=pengutronix.de;
+	spf=pass smtp.mailfrom=pengutronix.de;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=185.203.200.13
+Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 0E8801F000C4;
+	Sat, 14 Nov 2026 21:33:49 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key) header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=Ekyc6hHa
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 0E8801F000C4
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
+	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
+	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 286E6201E6B;
+	Sat, 14 Nov 2026 22:33:48 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
+	s=20260414; t=1794692028;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=GK0iipRd6v1mj8e0nB9Jyu8LoAfqE5IQglpcl+2bDDU=;
+	b=Ekyc6hHau0rFyEVJJXaAnW2Vtyj++gOZqlSAb2OiM68forKK/uxlPi3Ff60KngnRUZdTGZ
+	EhYc0hAzHHQbUdQgKpivrSwJoUuNSo9G2u9dK+TRFadLEpstgvLR7qbLRhn2is6OSKkfjv
+	eKwT+A1221+yrtBp+cOjeoisOsHzawwTZ3wv3lHYx3VvPXZ5O4jdBL0ZPNNfA+2tuWfkks
+	Fe02hBwWO7OqCIxeJkZ6snOPPEmOnQsuxTsOLYWCGHbWziP0nzPYuOJra8r94zlCVO0tCR
+	dPHNbdVIGd2iEnAc6jZ69n7PSoEcgIxM8+dYGzApb8Xw+xrxeyd3x4Tta23s9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
+	s=20260414; t=1794692028;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=GK0iipRd6v1mj8e0nB9Jyu8LoAfqE5IQglpcl+2bDDU=;
+	b=d+cV2HD4SYyChXPFnoHfysVRpkyoS8YPZl3rQahJKIfksCIb/0iqzZpywjp44wVpW1Ctbi
+	CQZuTJZcj3dNlOg9XtqoXszisE/Q2KmkYGiQpBmZUODEj1mz+nWePN+x7NXvBqpeulN6xo
+	oqH5Y6D5MVEoG6LLgNRIiSDHVYiMcOOMT/cuf3Lz5KiMzualgRbhC5Fmtxth+NLRvX/bx6
+	eBm2TxVwzfm31Gvbm57AyUmNeBThgl0vYNh2v6gWjlc+h/gyKNK4nqzvdhWlLsnjR0byMS
+	cO+lIhTIpldY26H2K/UuYS4nJumE+c2SM0YexgL34ekO7A2F7vDaqfFX/52zzw==
+ARC-Seal: i=1; s=20260414; d=pengutronix.de; t=1794692028; a=rsa-sha256;
+	cv=none;
+	b=g7oGRWFcK+BoGg6Mx40btYe++a8xpypyrb9SWzUG4bJyXGNMj7JAad3NasLYYK8nhokD63
+	ncNiEynIRsrkhHvb9DRiKF4ler222nFAaaAVSGv2r71GwKBAT4bPLnv2ar4jdG0FA0UFwp
+	jDp6fQZIiptkov3kNyxUBBUh85vQF0wMEoRYa1QSaBnak9W5tku4LY28MlC2ZPnazsR33e
+	p6S24hkyap2IcViEuqYgpLieCZ8o1XAmhREpnGbXI87Yk971TqJLZorwxROPCvbwn0M0t3
+	saX0SbmAMRWNlUev7MzlLQpLp1ACQWlP42XOgRIAb+4d/ntlPDw3oBQHoeXjRQ==
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=relay-from-drehscheibe.grey.stw.pengutronix.de smtp.mailfrom=mkl@pengutronix.de
+Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1xSLNc-004Bwk-08;
+	Sat, 14 Nov 2026 22:33:48 +0100
+Received: from pengutronix.de (p4ffb23c7.dip0.t-ipconnect.de [79.251.35.199])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	(Authenticated sender: mkl-all@blackshift.org)
+	by smtp.blackshift.org (Postfix) with ESMTPSA id 633365EBDC6;
+	Sat, 14 Nov 2026 21:33:47 +0000 (UTC)
+Date: Sat, 14 Nov 2026 22:33:47 +0100
+From: Marc Kleine-Budde <mkl@pengutronix.de>
+To: mricon@kernel.org
+Cc: tools@kernel.org, users@kernel.org
+Subject: b4: include git notes [feature request]
+Message-ID: <20261114-rapid-diamond-skylark-6d6cc6-mkl@pengutronix.de>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -53,77 +126,52 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Should get_maintainer.pl ignore obsolete Qualcomm domains?
-To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, tools@kernel.org
-References: <342fd0c1-671b-4487-8a42-44adecda502c@oss.qualcomm.com>
- <b02133f8-4819-4615-b99d-3df8eb1aecb2@kernel.org>
- <3aafe4ad-ce14-4ea7-8bd3-4a9484db6787@kernel.org>
- <fd6aa860-0d88-4e7e-b2b9-7cfbb738cf44@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <fd6aa860-0d88-4e7e-b2b9-7cfbb738cf44@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-On 14/11/2026 17:41, Jeff Johnson wrote:
-> On 11/12/2026 2:17 AM, Krzysztof Kozlowski wrote:
->> I think I missed partially your point - you do not refer to
->> --git-fallback, but blame for fixes. Well, yes, for that I would just
->> drop entire @codeaurora domain. quicinc.com is still working so for me
->> it is litmus test if maintainer is active.
-> 
-> Interesting. My access to quic_jjohnson@quicinc.com was terminated, and I was
-> told by IT that was true of all quicinc.com mailboxes.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gp6ha6rqzdtdcm6r"
+Content-Disposition: inline
 
 
-Well, my standard user@quicinc.com works, so I guess you mean the ones
-prefixed with "quic_" (quic_user)? That's a bit trickier, because domain
-is valid just usernames are not.
+--gp6ha6rqzdtdcm6r
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: b4: include git notes [feature request]
+MIME-Version: 1.0
 
+Hello Konstantin,
 
-Best regards,
-Krzysztof
+I'm using git notes to track additional information for some patches.
+Sometimes a FAQ section for our AI overlords^w review bots, sometimes a
+note why checkpatch currently creates a false positive and a link to the
+discussion, etc....
+
+When sending patches I want to have that information after my S-o-b, the
+'---' and before the diffstat. After adding
+
+| [format]
+| 	notes =3D refs/notes/commits
+
+to my .gitconfig, plain "git-format patch", does what it should.
+But "b4 send" doesn't. Is there a config option I missed?
+
+regards,
+Marc
+
+--=20
+Pengutronix e.K.                 | Marc Kleine-Budde          |
+Embedded Linux                   | https://www.pengutronix.de |
+Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
+Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
+
+--gp6ha6rqzdtdcm6r
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSl+MghEFFAdY3pYJLMOmT6rpmt0gUCavjTuAAKCRDMOmT6rpmt
+0vHwAP9TTEOeKYFQJTIDPi7du1pRrZFcdXbBOK4wufOndW/nrQEA0P11cmE4m8FY
+u168R5ubi0w8gWxA1OBzirj8gB5V0wE=
+=6eJY
+-----END PGP SIGNATURE-----
+
+--gp6ha6rqzdtdcm6r--
