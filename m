@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794832389;
-	b=TuOHnOpfvl7KKrEVurQJS58hPBSjDhmO5W6l7JqIqdIrYuB+FQJ1tW7r1DuZ/KCmnJnY
-	 /7lKMhGNJYr8nqXco2hQsQqttMxfaylCJQM3DrAahaTuPy7miuzfaplurM1zTKIDihZIn
-	 Jvx5id0fPTmaXQxL1sbbhDosZKAflzGBbAByAmj1eQE7tAKW8cvSxMiFNAXA4WlNbu2/E
-	 bRsyLF5uU4EmdUz9/MjzWLdOYoyAUBabwl2jWIpSp5BoZAUVTCb6QbO4vRfjmqfnJo6Bp
-	 6kKkHuBFQLn1tfCeQDB7LIxW7Ffdz1O4t4HDHANYIuZUf/730FEXI435n8p62xqBcSA==
+	t=1794841573;
+	b=eGns1XeZUCFGI7gVta8DLQi1BbyIwsCCYX/3QqZe1i7/m7+98n39vsy51KyYFUkwhHys
+	 HgS8p4YsxAR1TNeNkTmvzexeMTnWABm/euvNmBYj1i9ilonvLqXAhBgcSf5MiQYotxXgX
+	 OMESQXnlD3SSko5DKaiRXgEBNXp0s3YZX70r81vETS9KTumGKVK0ZJU7ytBF44GMZxwOG
+	 f26Wvvv4RMabMUvQz4/5aaAkjmsXmZ2wchE6bjktIGLgJBCNaV4QKNbCBR/NZRc9HdgHw
+	 oZr1Yviqvuen54onl87ki2xU6GKCoXYiy1BLPZZuExXELXGt1MLOy6PYuhnSJazpLOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794832389;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794841573;
 	h=Received:Delivered-To:Received:DKIM-Signature:Date:From:To:Cc:
-	 Subject:Message-ID:MIME-Version:Content-Type:Content-Disposition:
-	 X-Cookie;
-	bh=7pCDzF50WR3Ui6imm8/IGNoPhxwdgcVRwn0pQAdv/eA=;
-	b=ToUO5N3WzNjeQhG3RAr6F+ykKduhzuZ7h14IYVtTJizE5PnSHw3rJxAA7raQfboeFJD3
-	 Ro8vEHjXTB79LkmFfIBulKfPWGGc+vBO311dhPkQGPN/RZDGM23FIw425OlQRBkzLbzKW
-	 XSrqdxXJfaJp1oS5ejb/w4GaQ7l1eg5VWMCiwAXjxVuxEd0PyITwHI1uobiOoKst0WGbI
-	 HniEQEyFG0uhiWlqMILEpcaKpmAdNa2OnNM+ZDMT4wuouPaswfaxPtJUyZRRrKknCj1vZ
-	 e9Arl/5XIjNP1QlQX9Zqp1NyQ8bi2w7jSf49Opq8URm2Z6vCkQ4yij0Q/Qu9R06EcqQ==
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=A4ejsSLqtT05c0PFDQWsA0PS+WXJInyC4lFzs/A7TLQ=;
+	b=r5sACkxNJ5s0nAaFYw2L7Ks+OThnthmtzCUlk0FFaOAoQ1BO1eagqk57DTlYXhuo2VBE
+	 6GjVJ/gUacvAg6rLA+39TraYa4UFPtivk9EH7sQc5XO8hherot/Bp0t8j6LRnE7LONGUV
+	 P9veSRKVWdl45Gao9l4KeJRGZgQ0kma36RTr6oUz4v822XwnoZ7aboLfgJ0PWyYNdNYCW
+	 aDfdenDimREzLc2/wUgXJtsmooa/+ijAj6kbxaE6dBQdySUbW419AZj9hAbvu6Ji65T93
+	 TZFM9BviZz9Iz0/r2xmQ7NEfAu4mQaGcYHKx9qOfyD+N2y/2Vv5+S6hY/FJfnyX7gDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FIFpaR1Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kCX6QkgO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8A3606A323
-	for <tools@linux.kernel.org>; Mon, 16 Nov 2026 12:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5F2606A31C
+	for <tools@linux.kernel.org>; Mon, 16 Nov 2026 15:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FIFpaR1Z
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kCX6QkgO
 Received: by smtp.kernel.org (Postfix)
-	id 6848A1F000C5; Mon, 16 Nov 2026 12:33:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BCE1F000C4;
-	Mon, 16 Nov 2026 12:33:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794832389;
-	bh=7pCDzF50WR3Ui6imm8/IGNoPhxwdgcVRwn0pQAdv/eA=;
-	h=Date:From:To:Cc:Subject;
-	b=FIFpaR1ZDo62+9kDT/aa9IYdE0k5B7NaEQ/ueSBuaV+CwIy0dOTL4nGMlR3kL1Ab0
-	 agf7WspXpFRzmW9Vkzs+kVQTlpXHa+GsjrTSC+h5O0urjagPEEkw3vvY0p2z9aGebU
-	 rKIBEXJ+V0A6kM03Ywx4N3vXtEin9wbZ/eqaA12kGunA925hQU/qZmRIbCMZZ6HVNX
-	 wlgLiw10JCo+iyahwH7iv89v/Thh9pO32vcIA54rRLV8H2E3SdGAAN21cqMZN695on
-	 hOsiVqViQOMdNQpj7pKNZxTfdqkEKFFSLTlCNkZ3mGh65KE2LcCcxebmjC7UOVozvR
-	 xZAtO9wvg+MBw==
-Date: Mon, 16 Nov 2026 12:33:05 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: tools@kernel.org
-Subject: b4 review failing to find a series
-Message-ID: <f144d595-0bf0-49e6-8f85-b6be7e5477ef@sirena.org.uk>
+	id E97421F000C5; Mon, 16 Nov 2026 15:06:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19181F000C4;
+	Mon, 16 Nov 2026 15:06:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1794841572;
+	bh=A4ejsSLqtT05c0PFDQWsA0PS+WXJInyC4lFzs/A7TLQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=kCX6QkgO9gO5q0+NueeUSA2aW5/vN8fYgxf/Txd+GULc2gReEIcc18tKS4yWiwtHe
+	 OIE7wVLF7tqKNRT1hM8EHa8+OsW+WqL3DnjCBx8RGZ2PTh4bYB3ZwvIUqpXwj2oUhK
+	 EGch+Qy2vYxlZVyqVwKq5fmXc3KFIuuQaGUFF7Hw=
+Date: Mon, 16 Nov 2026 10:06:11 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: James Hilliard <james.hilliard1@gmail.com>
+Cc: "Kernel.org Tools" <tools@kernel.org>
+Subject: Re: [PATCH kgl] Preserve original dates when importing messages over
+ IMAP
+Message-ID: <20261116-authentic-attentive-cricket-b046cf@toolbx>
+References: <20261025-submit-imap-preserve-date-v1-v1-1-91ac2f5b502e@gmail.com>
+ <179451279186.1693101.3646569244001837281.b4-review@b4>
+ <CADvTj4oqJCvC1CoX4Dw=nXtCR4GYS5JiTNL5--iRKjCqG2FWzw@mail.gmail.com>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -57,39 +58,47 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EI0Xid6/U4V0YaTW"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-Cookie: Don't SANFORIZE me!!
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CADvTj4oqJCvC1CoX4Dw=nXtCR4GYS5JiTNL5--iRKjCqG2FWzw@mail.gmail.com>
 
+On Thu, Nov 12, 2026 at 04:07:04PM -0700, James Hilliard wrote:
+> On Thu, Nov 12, 2026 at 12:46 PM Konstantin Ryabitsev
+> <konstantin@linuxfoundation.org> wrote:
+> >
+> > > IMAP APPEND currently omits its optional timestamp, so the server assigns
+> > > the import time even when the message has a valid Date header. Archived
+> > > messages consequently appear as newly received in clients that sort by
+> > > INTERNALDATE, including the Gmail web interface.
+> >
+> > In general, I would consider this a feature, even if this was not really
+> > intended. I would specifically lean on this in a scenario where we
+> > perform a "yank" command -- someone would routinely be yanking an old
+> > thread and they wouldn't really want to go hunting for it in the middle
+> > of last month's mail.
+> 
+> I checked the other targets, and there isn't currently a consistent
+> date policy across them:
+> 
+> - Gmail API imports already use a valid Date: header. The target omits
+>   internalDateSource, whose API default is dateHeader [0].
+> - JMAP imports omit receivedAt, which defaults to the most recent
+>   Received: timestamp, or import time if none exists [1].
+> - IMAP without an APPEND timestamp uses import time.
+> - Maildir preserves Date: but creates the file with an import-time mtime.
+> 
+> Consequently, importing the same archived message through Gmail's API
+> or through IMAP can give it different dates in the same Gmail mailbox.
+> Preserving Date: for IMAP would align the normal case with what the
+> Gmail target already does.
 
---EI0Xid6/U4V0YaTW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Okay, after more thought, I think your reasoning is good. I didn't take your
+patch series directly, because there is already code in liblore that handles
+date header parsing and I wanted to use that instead of reimplementing it.
+The latest master should have the functionality you were looking for and I
+credited your submission with a Link: and Co-Developed-By.
 
-Hi,
+Thanks!
 
-I have v1 of 20261116093751.138455-1-stefan.ghetu@nxp.com tracked in b4
-review, it finds the v2 at that message ID when doing a b4 review cron
-but if I attempt to ugprade to v2 in the UI it says "No series found in
-retrieved messages".  If I forget and retrack the series it imports OK.
-
-Thanks,
-Mark
-
---EI0Xid6/U4V0YaTW
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmr6+AEACgkQJNaLcl1U
-h9AAywf9Gj6EeiLajV5FkKUxBkIec+Pl6Q5DEtL4aXqsXyKIjxV6yS6HACFVvt2y
-dgCQxAguCPIXaIMAWhf+GRjEyWN7AA7TrfXHB2nTcwc4aoH/1eHhnOEO3oQE+Z13
-m+PVxTAN30xAXQJFjV5Nwl0fJIz4RXGnIsbXfK3VQY+obv252kx3dsxgf7Ed9MGY
-gf/u6oL2x59XzfkQdCzrn3gNtI+Ia8U+qc24TKugNWy+giEOs+XTG9Wbz0mv74z0
-rrdJTmyItumzsjlltK3IHug220txxEQVJQTWuVUKrgEOPCvJ7U+TYBz365no9a7f
-T5cL9QHRSwilAACVKBt9VKprc5mo4g==
-=74ig
------END PGP SIGNATURE-----
-
---EI0Xid6/U4V0YaTW--
+-K
