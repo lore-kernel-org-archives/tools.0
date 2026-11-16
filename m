@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794852042;
-	b=lpf2N4SRMH0GODswa8dilmw291+yAdMRyer6b9hAE3T1EnpcSOXA5aOjKBtEIGxMBJ/S
-	 xmVCj+TwRCd+ZHvUO/q9bBXyf4jK8qvfOePMzGABLm6VP8bO/3eV96sJNDgPgg0IfNIxb
-	 is8nKLsC13jJfwT6eCGnwyOxzK3SPBMXgnavOrc1fMR5e+2rbBEZ6zVgdV8NUXPatHEVU
-	 SUg28vSbLxxkPv3RhmD0Oa/MWxhyooY8K+2NMQh3Q7o1YhpWuplJQZEFnyJ3SACQFrlMU
-	 5LQ/r0g2Aifiz6Xlp7FFcPj0I0HNw+k5dp5K/5hH4M9tSskev6dqzMZeHeRTCGEOvnw==
+	t=1794854195;
+	b=p4sV3rZAE/3oq07E2gfoP/BCiKROpl90l/l0FsRcIswfTRT0k9ui57X7TjEDsUT5Neze
+	 iHQnll3/91qVCWfNV36yI97umVxnUgNM+owu4Z3v89XpmO1h+dPb+OjNh0jrgo461SnqP
+	 3ha09GoarcesP91pbp3OFjUrDlvw1MLfolpO2VAazQJnohvdNKIFZgFam15NslujfO394
+	 FdwP/K76n0yh/D93s4MzLWGi6Qho8NaDaDUF1wR1TbfAvFl4cfh+Y1jWvyy1bMt0eKEVt
+	 ZaRAFoj6+U4yJ5XN8NkFZiCVTkhKWAKz5WN9NlemgKhKZUlfUI6SkIhqBkDG4pkVDvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794852042;
-	h=Received:Delivered-To:Received:DKIM-Signature:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
-	 X-Developer-Key;
-	bh=p9+P+GaaSja5AmFp193zAqhfBlfXj0rw49DwqByBrn0=;
-	b=iFqRfPygWMuDzP6XeFNzC8z1WAcAbLv5lB9Uuhnog+0048WjDeBznuK496D0E8FoYyJm
-	 BBrHSg4SXAhi3NZy85ZquT8+ZNCFhzcxo/nqCRTCR1J3CzbHJXDcbp34XSKo5gE1ukxib
-	 qvIy1TE/VvnAx5WrSci4YsygdVfuA3HDFqIxEFP9TPfB/5uNSJSVCxL+Eso0aCLtAtiBx
-	 OTOwWV6pT+ip5crhU9AVqvzHmdIYLs7dER1aUpbs/YVANiGcy+KlHB3lSsL+pz2AvAFWC
-	 0dTNB5PljlLOJ1lll+7hhmP+JC1ig26MXh/kQXBxjrrqUE5PgjjGcjurFcvOobo6Ozw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794854195;
+	h=Received:Delivered-To:Received:DKIM-Signature:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=L5v/2geJl6ZEhIfeepEdb51fajb8KTWrJf55kt/YAwQ=;
+	b=W5GeaLBZIBCXwkAxlq5jBJlvQkpcIBGwhIA6qCarpiBcclrHyE06eSxlSkqi4eoz3cXn
+	 yAzCf9quv7Hj8Fwd7CQLqkDtudUpG5NcP7/yLV+yNYTkM5BtTEH1K31hD4eMVr6axNhKz
+	 n8wdF5av/md7U6T4ZiazB5qI4oupWVk2IqXlBCi5brXYu19J3g1jc7COZFHNT2cXAag6L
+	 4V2qycY+X7k+U6uStPQcbCqAmCJ4GHVYK3vhBILVBGwLZkw1tHQE110Lq3rwsPsunWdqi
+	 k6c5UhoVw83MXv1raKv7PwCxnI/y8uy/t7Unb5O+QXdhzs9H1z3buJ/bvcsJQRnV40g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MjU5YQKm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mDVhAbTh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4068C606A886
-	for <tools@linux.kernel.org>; Mon, 16 Nov 2026 18:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE17A606A323
+	for <tools@linux.kernel.org>; Mon, 16 Nov 2026 18:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MjU5YQKm
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mDVhAbTh
 Received: by smtp.kernel.org (Postfix)
-	id 331C11F000CA; Mon, 16 Nov 2026 18:00:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F441F000CC;
-	Mon, 16 Nov 2026 18:00:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794852042;
-	bh=p9+P+GaaSja5AmFp193zAqhfBlfXj0rw49DwqByBrn0=;
-	h=From:Date:Subject:To:Cc;
-	b=MjU5YQKmOBMwNj3GBrwkyoW+/OOB66+eLwd2UXIqfG+48nK8iqjD/lVssyQ+sX9bj
-	 O94xJsj25yiJxIYVQEaVDvw1GqDisCCdw35E0eLkPLq3FbzSvSyH9FuojFHjOcZLlw
-	 7ObjddjmyhX/gOT/W/VEih4QnGox9oE0y6FqBfxfzzb+zr2K8YNp36ren9TwhLB4EF
-	 0oXRAH+tl2V4QbnsMCKH0hdXivg8FrtIEr4aHAF6Q9JdfFJ1hYiAZj4SXfgMDWcMjk
-	 dMwhWhnmscgq/YqJ0jyTeD9+UMLVhOClmhZHELw7fMhFif9D0FVOeRO1kSKP4Lc7ze
-	 2Zdh8R1/JNLiA==
-From: Brian Masney <masneyb@kernel.org>
-Date: Mon, 16 Nov 2026 13:00:34 -0500
-Subject: [PATCH b4] tests: ty: explicitly set master branch
+	id 5118A1F000C9; Mon, 16 Nov 2026 18:36:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A741F000C4;
+	Mon, 16 Nov 2026 18:36:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1794854195;
+	bh=L5v/2geJl6ZEhIfeepEdb51fajb8KTWrJf55kt/YAwQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=mDVhAbThdmt74ka7QE8KYQmQclDcQ9knO3kpNIWniROzF6TBTRHkXEa/v9byH7MwN
+	 XpD2PiVMKGvm8bDuX7twzmbfRjebLHB3mXG9bVf5lQn9w7wlf5yT0pNGun91tGJscW
+	 I2ozZkxDoEAZrAHMATSTrfvXPQ9eL0hD+con7vJQ=
+Date: Mon, 16 Nov 2026 13:36:33 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: tools@kernel.org
+Subject: Re: b4 review hangs on failed patatt signatures
+Message-ID: <20261116-flying-hopeful-boar-9eefb8@toolbx>
+References: <1a5ecca2-9e58-41de-947c-5600604dcc89@sirena.org.uk>
+ <20261112-vivacious-oyster-of-stamina-254a6c@toolbx>
+ <4935ff1a-0a6b-48e2-9bbb-5d5c521d1a76@sirena.org.uk>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -55,57 +57,29 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261116-tests-master-branch-v1-1-ead9f70c580f@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAA/yXMQQrCMBAF0KuEv+6AE0oWuYq4SNKJHcEomSiF0
- ruLun2Lt8Okqxii29HlraaPhuh4cihralchXRAd/MkHZg40xIbRPdmQTrmnVlbySaqfl1C4Cia
- HZ5eq2289I8+4/M1e+SZlfDscxweKjuQOewAAAA==
-X-Change-ID: 20261116-tests-master-branch-2aef24d6c1fe
-To: "Kernel.org Tools" <tools@kernel.org>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Jerome Brunet <jbrunet@baylibre.com>, Brian Masney <masneyb@kernel.org>
-X-Mailer: b4 0.17-dev-556f0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1177; i=masneyb@kernel.org;
- s=20250903; h=from:subject:message-id;
- bh=WyLW9H/7GcQiQiadOzEET8VSmNXCe9WRDlFQs/Ualvg=;
- b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLJ+uxx5IeoX4LradUX/zNUC91+VXPD5viz8raG64ob9i
- cuWLbBa2VHKwiDGxSArpsiyJNeoICJ1le29O5osMHNYmUCGMHBxCsBE4lcxMnzw/zPp0nOxna+V
- ZN0tDQNOeVZEqU7tlGeebpzxTaLxmwUjw89HUi0b7O4kL0llnaXxX+WYQc2OzI0zT/I9nHuWf0a
- RHBsA
-X-Developer-Key: i=masneyb@kernel.org; a=openpgp;
- fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4935ff1a-0a6b-48e2-9bbb-5d5c521d1a76@sirena.org.uk>
 
-The tests assume that the name of newly created branches is master.
-However if a user has it set to main in their .gitconfig, then this will
-cause the tests to fail. Let's explicitly set the branch name to what
-the tests expect when the repository is initialized.
+On Fri, Nov 13, 2026 at 12:40:53AM +0000, Mark Brown wrote:
+> > This sounds like a bug we fixed in patatt 0.8.0. Can you check which patatt
+> > version your b4 is actually using?
+> 
+> >   python3 -c 'import patatt; print(patatt.__version__)'
+> 
+> __VERSION__
+> 
+> > (run it with the same python that runs b4). We currently accept 0.7.x as well,
+> > since there are no incompatibilities between the two, but that's the version
+> > that has the hang.
+> 
+> > If you have 0.7.x, update your venv to pull in the latest released version.
+> 
+> > If you're already on 0.8.0 or later, then it's something else.
+> 
+> Assuming I found the right venv (I'm using uv rather than doing it
+> myself) it's 0.8.0.
 
-Assisted-by: LLM
-Signed-off-by: Brian Masney <masneyb@kernel.org>
----
- src/tests/test_ty.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Managed to replicate it -- will try another go at the fix.
 
-diff --git a/src/tests/test_ty.py b/src/tests/test_ty.py
-index 269ce021306f..c9a24f8748f1 100644
---- a/src/tests/test_ty.py
-+++ b/src/tests/test_ty.py
-@@ -401,7 +401,7 @@ def test_get_check_repo_config_override(monkeypatch: pytest.MonkeyPatch) -> None
- 
- 
- def _init_repo(path: str) -> None:
--    ecode, out = b4.git_run_command(None, ['init', path])
-+    ecode, out = b4.git_run_command(None, ['init', '-b', 'master', path])
-     assert ecode == 0, out
-     b4.git_set_config(path, 'user.name', 'Test')
-     b4.git_set_config(path, 'user.email', 'test@example.com')
-
----
-base-commit: ce4c1158edb292caca0ce4a6087e5edecc1b0371
-change-id: 20261116-tests-master-branch-2aef24d6c1fe
-
-Best regards,
---  
-Brian Masney <masneyb@kernel.org>
-
+-K
