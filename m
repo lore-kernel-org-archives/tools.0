@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794854195;
-	b=p4sV3rZAE/3oq07E2gfoP/BCiKROpl90l/l0FsRcIswfTRT0k9ui57X7TjEDsUT5Neze
-	 iHQnll3/91qVCWfNV36yI97umVxnUgNM+owu4Z3v89XpmO1h+dPb+OjNh0jrgo461SnqP
-	 3ha09GoarcesP91pbp3OFjUrDlvw1MLfolpO2VAazQJnohvdNKIFZgFam15NslujfO394
-	 FdwP/K76n0yh/D93s4MzLWGi6Qho8NaDaDUF1wR1TbfAvFl4cfh+Y1jWvyy1bMt0eKEVt
-	 ZaRAFoj6+U4yJ5XN8NkFZiCVTkhKWAKz5WN9NlemgKhKZUlfUI6SkIhqBkDG4pkVDvg==
+	t=1794855152;
+	b=30rfzgD1sJo8sqo4TZUjl13Ha1KI66m34KxFRPbwOyh35ENNuIg4Hci/GCZAn6jHAeKi
+	 azziKQPHGWwSghUvaIdKV8K31JT72y2HByhjytEhwyLzP0ykm61KjEcxutiLuDeQi4BRz
+	 NaISAmBPWVBI0QZGwK1bUS6sjXqjA5J/+a4t5ufB+3kPipxjrNCrSE515ZWb1ZpvrAx0F
+	 iogJDXYJBMpQO64yyH/k/gBBXVtMODRItQr0CudVTQF2vIfXKGYmZ2wbGJTKWLH20doGN
+	 3fmH7BraavCGpw/wGmuZW+H19mPlmmvKaN2VQWhrwu5eDsJtF27nekAR1yXQRuzpNDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794854195;
-	h=Received:Delivered-To:Received:DKIM-Signature:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=L5v/2geJl6ZEhIfeepEdb51fajb8KTWrJf55kt/YAwQ=;
-	b=W5GeaLBZIBCXwkAxlq5jBJlvQkpcIBGwhIA6qCarpiBcclrHyE06eSxlSkqi4eoz3cXn
-	 yAzCf9quv7Hj8Fwd7CQLqkDtudUpG5NcP7/yLV+yNYTkM5BtTEH1K31hD4eMVr6axNhKz
-	 n8wdF5av/md7U6T4ZiazB5qI4oupWVk2IqXlBCi5brXYu19J3g1jc7COZFHNT2cXAag6L
-	 4V2qycY+X7k+U6uStPQcbCqAmCJ4GHVYK3vhBILVBGwLZkw1tHQE110Lq3rwsPsunWdqi
-	 k6c5UhoVw83MXv1raKv7PwCxnI/y8uy/t7Unb5O+QXdhzs9H1z3buJ/bvcsJQRnV40g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794855152;
+	h=Received:Delivered-To:Received:DKIM-Signature:From:To:Cc:In-Reply-To:
+	 References:Subject:Message-Id:Date:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key;
+	bh=JL+Ohzf/gQUPpE15fvyw2Rem+N+AMD++hajv7VKlM4s=;
+	b=okI+KWRwYGPqp+ssqGeCTuL61Obzgtbu0NAzdKjn0ltPvuDVTbRsvcfA7qwlWBdwUfOt
+	 53acJYNL1DUrVI504lX+5dLIiYPckLlVd3MPtX6GSgSZe97BTU0kgK+u/jPIR38EAMvAU
+	 DXu3RLDWJROOqrPvhNs98knARZjkanhpRsEQB/knRkigN38w+DbiC6FJwnRKeSWalergs
+	 aMTK50bSDCkNm22WyxyPLrDjWaKz3fLXBbKRFF2bg/VWqB2MEdrUoigCZgMFLyKgGJZ2r
+	 0Gc7j53Oo/Dk7AGF036XP0hBPRpwu/lOPdcVEDy/NVQbY5W5hY63hj9GM32qqeZIP6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mDVhAbTh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BeTf7lTf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE17A606A323
-	for <tools@linux.kernel.org>; Mon, 16 Nov 2026 18:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19F2606A31C
+	for <tools@linux.kernel.org>; Mon, 16 Nov 2026 18:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mDVhAbTh
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BeTf7lTf
 Received: by smtp.kernel.org (Postfix)
-	id 5118A1F000C9; Mon, 16 Nov 2026 18:36:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A741F000C4;
-	Mon, 16 Nov 2026 18:36:34 +0000 (UTC)
+	id BC3731F000CF; Mon, 16 Nov 2026 18:52:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FEB1F000D3;
+	Mon, 16 Nov 2026 18:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794854195;
-	bh=L5v/2geJl6ZEhIfeepEdb51fajb8KTWrJf55kt/YAwQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mDVhAbThdmt74ka7QE8KYQmQclDcQ9knO3kpNIWniROzF6TBTRHkXEa/v9byH7MwN
-	 XpD2PiVMKGvm8bDuX7twzmbfRjebLHB3mXG9bVf5lQn9w7wlf5yT0pNGun91tGJscW
-	 I2ozZkxDoEAZrAHMATSTrfvXPQ9eL0hD+con7vJQ=
-Date: Mon, 16 Nov 2026 13:36:33 -0500
+	s=korg; t=1794855151;
+	bh=JL+Ohzf/gQUPpE15fvyw2Rem+N+AMD++hajv7VKlM4s=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=BeTf7lTf2wjrx1sw0lSNnZ/M64ScMI5L52FL992uYuNQ9pZ7VgmpFn3pLCA7/ZvRS
+	 GHpTeAYsy9Vfl99Yf2ASkwWT0PEJ0CuKyVxyZ6P6PhmiGOCeULOAPRfjObGU5t31RQ
+	 77KPCYxnbZ9VM9x4pUh3pXPk1fJcs9P/Sg9Ux08w=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: b4 review hangs on failed patatt signatures
-Message-ID: <20261116-flying-hopeful-boar-9eefb8@toolbx>
-References: <1a5ecca2-9e58-41de-947c-5600604dcc89@sirena.org.uk>
- <20261112-vivacious-oyster-of-stamina-254a6c@toolbx>
- <4935ff1a-0a6b-48e2-9bbb-5d5c521d1a76@sirena.org.uk>
+To: "Kernel.org Tools" <tools@kernel.org>, 
+ Brian Masney <masneyb@kernel.org>
+Cc: Jerome Brunet <jbrunet@baylibre.com>
+In-Reply-To: <20261014-pw-delegate-v1-0-a393ae92152a@kernel.org>
+References: <20261014-pw-delegate-v1-0-a393ae92152a@kernel.org>
+Subject: Re: [PATCH b4 0/4] review-tui: add support for setting the
+ delegate in patchwork
+Message-Id: <179485514467.730919.868224295472863805.b4-ty@b4>
+Date: Mon, 16 Nov 2026 18:52:24 +0000
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -57,29 +59,38 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4935ff1a-0a6b-48e2-9bbb-5d5c521d1a76@sirena.org.uk>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=977;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=Z2KGmM0HTn+DSgD3hlWJiWmJr+Lhh7bJj8ERoJAr8co=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLJ+B7yeYXfeisMyaOs+P+nAS4c4NhbseVJy5ZlXr2zHW
+ kM/rQNhHaUsDGJcDLJiiixl+2I3BRU+9JBL7zGFmcPKBDKEgYtTACby0ZaR4a9hnESXxxRJ9nBe
+ 7c+RXduYtk7f+HuT+/yMghrBt7s2tTL8T/DdtSFs18KFuXs9Zb+n9i7we//j3vcLQQU3jjLOO/D
+ 6KTMA
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On Fri, Nov 13, 2026 at 12:40:53AM +0000, Mark Brown wrote:
-> > This sounds like a bug we fixed in patatt 0.8.0. Can you check which patatt
-> > version your b4 is actually using?
-> 
-> >   python3 -c 'import patatt; print(patatt.__version__)'
-> 
-> __VERSION__
-> 
-> > (run it with the same python that runs b4). We currently accept 0.7.x as well,
-> > since there are no incompatibilities between the two, but that's the version
-> > that has the hang.
-> 
-> > If you have 0.7.x, update your venv to pull in the latest released version.
-> 
-> > If you're already on 0.8.0 or later, then it's something else.
-> 
-> Assuming I found the right venv (I'm using uv rather than doing it
-> myself) it's 0.8.0.
 
-Managed to replicate it -- will try another go at the fix.
+On Wed, 14 Oct 2026 20:03:37 -0400, Brian Masney wrote:
+> review-tui: add support for setting the delegate in patchwork
+> 
+> Here's a series that adds support for setting the delegate in patchwork
+> via the review-tui.
 
--K
+Applied, thanks!
+
+[1/4] review-tui: show why a Patchwork update failed
+      https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=f8dd05f102281fde48dbcc9ec4f919c64ec94817
+[2/4] review-tui: let ApplyStateModal update other patch fields
+      https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=bfb9b7ffcdafbdc680e22047127bc339a73b77a9
+[3/4] review: add pw_fetch_maintainers()
+      https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=0ddb22a5d1c70df923414c8c271068c08f0434c0
+[4/4] review-tui: change the Patchwork delegate from the pw browser
+      https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=12f7caba936e31563c15a6b20d196717e01162e0
+
+Best regards,
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+
