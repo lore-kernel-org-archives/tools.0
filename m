@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794927517;
-	b=ElCGUkgR/ahN88ZqsQaDV7LRAScyvuh4ma+7kuqYi9cxSUolQpDHx7F55S7GmwW1vFpi
-	 9zSoJS2C9wsuSu2suzHRtsw2SENWIhKvXMGdmOsJUNOTru3HMI5KxvTpMXlN0Psx0ddkm
-	 NJJm2j55LoJlJ21irLwMK9r0SYCiq4gtvfMaaRIfypjENGAJe7kMNYU+fDBZ1s+bMN6hx
-	 xQrX/esK0F1O6NjME4SLPc2Rv5eQXEexWAtYpxCtok+uOorWZZV+0D2IlD7G3m0FTS1Zj
-	 IdjundgEqaNdtdwGiKMKwYsITFM4Mh9lkZgH1Xg4YivLXSUYCi8fDKinNCh0dZsO8HA==
+	t=1794929401;
+	b=CnVJbyUGw3kbl1ceWpg2Gff8CZMWJ3KuGSa438C97wmSCdGD3F3PZgMEcQqTB7BGge1F
+	 MAktBCNM99CohvMS37OtEoEeXYfuvqW8OsYuEUYBxwKxWTGpxUDvEvUPUm2zBOZnYdqeO
+	 kymrFUFdVzgjsItg8k8st1gETExNpxOsFidpiVofYj243ZuK3UlpwSKWyxZknsU4H0356
+	 5OohgVI0js1946/FZkPYVFmkgUXJcqeEv6McwsZ3iXPWFISPtbYIUFHqEDZ+V8OY1uG78
+	 zfav3curnvV6cPxF7MZEhtF17xDbEFGAR3mv+7sBSaj8w9HwBWw0C8Nu5L96TgmOIVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794927517;
-	h=Received:Delivered-To:Received:DKIM-Signature:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=qtIWyTe4vVuwtkX1Wy5VJlFMHmgnAqInuDKYruztAcw=;
-	b=ilgSiUpQ6KouTBlul8kwLuDM6o7jawi9rjs6Tiz7+XOaPUd4Cfba6k7hXR/Bfk00RPxA
-	 ydsBTzNbX95btT6w47jLFIPKFF4LGIZOw2qa5bEUPQHRBvTvJzE0UaRI0SNBEcL2Cia6R
-	 hz/VONoiB+Fn6ejIFbb2A+XGWTClVbrs9za0MyeXKK7oIpjSF2epXfr/6zZHpVtMBoFx+
-	 y3/oA69orLgO8MAWkQ+urCjaCClqQA+DWjbEes3g9/5RTFuue8sO8+vjAKn1EsovWBklQ
-	 se0udXc1EK86Vm0sWAZTrEsVP3Qo6HrdYWnPnABqeYYMwIWb2tAFymNcJqinUHCJGiA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794929401;
+	h=Received:Delivered-To:Received:DKIM-Signature:From:To:Cc:In-Reply-To:
+	 References:Subject:Message-Id:Date:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key;
+	bh=haT7OW/skdr9WO6v5ShG/nLaCACSlPoy3WOLOpsBLro=;
+	b=ATo6S8oGuZwusyQ0XoSLmOGkn2N7k1n/377OWzEG8HaMALh3C08vz7bFkLbPgEFvSXFx
+	 nQATk3U4u3E3IYTDawoO3NccvxlgcC95YCjai7Yc6GDBeQD5pQ7Dh3IJgS1p0PELLyPGk
+	 WduyPzkzMNiTYraNzlg4EsWx29IuTemPw7/sHpEFboL3sHEAZtJEfkdVu7P9GT8moRWkW
+	 vnQFQgpXNoGmNz0nZRBU2OJWbQ/idb3Wu9Mg8kAz3H/AAnjBI99Fl0NLdJ8K8RzfF/yi5
+	 z2Am4iRiz/Ss4co1lo+4XoqfkeK+wWdauuQ03vWMVYsQpYdoEuNaHLFbstoi+Zc8muw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvqsXtsw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPiSB9Rv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B978606A336
-	for <tools@linux.kernel.org>; Tue, 17 Nov 2026 14:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB321606A331
+	for <tools@linux.kernel.org>; Tue, 17 Nov 2026 15:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvqsXtsw
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPiSB9Rv
 Received: by smtp.kernel.org (Postfix)
-	id 07DEB1F000C8; Tue, 17 Nov 2026 14:58:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EDC1F000C6;
-	Tue, 17 Nov 2026 14:58:36 +0000 (UTC)
+	id C2AD01F000C5; Tue, 17 Nov 2026 15:30:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EE11F000C4;
+	Tue, 17 Nov 2026 15:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794927516;
-	bh=qtIWyTe4vVuwtkX1Wy5VJlFMHmgnAqInuDKYruztAcw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=yvqsXtsw4mE28h/BxPTtDMrjtGfa8ryO+3k1ttO6Oxm1HmXDetCbc54dBG8aVHeMv
-	 lL+MLtsaam3RgWPBOmlC/oxyFLnjrq8eDljFbNBCiV/NDYCX3THK+QH/nlJC/eSvVo
-	 HypOi03HXhVg/NXMu8lWUonY1qGa/GUndO+MJvaE=
-Date: Tue, 17 Nov 2026 09:58:35 -0500
+	s=korg; t=1794929400;
+	bh=haT7OW/skdr9WO6v5ShG/nLaCACSlPoy3WOLOpsBLro=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=cPiSB9RvNzqYxaPnEX054k68ty/QPyFrb1gWfw9FQ91Dl4ec03cs8C9nyM1H2djlM
+	 1fITmKzpzJ46QkSC4nB75TBf+N3uMrhdtsUNvM9ThbDQkVKPgqef8AOAYY1Z9k1D+g
+	 VkpRZUaKTvupTzC3l06tdxqES7A0DnPbeyWJox/0=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: James Hilliard <james.hilliard1@gmail.com>
-Cc: "Kernel.org Tools" <tools@kernel.org>
-Subject: Re: [PATCH kgl] Preserve original dates when importing messages over
- IMAP
-Message-ID: <20261117-dinosaur-of-fabulous-skill-17ca6a@toolbx>
-References: <20261025-submit-imap-preserve-date-v1-v1-1-91ac2f5b502e@gmail.com>
- <179451279186.1693101.3646569244001837281.b4-review@b4>
- <CADvTj4oqJCvC1CoX4Dw=nXtCR4GYS5JiTNL5--iRKjCqG2FWzw@mail.gmail.com>
- <20261116-authentic-attentive-cricket-b046cf@toolbx>
- <CADvTj4qr0A0c8DpsNhWK3aV=Lh1bJL4knMjkG8rDaM=Qa01fsg@mail.gmail.com>
+To: "Kernel.org Tools" <tools@kernel.org>, 
+ Brian Masney <masneyb@kernel.org>
+Cc: Jerome Brunet <jbrunet@baylibre.com>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>
+In-Reply-To: <20261030-pw-key-command-v2-0-95fb0f822834@kernel.org>
+References: <20261030-pw-key-command-v2-0-95fb0f822834@kernel.org>
+Subject: Re: [PATCH b4 v2 0/3] review: add support for fetching patchwork
+ token via git credentials
+Message-Id: <179492939241.997809.6993666707201529524.b4-ty@b4>
+Date: Tue, 17 Nov 2026 15:29:52 +0000
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -60,51 +60,40 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CADvTj4qr0A0c8DpsNhWK3aV=Lh1bJL4knMjkG8rDaM=Qa01fsg@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=992;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=wT6r6peiTo6EC0SmWzTg+aT0FpD7GWlIQymBJPsIZpk=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLL+FH2W/LVifsIFVfGVF9/3Oley35eTThW4q3dGtS+HL
+ WWGuqJPRykLgxgXg6yYIkvZvthNQYUPPeTSe0xh5rAygQxh4OIUgIlob2P4H8y4WPjCyb9H3y/d
+ f182PfRleMCbKcFqEqkrrv5nnPSGcTvDP5PAay/8j87Xdn0R9kq+fpqa0Y0PT3X1f13JnK+9JHS
+ lHRcA
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On Mon, Nov 16, 2026 at 07:52:49PM -0700, James Hilliard wrote:
-> > > Consequently, importing the same archived message through Gmail's API
-> > > or through IMAP can give it different dates in the same Gmail mailbox.
-> > > Preserving Date: for IMAP would align the normal case with what the
-> > > Gmail target already does.
-> >
-> > Okay, after more thought, I think your reasoning is good. I didn't take your
-> > patch series directly, because there is already code in liblore that handles
-> > date header parsing and I wanted to use that instead of reimplementing it.
-> 
-> The liblore helper prefers the latest Received: timestamp over Date:.
-> For patch imports, that can lose ordering deliberately encoded by the
-> sender.
 
-Yes, as you can tell, I have real trust issues with client-set headers. :) In
-my mind, Date: headers should mean absolutely nothing in any scenario, but I
-am happy to accept that my viewpoint is a bit extreme.
+On Fri, 30 Oct 2026 09:47:27 -0400, Brian Masney wrote:
+> review: add support for fetching patchwork token via git credentials
+> 
+> Currently the patchwork token needs to be stored plaintext in your git
+> configuration. This series adds support for fetching the token via git
+> credentials, which allows storing this externally in a password manager
+> if desired.
+> 
+> [...]
 
-> b4 assigns successive patches Date: timestamps one second apart, and
-> git send-email also increments the timestamp for each message. Sorting
-> by Date: therefore preserves their series order. Delivery delays and
-> retries can change arrival order even when all server clocks are
-> correctly synchronized.
-> 
-> So a difference between Date: and Received: does not necessarily mean
-> the sender's clock was wrong. They describe different events, and for
-> reviewing an imported series the sender-defined order is useful.
-> 
-> > The latest master should have the functionality you were looking for and I
-> > credited your submission with a Link: and Co-Developed-By.
-> 
-> This avoids dating old messages by their import time, but IMAP and the
-> Gmail API target still differ: IMAP now prefers Received:, while the
-> Gmail API target uses a valid Date:. The same message can consequently
-> still get different stored dates depending on the import method.
-> 
-> Should header mode prefer a plausible Date:, with Received: as a
-> fallback? Alternatively, if Received: should remain the default, should
-> we provide an explicit Date:-first option for this use case?
+Applied, thanks!
 
-I think I will go the same route as mutt and provide "import", "date" and
-"received" mechanisms -- this way it satisfies every preference.
+[1/3] review: centralize lookup of patchwork key in one place
+      https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=a02d2c76e5071ffff33fd2dcfb39d7ff499262a4
+[2/3] review: add support for fetching patchwork key via git credentials
+      https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=06ea4123afebed14a2a617afe3509ffbaaebc374
+[3/3] review: tests: add tests for the patchwork key
+      https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=bf22d0198c34f68d068c150bdb9c2d90da134b56
 
--K
+Best regards,
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+
