@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794993327;
-	b=YvMd56JaEHcS5naObdL9IC0NssRC1bgjHg5aKZY68xUyy5+QNf9RXkLndUx9FLLx/oWn
-	 SCu5sk1Es+hLs3KEG6KF8P130tZ6QTlSskcR5sXdzPjYBL4m5HdxVWfVP6zyizNialt7s
-	 HuaobwDpaw5ooh6ztlSWdIJqdjeslWIhkNmkkGeKLPSs5VoLypfBlbvhVvMmBuBtZJAEk
-	 pDsk1B8Ukx55gXYwee1zCdscAr5v1I+18EODIbzRDbt74W/WVDgkW5ceVTn3lrBea/W9h
-	 TDDqwb4xM5Q4ZZzF2WbE0IwEi2zqL2e/xy3jHSMufeoAs2OtOP/AEcLzq6dxH4B+tpg==
+	t=1794993703;
+	b=vUYdA2dUHKiV0Z5P7BZGE0J8Y+VXTI6hmsRrIkCvUtYjExOMUsnDciQwnKT6JgVBD4OG
+	 kOuhLzd9aISALVQ3xwodifxPrtRFhMr0tuLhebtm/7bD+ZYdQYeX3tdzmfO1xYF1fGwb1
+	 QpJ3jAXPTPx6UkXcRE2hmKN5tv0PG4s9T141F8IuIir11I5eW8JJDeDkSwUWmvyUyZgA2
+	 iRtx8pvomHTrVbBqkirJVPcx8omfBBVGIhAXTO63Fx+raka/0UwSSNoho+XUDIR3gzvNT
+	 hHEzZ3UD+KPZZhRZZ5Rs4i3hOgz4ymXg+uAs8+wV/gSRIGuLbjrqgYS8eZl+/oactjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794993327;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:From:
-	 Content-Language:To:Subject:Autocrypt:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=119TZ7UXMESWSMzDFb1fEIZxetd/YAlSJgNXn+t/SUY=;
-	b=myPUkpF3giMpdrdBpj5TA5OT4hTMFRerJnwJ/8JBRHhm3wHigZqhorCLLzckpLbAPCC/
-	 nP+Z8OrrIdNEGKFMCBnxheePlZGUTn5hMjiXJJUe/AoGDUjCORO7rwNBY2XRLhGWw0ota
-	 3zT04V83qf9NNTeB9JgfAyuNQ9AJaLutjCG5aPPx9YlkzWz1LfBPWMf7JsZ67MpeMz0GL
-	 3O7ceDQtwX8sMApZOkrqujt3KuCe7HPr6Or/NQirhFfIbEhF8QwM1q2Z7RKCvF+nR9RYm
-	 wVBrKzi6MzrIinUNqAktNbRRAQGWJ5Qi5BzAyfBNz+lArdly7VI192c/kqK7qy1y5Gw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794993703;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:Content-Language:From:To:References:Autocrypt:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=ZDPqKc6xcr6oP3UBl9GdGIoUJYdqO62Ff59PG/RRw3Y=;
+	b=a6woT88LGefam0GSMhzQ9bkPYq0jJN/jg+Y1GrKVVw3yIDZOhhAzlOsOGyGT8Ztmg+DK
+	 UUNgkaorNZJBzNlMNFRhl3p/G6cDZLoeq+WtNhX72p4kwh/eqHWaeNEaNxSEHuJx577Ec
+	 W3BsQoYllLRjn01YFxtPnagcbfMilC2+v6VbiHdxbKtiAhCCaXzF3tnuD9JoNn9jS7FAF
+	 XUgMBiWnpQl997u/kCbtHF9Eo3daOS62kOfvG6ycIp+jCdNPBVxfKHXpP20ej73nI/ZRU
+	 HOw85IJAgtZWZByqE0KmWmIJw98RyeelBho4e/sjVYWW65opMB+Apfivwt5BQgZ8AdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="bW1/f44D";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OI37UWnx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16812606A320
-	for <tools@linux.kernel.org>; Wed, 18 Nov 2026 09:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0F9606A320
+	for <tools@linux.kernel.org>; Wed, 18 Nov 2026 09:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bW1/f44D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DCE1F000C4
-	for <tools@linux.kernel.org>; Wed, 18 Nov 2026 09:15:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OI37UWnx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED031F000C4
+	for <tools@linux.kernel.org>; Wed, 18 Nov 2026 09:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794993326;
-	bh=119TZ7UXMESWSMzDFb1fEIZxetd/YAlSJgNXn+t/SUY=;
-	h=Date:From:To:Subject;
-	b=bW1/f44Ddhdoy8/ASBer74M6igqGEyyNqgFHV6NB/9A15dZDVyCvjddRDeBPGSAOC
-	 8gvXuez0S8e+1R8QIapWWv7mjraYWpPWaC13txSoSXOSe0NLaf5Lv6qtuSE2o8XZ2h
-	 JBveatclQfT6o9l6yh+7BWBH/7D8vKRFNAtYIZ2dpI1Codf7p9vxqKqilT6JXu0cvk
-	 8aPHsS9Rc3eamnn5ag514WVrcQCTskvZjO5pdCp2XTt02b72sn2nVELOJRWZRjTvKm
-	 i8hXbAvtf7xPKa0noSLTfJnILKoSYZDK9ZpnItCyITeD+dAP5Ga8v5TC5fYDat+cRF
-	 7V/bH56dOKAPQ==
-Message-ID: <f345711b-8c2e-4d93-929c-c35b57a1b036@kernel.org>
-Date: Wed, 18 Nov 2026 10:15:24 +0100
+	s=k20260515; t=1794993703;
+	bh=ZDPqKc6xcr6oP3UBl9GdGIoUJYdqO62Ff59PG/RRw3Y=;
+	h=Date:Subject:From:To:References:In-Reply-To;
+	b=OI37UWnxlqyWDlmYidZOhqjt0Rb87cU6Wl6n9N/7I/YBp7sRxcZOhftzySDWamUXy
+	 Rpzxz8nk4gp9XrixQZHdotVDsLx8F6IRcIfUPytyp71jPXfhylWpcwtPhUnk2Raazp
+	 l3XdFEi5h+mVyz9eRaeoh4AGB0zLCA/oFCKwmfVsWWu5rcYlIHntffOQPI9CVTX/Sq
+	 zbX8I2nmHfnWSqRbzeSiKYif36RoW1ecVkAVxmZQz+sp6MlyFyOqjKX6O4wox8kgFb
+	 49OlRhEc8JDSgxh6XOGXfDRr0lbXwwva+iP4Zd4rhHJBjfk7YX2bVkJ8fWYbm6OAnG
+	 7yFAYj1d8yS7A==
+Message-ID: <f9d0a485-b7fa-4547-b445-dfb69a66edd1@kernel.org>
+Date: Wed, 18 Nov 2026 10:21:41 +0100
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -52,10 +52,12 @@ List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: Re: request: b4 trailers -u --interactive to bail out on editor
+ failure
 Content-Language: en-US
+From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
 To: tools@linux.kernel.org
-Subject: request: b4 trailers -u --interactive to bail out on editor failure
+References: <f345711b-8c2e-4d93-929c-c35b57a1b036@kernel.org>
 Autocrypt: addr=vbabka@kernel.org; keydata=
  xsFNBFZdmxYBEADsw/SiUSjB0dM+vSh95UkgcHjzEVBlby/Fg+g42O7LAEkCYXi/vvq31JTB
  KxRWDHX0R2tgpFDXHnzZcQywawu8eSq0LxzxFNYMvtB7sV1pxYwej2qx9B75qW2plBs+7+YB
@@ -95,15 +97,26 @@ Autocrypt: addr=vbabka@kernel.org; keydata=
  NcaZ+c6J4H+nEJGi2SkHAUJz5oBzuThvPudLvPA/SK8sKoM01IRxSihev/S/5WLazXB1PGem
  OCbvzC1IjWJJraxiDJ5IygokapUa2RP7+WBR22skQ3SSl6G107QgWKSyTOGWEaRmV53vxQLV
  jXuCmzSSasTL60zq5yGrT4/DYQVSNEUiUbG4pYekxJujNeEDkUlky0Y=
+In-Reply-To: <f345711b-8c2e-4d93-929c-c35b57a1b036@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hi,
+On 11/18/26 10:15, Vlastimil Babka (SUSE) wrote:
+> Hi,
+> 
+> from e.g. git rebase --interactice, I'm used to the behavior that when I
+> change my mind and abort vim with :cq to return an exit error, the operation
+> is cancelled. b4 trailers -u --interactive will however proceed. Could it
+> adopt this behavior too?
 
-from e.g. git rebase --interactice, I'm used to the behavior that when I
-change my mind and abort vim with :cq to return an exit error, the operation
-is cancelled. b4 trailers -u --interactive will however proceed. Could it
-adopt this behavior too?
+One more related When I don't specify -S and then I'm wondering why a tag I
+expected to see isn't offered in the --interactive list. I'll only find out
+from "NOTE: some trailers ignored due to from/email mismatches:" after
+closing the editor. Maybe it could add the tags commented out (so I can
+uncomment) with comments also explaining why they are ignored? "Msg From:
+... " etc.
 
-Thanks
-Vlastimil
+
+> Thanks
+> Vlastimil
+
