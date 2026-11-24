@@ -1,131 +1,151 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=3; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795203135;
-	b=XMOhH2Qyf4ap+ws0TMowKwGBYsEkDue38fHcDbxy3ZVKBCahwbrPk0CdfcSTJ54cMrtm
-	 N+lQ1WgR9ul7am3FxfRN2bLeF5tSpOpbSnKypD8CiXGr2h7sLgCmGfPLj2p+UTwWoZPeE
-	 zpnGHMxjmOh8bwD69ED07zsqlW1VshxYyUeHiBLb7X1ZB0d/uUraqwXnfh9ArQeW/jPiG
-	 yjS0us+/316ze8AhrCDCOltxhPI9rhW5UdXvfol2kX/X4q42GxfsvMcxJhDZUUpAMs/wS
-	 jcJxEyFrs12T6m/dalOMIP5uiKpCG+ENgkLnC3OSTtnHcASaBv9FE2/r/KnjOdUwIew==
-ARC-Message-Signature: i=3; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795203135;
-	h=Received:Delivered-To:Received:DMARC-Filter:DKIM-Signature:Received:
-	 Received:From:To:Subject:Date:Message-ID:Content-Type:
-	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=E9+BQ03JYf74hGpJnU8xiAvr+GizT1Tk3K9iFVI1fIo=;
-	b=a/wbn3Hhw6Dt3XWm5btOsxkoAwTXQ9TuDZ9tFSlfPOQxIBD+VoGKv5b8b19kAL4mevud
-	 X/S53ARH5W2YN4pu5xt5AYpuwYbdBSIDfutcZn8mwmE8qLhNHC/KY3IJbIV7I13rzJP/H
-	 /Y5j63ovy5VU4SRtDcjDLYCHw7mvz6rSiww9O8GwJXhZadJXJX9i0SPNGWESvcl43LuAa
-	 qzUQJ0UgP6W1BwdaT3gGHsQqto7C/GAqKaCZCjc3Mik9Z4uuZEWWplDER9Id9P+dfFOGd
-	 TW07dnryIWZFgUKJzwisskqPYCTQe+U8r8AbjL20iFcv7e8h5wYjKOAriL6iJaDvU3g==
-ARC-Authentication-Results: i=3; smtp.subspace.kernel.org; 
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=VLg4T967;
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795534317;
+	b=sa/KWNP7cIrCxlQEZbGWCSWkuRODguF9h0oQvO6u/5LMzaNSb5/7Kbe5IgzFa1h1/nNz
+	 TTnQfvtaZM8qs1B8zQ/93fWQ1AV/r80Sm1YgkzwRsPTf5VUqrM0RzkG3GlpflV842mPfK
+	 20pxVMItDjtDA3AbmnPKwzGO+ETx4xSXsWvWFx5b0MhiOTbCbnOOR/IUEMvdqXNo5S4N2
+	 3mOJC/brfHctw3Z+AIfXPVOUUJB+mRZpJWmO4fyRc11ZyG644rotg2k6VWzLqqG7wd9fj
+	 lRjplZ3KOeoz9pIL52IgzbKHvx7nZhG6Q72E9WrrP91B91/xEHNZcReW6FclJ2DnUVQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795534317;
+	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
+	 Received:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:From:To:Cc:
+	 Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding:X-Proofpoint-GUID:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
+	 X-Authority-Analysis:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=nVROACRjiQA/gf9dE4qYsCfCRzfJ+yLZQs9zI23IrvE=;
+	b=kqBrVSM3FmPzcFKZG1+oxEx53eCQsbzrKAXQ+XhbK0QMg5P6GZ0fqEY08P7SBCUUF7LS
+	 as8YIrvjscep4UnCdiP0asunSnAXw5KqPtMiWAN+jKEMpULBVWXjHd/zJCZbDbEjwsIpd
+	 5N4zkp8jcJhaZrzoFWGxzqB/0B9epSHLOjEQx0Tl7E/KzlwsQWb0tWkkzLQbhco7m3hzw
+	 5lJQmXOMxxi6Xdzp6a80xm0k+ITx4+RTQkgzQ3TgTUBy55MPo+Az8DqYWIki7Xg3FYGqJ
+	 /t+PqAAj/bOdMB26tQY3pPM3GrkV18ITWPKmEZ7vA5VlvI+Lv9Mg2x+n7NDwuv4IheA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=AVVeiD1E;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Ku2YpVGT;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5C3606A6DA
-	for <tools@linux.kernel.org>; Fri, 20 Nov 2026 19:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9732D606A31E
+	for <tools@linux.kernel.org>; Tue, 24 Nov 2026 15:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=VLg4T967
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=AVVeiD1E;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Ku2YpVGT
 Received: by smtp.kernel.org (Postfix)
-	id 9FA591F000D2; Fri, 20 Nov 2026 19:32:14 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.67
-ARC-Seal: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=pass;
-	t=1795203134;
-	b=s3SeIsnCdc2JEhIqqTDbe7+WzQrpDFbmQ1IXBeF3Z8FHP0sAPcsLd96mQfIiy1wByPTc
-	 z+29Nz4jcw8xs16gg322Sxt4B12vdLmigAGtoYgoyZmKf/ps7nPSRJsg2FXgtcu18KZQJ
-	 zzSkjqUrxBc2P0Z2Vw8GcQ2W3LOFXFVDQlcp4BFiGZVRiKzZImsgJaBg6hrvrL+B/tIVo
-	 ElZGE0KriQMvuNHqyERSgV6FI9gaHgOEgTqCZf3GxSgLS9QQMhLru9Z/jZ//hOGIXdsGC
-	 mkTy4JDuuKfvytta3wI4giyU3MD8hHCQTAUvsLQmaetPDRFBi5rnoMH5RylIAr9eojA==
-ARC-Message-Signature: i=2; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795203134;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Subject:Date:
-	 Message-ID:Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:
-	 MIME-Version:X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=E9+BQ03JYf74hGpJnU8xiAvr+GizT1Tk3K9iFVI1fIo=;
-	b=GdCC1lgccAon55MD/0F4g4Dj0OZs9Akp02iGRugBzY5WeVwvh6gW4bEJtpMR47I6JC0d
-	 hY4hcte5qq2Se/ruJlvwEX0Zs9iI8z6MRzZT0DSHRX1XlqXzIE3O4pHefA9XtZ3qle2yS
-	 oOu5pFO6z+PcWS7OjAC9xFpKMGF7iAJD8fqguM+NxpDZPYZaaSNcYmOICImFIHiMtfRaX
-	 gwyDh6JeTI+LTIr8334Eysc2VnKW7+8GnI+Qta1xc8YcQl3dftUYR/1j/XnD23Q8uP7Gz
-	 eahWe7llU1U3P8geWoPBaHKydY2uIYFgVqKTzhOE26tXx4RVmTQ8+ITXcO/vX7h9omw==
-ARC-Authentication-Results: i=2; smtp.kernel.org; 
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=VLg4T967;
-	dmarc=fail header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.67
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011067.outbound.protection.outlook.com [40.93.194.67])
+	id DBA2B1F000C4; Tue, 24 Nov 2026 15:31:56 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=205.220.168.131
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1795534316;
+	b=iOqvMNJeNObQkimWYqW68oYEvbrbLZUHtfvH2qcJVtJlxATePrnMohKs1YFQpK28JNmt
+	 nv4AWmbnGYUeCE3+FyoRWPQCDU1k3VtFhYNKF4Z3LedtBQqcUVatdG+wXgBjlbDRlIUME
+	 biqSbpWO37rPki7h9FBAVU7Uwg69ah17NZRYw0QFvQcmTtX/eM0/lA99HCm1PgtDtrFWd
+	 Zn6TYwMA73RkIyKukiByDbIqc/nzpsfmtoorPTldjJ3OBYkKMFphr37TmEpJbN1lmCIu0
+	 ukPBtj6tY12UJaOBKgBiEPyWGCXtJ0hrtp/F/YJnWiyEp8BCpTEVbB7qTN/Mmt359gQ==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1795534316;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:MIME-Version:Content-Transfer-Encoding:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-ORIG-GUID:X-Authority-Analysis:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=nVROACRjiQA/gf9dE4qYsCfCRzfJ+yLZQs9zI23IrvE=;
+	b=Y/k8fYtd99GVj5cAQ4r/hcWnSgf2W6WfsWe1fQTjqXrDiPRtW/lEXbe8cTYffJBX1yhv
+	 AD3nOVUpPXFAn21DP0nnb8hW0Zphnx04jDujp6V+nIL9b6S/sJ5r93zBh8NjJ6F0avUXK
+	 xtcgFZyA4/xjzzzKzd3WzdgKXPHYLSA46GqSm/RKGT6okB4hU9GZJvOi6CmcUMkUcigWh
+	 CvMn4zAFDcD7ZBA4mvFEXEMp4VkR++sZBwS3/yRZsqEu32ks1rk0072xpXpsVgvkPZLo0
+	 Y5g3i+D7tuIdJ9R8TDyVDEXxx8J/aYHVelLFHawHP/lYLG7xY1D6Y5J8FyBqbcXy7+w==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=AVVeiD1E;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Ku2YpVGT;
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 485F01F000C4
-	for <tools@kernel.org>; Fri, 20 Nov 2026 19:32:02 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 37FF01F000CA
+	for <tools@kernel.org>; Tue, 24 Nov 2026 15:31:47 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=VLg4T967
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 485F01F000C4
-Authentication-Results: smtp.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IckZyAOgpMwZWay62P6BlUgAeSYQq08CyiXhSx4Kbyq2IKUXSNGiFw0dm09Nrm49EGhLyHt/7XiFvMO8qow5l9U2rsThnQd5mA3crySZiuzGqvvgxaEgn/btHNI7ynrT5Sv+c7aVGcEL2KIPCKjl0OTVLWJZjIMKyUAmHlQ6pbcH2CLYUqzRkNDUz5qcPIur4HcIc2ie75FTrOgecz8EHntYlUJC3ZB32EF2C5Ij6EAnjRN+bwQFLc/7oNvQbsKC8Ksr6wYHIj7r4SQFdqWpGZKb/VcR6a1RW71VRe2VFeSEkZUENzVzOHVFAAR7X5PDVHqSnkL+tdOMBvE8WbqVMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E9+BQ03JYf74hGpJnU8xiAvr+GizT1Tk3K9iFVI1fIo=;
- b=KXq0asxXrqio4ZUKAnmSuvz4RheECKtAqVrD7kHoaLKyBBguGyD+ehhVKxJXmHA2vcBGXMyXpWzLcPRhB5322U1QjqG1RKpWvwziiufpTYCNM8wli2cfmGMpGXVlgJAf0OgfH9yz1OzjBGLM/G3fPvXxs7omh8O6ir1M5hPVeOD7s6YanAKuDuyyzfh5L2SaTF+f5eFAdK9lL6gxEU8gXdLQhrAGjKvHn9JxH5rMLlY11+ZN+H+/5NwM8My78hvjw+mSmP84k0pySLprT00uMQAyq/IjpQkXGBQkm8kW2a8aFxHUSfgNRj5zITcImRdHLopRtr/ClYDmn8IpMueVig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E9+BQ03JYf74hGpJnU8xiAvr+GizT1Tk3K9iFVI1fIo=;
- b=VLg4T967Z/yRtMZORqgjTFkzMqj0YtcHRTOl159W523obsDaL4ZA0CqmnDM9m1d7SX5DwUi6/iRkLnoBX4IB2YRmJbMmI1JmrrG+P9EL1ESDP1d7GvCR1kLdyW66Z3xYDK8ycAvhFnZCVri7+BHEmrMMn44PUopsBqA0QaRoivCJJ/AehPIbTfxGshLpZIZQPzXR6HYv/oVuKUsbJ8hMRM354/HZwxuRtQJlk6txRaNLUiKuwqBO3KbSRuPsvBFYtTd1/xMR/uRkPqNwDMf5OMAz63DwPYi3cbmbjsEHGazA33IbOyB4bfMB3LhDR/nb9BntgIsjg7r4lPLjPs2KtQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12) by SA1PR12MB5672.namprd12.prod.outlook.com
- (2603:10b6:806:23c::5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
- 2026 19:31:58 +0000
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0639.010; Fri, 20 Nov 2026
- 19:31:58 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=AVVeiD1E;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Ku2YpVGT
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 37FF01F000CA
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AOFKusG2569575
+	for <tools@kernel.org>; Tue, 24 Nov 2026 15:31:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=nVROACRjiQA/gf9dE4qYsCfCRzfJ+yLZQs9
+	zI23IrvE=; b=AVVeiD1EJ8WEeQRAxMJdjWn81ExGT2SOdfP72wzgC/vc07647Pm
+	75TqbtLHLSIe/zMwOLbjS4QOhXJcapeWGqWLmDIgE7kWjNXBiTilwXR/F8qOb6UG
+	ni6mZZe3eq2oXWX1aU52B0agE3UHrcPdor/55xU+77lcnrYV9xiSOREFPOIbfBfJ
+	Gg3SDBSWdYD+kUE39W7nM284dy3sLSbx+K8peVMqQTajQX0Y1n96yf68rDuU1EtU
+	7WDKxEWtlY1Zdk9cTbEXnUTpNre9T61VLvR2QorIPYI3r1afUvhggu2kEUA1etU2
+	w/cO9DYSBc+Mr4ZhtzsVFgS0t8cGc++qMhQ==
+Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com [209.85.221.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4w6sv3v1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <tools@kernel.org>; Tue, 24 Nov 2026 15:31:46 +0000 (GMT)
+Received: by mail-vk1-f197.google.com with SMTP id 71dfb90a1353d-5ece3cd5a00so3071254e0c.3
+        for <tools@kernel.org>; Tue, 24 Nov 2026 07:31:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1795534304; x=1796139104; darn=kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=nVROACRjiQA/gf9dE4qYsCfCRzfJ+yLZQs9zI23IrvE=;
+        b=Ku2YpVGT+DVbzItFlbYpOl8t9nwaFxYZvC5sid14rfsb0ZSrOGRoZ7hxVhbo06AGvM
+         sn2rB2YSKSPPElJc6U9mKeAAY8XOqqbQZsxWaF0ywYFn+AdvROSpWJna9j2SSX388zQ0
+         EMWXN+uC5eIzUwE5FKoDWfT0/ie5IwbP2HYXme5/t2qQc459lfv8w2VPZP5air6E1+yp
+         YO+vu6j/OcnzfHFWaF0snztM8z2uMbdYGol2WiX2imHXsf1Y/Xk3BklJ2nNVoDGFAqan
+         ec42+0enek6oH0YqLt8Ji5UZFZcE0QPzkoAtIdhdfY2yKRZMiRKLSxeZdH7kAZvmwX32
+         /wzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795534304; x=1796139104;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=nVROACRjiQA/gf9dE4qYsCfCRzfJ+yLZQs9zI23IrvE=;
+        b=Vhw7ZhFiqP+fXHOE1BvfnHG7Zi8ZDRmWjSSLqBn8LaB4Skyy9NR3gSFDH3rZL06BTO
+         HSWZEFlog0fpj968HNVsun/xxmIDtj61v2gX0VmwPCT7elCFRg3Pqem5yEqYqORn0G+H
+         8oQ3GhisnxFNLWEfq18Y1AjQh4HcaMIUcRZP3mD/fQM2vbUEJ6B1CeJExz0WMxtNjmWG
+         sKfiAabU0MPrxzOwHjTj6ZvHAQVcZXaVE+tr9qeVcVX1DsiaDQOtXdmiF4aAFM7qt/eS
+         amuw7HFxcPPuBKg5rxugFdsxs16fWxyhQWpxUXM2DiORH/Iho76eFdDywclBwxBZRQMq
+         WrTQ==
+X-Gm-Message-State: APuU4Z/E9UAMXfganvJcgWa5VMb5Bu63Mv3oto+FCl8xvFnzJhjz8bpL
+	kqXK/b2T/Y2tqTn9t8YThpvqcLaqxTrH8JAb1VuHH96rO89KxaHHBeMcDjtCnfbcgVLKupJTnfi
+	QQ33IejuGKqqrMjOAXBnPnC8VtMGb2hJ6/MQ1zkmzFMApzRa+yy6EpHLUkYF+Cw==
+X-Gm-Gg: AZFdTZe9LqRe1eMfdmZnjJkZM6xMS5UYPaYW18u3GY8/kwF5Ywe1+VDNpph/fN1G2kG
+	WisbP8g0iGI6J1oHSfx+mrifNTVWYlUA1tvbQ/a5z7k0ZUh1J2FQpFN+qtW5T3YspDB1uM/Yezz
+	n5vBK0iy3WYfjpJKLH9H4z4dlLy9IdDknEV9HnWqdU3cY+JYlBmIDpaNGMZSBjjWy13S1TqcB9x
+	yzoQa81ndwBGxCVlTB5wi+GrV++jgl95J9TiXKnsxoAkFsXM6Pd68J8v7Zp3a6TZnMwurE1yYSd
+	udgm4BE+iSw/c0K/saxFqPWH53NnXaxv4/eJEG0wl4bV7/EFpv1vw31Bu6fvjge/qfvbSZvYrCZ
+	PYLVxWYdN/gQmGLk4iniFCzJhxRS7w1+o1PKAyWQ+OpsOi1fL3KMXOiOaImQFiCDEq0/w9k+Xw8
+	jYazSpKD/8mMoDvksW4TYTLkdZBIaweTrpmw==
+X-Received: by 2002:a05:6122:4690:b0:5ea:bda1:7689 with SMTP id 71dfb90a1353d-5ee8af0b00fmr9116983e0c.4.1795534303685;
+        Tue, 24 Nov 2026 07:31:43 -0800 (PST)
+X-Received: by 2002:a05:6122:4690:b0:5ea:bda1:7689 with SMTP id 71dfb90a1353d-5ee8af0b00fmr9116920e0c.4.1795534303044;
+        Tue, 24 Nov 2026 07:31:43 -0800 (PST)
+Received: from quoll.home (83.31.98.241.ipv4.supernova.orange.pl. [83.31.98.241])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb884911e3sm531718135e9.6.2026.11.24.07.31.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Nov 2026 07:31:42 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 To: tools@kernel.org
-Subject: [PATCH b4] review-tui: add a discard_review command
-Date: Fri, 20 Nov 2026 15:31:56 -0400
-Message-ID: <0-v1-ae4a80b77311+75402d-discard_review_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BL1PR13CA0094.namprd13.prod.outlook.com
- (2603:10b6:208:2b9::9) To CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12)
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Subject: [PATCH b4] review: Allow custom Patchwork show states
+Date: Tue, 24 Nov 2026 16:31:31 +0100
+Message-ID: <20261124153131.100246-1-krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -135,824 +155,241 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|SA1PR12MB5672:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5768a95d-69e6-4e20-538c-08df473cf0e8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|6133799003|18002099003|261009223027099003|13003099007|261022075727099003|261026121527099003|261028144727099003|261021123027099003|261021121427099003|261026140227099003|261022113327099003|261022105027099003|11063799006|56012099006|10067099003|261102123227099003;
-X-Microsoft-Antispam-Message-Info:
-	28z8EJjO/l1G6UcfAcfXhxXGcbc9OVw9UWlU8WhEfBG8VQ3jLLggz83SGhuEHOCQq3Rcr6aXfea7sTJw26XNSnZ5rCthIzBrfI1GQMegAfm9sTO+Nbj+MenjI7i5fJHsSp9Oyr4VD2A/yrUfjjlGs6qBgMskIUsmKClSxG5rMUIoD+fx7x8wNQwVnbx6P5jgnQbQAE0gfN0MRn02tYZV9W2LH7KTmqAbC6rzkmo+7K1VHs8YAYRl1Ri0pwKjx/6ol6/eC3VH/hfROIanGhQVejkVCZ2zDLcbO6Twx7X6WQzbgHdeNZEarm4VeZZgE2b/lFWbtcDVDmNPMH3z8SPhP+8+qs6llZFgv9yh9vRU92NGOx8X0xMFVJLhNgpCnwQPFo8M7j5uu3bx1buNmvkXoTDs2kbqJnzguM0PGFP7rwo14oUv8dU4ZvBKvGHRZ02ZiOhWmSu19Djz+TVoWH5Ryzo6zmXsqFkOidMUrV0DJuXgaHYBtiGwg031aO8hY/wge/aBBh30eyZxiyN3jRKHkKc9qHM20eIPitpTcCePUIyyrvvMwfZNHLM8hLyh0fJAnfS4M4LgLMHX17ZgpAjDtRu7ZfrFAyd76h+iMrT/KY9U7yZmw8gF6iCPoSUrJN3r
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(6133799003)(18002099003)(261009223027099003)(13003099007)(261022075727099003)(261026121527099003)(261028144727099003)(261021123027099003)(261021121427099003)(261026140227099003)(261022113327099003)(261022105027099003)(11063799006)(56012099006)(10067099003)(261102123227099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?WW1JazMreGJZYXYrcFArS2J2cnY2d0NmQ2U1NTNlclo4ZXlFbDRDOGpNM1B0?=
- =?utf-8?B?Qzh4WFIzNkQxZFFjRUdHZ0JWS0lXZXJGdW96L2t1ZzFQcUs1VkF4cS9tK2lD?=
- =?utf-8?B?cU9LZm56VER4Q0Fmb0dDQUJXWk1xeFU1NjVHM0dac3NWdHZlWDJMMHFsWHRF?=
- =?utf-8?B?YmJBd25LMVhPZXF0VU5mMGRxWFN6WmUxTiszTWcvSnlobzJYYXRSNlQzTThl?=
- =?utf-8?B?bnRxZVgxbE1JSWRwWU9iOGFoSEFZczhmeXlvZW0zZTJzY21CYTl6UWphMElW?=
- =?utf-8?B?N0V1TVVIOWI4QXdRbUszRFIwTVRmNG02RW4xUEpqOGk0MTlabnNmRTBMcDBR?=
- =?utf-8?B?SS9hT3lmNDd4a0Yzd252eXo4aUdlY1RaYmJ0dXk0WUREc2lFays5MktPelNH?=
- =?utf-8?B?SnZWMmxTOUc5TWtHbkIvSDlTRW9xRWhnWG1NaWlkVDdkZnlKeDN5UVQxNThm?=
- =?utf-8?B?b0Nla1dUSExLdFEvTitSbTRHZ1dqcWxra0NVSTlEaUlKYjkrUFBBU3ZoYTFF?=
- =?utf-8?B?Tlh5RzRIVi8zaHJPT2hvOUo3MDZsUHdkK3lXQ2xJN1ZRbEY2Y1hZcWdPZ3F5?=
- =?utf-8?B?K3RpWHpyZnBEdzRoaDBiV0JlMDlLSjJqMjA2cnF5WU1acFFVYjN3dUVRNXky?=
- =?utf-8?B?TkRtQmxhOWx3QTIvVzM5WnhzUnowZjg3Um1zTUlJbEVoTkFsVkFJWG1yUzJS?=
- =?utf-8?B?aUdBSkJVbkNFdDRpZ3VHM2tiVkdlc3IyT1BoVHA0MnJnTEsvcVp0YVJhWFMv?=
- =?utf-8?B?SExFcnJpT1Q3ZHU3MkpwRzlvUnRMd1Q3NlZldHMzN0lDM0dSM2FJL29qbm1m?=
- =?utf-8?B?VTJsc0d2WmhDTUlFMURMV2FENHV0L1B3azc2elVyZ3BjVlRpSTBMc010K0Fh?=
- =?utf-8?B?SlhhdDNnckFNdllYQ1RIY0dTdUt2eGVucmllcngxVjBnL3ExS0JOVUx3cjNE?=
- =?utf-8?B?OGI1TG90dHBQVU9tMDQrZnM2WXJzcFJlK2xham54dVhWeVVCamR2ajNFQ2oy?=
- =?utf-8?B?enlJcUMxU096RTVObHJGVW5lMkNibkNLVXFJMVFEN3JhL3Q4L1NLV1JMZ1lV?=
- =?utf-8?B?bjZZYnIvc3RrWEVDZ01LekNScStNWXVQcXBIT09KZGdqUHVjaXZRUm9HNHBi?=
- =?utf-8?B?N2pmbU1PeXR0eTFTaWhCNnBSeTlUWWhFRGd5T09NWVFOZXVFaUQ4ZFlNUmtL?=
- =?utf-8?B?c0x2cWJKUVMxaitXOXY1NGZDWW1YWGc2aTdlVzJBaHlxemQxakx0MGRFZ3B4?=
- =?utf-8?B?azQ0S2lmLzFKcEVxVWNkTmp1UWtvVE42NllUaStYbjlhNUtpZ0sxRGx4UUN6?=
- =?utf-8?B?cGlweWFkcUk3bnNqLzBpbnRCZXNVK21MVjEra1ZFdkZOMEVwY1ZIbWc2ZFdx?=
- =?utf-8?B?VXdVcVluakRLZ3VBTnY2a0VmN3dZaTdxUnkxU3JsTVVJNTUxb3BER1BYZmp3?=
- =?utf-8?B?TnNJcGc3aXVjQkFyUU9rMmZ3VUJFaU5WbDNtSWJjcE9QbTZuT0l4TEJtYitj?=
- =?utf-8?B?YXd1cjBwaVpzWXE4RG1HZ1Jzc0JrWFZQN3ZwYmlBd1ZrYmtJTTNMUkVKMllY?=
- =?utf-8?B?bVN1WGdBMlZxN0RyQkltdnBZem52YVhOczNyZ3FrdkRheE9zUHFKcjR0ZzM3?=
- =?utf-8?B?T2JaOG1YZEJlTFZZSnVXVXROTkRvaW1GQ296N3VVUjNyeVgrSGJWYXhldHJj?=
- =?utf-8?B?NmpaKzRhUWFRTTV4NWtmbjd5cTRtY01lTSs5Rldpc3d0VVJURC83SHIzc3ly?=
- =?utf-8?B?MktTUllZY3hHeCtCa2xLWXE0b0lOdml0YmVtd1VMdGFzVjhiNkdqRWYzaHdh?=
- =?utf-8?B?L2kraFpDYk8yUWNPZXFna25YSGt5QVJVTmdKOEZBMURJd3V3SFd6NHRHNzlr?=
- =?utf-8?B?aXQxa3B0aTl5My9NeUxZQUxCVUszckx0ZUw4MUNGNHdTUEhYUEc3QzFXdVI4?=
- =?utf-8?B?N1JLZFdTY0c5UHF0ekNCZlJNUWtRRTZTbFRBNnc4Y2tIMzFaVHN3a3VFQnlj?=
- =?utf-8?B?YUdoZkw1WDd3RDdCZzlURUIrczFUbGIyVlBaeVB3bzFwaGhtYUhkNFhDLzZZ?=
- =?utf-8?B?WTZUVVNMVldhdUFjRGUyZFN1S3Mvay9nYlBURlYzUlpsTm9pR1R0QmJoRG5U?=
- =?utf-8?B?cDdNdXlucmZ5aGdYTU9SRTQxQWVndEVKVDN2MkVLZjcwdFNrT2dsbG10cndX?=
- =?utf-8?B?VlJEek10aW9meEsyNkZMQThnazRsU2xPeEdjaDVERzFTd2N1UnBoUW04d3E1?=
- =?utf-8?B?RnFWZm9QRHd6WFBRSEpCYlhDazBxcE4rWDNGd1duZFR1RStJYW1ZZjE4TmFM?=
- =?utf-8?Q?o/LFIgdrDaT1PK2oUR?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5768a95d-69e6-4e20-538c-08df473cf0e8
-X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 19:31:58.0200
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: u6P5/3bUDn6rSy/Zh4qU0+kbopuVTWg89ws48IlWpZotUQpqHIi5m44LToq2WWq4
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB5672
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 9WUcBqBV9O3lyhFV1oyzl-s97scSRERa
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA2MCBTYWx0ZWRfX+g7PTYwt/B85
+ gAXP66shApiBPgGvZpnwTJgJmZqoY8KpEJtR7e+pFitWu6oQPmc979pTTTURT4p4CsiVyyjg/wA
+ ohBc2q/z4jy5XLOpsiXvFpCek0HSNzI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA2MCBTYWx0ZWRfX2s0cluFOePBs
+ beL5+BJftzIo5UujkEPU9Nc7iZtixB/OEhUJAHXs0eEeXZsJJYd4EO95JYZnYPfezGLHmh/Rq4F
+ fCreJ9keAC2wSdlE/l7svPuI+W2EqBRYAqN803dmieIttRjjNkFM6DcA+LSwYT+IIc9zo1TUH06
+ UAp9nk1mhFmg3i0luKiehD6i98ZyEcG26X1jC47PkVvg/9i8y1bBkVHCunhG5B2bwZL0KQx/+Im
+ J/q7YGSkKsKDBFADgHqMlaGL633M8DzDioJisMy1qWZYScep2Nk+dMfcdyem+ULaB7GGaGKo6WX
+ S3qjYIn2V2SACjhZ6Rc/DNYjt73nFwKPMRgKUSPwJsa2l1yEFeoXL9auxXC0ooK41JXpFocVeyg
+ 0jYiIGxgxgqYeIcdoRdzHZw4doI0naflTO1dXA9UzS6odsEKU0Nj6G1X5DX4um/Wc7hqyOWX7GN
+ LMRzIKcgkXhvt/CxOfg==
+X-Proofpoint-ORIG-GUID: 9WUcBqBV9O3lyhFV1oyzl-s97scSRERa
+X-Authority-Analysis: v=2.4 cv=V8DoQuni c=1 sm=1 tr=0 ts=6b05ade2 cx=c_pps
+ a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=ivW4MigAevuCEqTxTIunpQ==:17
+ a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=30NY_0GOi3EfWuvo08sA:9 a=tNoRWFLymzeba-QzToBc:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-24_04,2026-11-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 bulkscore=0 spamscore=0 impostorscore=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611240060
 
-On the email screen with a patch selected this will discard any review
-information the user has created and set it back to the start again. It is
-useful if too much quote was removed or all the remarks were later found
-to be incorrect.
+Patchwork in some subsystems, like Linux Devicetree, uses 'needs-ack'
+for patches waiting for review and typical state 'under-review' is
+reserved for automation stage.  Add b4.pw-show-states config option
+allowing to customize it:
 
-Bound to the R key.
+  git config b4.pw-show-states 'needs-ack'
 
-Assisted-by: LLM
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Conor Dooley <conor+dt@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
 ---
- docs/maintainer/review.rst         |   7 ++
- docs/releases.rst                  |   8 ++
- liblore                            |   2 +-
- src/b4/review/_review.py           |  45 ++++++++
- src/b4/review_tui/_modals.py       |   1 +
- src/b4/review_tui/_review_app.py   |  69 ++++++++++-
- src/b4/review_tui/_tracking_app.py |   8 ++
- src/tests/test_review_tracking.py  | 157 ++++++++++++++++++++++++-
- src/tests/test_tui_review.py       | 176 +++++++++++++++++++++++++++++
- src/tests/test_tui_tracking.py     |  59 ++++++++++
- 10 files changed, 527 insertions(+), 5 deletions(-)
 
-I've found this useful a number of times. Sometimes you read further on and
-realize all the comments are wrong :)
+This is heavily vibe-coded without proper supervision. I don't mind if
+more competent person takes it over and redos with their authorship.
+---
+ docs/config.rst              | 16 +++++++++++++++
+ docs/maintainer/review.rst   |  3 ++-
+ src/b4/__init__.py           |  1 +
+ src/b4/review/_review.py     | 25 +++++++++++++++++++++-
+ src/b4/review_tui/_pw_app.py |  6 ++----
+ src/tests/test_pw_fetch.py   | 40 ++++++++++++++++++++++++++++++++++++
+ 6 files changed, 85 insertions(+), 6 deletions(-)
 
-I think the LLM went a big on the tests, Konstantin I'm not really sure what
-you prefer here.
-
+diff --git a/docs/config.rst b/docs/config.rst
+index d53ab9698c74..53cafefb8a44 100644
+--- a/docs/config.rst
++++ b/docs/config.rst
+@@ -1040,6 +1040,22 @@ integrate your b4 workflow with patchwork.
+ 
+      Default: ``None``
+ 
++   :term:`b4.pw-show-states`
++     The Patchwork states of the patches the ``b4 review`` Patchwork
++     browser lists. Takes a comma- or space-separated list of state
++     slugs, and may be given more than once. Use this if your project
++     uses custom states for patches that still need attention. For
++     example::
++
++         pw-show-states = new, under-review, needs-review
++
++     Series whose state changes to one outside this list stay in the
++     listing until the next refresh, but are dimmed.
++
++     Default: ``new, under-review``
++
++     .. versionadded:: v0.17
++
+    :term:`b4.pw-user`
+      Your username on the patchwork server. When this is set and
+      :term:`b4.pw-key` is not, b4 asks your git credential helpers for the
 diff --git a/docs/maintainer/review.rst b/docs/maintainer/review.rst
-index f4603ddb065a51..92b3a06e1ce9d8 100644
+index f4603ddb065a..e744ba1d5a79 100644
 --- a/docs/maintainer/review.rst
 +++ b/docs/maintainer/review.rst
-@@ -453,6 +453,7 @@ Key                        Action
- Key         Action
- ==========  ============================================================
- ``T``       Edit To/Cc/Bcc recipients
-+``R``       Discard the selected local review draft (with confirmation)
- ``Ctrl-y``  Send review emails (``S`` still works as a legacy alias)
- ``e``       Toggle email mode
- ==========  ============================================================
-@@ -489,6 +490,12 @@ bottom-right corner. Use ``.`` and ``,`` to jump between comments.
- Press ``r`` again to re-open the editor with your existing comments
- interleaved into the quoted content for further editing.
+@@ -823,7 +823,8 @@ If your project uses a Patchwork server (see :ref:`patchwork_settings`),
+ press ``p`` in the tracking list to open the Patchwork browser. From
+ there you can:
  
-+To discard that local draft, first enter email preview mode with ``e``, then
-+press ``R`` on the selected patch or cover letter and confirm. The next
-+``r`` regenerates the editor buffer from the original quoted content. Private
-+notes, external feedback, and sent history are preserved; the Git patch is
-+unchanged, and mail that has already been sent cannot be recalled.
-+
- When you send review emails, b4 automatically builds a standard
- quoted-reply for each patch: only hunks that contain comments are
- included, diff lines are quoted with ``>``, and your comments appear
-diff --git a/docs/releases.rst b/docs/releases.rst
-index 2b16efb72d7ace..03e62599915de6 100644
---- a/docs/releases.rst
-+++ b/docs/releases.rst
-@@ -48,6 +48,14 @@ context above it back to your last note. B4 replaces the run with the same
- review helpers. The marker also works in follow-up quick replies, and existing
- breadcrumbs coalesce into its skipped-line count.
- 
-+**Discarding review drafts**
-+
-+From email preview mode, press ``R`` to discard the selected patch or cover
-+letter's local review draft after confirmation. The next reply edit starts
-+again from the original quoted content while private notes, external feedback,
-+and sent history remain intact; this does not change the patch or recall sent
-+mail.
-+
- **Manual revision linking**
- 
- When automatic revision discovery fails — for example, a submitter sent
-diff --git a/liblore b/liblore
-index 6e8d825a12ae32..ac6e56d0b80983 160000
---- a/liblore
-+++ b/liblore
-@@ -1 +1 @@
--Subproject commit 6e8d825a12ae32b98e4da5348d3ade6fce12a895
-+Subproject commit ac6e56d0b80983002b93ceb4640b3aafeb1a1323
+-* Browse series from your Patchwork project
++* Browse series from your Patchwork project (by default those in the
++  ``new`` or ``under-review`` state; see :term:`b4.pw-show-states`)
+ * View a series thread (``Enter``)
+ * View CI check details for a series (``c``)
+ * Track a series directly from the Patchwork list (``t``)
+diff --git a/src/b4/__init__.py b/src/b4/__init__.py
+index 5e31566744c5..34682530cc7d 100644
+--- a/src/b4/__init__.py
++++ b/src/b4/__init__.py
+@@ -5045,6 +5045,7 @@ def _setup_main_config(
+         'keyringsrc',
+         'am-perpatch-check-cmd',
+         'prep-perpatch-check-cmd',
++        'pw-show-states',
+         'review-perpatch-check-cmd',
+         'review-series-check-cmd',
+         'review-target-branch',
 diff --git a/src/b4/review/_review.py b/src/b4/review/_review.py
-index e2499f8be15579..4976dffe3d1eec 100644
+index e2499f8be155..a5b5c05bc231 100644
 --- a/src/b4/review/_review.py
 +++ b/src/b4/review/_review.py
-@@ -1003,6 +1003,47 @@ def _cleanup_review(target: Dict[str, Any], usercfg: b4.ConfigDictT) -> None:
-         del target['reviews']
+@@ -4038,7 +4038,7 @@ def pw_fetch_series(
+     patches_url = '/'.join((api_url, 'patches'))
+     params: Dict[str, Any] = {
+         'project': pwproj,
+-        'state': ['new', 'under-review'],
++        'state': pw_show_states(),
+         'order': '-date',
+         'per_page': str(PW_PER_PAGE),
+         'archived': 'false',
+@@ -4247,6 +4247,29 @@ def pw_fetch_checks(
+     return all_checks
  
  
-+def _has_discardable_review_state(review: Dict[str, Any]) -> bool:
-+    """Return whether *review* has manual state that belongs to its draft."""
-+    patch_state = review.get('patch-state')
-+    if patch_state in ('done', 'draft'):
-+        return True
-+    skip_reason = review.get('skip-reason')
-+    has_skip_reason = isinstance(skip_reason, str) and bool(skip_reason.strip())
-+    # Older releases auto-skipped unchanged patches whose review had already
-+    # been sent, recording the explanation in skip-reason.  Current upgrades
-+    # use patch-state=unchanged instead, but preserve that legacy baseline;
-+    # only a reasonless skip is the manual state produced by the TUI's x action.
-+    return patch_state == 'skip' and not has_skip_reason
++PW_DEFAULT_SHOW_STATES = ('new', 'under-review')
 +
 +
-+def _discard_review_draft(target: Dict[str, Any], usercfg: b4.ConfigDictT) -> bool:
-+    """Discard the current user's outgoing draft and manual patch state.
++def pw_show_states() -> List[str]:
++    """Return the Patchwork states the Patchwork browser lists.
 +
-+    Reply text is authoritative, while comments and trailers are derived from
-+    it, so all three are removed together.  Automatic revision-upgrade state,
-+    private notes, sent history, and unrecognized fields are retained.
++    Read from ``b4.pw-show-states``, which takes a comma- or space-separated
++    list of state slugs and may be given more than once.  Falls back to
++    :data:`PW_DEFAULT_SHOW_STATES` when unset or empty.
 +    """
-+    review = _get_my_review(target, usercfg)
-+    if not review:
-+        return False
-+
-+    changed = False
-+    for key in ('reply', 'comments', 'trailers'):
-+        if key in review:
-+            review.pop(key)
-+            changed = True
-+
-+    if _has_discardable_review_state(review):
-+        review.pop('patch-state', None)
-+        review.pop('skip-reason', None)
-+        changed = True
-+
-+    if changed:
-+        _cleanup_review(target, usercfg)
-+    return changed
++    val = b4.get_main_config().get('pw-show-states')
++    if isinstance(val, str):
++        val = [val]
++    states: List[str] = []
++    if isinstance(val, list):
++        for entry in val:
++            for state in re.split(r'[\s,]+', str(entry)):
++                state = state.strip().lower()
++                if state and state not in states:
++                    states.append(state)
++    return states or list(PW_DEFAULT_SHOW_STATES)
 +
 +
- _APPROVAL_TRAILER_KEYS = frozenset({'reviewed-by', 'acked-by'})
- _NACK_TRAILER_KEY = 'nacked-by'
+ def pw_config_state(key: str) -> Optional[str]:
+     """Return the Patchwork state named by config *key*, or None if unset.
  
-@@ -2693,6 +2734,10 @@ def update_series_tracking(
-         'partial',
-         'waiting',
-     )
-+    # Waiting can be set before importing a series, so it need not have
-+    # a review branch yet.  Keep updating its database and thread data.
-+    if update_branch and topdir and status == 'waiting':
-+        update_branch = b4.git_branch_exists(topdir, branch)
-     if update_branch and topdir and b4.git_branch_checked_out(topdir, branch):
-         logger.debug('%s is checked out, leaving the branch alone', branch)
-         result['checked_out'] = True
-diff --git a/src/b4/review_tui/_modals.py b/src/b4/review_tui/_modals.py
-index 3ad9b3d21204a1..b72c1c8dc883d2 100644
---- a/src/b4/review_tui/_modals.py
-+++ b/src/b4/review_tui/_modals.py
-@@ -326,6 +326,7 @@ def _review_help_lines(has_agent: bool = False) -> List[str]:
-         '  [bold]t[/bold]         Trailers (↑↓ navigate, Space toggle, Enter save)\n',
-         '  [bold]r[/bold]         Open $EDITOR for reply\n',
-         '  [bold]T[/bold]         Edit To/Cc recipients\n',
-+        '  [bold]R[/bold]         Discard selected review draft\n',
-         '  [bold]Ctrl-y[/bold]    Send review emails\n',
-         '  [bold]e[/bold]         Toggle email mode\n',
-         '\n',
-diff --git a/src/b4/review_tui/_review_app.py b/src/b4/review_tui/_review_app.py
-index 97cc3e778db662..e1c56de99fa7e1 100644
---- a/src/b4/review_tui/_review_app.py
-+++ b/src/b4/review_tui/_review_app.py
-@@ -26,7 +26,13 @@ import b4.mbox
- import b4.review
- import b4.review.tracking
- import liblore
--from b4.review._review import BASEMENT_PATH, COMMIT_MESSAGE_PATH, NO_COVER_NOTE
-+from b4.review._review import (
-+    BASEMENT_PATH,
-+    COMMIT_MESSAGE_PATH,
-+    NO_COVER_NOTE,
-+    _discard_review_draft,
-+    _has_discardable_review_state,
-+)
- from b4.review_tui._common import (
-     PATCH_STATE_MARKERS,
-     QUIT_BINDINGS,
-@@ -63,6 +69,7 @@ from b4.review_tui._common import (
- )
- from b4.review_tui._modals import (
-     CheckLoadingScreen,
-+    ConfirmScreen,
-     FollowupReplyPreviewScreen,
-     HelpScreen,
-     NoteScreen,
-@@ -213,7 +220,7 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-     # Actions visible only in review mode
-     _REVIEW_ACTIONS = frozenset({'followups', 'agent'})
-     # Actions visible only in email mode
--    _EMAIL_ACTIONS = frozenset({'edit_tocc', 'send'})
-+    _EMAIL_ACTIONS = frozenset({'discard_review', 'edit_tocc', 'send'})
+diff --git a/src/b4/review_tui/_pw_app.py b/src/b4/review_tui/_pw_app.py
+index 48c33ffd187b..050cfabf66f6 100644
+--- a/src/b4/review_tui/_pw_app.py
++++ b/src/b4/review_tui/_pw_app.py
+@@ -128,8 +128,6 @@ def _format_series_label(
+ class PwSeriesItem(ListItem):
+     """A single Patchwork series entry in the listing."""
  
-     BINDING_GROUPS = {
-         'trailer': 'Review',
-@@ -226,6 +233,7 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-         'patch_skip': 'Review',
-         'check': 'Review',
-         'edit_tocc': 'Review',
-+        'discard_review': 'Review',
-         'send': 'Review',
-         'toggle_preview': 'App',
-         'suspend': 'App',
-@@ -255,6 +263,7 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-         Binding('comma', 'prev_comment', 'Prev comment', show=False),
-         # Email mode bindings
-         Binding('T', 'edit_tocc', 'edit to/cc', key_display='T'),
-+        Binding('R', 'discard_review', 'discard draft', key_display='R'),
-         Binding('ctrl+y', 'send', 'send'),
-         # Legacy alias for maintainers used to the old binding
-         Binding('S', 'send', 'send', key_display='S', show=False),
-@@ -1442,6 +1451,62 @@ class ReviewApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[None]):
-         else:
-             self.notify('Reply saved')
+-    ACTION_REQUIRED_STATES = ('new', 'under-review')
+-
+     def __init__(
+         self,
+         series: Dict[str, Any],
+@@ -143,7 +141,7 @@ class PwSeriesItem(ListItem):
+         self.show_delegate = show_delegate
+         self.selected = selected
+         state = series.get('state', 'new')
+-        if state not in self.ACTION_REQUIRED_STATES:
++        if state not in b4.review.pw_show_states():
+             self.add_class('--dimmed')
+         if tracked:
+             self.add_class('--tracked')
+@@ -874,7 +872,7 @@ class PwApp(LoreNodeShutdownMixin, App[None]):
+             if item is None:
+                 continue
+             item.selected = False
+-            if new_state in PwSeriesItem.ACTION_REQUIRED_STATES:
++            if new_state in b4.review.pw_show_states():
+                 item.remove_class('--dimmed')
+             else:
+                 item.add_class('--dimmed')
+diff --git a/src/tests/test_pw_fetch.py b/src/tests/test_pw_fetch.py
+index c634c4fad6fa..4374a121182b 100644
+--- a/src/tests/test_pw_fetch.py
++++ b/src/tests/test_pw_fetch.py
+@@ -17,6 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple, cast
+ import pytest
  
-+    def action_discard_review(self) -> None:
-+        """Confirm and discard the selected patch or cover review draft."""
-+        if not self._preview_mode:
-+            return
-+        target = self._get_current_review_target()
-+        if not target:
-+            return
+ import b4
++import b4.review
+ from b4.review._review import (
+     PW_BACKLOG_GATE,
+     PW_WINDOW_DAYS,
+@@ -221,3 +222,42 @@ class TestProgressCallback:
+         calls = self._run(monkeypatch, sess)
+         assert calls[0] == (0, 17)
+         assert all(total == 17 for _fetched, total in calls)
 +
-+        review = b4.review._get_my_review(target, self._usercfg)
-+        has_draft = any(key in review for key in ('reply', 'comments', 'trailers'))
-+        if not has_draft and not _has_discardable_review_state(review):
-+            self.notify('No review draft to discard')
-+            return
 +
-+        if self._selected_idx == 0:
-+            target_kind = 'cover letter'
-+            subject = self._cover_subject_clean or str(self._series.get('subject', ''))
-+        else:
-+            target_kind = 'patch'
-+            patch_idx = self._selected_idx - 1
-+            subject = (
-+                self._commit_subjects[patch_idx]
-+                if patch_idx < len(self._commit_subjects)
-+                else str(target.get('title', ''))
-+            )
++# ---------------------------------------------------------------------------
++# b4.pw-show-states
++# ---------------------------------------------------------------------------
 +
-+        def _on_confirm(confirmed: Optional[bool]) -> None:
-+            if not confirmed:
-+                return
-+            if not _discard_review_draft(target, self._usercfg):
-+                return
-+            self._save_tracking()
-+            self._refresh_patch_item(self._selected_idx)
-+            self._show_content(self._selected_idx)
-+            self.refresh_bindings()
-+            self.notify('Review draft discarded')
 +
-+        self.push_screen(
-+            ConfirmScreen(
-+                'Discard review draft?',
-+                [
-+                    f'Discard your review draft for this {target_kind}?',
-+                    '',
-+                    'Reply text, your inline comments, trailers, and manual review '
-+                    'state will be removed.',
-+                    "Private notes, other reviewers' feedback, and sent history "
-+                    'are kept.',
-+                    'This does not change the patch commit or recall mail already '
-+                    'sent.',
-+                ],
-+                border='$warning',
-+                subject=subject,
++class TestShowStates:
++    @pytest.mark.parametrize(
++        'value,expected',
++        [
++            pytest.param(None, ['new', 'under-review'], id='default'),
++            pytest.param('', ['new', 'under-review'], id='empty-is-default'),
++            pytest.param('needs-review', ['needs-review'], id='single'),
++            pytest.param(
++                'new, Changes-Requested  needs-review',
++                ['new', 'changes-requested', 'needs-review'],
++                id='comma-and-space-separated',
 +            ),
-+            _on_confirm,
-+        )
++            pytest.param(
++                ['new', 'needs-review,new'], ['new', 'needs-review'], id='multi-value'
++            ),
++        ],
++    )
++    def test_parse(self, value: Any, expected: List[str]) -> None:
++        if value is None:
++            b4.MAIN_CONFIG.pop('pw-show-states', None)
++        else:
++            b4.MAIN_CONFIG['pw-show-states'] = value
++        assert b4.review.pw_show_states() == expected
 +
-     def action_prior_review(self) -> None:
-         """Show prior revision review context."""
-         context = self._series.get('prior-review-context', '')
-diff --git a/src/b4/review_tui/_tracking_app.py b/src/b4/review_tui/_tracking_app.py
-index 3b73163dd37e0a..4c997575d18d83 100644
---- a/src/b4/review_tui/_tracking_app.py
-+++ b/src/b4/review_tui/_tracking_app.py
-@@ -1858,6 +1858,14 @@ class TrackingApp(LoreNodeShutdownMixin, CheckRunnerMixin, App[Optional[str]]):
-         if not self._selected_series:
-             return
-         status = self._selected_series.get('status', 'new')
-+        if status == 'waiting':
-+            topdir = b4.git_get_toplevel()
-+            change_id = self._selected_series.get('change_id', '')
-+            if not topdir or not b4.git_branch_exists(topdir, f'b4/review/{change_id}'):
-+                # Waiting can be set before the series has been imported.
-+                # Use the normal checkout flow, keeping its stored status
-+                # until checkout succeeds so cancellation leaves it waiting.
-+                status = 'new'
-         if status in (
-             'reviewing',
-             'replied',
-diff --git a/src/tests/test_review_tracking.py b/src/tests/test_review_tracking.py
-index 99c8bf6691036b..0d1a97526efb17 100644
---- a/src/tests/test_review_tracking.py
-+++ b/src/tests/test_review_tracking.py
-@@ -21,6 +21,7 @@ import liblore
- from b4.review import checks as review_checks
- from b4.review import messages as review_messages
- from b4.review import tracking as review_tracking
-+from b4.review._review import _discard_review_draft
- from b4.review_tui._modals import SnoozeScreen
- from b4.review_tui._tracking_app import (
-     _format_attestation,
-@@ -1928,6 +1929,124 @@ class TestPatchState:
-         assert b4.review._get_patch_state(target, self._USERCFG) == 'draft'
- 
- 
-+class TestDiscardReviewDraft:
-+    """Tests for resetting only the current maintainer's outgoing draft."""
-+
-+    _EMAIL = 'reviewer@example.com'
-+    _USERCFG: b4.ConfigDictT = {'email': _EMAIL, 'name': 'Test Reviewer'}
-+
-+    def _target(self, review: Dict[str, Any]) -> Dict[str, Any]:
-+        return {'reviews': {self._EMAIL: {'name': 'Test Reviewer', **review}}}
-+
-+    @pytest.mark.parametrize('state', ['draft', 'done'])
-+    def test_plain_draft_is_removed_and_cleaned_up(self, state: str) -> None:
-+        target = self._target(
-+            {
-+                'reply': 'Please fix this.',
-+                'comments': [{'path': 'a.c', 'line': 3, 'text': 'Why?'}],
-+                'trailers': ['Reviewed-by: Test Reviewer <reviewer@example.com>'],
-+                'patch-state': state,
-+            }
-+        )
-+
-+        assert _discard_review_draft(target, self._USERCFG)
-+        assert 'reviews' not in target
-+
-+    @pytest.mark.parametrize('reason', ['', '   ', None])
-+    def test_manual_skip_is_removed_but_automatic_skip_is_preserved(
-+        self, reason: Any
++    def test_fetch_requests_configured_states(
++        self, monkeypatch: pytest.MonkeyPatch
 +    ) -> None:
-+        manual = self._target({'patch-state': 'skip', 'skip-reason': reason})
-+        assert _discard_review_draft(manual, self._USERCFG)
-+        assert 'reviews' not in manual
-+
-+        automatic = self._target(
-+            {'patch-state': 'skip', 'skip-reason': 'unchanged and already reviewed'}
-+        )
-+        before = dict(automatic['reviews'][self._EMAIL])
-+        assert not _discard_review_draft(automatic, self._USERCFG)
-+        assert automatic['reviews'][self._EMAIL] == before
-+
-+    def test_removed_manual_state_does_not_leave_skip_reason(self) -> None:
-+        target = self._target(
-+            {'patch-state': 'done', 'skip-reason': 'inconsistent stale reason'}
-+        )
-+
-+        assert _discard_review_draft(target, self._USERCFG)
-+        assert 'reviews' not in target
-+
-+    def test_unchanged_state_becomes_visible_after_draft_removal(self) -> None:
-+        target = self._target(
-+            {
-+                'patch-state': 'unchanged',
-+                'reply': 'Carried-over draft text',
-+                'comments': [{'path': 'a.c', 'line': 2, 'text': 'old'}],
-+            }
-+        )
-+        assert b4.review._get_patch_state(target, self._USERCFG) == 'draft'
-+
-+        assert _discard_review_draft(target, self._USERCFG)
-+        assert target['reviews'][self._EMAIL]['patch-state'] == 'unchanged'
-+        assert b4.review._get_patch_state(target, self._USERCFG) == 'unchanged'
-+
-+    def test_private_and_forward_compatible_fields_survive(self) -> None:
-+        sent_revision = {'1': '2026-08-23T12:00:00+00:00'}
-+        target = self._target(
-+            {
-+                'reply': 'Discard me',
-+                'note': 'Private reminder',
-+                'sent-revision': sent_revision,
-+                'future-field': {'opaque': True},
-+            }
-+        )
-+
-+        assert _discard_review_draft(target, self._USERCFG)
-+        review = target['reviews'][self._EMAIL]
-+        assert review == {
-+            'name': 'Test Reviewer',
-+            'note': 'Private reminder',
-+            'sent-revision': sent_revision,
-+            'future-field': {'opaque': True},
-+        }
-+
-+    def test_external_reviews_followups_and_metadata_are_untouched(self) -> None:
-+        external = {
-+            'name': 'Other Reviewer',
-+            'comments': [{'path': 'a.c', 'line': 1, 'text': 'external'}],
-+            'provenance': 'https://example.com/review',
-+        }
-+        followups = [{'msgid': 'followup@example.com', 'body': b'raw bytes'}]
-+        header_info = {'msgid': 'patch@example.com', 'to': 'list@example.com'}
-+        target = self._target({'reply': 'Discard me'})
-+        target['reviews']['other@example.com'] = external
-+        target['followups'] = followups
-+        target['header-info'] = header_info
-+
-+        assert _discard_review_draft(target, self._USERCFG)
-+        assert target == {
-+            'reviews': {'other@example.com': external},
-+            'followups': followups,
-+            'header-info': header_info,
-+        }
-+
-+    def test_no_discardable_fields_is_a_strict_noop(self) -> None:
-+        target = self._target(
-+            {
-+                'note': 'Keep this',
-+                'sent-revision': 2,
-+                'patch-state': 'unchanged',
-+            }
-+        )
-+        before = {
-+            'reviews': {
-+                self._EMAIL: dict(target['reviews'][self._EMAIL]),
-+            }
-+        }
-+
-+        assert not _discard_review_draft(target, self._USERCFG)
-+        assert target == before
-+
-+
- class TestBuildReplyFromComments:
-     """Tests for _build_reply_from_comments() context-limiting logic."""
- 
-@@ -4005,12 +4124,13 @@ class TestUpdateSeriesTrackingCodeReviewSearch:
-             )
-         return result, searches, check_att
- 
--    def test_late_review_of_v1_lands_on_v2(self, gitdir: str) -> None:
-+    @pytest.mark.parametrize('status', ['reviewing', 'waiting'])
-+    def test_late_review_of_v1_lands_on_v2(self, gitdir: str, status: str) -> None:
-         branch = create_review_branch(
-             gitdir, 'cid-crs', tracking_data=self._tracking_data('cid-crs')
-         )
- 
--        result, searches, check_att = self._update('reviewing', topdir=gitdir)
-+        result, searches, check_att = self._update(status, topdir=gitdir)
- 
-         assert result['error'] is None
-         assert len(searches) == 1
-@@ -4030,6 +4150,39 @@ class TestUpdateSeriesTrackingCodeReviewSearch:
-         assert searches == []
-         check_att.assert_called_once()
- 
-+    def test_waiting_without_branch_keeps_updating(self, gitdir: str) -> None:
-+        conn = review_tracking.init_db('crs-proj')
-+        review_tracking.add_series_to_db(
-+            conn,
-+            'cid-crs',
-+            2,
-+            'thing: do things better',
-+            'Author',
-+            'author@example.com',
-+            '2026-03-23T00:00:00+00:00',
-+            'thing-v2-p0@example.com',
-+            2,
-+        )
-+        review_tracking.update_series_status(conn, 'cid-crs', 'waiting')
-+        conn.close()
-+
-+        result, searches, check_att = self._update('waiting', topdir=gitdir)
-+
-+        assert result['error'] is None
-+        assert result['counts_updated'] is True
-+        assert result['new_revisions'] == 1
-+        assert searches == []
-+        check_att.assert_called_once()
-+        assert not b4.git_branch_exists(gitdir, 'b4/review/cid-crs')
-+        conn = review_tracking.get_db('crs-proj')
-+        row = conn.execute(
-+            'SELECT status, message_count FROM series WHERE change_id = ?',
-+            ('cid-crs',),
-+        ).fetchone()
-+        conn.close()
-+        assert row['status'] == 'waiting'
-+        assert row['message_count'] == 3
-+
-     def test_checked_out_branch_skips_search(self, gitdir: str) -> None:
-         branch = create_review_branch(
-             gitdir, 'cid-crs', tracking_data=self._tracking_data('cid-crs')
-diff --git a/src/tests/test_tui_review.py b/src/tests/test_tui_review.py
-index e164bf646154d2..9bfd789af11403 100644
---- a/src/tests/test_tui_review.py
-+++ b/src/tests/test_tui_review.py
-@@ -27,6 +27,7 @@ import b4
- import b4.review
- import b4.review.tracking
- from b4.review_tui._common import filter_range_diff_for_commit
-+from b4.review_tui._modals import ConfirmScreen
- from b4.review_tui._review_app import FollowupItem, PatchListItem, ReviewApp
- 
- from .helpers.tracking import create_review_branch
-@@ -429,6 +430,181 @@ class TestFollowupSnipMarker:
-         assert send_mail.call_args.args[1] == [outgoing]
- 
- 
-+class TestDiscardReviewDraft:
-+    """The email preview exposes the core draft-discard operation."""
-+
-+    def _make_app(
-+        self, gitdir: str, change_id: str, message: str = 'patch 1'
-+    ) -> Tuple[ReviewApp, Dict[str, Any], str]:
-+        branch, _shas = _create_review_branch_with_patches(gitdir, change_id, [message])
-+        session = _build_session(gitdir, branch)
-+        my_email = self._seed_patch_draft(session)
-+        return ReviewApp(session), session, my_email
-+
-+    @staticmethod
-+    def _seed_patch_draft(session: Dict[str, Any]) -> str:
-+        my_email = str(session['usercfg']['email'])
-+        session['patches'][0]['reviews'] = {
-+            my_email: {
-+                'name': str(session['usercfg']['name']),
-+                'reply': 'Discarded maintainer prose',
-+                'comments': [{'path': ':message', 'line': 0, 'text': 'mine'}],
-+                'trailers': ['Reviewed-by: Maintainer <maintainer@example.com>'],
-+                'patch-state': 'draft',
-+            }
-+        }
-+        return my_email
-+
-+    @staticmethod
-+    def _capture_confirm(app: ReviewApp, selected_idx: int = 1) -> Tuple[Any, Any]:
-+        pushed: List[Tuple[Any, Any]] = []
-+        app._selected_idx = selected_idx
-+        app._preview_mode = True
-+        with mock.patch.object(
-+            app,
-+            'push_screen',
-+            side_effect=lambda screen, callback: pushed.append((screen, callback)),
-+        ):
-+            app.action_discard_review()
-+        assert len(pushed) == 1
-+        return pushed[0]
-+
-+    def test_binding_gate_and_cancel_are_non_mutating(self, gitdir: str) -> None:
-+        app, _session, my_email = self._make_app(gitdir, 'discard-gate')
-+        assert app.check_action('discard_review', ()) is False
-+        with mock.patch.object(app, 'push_screen') as push:
-+            app.action_discard_review()
-+        push.assert_not_called()
-+
-+        assert app._patches[0]['reviews'][my_email]['reply']
-+        screen, callback = self._capture_confirm(app)
-+        assert app.check_action('discard_review', ()) is True
-+        assert isinstance(screen, ConfirmScreen)
-+        assert screen._border == '$warning'
-+        assert any('recall mail already sent' in line for line in screen._body)
-+        with mock.patch.object(app, '_save_tracking') as save:
-+            callback(False)
-+        save.assert_not_called()
-+        assert app._patches[0]['reviews'][my_email]['reply']
-+
-+    @pytest.mark.asyncio
-+    async def test_confirm_discards_saves_and_refreshes(self, gitdir: str) -> None:
-+        app, _session, my_email = self._make_app(gitdir, 'discard-confirm')
-+
-+        async with app.run_test(size=(120, 30)) as pilot:
-+            await pilot.pause()
-+            app._show_content(1)
-+            await pilot.press('e')
-+            await pilot.press('R')
-+            await pilot.pause()
-+            assert isinstance(app.screen, ConfirmScreen)
-+            with (
-+                mock.patch.object(app, '_save_tracking', return_value=True) as save,
-+                mock.patch('b4.review._review._build_review_email') as build_email,
-+            ):
-+                await pilot.press('y')
-+                await pilot.pause()
-+
-+            save.assert_called_once_with()
-+            build_email.assert_not_called()
-+            assert my_email not in app._patches[0].get('reviews', {})
-+            patch_item = next(
-+                child
-+                for child in app.query_one('#patch-list').children
-+                if isinstance(child, PatchListItem) and child.patch_idx == 1
-+            )
-+            assert patch_item._state == ''
-+            assert any(
-+                notification.message == 'Review draft discarded'
-+                for notification in app._notifications
-+            )
-+
-+    def test_note_only_preview_and_discard_are_noops(self, gitdir: str) -> None:
-+        app, _session, my_email = self._make_app(gitdir, 'discard-note')
-+        app._patches[0]['reviews'][my_email] = {
-+            'name': 'Maintainer',
-+            'note': 'private only',
-+        }
-+        viewer = mock.Mock()
-+        with mock.patch('b4.review._review._build_review_email') as build_email:
-+            app._show_email_preview(viewer, 1)
-+        build_email.assert_not_called()
-+        viewer.write.assert_called_once_with(
-+            '[dim]No reply will be sent for this patch.[/dim]'
-+        )
-+
-+        app._selected_idx = 1
-+        app._preview_mode = True
-+        with (
-+            mock.patch.object(app, 'push_screen') as push,
-+            mock.patch.object(app, '_save_tracking') as save,
-+            mock.patch.object(app, 'notify') as notify,
-+        ):
-+            app.action_discard_review()
-+        push.assert_not_called()
-+        save.assert_not_called()
-+        notify.assert_called_once_with('No review draft to discard')
-+
-+    def test_cover_discard_does_not_touch_patch_review(self, gitdir: str) -> None:
-+        app, _session, my_email = self._make_app(gitdir, 'discard-cover')
-+        app._series['reviews'] = {
-+            my_email: {'name': 'Maintainer', 'reply': 'Discard cover prose'}
-+        }
-+        patch_review = dict(app._patches[0]['reviews'][my_email])
-+        _screen, callback = self._capture_confirm(app, selected_idx=0)
-+        with (
-+            mock.patch.object(app, '_save_tracking'),
-+            mock.patch.object(app, '_refresh_patch_item'),
-+            mock.patch.object(app, '_show_content'),
-+            mock.patch.object(app, 'refresh_bindings'),
-+            mock.patch.object(app, 'notify'),
-+        ):
-+            callback(True)
-+        assert 'reviews' not in app._series
-+        assert app._patches[0]['reviews'][my_email] == patch_review
-+
-+    def test_next_reply_is_regenerated_with_external_scaffolding(
-+        self, gitdir: str
-+    ) -> None:
-+        app, _session, _my_email = self._make_app(
-+            gitdir, 'discard-regenerate', 'patch 1\n\nOriginal commit body'
-+        )
-+        app._patches[0]['reviews']['other@example.com'] = {
-+            'name': 'Other Reviewer',
-+            'comments': [{'path': ':message', 'line': 0, 'text': 'External feedback'}],
-+            'provenance': 'https://example.com/external-review',
-+        }
-+        editor_seeds: List[str] = []
-+
-+        def fake_editor(
-+            _app: ReviewApp, data: bytes, *args: Any, **kwargs: Any
-+        ) -> bytes:
-+            editor_seeds.append(data.decode())
-+            return data
-+
-+        _screen, callback = self._capture_confirm(app)
-+        with (
-+            mock.patch.object(app, '_save_tracking'),
-+            mock.patch.object(app, '_refresh_patch_item'),
-+            mock.patch.object(app, '_show_content'),
-+            mock.patch.object(app, 'refresh_bindings'),
-+            mock.patch.object(app, 'notify'),
-+        ):
-+            callback(True)
-+            with mock.patch(
-+                'b4.review_tui._review_app.suspend_and_edit',
-+                side_effect=fake_editor,
-+            ):
-+                app.action_edit_reply()
-+
-+        seed = editor_seeds[-1]
-+        assert '> Original commit body' in seed
-+        assert 'Discarded maintainer prose' not in seed
-+        assert '| Other Reviewer <other@example.com>:' in seed
-+        assert '| External feedback' in seed
-+        assert '| via: https://example.com/external-review' in seed
-+
-+
- class TestReconcileAfterShell:
-     """Tests for _reconcile_after_shell tracking fixup."""
- 
-diff --git a/src/tests/test_tui_tracking.py b/src/tests/test_tui_tracking.py
-index 92909234393145..f194b6a08c6553 100644
---- a/src/tests/test_tui_tracking.py
-+++ b/src/tests/test_tui_tracking.py
-@@ -50,6 +50,7 @@ from b4.review_tui._modals import (
-     HelpScreen,
-     LimitScreen,
-     LinkRevisionScreen,
-+    RevisionChoiceScreen,
-     SnoozeScreen,
-     TakeConfirmScreen,
-     TargetBranchScreen,
-@@ -720,6 +721,64 @@ class TestTrackingWithReviewBranch:
-         assert tuple(row) == (10, 10)
- 
- 
-+class TestTrackingWithoutReviewBranch:
-+    """Entering review must import a branchless waiting series first."""
-+
-+    @pytest.mark.asyncio
-+    @pytest.mark.parametrize('newer', [False, True])
-+    @pytest.mark.parametrize('entry', ['r', 'menu'])
-+    async def test_review_waiting_starts_checkout(
-+        self, gitdir: str, newer: bool, entry: str
-+    ) -> None:
-+        identifier = 'test-review-waiting-no-branch'
-+        change_id = 'waiting-no-branch'
-+        seed_db(
-+            identifier,
-+            [
-+                {
-+                    'change_id': change_id,
-+                    'status': 'waiting',
-+                    'message_id': 'v1@ex.com',
-+                }
-+            ],
-+        )
-+        if newer:
-+            conn = tracking.get_db(identifier)
-+            tracking.add_revision(conn, change_id, 2, 'v2@ex.com')
-+            conn.close()
-+
-+        app = TrackingApp(identifier)
-+        with patch.object(app, '_checkout_new_series') as checkout:
-+            async with app.run_test(size=(120, 30)) as pilot:
-+                await pilot.pause()
-+                if entry == 'menu':
-+                    await pilot.press('a')
-+                    await pilot.pause()
-+                await pilot.press('r')
-+                await pilot.pause()
-+
-+                if newer:
-+                    assert isinstance(app.screen, RevisionChoiceScreen)
-+                    checkout.assert_not_called()
-+                    await pilot.press('escape')
-+                    await pilot.pause()
-+                    assert _get_db_status(identifier, change_id) == 'waiting'
-+                    await pilot.press('r')
-+                    await pilot.pause()
-+                    await pilot.press('n')
-+                    await pilot.pause()
-+
-+                checkout.assert_called_once_with()
-+                assert not app._exit
-+                assert app._selected_series is not None
-+                assert app._selected_series['revision'] == (2 if newer else 1)
-+                # Starting (or cancelling/failing) checkout must not promote
-+                # the series before a branch has actually been created.
-+                assert _get_db_status(identifier, change_id) == 'waiting'
-+                assert tracking.rescan_branches(identifier, gitdir)['gone'] == 0
-+                assert _get_db_status(identifier, change_id) == 'waiting'
-+
-+
- class TestTrackingActionMenu:
-     """The context-sensitive action menu.
- 
-
-base-commit: 1b309be67793a389c65db822a109b811b89b9dcb
++        b4.MAIN_CONFIG['pw-show-states'] = ['new', 'needs-review']
++        sess, _result = _fetch_with_backlog(monkeypatch, count=2)
++        assert sess.requests
++        for params in sess.requests[:1] + sess.fetch_params[:1]:
++            assert params['state'] == ['new', 'needs-review']
 -- 
-2.43.0
+2.53.0
 
