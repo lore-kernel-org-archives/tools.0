@@ -1,45 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795585357;
-	b=UroJRK9eVZx1drF5TgA78tpMolCgvEg8BcVCZBVMMovz2LEFquoOep1ScCp6Yk89Muz7
-	 BmQv/vCklZfupb/ZbJseazSRwTdwww/9gPzLNsKaW1iwedV9E5FxFhiV1OtAGc/8fhwU3
-	 YpW/YLQHcDbQt5j9ytJLWSE3tlYm1Kbn/mm80lWt24oE8qoA49RCSpMf4YTz1iguhlDzG
-	 xkS0mfpmXy60DG11zSNcZgyS5cmUqVdUkJcmiS0QSz/Y3nqvTqaf8jeGFuXvKG7G/4iYt
-	 vhxU49q5SlM8q12ZzChBb/0LFsK/t6hbpTuEA5fK0X2vPH0HpIooFN6OC3nvZvbon2A==
+	t=1795585987;
+	b=BsL5Dla2k9roin0kp6aiEhp9PgfpwWcEvEr4du0a1lFlMFeEovdF8VF16Pdu9PgV/0wH
+	 TWJ/zyDFHJfeCA1ZsdVpJUC+OdIXLXOwKWeRwYWLv5EnwfK0eVRa3yoWKM8JhGgP2rbf4
+	 dxZh2FqdLE1BSxuUzA3QoV2Stfxzq+o7FIN/oaWOxTBx06zE5BYTLXu1rr93PqzE5//dL
+	 6rmUK79Rs5ejBClN39RPblz4apTv8yYOACDegc+kUlCCbIrd+z2kRKD24PW4mqhJD0ZzP
+	 AXefXlIG5jm0t/HpFkUY1EwKGKJf/ifK1b6+fqzzyxys+KMt35jP/RKs1bbuzzBmXfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795585357;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795585987;
 	h=Received:Delivered-To:Received:DKIM-Signature:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
 	 References:Date:Message-Id:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=JgpHhbVz5VGIXyiT8ArmJKh4PiC06O+VW7wg5Ln2Nqs=;
-	b=hnYH1hrorbXKCBcVpn224NDLB8D2h6cz78ZcQP8iYy7Te+/Zn7wvpmmZFePQXqwLOr5x
-	 kxF+vqP3uWu3qjpo0LKFrZkKoxyYsscrS2s89mAUtuorILK+Wk8BZaWn0cz/RMJcKhmGE
-	 QBSsuuoVRvM7yKa5la/R6i6vFwRy9iZeZK9xCpJq9ABoOwCkty3EGhSrQ/jn1TvYYNV7W
-	 ipDvpb/F30rcsZyoKXUdwyda7ATv0R13xW9deFqhqEtwRxKvxetekfH0YE6q3TYLmHdLz
-	 FNm51Z6glvQQqDS0oHEwyScBjK4o90VFW5/3WsZfpsSzhqQCwWN/35ONhA2zXqK7xyA==
+	bh=y0KtvY5P/6btVX3iXoJQuP9+iJ00qPUh7IFxpRoqdFI=;
+	b=2jv3yxJYxyuzHJNZ6jlxTX7vSHdkljvHxLhNJENPQVb4LsjZo0RL3y58bsqQfb4/Alwz
+	 Zg6xyip8E4hMplpUqxtP6lRu5oAioW9SobTdzS9Ha/5h4XTiEKK0wAbyOI0kvgczXQC/0
+	 KauSMoGRmNsI/pwfc7SVzL1IBrdhYxejXenq6oKNxd7S6Xg5gzkjpVUheupbqoYLcyUdd
+	 AQG8S9f5sxgO6klZjtt/UtIjFUkCAP1mXFjuU0qKhYHhdn6CNhOEWga2U+jEjGwnC1Ieb
+	 54xmqJb7R2HAJv0CGIDElSXdX/L9C7X2njrhCbENSsJRsvWWQ1AMyagwSLAre3wc9Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUNYA3be;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=setGkOgS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C87606A31E
-	for <tools@linux.kernel.org>; Wed, 25 Nov 2026 05:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B38606A321
+	for <tools@linux.kernel.org>; Wed, 25 Nov 2026 05:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUNYA3be
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=setGkOgS
 Received: by smtp.kernel.org (Postfix)
-	id 1489D1F000CA; Wed, 25 Nov 2026 05:42:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933CB1F000C6;
-	Wed, 25 Nov 2026 05:42:36 +0000 (UTC)
+	id 8A7171F000C0; Wed, 25 Nov 2026 05:53:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E521F000C4;
+	Wed, 25 Nov 2026 05:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795585356;
-	bh=JgpHhbVz5VGIXyiT8ArmJKh4PiC06O+VW7wg5Ln2Nqs=;
+	s=korg; t=1795585986;
+	bh=y0KtvY5P/6btVX3iXoJQuP9+iJ00qPUh7IFxpRoqdFI=;
 	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=tUNYA3beCkNBxrcQtmh65ZtGEDYpp5zY8jIjhPknvcjsyXOK+dEZQ5SsDgPiwBeSz
-	 inQ+v2YDtz9+wujJDnXS3d/9Vg7j4yG1ZA1Vh4ZANF/GBP02ZHUPg+Ef0mhanAuEmM
-	 Q+GxyQLgMaVA5zlcizVy/mYHpAUyc/bLyyoTqjoE=
+	b=setGkOgSDsICWRNkUZPCqKw5zPnI6/gzdf9+k4C9ErWpkCAdh4UckHjJhbU+T4+Tj
+	 lMTIyZeEUNd/45sjJyMEZVTiviWmMbmWN2130T5TUg5qm9gcQ8g2INEEDwC+y9n4Vi
+	 I5vLHMgO9+Gi+cNJjLadnJETYsvnK3um6UJvV0xo=
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -51,50 +51,35 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH b4 0/2] Fix .mailmap identity comparisons and the
- missing-cover KeyError
+Subject: Re: [PATCH b4] tests: pin scratch repos to master regardless of
+ init.defaultBranch
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: Hangbin Liu <hangbin.liu@linux.dev>
 Cc: "Kernel.org Tools" <tools@kernel.org>, 
  Hangbin Liu <liuhangbin@kylinos.cn>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-In-Reply-To: <20261020-b4_mailmap-v1-0-55965f9201bd@kylinos.cn>
-References: <20261020-b4_mailmap-v1-0-55965f9201bd@kylinos.cn>
-Date: Wed, 25 Nov 2026 05:42:33 +0000
-Message-Id: <179558535325.3954985.2733374421247844119.b4-review@b4>
+In-Reply-To: <20261020-test_base_commit-v1-1-083fa909c424@kylinos.cn>
+References: <20261020-test_base_commit-v1-1-083fa909c424@kylinos.cn>
+Date: Wed, 25 Nov 2026 05:53:04 +0000
+Message-Id: <179558598406.3954985.17125450594205341485.b4-review@b4>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1171;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=416;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=4JPMMZ/x+4cqYZPp4K1nYH4yvhLbfocxzAi+FwZB6NE=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGLLZSr1/Kr++sOn+qj/dy3XtX9zoifcTapCzMFp3KKR2h
- WpcljBfRykLgxgXg6yYIkvZvthNQYUPPeTSe0xh5rAygQxh4OIUgIl8m8LIMMUyd37aKg3TK0Gl
- 9cf9K/WMA2zCmWOSvtUfvPZWwXuvHsP/4pAZCmXTuV77bhB8f8NhasF2tR6zO9oLjE67z3NlWVX
- CDAA=
+ bh=aWLkGnD/Vt37wiFPA0Yt82NrCglq79+HhzsKR3pPGrA=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLLZyg9Inb9WGHL79J7TacmP7Fg/Hi/ZGC5iPu3e3X/hv
+ MztXY8ZOkpZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAEwk4T/D/9oFjJN2f2lb1c1f
+ FlIvyrEseol4dcL2K5+TzfdJFd+KqWL4Z3G0amGOjlPwqpUF+gn8D1hkHvIbxO9fPH9RWOLnJXk
+ 8XAA=
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-> This series closes two remaining identity/tracking problems in the ez
-> prep workflow.
-> 
-> When a tree's .mailmap gains an alias for your own address, git log
-> matches --committer against the mailmap-canonicalized identity
-> (log.mailmap defaults to true), and 509f56ff5c24 already taught
-> find_cover_commit() to pass --no-mailmap so the cover letter stays
-> findable. Two comparisons still read the wrong identity, though: %cE
-> comes back mailmap-canonicalized even with --no-mailmap, so
-> `b4 prep --claim` treated a series you committed yourself as someone
-> else's work and re-stamped every commit (patch 1).
-> 
-> Separately, get_prep_branch_as_patches() indexed tracking['series']
-> without checking that any tracking was loaded at all, so any caller
-> arriving without a cover letter -- `b4 prep --auto-to-cc` on a branch
-> that was never prepped, or a cover older than the search's
-> --since=1.year window -- died with a bare KeyError traceback instead
-> of the diagnostic every other prep subcommand prints (patch 2).
+> _init_repo() ran a plain "git init", so the scratch repo's initial
+> branch followed the developer's init.defaultBranch. On a machine
+> configured with init.defaultBranch=main (increasingly the norm), the
+> repos come up on main, and test_base_commit_in_remote_tree then fails
+> at its "git checkout master".
 
-Thanks, I applied it with minor tweaks.
-
-Best wishes,
+Thanks, applied with minor tweaks.
 
 -- 
 Konstantin Ryabitsev <konstantin@linuxfoundation.org>
