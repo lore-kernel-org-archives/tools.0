@@ -1,45 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795585987;
-	b=BsL5Dla2k9roin0kp6aiEhp9PgfpwWcEvEr4du0a1lFlMFeEovdF8VF16Pdu9PgV/0wH
-	 TWJ/zyDFHJfeCA1ZsdVpJUC+OdIXLXOwKWeRwYWLv5EnwfK0eVRa3yoWKM8JhGgP2rbf4
-	 dxZh2FqdLE1BSxuUzA3QoV2Stfxzq+o7FIN/oaWOxTBx06zE5BYTLXu1rr93PqzE5//dL
-	 6rmUK79Rs5ejBClN39RPblz4apTv8yYOACDegc+kUlCCbIrd+z2kRKD24PW4mqhJD0ZzP
-	 AXefXlIG5jm0t/HpFkUY1EwKGKJf/ifK1b6+fqzzyxys+KMt35jP/RKs1bbuzzBmXfg==
+	t=1795620412;
+	b=lZhBjfJoWHkprnJmgvVNDK/e3OzVRgRLZreTvTIu5hXBLgqq/oI+codhdi3jf9Fg11wu
+	 USePvXOdqDYy7E0j2nTNtaSmkw6QGrLHVnGousl7Toy4bJnkbBWk7ftUk2I6XSdBoIJwx
+	 AtFkTb+1s4PFumvBPsYRWPbD817DvJaotSvUsPHUE2I4iaN7s+jmY0kQv4joJIKTwm+F9
+	 HakR+jYRo/7ROG1WyPAeRy6RXZ2ESXR4MCIq2g6WORYsi1+TRqY8qV2Ii4M9QesYHuDkB
+	 Xm7JtDiJY1epBqsvZLe2Iye13XqWLSNrRt8vC0RLEZOlWDXcix8MjMTYu3Lgwx13iZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795585987;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620412;
 	h=Received:Delivered-To:Received:DKIM-Signature:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
 	 References:Date:Message-Id:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=y0KtvY5P/6btVX3iXoJQuP9+iJ00qPUh7IFxpRoqdFI=;
-	b=2jv3yxJYxyuzHJNZ6jlxTX7vSHdkljvHxLhNJENPQVb4LsjZo0RL3y58bsqQfb4/Alwz
-	 Zg6xyip8E4hMplpUqxtP6lRu5oAioW9SobTdzS9Ha/5h4XTiEKK0wAbyOI0kvgczXQC/0
-	 KauSMoGRmNsI/pwfc7SVzL1IBrdhYxejXenq6oKNxd7S6Xg5gzkjpVUheupbqoYLcyUdd
-	 AQG8S9f5sxgO6klZjtt/UtIjFUkCAP1mXFjuU0qKhYHhdn6CNhOEWga2U+jEjGwnC1Ieb
-	 54xmqJb7R2HAJv0CGIDElSXdX/L9C7X2njrhCbENSsJRsvWWQ1AMyagwSLAre3wc9Gg==
+	bh=QwRz3Jo9srPIHzf1kMVcrHTF7XSBXEDtwnejr+kVoNc=;
+	b=yDu93AIEYky2zwGSZFhzI4UXvjqe4A+YuTf9XL/3N953RUaYx2bcD0CQ7xedHVrTG9H2
+	 KxckYJkoDt3LQIUEPqojJbGS3Qj8o9o4Y9XPd65JKEeKcgnTbKTtLTDss35cH+vu13VV1
+	 JxO8DnjftV87WvY29F5ZodwFI97gsAqeOyszhEoPfy7jLl0kTzP0SrkJe/g39pB0qTTl1
+	 YVgOwXM5CxB0+ZTYGgDPEa+czi2vq1fzaauZEHq8zfyoyeexN5IoqmI+pO3HqFJ0vl0ql
+	 4EFZkVH3JyAAB7vaXZfIrv4bytBwLPYEWIYoBLP0r/2H4sOi3nG44J9vl3b/k5gH/sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=setGkOgS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X1kJrYk2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B38606A321
-	for <tools@linux.kernel.org>; Wed, 25 Nov 2026 05:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051DC606A32A
+	for <tools@linux.kernel.org>; Wed, 25 Nov 2026 15:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=setGkOgS
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X1kJrYk2
 Received: by smtp.kernel.org (Postfix)
-	id 8A7171F000C0; Wed, 25 Nov 2026 05:53:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E521F000C4;
-	Wed, 25 Nov 2026 05:53:06 +0000 (UTC)
+	id ADC7B1F000C6; Wed, 25 Nov 2026 15:26:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4951F000C0;
+	Wed, 25 Nov 2026 15:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795585986;
-	bh=y0KtvY5P/6btVX3iXoJQuP9+iJ00qPUh7IFxpRoqdFI=;
+	s=korg; t=1795620411;
+	bh=QwRz3Jo9srPIHzf1kMVcrHTF7XSBXEDtwnejr+kVoNc=;
 	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=setGkOgSDsICWRNkUZPCqKw5zPnI6/gzdf9+k4C9ErWpkCAdh4UckHjJhbU+T4+Tj
-	 lMTIyZeEUNd/45sjJyMEZVTiviWmMbmWN2130T5TUg5qm9gcQ8g2INEEDwC+y9n4Vi
-	 I5vLHMgO9+Gi+cNJjLadnJETYsvnK3um6UJvV0xo=
+	b=X1kJrYk2N6PoiwY/vBKlAB019OWdr1KtmOAC8LYql1/rmkf3apWVWO7gB+0o77xGp
+	 frNkWnS9yA2IzAsFHyosD39p8phAmHALiu7jUzfUOh/6cCwkA2xgkBeIiCUQrQvedR
+	 +pcB89L9dJBEeWBEew5GmgfLbSaLttanKcPGCdXM=
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -51,35 +51,35 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH b4] tests: pin scratch repos to master regardless of
- init.defaultBranch
+Subject: Re: [PATCH b4 0/2] review: tui: Make series level reviews visible
+ with no cover letter
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Hangbin Liu <hangbin.liu@linux.dev>
-Cc: "Kernel.org Tools" <tools@kernel.org>, 
- Hangbin Liu <liuhangbin@kylinos.cn>, 
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-In-Reply-To: <20261020-test_base_commit-v1-1-083fa909c424@kylinos.cn>
-References: <20261020-test_base_commit-v1-1-083fa909c424@kylinos.cn>
-Date: Wed, 25 Nov 2026 05:53:04 +0000
-Message-Id: <179558598406.3954985.17125450594205341485.b4-review@b4>
+To: Mark Brown <broonie@kernel.org>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, tools@kernel.org
+In-Reply-To: <20261111-notes-no-cover-v1-0-b9b0d883742b@kernel.org>
+References: <20261111-notes-no-cover-v1-0-b9b0d883742b@kernel.org>
+Date: Wed, 25 Nov 2026 15:26:45 +0000
+Message-Id: <179562040521.198045.3180012341833344677.b4-review@b4>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=416;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=455;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=aWLkGnD/Vt37wiFPA0Yt82NrCglq79+HhzsKR3pPGrA=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGLLZyg9Inb9WGHL79J7TacmP7Fg/Hi/ZGC5iPu3e3X/hv
- MztXY8ZOkpZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAEwk4T/D/9oFjJN2f2lb1c1f
- FlIvyrEseol4dcL2K5+TzfdJFd+KqWL4Z3G0amGOjlPwqpUF+gn8D1hkHvIbxO9fPH9RWOLnJXk
- 8XAA=
+ bh=u6SzWRwFtsob9xWnScTYWqnNED2fwIlco2XqsobL3i0=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLLZ/pmZPxb4ndJYPatonvyvV6/OMIq/O83uEsrz9UfE4
+ 7s7TYrFOkpZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAEzkfBfD//Sdc2QSFu8MnnNv
+ W/0qx9j3t35/jtOdzG9seUayxSLf/TbDP5Vf3dHXT4QGtDFucF90K8tzl5V1wV7FEn8nP2GTloW
+ 7uAE=
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-> _init_repo() ran a plain "git init", so the scratch repo's initial
-> branch followed the developer's init.defaultBranch. On a machine
-> configured with init.defaultBranch=main (increasingly the norm), the
-> repos come up on main, and test_base_commit_in_remote_tree then fails
-> at its "git checkout master".
+> Currently b4 only displays series level notes (such as generated agent
+> reviews) if there is a cover letter which means they are hidden for
+> single patches or any multi-patch serieses which lack a cover letter.
+> Fix this by showing them alongside the per-patch stuff.
 
-Thanks, applied with minor tweaks.
+This is now applied with a few tweaks. I also pulled in your series that
+fixes the n/N doc mismatch.
+
+Thanks,
 
 -- 
 Konstantin Ryabitsev <konstantin@linuxfoundation.org>
