@@ -1,94 +1,93 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795574991;
-	b=eKEKMGMr9Xj52T5nHjX1Vk7jV4w7xPEaB61nzvxQaRYpadVgimFCs7v410LixXS5cRBU
-	 myQZfljQvornok2WQjtGlOvicsHHCNy8eUJ1joKT1r/uolz3312qSZpX4LibQXJA8bFat
-	 GgthXXdpSHgY6Z6RpqVueEX1k0dMiK4JSSwn1Sg0tcZxckbKT4vP2+165l5uiA6y2DB2G
-	 TYJg6CL8Q0Ni0EnCvMZ9mGvvSH0inwGNZZzanM7q54aQCS59X8LmcVDgH/O0xatH+26lV
-	 SPk3mfaRqUu6cDCo1yG2lBlPBWOsj4im9B4s17Kf6rJJ86iANSg8wv0AXHwMb1ef0vQ==
+	t=1795575140;
+	b=MQTA0FDCgdLULH0pQC2pI/E/KwWpOvRJ+UCpfxjMv1cwYxAD/cle5U6UzMOLTL8PtUc9
+	 eutsWG8A01Ga5ZISkyR+Ud8RY/SA4GNoTDviCwxIxSoTHIBiTmvvVMG2et95Caan98x9U
+	 MT/FUHMg8BqqIftCuUy248WqxzFepV8aqWrOh2O29fWSGQ2+k/+FRN7Wz/SYYVvzTqOBm
+	 0Kkb65JYK+k+3nDlaE+US5lyz3S8pLHbDgMKG8SLfN95y4KsEsW2M5E0V1D57OPLJjrHI
+	 EfsFuiTKys2C7BllS6GUjw8CGeHYoWkhKtwi75/AzLDzlkCEOtTdLuFNZSxZveEHC6g==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795574991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795575140;
 	h=Received:Delivered-To:Received:DMARC-Filter:X-Envelope-To:
 	 DKIM-Signature:X-Envelope-To:Received:X-Mizu-Trace-ID:X-Migadu-Flow:
 	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
 	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=Fq8wjwWMVp301+EeT2h7iBI7iGZhEEE+HG/WBKMWFrY=;
-	b=TiLyELB0/NI51QkexPuUw8LIymvO9bNpnnHQsUGxZJUiyNqf2dCyfrquTBHPDRjJEqpf
-	 0YwcyTs2XtJN2eKgIzaN50mXd4sea15Zb3vGBP1iyRqMXLgnRjdTajBZMTqf52/S9HXvj
-	 /qSWJasG9d0K2SQ0yJOTNUruaQwRQFLbjJKtsDbqnQDS295vwyiUWdQq4VmnVl0JnxsM5
-	 VG6F1IS+9m0WRy68MRJlMfyGL6ua7AJTJIdAPn3tUPmvZTVuE82C482wuJFNevcU+IITw
-	 VCVgJnAlGHCU7C5I4N6pdjkI0mwlsaIXAbYdAcLIxbTWtj5ZdZ+O+qkCVGz9eVBNUUg==
+	bh=KYXuF0aXO9/fh4H9HxgtlHf4IW+GudVqUjRHCQuWv9U=;
+	b=zeGqISo2YLG4JtelaDD3c6ACNMaZgpXLkL3XN+4DF0EicLPTJmGGOtGl8Pqjcd1PNuq6
+	 tQ7MmdyhMsPw8L1ecE7crOpgqrfW17v8Nus+1892YY1Q8nVfQ8qZc/W2lCy4LQtE1DCBd
+	 u82pd/SAAKesZ0z2JXJa6uQkZFQVzpNcQTVQu2ZizTqDLTGIUPryaEs0pNedsYJ+edJo4
+	 IKiDWn8MJQvMeJ06swvKDYJ19eZNAFWZ7rWWZ+YLA579FOvJLKID/AgNh7o1wVr+FZWvf
+	 78j1UgfDCxhN6WI/FT079QS5q9NgmQy+hE3Fqg5Rbp4cpwFUE80QhhGx6gGgKgGjSWA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=uoGKF0Kp;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ZRD5ESzW;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798ED606A31E
-	for <tools@linux.kernel.org>; Wed, 25 Nov 2026 02:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CFF606A31E
+	for <tools@linux.kernel.org>; Wed, 25 Nov 2026 02:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=uoGKF0Kp
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ZRD5ESzW
 Received: by smtp.kernel.org (Postfix)
-	id 4F1FE1F000C6; Wed, 25 Nov 2026 02:49:51 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=95.215.58.112
+	id D935A1F000D0; Wed, 25 Nov 2026 02:52:19 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=95.215.58.192
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795574991;
-	b=xOfzlHxyl0xILUZYoD7mZbOe1KhZ4gupByVgsXvXJfU7bQkjiEIC4sTWh5x1iKY7D71z
-	 mwOfYQVZ/uN/aaJUoHKeZ3g6hwgylN95FAbl9URK9pMMrRBamvFa7r6GHT4JKkWs8kvtx
-	 jxzplXkhQywqzHHHh7AjFmQtmgeQ+hlQFZfE9gBUoihAEU8rrrPzT5UFADNbvDo2POScO
-	 gZjillNiBpw39SyC1YTRXOU/0TYNbYZenj9quvcQtmlG+yc6bz8pqTqDHpfiLNZRZXRUM
-	 adQTy9r8YNuOt3nB0WLjXvYwC42FHC24ifJgQRoLod0fhn73XdMgGESlcNHY4FS9QGQ==
+	t=1795575139;
+	b=2CcZAvyhYYdPe4MfUSctCvtKQz3Fclqg/U6RsgDuFzjONkCboCgQMVTrwQLZgSNj9rvd
+	 yWKxXKcY8vbMV+7QVS8/G6fFaatl4KNKAlpBy2wkmJbel8dRzZJXNqaRw5Ynpu4Fq58RX
+	 DDtyeB3PYMh6H3yx6OVDiNo6wclzLbJdCPcVfcd+fuUJwjGXthMOLYIxTBDXu6IvKBSj0
+	 RK9HiInqvlWXo3s27a+hPWHuQLnOsAslM7ooHl9V81NilnUcPa7UIXCAJwitPr5fNZzqp
+	 545hpkkMVfWhEF6R/FyiYfsKhxu8wTve0dkd7lCsmJ6LIhNwkeciB6RSSqtXxdOndjA==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795574991;
+	c=relaxed/relaxed; t=1795575139;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=Fq8wjwWMVp301+EeT2h7iBI7iGZhEEE+HG/WBKMWFrY=;
-	b=d5tulAibU9tf/87MsXDa+hmDQSV6J4wQuBYIi98YlqcAnuNcsRbV5U0koLlJH3ttFBrq
-	 sdSq10zXC+uaFbRmkEHTSCgbPoclYu0Hs6mFJG4TrG0gpnpR2f867hzbdSANgzdkbtzg0
-	 e/pLFBl45YkOKr0dl95JckCpnoF4t6W5nN0zhBNy+9YquGS2QBoNQMdlFzGLpxEshCtxq
-	 P0tpYG2GOHjEDCGMkIEty+8xCm3BBXDRUtfT56UEPrmZTUlq8gCeCvMD6hX/mwCLQRh4i
-	 6/UdSmT5o3caAp0DDHmpJUOC6wDkfamL20rqrNYP6xCohvX5S/V7YByzgPQ6yQjM7iw==
+	bh=KYXuF0aXO9/fh4H9HxgtlHf4IW+GudVqUjRHCQuWv9U=;
+	b=ePDDJNCQq557vkyTfVoLRmoz0RsY6EyymgVNukFmjcCBURjLzd+pw/EjgFg+7NF3jzYh
+	 ZQIfc+dwdAHK85R6qBFvqVcWQDvCchY930RVVib7TkVeUcK8roQURQVOsBo8X3iTYZiLN
+	 L13X9JoEHkxyulIooa2xxw/lm7KK2XTKhHjYdftvGbgvkuJ+IRdULxlM559V5j4qiGxH7
+	 ZrSctQMwqqafnayBREgYWPWIQ0wQRiU0Ah+GRNv1kbvrRKCL7gTyrIEDEYzZkXxT7NUH8
+	 H+3Se2LrY5Xwl4ShoDHQ0RaGDZV6aOI6BbCmweifyOLzoaRijyi+bispCKGKIDoAEnA==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=uoGKF0Kp;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ZRD5ESzW;
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	arc=none smtp.remote-ip=95.215.58.112
-Received: from mta1.migadu.com (out-112.mta1.migadu.com [95.215.58.112])
+	arc=none smtp.remote-ip=95.215.58.192
+Received: from mta1.migadu.com (out-192.mta1.migadu.com [95.215.58.192])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id D779F1F000C4
-	for <tools@kernel.org>; Wed, 25 Nov 2026 02:49:44 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 78A951F000C6
+	for <tools@kernel.org>; Wed, 25 Nov 2026 02:52:08 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=uoGKF0Kp
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org D779F1F000C4
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ZRD5ESzW
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 78A951F000C6
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linux.dev
 X-Envelope-To: tools@kernel.org
-DKIM-Signature: a=rsa-sha256; bh=Vl6RwH++DT/bTHq5nx3M/g1CBsRHa8Ym6dlJzrnefDs=;
+DKIM-Signature: a=rsa-sha256; bh=nIJwrf1fgrloiEv4sVgd2nXUXhlt4qJZMXPjyZ3pm5U=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795574983; v=1; x=1796179783;
- b=uoGKF0KperdvPRk20zrDWjh2ebSYtpjMFCZ+rPhe9/sjKreDNNIfZB3cuv62SdypJEIHaC0D
- dvxtpacBes6REe0o4ccxIwqq2ofofecyPS1mnjlHIS7gGAKY76GKFx3PIf/mXj56vVy9p9CVWOl
- QmKHLVQj2qkpzaP80i3sSt5w=
+ t=1795575126; v=1; x=1796179926;
+ b=ZRD5ESzWuPwFD3bAkqrCZY9pU6pDzc0HkoldbwPVxwLLuHlkeuuBLLDwZI5cPwt/Gm3a1ucS
+ soDeB9K6n2x1vBdoK6LBtcbrrUsxuOrLpj2jXJ+QPcBSlNzEJ/UDNxENpPWXCbCaFPEjwzwfbPe
+ Hq2l8CHSXa/pOZJtZwi28nR4=
 X-Envelope-To: tools@kernel.org
-Received: by mta11.migadu.com with ESMTPS id f0bdffc37e10012f;
-	Wed, 25 Nov 2026 02:49:42 +0000
-X-Mizu-Trace-ID: f0bdffc37e10012f
+Received: by mta11.migadu.com with ESMTPS id ca999212b9bc5235;
+	Wed, 25 Nov 2026 02:52:06 +0000
+X-Mizu-Trace-ID: ca999212b9bc5235
 X-Migadu-Flow: FLOW_OUT
-Date: Wed, 25 Nov 2026 10:49:35 +0800
+Date: Wed, 25 Nov 2026 10:51:58 +0800
 From: Hangbin Liu <hangbin.liu@linux.dev>
 To: "Kernel.org Tools" <tools@kernel.org>,
 	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Hangbin Liu <liuhangbin@kylinos.cn>,
-	Hangbin Liu <hangbin.liu@linux.dev>
-Subject: Re: [PATCH b4 0/2] Fix .mailmap identity comparisons and the
- missing-cover KeyError
-Message-ID: <20261125024935.GA184281@Liu-laptop>
-References: <20261020-b4_mailmap-v1-0-55965f9201bd@kylinos.cn>
+Cc: Hangbin Liu <liuhangbin@kylinos.cn>
+Subject: Re: [PATCH b4] tests: pin scratch repos to master regardless of
+ init.defaultBranch
+Message-ID: <20261125025158.GB184281@Liu-laptop>
+References: <20261020-test_base_commit-v1-1-083fa909c424@kylinos.cn>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -100,51 +99,53 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261020-b4_mailmap-v1-0-55965f9201bd@kylinos.cn>
+In-Reply-To: <20261020-test_base_commit-v1-1-083fa909c424@kylinos.cn>
 
 Hi Konstantin,
 
-Sorry, I only sent this series to tools@kernel.org but forgot to cc you.
-Would you please help review it now?
+The same issue, I only sent to tools@kernel.org but forgot to cc you.
+Sorry to bother you.
 
 Thanks
 Hangbin
-
-On Tue, Oct 20, 2026 at 05:28:30PM +0800, Hangbin Liu wrote:
-> This series closes two remaining identity/tracking problems in the ez
-> prep workflow.
+On Tue, Oct 20, 2026 at 05:56:30PM +0800, Hangbin Liu wrote:
+> From: Hangbin Liu <liuhangbin@kylinos.cn>
 > 
-> When a tree's .mailmap gains an alias for your own address, git log
-> matches --committer against the mailmap-canonicalized identity
-> (log.mailmap defaults to true), and 509f56ff5c24 already taught
-> find_cover_commit() to pass --no-mailmap so the cover letter stays
-> findable. Two comparisons still read the wrong identity, though: %cE
-> comes back mailmap-canonicalized even with --no-mailmap, so
-> `b4 prep --claim` treated a series you committed yourself as someone
-> else's work and re-stamped every commit (patch 1).
+> _init_repo() ran a plain "git init", so the scratch repo's initial
+> branch followed the developer's init.defaultBranch. On a machine
+> configured with init.defaultBranch=main (increasingly the norm), the
+> repos come up on main, and test_base_commit_in_remote_tree then fails
+> at its "git checkout master".
 > 
-> Separately, get_prep_branch_as_patches() indexed tracking['series']
-> without checking that any tracking was loaded at all, so any caller
-> arriving without a cover letter -- `b4 prep --auto-to-cc` on a branch
-> that was never prepped, or a cover older than the search's
-> --since=1.year window -- died with a bare KeyError traceback instead
-> of the diagnostic every other prep subcommand prints (patch 2).
+> Pins -b master on the local side so the suite passes regardless of the
+> developer's default-branch configuration.
 > 
-> Run ci.sh, all test passed except one pre-existing failure
-> test_base_commit_in_remote_tree.
-> 
+> Assisted-by: LLM [analysis, codegen]
+> Fixes: 4ee47be995f2 ("ty: verify queued-thanks commits by ref reachability, not HTTP status")
 > Signed-off-by: Hangbin Liu <liuhangbin@kylinos.cn>
 > ---
-> Hangbin Liu (2):
->       ez: use raw committer emails for identity checks and diagnostics
->       ez: exit cleanly when prep tracking data is missing
+>  src/tests/test_ty.py | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
->  src/b4/ez.py         | 11 ++++++++--
->  src/tests/test_ez.py | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 66 insertions(+), 2 deletions(-)
+> diff --git a/src/tests/test_ty.py b/src/tests/test_ty.py
+> index 269ce021306f..2901f053f0f5 100644
+> --- a/src/tests/test_ty.py
+> +++ b/src/tests/test_ty.py
+> @@ -401,7 +401,9 @@ def test_get_check_repo_config_override(monkeypatch: pytest.MonkeyPatch) -> None
+>  
+>  
+>  def _init_repo(path: str) -> None:
+> -    ecode, out = b4.git_run_command(None, ['init', path])
+> +    # -b master: some tests check out "master" by name, and an
+> +    # init.defaultBranch of 'main' would leave no such branch to find.
+> +    ecode, out = b4.git_run_command(None, ['init', '-b', 'master', path])
+>      assert ecode == 0, out
+>      b4.git_set_config(path, 'user.name', 'Test')
+>      b4.git_set_config(path, 'user.email', 'test@example.com')
+> 
 > ---
 > base-commit: 6be7c6139d7734d84afddf989fa2874935b6d85b
-> change-id: 20261016-b4_mailmap-e33d8ae9ca53
+> change-id: 20261020-test_base_commit-d258e41c094a
 > 
 > Best regards,
 > --  
