@@ -1,93 +1,45 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795575140;
-	b=MQTA0FDCgdLULH0pQC2pI/E/KwWpOvRJ+UCpfxjMv1cwYxAD/cle5U6UzMOLTL8PtUc9
-	 eutsWG8A01Ga5ZISkyR+Ud8RY/SA4GNoTDviCwxIxSoTHIBiTmvvVMG2et95Caan98x9U
-	 MT/FUHMg8BqqIftCuUy248WqxzFepV8aqWrOh2O29fWSGQ2+k/+FRN7Wz/SYYVvzTqOBm
-	 0Kkb65JYK+k+3nDlaE+US5lyz3S8pLHbDgMKG8SLfN95y4KsEsW2M5E0V1D57OPLJjrHI
-	 EfsFuiTKys2C7BllS6GUjw8CGeHYoWkhKtwi75/AzLDzlkCEOtTdLuFNZSxZveEHC6g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795575140;
-	h=Received:Delivered-To:Received:DMARC-Filter:X-Envelope-To:
-	 DKIM-Signature:X-Envelope-To:Received:X-Mizu-Trace-ID:X-Migadu-Flow:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=KYXuF0aXO9/fh4H9HxgtlHf4IW+GudVqUjRHCQuWv9U=;
-	b=zeGqISo2YLG4JtelaDD3c6ACNMaZgpXLkL3XN+4DF0EicLPTJmGGOtGl8Pqjcd1PNuq6
-	 tQ7MmdyhMsPw8L1ecE7crOpgqrfW17v8Nus+1892YY1Q8nVfQ8qZc/W2lCy4LQtE1DCBd
-	 u82pd/SAAKesZ0z2JXJa6uQkZFQVzpNcQTVQu2ZizTqDLTGIUPryaEs0pNedsYJ+edJo4
-	 IKiDWn8MJQvMeJ06swvKDYJ19eZNAFWZ7rWWZ+YLA579FOvJLKID/AgNh7o1wVr+FZWvf
-	 78j1UgfDCxhN6WI/FT079QS5q9NgmQy+hE3Fqg5Rbp4cpwFUE80QhhGx6gGgKgGjSWA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ZRD5ESzW;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795583609;
+	b=eGgBfzhzErIQTmGcLyQBnnig2igpWGDsefvu80CL5OC9owANJL0xFywEMEx0LvRel7Ir
+	 xpV4buo4Iy9sKun2xfEEpH+f9rWGAud6/kcTIPhgSrOYO+vyAzP5c0pVJX89xMmywZXhP
+	 uxEoMsTEtXXRxPDEewHIP3eq9s+BAMPxjUCQsxZABmHhPXGcRaIH9jgfMOSeFF9V5im7w
+	 tUxSvQZQ41fDC3TQqFV2Ed1VSajODHqgY2DRhRP9BqDhdqfhhFWYtACyirT1jiiibVWBX
+	 aFw2xpnc1cU8G8jzv2zppkJYpgJrE3qBAq6GdaOImWbRwHq/iHI2ETQO9EkSAHqOlOg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795583609;
+	h=Received:Delivered-To:Received:DKIM-Signature:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key;
+	bh=d3UmUDdNQgB1QM+wEWmsJC2FXm7jJZrZ+lfN5dgfTj0=;
+	b=Ofi+sx2edwYo5DbPg5QnhN8fvLO3K2/qkcYEvc+SFuUe/jKKjYJCKpAu9rtDk1+kn6TY
+	 4pWOqyhhL7LsTKkRxW5yLhIhHxVHG9D/gaKdIJFnFZKd7zS9KoQ9Sf/JkDNBssu7+RHHK
+	 MUITcdcbVty2AqPRbiHpxviuw5W14jr/sYQOKUmwo+mvsQhlGIL4oAy1MbfDWRZhP1yj6
+	 Jp+TpCBDt3UE9cYvPUYgWcvBDWwZxGyUJZ1lLTeSKtvjmAnsDjq9fTh+r6UzY1zeUZD8F
+	 UAiRDuGJEtoP1DJudrWb4hRbanjOES1tQHDV4nK5iwHtkrpN5mBKv1o0uL7Iy0vKq6Q==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ob2n/4/b";
+	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CFF606A31E
-	for <tools@linux.kernel.org>; Wed, 25 Nov 2026 02:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DDC606A31E
+	for <tools@linux.kernel.org>; Wed, 25 Nov 2026 05:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ZRD5ESzW
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ob2n/4/b
 Received: by smtp.kernel.org (Postfix)
-	id D935A1F000D0; Wed, 25 Nov 2026 02:52:19 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=95.215.58.192
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795575139;
-	b=2CcZAvyhYYdPe4MfUSctCvtKQz3Fclqg/U6RsgDuFzjONkCboCgQMVTrwQLZgSNj9rvd
-	 yWKxXKcY8vbMV+7QVS8/G6fFaatl4KNKAlpBy2wkmJbel8dRzZJXNqaRw5Ynpu4Fq58RX
-	 DDtyeB3PYMh6H3yx6OVDiNo6wclzLbJdCPcVfcd+fuUJwjGXthMOLYIxTBDXu6IvKBSj0
-	 RK9HiInqvlWXo3s27a+hPWHuQLnOsAslM7ooHl9V81NilnUcPa7UIXCAJwitPr5fNZzqp
-	 545hpkkMVfWhEF6R/FyiYfsKhxu8wTve0dkd7lCsmJ6LIhNwkeciB6RSSqtXxdOndjA==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795575139;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=KYXuF0aXO9/fh4H9HxgtlHf4IW+GudVqUjRHCQuWv9U=;
-	b=ePDDJNCQq557vkyTfVoLRmoz0RsY6EyymgVNukFmjcCBURjLzd+pw/EjgFg+7NF3jzYh
-	 ZQIfc+dwdAHK85R6qBFvqVcWQDvCchY930RVVib7TkVeUcK8roQURQVOsBo8X3iTYZiLN
-	 L13X9JoEHkxyulIooa2xxw/lm7KK2XTKhHjYdftvGbgvkuJ+IRdULxlM559V5j4qiGxH7
-	 ZrSctQMwqqafnayBREgYWPWIQ0wQRiU0Ah+GRNv1kbvrRKCL7gTyrIEDEYzZkXxT7NUH8
-	 H+3Se2LrY5Xwl4ShoDHQ0RaGDZV6aOI6BbCmweifyOLzoaRijyi+bispCKGKIDoAEnA==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ZRD5ESzW;
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	arc=none smtp.remote-ip=95.215.58.192
-Received: from mta1.migadu.com (out-192.mta1.migadu.com [95.215.58.192])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 78A951F000C6
-	for <tools@kernel.org>; Wed, 25 Nov 2026 02:52:08 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ZRD5ESzW
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 78A951F000C6
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linux.dev
-X-Envelope-To: tools@kernel.org
-DKIM-Signature: a=rsa-sha256; bh=nIJwrf1fgrloiEv4sVgd2nXUXhlt4qJZMXPjyZ3pm5U=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795575126; v=1; x=1796179926;
- b=ZRD5ESzWuPwFD3bAkqrCZY9pU6pDzc0HkoldbwPVxwLLuHlkeuuBLLDwZI5cPwt/Gm3a1ucS
- soDeB9K6n2x1vBdoK6LBtcbrrUsxuOrLpj2jXJ+QPcBSlNzEJ/UDNxENpPWXCbCaFPEjwzwfbPe
- Hq2l8CHSXa/pOZJtZwi28nR4=
-X-Envelope-To: tools@kernel.org
-Received: by mta11.migadu.com with ESMTPS id ca999212b9bc5235;
-	Wed, 25 Nov 2026 02:52:06 +0000
-X-Mizu-Trace-ID: ca999212b9bc5235
-X-Migadu-Flow: FLOW_OUT
-Date: Wed, 25 Nov 2026 10:51:58 +0800
-From: Hangbin Liu <hangbin.liu@linux.dev>
-To: "Kernel.org Tools" <tools@kernel.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Hangbin Liu <liuhangbin@kylinos.cn>
-Subject: Re: [PATCH b4] tests: pin scratch repos to master regardless of
- init.defaultBranch
-Message-ID: <20261125025158.GB184281@Liu-laptop>
-References: <20261020-test_base_commit-v1-1-083fa909c424@kylinos.cn>
+	id A7FCC1F000D4; Wed, 25 Nov 2026 05:13:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAAB1F000C6;
+	Wed, 25 Nov 2026 05:13:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795583608;
+	bh=d3UmUDdNQgB1QM+wEWmsJC2FXm7jJZrZ+lfN5dgfTj0=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=Ob2n/4/bA01UT5EAWAxWENf99lJfbu69axi35HYsnPxWaMNS4vitCLWLCWU8e/A9n
+	 9kdRjWSQ1n8AfJENN4OexpG2Aq8JBQKNOIdnoqMiIQbNmbTkcVTig2oxVmF/1Fkwhy
+	 bsmyVx6oRP9R1j1mwXE3DW4aHZRd0jQQVj4kSkeE=
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -97,57 +49,38 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261020-test_base_commit-v1-1-083fa909c424@kylinos.cn>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH b4] review: send what was added since the last review
+ send
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Baptiste Le Duc <baptiste.le-duc@vates.tech>
+Cc: "Kernel.org Tools" <tools@kernel.org>, 
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+In-Reply-To: <1792769241.8631fc262581453bbf619ec5b2062170.1a1695fb28e000f79f@vates.tech>
+References: <1792769241.8631fc262581453bbf619ec5b2062170.1a1695fb28e000f79f@vates.tech>
+Date: Wed, 25 Nov 2026 05:13:22 +0000
+Message-Id: <179558360268.2933355.3254336246147018711.b4-review@b4>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=590;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=bBXYFBcZ3yhFYhs9Nczp/OXDVtkIHkTV37Vw5Pc4Ho0=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLLZ8or/zQ202H+9M9V6/456j0X7jhzzk5zIeaj1qtQZR
+ iWveVWFHaUsDGJcDLJiiixl+2I3BRU+9JBL7zGFmcPKBDKEgYtTACZyK5Hhn07ib/7fZZensDUE
+ C+2XZf/P2Ks00/TynTWWLOq7rRp5bRn+V3wSjtqj0D/l5OWdxhkfu5IW+kQfLvn+ISRweR//8XO
+ SXAA=
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-Hi Konstantin,
+> Once a review was sent, every review in the series was stamped with
+> sent-revision and collect_review_emails() skipped it for good. A
+> comment or trailer added afterwards on the same revision was kept in
+> the tracking data but never sent, and the TUI only said "No review
+> data to send.", so there was no way to follow up on a patch.
 
-The same issue, I only sent to tools@kernel.org but forgot to cc you.
-Sorry to bother you.
+Thanks -- this is applied with some fixes that I wanted to be done as
+part of this series. It should now be in master: please follow up if
+something isn't working as you'd like.
 
-Thanks
-Hangbin
-On Tue, Oct 20, 2026 at 05:56:30PM +0800, Hangbin Liu wrote:
-> From: Hangbin Liu <liuhangbin@kylinos.cn>
-> 
-> _init_repo() ran a plain "git init", so the scratch repo's initial
-> branch followed the developer's init.defaultBranch. On a machine
-> configured with init.defaultBranch=main (increasingly the norm), the
-> repos come up on main, and test_base_commit_in_remote_tree then fails
-> at its "git checkout master".
-> 
-> Pins -b master on the local side so the suite passes regardless of the
-> developer's default-branch configuration.
-> 
-> Assisted-by: LLM [analysis, codegen]
-> Fixes: 4ee47be995f2 ("ty: verify queued-thanks commits by ref reachability, not HTTP status")
-> Signed-off-by: Hangbin Liu <liuhangbin@kylinos.cn>
-> ---
->  src/tests/test_ty.py | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/src/tests/test_ty.py b/src/tests/test_ty.py
-> index 269ce021306f..2901f053f0f5 100644
-> --- a/src/tests/test_ty.py
-> +++ b/src/tests/test_ty.py
-> @@ -401,7 +401,9 @@ def test_get_check_repo_config_override(monkeypatch: pytest.MonkeyPatch) -> None
->  
->  
->  def _init_repo(path: str) -> None:
-> -    ecode, out = b4.git_run_command(None, ['init', path])
-> +    # -b master: some tests check out "master" by name, and an
-> +    # init.defaultBranch of 'main' would leave no such branch to find.
-> +    ecode, out = b4.git_run_command(None, ['init', '-b', 'master', path])
->      assert ecode == 0, out
->      b4.git_set_config(path, 'user.name', 'Test')
->      b4.git_set_config(path, 'user.email', 'test@example.com')
-> 
-> ---
-> base-commit: 6be7c6139d7734d84afddf989fa2874935b6d85b
-> change-id: 20261020-test_base_commit-d258e41c094a
-> 
-> Best regards,
-> --  
-> Hangbin Liu <liuhangbin@kylinos.cn>
-> 
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
