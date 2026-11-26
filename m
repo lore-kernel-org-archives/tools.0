@@ -1,45 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795678425;
-	b=3Mm7L4MWQ8s+GeMp9bR8J/x6mf4334WN/TrYUDOKwOv34SDbUZOqqMC7GEFOqaeJKFcf
-	 lyvqBmVpOcHnZrQsCRP8iMqjyThBqWFJPzNp0SZNQJ0BiLW+6znb/GZnHfEGbRWi2tYhQ
-	 dBGIxzHr97ysvyT1YkFq2mGVDUROjD8oml1q7fTmV14U45A1pID9KchwyQVKQgaaVF5Wy
-	 EzR32bpv3N/1rG0CpDTSJGr9K5n0i4jYnmaKIGUCYM4WD4Sv+aQmYDtRa7ujkMQTo8S4y
-	 vEFwQTXPZs/jSChH0JTTfeQceeyA/87K4aOHgdKBX1pW7P4H9QdYuYcjpIdEyrHs24A==
+	t=1795680388;
+	b=v4Ji7WtGjasUH5jSoCh0Ki1XdD7WTAemrglTZTM5jvfGLov9Dsyrk4wkqSq/RPD2PLHD
+	 rV5gF6D6ihk0EP0lxnl67+lvmW/7JkZwZpvUuH91Xh+6M+HHlhWk1QTZPxegdvo5x4Vtb
+	 rejPrOvc3EIO9Q/SVPuXS4Bwyu1tBQI7gHoUGGyEMf2T8waCkS66Eo8DapKVuzAXu4NtS
+	 7RxEN4FSWHv6GQ37g9dxCx+T/FI+EFudaH9X6Lf90R3gVtjkw5Pm6glP5hNIBAdcy/KFH
+	 IPZ/x2iFpFnV61UjX1B/4IgZTReqLSlWICbnO5i91Jc+8PfrTJnEtlLRsduNxg5M71g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795678425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795680388;
 	h=Received:Delivered-To:Received:DKIM-Signature:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
 	 References:Date:Message-Id:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=cgLnk5/Yk3QIdNkFv57hv3twYgCQ1yOQ8HUSlLmf9ms=;
-	b=m+F7+adqIqqKJCf6Cdpjo8GEYBN4QytUdknnaR7QMJGgdE5WgjSy9cSZykmVE7pRamhT
-	 w7TDRIC/XcwKK7ihU1IEABvZvmDmSEdshLwFXuNyT0FxkcM81EdbQdoqHz+agVl/ebtc7
-	 6uly7RTRWGcemhYWpKr7Vz4sAy3fpXVss+42mSOzQxdGWfJtKe/gy3HNJYO6ZWkOqRtus
-	 yuvo2JfvkPbAjbhYCw/CBivFC5WQo6YcRj1U/ze8FarDX7N9ZdrRjQQfLgCb0J2UEAWk+
-	 DH2TWhtOu4TcWQAHhFKsQJa/3nzrketKI3JYIBhpgbWF8daN7Mqr4XIRp3cpY3D9RJQ==
+	bh=GOKfO5o1Z3/+oBov/qveq+Twy0DN7jW9muCE4k9wMWE=;
+	b=nbPM0yelQzwVMD2fVvkGTJF8OUMMvFdGt5tqpgtTkcUwwHRnYiRziR956tzbqlI04D36
+	 aVtvPBv29LbgAbSPvVCex8Te9w5rJt2tKyWPWRD9AZmNCLBVRTeF/n0W0d8BTG/uhi0CK
+	 WRA+CXhf0zx39p8+wyrQ+FcFhFJ6SccochKR9Sy9I5+9DQk81xuLIZ20KsvblkqRJ7pYH
+	 WZ7Ip9EwJ+PX6BNiUGPyaMqkF4eydvT3pQsioodM4DELCkpUA/A9xfhqHIYgbGwCSuLL4
+	 DTdDkPSWiJzoeV+7xmX2iR8DqhuoOGREngWVGZKebAOOiBSOgKFTOrDcdWOBWIv4AqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKDZEQCB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UvqBBj1J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A29606A32A
-	for <tools@linux.kernel.org>; Thu, 26 Nov 2026 07:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C1F606A332
+	for <tools@linux.kernel.org>; Thu, 26 Nov 2026 08:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKDZEQCB
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UvqBBj1J
 Received: by smtp.kernel.org (Postfix)
-	id 9814A1F0089E; Thu, 26 Nov 2026 07:33:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16EA51F000EE;
-	Thu, 26 Nov 2026 07:33:44 +0000 (UTC)
+	id 339D21F000D3; Thu, 26 Nov 2026 08:06:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B1B1F000C4;
+	Thu, 26 Nov 2026 08:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795678424;
-	bh=cgLnk5/Yk3QIdNkFv57hv3twYgCQ1yOQ8HUSlLmf9ms=;
+	s=korg; t=1795680386;
+	bh=GOKfO5o1Z3/+oBov/qveq+Twy0DN7jW9muCE4k9wMWE=;
 	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=mKDZEQCBQWJIDMvPfYB/enae/aeD9nCPJnIBrZ6LTIMIWUxbtRrRTFWZkmukWBd7c
-	 QsgR2yhT6Pad4WhYjP8kW1H6GjKcKE6t45pPN6HzGDDEGOTLDZv6ioN3Q/EzsYXO86
-	 0cyVda+32FGHkBJFokph5t33GYGcmR3s3o2f9O7o=
+	b=UvqBBj1JnxynniYlUgK68lWhW5pD0VBj4QfBbWFUM8INxwUtPejc1cqnF/mhG61Wv
+	 Mj4PBvXs2Iu8ZdxOcgDjYUIt2jk1sah/Mc3Ui2Yl1lDWBv0dWte3kq+AN/WDlyLROh
+	 5hLnIYT2YwUmrMM6pVUEjXbe2jl71Zu6/tf+HdAk=
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -51,40 +51,42 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH b4 0/2] correctly walk a series when a message is
- missing from the lore archive
+Subject: Re: [PATCH b4] am/shazam/pr: allow suppressing thanks records
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Brian Masney <masneyb@kernel.org>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Cc: "Kernel.org Tools" <tools@kernel.org>, 
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
- Jerome Brunet <jbrunet@baylibre.com>
-In-Reply-To: <20261117-lore-missing-msg-id-fix-v1-0-a5d13a11eb10@kernel.org>
-References: <20261117-lore-missing-msg-id-fix-v1-0-a5d13a11eb10@kernel.org>
-Date: Thu, 26 Nov 2026 07:33:41 +0000
-Message-Id: <179567842198.4097193.9480418861709200271.b4-review@b4>
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+In-Reply-To: <20261124-suppress-thanks-v1-1-a0270ecee6bc@gmail.com>
+References: <20261124-suppress-thanks-v1-1-a0270ecee6bc@gmail.com>
+Date: Thu, 26 Nov 2026 08:06:24 +0000
+Message-Id: <179568038413.4097193.14320325595262035034.b4-review@b4>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=693;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=959;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=vhC2xLsOdVfozpynS1EPwlrXZNK5Hyg4FtR1yj87ycI=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGLLZH1ybJMR3/USJSpr8uUZP97SUTyGh8rlJ2zh3pKjX5
- ayrrJrfUcrCIMbFICumyFK2L3ZTUOFDD7n0HlOYOaxMIEMYuDgFYCISaxn+GRVOirj5QPUM50fG
- sJw7B4TKPDo3+ZyI5Y+o2vRA2PSYOMNf8cNZGknbui/nLhIunBjL+HlnW03e1JzQ1zqNl7oDXsi
- yAQA=
+ bh=YlFmxasnFW+DGcGH93RtI5z9q9qGU1UqdSstt1eWoLM=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLLZXzSWZT9/euX+tth1FkonOHfESUXxhGRGvvScsWH+q
+ x8XJlzc0FHKwiDGxSArpshSti92U1DhQw+59B5TmDmsTCBDGLg4BWAihn4M/5MWZjRvqzCsO93D
+ NKE97ZmxZYI/7/2DIUuy2w/wsM9YspeR4ejaxYr+DdVXH+j0Oke9OdD94ozLt5B9H466ZvFtk+N
+ l4wEA
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-> Here's some fixes for the 'b4 am' and 'b4 review tui' that can cause a
-> trailer from someone to not show up when there is a message missing in
-> the lore archive.
+> Recording retrieved series and pull requests for later b4 ty use is
+> helpful for maintainers who send automated thank-you notes, but it
+> accumulates unwanted tracking files for contributors, one-off fetches,
+> or maintainers who prefer to write replies themselves.
 > 
-> I ran into this with the series linked below. The message from Brian
-> with ID avXhA9mJL0EIcm_0@x1g10 is missing from the lore archive. This
-> causes the Reviewed-by from Jerome that is in the archive to not be
-> picked up when 'git am' is used. With this change, the trailer is
-> picked up as expected, and the messages show up in the review TUI,
-> along with the trailer.
+> Add a b4.thanks-record boolean configuration option (defaulting to yes)
+> and matching --thanks-record / --no-thanks-record flags on b4 am,
+> b4 shazam, and b4 pr so tracking can be disabled by default or
+> overridden per invocation. Invalid configuration values warn and fall
+> back to the default.
+> 
+> Decouple Patchwork review-state updates from writing thanks records so
+> b4.pw-review-state continues to work when thanks tracking is suppressed,
+> while keeping read-only checks and pull-request explosion unaffected.
 
-Applied after a rebase on the latest master and a few tweaks.
+Applied with a few tweaks, mostly to make it work on the latest master.
 
 Thanks!
 
