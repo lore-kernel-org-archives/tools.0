@@ -1,122 +1,124 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795684036;
-	b=ohLaDSdd/goU0h2W5g8UaLr423AHugaU4JnuIvkpFOhCUe8wC+dwqIWOAlIbC807qWhX
-	 vH0g2/RH97ypr1XnrklLipgF4SyIRvZogXenNmdWzHCVW2BR/U28OwCczjL/2pv5PeMun
-	 Sktu7TWmnYFKWp/f0UueTfwnlsIrdit0Czyx+hlyDJ1u5X8FKq1Ls+gZFlY+i6ArU3PnC
-	 lG3Tx3QFgA/CEL2xFmJaRpECZe2tEbc1+IBgah1eMzr1KtXw3puQgfVn4p9U+kstwQ/tn
-	 x6AKQIyjCEdQQGQ/i/3V8Z8i2wvwkECucvOXR7qyp4AuH8N8KhIm3rKmQF4d5exMR3w==
+	t=1795684039;
+	b=lkVswYopCJIRQ+dwpRTLQmiilzJjjMeioLiLy2DZaQikVbfIA88U0RuhyRMIh2ADoP4O
+	 i3+ZZHm+2Cm9bjLdVOQpBgbE2IB+Q2D0o+X/dBVq1AlSbkEEVovY7Ial6fzbcKqJ5HF+G
+	 M0Y54JsLsUHdSHLuZO5afTsVeD7a3GIyzYScHXC89yizSifqEqpJFHqF103v/MAM8Rme3
+	 6BscfMQbWDQJOZ44L6WofHTIc52uLnPZgySl6K3cynLPIGsQlonOXcRlPUOIbndR/j2xQ
+	 4BJLtkX9WDn4Btu3A1W8P74D9YeC+08c/pDWSS7riAWK5AdXN9W0bpIsV/a2yDW4v2A==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795684036;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795684039;
 	h=Received:Delivered-To:Received:DMARC-Filter:Received:DKIM-Signature:
 	 X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 Received:From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=+uNcBPguysmQ8/FB/WzpSmoRMFHNDBQhht3tWQyiekQ=;
-	b=xBFaV8tmoE85uXo+6pGG1qpw4/GnpQRXsADydd4+wb5fz+B0w1prWfG0pDKYTusy5wvQ
-	 3K/BcLtgiVneAz7wRRwFQnihQ94omHbUa7ym2mwrsZOlAcI1lDMHdaYAySnyAGs4t1IWM
-	 eRf5u4csO5TTmLU60VN//UEIhQ9thteuwC/U8X1jjT01rqD9Q6SWJuJo5Y36G2LMEmLJe
-	 97KlIBqGYERtp4jXwuPyoP4GsCfmT3MXKxehzyxYfyysKWkkWasvatVtqTh8UYg90YYT/
-	 PET/NRTUAxCPHvAlvDzFDkR8FhGSqHF3iAn0vF3izNKNyu8psL/+LZiDCfOGY7s/fKQ==
+	 Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+	 X-Mailer;
+	bh=mbfC77ro3wp86eE9xIDtxC+XJ4v2kHTXYj6tsIzykBc=;
+	b=OnriqPbbX0yXh3wHAWuwMOgdSJXk8CQ8WGSnyHDHwHQtHAzo03djLSSzBDNazrMfqkW1
+	 4utcaulRnRLoQB4jmVHOs9wblSu0cxw0hEqUUrjgyLcbYX8sgA/iPs1q5z7UgSouI8woB
+	 63s2jqsktYooVa7pMIlZtowPmc6dSsqieowPclVvRo09koP24iFC0sNfWmt1JgHkx6ucW
+	 UDSKnizIS2WesayiUT3qmxx3zjRSY7NfzPd2vhEusrtUF8F8ttUsBytcf6R7jycEXG6XS
+	 ucCLTeFvwxm/8spDa2Q9lTWO5gk2vS3cNlFCGMgMIu3RZEKAAENWcQJMv7RwFLu8C0g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NPxbkEVm;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oTbhMKCg;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249B4606A31C
-	for <tools@linux.kernel.org>; Thu, 26 Nov 2026 09:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3225F606A31C
+	for <tools@linux.kernel.org>; Thu, 26 Nov 2026 09:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NPxbkEVm
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oTbhMKCg
 Received: by smtp.kernel.org (Postfix)
-	id 978D41F000CA; Thu, 26 Nov 2026 09:07:15 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.210.41
+	id 1F8BA1F000C4; Thu, 26 Nov 2026 09:07:19 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=209.85.161.50
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795684035;
-	b=S5lA66HioJoGbsytE1Pu2IftCVMUQFTY8mxmBq9qOp6z43Z8nxMV2H/yoh3Jo2qUBKAf
-	 QdSI8DoeqgO/a5hsxe76Jj8S4ygPOL7hFuRpoJ25Dm8RMLlnRucUHH7j9QpYY3j/Ily77
-	 05rmOATawK5uzx7pVh5GLxMf8WbutB2mkoYVc1q3AgulqjX6sORztu1IbJ/XwsCaAvqSb
-	 03V/48mnsi9Lo68UqJOkjgYzzsk1azDMTTcWzST/Yt4HcpkjxZOacren3qmMs5STgJ9g0
-	 RXikOKGlQiUADS6f9NVC5SD4MM2vnM5vhiqOASlxNYdzqwTklJVw5XMIlMrUXd5iDow==
+	t=1795684039;
+	b=Ton5mUDoTc9/GQjn3KfS/1yXmbBgbELAM7qg2Pbb1tBPqtdy2iel5z98Tjy9iwUxHyrS
+	 aLX6gNP+TQMMJ8ZxNgdZMXtChM4Csu8YKG0EQSSTnGBVwMMeZkyxWCMXTwmu+HdDvwtVw
+	 DZ9bhQxW1DdIp5eroB1b+/4Wvn4ZGho4bKez2QgxrR8Hf2FmkTH+Wq1qujSffMaygRQwa
+	 /I0I8aEUSgkSgh6bFwNYC/uLC5tYt1Eqaywmzgtc8LdYLQ92WbRjFbJLs89DMap/TcXS0
+	 3+90kfubYcT6kgY4IvJniXUm5/OlHzhO+LRjdaXTXjm5bPpAG4eAjLm/hPb8kY6HT9Q==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795684035;
+	c=relaxed/relaxed; t=1795684039;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
-	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=+uNcBPguysmQ8/FB/WzpSmoRMFHNDBQhht3tWQyiekQ=;
-	b=Dy1vz01fPl9sR3N6tWypWWQGrM72wN1GDqAQRtQGrZ18BaUFpJdDsYPJszTb3ZSfX3gg
-	 VXHMqm5jCG0ame9fYYf4ML3Z4CdJi8qGqCMbIS7q/q2bTVZqfObCoFbcivFclOACkp9vX
-	 wd4q9TdnX3fd7zH92W6bfPcm529UzDvVU5N/CIWR7Lx7Iblt+aUWJ9sw1HDtYBe3XtS/p
-	 l252EONRStpmeLSj9+PnY4F2UkIeYh6E/bZ4m3C2l3oeKWoTNQx8mXp30KQOIm7zwz6bD
-	 73HGvCGVDAltB8o4wY8UAfrS9Z8yWm5pHZWJdOWfLm1MW29mrit8zaXsaH/BM3bpHkw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 References:In-Reply-To:To:Cc:X-Mailer;
+	bh=mbfC77ro3wp86eE9xIDtxC+XJ4v2kHTXYj6tsIzykBc=;
+	b=WhJghNiIJAXwlZb+1gPBfSxUwWTRzrYf5DTiYMK7EHzpe3T8Gr5z4q47v9AbTHyYUh7U
+	 XPF55bG7342c91y7zyVs4MdCqcvJpTReW+HTDNUvAHOxvOUmdmHF7/OjrPLtWUeZaGTAM
+	 8VwAvtX6hCw3jBGcbRUF+d9Ah4ZXoUgZPqP8ey4epLJ1IjrlSNl+57ZBoAYAV5C3i4YEo
+	 FlWdmqQ7aV9Kv1V6qP3npqXo657Cw3dt+ZEA9WbZN4KXPNCVF6Ijo7SD5WfXy+lvzwKIe
+	 veM9g5UPfZ3yieRmG0Bu6euhryP7iNqaYB9gJa50DzGW6UWaFnfHbWim9Um8IJUbB+Q==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NPxbkEVm;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oTbhMKCg;
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	arc=none smtp.remote-ip=209.85.210.41
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+	arc=none smtp.remote-ip=209.85.161.50
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 52EFF1F000D0
-	for <tools@kernel.org>; Thu, 26 Nov 2026 09:07:09 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 952D81F000C0
+	for <tools@kernel.org>; Thu, 26 Nov 2026 09:07:10 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NPxbkEVm
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 52EFF1F000D0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oTbhMKCg
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org 952D81F000C0
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-862b3a39d0dso3291824a34.3
-        for <tools@kernel.org>; Thu, 26 Nov 2026 01:07:09 -0800 (PST)
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-6de2f213b7aso2880362eaf.0
+        for <tools@kernel.org>; Thu, 26 Nov 2026 01:07:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795684028; x=1796288828; darn=kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=+uNcBPguysmQ8/FB/WzpSmoRMFHNDBQhht3tWQyiekQ=;
-        b=NPxbkEVm4R/m6YjsoCgdDEmuGSDcHNgkmYhGZY3vnEO0pWlwcQe+xABmdhQdUXwao1
-         Rz5SCl+7O/Zu95e3JRn0plO+2uajiFZtrBQKvfrSfJgdhTLncFiE/zJlrhOD2yOM4h3V
-         cRa1hl5DoAWEMVtQwFAtmHivmGDRWp89oS52CfjWpw6GPK6HjANC1GcS6hajEqNIjAVf
-         BjXyUtDiPzm7Kf4quB1ieRkAYz1zQxWj8eta9PoM7CEw+kKL0CGWgpnFkotMUxTknwdj
-         hXNm+dzZ99CM5KXMmBW2pcGG4sK4Drz1lgCaC/BHyTyA96NjaiUnhxQMK8J+bv0WdMU1
-         thlg==
+        d=gmail.com; s=20260707; t=1795684029; x=1796288829; darn=kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=mbfC77ro3wp86eE9xIDtxC+XJ4v2kHTXYj6tsIzykBc=;
+        b=oTbhMKCgw4pqnpKPiYcd36J1mak5lDQR6ou4zJrxfKIV5i12aKbFxoyVQz3Zq5SZVU
+         aXILIcszqRcWWdPkNRpYo2AbpxBMJHWTh2UPDHGfQFqUFrEVLqjTDe0XPrEbD0wEnXLK
+         cU3SP+3t8RleC53qEFuW0dC2Nj2DwnQMOuLctQAF6v0MjOYRJleiZmeDv2WBOEwDZMcz
+         4bwE62C0cdbfkR8ZD0JFSmeyQ6krJcLosQtIFQonwttZic75h9gnIS8SFzCYX+vyCnDU
+         NLnl7x7FWcobBzP95+3SQTviGdFV7G/Pqn6lnhPuMIxmuKZ58QO9S3EadUwZbxN/lsv0
+         pSYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795684028; x=1796288828;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=+uNcBPguysmQ8/FB/WzpSmoRMFHNDBQhht3tWQyiekQ=;
-        b=kB6UOsO9jgmKjjmTdXiViia6jctsn/txxc692NeArjpYX9Pt4KBTwCb5h0X5g9NHBn
-         BbPReoP6dF0oMsb+R0F9frxX4adCDnJHONP+eMPfzSq6KodFuqYj+2xnRJ2icrv/uZBB
-         ptQcfxcoAV2uUUh+37OL8xMdHWtbG/r7MNPu3SjLKc+dCRJVSOmRsD4tk6iV8+eMbyKo
-         jk44hMBUi2q2c686WsvBC+fV0KTkiKR88F61IV/YIYUg9w1iUs1aSi4GzzzMS3xQtATf
-         OSKmeXCtwxdAZBAM8Smya7G6aVwmk9OD9U7BMfTwZtVwCMTrLSnH/cxh21/2fNgMUboN
-         z9Zg==
-X-Gm-Message-State: APuU4Z9IheuBjLRPSUxFIER/3yljRoG9gTiUQPSzoZHbI5X9EQcNgB3X
-	DgcaU1cofoe9JQeyt0xGOY27BJlF0fgqDXmsqJ3o6n60HwTYiIF2a/e4
-X-Gm-Gg: AZFdTZfeBhcJLTfdcR5ev41CL3cNNle8xytOaOwdYw6hvCQBgqngXIZ7Ex1AmHTmNfP
-	9koY5mr8RAWAzWS9iwnwky1A5MjwN9U5VPhZYA291Sblsim2uZsqF7vT2X8ouj+tPysV3fH2uWe
-	PUCXM1DmichzbQRtCLQ8cyO8xC4u4g9dqcLRNB5vlDqczNvoTVrzTB+DaXF4Rp0i7qZCEnLydZq
-	s2JpQXxtihCEJtR8nA+CaqBWUc8f/gz/QQ+2YOiZ9eQpb6S9brJMA+g4ZFEq6C6NJ68MT6PH9FY
-	upY91QQCHZsnh58Ivy8M9xCCBz9skhqZxU6fiijVqC8LFK7jEqrJIr9EKpr87bxcFA/d2JLgoUk
-	xOGrZDkvOe4qqRmmY/CqFMtaOOWwAtRvA+Dvh7e+TfuiykvaE0nmrACcVoFp2yIOA/ZOU6bjK/Y
-	zZ4rEnCzzDkULUICfhjEWIBAnREw3i+g0noHa4BQN2Q3574HVE6NahJGg6zu/6kdg0ncE9CvLIK
-	EvYrekBhiTAPbf8b+TAzcCFAeFb7sp95wnasSm7tODEFsQ9JPYLXbNWOBRBU4lCx04aTZvvReRw
-	lRPERTcE4rUtbcKSOy7M6Yop+e4SGqqvwJrlAq6ioKZgxDC2OuZU14QcvkWf9tPE/jJucRnbKZr
-	3uinWkSgl+nTLxzkaQvvP3Kmi+0hU9kYvHCq9k9lv2bvmFd8GOsrplunXUZt/QjrEmC0rgpjpwZ
-	nd05qjrmj3sBARi9QC3/FXtvAmQkC/5pGkhIQ2eXePAMd193paopzG
-X-Received: by 2002:a05:6830:681c:b0:81f:6e05:c1aa with SMTP id 46e09a7af769-863159c5575mr22114058a34.18.1795684028286;
-        Thu, 26 Nov 2026 01:07:08 -0800 (PST)
+        d=1e100.net; s=20260707; t=1795684029; x=1796288829;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mbfC77ro3wp86eE9xIDtxC+XJ4v2kHTXYj6tsIzykBc=;
+        b=KcLgSptTaJPDTEyF9CgwaMYhOjmmnC0nnlECM3GQ7jYFoaw1v37zmFg2WcckHjDSCB
+         8DRAi/VSgSX+n39k9Z0hHp/puzVeizJY8nQDmV8IZBVtDS4GZqYc2aVmMu55qXt5DZ51
+         Qp/x0My1nb/GMNFTU2ByqTW4lWvrJFpDrtqQ2c5aDtOfDEZPrPQq4Gxz0pwNW412Dq/b
+         6AA7WDxkdy9DtmvjlP1Myp1rTsHyODVmu1NClZAtfYOF85ImxkBjYc0JKPhdsIx3zvNO
+         U2LnsTig2i5GL+DcD6B7G4VeCjTLLtys3pna8HwiMvyvYz+6cvfVXV+eG1+HgRIWjqZQ
+         OSoQ==
+X-Gm-Message-State: APuU4Z+oul0HaaVwh9EqmUaCnqLe72N8gdUMUurOmuIo7Y7yhjZgE6Vg
+	8+hiPYM+3qjOgI4bgspSXWD7/+gWbqDvJp6pwFOQxOw8p4coczcTLsD/TMajXIZ2
+X-Gm-Gg: AZFdTZerb1mVJHm74qY6bZ974ErncUM506WQOrwWzuvkJ07RC+HWUYtRRGQ4c/H2yrC
+	oHlRATZZOkfv62ys3oLHZG/4GmrYs5A24dngUfPe0hOjyzsN2E/7ChuLSTyL5VzMB6obQ4cohDa
+	Q2qYT+Yv7uM0vh88aBU8r/0dMVvgT5TBoVqU6kkyiPWt+R3CCzLE+hbXoF1faf7JsMleHkDYOhc
+	NssU9gRtMzFMZUr+Mwwzf+LuG1l0YYMMYoV0LxWzY13XTJxKbLKkXKYlfzaKI/mpHmA4LIsCSai
+	EceKPjmwAqHYcHMpxw0zUmK5dAEqfIb30T463OxeISwrg9RS3IVqJEgFx3hAa3H4YOwpJ8HMyND
+	NlsR9C4DeYI0Iy2WGDocjo2UHVtR8nXjSUb4YNfTvidcR/AHIRDY7tOt1Oj+xEJ9SsIXLLUmojq
+	DZOxIL1DMxFF0/FGT2bgpZZvj0glqE2v/paciddEUXaZeLGgL6f1yj0gaH0+yCKLZSNk+t/gIvz
+	NepReWwylZW6cT9YrZHsfuSPINq772ZKHobv10pfTGAzRrhxJlV0/Q+/qWu6FNd/QmENWpyfhCX
+	byceVQuj5XdsuezoAHh6q7sXhZx4AfAem+30YtA4iZJKNGN/yY8VgBlyCz9UVGyx86fCPb0uRA9
+	BZmmSW5ml6JWZ7AQf4VEBGwt2mL6cPB3fUI9ptofZVGV6WZBMIXzcr1R5KNPo8s/OeDOGlg00gF
+	9a17WdwaPGNAa/+Qy5z4mO7V4W6MKUDhePGo9CHSJrKz+csQ+6VS5prtfLyWDKsVfDHQjUERnIW
+	A==
+X-Received: by 2002:a05:6820:8599:20b0:71a:d6ae:500a with SMTP id 006d021491bc7-71b394b822amr11874341eaf.46.1795684029271;
+        Thu, 26 Nov 2026 01:07:09 -0800 (PST)
 Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8631682200esm14448597a34.2.2026.11.26.01.07.07
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8631682200esm14448597a34.2.2026.11.26.01.07.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Nov 2026 01:07:07 -0800 (PST)
+        Thu, 26 Nov 2026 01:07:08 -0800 (PST)
 From: James Hilliard <james.hilliard1@gmail.com>
-Subject: [PATCH b4 0/3] send: fix SMTP resume across transports and
- recipient refusals
-Date: Thu, 26 Nov 2026 02:06:58 -0700
-Message-Id: <20261126-submit-b4-send-resume-fixes-v1-v1-0-cf5e018d8d7a@gmail.com>
+Date: Thu, 26 Nov 2026 02:06:59 -0700
+Subject: [PATCH b4 1/3] send: retire an untouched SMTP submission when
+ changing transports
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -128,44 +130,287 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMQQ6CMBBFr0Jm7URbmmq8inHRwhTGhGJmCjEh3
- N2iy/f+z9tASZgU7s0GQisrz7mCOTXQjSEPhNxXBnux3hjrUZc4ccHoUCn3KKTLRJj4Q4qrweT
- bW+tsMsZdoUbeQr+tNh4QHTz/rlZe1JWjfLxiUMIoIXfjoWbhgfN5ClpIYN+/mU0/+6YAAAA=
-X-Change-ID: 20261126-submit-b4-send-resume-fixes-v1-f638342f1147
+Message-Id: <20261126-submit-b4-send-resume-fixes-v1-v1-1-cf5e018d8d7a@gmail.com>
+References: <20261126-submit-b4-send-resume-fixes-v1-v1-0-cf5e018d8d7a@gmail.com>
+In-Reply-To: <20261126-submit-b4-send-resume-fixes-v1-v1-0-cf5e018d8d7a@gmail.com>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.17-dev
 
-If an SMTP submission reached nobody, a fresh send may replace it.
-Make that true for local sendmail and the web endpoint as well: once
-the replacement goes out, the old messages must not be sent by a
-later --resume.
+If SMTP fails before delivering anything, an ordinary send can replace
+the saved submission. Sending the replacement through local sendmail
+or the web endpoint advances the revision but leaves the old SMTP
+record behind. A later --resume sends that revision again before it
+detects the bookkeeping mismatch.
 
-The other two patches address interrupted delivery to some recipients.
-Let later messages proceed when all remaining recipients of an earlier
-message are temporarily refused. When an explicit Bcc overrode an
-exclusion on the original send, honor the same override on resume
-without bypassing a newly matching exclusion.
+Hold the series lock for ordinary sends regardless of transport, and
+discard a record that reached nobody after confirmation but before the
+replacement can deliver mail. Refuse replacement if any delivery is
+partial or uncertain. Previews, dry runs and explicit resends do not
+replace the submission.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-
 ---
-James Hilliard (3):
-      send: retire an untouched SMTP submission when changing transports
-      send: continue past temporary recipient refusals on resume
-      send: honor saved Bcc exclusion overrides on resume
+ src/b4/ez.py                  | 151 +++++++++++++++++-------------------------
+ src/tests/test_send_resume.py |  51 ++++++++++++++
+ 2 files changed, 112 insertions(+), 90 deletions(-)
 
- docs/contributor/send.rst     |   3 +-
- src/b4/_send.py               |  22 ++++--
- src/b4/ez.py                  | 173 +++++++++++++++++++-----------------------
- src/tests/test_send_resume.py | 126 +++++++++++++++++++++++++++++-
- 4 files changed, 221 insertions(+), 103 deletions(-)
----
-base-commit: dc3a6050dab1b5ce3b6d1d4d15d463a6bdedde2a
-change-id: 20261126-submit-b4-send-resume-fixes-v1-f638342f1147
+diff --git a/src/b4/ez.py b/src/b4/ez.py
+index 0eadbff..8db2cb7 100644
+--- a/src/b4/ez.py
++++ b/src/b4/ez.py
+@@ -3291,10 +3291,18 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
+             or cmdargs.preview_to
+             or cmdargs.resend
+         )
+-        # Checked again under the lock; this only spares the user the prompts.
+-        if not unrecorded and _blocking_session(directory):
+-            raise RuntimeError('An unfinished submission exists; use b4 send --resume')
+-        _cmd_send(cmdargs, directory)
++        if unrecorded:
++            _cmd_send(cmdargs)
++            return
++        directory.parent.mkdir(mode=0o700, exist_ok=True)
++        directory.mkdir(mode=0o700, exist_ok=True)
++        with b4.lockfile_nb(str(directory / 'send.lock')):
++            previous = pending_session(directory)
++            if previous and not previous.untouched():
++                raise RuntimeError(
++                    'An unfinished submission exists; use b4 send --resume'
++                )
++            _cmd_send(cmdargs, directory, previous)
+     except (RuntimeError, OSError, ValueError) as exc:
+         logger.critical('CRITICAL: %s', exc)
+         if _has_pending_send(directory):
+@@ -3310,18 +3318,6 @@ def cmd_send(cmdargs: argparse.Namespace) -> None:
+         sys.exit(130)
+ 
+ 
+-def _blocking_session(directory: pathlib.Path) -> Optional[SendSession]:
+-    """Return the saved submission that a fresh send would duplicate.
+-
+-    A submission that reached nobody protects nothing, and holding the
+-    user to its messages would keep them from fixing the series first.
+-    """
+-    session = pending_session(directory)
+-    if session is None or session.untouched():
+-        return None
+-    return session
+-
+-
+ def _has_pending_send(directory: pathlib.Path) -> bool:
+     try:
+         return pending_session(directory) is not None
+@@ -3530,7 +3526,11 @@ def _resume_send(cmdargs: argparse.Namespace, session: SendSession) -> None:
+     _finish_send(session)
+ 
+ 
+-def _cmd_send(cmdargs: argparse.Namespace, directory: pathlib.Path) -> None:
++def _cmd_send(
++    cmdargs: argparse.Namespace,
++    directory: Optional[pathlib.Path] = None,
++    previous: Optional[SendSession] = None,
++) -> None:
+     mybranch = b4.git_get_current_branch()
+     if mybranch is None:
+         logger.critical('CRITICAL: Not currently on a branch, unable to send')
+@@ -4011,88 +4011,59 @@ def _cmd_send(cmdargs: argparse.Namespace, directory: pathlib.Path) -> None:
+             logger.critical('          Please re-enable signing or use SMTP')
+             sys.exit(1)
+ 
+-        try:
+-            sent = b4.send_mail(
+-                None,
+-                send_msgs,
+-                fromaddr=None,
+-                bccaddrs=send_bcc,
+-                patatt_sign=True,
+-                dryrun=cmdargs.dryrun,
+-                output_dir=cmdargs.output_dir,
+-                web_endpoint=endpoint,
+-                reflect=cmdargs.reflect,
+-            )
+-        except RuntimeError as ex:
+-            logger.critical('CRITICAL: %s', ex)
+-            sys.exit(1)
++        smtp, sender = None, None
+     else:
+         try:
+-            smtp, fromaddr = b4.get_smtp(dryrun=cmdargs.dryrun)
++            smtp, sender = b4.get_smtp(dryrun=cmdargs.dryrun)
+         except Exception as ex:
+             logger.critical('Failed to configure the smtp connection:')
+             logger.critical(ex)
+             sys.exit(1)
+ 
+-        if isinstance(smtp, b4.SMTPConnector) and not (
+-            cmdargs.dryrun or cmdargs.reflect or cmdargs.resend or cmdargs.preview_to
+-        ):
+-            if tag_msg is None:
+-                raise RuntimeError(
+-                    'Cannot save submission bookkeeping without a cover/tag message'
+-                )
+-            branch, head, tree, cover_hash = source
+-            series = tracking['series']
+-            state = State(
+-                change_id=series['change-id'],
+-                revision=series['revision'],
+-                branch=branch,
+-                head=head,
+-                tree=tree,
+-                cover_hash=cover_hash,
+-                tag_message=tag_msg,
+-                cover_message_id=cl_msgid,
+-                fromaddr=fromaddr,
+-                messages=[],
++    # Once the replacement can send, the old messages must not be resumable.
++    if previous is not None:
++        logger.info('Replacing a saved submission that reached nobody')
++        previous.discard()
++    if directory is not None and isinstance(smtp, b4.SMTPConnector):
++        if tag_msg is None:
++            raise RuntimeError(
++                'Cannot save submission bookkeeping without a cover/tag message'
+             )
+-            directory.parent.mkdir(mode=0o700, exist_ok=True)
+-            directory.mkdir(mode=0o700, exist_ok=True)
+-            with b4.lockfile_nb(str(directory / 'send.lock')):
+-                if _blocking_session(directory):
+-                    raise RuntimeError(
+-                        'An unfinished submission exists; use b4 send --resume'
+-                    )
+-                stale = pending_session(directory)
+-                if stale is not None:
+-                    logger.info('Replacing a saved submission that reached nobody')
+-                    stale.discard()
+-                # Before saving: --resume sends what was saved without this check.
+-                _check_send_source(state)
+-                prepared = b4.prepare_mail(
+-                    send_msgs, bccaddrs=send_bcc, patatt_sign=sign
+-                )
+-                session = SendSession.prepare(
+-                    directory / f'v{state.revision}', state, prepared
+-                )
+-                logger.info('Saved SMTP submission in %s', session.directory)
+-                _send_with_retry(session, smtp, no_interactive=cmdargs.no_interactive)
+-                _finish_send(session)
+-            return
++        assert sender is not None
++        branch, head, tree, cover_hash = source
++        series = tracking['series']
++        state = State(
++            change_id=series['change-id'],
++            revision=series['revision'],
++            branch=branch,
++            head=head,
++            tree=tree,
++            cover_hash=cover_hash,
++            tag_message=tag_msg,
++            cover_message_id=cl_msgid,
++            fromaddr=sender,
++            messages=[],
++        )
++        # Before saving: --resume sends what was saved without this check.
++        _check_send_source(state)
++        prepared = b4.prepare_mail(send_msgs, bccaddrs=send_bcc, patatt_sign=sign)
++        session = SendSession.prepare(directory / f'v{state.revision}', state, prepared)
++        logger.info('Saved SMTP submission in %s', session.directory)
++        _send_with_retry(session, smtp, no_interactive=cmdargs.no_interactive)
++        _finish_send(session)
++        return
+ 
+-        try:
+-            sent = b4.send_mail(
+-                smtp,
+-                send_msgs,
+-                fromaddr=fromaddr,
+-                bccaddrs=send_bcc,
+-                patatt_sign=sign,
+-                dryrun=cmdargs.dryrun,
+-                output_dir=cmdargs.output_dir,
+-                reflect=cmdargs.reflect,
+-            )
+-        except RuntimeError as ex:
+-            logger.critical('CRITICAL: %s', ex)
+-            sys.exit(1)
++    sent = b4.send_mail(
++        smtp,
++        send_msgs,
++        fromaddr=sender,
++        bccaddrs=send_bcc,
++        patatt_sign=sign,
++        dryrun=cmdargs.dryrun,
++        output_dir=cmdargs.output_dir,
++        web_endpoint=endpoint,
++        reflect=cmdargs.reflect,
++    )
+ 
+     logger.info('---')
+     if cmdargs.dryrun:
+diff --git a/src/tests/test_send_resume.py b/src/tests/test_send_resume.py
+index f540166..e1a74bb 100644
+--- a/src/tests/test_send_resume.py
++++ b/src/tests/test_send_resume.py
+@@ -1334,6 +1334,57 @@ def test_submission_that_reached_nobody_does_not_block_a_fresh_send(
+     assert b4.ez.load_cover()[1]['series']['revision'] == 2
+ 
+ 
++@pytest.mark.parametrize('transport', ['local', 'web'])
++def test_replace_untouched_submission_using_another_transport(
++    send_repo: Path, monkeypatch: pytest.MonkeyPatch, transport: str
++) -> None:
++    first = FakeSMTP(
++        smtplib.SMTPSenderRefused(550, b'relay denied', 'alice@example.org')
++    )
++    configure_smtp(monkeypatch, first)
++    with pytest.raises(SystemExit):
++        run_send('--no-sign')
++    saved = pending_session(send_repo)
++    assert saved is not None and saved.untouched()
++
++    if transport == 'web':
++        b4.MAIN_CONFIG['send-endpoint-web'] = 'https://example.org/send'
++        args = ['--use-web-endpoint']
++    else:
++        monkeypatch.setattr(
++            b4, 'get_smtp', lambda dryrun=False: (['sendmail'], 'alice@example.org')
++        )
++        args = ['--no-sign']
++    # Stopping at the prompt must leave the original available for resume.
++    with monkeypatch.context() as mp:
++        mp.setattr('builtins.input', Mock(side_effect=KeyboardInterrupt))
++        with pytest.raises(SystemExit) as exc:
++            run_send(*args)
++        assert exc.value.code == 130
++    assert pending_session(send_repo) is not None
++
++    def deliver(smtp: Any, msgs: List[EmailMessage], **kwargs: Any) -> int:
++        if transport == 'web':
++            assert kwargs['web_endpoint'] == 'https://example.org/send'
++        else:
++            assert smtp == ['sendmail']
++        assert pending_session(send_repo) is None
++        with (
++            pytest.raises(b4.LockHeldError),
++            b4.lockfile_nb(str(send_repo / 'send.lock')),
++        ):
++            pass
++        return len(msgs)
++
++    monkeypatch.setattr(b4, 'send_mail', deliver)
++    run_send(*args)
++    assert b4.ez.load_cover()[1]['series']['revision'] == 2
++    smtp = FakeSMTP()
++    configure_smtp(monkeypatch, smtp)
++    run_send('--resume')
++    assert not smtp.calls
++
++
+ @pytest.mark.parametrize('failure', ['cannot-tag', 'tag-exists'])
+ def test_sent_tag_trouble_does_not_block_the_reroll(
+     send_repo: Path,
 
-Best regards,
---  
-James Hilliard <james.hilliard1@gmail.com>
+-- 
+2.53.0
 
