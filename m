@@ -1,51 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795706925;
-	b=LlWKdqB+i37nOgXAZJeC4Qt2dEce9bkyTA1mzbqz3KaR8k+Vu9nbtEn0wz8Zn4XoH8cA
-	 7LJVoDzy7nBpUhHw/5Ir4mGpI9EoigiIWDFVlAn6kyIpQ6G5HoR3ImEsjS6W4ubdlSu12
-	 WQGOKAGW+ppUGFFfo/TX6oJgH2bMiBxGyLJx0305h2p8+e6LGMIfXS9/QLFxqaOk8oKeF
-	 vfybJhC6Z+dbG74LdjgCV6fABH9VZlr3hcDAT342idO46spYFOAWOmckwmR5cc08i31ZZ
-	 8nqznNoX/B6K2YpqAt5B37GS0THdnI2wWifbqesN8eyEJ16KyFZCUNyBDry0xZY1AkQ==
+	t=1795708917;
+	b=EMNc/P9AbL2B8nDO8ewsdpdBNrvElAB049iZKI/+zBBS7IA9qqwxm15SKknwoCSvL/cd
+	 up5xQn6fhroYCtnuvaGnj0dWKkk/YE/SMmVu/NCIziAWIBvDmLPQ7NvfP5Q4GKKbUmcji
+	 2H1CEwJbbpBxo2ssPuRNP65HnxEIYYbrT9psjaLbS0+4qtXsJb+U457GYMB+Q8yPzaANs
+	 cUw09MGegvPt63CKoNDWVGRuxNMYDSB0d/SskZWD7TEquC4EA89rDkjL2zNDydM+8qcjT
+	 udlPjNbtARdHxfoiWTGONXqkVsB4GfIhZKg3x/FM/8etClBtNrGGc7/uY1nkfg7TJKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795706925;
-	h=Received:Delivered-To:Received:DKIM-Signature:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=QeKpt5h9cQaCimJFgZaHAzjAd/6GI5uegJ/yJ7Fwso0=;
-	b=phLPcm8ofStUaElJpu6eK2nOtWUTpAChobICVRamz4gBuG5gAfCX0TifnxfYstJMLLaD
-	 10uprwaLwmAR5vra+ORJepUyZYXpmTBHxZwhOSxVGPUmVOw0DL6lOzyCD8/1V4/D2mme1
-	 WgnM2wiABqi4d3gyE8aAa2JkykfhugUzgWbcXJ3ptuccMoP5Jw6X1EZkEk99yZZsMCa6v
-	 Vz/dkJ8TDzYIM4gTn6faSw80AfhLJBL8iAP4ESL1IFU4y9WvGO1CPZEAt+ibY8fFoDhea
-	 pCtzxNTfaFvNAjVTRwRxZq5Ay5vdPtxy3T2hDe1St2H1hChf0FViTNwlwxNTvgynyOQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795708917;
+	h=Received:Delivered-To:Received:DKIM-Signature:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key;
+	bh=qjwQlisDGw7i3HyW471O3OxKTvjUALrOvWc8FTjggZo=;
+	b=H0Kxqa6w3cZbPyQIutlK0ad28ANvM9Y+SDt4eXt+UaO59hTvqg78XghugJcBAxfz3iqu
+	 CDfsXHyHQf/6mNs7hXJ2BZbVLk9hqwcpgiwpCnFOWZ0asTGSs9Rcq2Hdcfa3msGMaSInf
+	 SbAF3Zt8ga5ugtG+yFta6Bpvf9+kv9U9VpJKLRxq/Qn5ndleKeY44eSPvLAoM1N2o1U3q
+	 XFYeB6uPClPxdcke9FDtqX3bV681wkebfK2jQJulW26HCNsOaxqoMhBOGbzZaeJYBfDES
+	 6s6giU8EeXdTuV6GNq1Oy/61ibD8351l7dQk/nfH5lnoKu4aSVtGTN0k4QVOgXcaPQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="exb/jx8c";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="U5HkOo/8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091F0606A31C
-	for <tools@linux.kernel.org>; Thu, 26 Nov 2026 15:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ED5606A31C
+	for <tools@linux.kernel.org>; Thu, 26 Nov 2026 16:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exb/jx8c
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U5HkOo/8
 Received: by smtp.kernel.org (Postfix)
-	id D62041F000C0; Thu, 26 Nov 2026 15:28:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894121F000C4;
-	Thu, 26 Nov 2026 15:28:44 +0000 (UTC)
+	id 632051F000CA; Thu, 26 Nov 2026 16:01:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F781F000C4;
+	Thu, 26 Nov 2026 16:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795706924;
-	bh=QeKpt5h9cQaCimJFgZaHAzjAd/6GI5uegJ/yJ7Fwso0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=exb/jx8cLADTMfogp27Ay+C3lLqBc9vteZg3ehg/IrU3dYHBtecQZY05rS6GQjTTB
-	 kPIOLn2TSjthCuXUqF5hAzn0bj0wWNN38LHFmnQ/c523Y3HyeNCWDCaSR3G6viAp2/
-	 ic6ZVeRmteoC6TEl8RjQRSyBWgHliGhUZ/P1acX4=
-Date: Thu, 26 Nov 2026 10:28:43 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: tools@kernel.org
-Subject: Re: [PATCH b4 v2] review: Add a batch mode for agent reviews
-Message-ID: <20261126-colossal-azure-bustard-f6bfde@toolbx>
-References: <20261117-batch-agent-v2-1-d42998f95590@kernel.org>
+	s=korg; t=1795708917;
+	bh=qjwQlisDGw7i3HyW471O3OxKTvjUALrOvWc8FTjggZo=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=U5HkOo/84phXFDPe07AvK+kJBmCsWaSOEm518cj4CWQ9egnhGp9vjaDmk01ZWMQOM
+	 rKX7xMMS4tzOjxQctW4fzuxbplzp0JDEdwmjh0qTrQoIC1AS6TeW3Ibb+LwSk7K1x8
+	 2uksQx1AfF01c8OahCHAFGNFTCxr/8erJfYJLoyU=
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -55,32 +49,41 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261117-batch-agent-v2-1-d42998f95590@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH b4 0/3] send: fix SMTP resume across transports and
+ recipient refusals
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: James Hilliard <james.hilliard1@gmail.com>
+Cc: "Kernel.org Tools" <tools@kernel.org>, 
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+In-Reply-To: <20261126-submit-b4-send-resume-fixes-v1-v1-0-cf5e018d8d7a@gmail.com>
+References: <20261126-submit-b4-send-resume-fixes-v1-v1-0-cf5e018d8d7a@gmail.com>
+Date: Thu, 26 Nov 2026 16:01:51 +0000
+Message-Id: <179570891191.2238394.13161623245972083134.b4-review@b4>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=668;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=EOAGAjb8Dt1qVPa8KEzegkpJad86+I1bJdEzVtNL4EQ=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLI5wj94cStYJ3v5uZyf25CumN5WtvlZS3HTxieiD74XG
+ qccVM/oKGVhEONikBVTZCnbF7spqPChh1x6jynMHFYmkCEMXJwCMJHr8xl+MQuWN1/Zv2PlIwPB
+ 5HdfTj9d9fJkpF3yD9erDhJcZ9+KbmJkOPVv8s8DjRGKB37Wrn1ybFdEW5PLJxYzm/LTSoYFlsa
+ TGAE=
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On Tue, Nov 17, 2026 at 01:07:42AM +0000, Mark Brown wrote:
-> Agent reviews can take quite some time to run which is not ideal for
-> interactive use. Add a command 'b4 review batch agent' which runs an agent
-> review for everything that is currently in reviewing state, allowing users
-> to ingest a batch of patches then review them all non-interactively.
-> Allow this to be limited to a specific agent in case the user is working
-> with multiple agents and wants to use them all.
+> If an SMTP submission reached nobody, a fresh send may replace it.
+> Make that true for local sendmail and the web endpoint as well: once
+> the replacement goes out, the old messages must not be sent by a
+> later --resume.
 > 
-> A separate agent command can be supplied for this mode, allowing the
-> user to have both interactive and non-interactive sessions, and a
-> substitution {review_dir} is provided to make permissions management
-> easier.
-> 
-> There is a plan to offer batch operations on tagged commits in the TUI but
-> this feels like a case that's worth handling separately.  As well as the
-> particularly long runtimes compared to other things that b4 does users
-> may also wish to do them in an isolated environment (or an environment
-> with better connectivity for that matter) so a mechanism for running
-> things non-interactively could be beneficial.
+> The other two patches address interrupted delivery to some recipients.
+> Let later messages proceed when all remaining recipients of an earlier
+> message are temporarily refused. When an explicit Bcc overrode an
+> exclusion on the original send, honor the same override on resume
+> without bypassing a newly matching exclusion.
 
-Thanks! I made some changes to better fit with the plans I have for the
-workbooks and batch operation mode. Please test out the master to make sure
-it's still doing what you need it to do.
+Thanks, applied with minor tweaks.
 
--K
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
