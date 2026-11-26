@@ -1,45 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795726384;
-	b=TlP1urt7u1ZLpXbf9fOGAU6hMUaaVgifNCwa+pvPnmZClOk4j7yC32q+N/Fx/BifXS2y
-	 F8Y3esNPozQtTwTbIezCV57qfrv1YcXYblvcd4+MDze8DFQ0KDDIwUcalPYrikudZ8F8S
-	 v6xB1A/qvOsMBAv1p+6l8Hf8msLJ5EnpJvONSfp3iSLVoaS0ULEHwrGyeggF8vsQWNXBr
-	 nUTQNy3M0ax/M+qBpS62grwW/LD6MQyhg2bOnc5A9NbrjoUTlk+vWxsgqe3IDPKPhuAxE
-	 S3XtSTFPxdEzskUpXduuJLj/2w0W0at72Z30ngeJ6Tti4USGq6bMh0wVIWkh/f/atng==
+	t=1795726708;
+	b=0SLj2y6qrsYZDEuHAxu/2Isxug+N36zeA069gt0WtGoQdch2lShQAJv8gKWGt73oAxRj
+	 uRQHKEB6s7YId/+61U+sbhgafZhJyp5oveLwjF89WjUuJ4zt/chLW40/dulWckXCElLc1
+	 b2W6qmrdGpbrIZoPIh1eMa5w28PeHpPsSirbPm+DkcFN3mob/2fgIabDI0lZfYFm8GSwU
+	 XOUOJnoZvzwELjuthnjWtmNf+GQkSJxrmCzRSmD0OjENVvcF+bD+V07oyOJCtJj9W73vE
+	 40SCQ9IFS0/c9Hyo817jQZnUFPh8KEkJ6bHhCL9Y/v/ws2/htV9d99X+cBtgxsVaAIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795726384;
-	h=Received:Delivered-To:Received:DKIM-Signature:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id:X-Mailer:X-Developer-Signature:
-	 X-Developer-Key;
-	bh=qO0XNePCXrHB5TWEjfcyPVp3ckqw0t6CdVn+QA3RBXI=;
-	b=NCu2WlLbgWsEB2XJzGc/1m9s1x5fy7XoIBTiI/9Z/HU8yE491+O4HHa2Tkl6+WnK0OFN
-	 Gkmtktph5FdYqXwUFVWussXDKLDQJrrHzLk2dB+npr4WsytHb2aUPf+FkIMmrbBf6W6fL
-	 QPL7SWZ8yX5W0Rd1VzYi5akc7hJyKNSbcyz9mhu56XfK6uR0hUlroy35jpppHp9JIJ8JR
-	 h8PU5QSgI7ZJi8p6rCQpxjzodFKG7iFw1iLTMGiSinhn3Ja9ytFJhwwdj4GkgWL63lgdb
-	 Il/XEHUC7a7zjKUltBOUICQieM0WakCfURw5dsCbATseJym1WsfDZt1HeTKJBdNnYcg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795726708;
+	h=Received:Delivered-To:Received:DKIM-Signature:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:X-Cookie;
+	bh=0MRbsCv/y0RuhN75R/5l4/QTPoNdguE5uu0/dL1nRnU=;
+	b=NlDOUFPclwcX9dn7MWhfpgPPrVgKs8uM2bEhr8w8w8dFBSQNSInpAzZO5X5fYQuWRBSa
+	 DkhwiOis13jQPG3meftNP6BdfytT6pgDQ9B7Xk8KNhYhKKJXmVGaf8AhxEottFYhYatzW
+	 +8j3+HH2xf4ycaFgiBXfpp1GiLNTdZsNsxASp1dcH5nrYUfircKmX/y7rRvRVIpdCyGRQ
+	 /8l+W7ohaD+FnsVc2x7jwUqaVHHbUie9ONJGuDpzDFWfa5tP9tJUkxrwEvWhyFQaYLFWt
+	 mjH+kfrDN5hvaLB+FGh+Ely6sm8C9e8W0OFw4DL3VD+QvIAddK+lYKF8h9m4ckl+kSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7pr6ShN;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cqWck8ks;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97934606A31C
-	for <tools@linux.kernel.org>; Thu, 26 Nov 2026 20:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90515606A6BC
+	for <tools@linux.kernel.org>; Thu, 26 Nov 2026 20:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7pr6ShN
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cqWck8ks
 Received: by smtp.kernel.org (Postfix)
-	id 604D81F00897; Thu, 26 Nov 2026 20:53:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A161F000C1;
-	Thu, 26 Nov 2026 20:53:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795726384;
-	bh=qO0XNePCXrHB5TWEjfcyPVp3ckqw0t6CdVn+QA3RBXI=;
-	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=X7pr6ShNKWujW/CFTuVMXI8rdno+FsL5sq3c6I49zUvcLfkPyLWm79tBrf9dHAcSu
-	 BoqEs9FkEUFRXC/200qnGynf9Zf+VWc/DuPOMRZ5zF29IGCUoQzlw+Kwz/CGWmlZFn
-	 cCM1fJBVa5cNguIQAJ/4/tLYB811PhYR4vx7K0fA=
+	id 3D09B1F00926; Thu, 26 Nov 2026 20:58:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806111F00924;
+	Thu, 26 Nov 2026 20:58:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795726708;
+	bh=0MRbsCv/y0RuhN75R/5l4/QTPoNdguE5uu0/dL1nRnU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=cqWck8ksxO5zBxIcll7YBcMDijEaoz938lOXgh/tk27Tg/Hxe7yBil5ElW5ORXOuy
+	 x/kTCIcv8b9xODDIddLqKaRU+oycBgrfXn3cRDgeTb0FX7984guJnzUcm+gGP6rpQT
+	 p7qIvRH5lu3kSeAFrnt0oWCSEd6wVaE7paGmJAXFLeubBn9d4x8EMCHL37iyBNMQd9
+	 gEbw5PgOeNBt4egrp5nkwL7aO3I/pYsw2cUBQ1jE3zAevBeO6iRYm6AEQPHaJWDVOO
+	 ZHBoQRsxVUS+CyhohWOvaIN6xmnLy2SDbT4J65jcs8ciibLIysz1ewGUkKaHZNo5gq
+	 OY6Ys2y2ilyVw==
+Date: Thu, 26 Nov 2026 20:58:24 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: tools@kernel.org
+Subject: Re: [PATCH b4 v2] review: Add a batch mode for agent reviews
+Message-ID: <12466b3b-b08b-4710-83df-8eeb86f33019@sirena.org.uk>
+References: <20261117-batch-agent-v2-1-d42998f95590@kernel.org>
+ <20261126-colossal-azure-bustard-f6bfde@toolbx>
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -49,41 +59,47 @@ List-Unsubscribe: <mailto:tools+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:tools+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH kgl] Fall back to Date when Received is at or before
- the Unix epoch
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: James Hilliard <james.hilliard1@gmail.com>
-Cc: "Kernel.org Tools" <tools@kernel.org>, 
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-In-Reply-To: <20261126-submit-received-date-fallback-v1-v1-1-351156bfc4d0@gmail.com>
-References: <20261126-submit-received-date-fallback-v1-v1-1-351156bfc4d0@gmail.com>
-Date: Thu, 26 Nov 2026 20:53:01 +0000
-Message-Id: <179572638192.97082.918095237344817393.b4-review@b4>
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=562;
- i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=NyNcdfux6ajSzZ4lHKu1RWqvBN3xDs8ZvlkyP5/p97s=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGLI55uj9anQvPb+S61j4u+lvpCtWMW0+b7pgJ5/MdpPn0
- pXn5T4WdZSyMIhxMciKKbKU7YvdFFT40EMuvccUZg4rE8gQBi5OAZjI8jxGhvM8zhmK5bLT5zSL
- /nH0dl/q9HTy3vtZH54d3H3GatfT0zqMDIvbDv7WiJ0m3u/u1W26aVXk+VUhCstY+jSfPY3xrKh
- X5QEA
-X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
- fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="299oLxEjtaYZwCss"
+Content-Disposition: inline
+In-Reply-To: <20261126-colossal-azure-bustard-f6bfde@toolbx>
+X-Cookie: Sank heaven for leetle curls.
 
-> With message_date = 'received', an archived message can appear newly
-> arrived in an IMAP mailbox despite having a valid Date header. If the
-> latest Received timestamp is at or before the Unix epoch, liblore
-> returns that timestamp and korgalore discards it. IMAP then assigns
-> the time of import.
-> 
-> Try the Date header in that case and apply the usual timestamp bounds
-> to it. Keep clamping future Received timestamps to the time of import.
 
-Applied with small tweaks.
+--299oLxEjtaYZwCss
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Thanks!
+On Thu, Nov 26, 2026 at 10:28:43AM -0500, Konstantin Ryabitsev wrote:
+> On Tue, Nov 17, 2026 at 01:07:42AM +0000, Mark Brown wrote:
 
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+> > There is a plan to offer batch operations on tagged commits in the TUI but
+> > this feels like a case that's worth handling separately.  As well as the
+> > particularly long runtimes compared to other things that b4 does users
+> > may also wish to do them in an isolated environment (or an environment
+> > with better connectivity for that matter) so a mechanism for running
+> > things non-interactively could be beneficial.
+
+> Thanks! I made some changes to better fit with the plans I have for the
+> workbooks and batch operation mode. Please test out the master to make sure
+> it's still doing what you need it to do.
+
+Quite a few changes there!  Everything seems to be working as expected,
+thanks.
+
+--299oLxEjtaYZwCss
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmsInXAACgkQJNaLcl1U
+h9DRxQf/VBHBfVmuola25QMARsrU/r5gok78VpdX8pP4FmmD7lkUy+EqIZONkZwW
+eA1WJ87PTNHQTFB/WtgCoVUgI0c9gpopjQRbEGt/xCpyNdPaWLRnUPDPpvZlclIa
+g7lPuJNQn/jxln3kAVil9vDX8uqmuU64q4ueLHSgdc1VHUZTXJnqPr0uTER7RAj+
+mUyQFG1XMGqyse5hF8/GJcu8rsNuvcRg3JgCXtxkd+v2RkLVmzG911HIRxlu9jAl
+FLWOLyjtwuX3ELTJ1NOYr722s1VtqKcIfYbtctZoKaicUD5rFrbPlgWVntQVmqPm
+TBxr6rbDM+pvjQ+PIK1QtgQMPzqzUw==
+=Oa8U
+-----END PGP SIGNATURE-----
+
+--299oLxEjtaYZwCss--
