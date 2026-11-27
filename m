@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795792637;
-	b=chpbyPrz1qhscryxxIO9iLdLx5rZI9yJ8iOnQY+NrudWCBkoQisQ9+mgc78tgGt8wxsD
-	 w3p5Es7Wd0K5rDHHbyuYxB+gPvQFAtCUIduHq029a5EnNapnbJJWvdziVqA+xmL9EwU7M
-	 bte2rWyy7kfLxguFtO/HFC2ybxkX5brMhb/7UJijgT8KBzAkhTXYXnPDenMzxHmsw/mvT
-	 pHEsinIf9NPVU9A8RfKKnZT7wokhEmSibGOOmfkJ7Au2WdUsLC6KbolaftBzS1mOAVl/P
-	 OU7fGPLSOtfeNaAWtuK4zjx0Und4J44rFZqHGc4UOGgbkx0FXMBm8jNfpK71XrKgnLw==
+	t=1795792638;
+	b=FPLkNUwnqgyPP/9XxxhFtYSP77uSdafR0AuFzQkgx/Q78ZRBQTGndgrJjF7j8duk/dE0
+	 OMXK+CqLQKBC1+QX/FJZNf4KTDWzFvXmQu1iNgSr+GEuqzXbF8VoREgNsVx/6uOPwZ49o
+	 VY7t1MYXD030885AcAUMV2Jco92buqD4mZW3AMqmySLmO6OqSC9j1IzldgrIVu1VYJwLw
+	 BDJv3P3ReN+3mth0x6LVZO5sSuuHpjTcYzAhUb/9cwjngA6EAEeFUGH3fjz1TSZEtHp2o
+	 zNzeitYJF60wsGmc1am3KZY+549WmBplA4sCfmLYBP54vayp3+vj/D4hacEos98HFLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795792637;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795792638;
 	h=Received:Delivered-To:Received:DKIM-Signature:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=cpWcJLY+0LUTX+QbjOK4UPOrUokKvPouxVcANaBn4Mo=;
-	b=rTIJ3EmBl04XeL+U05s5Ujt9PY2FQ7xCkh0Rb700ss0WULxulvM75/FTlSYfUF2wWzo8
-	 7pi2LocUyJe1cd8A9jIekUw6+rFaH4s29z1tH6VrcMNHk402kZUwillagmgjfCe9aiiL1
-	 0OUwoVTGfmy3kCL/tbfbUJI+CxkZxaiGAymlKsr8BwiX53l2dJMuLftwkCYLhgTG5WOHp
-	 +2FRrASyfoO6OP66CwAejf6Kc65q5ltRabatoD6sT3+CtrMQWsDwEvfPkc34w0xCvuzWm
-	 3A8o6LAeCza0GOLpjMVwmNjPWDYgSfD5/6kbWa9vdPABvK0Atvpa3gBU1jjA0WO+2mQ==
+	bh=85m5N7/TAndEellNRDyYEN26J2QDpIusnRBrOPmw2z8=;
+	b=0Z8xOSqFQO7cBgiie6ie1tuwKVV+wSjn/JR6dwO4675Z9ayDEeQy/Tve4vpGE21xZ30N
+	 pNEdBe8C+XgdEaSI45wyREGZ5gg3WyQrTpMjjB++nWiqz7ZT7pMyYGnTBVU9CtAbaQrgF
+	 wLF01jQ2ZiuanSx5XEJwvTyx1CFM9NJXn1itnwDWeZexcijEawpXViUWKaeuZPABEloRY
+	 QOazfECXbvG7wlCvzs+oaqrBv+6hAYlTYc6YoWIfhzh/4SDFfE9wd3xmDDYhD/C5k+cOz
+	 N989nJzrLNYgCk3Uy3MyzJNf/y3bufAfuLJ7xUOC7keoXGHmErXYzqr3DRVJK5k3H0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="bG/G2sqj";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="M+fv+I/D";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC856606A31C
-	for <tools@linux.kernel.org>; Fri, 27 Nov 2026 15:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83F4606A321
+	for <tools@linux.kernel.org>; Fri, 27 Nov 2026 15:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bG/G2sqj
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=M+fv+I/D
 Received: by smtp.kernel.org (Postfix)
-	id B6B991F008A0; Fri, 27 Nov 2026 15:17:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE461F00893;
-	Fri, 27 Nov 2026 15:17:15 +0000 (UTC)
+	id 38CAF1F00898; Fri, 27 Nov 2026 15:17:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A2A1F008A0;
+	Fri, 27 Nov 2026 15:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795792636;
-	bh=cpWcJLY+0LUTX+QbjOK4UPOrUokKvPouxVcANaBn4Mo=;
+	s=k20260515; t=1795792637;
+	bh=85m5N7/TAndEellNRDyYEN26J2QDpIusnRBrOPmw2z8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=bG/G2sqj4gGOQ4x6ga1bRlHKgeRalINUwkvoW74oHEwhfzzrGSpmwevYEQJIwsJdY
-	 6sY9gNu33QPohBtoguqkn5pARwm5tc5IQF2X13MBZhkcyDcQxnAOmZujSCFs/5hCHF
-	 nMTvvj6Y71tVFoFP0wVMSjsSIyw6Ta90rYI1cxgdCYb3reuJXV6uGnlQS7ne89vs5T
-	 xx8Rli0BxtdoW7V2e/TadzlnqlDDWy6n9A3ST1qfLRzHtegfnHy/95dRJ5NGKihzk+
-	 FNuyEanGDjmO0bOc/5xls1bYKS7XId44rqa5dfpm7UJcsm+t/PZMZqh0aVsdbXcUSd
-	 iLHH7+A6qkl6Q==
+	b=M+fv+I/DcxGPnqHXoffpAktOQD6OAp2Y3uijIVY6Vtf9jCvAmHZ14eDT+zJHKMoAk
+	 6o8f98SmfJ3CFUTHNrorN/SsHLUKM6Y/zXN6g0VZ+v4V23dPo0CO6zWVnX3HlEocUE
+	 jJYtNSUp+uC6SdBWMQGxxpxMv17hF8cxvfnt4N3WUHXTFZ/NhT3LjowfVADxuRu0DM
+	 Yit9J27LWAhYVMuS6fKNQpRYb+6vgIn4G+yxTkdhYS+QS908EKEaZty7mkgTr5ISOM
+	 Ailu2KbEQKJ9gbD2P2xBwzJfJEZkxN8Ms+1NK88vrPoKdeZbKtDAb540siXjydE3RG
+	 uom9Y5fv5FHGg==
 From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Date: Fri, 27 Nov 2026 16:17:03 +0100
-Subject: [PATCH b4 1/2] trailers: keep multi-line comments between
- Signed-off-by trailers
+Date: Fri, 27 Nov 2026 16:17:04 +0100
+Subject: [PATCH b4 2/2] trailers: keep comments below our own Signed-off-by
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -58,250 +57,146 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261127-multiline-trailer-comments-v1-1-ae8360525615@kernel.org>
+Message-Id: <20261127-multiline-trailer-comments-v1-2-ae8360525615@kernel.org>
 References: <20261127-multiline-trailer-comments-v1-0-ae8360525615@kernel.org>
 In-Reply-To: <20261127-multiline-trailer-comments-v1-0-ae8360525615@kernel.org>
 To: "Kernel.org Tools" <tools@kernel.org>
 Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
  "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8539; i=matttbe@kernel.org;
- h=from:subject:message-id; bh=u1RzTAjBZSeA2I+FRoUpMmWsPeCgh+9zTFG/3Cf92gM=;
- b=owGbwMvMwCVWo/Th0Gd3rumMp9WSGLI55/08E/Ewc2PIp0XHahdw/lksJnXu7YRn2+6XG2xnW
- Np0b+IFsY5SFgYxLgZZMUUW6bbI/JnPq3hLvPwsYOawMoEMYeDiFICJ5KozMjx9/YB9Je+/Pwc6
- vRqkby2ecnLadwZ5fiaRR8lzYn4G7VFn+F+g8KJQxmCdsNbZgtXVp3QLCv1jxN4s2K+ZZZSmbPS
- QixsA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5209; i=matttbe@kernel.org;
+ h=from:subject:message-id; bh=AyBHq4ISlqoKgZOpQF+4sIgvHkCexVtkFQWqWviRtbM=;
+ b=kA0DAAoWfCLwwvNHCpcByyZiAGsJnvqhDYxEIF66xb6sjLbGMNhgDj8KVSFw5xQdQDbyaobC+
+ 4h1BAAWCgAdFiEEG4ZZb5nneg10Sk44fCLwwvNHCpcFAmsJnvoACgkQfCLwwvNHCpe5YwD+JakS
+ +oxJDz2WmsrPl4XDUGmZL6yEKNrj4HANwFu9swsBAJJnzquIemWFHerNNZ0QsKzjs4aZt5Wd/kP
+ VYNqyzBEL
 X-Developer-Key: i=matttbe@kernel.org; a=openpgp;
  fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
 
-'b4 trailers -u' and 'b4 shazam' move multi-line [ ... ] comments placed
-between two Signed-off-by trailers above all the trailers.
+'b4 am', 'b4 shazam' and 'b4 trailers -u' drop a [ ... ] comment placed
+below the user's own Signed-off-by.
 
-Such comments are commonly used to describe modifications made to a
-patch after its original submission, and are placed between the
-original author's Signed-off-by and the one of the person who modified
-it. Moving them breaks this chain of custody description. Only
-single-line comments were recognised so far.
+b4 moves the user's Signed-off-by to the bottom of the trailers, and
+recreates it without its comment. When other trailers follow, such a
+comment typically describes changes made by the next signer, e.g. when
+the original author applies a version modified by a maintainer:
+dropping it, or moving it with the Signed-off-by, breaks the chain of
+custody description. Keep this Signed-off-by in place in this case. When
+it is the last trailer, it is still moved, but with its comment.
 
 The new tests check that:
 
-- such a comment stays in place when follow-up trailers are added;
-- trailer-like lines inside it are not parsed as trailers;
-- unclosed brackets, blank lines, or comments not following a trailer
-  are still treated as regular text.
+- a Signed-off-by followed by a comment and another signer stays in
+  place, with or without adding a new Signed-off-by;
+- the last Signed-off-by keeps its comment when moved below the new
+  trailers.
 
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 ---
- src/b4/__init__.py                                 | 26 ++++++++++-
- ...lers-followup-custody-comment-ref-unordered.txt | 33 ++++++++++++++
- .../samples/trailers-followup-custody-comment.mbox | 45 +++++++++++++++++++
- src/tests/test___init__.py                         | 50 ++++++++++++++++++++++
- 4 files changed, 152 insertions(+), 2 deletions(-)
+ src/b4/__init__.py         | 14 +++++++---
+ src/tests/test___init__.py | 64 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 75 insertions(+), 3 deletions(-)
 
 diff --git a/src/b4/__init__.py b/src/b4/__init__.py
-index 7dcf7b6..e3c0f33 100644
+index e3c0f33..39b9fe0 100644
 --- a/src/b4/__init__.py
 +++ b/src/b4/__init__.py
-@@ -3401,10 +3401,11 @@ class LoreMessage:
-         trailers: List[LoreTrailer] = list()
-         others: List[str] = list()
-         was_trailer = False
-+        lines = [x.strip('\r') for x in body.split('\n')]
-         at = 0
--        for line in body.split('\n'):
-+        while at < len(lines):
-+            line = lines[at]
-             at += 1
--            line = line.strip('\r')
-             matches = re.search(r'^\s*(\w\S+):\s+(\S.*)', line, flags=re.I)
-             if matches:
-                 oname, ovalue = list(matches.groups())
-@@ -3469,6 +3470,27 @@ class LoreMessage:
-                 trailers[-1].extinfo = line
-                 was_trailer = False
-                 continue
-+            # Or a multi-line [ ... ] one, e.g. describing changes by the next signer
-+            if was_trailer and re.search(r'^\s*\[[^]]*$', line):
-+                end = at
-+                while (
-+                    end < len(lines)
-+                    and lines[end].strip()
-+                    and re.search(r'^[^][]*$', lines[end])
-+                ):
-+                    end += 1
-+                if (
-+                    end < len(lines)
-+                    and lines[end].strip()
-+                    and re.search(r'^[^][]*]\s*$', lines[end])
-+                ):
-+                    trailers[-1].extinfo = '\n'.join(lines[at - 1 : end + 1])
-+                    logger.debug(
-+                        'Multi-line extinfo %d-%d: %s', at, end + 1, trailers[-1]
-+                    )
-+                    at = end + 1
-+                    was_trailer = False
-+                    continue
-             was_trailer = False
-             others.append(line)
+@@ -3638,9 +3638,17 @@ class LoreMessage:
+         sobtr = LoreTrailer()
+         hasmysob = False
+         if sobtr in btrailers:
+-            # Our own signoff always moves to the bottom of all trailers
+-            hasmysob = True
+-            btrailers.remove(sobtr)
++            mysob = btrailers[btrailers.index(sobtr)]
++            # Our own signoff moves to the bottom of all trailers, unless it is
++            # followed by a comment describing the next signer's changes
++            if (
++                mysob is btrailers[-1]
++                or not mysob.extinfo
++                or mysob.extinfo.lstrip().startswith('#')
++            ):
++                hasmysob = True
++                btrailers.remove(mysob)
++                sobtr.extinfo = mysob.extinfo
  
-diff --git a/src/tests/samples/trailers-followup-custody-comment-ref-unordered.txt b/src/tests/samples/trailers-followup-custody-comment-ref-unordered.txt
-new file mode 100644
-index 0000000..4bbc1c3
---- /dev/null
-+++ b/src/tests/samples/trailers-followup-custody-comment-ref-unordered.txt
-@@ -0,0 +1,33 @@
-+From git@z Thu Jan  1 00:00:00 1970
-+Subject: [PATCH] Simple test
-+From: Test Test <test@example.com>
-+Date: Tue, 30 Aug 2022 11:19:07 -0400
-+Message-Id: <orig-message@example.com>
-+MIME-Version: 1.0
-+Content-Type: text/plain; charset="utf-8"
-+Content-Transfer-Encoding: 7bit
-+
-+Follow-up trailer collating test with a multi-line comment between
-+two Signed-off-by trailers.
-+
-+Reviewed-by: Original Reviewer <original-reviewer@example.com>
-+Signed-off-by: Original Submitter <original-submitter@example.com>
-+[ Test Override: a comment describing the changes made after the
-+  original submission, spanning: multiple lines. ]
-+Reviewed-by: Followup Reviewer1 <followup-reviewer1@example.com>
-+Signed-off-by: Test Override <test-override@example.com>
-+
-+diff --git a/b4/junk.py b/b4/junk.py
-+index 12345678..23456789 100644
-+--- a/b4/junk.py
-++++ b/b4/junk.py
-+@@@ -1,1 +1,1 @@ def junk():
-+ 
-+ 
-+-junk1
-++junk2
-+ 
-+ 
-+-- 
-+2.wong.fu
-+
-diff --git a/src/tests/samples/trailers-followup-custody-comment.mbox b/src/tests/samples/trailers-followup-custody-comment.mbox
-new file mode 100644
-index 0000000..8ce9458
---- /dev/null
-+++ b/src/tests/samples/trailers-followup-custody-comment.mbox
-@@ -0,0 +1,45 @@
-+From foo@z Thu Jan  1 00:00:00 1970
-+From: Test Test <test@example.com>
-+Subject: [PATCH] Simple test
-+To: Some List <list-1@lists.example.com>
-+Date: Tue, 30 Aug 2022 11:19:07 -0400
-+Message-Id: <orig-message@example.com>
-+
-+Follow-up trailer collating test with a multi-line comment between
-+two Signed-off-by trailers.
-+
-+Reviewed-by: Original Reviewer <original-reviewer@example.com>
-+Signed-off-by: Original Submitter <original-submitter@example.com>
-+[ Test Override: a comment describing the changes made after the
-+  original submission, spanning: multiple lines. ]
-+Signed-off-by: Test Override <test-override@example.com>
-+---
-+
-+diff --git a/b4/junk.py b/b4/junk.py
-+index 12345678..23456789 100644
-+--- a/b4/junk.py
-++++ b/b4/junk.py
-+@@@ -1,1 +1,1 @@ def junk():
-+ 
-+ 
-+-junk1
-++junk2
-+ 
-+ 
-+-- 
-+2.wong.fu
-+
-+From foo@z Thu Jan  1 00:00:00 1970
-+From: Followup Reviewer1 <followup-reviewer1@example.com>
-+Subject: Re: [PATCH] Simple test
-+Date: Tue, 30 Aug 2022 11:19:07 -0400
-+Message-Id: <fwup-message-1@example.com>
-+In-Reply-To: <orig-message@example.com>
-+References: <orig-message@example.com>
-+
-+> Follow-up trailer collating test with a multi-line comment between
-+
-+Reviewed-by: Followup Reviewer1 <followup-reviewer1@example.com>
-+
-+--
-+My sig
+         new_trailers = self.followup_trailers
+         if extras:
 diff --git a/src/tests/test___init__.py b/src/tests/test___init__.py
-index 60ef5b8..8f4242a 100644
+index 8f4242a..f52c9ee 100644
 --- a/src/tests/test___init__.py
 +++ b/src/tests/test___init__.py
-@@ -332,6 +332,55 @@ def test_fixes_trailer_format_validation(
-     assert fixes == expected_fixes_values
+@@ -381,6 +381,70 @@ def test_multiline_extinfo(
+     assert others == expected_others
  
  
 +@pytest.mark.parametrize(
-+    'body,expected_extinfo,expected_others',
++    'trailers,addmysob,expected',
 +    [
-+        # Multi-line comment between two trailers stays attached
++        # Our signoff followed by a comment from the next signer stays in place
 +        (
-+            'Signed-off-by: Foo Foo <foo@example.com>\n'
-+            '[ Bar Bar: adapted the foo bits,\n'
-+            '  Baz: and other: bits. ]\n'
-+            'Signed-off-by: Bar Bar <bar@example.com>\n',
-+            [
-+                '[ Bar Bar: adapted the foo bits,\n  Baz: and other: bits. ]',
-+                None,
-+            ],
-+            [''],
++            'Signed-off-by: Test Override <test-override@example.com>\n'
++            '[ Maint: reworked\n'
++            '  the foo bits ]\n'
++            'Signed-off-by: Maint <maint@example.com>\n',
++            False,
++            'Signed-off-by: Test Override <test-override@example.com>\n'
++            '[ Maint: reworked\n'
++            '  the foo bits ]\n'
++            'Signed-off-by: Maint <maint@example.com>\n'
++            'Reviewed-by: Rev <rev@example.com>\n',
 +        ),
-+        # Unclosed bracket is not extinfo
 +        (
-+            'Signed-off-by: Foo Foo <foo@example.com>\n'
-+            '[ this is not closed\n'
-+            'Signed-off-by: Bar Bar <bar@example.com>\n',
-+            [None, None],
-+            ['[ this is not closed', ''],
++            'Signed-off-by: Test Override <test-override@example.com>\n'
++            '[ Maint: reworked\n'
++            '  the foo bits ]\n'
++            'Signed-off-by: Maint <maint@example.com>\n',
++            True,
++            'Signed-off-by: Test Override <test-override@example.com>\n'
++            '[ Maint: reworked\n'
++            '  the foo bits ]\n'
++            'Signed-off-by: Maint <maint@example.com>\n'
++            'Reviewed-by: Rev <rev@example.com>\n'
++            'Signed-off-by: Test Override <test-override@example.com>\n',
 +        ),
-+        # A blank line ends the comment
++        # Our last signoff moves to the bottom with its comment
 +        (
-+            'Signed-off-by: Foo Foo <foo@example.com>\n'
-+            '[ this is not\n'
-+            '\n'
-+            '  closed here ]\n'
-+            'Signed-off-by: Bar Bar <bar@example.com>\n',
-+            [None, None],
-+            ['[ this is not', '', '  closed here ]', ''],
-+        ),
-+        # Not following a trailer
-+        (
-+            '[ some\n  comment ]\nSigned-off-by: Bar Bar <bar@example.com>\n',
-+            [None],
-+            ['[ some', '  comment ]', ''],
++            'Signed-off-by: Maint <maint@example.com>\n'
++            'Signed-off-by: Test Override <test-override@example.com>\n'
++            '[ Test Override: resolved\n'
++            '  conflicts ]\n',
++            True,
++            'Signed-off-by: Maint <maint@example.com>\n'
++            'Reviewed-by: Rev <rev@example.com>\n'
++            'Signed-off-by: Test Override <test-override@example.com>\n'
++            '[ Test Override: resolved\n'
++            '  conflicts ]\n',
 +        ),
 +    ],
 +)
-+def test_multiline_extinfo(
-+    body: str, expected_extinfo: List[Optional[str]], expected_others: List[str]
++def test_fix_trailers_keeps_comments(
++    trailers: str, addmysob: bool, expected: str
 +) -> None:
-+    trailers, others = b4.LoreMessage.find_trailers(body)
-+    assert [t.extinfo for t in trailers] == expected_extinfo
-+    assert others == expected_others
++    raw = (
++        'From: Test Author <test@example.com>\n'
++        'Subject: [PATCH] test comments\n'
++        'Date: Mon, 1 Jan 2024 00:00:00 +0000\n'
++        'Message-Id: <20240101-test-v1-1-abc123@example.com>\n'
++        '\n'
++        'Commit body here.\n'
++        '\n'
++        f'{trailers}'
++    )
++    msg = email.message_from_string(raw, policy=email.policy.EmailPolicy(utf8=True))
++    lmsg = b4.LoreMessage(msg)
++    extra = b4.LoreTrailer(name='Reviewed-by', value='Rev <rev@example.com>')
++    lmsg.fix_trailers(extras=[extra], addmysob=addmysob)
++    assert lmsg.body == f'Commit body here.\n\n{expected}'
 +
 +
  @pytest.mark.parametrize('wrap', ['\n', ' \n', ' \n    ', '\t\n\t'])
  def test_wrapped_fixes_trailer_matches_original(wrap: str) -> None:
      original = 'Fixes: 239b7c5705a4 ("vfio/pci: close display console during unrealize, not finalize")'
-@@ -473,6 +522,7 @@ def test_trailer_addr_parsing(
-             'with-ignored',
-             {'trailers-ignore-from': 'followup-reviewer1@example.com'},
-         ),
-+        ('custody-comment', {}, {'addmysob': True}, 'unordered', {}),
-         ('partial-reroll', {}, {'addmysob': True}, 'defaults', {}),
-         ('nore', {}, {}, 'defaults', {}),
-         ('non-git-patch', {}, {}, 'defaults', {}),
 
 -- 
 2.55.0
