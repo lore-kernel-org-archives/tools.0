@@ -1,45 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795822343;
-	b=DTIHM+C9PJkLwTBCsJh1v9BbgCDc5dEh+0UE28WdqbqmPwZ1y2/TH2sr4sytVJo1wyFr
-	 Ow/lfnANTMxNSxH7xcxGdg4xhi9kTjGRXqxlOm4N8u/M1CjphrVYBkLzh46U0FVL5MV4e
-	 RpEY88I+rwSmyAIrI8AOcUbprr5Z1ubJfAsdF0MFSV2jdOQk0KKW6cjeHY+c9a2HeSTIr
-	 ZRsT4bDVYCFpXK2zTbkvXGypFVmlc4Y5Z7FoROCx3YffOiJJb2IpPZwl2m4mdyoWJtmo4
-	 zOiSqk2pPMng4vZ0hqxBEwSML6ygyoWBJ9mVV2vgMQryDn7qk58MlN6sP/QhzVWH9Eg==
+	t=1795827972;
+	b=a/UHjNxGEFsGb7nWaoSZtUSUuSoCDRP9uIHn2xzoSXWWja80MQy+ZlxFRRdYswWokWp7
+	 2+yvWBtJxCP0gMHek3eWUvUywJnT9ex2HAhgyhjiA2uRhuMO83Nl4z+IPNalJz4VvguBR
+	 8xPu5auUvUOgmZTRB8ZSepwXfr2mQ7YH1SZs7oNVKKh9My5QCXOWkLwxKvyqYDPFyFVue
+	 0Ki4BDQ34ka2IxL+ZXwCQH5nR9Y7Enb5odohgFlUHNoQKrMOsJZchfNhiEicly9VCurVF
+	 akK8Z0Cp7z6tYwOd46PQJhdjEmFOB2yEbC/5xBwpaS8jKy/k5jodRPoCuup0+6hj//A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795822343;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795827972;
 	h=Received:Delivered-To:Received:DKIM-Signature:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
 	 References:Date:Message-Id:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=yxxd0YGbMqrFy0ccZ2UyzOgmnNEKTvx3bmrI7XBS9lg=;
-	b=YJpNR3sM0GCQ9LAyIvCNcm3GydUM7BcLR0WPmGnB3h3vW1VwUGDo+BPjYnXcIgfR9lwn
-	 vU+DQ+P9iNz56i784cv6zlwskxzExqp3WdbPxwJAhflC9VpwxYfjdvqCzorFrA9pb67c7
-	 EJFMLf/qPaD4Lzo2gnQOcmcYBVJowPuVf/aicvjLE3Ip3d9MTQ3QgUGVWOSfzYjOPd4YP
-	 iLFyDApFZg7eKHEKtHVksIi0Q1j+pksaPiL89wmc7i6V+ITggFGpaP2cQDwjfohe1dWQX
-	 xUkpQxc8YLqeL1MrP0ghaQQqZIWEgPCwG8q7IIADgE0CkqRcmBzsi8JT1KpoaumRdrw==
+	bh=VP80zv5SrysLv/FaAGozkbwDjMRQqjpsXyUyCoPRoRI=;
+	b=zb8C8EWuA1CwFPX3Av/5i15VTmhnVDawA4hs0gRJdxKg/36DhFsewGuaSs/R+pPpmKCy
+	 4uJtmGyR2jJzVbrnWiYQPchQXf6PT2UJZ1K9YU2OJAQKjBd+N5dQeDWn3KvrVCqY3VsiB
+	 lrohKCUq7G3NfsoDkw07ZK6HC5geaJTpcucjPRA0yyqy8xW7hxncuBufWYKVk3aCCazey
+	 x/VqUnwZm7Q2kH4c3cofF3kQTaumM+15XTh6p0pKY9kuppBL5KcX+ohv3WoWxE1Tyc1gJ
+	 yAjbwzj6N5eOWFTLShmyXP+d8tQNGgiLw5M+DbxLRe4Aa4N7YitGTBSifcAjVg6amJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cleiHlsM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ns5fpUcA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85034606A31C
-	for <tools@linux.kernel.org>; Fri, 27 Nov 2026 23:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69517606A31C
+	for <tools@linux.kernel.org>; Sat, 28 Nov 2026 01:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cleiHlsM
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ns5fpUcA
 Received: by smtp.kernel.org (Postfix)
-	id 1315E1F00897; Fri, 27 Nov 2026 23:32:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEB41F00893;
-	Fri, 27 Nov 2026 23:32:22 +0000 (UTC)
+	id 0E1B61F00893; Sat, 28 Nov 2026 01:06:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2031F000C1;
+	Sat, 28 Nov 2026 01:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795822343;
-	bh=yxxd0YGbMqrFy0ccZ2UyzOgmnNEKTvx3bmrI7XBS9lg=;
+	s=korg; t=1795827972;
+	bh=VP80zv5SrysLv/FaAGozkbwDjMRQqjpsXyUyCoPRoRI=;
 	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=cleiHlsMOSrLA1wVjcCRFnN+lff+IS8N73DjLSBweQv79jf+sE6okKrvVolYegjJw
-	 KOoCI2yBlddWauGgZilUWv/LaR6ml5hPIvF6NdEVmCPDv1WEgYDbJbiTZy6RHlmbmI
-	 2JLaE/dDvPUPpgcxTJ4n81rjYxx2kgWGOEGm5kw8=
+	b=Ns5fpUcAXZ9TUfRYThP0kVrBbeXGOp34jAKca+JaEVVIupzyIvURdK1x79yhbNqd+
+	 FH2INVBweC3J5SpNq9Ki7j2svQSAkpsPYJt4w3VutSLNSuTnNK9si7h2SIbs/uYyzR
+	 urI+GUid8R5oOrR9iI2Hh/vGo50tPw1GF1qfVDFs=
 X-Mailing-List: tools@linux.kernel.org
 List-Id: <tools.linux.kernel.org>
 List-Post: <mailto:tools@linux.kernel.org>
@@ -51,41 +51,40 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH b4 0/2] trailers: keep comments between Signed-off-by
- trailers
+Subject: Re: [PATCH RESEND b4] shell: copy zshenv and zprofile if it is zsh
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Cc: "Kernel.org Tools" <tools@kernel.org>, 
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-In-Reply-To: <20261127-multiline-trailer-comments-v1-0-ae8360525615@kernel.org>
-References: <20261127-multiline-trailer-comments-v1-0-ae8360525615@kernel.org>
-Date: Fri, 27 Nov 2026 23:32:17 +0000
-Message-Id: <179582233748.831361.6846250850498336586.b4-review@b4>
+To: Tan Siewert <tan.siewert@9elements.com>
+Cc: tools@kernel.org, Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+In-Reply-To: <20261127-zshenv-v1-1-9e41c65abeec@9elements.com>
+References: <20261127-zshenv-v1-1-9e41c65abeec@9elements.com>
+Date: Sat, 28 Nov 2026 01:06:06 +0000
+Message-Id: <179582796696.1195475.3422428907206642182.b4-review@b4>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=792;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=724;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=CaH3bhcf2p0wM2mqI7fRsSbs7wdcC4TEM472zcVgN50=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGLK5hJkkJrgo7tlZ96T/QJ2Z5hwmvR2WLxZbbZcp47iwd
- FKr66LqjlIWBjEuBlkxRZayfbGbggofesil95jCzGFlAhnCwMUpABOZ5cLwz6jnc59pTdqe2kK1
- pL8eW+sPXxWt4PidENGXfdD1ed+fxwz/K952nXc5Yrt8RnhZTEy8ySl1s6XewklHBJq96pcHO99
- iBgA=
+ bh=Mx7kBWb5zyfgFwMZCvNT+/5ETLKSKdcFZBID0IWmL6E=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGLK5NJkM9hQ9TNpp4zx1LoeW4endl1cm1qYePSenMWWO/
+ Ye9l7StOkpZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenANzky4wM/zx+8CakaSxd4X7I
+ ulNA/IXhZcfK6a9+nAmxf/iNPYb7ICPDSuaZm1eVGV+/8DxtcXbg9Aax/06my0vqVOx9joRp/5/
+ MCwA=
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-> 'b4 trailers -u' and 'b4 shazam' move [ ... ] comments spanning multiple
-> lines, placed between Signed-off-by trailers, above all the trailers.
-> Such comments are commonly used to describe modifications made to a
-> patch after its original submission.
+> ZDOTDIR gets overwritten to a temporary directory that has a generated
+> zshrc, based on the original file from ZDOTDIR.
+> According to zshall(1), zsh also reads .zshenv and .zprofile from ZDOTDIR
+> before .zshrc.
 > 
-> Patch 1 keeps these comments attached to the trailer above them, as was
-> already done for single-line ones. Patch 2 makes sure such a comment is
-> not dropped when b4 moves the user's own Signed-off-by to the bottom.
-> 
-> Feel free to drop the second patch, it was only useful once for me when
-> re-testing something sent for the backports on another branch instead of
-> doing a simple cherry-pick :)
+> On NixOS / home-manager, a "$ZSH" variable is being set in .zshenv that
+> points to the script directory in the Nix store, which is then being
+> used by .zshrc. As the previous mentioned files are not being copied,
+> the shell is broken:
 
-I kept it -- both merged with small tweaks. Thanks!
+I had to play with zsh a bit, but I think I got it working with zsh the
+way you wanted. Can you please take a look at the latest master and let
+me know if it does what you need?
+
+Thanks!
 
 -- 
 Konstantin Ryabitsev <konstantin@linuxfoundation.org>
